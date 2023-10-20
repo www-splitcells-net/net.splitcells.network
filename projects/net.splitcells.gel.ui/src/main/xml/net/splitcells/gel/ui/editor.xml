@@ -13,26 +13,30 @@
         <title>Generic Allocation Editor</title>
         <description>Define and solve assignment problems.</description>
     </meta>
-    <chapter>
-        <title>Problem Definition</title>
-        <x:textarea class="net-splitcells-component-priority-0" style="width: 100%; height: 50em; resize: none; border: none;"
-        ><![CDATA[demands={a=int();b=string()};
+    <x:form action="/net/splitcells/gel/ui/calculate-solution.form" method="post" enctype="multipart/form-data">
+        <x:input type="submit" value="Submit optimization problem."></x:input>
+        <chapter>
+            <title>Problem Definition</title>
+
+            <x:textarea name="problem-definition" class="net-splitcells-component-priority-0" style="width: 100%; height: 50em; resize: none; border: none;"
+            ><![CDATA[demands={a=int();b=string()};
 supplies={c=float()};
 constraints=forEach(a).then(hasSize(2));
 constraints().forEach(b).then(allSame(c));
 name="testParseProblem";
 ]]></x:textarea>
-    </chapter>
-    <chapter>
-        <title>Problem Data</title>
-        <chapter>
-            <title>Demands</title>
         </chapter>
         <chapter>
-            <title>Supplies</title>
+            <title>Problem Data</title>
+            <chapter>
+                <title>Demands</title>
+            </chapter>
+            <chapter>
+                <title>Supplies</title>
+            </chapter>
         </chapter>
-    </chapter>
-    <chapter>
-        <title>Solutions</title>
-    </chapter>
+        <chapter>
+            <title>Solutions</title>
+        </chapter>
+    </x:form>
 </article>

@@ -18,9 +18,13 @@ package net.splitcells.website.server;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.website.server.processor.BinaryProcessor;
+import net.splitcells.website.server.processor.BinaryRequest;
+import net.splitcells.website.server.processor.BinaryResponse;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -28,6 +32,8 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.website.server.processor.BinaryResponse.PRIMARY_TEXT_RESPONSE;
+import static net.splitcells.website.server.processor.BinaryResponse.binaryResponse;
 
 /**
  * TODO IDEA Use string and enum based mapping as a backend,
@@ -176,6 +182,15 @@ public class Config {
 
     private List<ProgramConfig> programConfigs = list();
     private List<ProjectsRendererExtension> projectsRendererExtension = list();
+
+    private BinaryProcessor binaryProcessor = new BinaryProcessor() {
+        @Override
+        public BinaryResponse process(BinaryRequest message) {
+            final var response = binaryResponse();
+            response.data().put(PRIMARY_TEXT_RESPONSE, "no-response".getBytes(StandardCharsets.UTF_8));
+            return response;
+        }
+    };
 
     private Config() {
     }
@@ -410,5 +425,14 @@ public class Config {
 
     public List<ProjectsRendererExtension> projectsRendererExtensions() {
         return projectsRendererExtension;
+    }
+
+    public BinaryProcessor binaryProcessor() {
+        return binaryProcessor;
+    }
+
+    public Config withBinaryProcessor(BinaryProcessor arg) {
+        binaryProcessor = arg;
+        return this;
     }
 }

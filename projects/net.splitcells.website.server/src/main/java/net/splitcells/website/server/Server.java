@@ -16,7 +16,10 @@
 package net.splitcells.website.server;
 
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.AsyncResult;
 import io.vertx.core.DeploymentOptions;
+import io.vertx.core.Handler;
+import io.vertx.core.MultiMap;
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
 import io.vertx.core.buffer.Buffer;
@@ -25,20 +28,28 @@ import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.net.PfxOptions;
 import io.vertx.ext.web.Router;
+import io.vertx.ext.web.RoutingContext;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.resource.communication.log.LogLevel;
+import net.splitcells.website.Formats;
+import net.splitcells.website.server.processor.BinaryRequest;
 import net.splitcells.website.server.project.RenderingResult;
 
+import javax.annotation.Nullable;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.function.Function;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.log.LogLevel.WARNING;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.website.server.processor.BinaryRequest.binaryRequest;
+import static net.splitcells.website.server.processor.BinaryResponse.PRIMARY_TEXT_RESPONSE;
 
 /**
  * TODO Create and use server interface, instead of implementation.
@@ -104,6 +115,20 @@ public class Server {
                         });
                         router.route("/*").handler(routingContext -> {
                             HttpServerResponse response = routingContext.response();
+                            if (routingContext.request().path().endsWith(".form")) {
+                                routingContext.request().setExpectMultipart(true);
+                            }
+                            if (routingContext.request().isExpectMultipart()) {
+                                vertx.<byte[]>executeBlocking((promise) -> {
+                                    routingContext.request().endHandler(v -> {
+                                        final var binaryResponse = config.binaryProcessor()
+                                                .process(parseBinaryRequest(routingContext.request().path()
+                                                        , routingContext.request().formAttributes()));
+                                        response.putHeader("content-type", Formats.TEXT_PLAIN.mimeTypes());
+                                        promise.complete(binaryResponse.data().get(PRIMARY_TEXT_RESPONSE));
+                                    });
+                                }, (result) -> handleResult(routingContext, result));
+                            }
                             vertx.<byte[]>executeBlocking((promise) -> {
                                 try {
                                     final String requestPath;
@@ -123,16 +148,7 @@ public class Server {
                                     domsole().appendError(e);
                                     throw new RuntimeException(e);
                                 }
-                            }, (result) -> {
-                                if (result.failed()) {
-                                    domsole().append(perspective(result.cause().toString()), LogLevel.ERROR);
-                                    domsole().appendError(result.cause());
-                                    response.setStatusCode(500);
-                                    response.end();
-                                } else {
-                                    response.end(Buffer.buffer().appendBytes(result.result()));
-                                }
-                            });
+                            }, (result) -> handleResult(routingContext, result));
                         });
                         router.errorHandler(500, e -> {
                             domsole().appendError(e.failure());
@@ -144,6 +160,27 @@ public class Server {
                 }, deploymentOptions);
             }
         };
+    }
+
+    private static void handleResult(RoutingContext routingContext, AsyncResult<byte[]> result) {
+        final var response = routingContext.response();
+        if (result.failed()) {
+            domsole().appendError(executionException(perspective("Could not process form:")
+                            .withProperty("path", routingContext.request().path())
+                    , result.cause()));
+            response.setStatusCode(500);
+            response.end();
+        } else {
+            response.end(Buffer.buffer().appendBytes(result.result()));
+        }
+    }
+
+    private static BinaryRequest parseBinaryRequest(String path, MultiMap multiMap) {
+        final var binaryRequest = binaryRequest(trail(path.split("/")));
+        multiMap.entries().forEach(entry -> {
+            binaryRequest.data().put(entry.getKey(), entry.getValue().getBytes(StandardCharsets.UTF_8));
+        });
+        return binaryRequest;
     }
 
     public static Service serveAsAuthenticatedHttpsAt(Function<String, Optional<RenderingResult>> renderer, Config config) {

@@ -26,7 +26,7 @@ import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.proposal.ProposalProcessor.propose;
 import static net.splitcells.gel.rating.rater.lib.AllSame.allSame;
 
-public class ProposalProcessorTest {
+public class ProposalBinaryProcessorTest {
     @UnitTest
     public void testIllegalConstructor() {
         requireIllegalDefaultConstructor(ProposalProcessor.class);
