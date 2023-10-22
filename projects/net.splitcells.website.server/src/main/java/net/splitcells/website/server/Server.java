@@ -120,35 +120,34 @@ public class Server {
                             }
                             if (routingContext.request().isExpectMultipart()) {
                                 vertx.<byte[]>executeBlocking((promise) -> {
-                                    routingContext.request().endHandler(v -> {
-                                        final var binaryResponse = config.binaryProcessor()
-                                                .process(parseBinaryRequest(routingContext.request().path()
-                                                        , routingContext.request().formAttributes()));
-                                        response.putHeader("content-type", Formats.TEXT_PLAIN.mimeTypes());
-                                        promise.complete(binaryResponse.data().get(PRIMARY_TEXT_RESPONSE));
-                                    });
+                                    final var binaryResponse = config.binaryProcessor()
+                                            .process(parseBinaryRequest(routingContext.request().path()
+                                                    , routingContext.request().formAttributes()));
+                                    response.putHeader("content-type", Formats.TEXT_PLAIN.mimeTypes());
+                                    promise.complete(binaryResponse.data().get(PRIMARY_TEXT_RESPONSE));
+                                }, (result) -> handleResult(routingContext, result));
+                            } else {
+                                vertx.<byte[]>executeBlocking((promise) -> {
+                                    try {
+                                        final String requestPath;
+                                        if ("".equals(routingContext.request().path()) || "/".equals(routingContext.request().path())) {
+                                            requestPath = "index.html";
+                                        } else {
+                                            requestPath = routingContext.request().path();
+                                        }
+                                        final var result = renderer.apply(requestPath);
+                                        if (result.isPresent()) {
+                                            response.putHeader("content-type", result.get().getFormat());
+                                            promise.complete(result.get().getContent());
+                                        } else {
+                                            promise.fail("Could not render path:" + requestPath);
+                                        }
+                                    } catch (Exception e) {
+                                        domsole().appendError(e);
+                                        throw new RuntimeException(e);
+                                    }
                                 }, (result) -> handleResult(routingContext, result));
                             }
-                            vertx.<byte[]>executeBlocking((promise) -> {
-                                try {
-                                    final String requestPath;
-                                    if ("".equals(routingContext.request().path()) || "/".equals(routingContext.request().path())) {
-                                        requestPath = "index.html";
-                                    } else {
-                                        requestPath = routingContext.request().path();
-                                    }
-                                    final var result = renderer.apply(requestPath);
-                                    if (result.isPresent()) {
-                                        response.putHeader("content-type", result.get().getFormat());
-                                        promise.complete(result.get().getContent());
-                                    } else {
-                                        promise.fail("Could not render path:" + requestPath);
-                                    }
-                                } catch (Exception e) {
-                                    domsole().appendError(e);
-                                    throw new RuntimeException(e);
-                                }
-                            }, (result) -> handleResult(routingContext, result));
                         });
                         router.errorHandler(500, e -> {
                             domsole().appendError(e.failure());
