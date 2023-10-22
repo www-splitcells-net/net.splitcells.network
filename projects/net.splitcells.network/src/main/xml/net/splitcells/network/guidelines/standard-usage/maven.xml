@@ -56,5 +56,11 @@
                     It's best to list those people, who take responsibility for the project.</item>
             </list>
         </chapter>
+        <chapter><title>Support Documentation</title>
+            <paragraph>If there is any non obvious problem with Maven or while using Maven,
+                it is helpful to use the flags `--errors --debug` (which is equal to `-X and -e`),
+                in order to get more details.
+            </paragraph>
+        </chapter>
     </chapter>
 </article>
