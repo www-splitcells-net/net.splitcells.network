@@ -61,6 +61,11 @@
                 it is helpful to use the flags `--errors --debug` (which is equal to `-X and -e`),
                 in order to get more details.
             </paragraph>
+            <paragraph>Never exit a state with the current thread marked as interrupted,
+                as this will make the test failed.
+                Also, note that the error message will not be very useful in this case,
+                if `--errors --debug`  is not used: `[ERROR] Failed to execute goal org.codehaus.mojo:exec-maven-plugin:1.1:java (default-cli) on project [...]: An exception occured while executing the Java class. java.lang.InterruptedException -> [Help 1]
+            `</paragraph>
         </chapter>
     </chapter>
 </article>
