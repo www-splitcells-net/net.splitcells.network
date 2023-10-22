@@ -25,6 +25,7 @@ import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.resource.communication.log.Domsole;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
 
+import java.security.Permission;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.concurrent.Semaphore;
@@ -97,6 +98,7 @@ public class Dem {
      */
     public static ProcessResult process(Runnable program, Consumer<Environment> configurator) {
         ProcessResult processResult = processResult();
+        disallowSystemExit();
         Thread root = new Thread(() -> {
             final var processEnvironment = initializeProcess(program.getClass(), configurator);
             processEnvironment.start();
@@ -220,15 +222,35 @@ public class Dem {
     }
 
     /**
-     * {@link System#exit(int)} should not be used directly.
-     * Use this method instead, which notice such calls via appropriate logging.
+     * <p>TODO Remove calls to {@link System#exit(int)}, because it creates problems.
+     * See {@link #disallowSystemExit}.</p>
+     * <p>{@link System#exit(int)} should not be used directly.
+     * Use this method instead, which notice such calls via appropriate logging.</p>
      *
      * @param exitCode
      */
+    @Deprecated
     public static void systemExit(int exitCode) {
         final var exception = executionException("Exiting system.");
         exception.printStackTrace();
         domsole().appendError(exception);
         System.exit(exitCode);
+    }
+
+    /**
+     * <p>Maven's Surefire plugin for JUnit tests does not support {@link System#exit(int)}.
+     * {@link System#exit(int)} may also cause resource issues.
+     * Therefore, it can make sense to disallow such calls.</p>
+     * <p>End processes via exceptions or main method returns instead,
+     * in order to ensure to cleanly end the program.</p>
+     */
+    private static void disallowSystemExit() {
+        System.setSecurityManager(new SecurityManager() {
+            @Override
+            public void checkExit(int status) {
+                super.checkExit(status);
+                throw executionException("System exit is disallowed and not supported: " + status);
+            }
+        });
     }
 }
