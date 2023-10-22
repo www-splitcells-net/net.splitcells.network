@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel;
 
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
 
 import static net.splitcells.dem.resource.Files.writeToFile;
@@ -30,7 +31,8 @@ public final class GelTestUnits {
     public static void main(String... arg) {
         GelEnv.process(() -> {
                     if (!testUnits()) {
-                        System.exit(1);
+                        System.out.println("Could not execute tests successfully.");
+                        Dem.systemExit(1);
                     }
                 }
                 , standardDeveloperConfigurator().andThen(env -> {

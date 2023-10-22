@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel;
 
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
@@ -36,7 +37,7 @@ public class GelTestFunctionality {
                             .withConfigValue(MessageFilter.class, a -> false)
                             .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()));
                 })).hasError()) {
-            System.exit(1);
+            Dem.systemExit(0);
         }
     }
 }

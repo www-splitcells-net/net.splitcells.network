@@ -33,7 +33,9 @@ import java.util.function.Consumer;
 import static net.splitcells.dem.ProcessResult.processResult;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.environment.config.StaticFlags.logStaticFlags;
+import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.resource.communication.log.LogLevel.UNKNOWN_ERROR;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.reflection.ClassesRelated.callerClass;
 
 /**
@@ -103,7 +105,7 @@ public class Dem {
                 program.run();
             } catch (Throwable t) {
                 // TODO Somehow mark this error specially, so its clear, that this error caused execution failure.
-                Domsole.domsole().appendError(t);
+                domsole().appendError(t);
                 processResult.hasError(true);
                 /** Note that thread should handle all exceptions,
                  * because some are using {@link Thread#getThreadGroup()} and {@link ThreadGroup#},
@@ -215,5 +217,18 @@ public class Dem {
 
     public static <T> T configValue(Class<? extends Option<T>> key) {
         return environment().config().configValue(key);
+    }
+
+    /**
+     * {@link System#exit(int)} should not be used directly.
+     * Use this method instead, which notice such calls via appropriate logging.
+     *
+     * @param exitCode
+     */
+    public static void systemExit(int exitCode) {
+        final var exception = executionException("Exiting system.");
+        exception.printStackTrace();
+        domsole().appendError(exception);
+        System.exit(exitCode);
     }
 }

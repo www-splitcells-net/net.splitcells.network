@@ -53,7 +53,8 @@ import static org.junit.platform.launcher.TagFilter.includeTags;
 public class Test {
     public static void main(String... arg) {
         if (!test()) {
-            System.exit(1);
+            System.out.println("Could not execute tests successfully.");
+            Dem.systemExit(1);
         }
     }
 
