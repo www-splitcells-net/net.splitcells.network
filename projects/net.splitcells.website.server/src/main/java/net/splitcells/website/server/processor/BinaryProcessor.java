@@ -16,5 +16,5 @@
 package net.splitcells.website.server.processor;
 
 public interface BinaryProcessor {
-    BinaryResponse process(BinaryRequest message);
+    BinaryResponse process(BinaryRequest request);
 }

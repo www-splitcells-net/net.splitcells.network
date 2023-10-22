@@ -185,7 +185,7 @@ public class Config {
 
     private BinaryProcessor binaryProcessor = new BinaryProcessor() {
         @Override
-        public BinaryResponse process(BinaryRequest message) {
+        public BinaryResponse process(BinaryRequest request) {
             final var response = binaryResponse();
             response.data().put(PRIMARY_TEXT_RESPONSE, "no-response".getBytes(StandardCharsets.UTF_8));
             return response;
