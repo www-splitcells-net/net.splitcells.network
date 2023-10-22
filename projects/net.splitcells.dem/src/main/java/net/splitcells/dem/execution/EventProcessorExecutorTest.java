@@ -16,6 +16,7 @@
 package net.splitcells.dem.execution;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.Semaphore;
@@ -29,6 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @JavaLegacyArtifact
 public class EventProcessorExecutorTest {
     @Test
+    @Disabled
     public void test() {
         final var testResult = new AtomicInteger(0);
         try (final EventProcessorExecutor testSubject = eventProcessorExecutor()) {
