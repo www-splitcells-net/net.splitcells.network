@@ -16,6 +16,7 @@
 package net.splitcells.website.server.processor;
 
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.website.server.project.RenderingResult;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
 
@@ -26,13 +27,13 @@ public class BinaryResponse {
         return new BinaryResponse();
     }
 
-    private Map<String, byte[]> data = map();
+    private Map<String, RenderingResult> data = map();
 
     private BinaryResponse() {
 
     }
 
-    public Map<String, byte[]> data() {
+    public Map<String, RenderingResult> data() {
         return data;
     }
 }

@@ -15,6 +15,28 @@
  */
 package net.splitcells.website.server.processor;
 
+import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.website.server.Server;
+
+/**
+ * <p>This class is the currently the most abstract server API supported on a concept level.
+ * This API allows to model all kinds of simple function calls and any kind of return value types.
+ * This API was introduced, in order to support HTML/HTTP forms.</p>
+ * <p>TODO Use this API for the webserver instead of {@link net.splitcells.website.server.projects.ProjectsRenderer}.</p>
+ * <p>TODO IDEA The most abstract server API concept, is an API,
+ * where a path and tree of binary arrays annotated with
+ * an ID with a URL format and like {@link Perspective#nameSpace()} for each array is sent to a server,
+ * that responses with the same kind of binary tree,
+ * but without a path.
+ * Such an API could model any kind of function signature natively,
+ * with an high amount of adaptivity to other APIs.
+ * Alternatively, the most abstract API only supports only a byte array as an argument and
+ * a byte array as a result set,
+ * but this makes it harder to write adapters for.
+ * In other words, an API based on type binary array trees makes it easiest,
+ * to create an adapter for such an API to any other API.
+ * </p>
+ */
 public interface BinaryProcessor {
     BinaryResponse process(BinaryRequest request);
 }

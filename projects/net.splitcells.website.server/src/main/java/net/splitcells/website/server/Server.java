@@ -52,6 +52,7 @@ import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.website.server.processor.BinaryRequest.binaryRequest;
 import static net.splitcells.website.server.processor.BinaryResponse.PRIMARY_TEXT_RESPONSE;
+import static net.splitcells.website.server.project.RenderingResult.renderingResult;
 
 /**
  * TODO Create and use server interface, instead of implementation.
@@ -133,7 +134,7 @@ public class Server {
                                             .process(parseBinaryRequest(routingContext.request().path()
                                                     , routingContext.request().formAttributes()));
                                     response.putHeader("content-type", Formats.TEXT_PLAIN.mimeTypes());
-                                    promise.complete(binaryResponse.data().get(PRIMARY_TEXT_RESPONSE));
+                                    promise.complete(binaryResponse.data().get(PRIMARY_TEXT_RESPONSE).getContent());
                                 }, (result) -> handleResult(routingContext, result));
                             } else {
                                 vertx.<byte[]>executeBlocking((promise) -> {
@@ -186,7 +187,7 @@ public class Server {
     private static BinaryRequest parseBinaryRequest(String path, MultiMap multiMap) {
         final var binaryRequest = binaryRequest(trail(path.split("/")));
         multiMap.entries().forEach(entry -> {
-            binaryRequest.data().put(entry.getKey(), entry.getValue().getBytes(StandardCharsets.UTF_8));
+            binaryRequest.data().put(entry.getKey(), renderingResult(entry.getValue().getBytes(StandardCharsets.UTF_8), "text/html"));
         });
         return binaryRequest;
     }
