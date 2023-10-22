@@ -537,10 +537,9 @@
                                 <!-- TOFIX Does not work. Currently the property is set in TestSuiteI manually. -->
                                 <net.splitcells.mode.build>true</net.splitcells.mode.build>
                             </systemPropertyVariables>
+                            <!-- TODO Execute tests in parallel.
                             <parallel>all</parallel>
-                            <useUnlimitedThreads>true</useUnlimitedThreads>
-                            <!-- TODO Execute tests in parallel. parallel>all</parallel>
-                            <useUnlimitedThreads>true</useUnlimitedThreads-->
+                            <useUnlimitedThreads>true</useUnlimitedThreads> -->
                             <!-- Doc Of Tag Expressions: https://junit.org/junit5/docs/current/user-guide/#running-tests-tag-expressions -->
                             <groups>${test.groups}</groups>
                             <argLine>${surefireArgLine}</argLine>
