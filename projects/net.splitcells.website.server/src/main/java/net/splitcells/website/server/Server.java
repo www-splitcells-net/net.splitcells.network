@@ -137,7 +137,7 @@ public class Server {
                                     } else {
                                         requestPath = routingContext.request().path();
                                     }
-                                    final var result = renderer.apply(java.net.URLDecoder.decode(requestPath, StandardCharsets.UTF_8.name()));
+                                    final var result = renderer.apply(requestPath);
                                     if (result.isPresent()) {
                                         response.putHeader("content-type", result.get().getFormat());
                                         promise.complete(result.get().getContent());
