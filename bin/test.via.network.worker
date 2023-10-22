@@ -22,7 +22,7 @@ test -f $logFile || echo 'Date,Number Of Warnings' >> $logFile
 echo $(date +'%Y-%m-%d')','$numberOfWarnings >> $logFile
 cd ../net.splitcells.network/projects/net.splitcells.system
 cat bin/execute
-bin/execute | >&2 echo '`net.splitcells.system/bin/execute` was not successful.'
+bin/execute || >&2 echo '`net.splitcells.system/bin/execute` was not successful.'
 endTime=$(date +%s)
 completionRuntimeFolder=$networkProjectFolder/../net.splitcells.network.log/src/main/csv/net/splitcells/network/worker/builder/runtime/complete/
 mkdir -p "$completionRuntimeFolder"
