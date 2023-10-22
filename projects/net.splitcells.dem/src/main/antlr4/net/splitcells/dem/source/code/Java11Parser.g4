@@ -69,7 +69,7 @@ annotation
     /* TODO call_arguments is a hack. */
 	: Keysymbol_at name call_arguments?;
 annotation_definition
-    : javadoc? Keyword_public Keyword_annotation* name
+    : javadoc? annotation* Keyword_public Keyword_annotation* name
         Brace_curly_open Brace_curly_closed
     ;
 call_arguments
