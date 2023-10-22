@@ -33,7 +33,9 @@ import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.Formats;
+import net.splitcells.website.server.processor.BinaryProcessor;
 import net.splitcells.website.server.processor.BinaryRequest;
+import net.splitcells.website.server.processor.BinaryResponse;
 import net.splitcells.website.server.project.RenderingResult;
 
 import javax.annotation.Nullable;
@@ -92,6 +94,12 @@ public class Server {
                 final var deploymentOptions = new DeploymentOptions()
                         .setMaxWorkerExecuteTimeUnit(SECONDS)
                         .setMaxWorkerExecuteTime(60L);
+                final var binaryProcessor = new BinaryProcessor() {
+                    @Override
+                    public synchronized BinaryResponse process(BinaryRequest request) {
+                        return config.binaryProcessor().process(request);
+                    }
+                };
                 vertx.deployVerticle(new AbstractVerticle() {
                     @Override
                     public void start() {
@@ -121,7 +129,7 @@ public class Server {
                             }
                             if (routingContext.request().isExpectMultipart()) {
                                 vertx.<byte[]>executeBlocking((promise) -> {
-                                    final var binaryResponse = config.binaryProcessor()
+                                    final var binaryResponse = binaryProcessor
                                             .process(parseBinaryRequest(routingContext.request().path()
                                                     , routingContext.request().formAttributes()));
                                     response.putHeader("content-type", Formats.TEXT_PLAIN.mimeTypes());
