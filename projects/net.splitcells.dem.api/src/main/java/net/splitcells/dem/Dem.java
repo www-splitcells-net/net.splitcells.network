@@ -98,7 +98,9 @@ public class Dem {
      */
     public static ProcessResult process(Runnable program, Consumer<Environment> configurator) {
         ProcessResult processResult = processResult();
-        disallowSystemExit();
+        /* TODO This does not work with Maven:
+         * disallowSystemExit();
+         */
         Thread root = new Thread(() -> {
             final var processEnvironment = initializeProcess(program.getClass(), configurator);
             processEnvironment.start();
@@ -246,6 +248,16 @@ public class Dem {
      */
     private static void disallowSystemExit() {
         System.setSecurityManager(new SecurityManager() {
+            @Override
+            public void checkPermission(Permission perm) {
+                // Allow everything, as Surefire will have otherwise a problem.
+            }
+
+            @Override
+            public void checkPermission(Permission perm, Object context) {
+                // Allow everything, as Surefire will have otherwise a problem.
+            }
+
             @Override
             public void checkExit(int status) {
                 super.checkExit(status);
