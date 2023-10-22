@@ -16,8 +16,10 @@
 package net.splitcells.dem.lang.annotations;
 
 /**
- * Marks code that is only present for Java compatibility.
+ * <p>TODO REMOVE Move Java legacy code to dedicated classes and do not mix these with non legacy code.</p>
+ * <p>Marks code that is only present for Java compatibility.</p>
  */
+@Deprecated
 public @interface JavaLegacyBody {
 
 }

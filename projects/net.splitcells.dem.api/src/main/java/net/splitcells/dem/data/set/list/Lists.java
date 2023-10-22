@@ -15,9 +15,8 @@
  */
 package net.splitcells.dem.data.set.list;
 
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
-
-import java.util.stream.IntStream;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;

@@ -17,12 +17,10 @@ package net.splitcells.dem.resource;
 
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.util.stream.Stream;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.dem.utils.StringUtils.getBytes;
 
 /**
  * <p>When one works with {@link java.nio.file.Path} and {@link java.nio.file.Files} directly,
@@ -59,7 +57,7 @@ public interface FileSystem extends FileSystemView {
 
     @ReturnsThis
     default FileSystem writeToFile(Path path, String content) {
-        return writeToFile(path, content.getBytes(StandardCharsets.UTF_8));
+        return writeToFile(path, getBytes(content));
     }
 
     FileSystem subFileSystem(Path path);

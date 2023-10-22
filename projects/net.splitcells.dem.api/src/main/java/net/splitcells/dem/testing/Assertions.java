@@ -18,7 +18,6 @@ package net.splitcells.dem.testing;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.utils.ConstructorIllegal;
 
-import java.lang.reflect.Constructor;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -75,7 +74,7 @@ public class Assertions {
 
     @JavaLegacyBody
     public static void requireIllegalDefaultConstructor(Class<?> clazz) {
-        final Constructor<?> constructor;
+        final java.lang.reflect.Constructor<?> constructor;
         try {
             constructor = clazz.getDeclaredConstructor();
         } catch (NoSuchMethodException e) {

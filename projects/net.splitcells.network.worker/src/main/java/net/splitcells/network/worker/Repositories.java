@@ -15,6 +15,7 @@
  */
 package net.splitcells.network.worker;
 
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.nio.file.Path;
 
+@JavaLegacyArtifact
 public class Repositories implements Repository {
     public static Repository repository(Path path) {
         return new Repositories(path);

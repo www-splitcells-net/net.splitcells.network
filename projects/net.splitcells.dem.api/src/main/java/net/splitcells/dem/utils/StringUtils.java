@@ -17,6 +17,8 @@ package net.splitcells.dem.utils;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
+import java.nio.charset.StandardCharsets;
+
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
@@ -38,5 +40,9 @@ public class StringUtils {
         throw executionException(perspective("`target` does not start with `prefix`.")
                 .withProperty("prefix", prefix)
                 .withProperty("target", target));
+    }
+
+    public static byte[] getBytes(String arg) {
+        return arg.getBytes(StandardCharsets.UTF_8);
     }
 }
