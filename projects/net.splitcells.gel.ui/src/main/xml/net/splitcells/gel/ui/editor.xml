@@ -13,8 +13,10 @@
         <title>Generic Allocation Editor</title>
         <description>Define and solve assignment problems.</description>
     </meta>
-    <x:form action="/net/splitcells/gel/ui/calculate-solution.form" method="post" enctype="multipart/form-data">
-        <x:input type="submit" value="Submit optimization problem."></x:input>
+    <x:div class="net-splitcells-button" onclick="javascript: net_splitcells_gel_ui_editor_form()">Submit optimization problem.</x:div>
+    <x:form action="/net/splitcells/gel/ui/calculate-solution.form" method="post"
+            enctype="multipart/form-data"
+            id="net-splitcells-gel-ui-editor-form">
         <chapter>
             <title>Problem Definition</title>
 
@@ -39,4 +41,16 @@ name="testParseProblem";
             <title>Solutions</title>
         </chapter>
     </x:form>
+    <x:script type="text/javascript"><![CDATA[
+        function net_splitcells_gel_ui_editor_form() {
+            var form = document.getElementById('net-splitcells-gel-ui-editor-form');
+            var request  = new XMLHttpRequest();
+            var data = new FormData(form);
+            request.onload = function() {
+                console.log('Response to "net-splitcells-gel-ui-editor-form":' + this.responseText);
+            }
+            request.open("post", form.action);
+            request.send(data);
+        }]]>
+    </x:script>
 </article>
