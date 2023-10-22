@@ -116,6 +116,7 @@ public class Server {
                         router.route("/*").handler(routingContext -> {
                             HttpServerResponse response = routingContext.response();
                             if (routingContext.request().path().endsWith(".form")) {
+                                routingContext.response().setChunked(true);
                                 routingContext.request().setExpectMultipart(true);
                             }
                             if (routingContext.request().isExpectMultipart()) {
