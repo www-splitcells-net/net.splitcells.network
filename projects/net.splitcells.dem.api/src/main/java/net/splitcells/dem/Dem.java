@@ -234,6 +234,11 @@ public class Dem {
     @Deprecated
     public static void systemExit(int exitCode) {
         final var exception = executionException("Exiting system.");
+        /**
+         * The {@link Exception#printStackTrace()} is a mehtod of last resort,
+         * in order to get a stack trace,
+         * even if {@link Dem} is not initialized or working correctly.
+         */
         exception.printStackTrace();
         domsole().appendError(exception);
         System.exit(exitCode);
