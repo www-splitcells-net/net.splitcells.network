@@ -439,15 +439,15 @@ public interface Perspective extends PerspectiveView {
             boolean isNotFirstChild = false;
             final var hasAnyPrimitiveValues = children().stream().anyMatch(c -> c.children().isEmpty()
                     || c.children().get(0).name().isEmpty());
-            final var isThisADictionary = !hasAnyPrimitiveValues && !name().isEmpty();
+            final var isThisANamedDictionary = !hasAnyPrimitiveValues && !name().isEmpty();
             if (hasAnyPrimitiveValues) {
                 jsonString.append("[");
             } else {
                 if (name().isEmpty()) {
-                    requireNot(isThisADictionary);
+                    requireNot(isThisANamedDictionary);
                     jsonString.append("{");
                 } else {
-                    require(isThisADictionary);
+                    require(isThisANamedDictionary);
                     if (config.isTopElement()) {
                         jsonString.append("{\"" + name() + "\":{");
                     } else {
@@ -477,7 +477,7 @@ public interface Perspective extends PerspectiveView {
             if (hasAnyPrimitiveValues) {
                 jsonString.append("]");
             } else {
-                if (isThisADictionary) {
+                if (isThisANamedDictionary) {
                     if (config.isTopElement()) {
                         jsonString.append("}}");
                     } else {
