@@ -36,6 +36,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
+import static net.splitcells.dem.lang.perspective.JsonConfig.jsonConfig;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -421,18 +422,23 @@ public interface Perspective extends PerspectiveView {
         return htmlList;
     }
 
+    default String toJsonString() {
+        return toJsonString(jsonConfig());
+    }
+
     /**
      * Creates a JSON, where all primitive values are Strings.
      *
      * @return This is a JSON, representing the contents of this, whereby the {@link #nameSpace()} is ignored.
      */
-    default String toJsonString() {
+    default String toJsonString(JsonConfig config) {
         final StringBuilder jsonString = new StringBuilder();
         if (children().isEmpty()) {
             jsonString.append("{\"" + name() + "\":\"\"}");
         } else {
             boolean isNotFirstChild = false;
-            final var hasAnyPrimitiveValues = children().stream().anyMatch(c -> c.children().isEmpty());
+            final var hasAnyPrimitiveValues = children().stream().anyMatch(c -> c.children().isEmpty()
+                    || c.children().get(0).name().isEmpty());
             final var isThisADictionary = !hasAnyPrimitiveValues && !name().isEmpty();
             if (hasAnyPrimitiveValues) {
                 jsonString.append("[");
@@ -442,7 +448,11 @@ public interface Perspective extends PerspectiveView {
                     jsonString.append("{");
                 } else {
                     require(isThisADictionary);
-                    jsonString.append("{\"" + name() + "\":{");
+                    if (config.isTopElement()) {
+                        jsonString.append("{\"" + name() + "\":{");
+                    } else {
+                        jsonString.append("\"" + name() + "\":{");
+                    }
                 }
             }
             for (final var child : children()) {
@@ -453,13 +463,14 @@ public interface Perspective extends PerspectiveView {
                     if (child.children().get(0).children().size() == 0) {
                         jsonString.append("\"" + child.name() + "\":\"" + child.children().get(0).name() + "\"");
                     } else {
-                        jsonString.append("\"" + child.name() + "\":" + child.toJsonString());
+                        jsonString.append("\"" + child.name() + "\":"
+                                + child.toJsonString(jsonConfig().withIsTopElement(false)));
                     }
                 } else if (child.children().isEmpty()) {
                     require(hasAnyPrimitiveValues);
                     jsonString.append("\"" + child.name() + "\"");
                 } else {
-                    jsonString.append(child.toJsonString());
+                    jsonString.append(child.toJsonString(jsonConfig().withIsTopElement(false)));
                 }
                 isNotFirstChild = true;
             }
@@ -467,7 +478,11 @@ public interface Perspective extends PerspectiveView {
                 jsonString.append("]");
             } else {
                 if (isThisADictionary) {
-                    jsonString.append("}}");
+                    if (config.isTopElement()) {
+                        jsonString.append("}}");
+                    } else {
+                        jsonString.append("}");
+                    }
                 } else {
                     jsonString.append("}");
                 }

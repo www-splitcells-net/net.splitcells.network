@@ -66,7 +66,18 @@ public class PerspectiveTest {
                 .withProperty("1", "2")
                 .withProperty("3", "4")
                 .withProperty("4", "5");
-        System.out.println(testSubject.toJsonString());
         requireEquals(testSubject.toJsonString(), "{\"name\":{\"1\":\"2\",\"3\":\"4\",\"4\":\"5\"}}");
+    }
+
+    @UnitTest
+    public void testToJsonStringWithNestedDictionary() {
+        final var testSubject = perspective("")
+                .withProperty("1", "2")
+                .withChild(perspective("test")
+                        .withProperty("a", "b")
+                        .withProperty("c", "d")
+                )
+                .withProperty("3", "4");
+        requireEquals(testSubject.toJsonString(), "{\"1\":\"2\",\"test\":{\"a\":\"b\",\"c\":\"d\"},\"3\":\"4\"}");
     }
 }
