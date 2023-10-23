@@ -17,16 +17,14 @@ package net.splitcells.website.server.project.renderer.extension;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
-import net.splitcells.dem.resource.ContentType;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
-import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.processor.BinaryMessage;
 
 import java.nio.file.Path;
 import java.util.Optional;
 
-import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
-import static net.splitcells.website.server.project.RenderingResult.renderingResult;
+import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 public class SvgProjectRendererExtension implements ProjectRendererExtension {
     public static SvgProjectRendererExtension svgRenderer() {
@@ -38,11 +36,11 @@ public class SvgProjectRendererExtension implements ProjectRendererExtension {
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
+    public Optional<BinaryMessage> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
         if (path.endsWith(".svg")) {
             final var requestedFile = Path.of("src/main/svg/").resolve(path);
             if (projectRenderer.projectFileSystem().isFile(requestedFile)) {
-                return Optional.of(renderingResult(projectRenderer.projectFileSystem().readFileAsBytes(requestedFile)
+                return Optional.of(binaryMessage(projectRenderer.projectFileSystem().readFileAsBytes(requestedFile)
                         , "image/svg+xml"));
             }
         }

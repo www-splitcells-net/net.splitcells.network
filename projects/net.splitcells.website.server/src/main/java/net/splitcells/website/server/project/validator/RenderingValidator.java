@@ -16,7 +16,7 @@
 package net.splitcells.website.server.project.validator;
 
 import net.splitcells.website.server.projects.ProjectsRendererI;
-import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.processor.BinaryMessage;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -26,7 +26,7 @@ import java.util.Optional;
  */
 @FunctionalInterface
 public interface RenderingValidator {
-    boolean validate(Optional<RenderingResult> content, ProjectsRendererI projectsRendererI, Path requestedPath);
+    boolean validate(Optional<BinaryMessage> content, ProjectsRendererI projectsRendererI, Path requestedPath);
 
     default void startReport(String context) {
 

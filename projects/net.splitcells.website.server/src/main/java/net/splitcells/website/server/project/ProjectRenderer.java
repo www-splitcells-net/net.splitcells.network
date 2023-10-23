@@ -16,6 +16,7 @@
 package net.splitcells.website.server.project;
 
 import net.splitcells.dem.resource.FileSystemView;
+import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.project.validator.SourceValidator;
 import net.splitcells.website.server.Config;
@@ -27,7 +28,6 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 /**
@@ -114,7 +114,7 @@ public interface ProjectRenderer extends Renderer {
      * @param projectRenderer Provides basic rendering utilities.
      * @return This is the rendering result, if the path is supported.
      */
-    default Optional<RenderingResult> render(String path, Config config, @Deprecated ProjectRenderer projectRenderer) {
+    default Optional<BinaryMessage> render(String path, Config config, @Deprecated ProjectRenderer projectRenderer) {
         return Optional.empty();
     }
 
@@ -126,7 +126,7 @@ public interface ProjectRenderer extends Renderer {
      *                         For instance, here the {@link Config} of that infrastructure can be retrieved.
      * @return This is the rendering result, if the path is supported.
      */
-    default Optional<RenderingResult> render(String path, ProjectsRenderer projectsRenderer) {
+    default Optional<BinaryMessage> render(String path, ProjectsRenderer projectsRenderer) {
         return render(path);
     }
 

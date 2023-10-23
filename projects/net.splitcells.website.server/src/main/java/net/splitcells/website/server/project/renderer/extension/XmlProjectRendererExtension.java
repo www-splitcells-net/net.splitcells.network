@@ -22,7 +22,7 @@ import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
-import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 
@@ -38,7 +38,7 @@ import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
 import static net.splitcells.dem.resource.Paths.removeFileSuffix;
 import static net.splitcells.dem.utils.StreamUtils.emptyStream;
 import static net.splitcells.website.server.project.LayoutConfig.layoutConfig;
-import static net.splitcells.website.server.project.RenderingResult.renderingResult;
+import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.project.renderer.PageMetaData.pageMetaData;
 
 /**
@@ -92,7 +92,7 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
+    public Optional<BinaryMessage> renderFile(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
         if (path.endsWith(".html")) {
             final var xmlPath = xmlPath(path, projectsRenderer, projectRenderer);
             final var pathFolder = StreamUtils.stream(path.split("/"))
@@ -124,7 +124,7 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
         return Optional.empty();
     }
 
-    private Optional<RenderingResult> renderFile(String path
+    private Optional<BinaryMessage> renderFile(String path
             , String xmlContent
             , ProjectRenderer projectRenderer
             , ProjectsRenderer projectsRenderer
@@ -169,11 +169,11 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
                             + pathContext
                             + "</path.context>"
                             + metaData);
-            return Optional.of(renderingResult
+            return Optional.of(binaryMessage
                     (projectRenderer.renderRawXml(documentString, projectsRenderer.config()).orElseThrow()
                             , HTML_TEXT.codeName()));
         } else {
-            return Optional.of(renderingResult
+            return Optional.of(binaryMessage
                     (projectRenderer.renderXml(xmlContent, layoutConfig, projectsRenderer.config()).orElseThrow()
                             , HTML_TEXT.codeName()));
         }

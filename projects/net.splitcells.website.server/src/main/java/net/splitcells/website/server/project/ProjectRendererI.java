@@ -22,10 +22,9 @@ import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.FileSystemView;
-import net.splitcells.dem.resource.FileSystems;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.log.LogLevel;
-import net.splitcells.dem.utils.StreamUtils;
+import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.project.validator.SourceValidator;
 import net.splitcells.website.server.Config;
@@ -34,7 +33,6 @@ import net.splitcells.website.server.projects.ProjectsRenderer;
 
 import java.nio.file.Path;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -44,7 +42,6 @@ import static net.splitcells.dem.lang.Xml.optionalDirectChildElementsByName;
 import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.ContentType.UTF_8;
-import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -59,13 +56,10 @@ import static net.splitcells.website.server.project.renderer.extension.ProjectRe
 import static net.splitcells.website.server.project.renderer.extension.ResourceProjectRendererExtension.resourceRenderer;
 import static net.splitcells.website.server.project.renderer.extension.SvgProjectRendererExtension.svgRenderer;
 import static net.splitcells.website.server.project.renderer.extension.TextProjectRendererExtension.textExtension;
-import static net.splitcells.website.server.project.RenderingResult.renderingResult;
+import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.project.renderer.extension.XmlProjectRendererExtension.xmlRenderer;
-import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkBuildProjectRendererExtension.commonMarkBuildRenderer;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkChangelogEventProjectRendererExtension.commonMarkChangelogEventRenderer;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkChangelogProjectRendererExtension.commonMarkChangelogRenderer;
-import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkContributingProjectRendererExtension.commonMarkContributingRenderer;
-import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkDevelopmentProjectRendererExtension.commonMarkDevelopmentRenderer;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkProjectRendererExtension.commonMarkExtension;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkReadmeProjectRendererExtension.commonMarkReadmeRenderer;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.RootFileProjectRendererExtension.rootFileProjectRendererExtension;
@@ -220,14 +214,14 @@ public class ProjectRendererI implements ProjectRenderer {
     }
 
     @Override
-    public Optional<RenderingResult> render(String path, ProjectsRenderer projectsRenderer) {
+    public Optional<BinaryMessage> render(String path, ProjectsRenderer projectsRenderer) {
         return addMissingMetaData(renderInternal(path, projectsRenderer));
     }
 
     /**
      * TODO Create root for each file type, that needs its one processing method.
      */
-    private Optional<RenderingResult> renderInternal(String path, ProjectsRenderer projectsRenderer) {
+    private Optional<BinaryMessage> renderInternal(String path, ProjectsRenderer projectsRenderer) {
         try {
             if (path.length() > 0 && path.charAt(0) == '/') {
                 path = path.substring(1);
@@ -241,52 +235,52 @@ public class ProjectRendererI implements ProjectRenderer {
             // TODO Devide rendering function into routing and content type determination.
             // TODO Move this into extensions.
             if (path.endsWith(".png")) {
-                return readArtifact(path).map(r -> renderingResult(r, "image/png"));
+                return readArtifact(path).map(r -> binaryMessage(r, "image/png"));
             } else if (path.endsWith(".jpg")) {
-                return readArtifact(path).map(r -> renderingResult(r, "image/jpg"));
+                return readArtifact(path).map(r -> binaryMessage(r, "image/jpg"));
             } else if (path.endsWith(".css")) {
-                return readArtifact(path).map(r -> renderingResult(r, "text/css"));
+                return readArtifact(path).map(r -> binaryMessage(r, "text/css"));
             } else if (path.endsWith(".woff")) {
-                return readArtifact(path).map(r -> renderingResult(r, "font/woff"));
+                return readArtifact(path).map(r -> binaryMessage(r, "font/woff"));
             } else if (path.endsWith(".js")) {
-                return readArtifact(path).map(r -> renderingResult(r, "text/javascript"));
+                return readArtifact(path).map(r -> binaryMessage(r, "text/javascript"));
             } else if (path.endsWith(".html")) {
                 final var html = readSrc("html", path);
                 if (html.isPresent()) {
-                    return html.map(r -> renderingResult(r, "text/html"));
+                    return html.map(r -> binaryMessage(r, "text/html"));
                 }
                 return Optional.empty();
             } else if (path.endsWith(".svg")) {
                 final var artifactResult = readArtifact(path)
-                        .map(r -> renderingResult(r, "image/svg+xml"));
+                        .map(r -> binaryMessage(r, "image/svg+xml"));
                 if (artifactResult.isEmpty()) {
                     return readSrc("svg", path)
-                            .map(r -> renderingResult(r, "image/svg+xml"));
+                            .map(r -> binaryMessage(r, "image/svg+xml"));
                 }
                 return artifactResult;
             } else if (path.endsWith(".csv")) {
                 final var file = resolveSourceFolder(path, "csv");
                 if (projectSrcFolder.isFile(file)) {
-                    return Optional.of(renderingResult(Files.readFileAsBytes(file), "text/csv"));
+                    return Optional.of(binaryMessage(Files.readFileAsBytes(file), "text/csv"));
                 } else {
                     return Optional.empty();
                 }
             } else {
-                return readArtifact(path).map(r -> renderingResult(r, "text/html"));
+                return readArtifact(path).map(r -> binaryMessage(r, "text/html"));
             }
         } catch (Exception e) {
             throw new RuntimeException("resourceRootPath: " + resourceRootPath, e);
         }
     }
 
-    private Optional<RenderingResult> addMissingMetaData(Optional<RenderingResult> result) {
+    private Optional<BinaryMessage> addMissingMetaData(Optional<BinaryMessage> result) {
         return result.map(r -> {
             if (ContentType.HTML_TEXT.codeName().equals(r.getFormat())) {
                 final var content = new String(r.getContent());
                 final var docTypePrefix = "<!DOCTYPE html>";
                 if (!content.startsWith(docTypePrefix)) {
                     try {
-                        return renderingResult((docTypePrefix + content).getBytes(UTF_8.codeName())
+                        return binaryMessage((docTypePrefix + content).getBytes(UTF_8.codeName())
                                 , r.getFormat());
                     } catch (Exception e) {
                         throw executionException(e);
@@ -581,7 +575,7 @@ public class ProjectRendererI implements ProjectRenderer {
     }
 
     @Override
-    public Optional<RenderingResult> render(String path) {
+    public Optional<BinaryMessage> render(String path) {
         throw notImplementedYet();
     }
 

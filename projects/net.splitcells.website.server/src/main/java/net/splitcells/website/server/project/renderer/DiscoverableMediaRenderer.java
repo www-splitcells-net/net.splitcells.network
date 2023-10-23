@@ -18,10 +18,10 @@ package net.splitcells.website.server.project.renderer;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
-import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.processor.BinaryMessage;
 
 import java.util.Optional;
 
 public interface DiscoverableMediaRenderer extends Discoverable {
-    Optional<RenderingResult> render(ProjectRenderer projectRenderer, Config config);
+    Optional<BinaryMessage> render(ProjectRenderer projectRenderer, Config config);
 }

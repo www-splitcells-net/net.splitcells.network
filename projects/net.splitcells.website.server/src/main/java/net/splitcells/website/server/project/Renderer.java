@@ -16,8 +16,7 @@
 package net.splitcells.website.server.project;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.website.server.Config;
-import net.splitcells.website.server.projects.ProjectsRenderer;
+import net.splitcells.website.server.processor.BinaryMessage;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -63,7 +62,7 @@ public interface Renderer {
      * @return This is the rendering result, if the path is supported.
      */
     @Deprecated
-    Optional<RenderingResult> render(String path);
+    Optional<BinaryMessage> render(String path);
 
     /**
      * TODO Use {@link Path} object instead of {@link String}.

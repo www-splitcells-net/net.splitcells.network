@@ -20,13 +20,13 @@ import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.resource.ContentType;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
-import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.processor.BinaryMessage;
 
 import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
-import static net.splitcells.website.server.project.RenderingResult.renderingResult;
+import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 /**
  * Projects the file tree located "src/main/resources/html/" of the project's folder.
@@ -43,7 +43,7 @@ public class ResourceProjectRendererExtension implements ProjectRendererExtensio
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
+    public Optional<BinaryMessage> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
         final var requestedFile = Path.of("src/main/resources/html/").resolve(path);
         if (projectRenderer.projectFileSystem().isFile(requestedFile)) {
             final String format;
@@ -58,7 +58,7 @@ public class ResourceProjectRendererExtension implements ProjectRendererExtensio
             } else {
                 format = HTML_TEXT.codeName();
             }
-            return Optional.of(renderingResult(projectRenderer.projectFileSystem().readFileAsBytes(requestedFile)
+            return Optional.of(binaryMessage(projectRenderer.projectFileSystem().readFileAsBytes(requestedFile)
                     , format));
         }
         return Optional.empty();

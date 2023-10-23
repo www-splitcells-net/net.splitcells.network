@@ -19,7 +19,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.testing.Test;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutConfig;
-import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 
 import java.nio.file.Path;
@@ -40,7 +40,7 @@ public class TestExtension implements ProjectsRendererExtension {
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectsRendererI projectsRenderer, Config config) {
+    public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRenderer, Config config) {
         if (PATH.equals(path)) {
             if ("true".equals(System.getProperty("net.splitcells.mode.build"))) {
                 return projectsRenderer.renderContent
@@ -64,7 +64,7 @@ public class TestExtension implements ProjectsRendererExtension {
         return Optional.empty();
     }
 
-    private Optional<RenderingResult> errorReport(ProjectsRendererI projectsRenderer) {
+    private Optional<BinaryMessage> errorReport(ProjectsRendererI projectsRenderer) {
         return projectsRenderer.renderContent
                 ("<p xmlns=\"http://www.w3.org/1999/xhtml\">Tests executed erroneously. System is dysfunctional.</p>"
                         , LayoutConfig.layoutConfig(PATH));

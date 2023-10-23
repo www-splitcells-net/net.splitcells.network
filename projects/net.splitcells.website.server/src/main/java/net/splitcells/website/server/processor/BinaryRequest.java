@@ -17,7 +17,6 @@ package net.splitcells.website.server.processor;
 
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.resource.Trail;
-import net.splitcells.website.server.project.RenderingResult;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
 
@@ -27,13 +26,13 @@ public class BinaryRequest {
     }
 
     private Trail trail;
-    private Map<String, RenderingResult> data = map();
+    private Map<String, BinaryMessage> data = map();
 
     private BinaryRequest(Trail trailArg) {
         trail = trailArg;
     }
 
-    public Map<String, RenderingResult> data() {
+    public Map<String, BinaryMessage> data() {
         return data;
     }
 

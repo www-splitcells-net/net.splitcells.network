@@ -19,7 +19,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.website.server.Config;
-import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkChangelogEventProjectRendererExtension;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 
@@ -29,7 +29,7 @@ import java.util.Optional;
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.website.server.project.RenderingResult.renderingResult;
+import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkChangelogEventProjectRendererExtension.commonMarkChangelogEventRenderer;
 
 public class GlobalChangelogExtension implements ProjectsRendererExtension {
@@ -49,14 +49,14 @@ public class GlobalChangelogExtension implements ProjectsRendererExtension {
     private final CommonMarkChangelogEventProjectRendererExtension eventUtils = commonMarkChangelogEventRenderer();
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
+    public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         if (PATH.equals(path)) {
             final var events = projectsRendererI.projectRenderers().stream()
                     .map(pr -> eventUtils.extractEvent(pr.resourceRootPath2().resolve("CHANGELOG.events.html").toString(), pr, config))
                     .reduce(List::withAppended)
                     .orElseGet(Lists::list);
             return Optional.of(
-                    renderingResult(projectsRendererI.renderHtmlBodyContent("<ol>" + eventUtils.renderEvents(events) + "</ol>"
+                    binaryMessage(projectsRendererI.renderHtmlBodyContent("<ol>" + eventUtils.renderEvents(events) + "</ol>"
                                     , Optional.of("Global Changelog")
                                     , Optional.of(path)
                                     , config).orElseThrow()

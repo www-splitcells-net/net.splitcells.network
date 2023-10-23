@@ -33,7 +33,7 @@ import net.splitcells.gel.solution.Solutions;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.ServerService;
 import net.splitcells.website.server.project.ProjectRenderer;
-import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.DiscoverableMediaRenderer;
 import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 import net.splitcells.website.server.project.renderer.ObjectsMediaRenderer;
@@ -48,7 +48,7 @@ import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.gel.GelEnv.process;
 import static net.splitcells.website.Projects.projectsRenderer;
-import static net.splitcells.website.server.project.RenderingResult.renderingResult;
+import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 public final class GelDev {
     private GelDev() {
@@ -140,8 +140,8 @@ public final class GelDev {
         env.config().configValue(Solutions.class)
                 .withConnector(solution -> ObjectsMediaRenderer.registerMediaObject(new DiscoverableMediaRenderer() {
                     @Override
-                    public Optional<RenderingResult> render(ProjectRenderer projectRenderer, Config config) {
-                        return Optional.of(renderingResult(solution.toCSV().getBytes(), ContentType.CSV.codeName()));
+                    public Optional<BinaryMessage> render(ProjectRenderer projectRenderer, Config config) {
+                        return Optional.of(binaryMessage(solution.toCSV().getBytes(), ContentType.CSV.codeName()));
                     }
 
                     @Override

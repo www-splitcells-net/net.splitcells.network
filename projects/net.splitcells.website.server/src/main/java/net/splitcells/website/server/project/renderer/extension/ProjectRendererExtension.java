@@ -19,7 +19,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
-import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
@@ -51,7 +51,7 @@ public interface ProjectRendererExtension {
      * @return
      */
     @Deprecated
-    default Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
+    default Optional<BinaryMessage> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
         throw notImplementedYet();
     }
 
@@ -68,7 +68,7 @@ public interface ProjectRendererExtension {
      * @param projectRenderer  Basic Rendering Utilities
      * @return
      */
-    default Optional<RenderingResult> renderFile(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
+    default Optional<BinaryMessage> renderFile(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
         return renderFile(path, projectRenderer, projectsRenderer.config());
     }
 

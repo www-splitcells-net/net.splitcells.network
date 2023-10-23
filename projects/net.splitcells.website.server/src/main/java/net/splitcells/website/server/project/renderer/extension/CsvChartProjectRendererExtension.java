@@ -21,13 +21,13 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
-import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.processor.BinaryMessage;
 
 import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
-import static net.splitcells.website.server.project.RenderingResult.renderingResult;
+import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 public class CsvChartProjectRendererExtension implements ProjectRendererExtension {
     public static CsvChartProjectRendererExtension csvChartRenderer() {
@@ -38,7 +38,7 @@ public class CsvChartProjectRendererExtension implements ProjectRendererExtensio
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
+    public Optional<BinaryMessage> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
         if (path.endsWith("csv.html")) {
             final var csvPath = path.substring(0, path.lastIndexOf(".csv.html")) + ".csv";
             final var requestedFile = Path.of("src/main/csv/").resolve(csvPath);
@@ -57,7 +57,7 @@ public class CsvChartProjectRendererExtension implements ProjectRendererExtensio
                 metaElement.appendChild(pathElement);
                 page.appendChild(metaElement);
                 page.appendChild(content);
-                return Optional.of(renderingResult(projectRenderer.renderRawXml(Xml.toPrettyString(page), config).orElseThrow()
+                return Optional.of(binaryMessage(projectRenderer.renderRawXml(Xml.toPrettyString(page), config).orElseThrow()
                         , HTML_TEXT.codeName()));
             }
         }

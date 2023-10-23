@@ -25,7 +25,7 @@ import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.Renderer;
-import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.project.validator.RenderingValidator;
 import net.splitcells.website.server.Server;
@@ -48,7 +48,7 @@ import static net.splitcells.dem.resource.Paths.path;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithSimplePath;
-import static net.splitcells.website.server.project.RenderingResult.renderingResult;
+import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.project.validator.RenderingValidatorForHtmlLinks.renderingValidatorForHtmlLinks;
 import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithPath;
 import static net.splitcells.website.server.projects.extension.FrontMenuExtension.frontMenuExtension;
@@ -204,7 +204,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
      * @return Rendering Result
      */
     @Override
-    public Optional<RenderingResult> render(String path) {
+    public Optional<BinaryMessage> render(String path) {
         final var normalizedPath = normalizedPath(path);
         try {
             final var extensionRendering = extension.renderFile(normalizedPath, this, config);
@@ -255,7 +255,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
         }
     }
 
-    private Optional<RenderingResult> validateRenderingResult(Optional<RenderingResult> renderingResult, Path requestedPath) {
+    private Optional<BinaryMessage> validateRenderingResult(Optional<BinaryMessage> renderingResult, Path requestedPath) {
         try {
             renderingValidator.validate(renderingResult, this, requestedPath);
         } catch (Throwable th) {
@@ -343,7 +343,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
     }
 
     @Override
-    public Optional<RenderingResult> renderContent(String content, LayoutConfig metaContent) {
-        return Optional.of(renderingResult(fallbackRenderer.renderXml(content, metaContent, config).orElseThrow(), TEXT_HTML.toString()));
+    public Optional<BinaryMessage> renderContent(String content, LayoutConfig metaContent) {
+        return Optional.of(binaryMessage(fallbackRenderer.renderXml(content, metaContent, config).orElseThrow(), TEXT_HTML.toString()));
     }
 }

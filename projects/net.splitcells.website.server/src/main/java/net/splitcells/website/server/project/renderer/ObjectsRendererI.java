@@ -23,7 +23,7 @@ import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
-import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 
 import java.nio.file.Path;
@@ -33,7 +33,7 @@ import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
-import static net.splitcells.website.server.project.RenderingResult.renderingResult;
+import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 public class ObjectsRendererI implements ProjectRenderer {
     public static ObjectsRendererI objectsRenderer(Path basePath) {
@@ -103,12 +103,12 @@ public class ObjectsRendererI implements ProjectRenderer {
     }
 
     @Override
-    public synchronized Optional<RenderingResult> render(String argPath) {
+    public synchronized Optional<BinaryMessage> render(String argPath) {
         return Optional.empty();
     }
 
     @Override
-    public synchronized Optional<RenderingResult> render(String argPath, ProjectsRenderer projectsRenderer) {
+    public synchronized Optional<BinaryMessage> render(String argPath, ProjectsRenderer projectsRenderer) {
         final var path = Path.of(argPath);
         if (objects.containsKey(path)) {
             final var object = objects.get(path);
@@ -118,7 +118,7 @@ public class ObjectsRendererI implements ProjectRenderer {
             } else {
                 relativeArgPath = argPath;
             }
-            return Optional.of(renderingResult(projectsRenderer.renderHtmlBodyContent(object.render()
+            return Optional.of(binaryMessage(projectsRenderer.renderHtmlBodyContent(object.render()
                             , object.title()
                             , Optional.of(relativeArgPath)
                             , projectsRenderer.config()).orElseThrow()

@@ -18,7 +18,6 @@ package net.splitcells.website.server;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.DeploymentOptions;
-import io.vertx.core.Handler;
 import io.vertx.core.MultiMap;
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
@@ -31,14 +30,12 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.Formats;
 import net.splitcells.website.server.processor.BinaryProcessor;
 import net.splitcells.website.server.processor.BinaryRequest;
 import net.splitcells.website.server.processor.BinaryResponse;
-import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.processor.BinaryMessage;
 
-import javax.annotation.Nullable;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.function.Function;
@@ -52,7 +49,7 @@ import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.website.server.processor.BinaryRequest.binaryRequest;
 import static net.splitcells.website.server.processor.BinaryResponse.PRIMARY_TEXT_RESPONSE;
-import static net.splitcells.website.server.project.RenderingResult.renderingResult;
+import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 /**
  * TODO Create and use server interface, instead of implementation.
@@ -69,7 +66,7 @@ public class Server {
      *
      * @param renderer renderer
      */
-    public static Service serveToHttpAt(Function<String, Optional<RenderingResult>> renderer, Config config) {
+    public static Service serveToHttpAt(Function<String, Optional<BinaryMessage>> renderer, Config config) {
         return new Service() {
             Vertx vertx;
 
@@ -187,12 +184,12 @@ public class Server {
     private static BinaryRequest parseBinaryRequest(String path, MultiMap multiMap) {
         final var binaryRequest = binaryRequest(trail(path.split("/")));
         multiMap.entries().forEach(entry -> {
-            binaryRequest.data().put(entry.getKey(), renderingResult(entry.getValue().getBytes(StandardCharsets.UTF_8), "text/html"));
+            binaryRequest.data().put(entry.getKey(), binaryMessage(entry.getValue().getBytes(StandardCharsets.UTF_8), "text/html"));
         });
         return binaryRequest;
     }
 
-    public static Service serveAsAuthenticatedHttpsAt(Function<String, Optional<RenderingResult>> renderer, Config config) {
+    public static Service serveAsAuthenticatedHttpsAt(Function<String, Optional<BinaryMessage>> renderer, Config config) {
         return new Service() {
             Vertx vertx;
 

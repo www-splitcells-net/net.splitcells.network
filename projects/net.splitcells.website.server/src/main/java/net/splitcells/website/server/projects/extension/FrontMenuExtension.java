@@ -16,10 +16,9 @@
 package net.splitcells.website.server.projects.extension;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.website.server.Config;
-import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 
 import java.nio.file.Path;
@@ -28,11 +27,9 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
-import static net.splitcells.dem.lang.perspective.Den.subtree;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
-import static net.splitcells.website.server.project.LayoutConfig.layoutConfig;
-import static net.splitcells.website.server.project.RenderingResult.renderingResult;
+import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 public class FrontMenuExtension implements ProjectsRendererExtension {
 
@@ -47,7 +44,7 @@ public class FrontMenuExtension implements ProjectsRendererExtension {
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
+    public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         if (path(config).equals(path) && config.programConfigs().hasElements()) {
             final var pathFolder = StreamUtils.stream(path.split("/"))
                     .filter(s -> !s.isEmpty())
@@ -73,7 +70,7 @@ public class FrontMenuExtension implements ProjectsRendererExtension {
                                     , perspective("image", SEW).withText(pc.logoPath().orElseThrow()));
                         deck.withChild(card);
                     });
-            return Optional.of(renderingResult(projectsRendererI.projectRenderers().get(0)
+            return Optional.of(binaryMessage(projectsRendererI.projectRenderers().get(0)
                             .renderRawXml(article.toXmlString(true), config)
                             .orElseThrow()
                     , HTML_TEXT.codeName()));

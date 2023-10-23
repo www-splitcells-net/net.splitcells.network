@@ -23,7 +23,7 @@ import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.host.HostName;
 import net.splitcells.website.Formats;
 import net.splitcells.website.server.Config;
-import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.validator.RenderingValidatorForHtmlLinks;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
@@ -45,7 +45,7 @@ import static net.splitcells.dem.utils.CommonFunctions.getBytes;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StreamUtils.stream;
 import static net.splitcells.network.worker.Logger.logger;
-import static net.splitcells.website.server.project.RenderingResult.renderingResult;
+import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.projects.extension.status.StatusReport.statusReport;
 
 public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
@@ -60,7 +60,7 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
+    public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         // TODO Avoid code duplication in if else structure.
         if (path.equals("/" + STATUS_DOCUMENT_PATH)) {
             final var disruptedStatuses = new StringBuffer();
@@ -103,7 +103,7 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
             final var successfulTasks = "<h2>Successful Tasks</h2><ol>"
                     + successfulStatuses
                     + "</ol>";
-            return Optional.of(renderingResult(projectsRendererI.renderHtmlBodyContent(disruptedTasks + successfulTasks
+            return Optional.of(binaryMessage(projectsRendererI.renderHtmlBodyContent(disruptedTasks + successfulTasks
                                     , Optional.of("Network Status")
                                     , Optional.of(STATUS_DOCUMENT_PATH)
                                     , config)
@@ -134,10 +134,10 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                     });
             logLevels.sort(naturalComparator());
             if (logLevels.isEmpty()) {
-                return Optional.of(renderingResult(getBytes(INFO.name(), ContentType.UTF_8), Formats.TEXT_PLAIN.mimeTypes()));
+                return Optional.of(binaryMessage(getBytes(INFO.name(), ContentType.UTF_8), Formats.TEXT_PLAIN.mimeTypes()));
             }
             final var statusLevel = logLevels.get(0);
-            return Optional.of(renderingResult(getBytes(statusLevel.name(), ContentType.UTF_8), Formats.TEXT_PLAIN.mimeTypes()));
+            return Optional.of(binaryMessage(getBytes(statusLevel.name(), ContentType.UTF_8), Formats.TEXT_PLAIN.mimeTypes()));
         }
         return Optional.empty();
     }

@@ -19,14 +19,14 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
-import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.processor.BinaryMessage;
 
 import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
 import static net.splitcells.website.Formats.CSS;
-import static net.splitcells.website.server.project.RenderingResult.renderingResult;
+import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 /**
  * Renders the Javadoc of projects at `{@link ProjectRenderer#projectFileSystem()}/javadoc/*`,
@@ -45,7 +45,7 @@ public class JavadocProjectRendererExtension implements ProjectRendererExtension
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
+    public Optional<BinaryMessage> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
         if (("/" + path).startsWith(projectRenderer.resourceRootPath2().resolve(RENDERED_JAVADOC_FOLDER).toString())) {
             final var requestedFile = Path.of(SOURCE_JAVADOC_FOLDER)
                     .resolve(projectRenderer
@@ -59,7 +59,7 @@ public class JavadocProjectRendererExtension implements ProjectRendererExtension
                 } else {
                     format = HTML_TEXT.codeName();
                 }
-                return Optional.of(renderingResult(projectRenderer.projectFileSystem().readFileAsBytes(requestedFile)
+                return Optional.of(binaryMessage(projectRenderer.projectFileSystem().readFileAsBytes(requestedFile)
                         , format));
             }
         }

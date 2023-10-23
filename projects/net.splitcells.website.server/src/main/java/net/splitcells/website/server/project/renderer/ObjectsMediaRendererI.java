@@ -12,7 +12,7 @@ import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
-import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 
 import java.nio.file.Path;
@@ -90,12 +90,12 @@ public class ObjectsMediaRendererI implements ProjectRenderer {
     }
 
     @Override
-    public Optional<RenderingResult> render(String path) {
+    public Optional<BinaryMessage> render(String path) {
         return Optional.empty();
     }
 
     @Override
-    public Optional<RenderingResult> render(String argPath, Config config, ProjectRenderer projectRenderer) {
+    public Optional<BinaryMessage> render(String argPath, Config config, ProjectRenderer projectRenderer) {
         final var path = Path.of(argPath);
         if (objects.containsKey(path)) {
             final var objectMedia = objects.get(path);

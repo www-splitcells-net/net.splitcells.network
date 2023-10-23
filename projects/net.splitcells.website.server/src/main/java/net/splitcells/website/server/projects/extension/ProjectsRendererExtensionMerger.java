@@ -21,7 +21,7 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.website.server.Config;
-import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 
 import java.nio.file.Path;
@@ -50,7 +50,7 @@ public class ProjectsRendererExtensionMerger implements ProjectsRendererExtensio
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
+    public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         final var rendering = projectsRendererExtensions.stream()
                 .map(e -> e.renderFile(path, projectsRendererI, config))
                 .filter(e -> e.isPresent())

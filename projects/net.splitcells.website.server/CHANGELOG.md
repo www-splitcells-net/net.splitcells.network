@@ -7,6 +7,10 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
 
 ## [Unreleased]
 ### Major Changes
+* **2023-10-23: \#252** Rename `net.splitcells.website.server.project.RenderingResult`
+    to `net.splitcells.website.server.processor.BinaryMessage` in order to have a clean abstract API
+    for the website server communication.
+    This API will be used as the base API for the webserver in the future.
 * **2023-04-24: \#199** Rename project `net.splitcells.website.default.content`
   to `net.splitcells.website.content.default` in order to get more consistent project naming,
   when the website project for minimal content is introduced.

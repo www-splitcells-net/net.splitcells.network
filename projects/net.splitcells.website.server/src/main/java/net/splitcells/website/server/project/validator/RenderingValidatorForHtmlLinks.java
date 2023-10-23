@@ -20,7 +20,7 @@ import net.splitcells.dem.resource.host.HostName;
 import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.website.Formats;
 import net.splitcells.website.server.projects.ProjectsRendererI;
-import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.processor.BinaryMessage;
 
 
 import java.nio.file.Path;
@@ -54,7 +54,7 @@ public class RenderingValidatorForHtmlLinks implements RenderingValidator {
     }
 
     @Override
-    public boolean validate(Optional<RenderingResult> content, ProjectsRendererI projectsRendererI, Path requestedPath) {
+    public boolean validate(Optional<BinaryMessage> content, ProjectsRendererI projectsRendererI, Path requestedPath) {
         if (content.isEmpty()) {
             return true;
         }

@@ -18,7 +18,7 @@ package net.splitcells.website.server.project.renderer.extension.commonmark;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.website.server.project.ProjectRenderer;
-import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.extension.ProjectRendererExtension;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 
@@ -28,7 +28,7 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
-import static net.splitcells.website.server.project.RenderingResult.renderingResult;
+import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 public class CommonMarkProjectRendererExtension implements ProjectRendererExtension {
     public static CommonMarkProjectRendererExtension commonMarkExtension() {
@@ -42,13 +42,13 @@ public class CommonMarkProjectRendererExtension implements ProjectRendererExtens
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
+    public Optional<BinaryMessage> renderFile(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
         if (path.endsWith(".html")) {
             final var commonMarkFile = Path.of("src/main/md")
                     .resolve(path.substring(0, path.lastIndexOf(".html")) + ".md");
             if (projectRenderer.projectFileSystem().isFile(commonMarkFile)) {
                 final var pathContent = projectRenderer.projectFileSystem().readString(commonMarkFile);
-                return Optional.of(renderingResult(renderer.render(pathContent, projectRenderer, path, projectsRenderer.config(), projectsRenderer)
+                return Optional.of(binaryMessage(renderer.render(pathContent, projectRenderer, path, projectsRenderer.config(), projectsRenderer)
                         , HTML_TEXT.codeName()));
             }
         }

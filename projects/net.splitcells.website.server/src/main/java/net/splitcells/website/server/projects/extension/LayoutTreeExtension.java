@@ -16,10 +16,9 @@
 package net.splitcells.website.server.projects.extension;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutConfig;
-import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 
 import java.nio.file.Path;
@@ -45,7 +44,7 @@ public class LayoutTreeExtension implements ProjectsRendererExtension {
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
+    public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         if (PATH.equals(path) && config.layout().isPresent()) {
             final var layout = perspective("layout");
             projectsRendererI.projectsPaths().forEach(p -> layout.extendWith(list(p.toString().split("/"))));

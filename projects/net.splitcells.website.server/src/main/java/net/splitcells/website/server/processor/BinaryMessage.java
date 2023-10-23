@@ -13,19 +13,19 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.website.server.project;
+package net.splitcells.website.server.processor;
 
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 
-public class RenderingResult {
-    public static RenderingResult renderingResult(byte[] content, String format) {
-        return new RenderingResult(content, format);
+public class BinaryMessage {
+    public static BinaryMessage binaryMessage(byte[] content, String format) {
+        return new BinaryMessage(content, format);
     }
 
     private final byte[] content;
     private final String format;
 
-    private RenderingResult(byte[] content, String format) {
+    private BinaryMessage(byte[] content, String format) {
         this.content = content;
         this.format = format;
     }

@@ -19,13 +19,13 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
-import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.processor.BinaryMessage;
 
 import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
-import static net.splitcells.website.server.project.RenderingResult.renderingResult;
+import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 public class CsvProjectRendererExtension implements ProjectRendererExtension {
     public static CsvProjectRendererExtension csvRenderer() {
@@ -37,11 +37,11 @@ public class CsvProjectRendererExtension implements ProjectRendererExtension {
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
+    public Optional<BinaryMessage> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
         final var requestedFile = Path.of("src/main/csv/").resolve(path);
         if (projectRenderer.projectFileSystem().isFile(requestedFile)) {
             try {
-                return Optional.of(renderingResult(projectRenderer.projectFileSystem().readFileAsBytes(requestedFile)
+                return Optional.of(binaryMessage(projectRenderer.projectFileSystem().readFileAsBytes(requestedFile)
                         , HTML_TEXT.codeName()));
             } catch (Exception e) {
                 throw new RuntimeException(e);

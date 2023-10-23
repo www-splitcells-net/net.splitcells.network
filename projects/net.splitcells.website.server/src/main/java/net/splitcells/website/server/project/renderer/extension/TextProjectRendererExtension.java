@@ -19,16 +19,15 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
-import net.splitcells.dem.resource.Paths;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
-import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.processor.BinaryMessage;
 
 import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
-import static net.splitcells.website.server.project.RenderingResult.renderingResult;
+import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 /**
  * Projects the file tree located "src/main/txt/" of the project's folder.
@@ -44,7 +43,7 @@ public class TextProjectRendererExtension implements ProjectRendererExtension {
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
+    public Optional<BinaryMessage> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
         Optional<Path> fileToRender = Optional.empty();
         if (path.endsWith(".html")) {
             // TODO This should return the raw text file.
@@ -68,7 +67,7 @@ public class TextProjectRendererExtension implements ProjectRendererExtension {
             metaElement.appendChild(pathElement);
             content.appendChild(metaElement);
             content.appendChild(Xml.textNode(projectRenderer.projectFileSystem().readString(fileToRender.get())));
-            return Optional.of(renderingResult(projectRenderer.renderRawXml(Xml.toPrettyString(content), config).orElseThrow()
+            return Optional.of(binaryMessage(projectRenderer.renderRawXml(Xml.toPrettyString(content), config).orElseThrow()
                     , HTML_TEXT.codeName()));
         }
         return Optional.empty();

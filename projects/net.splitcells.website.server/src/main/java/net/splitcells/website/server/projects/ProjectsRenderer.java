@@ -21,7 +21,7 @@ import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
-import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.PageMetaData;
 
 import java.nio.file.Path;
@@ -79,7 +79,7 @@ public interface ProjectsRenderer {
      * @param path This is the path of the file being rendered.
      * @return The rendered file.
      */
-    Optional<RenderingResult> render(String path);
+    Optional<BinaryMessage> render(String path);
 
     /**
      * @return All Paths In Relative Form
@@ -111,7 +111,7 @@ public interface ProjectsRenderer {
      * @param metaContent Additional information about {@param content}.
      * @return This is the rendered String.
      */
-    Optional<RenderingResult> renderContent(String content, LayoutConfig metaContent);
+    Optional<BinaryMessage> renderContent(String content, LayoutConfig metaContent);
 
     default List<PageMetaData> relevantParentPages(String path) {
         final List<PageMetaData> relevantParentPages = list();

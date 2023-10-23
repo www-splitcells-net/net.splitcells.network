@@ -20,11 +20,10 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.ContentType;
-import net.splitcells.website.Projects;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutUtils;
 import net.splitcells.website.server.project.ProjectRenderer;
-import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.extension.ProjectRendererExtension;
 
 import java.nio.file.Path;
@@ -34,7 +33,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
-import static net.splitcells.website.server.project.RenderingResult.renderingResult;
+import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkIntegration.commonMarkIntegration;
 
 public class CommonMarkChangelogEventProjectRendererExtension implements ProjectRendererExtension {
@@ -52,14 +51,14 @@ public class CommonMarkChangelogEventProjectRendererExtension implements Project
     }
 
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
+    public Optional<BinaryMessage> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
         if (path.endsWith("CHANGELOG.events.html")
                 && projectRenderer.projectFileSystem().isFile(CHANGELOG)) {
             final var pathContent = projectRenderer.projectFileSystem().readString(CHANGELOG);
             final var events = renderer.events(pathContent, projectRenderer, path, config);
             try {
                 return Optional.of(
-                        renderingResult(renderEvents(events).getBytes(ContentType.UTF_8.codeName())
+                        binaryMessage(renderEvents(events).getBytes(ContentType.UTF_8.codeName())
                                 , HTML_TEXT.codeName()));
             } catch (Exception e) {
                 throw executionException(e);

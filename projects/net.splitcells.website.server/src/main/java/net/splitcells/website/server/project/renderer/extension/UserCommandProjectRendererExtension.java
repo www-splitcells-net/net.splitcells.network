@@ -24,7 +24,7 @@ import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutRenderer;
 import net.splitcells.website.server.project.LayoutUtils;
 import net.splitcells.website.server.project.ProjectRenderer;
-import net.splitcells.website.server.project.RenderingResult;
+import net.splitcells.website.server.processor.BinaryMessage;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -34,7 +34,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
-import static net.splitcells.website.server.project.RenderingResult.renderingResult;
+import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 /**
  * Renders all commands, that are installed via 'net.splitcells.os.state.interface' for the current user
@@ -59,7 +59,7 @@ public class UserCommandProjectRendererExtension implements ProjectRendererExten
      * @return
      */
     @Override
-    public Optional<RenderingResult> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
+    public Optional<BinaryMessage> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
         if (RENDERING_PATH.equals(path) && BIN_FOLDER.isDirectory(BIN_FOLDER_PATH)) {
             final var layout = perspective(NameSpaces.VAL, NameSpaces.DEN);
             try {
@@ -76,7 +76,7 @@ public class UserCommandProjectRendererExtension implements ProjectRendererExten
                 throw new RuntimeException(e);
             }
             return projectRenderer.renderString(layout.toString())
-                    .map(r -> renderingResult(r, TEXT_HTML.toString()));
+                    .map(r -> binaryMessage(r, TEXT_HTML.toString()));
         }
         return Optional.empty();
     }
