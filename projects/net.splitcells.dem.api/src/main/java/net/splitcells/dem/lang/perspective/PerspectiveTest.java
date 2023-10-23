@@ -41,4 +41,13 @@ public class PerspectiveTest {
         requireEquals(testSubject.toXmlString(true)
                 , "<article xmlns=\"http://splitcells.net/sew.xsd\"><content><deck/></content></article>");
     }
+
+    @UnitTest
+    public void testToJsonStringWithArray() {
+        final var testSubject = perspective("")
+                .withChild(perspective("1"))
+                .withChild(perspective("1"))
+                .withChild(perspective("1"));
+        requireEquals(testSubject.toJsonString(), "[\"1\",\"1\",\"1\"]");
+    }
 }

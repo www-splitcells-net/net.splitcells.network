@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.lang.perspective;
 
+import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.Xml;
@@ -28,6 +29,9 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import static net.splitcells.dem.data.atom.Bools.bool;
+import static net.splitcells.dem.data.atom.Bools.require;
+import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.list.Lists.toList;
@@ -415,6 +419,62 @@ public interface Perspective extends PerspectiveView {
             return "<ol>" + htmlList + "</ol>";
         }
         return htmlList;
+    }
+
+    /**
+     * Creates a JSON, where all primitive values are Strings.
+     *
+     * @return This is a JSON, representing the contents of this, whereby the {@link #nameSpace()} is ignored.
+     */
+    default String toJsonString() {
+        final StringBuilder jsonString = new StringBuilder();
+        if (children().isEmpty()) {
+            jsonString.append("{\"" + name() + "\":\"\"}");
+        } else {
+            boolean isNotFirstChild = false;
+            final var hasAnyPrimitiveValues = children().stream().anyMatch(c -> c.children().isEmpty());
+            final var isThisADictionary = !hasAnyPrimitiveValues && !name().isEmpty();
+            if (hasAnyPrimitiveValues) {
+                jsonString.append("[");
+            } else {
+                if (name().isEmpty()) {
+                    requireNot(isThisADictionary);
+                    jsonString.append("{");
+                } else {
+                    require(isThisADictionary);
+                    jsonString.append("{\"" + name() + "\":{");
+                }
+            }
+            for (final var child : children()) {
+                if (isNotFirstChild) {
+                    jsonString.append(",");
+                }
+                if (child.children().size() == 1) {
+                    if (child.children().get(0).children().size() == 0) {
+                        jsonString.append("\"" + child.name() + "\":\"" + child.children().get(0).name() + "\"");
+                    } else {
+                        jsonString.append("\"" + child.name() + "\":" + child.toJsonString());
+                    }
+                } else if (child.children().isEmpty()) {
+                    require(hasAnyPrimitiveValues);
+                    jsonString.append("\"" + child.name() + "\"");
+                } else {
+                    jsonString.append(child.toJsonString());
+                }
+                isNotFirstChild = true;
+            }
+            if (hasAnyPrimitiveValues) {
+                jsonString.append("]");
+            } else {
+                if (isThisADictionary) {
+                    jsonString.append("}}");
+                } else {
+                    jsonString.append("}");
+                }
+            }
+        }
+
+        return jsonString.toString();
     }
 
     default Perspective subtree(List<String> path) {

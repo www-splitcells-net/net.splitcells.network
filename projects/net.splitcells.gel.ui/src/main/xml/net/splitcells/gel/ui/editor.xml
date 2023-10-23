@@ -50,7 +50,7 @@ name="testParseProblem";
                 console.log('Response to "net-splitcells-gel-ui-editor-form":' + this.responseText);
             }
             request.open("post", form.action);
-            request.send(data);
+            alert(request.send(data));
         }]]>
     </x:script>
 </article>

@@ -23,6 +23,12 @@ public class Bools {
         throw constructorIllegal();
     }
 
+    public static void requireNot(boolean arg) {
+        if (arg) {
+            throw executionException("Boolean should be false, but is not.");
+        }
+    }
+
     public static void require(boolean arg) {
         if (!arg) {
             throw executionException("Boolean should be true, but is not.");
