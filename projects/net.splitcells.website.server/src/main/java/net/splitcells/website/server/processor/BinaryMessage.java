@@ -15,11 +15,25 @@
  */
 package net.splitcells.website.server.processor;
 
+import net.splitcells.website.Formats;
+
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 
 public class BinaryMessage {
+    /**
+     * TODO It is unclear, if the usage of Strings for the format ID is a good idea.
+     *
+     * @param content
+     * @param format
+     * @return
+     */
+    @Deprecated
     public static BinaryMessage binaryMessage(byte[] content, String format) {
         return new BinaryMessage(content, format);
+    }
+
+    public static BinaryMessage binaryMessage(byte[] content, Formats format) {
+        return new BinaryMessage(content, format.mimeTypes());
     }
 
     private final byte[] content;
