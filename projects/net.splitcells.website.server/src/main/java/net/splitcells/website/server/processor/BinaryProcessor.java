@@ -18,6 +18,8 @@ package net.splitcells.website.server.processor;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.website.server.Server;
 
+import java.util.Optional;
+
 /**
  * <p>This class is the currently the most abstract server API supported on a concept level.
  * This API allows to model all kinds of simple function calls and any kind of return value types.
@@ -38,5 +40,32 @@ import net.splitcells.website.server.Server;
  * </p>
  */
 public interface BinaryProcessor {
+    /**
+     * Provides binary data given binary data, which may be used directly.
+     * Alternatively, this may be used in order to create an side effect.
+     *
+     * @param request <p>This contains the request data for which a set of data is being requested.</p>
+     *                <p>The return type is not an {@link Optional}, as this simplifies the API and
+     *                there is no use case for an empty answer, except for composing a {@link BinaryProcessor}
+     *                out of multiple sub {@link BinaryProcessor} in the form of a tree of {@link BinaryProcessor}.</p>
+     *                <p>If the return type {@link Optional} would be used,
+     *                a root processor could query all of its direct sub processors via {@link Optional#isEmpty()}
+     *                in order to find the one processor, that can answer the given {@link BinaryRequest}.
+     *                Most importantly, the root processor could find out this way,
+     *                which processor can process a given {@link BinaryRequest#trail()},
+     *                without maintaining a map matching {@link BinaryRequest#trail()}
+     *                to the corresponding {@link BinaryProcessor}.</p>
+     *                <p>If the return type is not {@link Optional},
+     *                one could assume, that creating a processor is much harder.
+     *                Especially, when the set of supported {@link BinaryRequest#trail()} changes,
+     *                as every meta processor would have to manage and update
+     *                a map of supported {@link BinaryRequest#trail()} to it's processors.
+     *                This is not the case, because the method for creating the list of all supported paths,
+     *                which is required for the complete website rendering,
+     *                can also be used, in order to dynamically determine,
+     *                which processor supports which {@link BinaryRequest#trail()}.</p>
+     *                <p>Therefore, an {@link Optional} is not required and does not make the API more future proof.</p>
+     * @return This is the set of requested binary data.
+     */
     BinaryResponse process(BinaryRequest request);
 }
