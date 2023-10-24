@@ -130,7 +130,8 @@ public class Server {
                                     final var binaryResponse = binaryProcessor
                                             .process(parseBinaryRequest(routingContext.request().path()
                                                     , routingContext.request().formAttributes()));
-                                    response.putHeader("content-type", Formats.TEXT_PLAIN.mimeTypes());
+                                    response.putHeader("content-type"
+                                            , binaryResponse.data().get(PRIMARY_TEXT_RESPONSE).getFormat());
                                     promise.complete(binaryResponse.data().get(PRIMARY_TEXT_RESPONSE).getContent());
                                 }, (result) -> handleResult(routingContext, result));
                             } else {

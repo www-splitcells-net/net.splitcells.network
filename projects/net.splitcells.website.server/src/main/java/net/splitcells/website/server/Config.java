@@ -32,6 +32,8 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.website.Formats.JSON;
 import static net.splitcells.website.server.processor.BinaryResponse.PRIMARY_TEXT_RESPONSE;
 import static net.splitcells.website.server.processor.BinaryResponse.binaryResponse;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
@@ -188,7 +190,11 @@ public class Config {
         @Override
         public BinaryResponse process(BinaryRequest request) {
             final var response = binaryResponse();
-            response.data().put(PRIMARY_TEXT_RESPONSE, binaryMessage("no-response".getBytes(StandardCharsets.UTF_8), "text/html"));
+            response.data().put(PRIMARY_TEXT_RESPONSE
+                    , binaryMessage(perspective("no-response")
+                                    .toJsonString()
+                                    .getBytes(StandardCharsets.UTF_8)
+                            , JSON));
             return response;
         }
     };

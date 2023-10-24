@@ -18,7 +18,8 @@ package net.splitcells.website;
 public enum Formats {
     HTML("text/html")
     , CSS("text/css")
-    , TEXT_PLAIN("text/plain");
+    , TEXT_PLAIN("text/plain")
+    , JSON("application/json");
 
     private final String mimeTypes;
 
