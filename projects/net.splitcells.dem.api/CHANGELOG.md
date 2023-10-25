@@ -5,6 +5,11 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2023-10-25 \#242** `net.splitcells.dem.data.set.map.Map#put` now throws an exception,
+    if the key is already present.
+    This is done, because in this case, there is an increased chance, of a programming bug being present.
+    If the value of the map should be updated regardless of the presence of the given key,
+    the method `ensurePresence` should be used instead.
 * **2023-07-13 \#249** Migrate Java's Path API usage to new FileSystem API,
   in order to support operation system unspecific deployment.
 * **2023-06-06 \#248**

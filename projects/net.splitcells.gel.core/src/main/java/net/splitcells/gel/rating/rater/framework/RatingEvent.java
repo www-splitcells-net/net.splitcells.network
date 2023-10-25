@@ -85,8 +85,10 @@ public interface RatingEvent {
         } else {
             currentRating = ratingBeforeAddition.orElse(noCost());
         }
-        additions().put
-                (subject
+        /**
+         * TODO Usage of {@link Map#ensurePresence} seems to be incorrect.
+         */
+        additions().ensurePresence(subject
                         , localRating()
                                 .withPropagationTo(children)
                                 .withRating(currentRating.combine(additionalRating))
@@ -118,6 +120,6 @@ public interface RatingEvent {
             }
         }
         removal().add(subject);
-        additions().put(subject, newRating);
+        additions().ensurePresence(subject, newRating);
     }
 }

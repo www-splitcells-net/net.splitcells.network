@@ -15,9 +15,11 @@
  */
 package net.splitcells.dem.data.set.map;
 
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiFunction;
@@ -25,6 +27,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 @JavaLegacyArtifact
@@ -38,6 +41,49 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
         put(key, value);
         return this;
     }
+
+    /**
+     * Adds the given key value relationship to this,
+     * regardless if this key is already present in this.
+     * It is encourage to use {@link #put(Object, Object)} instead,
+     * in order to minimize bug potential.
+     *
+     * @param key
+     * @param value
+     * @return
+     */
+    Map<Key, Value> ensurePresence(Key key, Value value);
+
+    Value ensurePresenceAndValue(Key key, Value value);
+
+
+    default Value computeIfPresent(Key key, BiFunction<? super Key, ? super Value, ? extends Value> updateFunction) {
+        final Value oldValue = get(key);
+        if (oldValue != null) {
+            final var newValue = updateFunction.apply(key, oldValue);
+            if (newValue != null) {
+                ensurePresence(key, newValue);
+            } else {
+                remove(key);
+            }
+            return newValue;
+        }
+        return null;
+    }
+
+    /**
+     * <p>This method should throw an exception, if the key is already present.
+     * The reason for that, is that in this case, there is an higher chance of a programmer bug being present.</p>
+     * <p>If the key is added regardless of the fact, if this already has the key or not,
+     * use {@link #ensurePresence(Object, Object)} instead.
+     * This method name is shorter than {@link #ensurePresence(Object, Object)},
+     * which encourages to use this safer method.</p>
+     *
+     * @param key
+     * @param value
+     * @return
+     */
+    Value put(Key key, Value value);
 
     default net.splitcells.dem.data.set.Set<Key> keySet2() {
         return setOfUniques(keySet());

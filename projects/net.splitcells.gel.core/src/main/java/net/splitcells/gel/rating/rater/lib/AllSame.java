@@ -57,7 +57,7 @@ public class AllSame {
                                           .filter(e -> removal.map(line -> e.index() != line.index()).orElse(true))
                                           .map(line -> line.value(LINE).value(attribute))
                                           .forEach(value -> {
-                                              valueCounter.computeIfPresent(value, (k, v) -> valueCounter.put(k, v + 1));
+                                              valueCounter.computeIfPresent(value, (k, v) -> valueCounter.ensurePresenceAndValue(k, v + 1));
                                               valueCounter.computeIfAbsent(value, v -> valueCounter.put(v, 1));
                                           });
                                   if (1 == valueCounter.size()) {

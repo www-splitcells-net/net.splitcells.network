@@ -15,11 +15,15 @@
  */
 package net.splitcells.dem.data.set.map;
 
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
+
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 @JavaLegacyArtifact
 public class MapLegacyWrapper<Key, Value> implements Map<Key, Value> {
@@ -66,7 +70,24 @@ public class MapLegacyWrapper<Key, Value> implements Map<Key, Value> {
     }
 
     @Override
+    public Map<Key, Value> ensurePresence(Key key, Value value) {
+        content.put(key, value);
+        return this;
+    }
+
+    @Override
+    public Value ensurePresenceAndValue(Key key, Value value) {
+        return content.put(key, value);
+    }
+
+    @Override
     public Value put(Key key, Value value) {
+        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY
+                && containsKey(key)) {
+            throw executionException(perspective("Key already exists")
+                    .withProperty("key", key.toString())
+                    .withProperty("value", value.toString()));
+        }
         return content.put(key, value);
     }
 
