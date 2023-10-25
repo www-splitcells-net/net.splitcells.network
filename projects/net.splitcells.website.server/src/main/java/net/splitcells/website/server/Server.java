@@ -28,6 +28,7 @@ import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.net.PfxOptions;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.website.Formats;
@@ -183,7 +184,11 @@ public class Server {
     }
 
     private static BinaryRequest parseBinaryRequest(String path, MultiMap multiMap) {
-        final var binaryRequest = binaryRequest(trail(path.split("/")));
+        final var pathSplit = Lists.listWithValuesOf(path.split("/"));
+        if (!pathSplit.isEmpty() && "".equals(pathSplit.get(0))) {
+            pathSplit.removeAt(0);
+        }
+        final var binaryRequest = binaryRequest(trail(pathSplit));
         multiMap.entries().forEach(entry -> {
             binaryRequest.data().put(entry.getKey(), binaryMessage(entry.getValue().getBytes(StandardCharsets.UTF_8), "text/html"));
         });
