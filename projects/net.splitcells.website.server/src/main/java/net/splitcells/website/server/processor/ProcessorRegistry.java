@@ -20,23 +20,24 @@ import net.splitcells.dem.resource.Trail;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
 
-public class BinaryRequest {
-    public static BinaryRequest binaryRequest(Trail trail) {
-        return new BinaryRequest(trail);
+public class ProcessorRegistry<Source, Target> implements Processor<Source, Target> {
+    public static <Source, Target> ProcessorRegistry<Source, Target> binaryProcessorRegistry() {
+        return new ProcessorRegistry<>();
     }
 
-    private Trail trail;
-    private Map<String, BinaryMessage> data = map();
+    private final Map<Trail, Processor<Source, Target>> processors = map();
 
-    private BinaryRequest(Trail trailArg) {
-        trail = trailArg;
+    private ProcessorRegistry() {
+
     }
 
-    public Map<String, BinaryMessage> data() {
-        return data;
+    @Override
+    public Response<Target> process(Request<Source> request) {
+        return processors.get(request.trail()).process(request);
     }
 
-    public Trail trail() {
-        return trail;
+    public ProcessorRegistry<Source, Target> register(Trail trail, Processor<Source, Target> processor) {
+        processors.put(trail, processor);
+        return this;
     }
 }

@@ -16,28 +16,21 @@
 package net.splitcells.website.server.processor;
 
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.resource.Trail;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
 
-public class BinaryProcessorRegistry implements BinaryProcessor {
-    public static BinaryProcessorRegistry binaryProcessorRegistry() {
-        return new BinaryProcessorRegistry();
+public class Response<T> {
+    public static <T> Response<T> binaryResponse(T data) {
+        return new Response<>(data);
     }
 
-    private final Map<Trail, BinaryProcessor> processors = map();
+    private final T data;
 
-    private BinaryProcessorRegistry() {
-
+    private Response(T dataArg) {
+        data = dataArg;
     }
 
-    @Override
-    public BinaryResponse process(BinaryRequest request) {
-        return processors.get(request.trail()).process(request);
-    }
-
-    public BinaryProcessorRegistry register(Trail trail, BinaryProcessor processor) {
-        processors.put(trail, processor);
-        return this;
+    public T data() {
+        return data;
     }
 }

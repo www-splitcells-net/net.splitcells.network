@@ -19,8 +19,8 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Trail;
-import net.splitcells.website.server.processor.BinaryProcessor;
-import net.splitcells.website.server.processor.BinaryProcessorRegistry;
+import net.splitcells.website.server.processor.Processor;
+import net.splitcells.website.server.processor.ProcessorRegistry;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
 
@@ -32,7 +32,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.website.server.processor.BinaryProcessorRegistry.binaryProcessorRegistry;
+import static net.splitcells.website.server.processor.ProcessorRegistry.binaryProcessorRegistry;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 /**
@@ -183,7 +183,7 @@ public class Config {
     private List<ProgramConfig> programConfigs = list();
     private List<ProjectsRendererExtension> projectsRendererExtension = list();
 
-    private BinaryProcessorRegistry binaryProcessor = binaryProcessorRegistry();
+    private ProcessorRegistry<Perspective, Perspective> processor = binaryProcessorRegistry();
     /*new BinaryProcessor() {
         @Override
         public BinaryResponse process(BinaryRequest request) {
@@ -432,12 +432,12 @@ public class Config {
         return projectsRendererExtension;
     }
 
-    public BinaryProcessorRegistry binaryProcessor() {
-        return binaryProcessor;
+    public ProcessorRegistry<Perspective, Perspective> processor() {
+        return processor;
     }
 
-    public Config withAdditionalBinaryProcessor(Trail trail, BinaryProcessor arg) {
-        binaryProcessor.register(trail, arg);
+    public Config withAdditionalProcessor(Trail trail, Processor<Perspective, Perspective> arg) {
+        processor.register(trail, arg);
         return this;
     }
 }

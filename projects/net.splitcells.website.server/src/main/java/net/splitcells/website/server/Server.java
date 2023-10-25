@@ -31,10 +31,12 @@ import io.vertx.ext.web.RoutingContext;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.website.Formats;
-import net.splitcells.website.server.processor.BinaryProcessor;
-import net.splitcells.website.server.processor.BinaryRequest;
-import net.splitcells.website.server.processor.BinaryResponse;
+import net.splitcells.website.server.processor.Processor;
+import net.splitcells.website.server.processor.Request;
+import net.splitcells.website.server.processor.Response;
 import net.splitcells.website.server.processor.BinaryMessage;
 
 import java.nio.charset.StandardCharsets;
@@ -48,8 +50,8 @@ import static net.splitcells.dem.resource.communication.log.LogLevel.WARNING;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
-import static net.splitcells.website.server.processor.BinaryRequest.binaryRequest;
-import static net.splitcells.website.server.processor.BinaryResponse.PRIMARY_TEXT_RESPONSE;
+import static net.splitcells.dem.utils.StringUtils.toBytes;
+import static net.splitcells.website.server.processor.Request.binaryRequest;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 /**
@@ -93,10 +95,10 @@ public class Server {
                 final var deploymentOptions = new DeploymentOptions()
                         .setMaxWorkerExecuteTimeUnit(SECONDS)
                         .setMaxWorkerExecuteTime(60L);
-                final var binaryProcessor = new BinaryProcessor() {
+                final var binaryProcessor = new Processor<Perspective, Perspective>() {
                     @Override
-                    public synchronized BinaryResponse process(BinaryRequest request) {
-                        return config.binaryProcessor().process(request);
+                    public synchronized Response<Perspective> process(Request<Perspective> request) {
+                        return config.processor().process(request);
                     }
                 };
                 vertx.deployVerticle(new AbstractVerticle() {
@@ -127,14 +129,15 @@ public class Server {
                                 routingContext.request().setExpectMultipart(true);
                             }
                             if (routingContext.request().isExpectMultipart()) {
-                                vertx.<byte[]>executeBlocking((promise) -> {
-                                    final var binaryResponse = binaryProcessor
-                                            .process(parseBinaryRequest(routingContext.request().path()
-                                                    , routingContext.request().formAttributes()));
-                                    response.putHeader("content-type"
-                                            , binaryResponse.data().get(PRIMARY_TEXT_RESPONSE).getFormat());
-                                    promise.complete(binaryResponse.data().get(PRIMARY_TEXT_RESPONSE).getContent());
-                                }, (result) -> handleResult(routingContext, result));
+                                routingContext.request().endHandler(voidz -> {
+                                    vertx.<byte[]>executeBlocking((promise) -> {
+                                        final var binaryResponse = binaryProcessor
+                                                .process(parseBinaryRequest(routingContext.request().path()
+                                                        , routingContext.request().formAttributes()));
+                                        response.putHeader("content-type", Formats.JSON.mimeTypes());
+                                        promise.complete(toBytes(binaryResponse.data().toJsonString()));
+                                    }, (result) -> handleResult(routingContext, result));
+                                });
                             } else {
                                 vertx.<byte[]>executeBlocking((promise) -> {
                                     try {
@@ -183,18 +186,27 @@ public class Server {
         }
     }
 
-    private static BinaryRequest parseBinaryRequest(String path, MultiMap multiMap) {
+    private static Request<Perspective> parseBinaryRequest(String path, MultiMap multiMap) {
         final var pathSplit = Lists.listWithValuesOf(path.split("/"));
         if (!pathSplit.isEmpty() && "".equals(pathSplit.get(0))) {
             pathSplit.removeAt(0);
         }
-        final var binaryRequest = binaryRequest(trail(pathSplit));
+        final var requestData = perspective("");
         multiMap.entries().forEach(entry -> {
-            binaryRequest.data().put(entry.getKey(), binaryMessage(entry.getValue().getBytes(StandardCharsets.UTF_8), "text/html"));
+            requestData.withProperty(entry.getKey(), entry.getValue());
         });
+        final var binaryRequest = binaryRequest(trail(pathSplit), requestData);
         return binaryRequest;
     }
 
+    /**
+     * TODO The handlers are out of date. Use the same handlers as {@link #serveToHttpAt(Function, Config)}.
+     *
+     * @param renderer
+     * @param config
+     * @return
+     */
+    @Deprecated
     public static Service serveAsAuthenticatedHttpsAt(Function<String, Optional<BinaryMessage>> renderer, Config config) {
         return new Service() {
             Vertx vertx;

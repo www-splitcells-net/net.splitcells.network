@@ -16,23 +16,28 @@
 package net.splitcells.website.server.processor;
 
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.resource.Trail;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
 
-public class BinaryResponse {
-
-    public static final String PRIMARY_TEXT_RESPONSE = "primary-text-response";
-    public static BinaryResponse binaryResponse() {
-        return new BinaryResponse();
+public class Request<T> {
+    public static <T> Request<T> binaryRequest(Trail trail, T data) {
+        return new Request<>(trail, data);
     }
 
-    private Map<String, BinaryMessage> data = map();
+    private Trail trail;
+    private final T data;
 
-    private BinaryResponse() {
-
+    private Request(Trail trailArg, T dataArg) {
+        trail = trailArg;
+        data = dataArg;
     }
 
-    public Map<String, BinaryMessage> data() {
+    public T data() {
         return data;
+    }
+
+    public Trail trail() {
+        return trail;
     }
 }

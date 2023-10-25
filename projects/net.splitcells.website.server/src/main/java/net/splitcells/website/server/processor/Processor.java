@@ -16,7 +16,6 @@
 package net.splitcells.website.server.processor;
 
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.website.server.Server;
 
 import java.util.Optional;
 
@@ -39,33 +38,37 @@ import java.util.Optional;
  * to create an adapter for such an API to any other API.
  * </p>
  */
-public interface BinaryProcessor {
+public interface Processor<Source, Target> {
     /**
      * Provides binary data given binary data, which may be used directly.
      * Alternatively, this may be used in order to create an side effect.
      *
      * @param request <p>This contains the request data for which a set of data is being requested.</p>
      *                <p>The return type is not an {@link Optional}, as this simplifies the API and
-     *                there is no use case for an empty answer, except for composing a {@link BinaryProcessor}
-     *                out of multiple sub {@link BinaryProcessor} in the form of a tree of {@link BinaryProcessor}.</p>
+     *                there is no use case for an empty answer, except for composing a {@link Processor}
+     *                out of multiple sub {@link Processor} in the form of a tree of {@link Processor}.</p>
      *                <p>If the return type {@link Optional} would be used,
      *                a root processor could query all of its direct sub processors via {@link Optional#isEmpty()}
-     *                in order to find the one processor, that can answer the given {@link BinaryRequest}.
+     *                in order to find the one processor, that can answer the given {@link Request}.
      *                Most importantly, the root processor could find out this way,
-     *                which processor can process a given {@link BinaryRequest#trail()},
-     *                without maintaining a map matching {@link BinaryRequest#trail()}
-     *                to the corresponding {@link BinaryProcessor}.</p>
+     *                which processor can process a given {@link Request#trail()},
+     *                without maintaining a map matching {@link Request#trail()}
+     *                to the corresponding {@link Processor}.</p>
      *                <p>If the return type is not {@link Optional},
      *                one could assume, that creating a processor is much harder.
-     *                Especially, when the set of supported {@link BinaryRequest#trail()} changes,
+     *                Especially, when the set of supported {@link Request#trail()} changes,
      *                as every meta processor would have to manage and update
-     *                a map of supported {@link BinaryRequest#trail()} to it's processors.
+     *                a map of supported {@link Request#trail()} to it's processors.
      *                This is not the case, because the method for creating the list of all supported paths,
      *                which is required for the complete website rendering,
      *                can also be used, in order to dynamically determine,
-     *                which processor supports which {@link BinaryRequest#trail()}.</p>
+     *                which processor supports which {@link Request#trail()}.</p>
      *                <p>Therefore, an {@link Optional} is not required and does not make the API more future proof.</p>
+     *                <p>The type of data itself is generic, so it is possible to chain processors.
+     *                For now {@link Perspective} is preferred as default type,
+     *                because it can hold arbitrary formatted String structures and
+     *                binary data can be stored as base64 as well.</p>
      * @return This is the set of requested binary data.
      */
-    BinaryResponse process(BinaryRequest request);
+    Response<Target> process(Request<Source> request);
 }
