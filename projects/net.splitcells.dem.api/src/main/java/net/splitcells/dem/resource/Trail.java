@@ -15,12 +15,14 @@
  */
 package net.splitcells.dem.resource;
 
+import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 
 import java.nio.file.Path;
 
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**
  * <p>TODO Ensure that only trails, that adhere to guidelines are accepted.</p>
@@ -29,9 +31,13 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
  * Thereby bugs are avoided,
  * that are created via {@link Path#resolve(Path)} by accidentally mixing relative and absolute paths.
  */
-public class Trail {
+public class Trail implements Thing {
     public static Trail trail(String... content) {
         return new Trail(listWithValuesOf(content));
+    }
+
+    public static Trail trail(String path) {
+        return new Trail(listWithValuesOf(path.split("/")));
     }
 
     private final List<String> content;
@@ -42,5 +48,20 @@ public class Trail {
 
     public ListView<String> content() {
         return content;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Trail) {
+            final var other = (Trail) obj;
+            return content.equals(other.content);
+        } else {
+            throw executionException("Illegal argument: " + obj);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Thing.hashCode(content);
     }
 }
