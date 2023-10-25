@@ -18,13 +18,12 @@ package net.splitcells.website.server;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.resource.Trail;
 import net.splitcells.website.server.processor.BinaryProcessor;
-import net.splitcells.website.server.processor.BinaryRequest;
-import net.splitcells.website.server.processor.BinaryResponse;
+import net.splitcells.website.server.processor.BinaryProcessorRegistry;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
 
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -33,9 +32,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.website.Formats.JSON;
-import static net.splitcells.website.server.processor.BinaryResponse.PRIMARY_TEXT_RESPONSE;
-import static net.splitcells.website.server.processor.BinaryResponse.binaryResponse;
+import static net.splitcells.website.server.processor.BinaryProcessorRegistry.binaryProcessorRegistry;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 /**
@@ -186,7 +183,8 @@ public class Config {
     private List<ProgramConfig> programConfigs = list();
     private List<ProjectsRendererExtension> projectsRendererExtension = list();
 
-    private BinaryProcessor binaryProcessor = new BinaryProcessor() {
+    private BinaryProcessorRegistry binaryProcessor = binaryProcessorRegistry();
+    /*new BinaryProcessor() {
         @Override
         public BinaryResponse process(BinaryRequest request) {
             final var response = binaryResponse();
@@ -197,7 +195,7 @@ public class Config {
                             , JSON));
             return response;
         }
-    };
+    };*/
 
     private Config() {
     }
@@ -434,12 +432,12 @@ public class Config {
         return projectsRendererExtension;
     }
 
-    public BinaryProcessor binaryProcessor() {
+    public BinaryProcessorRegistry binaryProcessor() {
         return binaryProcessor;
     }
 
-    public Config withBinaryProcessor(BinaryProcessor arg) {
-        binaryProcessor = arg;
+    public Config withAdditionalBinaryProcessor(Trail trail, BinaryProcessor arg) {
+        binaryProcessor.register(trail, arg);
         return this;
     }
 }
