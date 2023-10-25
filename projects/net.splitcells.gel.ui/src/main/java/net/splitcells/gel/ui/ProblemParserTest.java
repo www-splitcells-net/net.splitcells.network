@@ -43,11 +43,11 @@ public class ProblemParserTest {
 
     @UnitTest
     public void testParseProblem() {
-        final var testData = "demands={a=int();b=string()};"
-                + "supplies={c=float()};"
-                + "constraints=forEach(a).then(hasSize(2));"
-                + "constraints().forEach(b).then(allSame(c));"
-                + "name=\"testParseProblem\";";
+        final var testData = "demands={a=int();b=string()};\n"
+                + "supplies={c=float()};\n"
+                + "constraints=forEach(a).then(hasSize(2));\n"
+                + "constraints().forEach(b).then(allSame(c));\n"
+                + "name=\"testParseProblem\";\n";
         final var testSubject = parseProblem(testData);
         final var forEachA = testSubject.constraint().child(0);
         requireEquals(forEachA.type(), ForAll.class);
