@@ -20,7 +20,7 @@ import net.splitcells.dem.lang.annotations.ReturnsThis;
 import java.nio.file.Path;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
-import static net.splitcells.dem.utils.StringUtils.getBytes;
+import static net.splitcells.dem.utils.StringUtils.toBytes;
 
 /**
  * <p>When one works with {@link java.nio.file.Path} and {@link java.nio.file.Files} directly,
@@ -57,7 +57,7 @@ public interface FileSystem extends FileSystemView {
 
     @ReturnsThis
     default FileSystem writeToFile(Path path, String content) {
-        return writeToFile(path, getBytes(content));
+        return writeToFile(path, toBytes(content));
     }
 
     FileSystem subFileSystem(Path path);

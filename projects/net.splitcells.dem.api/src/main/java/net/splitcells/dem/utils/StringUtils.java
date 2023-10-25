@@ -42,7 +42,7 @@ public class StringUtils {
                 .withProperty("target", target));
     }
 
-    public static byte[] getBytes(String arg) {
+    public static byte[] toBytes(String arg) {
         return arg.getBytes(StandardCharsets.UTF_8);
     }
 }
