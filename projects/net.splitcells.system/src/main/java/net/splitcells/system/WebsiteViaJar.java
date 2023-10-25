@@ -17,6 +17,7 @@ package net.splitcells.system;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.ext.FileSystemExt;
+import net.splitcells.gel.ui.SolutionCalculator;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.validator.SourceValidator;
@@ -29,6 +30,7 @@ import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
+import static net.splitcells.gel.ui.SolutionCalculator.solutionCalculator;
 import static net.splitcells.website.server.ProgramConfig.programConfig;
 import static net.splitcells.website.server.ProjectConfig.projectConfig;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
@@ -88,7 +90,8 @@ public class WebsiteViaJar {
                 .withAdditionalProgramConfig(programConfig("Generic Allocation Editor"
                         , "/net/splitcells/gel/ui/editor")
                         .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/net.splitcells.gel.ui.logo.jpg"))
-                        .withDescription(Optional.of("Define and solve assignment problems.")));
+                        .withDescription(Optional.of("Define and solve assignment problems.")))
+                .withAdditionalProcessor(SolutionCalculator.PATH, solutionCalculator());
     }
 
     public static ProjectsRendererI projectsRenderer(Config config) {

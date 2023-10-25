@@ -18,6 +18,7 @@ package net.splitcells.website;
 public enum Formats {
     HTML("text/html")
     , CSS("text/css")
+    , CSV("text/csv")
     , TEXT_PLAIN("text/plain")
     , JSON("application/json");
 

@@ -20,7 +20,7 @@
         <chapter>
             <title>Problem Definition</title>
 
-            <x:textarea name="problem-definition" class="net-splitcells-component-priority-0" style="width: 100%; height: 50em; resize: none; border: none;"
+            <x:textarea id="net-splitcells-gel-ui-editor-form-problem-definition" name="net-splitcells-gel-ui-editor-form-problem-definition" class="net-splitcells-component-priority-0" style="width: 100%; height: 50em; resize: none; border: none;"
             ><![CDATA[demands={a=int();b=string()};
 supplies={c=float()};
 constraints=forEach(a).then(hasSize(2));
@@ -39,6 +39,8 @@ name="testParseProblem";
         </chapter>
         <chapter>
             <title>Solutions</title>
+            <x:textarea id="net-splitcells-gel-ui-editor-form-solution" name="net-splitcells-gel-ui-editor-form-solution" class="net-splitcells-component-priority-0" style="width: 100%; height: 50em; resize: none; border: none;"
+            ></x:textarea>
         </chapter>
     </x:form>
     <x:script type="text/javascript"><![CDATA[
@@ -48,9 +50,15 @@ name="testParseProblem";
             var data = new FormData(form);
             request.onload = function() {
                 console.log('Response to "net-splitcells-gel-ui-editor-form":' + this.responseText);
+                var responseObject = JSON.parse(this.responseText);
+                if ('net-splitcells-websiter-server-form-update' in responseObject) {
+                    for (const [key, value] of Object.entries(responseObject['net-splitcells-websiter-server-form-update'])) {
+                        document.getElementById(key).value = value;
+                    }
+                }
             }
             request.open("post", form.action);
-            alert(request.send(data));
+            request.send(data);
         }]]>
     </x:script>
 </article>

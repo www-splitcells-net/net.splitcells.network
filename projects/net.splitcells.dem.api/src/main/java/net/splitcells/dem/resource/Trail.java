@@ -36,6 +36,10 @@ public class Trail implements Thing {
         return new Trail(listWithValuesOf(content));
     }
 
+    public static Trail trail(List<String> content) {
+        return new Trail(content);
+    }
+
     public static Trail trail(String path) {
         return new Trail(listWithValuesOf(path.split("/")));
     }

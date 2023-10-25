@@ -45,4 +45,8 @@ public class StringUtils {
     public static byte[] toBytes(String arg) {
         return arg.getBytes(StandardCharsets.UTF_8);
     }
+
+    public static String parseString(byte[] arg) {
+        return new String(arg, StandardCharsets.UTF_8);
+    }
 }
