@@ -146,6 +146,17 @@ public interface Perspective extends PerspectiveView {
         return Optional.of(children.get(0));
     }
 
+    default Perspective namedChild(String name) {
+        final var children = children().stream()
+                .filter(child -> name.equals(child.name()))
+                .collect(toList());
+        return children.get(0);
+    }
+
+    default Perspective child(int index) {
+        return children().get(index);
+    }
+
     default Perspective withChildren(Perspective... argChildren) {
         Stream.of(argChildren).forEach(children()::add);
         return this;
@@ -426,6 +437,11 @@ public interface Perspective extends PerspectiveView {
         return toJsonString(jsonConfig());
     }
 
+    private static String encodeJsonString(String arg) {
+        return arg.replace("\n", "\\n")
+                .replace("\r", "\\r");
+    }
+
     /**
      * Creates a JSON, where all primitive values are Strings.
      *
@@ -434,7 +450,7 @@ public interface Perspective extends PerspectiveView {
     default String toJsonString(JsonConfig config) {
         final StringBuilder jsonString = new StringBuilder();
         if (children().isEmpty()) {
-            jsonString.append("{\"" + name() + "\":\"\"}");
+            jsonString.append("{\"" + encodeJsonString(name()) + "\":\"\"}");
         } else {
             boolean isNotFirstChild = false;
             final var hasAnyPrimitiveValues = children().stream().anyMatch(c -> c.children().isEmpty()
@@ -449,9 +465,9 @@ public interface Perspective extends PerspectiveView {
                 } else {
                     require(isThisANamedDictionary);
                     if (config.isTopElement()) {
-                        jsonString.append("{\"" + name() + "\":{");
+                        jsonString.append("{\"" + encodeJsonString(name()) + "\":{");
                     } else {
-                        jsonString.append("\"" + name() + "\":{");
+                        jsonString.append("\"" + encodeJsonString(name()) + "\":{");
                     }
                 }
             }
@@ -461,14 +477,14 @@ public interface Perspective extends PerspectiveView {
                 }
                 if (child.children().size() == 1) {
                     if (child.children().get(0).children().size() == 0) {
-                        jsonString.append("\"" + child.name() + "\":\"" + child.children().get(0).name() + "\"");
+                        jsonString.append("\"" + encodeJsonString(child.name()) + "\":\"" + encodeJsonString(child.children().get(0).name()) + "\"");
                     } else {
-                        jsonString.append("\"" + child.name() + "\":"
+                        jsonString.append("\"" + encodeJsonString(child.name()) + "\":"
                                 + child.toJsonString(jsonConfig().withIsTopElement(false)));
                     }
                 } else if (child.children().isEmpty()) {
                     require(hasAnyPrimitiveValues);
-                    jsonString.append("\"" + child.name() + "\"");
+                    jsonString.append("\"" + encodeJsonString(child.name()) + "\"");
                 } else {
                     jsonString.append(child.toJsonString(jsonConfig().withIsTopElement(false)));
                 }

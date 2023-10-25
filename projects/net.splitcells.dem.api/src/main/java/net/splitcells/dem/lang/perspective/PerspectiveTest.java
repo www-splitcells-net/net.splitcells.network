@@ -45,28 +45,28 @@ public class PerspectiveTest {
     @UnitTest
     public void testToJsonStringWithArray() {
         final var testSubject = perspective("")
-                .withChild(perspective("1"))
-                .withChild(perspective("2"))
+                .withChild(perspective("1\n"))
+                .withChild(perspective("2\r"))
                 .withChild(perspective("3"));
-        requireEquals(testSubject.toJsonString(), "[\"1\",\"2\",\"3\"]");
+        requireEquals(testSubject.toJsonString(), "[\"1\\n\",\"2\\r\",\"3\"]");
     }
 
     @UnitTest
     public void testToJsonStringWithDictionary() {
         final var testSubject = perspective("")
-                .withProperty("1", "2")
+                .withProperty("1", "2\n")
                 .withProperty("3", "4")
-                .withProperty("4", "5");
-        requireEquals(testSubject.toJsonString(), "{\"1\":\"2\",\"3\":\"4\",\"4\":\"5\"}");
+                .withProperty("4", "5\r");
+        requireEquals(testSubject.toJsonString(), "{\"1\":\"2\\n\",\"3\":\"4\",\"4\":\"5\\r\"}");
     }
 
     @UnitTest
     public void testToJsonStringWithNamedDictionary() {
-        final var testSubject = perspective("name")
+        final var testSubject = perspective("name\r\n")
                 .withProperty("1", "2")
                 .withProperty("3", "4")
                 .withProperty("4", "5");
-        requireEquals(testSubject.toJsonString(), "{\"name\":{\"1\":\"2\",\"3\":\"4\",\"4\":\"5\"}}");
+        requireEquals(testSubject.toJsonString(), "{\"name\\r\\n\":{\"1\":\"2\",\"3\":\"4\",\"4\":\"5\"}}");
     }
 
     @UnitTest
@@ -74,10 +74,10 @@ public class PerspectiveTest {
         final var testSubject = perspective("")
                 .withProperty("1", "2")
                 .withChild(perspective("test")
-                        .withProperty("a", "b")
-                        .withProperty("c", "d")
+                        .withProperty("a", "b\r")
+                        .withProperty("c", "d\n")
                 )
                 .withProperty("3", "4");
-        requireEquals(testSubject.toJsonString(), "{\"1\":\"2\",\"test\":{\"a\":\"b\",\"c\":\"d\"},\"3\":\"4\"}");
+        requireEquals(testSubject.toJsonString(), "{\"1\":\"2\",\"test\":{\"a\":\"b\\r\",\"c\":\"d\\n\"},\"3\":\"4\"}");
     }
 }
