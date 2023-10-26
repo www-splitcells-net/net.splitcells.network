@@ -32,14 +32,12 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.website.Formats;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
 import net.splitcells.website.server.processor.BinaryMessage;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -51,7 +49,7 @@ import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
-import static net.splitcells.website.server.processor.Request.binaryRequest;
+import static net.splitcells.website.server.processor.Request.request;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 /**
@@ -195,7 +193,7 @@ public class Server {
         multiMap.entries().forEach(entry -> {
             requestData.withProperty(entry.getKey(), entry.getValue());
         });
-        final var binaryRequest = binaryRequest(trail(pathSplit), requestData);
+        final var binaryRequest = request(trail(pathSplit), requestData);
         return binaryRequest;
     }
 

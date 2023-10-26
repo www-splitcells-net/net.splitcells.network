@@ -15,12 +15,10 @@
  */
 package net.splitcells.website.server.processor;
 
-import net.splitcells.dem.data.set.map.Map;
-
 import static net.splitcells.dem.data.set.map.Maps.map;
 
 public class Response<T> {
-    public static <T> Response<T> binaryResponse(T data) {
+    public static <T> Response<T> response(T data) {
         return new Response<>(data);
     }
 

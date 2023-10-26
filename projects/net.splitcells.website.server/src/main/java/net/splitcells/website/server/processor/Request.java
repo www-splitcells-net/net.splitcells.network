@@ -15,13 +15,12 @@
  */
 package net.splitcells.website.server.processor;
 
-import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.resource.Trail;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
 
 public class Request<T> {
-    public static <T> Request<T> binaryRequest(Trail trail, T data) {
+    public static <T> Request<T> request(Trail trail, T data) {
         return new Request<>(trail, data);
     }
 
