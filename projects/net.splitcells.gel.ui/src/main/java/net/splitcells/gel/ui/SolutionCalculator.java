@@ -17,25 +17,25 @@ package net.splitcells.gel.ui;
 
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Trail;
-import net.splitcells.website.Formats;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
 
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.dem.utils.StringUtils.toBytes;
-import static net.splitcells.dem.utils.StringUtils.parseString;
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.constraintGroupBasedRepair;
 import static net.splitcells.gel.solution.optimization.primitive.repair.RepairConfig.repairConfig;
 import static net.splitcells.gel.ui.ProblemParser.parseProblem;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
-import static net.splitcells.website.server.processor.Response.binaryResponse;
+import static net.splitcells.website.server.processor.Response.response;
 
 public class SolutionCalculator implements Processor<Perspective, Perspective> {
 
     public static final Trail PATH = Trail.trail("net/splitcells/gel/ui/calculate-solution.form");
+    public static final String PROBLEM_DEFINITION = "net-splitcells-gel-ui-editor-form-problem-definition";
+    public static final String SOLUTION = "net-splitcells-gel-ui-editor-form-solution";
+    public static final String FORM_UPDATE = "net-splitcells-websiter-server-form-update";
 
-    public static Processor solutionCalculator() {
+    public static Processor<Perspective, Perspective> solutionCalculator() {
         return new SolutionCalculator();
     }
 
@@ -48,12 +48,12 @@ public class SolutionCalculator implements Processor<Perspective, Perspective> {
         PATH.requireEqualityTo(request.trail());
         final var solution = parseProblem(request
                 .data()
-                .namedChild("net-splitcells-gel-ui-editor-form-problem-definition")
+                .namedChild(PROBLEM_DEFINITION)
                 .child(0)
                 .name())
                 .asSolution();
         solution.optimize(constraintGroupBasedRepair(repairConfig()));
-        return binaryResponse(perspective("net-splitcells-websiter-server-form-update")
-                .withProperty("net-splitcells-gel-ui-editor-form-solution", solution.toCSV()));
+        return response(perspective(FORM_UPDATE)
+                .withProperty(SOLUTION, solution.toCSV()));
     }
 }

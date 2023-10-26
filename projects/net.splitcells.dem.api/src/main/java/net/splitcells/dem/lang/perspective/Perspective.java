@@ -127,8 +127,24 @@ public interface Perspective extends PerspectiveView {
                 .collect(Lists.toList());
     }
 
+    default List<Perspective> propertyInstances(String name) {
+        return children().stream()
+                .filter(property -> name.equals(property.name()))
+                .filter(property -> property.children().size() == 1)
+                .collect(Lists.toList());
+    }
+
     default Optional<Perspective> propertyInstance(String name, NameSpace nameSpace) {
         final var propertyInstances = propertyInstances(name, nameSpace);
+        assertThat(propertyInstances).hasSizeLessThan(2);
+        if (propertyInstances.isEmpty()) {
+            return Optional.ofNullable(null);
+        }
+        return Optional.of(propertyInstances.get(0));
+    }
+
+    default Optional<Perspective> propertyInstance(String name) {
+        final var propertyInstances = propertyInstances(name);
         assertThat(propertyInstances).hasSizeLessThan(2);
         if (propertyInstances.isEmpty()) {
             return Optional.ofNullable(null);
