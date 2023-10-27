@@ -16,6 +16,23 @@ pre {
 ol > ol {
     border-left: 1px solid rgb(100,100,100);
     }
+@keyframes net-splitcells-activity {
+    0% {
+        background-color: var(--background-color-activity-animation-start);
+        color: var(--foreground-color-activity-animation-start);
+        }
+    50% {
+        background-color: var(--background-color-activity-animation-end);
+        color: var(--foreground-color-activity-animation-end);
+        }
+    100% {
+        background-color: var(--background-color-activity-animation-start);
+        color: var(--foreground-color-activity-animation-start);
+        }
+    }
+.net-splitcells-button.net-splitcells-activity  {
+	animation: net-splitcells-activity 5s infinite;
+    }
 .net-splitcells-button:hover {
 	background-color: var(--background-color-priority-1);
 	color: var(--foreground-color-priority-1);

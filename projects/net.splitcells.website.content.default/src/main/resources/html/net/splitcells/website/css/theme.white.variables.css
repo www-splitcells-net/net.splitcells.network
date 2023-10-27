@@ -66,4 +66,12 @@
 	
 	--error-background-color-priority-0:#FFFFFF;
 	--error-background-color-priority-1:#F6F6F6;
+
+	--foreground-color-activity:;
+
+	--background-color-activity-animation-start:var(--background-color-priority-0);
+    --foreground-color-activity-animation-start:#000000;
+
+    --background-color-activity-animation-end:#ff9900;
+    --foreground-color-activity-animation-end:#000000;
 	}
