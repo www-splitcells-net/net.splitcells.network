@@ -19,6 +19,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.dem.lang.perspective.antlr4.DenParserBaseVisitor;
+import net.splitcells.gel.data.table.attribute.AttributeI;
 import net.splitcells.gel.problem.Problem;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -27,6 +28,9 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.gel.data.table.attribute.AttributeI.floatAttribute;
+import static net.splitcells.gel.data.table.attribute.AttributeI.integerAttribute;
+import static net.splitcells.gel.data.table.attribute.AttributeI.stringAttribute;
 import static net.splitcells.gel.ui.ConstraintParser.parseConstraint;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
 import static net.splitcells.gel.data.database.Databases.database;
@@ -99,11 +103,11 @@ public class ProblemParser extends DenParserBaseVisitor<Problem> {
 
     private Attribute<? extends Object> parseAttribute(String name, String type) {
         if (type.equals("int")) {
-            return attribute(Integer.class, name);
+            return integerAttribute(name);
         } else if (type.equals("float")) {
-            return attribute(Float.class, name);
+            return floatAttribute(name);
         } else if (type.equals("string")) {
-            return attribute(String.class, name);
+            return stringAttribute(name);
         } else {
             throw executionException(type);
         }

@@ -211,6 +211,32 @@ public interface Table extends Discoverable, Domable, Identifiable {
         }
     }
 
+    default String toSimplifiedCSV() {
+        final var simplifiedCsv = new StringBuilder();
+        simplifiedCsv.append(headerView().stream()
+                .map(Attribute::name)
+                .reduce("", Table::mergeSimplifiedCsvList)
+                + "\n");
+        unorderedLines().forEach(line -> simplifiedCsv.append(line.values().stream()
+                .map(Object::toString)
+                .reduce("", Table::mergeSimplifiedCsvList)
+                + "\n"));
+        return simplifiedCsv.toString();
+    }
+
+    private static String mergeSimplifiedCsvList(String a, String b) {
+        if (a.isEmpty() && b.isEmpty()) {
+            return "";
+        }
+        if (a.isEmpty()) {
+            return b;
+        }
+        if (b.isEmpty()) {
+            return a;
+        }
+        return a + "," + b;
+    }
+
     default <T> Table lookup(Attribute<T> attribute, T value) {
         return columnView(attribute).lookup(value);
     }

@@ -350,3 +350,7 @@ Eclipse Platform
 
 * License: EPL-2.0
 * Source Code: https://github.com/eclipse-platform
+
+Tabulator
+* License: MIT
+* Source Code: https://github.com/olifolkerd/tabulator

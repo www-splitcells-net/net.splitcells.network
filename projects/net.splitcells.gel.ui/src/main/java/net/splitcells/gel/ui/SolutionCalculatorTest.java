@@ -44,6 +44,6 @@ public class SolutionCalculatorTest {
                         .orElseThrow()
                         .child(0)
                         .name()
-                , "a,b,c\r\n");
+                , "a,b,c\n");
     }
 }

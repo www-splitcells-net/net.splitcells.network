@@ -26,6 +26,9 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import static java.util.stream.IntStream.range;
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -150,5 +153,20 @@ public interface Database extends Table {
                 .filter(line -> line != null)
                 .forEach(line -> dom.withChild(line.toPerspective()));
         return dom;
+    }
+
+    default Database withAddSimplifiedCsv(String csvFile) {
+        final var csvContent = listWithValuesOf(csvFile.split("\n"));
+        range(0, csvContent.size()).forEach(i -> {
+            final ListView<Object> rawValues = list();
+            if (!csvContent.get(i).isBlank()) {
+                final var csvLine = listWithValuesOf(csvContent.get(i).split(","));
+                range(0, csvLine.size()).forEach(j -> {
+                    rawValues.add(headerView().get(j).deserializeValue(csvLine.get(j)));
+                });
+                addTranslated(rawValues);
+            }
+        });
+        return this;
     }
 }

@@ -162,11 +162,14 @@ public interface Perspective extends PerspectiveView {
         return Optional.of(children.get(0));
     }
 
-    default Perspective namedChild(String name) {
-        final var children = children().stream()
+    default List<Perspective> namedChildren(String name) {
+        return children().stream()
                 .filter(child -> name.equals(child.name()))
                 .collect(toList());
-        return children.get(0);
+    }
+
+    default Perspective namedChild(String name) {
+        return namedChildren(name).get(0);
     }
 
     default Perspective child(int index) {

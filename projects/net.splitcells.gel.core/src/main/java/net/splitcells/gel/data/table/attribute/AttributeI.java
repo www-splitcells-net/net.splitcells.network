@@ -44,6 +44,10 @@ public final class AttributeI<T> implements Attribute<T> {
         return new AttributeI<>(Integer.class, name, arg -> Integer.valueOf(arg));
     }
 
+    public static Attribute<Float> floatAttribute(String name) {
+        return new AttributeI<>(Float.class, name, arg -> Float.valueOf(arg));
+    }
+
     public static Attribute<String> stringAttribute(String name) {
         return new AttributeI<>(String.class, name, arg -> arg);
     }

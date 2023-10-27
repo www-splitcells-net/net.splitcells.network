@@ -15,13 +15,21 @@
  */
 package net.splitcells.gel.ui;
 
+import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
 
+import java.util.stream.IntStream;
+
+import static java.util.stream.IntStream.range;
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.constraintGroupBasedRepair;
 import static net.splitcells.gel.solution.optimization.primitive.repair.RepairConfig.repairConfig;
 import static net.splitcells.gel.ui.ProblemParser.parseProblem;
@@ -33,6 +41,8 @@ public class SolutionCalculator implements Processor<Perspective, Perspective> {
     public static final Trail PATH = Trail.trail("net/splitcells/gel/ui/calculate-solution.form");
     public static final String PROBLEM_DEFINITION = "net-splitcells-gel-ui-editor-form-problem-definition";
     public static final String SOLUTION = "net-splitcells-gel-ui-editor-form-solution";
+    public static final String DEMANDS = "net-splitcells-gel-ui-editor-form-demands";
+    public static final String SUPPLIES = "net-splitcells-gel-ui-editor-form-supplies";
     public static final String FORM_UPDATE = "net-splitcells-websiter-server-form-update";
 
     public static Processor<Perspective, Perspective> solutionCalculator() {
@@ -52,8 +62,27 @@ public class SolutionCalculator implements Processor<Perspective, Perspective> {
                 .child(0)
                 .name())
                 .asSolution();
-        solution.optimize(constraintGroupBasedRepair(repairConfig()));
+        final var demandDefinitions = request
+                .data()
+                .namedChildren(DEMANDS);
+        if (demandDefinitions.hasElements()) {
+            solution.demandsFree().withAddSimplifiedCsv(
+                    standardizeInput(demandDefinitions.get(0).child(0).name()));
+        }
+        final var supplyDefinitions = request
+                .data()
+                .namedChildren(SUPPLIES);
+        if (supplyDefinitions.hasElements()) {
+            solution.suppliesFree().withAddSimplifiedCsv(
+                    standardizeInput(supplyDefinitions.get(0).child(0).name()));
+        }
+        constraintGroupBasedRepair(repairConfig()).optimize(solution);
+        onlineLinearInitialization().optimize(solution);
         return response(perspective(FORM_UPDATE)
-                .withProperty(SOLUTION, solution.toCSV()));
+                .withProperty(SOLUTION, solution.toSimplifiedCSV()));
+    }
+
+    private static String standardizeInput(String arg) {
+        return arg.replace("\n\r", "\n").replace("\r\n", "\n");
     }
 }
