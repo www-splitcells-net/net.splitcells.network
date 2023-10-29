@@ -373,7 +373,6 @@
                         <xsl:when test="./s:location">
                             <xsl:apply-templates
                                     select="concat($site_instance_purl, s:string-remove-whitespace(./s:location), '.html')"/>
-                            <xsl:text>'</xsl:text>
                         </xsl:when>
                         <xsl:when test="./s:path">
                             <xsl:copy-of
