@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.utils;
 
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import java.util.Collections;
@@ -39,6 +40,14 @@ public final class StreamUtils {
 
     public static <T> Stream<T> concat(Stream<T> a, Stream<T> b) {
         return java.util.stream.Stream.concat(a, b);
+    }
+
+    public static <T> Stream<T> concat(List<Stream<T>> streams) {
+        var concatination = Stream.<T>empty();
+        for (final var stream : streams) {
+            concatination = Stream.concat(concatination, stream);
+        }
+        return concatination;
     }
 
     public static <T> Stream<T> concat(Stream<T> a, Stream<T>... b) {
