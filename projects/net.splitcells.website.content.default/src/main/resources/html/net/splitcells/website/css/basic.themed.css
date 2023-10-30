@@ -16,7 +16,7 @@ pre {
 ol > ol {
     border-left: 1px solid rgb(100,100,100);
     }
-@keyframes net-splitcells-activity {
+@keyframes net-splitcells-button-activity {
     0% {
         background-color: var(--background-color-activity-animation-start);
         color: var(--foreground-color-activity-animation-start);
@@ -30,8 +30,36 @@ ol > ol {
         color: var(--foreground-color-activity-animation-start);
         }
     }
-.net-splitcells-button.net-splitcells-activity  {
-	animation: net-splitcells-activity 5s infinite;
+.net-splitcells-component-priority-2 > .net-splitcells-action-button {
+    background: linear-gradient(0deg, var(--background-color-priority-3) 0%, var(--background-color-priority-1) 60%);
+    border: 0.125em solid var(--background-color-priority-3);
+}
+.net-splitcells-component-priority-2 > .net-splitcells-action-button:hover {
+    background: linear-gradient(0deg, var(--background-color-priority-2) 0%, var(--background-color-priority-0) 60%);
+    border: 0.125em solid var(--background-color-priority-3);
+}
+.net-splitcells-component-priority-3 > .net-splitcells-action-button:hover {
+    background: linear-gradient(0deg, var(--background-color-priority-3) 0%, var(--background-color-priority-1) 60%);
+    border: 0.125em solid var(--background-color-priority-4);
+}
+.net-splitcells-component-priority-3 > .net-splitcells-action-button {
+    background: linear-gradient(0deg, var(--background-color-priority-4) 0%, var(--background-color-priority-2) 60%);
+    border: 0.125em solid var(--background-color-priority-4);
+}
+.net-splitcells-action-button {
+    background: linear-gradient(0deg, var(--background-color-priority-1) 0%, var(--background-color-priority-0) 60%);
+    border: 0.125em solid var(--background-color-priority-2);
+    border-radius: 0.25em;
+}
+.net-splitcells-action-button:hover {
+    background: linear-gradient(0deg, var(--background-color-priority-0) 0%, var(--background-color-structural-guide) 60%);
+    border: 0.125em solid var(--background-color-priority-2);
+    border-radius: 0.25em;
+}
+.net-splitcells-button-activity  {
+	animation: net-splitcells-button-activity 5s infinite;
+    border: 0.125em solid var(--background-color-priority-2);
+    border-radius: 0.25em;
     }
 .net-splitcells-button:hover {
 	background-color: var(--background-color-priority-1);
@@ -48,6 +76,14 @@ ol > ol {
 .net-splitcells-component-priority-3 > .net-splitcells-button-inline {
 	background-color: var(--background-color-priority-2);
         color: var(--foreground-color-priority-2);
+	}
+.net-splitcells-component-priority-2 > .net-splitcells-button-inline:hover {
+	background-color: var(--background-color-selected-priority-0);
+    color: var(--foreground-color-selected-priority-0);
+	}
+.net-splitcells-component-priority-2 > .net-splitcells-button-inline {
+	background-color: var(--background-color-priority-1);
+        color: var(--foreground-color-priority-1);
 	}
 .net-splitcells-priority-4 .net-splitcells-button {
 	background-color: var(--background-color-priority-3);
@@ -255,12 +291,11 @@ main {
     background-color: var(--background-color-priority-2);
 	color: var(--foreground-color-priority-2);
 }
-.net-splitcells-content-filler,
-.net-splitcells-meta-column,
-.net-splitcells-content-main {
+.net-splitcells-content-filler {
 	border-left: solid;
 	border-left-color: var(--background-color-structural-guide);
 	border-left-width: .25em;
+	z-index: 10000;
 	}
 .net-splitcells-content-main,
 .net-splitcells-component-priority-1 {
@@ -320,6 +355,13 @@ a {
 	font-weight: bold;
     color: var(--foreground-color-priority-3);
 	}
+.net-splitcells-content-column-left-border,
+.net-splitcells-meta-column-left-border,
+.net-splitcells-right-decoration-left-border {
+    z-index: 10000;
+    width:.25em;
+    background-color: var(--background-color-structural-guide);
+    }
 .net-splitcells-content-column a, .rightDecoration a, .splitcells-net-title-logo a {
     color: var(--foreground-color-priority-0);
 	}
