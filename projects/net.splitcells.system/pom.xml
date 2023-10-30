@@ -40,6 +40,11 @@
         </dependency>
         <dependency>
             <groupId>net.splitcells</groupId>
+            <artifactId>gel.ext</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.splitcells</groupId>
             <artifactId>gel.ui</artifactId>
             <version>${revision}</version>
         </dependency>
