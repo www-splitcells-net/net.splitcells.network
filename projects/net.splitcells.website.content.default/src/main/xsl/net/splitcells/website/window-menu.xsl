@@ -18,7 +18,7 @@
             <a class="HeaderButton_structure HeaderButton net-splitcells-main-button-project-logo">
                 <xsl:attribute name="href">
                     <xsl:value-of
-                            select="s:default-root-relative-url('net/splitcells/network/README.html')"/>
+                            select="s:default-root-relative-url('net/splitcells/website/server/front-menu.html')"/>
                 </xsl:attribute>
             </a>
             <div class="net-splitcells-error-status-indicator net-splitcells-button-inline"
