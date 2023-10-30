@@ -545,34 +545,35 @@ window.onload = function() {
                             <!-- TODO Move window menu to header. -->
                         </header>
                         <main id="topElement">
+                            <div class="net-splitcells-content-column-left-border"> </div>
                             <div class="net-splitcells-content-column">
                                 <div id="content"
                                      class="net-splitcells-content-main">
                                     <article>
                                         <div class="splitcells-net-window-menu">
-                                            <div class="splitcells-net-line net-splitcells-component-priority-3">
+                                            <div class="splitcells-net-line net-splitcells-component-priority-2">
                                                 <xsl:copy-of select="$net-splitcells-website-server-config-window-menu"/>
                                                 <div class="net-splitcells-space-filler"></div>
-                                                <div class="net-splitcells-button-inline page-column-0-full-screen net-splitcells-minimal-not"
+                                                <div class="net-splitcells-action-button net-splitcells-button-inline page-column-0-full-screen net-splitcells-minimal-not"
                                                      onclick="javascript: fullScreenEnable();
 														unshowByCssClass('page-column-0-full-screen');
 										                unshowByCssClass('column_1');
 										                showByCssClass('page-column-0-windowed');
 													">
-                                                    wide screen
+                                                    ☐
                                                 </div>
-                                                <div class="net-splitcells-button-inline page-column-0-windowed optional"
+                                                <div class="net-splitcells-button-inline net-splitcells-action-button page-column-0-windowed optional"
                                                      style="visibility: hidden; display: none;"
                                                      onclick="javascript: fullScreenDisable();
 													hide('page-column-0-windowed');
 														unshowByCssClass('page-column-0-windowed');
 														showByCssClass('page-column-0-full-screen');
 														showByCssClass('column_1');">
-                                                    windowed
+                                                    _
                                                 </div>
                                             </div>
                                             <div class="net-splitcells-structural-guide"/>
-                                            <div class="splitcells-net-line net-splitcells-component-priority-1-a">
+                                            <div class="splitcells-net-window-menu-line-2 splitcells-net-line net-splitcells-component-priority-1-a">
                                                 <div class="splitcells-net-line-title">
                                                     <xsl:if test="./s:title.detailed">
                                                         <xsl:value-of select="./s:title.detailed"/>
@@ -617,32 +618,33 @@ window.onload = function() {
                                 </div>
 
                                 <xsl:if test="$column_1 != ''">
+                                    <div class="net-splitcells-meta-column-left-border"> </div>
                                     <div class="net-splitcells-meta-column column_1 contentCell Right_shadow">
                                         <!-- TODO Create complete table of content for this column. -->
                                         <article class="Standard_p2 net-splitcells-component-priority-2">
                                             <xsl:if test="$column_1 != ''">
                                                 <div class="Right_shadow Standard_p2 splitcells-net-window-menu">
-                                                    <div class="Standard_p3 bottomLightShadow splitcells-net-line net-splitcells-minimal-not">
+                                                    <div class="Standard_p2 bottomLightShadow splitcells-net-line net-splitcells-minimal-not net-splitcells-component-priority-2">
                                                         <div class="net-splitcells-space-filler"></div>
-                                                        <div class="HeaderButton_structure HeaderButton_p2 page-column-1-full-screen optional net-splitcells-minimal-not"
+                                                        <div class="net-splitcells-action-button net-splitcells-button-inline page-column-1-full-screen optional net-splitcells-minimal-not"
                                                              onclick="javascript: fullScreenEnable();
 														unshowByCssClass('page-column-1-full-screen');
 										                unshowByCssClass('net-splitcells-content-main');
 										                showByCssClass('page-column-1-windowed');">
-                                                            wide screen
+                                                            ☐
                                                         </div>
-                                                        <div class="HeaderButton_structure HeaderButton_p2 page-column-1-windowed optional"
+                                                        <div class="net-splitcells-action-button page-column-1-windowed optional"
                                                              style="visibility: hidden; display: none;"
                                                              onclick="javascript: fullScreenDisable();
 													hide('page-column-1-windowed');
 														unshowByCssClass('page-column-1-windowed');
 														showByCssClass('page-column-1-full-screen');
 														showByCssClass('net-splitcells-content-main');">
-                                                            windowed
+                                                            _
                                                         </div>
                                                     </div>
                                                     <div class="net-splitcells-structural-guide"/>
-                                                    <div class="net-splitcells-component-priority-1-a splitcells-net-line">
+                                                    <div class="net-splitcells-component-priority-2 splitcells-net-window-menu-line-2">
                                                         <div class="splitcells-net-line-title">Meta</div>
                                                     </div>
                                                 </div>
@@ -651,10 +653,9 @@ window.onload = function() {
                                         </article>
                                     </div>
                                 </xsl:if>
-                                <div class="net-splitcells-content-filler net-splitcells-component-priority-2 net-splitcells-space-filler"></div>
                             </div>
                             <div class="menu Left_shadow TextCell Layout net-splitcells-component-priority-4">
-                                <div class="Left_shadow net-splitcells-component-priority-1-a splitcells-net-title-logo splitcells-net-window-menu">
+                                <div class="Left_shadow net-splitcells-component-priority-0 splitcells-net-title-logo splitcells-net-window-menu">
                                     <div class="splitcells-net-window-menu-line-1">
                                         <a class="net-splitcells-button net-splitcells-main-button-project-logo">
                                             <xsl:attribute name="href">
@@ -693,6 +694,7 @@ window.onload = function() {
                                     </a>
                                 </div>
                             </div>
+                            <div class="net-splitcells-right-decoration-left-border"> </div>
                             <div class="rightDecoration Right_shadow">
                                 <div class="Borderless Standard_p2 Layout decorationBoxRight"
                                      style="position: relative; z-index: 2; width: 1.5em;"></div>

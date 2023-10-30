@@ -15,7 +15,7 @@
     -->
     <xsl:variable name="net-splitcells-website-server-config-window-menu">
         <xsl:variable name="content">
-            <a class="HeaderButton_structure HeaderButton net-splitcells-main-button-project-logo">
+            <a class="net-splitcells-button net-splitcells-main-button-project-logo">
                 <xsl:attribute name="href">
                     <xsl:value-of
                             select="s:default-root-relative-url('net/splitcells/website/server/front-menu.html')"/>
