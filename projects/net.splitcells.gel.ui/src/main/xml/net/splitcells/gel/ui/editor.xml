@@ -13,6 +13,12 @@
         <title>Generic Allocation Editor</title>
         <description>Define and solve assignment problems.</description>
     </meta>
+    <paragraph>
+        This editor allows one to define an assignment problem and to let it solve by the Generic Allocator.
+        Please, define the problem definition and enter the data for demands and supplies in CSV format.
+        After executing the optimizer via the <quote>Submit optimization problem.</quote> button,
+        solution will be visible under the chapter <quote>Solutions</quote>.
+    </paragraph>
     <x:div id="net-splitcells-gel-ui-calculate-solution-form-submit-1" class="net-splitcells-button net-splitcells-action-button" onclick="javascript: net_splitcells_gel_ui_editor_form()">Submit optimization problem.</x:div>
     <x:form action="/net/splitcells/gel/ui/calculate-solution.form" method="post"
             enctype="multipart/form-data"
