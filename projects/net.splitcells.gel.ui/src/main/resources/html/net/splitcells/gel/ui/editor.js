@@ -7,7 +7,7 @@ function net_splitcells_gel_ui_editor_form_submit() {
     config['form-id'] = 'net-splitcells-gel-ui-editor-form'
     config['submit-button-id'] = 'net-splitcells-gel-ui-calculate-solution-form-submit-1';
     config['on-submission-completion'] = () => {
-        net_splitcells_gel_ui_editor_form_solution = new Tabulator("#example-table"
+        net_splitcells_gel_ui_editor_form_solution = new Tabulator("#net-splitcells-gel-ui-calculate-solution-form-solution-data"
             , {data: document.getElementById('net-splitcells-gel-ui-editor-form-solution').value
             , importFormat: 'csv'
             , autoColumns: true });
