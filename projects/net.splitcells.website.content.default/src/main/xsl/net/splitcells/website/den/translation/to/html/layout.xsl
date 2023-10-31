@@ -241,24 +241,28 @@ window.onload = function() {
                         </link>
                         <link rel="icon" type="image/svg+xml">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:default-root-relative-url('net/splitcells/website/icons/icon.svg')"/>
+                                <xsl:value-of
+                                        select="s:default-root-relative-url('net/splitcells/website/icons/icon.svg')"/>
                             </xsl:attribute>
                         </link>
                         <link rel="alternate icon">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:default-root-relative-url('net/splitcells/website/icons/icon.svg')"/>
+                                <xsl:value-of
+                                        select="s:default-root-relative-url('net/splitcells/website/icons/icon.svg')"/>
                             </xsl:attribute>
                         </link>
                         <link rel="mask-icon" type="image/svg+xml">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:default-root-relative-url('net/splitcells/website/icons/icon.svg')"/>
+                                <xsl:value-of
+                                        select="s:default-root-relative-url('net/splitcells/website/icons/icon.svg')"/>
                             </xsl:attribute>
                         </link>
                         <meta name="viewport" content="width=device-width, initial-scale=1"/>
                         <link rel="apple-touch-icon">
                             <!-- Some Mobile browsers only support pngs as favicons. -->
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:default-root-relative-url('net/splitcells/website/icons/icon.png')"/>
+                                <xsl:value-of
+                                        select="s:default-root-relative-url('net/splitcells/website/icons/icon.png')"/>
                             </xsl:attribute>
                         </link>
                         <link rel="stylesheet" type="text/css"
@@ -462,24 +466,28 @@ window.onload = function() {
                         </link>
                         <link rel="icon" type="image/svg+xml">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:default-root-relative-url('net/splitcells/website/icons/icon.svg')"/>
+                                <xsl:value-of
+                                        select="s:default-root-relative-url('net/splitcells/website/icons/icon.svg')"/>
                             </xsl:attribute>
                         </link>
                         <link rel="alternate icon">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:default-root-relative-url('net/splitcells/website/icons/icon.svg')"/>
+                                <xsl:value-of
+                                        select="s:default-root-relative-url('net/splitcells/website/icons/icon.svg')"/>
                             </xsl:attribute>
                         </link>
                         <link rel="mask-icon" type="image/svg+xml">
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:default-root-relative-url(net/splitcells/website/'icons/icon.svg')"/>
+                                <xsl:value-of
+                                        select="s:default-root-relative-url(net/splitcells/website/'icons/icon.svg')"/>
                             </xsl:attribute>
                         </link>
                         <meta name="viewport" content="width=device-width, initial-scale=1"/>
                         <link rel="apple-touch-icon">
                             <!-- Some Mobile browsers only support pngs as favicons. -->
                             <xsl:attribute name="href">
-                                <xsl:value-of select="s:default-root-relative-url('net/splitcells/website/icons/icon.png')"/>
+                                <xsl:value-of
+                                        select="s:default-root-relative-url('net/splitcells/website/icons/icon.png')"/>
                             </xsl:attribute>
                         </link>
                         <title>
@@ -545,14 +553,15 @@ window.onload = function() {
                             <!-- TODO Move window menu to header. -->
                         </header>
                         <main id="topElement">
-                            <div class="net-splitcells-content-column-left-border"> </div>
+                            <div class="net-splitcells-content-column-left-border"></div>
                             <div class="net-splitcells-content-column">
                                 <div id="content"
                                      class="net-splitcells-content-main">
                                     <article>
                                         <div class="splitcells-net-window-menu">
                                             <div class="splitcells-net-line net-splitcells-component-priority-2">
-                                                <xsl:copy-of select="$net-splitcells-website-server-config-window-menu"/>
+                                                <xsl:copy-of
+                                                        select="$net-splitcells-website-server-config-window-menu"/>
                                                 <div class="net-splitcells-space-filler"></div>
                                                 <div class="net-splitcells-action-button net-splitcells-button-inline page-column-0-full-screen net-splitcells-minimal-not"
                                                      onclick="javascript: fullScreenEnable();
@@ -560,7 +569,7 @@ window.onload = function() {
 										                unshowByCssClass('column_1');
 										                showByCssClass('page-column-0-windowed');
 													">
-                                                    ☐
+                                                    <xsl:text>☐</xsl:text>
                                                 </div>
                                                 <div class="net-splitcells-button-inline net-splitcells-action-button page-column-0-windowed optional"
                                                      style="visibility: hidden; display: none;"
@@ -569,7 +578,7 @@ window.onload = function() {
 														unshowByCssClass('page-column-0-windowed');
 														showByCssClass('page-column-0-full-screen');
 														showByCssClass('column_1');">
-                                                    _
+                                                    <xsl:text>_</xsl:text>
                                                 </div>
                                             </div>
                                             <div class="net-splitcells-structural-guide"/>
@@ -618,7 +627,7 @@ window.onload = function() {
                                 </div>
 
                                 <xsl:if test="$column_1 != ''">
-                                    <div class="net-splitcells-meta-column-left-border"> </div>
+                                    <div class="net-splitcells-meta-column-left-border"></div>
                                     <div class="net-splitcells-meta-column column_1 contentCell Right_shadow">
                                         <!-- TODO Create complete table of content for this column. -->
                                         <article class="Standard_p2 net-splitcells-component-priority-2">
@@ -631,7 +640,7 @@ window.onload = function() {
 														unshowByCssClass('page-column-1-full-screen');
 										                unshowByCssClass('net-splitcells-content-main');
 										                showByCssClass('page-column-1-windowed');">
-                                                            ☐
+                                                            <xsl:text>☐</xsl:text>
                                                         </div>
                                                         <div class="net-splitcells-action-button page-column-1-windowed optional"
                                                              style="visibility: hidden; display: none;"
@@ -640,7 +649,7 @@ window.onload = function() {
 														unshowByCssClass('page-column-1-windowed');
 														showByCssClass('page-column-1-full-screen');
 														showByCssClass('net-splitcells-content-main');">
-                                                            _
+                                                            <xsl:text>_</xsl:text>
                                                         </div>
                                                     </div>
                                                     <div class="net-splitcells-structural-guide"/>
@@ -694,7 +703,7 @@ window.onload = function() {
                                     </a>
                                 </div>
                             </div>
-                            <div class="net-splitcells-right-decoration-left-border"> </div>
+                            <div class="net-splitcells-right-decoration-left-border"></div>
                             <div class="rightDecoration Right_shadow">
                                 <div class="Borderless Standard_p2 Layout decorationBoxRight"
                                      style="position: relative; z-index: 2; width: 1.5em;"></div>
@@ -785,8 +794,10 @@ window.onload = function() {
                             .forEach(disableStylesheet);*/
                         </script>
                         <script type="text/javascript">
-                            // TODO REMOVE apply_to_elements_of('advertise-one-of', function(element){unshowAllChildren(element);});
-                            // TODO REMOVE apply_to_elements_of('advertise-one-of', function(element){showOneOfChildren(element);});
+                            // TODO REMOVE apply_to_elements_of('advertise-one-of',
+                            function(element){unshowAllChildren(element);});
+                            // TODO REMOVE apply_to_elements_of('advertise-one-of',
+                            function(element){showOneOfChildren(element);});
                             checkAvailibility('net-splitcells-website-log-error');
                         </script>
                         <!-- Integration of https://www.mathjax.org. TODO Use local copy in future. -->
@@ -802,7 +813,8 @@ window.onload = function() {
                                 src="/net/splitcells/website/js/math-jax/es5/tex-mml-chtml.js"></script>
                         <script type="text/javascript" charset="utf-8">
                             <xsl:attribute name="src">
-                                <xsl:value-of select="s:default-root-relative-url('net/splitcells/website/js/status-render.js')"/>
+                                <xsl:value-of
+                                        select="s:default-root-relative-url('net/splitcells/website/js/status-render.js')"/>
                             </xsl:attribute>
                         </script>
                     </body>

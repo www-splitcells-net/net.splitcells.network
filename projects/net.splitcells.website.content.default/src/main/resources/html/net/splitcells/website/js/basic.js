@@ -37,8 +37,7 @@
  	if (!child.hasOwnProperty('style')) {
  	    return;
  	    }
- 	child.style.display = 'inherit';
- 	child.style.visibility = 'inherit';
+ 	showElement(child);
  	}
  function unshowAllChildren(node) {
      for (var i = 0; i < node.childNodes.length; i++) {
@@ -48,14 +47,10 @@
          }
      }
 function unshowById(elementId) {
-    var element = document.getElementById(elementId);
-    element.style.display = "none";
-    element.style.visibility = "hidden";
+    unshowElement(document.getElementById(elementId));
     }
 function showById(elementId) {
-    var element = document.getElementById(elementId);
-    element.style.display = "inherit";
-    element.style.visibility = "inherit";
+    showElement(document.getElementById(elementId));
     }
 function unshowByCssClass(cssClass) {
     hide(cssClass);
@@ -70,8 +65,11 @@ function unshowElement(element) {
   	element.style.visibility = 'hidden';
 	}
 function showElement(element) {
-	element.style.display = 'inherit';
-  	element.style.visibility = 'inherit';
+    /* The value 'inherit' is not used, as this can cause problems,
+     * when i.e. the element in question is a div containing centered text.
+     */
+	element.style.display = null;
+  	element.style.visibility = null;
 	}
 function hasClass(element, cls) {
 	return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
@@ -100,13 +98,13 @@ function element_visibility_default(css_class) {
 function unhide(elementId /*str*/ ) {
 	var elementId_elements = document.getElementsByClassName(elementId);
 	for (var i = 0; i < elementId_elements.length; i++) {
-		elementId_elements[i].style.visibility = 'inherit';
+		elementId_elements[i].style.visibility = null;
 		}
 	}
 function display(elementId /*str*/) {
 	var elementId_elements = document.getElementsByClassName(elementId);
 	for (var i = 0; i < elementId_elements.length; i++) {
-		elementId_elements[i].style.display = "inherit";
+		elementId_elements[i].style.display = null;
 		}
 	}
 function undisplay(elementId /*str*/) {
