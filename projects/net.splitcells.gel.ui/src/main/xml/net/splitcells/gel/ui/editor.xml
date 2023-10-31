@@ -12,6 +12,11 @@
     <meta>
         <title>Generic Allocation Editor</title>
         <description>Define and solve assignment problems.</description>
+        <d:toDo>
+            <d:toDo>Import supplies and demands from local file via Tabulator.</d:toDo>
+            <d:toDo>Edit supply and demand data via Tabulator for a better use experience.</d:toDo>
+            <d:toDo>Export and import data from Excel format.</d:toDo>
+        </d:toDo>
     </meta>
     <paragraph>
         This editor allows one to define an assignment problem and to let it solve by the Generic Allocator.
@@ -19,13 +24,19 @@
         After executing the optimizer via the <quote>Submit optimization problem.</quote> button,
         solution will be visible under the chapter <quote>Solutions</quote>.
     </paragraph>
-    <x:div id="net-splitcells-gel-ui-calculate-solution-form-submit-1" class="net-splitcells-button net-splitcells-action-button" onclick="javascript: net_splitcells_gel_ui_editor_form()">Submit optimization problem.</x:div>
+    <x:div id="net-splitcells-gel-ui-calculate-solution-form-submit-1"
+           class="net-splitcells-button net-splitcells-action-button"
+           onclick="javascript: net_splitcells_gel_ui_editor_form()">Submit optimization problem.
+    </x:div>
     <x:form action="/net/splitcells/gel/ui/calculate-solution.form" method="post"
             enctype="multipart/form-data"
             id="net-splitcells-gel-ui-editor-form">
         <chapter minimized="true">
             <title>Problem Definition</title>
-            <x:textarea id="net-splitcells-gel-ui-editor-form-problem-definition" name="net-splitcells-gel-ui-editor-form-problem-definition" class="net-splitcells-component-priority-0" style="width: 100%; height: 50em; resize: none; border: none; font-family: monospace; font-size: 1em;"
+            <x:textarea id="net-splitcells-gel-ui-editor-form-problem-definition"
+                        name="net-splitcells-gel-ui-editor-form-problem-definition"
+                        class="net-splitcells-component-priority-0"
+                        style="width: 100%; height: 50em; resize: none; border: none; font-family: monospace; font-size: 1em;"
             ><![CDATA[demands={a=int();b=string()};
 supplies={c=float()};
 constraints=forEach(a).then(hasSize(2));
@@ -37,14 +48,19 @@ name="testParseProblem";
             <title>Problem Data</title>
             <chapter minimized="true">
                 <title>Demands</title>
-                <x:textarea id="net-splitcells-gel-ui-editor-form-demands" name="net-splitcells-gel-ui-editor-form-demands" class="net-splitcells-component-priority-0" style="width: 100%; height: 50em; resize: none; border: none; font-family: monospace; font-size: 1em;"
+                <x:textarea id="net-splitcells-gel-ui-editor-form-demands"
+                            name="net-splitcells-gel-ui-editor-form-demands" class="net-splitcells-component-priority-0"
+                            style="width: 100%; height: 50em; resize: none; border: none; font-family: monospace; font-size: 1em;"
                 ><![CDATA[1,1
 2,2
 3,3]]></x:textarea>
             </chapter>
             <chapter minimized="true">
                 <title>Supplies</title>
-                <x:textarea id="net-splitcells-gel-ui-editor-form-supplies" name="net-splitcells-gel-ui-editor-form-supplies" class="net-splitcells-component-priority-0" style="width: 100%; height: 50em; resize: none; border: none; font-family: monospace; font-size: 1em;"
+                <x:textarea id="net-splitcells-gel-ui-editor-form-supplies"
+                            name="net-splitcells-gel-ui-editor-form-supplies"
+                            class="net-splitcells-component-priority-0"
+                            style="width: 100%; height: 50em; resize: none; border: none; font-family: monospace; font-size: 1em;"
                 ><![CDATA[1
 2
 3]]></x:textarea>
@@ -52,10 +68,16 @@ name="testParseProblem";
         </chapter>
         <chapter>
             <title>Solutions</title>
-            <x:div id="net-splitcells-gel-ui-calculate-solution-form-solution-download-as-csv" class="net-splitcells-action-button" onclick="javascript: net_splitcells_gel_ui_calculate_solution_form_solution_download_as_csv()">Download as CSV file.</x:div>
+            <x:div id="net-splitcells-gel-ui-calculate-solution-form-solution-download-as-csv"
+                   class="net-splitcells-action-button"
+                   onclick="javascript: net_splitcells_gel_ui_calculate_solution_form_solution_download_as_csv()">
+                Download as CSV file.
+            </x:div>
             <x:div id="example-table">No data present yet.</x:div>
 
-            <x:textarea id="net-splitcells-gel-ui-editor-form-solution" name="net-splitcells-gel-ui-editor-form-solution" class="net-splitcells-component-priority-0" style="width: 100%; height: 50em; resize: none; border: none; visibility: hidden; display: none; font-family: monospace; font-size: 1em;"
+            <x:textarea id="net-splitcells-gel-ui-editor-form-solution"
+                        name="net-splitcells-gel-ui-editor-form-solution" class="net-splitcells-component-priority-0"
+                        style="width: 100%; height: 50em; resize: none; border: none; visibility: hidden; display: none; font-family: monospace; font-size: 1em;"
             ></x:textarea>
         </chapter>
     </x:form>
