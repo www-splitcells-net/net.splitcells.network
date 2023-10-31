@@ -794,10 +794,6 @@ window.onload = function() {
                             .forEach(disableStylesheet);*/
                         </script>
                         <script type="text/javascript">
-                            // TODO REMOVE apply_to_elements_of('advertise-one-of',
-                            function(element){unshowAllChildren(element);});
-                            // TODO REMOVE apply_to_elements_of('advertise-one-of',
-                            function(element){showOneOfChildren(element);});
                             checkAvailibility('net-splitcells-website-log-error');
                         </script>
                         <!-- Integration of https://www.mathjax.org. TODO Use local copy in future. -->
