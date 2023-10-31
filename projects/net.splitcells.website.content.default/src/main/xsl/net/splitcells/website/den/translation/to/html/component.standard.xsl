@@ -253,7 +253,7 @@
                                 <xsl:attribute name="href" select="concat('#', generate-id(.))"/>
                                 <xsl:apply-templates select="./s:title/node()"/>
                             </a>
-                            <div style="float: right;">
+                            <div class="net-splitcells-action-button" style="float: right;">
                                 <a href="#topElement">↑
                                 </a>
                             </div>
