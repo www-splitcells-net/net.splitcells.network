@@ -130,3 +130,39 @@ function invert_colors() {
 			}
 		}
 	}
+function net_splitcells_webserver_form_submit_config() {
+    var config = {
+        'form-id' : null,
+        'submit-button-id' : null,
+        'on-submission-completion' : () => {}
+    };
+    return config;
+}
+function net_splitcells_webserver_form_submit(config) {
+    var submitButton = document.getElementById(config['submit-button-id']);
+    var preSubmitButtonText = submitButton.innerHTML;
+    var onClickCode = submitButton.onclick;
+    submitButton.onclick = null;
+    submitButton.innerHTML = "Executing...";
+    submitButton.classList.add("net-splitcells-button-activity");
+    submitButton.classList.remove("net-splitcells-action-button");
+    var form = document.getElementById(config['form-id']);
+    var request  = new XMLHttpRequest();
+    var data = new FormData(form);
+    request.onload = function() {
+        console.log('Response to "' + config['form-id'] + '":' + this.responseText);
+        var responseObject = JSON.parse(this.responseText);
+        if ('net-splitcells-websiter-server-form-update' in responseObject) {
+            for (const [key, value] of Object.entries(responseObject['net-splitcells-websiter-server-form-update'])) {
+                document.getElementById(key).value = value;
+            }
+        }
+        config['on-submission-completion']();
+        submitButton.onclick = onClickCode;
+        submitButton.classList.remove("net-splitcells-button-activity");
+        submitButton.classList.add("net-splitcells-action-button");
+        submitButton.innerHTML = preSubmitButtonText;
+    }
+    request.open("post", form.action);
+    request.send(data);
+}

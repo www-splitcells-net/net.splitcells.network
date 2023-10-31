@@ -27,7 +27,7 @@
     <paragraph>Click on the <quote>+</quote> button to enter or edit data of the correspondent chapter.</paragraph>
     <x:div id="net-splitcells-gel-ui-calculate-solution-form-submit-1"
            class="net-splitcells-button net-splitcells-action-button"
-           onclick="javascript: net_splitcells_gel_ui_editor_form()">Submit optimization problem.
+           onclick="javascript: net_splitcells_gel_ui_editor_form_submit()">Submit optimization problem.
     </x:div>
     <x:form action="/net/splitcells/gel/ui/calculate-solution.form" method="post"
             enctype="multipart/form-data"
@@ -83,43 +83,5 @@ name="testParseProblem";
         </chapter>
     </x:form>
     <x:script type="text/javascript" charset="utf-8" src="/net/splitcells/website/js/tabulator.min.js"></x:script>
-    <x:script type="text/javascript"><![CDATA[
-        let net_splitcells_gel_ui_editor_form_solution = null;
-        function net_splitcells_gel_ui_calculate_solution_form_solution_download_as_csv() {
-            net_splitcells_gel_ui_editor_form_solution.download("csv", "solution.csv", {delimiter:","});
-        }
-        function net_splitcells_gel_ui_editor_form() {
-            var submitButton = document.getElementById('net-splitcells-gel-ui-calculate-solution-form-submit-1');
-            var preSubmitButtonText = submitButton.innerHTML;
-            var onClickCode = submitButton.onclick;
-            submitButton.onclick = null;
-            submitButton.innerHTML = "Executing...";
-            submitButton.classList.add("net-splitcells-button-activity");
-            submitButton.classList.remove("net-splitcells-action-button");
-            var form = document.getElementById('net-splitcells-gel-ui-editor-form');
-            var request  = new XMLHttpRequest();
-            var data = new FormData(form);
-            request.onload = function() {
-                console.log('Response to "net-splitcells-gel-ui-editor-form":' + this.responseText);
-                var responseObject = JSON.parse(this.responseText);
-                if ('net-splitcells-websiter-server-form-update' in responseObject) {
-                    for (const [key, value] of Object.entries(responseObject['net-splitcells-websiter-server-form-update'])) {
-                        document.getElementById(key).value = value;
-                    }
-                }
-                net_splitcells_gel_ui_editor_form_solution = new Tabulator("#example-table", {
-                    data: document.getElementById('net-splitcells-gel-ui-editor-form-solution').value
-                    , importFormat: 'csv'
-                    , autoColumns: true });
-
-                submitButton.onclick = onClickCode;
-                submitButton.classList.remove("net-splitcells-button-activity");
-                submitButton.classList.add("net-splitcells-action-button");
-                submitButton.innerHTML = preSubmitButtonText;
-            }
-            request.open("post", form.action);
-            request.send(data);
-        }
-]]>
-    </x:script>
+    <x:script type="text/javascript" charset="utf-8" src="/net/splitcells/gel/ui/editor.js"></x:script>
 </article>
