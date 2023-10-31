@@ -24,6 +24,7 @@
         After executing the optimizer via the <quote>Submit optimization problem.</quote> button,
         solution will be visible under the chapter <quote>Solutions</quote>.
     </paragraph>
+    <paragraph>Click on the <quote>+</quote> button to enter or edit data of the correspondent chapter.</paragraph>
     <x:div id="net-splitcells-gel-ui-calculate-solution-form-submit-1"
            class="net-splitcells-button net-splitcells-action-button"
            onclick="javascript: net_splitcells_gel_ui_editor_form()">Submit optimization problem.
