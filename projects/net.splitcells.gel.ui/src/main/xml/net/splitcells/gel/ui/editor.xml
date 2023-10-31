@@ -17,7 +17,7 @@
     <x:form action="/net/splitcells/gel/ui/calculate-solution.form" method="post"
             enctype="multipart/form-data"
             id="net-splitcells-gel-ui-editor-form">
-        <chapter>
+        <chapter minimized="true">
             <title>Problem Definition</title>
             <x:textarea id="net-splitcells-gel-ui-editor-form-problem-definition" name="net-splitcells-gel-ui-editor-form-problem-definition" class="net-splitcells-component-priority-0" style="width: 100%; height: 50em; resize: none; border: none; font-family: monospace; font-size: 1em;"
             ><![CDATA[demands={a=int();b=string()};
@@ -29,14 +29,14 @@ name="testParseProblem";
         </chapter>
         <chapter>
             <title>Problem Data</title>
-            <chapter>
+            <chapter minimized="true">
                 <title>Demands</title>
                 <x:textarea id="net-splitcells-gel-ui-editor-form-demands" name="net-splitcells-gel-ui-editor-form-demands" class="net-splitcells-component-priority-0" style="width: 100%; height: 50em; resize: none; border: none; font-family: monospace; font-size: 1em;"
                 ><![CDATA[1,1
 2,2
 3,3]]></x:textarea>
             </chapter>
-            <chapter>
+            <chapter minimized="true">
                 <title>Supplies</title>
                 <x:textarea id="net-splitcells-gel-ui-editor-form-supplies" name="net-splitcells-gel-ui-editor-form-supplies" class="net-splitcells-component-priority-0" style="width: 100%; height: 50em; resize: none; border: none; font-family: monospace; font-size: 1em;"
                 ><![CDATA[1

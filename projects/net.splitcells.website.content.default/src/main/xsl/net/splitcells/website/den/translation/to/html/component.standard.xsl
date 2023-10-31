@@ -244,22 +244,77 @@
                 </section>
             </xsl:when>
             <xsl:otherwise>
+                <xsl:variable name="id" select="generate-id(.)"/>
                 <section>
-                    <xsl:attribute name="id" select="generate-id(.)"/>
+                    <xsl:attribute name="id" select="$id"/>
                     <div class="heading">
                         <xsl:attribute name="id" select="./s:title/@id"/>
                         <div style="width: 100%;">
                             <a style="margin-right: .5em;">
-                                <xsl:attribute name="href" select="concat('#', generate-id(.))"/>
+                                <xsl:attribute name="href" select="concat('#', $id)"/>
                                 <xsl:apply-templates select="./s:title/node()"/>
                             </a>
                             <div class="net-splitcells-action-button" style="float: right;">
-                                <a href="#topElement">↑
-                                </a>
+                                <a href="#topElement">↑</a>
+                            </div>
+                            <div class="net-splitcells-action-button">
+                                <xsl:attribute name="id" select="concat($id, '-button-hide')"/>
+                                <xsl:attribute name="style">
+                                    <xsl:text>float: right;</xsl:text>
+                                    <xsl:choose>
+                                        <xsl:when test="./@minimized='true'">display: none; visibility: hidden;
+                                        </xsl:when>
+                                        <xsl:otherwise></xsl:otherwise>
+                                    </xsl:choose>
+                                </xsl:attribute>
+                                <xsl:attribute name="onclick">
+                                    <xsl:text>unshowById('</xsl:text>
+                                    <xsl:value-of select="$id"/>
+                                    <xsl:text>-body');</xsl:text>
+                                    <xsl:text>showById('</xsl:text>
+                                    <xsl:value-of select="$id"/>
+                                    <xsl:text>-button-show');</xsl:text>
+                                    <xsl:text>unshowById('</xsl:text>
+                                    <xsl:value-of select="$id"/>
+                                    <xsl:text>-button-hide');</xsl:text>
+                                </xsl:attribute>
+                                -
+                            </div>
+                            <div class="net-splitcells-action-button">
+                                <xsl:attribute name="id" select="concat($id, '-button-show')"/>
+                                <xsl:attribute name="style">
+                                    <xsl:text>float: right;</xsl:text>
+                                    <xsl:choose>
+                                        <xsl:when test="./@minimized='true'"></xsl:when>
+                                        <xsl:otherwise>display: none; visibility: hidden;</xsl:otherwise>
+                                    </xsl:choose>
+                                </xsl:attribute>
+                                <xsl:attribute name="onclick">
+                                    <xsl:text>showById('</xsl:text>
+                                    <xsl:value-of select="$id"/>
+                                    <xsl:text>-body');</xsl:text>
+                                    <xsl:text>unshowById('</xsl:text>
+                                    <xsl:value-of select="$id"/>
+                                    <xsl:text>-button-show');</xsl:text>
+                                    <xsl:text>showById('</xsl:text>
+                                    <xsl:value-of select="$id"/>
+                                    <xsl:text>-button-hide');</xsl:text>
+                                </xsl:attribute>
+                                +
                             </div>
                         </div>
                     </div>
-                    <xsl:apply-templates select="node()[not(self::s:title)]"/>
+                    <x:div>
+                        <xsl:attribute name="id" select="concat($id, '-body')"/>
+                        <xsl:attribute name="style">
+                            <xsl:choose>
+                                <xsl:when test="./@minimized='true'">display: none; visibility: hidden;
+                                </xsl:when>
+                                <xsl:otherwise></xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:attribute>
+                        <xsl:apply-templates select="node()[not(self::s:title)]"/>
+                    </x:div>
                 </section>
             </xsl:otherwise>
         </xsl:choose>
@@ -388,7 +443,9 @@
                         highlightedShortSummary
                     </xsl:attribute>
                     <xsl:attribute name="style">
-                        <xsl:text>padding: 0em; margin-top: 1.4em; margin-bottom: 1.4em; display: flex; flex-direction: row;</xsl:text>
+                        <xsl:text>padding: 0em; margin-top: 1.4em; margin-bottom: 1.4em; display: flex; flex-direction:
+                            row;
+                        </xsl:text>
                         <xsl:choose>
                             <xsl:when test="./s:logos">
                                 <xsl:text>min-height: 12em;</xsl:text>
@@ -460,7 +517,9 @@
                         <xsl:element name="div">
                             <!-- Randomize logo selection if multiple logos are available. -->
                             <xsl:attribute name="style">
-                                <xsl:text>width: 50%; overflow: hidden; background-size: 100% auto; background-repeat: no-repeat; background-image: url('</xsl:text>
+                                <xsl:text>width: 50%; overflow: hidden; background-size: 100% auto; background-repeat:
+                                    no-repeat; background-image: url('
+                                </xsl:text>
                                 <xsl:choose>
                                     <xsl:when test="./s:logos/*[1]/@license">
                                         <!-- TODO REMOVE This is legacy code. -->

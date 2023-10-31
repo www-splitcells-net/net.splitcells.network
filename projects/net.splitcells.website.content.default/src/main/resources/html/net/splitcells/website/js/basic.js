@@ -47,6 +47,16 @@
              }
          }
      }
+function unshowById(elementId) {
+    var element = document.getElementById(elementId);
+    element.style.display = "none";
+    element.style.visibility = "hidden";
+    }
+function showById(elementId) {
+    var element = document.getElementById(elementId);
+    element.style.display = "inherit";
+    element.style.visibility = "inherit";
+    }
 function unshowByCssClass(cssClass) {
     hide(cssClass);
     undisplay(cssClass);
