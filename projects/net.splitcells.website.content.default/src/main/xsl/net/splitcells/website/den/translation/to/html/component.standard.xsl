@@ -231,6 +231,40 @@
     <xsl:template match="s:text">
         <xsl:apply-templates/>
     </xsl:template>
+    <xsl:template match="s:form">
+        <form method="post" enctype="multipart/form-data">
+            <xsl:attribute name="id" select="./@id"/>
+            <!-- TODO Action paths are a hack, because the server does not support the root path concept,
+                which is actively used for documents hosted be the server. -->
+            <xsl:attribute name="action" select="./@action"/>
+            <xsl:apply-templates select="node()[not(self::s:library)]"/>
+        </form>
+        <xsl:for-each select="./s:library">
+            <script type="text/javascript" charset="utf-8">
+                <xsl:attribute name="src" select="concat(s:default-root-relative-url(./@path), '.js')"/>
+            </script>
+        </xsl:for-each>
+    </xsl:template>
+    <xsl:template match="s:form-submit-button">
+        <div class="net-splitcells-button net-splitcells-action-button">
+            <xsl:attribute name="id" select="./@id"/>
+            <xsl:attribute name="onclick" select="concat('javascript: ', ./@command, '()')"/>
+            <xsl:apply-templates select="./node()"/>
+        </div>
+    </xsl:template>
+    <xsl:template match="s:text-area">
+        <textarea class="net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor">
+            <xsl:attribute name="id" select="./@id"/>
+            <xsl:attribute name="name" select="./@id"/>
+            <xsl:apply-templates select="./text()"/>
+        </textarea>
+    </xsl:template>
+    <xsl:template match="s:rendering-target">
+        <x:div>
+            <xsl:attribute name="id" select="./@id"/>
+            No data present yet.
+        </x:div>
+    </xsl:template>
     <xsl:template match="s:chapter">
         <xsl:choose>
             <xsl:when test="$generation.style='minimal'">
