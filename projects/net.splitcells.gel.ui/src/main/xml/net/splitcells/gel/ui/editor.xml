@@ -68,6 +68,8 @@ name="testParseProblem";
         function net_splitcells_gel_ui_editor_form() {
             var submitButton = document.getElementById('net-splitcells-gel-ui-calculate-solution-form-submit-1');
             var preSubmitButtonText = submitButton.innerHTML;
+            var onClickCode = submitButton.onclick;
+            submitButton.onclick = null;
             submitButton.innerHTML = "Executing...";
             submitButton.classList.add("net-splitcells-button-activity");
             submitButton.classList.remove("net-splitcells-action-button");
@@ -87,9 +89,10 @@ name="testParseProblem";
                     , importFormat: 'csv'
                     , autoColumns: true });
 
-                submitButton.innerHTML = preSubmitButtonText;
+                submitButton.onclick = onClickCode;
                 submitButton.classList.remove("net-splitcells-button-activity");
                 submitButton.classList.add("net-splitcells-action-button");
+                submitButton.innerHTML = preSubmitButtonText;
             }
             request.open("post", form.action);
             request.send(data);
