@@ -82,6 +82,5 @@ name="testParseProblem";
             ></x:textarea>
         </chapter>
     </x:form>
-    <x:script type="text/javascript" charset="utf-8" src="/net/splitcells/website/js/tabulator.min.js"></x:script>
     <x:script type="text/javascript" charset="utf-8" src="/net/splitcells/gel/ui/editor.js"></x:script>
 </article>
