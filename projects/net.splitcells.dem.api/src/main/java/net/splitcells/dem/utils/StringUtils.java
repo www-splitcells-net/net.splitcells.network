@@ -49,4 +49,14 @@ public class StringUtils {
     public static String parseString(byte[] arg) {
         return new String(arg, StandardCharsets.UTF_8);
     }
+
+    public static int countChar(String string, char character) {
+        var count = 0;
+        for (int i = 0; i < string.length(); i++) {
+            if (string.charAt(i) == character) {
+                count++;
+            }
+        }
+        return count;
+    }
 }

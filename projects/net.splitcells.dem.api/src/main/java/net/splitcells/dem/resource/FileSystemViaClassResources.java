@@ -33,6 +33,7 @@ import static net.splitcells.dem.resource.Files.readAsString;
 import static net.splitcells.dem.resource.Files.walk_recursively;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.dem.utils.StringUtils.countChar;
 import static net.splitcells.dem.utils.StringUtils.removePrefix;
 
 /**
@@ -146,34 +147,44 @@ public class FileSystemViaClassResources implements FileSystemView {
     @Override
     public Stream<Path> walkRecursively(Path path) {
         try {
-            final var resourcePath = clazz.getClassLoader()
-                    .getResource(normalize((basePath + path + "/")));
+            final var resourcePath = clazz.getClassLoader().getResource(normalize((basePath + path + "/")));
             if (resourcePath == null) {
                 return Stream.empty();
             }
             if ("jar".equals(resourcePath.getProtocol())) {
-                if (!"file".equals(FileSystemViaClassResources.class.getResource("/net/").getProtocol())) {
+                if (!"file".equals(clazz.getClassLoader().getResource("/" + basePath).getProtocol())) {
                     try {
                         final var pathStr = basePath + path.toString();
-                        final var dirURL = FileSystemViaClassResources.class.getResource("/net/");
-                        final var jarPath = dirURL.getPath().substring(5, dirURL.getPath().indexOf("!"));
-                        // The jar is provided by the class loader, and thereby this jar is trusted.
-                        try (final var jarFile = new JarFile(URLDecoder.decode(jarPath, UTF_8))) {
-                            final var jarEntries = jarFile
-                                    .entries()
-                                    .asIterator();
-                            final List<Path> walk = list();
-                            while (jarEntries.hasNext()) {
-                                walk.withAppended(Path.of((jarEntries.next().getRealName())));
+                        final var dirURL = clazz.getClassLoader().getResource("/" + pathStr);
+                        final var explenationCount = countChar(dirURL.getPath(), '!');
+                        if (explenationCount == 0) {
+                            throw executionException(perspective("Cannot process jar path, as no explanation mark is present in the class loader path. This indicates, that the resource is not located inside a jar:")
+                                    .withProperty("clazz", clazz.toString())
+                                    .withProperty("path", path.toString())
+                                    .withProperty("pathStr", pathStr)
+                                    .withProperty("dirURL", dirURL.toString()));
+                        } else if (explenationCount == 1) {
+                            final var jarPath = dirURL.getPath().substring(5, dirURL.getPath().lastIndexOf("!"));
+                            // The jar is provided by the class loader, and thereby this jar is trusted.
+                            try (final var jarFile = new JarFile(URLDecoder.decode(jarPath, UTF_8))) {
+                                final var jarEntries = jarFile
+                                        .entries()
+                                        .asIterator();
+                                final List<Path> walk = list();
+                                while (jarEntries.hasNext()) {
+                                    walk.withAppended(Path.of((jarEntries.next().getRealName())));
+                                }
+                                /*
+                                 * If the resources are loaded from a jar, the `META-INF` folder is actively filtered afterwards,
+                                 * in order to avoid walking through it, even it is not request.
+                                 * For example, without this hack requesting `net/splitcells/` would result in getting
+                                 * `META-INF` and `META-INF/MANIFEST.MF` as well, even though it was not requested.
+                                 */
+                                return walk.stream().filter(w -> w.startsWith(pathStr))
+                                        .map(w -> Path.of(w.toString().substring(basePath.length())));
                             }
-                            /*
-                             * If the resources are loaded from a jar, the `META-INF` folder is actively filtered afterwards,
-                             * in order to avoid walking through it, even it is not request.
-                             * For example, without this hack requesting `net/splitcells/` would result in getting
-                             * `META-INF` and `META-INF/MANIFEST.MF` as well, even though it was not requested.
-                             */
-                            return walk.stream().filter(w -> w.startsWith(pathStr))
-                                    .map(w -> Path.of(w.toString().substring(basePath.length())));
+                        } else {
+                            throw notImplementedYet("Nested jars are not supported yet.");
                         }
                     } catch (Throwable e) {
                         throw executionException(e);
