@@ -41,6 +41,11 @@ import static net.splitcells.dem.utils.StringUtils.removePrefix;
  * <p>Never place multiple {@link FileSystemViaClassResources} at the same package across modules or jars,
  * but with a different class name,
  * because this will create hard to debug problems while accessing files.</p>
+ * <p>TODO For maximal portability {@link #walkRecursively()} and co.
+ * should use a resource file, containing a list of all resource files.
+ * Otherwise, relative much support may be required for {@link #walkRecursively()} and co.
+ * to work in different environments.
+ * This would probably the case for i.e. TeaVM.</p>
  */
 @JavaLegacyArtifact
 public class FileSystemViaClassResources implements FileSystemView {
