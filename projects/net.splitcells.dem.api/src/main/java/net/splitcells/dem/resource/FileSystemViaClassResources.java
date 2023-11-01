@@ -144,6 +144,31 @@ public class FileSystemViaClassResources implements FileSystemView {
         return walkRecursively(Path.of("/"));
     }
 
+    /**
+     * Finds the resource protocol of the source code,
+     * in order to get more information about the protocols used for loading resources.
+     *
+     * @return The source code resource protocol of the {@link Class#getClassLoader()}
+     * of {@link FileSystemViaClassResources}.
+     */
+    private String defaultProtocol() {
+        var testResource = FileSystemViaClassResources.class.getClassLoader()
+                .getResource("net/");
+        if (testResource == null) {
+            testResource = FileSystemViaClassResources.class.getClassLoader()
+                    .getResource("/net/");
+        }
+        if (testResource == null) {
+            throw executionException(perspective("Could not test default protocol for resources of the class loader via the `net` source code package."));
+        }
+        final var resourceTestPath = testResource
+                .getProtocol();
+        if (resourceTestPath == null) {
+            throw executionException(perspective("Could not determine default protocol for resources of the class loader."));
+        }
+        return resourceTestPath;
+    }
+
     @Override
     public Stream<Path> walkRecursively(Path path) {
         try {
@@ -152,7 +177,9 @@ public class FileSystemViaClassResources implements FileSystemView {
                 return Stream.empty();
             }
             if ("jar".equals(resourcePath.getProtocol())) {
-                if (!"file".equals(clazz.getClassLoader().getResource("/" + basePath).getProtocol())) {
+                final var defaultProtocol = defaultProtocol();
+                if (!"file".equals(defaultProtocol)) {
+                    // Load resources from class loader via jars or something, that is not the file protocol.
                     try {
                         final var pathStr = basePath + path.toString();
                         final var dirURL = clazz.getClassLoader().getResource("/" + pathStr);
@@ -190,6 +217,8 @@ public class FileSystemViaClassResources implements FileSystemView {
                         throw executionException(e);
                     }
                 } else {
+                    // TODO Document when this branch is active.
+                    // Loading resources from class loader via the file protocol.
                     final var pathStrWithoutProtocols = resourcePath.toURI().toString().substring(9);
                     final var jarPath = pathStrWithoutProtocols.substring(0, pathStrWithoutProtocols.indexOf("!"));
                     // The jar is provided by the class loader, and thereby this jar is trusted.
@@ -215,7 +244,9 @@ public class FileSystemViaClassResources implements FileSystemView {
                     }
                 }
             } else {
-                // Checks if base path is present.
+                /* Assume that class loader has resources from target folder of Maven build at the current folder.
+                 * Checks if base path is present.
+                 */
                 final var resource = clazz.getClassLoader().getResource(basePath + "./");
                 if (resource == null) {
                     return StreamUtils.emptyStream();
