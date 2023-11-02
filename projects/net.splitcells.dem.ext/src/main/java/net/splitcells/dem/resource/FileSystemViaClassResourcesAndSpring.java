@@ -137,21 +137,13 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
 
     @Override
     public Stream<Path> walkRecursively(Path path) {
-        System.out.println("1" + path);
         if (isFile(path)) {
             return streamOf(path);
         }
-        System.out.println("2" + path);
         try {
             final var pathChildren = streamOf(resourceResolver.getResources(normalize((basePath + path + "/**"))))
                     .filter(r -> r.exists())
-                    .map(r -> {
-                        try {
-                            return r.toString();
-                        } catch (Throwable e) {
-                            throw executionException(e);
-                        }
-                    })
+                    .map(r -> r.toString())
                     .map(p -> p.substring(p.lastIndexOf(basePath) + basePath.length()))
                     .map(p -> {
                         if (p.startsWith("./")) {
@@ -169,10 +161,6 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
                         if (p.endsWith("]")) {
                             return p.substring(0, p.length() - 1);
                         }
-                        return p;
-                    })
-                    .map(p -> {
-                        System.out.println("#" + p);
                         return p;
                     })
                     .map(Path::of);
