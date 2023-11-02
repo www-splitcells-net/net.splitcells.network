@@ -19,5 +19,9 @@
             <artifactId>dem.api</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+        </dependency>
     </dependencies>
 </project>

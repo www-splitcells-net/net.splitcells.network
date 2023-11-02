@@ -46,14 +46,6 @@ import static net.splitcells.dem.utils.StringUtils.removePrefix;
  * Otherwise, relative much support may be required for {@link #walkRecursively()} and co.
  * to work in different environments.
  * This would probably the case for i.e. TeaVM.</p>
- * <p>TODO In the future it would be probably best, to delegate the implementation of {@link #walkRecursively()} and co.
- * to external dependencies.
- * The reason for this is its complex implementation and the dependency on the runtime's platform and environment,
- * that in turn causes relative much work.
- * Spring Core's PathMatchingResourcePatternResolver seems to be a working example.
- * This delegation has to be optional, in order to minimize the number of required dependencies.
- * Therefore, this should be implemented at an extension project and not an core or API project.
- * </p>
  */
 @JavaLegacyArtifact
 public class FileSystemViaClassResources implements FileSystemView {

@@ -15,114 +15,112 @@
  */
 package net.splitcells.dem.resource;
 
-import net.splitcells.dem.testing.annotations.IntegrationTest;
+import net.splitcells.dem.data.atom.Bools;
+import net.splitcells.dem.testing.TestSuiteI;
+import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.TestFactory;
 
 import java.nio.file.Path;
+import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.atom.Bools.require;
+import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
-import static net.splitcells.dem.resource.FileSystemViaClassResources.resourceBasePath;
+import static net.splitcells.dem.resource.FileSystemViaClassResourcesFactoryImpl.fileSystemViaClassResourcesFactoryImpl;
 import static net.splitcells.dem.resource.Files.readAsString;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
+import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
+import static net.splitcells.dem.utils.StreamUtils.concat;
 
-public class FileSystemViaClassResourcesTest {
-    @IntegrationTest
-    public void testInputStream() {
-        final var testSubject = fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                , resourceBasePath("net.splitcells", "dem.api"));
+public class FileSystemViaClassResourcesTest extends TestSuiteI {
+
+    @Tag(INTEGRATION_TEST)
+    @TestFactory
+    public Stream<DynamicTest> testStdFactory() {
+        return testFactory(fileSystemViaClassResourcesFactoryImpl());
+    }
+
+    public Stream<DynamicTest> testFactory(FileSystemViaClassResourcesFactoryApi factory) {
+        return concat(dynamicTests(this::testInputStream, factory)
+                , dynamicTests(this::testInputStreamForSubFileSystem, factory)
+                , dynamicTests(this::testReadString, factory)
+                , dynamicTests(this::testReadStringForSubFileSystem, factory)
+                , dynamicTests(this::testExists, factory)
+                , dynamicTests(this::testExistsForSubFileSystem, factory)
+                , dynamicTests(this::testIsFile, factory)
+                , dynamicTests(this::testIsFileForSubFileSystem, factory)
+                , dynamicTests(this::testWalkRecursively, factory)
+                , dynamicTests(this::testWalkRecursivelyOnFile, factory)
+                , dynamicTests(this::testWalkRecursivelyForSubFileSystem, factory)
+                , dynamicTests(this::testSubFileSystemView, factory)
+                , dynamicTests(this::testReadFileAsBytes, factory));
+    }
+
+    public void testInputStream(FileSystemViaClassResourcesFactoryApi factory) {
+        final var testSubject = factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
+                , "net.splitcells", "dem.api");
         requireEquals(readAsString(testSubject.inputStream("src/main/resources/net/splitcells/dem/api/test-file.txt"))
                 , "This is a test file of the 20th of July 2023.");
     }
 
-    @IntegrationTest
-    public void testInputStreamForSubFileSystem() {
-        final var testSubject = fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                , resourceBasePath("net.splitcells", "dem.api")
-        ).subFileSystemView("src/main/resources/net/splitcells/dem");
+    public void testInputStreamForSubFileSystem(FileSystemViaClassResourcesFactoryApi factory) {
+        final var testSubject = factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
+                        , "net.splitcells", "dem.api")
+                .subFileSystemView("src/main/resources/net/splitcells/dem");
         requireEquals(readAsString(testSubject.inputStream("api/test-file.txt"))
                 , "This is a test file of the 20th of July 2023.");
     }
 
-    @IntegrationTest
-    public void testReadString() {
-        requireEquals(fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                        , resourceBasePath("net.splitcells", "dem.api")
-                ).readString("src/main/resources/net/splitcells/dem/api/test-file.txt")
+    public void testReadString(FileSystemViaClassResourcesFactoryApi factory) {
+        requireEquals(factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
+                                , "net.splitcells", "dem.api")
+                        .readString("src/main/resources/net/splitcells/dem/api/test-file.txt")
                 , "This is a test file of the 20th of July 2023.");
     }
 
-    @IntegrationTest
-    public void testReadStringForSubFileSystem() {
-        requireEquals(fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                        , resourceBasePath("net.splitcells", "dem.api")
-                ).subFileSystemView("src/main/resources/net/splitcells/dem/api")
+    public void testReadStringForSubFileSystem(FileSystemViaClassResourcesFactoryApi factory) {
+        requireEquals(factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
+                                , "net.splitcells", "dem.api")
+                        .subFileSystemView("src/main/resources/net/splitcells/dem/api")
                         .readString("test-file.txt")
                 , "This is a test file of the 20th of July 2023.");
     }
 
-    @IntegrationTest
-    public void testExists() {
-        require(fileSystemViaClassResources(FileSystemViaClassResourcesTest.class).exists());
+    public void testExists(FileSystemViaClassResourcesFactoryApi factory) {
+        require(factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class, "", "").exists());
     }
 
-    @IntegrationTest
-    public void testExistsForSubFileSystem() {
-        require(fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                , resourceBasePath("net.splitcells", "dem.api"))
+    public void testExistsForSubFileSystem(FileSystemViaClassResourcesFactoryApi factory) {
+        require(factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
+                        , "net.splitcells", "dem.api")
                 .exists());
-        require(fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                , resourceBasePath("net.splitcells", "dem.api"))
+        require(factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
+                        , "net.splitcells", "dem.api")
                 .subFileSystemView("src/main/resources/net/splitcells/")
                 .exists());
     }
 
-    @IntegrationTest
-    public void testIsFile() {
-        final var testSubject = fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                , resourceBasePath("net.splitcells", "dem.api"));
+    public void testIsFile(FileSystemViaClassResourcesFactoryApi factory) {
+        final var testSubject = factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
+                , "net.splitcells", "dem.api");
         require(testSubject.isFile("src/main/resources/net/splitcells/dem/api/test-file.txt"));
+        requireNot(testSubject.isFile("src/main/resources/net/splitcells/dem/api/test-file-invalid.txt"));
+        requireNot(testSubject.isFile("src/main/resources/net/splitcells/dem/api"));
     }
 
-    @IntegrationTest
-    public void testIsFileForSubFileSystem() {
-        final var testSubject = fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                , resourceBasePath("net.splitcells", "dem.api")
-        ).subFileSystemView("src/main/resources/net/");
+    public void testIsFileForSubFileSystem(FileSystemViaClassResourcesFactoryApi factory) {
+        final var testSubject = factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
+                        , "net.splitcells", "dem.api")
+                .subFileSystemView("src/main/resources/net/");
         require(testSubject.isFile("splitcells/dem/api/test-file.txt"));
     }
 
-    @IntegrationTest
-    public void testWalkRecursively() {
+    public void testWalkRecursively(FileSystemViaClassResourcesFactoryApi factory) {
         final var rootPath = "src/main/resources/net/splitcells/dem/resource/FileSystemViaClassResourcesTest/testWalkRecursively/";
-        fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                , resourceBasePath("net.splitcells", "dem.api")
-        ).walkRecursively(rootPath)
-                .collect(toList())
-                .requireContentsOf(Path.of(rootPath)
-                        , Path.of(rootPath + "1")
-                        , Path.of(rootPath + "1/2")
-                        , Path.of(rootPath + "1/2/3")
-                        , Path.of(rootPath + "1/2/3/test.txt")
-                );
-    }
-
-    @IntegrationTest
-    public void testWalkRecursivelyOnFile() {
-        final var rootPath = "src/main/resources/net/splitcells/dem/resource/FileSystemViaClassResourcesTest/testWalkRecursively/another-test.txt";
-        fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                , resourceBasePath("net.splitcells", "dem.api")
-        ).walkRecursively(rootPath)
-                .collect(toList())
-                .requireContentsOf(Path.of(rootPath));
-    }
-
-    @IntegrationTest
-    public void testWalkRecursivelyForSubFileSystem() {
-        final var rootPath = "testWalkRecursively/";
-        fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                , resourceBasePath("net.splitcells", "dem.api")
-        ).subFileSystemView("src/main/resources/net/splitcells/dem/resource/FileSystemViaClassResourcesTest")
+        factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
+                        , "net.splitcells", "dem.api")
                 .walkRecursively(rootPath)
                 .collect(toList())
                 .requireContentsOf(Path.of(rootPath)
@@ -133,18 +131,40 @@ public class FileSystemViaClassResourcesTest {
                 );
     }
 
-    @IntegrationTest
-    public void testSubFileSystemView() {
-        final var testSubject = fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                , resourceBasePath("net.splitcells", "dem.api")
-        ).subFileSystemView("src/main/resources/net/splitcells");
+    public void testWalkRecursivelyOnFile(FileSystemViaClassResourcesFactoryApi factory) {
+        final var rootPath = "src/main/resources/net/splitcells/dem/resource/FileSystemViaClassResourcesTest/testWalkRecursively/another-test.txt";
+        factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
+                        , "net.splitcells", "dem.api")
+                .walkRecursively(rootPath)
+                .collect(toList())
+                .requireContentsOf(Path.of(rootPath));
+    }
+
+    public void testWalkRecursivelyForSubFileSystem(FileSystemViaClassResourcesFactoryApi factory) {
+        final var rootPath = "testWalkRecursively/";
+        factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
+                        , "net.splitcells", "dem.api")
+                .subFileSystemView("src/main/resources/net/splitcells/dem/resource/FileSystemViaClassResourcesTest")
+                .walkRecursively(rootPath)
+                .collect(toList())
+                .requireContentsOf(Path.of(rootPath)
+                        , Path.of(rootPath + "1")
+                        , Path.of(rootPath + "1/2")
+                        , Path.of(rootPath + "1/2/3")
+                        , Path.of(rootPath + "1/2/3/test.txt")
+                );
+    }
+
+    public void testSubFileSystemView(FileSystemViaClassResourcesFactoryApi factory) {
+        final var testSubject = factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
+                        , "net.splitcells", "dem.api")
+                .subFileSystemView("src/main/resources/net/splitcells");
         require(testSubject.isFile("dem/api/test-file.txt"));
     }
 
-    @IntegrationTest
-    public void testReadFileAsBytes() {
-        final var testSubject = fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                , resourceBasePath("net.splitcells", "dem.api"));
+    public void testReadFileAsBytes(FileSystemViaClassResourcesFactoryApi factory) {
+        final var testSubject = factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
+                , "net.splitcells", "dem.api");
         requireEquals(new String(testSubject.readFileAsBytes("src/main/resources/net/splitcells/dem/api/test-file.txt"))
                 , "This is a test file of the 20th of July 2023.");
     }
