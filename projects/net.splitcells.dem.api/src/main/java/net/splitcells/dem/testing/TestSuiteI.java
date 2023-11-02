@@ -48,7 +48,7 @@ public class TestSuiteI implements TestSuite {
 
     @BeforeEach
     public void prepareTest(TestReporter reporter) {
-        reporter.publishEntry(START_TIME.keyString(), START_TIME.currentValue());
+        reporter.publishEntry(ReportEntryKey.START_TIME.keyString(), ReportEntryKey.START_TIME.currentValue());
     }
 
     @Override
@@ -58,7 +58,7 @@ public class TestSuiteI implements TestSuite {
 
     @AfterEach
     public void endTest(TestReporter reporter) {
-        reporter.publishEntry(END_TIME.keyString(), END_TIME.currentValue());
+        reporter.publishEntry(ReportEntryKey.END_TIME.keyString(), ReportEntryKey.END_TIME.currentValue());
     }
 
     public void test(Stream<DynamicTest> tests) {
