@@ -158,10 +158,10 @@ function net_splitcells_webserver_form_submit(config) {
             }
         }
         config['on-submission-completion']();
-        submitButton.onclick = onClickCode;
         submitButton.classList.remove("net-splitcells-button-activity");
         submitButton.classList.add("net-splitcells-action-button");
         submitButton.innerHTML = preSubmitButtonText;
+        submitButton.onclick = onClickCode;
     }
     request.open("post", form.action);
     request.send(data);
