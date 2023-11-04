@@ -1,3 +1,6 @@
+/* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+ * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+ */
 let net_splitcells_gel_ui_editor_form_solution = null;
 function net_splitcells_gel_ui_calculate_solution_form_solution_download_as_csv() {
     net_splitcells_gel_ui_editor_form_solution.download("csv", "solution.csv", {delimiter:","});
