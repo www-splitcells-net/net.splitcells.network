@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd">
+    <meta>
+        <!--
+            SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+            SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+        -->
+        <title>Bash Guidelines</title>
+    </meta>
+    <paragraph>Consider
+        <link>
+            <text>these</text>
+            <url>https://github.com/icy/bash-coding-style</url>
+        </link>
+        guidelines.</paragraph>
+</article>
