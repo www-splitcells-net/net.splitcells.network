@@ -166,10 +166,15 @@
     </meta>
     <chapter>
         <title>Goals</title>
-        <paragraph>Guidelines are just that.
-            They are nothing more and nothing less.
+        <paragraph>Guidelines describe, how something should be done or what the guiding principles are.
+            It makes actions more reproducible and predictable.
+            Guidelines are nothing more and nothing less.
             If these guidelines are overridden a reason should be present,
             and be documented or commented, if it is feasible.
+        </paragraph>
+        <paragraph>These guidelines refer to the Splitcells Network project.
+            These guidelines do not handle communities and other social interactions.
+            The management Communities and co. has to be done by themselves.
         </paragraph>
         <paragraph>For (programming) languages and document formats prefer
             using the most official or the most common guidelines,
