@@ -187,9 +187,7 @@
     </chapter>
     <chapter>
         <title>Base Rule</title>
-        <paragraph>The project structure, its contents and products has to
-            represent a discovery based network of perspectives and changes.
-            The project and its parts should be portable, extendable, adaptable,
+        <paragraph>The project and its parts should be portable, extendable, adaptable,
             <link>
                 <text>deletable</text>
                 <url>https://programmingisterrible.com/post/139222674273/how-to-write-disposable-code-in-large-systems
