@@ -10,32 +10,42 @@
         <title>Documentation Guidelines</title>
     </meta>
     <chapter>
-        <title>Management</title>
-        <paragraph>The longer a task list is, the more it should be considered
-            to be a task archive, marked as such and moved to a dedicated location.</paragraph>
-        <chapter>
-            <title>Task Organization</title>
-            <paragraph>
-                Tickets should be stored at the location where these are used or matter.
-                It should be easy to figure out which tickets apply to a certain portion of a project.
-                If a person is working on a part of the project in question,
-                relevant tickets should be available with little work.
-            </paragraph>
-            <paragraph>Tickets can be stored as a comment at the relevant source code location.
-                Every task should start with <quote>TODO</quote>, which is recognized by many tools.
-                Additional tags can be used in order to signal, which tasks may be ignored under special conditions
-                or may require special care:
-            </paragraph>
-            <list>
-                <item><quote>ACTIVE</quote>: Someone is already working on the marked tag.
-                </item>
-                <item><quote>TOFIX</quote>: This task points to an error.
-                </item>
-                <item><quote>IDEA</quote>: This task may not be a good idea.
-                </item>
-                <item><quote>HACK</quote>: This task marks a code quality issue.
-                </item>
-            </list>
-        </chapter>
+        <title>Project Management</title>
+        <paragraph>
+            Tickets of a project need to be actively managed and need to be up-to-date.
+            Otherwise, there is a great chance, that the project is not manageable.
+        </paragraph>
+        <paragraph>
+            The more tickets are located at a project, the more it should be considered,
+            to remove these tickets from the project.
+            Move these to a location, where the tickets do not have to be constantly updated for project management.
+            For instance, if a ticket inside a project is a ticket for fixing a bug inside a module,
+            consider moving the ticket to the module's ticket system, documentation or to write an appropriate TODO
+            inside the affected module's source code.
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>Ticket Organization</title>
+        <paragraph>
+            Tickets should be stored at the location where these are used or matter.
+            It should be easy to figure out which tickets apply to a certain portion of a project.
+            If a person is working on a part of the project in question,
+            relevant tickets should be available with little work.
+        </paragraph>
+        <paragraph>Tickets can be stored as a comment at the relevant source code location.
+            Every task should start with <quote>TODO</quote>, which is recognized by many tools.
+            Additional tags can be used in order to signal, which tasks may be ignored under special conditions
+            or may require special care:
+        </paragraph>
+        <list>
+            <item><quote>ACTIVE</quote>: Someone is already working on the marked tag.
+            </item>
+            <item><quote>TOFIX</quote>: This task points to an error.
+            </item>
+            <item><quote>IDEA</quote>: This task may not be a good idea.
+            </item>
+            <item><quote>HACK</quote>: This task marks a code quality issue.
+            </item>
+        </list>
     </chapter>
 </article>
