@@ -47,6 +47,15 @@
                 </link>
                 is provided as good as planned.
             </paragraph>
+            <paragraph>Being able to easily migrate from an incorrect implementation to a correct one,
+                is more important than
+                <link>
+                    <text>creating a completely correct solution,
+                        that makes it hard to migrate to other solutions, when the requirements change</text>
+                    <url>https://www.jwz.org/doc/worse-is-better.html</url>
+                </link>
+                .
+            </paragraph>
         </chapter>
     </chapter>
     <chapter>
@@ -63,7 +72,9 @@
                 where the split is done implicitly:
             </paragraph>
             <list>
-                <item>Implementation (Impl): the implementation contains the minimal implementation to get the project running.</item>
+                <item>Implementation (Impl): the implementation contains the minimal implementation to get the project
+                    running.
+                </item>
                 <item>API: establishes a common vocabulary and interfaces of the project.
                     It has the authority to define and verify every implementation feature and
                     the interface of the project.

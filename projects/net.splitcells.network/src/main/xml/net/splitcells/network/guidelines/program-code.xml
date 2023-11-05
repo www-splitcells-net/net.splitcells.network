@@ -7,7 +7,7 @@
             SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
             SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
         -->
-        <title>Code Guidelines</title>
+        <title>General Code Guidelines</title>
     </meta>
     <paragraph>The programming code should prioritize adaptability and readability.
         This can be made by making it easy to refactor the code or to translate it to a completely other language.
@@ -17,7 +17,8 @@
     <paragraph>Avoid side effects, as it makes it harder to understand a program.
         Avoid inheritance, because it makes it harder to write easily portable
         side effect free code under certain conditions.
-        Inheritance works great as adhoc wrappers and type and implementation extenders.
+    </paragraph>
+    <paragraph>Inheritance works great as adhoc wrappers and type and implementation extenders.
         Inheritance does not support swapping out the parent implementation,
         which makes it often not portable in practice.
     </paragraph>
@@ -37,8 +38,12 @@
             consider creating a dedicated method.
             This minimizes the likelihood of misreading such an inverse usage.
             For example, it helps to create an <quote>isEmpty</quote> and an <quote>hasElements</quote> method,
-            because it is relatively hard to distinguish <quote>someObject.doSomething().doSomtingeElse().isEmpty()</quote> and <quote>!someObject.doSomething().doSomtingeElse().isEmpty()</quote> from one another,
+            because it is relatively hard to distinguish <quote>someObject.doSomething().doSomtingeElse().isEmpty()
+            </quote> and <quote>!someObject.doSomething().doSomtingeElse().isEmpty()</quote> from one another,
             if one just skim through the code.
+        </paragraph>
+        <paragraph>For method names prefer using a noun, if the of the method is to retrieve something.
+            Use verbs instead, if the goal of the function is to do something or to change something.
         </paragraph>
     </chapter>
     <chapter>
@@ -82,7 +87,9 @@
         </chapter>
         <chapter>
             <title>Self Reporting</title>
-            <paragraph>Each test should have an error message, in order to minimize the time in order to understand an error.</paragraph>
+            <paragraph>Each test should have an error message, in order to minimize the time in order to understand an
+                error.
+            </paragraph>
         </chapter>
     </chapter>
     <chapter>
@@ -185,6 +192,7 @@
             This can be done by adding runtime checks with an extensive error message.
         </paragraph>
         <paragraph>If a support documentation is needed, try to structure it in the form of a decision tree,
-            that finds the appropriate problem and solution given a set of symptoms.</paragraph>
+            that finds the appropriate problem and solution given a set of symptoms.
+        </paragraph>
     </chapter>
 </article>
