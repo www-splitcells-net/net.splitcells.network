@@ -193,12 +193,17 @@
             and comply with
             <link>
                 <text>Perspective's guidelines</text>
-                <post>/net/splitcells/dem/lang/perspective/index</post>
+                <post>/net/splitcells/symbiosis/perspective/index</post>
             </link>
             .
         </paragraph>
-        <paragraph>This specifically means, that the file and
-            content path of a particular information
+        <paragraph>The compliance with the
+            <link>
+                <text>Perspective's guidelines</text>
+                <post>/net/splitcells/symbiosis/perspective/index</post>
+            </link>
+            specifically means,
+            that the file and content path of a particular information
             (for an XML element,
             this would be the file path + the XPath pointing to the XML element)
             should identify and describe or at least summarize the content's
