@@ -37,6 +37,9 @@ import static net.splitcells.dem.utils.StringUtils.toBytes;
  * These are isolated from each other.
  * Thereby, different things like the config files or cache files can be handled via different file systems.
  * In the ideal case, the actual storage of these file is only configured and thereby interchangeable.</p>
+ * <p>By default the methods do not provide any guarantee of being synchronous or asynchronous.
+ * Implementations, may implement such methods in any way they like.
+ * The reason for this is the fact, that asynchronous execution can be implemented using an synchronous API.</p>
  * <p>TODO Only allow a narrow subset of all possible paths by default.
  * Especially, don't allow pointing outside the file system via `../` and
  * discourage any usage of `..` and absolute paths.
