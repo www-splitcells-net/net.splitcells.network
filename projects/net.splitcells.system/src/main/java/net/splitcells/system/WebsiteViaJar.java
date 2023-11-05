@@ -136,7 +136,7 @@ public class WebsiteViaJar {
                 , configValue(net.splitcells.website.content.defaults.FileSystem.class)
                         .subFileSystemView("src/main/xsl/net/splitcells/website/den/translation/to/html/")
                 , configValue(net.splitcells.website.content.defaults.FileSystem.class)
-                        .subFileSystemView("src/main/resources/content")
+                        .subFileSystemView("src/main/resources/html")
                 , "/"
                 , sourceValidator
                 , config);

@@ -38,7 +38,7 @@ public class CommonMarkReadmeProjectRendererExtensionTest {
                 ("public"
                         , fileSystemOnLocalHost(Path.of("../net.splitcells.dem"))
                         , fileSystemOnLocalHost(Path.of("../net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/"))
-                        , fileSystemOnLocalHost(Path.of("net.splitcells.website.content.default/src/main/resources/html"))
+                        , fileSystemOnLocalHost(Path.of("../net.splitcells.website.content.default/src/main/resources/html"))
                         , "/net/splitcells/dem"
                         , a -> Optional.empty()
                         , Config.create());

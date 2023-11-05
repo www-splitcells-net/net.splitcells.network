@@ -81,8 +81,8 @@ public class ProjectsRendererI implements ProjectsRenderer {
     @Override
     public void build() {
         final var generatedFilesPath = Paths.get("target", "generated");
-        final var generatedFiles = fileSystemOnLocalHost(generatedFilesPath);
         Files.createDirectory(generatedFilesPath);
+        final var generatedFiles = fileSystemOnLocalHost(generatedFilesPath);
         generatedFiles.writeToFile(Path.of("generation.style.xml")
                 , "<val xmlns=\"http://splitcells.net/den.xsd\">"
                         + config.generationStyle()
