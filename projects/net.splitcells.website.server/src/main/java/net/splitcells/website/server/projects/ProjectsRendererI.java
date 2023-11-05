@@ -51,6 +51,7 @@ import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiv
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.project.validator.RenderingValidatorForHtmlLinks.renderingValidatorForHtmlLinks;
 import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithPath;
+import static net.splitcells.website.server.projects.extension.DemConfigExtension.demConfigExtension;
 import static net.splitcells.website.server.projects.extension.FrontMenuExtension.frontMenuExtension;
 import static net.splitcells.website.server.projects.extension.GlobalChangelogExtension.globalChangelogExtension;
 import static net.splitcells.website.server.projects.extension.LayoutExtension.layoutExtension;
@@ -166,7 +167,8 @@ public class ProjectsRendererI implements ProjectsRenderer {
             .withRegisteredExtension(layoutExtension())
             .withRegisteredExtension(layoutTreeExtension())
             .withRegisteredExtension(testExtension())
-            .withRegisteredExtension(frontMenuExtension());
+            .withRegisteredExtension(frontMenuExtension())
+            .withRegisteredExtension(demConfigExtension());
 
     private ProjectsRendererI(String name
             , ProjectRenderer fallbackRenderer

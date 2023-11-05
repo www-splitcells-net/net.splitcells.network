@@ -16,6 +16,7 @@
 package net.splitcells.dem.environment.config.framework;
 
 import net.splitcells.dem.data.atom.Bools;
+import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.map.typed.TypedMap;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
@@ -78,6 +79,18 @@ public class ConfigurationI implements Configuration {
             withInitedOption(key);
         }
         return (T) this.config_store.get(key);
+    }
+
+    @Override
+    public Object configValueUntyped(Object key) {
+        return config_store.get(key);
+    }
+
+    @Override
+    public net.splitcells.dem.data.set.Set<Class<? extends Option<?>>> keys() {
+        return config_store.keySet().stream()
+                .map(arg -> (Class<? extends Option<?>>) arg)
+                .collect(Sets.toSetOfUniques());
     }
 
     @Override

@@ -15,6 +15,12 @@
  */
 package net.splitcells.dem.environment.config.framework;
 
+import net.splitcells.dem.data.set.Set;
+
 public interface ConfigurationV {
-	<T> T configValue(Class<? extends Option<T>> key);
+    <T> T configValue(Class<? extends Option<T>> key);
+
+    Object configValueUntyped(Object key);
+
+    Set<Class<? extends Option<?>>> keys();
 }
