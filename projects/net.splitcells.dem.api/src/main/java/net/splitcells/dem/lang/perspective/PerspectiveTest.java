@@ -98,7 +98,7 @@ public class PerspectiveTest {
                 .withProperty("sed pretium felis", "Aliquam orci nunc");
         testData.printCommonMarkString(stringSender(resultData));
         requireEquals(resultData.toString(),
-                "Lorem ipsum dolor sit amet:\n"
+                "* Lorem ipsum dolor sit amet:\n"
                         + "    * consectetur adipiscing elit:\n"
                         + "        * Cras lobortis mi risus\n"
                         + "    * eu viverra purus feugiat sit amet:\n"

@@ -531,12 +531,16 @@ public interface Perspective extends PerspectiveView {
     }
 
     default void printCommonMarkString(Sender<String> output) {
-        printCommonMarkString(output, "", "");
+        printCommonMarkString(output, "", "* ");
     }
 
     default void printCommonMarkString(Sender<String> output, String prefix, String listPrefix) {
         if (children().isEmpty()) {
-            output.append(prefix + name());
+            if (name().length() > 200) {
+                output.append("```\n" + name() + "\n```");
+            } else {
+                output.append(prefix + name());
+            }
         } else {
             final var isSimpleList = children().stream().map(c -> c.children().isEmpty()).reduce(true, (a, b) -> a && b);
             output.append(listPrefix + name() + ":");

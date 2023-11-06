@@ -37,7 +37,7 @@ public class CommonMarkDui implements Ui {
     @Override
     public <R extends ListWA<LogMessage<Perspective>>> R append(LogMessage<Perspective> arg) {
         if (messageFilter.test(arg)) {
-            arg.content().printCommonMarkString(output, "", "");
+            arg.content().printCommonMarkString(output);
         }
         return (R) this;
     }
