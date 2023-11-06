@@ -18,6 +18,7 @@ package net.splitcells.dem.utils;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import java.nio.charset.StandardCharsets;
+import java.util.stream.IntStream;
 
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
@@ -58,5 +59,13 @@ public class StringUtils {
             }
         }
         return count;
+    }
+
+    public static String multiple(String base, int factor) {
+        final var multiple = new StringBuilder();
+        IntStream.range(0, factor).forEach(i -> {
+            multiple.append(base);
+        });
+        return multiple.toString();
     }
 }

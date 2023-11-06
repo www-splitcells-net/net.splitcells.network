@@ -15,11 +15,15 @@
  */
 package net.splitcells.dem.lang.perspective;
 
+import net.splitcells.dem.resource.communication.Sender;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
+import java.io.ByteArrayOutputStream;
+
 import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.resource.communication.Sender.stringSender;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 
 public class PerspectiveTest {
@@ -79,5 +83,35 @@ public class PerspectiveTest {
                 )
                 .withProperty("3", "4");
         requireEquals(testSubject.toJsonString(), "{\"1\":\"2\",\"test\":{\"a\":\"b\\r\",\"c\":\"d\\n\"},\"3\":\"4\"}");
+    }
+
+    @UnitTest
+    public void testPrintCommonMarkString() {
+        final var resultData = new ByteArrayOutputStream();
+        final var testData = perspective("Lorem ipsum dolor sit amet")
+                .withProperty("consectetur adipiscing elit", "Cras lobortis mi risus")
+                .withProperty("eu viverra purus feugiat sit amet", perspective("Fusce viverra ipsum in arcu scelerisque egestas")
+                        .withProperty("Vivamus sagittis commodo eleifend", "Nullam lobortis purus ut felis viverra vulputate")
+                        .withProperty("Quisque elementum vitae nulla sit amet pretium"
+                                , perspective("Maecenas nunc urna").withProperty("ullamcorper dictum pellentesque in", "vehicula a magna. Vivamus luctus efficitur ex"))
+                        .withProperty("el ultrices erat luctus lacinia", "Donec vestibulum semper ipsum"))
+                .withProperty("sed pretium felis", "Aliquam orci nunc");
+        testData.printCommonMarkString(stringSender(resultData), "", "");
+        requireEquals(resultData.toString(),
+                "Lorem ipsum dolor sit amet:\n"
+                        + "    * consectetur adipiscing elit:\n"
+                        + "        Cras lobortis mi risus\n"
+                        + "    * eu viverra purus feugiat sit amet:\n"
+                        + "        * Fusce viverra ipsum in arcu scelerisque egestas:\n"
+                        + "            * Vivamus sagittis commodo eleifend:\n"
+                        + "                Nullam lobortis purus ut felis viverra vulputate\n"
+                        + "            * Quisque elementum vitae nulla sit amet pretium:\n"
+                        + "                * Maecenas nunc urna:\n"
+                        + "                    * ullamcorper dictum pellentesque in:\n"
+                        + "                        vehicula a magna. Vivamus luctus efficitur ex\n"
+                        + "            * el ultrices erat luctus lacinia:\n"
+                        + "                Donec vestibulum semper ipsum\n"
+                        + "    * sed pretium felis:\n"
+                        + "        Aliquam orci nunc\n");
     }
 }

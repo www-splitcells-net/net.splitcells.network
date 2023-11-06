@@ -15,10 +15,13 @@
  */
 package net.splitcells.dem.utils;
 
+import net.splitcells.dem.testing.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.atom.Integers.requireEqualInts;
+import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.StringUtils.countChar;
+import static net.splitcells.dem.utils.StringUtils.multiple;
 
 public class StringUtilsTest {
     @Test
@@ -27,5 +30,10 @@ public class StringUtilsTest {
         requireEqualInts(2, countChar("abcdefga", 'a'));
         requireEqualInts(2, countChar("aabcdefg", 'a'));
         requireEqualInts(0, countChar("bcdefg", 'a'));
+    }
+
+    @Test
+    public void testMultiple() {
+        requireEquals(multiple("23", 3), "232323");
     }
 }

@@ -23,6 +23,7 @@ import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.namespace.NameSpace;
 import net.splitcells.dem.lang.namespace.NameSpaces;
+import net.splitcells.dem.resource.communication.Sender;
 import org.assertj.core.api.Assertions;
 
 import java.util.Optional;
@@ -39,6 +40,7 @@ import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.perspective.JsonConfig.jsonConfig;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.StringUtils.multiple;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -525,6 +527,17 @@ public interface Perspective extends PerspectiveView {
         }
 
         return jsonString.toString();
+    }
+
+    default void printCommonMarkString(Sender<String> output, String prefix, String listPrefix) {
+        if (children().isEmpty()) {
+            output.append(prefix + name());
+        } else {
+            output.append(listPrefix + name() + ":");
+            final var newListPrefix = prefix + "    * ";
+            final var newPrefix = prefix + "    ";
+            children().forEach(c -> c.printCommonMarkString(output, newPrefix, newListPrefix));
+        }
     }
 
     default Perspective subtree(List<String> path) {
