@@ -74,11 +74,11 @@ public final class StaticFlags {
 
     private static void logIfMostPerformant() {
         if (ENFORCING_UNIT_CONSISTENCY || TELLING_STORY || WARNING || TRACING || INLINE_STANDARD_FACTORIES) {
-            domsole().append(perspective("The most performant settings are not enabled:").withChild(
-                            perspective("ENFORCING_UNIT_CONSISTENCY = " + ENFORCING_UNIT_CONSISTENCY
-                                    + ", TELLING_STORY = " + TELLING_STORY
-                                    + ", WARNING = " + WARNING
-                                    + ", INLINE_STANDARD_FACTORIES = " + INLINE_STANDARD_FACTORIES))
+            domsole().append(perspective("The most performant settings are not enabled").withChildren(
+                            perspective("ENFORCING_UNIT_CONSISTENCY = " + ENFORCING_UNIT_CONSISTENCY)
+                            , perspective(" TELLING_STORY = " + TELLING_STORY)
+                            , perspective("WARNING = " + WARNING)
+                            , perspective("INLINE_STANDARD_FACTORIES = " + INLINE_STANDARD_FACTORIES))
                     , LogLevel.WARNING);
         }
     }
