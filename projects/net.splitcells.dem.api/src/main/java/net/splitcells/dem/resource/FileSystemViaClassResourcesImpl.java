@@ -68,11 +68,11 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
         return groupdId + "." + artifiactId + ".resources/";
     }
 
-    public static FileSystemView fileSystemViaClassResources(Class<?> clazz) {
+    public static FileSystemView _fileSystemViaClassResourcesImpl(Class<?> clazz) {
         return new FileSystemViaClassResourcesImpl(clazz, "");
     }
 
-    public static FileSystemView fileSystemViaClassResources(Class<?> clazz, String basePath) {
+    public static FileSystemView _fileSystemViaClassResourcesImpl(Class<?> clazz, String basePath) {
         return new FileSystemViaClassResourcesImpl(clazz, basePath);
     }
 

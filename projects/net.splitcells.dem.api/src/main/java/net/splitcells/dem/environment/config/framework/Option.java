@@ -15,8 +15,15 @@
  */
 package net.splitcells.dem.environment.config.framework;
 
+import net.splitcells.dem.Dem;
+
 /**
- * Every implementation has to have a public default constructor and needs to be thread safe.
+ * <p>Every implementation has to have a public default constructor and needs to be thread safe.</p>
+ * <p>Implementations of option values should have factory methods starting with an underscore,
+ * in order to discourage their usage.
+ * Access to dependencies should be done via {@link Option} and
+ * {@link Dem#config()} instead of directly accessing their implementations,
+ * as otherwise swapping the dependencies implementation becomes a lot harder.</p>
  * <p>
  * TODO Check if every option has public constructor without arguments.
  * <p>

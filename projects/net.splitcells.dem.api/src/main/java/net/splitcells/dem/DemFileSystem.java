@@ -16,12 +16,13 @@
 package net.splitcells.dem;
 
 import net.splitcells.dem.environment.config.framework.OptionI;
+import net.splitcells.dem.resource.FileSystemViaClassResourcesImpl;
 import net.splitcells.dem.resource.FileSystemView;
 
-import static net.splitcells.dem.resource.FileSystemViaClassResourcesImpl.fileSystemViaClassResources;
+import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
 
 public class DemFileSystem extends OptionI<FileSystemView> {
     public DemFileSystem() {
-        super(() -> fileSystemViaClassResources(Dem.class));
+        super(() -> fileSystemViaClassResources(Dem.class, "net.splitcells", "dem.api"));
     }
 }

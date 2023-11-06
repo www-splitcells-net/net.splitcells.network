@@ -18,12 +18,11 @@ package net.splitcells.dem;
 import net.splitcells.dem.environment.config.framework.OptionI;
 import net.splitcells.dem.resource.FileSystemView;
 
-import static net.splitcells.dem.resource.FileSystemViaClassResourcesImpl.fileSystemViaClassResources;
+import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
 import static net.splitcells.dem.resource.FileSystemViaClassResourcesImpl.resourceBasePath;
 
 public class ApiFileSystem extends OptionI<FileSystemView> {
     public ApiFileSystem() {
-        super(() -> fileSystemViaClassResources(ApiFileSystem.class
-                , resourceBasePath("net.splitcells", "dem.api")));
+        super(() -> fileSystemViaClassResources(ApiFileSystem.class, "net.splitcells", "dem.api"));
     }
 }

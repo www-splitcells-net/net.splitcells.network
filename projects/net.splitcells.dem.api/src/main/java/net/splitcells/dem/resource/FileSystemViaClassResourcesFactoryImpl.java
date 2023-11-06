@@ -15,11 +15,10 @@
  */
 package net.splitcells.dem.resource;
 
-import static net.splitcells.dem.resource.FileSystemViaClassResourcesImpl.fileSystemViaClassResources;
 import static net.splitcells.dem.resource.FileSystemViaClassResourcesImpl.resourceBasePath;
 
 public class FileSystemViaClassResourcesFactoryImpl implements FileSystemViaClassResourcesFactoryApi {
-    public static FileSystemViaClassResourcesFactoryApi fileSystemViaClassResourcesFactoryImpl() {
+    public static FileSystemViaClassResourcesFactoryApi _fileSystemViaClassResourcesFactoryImpl() {
         return new FileSystemViaClassResourcesFactoryImpl();
     }
 
@@ -29,6 +28,6 @@ public class FileSystemViaClassResourcesFactoryImpl implements FileSystemViaClas
 
     @Override
     public FileSystemView fileSystemViaClassResources(Class<?> clazz, String groupId, String artifactId) {
-        return FileSystemViaClassResourcesImpl.fileSystemViaClassResources(clazz, resourceBasePath(groupId, artifactId));
+        return FileSystemViaClassResourcesImpl._fileSystemViaClassResourcesImpl(clazz, resourceBasePath(groupId, artifactId));
     }
 }

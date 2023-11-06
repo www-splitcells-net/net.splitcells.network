@@ -18,12 +18,10 @@ package net.splitcells.website.content.defaults;
 import net.splitcells.dem.environment.config.framework.OptionI;
 import net.splitcells.dem.resource.FileSystemView;
 
-import static net.splitcells.dem.resource.FileSystemViaClassResourcesImpl.fileSystemViaClassResources;
-import static net.splitcells.dem.resource.FileSystemViaClassResourcesImpl.resourceBasePath;
+import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
 
 public class FileSystem extends OptionI<FileSystemView> {
     public FileSystem() {
-        super(() -> fileSystemViaClassResources(FileSystem.class
-                , resourceBasePath("net.splitcells", "website.content.default")));
+        super(() -> fileSystemViaClassResources(FileSystem.class, "net.splitcells", "website.content.default"));
     }
 }

@@ -18,12 +18,10 @@ package net.splitcells.gel.ext;
 import net.splitcells.dem.environment.config.framework.OptionI;
 import net.splitcells.dem.resource.FileSystemView;
 
-import static net.splitcells.dem.resource.FileSystemViaClassResourcesImpl.fileSystemViaClassResources;
-import static net.splitcells.dem.resource.FileSystemViaClassResourcesImpl.resourceBasePath;
+import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
 
 public class FileSystemExt extends OptionI<FileSystemView> {
     public FileSystemExt() {
-        super(() -> fileSystemViaClassResources(FileSystemExt.class
-                , resourceBasePath("net.splitcells", "gel.ext")));
+        super(() -> fileSystemViaClassResources(FileSystemExt.class, "net.splitcells", "gel.ext"));
     }
 }

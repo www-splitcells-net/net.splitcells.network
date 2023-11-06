@@ -26,8 +26,7 @@ import java.util.stream.Stream;
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.resource.FileSystemViaClassResourcesImpl.fileSystemViaClassResources;
-import static net.splitcells.dem.resource.FileSystemViaClassResourcesFactoryImpl.fileSystemViaClassResourcesFactoryImpl;
+import static net.splitcells.dem.resource.FileSystemViaClassResourcesFactoryImpl._fileSystemViaClassResourcesFactoryImpl;
 import static net.splitcells.dem.resource.Files.readAsString;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
@@ -38,7 +37,7 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
     @Tag(INTEGRATION_TEST)
     @TestFactory
     public Stream<DynamicTest> testStdFactory() {
-        return testFactory(fileSystemViaClassResourcesFactoryImpl());
+        return testFactory(_fileSystemViaClassResourcesFactoryImpl());
     }
 
     public Stream<DynamicTest> testFactory(FileSystemViaClassResourcesFactoryApi factory) {

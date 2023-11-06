@@ -18,11 +18,11 @@ package net.splitcells.dem.resource;
 import net.splitcells.dem.environment.config.framework.OptionI;
 
 import static net.splitcells.dem.Dem.configValue;
-import static net.splitcells.dem.resource.FileSystemViaClassResourcesFactoryImpl.fileSystemViaClassResourcesFactoryImpl;
+import static net.splitcells.dem.resource.FileSystemViaClassResourcesFactoryImpl._fileSystemViaClassResourcesFactoryImpl;
 
 public class FileSystemViaClassResources extends OptionI<FileSystemViaClassResourcesFactoryApi> {
     public FileSystemViaClassResources() {
-        super(() -> fileSystemViaClassResourcesFactoryImpl());
+        super(() -> _fileSystemViaClassResourcesFactoryImpl());
     }
 
     public static FileSystemView fileSystemViaClassResources(Class<?> clazz, String groupId, String artifactId) {

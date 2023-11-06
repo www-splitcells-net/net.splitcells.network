@@ -18,7 +18,6 @@ package net.splitcells.network.worker;
 import net.splitcells.dem.environment.config.framework.OptionI;
 
 import static net.splitcells.dem.resource.FileSystemInMemory.fileSystemInMemory;
-import static net.splitcells.dem.resource.FileSystemViaClassResourcesImpl.fileSystemViaClassResources;
 
 public class NetworkLog extends OptionI<net.splitcells.dem.resource.FileSystem> {
     public NetworkLog() {
