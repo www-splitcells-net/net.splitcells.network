@@ -15,8 +15,6 @@
  */
 package net.splitcells.dem.resource;
 
-import static net.splitcells.dem.resource.FileSystemViaClassResources.resourceBasePath;
-
 public class FileSystemViaClassResourcesAndSpringFactory implements FileSystemViaClassResourcesFactoryApi {
 
     public static FileSystemViaClassResourcesFactoryApi fileSystemViaClassResourcesAndSpringFactory() {

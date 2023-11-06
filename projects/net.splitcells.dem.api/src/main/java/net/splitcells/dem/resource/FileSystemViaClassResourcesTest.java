@@ -15,7 +15,6 @@
  */
 package net.splitcells.dem.resource;
 
-import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.testing.TestSuiteI;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Tag;
@@ -27,7 +26,7 @@ import java.util.stream.Stream;
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
+import static net.splitcells.dem.resource.FileSystemViaClassResourcesImpl.fileSystemViaClassResources;
 import static net.splitcells.dem.resource.FileSystemViaClassResourcesFactoryImpl.fileSystemViaClassResourcesFactoryImpl;
 import static net.splitcells.dem.resource.Files.readAsString;
 import static net.splitcells.dem.testing.Assertions.requireEquals;

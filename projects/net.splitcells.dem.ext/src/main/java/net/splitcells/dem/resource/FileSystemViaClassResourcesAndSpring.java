@@ -15,25 +15,18 @@
  */
 package net.splitcells.dem.resource;
 
-import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.utils.StreamUtils;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLDecoder;
 import java.nio.file.Path;
-import java.util.jar.JarFile;
 import java.util.stream.Stream;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.dem.resource.FileSystemViaClassResources.resourceBasePath;
+import static net.splitcells.dem.resource.FileSystemViaClassResourcesImpl.resourceBasePath;
 import static net.splitcells.dem.resource.Files.readAsString;
-import static net.splitcells.dem.resource.Files.walk_recursively;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
