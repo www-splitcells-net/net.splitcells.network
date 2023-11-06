@@ -39,6 +39,7 @@ import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.perspective.JsonConfig.jsonConfig;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.resource.communication.Sender.stringSender;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.StringUtils.multiple;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -529,14 +530,25 @@ public interface Perspective extends PerspectiveView {
         return jsonString.toString();
     }
 
+    default void printCommonMarkString(Sender<String> output) {
+        printCommonMarkString(output, "", "");
+    }
+
     default void printCommonMarkString(Sender<String> output, String prefix, String listPrefix) {
         if (children().isEmpty()) {
             output.append(prefix + name());
         } else {
+            final var isSimpleList = children().stream().map(c -> c.children().isEmpty()).reduce(true, (a, b) -> a && b);
             output.append(listPrefix + name() + ":");
-            final var newListPrefix = prefix + "    * ";
-            final var newPrefix = prefix + "    ";
-            children().forEach(c -> c.printCommonMarkString(output, newPrefix, newListPrefix));
+            if (isSimpleList) {
+                final var newListPrefix = prefix + "    * ";
+                final var newPrefix = newListPrefix;
+                children().forEach(c -> c.printCommonMarkString(output, newPrefix, newListPrefix));
+            } else {
+                final var newListPrefix = prefix + "    * ";
+                final var newPrefix = prefix + "    ";
+                children().forEach(c -> c.printCommonMarkString(output, newPrefix, newListPrefix));
+            }
         }
     }
 
