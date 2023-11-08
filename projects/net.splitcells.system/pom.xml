@@ -60,7 +60,7 @@
         </dependency>
         <dependency>
             <groupId>net.splitcells</groupId>
-            <artifactId>gel.ext</artifactId>
+            <artifactId>dem.ext</artifactId>
             <version>${revision}</version>
         </dependency>
     </dependencies>
