@@ -28,6 +28,7 @@ import java.util.function.Function;
 
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.resource.FileSystemInMemory.fileSystemInMemory;
 import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.website.server.translation.to.html.PathBasedUriResolver.pathBasedUriResolver;
@@ -66,10 +67,11 @@ public class FileStructureTransformer {
      */
     private XslTransformer transformer() {
         try {
+
             return new XslTransformer
                     (xslLibs.inputStream(Paths.path(transformerXsl))
                             , pathBasedUriResolver(xslLibs
-                            , FileSystems.fileSystemOnLocalHost(Path.of("./src/main/xml/"))
+                            , fileSystemInMemory()
                             , config::apply));
         } catch (Exception e) {
             throw new RuntimeException(e);
