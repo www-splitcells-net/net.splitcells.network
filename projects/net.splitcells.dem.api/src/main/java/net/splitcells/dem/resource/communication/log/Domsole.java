@@ -17,8 +17,12 @@ package net.splitcells.dem.resource.communication.log;
 
 import net.splitcells.dem.environment.resource.Console;
 import net.splitcells.dem.environment.resource.ResourceOptionI;
+import net.splitcells.dem.resource.communication.Sender;
+
+import java.util.function.Predicate;
 
 import static net.splitcells.dem.Dem.environment;
+import static net.splitcells.dem.resource.communication.log.CommonMarkDui.commonMarkDui;
 import static net.splitcells.dem.resource.communication.log.Pdsui.pdsui;
 
 /**
@@ -30,8 +34,12 @@ import static net.splitcells.dem.resource.communication.log.Pdsui.pdsui;
  * </p>
  */
 public class Domsole extends ResourceOptionI<Ui> {
+    /**
+     * {@link CommonMarkDui#commonMarkDui(Sender, Predicate)} is used by default,
+     * as it looks nice in consoles and on websites supporting CommonMark rendering.
+     */
     public Domsole() {
-        super(() -> pdsui(environment().config().configValue(Console.class)
+        super(() -> commonMarkDui(environment().config().configValue(Console.class)
                 , environment().config().configValue(MessageFilter.class)));
     }
 
