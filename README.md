@@ -1,4 +1,4 @@
-# net.splitcells.network
+# Splitcells[™](https://register.dpma.de/DPMAregister/marke/register/3020232218735/DE) Network
 
 <div align="center">
   <img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/net.splitcells.network.logo.for.readme.svg" style="width: 100%; display: block; margin: 1em;"/>
