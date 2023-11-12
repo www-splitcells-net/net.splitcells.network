@@ -17,21 +17,17 @@ package net.splitcells.dem.utils;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
-import java.io.ByteArrayOutputStream;
+import java.time.LocalTime;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 @JavaLegacyArtifact
-public class BinaryUtils {
-    private BinaryUtils() {
+public class TimeUtils {
+    private TimeUtils() {
         throw constructorIllegal();
     }
 
-    public static ByteArrayOutputStream binaryOutputStream() {
-        return new ByteArrayOutputStream();
-    }
-
-    public static byte[] emptyByteArray() {
-        return new byte[]{};
+    public static LocalTime currentLocalTime() {
+        return LocalTime.now();
     }
 }

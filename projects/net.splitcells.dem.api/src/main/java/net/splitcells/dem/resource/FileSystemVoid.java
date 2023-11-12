@@ -20,6 +20,7 @@ import java.nio.file.Path;
 import java.util.stream.Stream;
 
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.utils.BinaryUtils.emptyByteArray;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
@@ -96,7 +97,7 @@ public class FileSystemVoid implements FileSystem {
     @Override
     public byte[] readFileAsBytes(Path path) {
         domsole().appendUnimplementedWarning(FileSystemVoid.class);
-        return new byte[]{};
+        return emptyByteArray();
     }
 
     @Override

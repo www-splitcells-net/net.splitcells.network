@@ -68,4 +68,12 @@ public class StringUtils {
         });
         return multiple.toString();
     }
+
+    public static String throwableToString(Throwable th) {
+        final var stackTraceValue = new java.io.StringWriter();
+        final var stackTracePrinter = new java.io.PrintWriter(stackTraceValue);
+        th.printStackTrace(stackTracePrinter);
+        stackTracePrinter.flush();
+        return stackTracePrinter.toString();
+    }
 }

@@ -30,7 +30,9 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.resource.communication.log.LogMessageI.logMessage;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.TODO_NOT_IMPLEMENTED_YET;
+import static net.splitcells.dem.utils.StringUtils.throwableToString;
 
 /**
  * <p>Rename this to Log.</p>
@@ -62,11 +64,11 @@ public interface Ui extends ListWA<LogMessage<Perspective>>, Resource {
     @ReturnsThis
     @JavaLegacyBody
     default Ui appendUnimplementedWarning(Class<?> clazz) {
-        final var stackTrace = new RuntimeException();
-        final var stackTraceValue = new java.io.StringWriter();
-        final var stackTracePrinter = new java.io.PrintWriter(stackTraceValue);
-        stackTrace.printStackTrace(stackTracePrinter);
-        domsole().append("Unimplemented program part for class " + clazz + " at:\n" + stackTraceValue, LogLevel.WARNING);
+        domsole().append("Unimplemented program part for class "
+                        + clazz
+                        + " at:\n"
+                        + throwableToString(executionException("no-message"))
+                , LogLevel.WARNING);
         return this;
     }
 
@@ -102,13 +104,7 @@ public interface Ui extends ListWA<LogMessage<Perspective>>, Resource {
             if (throwable.getMessage() != null) {
                 error.withProperty("message", throwable.getMessage());
             }
-            {
-                final var stackTraceValue = new java.io.StringWriter();
-                final var stackTracePrinter = new java.io.PrintWriter(stackTraceValue);
-                throwable.printStackTrace(stackTracePrinter);
-                stackTracePrinter.flush();
-                error.withProperty("stack-trace", stackTraceValue.toString());
-            }
+            error.withProperty("stack-trace", throwableToString(throwable));
             return append(logMessage(error, NO_CONTEXT, LogLevel.CRITICAL));
         } catch (Throwable th) {
             // This is a fallback, if the error could not be logged.
@@ -133,11 +129,7 @@ public interface Ui extends ListWA<LogMessage<Perspective>>, Resource {
     default Ui appendWarning(Throwable throwable) {
         final var warning = perspective("warning");
         warning.withProperty("message", throwable.getMessage());
-        {
-            final var stackTraceValue = new java.io.StringWriter();
-            throwable.printStackTrace(new java.io.PrintWriter(stackTraceValue));
-            warning.withProperty("stack-trace", stackTraceValue.toString());
-        }
+        warning.withProperty("stack-trace", throwableToString(throwable));
         return append(logMessage(warning, NO_CONTEXT, LogLevel.CRITICAL));
     }
 
@@ -148,11 +140,7 @@ public interface Ui extends ListWA<LogMessage<Perspective>>, Resource {
     default Ui appendWarning(Perspective message, Throwable throwable) {
         final var throwablePerspective = perspective("throwable");
         throwablePerspective.withProperty("message", throwable.getMessage());
-        {
-            final var stackTraceValue = new java.io.StringWriter();
-            throwable.printStackTrace(new java.io.PrintWriter(stackTraceValue));
-            throwablePerspective.withProperty("stack-trace", stackTraceValue.toString());
-        }
+        throwablePerspective.withProperty("stack-trace", throwableToString(throwable));
         return append(logMessage(message.withChild(throwablePerspective), NO_CONTEXT, LogLevel.CRITICAL));
     }
 }

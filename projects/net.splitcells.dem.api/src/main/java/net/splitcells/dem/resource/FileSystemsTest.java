@@ -19,9 +19,7 @@ import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
 
-import java.io.IOException;
 import java.nio.file.Path;
-import java.util.stream.IntStream;
 
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
@@ -43,7 +41,7 @@ public class FileSystemsTest {
             try {
                 requireEquals(new String(testSubject.inputStream(testPath).readAllBytes())
                         , testData);
-            } catch (IOException e) {
+            } catch (Throwable e) {
                 throw executionException(e);
             }
         });
@@ -59,7 +57,7 @@ public class FileSystemsTest {
             try {
                 requireEquals(new String(testSubject.inputStream(testPath).readAllBytes())
                         , testData);
-            } catch (IOException e) {
+            } catch (Throwable e) {
                 throw executionException(e);
             }
         });

@@ -19,11 +19,10 @@ import net.splitcells.dem.data.set.list.ListWA;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.communication.Sender;
 
-import java.time.LocalTime;
-import java.time.ZonedDateTime;
 import java.util.function.Predicate;
 
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.utils.TimeUtils.currentLocalTime;
 
 public class CommonMarkDui implements Ui {
     public static Ui commonMarkDui(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
@@ -41,7 +40,7 @@ public class CommonMarkDui implements Ui {
     @Override
     public <R extends ListWA<LogMessage<Perspective>>> R append(LogMessage<Perspective> arg) {
         if (messageFilter.test(arg)) {
-            perspective(LocalTime.now() + ": " + arg.content().name())
+            perspective(currentLocalTime() + ": " + arg.content().name())
                     .withChildren(arg.content().children()).printCommonMarkString(output);
         }
         return (R) this;
