@@ -8,7 +8,7 @@ echo 'There were 2 reasons to support building the software without external rep
 echo '* Ensure, that all dependencies are known.'
 echo '* Ensure, that the core software has a minimal set of dependencies.'
 chmod +x ./bin/*
-export JAVA_VERSION=11 # This is required on FreeBSD, if an older Java version is set as default.
+export JAVA_VERSION=21 # This is required on FreeBSD, if an older Java version is set as default.
 mvn --settings projects/net.splitcells.network/src/main/xml-pom/net/splitcells/network/build-with-github-snapshot.pom.xml \
     -Dmaven.repo.local=../net.splitcells.network.m2/src/main/m2 \
      --offline \
