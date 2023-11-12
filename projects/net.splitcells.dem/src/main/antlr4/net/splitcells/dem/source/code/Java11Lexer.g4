@@ -45,7 +45,8 @@ lexer grammar Java11Lexer;
 /* Keywords and Keysymbols */
     Legacy_Imports: Legacy_Import_Instances;
     fragment Legacy_Import_Instances
-    		: 'import java.nio.file.Path;'
+    		: 'import java.io.InputStream;'
+    		| 'import java.nio.file.Path;'
     		| 'import java.nio.file.Paths;'
     		| 'import java.time.format.DateTimeFormatter;'
     		| 'import java.time.LocalDate;'
