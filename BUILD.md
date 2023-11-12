@@ -11,7 +11,7 @@ Clone these into the same directory:
 * `git clone git@github.com:www-splitcells-net/net.splitcells.network.git`
 * `git clone git@github.com:www-splitcells-net/net.splitcells.network.bom.git`
 
-Java 11 ([Eclipse Temurin](https://adoptium.net/) is preferred), Maven, Python 3 and Bash is required in
+Java 21 ([Eclipse Temurin](https://adoptium.net/) is preferred), Maven, Python 3 and Bash is required in
 order to build this project.
 Execute `./bin/build`, that's it. ✨
 The Java projects can be build via `mvn clean install` at the root folder.
