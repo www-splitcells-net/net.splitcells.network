@@ -24,10 +24,17 @@ fi
 mkdir -p $userFolder/bin/net.splitcells.os.state.interface.commands.managed
 mkdir -p $userFolder/.config/net.splitcells.os.state.interface
 
-# Adds this framework only to interactive shells.
+# Adds this framework's PATHs only to interactive shells.
 # Therefore only ".bashrc" is currently configured.
+# It is best practice to add PATH exports only in interactive shells via `if [[ $- == *i* ]] ; then [...] fi`: https://unix.stackexchange.com/questions/257571/why-does-bashrc-check-whether-the-current-shell-is-interactive
 
-# TODO Support alternative shells.
+# Placing the exports in `.profile` could cause the framework's PATHs to be provided to shells,
+# that are not opened by users directly and therefore may cause problems for other programs.
+# The same applies for `bash_profile`.
+
+# TODO Support fish terminal via ` ~/.config/fish/config.fish`: check presence of option via heuristics.
+# TODO Add dependency injection for `command.managed.export.bin` in order to easily support additional exports,
+# but make it so, that dependency injection is optional and therefore this script also works without `command.managed.export`.
 
 touch $userFolder/.bashrc
 grep -q -F '. ~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin' $userFolder/.bashrc
