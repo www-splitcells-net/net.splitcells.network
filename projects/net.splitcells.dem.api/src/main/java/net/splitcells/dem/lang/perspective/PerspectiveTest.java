@@ -19,12 +19,11 @@ import net.splitcells.dem.resource.communication.Sender;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
-import java.io.ByteArrayOutputStream;
-
 import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
+import static net.splitcells.dem.utils.BinaryUtils.binaryOutputStream;
 
 public class PerspectiveTest {
     @UnitTest
@@ -87,7 +86,7 @@ public class PerspectiveTest {
 
     @UnitTest
     public void testPrintCommonMarkString() {
-        final var resultData = new ByteArrayOutputStream();
+        final var resultData = binaryOutputStream();
         final var testData = perspective("Lorem ipsum dolor sit amet")
                 .withProperty("consectetur adipiscing elit", "Cras lobortis mi risus")
                 .withProperty("eu viverra purus feugiat sit amet", perspective("Fusce viverra ipsum in arcu scelerisque egestas")
