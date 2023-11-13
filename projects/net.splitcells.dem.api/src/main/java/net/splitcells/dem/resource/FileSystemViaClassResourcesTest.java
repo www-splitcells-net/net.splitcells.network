@@ -48,6 +48,7 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
                 , dynamicTests(this::testExists, factory)
                 , dynamicTests(this::testExistsForSubFileSystem, factory)
                 , dynamicTests(this::testIsFile, factory)
+                , dynamicTests(this::testIsDirectory, factory)
                 , dynamicTests(this::testIsFileForSubFileSystem, factory)
                 , dynamicTests(this::testWalkRecursively, factory)
                 , dynamicTests(this::testWalkRecursivelyOnFile, factory)
@@ -104,8 +105,17 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
         final var testSubject = factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
                 , "net.splitcells", "dem.api");
         require(testSubject.isFile("src/main/resources/net/splitcells/dem/api/test-file.txt"));
-        requireNot(testSubject.isFile("src/main/resources/net/splitcells/dem/api/test-file-invalid.txt"));
+        requireNot(testSubject.isFile("src/main/resources/net/splitcells/dem/api/test-file-not-existing.txt"));
         requireNot(testSubject.isFile("src/main/resources/net/splitcells/dem/api"));
+    }
+
+    public void testIsDirectory(FileSystemViaClassResourcesFactoryApi factory) {
+        final var testSubject = factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
+                , "net.splitcells", "dem.api");
+        requireNot(testSubject.isDirectory("src/main/resources/net/splitcells/dem/api/test-file.txt"));
+        requireNot(testSubject.isDirectory("src/main/resources/net/splitcells/dem/api/test-file-not-existing.txt"));
+        require(testSubject.isDirectory("src/main/resources/net/splitcells/dem/api"));
+        requireNot(testSubject.isDirectory("src/main/resources/net/splitcells/dem/api-not-existing"));
     }
 
     public void testIsFileForSubFileSystem(FileSystemViaClassResourcesFactoryApi factory) {

@@ -16,6 +16,7 @@
 package net.splitcells.dem.resource;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.utils.StreamUtils;
 
@@ -24,6 +25,7 @@ import java.io.InputStream;
 import java.net.URLDecoder;
 import java.nio.file.Path;
 import java.util.jar.JarFile;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -141,7 +143,7 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
 
     @Override
     public boolean isDirectory(Path path) {
-        return walkRecursively(path).findAny().isPresent();
+        return walkRecursively(path).collect(Lists.toList()).size() > 1;
     }
 
     @Override

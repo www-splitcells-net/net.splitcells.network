@@ -116,7 +116,7 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
             return false;
         }
         try {
-            return resource.contentLength() > 0;
+            return resource.contentLength() == 0;
         } catch (Throwable t) {
             domsole().appendError(t);
             return false;
