@@ -45,6 +45,7 @@
      This also makes it possible to use the name `Resource` for an interface
      of resource like things.
 ### Minor Changes
+* **2023-1-13 \#252**: `CommonMarkDui` now provides a logger, that output CommonMark document.
 * **2023-07-12 \#249** Implement FileSystemViaClassResources in order to provide FileSystem API for class resources.
   This can be used in order to provide file systems via jar files.
 * **2023-07-12 \#249** Provide file system API in order to not to rely on Paths specific to the operation system.

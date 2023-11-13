@@ -24,6 +24,16 @@ import java.util.function.Predicate;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.TimeUtils.currentLocalTime;
 
+/**
+ * <p>TODO Print each stack strace only once in log, in order to not clutter the log.
+ * If a stack trace is logged a second time an appropriate anchor link should be created.
+ * Only cache a limited number of stack traces.
+ * Avoid using hashes for caching stack traces in order to rule out low probability hash conflicts.
+ * </p>
+ * <p>This is a user friendly logger, that stores it's log as CommonMark document.
+ * Such a log also looks nice in issue on platforms like SourceHut or GitHub and
+ * probably also looks nice for not technical users.</p>
+ */
 public class CommonMarkDui implements Ui {
     public static Ui commonMarkDui(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
         return new CommonMarkDui(output, messageFilter);
