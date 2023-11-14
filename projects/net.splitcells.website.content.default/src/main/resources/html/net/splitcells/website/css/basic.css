@@ -232,7 +232,7 @@ ul {
     height: 2em;
     }
 .splitcells-net-window-menu-line-2 {
-    height: 2.7em;
+    min-height: 2.85em; /* min-height is required for document titles, that need at least 2 lines. */
     padding-top: .2em;
     }
 .HeaderButton_structure {
