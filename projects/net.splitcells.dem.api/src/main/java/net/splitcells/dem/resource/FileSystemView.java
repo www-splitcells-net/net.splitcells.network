@@ -21,6 +21,12 @@ import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
+/**
+ * <p>No 2 instances of {@link FileSystem} should have the same class name
+ * (i.e. multiple classes being named "FileSystem"),
+ * because some decompilers have problems,
+ * when such classes are referenced inside the same class.</p>
+ */
 public interface FileSystemView {
     default InputStream inputStream(String path) {
         return inputStream(Path.of(path));

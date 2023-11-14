@@ -13,16 +13,15 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.dem;
+package net.splitcells.website.content.defaults;
 
 import net.splitcells.dem.environment.config.framework.OptionI;
-import net.splitcells.dem.resource.FileSystemViaClassResourcesImpl;
 import net.splitcells.dem.resource.FileSystemView;
 
 import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
 
-public class DemFileSystem extends OptionI<FileSystemView> {
-    public DemFileSystem() {
-        super(() -> fileSystemViaClassResources(Dem.class, "net.splitcells", "dem.api"));
+public class WebsiteContentDefaultsFileSystem extends OptionI<FileSystemView> {
+    public WebsiteContentDefaultsFileSystem() {
+        super(() -> fileSystemViaClassResources(WebsiteContentDefaultsFileSystem.class, "net.splitcells", "website.content.default"));
     }
 }

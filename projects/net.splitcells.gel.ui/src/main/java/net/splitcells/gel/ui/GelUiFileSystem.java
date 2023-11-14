@@ -13,16 +13,15 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.doc;
+package net.splitcells.gel.ui;
 
 import net.splitcells.dem.environment.config.framework.OptionI;
 import net.splitcells.dem.resource.FileSystemView;
 
 import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
 
-
-public class FileSystem extends OptionI<FileSystemView> {
-    public FileSystem() {
-        super(() -> fileSystemViaClassResources(FileSystem.class, "net.splitcells", "gel.doc"));
+public class GelUiFileSystem extends OptionI<FileSystemView> {
+    public GelUiFileSystem() {
+        super(() -> fileSystemViaClassResources(GelUiFileSystem.class, "net.splitcells", "gel.ui"));
     }
 }

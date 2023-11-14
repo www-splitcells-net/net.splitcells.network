@@ -15,9 +15,20 @@
  */
 package net.splitcells.system;
 
+import net.splitcells.cin.CinFileSystem;
+import net.splitcells.dem.DemFileSystem;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.ext.FileSystemExt;
+import net.splitcells.gel.GelCoreFileSystem;
+import net.splitcells.gel.doc.GelDocFileSystem;
+import net.splitcells.gel.ext.GelExtFileSystem;
+import net.splitcells.gel.ui.GelUiFileSystem;
 import net.splitcells.gel.ui.SolutionCalculator;
+import net.splitcells.network.NetworkFileSystem;
+import net.splitcells.network.worker.NetworkWorkerFileSystem;
+import net.splitcells.os.state.interfaces.OsiFileSystem;
+import net.splitcells.os.state.interfaces.lib.OsiLibFileSystem;
+import net.splitcells.website.WebsiteServerFileSystem;
+import net.splitcells.website.content.defaults.WebsiteContentDefaultsFileSystem;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.validator.SourceValidator;
@@ -44,36 +55,36 @@ public class WebsiteViaJar {
     public static Config config() {
         return Config.create()
                 .withAdditionalProject(projectConfig("/net/splitcells/cin/"
-                        , configValue(net.splitcells.cin.FileSystem.class)))
+                        , configValue(CinFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/dem/"
-                        , configValue(net.splitcells.dem.FileSystem.class)))
+                        , configValue(DemFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/dem/"
-                        , configValue(net.splitcells.dem.ApiFileSystem.class)))
+                        , configValue(net.splitcells.dem.DemApiFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/gel/"
-                        , configValue(net.splitcells.gel.doc.FileSystem.class)))
+                        , configValue(GelDocFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/gel/"
-                        , configValue(net.splitcells.gel.FileSystem.class)))
+                        , configValue(GelCoreFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/gel/"
-                        , configValue(FileSystemExt.class)))
+                        , configValue(GelExtFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/gel/ui/"
-                        , configValue(net.splitcells.gel.ui.FileSystem.class)))
+                        , configValue(GelUiFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/network/"
-                        , configValue(net.splitcells.network.FileSystem.class)))
+                        , configValue(NetworkFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/network/worker/"
-                        , configValue(net.splitcells.network.worker.FileSystem.class)))
+                        , configValue(NetworkWorkerFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/os/state/interface/"
-                        , configValue(net.splitcells.os.state.interfaces.FileSystem.class)))
+                        , configValue(OsiFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/os/state/interface/lib/"
-                        , configValue(net.splitcells.os.state.interfaces.lib.FileSystem.class)))
+                        , configValue(OsiLibFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/system/"
-                        , configValue(net.splitcells.system.FileSystem.class)))
+                        , configValue(SystemsFileSystem.class)))
                 .withAdditionalProject(projectConfig("/"
-                        , configValue(net.splitcells.website.FileSystem.class)))
+                        , configValue(WebsiteServerFileSystem.class)))
                 .withAdditionalProject(projectConfig("/"
-                        , configValue(net.splitcells.website.content.defaults.FileSystem.class)))
-                .withDetailedXslMenu(Optional.of(configValue(net.splitcells.website.content.defaults.FileSystem.class)
+                        , configValue(WebsiteContentDefaultsFileSystem.class)))
+                .withDetailedXslMenu(Optional.of(configValue(WebsiteContentDefaultsFileSystem.class)
                         .readString("src/main/xsl/net/splitcells/website/detailed-menu.xsl")))
-                .withXslWindowMenu(Optional.of(configValue(net.splitcells.website.content.defaults.FileSystem.class)
+                .withXslWindowMenu(Optional.of(configValue(WebsiteContentDefaultsFileSystem.class)
                         .readString("src/main/xsl/net/splitcells/website/window-menu.xsl")))
                 .withAdditionalJsBackgroundFiles("net/splitcells/website/js/basic.js")
                 .withAdditionalJsBackgroundFiles("net/splitcells/website/js/basic.default.js")
@@ -104,9 +115,9 @@ public class WebsiteViaJar {
                 .map(project ->
                         projectRenderer(profile
                                 , project.projectFiles()
-                                , configValue(net.splitcells.website.content.defaults.FileSystem.class)
+                                , configValue(WebsiteContentDefaultsFileSystem.class)
                                         .subFileSystemView("src/main/xsl/net/splitcells/website/den/translation/to/html/")
-                                , configValue(net.splitcells.website.content.defaults.FileSystem.class)
+                                , configValue(WebsiteContentDefaultsFileSystem.class)
                                         .subFileSystemView("src/main/resources/html")
                                 , project.rootPath()
                                 , validator
@@ -132,10 +143,10 @@ public class WebsiteViaJar {
             , SourceValidator sourceValidator
             , Config config) {
         return projectRenderer(profile
-                , configValue(net.splitcells.website.content.defaults.FileSystem.class)
-                , configValue(net.splitcells.website.content.defaults.FileSystem.class)
+                , configValue(WebsiteContentDefaultsFileSystem.class)
+                , configValue(WebsiteContentDefaultsFileSystem.class)
                         .subFileSystemView("src/main/xsl/net/splitcells/website/den/translation/to/html/")
-                , configValue(net.splitcells.website.content.defaults.FileSystem.class)
+                , configValue(WebsiteContentDefaultsFileSystem.class)
                         .subFileSystemView("src/main/resources/html")
                 , "/"
                 , sourceValidator

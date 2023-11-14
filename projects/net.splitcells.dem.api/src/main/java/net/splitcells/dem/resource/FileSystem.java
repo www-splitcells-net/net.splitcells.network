@@ -23,6 +23,10 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
 
 /**
+ * <p>No 2 instances of {@link FileSystem} should have the same class name
+ * (i.e. multiple classes being named "FileSystem"),
+ * because some decompilers have problems,
+ * when such classes are referenced inside the same class.</p>
  * <p>When one works with {@link java.nio.file.Path} and {@link java.nio.file.Files} directly,
  * the current path (denoted as `./`) and the root path is always specific to the operation system and
  * the current process of the operation system.
