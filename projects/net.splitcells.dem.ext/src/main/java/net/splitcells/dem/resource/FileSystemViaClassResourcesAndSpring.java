@@ -15,12 +15,15 @@
  */
 package net.splitcells.dem.resource;
 
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.resource.communication.log.LogLevel;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -46,6 +49,8 @@ import static net.splitcells.dem.utils.StreamUtils.*;
  */
 @JavaLegacyArtifact
 public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
+
+    private static final boolean IS_TRACING = Boolean.parseBoolean(System.getProperty("net.splitcells.dem.resource.FileSystemViaClassResourcesAndSpring.IS_TRACING", "false"));
 
     public static FileSystemView fileSystemViaClassResourcesAndSpring(Class<?> clazz, String groupId
             , String artifactId) {
@@ -111,6 +116,25 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
 
     @Override
     public boolean isDirectory(Path path) {
+        if (IS_TRACING) {
+            boolean isDirectory;
+            final var resource = resourceResolver.getResource(normalize(basePath + path));
+            if (!resource.exists()) {
+                isDirectory = false;
+            }
+            try {
+                isDirectory = resource.contentLength() == 0;
+            } catch (Throwable t) {
+                domsole().appendError(t);
+                isDirectory = false;
+            }
+            domsole().append(perspective("isDirectory")
+                            .withProperty("path", path.toString())
+                            .withProperty("clazz", clazz.getName())
+                            .withProperty("isDirectory", isDirectory + "")
+                    , LogLevel.INFO);
+            return isDirectory;
+        }
         final var resource = resourceResolver.getResource(normalize(basePath + path));
         if (!resource.exists()) {
             return false;
@@ -131,9 +155,55 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
     @Override
     public Stream<Path> walkRecursively(Path path) {
         if (isFile(path)) {
+            if (IS_TRACING) {
+                domsole().append(perspective("Call of walkRecursively")
+                                .withProperty("path", path.toString())
+                                .withProperty("clazz", clazz.getName())
+                                .withProperty("result", "Path is hot a folder and therefore nothing can be walked except for the path itself.")
+                        , LogLevel.INFO);
+            }
             return streamOf(path);
         }
+        if (IS_TRACING) {
+            if (isDirectory(path)) {
+                domsole().append(perspective("Call of walkRecursively")
+                                .withProperty("path", path.toString())
+                                .withProperty("clazz", clazz.getName())
+                                .withProperty("result", "Path is a folder.")
+                        , LogLevel.INFO);
+            } else {
+                domsole().append(perspective("Call of walkRecursively")
+                                .withProperty("path", path.toString())
+                                .withProperty("clazz", clazz.getName())
+                                .withProperty("result", "Path is not a folder.")
+                        , LogLevel.INFO);
+            }
+        }
         try {
+            if (IS_TRACING) {
+                domsole().append(perspective("Call of walkRecursively")
+                                .withProperty("path", path.toString())
+                                .withProperty("clazz", clazz.getName())
+                                .withProperty("result candidates"
+                                        , streamOf(resourceResolver.getResources(normalize((basePath + path + "/**"))))
+                                                .filter(r -> r.exists())
+                                                .map(r -> r.toString())
+                                                .map(p -> p.substring(p.lastIndexOf(basePath) + basePath.length()))
+                                                .map(p -> {
+                                                    if (p.endsWith("/")) {
+                                                        return p.substring(0, p.length() - 1);
+                                                    }
+                                                    if (p.endsWith("/]")) {
+                                                        return p.substring(0, p.length() - 2);
+                                                    }
+                                                    if (p.endsWith("]")) {
+                                                        return p.substring(0, p.length() - 1);
+                                                    }
+                                                    return p;
+                                                })
+                                                .collect(Lists.toList()).toString())
+                        , LogLevel.INFO);
+            }
             final var pathChildren = streamOf(resourceResolver.getResources(normalize((basePath + path + "/**"))))
                     .filter(r -> r.exists())
                     .map(r -> r.toString())
