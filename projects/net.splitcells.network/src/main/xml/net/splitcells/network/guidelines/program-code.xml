@@ -88,7 +88,8 @@
         <chapter>
             <title>Self Reporting</title>
             <paragraph>Each test should have an error message, in order to minimize the time in order to understand an
-                error.
+                error. This is especially important,
+                if the test is run during the execution of the program by an external user.
             </paragraph>
         </chapter>
     </chapter>
@@ -159,8 +160,11 @@
     </chapter>
     <chapter>
         <title>Logging</title>
-        <paragraph>By default settings only events that require action or signal execution progress for the
-            log inspector should be shown.
+        <paragraph>By default settings only events,
+            that require action, signal overhaul execution progress for the log inspector should be shown.
+            Log code should be separated from the actual as much as possible,
+            in order to reduce noise of regular program code.
+            This is especially the case for trace logging.
         </paragraph>
         <chapter>
             <title>Logging as Event Log</title>
