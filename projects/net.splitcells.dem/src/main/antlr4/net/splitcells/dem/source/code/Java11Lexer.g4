@@ -150,7 +150,9 @@ lexer grammar Java11Lexer;
 	fragment String_character
 		: [a-zA-Z0-9_-]
 		| '\\"'
-		| '\n'
+		| '\\n'
+		| '\\r'
+		| '\\t'
 		| '.'
 		| ' '
 		| '<'
@@ -159,7 +161,7 @@ lexer grammar Java11Lexer;
 		| '='
 		| ':'
 		| '/'
-		| '\\'
+		| '\\\\'
 		| ','
 		| '['
 		| ']'
