@@ -22,12 +22,17 @@ import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 /**
- * <p>Provides settings, that are set during program initialization.
+ * <p>These static flags provide a simple and centrally controllable way,
+ * in order to enable or to disable code via static if blocks.
+ * The main goal of these static flags is,
+ * to avoid any performance penalties caused by disabled features and program code.</p>
+ * <p>This class provides settings, that are set during program initialization.
  * These values are never changed.
  * These settings are used in order to enable or disable optional features.
- * Features that are disabled do not cause a performance penalty.
- * Performance and reasonable signaling for warnings and errors are prioritized by default.
+ * Features that are disabled, do not cause a performance penalty.
  * </p>
+ * <p>Performance and reasonable signaling for warnings and errors
+ * are prioritized by default settings of the static flags.</p>
  * <p>If one relates this to compiled languages,
  * this can be viewed as a kind of compile time arguments.
  * </p>
