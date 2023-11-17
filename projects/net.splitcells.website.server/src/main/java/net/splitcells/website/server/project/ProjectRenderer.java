@@ -28,7 +28,6 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 /**
  * Renders a folder, that is interpreted as a folder containing a project.
@@ -65,14 +64,14 @@ public interface ProjectRenderer extends Renderer {
             , SourceValidator sourceValidator
             , Config config) {
         return new ProjectRendererI(renderer
-                , projectFolder // fileSystemOnLocalHost(projectFolder.resolve("src/main"))
+                , projectFolder
                 , xslLibs
-                , resources // fileSystemOnLocalHost(resources)
+                , resources
                 , resourceRootPath
                 , true
                 , false
                 , sourceValidator
-                , projectFolder // fileSystemOnLocalHost(projectFolder)
+                , projectFolder
                 , config);
     }
 

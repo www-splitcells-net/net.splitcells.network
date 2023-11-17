@@ -35,6 +35,8 @@ public class SourceCodeCheck {
     public static void main(String... arg) {
         checkJavaSourceCodeFile(Path.of(
                 "../net.splitcells.dem.api/src/main/java/net/splitcells/dem/lang/perspective/PerspectiveTest.java"));
+        checkJavaSourceCodeProject(Path.of("../net.splitcells.website.server"));
+        checkJavaSourceCodeProject(Path.of("../net.splitcells.gel.ui"));
         checkJavaSourceCodeProject(Path.of("../net.splitcells.dem.api"));
         checkJavaSourceCodeProject(Path.of("../net.splitcells.gel.core"));
         checkJavaSourceCodeProject(Path.of("../net.splitcells.network.worker"));

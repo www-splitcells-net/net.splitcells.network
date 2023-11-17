@@ -23,9 +23,6 @@ import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
 
-import java.util.stream.IntStream;
-
-import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
