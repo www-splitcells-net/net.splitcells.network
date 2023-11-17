@@ -15,7 +15,7 @@ import subprocess
 from pathlib import Path
 import json
 import sys
-print(Path('.').resolve())
+print('Verifying repo `' + str(Path('.').resolve()) + '`.')
 returnCode = subprocess.call('command.managed.execute conjunction repo.verify', shell='True')
 if returnCode != 0:
 	sys.exit(1)
