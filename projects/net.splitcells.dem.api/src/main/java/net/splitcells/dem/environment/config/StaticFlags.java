@@ -56,7 +56,13 @@ public final class StaticFlags {
             = Boolean.parseBoolean
             (System.getProperty("net.splitcells.dem.environment.config.StaticFlags.TELLING_STORY", "false"));
     /**
-     * TODO Warn, if warnings are disabled.
+     * <p>This flags determines, if the main code for logging warnings is runnable or not.
+     * If set to false, the log system will not even get any warn messages.
+     * If set to true, the log system will retrieve warn messages and decide,
+     * whether these will be logged or not.
+     * This is done via static if blocks and is used in order to maximize performance.
+     * </p>
+     * <p>TODO Warn, if warnings are disabled.</p>
      */
     public static final boolean WARNING = false;
     /**
