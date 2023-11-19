@@ -27,13 +27,17 @@ import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearDei
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 
 public class LonelinessTest {
+    private static final String TIME = "time";
+    private static final String PLAYER_VALUE = "playerValue";
+    private static final String POSITION_X = "positionX";
+    private static final String POSITION_Y = "positionY";
     @UnitTest
     public void testLoneliness() {
-        final var time = attribute(Integer.class, "time");
-        final var playerValue = attribute(Integer.class, "playerValue");
-        final var positionX = attribute(Integer.class, "positionX");
-        final var positionY = attribute(Integer.class, "positionY");
-        final var testSubject = defineProblem("testTimeEvenSteps")
+        final var time = attribute(Integer.class, TIME);
+        final var playerValue = attribute(Integer.class, PLAYER_VALUE);
+        final var positionX = attribute(Integer.class, POSITION_X);
+        final var positionY = attribute(Integer.class, POSITION_Y);
+        final var testSubject = defineProblem("testLoneliness")
                 .withDemandAttributes(time, playerValue, positionX, positionY)
                 .withDemands(list(list(0, 1, 1, 1)
                         , list(1, 1, 1, 1)
@@ -88,11 +92,11 @@ public class LonelinessTest {
 
     @UnitTest
     public void testLonelinessWithoutCenterStart() {
-        final var time = attribute(Integer.class, "time");
-        final var playerValue = attribute(Integer.class, "playerValue");
-        final var positionX = attribute(Integer.class, "positionX");
-        final var positionY = attribute(Integer.class, "positionY");
-        final var testSubject = defineProblem("testTimeEvenSteps")
+        final var time = attribute(Integer.class, TIME);
+        final var playerValue = attribute(Integer.class, PLAYER_VALUE);
+        final var positionX = attribute(Integer.class, POSITION_X);
+        final var positionY = attribute(Integer.class, POSITION_Y);
+        final var testSubject = defineProblem("testLonelinessWithoutCenterStart")
                 .withDemandAttributes(time, playerValue, positionX, positionY)
                 .withDemands(list(list(0, 1, 2, 2)
                         , list(1, 1, 1, 1)
@@ -130,11 +134,11 @@ public class LonelinessTest {
 
     @UnitTest
     public void testLonelinessRemoval() {
-        final var time = attribute(Integer.class, "time");
-        final var playerValue = attribute(Integer.class, "playerValue");
-        final var positionX = attribute(Integer.class, "positionX");
-        final var positionY = attribute(Integer.class, "positionY");
-        final var testSubject = defineProblem("testTimeEvenSteps")
+        final var time = attribute(Integer.class, TIME);
+        final var playerValue = attribute(Integer.class, PLAYER_VALUE);
+        final var positionX = attribute(Integer.class, POSITION_X);
+        final var positionY = attribute(Integer.class, POSITION_Y);
+        final var testSubject = defineProblem("testLonelinessRemoval")
                 .withDemandAttributes(time, playerValue, positionX, positionY)
                 .withDemands(list(list(0, 1, 2, 2)
                         , list(1, 1, 1, 1)
