@@ -684,7 +684,9 @@ window.onload = function() {
                                     <div class="splitcells-net-window-menu-line-2"></div>
                                 </div>
                                 <div class="net-splitcells-menu net-splitcells-priority-4">
-                                    <xsl:copy-of select="$net-splitcells-website-server-config-menu-detailed"/>
+                                    <xsl:apply-templates mode="net-splitcells-website-menu"
+                                                         select="$net-splitcells-website-server-config-menu-detailed">
+                                    </xsl:apply-templates>
                                     <h3>Metadata About This Document</h3>
                                     <p>Unless otherwise noted, the
                                         content of this

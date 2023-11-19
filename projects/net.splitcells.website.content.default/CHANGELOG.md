@@ -6,5 +6,7 @@
 The changelog format can be found [here](../../src/main/md/net/splitcells/network/guidelines/changelog.md).
 
 ## [Unreleased]
+### Major Changes
+* **2023-02-12: \#s148** Explicitly set priority of menu buttons for section headings.
 ### Minor Changes
 * **2023-02-12: \#218**: Create shorter form of links: `<link url="[URL]">[TEXT]</link>`.

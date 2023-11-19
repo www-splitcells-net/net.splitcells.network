@@ -266,6 +266,20 @@
         </x:div>
     </xsl:template>
     <xsl:template match="s:chapter">
+        <xsl:call-template name="chapter-with-priority">
+            <xsl:with-param name="node" select="."/>
+            <xsl:with-param name="priority" select="'none'"/>
+        </xsl:call-template>
+    </xsl:template>
+    <xsl:template match="s:chapter" mode="net-splitcells-website-menu">
+        <xsl:call-template name="chapter-with-priority">
+            <xsl:with-param name="node" select="."/>
+            <xsl:with-param name="priority" select="'4'"/>
+        </xsl:call-template>
+    </xsl:template>
+    <xsl:template name="chapter-with-priority">
+        <xsl:param name="node"/>
+        <xsl:param name="priority"/>
         <xsl:choose>
             <xsl:when test="$generation.style='minimal'">
                 <section>
@@ -289,9 +303,27 @@
                                 <xsl:apply-templates select="./s:title/node()"/>
                             </a>
                             <div class="net-splitcells-action-button" style="float: right;">
+                                <xsl:choose>
+                                    <xsl:when test="$priority!='none'">
+                                        <xsl:attribute name="class"
+                                                       select="concat('net-splitcells-action-button net-splitcells-component-priority-', $priority)"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:attribute name="class" select="'net-splitcells-action-button'"/>
+                                    </xsl:otherwise>
+                                </xsl:choose>
                                 <a href="#topElement">↑</a>
                             </div>
-                            <div class="net-splitcells-action-button">
+                            <div>
+                                <xsl:choose>
+                                    <xsl:when test="$priority!='none'">
+                                        <xsl:attribute name="class"
+                                                       select="concat('net-splitcells-action-button net-splitcells-component-priority-', $priority)"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:attribute name="class" select="'net-splitcells-action-button'"/>
+                                    </xsl:otherwise>
+                                </xsl:choose>
                                 <xsl:attribute name="id" select="concat($id, '-button-hide')"/>
                                 <xsl:attribute name="style">
                                     <xsl:text>float: right;</xsl:text>
@@ -314,7 +346,16 @@
                                 </xsl:attribute>
                                 -
                             </div>
-                            <div class="net-splitcells-action-button">
+                            <div>
+                                <xsl:choose>
+                                    <xsl:when test="$priority!='none'">
+                                        <xsl:attribute name="class"
+                                                       select="concat('net-splitcells-action-button net-splitcells-component-priority-', $priority)"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:attribute name="class" select="'net-splitcells-action-button'"/>
+                                    </xsl:otherwise>
+                                </xsl:choose>
                                 <xsl:attribute name="id" select="concat($id, '-button-show')"/>
                                 <xsl:attribute name="style">
                                     <xsl:text>float: right;</xsl:text>
@@ -842,6 +883,15 @@
         </xsl:element>
     </xsl:template>
     <xsl:template match="x:*">
+        <!-- xhtml -->
+        <!-- Identity transformation as described in: https://en.wikipedia.org/wiki/Identity_transform -->
+        <!-- TODO Create prefix translating identity template and use this in order to avoid code duplication. -->
+        <xsl:element name="{local-name()}">
+            <xsl:copy-of select="@*"/>
+            <xsl:apply-templates/>
+        </xsl:element>
+    </xsl:template>
+    <xsl:template match="x:*" mode="net-splitcells-website-menu">
         <!-- xhtml -->
         <!-- Identity transformation as described in: https://en.wikipedia.org/wiki/Identity_transform -->
         <!-- TODO Create prefix translating identity template and use this in order to avoid code duplication. -->
