@@ -30,10 +30,11 @@ Steps required on the target computer to set this up:
 * Upload all repositories to the target server.
   This can be done via sshfs mounts or by cloning the repos from some other servers to the target server.
 * Install all required software on the target server.
-  This is usually Python 3 and Java 11.
+  This is usually Python 3 and Java 21.
 * Configure git via `git config --global user.email && git config --global user.name`.
 
-`journalctl --follow --unit build` can be used in order to follow the log of the service in real time. 
+`journalctl --follow --unit build` can be used in order to follow the log of the service in real time.
+Use `cat ~/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.log/target/test.via.network.worker.log` in order to view the build logs written to a file.
 """)
 	argsParser.add_argument('--target-server', dest='targetServer', type = str, required = True)
 	argsParser.add_argument('--user', type = str, required = True)
