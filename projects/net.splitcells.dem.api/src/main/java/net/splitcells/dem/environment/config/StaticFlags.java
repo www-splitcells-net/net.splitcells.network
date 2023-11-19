@@ -15,7 +15,10 @@
  */
 package net.splitcells.dem.environment.config;
 
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.communication.log.LogLevel;
+
+import java.util.Optional;
 
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
@@ -83,15 +86,15 @@ public final class StaticFlags {
         throw constructorIllegal();
     }
 
-    private static void logIfMostPerformant() {
-        if (ENFORCING_UNIT_CONSISTENCY || TELLING_STORY || WARNING || TRACING || INLINE_STANDARD_FACTORIES) {
-            domsole().append(perspective("The most performant settings are not enabled").withChildren(
-                            perspective("ENFORCING_UNIT_CONSISTENCY = " + ENFORCING_UNIT_CONSISTENCY)
-                            , perspective("TELLING_STORY = " + TELLING_STORY)
-                            , perspective("WARNING = " + WARNING)
-                            , perspective("INLINE_STANDARD_FACTORIES = " + INLINE_STANDARD_FACTORIES))
-                    , LogLevel.WARNING);
+    private static Optional<Perspective> warningIfNotMostPerformant() {
+        if (ENFORCING_UNIT_CONSISTENCY || TELLING_STORY || WARNING || TRACING || !INLINE_STANDARD_FACTORIES) {
+            return Optional.of(perspective("The most performant settings are not enabled").withChildren(
+                    perspective("ENFORCING_UNIT_CONSISTENCY = " + ENFORCING_UNIT_CONSISTENCY)
+                    , perspective("TELLING_STORY = " + TELLING_STORY)
+                    , perspective("WARNING = " + WARNING)
+                    , perspective("INLINE_STANDARD_FACTORIES = " + INLINE_STANDARD_FACTORIES)));
         }
+        return Optional.empty();
     }
 
     /**
@@ -99,15 +102,12 @@ public final class StaticFlags {
      */
     public static void logStaticFlags() {
         final var staticFlagsOverridden = perspective("static-flags-overridden");
-        if (!INLINE_STANDARD_FACTORIES) {
-            staticFlagsOverridden.withText("`" + INLINE_STANDARD_FACTORIES_KEY + "` set to `false` and therefore the best performance is not achieved.");
-        }
         if (!ENFORCING_UNIT_CONSISTENCY) {
             staticFlagsOverridden.withText("`" + ENFORCING_UNIT_CONSISTENCY_KEY + "` set to `false` and therefore simple errors are not checked.");
         }
+        warningIfNotMostPerformant().ifPresent(staticFlagsOverridden::withChild);
         if (staticFlagsOverridden.children().hasElements()) {
             domsole().append(staticFlagsOverridden, LogLevel.WARNING);
         }
-        logIfMostPerformant();
     }
 }
