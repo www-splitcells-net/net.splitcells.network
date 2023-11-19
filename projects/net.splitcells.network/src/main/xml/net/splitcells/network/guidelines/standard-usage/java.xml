@@ -15,14 +15,16 @@
     <paragraph>Use only private or public visibility modifier.
         Method arguments are implicitly final.
         The source code has to comply with <quote>net.splitcells.dem</quote>'s Java grammar.
-        Classes must not be final, because this is useful for <quote>net.splitcells.network.community.via.javadoc</quote>.
+        Classes must not be final, because this is useful for <quote>
+            net.splitcells.network.community.via.javadoc</quote>.
     </paragraph>
     <chapter>
         <title>Java's Limitations</title>
         <paragraph>Here are problems encountered with Java listed and not solved.
             These should be considered, when an alternative language to Java is searched.
         </paragraph>
-        <paragraph>There is no known way, in order to define a static API in Java in a similar portable, easy, performant and adaptable way,
+        <paragraph>There is no known way, in order to define a static API in Java in a similar portable, easy,
+            performant and adaptable way,
             like C header files.
             The most portable way seems to be the usage of the service locator pattern and similar patterns,
             but the resulting code requires some non trivial boiler code.
@@ -37,5 +39,16 @@
             <item>Impl</item>
             <item>Doc</item>
         </list>
+    </chapter>
+    <chapter>
+        <title>Remote Debugging</title>
+        <paragraph>Use following command in order to start the Java process.
+            <quote>java -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8000 -jar [path to jar, that is
+                executed]
+            </quote>
+        </paragraph>
+        <paragraph>In this case <quote>suspend=y</quote> let's pauses the program start,
+            until something connects to the debugging port.
+        </paragraph>
     </chapter>
 </article>
