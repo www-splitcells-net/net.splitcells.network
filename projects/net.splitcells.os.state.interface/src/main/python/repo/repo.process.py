@@ -83,33 +83,39 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown, c
 	command = command.replace('$peerRepo', '')
 	subListPath=Path('./.net.splitcells.os.state.interface.repo/subs.json')
 	if subListPath.is_file():
-		# TODO Check if "!/.net.splitcells.os.state.interface.repo/" is present in gitignore. If not pr
-		with open(subListPath, 'r') as subListFile:
-			repoList=json.load(subListFile)
-			for currentSubDir in Path('.').iterdir():
-				if not currentSubDir.name.startswith('.') and currentSubDir.is_dir():
-					subName = currentSubDir.name
-					if not subName in repoList['subs']:
-						unknownSubRepoScript = 'set -e; cd ' + subName + ' ; repo.process' + " --command='" + commandForUnknown + "' --host=" + host + ' --relative-path=' + relativePath + '/' + subName
-						unknownSubRepoScript = unknownSubRepoScript.replace('$subRepo', relativePath + '/' + subName + '/$subRepo')
-						logging.debug('unknownSubRepoScript: ' + unknownSubRepoScript)
-						returnCode = subprocess.call(unknownSubRepoScript, shell='True')
-						if returnCode != 0:
-							logging.error('Error processing unknown sub repository with return code ' + str(returnCode) + '.')
-							return False
-			for subName in repoList['subs'].keys():
-				subRepoPath=Path('./' + subName)
-				returnCode = processSub(relativePath
-										, host
-										, command
-										, commandForMissing
-										, commandForUnknown
-										, commandForCurrent
-										, commandForChildren
-										, subName
-										, subRepoPath)
-				if not returnCode:
-					return returnCode
+		raise Exception('`./.net.splitcells.os.state.interface.repo/subs.json` is present, but deprecated and unsupported.')
+	subListPath=Path('./.net.splitcells.os.state.interface.repo/sub-repo-names')
+	if subListPath.is_file():
+		subListQuery = subprocess.run([subListPath], stdout=subprocess.PIPE)
+		subRepos = []
+		for subRepo in subListQuery.stdout.decode('utf-8').split("\n"):
+			if not subRepo == "" and not subRepo.isspace():
+				subRepos.append(subRepo)
+		for currentSubDir in Path('.').iterdir():
+			# Hidden files aka dotfiles are ignored.
+			if not currentSubDir.name.startswith('.') and currentSubDir.is_dir():
+				subName = currentSubDir.name
+				if not subName in subRepos:
+					unknownSubRepoScript = 'set -e; cd ' + subName + ' ; repo.process' + " --command='" + commandForUnknown + "' --host=" + host + ' --relative-path=' + relativePath + '/' + subName
+					unknownSubRepoScript = unknownSubRepoScript.replace('$subRepo', relativePath + '/' + subName + '/$subRepo')
+					logging.debug('unknownSubRepoScript: ' + unknownSubRepoScript)
+					returnCode = subprocess.call(unknownSubRepoScript, shell='True')
+					if returnCode != 0:
+						logging.error('Error processing unknown sub repository with return code ' + str(returnCode) + '.')
+						return False
+		for subName in subRepos:
+			subRepoPath=Path('./' + subName)
+			returnCode = processSub(relativePath
+				, host
+				, command
+				, commandForMissing
+				, commandForUnknown
+				, commandForCurrent
+				, commandForChildren
+				, subName
+				, subRepoPath)
+			if not returnCode:
+				return returnCode
 	return True
 def processSub(relativePath, host, command, commandForMissing, commandForUnknown, commandForCurrent, commandForChildren, subName, subRepoPath):
 	if not subRepoPath.is_dir():

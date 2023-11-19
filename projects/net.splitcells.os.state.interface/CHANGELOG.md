@@ -22,6 +22,11 @@ Changes are now written to the root changelog instead.
 
 ## Unreleased
 ### Major Changes
+* **2023-11-19 \#213** `repo.process` now loads the list of sub repositories via `./.net.splitcells.os.state.interface.repo/sub-repo-names`
+    and not `./.net.splitcells.os.state.interface.repo/subs.json` in order to simplify the format.
+    `./.net.splitcells.os.state.interface.repo/sub-repo-names` is now a command that is executed and returns a list of sub repo names,
+    that are separated via new line symbols, which in turn is a csv file. 
+    This makes it also easier to make it compatible with other software like hakoerber's GRM.
 * **2023-06-16** [**\#245** Notify users of `echo.error` call by default.](https://github.com/www-splitcells-net/net.splitcells.network/issues/245)
 * **2023-03-26** [**\#s109** `repo.process` should not create the folder of missing sub repos by default.](https://todo.sr.ht/~splitcells-net/net.splitcells.network/119)
   If `--command-for-missing` is not set or is set as `exit 1`,
