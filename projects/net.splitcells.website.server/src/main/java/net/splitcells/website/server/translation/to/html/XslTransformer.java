@@ -15,7 +15,6 @@
  */
 package net.splitcells.website.server.translation.to.html;
 
-import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
@@ -23,17 +22,12 @@ import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Templates;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.URIResolver;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+
+import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 
 /**
  * The <a href="http://saxon.sourceforge.net/">SAXON The XSLT and XQuery
@@ -49,12 +43,37 @@ public class XslTransformer {
 
     private final Transformer transformer;
 
+    private static ErrorListener errorListener() {
+        return new ErrorListener() {
+
+            @Override
+            public void warning(TransformerException exception) throws TransformerException {
+                System.out.println(123);
+                domsole().appendWarning("XML transformation warning", exception);
+            }
+
+            @Override
+            public void error(TransformerException exception) throws TransformerException {
+                System.out.println(1234);
+                domsole().appendWarning("XML transformation error", exception);
+            }
+
+            @Override
+            public void fatalError(TransformerException exception) throws TransformerException {
+                System.out.println(1235);
+                domsole().appendWarning("Fatal error XML transformation", exception);
+            }
+        };
+    }
+
     public XslTransformer(InputStream xsl, URIResolver uriSolver) {
         TransformerFactory factory = TransformerFactory.newInstance();
+        factory.setErrorListener(errorListener());
         factory.setURIResolver(uriSolver);
         try {
             Templates template = factory.newTemplates(new StreamSource(xsl));
             transformer = template.newTransformer();
+            transformer.setErrorListener(errorListener());
             transformer.setParameter("siteFolder", Paths.get(".").toAbsolutePath().toString() + File.separator);
         } catch (TransformerConfigurationException e) {
             throw new RuntimeException(e);
