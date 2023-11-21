@@ -152,6 +152,23 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
         return walkRecursively(Path.of("/"));
     }
 
+    /**
+     * <p>This does not work for {@link #clazz} of Maven artifacts, that are inside a jar of a Eclipse Bundle.
+     * Following could load a resource out of such {@link #clazz}: "resourceResolver.getResources(clazz.getClassLoader().getResource(normalize(basePath + path)).toString)"
+     * but the following could not walk the resources recursively: "resourceResolver.getResources(clazz.getClassLoader().getResource(normalize(basePath + path)).toString() + "/**")"
+     * Also, the resource path of the Equinox class loader is cryptic.</p>
+     * <p>In order to mitigate this, following solution was decided:
+     * During the build a custom Maven plugin adds a resource to the jar,
+     * that contains a list of all resources for that project.
+     * The Java program inside the build jar can calculate the name of this resource
+     * based on the Maven's artifactId and GroupId and
+     * therefore load this resource list in a way, that is supported by most class loaders.
+     * This is implemented at {@link FileSystemViaClassResourcesImpl}.
+     * </p>
+     *
+     * @param path
+     * @return
+     */
     @Override
     public Stream<Path> walkRecursively(Path path) {
         if (isFile(path)) {
