@@ -48,7 +48,6 @@ public class XslTransformer {
 
             @Override
             public void warning(TransformerException exception) throws TransformerException {
-                System.out.println(123);
                 domsole().appendWarning("XML transformation warning", exception);
             }
 
