@@ -135,7 +135,10 @@ public class ProjectsRendererI implements ProjectsRenderer {
                         Files.createDirectory(targetPath.getParent());
                         Files.writeToFile(targetPath, render(path).orElseThrow().getContent());
                     } catch (Exception e) {
-                        throw new RuntimeException(target.toString() + path, e);
+                        throw executionException(perspective("Could not serve path to file system.")
+                                        .withProperty("target", target.toString())
+                                        .withProperty("path", path.toString())
+                                , e);
                     }
                 });
         renderingValidator.endReport();
