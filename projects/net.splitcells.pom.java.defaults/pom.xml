@@ -35,6 +35,20 @@
         <testSourceDirectory>src/main/java</testSourceDirectory>
         <plugins>
             <plugin>
+                <groupId>net.splitcells</groupId>
+                <artifactId>resource-list-maven-plugin</artifactId>
+                <version>${revision}</version>
+                <executions>
+                    <execution>
+                        <id>generate-resource-list</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>generate-resource-list</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <!-- This makes it easier to execute a Java program from command line via `mvn exec:java -Dexec.mainClass=[...]`. -->
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
