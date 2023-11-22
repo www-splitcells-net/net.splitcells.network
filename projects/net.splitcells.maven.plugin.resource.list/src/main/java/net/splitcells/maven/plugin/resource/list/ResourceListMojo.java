@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -47,10 +48,16 @@ public class ResourceListMojo extends AbstractMojo {
         final var resourceFolder = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources");
         final var resourceListFile = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources.list.txt");
         try {
+            if (!Files.isDirectory(resourceFolder)) {
+                try {
+                    Files.createDirectories(resourceFolder);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             final var fileSystemSeparator = FileSystems.getDefault().getSeparator();
             final var basePathStr = basePath.toAbsolutePath().toString().replace(fileSystemSeparator, "/");
             getLog().info("Writing resource list file to `" + resourceFolder.toAbsolutePath() + "`.");
-            resourceFolder.toFile().mkdirs();
             final var resourceList = new StringBuilder();
             // "+1" makes the paths relative by removing the first slash.
             java.nio.file.Files.walk(resourceFolder)

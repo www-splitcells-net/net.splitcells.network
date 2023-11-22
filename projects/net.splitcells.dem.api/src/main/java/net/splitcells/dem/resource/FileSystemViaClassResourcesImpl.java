@@ -25,7 +25,7 @@ import java.io.InputStream;
 import java.net.URLDecoder;
 import java.nio.file.Path;
 import java.util.jar.JarFile;
-import java.util.stream.Collectors;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -70,12 +70,13 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
         return groupdId + "." + artifiactId + ".resources/";
     }
 
-    public static FileSystemView _fileSystemViaClassResourcesImpl(Class<?> clazz) {
-        return new FileSystemViaClassResourcesImpl(clazz, "");
+    public static String resourceListPath(String groupdId, String artifiactId) {
+        return groupdId + "." + artifiactId + ".resources.list.txt";
     }
 
-    public static FileSystemView _fileSystemViaClassResourcesImpl(Class<?> clazz, String basePath) {
-        return new FileSystemViaClassResourcesImpl(clazz, basePath);
+    public static FileSystemView _fileSystemViaClassResourcesImpl(Class<?> clazz, String groupdId, String artifactId) {
+        return new FileSystemViaClassResourcesImpl(clazz, resourceBasePath(groupdId, artifactId)
+                , resourceListPath(groupdId, artifactId));
     }
 
     /**
@@ -83,10 +84,24 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
      */
     private final String basePath;
     private final Class<?> clazz;
+    private List<String> resourceList;
 
-    private FileSystemViaClassResourcesImpl(Class<?> clazz, String basePath) {
+    private FileSystemViaClassResourcesImpl(Class<?> clazz, String basePath, List<String> resourceListArg) {
         this.clazz = clazz;
         this.basePath = basePath;
+        this.resourceList = resourceListArg;
+    }
+
+    private FileSystemViaClassResourcesImpl(Class<?> clazz, String basePath, String resourceListPath) {
+        this.clazz = clazz;
+        this.basePath = basePath;
+        resourceList = list();
+        final var resourceListContent = clazz.getResourceAsStream("/" + resourceListPath);
+        if (resourceListContent != null) {
+            for (final var resource : readAsString(resourceListContent).split("\n")) {
+                resourceList.add(normalize(resource));
+            }
+        }
     }
 
     @Override
@@ -138,7 +153,10 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
     }
 
     private String normalize(String path) {
-        return path.replace("./", "").replace("//", "/");
+        return path
+                .replace("\\", "/")
+                .replace("./", "")
+                .replace("//", "/");
     }
 
     @Override
@@ -182,6 +200,18 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
             final var resourcePath = clazz.getClassLoader().getResource(normalize((basePath + path + "/")));
             if (resourcePath == null) {
                 return Stream.empty();
+            }
+            if (resourceList.hasElements()) {
+                final var pathStr = normalize(basePath + path.toString());
+                final var pathStrFolder = pathStr + "/";
+                final List<Path> walk = list();
+                for (final var resource : resourceList) {
+                    final var resourceStr = normalize(resource);
+                    if (resourceStr.startsWith(pathStrFolder) || resourceStr.equals(pathStr)) {
+                        walk.add(Path.of(resourceStr.substring(basePath.length())));
+                    }
+                }
+                return walk.stream();
             }
             if ("jar".equals(resourcePath.getProtocol())) {
                 final var defaultProtocol = defaultProtocol();
@@ -282,6 +312,8 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
     }
 
     public FileSystemView subFileSystemView(String path) {
-        return new FileSystemViaClassResourcesImpl(clazz, (basePath + path + "/").replaceAll("//", "/"));
+        return new FileSystemViaClassResourcesImpl(clazz
+                , (basePath + path + "/").replaceAll("//", "/")
+                , resourceList);
     }
 }
