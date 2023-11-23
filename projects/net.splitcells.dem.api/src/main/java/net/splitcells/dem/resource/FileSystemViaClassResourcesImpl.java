@@ -85,11 +85,13 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
     private final String basePath;
     private final Class<?> clazz;
     private List<String> resourceList;
+    private final boolean populatedResourceList;
 
-    private FileSystemViaClassResourcesImpl(Class<?> clazz, String basePath, List<String> resourceListArg) {
+    private FileSystemViaClassResourcesImpl(Class<?> clazz, String basePath, List<String> resourceListArg, boolean populatedResourceListArg) {
         this.clazz = clazz;
         this.basePath = basePath;
         this.resourceList = resourceListArg;
+        populatedResourceList = populatedResourceListArg;
     }
 
     private FileSystemViaClassResourcesImpl(Class<?> clazz, String basePath, String resourceListPath) {
@@ -97,11 +99,13 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
         this.basePath = basePath;
         resourceList = list();
         final var resourceListContent = clazz.getResourceAsStream("/" + resourceListPath);
-        if (resourceListContent != null) {
+        populatedResourceList = resourceListContent != null;
+        if (populatedResourceList) {
             for (final var resource : readAsString(resourceListContent).split("\n")) {
                 resourceList.add(normalize(resource));
             }
         }
+
     }
 
     @Override
@@ -197,11 +201,7 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
     @Override
     public Stream<Path> walkRecursively(Path path) {
         try {
-            final var resourcePath = clazz.getClassLoader().getResource(normalize((basePath + path + "/")));
-            if (resourcePath == null) {
-                return Stream.empty();
-            }
-            if (resourceList.hasElements()) {
+            if (populatedResourceList) {
                 final var pathStr = normalize(basePath + path.toString());
                 final var pathStrFolder = pathStr + "/";
                 final List<Path> walk = list();
@@ -212,6 +212,10 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
                     }
                 }
                 return walk.stream();
+            }
+            final var resourcePath = clazz.getClassLoader().getResource(normalize((basePath + path + "/")));
+            if (resourcePath == null) {
+                return Stream.empty();
             }
             if ("jar".equals(resourcePath.getProtocol())) {
                 final var defaultProtocol = defaultProtocol();
@@ -314,6 +318,7 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
     public FileSystemView subFileSystemView(String path) {
         return new FileSystemViaClassResourcesImpl(clazz
                 , (basePath + path + "/").replaceAll("//", "/")
-                , resourceList);
+                , resourceList
+                , populatedResourceList);
     }
 }
