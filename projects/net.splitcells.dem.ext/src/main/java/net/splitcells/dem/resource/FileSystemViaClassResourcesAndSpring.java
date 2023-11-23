@@ -45,6 +45,7 @@ import static net.splitcells.dem.utils.StreamUtils.*;
  * The reason for this is its complex implementation and the dependency on the runtime's platform and environment,
  * that in turn causes relative much work.
  * </p>
+ * <p>This class seems to be slow with Equinox class loader and Eclipse applications.</p>
  * <p>TODO Test via {@link FileSystemViaClassResourcesTest}.</p>
  */
 @JavaLegacyArtifact
