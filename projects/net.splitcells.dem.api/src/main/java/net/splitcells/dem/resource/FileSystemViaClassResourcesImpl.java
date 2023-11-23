@@ -206,7 +206,7 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
                 final var pathStrFolder = pathStr + "/";
                 final List<Path> walk = list();
                 for (final var resource : resourceList) {
-                    final var resourceStr = normalize(resource);
+                    final var resourceStr = resource;
                     if (resourceStr.startsWith(pathStrFolder) || resourceStr.equals(pathStr)) {
                         walk.add(Path.of(resourceStr.substring(basePath.length())));
                     }
