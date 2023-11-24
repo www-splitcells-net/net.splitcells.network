@@ -19,6 +19,7 @@ import net.splitcells.dem.lang.annotations.ReturnsThis;
 
 import java.io.InputStream;
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -33,6 +34,13 @@ public interface FileSystemView {
     }
 
     InputStream inputStream(Path path);
+
+    default Optional<String> readStringIfPresent(Path path) {
+        if (isFile(path)) {
+            return Optional.of(readString(path));
+        }
+        return Optional.empty();
+    }
 
     default String readString(String path) {
         return readString(Path.of(path));

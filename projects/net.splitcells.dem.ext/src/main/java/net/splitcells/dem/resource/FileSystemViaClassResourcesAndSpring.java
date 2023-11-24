@@ -23,6 +23,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -86,6 +87,22 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
                             .withProperty("calculated resource path", path.toString())
                     , th);
         }
+    }
+
+    @Override
+    public Optional<String> readStringIfPresent(Path path) {
+        final var fileContent = resourceResolver.getResource(normalize(path));
+        if (fileContent != null) {
+            try {
+                return Optional.of(readAsString(fileContent.getInputStream()));
+            } catch (Throwable th) {
+                throw executionException(perspective("Could not optionally read file from class path resources:")
+                                .withProperty("path requested", path.toString())
+                                .withProperty("calculated resource path", path.toString())
+                        , th);
+            }
+        }
+        return Optional.empty();
     }
 
     @Override

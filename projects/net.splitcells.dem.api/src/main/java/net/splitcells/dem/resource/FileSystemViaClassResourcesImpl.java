@@ -127,6 +127,23 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
     }
 
     @Override
+    public Optional<String> readStringIfPresent(Path path) {
+        final var resourcePath = ("/" + basePath + path.toString()).replace("\\", "/");
+        final var fileContent = clazz.getResourceAsStream(resourcePath);
+        if (fileContent != null) {
+            try {
+                return Optional.of(readAsString(fileContent));
+            } catch (Throwable th) {
+                throw executionException(perspective("Could not optionally read file from class path resources:")
+                                .withProperty("path requested", path.toString())
+                                .withProperty("calculated resource path", path.toString())
+                        , th);
+            }
+        }
+        return Optional.empty();
+    }
+
+    @Override
     public boolean exists() {
         return true;
     }
