@@ -148,7 +148,19 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
      */
     @Override
     public boolean isFile(Path path) {
-        final var inputStream = clazz.getResourceAsStream(normalize("/" + basePath + path));
+        if (populatedResourceList) {
+            final var pathStr = normalize(basePath + path);
+            for (final var r : resourceList) {
+                if (r.length() == pathStr.length() && r.equals(pathStr)) {
+                    return true;
+                } else if (r.length() == pathStr.length() + 1 && r.equals(pathStr + "/")) {
+                    return false;
+                }
+            }
+            return false;
+        }
+        final var pathStr = normalize("/" + basePath + path);
+        final var inputStream = clazz.getResourceAsStream(pathStr);
         return inputStream != null
                 && Files.readAsString(inputStream).length() != 0
                 && walkRecursively(path)
