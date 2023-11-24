@@ -60,19 +60,20 @@ public class ResourceListMojo extends AbstractMojo {
             getLog().info("Writing resource list file to `" + resourceFolder.toAbsolutePath() + "`.");
             final var resourceList = new StringBuilder();
             // "+1" makes the paths relative by removing the first slash.
-            java.nio.file.Files.walk(resourceFolder)
-                    .forEach(resource -> {
-                        var resourceStr = resource
-                                .toAbsolutePath()
-                                .toString()
-                                .replace(fileSystemSeparator, "/")
-                                .substring(basePathStr.length() + 1);
-                        if (Files.isDirectory(resource)) {
-                            resourceStr += "/";
-                        }
-                        resourceList.append(resourceStr);
-                        resourceList.append("\n");
-                    });
+            try (final var walk = java.nio.file.Files.walk(resourceFolder)) {
+                walk.forEach(resource -> {
+                    var resourceStr = resource
+                            .toAbsolutePath()
+                            .toString()
+                            .replace(fileSystemSeparator, "/")
+                            .substring(basePathStr.length() + 1);
+                    if (Files.isDirectory(resource)) {
+                        resourceStr += "/";
+                    }
+                    resourceList.append(resourceStr);
+                    resourceList.append("\n");
+                });
+            }
             try (final BufferedWriter resourceListWriter = new BufferedWriter(new FileWriter(resourceListFile.toFile()))) {
                 resourceListWriter.write(resourceList.toString());
             }
