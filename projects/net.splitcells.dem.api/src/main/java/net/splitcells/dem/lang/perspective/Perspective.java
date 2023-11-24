@@ -539,7 +539,7 @@ public interface Perspective extends PerspectiveView {
             if (name().length() > 200) {
                 output.append("```\n" + name() + "\n```");
             } else {
-                output.append(prefix + name());
+                output.append(listPrefix + name());
             }
         } else {
             final var isSimpleList = children().stream().map(c -> c.children().isEmpty()).reduce(true, (a, b) -> a && b);
