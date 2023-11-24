@@ -106,13 +106,15 @@ pre {
 	display: none;
 	visibility: hidden;
 }
-textarea.net-splitcells-webserver-form-text-editor {
+textarea.net-splitcells-webserver-form-text-editor-backend {
     width: 100%;
     height: 50em;
     resize: none;
     border: none;
     font-family: monospace;
     font-size: 1em;
+    visibility: hidden;
+    display: none;
     }
 .net-splitcells-button-inline {
 	margin-left: .0625em;

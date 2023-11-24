@@ -253,7 +253,11 @@
         </div>
     </xsl:template>
     <xsl:template match="s:text-area">
-        <textarea class="net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor">
+        <div class="net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor">
+            <xsl:attribute name="net-splitcells-syncs-to" select="./@id"/>
+            <xsl:apply-templates select="./text()"/>
+        </div>
+        <textarea class="net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor-backend">
             <xsl:attribute name="id" select="./@id"/>
             <xsl:attribute name="name" select="./@id"/>
             <xsl:apply-templates select="./text()"/>

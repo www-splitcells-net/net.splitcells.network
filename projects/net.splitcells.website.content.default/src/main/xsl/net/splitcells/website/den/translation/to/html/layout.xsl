@@ -16,6 +16,7 @@
     <!-- Defines the standard html layout.
         Do not normalize spaces by default via a generic template,
         as not normalized space can be important for things like the default content of a textarea HTML element.
+        Therefore, "xsl:output" with indent="no" is used.
     -->
     <!-- TODO s:root-relative-url(
     TODO Use only css classes with net-splitcells prefix for best portability.

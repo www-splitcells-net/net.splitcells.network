@@ -16,7 +16,7 @@
         SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
         SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
     -->
-    <xsl:output method="html" indent="yes" omit-xml-declaration="yes"/>
+    <xsl:output method="html" indent="no" omit-xml-declaration="yes"/>
     <xsl:include href="main.lib.xsl"/>
     <xsl:template name="file-path-environment">
         <xsl:param name="path"/>

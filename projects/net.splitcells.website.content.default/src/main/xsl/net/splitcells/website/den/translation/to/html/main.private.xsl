@@ -19,7 +19,7 @@
     TODO Use only one main XSL file,
     because the configuration should be done via the XSL executor.
     -->
-    <xsl:output method="html" indent="yes" omit-xml-declaration="yes"/>
+    <xsl:output method="html" indent="no" omit-xml-declaration="yes"/>
     <xsl:include href="main.lib.xsl"/>
     <xsl:template name="file-path-environment">
         <xsl:param name="path"/>
