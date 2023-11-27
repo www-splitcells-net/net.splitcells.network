@@ -37,6 +37,10 @@ the distributor is responsible for the compliance with the secondary license.
 This is especially the case for third party content and third party dependencies.
 See the license texts for more details.
 
+# TODO
+This NOTICE file contains also dependencies only present at other Splitcells project repos.
+These mentions should be moved to the respective repos.
+
 ## Third Party Content
 
 Third party content is created by external parties and
@@ -354,3 +358,8 @@ Eclipse Platform
 Tabulator
 * License: MIT
 * Source Code: https://github.com/olifolkerd/tabulator
+
+CodeMirror
+* License: MIT: https://github.com/codemirror/dev/blob/main/LICENSE
+* Website: https://codemirror.net/
+* Source Code: https://github.com/codemirror/dev/
