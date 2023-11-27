@@ -154,7 +154,8 @@ function net_splitcells_webserver_form_submit(config) {
         var responseObject = JSON.parse(this.responseText);
         if ('net-splitcells-websiter-server-form-update' in responseObject) {
             for (const [key, value] of Object.entries(responseObject['net-splitcells-websiter-server-form-update'])) {
-                document.getElementById(key).value = value;
+                document.getElementById(key).value = value; // value is used by form elements like textarea.
+                document.getElementById(key).innerHTML = value; // innerHTML is used by div elements inside forms.
             }
         }
         config['on-submission-completion']();
