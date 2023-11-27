@@ -43,7 +43,7 @@ import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.MathUtils.intervalClosed;
 import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
@@ -168,13 +168,13 @@ public class ColloquiumPlanningTest extends TestSuiteI {
             if (testSubject.isOptimal()) {
                 return;
             }
-            domsole().append(
+            logs().append(
                     perspective(i + ""
                             , STRING)
                     , () -> list("debugging")
                     , LogLevel.DEBUG);
             testSubject.optimizeWithFunction(ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(3), (currentSolution, step) -> {
-                domsole().append(
+                logs().append(
                         perspective(ZonedDateTime.now().toString()
                                         + testSubject.constraint().rating().asMetaRating().getContentValue(Cost.class).value()
                                         + currentSolution.isComplete()
@@ -185,7 +185,7 @@ public class ColloquiumPlanningTest extends TestSuiteI {
                 return step <= 100 && !currentSolution.isOptimal();
             });
             testSubject.optimizeWithFunction(simpleConstraintGroupBasedOfflineRepair(4, 2), (currentSolution, step) -> {
-                domsole().append(
+                logs().append(
                         perspective(ZonedDateTime.now().toString()
                                         + testSubject.constraint().rating().asMetaRating().getContentValue(Cost.class).value()
                                         + currentSolution.isComplete()
@@ -196,7 +196,7 @@ public class ColloquiumPlanningTest extends TestSuiteI {
                 return step <= 100 && !currentSolution.isOptimal();
             });
             testSubject.optimizeWithFunction(simpleConstraintGroupBasedOfflineRepair(4, 3), (currentSolution, step) -> {
-                domsole().append(
+                logs().append(
                         perspective(ZonedDateTime.now().toString()
                                         + testSubject.constraint().rating().asMetaRating().getContentValue(Cost.class).value()
                                         + currentSolution.isComplete()
@@ -207,7 +207,7 @@ public class ColloquiumPlanningTest extends TestSuiteI {
                 return step <= 100 && !currentSolution.isOptimal();
             });
             testSubject.optimizeWithFunction(ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(1), (currentSolution, step) -> {
-                domsole().append(
+                logs().append(
                         perspective(ZonedDateTime.now().toString()
                                         + testSubject.constraint().rating().asMetaRating().getContentValue(Cost.class).value()
                                         + currentSolution.isComplete()

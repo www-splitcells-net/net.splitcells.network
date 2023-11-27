@@ -26,7 +26,7 @@ import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_C
 import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
 import static net.splitcells.dem.lang.namespace.NameSpaces.GEL;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.common.Language.ARGUMENTATION;
@@ -44,9 +44,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.Xml;
@@ -252,7 +250,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
     public void registerAdditions(GroupId injectionGroup, Line addition) {
         // TODO Move this to a different project.
         if (TRACING) {
-            domsole().append
+            logs().append
                     (perspective("register-additions." + Constraint.class.getSimpleName())
                                     .withChild(perspective("additions").withChild(addition.toPerspective()))
                                     .withProperty("injectionGroup", injectionGroup.toString())

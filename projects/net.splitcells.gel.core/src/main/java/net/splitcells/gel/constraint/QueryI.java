@@ -19,7 +19,7 @@ import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.environment.config.StaticFlags.WARNING;
 import static net.splitcells.dem.object.Discoverable.discoverable;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StreamUtils.ensureSingle;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -326,7 +326,7 @@ public class QueryI implements Query {
 
     @Override
     public Query forAll(List<Rater> classifiers) {
-        if (WARNING) domsole().append("Groups are not supported yet: " + groups.toString(), LogLevel.WARNING);
+        if (WARNING) logs().append("Groups are not supported yet: " + groups.toString(), LogLevel.WARNING);
         final var forAllCatcher = ForAlls.forAll(Optional.of(discoverable(currentInjectionGroups.path()
                 .withAppended("" + currentInjectionGroups.childrenView().size()))));
         classifiers.forEach(c -> {

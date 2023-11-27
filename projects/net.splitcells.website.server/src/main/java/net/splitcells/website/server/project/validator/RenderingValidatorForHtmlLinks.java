@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 
 import static net.splitcells.dem.Dem.config;
 import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.network.worker.Logger.logger;
 
 /**
@@ -92,7 +92,7 @@ public class RenderingValidatorForHtmlLinks implements RenderingValidator {
                         // TODO HACK
                         if (!isValid) {
                             ++invalidLinkCount;
-                            domsole().append("Invalid link `"
+                            logs().append("Invalid link `"
                                             + link + "` from `"
                                             + requestedPath + "` resolved to `"
                                             + resolvedLink + "`."

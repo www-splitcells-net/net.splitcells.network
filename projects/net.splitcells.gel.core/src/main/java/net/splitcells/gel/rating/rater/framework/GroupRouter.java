@@ -23,7 +23,7 @@ import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.gel.rating.framework.Rating;
 
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 
 /**
  * This is a helper interface, in order to create a rater based on one method.
@@ -42,7 +42,7 @@ public interface GroupRouter {
 
     default Proposal propose(Proposal proposal) {
         if (StaticFlags.WARNING) {
-            domsole().appendUnimplementedWarning(getClass());
+            logs().appendUnimplementedWarning(getClass());
         }
         return proposal;
     }

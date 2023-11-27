@@ -19,7 +19,7 @@ import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestIdentifier;
 
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static org.junit.platform.engine.TestExecutionResult.Status.SUCCESSFUL;
 
 /**
@@ -65,9 +65,9 @@ public class LiveReporter implements TestExecutionListener {
         } else {
             System.out.println("Failed: " + testIdentifier.getUniqueId());
             testExecutionResult.getThrowable().ifPresent(t -> {
-                domsole().appendError(t);
+                logs().appendError(t);
                 if (t.getCause() != null) {
-                    domsole().appendError(t.getCause());
+                    logs().appendError(t.getCause());
                 }
             });
         }

@@ -27,7 +27,7 @@ import java.util.function.Function;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.gel.common.Language.OPTIMIZATION;
 
 public class Escalator implements OfflineOptimization {
@@ -56,7 +56,7 @@ public class Escalator implements OfflineOptimization {
     public List<OptimizationEvent> optimize(SolutionView solution) {
         final var rootRating = solution.constraint().rating();
         if (TRACING) {
-            domsole().append(perspective("escalation-step")
+            logs().append(perspective("escalation-step")
                             .withProperty("escalation-level", "" + escalationLevel)
                             .withProperty("root-cost", "" + rootRating.asMetaRating().getContentValue(Cost.class).value())
                     , () -> solution.path().withAppended(OPTIMIZATION.value(), getClass().getSimpleName())

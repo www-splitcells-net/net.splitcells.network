@@ -30,7 +30,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
@@ -211,7 +211,7 @@ public class LookupTable implements Table {
             content.requireAbsenceOf(line.index());
         }
         if (TRACING) {
-            domsole().append(Xml.elementWithChildren("register.LookupTable"
+            logs().append(Xml.elementWithChildren("register.LookupTable"
                             , Xml.elementWithChildren("subject", textNode(path().toString()))
                             , line.toDom()
                     )
@@ -257,7 +257,7 @@ public class LookupTable implements Table {
 
     public void removeRegistration(Line line) {
         if (TRACING) {
-            domsole().append(Xml.elementWithChildren("deregister." + getClass().getSimpleName()
+            logs().append(Xml.elementWithChildren("deregister." + getClass().getSimpleName()
                             , Xml.elementWithChildren("subject", textNode(path().toString()))
                             , Xml.elementWithChildren("content", textNode(content.toString()))
                             , line.toDom()
@@ -285,7 +285,7 @@ public class LookupTable implements Table {
             rawLinesHashedCache.remove(line.index());
         }
         if (TRACING) {
-            domsole().append(
+            logs().append(
                     Xml.elementWithChildren("after.deregister." + getClass().getSimpleName()
                             , Xml.elementWithChildren("subject", textNode(path().toString()))
                             , Xml.elementWithChildren("content", textNode(content.toString()))

@@ -17,7 +17,7 @@ package net.splitcells.dem.lang.perspective;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.resource.communication.log.LogLevel;
-import net.splitcells.dem.resource.communication.log.Domsole;
+import net.splitcells.dem.resource.communication.log.Logs;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
 
 import static net.splitcells.dem.lang.perspective.Den.priority;
@@ -72,7 +72,7 @@ public class DocumentTest {
          *
          * We cannot do real typing without much boilerplate without using inheritance.
          */
-        Domsole.domsole().append(
+        Logs.logs().append(
                 project().withProperty("name", "Dependency Manager").withValues(
                         solution().withValues(
                                 scheduling().withValues(
@@ -97,7 +97,7 @@ public class DocumentTest {
          * Now we just need to require, that the return value of such functions are immutable
          * and we effectively have a grammar, that has a comparable quality compared to XML.
          */
-        Domsole.domsole().append(
+        Logs.logs().append(
                 project(
                         solution(
                                 scheduling(

@@ -16,14 +16,12 @@
 package net.splitcells.dem.lang.perspective;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.environment.config.StaticFlags;
-import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpace;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.environment.config.StaticFlags.WARNING;
 import static net.splitcells.dem.lang.namespace.NameSpaces.TEXT;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 
 public class PerspectiveI implements Perspective {
 	public static Perspective perspective(String value, NameSpace nameSpace) {
@@ -70,7 +68,7 @@ public class PerspectiveI implements Perspective {
 	@Override
 	public String toString() {
 		if (WARNING) {
-			domsole().appendUnimplementedWarning(PerspectiveI.class);
+			logs().appendUnimplementedWarning(PerspectiveI.class);
 		}
 		return "not-implemented-yet";
 	}

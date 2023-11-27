@@ -45,7 +45,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.log.LogLevel.WARNING;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
@@ -114,7 +114,7 @@ public class Server {
                                             .setPath(config.sslKeystoreFile().orElseThrow().toString())
                                             .setPassword(config.sslKeystorePassword().orElseThrow()));
                         } else {
-                            domsole().append(perspective("Webserver is not secured!"), WARNING);
+                            logs().append(perspective("Webserver is not secured!"), WARNING);
                         }
                         webServerOptions.setPort(config.openPort());
                         final var router = Router.router(vertx);
@@ -153,14 +153,14 @@ public class Server {
                                             promise.fail("Could not render path:" + requestPath);
                                         }
                                     } catch (Exception e) {
-                                        domsole().appendError(e);
+                                        logs().appendError(e);
                                         throw new RuntimeException(e);
                                     }
                                 }, (result) -> handleResult(routingContext, result));
                             }
                         });
                         router.errorHandler(500, e -> {
-                            domsole().appendError(e.failure());
+                            logs().appendError(e.failure());
                         });
                         final var server = vertx.createHttpServer(webServerOptions);//
                         server.requestHandler(router);//
@@ -174,7 +174,7 @@ public class Server {
     private static void handleResult(RoutingContext routingContext, AsyncResult<byte[]> result) {
         final var response = routingContext.response();
         if (result.failed()) {
-            domsole().appendError(executionException(perspective("Could not process form:")
+            logs().appendError(executionException(perspective("Could not process form:")
                             .withProperty("path", routingContext.request().path())
                     , result.cause()));
             response.setStatusCode(500);
@@ -250,7 +250,7 @@ public class Server {
                                 }
                             }, (result) -> {
                                 if (result.failed()) {
-                                    domsole().appendError(result.cause());
+                                    logs().appendError(result.cause());
                                     response.setStatusCode(500);
                                     response.end();
                                 } else {
@@ -259,7 +259,7 @@ public class Server {
                             });
                         });
                         router.errorHandler(500, e -> {
-                            domsole().appendError(e.failure());
+                            logs().appendError(e.failure());
                         });
                         final var server = vertx.createHttpServer(webServerOptions);//
                         server.requestHandler(router);//

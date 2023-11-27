@@ -36,7 +36,7 @@ import static net.splitcells.dem.Dem.config;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.resource.ContentType.CSV;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.network.worker.Repositories.repository;
 
 /**
@@ -152,7 +152,7 @@ public class Logger implements TestExecutionListener {
              */
             repository(Path.of("../../../net.splitcells.network.log")).commitAll();
         } else {
-            domsole().append("`Logger#commit` is not implemented.", LogLevel.ERROR);
+            logs().append("`Logger#commit` is not implemented.", LogLevel.ERROR);
         }
         // TODO TOFIX SystemUtils.executeShellScript("sh -c ./bin/net.splitcells.network.log.commit", networkProject);
     }

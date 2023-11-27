@@ -24,21 +24,18 @@ import java.util.function.Predicate;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
-/**
- * Pdsui = Path Based Dom Stream User Interface
- */
-public class Pdsui implements Ui {
+public class LogImpl implements Log {
 
     private static final boolean ENABLE_EXPERIMENTAL_XML_RENDERING = true;
 
-    public static Pdsui pdsui(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
-        return new Pdsui(output, messageFilter);
+    public static LogImpl logBasedOnPerspective(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
+        return new LogImpl(output, messageFilter);
     }
 
     private final Sender<String> output;
     private final Predicate<LogMessage<Perspective>> messageFilter;
 
-    private Pdsui(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
+    private LogImpl(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
         this.output = output;
         this.messageFilter = messageFilter;
     }

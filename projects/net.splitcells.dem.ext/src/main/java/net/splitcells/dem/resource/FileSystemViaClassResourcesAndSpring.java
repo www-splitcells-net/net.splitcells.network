@@ -24,14 +24,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.FileSystemViaClassResourcesImpl.resourceBasePath;
 import static net.splitcells.dem.resource.Files.readAsString;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StreamUtils.*;
@@ -119,7 +118,7 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
         try {
             return resource.contentLength() != 0;
         } catch (Throwable t) {
-            domsole().appendError(t);
+            logs().appendError(t);
             return false;
         }
     }
@@ -143,10 +142,10 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
             try {
                 isDirectory = resource.contentLength() == 0;
             } catch (Throwable t) {
-                domsole().appendError(t);
+                logs().appendError(t);
                 isDirectory = false;
             }
-            domsole().append(perspective("isDirectory")
+            logs().append(perspective("isDirectory")
                             .withProperty("path", path.toString())
                             .withProperty("clazz", clazz.getName())
                             .withProperty("isDirectory", isDirectory + "")
@@ -160,7 +159,7 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
         try {
             return resource.contentLength() == 0;
         } catch (Throwable t) {
-            domsole().appendError(t);
+            logs().appendError(t);
             return false;
         }
     }
@@ -191,7 +190,7 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
     public Stream<Path> walkRecursively(Path path) {
         if (isFile(path)) {
             if (IS_TRACING) {
-                domsole().append(perspective("Call of walkRecursively")
+                logs().append(perspective("Call of walkRecursively")
                                 .withProperty("path", path.toString())
                                 .withProperty("clazz", clazz.getName())
                                 .withProperty("result", "Path is hot a folder and therefore nothing can be walked except for the path itself.")
@@ -201,13 +200,13 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
         }
         if (IS_TRACING) {
             if (isDirectory(path)) {
-                domsole().append(perspective("Call of walkRecursively")
+                logs().append(perspective("Call of walkRecursively")
                                 .withProperty("path", path.toString())
                                 .withProperty("clazz", clazz.getName())
                                 .withProperty("result", "Path is a folder.")
                         , LogLevel.INFO);
             } else {
-                domsole().append(perspective("Call of walkRecursively")
+                logs().append(perspective("Call of walkRecursively")
                                 .withProperty("path", path.toString())
                                 .withProperty("clazz", clazz.getName())
                                 .withProperty("result", "Path is not a folder.")
@@ -216,7 +215,7 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
         }
         try {
             if (IS_TRACING) {
-                domsole().append(perspective("Call of walkRecursively")
+                logs().append(perspective("Call of walkRecursively")
                                 .withProperty("path", path.toString())
                                 .withProperty("clazz", clazz.getName())
                                 .withProperty("result candidates"

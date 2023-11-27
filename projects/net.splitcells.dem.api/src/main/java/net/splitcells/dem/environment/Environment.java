@@ -21,12 +21,13 @@ import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
 
 /**
- * TODO Create a meta config in form of a table, in order to add arbitrary information, methods etc. to a config.
+ * <p>TODO Merge dem.environment package content into dem.resources package.</p>
+ * <p>TODO Create a meta config in form of a table, in order to add arbitrary information, methods etc. to a config.
  * This would allow one to omit reflection in order to close all {@link net.splitcells.dem.environment.resource.Resource}
  * during {@link #close()}, for instance.
  * This would also be a way to generate state reports or documentation via injection mechanisms.
  * Thereby, the whole environment configuration could be modelled as a table,
- * which would simplify the visualization.
+ * which would simplify the visualization.</p>
  */
 public interface Environment extends EnvironmentV, Service {
 

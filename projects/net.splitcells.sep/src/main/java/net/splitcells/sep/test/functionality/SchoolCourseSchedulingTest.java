@@ -23,7 +23,7 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.data.set.map.Maps;
 import net.splitcells.dem.environment.config.IsDeterministic;
-import net.splitcells.dem.resource.communication.log.Domsole;
+import net.splitcells.dem.resource.communication.log.Logs;
 import net.splitcells.dem.resource.communication.log.IsEchoToFile;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
 import net.splitcells.dem.testing.annotations.DisabledTest;
@@ -51,7 +51,7 @@ import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.dem.resource.communication.log.UiRouter.uiRouter;
+import static net.splitcells.dem.resource.communication.log.LogRouter.uiRouter;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.MathUtils.*;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -177,7 +177,7 @@ public class SchoolCourseSchedulingTest {
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
                     .withConfigValue(IsEchoToFile.class, true)
                     .withConfigValue(MessageFilter.class, logMessage -> logMessage.path().equals(list("demands", "Solution", "isComplete", "optimize", "after", "cost")))
-                    .withConfigValue(Domsole.class, uiRouter(env.config().configValue(MessageFilter.class)));
+                    .withConfigValue(Logs.class, uiRouter(env.config().configValue(MessageFilter.class)));
         }));
         if (false) {
             // TODO Will be done later. Simpler instance will be solved first.
@@ -242,7 +242,7 @@ public class SchoolCourseSchedulingTest {
                         .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
                         .withConfigValue(IsEchoToFile.class, true)
                         .withConfigValue(MessageFilter.class, logMessage -> logMessage.path().equals(list("demands", "Solution", "isComplete", "optimize", "after", "cost")))
-                        .withConfigValue(Domsole.class, uiRouter(env.config().configValue(MessageFilter.class)));
+                        .withConfigValue(Logs.class, uiRouter(env.config().configValue(MessageFilter.class)));
             }));
         }
     }

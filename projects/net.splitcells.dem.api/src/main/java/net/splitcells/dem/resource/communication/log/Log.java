@@ -29,7 +29,7 @@ import java.util.Optional;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.resource.communication.log.LogMessageI.logMessage;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.TODO_NOT_IMPLEMENTED_YET;
 import static net.splitcells.dem.utils.StringUtils.throwableToString;
@@ -42,13 +42,13 @@ import static net.splitcells.dem.utils.StringUtils.throwableToString;
  * In other words, this may be should be implemented as a general
  * functionality in order to provide one message one line logs.</p>
  */
-public interface Ui extends ListWA<LogMessage<Perspective>>, Resource {
+public interface Log extends ListWA<LogMessage<Perspective>>, Resource {
 
-    default Ui append(String name) {
+    default Log append(String name) {
         return append(logMessage(perspective(name), NO_CONTEXT, LogLevel.DEBUG));
     }
 
-    default Ui append(String message, LogLevel logLevel) {
+    default Log append(String message, LogLevel logLevel) {
         return append(logMessage(perspective(message), NO_CONTEXT, logLevel));
     }
 
@@ -63,8 +63,8 @@ public interface Ui extends ListWA<LogMessage<Perspective>>, Resource {
      */
     @ReturnsThis
     @JavaLegacyBody
-    default Ui appendUnimplementedWarning(Class<?> clazz) {
-        domsole().append("Unimplemented program part for class "
+    default Log appendUnimplementedWarning(Class<?> clazz) {
+        logs().append("Unimplemented program part for class "
                         + clazz
                         + " at:\n"
                         + throwableToString(executionException("no-message"))
@@ -72,33 +72,33 @@ public interface Ui extends ListWA<LogMessage<Perspective>>, Resource {
         return this;
     }
 
-    default Ui append(Domable domable, LogLevel logLevel) {
+    default Log append(Domable domable, LogLevel logLevel) {
         return append(logMessage(domable.toPerspective(), NO_CONTEXT, logLevel));
     }
 
-    default Ui append(Perspective perspective, LogLevel logLevel) {
+    default Log append(Perspective perspective, LogLevel logLevel) {
         return append(logMessage(perspective, NO_CONTEXT, logLevel));
     }
 
     @Deprecated
-    default Ui append(Node content, Discoverable context, LogLevel logLevel) {
+    default Log append(Node content, Discoverable context, LogLevel logLevel) {
         return append(logMessage(perspective(TODO_NOT_IMPLEMENTED_YET), context, logLevel));
     }
 
-    default Ui append(Domable content, Discoverable context, LogLevel logLevel) {
+    default Log append(Domable content, Discoverable context, LogLevel logLevel) {
         return append(logMessage(content.toPerspective(), context, logLevel));
     }
 
-    default Ui append(Domable content, Optional<Discoverable> context, LogLevel logLevel) {
+    default Log append(Domable content, Optional<Discoverable> context, LogLevel logLevel) {
         return append(logMessage(content.toPerspective(), context.orElse(NO_CONTEXT), logLevel));
     }
 
-    default Ui append(Perspective content, Discoverable context, LogLevel logLevel) {
+    default Log append(Perspective content, Discoverable context, LogLevel logLevel) {
         return append(logMessage(content, context, logLevel));
     }
 
     @JavaLegacyBody
-    default Ui appendError(Throwable throwable) {
+    default Log appendError(Throwable throwable) {
         try {
             final var error = perspective("error");
             if (throwable.getMessage() != null) {
@@ -126,18 +126,18 @@ public interface Ui extends ListWA<LogMessage<Perspective>>, Resource {
      * @param throwable
      * @return
      */
-    default Ui appendWarning(Throwable throwable) {
+    default Log appendWarning(Throwable throwable) {
         final var warning = perspective("warning");
         warning.withProperty("message", throwable.getMessage());
         warning.withProperty("stack-trace", throwableToString(throwable));
         return append(logMessage(warning, NO_CONTEXT, LogLevel.CRITICAL));
     }
 
-    default Ui appendWarning(String message, Throwable throwable) {
+    default Log appendWarning(String message, Throwable throwable) {
         return appendWarning(perspective(message), throwable);
     }
 
-    default Ui appendWarning(Perspective message, Throwable throwable) {
+    default Log appendWarning(Perspective message, Throwable throwable) {
         final var throwablePerspective = perspective("throwable");
         throwablePerspective.withProperty("message", throwable.getMessage());
         throwablePerspective.withProperty("stack-trace", throwableToString(throwable));

@@ -33,7 +33,7 @@ import java.util.function.Predicate;
 import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
-import static net.splitcells.dem.resource.communication.log.Pdsui.pdsui;
+import static net.splitcells.dem.resource.communication.log.LogImpl.logBasedOnPerspective;
 import static net.splitcells.dem.resource.Files.createDirectory;
 
 /**
@@ -48,16 +48,16 @@ import static net.splitcells.dem.resource.Files.createDirectory;
  */
 @Deprecated
 @JavaLegacyArtifact
-public class UiRouter implements Ui {
+public class LogRouter implements Log {
 
-    public static UiRouter uiRouter(Predicate<LogMessage<Perspective>> messageFilter) {
-        return new UiRouter(messageFilter);
+    public static LogRouter uiRouter(Predicate<LogMessage<Perspective>> messageFilter) {
+        return new LogRouter(messageFilter);
     }
 
-    private final Map<List<String>, Ui> routing = map();
+    private final Map<List<String>, Log> routing = map();
     private final Predicate<LogMessage<Perspective>> messageFilter;
 
-    private UiRouter(Predicate<LogMessage<Perspective>> messageFilter) {
+    private LogRouter(Predicate<LogMessage<Perspective>> messageFilter) {
         this.messageFilter = messageFilter;
     }
 
@@ -101,7 +101,7 @@ public class UiRouter implements Ui {
                 }
                 try {
                     routing.put(arg.path()
-                            , pdsui(stringSender(new FileOutputStream(consolePath.toFile())), messageFilter));
+                            , logBasedOnPerspective(stringSender(new FileOutputStream(consolePath.toFile())), messageFilter));
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(arg.path().toString(), e);
                 }
@@ -113,12 +113,12 @@ public class UiRouter implements Ui {
 
     @Override
     public void close() {
-        routing.values().forEach(Ui::close);
+        routing.values().forEach(Log::close);
         routing.clear();
     }
 
     @Override
     public void flush() {
-        routing.values().forEach(Ui::flush);
+        routing.values().forEach(Log::flush);
     }
 }

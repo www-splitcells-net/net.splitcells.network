@@ -16,7 +16,7 @@
 package net.splitcells.gel.rating.rater.framework;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 
@@ -164,7 +164,7 @@ public interface Rater extends PubliclyTyped<Rater>
      */
     default Proposal propose(Proposal proposal) {
         if (StaticFlags.WARNING) {
-            domsole().append(getClass() + " does not implement `Rater#propose(Proposal)`.", LogLevel.WARNING);
+            logs().append(getClass() + " does not implement `Rater#propose(Proposal)`.", LogLevel.WARNING);
         }
         return proposal;
     }

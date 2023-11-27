@@ -31,7 +31,6 @@ import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.LinePointer;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
 import net.splitcells.gel.problem.derived.DerivedSolution;
 import net.splitcells.gel.rating.framework.Rating;
@@ -44,7 +43,7 @@ import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.gel.common.Language.RATING;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -64,7 +63,7 @@ public class SolutionAspect implements Solution {
     public Solution optimize(List<OptimizationEvent> events) {
         final var solution = Solution.super.optimize(events);
         if (StaticFlags.TRACING) {
-            domsole().append
+            logs().append
                     (constraint().rating()
                             , () -> solution.path().withAppended(RATING.value())
                             , LogLevel.TRACE);
@@ -76,7 +75,7 @@ public class SolutionAspect implements Solution {
     public Rating rating(List<OptimizationEvent> event) {
         final var rating = Solution.super.rating(event);
         if (StaticFlags.TRACING) {
-            domsole().append
+            logs().append
                     (rating
                             , () -> solution.path().withAppended(RATING.value())
                             , LogLevel.TRACE);
@@ -108,11 +107,11 @@ public class SolutionAspect implements Solution {
         }
         final var result = solution.optimize(event, parameters);
         if (StaticFlags.TELLING_STORY) {
-            domsole().append(perspective("" + constraint().rating().asMetaRating().getContentValue(Cost.class).value())
+            logs().append(perspective("" + constraint().rating().asMetaRating().getContentValue(Cost.class).value())
                     , () -> path().withAppended("optimize", "after", "cost")
                     , LogLevel.DEBUG);
             if (isComplete()) {
-                domsole().append(perspective(this.history().size() + ", " + constraint().rating().asMetaRating().getContentValue(Cost.class).value())
+                logs().append(perspective(this.history().size() + ", " + constraint().rating().asMetaRating().getContentValue(Cost.class).value())
                         , () -> path().withAppended("isComplete", "optimize", "after", "cost")
                         , LogLevel.DEBUG);
             }

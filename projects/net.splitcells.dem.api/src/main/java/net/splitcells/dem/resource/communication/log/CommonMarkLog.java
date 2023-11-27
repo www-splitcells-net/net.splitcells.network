@@ -34,15 +34,15 @@ import static net.splitcells.dem.utils.TimeUtils.currentLocalTime;
  * Such a log also looks nice in issue on platforms like SourceHut or GitHub and
  * probably also looks nice for not technical users.</p>
  */
-public class CommonMarkDui implements Ui {
-    public static Ui commonMarkDui(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
-        return new CommonMarkDui(output, messageFilter);
+public class CommonMarkLog implements Log {
+    public static Log commonMarkDui(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
+        return new CommonMarkLog(output, messageFilter);
     }
 
     private final Sender<String> output;
     private final Predicate<LogMessage<Perspective>> messageFilter;
 
-    private CommonMarkDui(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
+    private CommonMarkLog(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
         this.output = output;
         this.messageFilter = messageFilter;
     }

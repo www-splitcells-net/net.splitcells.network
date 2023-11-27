@@ -5,6 +5,14 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2023-11-27** \#252: Rename logging facilities as such.
+    This avoids, that someone interprets such logging facilities as something else based on their complex names.
+    The idea of a Domsole is not abandoned and therefore such an interface was recreated with an appropriate note.
+    1. CommonMarkDui -> CommonMarkLog.
+    2. Domsole -> Logs
+    3. Pdsui -> LogImpl
+    4. Ui -> Log
+    5. UiRouter -> LogRouter
 * **2023-06-27**:
   1. Rename `ListI#list()` into `ListI#_list()`,
     in order to simplify autocompletion for import statements in IDEs

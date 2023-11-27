@@ -21,7 +21,7 @@ import net.splitcells.dem.resource.communication.log.LogLevel;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 @JavaLegacyArtifact
@@ -32,9 +32,9 @@ public class Time {
 
     public static void reportRuntime(Runnable run, String taskName, LogLevel logLevel) {
         final var startTime = LocalDateTime.now();
-        domsole().append("Executing `" + taskName + "`.", logLevel);
+        logs().append("Executing `" + taskName + "`.", logLevel);
         run.run();
         final var endTime = LocalDateTime.now();
-        domsole().append("`" + taskName + "` took " + ChronoUnit.SECONDS.between(startTime, endTime) + " seconds to execute.", logLevel);
+        logs().append("`" + taskName + "` took " + ChronoUnit.SECONDS.between(startTime, endTime) + " seconds to execute.", logLevel);
     }
 }

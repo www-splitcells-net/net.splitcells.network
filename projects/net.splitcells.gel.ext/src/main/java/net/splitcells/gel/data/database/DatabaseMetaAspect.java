@@ -23,7 +23,6 @@ import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -38,7 +37,7 @@ import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.event;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
@@ -139,7 +138,7 @@ public class DatabaseMetaAspect implements Database {
         }
         final var translatedAddition = database.addTranslated(lineValues);
         if (TRACING) {
-            domsole().append(
+            logs().append(
                     event("addTranslating." + Database.class.getSimpleName()
                             , path().toString()
                             , elementWithChildren("index", textNode("" + translatedAddition.index()))
@@ -153,7 +152,7 @@ public class DatabaseMetaAspect implements Database {
     @Override
     public void remove(Line line) {
         if (TRACING) {
-            domsole().append(event(REMOVE.value()
+            logs().append(event(REMOVE.value()
                                     + PATH_ACCESS_SYMBOL.value()
                                     + Database.class.getSimpleName()
                             , path().toString()

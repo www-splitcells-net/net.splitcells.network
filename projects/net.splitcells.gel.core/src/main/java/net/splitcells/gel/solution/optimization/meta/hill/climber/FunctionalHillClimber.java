@@ -25,7 +25,7 @@ import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
 import static net.splitcells.gel.solution.optimization.meta.LinearIterator.linearIterator;
@@ -85,7 +85,7 @@ public class FunctionalHillClimber implements OfflineOptimization {
             }
             if (TRACING) {
                 recommendations.forEach
-                        (suggestion -> domsole().append
+                        (suggestion -> logs().append
                                 (suggestion.toPerspective()
                                         , () -> solution.path().withAppended
                                                 (OfflineOptimization.class.getSimpleName()

@@ -27,7 +27,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 
 /**
  * The <a href="http://saxon.sourceforge.net/">SAXON The XSLT and XQuery
@@ -48,19 +48,19 @@ public class XslTransformer {
 
             @Override
             public void warning(TransformerException exception) throws TransformerException {
-                domsole().appendWarning("XML transformation warning", exception);
+                logs().appendWarning("XML transformation warning", exception);
             }
 
             @Override
             public void error(TransformerException exception) throws TransformerException {
                 System.out.println(1234);
-                domsole().appendWarning("XML transformation error", exception);
+                logs().appendWarning("XML transformation error", exception);
             }
 
             @Override
             public void fatalError(TransformerException exception) throws TransformerException {
                 System.out.println(1235);
-                domsole().appendWarning("Fatal error XML transformation", exception);
+                logs().appendWarning("Fatal error XML transformation", exception);
             }
         };
     }

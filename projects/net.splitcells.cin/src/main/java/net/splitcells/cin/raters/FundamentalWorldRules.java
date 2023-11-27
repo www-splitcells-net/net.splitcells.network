@@ -25,7 +25,7 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
@@ -62,7 +62,7 @@ public class FundamentalWorldRules implements Rater {
 
     @Override
     public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table lineProcessing) {
-        domsole().appendUnimplementedWarning(getClass());
+        logs().appendUnimplementedWarning(getClass());
         final var ratingEvent = ratingEvent();
         final var localRating = localRating().withRating(noCost())
                 .withPropagationTo(children)

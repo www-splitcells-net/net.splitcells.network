@@ -23,12 +23,10 @@ import net.splitcells.website.server.project.renderer.ObjectsRenderer;
 
 import java.util.Optional;
 
-import static net.splitcells.dem.Dem.executeThread;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.resource.Files.readFileAsString;
 import static net.splitcells.dem.resource.Paths.userHome;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.website.Projects.projectsRenderer;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;

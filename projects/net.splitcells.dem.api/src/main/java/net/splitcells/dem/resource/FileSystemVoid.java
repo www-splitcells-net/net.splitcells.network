@@ -19,7 +19,7 @@ import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.BinaryUtils.emptyByteArray;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
@@ -37,19 +37,19 @@ public class FileSystemVoid implements FileSystem {
 
     @Override
     public FileSystem writeToFile(Path path, byte[] content) {
-        domsole().appendUnimplementedWarning(FileSystemVoid.class);
+        logs().appendUnimplementedWarning(FileSystemVoid.class);
         return this;
     }
 
     @Override
     public FileSystem appendToFile(Path path, byte[] content) {
-        domsole().appendUnimplementedWarning(FileSystemVoid.class);
+        logs().appendUnimplementedWarning(FileSystemVoid.class);
         return this;
     }
 
     @Override
     public FileSystem subFileSystem(Path path) {
-        domsole().appendUnimplementedWarning(FileSystemVoid.class);
+        logs().appendUnimplementedWarning(FileSystemVoid.class);
         return this;
     }
 
@@ -60,55 +60,55 @@ public class FileSystemVoid implements FileSystem {
 
     @Override
     public String readString(Path path) {
-        domsole().appendUnimplementedWarning(FileSystemVoid.class);
+        logs().appendUnimplementedWarning(FileSystemVoid.class);
         return "";
     }
 
     @Override
     public boolean exists() {
-        domsole().appendUnimplementedWarning(FileSystemVoid.class);
+        logs().appendUnimplementedWarning(FileSystemVoid.class);
         return false;
     }
 
     @Override
     public boolean isFile(Path path) {
-        domsole().appendUnimplementedWarning(FileSystemVoid.class);
+        logs().appendUnimplementedWarning(FileSystemVoid.class);
         return false;
     }
 
     @Override
     public boolean isDirectory(Path path) {
-        domsole().appendUnimplementedWarning(FileSystemVoid.class);
+        logs().appendUnimplementedWarning(FileSystemVoid.class);
         return false;
     }
 
     @Override
     public Stream<Path> walkRecursively() {
-        domsole().appendUnimplementedWarning(FileSystemVoid.class);
+        logs().appendUnimplementedWarning(FileSystemVoid.class);
         return Stream.empty();
     }
 
     @Override
     public Stream<Path> walkRecursively(Path path) {
-        domsole().appendUnimplementedWarning(FileSystemVoid.class);
+        logs().appendUnimplementedWarning(FileSystemVoid.class);
         return Stream.empty();
     }
 
     @Override
     public byte[] readFileAsBytes(Path path) {
-        domsole().appendUnimplementedWarning(FileSystemVoid.class);
+        logs().appendUnimplementedWarning(FileSystemVoid.class);
         return emptyByteArray();
     }
 
     @Override
     public FileSystemView subFileSystemView(String path) {
-        domsole().appendUnimplementedWarning(FileSystemVoid.class);
+        logs().appendUnimplementedWarning(FileSystemVoid.class);
         return this;
     }
 
     @Override
     public FileSystem createDirectoryPath(String path) {
-        domsole().appendUnimplementedWarning(FileSystemVoid.class);
+        logs().appendUnimplementedWarning(FileSystemVoid.class);
         return this;
     }
 }

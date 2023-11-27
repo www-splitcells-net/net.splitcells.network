@@ -24,7 +24,7 @@ import net.splitcells.gel.proposal.Proposal;
 
 import java.util.Optional;
 
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 
 @FunctionalInterface
 public interface RaterBasedOnLineGroupLambda {
@@ -32,7 +32,7 @@ public interface RaterBasedOnLineGroupLambda {
 
     default Proposal propose(Proposal proposal) {
         if (StaticFlags.WARNING) {
-            domsole().appendUnimplementedWarning(getClass());
+            logs().appendUnimplementedWarning(getClass());
         }
         return proposal;
     }

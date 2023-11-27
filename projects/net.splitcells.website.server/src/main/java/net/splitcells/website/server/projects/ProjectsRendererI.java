@@ -45,7 +45,7 @@ import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.resource.Paths.path;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithSimplePath;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
@@ -217,7 +217,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
                 return extensionRendering;
             }
             if (normalizedPath.equals(LAYOUT_PATH)) {
-                domsole().append(perspective("Refreshing layout."), LogLevel.INFO);
+                logs().append(perspective("Refreshing layout."), LogLevel.INFO);
                 this.build();
                 return render("/");
             }
@@ -251,7 +251,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
                     .filter(Optional::isPresent)
                     .findFirst();
             if (renderingResult.isEmpty()) {
-                domsole().append(perspective("Path could not be found: " + normalizedPath), LogLevel.ERROR);
+                logs().append(perspective("Path could not be found: " + normalizedPath), LogLevel.ERROR);
                 return validateRenderingResult(Optional.empty(), Path.of(normalizedPath));
             }
             return validateRenderingResult(renderingResult.get(), Path.of(normalizedPath));
@@ -264,7 +264,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
         try {
             renderingValidator.validate(renderingResult, this, requestedPath);
         } catch (Throwable th) {
-            domsole().appendWarning(perspective("Could not validate rendering result:")
+            logs().appendWarning(perspective("Could not validate rendering result:")
                             .withProperty("rendering result", renderingResult.toString())
                             .withProperty("requested path", requestedPath.toString())
                     , th);
@@ -331,7 +331,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
             return Optional.empty();
         }
         if (metaData.size() > 1) {
-            domsole().appendWarning(executionException("Expecting at most 1 meta data entries but found "
+            logs().appendWarning(executionException("Expecting at most 1 meta data entries but found "
                     + metaData.size()
                     + " instead: "
                     + metaData));

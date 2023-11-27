@@ -28,7 +28,7 @@ import static net.splitcells.dem.lang.Xml.event;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.ListViewI.listView;
@@ -47,7 +47,6 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.table.Line;
@@ -56,7 +55,6 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnI;
 import net.splitcells.gel.data.table.column.ColumnView;
-import org.w3c.dom.Element;
 import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.dem.object.Discoverable;
 
@@ -227,7 +225,7 @@ public class DatabaseI implements Database {
 
     private Line addTranslated(List<Object> lineValues, int index) {
         if (TRACING) {
-            domsole().append(
+            logs().append(
                     event("addTranslatingAt." + Database.class.getSimpleName()
                             , path().toString()
                             , elementWithChildren("index", textNode("" + index))

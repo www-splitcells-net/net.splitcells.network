@@ -18,9 +18,7 @@ package net.splitcells.website;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.resource.FileSystem;
-import net.splitcells.dem.resource.FileSystemView;
 import net.splitcells.dem.resource.FileSystems;
-import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
@@ -30,12 +28,10 @@ import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.project.validator.SourceValidator;
 
 import java.nio.file.Path;
-import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
-import static net.splitcells.dem.resource.Files.isDirectory;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.website.server.project.validator.SourceValidator.VOID_VALIDATOR;
 import static net.splitcells.website.server.project.validator.SourceValidatorViaSchema.validatorViaSchema;
@@ -242,7 +238,7 @@ public class Projects {
                             , sourceValidator
                             , config));
         } else {
-            domsole().append("Project 'net.splitcells.network.log' does not exist.", LogLevel.WARNING);
+            logs().append("Project 'net.splitcells.network.log' does not exist.", LogLevel.WARNING);
         }
         if (projectClusterRepo.isDirectory("net.splitcells.symbiosis")) {
             projectRenderers.add(projectRenderer
@@ -254,7 +250,7 @@ public class Projects {
                             , sourceValidator
                             , config));
         } else {
-            domsole().append("Project 'net.splitcells.symbiosis' does not exist.", LogLevel.WARNING);
+            logs().append("Project 'net.splitcells.symbiosis' does not exist.", LogLevel.WARNING);
         }
         return projectRenderers;
     }

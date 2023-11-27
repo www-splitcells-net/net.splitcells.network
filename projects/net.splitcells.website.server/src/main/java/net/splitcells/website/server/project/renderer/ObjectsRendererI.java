@@ -32,7 +32,7 @@ import java.util.Optional;
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 public class ObjectsRendererI implements ProjectRenderer {
@@ -59,7 +59,7 @@ public class ObjectsRendererI implements ProjectRenderer {
 
     @Override
     public synchronized Optional<byte[]> renderString(String arg) {
-        domsole().append(getClass().getName() + "#renderString not implemented.", LogLevel.WARNING);
+        logs().append(getClass().getName() + "#renderString not implemented.", LogLevel.WARNING);
         return Optional.empty();
     }
 
@@ -68,19 +68,19 @@ public class ObjectsRendererI implements ProjectRenderer {
             , Optional<String> path
             , Config config
             , ProjectsRenderer projectsRenderer) {
-        domsole().append(getClass().getName() + "#renderHtmlBodyContent not implemented.", LogLevel.WARNING);
+        logs().append(getClass().getName() + "#renderHtmlBodyContent not implemented.", LogLevel.WARNING);
         return Optional.empty();
     }
 
     @Override
     public synchronized Optional<byte[]> renderXml(String xml, LayoutConfig layoutConfig, Config config) {
-        domsole().append(getClass().getName() + "#renderXml not implemented.", LogLevel.WARNING);
+        logs().append(getClass().getName() + "#renderXml not implemented.", LogLevel.WARNING);
         return Optional.empty();
     }
 
     @Override
     public synchronized Optional<byte[]> renderRawXml(String xml, Config config) {
-        domsole().append(ObjectsRendererI.class.getName() + "#renderRawXml not implemented.", LogLevel.WARNING);
+        logs().append(ObjectsRendererI.class.getName() + "#renderRawXml not implemented.", LogLevel.WARNING);
         return Optional.empty();
     }
 

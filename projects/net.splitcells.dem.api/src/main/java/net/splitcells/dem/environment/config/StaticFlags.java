@@ -21,7 +21,7 @@ import net.splitcells.dem.resource.communication.log.LogLevel;
 import java.util.Optional;
 
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 /**
@@ -107,7 +107,7 @@ public final class StaticFlags {
         }
         warningIfNotMostPerformant().ifPresent(staticFlagsOverridden::withChild);
         if (staticFlagsOverridden.children().hasElements()) {
-            domsole().append(staticFlagsOverridden, LogLevel.WARNING);
+            logs().append(staticFlagsOverridden, LogLevel.WARNING);
         }
     }
 }

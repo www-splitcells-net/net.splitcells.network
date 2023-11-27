@@ -27,7 +27,7 @@ import java.util.function.Function;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.FileSystemVoid.fileSystemVoid;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.website.server.translation.to.html.PathBasedUriResolver.pathBasedUriResolver;
 
 public class FileStructureTransformer {
@@ -77,7 +77,7 @@ public class FileStructureTransformer {
 
     public String transform(String content) {
         sourceValidator.validate(content).ifPresent(error -> {
-            domsole().append(perspective(error, STRING), LogLevel.ERROR);
+            logs().append(perspective(error, STRING), LogLevel.ERROR);
         });
         return transformer().transform(content);
     }

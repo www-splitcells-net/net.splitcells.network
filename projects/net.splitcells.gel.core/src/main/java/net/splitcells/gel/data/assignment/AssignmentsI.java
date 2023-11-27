@@ -22,7 +22,7 @@ import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.event;
 import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
@@ -54,7 +54,6 @@ import net.splitcells.gel.common.Language;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.LinePointer;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
 import org.w3c.dom.Element;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
@@ -187,7 +186,7 @@ public class AssignmentsI implements Assignments {
         if (TRACING) {
             requireNotNull(demand, "Cannot allocate without demand.");
             requireNotNull(supply, "Cannot allocate without supply.");
-            domsole().append
+            logs().append
                     (event(ALLOCATE.value() + PATH_ACCESS_SYMBOL.value() + Assignments.class.getSimpleName()
                                     , path().toString()
                                     , Xml.elementWithChildren(DEMAND.value(), demand.toDom())
@@ -320,7 +319,7 @@ public class AssignmentsI implements Assignments {
         final var demand = demandOfAssignment(allocation);
         final var supply = supplyOfAssignment(allocation);
         if (TRACING) {
-            domsole().append
+            logs().append
                     (Xml.event(REMOVE.value()
                                             + PATH_ACCESS_SYMBOL.value()
                                             + Assignments.class.getSimpleName()

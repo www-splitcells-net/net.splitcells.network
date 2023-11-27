@@ -26,7 +26,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 
 public class TestExtension implements ProjectsRendererExtension {
     public static TestExtension testExtension() {
@@ -57,7 +57,7 @@ public class TestExtension implements ProjectsRendererExtension {
                 }
                 return errorReport(projectsRenderer);
             } catch (Throwable th) {
-                domsole().appendError(th);
+                logs().appendError(th);
                 return errorReport(projectsRenderer);
             }
         }

@@ -22,8 +22,7 @@ import net.splitcells.dem.resource.communication.Sender;
 import java.util.function.Predicate;
 
 import static net.splitcells.dem.Dem.environment;
-import static net.splitcells.dem.resource.communication.log.CommonMarkDui.commonMarkDui;
-import static net.splitcells.dem.resource.communication.log.Pdsui.pdsui;
+import static net.splitcells.dem.resource.communication.log.CommonMarkLog.commonMarkDui;
 
 /**
  * <p>TODO Create compact and standardize log format.
@@ -33,17 +32,17 @@ import static net.splitcells.dem.resource.communication.log.Pdsui.pdsui;
  * so that rendering can be separated from the rest.
  * </p>
  */
-public class Domsole extends ResourceOptionI<Ui> {
+public class Logs extends ResourceOptionI<Log> {
     /**
-     * {@link CommonMarkDui#commonMarkDui(Sender, Predicate)} is used by default,
+     * {@link CommonMarkLog#commonMarkDui(Sender, Predicate)} is used by default,
      * as it looks nice in consoles and on websites supporting CommonMark rendering.
      */
-    public Domsole() {
+    public Logs() {
         super(() -> commonMarkDui(environment().config().configValue(Console.class)
                 , environment().config().configValue(MessageFilter.class)));
     }
 
-    public static Ui domsole() {
-        return environment().config().configValue(Domsole.class);
+    public static Log logs() {
+        return environment().config().configValue(Logs.class);
     }
 }

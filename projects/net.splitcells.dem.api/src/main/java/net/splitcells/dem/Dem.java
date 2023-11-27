@@ -22,7 +22,7 @@ import net.splitcells.dem.environment.config.EndTime;
 import net.splitcells.dem.environment.config.framework.ConfigurationV;
 import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.resource.communication.log.Domsole;
+import net.splitcells.dem.resource.communication.log.Logs;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
 
 import java.security.Permission;
@@ -34,7 +34,7 @@ import java.util.function.Consumer;
 import static net.splitcells.dem.ProcessResult.processResult;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.environment.config.StaticFlags.logStaticFlags;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.communication.log.LogLevel.UNKNOWN_ERROR;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.reflection.ClassesRelated.callerClass;
@@ -109,7 +109,7 @@ public class Dem {
                 program.run();
             } catch (Throwable t) {
                 // TODO Somehow mark this error specially, so its clear, that this error caused execution failure.
-                domsole().appendError(t);
+                logs().appendError(t);
                 processResult.hasError(true);
                 /** Note that thread should handle all exceptions,
                  * because some are using {@link Thread#getThreadGroup()} and {@link ThreadGroup#},
@@ -128,7 +128,7 @@ public class Dem {
             }
             try {
                 /**
-                 * In some cases the last print operation of {@link Domsole} is not executed, when java exits after this process.
+                 * In some cases the last print operation of {@link Logs} is not executed, when java exits after this process.
                  * This happened on Ubuntu 20.04.1 LTS, but may not be exclusive to this OS.
                  * This hack is used in order to get the last print.
                  */
@@ -240,7 +240,7 @@ public class Dem {
          * even if {@link Dem} is not initialized or working correctly.
          */
         exception.printStackTrace();
-        domsole().appendError(exception);
+        logs().appendError(exception);
         System.exit(exitCode);
     }
 

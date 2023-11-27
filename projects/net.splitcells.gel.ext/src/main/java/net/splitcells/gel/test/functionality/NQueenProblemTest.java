@@ -46,7 +46,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
-import static net.splitcells.dem.resource.communication.log.Domsole.domsole;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.TestTypes.CAPABILITY_TEST;
 import static net.splitcells.dem.utils.MathUtils.max;
 import static net.splitcells.dem.utils.MathUtils.naturalLogarithm;
@@ -140,7 +140,7 @@ public class NQueenProblemTest extends TestSuiteI {
                     , testSubject.history().toFods());
             writeToFile(environment().config().configValue(ProcessPath.class).resolve("analysis.fods")
                     , testSubject.toFodsTableAnalysis());
-            domsole().append(testSubject.constraint().rating(), Optional.empty(), LogLevel.UNKNOWN_ERROR);
+            logs().append(testSubject.constraint().rating(), Optional.empty(), LogLevel.UNKNOWN_ERROR);
             testSubject.constraint().rating().requireEqualsTo(cost(0));
         }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
             env.config()
