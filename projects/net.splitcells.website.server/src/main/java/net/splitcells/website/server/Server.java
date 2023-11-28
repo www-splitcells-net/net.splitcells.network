@@ -32,6 +32,7 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.Formats;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
@@ -46,6 +47,7 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.log.LogLevel.WARNING;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
+import static net.splitcells.dem.utils.BinaryUtils.binaryOutputStream;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
@@ -129,9 +131,13 @@ public class Server {
                             if (routingContext.request().isExpectMultipart()) {
                                 routingContext.request().endHandler(voidz -> {
                                     vertx.<byte[]>executeBlocking((promise) -> {
+                                        final var binaryRequest = parseBinaryRequest(routingContext.request().path()
+                                                , routingContext.request().formAttributes());
+                                        logs().append(perspective("Processing web server binary request.")
+                                                        .withProperty("Binary request", binaryRequest.data().toCommonMarkString())
+                                                , LogLevel.DEBUG);
                                         final var binaryResponse = binaryProcessor
-                                                .process(parseBinaryRequest(routingContext.request().path()
-                                                        , routingContext.request().formAttributes()));
+                                                .process(binaryRequest);
                                         response.putHeader("content-type", Formats.JSON.mimeTypes());
                                         promise.complete(toBytes(binaryResponse.data().toJsonString()));
                                     }, (result) -> handleResult(routingContext, result));
@@ -145,6 +151,10 @@ public class Server {
                                         } else {
                                             requestPath = routingContext.request().path();
                                         }
+                                        logs().append(perspective("Processing web server rendering request.")
+                                                        .withProperty("Raw request path", routingContext.request().path())
+                                                        .withProperty("Interpreted request path", requestPath)
+                                                , LogLevel.DEBUG);
                                         final var result = renderer.apply(requestPath);
                                         if (result.isPresent()) {
                                             response.putHeader("content-type", result.get().getFormat());
