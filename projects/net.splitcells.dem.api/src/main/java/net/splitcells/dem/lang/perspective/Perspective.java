@@ -40,6 +40,7 @@ import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.perspective.JsonConfig.jsonConfig;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
+import static net.splitcells.dem.utils.BinaryUtils.binaryOutputStream;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.StringUtils.multiple;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -530,6 +531,12 @@ public interface Perspective extends PerspectiveView {
         return jsonString.toString();
     }
 
+    default String toCommonMarkString() {
+        final var commonMarkString = binaryOutputStream();
+        printCommonMarkString(stringSender(commonMarkString));
+        return commonMarkString.toString();
+    }
+
     default void printCommonMarkString(Sender<String> output) {
         printCommonMarkString(output, "", "* ");
     }
@@ -543,7 +550,14 @@ public interface Perspective extends PerspectiveView {
             }
         } else {
             final var isSimpleList = children().stream().map(c -> c.children().isEmpty()).reduce(true, (a, b) -> a && b);
-            output.append(listPrefix + name() + ":");
+            if (!name().isEmpty()) {
+                final var lastNameChar = name().charAt(name().length() - 1);
+                if (lastNameChar == '.' || lastNameChar == ':') {
+                    output.append(listPrefix + name());
+                } else {
+                    output.append(listPrefix + name() + ":");
+                }
+            }
             if (isSimpleList) {
                 final var newListPrefix = prefix + "    * ";
                 final var newPrefix = newListPrefix;
