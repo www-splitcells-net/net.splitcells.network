@@ -543,7 +543,7 @@ public interface Perspective extends PerspectiveView {
 
     default void printCommonMarkString(Sender<String> output, String prefix, String listPrefix) {
         if (children().isEmpty()) {
-            if (name().length() > 200) {
+            if (name().length() > 200 || name().contains("\n")) {
                 output.append("```\n" + name() + "\n```");
             } else {
                 output.append(listPrefix + name());

@@ -134,7 +134,7 @@ public class Server {
                                         final var binaryRequest = parseBinaryRequest(routingContext.request().path()
                                                 , routingContext.request().formAttributes());
                                         logs().append(perspective("Processing web server binary request.")
-                                                        .withProperty("Binary request", binaryRequest.data().toCommonMarkString())
+                                                        .withProperty("Binary request", binaryRequest.data())
                                                 , LogLevel.DEBUG);
                                         final var binaryResponse = binaryProcessor
                                                 .process(binaryRequest);
