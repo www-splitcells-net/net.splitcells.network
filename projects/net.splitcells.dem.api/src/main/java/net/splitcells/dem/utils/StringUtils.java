@@ -74,6 +74,6 @@ public class StringUtils {
         final var stackTracePrinter = new java.io.PrintWriter(stackTraceValue);
         th.printStackTrace(stackTracePrinter);
         stackTracePrinter.flush();
-        return stackTracePrinter.toString();
+        return stackTraceValue.toString();
     }
 }
