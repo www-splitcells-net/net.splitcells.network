@@ -55,6 +55,14 @@
         <paragraph>Every implemented feature should be tested.
             Also, every project command should be tested as well.
         </paragraph>
+        <paragraph>Any kind of error testing method like the `orElseThrow` method of Java's Optional class,
+            should have a required error message argument.
+            Otherwise, it is unnecessarily hard to debug errors of users, whose computer cannot be accessed.
+            Such error messages or reports do not have to be statically typed,
+            in order to make it easier to add error messages to code,
+            which is often more important,
+            than having easily processed error messages.
+        </paragraph>
         <chapter>
             <title>Naming Convention</title>
             <paragraph>
