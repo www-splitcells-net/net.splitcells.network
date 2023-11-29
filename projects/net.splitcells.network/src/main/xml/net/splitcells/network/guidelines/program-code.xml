@@ -53,7 +53,7 @@
             This ensures that tests are nothing special and therefore independent of the build system.
         </paragraph>
         <paragraph>Every implemented feature should be tested.
-            Also every project command should be tested as well.
+            Also, every project command should be tested as well.
         </paragraph>
         <chapter>
             <title>Naming Convention</title>
@@ -104,7 +104,7 @@
             Trailing special symbols like commas in lists are preferred to leading symbols,
             as this is the most common way.
             Thereby, generally speaking, the overall structure of the source code is visible on the left side,
-            whereas the meaning of the structure is located at the right side.
+            whereas the meaning of the structure is located on the right side.
         </paragraph>
     </chapter>
     <chapter>
