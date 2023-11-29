@@ -19,6 +19,9 @@ import java.util.Optional;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.PerspectiveView;
+import net.splitcells.dem.lang.perspective.antlr4.DenParser;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.framework.Rating;
@@ -85,4 +88,8 @@ public interface Query {
     Set<GroupId> currentInjectionGroups();
 
     Query forAll(List<Rater> classifiers);
+
+    Query parse(DenParser.AccessContext arg);
+
+    Query parse(DenParser.Function_callContext arg);
 }
