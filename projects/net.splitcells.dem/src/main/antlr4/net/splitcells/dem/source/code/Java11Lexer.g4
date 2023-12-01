@@ -184,6 +184,7 @@ lexer grammar Java11Lexer;
 		| '{'
 		| '}'
 		| '|'
+		| '™' /* TODO Maybe this should be done via dedicated static variables, that are code pointers? */
 		;
 /* Tokens Of Last Resort */
 	WS:
