@@ -50,7 +50,8 @@ public class SourceCodeCheck {
     }
 
     private static void checkJavaSourceCodeProject(Path projectFolder) {
-        if (Files.isDirectory(projectFolder.resolve("src/main/java/"))) {
+        if (Files.isDirectory(projectFolder.resolve("src/main/java/"))
+                && !projectFolder.getFileName().toString().equals("net.splitcells.maven.plugin.resource.list")) {
             Files.walk_recursively(projectFolder.resolve("src/main/java/"))
                     .filter(Files::is_file)
                     .forEach(SourceCodeCheck::checkJavaSourceCodeFile);
