@@ -58,11 +58,11 @@ public class CommonMarkIntegration {
         }
         if (arg.startsWith("#")) {
             final var titleLine = arg.split("[\r\n]+")[0];
+            /** This is a dirty quick hack. Note that rendering the title via CommonMark library,
+             * would not fix the issue, as element symbols are escaped during title rendering via
+             * {@link projectRenderer}.
+             */
             title = Optional.of(titleLine.replace("#", "")
-                    /** This is a dirty quick hack. Note that rendering the title via CommonMark library,
-                     * would not fix the issue, as element symbols are escaped during title rendering via
-                     * {@link projectRenderer}.
-                     */
                     .replaceAll("\\[™\\]\\(.*\\)", "™")
                     .trim());
             contentToRender = arg.substring(titleLine.length());

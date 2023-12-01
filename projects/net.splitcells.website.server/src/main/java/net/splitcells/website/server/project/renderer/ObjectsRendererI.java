@@ -18,6 +18,7 @@ package net.splitcells.website.server.project.renderer;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.Config;
@@ -29,7 +30,6 @@ import net.splitcells.website.server.projects.ProjectsRenderer;
 import java.nio.file.Path;
 import java.util.Optional;
 
-import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
@@ -122,7 +122,7 @@ public class ObjectsRendererI implements ProjectRenderer {
                             , object.title()
                             , Optional.of(relativeArgPath)
                             , projectsRenderer.config()).orElseThrow()
-                    , TEXT_HTML.toString()));
+                    , ContentType.HTML_TEXT.toString()));
         }
         return Optional.empty();
     }

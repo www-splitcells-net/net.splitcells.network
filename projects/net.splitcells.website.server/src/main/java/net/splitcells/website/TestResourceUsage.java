@@ -15,8 +15,6 @@
  */
 package net.splitcells.website;
 
-import java.io.IOException;
-
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 public class TestResourceUsage {
@@ -24,8 +22,8 @@ public class TestResourceUsage {
         try {
             System.out.println(TestResourceUsage.class.getResourceAsStream("/net/splitcells/website/server/index.xml")
                     .readAllBytes());
-        } catch (IOException e) {
-            throw executionException(e);
+        } catch (Throwable th) {
+            throw executionException(th);
         }
     }
 }
