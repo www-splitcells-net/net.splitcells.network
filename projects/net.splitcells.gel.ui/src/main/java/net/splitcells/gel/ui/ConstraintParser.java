@@ -23,6 +23,7 @@ import net.splitcells.gel.data.assignment.Assignments;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
@@ -115,9 +116,7 @@ public class ConstraintParser extends DenParserBaseVisitor<Constraint> {
             }
             throw executionException("Could not parse argument of then constraint: " + arguments.getText());
         } else {
-            throw executionException(perspective("Unknown constraint name:")
-                    .withProperty("constraintType", constraintType)
-                    .withProperty("arguments", arguments.getText()));
+            parsedConstraint = parentConstraint.constraint(constraintType, list(), list());
         }
         return parsedConstraint;
     }
