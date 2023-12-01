@@ -109,7 +109,7 @@ class_constructor
     | javadoc? annotation* Keyword_public name call_arguments statement_body
     ;
 class_member_method_definition
-    : javadoc? annotation* modifier_visibility? Keyword_static?
+    : javadoc? annotation* modifier_visibility? Keyword_static? Keyword_synchronized?
     	type_argument? type_declaration
         name call_arguments Brace_curly_open statement*
         Brace_curly_closed
