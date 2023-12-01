@@ -25,8 +25,11 @@ import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StreamUtils.ensureSingle;
+import static net.splitcells.gel.constraint.type.ForAll.FOR_ALL_NAME;
+import static net.splitcells.gel.constraint.type.Then.THEN_NAME;
 import static net.splitcells.gel.rating.framework.MetaRatingI.metaRating;
 import static net.splitcells.gel.rating.rater.lib.ConstantRater.constantRater;
+import static net.splitcells.gel.rating.rater.lib.classification.ForAllValueCombinations.FOR_ALL_VALUE_COMBINATIONS_NAME;
 import static net.splitcells.gel.rating.rater.lib.classification.ForAllValueCombinations.forAllValueCombinations;
 
 import java.util.Optional;
@@ -340,5 +343,45 @@ public class QueryI implements Query, QueryEditor {
             currentConstraint.withChildren(f);
         });
         return nextQueryPathElement(setOfUniques(), forAllCatcher);
+    }
+
+    @Override
+    public Query constraint(String constraintType, List<Rater> raters, List<Attribute<? extends Object>> attributes) {
+        if (constraintType.equals(FOR_ALL_VALUE_COMBINATIONS_NAME)) {
+            if (raters.hasElements()) {
+                throw executionException(perspective("No raters are allowed for parsing of `" + FOR_ALL_VALUE_COMBINATIONS_NAME + "` constraint.")
+                        .withProperty("constraint type", constraintType)
+                        .withProperty("raters", raters.toString())
+                        .withProperty("attributes", attributes.toString()));
+            }
+            return forAllCombinationsOf(attributes);
+        } else if (constraintType.equals(FOR_ALL_NAME)) {
+            if (attributes.hasElements()) {
+                throw executionException(perspective("No attributes are not allowed for parsing of `" + FOR_ALL_NAME + "` constraint.")
+                        .withProperty("constraint type", constraintType)
+                        .withProperty("raters", raters.toString())
+                        .withProperty("attributes", attributes.toString()));
+            }
+            return forAll(raters);
+        } else if (constraintType.equals(THEN_NAME)) {
+            if (raters.size() != 1) {
+                throw executionException(perspective("Invalid number of raters given for parsing a `" + THEN_NAME + "` constraint. A `" + THEN_NAME + "` constraint requires exactly one rater.")
+                        .withProperty("constraint type", constraintType)
+                        .withProperty("raters", raters.toString())
+                        .withProperty("attributes", attributes.toString()));
+            }
+            if (attributes.hasElements()) {
+                throw executionException(perspective("No attributes are not allowed for parsing of `" + THEN_NAME + "` constraint.")
+                        .withProperty("constraint type", constraintType)
+                        .withProperty("raters", raters.toString())
+                        .withProperty("attributes", attributes.toString()));
+            }
+            return then(raters.get(0));
+        } else {
+            throw executionException(perspective("Unknown constraint type given for constraint parsing.")
+                    .withProperty("constraint type", constraintType)
+                    .withProperty("raters", raters.toString())
+                    .withProperty("attributes", attributes.toString()));
+        }
     }
 }

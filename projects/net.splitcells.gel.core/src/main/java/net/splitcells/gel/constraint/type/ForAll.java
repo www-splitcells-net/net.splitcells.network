@@ -51,6 +51,8 @@ import java.util.function.Predicate;
 
 public class ForAll implements Constraint {
 
+    public static final String FOR_ALL_NAME = "forAll";
+
     private static final BiFunction<ConstraintBasedOnLocalGroupsAI, Report, String> LOCAL_NATURAL_ARGUMENTATION = (constraint, report) -> {
         final var raterBasedOnGrouping = constraint.rater().casted(RaterBasedOnGrouping.class);
         if (raterBasedOnGrouping.isPresent()) {

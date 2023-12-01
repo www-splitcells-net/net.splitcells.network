@@ -48,6 +48,8 @@ import java.util.function.Predicate;
 
 public class Then implements Constraint {
 
+    public static final String THEN_NAME = "then";
+
     private static final BiFunction<ConstraintBasedOnLocalGroupsAI, Report, String> LOCAL_NATURAL_ARGUMENTATION = (constraint, report) -> {
         return "Then " + constraint.rater().toSimpleDescription(report.line()
                 , constraint.lineProcessing().columnView(Constraint.INCOMING_CONSTRAINT_GROUP).lookup(report.group())

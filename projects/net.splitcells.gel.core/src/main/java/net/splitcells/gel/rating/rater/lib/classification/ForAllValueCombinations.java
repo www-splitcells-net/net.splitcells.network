@@ -39,6 +39,8 @@ import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import org.w3c.dom.Node;
 
 public class ForAllValueCombinations implements Rater {
+
+    public static final String FOR_ALL_VALUE_COMBINATIONS_NAME = "forAllCombinationsOf";
     public static ForAllValueCombinations forAllValueCombinations(final Attribute<?>... attributes) {
         return new ForAllValueCombinations(listWithValuesOf(attributes));
     }

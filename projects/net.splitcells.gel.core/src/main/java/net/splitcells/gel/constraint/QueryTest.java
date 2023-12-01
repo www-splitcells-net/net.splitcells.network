@@ -15,12 +15,20 @@
  */
 package net.splitcells.gel.constraint;
 
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
+import net.splitcells.dem.utils.ExecutionException;
+import net.splitcells.gel.constraint.type.ForAll;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.testing.Assertions.assertThrows;
 import static net.splitcells.gel.Gel.defineProblem;
+import static net.splitcells.gel.constraint.type.ForAll.FOR_ALL_NAME;
+import static net.splitcells.gel.constraint.type.Then.THEN_NAME;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.lib.classification.ForAllAttributeValues.forAllAttributeValues;
+import static net.splitcells.gel.rating.rater.lib.classification.ForAllValueCombinations.FOR_ALL_VALUE_COMBINATIONS_NAME;
 
 public class QueryTest {
     @UnitTest
@@ -64,6 +72,78 @@ public class QueryTest {
         testResult.childrenView().get(1).childrenView().requireSizeOf(1);
         testResult.childrenView().get(0).childrenView().get(0).childrenView().requireSizeOf(1);
         testResult.childrenView().get(0).childrenView().get(0).childrenView().get(0).childrenView().requireSizeOf(0);
+    }
+
+    @UnitTest
+    public void testConstraintErrorForAllWithAttributes() {
+        assertThrows(ExecutionException.class
+                , () -> {
+                    final var d = attribute(Integer.class, "d");
+                    final var s = attribute(Integer.class, "s");
+                    defineProblem("testConstraintErrorForAllWithAttributes")
+                            .withDemandAttributes(d)
+                            .withNoDemands()
+                            .withSupplyAttributes(s)
+                            .withNoSupplies()
+                            .withConstraint(r -> {
+                                r.constraint(FOR_ALL_NAME, list(hasSize(1)), list(d));
+                                return r;
+                            });
+                });
+    }
+
+    @UnitTest
+    public void testConstraintThenWithTooManyRaters() {
+        assertThrows(ExecutionException.class
+                , () -> {
+                    final var d = attribute(Integer.class, "d");
+                    final var s = attribute(Integer.class, "s");
+                    defineProblem("testConstraintThenWithTooManyRaters")
+                            .withDemandAttributes(d)
+                            .withNoDemands()
+                            .withSupplyAttributes(s)
+                            .withNoSupplies()
+                            .withConstraint(r -> {
+                                r.constraint(THEN_NAME, list(hasSize(1), hasSize(1)), list());
+                                return r;
+                            });
+                });
+    }
+
+    @UnitTest
+    public void testConstraintThenWithAttributes() {
+        assertThrows(ExecutionException.class
+                , () -> {
+                    final var d = attribute(Integer.class, "d");
+                    final var s = attribute(Integer.class, "s");
+                    defineProblem("testConstraintThenWithAttributes")
+                            .withDemandAttributes(d)
+                            .withNoDemands()
+                            .withSupplyAttributes(s)
+                            .withNoSupplies()
+                            .withConstraint(r -> {
+                                r.constraint(THEN_NAME, list(hasSize(1)), list(s));
+                                return r;
+                            });
+                });
+    }
+
+    @UnitTest
+    public void testConstraintForAllCombinationsWithRaters() {
+        assertThrows(ExecutionException.class
+                , () -> {
+                    final var d = attribute(Integer.class, "d");
+                    final var s = attribute(Integer.class, "s");
+                    defineProblem("testConstraintThenWithAttributes")
+                            .withDemandAttributes(d)
+                            .withNoDemands()
+                            .withSupplyAttributes(s)
+                            .withNoSupplies()
+                            .withConstraint(r -> {
+                                r.constraint(FOR_ALL_VALUE_COMBINATIONS_NAME, list(hasSize(1)), list(s));
+                                return r;
+                            });
+                });
     }
 
 }
