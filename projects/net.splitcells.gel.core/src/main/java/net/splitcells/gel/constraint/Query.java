@@ -36,6 +36,9 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
  * The path is created by calling methods, that are returning a new {@link Query} object.
  * {@link #currentConstraint} can be used in order to retrieve the currently selected {@link Constraint}.
  * </p>
+ * <p>Never add an parsing method to this interface, that parses a data structure in order to create a new constraint.
+ * This interface is thought to be used by parsers and is not thought to be used as an interface for parser
+ * implementations.</p>
  * <p>TODO Split this up in read only query and builder based on query.
  * Somehow illegal queries need to be marked via interface.</p>
  */
@@ -88,8 +91,4 @@ public interface Query {
     Set<GroupId> currentInjectionGroups();
 
     Query forAll(List<Rater> classifiers);
-
-    Query parse(DenParser.AccessContext arg);
-
-    Query parse(DenParser.Function_callContext arg);
 }

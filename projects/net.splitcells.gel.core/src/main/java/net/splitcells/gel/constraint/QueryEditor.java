@@ -22,7 +22,6 @@ import net.splitcells.dem.data.set.Set;
  * that enables one to extend the {@link Query} functionality dynamically.
  */
 public interface QueryEditor extends Query {
-    QueryEditor registerParser(ConstraintParser parser);
 
     QueryEditor nextQueryPathElement(Set<GroupId> nextGroups, Constraint nextConstraint);
 }

@@ -95,7 +95,6 @@ public class QueryI implements Query, QueryEditor {
     private final List<Constraint> constraintPath;
     private final Set<GroupId> groups;
     private final Optional<Assignments> subject;
-    private final List<ConstraintParser> constraintParsers = list();
 
     private QueryI(Constraint currentInjectionGroup, Set<GroupId> groups, Optional<Constraint> root) {
         this.currentConstraint = currentInjectionGroup;
@@ -341,37 +340,5 @@ public class QueryI implements Query, QueryEditor {
             currentConstraint.withChildren(f);
         });
         return nextQueryPathElement(setOfUniques(), forAllCatcher);
-    }
-
-    @Override
-    public Query parse(DenParser.AccessContext arg) {
-        final var parsingMatches = this.constraintParsers.stream()
-                .map(cp -> cp.parseConstraint(this, arg))
-                .filter(Optional::isPresent)
-                .collect(toList());
-        if (parsingMatches.size() != 1) {
-            throw executionException(perspective("Could not parse constraint.")
-                    .withProperty("content", arg.getText()));
-        }
-        return parsingMatches.get(0).orElseThrow();
-    }
-
-    @Override
-    public Query parse(DenParser.Function_callContext arg) {
-        final var parsingMatches = this.constraintParsers.stream()
-                .map(cp -> cp.parseConstraint(this, arg))
-                .filter(Optional::isPresent)
-                .collect(toList());
-        if (parsingMatches.size() != 1) {
-            throw executionException(perspective("Could not parse constraint.")
-                    .withProperty("content", arg.getText()));
-        }
-        return parsingMatches.get(0).orElseThrow();
-    }
-
-    @Override
-    public QueryEditor registerParser(ConstraintParser parser) {
-        constraintParsers.add(parser);
-        return this;
     }
 }
