@@ -130,9 +130,9 @@
         <paragraph>
             Maximize the replaceability of external dependencies.
             Minimize dependency on concrete versions of the dependencies.
-            Prefer own interfaces and avoid accessing external things. Use dependency injection via static methods
-            as this supports
-            most paradigms and implementations. This also supports
+            Prefer own interfaces and avoid accessing external things.
+            Use dependency injection via static methods as this supports most paradigms and implementations.
+            This also supports
             dependency injection of general objects like lists nicely.
         </paragraph>
         <paragraph>Minimize the number of extern dependencies that are explicitly supported as these can cause
