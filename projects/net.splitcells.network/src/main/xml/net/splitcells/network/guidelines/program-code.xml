@@ -206,6 +206,17 @@
                 each object.
             </paragraph>
         </chapter>
+        <chapter>
+            <title>Logging As Double Entry Bookkeeping</title>
+            <paragraph>Logging has to provide a form of double entry bookkeeping.
+                Especially for the programs configuration, inputs and outputs.
+            </paragraph>
+            <paragraph>
+                Therefore, the log has to signal for every thing,
+                where the thing is coming from, what has happened to the thing and where the thing is going to.
+                Where is a config value coming from, how is it interpreted and what component is using the config value.
+            </paragraph>
+        </chapter>
     </chapter>
     <chapter>
         <title>Support</title>
