@@ -28,6 +28,8 @@ The iteration process accomplishes this,
 by generating scripts, configs or similar
 in order to enable other software to work on the repos like one.
 
+The primary purpose of this tool is to synchronize repos across multiple servers and computers.
+
 This is mainly done, by providing a program,
 that takes a root repo and a command pattern as an argument.
 Repo process iterates over all sub repositories,
