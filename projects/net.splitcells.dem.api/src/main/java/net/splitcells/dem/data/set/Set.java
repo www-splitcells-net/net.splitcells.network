@@ -39,6 +39,16 @@ public interface Set<T> extends java.util.Set<T>, SetT<T> {
         return rVal;
     }
 
+    /**
+     * Adds the given argument to this {@link Set} and throws an exception,
+     * if the argument is already present.
+     * This is done, because adding an element multiple times without signaling this,
+     * has a higher probability of being a false action aka. bug.
+     * Use {@link #ensureContains(Object)} in such cases instead.
+     *
+     * @param e Element that should be added to the list.
+     * @return Returns true, in order to indicate, that the {@link Set} was changed.
+     */
     default boolean add(T e) {
         if (contains(e)) {
             throw new IllegalArgumentException("Element " + e + " already present in " + this);
