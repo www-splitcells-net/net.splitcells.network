@@ -114,6 +114,16 @@
             Thereby, generally speaking, the overall structure of the source code is visible on the left side,
             whereas the meaning of the structure is located on the right side.
         </paragraph>
+        <chapter>
+            <title>Automatic Formatting</title>
+            <paragraph>Automatic code styling/formatting should never remove already present new line characters,
+                as otherwise it is hard to structure large code statements.
+                The automatic formatting should also not add new line symbols,
+                as this makes it harder to structure flowing text,
+                where long lines are more acceptable.
+                In most cases, during automatic formatting only whitespaces (without new line symbols) between symbols should be normalized.
+            </paragraph>
+        </chapter>
     </chapter>
     <chapter>
         <title>Dependencies</title>
