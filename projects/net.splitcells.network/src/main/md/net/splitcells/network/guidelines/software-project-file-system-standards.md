@@ -92,6 +92,12 @@ Contains meta data like IDE configuration files or version control data.
 ## Files at `./bin/*`
 The files are located at `./bin/*`.
 Contains executable programs regarding tasks of the project.
+
+In some build software the bin folder is used in order to store the built program,
+and therefore this might create a conflict with such programs.
+On the other hand, there is a convention in Unix to put executable programs inside bin folders like
+`$HOME/bin`,  `/bin` and `/usr/bin`.
+
 It is preferred, if the scripts are written in such a way,
 that the current folder is located at the project's root folder.
 Such commands are called project commands.
