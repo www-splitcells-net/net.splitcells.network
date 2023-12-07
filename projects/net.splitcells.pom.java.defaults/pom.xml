@@ -545,9 +545,6 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>2.22.2</version>
                         <configuration>
-                            <argLine>
-                                --illegal-access=permit
-                            </argLine>
                             <!--trimStackTrace: show full stack trace in console: source: https://stackoverflow.com/questions/2928548/make-mavens-surefire-show-stacktrace-in-console/16941432#16941432-->
                             <trimStackTrace>false</trimStackTrace>
                             <systemPropertyVariables>
@@ -559,7 +556,6 @@
                             <useUnlimitedThreads>true</useUnlimitedThreads> -->
                             <!-- Doc Of Tag Expressions: https://junit.org/junit5/docs/current/user-guide/#running-tests-tag-expressions -->
                             <groups>${test.groups}</groups>
-                            <argLine>${surefireArgLine}</argLine>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -810,9 +806,6 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>2.22.2</version>
                         <configuration>
-                            <argLine>
-                                --illegal-access=permit
-                            </argLine>
                             <!--trimStackTrace: show full stack trace in console: source: https://stackoverflow.com/questions/2928548/make-mavens-surefire-show-stacktrace-in-console/16941432#16941432-->
                             <trimStackTrace>false</trimStackTrace>
                             <systemPropertyVariables>
@@ -824,7 +817,6 @@
                             <!-- TODO Execute tests in parallel. parallel>all</parallel>
                             <useUnlimitedThreads>true</useUnlimitedThreads-->
                             <excludedGroups>testing_capabilities</excludedGroups>
-                            <argLine>${surefireArgLine}</argLine>
                         </configuration>
                     </plugin>
                 </plugins>
