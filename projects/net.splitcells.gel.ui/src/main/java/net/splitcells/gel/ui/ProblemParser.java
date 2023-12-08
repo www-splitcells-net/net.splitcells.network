@@ -16,6 +16,8 @@
 package net.splitcells.gel.ui;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.dem.lang.perspective.antlr4.DenParserBaseVisitor;
@@ -26,6 +28,8 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.gel.data.table.attribute.AttributeI.floatAttribute;
 import static net.splitcells.gel.data.table.attribute.AttributeI.integerAttribute;
@@ -36,29 +40,44 @@ import static net.splitcells.gel.data.database.Databases.database;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.problem.ProblemI.problem;
 
-public class ProblemParser extends DenParserBaseVisitor<Problem> {
+public class ProblemParser extends DenParserBaseVisitor<Result<Problem, Perspective>> {
 
     private Optional<String> name = Optional.empty();
 
     private Optional<Database> demands = Optional.empty();
     private Optional<Database> supplies = Optional.empty();
 
-    public static Problem parseProblem(String arg) {
+    private Result<Problem, Perspective> problem = result();
+
+    public static Result<Problem, Perspective> parseProblem(String arg) {
         final var lexer = new net.splitcells.dem.lang.perspective.antlr4.DenLexer(CharStreams.fromString(arg));
         final var parser = new net.splitcells.dem.lang.perspective.antlr4.DenParser(new CommonTokenStream(lexer));
         return new ProblemParser().visitSource_unit(parser.source_unit());
     }
 
     @Override
-    public Problem visitSource_unit(net.splitcells.dem.lang.perspective.antlr4.DenParser.Source_unitContext sourceUnit) {
+    public Result<Problem, Perspective> visitSource_unit(net.splitcells.dem.lang.perspective.antlr4.DenParser.Source_unitContext sourceUnit) {
         visitChildren(sourceUnit);
-        final var assignments = assignments(name.orElseThrow(), demands.orElseThrow(), supplies.orElseThrow());
-        return problem(assignments
-                , parseQuery(sourceUnit, assignments).value().orElseThrow().root().orElseThrow());
+        if (name.isPresent() && demands.isPresent() && supplies.isPresent()) {
+            final var assignments = assignments(name.orElseThrow(), demands.orElseThrow(), supplies.orElseThrow());
+            problem.withValue(problem(assignments
+                    , parseQuery(sourceUnit, assignments).value().orElseThrow().root().orElseThrow()));
+        } else {
+            if (name.isEmpty()) {
+                problem.withErrorMessage(perspective("No name was defined via `name=\"[...]\"`."));
+            }
+            if (demands.isEmpty()) {
+                problem.withErrorMessage(perspective("No demands was defined via `demands=\"[...]\"`."));
+            }
+            if (supplies.isEmpty()) {
+                problem.withErrorMessage(perspective("No supplies was defined via `supplies=\"[...]\"`."));
+            }
+        }
+        return problem;
     }
 
     @Override
-    public Problem visitVariable_definition(net.splitcells.dem.lang.perspective.antlr4.DenParser.Variable_definitionContext ctx) {
+    public Result<Problem, Perspective> visitVariable_definition(net.splitcells.dem.lang.perspective.antlr4.DenParser.Variable_definitionContext ctx) {
         final var ctxName = ctx.Name().getText();
         if (ctxName.equals("name")) {
             if (name.isPresent()) {

@@ -53,11 +53,12 @@ public class SolutionCalculator implements Processor<Perspective, Perspective> {
     @Override
     public Response<Perspective> process(Request<Perspective> request) {
         PATH.requireEqualityTo(request.trail());
-        final var solution = parseProblem(request
+        final var problemParsing = parseProblem(request
                 .data()
                 .namedChild(PROBLEM_DEFINITION)
                 .child(0)
-                .name())
+                .name());
+        final var solution = problemParsing.value().orElseThrow()
                 .asSolution();
         final var demandDefinitions = request
                 .data()

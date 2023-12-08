@@ -48,7 +48,7 @@ public class ProblemParserTest {
                 + "constraints=forEach(a).then(hasSize(2));\n"
                 + "constraints().forEach(b).then(allSame(c));\n"
                 + "name=\"testParseProblem\";\n";
-        final var testSubject = parseProblem(testData);
+        final var testSubject = parseProblem(testData).value().orElseThrow();
         final var forEachA = testSubject.constraint().child(0);
         requireEquals(forEachA.type(), ForAll.class);
         requirePresenceOf(forEachA.arguments().get(0).toPerspective().pathOfValueTree(
