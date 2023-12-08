@@ -19,7 +19,6 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.dem.lang.perspective.antlr4.DenParserBaseVisitor;
-import net.splitcells.gel.data.table.attribute.AttributeI;
 import net.splitcells.gel.problem.Problem;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -31,7 +30,7 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.gel.data.table.attribute.AttributeI.floatAttribute;
 import static net.splitcells.gel.data.table.attribute.AttributeI.integerAttribute;
 import static net.splitcells.gel.data.table.attribute.AttributeI.stringAttribute;
-import static net.splitcells.gel.ui.ConstraintParser.parseConstraint;
+import static net.splitcells.gel.ui.QueryParser.parseQuery;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
 import static net.splitcells.gel.data.database.Databases.database;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
@@ -54,7 +53,8 @@ public class ProblemParser extends DenParserBaseVisitor<Problem> {
     public Problem visitSource_unit(net.splitcells.dem.lang.perspective.antlr4.DenParser.Source_unitContext sourceUnit) {
         visitChildren(sourceUnit);
         final var assignments = assignments(name.orElseThrow(), demands.orElseThrow(), supplies.orElseThrow());
-        return problem(assignments, parseConstraint(sourceUnit, assignments));
+        return problem(assignments
+                , parseQuery(sourceUnit, assignments).value().orElseThrow().root().orElseThrow());
     }
 
     @Override
