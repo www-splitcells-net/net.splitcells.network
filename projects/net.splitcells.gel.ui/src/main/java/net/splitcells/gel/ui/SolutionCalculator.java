@@ -40,6 +40,8 @@ public class SolutionCalculator implements Processor<Perspective, Perspective> {
     public static final String SOLUTION = "net-splitcells-gel-ui-editor-form-solution";
     public static final String DEMANDS = "net-splitcells-gel-ui-editor-form-demands";
     public static final String SUPPLIES = "net-splitcells-gel-ui-editor-form-supplies";
+
+    public static final String ERRORS = "net-splitcells-gel-ui-editor-form-errors";
     public static final String FORM_UPDATE = "net-splitcells-websiter-server-form-update";
 
     public static Processor<Perspective, Perspective> solutionCalculator() {
@@ -58,26 +60,38 @@ public class SolutionCalculator implements Processor<Perspective, Perspective> {
                 .namedChild(PROBLEM_DEFINITION)
                 .child(0)
                 .name());
-        final var solution = problemParsing.value().orElseThrow()
-                .asSolution();
-        final var demandDefinitions = request
-                .data()
-                .namedChildren(DEMANDS);
-        if (demandDefinitions.hasElements()) {
-            solution.demandsFree().withAddSimplifiedCsv(
-                    standardizeInput(demandDefinitions.get(0).child(0).name()));
+        final var formUpdate = perspective(FORM_UPDATE);
+        final var isProblemParsed = problemParsing.value().isPresent();
+        if (isProblemParsed) {
+            final var solution = problemParsing.value().orElseThrow()
+                    .asSolution();
+            final var demandDefinitions = request
+                    .data()
+                    .namedChildren(DEMANDS);
+            if (demandDefinitions.hasElements()) {
+                solution.demandsFree().withAddSimplifiedCsv(
+                        standardizeInput(demandDefinitions.get(0).child(0).name()));
+            }
+            final var supplyDefinitions = request
+                    .data()
+                    .namedChildren(SUPPLIES);
+            if (supplyDefinitions.hasElements()) {
+                solution.suppliesFree().withAddSimplifiedCsv(
+                        standardizeInput(supplyDefinitions.get(0).child(0).name()));
+            }
+            constraintGroupBasedRepair(repairConfig()).optimize(solution);
+            onlineLinearInitialization().optimize(solution);
+            formUpdate.withProperty(SOLUTION, solution.toSimplifiedCSV());
         }
-        final var supplyDefinitions = request
-                .data()
-                .namedChildren(SUPPLIES);
-        if (supplyDefinitions.hasElements()) {
-            solution.suppliesFree().withAddSimplifiedCsv(
-                    standardizeInput(supplyDefinitions.get(0).child(0).name()));
+        if (problemParsing.errorMessages().hasElements() || !isProblemParsed) {
+            final var errorReport = perspective("Errors solving the given problem.");
+            if (!isProblemParsed) {
+                errorReport.withChild(perspective("Could not parse problem."));
+            }
+            errorReport.withChildren(problemParsing.errorMessages());
+            formUpdate.withProperty(ERRORS, errorReport);
         }
-        constraintGroupBasedRepair(repairConfig()).optimize(solution);
-        onlineLinearInitialization().optimize(solution);
-        return response(perspective(FORM_UPDATE)
-                .withProperty(SOLUTION, solution.toSimplifiedCSV()));
+        return response(formUpdate);
     }
 
     private static String standardizeInput(String arg) {

@@ -31,8 +31,12 @@
     </form-submit-button>
     <form id="net-splitcells-gel-ui-editor-form"
           action="/net/splitcells/gel/ui/calculate-solution.form">
+        <chapter>
+            <title>Errors</title>
+            <text-area id="net-splitcells-gel-ui-editor-form-errors"></text-area>
+        </chapter>
         <library path="net/splitcells/gel/ui/editor"/>
-        <chapter minimized="true">
+        <chapter>
             <title>Problem Definition</title>
             <text-area id="net-splitcells-gel-ui-editor-form-problem-definition"><![CDATA[demands={a=int();b=string()};
 supplies={c=float()};
