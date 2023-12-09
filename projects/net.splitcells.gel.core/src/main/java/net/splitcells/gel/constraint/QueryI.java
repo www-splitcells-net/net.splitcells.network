@@ -356,6 +356,9 @@ public class QueryI implements Query, QueryEditor {
             }
             return forAllCombinationsOf(attributes);
         } else if (constraintType.equals(FOR_ALL_NAME)) {
+            if (attributes.size() == 1 && raters.isEmpty()) {
+                return forAll(attributes.get(0));
+            }
             if (attributes.hasElements()) {
                 throw executionException(perspective("No attributes are allowed for parsing of `" + FOR_ALL_NAME + "` constraint.")
                         .withProperty("constraint type", constraintType)
