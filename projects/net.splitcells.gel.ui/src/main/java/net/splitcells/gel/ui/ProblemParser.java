@@ -58,7 +58,7 @@ public class ProblemParser extends DenParserBaseVisitor<Result<Problem, Perspect
     @Override
     public Result<Problem, Perspective> visitSource_unit(net.splitcells.dem.lang.perspective.antlr4.DenParser.Source_unitContext sourceUnit) {
         visitChildren(sourceUnit);
-        if (name.isPresent() && demands.isPresent() && supplies.isPresent()) {
+        if (name.isPresent() && demands.isPresent() && supplies.isPresent() && problem.errorMessages().isEmpty()) {
             final var assignments = assignments(name.orElseThrow(), demands.orElseThrow(), supplies.orElseThrow());
             problem.withValue(problem(assignments
                     , parseQuery(sourceUnit, assignments).value().orElseThrow().root().orElseThrow()));
@@ -81,54 +81,76 @@ public class ProblemParser extends DenParserBaseVisitor<Result<Problem, Perspect
         final var ctxName = ctx.Name().getText();
         if (ctxName.equals("name")) {
             if (name.isPresent()) {
-                throw executionException("Names are not allowed to be defined multiple times.");
+                problem.withErrorMessage(perspective("Names are not allowed to be defined multiple times."));
+                return null;
             }
             name = Optional.of(ctxName);
         } else if (ctxName.equals("demands")) {
             if (demands.isPresent()) {
-                throw executionException("Demands are not allowed to be defined multiple times.");
+                problem.withErrorMessage(perspective("Demands are not allowed to be defined multiple times."));
+                return null;
             }
             final List<Attribute<? extends Object>> demandAttributes = list();
             final var firstDemandAttribute = ctx.block_statement().variable_definition();
             if (firstDemandAttribute != null) {
-                demandAttributes.add(
-                        parseAttribute(firstDemandAttribute.Name().getText()
-                                , firstDemandAttribute.function_call().Name().getText()));
+                final var parsedAttribute = parseAttribute(firstDemandAttribute.Name().getText()
+                        , firstDemandAttribute.function_call().Name().getText());
+                if (parsedAttribute.value().isPresent()) {
+                    demandAttributes.add(parsedAttribute.value().get());
+                }
+                problem.errorMessages().withAppended(parsedAttribute.errorMessages());
             }
             final var additionalDemandAttributes = ctx.block_statement().statement_reversed();
-            additionalDemandAttributes.forEach(da -> demandAttributes
-                    .add(parseAttribute(da.variable_definition().Name().getText()
-                            , da.variable_definition().function_call().Name().getText())));
+            additionalDemandAttributes.forEach(da -> {
+                        final var parsedAttribute = parseAttribute(da.variable_definition().Name().getText()
+                                , da.variable_definition().function_call().Name().getText());
+                        if (parsedAttribute.value().isPresent()) {
+                            demandAttributes.add(parsedAttribute.value().get());
+                        }
+                        problem.errorMessages().withAppended(parsedAttribute.errorMessages());
+                    }
+            );
             demands = Optional.of(database(demandAttributes));
         } else if (ctxName.equals("supplies")) {
             if (supplies.isPresent()) {
-                throw executionException("Supplies are not allowed to be defined multiple times.");
+                problem.withErrorMessage(perspective("Supplies are not allowed to be defined multiple times."));
+                return null;
             }
             final List<Attribute<? extends Object>> supplyAttributes = list();
             final var firstSupplyAttribute = ctx.block_statement().variable_definition();
             if (firstSupplyAttribute != null) {
-                supplyAttributes.add(
-                        parseAttribute(firstSupplyAttribute.Name().getText()
-                                , firstSupplyAttribute.function_call().Name().getText()));
+                final var parsedAttribute = parseAttribute(firstSupplyAttribute.Name().getText()
+                        , firstSupplyAttribute.function_call().Name().getText());
+                if (parsedAttribute.value().isPresent()) {
+                    supplyAttributes.add(parsedAttribute.value().get());
+                }
+                problem.errorMessages().withAppended(parsedAttribute.errorMessages());
             }
             final var additionalSupplyAttributes = ctx.block_statement().statement_reversed();
-            additionalSupplyAttributes.forEach(sa -> supplyAttributes
-                    .add(parseAttribute(sa.variable_definition().Name().getText()
-                            , sa.variable_definition().function_call().Name().getText())));
+            additionalSupplyAttributes.forEach(sa -> {
+                final var parsedAttribute = parseAttribute(sa.variable_definition().Name().getText()
+                        , sa.variable_definition().function_call().Name().getText());
+                if (parsedAttribute.value().isPresent()) {
+                    supplyAttributes.add(parsedAttribute.value().get());
+                }
+                problem.errorMessages().withAppended(parsedAttribute.errorMessages());
+            });
             supplies = Optional.of(database(supplyAttributes));
         }
         return null;
     }
 
-    private Attribute<? extends Object> parseAttribute(String name, String type) {
+    private Result<Attribute<? extends Object>, Perspective> parseAttribute(String name, String type) {
+        final Result<Attribute<? extends Object>, Perspective> parsedAttribute = result();
         if (type.equals("int")) {
-            return integerAttribute(name);
+            return parsedAttribute.withValue(integerAttribute(name));
         } else if (type.equals("float")) {
-            return floatAttribute(name);
+            return parsedAttribute.withValue(floatAttribute(name));
         } else if (type.equals("string")) {
-            return stringAttribute(name);
-        } else {
-            throw executionException(type);
+            return parsedAttribute.withValue(stringAttribute(name));
         }
+        return parsedAttribute.withErrorMessage(perspective("Unknown attribute type.")
+                .withProperty("name", name)
+                .withProperty("type", type));
     }
 }

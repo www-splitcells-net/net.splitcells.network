@@ -91,7 +91,7 @@ public class ProblemParserTest {
                 + "supplies={};"
                 + "constraints=forEach(a);"
                 + "name=\"testInvalidDemandAttribute\";";
-        assertThrows(Throwable.class, () -> parseProblem(testData));
+        parseProblem(testData).errorMessages().requireAnyContent();
     }
 
     @UnitTest
@@ -100,6 +100,6 @@ public class ProblemParserTest {
                 + "supplies={a=invalid_attribute()};"
                 + "constraints=forEach(a);"
                 + "name=\"testInvalidDemandAttribute\";";
-        assertThrows(Throwable.class, () -> parseProblem(testData));
+        parseProblem(testData).errorMessages().requireAnyContent();
     }
 }
