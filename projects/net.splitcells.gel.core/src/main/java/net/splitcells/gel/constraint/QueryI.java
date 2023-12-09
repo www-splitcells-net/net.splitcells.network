@@ -357,7 +357,7 @@ public class QueryI implements Query, QueryEditor {
             return forAllCombinationsOf(attributes);
         } else if (constraintType.equals(FOR_ALL_NAME)) {
             if (attributes.hasElements()) {
-                throw executionException(perspective("No attributes are not allowed for parsing of `" + FOR_ALL_NAME + "` constraint.")
+                throw executionException(perspective("No attributes are allowed for parsing of `" + FOR_ALL_NAME + "` constraint.")
                         .withProperty("constraint type", constraintType)
                         .withProperty("raters", raters.toString())
                         .withProperty("attributes", attributes.toString()));
