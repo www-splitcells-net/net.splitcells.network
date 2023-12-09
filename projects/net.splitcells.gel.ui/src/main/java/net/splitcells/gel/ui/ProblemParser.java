@@ -60,8 +60,12 @@ public class ProblemParser extends DenParserBaseVisitor<Result<Problem, Perspect
         visitChildren(sourceUnit);
         if (name.isPresent() && demands.isPresent() && supplies.isPresent() && problem.errorMessages().isEmpty()) {
             final var assignments = assignments(name.orElseThrow(), demands.orElseThrow(), supplies.orElseThrow());
-            problem.withValue(problem(assignments
-                    , parseQuery(sourceUnit, assignments).value().orElseThrow().root().orElseThrow()));
+            final var parsedQuery = parseQuery(sourceUnit, assignments);
+            problem.errorMessages().withAppended(parsedQuery.errorMessages());
+            if (parsedQuery.value().isEmpty()) {
+                return problem;
+            }
+            problem.withValue(problem(assignments, parsedQuery.value().orElseThrow().root().orElseThrow()));
         } else {
             if (name.isEmpty()) {
                 problem.withErrorMessage(perspective("No name was defined via `name=\"[...]\"`."));

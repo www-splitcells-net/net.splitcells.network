@@ -140,7 +140,7 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Perspective>
     public Result<Query, Perspective> visitFunction_call(DenParser.Function_callContext functionCall) {
         nextConstraint = parseQuery(functionCall.Name().getText()
                 , functionCall.function_call_arguments());
-        if (functionCall.access() != null) {
+        if (functionCall.access() != null && nextConstraint.value().isPresent()) {
             final var childConstraintParser = new QueryParser(assignments, nextConstraint.value().orElseThrow());
             childConstraintParser.visitAccess(functionCall.access());
         }
