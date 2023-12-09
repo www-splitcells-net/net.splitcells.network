@@ -99,8 +99,9 @@ public class ProblemParser extends DenParserBaseVisitor<Result<Problem, Perspect
             if (firstDemandAttribute != null) {
                 final var parsedAttribute = parseAttribute(firstDemandAttribute.Name().getText()
                         , firstDemandAttribute.function_call().Name().getText());
-                if (parsedAttribute.value().isPresent()) {
-                    demandAttributes.add(parsedAttribute.value().get());
+                final var parsedAttributeValue = parsedAttribute.value();
+                if (parsedAttributeValue.isPresent()) {
+                    demandAttributes.add(parsedAttributeValue.get());
                 }
                 problem.errorMessages().withAppended(parsedAttribute.errorMessages());
             }
@@ -125,8 +126,9 @@ public class ProblemParser extends DenParserBaseVisitor<Result<Problem, Perspect
             if (firstSupplyAttribute != null) {
                 final var parsedAttribute = parseAttribute(firstSupplyAttribute.Name().getText()
                         , firstSupplyAttribute.function_call().Name().getText());
-                if (parsedAttribute.value().isPresent()) {
-                    supplyAttributes.add(parsedAttribute.value().get());
+                final var parsedAttributeValue = parsedAttribute.value();
+                if (parsedAttributeValue.isPresent()) {
+                    supplyAttributes.add(parsedAttributeValue.get());
                 }
                 problem.errorMessages().withAppended(parsedAttribute.errorMessages());
             }
