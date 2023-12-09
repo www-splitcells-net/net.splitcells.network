@@ -20,6 +20,7 @@ import net.splitcells.dem.lang.perspective.antlr4.DenParser;
 import net.splitcells.dem.lang.perspective.antlr4.DenParserBaseVisitor;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.constraint.Query;
+import net.splitcells.gel.constraint.type.ForAll;
 import net.splitcells.gel.data.assignment.Assignments;
 
 import java.util.Optional;
@@ -30,6 +31,7 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.gel.constraint.QueryI.query;
+import static net.splitcells.gel.constraint.type.ForAll.FOR_ALL_NAME;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.ui.RaterParser.parseRater;
 
@@ -87,7 +89,9 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Perspective>
                 // TODO FIX
                 if (arguments.function_call_arguments_element().function_call() != null
                         && !arguments.function_call_arguments_element().function_call().isEmpty()) {
-                    return parsedConstraint.withErrorMessage(perspective("Function call arguments are not supported for forEach constraint: "
+                    return parsedConstraint.withErrorMessage(perspective("Function call arguments are not supported for "
+                            + FOR_ALL_NAME
+                            + " constraint: "
                             + arguments.getText()));
                 }
                 final var attributeName = arguments
@@ -97,7 +101,12 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Perspective>
                 final var attributeMatches = assignments.headerView().stream()
                         .filter(da -> da.name().equals(attributeName))
                         .collect(toList());
-                attributeMatches.requireSizeOf(1);
+                if (attributeMatches.size() != 1) {
+                    return parsedConstraint.withErrorMessage(perspective("For each constraint argument only exact one attribute match is allowed.")
+                            .withProperty("constraint type", constraintType)
+                            .withProperty("attributes matches", attributeMatches.toString())
+                            .withProperty("searched attribute name", attributeName));
+                }
                 parsedConstraint.withValue(parentConstraint.forAll(attributeMatches.get(0)));
                 return parsedConstraint;
             }
