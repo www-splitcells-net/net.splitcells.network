@@ -499,11 +499,15 @@ public interface Perspective extends PerspectiveView {
                     jsonString.append(",");
                 }
                 if (child.children().size() == 1) {
-                    if (child.children().get(0).children().size() == 0) {
+                    if (child.children().get(0).children().isEmpty()) {
                         jsonString.append("\"" + encodeJsonString(child.name()) + "\":\"" + encodeJsonString(child.children().get(0).name()) + "\"");
                     } else {
-                        jsonString.append("\"" + encodeJsonString(child.name()) + "\":"
-                                + child.toJsonString(jsonConfig().withIsTopElement(false)));
+                        jsonString.append("\"" + encodeJsonString(child.name()) + "\": {"
+                                + child.children().stream()
+                                .map(c -> c.toJsonString(jsonConfig().withIsTopElement(false)))
+                                .reduce("", (a, b) -> a + b)
+                                + "}"
+                        );
                     }
                 } else if (child.children().isEmpty()) {
                     require(hasAnyPrimitiveValues);
