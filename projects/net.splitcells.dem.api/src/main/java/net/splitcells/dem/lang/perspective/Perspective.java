@@ -465,6 +465,10 @@ public interface Perspective extends PerspectiveView {
                 .replace("\r", "\\r");
     }
 
+    private boolean hasAnyPrimitiveValues() {
+        return children().stream().anyMatch(c -> c.children().isEmpty());
+    }
+
     /**
      * Creates a JSON, where all primitive values are Strings.
      *
@@ -480,7 +484,11 @@ public interface Perspective extends PerspectiveView {
                     || c.children().get(0).name().isEmpty());
             final var isThisANamedDictionary = !hasAnyPrimitiveValues && !name().isEmpty();
             if (hasAnyPrimitiveValues) {
-                jsonString.append("[");
+                if (config.isTopElement()) {
+                    jsonString.append("[");
+                } else {
+                    jsonString.append("\"" + encodeJsonString(name()) + "\": [");
+                }
             } else {
                 if (name().isEmpty()) {
                     requireNot(isThisANamedDictionary);
@@ -502,12 +510,19 @@ public interface Perspective extends PerspectiveView {
                     if (child.children().get(0).children().isEmpty()) {
                         jsonString.append("\"" + encodeJsonString(child.name()) + "\":\"" + encodeJsonString(child.children().get(0).name()) + "\"");
                     } else {
-                        jsonString.append("\"" + encodeJsonString(child.name()) + "\": {"
-                                + child.children().stream()
-                                .map(c -> c.toJsonString(jsonConfig().withIsTopElement(false)))
-                                .reduce("", (a, b) -> a + b)
-                                + "}"
-                        );
+                        if (child.hasAnyPrimitiveValues()) {
+                            jsonString.append("\"" + encodeJsonString(child.name()) + "\": ["
+                                    + child.children().stream()
+                                    .map(c -> c.toJsonString(jsonConfig().withIsTopElement(false)))
+                                    .reduce("", (a, b) -> a + b)
+                                    + "]");
+                        } else {
+                            jsonString.append("\"" + encodeJsonString(child.name()) + "\": {"
+                                    + child.children().stream()
+                                    .map(c -> c.toJsonString(jsonConfig().withIsTopElement(false)))
+                                    .reduce("", (a, b) -> a + b)
+                                    + "}");
+                        }
                     }
                 } else if (child.children().isEmpty()) {
                     require(hasAnyPrimitiveValues);

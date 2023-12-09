@@ -56,6 +56,23 @@ public class PerspectiveTest {
     }
 
     @UnitTest
+    public void testToJsonStringWithPathToArray() {
+        final var testSubject = perspective("")
+                .withChild(perspective("path start")
+                        .withChild(perspective("path end")
+                                .withChildren(perspective("1"), perspective("2"))));
+        requireEquals(testSubject.toJsonString(), "{\"path start\": {\"path end\": [\"1\",\"2\"]}}");
+    }
+
+    @UnitTest
+    public void testToJsonStringWithNamedArray() {
+        final var testSubject = perspective("")
+                .withChild(perspective("name")
+                        .withChildren(perspective("3"), perspective("4")));
+        requireEquals(testSubject.toJsonString(), "{\"name\": [\"3\",\"4\"]}");
+    }
+
+    @UnitTest
     public void testToJsonStringWithArray() {
         final var testSubject = perspective("")
                 .withChild(perspective("1\n"))
