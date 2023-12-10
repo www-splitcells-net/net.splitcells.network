@@ -89,7 +89,7 @@ public class SolutionCalculator implements Processor<Perspective, Perspective> {
                 errorReport.withChild(perspective("Could not parse problem."));
             }
             errorReport.withChildren(problemParsing.errorMessages());
-            formUpdate.withProperty(ERRORS, errorReport);
+            formUpdate.withProperty(ERRORS, errorReport.toCommonMarkString());
         }
         return response(formUpdate);
     }
