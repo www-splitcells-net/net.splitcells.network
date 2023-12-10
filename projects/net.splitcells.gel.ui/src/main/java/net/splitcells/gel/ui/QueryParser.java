@@ -101,8 +101,13 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Perspective>
                 final var attributeMatches = assignments.headerView().stream()
                         .filter(da -> da.name().equals(attributeName))
                         .collect(toList());
+                if (attributeMatches.isEmpty()) {
+                    return parsedConstraint.withErrorMessage(perspective("Attribute for constraint argument not found.")
+                            .withProperty("constraint type", constraintType)
+                            .withProperty("not found attribute name", attributeName));
+                }
                 if (attributeMatches.size() != 1) {
-                    return parsedConstraint.withErrorMessage(perspective("For each constraint argument only exact one attribute match is allowed.")
+                    return parsedConstraint.withErrorMessage(perspective("For each constraint argument only exact one attribute match is allowed, but multiple were found.")
                             .withProperty("constraint type", constraintType)
                             .withProperty("attributes matches", attributeMatches.toString())
                             .withProperty("searched attribute name", attributeName));
