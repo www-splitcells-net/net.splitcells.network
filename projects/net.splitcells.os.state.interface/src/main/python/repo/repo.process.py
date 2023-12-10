@@ -71,7 +71,7 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown, c
 					subRepoPath = Path('../' + peerRepo)
 					returnCode = processSub(relativePath + '/../' + peerRepo
 											, host
-											, re.sub('/[a-z\.]*/../', '/', command.replace('$peerRepo', '/../' + peerRepo))
+											, re.sub(r'/[a-z\.]*/../', '/', command.replace('$peerRepo', '/../' + peerRepo))
 											, commandForMissing
 											, commandForUnknown
 											, commandForCurrent
