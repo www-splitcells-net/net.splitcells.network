@@ -39,7 +39,7 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
 /**
  * Some additional methods for the java.nio.file.Files class.
  *
- * @Deprecated This class is an integration to OS functionality.
+ * @deprecated This class is an integration to OS functionality.
  * OS functionality should not be used in code directly most of the time.
  * Use {@link FileSystem} instead.
  */
@@ -226,7 +226,7 @@ public interface Files {
     }
 
     /**
-     * <p>Folder containing the user's temporary (`~/.local/state/<ProgramName>`) files for this program based on {@link ProgramName}.
+     * <p>Folder containing the user's temporary (`~/.local/state/&lt;ProgramName&gt;`) files for this program based on {@link ProgramName}.
      * This is based on the <a href="https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html">XDG Base Directory Specification</a>.
      * The format there should abide by the <a href="https://splitcells.net/net/splitcells/network/guidelines/filesystem.html">Software Project File System Standards</a>.
      * </p>

@@ -36,8 +36,8 @@ public interface Ordered<T> extends Comparable<T>, OrderingCheck<T> {
 	/**
 	 * TODO Test if {@link #compare_to} is implemented for subclass of T.
 	 * 
-	 * The relation of {@param arg} to {@link this}:
-	 * this is <EQUAL|LESSER_THAN|GREATER_THANT> to arg.
+	 * The relation of {@param arg} to this:
+	 * this is &lt;EQUAL|LESSER_THAN|GREATER_THANT&gt; to arg.
 	 * Default order is ascending.
 	 */
 	default Ordering compare_to(T arg) {

@@ -19,8 +19,8 @@ package net.splitcells.dem.object;
  * This is an alternative to {@link Object#equals(Object)}.
  * It has the benefit of being typed.
  *
- * Every instance implementing this method should have consistent {@link#equalCOntents}
- * {@Object#equals} and {@Object#hashCode}.
+ * Every instance implementing this method should have consistent {@link #equalContents(Object)}
+ * {@link Object#equals} and {@link Object#hashCode}.
  *
  * Here, no fish will be forced to fly and no bird will be forced to swim. - Motto of an Ottoman school?
  */

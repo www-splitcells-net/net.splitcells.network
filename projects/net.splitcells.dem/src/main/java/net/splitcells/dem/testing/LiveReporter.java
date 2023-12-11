@@ -23,8 +23,6 @@ import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static org.junit.platform.engine.TestExecutionResult.Status.SUCCESSFUL;
 
 /**
- * RENAME
- * <p/>
  * TODO Create and use generic stack trace to String method.
  */
 public class LiveReporter implements TestExecutionListener {

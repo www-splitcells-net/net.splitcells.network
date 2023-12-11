@@ -42,7 +42,7 @@ import static net.splitcells.dem.utils.reflection.ClassesRelated.callerClass;
 /**
  * <p>This is the starting point of all process definitions.
  * For a process it defines the program that is executed and the environment in which it is executed.
- * <p/>
+ * </p>
  * <p>One of the main goals is to control side effects caused by the program to the environment.
  * This is done, by having 1 and only one variable representing the state of the environment
  * and passing it through everywhere.
@@ -78,7 +78,7 @@ public class Dem {
     }
 
     /**
-     * It is assumed, that {@link #initializeProcess(Class, Consumer)} )} or
+     * It is assumed, that {@link #initializeProcess(Class, Consumer)} or
      * similar is already called before on the current thread.
      *
      * @param program This is the code, that the thread executes.

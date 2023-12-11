@@ -49,7 +49,7 @@ import static org.w3c.dom.Node.ELEMENT_NODE;
 
 /**
  * Currently XML is used as the base of all documents.
- * If it is not suitable anymore, it will be replaced by {@link net.splitcells.dem.lang.perspective.PerspectiveDocument}.
+ * If it is not suitable anymore, it will be replaced by {@link net.splitcells.dem.lang.perspective.Perspective}.
  */
 @JavaLegacyArtifact
 public final class Xml {
