@@ -667,13 +667,13 @@ window.onload = function() {
                             <div class="menu Left_shadow TextCell Layout net-splitcells-component-priority-4">
                                 <div class="Left_shadow net-splitcells-component-priority-0 splitcells-net-title-logo splitcells-net-window-menu">
                                     <div class="splitcells-net-window-menu-line-1">
-                                        <a class="net-splitcells-button net-splitcells-main-button-project-logo">
+                                        <a class="net-splitcells-button-inline net-splitcells-main-button-project-logo">
                                             <xsl:attribute name="href">
                                                 <xsl:value-of
                                                         select="s:default-root-relative-url('net/splitcells/network/README.html')"/>
                                             </xsl:attribute>
                                         </a>
-                                        <a class="net-splitcells-button">
+                                        <a class="net-splitcells-button-inline">
                                             <xsl:attribute name="href">
                                                 <xsl:value-of
                                                         select="s:default-root-relative-url('net/splitcells/network/README.html')"/>
