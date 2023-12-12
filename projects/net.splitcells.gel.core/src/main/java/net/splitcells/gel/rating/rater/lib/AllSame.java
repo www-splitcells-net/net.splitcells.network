@@ -42,7 +42,7 @@ import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
 /**
- * Checks whether the {@linke Line}s of a group have the same value for a given {@link Attribute}.
+ * Checks whether the {@link Line}s of a group have the same value for a given {@link Attribute}.
  */
 public class AllSame {
 

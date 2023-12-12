@@ -57,10 +57,9 @@ import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
 /**
- * TODO FIX This does not work.
- * <p/>
- * TODO IDEA Use this and {@link MinimalDistance} in order to measure performance of diff based implementation
- * vs recalculating implementation.
+ * <p>TODO FIX This does not work.</p>
+ * <p>TODO IDEA Use this and {@link MinimalDistance} in order to measure performance of diff based implementation
+ * vs recalculating implementation.</p>
  *
  * @param <T>
  */

@@ -62,14 +62,10 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.Constrai
 import static net.splitcells.gel.solution.optimization.primitive.OfflineLinearInitialization.offlineLinearInitialization;
 
 /**
- * TODO IDEA Test object orientation by making all people an instance of a certain
- * class.
- * <p>
- * TODO IDEA The number of days with exams for a teacher should be smaller or equals to a given number.
- * <p>
- * TODO Pupil and teachers are not available on certain days or at certain shifts in certain days.
- * <p>
- * TODO Prefered days and shifts for pupil and teachers.
+ * <p>TODO IDEA Test object orientation by making all people an instance of a certain class.</p>
+ * <p>TODO IDEA The number of days with exams for a teacher should be smaller or equals to a given number.</p>
+ * <p>TODO Pupil and teachers are not available on certain days or at certain shifts in certain days.</p>
+ * <p>TODO Prefered days and shifts for pupil and teachers.</p>
  */
 public class ColloquiumPlanningTest extends TestSuiteI {
     public static final Attribute<Integer> STUDENTS = integerAttribute("students");
@@ -248,11 +244,9 @@ public class ColloquiumPlanningTest extends TestSuiteI {
     }
 
     /**
-     * TODO Every examiner and observer wants to minimize the number of days with exams.
-     * <p/>
-     * TODO Every examiner and observer wants to minimize the pause between 2 exams of one day.
-     * <p/>
-     * TODO Every examiner and observer wants to minimize the number of room switches per day.
+     * <p>TODO Every examiner and observer wants to minimize the number of days with exams.</p>
+     * <p>TODO Every examiner and observer wants to minimize the pause between 2 exams of one day.</p>
+     * <p>TODO Every examiner and observer wants to minimize the number of room switches per day.</p>
      */
     public Problem colloquiumPlanning(List<List<Object>> demands, List<List<Object>> supplies) {
         return defineProblem("colloquium-planning")

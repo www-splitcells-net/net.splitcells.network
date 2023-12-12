@@ -104,7 +104,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
      * than the other way around.</p>
      * <p>There is no guarantee regarding the ordering.</p>
      *
-     * @return An ordered {@linl Stream} of {@łink #lines}.
+     * @return An ordered {@link Stream} of {@link #orderedLines()}.
      */
     default Stream<Line> unorderedLinesStream() {
         return unorderedLines().stream();
@@ -119,7 +119,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
 
     /**
      * @return {@link Line} With Distinct Values
-     * @see {@link Database#query()}
+     * @see Database#query()
      */
     @Deprecated
     default List<Line> distinctLines() {

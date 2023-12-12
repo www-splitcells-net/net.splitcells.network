@@ -65,10 +65,10 @@ import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
  * <p>Line removal from {@link #demands_free} and {@link #supplies_free} has no subscriptions,
  * because {@link Database} lines can be remove from the {@link Assignments} completely
  * or they can be moved to the respectively used tables.</p>
- * <p>TODO Fix {@link #demandOfAssignment(Line)} by using {@link #demands_used}.</p>
- * <p>TODO Fix {@link #supplyOfAssignment} by using {@link #supplies_used}.<p/>
- * <p>TODO IDEA Support for multiple {@link #path}. In this case paths with demand and supplies as base.<p/>
- * <p>TODO Define {@link #path} as an convention regarding the meaning of demands and supplies.</p>
+ * <p>TODO Fix {@link #demandOfAssignment(Line)} by using {@link #demandsUsed()}.</p>
+ * <p>TODO Fix {@link #supplyOfAssignment} by using {@link #suppliesUsed()}.</p>
+ * <p>TODO IDEA Support for multiple {@link #path}. In this case paths with demand and supplies as base.</p>
+ * <p>TODO Define {@link #path()} as an convention regarding the meaning of demands and supplies.</p>
  */
 public class AssignmentsI implements Assignments {
 

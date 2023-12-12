@@ -174,7 +174,7 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
     }
 
     /**
-     * TODO Should this not return `List<ConstraintView>`?
+     * TODO Should this not return `List&lt;ConstraintView&gt;`?
      *
      * @return List Of Child Constraints
      */

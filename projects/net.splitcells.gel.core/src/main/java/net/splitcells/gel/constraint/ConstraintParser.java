@@ -38,7 +38,7 @@ public interface ConstraintParser {
      * @param queryEditor
      * @param content
      * @return
-     * @see {@link #parseConstraint(QueryEditor, DenParser.AccessContext)}
+     * @see #parseConstraint(QueryEditor, DenParser.AccessContext)
      */
     Optional<QueryEditor> parseConstraint(QueryEditor queryEditor, DenParser.Function_callContext content);
 }

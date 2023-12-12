@@ -26,7 +26,7 @@ import static net.splitcells.gel.solution.optimization.space.EnumerableOptimizat
 
 /**
  * <p>This is an implementation of the backtracking algorithm.
- * The backtracking exits, when the {@link Solution#isComplete()} is {@link true}.
+ * The backtracking exits, when the {@link Solution#isComplete()} is {@code true}.
  * This implementation backtracks,
  * if a given {@link Solution} is worse than the previous {@link Solution}
  * found via {@link EnumerableOptimizationSpace#parent()}.</p>

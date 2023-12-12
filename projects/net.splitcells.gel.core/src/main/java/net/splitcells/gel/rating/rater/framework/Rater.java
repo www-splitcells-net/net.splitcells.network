@@ -47,7 +47,6 @@ import net.splitcells.dem.utils.reflection.PubliclyTyped;
  * A simple instance will calculate the {@link Rating} of all {@link Line} in a given group.
  * The performant one, will only calculate the changes in {@link Rating} of a given group and
  * the added or removed {@link Line}.</p>
- * <p>
  * <p>{@link Rater} implementations should always calculate the {@link Constraint#RESULTING_CONSTRAINT_GROUP}
  * based on the {@link Constraint#INCOMING_CONSTRAINT_GROUP}.</p>
  * TODO RENAME Rater seems to be an incorrect name, because it produces more than a rating.

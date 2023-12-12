@@ -49,12 +49,11 @@ import static net.splitcells.gel.common.Language.REMOVE;
 
 /**
  * <p>This aspect adds mainly logging and runtime check functionality to {@link Database} instances.</p>
- * <p>TODO Make this an aspect in order to make it usable for other implementations of {@link Database}.<p/>
- * <p>TODO Require the usage of a non empty name during construction.<p/>
- * <p>TODO Invalidate Lines pointing to an index where values are already replaced.<p/>
+ * <p>TODO Make this an aspect in order to make it usable for other implementations of {@link Database}.</p>
+ * <p>TODO Require the usage of a non empty name during construction.</p>
+ * <p>TODO Invalidate Lines pointing to an index where values are already replaced.</p>
  * <p>TODO PERFORMANCE Abstract Database implementation with generic storage in order to
- * simplify implementation and maintenance row and column based Databases.
- * <p/>
+ * simplify implementation and maintenance row and column based Databases.</p>
  * <p>TODO IDEA Implement Java collection interface.</p>
  */
 public class DatabaseMetaAspect implements Database {
@@ -70,15 +69,12 @@ public class DatabaseMetaAspect implements Database {
     }
 
     /**
-     * TODO PERFORMANCE No copies have to be created, as it is guaranteed that a Line
+     * <p>TODO PERFORMANCE No copies have to be created, as it is guaranteed that a Line
      * does not change its content during its life cycle. This is important for
-     * constraints.
-     * <p/>
-     * TODO Test whether the line is added to the correct place.
-     * <p/>
-     * TODO FIX Why does List<?> not work?
-     * <p/>
-     * TODO PERFORMANCE Reduce the high number of copies.
+     * constraints.</p>
+     * <p>TODO Test whether the line is added to the correct place.</p>
+     * <p>TODO FIX Why does List&lt;?&gt; not work?</p>
+     * <p>TODO PERFORMANCE Reduce the high number of copies.</p>
      *
      * @param line
      * @return

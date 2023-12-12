@@ -45,13 +45,13 @@ import static net.splitcells.network.worker.Repositories.repository;
  * It is assumed, that the folder of the project is under version control.</p>
  * <p>The entries are stored at "./src/main/csv/**".
  * The relative path of each entry represents the package, the test case and the executor of the test:
- * "./src/main/csv/<package>/<test case>/<id of the executor>.csv".
+ * "./src/main/csv/&lt;package&gt;/&lt;test case&gt;/&lt;id of the executor&gt;.csv".
  * The executors hardware and software should not change between each run,
  * in order to make it easily possible to find regressions.</p>
  * <p>Each CSV file contains the 2 columns "Date" and "Execution Time".
  * The first one has the executions date of the test case.
  * The second one contains the execution time for the corresponding test case.</p>
- * <p>{@link #BUILDER_RUNTIME_LOG}"/<host>.csv" contains the start times of all runs for a given host.
+ * <p>{@link #BUILDER_RUNTIME_LOG}"/&lt;host&gt;.csv" contains the start times of all runs for a given host.
  * </p>
  */
 @JavaLegacyArtifact
