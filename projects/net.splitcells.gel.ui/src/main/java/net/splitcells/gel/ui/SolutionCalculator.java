@@ -26,6 +26,7 @@ import net.splitcells.website.server.processor.Response;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.constraintGroupBasedRepair;
 import static net.splitcells.gel.solution.optimization.primitive.repair.RepairConfig.repairConfig;
@@ -61,35 +62,40 @@ public class SolutionCalculator implements Processor<Perspective, Perspective> {
                 .child(0)
                 .name());
         final var formUpdate = perspective(FORM_UPDATE);
-        final var isProblemParsed = problemParsing.value().isPresent();
-        if (isProblemParsed) {
-            final var solution = problemParsing.value().orElseThrow()
-                    .asSolution();
-            final var demandDefinitions = request
-                    .data()
-                    .namedChildren(DEMANDS);
-            if (demandDefinitions.hasElements()) {
-                solution.demandsFree().withAddSimplifiedCsv(
-                        standardizeInput(demandDefinitions.get(0).child(0).name()));
+        try {
+            final var isProblemParsed = problemParsing.value().isPresent();
+            if (isProblemParsed) {
+                final var solution = problemParsing.value().orElseThrow()
+                        .asSolution();
+                final var demandDefinitions = request
+                        .data()
+                        .namedChildren(DEMANDS);
+                if (demandDefinitions.hasElements()) {
+                    solution.demandsFree().withAddSimplifiedCsv(
+                            standardizeInput(demandDefinitions.get(0).child(0).name()));
+                }
+                final var supplyDefinitions = request
+                        .data()
+                        .namedChildren(SUPPLIES);
+                if (supplyDefinitions.hasElements()) {
+                    solution.suppliesFree().withAddSimplifiedCsv(
+                            standardizeInput(supplyDefinitions.get(0).child(0).name()));
+                }
+                constraintGroupBasedRepair(repairConfig()).optimize(solution);
+                onlineLinearInitialization().optimize(solution);
+                formUpdate.withProperty(SOLUTION, solution.toSimplifiedCSV());
             }
-            final var supplyDefinitions = request
-                    .data()
-                    .namedChildren(SUPPLIES);
-            if (supplyDefinitions.hasElements()) {
-                solution.suppliesFree().withAddSimplifiedCsv(
-                        standardizeInput(supplyDefinitions.get(0).child(0).name()));
+            if (problemParsing.errorMessages().hasElements() || !isProblemParsed) {
+                final var errorReport = perspective("Errors solving the given problem.");
+                if (!isProblemParsed) {
+                    errorReport.withChild(perspective("Could not parse problem."));
+                }
+                errorReport.withChildren(problemParsing.errorMessages());
+                formUpdate.withProperty(ERRORS, errorReport.toCommonMarkString());
             }
-            constraintGroupBasedRepair(repairConfig()).optimize(solution);
-            onlineLinearInitialization().optimize(solution);
-            formUpdate.withProperty(SOLUTION, solution.toSimplifiedCSV());
-        }
-        if (problemParsing.errorMessages().hasElements() || !isProblemParsed) {
-            final var errorReport = perspective("Errors solving the given problem.");
-            if (!isProblemParsed) {
-                errorReport.withChild(perspective("Could not parse problem."));
-            }
-            errorReport.withChildren(problemParsing.errorMessages());
-            formUpdate.withProperty(ERRORS, errorReport.toCommonMarkString());
+        } catch (Throwable t) {
+            logs().appendError(t);
+            formUpdate.withProperty(ERRORS, perspective("The program had an internal error and therefore a solution could not be calculated."));
         }
         return response(formUpdate);
     }
