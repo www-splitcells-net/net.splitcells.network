@@ -55,14 +55,14 @@ public class SolutionCalculator implements Processor<Perspective, Perspective> {
 
     @Override
     public Response<Perspective> process(Request<Perspective> request) {
-        PATH.requireEqualityTo(request.trail());
-        final var problemParsing = parseProblem(request
-                .data()
-                .namedChild(PROBLEM_DEFINITION)
-                .child(0)
-                .name());
         final var formUpdate = perspective(FORM_UPDATE);
         try {
+            PATH.requireEqualityTo(request.trail());
+            final var problemParsing = parseProblem(request
+                    .data()
+                    .namedChild(PROBLEM_DEFINITION)
+                    .child(0)
+                    .name());
             final var isProblemParsed = problemParsing.value().isPresent();
             if (isProblemParsed) {
                 final var solution = problemParsing.value().orElseThrow()

@@ -22,8 +22,8 @@ import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.dem.lang.perspective.antlr4.DenParserBaseVisitor;
 import net.splitcells.gel.problem.Problem;
-import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.misc.ParseCancellationException;
 
 import java.util.Optional;
 
@@ -52,7 +52,32 @@ public class ProblemParser extends DenParserBaseVisitor<Result<Problem, Perspect
     public static Result<Problem, Perspective> parseProblem(String arg) {
         final var lexer = new net.splitcells.dem.lang.perspective.antlr4.DenLexer(CharStreams.fromString(arg));
         final var parser = new net.splitcells.dem.lang.perspective.antlr4.DenParser(new CommonTokenStream(lexer));
-        return new ProblemParser().visitSource_unit(parser.source_unit());
+        final List<Perspective> parsingErrors = list();
+        parser.addErrorListener(new BaseErrorListener() {
+            // Ensures, that error messages are not hidden.
+            @Override
+            public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e)
+                    throws ParseCancellationException {
+                if (offendingSymbol instanceof CommonToken) {
+                    final var token = (CommonToken) offendingSymbol;
+                    parsingErrors.add(perspective("Could not parse problem definition:")
+                            .withProperty("line", "" + line)
+                            .withProperty("column", "" + charPositionInLine)
+                            .withProperty("invalid text", "`" + token.toString(recognizer) + "`")
+                            .withProperty("invalid token", "`" + token.getText() + "`")
+                            .withProperty("error", msg));
+                } else {
+                    parsingErrors.add(perspective("Could not parse problem definition:")
+                            .withProperty("line", "" + line)
+                            .withProperty("column", "" + charPositionInLine)
+                            .withProperty("invalid text", "`" + offendingSymbol.toString() + "`")
+                            .withProperty("error", msg));
+                }
+            }
+        });
+        final var parsedProblem = new ProblemParser().visitSource_unit(parser.source_unit());
+        parsedProblem.errorMessages().withAppended(parsingErrors);
+        return parsedProblem;
     }
 
     @Override
