@@ -24,6 +24,8 @@ import java.util.Optional;
 
 public class ForAlls {
 
+    public static final String FOR_EACH_NAME = "forEach";
+
     public static <T> Constraint forAllWithValue(Attribute<T> attribute, T value) {
         return ForAllFactory.instance().forAllWithValue(attribute, value);
     }

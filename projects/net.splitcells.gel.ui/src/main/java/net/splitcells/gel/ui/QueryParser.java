@@ -32,6 +32,7 @@ import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.constraint.type.ForAll.FOR_ALL_NAME;
+import static net.splitcells.gel.constraint.type.ForAlls.FOR_EACH_NAME;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.ui.RaterParser.parseRater;
 
@@ -78,12 +79,12 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Perspective>
 
     private Result<Query, Perspective> parseQuery(String constraintType, DenParser.Function_call_argumentsContext arguments) {
         final Result<Query, Perspective> parsedConstraint = result();
-        if (constraintType.equals("forAll")) {
+        if (constraintType.equals(FOR_ALL_NAME)) {
             if (arguments.function_call_arguments_element() != null) {
                 return parsedConstraint.withErrorMessage(perspective("ForAll does not support arguments: " + arguments.getText()));
             }
             parsedConstraint.withValue(parentConstraint.forAll());
-        } else if (constraintType.equals("forEach")) {
+        } else if (constraintType.equals(FOR_EACH_NAME)) {
             if (arguments.function_call_arguments_element() != null
                     && arguments.function_call_arguments_next().isEmpty()) {
                 // TODO FIX
