@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.constraint.type;
 
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -22,9 +23,12 @@ import net.splitcells.gel.rating.rater.framework.Rater;
 
 import java.util.Optional;
 
+import static net.splitcells.gel.constraint.type.ForAlls.forAllCombinationsOf;
+
 public class ForAlls {
 
     public static final String FOR_EACH_NAME = "forEach";
+    public static final String FOR_ALL_COMBINATIONS_OF = "forAllCombinationsOf";
 
     public static <T> Constraint forAllWithValue(Attribute<T> attribute, T value) {
         return ForAllFactory.instance().forAllWithValue(attribute, value);

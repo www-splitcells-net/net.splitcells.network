@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.constraint.type;
 
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.attribute.Attribute;

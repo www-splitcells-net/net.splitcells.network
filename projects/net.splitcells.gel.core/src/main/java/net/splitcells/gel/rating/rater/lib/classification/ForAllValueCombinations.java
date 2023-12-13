@@ -18,6 +18,8 @@ package net.splitcells.gel.rating.rater.lib.classification;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.utils.NotImplementedYet.TODO_NOT_IMPLEMENTED_YET;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
@@ -28,6 +30,7 @@ import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
@@ -41,6 +44,7 @@ import org.w3c.dom.Node;
 public class ForAllValueCombinations implements Rater {
 
     public static final String FOR_ALL_VALUE_COMBINATIONS_NAME = "forAllCombinationsOf";
+
     public static ForAllValueCombinations forAllValueCombinations(final Attribute<?>... attributes) {
         return new ForAllValueCombinations(listWithValuesOf(attributes));
     }
@@ -126,6 +130,12 @@ public class ForAllValueCombinations implements Rater {
             attributes.forEach(att -> attributeDescription.appendChild(att.toDom()));
         }
         return reasoning;
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        return perspective(FOR_ALL_VALUE_COMBINATIONS_NAME)
+                .withChild(perspective("attributes").withChildren(listWithValuesOf(attributes.mapped(Domable::toPerspective))));
     }
 
     @Override

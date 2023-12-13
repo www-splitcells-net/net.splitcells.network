@@ -601,6 +601,25 @@ public interface Perspective extends PerspectiveView {
                 .subtree(path);
     }
 
+    default Perspective subtreeByName(String... path) {
+        if (path.length == 0) {
+            return this;
+        }
+        var current = this;
+        for (final var element : path) {
+            final var next = current.children().stream()
+                    .filter(child -> child.name().equals(element))
+                    .findFirst();
+            if (next.isEmpty()) {
+                throw executionException(perspective("Could not find " + getClass().getName() + " child by name.")
+                        .withProperty("path", listWithValuesOf(path).toString())
+                        .withProperty("searched", element));
+            }
+            current = next.get();
+        }
+        return current;
+    }
+
     /**
      * TODO It would be best to return a copy of {@link Perspective} instead of {@code this}.
      *

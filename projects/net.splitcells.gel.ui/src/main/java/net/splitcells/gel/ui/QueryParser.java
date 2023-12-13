@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.ui;
 
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.lang.perspective.antlr4.DenParser;
 import net.splitcells.dem.lang.perspective.antlr4.DenParserBaseVisitor;
@@ -22,6 +23,7 @@ import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.constraint.type.ForAll;
 import net.splitcells.gel.data.assignment.Assignments;
+import net.splitcells.gel.data.table.attribute.Attribute;
 
 import java.util.Optional;
 
@@ -32,8 +34,8 @@ import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.constraint.type.ForAll.FOR_ALL_NAME;
-import static net.splitcells.gel.constraint.type.ForAlls.FOR_EACH_NAME;
-import static net.splitcells.gel.constraint.type.ForAlls.forAll;
+import static net.splitcells.gel.constraint.type.ForAlls.*;
+import static net.splitcells.gel.constraint.type.Then.THEN_NAME;
 import static net.splitcells.gel.ui.RaterParser.parseRater;
 
 public class QueryParser extends DenParserBaseVisitor<Result<Query, Perspective>> {
@@ -122,7 +124,26 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Perspective>
                                 + arguments.getText()));
             }
             return parsedConstraint.withErrorMessage(perspective("Invalid program state."));
-        } else if (constraintType.equals("then")) {
+        } else if (constraintType.equals(FOR_ALL_COMBINATIONS_OF)) {
+            if (arguments.function_call_arguments_element() != null) {
+                if (arguments.function_call_arguments_element().function_call() != null
+                        && !arguments.function_call_arguments_element().function_call().isEmpty()) {
+                    return parsedConstraint.withErrorMessage(perspective("Function call arguments are not supported for "
+                            + FOR_ALL_COMBINATIONS_OF
+                            + " constraint: "
+                            + arguments.getText()));
+                }
+                final var attributeMatches = parseAttributes(arguments);
+                if (attributeMatches.isEmpty()) {
+                    return parsedConstraint.withErrorMessage(perspective("Attribute for constraint argument not found.")
+                            .withProperty("constraint type", constraintType)
+                            .withProperty("arguments", arguments.getText()));
+                }
+                parsedConstraint.withValue(parentConstraint.forAllCombinationsOf(attributeMatches.get()));
+                return parsedConstraint;
+            }
+            return parsedConstraint.withErrorMessage(perspective(FOR_ALL_COMBINATIONS_OF + " constraint type required arguments, but has none."));
+        } else if (constraintType.equals(THEN_NAME)) {
             if (arguments.function_call_arguments_element() == null) {
                 return parsedConstraint
                         .withErrorMessage(perspective("Then constraint requires at least one argument: "
@@ -140,6 +161,40 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Perspective>
             parsedConstraint.withValue(parentConstraint.constraint(constraintType, list(), list()));
         }
         return parsedConstraint;
+    }
+
+    private Optional<List<Attribute<?>>> parseAttributes(DenParser.Function_call_argumentsContext arguments) {
+        final List<Attribute<?>> parsedAttributes = list();
+        final var attributeName = arguments
+                .function_call_arguments_element()
+                .Name()
+                .getText();
+        final var firstAttribute = parseAttribute(attributeName);
+        if (firstAttribute.isEmpty()) {
+            return Optional.empty();
+        }
+        parsedAttributes.add(firstAttribute.get());
+        for (final var nextArg : arguments.function_call_arguments_next()) {
+            final var nextAttribute = parseAttribute(nextArg.function_call_arguments_element().Name().getText());
+            if (nextAttribute.isEmpty()) {
+                return Optional.empty();
+            }
+            parsedAttributes.add(nextAttribute.get());
+        }
+        return Optional.of(parsedAttributes);
+    }
+
+    private Optional<Attribute<?>> parseAttribute(String name) {
+        final var attributeMatches = assignments.headerView().stream()
+                .filter(da -> da.name().equals(name))
+                .map(e -> (Attribute<? extends Object>) e)
+                .collect(toList());
+        if (attributeMatches.size() != 1) {
+            nextConstraint.withErrorMessage(perspective("Could not find attribute by name.")
+                    .withProperty("name", name));
+            return Optional.empty();
+        }
+        return Optional.of(attributeMatches.get(0));
     }
 
     @Override

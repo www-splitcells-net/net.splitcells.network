@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.ui;
 
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.constraint.type.ForAll;
 import net.splitcells.gel.constraint.type.Then;
@@ -24,6 +25,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import static net.splitcells.dem.testing.Assertions.assertThrows;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requirePresenceOf;
+import static net.splitcells.gel.rating.rater.lib.classification.ForAllValueCombinations.FOR_ALL_VALUE_COMBINATIONS_NAME;
 import static net.splitcells.gel.ui.ProblemParser.parseProblem;
 
 public class ProblemParserTest {
@@ -83,6 +85,31 @@ public class ProblemParserTest {
                 , "Attribute"
                 , "name"
                 , "c"));
+    }
+
+    @UnitTest
+    public void testParseProblemWithForAllCombinationsOf() {
+        final var testData = "demands = {a = int(); b = string()};\n"
+                + "supplies = {c = float()};\n"
+                + "constraints = forAllCombinationsOf(a, b, c);\n"
+                + "name = \"testParseProblem\";\n";
+        final var testSubject = parseProblem(testData).value().orElseThrow();
+        final var forAllCombinationsOf = testSubject.constraint().child(0);
+        requireEquals(forAllCombinationsOf.type(), ForAll.class);
+        requirePresenceOf(forAllCombinationsOf.arguments().get(0).toPerspective().pathOfValueTree(
+                "rater-based-on-grouping"
+                , "grouping"
+                , FOR_ALL_VALUE_COMBINATIONS_NAME
+                , "attributes"
+                , "Attribute"
+                , "name"
+                , "a"));
+        final var attributes = forAllCombinationsOf.arguments().get(0).toPerspective()
+                .subtreeByName("grouping"
+                        , FOR_ALL_VALUE_COMBINATIONS_NAME
+                        , "attributes");
+        requireEquals(attributes.child(1).subtreeByName("name", "b").name(), "b");
+        requireEquals(attributes.child(2).subtreeByName("name", "c").name(), "c");
     }
 
     @UnitTest
