@@ -38,26 +38,31 @@
         <library path="net/splitcells/gel/ui/editor"/>
         <chapter>
             <title>Problem Definition</title>
-            <text-area id="net-splitcells-gel-ui-editor-form-problem-definition"><![CDATA[demands={a=int();b=string()};
-supplies={c=float()};
-constraints=forEach(a).then(hasSize(2));
-constraints().forEach(b).then(allSame(c));
-name="testParseProblem";
+            <text-area id="net-splitcells-gel-ui-editor-form-problem-definition"><![CDATA[demands = {
+    students=int();
+    examiner=int();
+    observer=int()
+};
+supplies = {
+    date=int();
+    shift=int();
+    roomNumber=int()
+};
+constraints = forEach(observer);
+constraints().forEach(examiner);
+constraints().forEach(students);
+name = "colloquiumPlanningDemonstration";
 ]]></text-area>
         </chapter>
         <chapter>
             <title>Problem Data</title>
             <chapter minimized="true">
                 <title>Demands</title>
-                <text-area id="net-splitcells-gel-ui-editor-form-demands"><![CDATA[1,1
-2,2
-3,3]]></text-area>
+                <text-area id="net-splitcells-gel-ui-editor-form-demands"><![CDATA[]]></text-area>
             </chapter>
             <chapter minimized="true">
                 <title>Supplies</title>
-                <text-area id="net-splitcells-gel-ui-editor-form-supplies"><![CDATA[1
-2
-3]]></text-area>
+                <text-area id="net-splitcells-gel-ui-editor-form-supplies"><![CDATA[]]></text-area>
             </chapter>
         </chapter>
         <chapter>
