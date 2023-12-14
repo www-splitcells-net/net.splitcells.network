@@ -46,6 +46,8 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
  */
 public class AllSame {
 
+    public static final String ALL_SAME_NAME = "allSame";
+
     public static <T> Rater allSame(Attribute<T> attribute) {
         return groupRater(new GroupRater() {
 

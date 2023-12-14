@@ -43,6 +43,8 @@ import net.splitcells.gel.rating.framework.Rating;
 
 
 public class HasSize implements Rater {
+    public static final String HAS_SIZE_NAME = "hasSize";
+
     public static HasSize hasSize(int targetSize) {
         return new HasSize(targetSize);
     }

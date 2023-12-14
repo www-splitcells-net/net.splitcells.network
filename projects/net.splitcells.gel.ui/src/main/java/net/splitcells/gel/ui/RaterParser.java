@@ -22,7 +22,9 @@ import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.rating.rater.framework.Rater;
 
 import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.gel.rating.rater.lib.AllSame.ALL_SAME_NAME;
 import static net.splitcells.gel.rating.rater.lib.AllSame.allSame;
+import static net.splitcells.gel.rating.rater.lib.HasSize.HAS_SIZE_NAME;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 
 public class RaterParser extends DenParserBaseVisitor<Rater> {
@@ -38,7 +40,7 @@ public class RaterParser extends DenParserBaseVisitor<Rater> {
 
     @Override
     public Rater visitFunction_call(DenParser.Function_callContext functionCall) {
-        if (functionCall.Name().getText().equals("hasSize")) {
+        if (functionCall.Name().getText().equals(HAS_SIZE_NAME)) {
             if (functionCall.function_call_arguments().function_call_arguments_element().Integer() != null) {
                 final int argument = Integers.parse(functionCall
                         .function_call_arguments()
@@ -47,7 +49,7 @@ public class RaterParser extends DenParserBaseVisitor<Rater> {
                         .getText());
                 return hasSize(argument);
             }
-        } else if (functionCall.Name().getText().equals("allSame")) {
+        } else if (functionCall.Name().getText().equals(ALL_SAME_NAME)) {
             final var firstArgument = functionCall.function_call_arguments().function_call_arguments_element();
             if (firstArgument.Name() != null) {
                 return allSame(assignments.attributeByName(firstArgument.Name().getText()));
