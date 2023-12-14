@@ -48,10 +48,10 @@ supplies = {
     shift=int();
     roomNumber=int()
 };
-constraints = forEach(observer).forAllCombinationsOf(date, shift);
-constraints().forEach(examiner).forAllCombinationsOf(date, shift);
-constraints().forEach(students).forAllCombinationsOf(date, shift);
-constraints().forAllCombinationsOf(date, shift, roomNumber);
+constraints = forEach(observer).forAllCombinationsOf(date, shift).then(hasSize(1));
+constraints().forEach(examiner).forAllCombinationsOf(date, shift).then(hasSize(1));
+constraints().forEach(students).forAllCombinationsOf(date, shift).then(hasSize(1));
+constraints().forAllCombinationsOf(date, shift, roomNumber).then(hasSize(1));
 name = "colloquiumPlanningDemonstration";
 ]]></text-area>
         </chapter>
