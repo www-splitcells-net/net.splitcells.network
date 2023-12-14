@@ -76,31 +76,80 @@ Therefore, only Python 3 is required.
 Just make sure, that every required command is present in the environment path and
 that the file suffixes are trimmed.
 # Recommended Repo Organization
+## Meta Repo Structure
+> How could one organize repos? Where do I put a new repo without thinking to much about it?
+
 Support processing a tree of repositories (meta repo) and therefore allow working on all repos as one
-(i.e. in order to backup everything).
+(i.e. in order to back up everything).
 
 The following tree structure is recommended for the meta repo,
 in order to maximize the adaptability of the meta repo,
 while still keeping a relatively simple folder structure:
-The tree should only have 3 levels of root folders, that are processed by this.
+The tree should only have 3 levels of root folders, that are processed by this:
+
+```
+Meta repo root
+├── Organization 1
+│   ├── Project 1
+│   ├── Project 2
+│   └── ...
+├── Organization 2
+│   ├── Project 1
+│   ├── Project 2
+│   └── ...
+```
+
 The first level consists of one folder and is the root of the meta repo.
 
 The second level splits the repositories into organisational units like private and public repositories.
-A minimal number of second level repositories is recommended in order to ease administration.
-If there is no need for such organization, the second level may be omitted.
+If there is no need for such organization, the second level should be present nevertheless.
+By using globally unique organization names based on the Java package name convention,
+one can ensure, that meta repos can be combined without conflicts.
+This in turns makes it easy to add repos from a foreign server to the meta repo.
 
 The third level contains the roots of all repos containing the actual data.
 There should be no repository roots of higher levels,
 except if it is managed by the backend (i.e. git submodules).
 Only third level repositories should be assumed to be fully publicly portable,
-because a flat meta repo structure is easiest to support by hosting platforms (i.e. Github, Gitlab, sourcehut etc).
+because a flat meta repo structure is easiest to support by hosting platforms (i.e. Github, Gitlab, SourceHut etc).
 
 The first and second level repositories are only used in order to organize third level repositories by the user.
-They are portable, but generally it is harder to migrate these to an other platforms.
 
 It is encouraged to use globally unique names for each repo,
 in order to be able to minimize the number of second level repositories.
 Java package name convention is a good start for that.
+## Partial Backups And Data Distribution
+For some repos it is necessary to restrict access to it.
+These may be repos containing personal data like invoices.
+Other repos like open source repos may not need such restrictions,
+which leads to a situation where some repos are present only on some storage sites.
+Other repos may require too much storage space and
+therefor may have a limited number of mirror servers as well.
+
+This in turn may make it very complicated to ensure,
+that all repos, mirrors and backups are up-to-date,
+if no central accounting for all repos is present.
+Such lack of accounting makes it also hard to reliably synchronize all repos via one command.
+Instead, at least one command would have to be executed at each storage site.
+### Central Server Backups
+However, one could use a central server as centralized inventory list of all repositories.
+This server requires the highest security clearance,
+so it is allowed to store any data.
+
+In order to synchronize such a network,
+the central server pulls all data from the secondary servers and
+thereby establishes a single source of true.
+After that, all secondary servers can pull the updated data or
+the central server could push all data to the secondary servers.
+### Distributed Inventory List
+Alternatively, the meta repo contains a repo, that entails a list of all servers.
+This repo would have to be present on all servers.
+
+If every server only pulls updates for the organizations, that it itself hosts,
+it is ensured, that private data is not leaked.
+Simultaneously, a somewhat global inventory list of all repos is provided and
+can be updated via an edit at one server.
+This edit will be distributed via subsequent server synchronizations.
 # Alternatives
 > Of course, this is a not invented here syndrome.
 
