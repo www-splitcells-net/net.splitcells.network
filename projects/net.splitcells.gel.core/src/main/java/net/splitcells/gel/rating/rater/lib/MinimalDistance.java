@@ -60,6 +60,8 @@ import org.w3c.dom.Node;
  * The cost value of defiance for a {@link GroupId} is equals to the sum of additionally required distances.
  */
 public class MinimalDistance<T> implements Rater {
+
+    public static final String MINIMAL_DISTANCE_NAME = "minimalDistance";
     public static MinimalDistance<Integer> has_minimal_distance_of(Attribute<Integer> attribute, double minimumDistance) {
         return minimalDistance(attribute, minimumDistance, ASCENDING_INTEGERS, MathUtils::distance);
     }
