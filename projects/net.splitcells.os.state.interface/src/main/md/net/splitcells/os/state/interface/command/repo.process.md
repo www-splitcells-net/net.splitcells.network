@@ -40,7 +40,7 @@ The repos are assumed to be organized in a tree structure.
 Therefore, the root repo (here called meta repo) contains the sub repos,
 but usually does not provide version control of the sub repos
 (for Git repos the subs are generally listed in `.gitignore`).
-By default every meta repo has a list of all subs stored in a file under version control.
+By default, every meta repo has a list of all subs stored in a file under version control.
 
 In order to make this VCS independent, additional `repo.*` commands are provided,
 that are built on top of repo process.
