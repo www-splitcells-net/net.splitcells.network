@@ -9,6 +9,11 @@
 * Releases are done every time an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
+* **2023-09-15 \#281** [Create dedicated project for a project files standard](https://github.com/www-splitcells-net/net.splitcells.network/issues/281):
+  1. This project moves all such files to one dedicated place and
+      thereby creates a standard, that is easier to understand, support and check.
+  2. Some files were moved from the root project and `projects/net.splitcells.os.state.interface` to
+     `projects/net.splitcells.project.standard`.
 * **2023-09-15 \#256** [Stop active support for offline builds.](https://github.com/www-splitcells-net/net.splitcells.network/issues/256)
 * **2023-08-17 \#249** Provide default value for `net.splitcells.website.server.Config#detailedXslMenu`.
 * **2023-04-14 \#241** [Adjust projects to the project partitioning guidelines](https://github.com/www-splitcells-net/net.splitcells.network/issues/241):

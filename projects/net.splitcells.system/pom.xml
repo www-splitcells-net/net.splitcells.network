@@ -63,5 +63,10 @@
             <artifactId>dem.ext</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>net.splitcells</groupId>
+            <artifactId>project.files.standard</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 </project>
