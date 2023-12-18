@@ -262,6 +262,17 @@
             <xsl:attribute name="name" select="./@id"/>
             <xsl:apply-templates select="./text()"/>
         </textarea>
+        <xsl:if test="./@initial-content-at">
+            <script type="text/javascript"><![CDATA[
+var httpRequest = new XMLHttpRequest();
+httpRequest.open("GET", "]]><xsl:value-of select="./@initial-content-at"/><![CDATA[", true);
+function listener() {
+    document.getElementById(']]><xsl:value-of select="./@id"/><![CDATA[').innerHTML = this.responseText;
+}
+httpRequest.addEventListener("load", listener);
+httpRequest.send(null);]]>
+            </script>
+        </xsl:if>
     </xsl:template>
     <xsl:template match="s:rendering-target">
         <x:div>

@@ -38,24 +38,7 @@
         <library path="net/splitcells/gel/ui/editor"/>
         <chapter>
             <title>Problem Definition</title>
-            <text-area id="net-splitcells-gel-ui-editor-form-problem-definition"><![CDATA[demands = {
-    students=int();
-    examiner=int();
-    observer=int()
-};
-supplies = {
-    date=int();
-    shift=int();
-    roomNumber=int()
-};
-constraints = forEach(observer).forAllCombinationsOf(date, shift).then(hasSize(1));
-constraints().forEach(examiner).forAllCombinationsOf(date, shift).then(hasSize(1));
-constraints().forEach(students).forAllCombinationsOf(date, shift).then(hasSize(1));
-constraints().forEach(students).forAllCombinationsOf(date, shift).then(minimalDistance(date, 3));
-constraints().forEach(students).forAllCombinationsOf(date, shift).then(minimalDistance(date, 5));
-constraints().forAllCombinationsOf(date, shift, roomNumber).then(hasSize(1));
-name = "colloquiumPlanningDemonstration";
-]]></text-area>
+            <text-area id="net-splitcells-gel-ui-editor-form-problem-definition" initial-content-at="/net/splitcells/gel/ui/examples/school-course-scheduling-problem.txt"/>
         </chapter>
         <chapter>
             <title>Problem Data</title>

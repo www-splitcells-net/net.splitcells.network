@@ -1,0 +1,17 @@
+demands = {
+    students=int();
+    examiner=int();
+    observer=int()
+};
+supplies = {
+    date=int();
+    shift=int();
+    roomNumber=int()
+};
+constraints = forEach(observer).forAllCombinationsOf(date, shift).then(hasSize(1));
+constraints().forEach(examiner).forAllCombinationsOf(date, shift).then(hasSize(1));
+constraints().forEach(students).forAllCombinationsOf(date, shift).then(hasSize(1));
+constraints().forEach(students).forAllCombinationsOf(date, shift).then(minimalDistance(date, 3));
+constraints().forEach(students).forAllCombinationsOf(date, shift).then(minimalDistance(date, 5));
+constraints().forAllCombinationsOf(date, shift, roomNumber).then(hasSize(1));
+name = "colloquiumPlanningDemonstration";
