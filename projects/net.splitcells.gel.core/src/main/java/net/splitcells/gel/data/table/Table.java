@@ -224,7 +224,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
         return simplifiedCsv.toString();
     }
 
-    private static String mergeSimplifiedCsvList(String a, String b) {
+    public static String mergeSimplifiedCsvList(String a, String b) {
         if (a.isEmpty() && b.isEmpty()) {
             return "";
         }

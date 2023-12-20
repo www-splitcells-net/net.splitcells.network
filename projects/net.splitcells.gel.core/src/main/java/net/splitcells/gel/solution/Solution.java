@@ -16,6 +16,8 @@
 package net.splitcells.gel.solution;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.Xml.attribute;
+import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_TABLE;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.gel.solution.OptimizationParameters.optimizationParameters;
@@ -23,7 +25,12 @@ import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
+import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.solution.optimization.OfflineOptimization;
@@ -31,6 +38,7 @@ import net.splitcells.gel.solution.optimization.OnlineOptimization;
 import net.splitcells.gel.solution.optimization.OptimizationConfig;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 
+import java.util.Optional;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 
@@ -318,5 +326,29 @@ public interface Solution extends Problem, SolutionView {
      */
     default void init() {
         constraint().init(this);
+    }
+
+    default String toSimplifiedCSV() {
+        final var simplifiedCsv = new StringBuilder();
+        simplifiedCsv.append(headerView().stream()
+                .map(Attribute::name)
+                .reduce("", Table::mergeSimplifiedCsvList)
+                + ",argumentation\n");
+        unorderedLines().forEach(line -> simplifiedCsv.append(line.values().stream()
+                .map(Object::toString)
+                .reduce("", Table::mergeSimplifiedCsvList)
+                + ","
+                + singleLineArgumentation(line).orElse("")
+                + "\n"));
+        return simplifiedCsv.toString();
+    }
+
+    default Optional<String> singleLineArgumentation(Line allocation) {
+        // TODO The comma replacement is an hack.
+        return constraint().naturalArgumentation(allocation, constraint().injectionGroup())
+                .map(argumentation -> argumentation.toStringPaths()
+                        .stream()
+                        .reduce("", (a, b) -> a + ". " + b)
+                        .replace(',', ' '));
     }
 }
