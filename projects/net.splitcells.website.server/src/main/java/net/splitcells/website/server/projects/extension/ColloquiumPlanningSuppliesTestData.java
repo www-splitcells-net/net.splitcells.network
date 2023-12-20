@@ -30,9 +30,7 @@ import java.util.Optional;
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.dem.utils.StringUtils.stringBuilder;
-import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 public class ColloquiumPlanningSuppliesTestData implements ProjectsRendererExtension {
@@ -51,13 +49,11 @@ public class ColloquiumPlanningSuppliesTestData implements ProjectsRendererExten
     public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         if (PATH.equals(path)) {
             final var testData = stringBuilder();
-            final var randomness = randomness();
             final var nameGenerator = IdentifiedNameGenerator.identifiedNameGenerator();
             final List<String> examinerNames = list();
             range(0, 40).forEach(i -> examinerNames.add(nameGenerator.nextName()));
             final List<String> checkerNames = list();
             range(0, 41).forEach(i -> checkerNames.add(nameGenerator.nextName()));
-            var studentName = nameGenerator.nextName();
             for (int roomNumber = 1; roomNumber <= 6; ++roomNumber) {
                 for (int week = 1; week <= 2; ++week) {
                     for (int examDay = 1; examDay <= 5; ++examDay) {
