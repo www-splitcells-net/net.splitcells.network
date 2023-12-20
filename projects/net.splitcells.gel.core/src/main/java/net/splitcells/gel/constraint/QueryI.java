@@ -22,6 +22,7 @@ import static net.splitcells.dem.environment.config.StaticFlags.WARNING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.object.Discoverable.discoverable;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
+import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StreamUtils.ensureSingle;
@@ -41,6 +42,7 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.lang.perspective.antlr4.DenParser;
 import net.splitcells.dem.resource.communication.log.LogLevel;
+import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.constraint.type.ForAll;
@@ -347,41 +349,51 @@ public class QueryI implements Query, QueryEditor {
 
     @Override
     public Query constraint(String constraintType, List<Rater> raters, List<Attribute<? extends Object>> attributes) {
+        final var constraint = constraintResult(constraintType, raters, attributes);
+        if (constraint.errorMessages().hasElements()) {
+            throw executionException(perspective("Could not construct constraints.").withChildren(constraint.errorMessages()));
+        }
+        return constraint.value().orElseThrow();
+    }
+
+    @Override
+    public Result<Query, Perspective> constraintResult(String constraintType, List<Rater> raters, List<Attribute<? extends Object>> attributes) {
+        final Result<Query, Perspective> constraint = result();
         if (constraintType.equals(FOR_ALL_VALUE_COMBINATIONS_NAME)) {
             if (raters.hasElements()) {
-                throw executionException(perspective("No raters are allowed for parsing of `" + FOR_ALL_VALUE_COMBINATIONS_NAME + "` constraint.")
+                return constraint.withErrorMessage(perspective("No raters are allowed for parsing of `" + FOR_ALL_VALUE_COMBINATIONS_NAME + "` constraint.")
                         .withProperty("constraint type", constraintType)
                         .withProperty("raters", raters.toString())
                         .withProperty("attributes", attributes.toString()));
             }
-            return forAllCombinationsOf(attributes);
+            return constraint.withValue(forAllCombinationsOf(attributes));
         } else if (constraintType.equals(FOR_ALL_NAME)) {
             if (attributes.size() == 1 && raters.isEmpty()) {
-                return forAll(attributes.get(0));
+                return constraint.withValue(forAll(attributes.get(0)));
             }
             if (attributes.hasElements()) {
-                throw executionException(perspective("No attributes are allowed for parsing of `" + FOR_ALL_NAME + "` constraint.")
+                return constraint.withErrorMessage(perspective("No attributes are allowed for parsing of `" + FOR_ALL_NAME + "` constraint.")
                         .withProperty("constraint type", constraintType)
                         .withProperty("raters", raters.toString())
                         .withProperty("attributes", attributes.toString()));
             }
-            return forAll(raters);
+            return constraint.withValue(forAll(raters));
         } else if (constraintType.equals(THEN_NAME)) {
             if (raters.size() != 1) {
-                throw executionException(perspective("Invalid number of raters given for parsing a `" + THEN_NAME + "` constraint. A `" + THEN_NAME + "` constraint requires exactly one rater.")
+                return constraint.withErrorMessage(perspective("Invalid number of raters given for parsing a `" + THEN_NAME + "` constraint. A `" + THEN_NAME + "` constraint requires exactly one rater.")
                         .withProperty("constraint type", constraintType)
                         .withProperty("raters", raters.toString())
                         .withProperty("attributes", attributes.toString()));
             }
             if (attributes.hasElements()) {
-                throw executionException(perspective("No attributes are not allowed for parsing of `" + THEN_NAME + "` constraint.")
+                return constraint.withErrorMessage(perspective("No attributes are not allowed for parsing of `" + THEN_NAME + "` constraint.")
                         .withProperty("constraint type", constraintType)
                         .withProperty("raters", raters.toString())
                         .withProperty("attributes", attributes.toString()));
             }
-            return then(raters.get(0));
+            return constraint.withValue(then(raters.get(0)));
         } else {
-            throw executionException(perspective("Unknown constraint type given for constraint parsing.")
+            return constraint.withErrorMessage(perspective("Unknown constraint type given for constraint parsing.")
                     .withProperty("constraint type", constraintType)
                     .withProperty("raters", raters.toString())
                     .withProperty("attributes", attributes.toString()));
