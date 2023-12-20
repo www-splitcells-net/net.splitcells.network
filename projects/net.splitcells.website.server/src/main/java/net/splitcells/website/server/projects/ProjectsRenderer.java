@@ -34,6 +34,22 @@ import static net.splitcells.dem.lang.namespace.NameSpaces.DEN;
 import static net.splitcells.dem.lang.namespace.NameSpaces.NAME;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
+/**
+ * <p>Provides a file system like API to project files,
+ * that are rendered in a presentable manner.</p>
+ * <p>TODO Support any rendering target formats.
+ * Currently, the files are only rendered as HTML and other web compatible formats.</p>
+ * <p>TODO Note, that this API has a lot of historic burdens and
+ * therefor does not currently represent the goals, that are achieved with it.
+ * When this project was started, it was not known how documentation should be rendered and
+ * what requirements were for real world usage etc.,
+ * as appropriate development expertise was not available.
+ * Therefore, the webserver implementation started with a domain driven paradigm,
+ * where the focus was on rendering the contents of project folders as one website.
+ * Later it was figured out,
+ * that hard coding the project driven rendering into the program code created convoluted code,
+ * that was hard to refactor and extend.</p>
+ */
 public interface ProjectsRenderer {
     /**
      * <p>
