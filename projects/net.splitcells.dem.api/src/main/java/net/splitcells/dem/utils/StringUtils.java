@@ -34,6 +34,10 @@ public class StringUtils {
         return arg.split(delimiter)[part];
     }
 
+    public static StringBuilder stringBuilder() {
+        return new StringBuilder();
+    }
+
     public static String removePrefix(String prefix, String target) {
         if (target.startsWith(prefix)) {
             return target.substring(prefix.length());

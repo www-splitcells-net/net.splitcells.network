@@ -51,6 +51,7 @@ import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiv
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.project.validator.RenderingValidatorForHtmlLinks.renderingValidatorForHtmlLinks;
 import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithPath;
+import static net.splitcells.website.server.projects.extension.ColloquiumPlanningDemandTestData.colloquiumPlanningDemandTestData;
 import static net.splitcells.website.server.projects.extension.DemConfigExtension.demConfigExtension;
 import static net.splitcells.website.server.projects.extension.FrontMenuExtension.frontMenuExtension;
 import static net.splitcells.website.server.projects.extension.GlobalChangelogExtension.globalChangelogExtension;
@@ -164,6 +165,9 @@ public class ProjectsRendererI implements ProjectsRenderer {
     private Optional<Set<Path>> projectPathsCache = Optional.empty();
     private final ProjectRenderer fallbackRenderer;
     private final RenderingValidator renderingValidator = renderingValidatorForHtmlLinks();
+    /**
+     * TODO In the future, all extensions should be added via dependency injection.
+     */
     private final ProjectsRendererExtensionMerger extension = projectsRendererExtensionMerger()
             .withRegisteredExtension(globalChangelogExtension())
             .withRegisteredExtension(networkStatusRenderExtension())
@@ -171,7 +175,8 @@ public class ProjectsRendererI implements ProjectsRenderer {
             .withRegisteredExtension(layoutTreeExtension())
             .withRegisteredExtension(testExtension())
             .withRegisteredExtension(frontMenuExtension())
-            .withRegisteredExtension(demConfigExtension());
+            .withRegisteredExtension(demConfigExtension())
+            .withRegisteredExtension(colloquiumPlanningDemandTestData());
 
     private ProjectsRendererI(String name
             , ProjectRenderer fallbackRenderer
