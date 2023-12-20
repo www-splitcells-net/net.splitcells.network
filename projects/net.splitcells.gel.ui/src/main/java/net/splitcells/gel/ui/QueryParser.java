@@ -74,7 +74,8 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Perspective>
         nextConstraint = parseQuery(access.Name().getText(), access.function_call_arguments());
         if (access.access() != null) {
             final var childConstraintParser = new QueryParser(assignments, nextConstraint.value().orElseThrow());
-            childConstraintParser.visitAccess(access.access());
+            final var intermediate = childConstraintParser.visitAccess(access.access());
+            nextConstraint.errorMessages().withAppended(intermediate.errorMessages());
         }
         return nextConstraint;
     }
@@ -150,10 +151,12 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Perspective>
                                 + arguments.getText()));
             }
             if (arguments.function_call_arguments_element().function_call() != null) {
-                return parsedConstraint.withValue
-                        (parentConstraint.then
-                                (parseRater(arguments.function_call_arguments_element().function_call()
-                                        , assignments)));
+                final var rater = parseRater(arguments.function_call_arguments_element().function_call(), assignments);
+                if (rater.defective()) {
+                    parsedConstraint.errorMessages().withAppended(rater.errorMessages());
+                    return parsedConstraint;
+                }
+                return parsedConstraint.withValue(parentConstraint.then(rater.value().get()));
             }
             parsedConstraint.withErrorMessage(perspective("Could not parse argument of then constraint: "
                     + arguments.getText()));
@@ -203,7 +206,8 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Perspective>
                 , functionCall.function_call_arguments());
         if (functionCall.access() != null && nextConstraint.value().isPresent()) {
             final var childConstraintParser = new QueryParser(assignments, nextConstraint.value().orElseThrow());
-            childConstraintParser.visitAccess(functionCall.access());
+            final var intermediate = childConstraintParser.visitAccess(functionCall.access());
+            nextConstraint.errorMessages().withAppended(intermediate.errorMessages());
         }
         return nextConstraint;
     }
@@ -220,7 +224,8 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Perspective>
             }
             if (statement.function_call().access() != null) {
                 final var childConstraintParser = new QueryParser(assignments, parentConstraint);
-                childConstraintParser.visitAccess(statement.function_call().access());
+                final var intermediate = childConstraintParser.visitAccess(statement.function_call().access());
+                nextConstraint.errorMessages().withAppended(intermediate.errorMessages());
             }
             return nextConstraint;
         }

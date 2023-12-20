@@ -16,8 +16,10 @@
 package net.splitcells.gel.ui;
 
 import net.splitcells.dem.data.atom.Integers;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.lang.perspective.antlr4.DenParser;
 import net.splitcells.dem.lang.perspective.antlr4.DenParserBaseVisitor;
+import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.framework.Rater;
@@ -31,8 +33,8 @@ import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.lib.MinimalDistance.MINIMAL_DISTANCE_NAME;
 import static net.splitcells.gel.rating.rater.lib.MinimalDistance.has_minimal_distance_of;
 
-public class RaterParser extends DenParserBaseVisitor<Rater> {
-    public static Rater parseRater(DenParser.Function_callContext functionCall, Assignments assignments) {
+public class RaterParser extends DenParserBaseVisitor<Result<Rater, Perspective>> {
+    public static Result<Rater, Perspective> parseRater(DenParser.Function_callContext functionCall, Assignments assignments) {
         return new RaterParser(assignments).visitFunction_call(functionCall);
     }
 
@@ -43,7 +45,8 @@ public class RaterParser extends DenParserBaseVisitor<Rater> {
     }
 
     @Override
-    public Rater visitFunction_call(DenParser.Function_callContext functionCall) {
+    public Result<Rater, Perspective> visitFunction_call(DenParser.Function_callContext functionCall) {
+        final Result<Rater, Perspective> rater = Result.result();
         if (functionCall.Name().getText().equals(HAS_SIZE_NAME)) {
             if (functionCall.function_call_arguments().function_call_arguments_element().Integer() != null) {
                 final int argument = Integers.parse(functionCall
@@ -51,30 +54,30 @@ public class RaterParser extends DenParserBaseVisitor<Rater> {
                         .function_call_arguments_element()
                         .Integer()
                         .getText());
-                return hasSize(argument);
+                return rater.withValue(hasSize(argument));
             }
         } else if (functionCall.Name().getText().equals(ALL_SAME_NAME)) {
             final var firstArgument = functionCall.function_call_arguments().function_call_arguments_element();
             if (firstArgument.Name() != null) {
-                return allSame(assignments.attributeByName(firstArgument.Name().getText()));
+                return rater.withValue(allSame(assignments.attributeByName(firstArgument.Name().getText())));
 
             }
         } else if (functionCall.Name().getText().equals(MINIMAL_DISTANCE_NAME)) {
             if (functionCall.function_call_arguments().function_call_arguments_element() == null) {
-                throw executionException(perspective("Rater `" + MINIMAL_DISTANCE_NAME + "` requires exactly 2 arguments, but has none.")
+                return rater.withErrorMessage(perspective("Rater `" + MINIMAL_DISTANCE_NAME + "` requires exactly 2 arguments, but has none.")
                         .withProperty("rater", functionCall.getText()));
             }
             final var attribute = assignments.attributeByName(
                     functionCall.function_call_arguments().function_call_arguments_element().Name().getText());
             if (functionCall.function_call_arguments().function_call_arguments_next().size() != 1) {
-                throw executionException(perspective("Rater `" + MINIMAL_DISTANCE_NAME + "` requires exactly 2 arguments.")
+                return rater.withErrorMessage(perspective("Rater `" + MINIMAL_DISTANCE_NAME + "` requires exactly 2 arguments.")
                         .withProperty("rater", functionCall.getText()));
             }
             final var minimumDistance = Double.parseDouble(functionCall
                     .function_call_arguments().function_call_arguments_next().get(0).function_call_arguments_element().getText());
-            return has_minimal_distance_of((Attribute<Integer>) attribute, minimumDistance);
+            return rater.withValue(has_minimal_distance_of((Attribute<Integer>) attribute, minimumDistance));
 
         }
-        throw executionException("Unknown rater function: " + functionCall.getText());
+        return rater.withErrorMessage(perspective("Unknown rater function: " + functionCall.getText()));
     }
 }

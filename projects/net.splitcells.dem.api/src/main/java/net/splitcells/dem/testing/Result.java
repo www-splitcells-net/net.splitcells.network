@@ -58,4 +58,8 @@ public class Result<Value, Message> {
         value = Optional.of(arg);
         return this;
     }
+
+    public boolean defective() {
+        return value.isEmpty() || errorMessages.hasElements();
+    }
 }
