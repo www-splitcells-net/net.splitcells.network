@@ -20,7 +20,10 @@ projectFolder=$(pwd)
 	cd target/test
 command.managed.execute.test
 user.ssh.key.generate.test
-cd $projectFolder/src/test/repo.process.test
+command.repository.register "$projectFolder"
+command.repository.register "$projectFolder/../net.splitcells.project.files.standard"
+user.bin.configure
+cd $projectFolder/../net.splitcells.project.files.standard/src/test/repo.process.test
   repo.process.test
 cd $projectFolder # Leave current folder before it is deleted.
 	rm -rf $projectFolder/target/test
