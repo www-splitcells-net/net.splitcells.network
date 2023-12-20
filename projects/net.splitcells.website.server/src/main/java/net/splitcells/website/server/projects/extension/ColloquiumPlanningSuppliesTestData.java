@@ -51,7 +51,6 @@ public class ColloquiumPlanningSuppliesTestData implements ProjectsRendererExten
     public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         if (PATH.equals(path)) {
             final var testData = stringBuilder();
-            testData.append("date,shift,roomNumber\n");
             final var randomness = randomness();
             final var nameGenerator = IdentifiedNameGenerator.identifiedNameGenerator();
             final List<String> examinerNames = list();
