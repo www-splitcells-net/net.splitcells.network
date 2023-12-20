@@ -91,7 +91,8 @@ public class Server {
                 vertx = Vertx.vertx(new VertxOptions()
                         .setMaxEventLoopExecuteTimeUnit(SECONDS)
                         .setMaxEventLoopExecuteTime(60L)
-                        .setBlockedThreadCheckInterval(60_000L));
+                        .setBlockedThreadCheckInterval(60_000L))
+                ;
                 final var deploymentOptions = new DeploymentOptions()
                         .setMaxWorkerExecuteTimeUnit(SECONDS)
                         .setMaxWorkerExecuteTime(60L);
@@ -118,6 +119,7 @@ public class Server {
                         } else {
                             logs().append(perspective("Webserver is not secured!"), WARNING);
                         }
+                        webServerOptions.setMaxFormAttributeSize(100_000_000);
                         webServerOptions.setPort(config.openPort());
                         final var router = Router.router(vertx);
                         router.route("/favicon.ico").handler(a -> {
@@ -238,7 +240,8 @@ public class Server {
                                         .setPassword(config.sslKeystorePassword().orElseThrow()))
                                 .setClientAuth(ClientAuth.REQUIRED)
                                 .setLogActivity(true)
-                                .setPort(config.openPort());
+                                .setPort(config.openPort())
+                                .setMaxFormAttributeSize(100_000_000);
                         final var router = Router.router(vertx);
                         router.route("/favicon.ico").handler(a -> {
                         });
