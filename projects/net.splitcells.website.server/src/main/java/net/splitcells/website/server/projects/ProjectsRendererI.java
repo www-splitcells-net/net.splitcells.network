@@ -51,7 +51,8 @@ import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiv
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.project.validator.RenderingValidatorForHtmlLinks.renderingValidatorForHtmlLinks;
 import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithPath;
-import static net.splitcells.website.server.projects.extension.ColloquiumPlanningDemandTestData.colloquiumPlanningDemandTestData;
+import static net.splitcells.website.server.projects.extension.ColloquiumPlanningDemandsTestData.colloquiumPlanningDemandTestData;
+import static net.splitcells.website.server.projects.extension.ColloquiumPlanningSuppliesTestData.colloquiumPlanningSuppliesTestData;
 import static net.splitcells.website.server.projects.extension.DemConfigExtension.demConfigExtension;
 import static net.splitcells.website.server.projects.extension.FrontMenuExtension.frontMenuExtension;
 import static net.splitcells.website.server.projects.extension.GlobalChangelogExtension.globalChangelogExtension;
@@ -176,7 +177,8 @@ public class ProjectsRendererI implements ProjectsRenderer {
             .withRegisteredExtension(testExtension())
             .withRegisteredExtension(frontMenuExtension())
             .withRegisteredExtension(demConfigExtension())
-            .withRegisteredExtension(colloquiumPlanningDemandTestData());
+            .withRegisteredExtension(colloquiumPlanningDemandTestData())
+            .withRegisteredExtension(colloquiumPlanningSuppliesTestData());
 
     private ProjectsRendererI(String name
             , ProjectRenderer fallbackRenderer

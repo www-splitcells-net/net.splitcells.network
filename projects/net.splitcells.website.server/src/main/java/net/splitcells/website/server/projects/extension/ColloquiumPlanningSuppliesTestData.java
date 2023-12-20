@@ -30,20 +30,20 @@ import java.util.Optional;
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.dem.utils.StringUtils.stringBuilder;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
-public class ColloquiumPlanningDemandTestData implements ProjectsRendererExtension {
+public class ColloquiumPlanningSuppliesTestData implements ProjectsRendererExtension {
 
-    private static final String PATH = "/net/splitcells/gel/ui/colloquium-planning-demand-test-data";
+    private static final String PATH = "/net/splitcells/gel/ui/colloquium-planning-supplies-test-data.csv";
 
-    public static ColloquiumPlanningDemandTestData colloquiumPlanningDemandTestData() {
-        return new ColloquiumPlanningDemandTestData();
+    public static ColloquiumPlanningSuppliesTestData colloquiumPlanningSuppliesTestData() {
+        return new ColloquiumPlanningSuppliesTestData();
     }
 
-    private ColloquiumPlanningDemandTestData() {
+    private ColloquiumPlanningSuppliesTestData() {
 
     }
 
@@ -51,17 +51,21 @@ public class ColloquiumPlanningDemandTestData implements ProjectsRendererExtensi
     public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         if (PATH.equals(path)) {
             final var testData = stringBuilder();
-            testData.append("student,examiner,observer\n");
+            testData.append("date,shift,roomNumber\n");
             final var randomness = randomness();
             final var nameGenerator = IdentifiedNameGenerator.identifiedNameGenerator();
             final List<String> examinerNames = list();
             range(0, 40).forEach(i -> examinerNames.add(nameGenerator.nextName()));
             final List<String> checkerNames = list();
             range(0, 41).forEach(i -> checkerNames.add(nameGenerator.nextName()));
-            for (int student = 1; student <= 88; ++student) {
-                var studentName = nameGenerator.nextName();
-                for (int exam = 1; exam <= 177 / 88; ++exam) {
-                    testData.append(studentName + "," + randomness.chooseOneOf(examinerNames) + "," + randomness.chooseOneOf(checkerNames) + "\n");
+            var studentName = nameGenerator.nextName();
+            for (int roomNumber = 1; roomNumber <= 6; ++roomNumber) {
+                for (int week = 1; week <= 2; ++week) {
+                    for (int examDay = 1; examDay <= 5; ++examDay) {
+                        for (int shift = 1; shift <= 5; ++shift) {
+                            testData.append(examDay + "," + shift + "," + roomNumber + "\n");
+                        }
+                    }
                 }
             }
             return Optional.of(binaryMessage(StringUtils.toBytes(testData.toString()), Formats.TEXT_PLAIN));
