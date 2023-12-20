@@ -45,7 +45,7 @@ public class FrontMenuExtension implements ProjectsRendererExtension {
 
     @Override
     public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
-        if (path(config).equals(path) && config.programConfigs().hasElements()) {
+        if (EXTENSION_PATH.equals(path) && config.programConfigs().hasElements()) {
             final var pathFolder = StreamUtils.stream(path.split("/"))
                     .filter(s -> !s.isEmpty())
                     .collect(toList())
