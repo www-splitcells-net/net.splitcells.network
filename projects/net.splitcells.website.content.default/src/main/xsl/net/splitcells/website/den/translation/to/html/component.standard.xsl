@@ -22,13 +22,13 @@
     </xsl:template>
     <xsl:template match="s:tableOfContents">
         <xsl:message>TOREMOVE This will be implemented via local path context.</xsl:message>
-        <x:div style="padding-top: 1.4em;">
+        <div style="padding-top: 1.4em;">
             <xsl:for-each select="s:chapter">
                 <xsl:apply-templates select="." mode="tableOfContents">
                     <xsl:with-param name="relativeIdPrefix" select="concat(position(), '.')"/>
                 </xsl:apply-templates>
             </xsl:for-each>
-        </x:div>
+        </div>
     </xsl:template>
     <xsl:template match="s:related">
         <xsl:variable name="related-content">
@@ -64,16 +64,16 @@
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="url" select="replace(normalize-space($tmpUrl), ' ', '')"/>
-        <x:div style="display: flex; flex-direction: row; overflow: hidden; flex-wrap: wrap; width: 100%;">
-            <x:div class="optional" style="width: 1em;">&#160;</x:div>
-            <x:div style="flex: auto">
+        <div style="display: flex; flex-direction: row; overflow: hidden; flex-wrap: wrap; width: 100%;">
+            <div class="optional" style="width: 1em;">&#160;</div>
+            <div style="flex: auto">
                 <xsl:element name="div">
                     <xsl:attribute name="class">Standard_highlighted toc_chapter_1
                         <xsl:if test="not(s:relatedTo) and not(s:absolute-path)">premature</xsl:if>
                     </xsl:attribute>
                     <xsl:attribute name="style">display: block; transform: skewx(12deg);
                     </xsl:attribute>
-                    <x:div style="transform: skewx(-12deg); display: flex; flex-direction: row;">
+                    <div style="transform: skewx(-12deg); display: flex; flex-direction: row;">
                         <xsl:element name="a">
                             <xsl:attribute name="class">NonStandard
                                 <xsl:if test="not(s:relatedTo) and not(s:absolute-path)">premature</xsl:if>
@@ -104,15 +104,15 @@
                             </xsl:attribute>
                             <xsl:value-of select="$relativeIdPrefix"/>
                         </xsl:element>
-                    </x:div>
+                    </div>
                 </xsl:element>
                 <xsl:for-each select="s:chapter">
                     <xsl:apply-templates select="." mode="tableOfContents">
                         <xsl:with-param name="relativeIdPrefix" select="concat($relativeIdPrefix, position(), '.')"/>
                     </xsl:apply-templates>
                 </xsl:for-each>
-            </x:div>
-        </x:div>
+            </div>
+        </div>
     </xsl:template>
     <!-- -->
     <xsl:template match="s:private_info">
@@ -275,10 +275,10 @@ httpRequest.send(null);]]>
         </xsl:if>
     </xsl:template>
     <xsl:template match="s:rendering-target">
-        <x:div>
+        <div>
             <xsl:attribute name="id" select="./@id"/>
             No data present yet.
-        </x:div>
+        </div>
     </xsl:template>
     <xsl:template match="s:chapter">
         <xsl:call-template name="chapter-with-priority">
@@ -394,7 +394,7 @@ httpRequest.send(null);]]>
                             </div>
                         </div>
                     </div>
-                    <x:div>
+                    <div>
                         <xsl:attribute name="id" select="concat($id, '-body')"/>
                         <xsl:attribute name="style">
                             <xsl:choose>
@@ -404,7 +404,7 @@ httpRequest.send(null);]]>
                             </xsl:choose>
                         </xsl:attribute>
                         <xsl:apply-templates select="node()[not(self::s:title)]"/>
-                    </x:div>
+                    </div>
                 </section>
             </xsl:otherwise>
         </xsl:choose>
@@ -741,9 +741,9 @@ httpRequest.send(null);]]>
         </xsl:for-each>
     </xsl:template>
     <xsl:template match="s:blockquote">
-        <x:blockquote>
+        <blockquote>
             <xsl:apply-templates/>
-        </x:blockquote>
+        </blockquote>
     </xsl:template>
     <xsl:template match="s:code_block">
         <!-- "overflow: auto;"is used because some syntax highlighter do not use scrollbars by default. -->
@@ -849,12 +849,12 @@ httpRequest.send(null);]]>
         <xsl:apply-templates select="./s:option"/>
     </xsl:template>
     <xsl:template match="s:path.context">
-        <x:ol>
+        <ol>
             <xsl:apply-templates select="./node()" mode="path.context"/>
-        </x:ol>
+        </ol>
     </xsl:template>
     <xsl:template match="d:val" mode="path.context">
-        <x:li>
+        <li>
             <xsl:choose>
                 <xsl:when test="./d:link/d:url">
                     <a>
@@ -868,11 +868,11 @@ httpRequest.send(null);]]>
                     <xsl:value-of select="./d:name"/>
                 </xsl:otherwise>
             </xsl:choose>
-        </x:li>
+        </li>
         <xsl:if test="./d:val">
-            <x:ol>
+            <ol>
                 <xsl:apply-templates select="./d:val" mode="path.context"/>
-            </x:ol>
+            </ol>
         </xsl:if>
     </xsl:template>
     <xsl:template match="*" mode="path.context">
