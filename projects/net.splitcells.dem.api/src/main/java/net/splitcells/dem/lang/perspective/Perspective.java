@@ -480,8 +480,7 @@ public interface Perspective extends PerspectiveView {
             jsonString.append("{\"" + encodeJsonString(name()) + "\":\"\"}");
         } else {
             boolean isNotFirstChild = false;
-            final var hasAnyPrimitiveValues = children().stream().anyMatch(c -> c.children().isEmpty()
-                    || c.children().get(0).name().isEmpty());
+            final var hasAnyPrimitiveValues = children().stream().anyMatch(c -> c.children().isEmpty());
             final var isThisANamedDictionary = !hasAnyPrimitiveValues && !name().isEmpty();
             if (hasAnyPrimitiveValues) {
                 if (config.isTopElement()) {
