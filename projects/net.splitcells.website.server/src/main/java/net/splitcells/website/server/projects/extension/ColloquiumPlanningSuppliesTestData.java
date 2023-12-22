@@ -49,11 +49,6 @@ public class ColloquiumPlanningSuppliesTestData implements ProjectsRendererExten
     public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         if (PATH.equals(path)) {
             final var testData = stringBuilder();
-            final var nameGenerator = IdentifiedNameGenerator.identifiedNameGenerator();
-            final List<String> examinerNames = list();
-            range(0, 40).forEach(i -> examinerNames.add(nameGenerator.nextName()));
-            final List<String> checkerNames = list();
-            range(0, 41).forEach(i -> checkerNames.add(nameGenerator.nextName()));
             for (int roomNumber = 1; roomNumber <= 6; ++roomNumber) {
                 for (int week = 1; week <= 2; ++week) {
                     for (int examDay = 1; examDay <= 5; ++examDay) {
