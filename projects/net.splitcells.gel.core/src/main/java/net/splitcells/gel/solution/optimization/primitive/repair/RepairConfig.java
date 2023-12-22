@@ -40,6 +40,23 @@ public class RepairConfig {
 
     }
 
+    private void setupGroupSelector() {
+        groupSelector = GroupSelectors.groupSelector(randomness(), minimumConstraintGroupPath
+                , numberOfGroupsSelectedPerDefiance);
+    }
+
+    public RepairConfig withMinimumConstraintGroupPath(int minimumConstraintGroupPathArg) {
+        minimumConstraintGroupPath = minimumConstraintGroupPathArg;
+        setupGroupSelector();
+        return this;
+    }
+
+    public RepairConfig withNumberOfGroupsSelectedPerDefiance(int numberOfGroupsSelectedPerDefianceArg) {
+        numberOfGroupsSelectedPerDefiance = numberOfGroupsSelectedPerDefianceArg;
+        setupGroupSelector();
+        return this;
+    }
+
     public RepairConfig withRepairCompliants(boolean arg) {
         repairCompliants = arg;
         return this;
