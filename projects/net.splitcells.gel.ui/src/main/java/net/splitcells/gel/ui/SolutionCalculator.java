@@ -15,23 +15,16 @@
  */
 package net.splitcells.gel.ui;
 
-import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
 
-import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
-import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
-import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.constraintGroupBasedRepair;
-import static net.splitcells.gel.solution.optimization.primitive.repair.RepairConfig.repairConfig;
+import static net.splitcells.gel.solution.optimization.DefaultOptimization.defaultOptimization;
 import static net.splitcells.gel.ui.ProblemParser.parseProblem;
-import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.processor.Response.response;
 
 public class SolutionCalculator implements Processor<Perspective, Perspective> {
@@ -81,8 +74,7 @@ public class SolutionCalculator implements Processor<Perspective, Perspective> {
                     solution.supplies().withAddSimplifiedCsv(
                             standardizeInput(supplyDefinitions.get(0).child(0).name()));
                 }
-                constraintGroupBasedRepair(repairConfig()).optimize(solution);
-                onlineLinearInitialization().optimize(solution);
+                defaultOptimization().optimize(solution);
                 formUpdate.withProperty(SOLUTION, solution.toSimplifiedCSV());
             }
             if (problemParsing.errorMessages().hasElements() || !isProblemParsed) {
