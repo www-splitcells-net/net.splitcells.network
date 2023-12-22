@@ -52,14 +52,18 @@ public class ColloquiumPlanningDemandsTestData implements ProjectsRendererExtens
             final var testData = stringBuilder();
             final var randomness = randomness();
             final var nameGenerator = IdentifiedNameGenerator.identifiedNameGenerator();
-            final List<String> examinerNames = list();
+            final Set<String> examinerNames = setOfUniques();
             range(0, 40).forEach(i -> examinerNames.add(nameGenerator.nextName()));
-            final List<String> checkerNames = list();
+            final List<String> examinerNameList = list();
+            examinerNameList.addAll(examinerNames);
+            final Set<String> checkerNames = setOfUniques();
             range(0, 41).forEach(i -> checkerNames.add(nameGenerator.nextName()));
+            final List<String> checkerNamesList = list();
+            checkerNamesList.addAll(checkerNames);
             for (int student = 1; student <= 88; ++student) {
                 var studentName = nameGenerator.nextName();
                 for (int exam = 1; exam <= 177 / 88; ++exam) {
-                    testData.append(studentName + "," + randomness.chooseOneOf(examinerNames) + "," + randomness.chooseOneOf(checkerNames) + "\n");
+                    testData.append(studentName + "," + randomness.chooseOneOf(examinerNameList) + "," + randomness.chooseOneOf(checkerNamesList) + "\n");
                 }
             }
             return Optional.of(binaryMessage(StringUtils.toBytes(testData.toString()), Formats.TEXT_PLAIN));
