@@ -141,7 +141,8 @@ public class Server {
                                         final var binaryResponse = binaryProcessor
                                                 .process(binaryRequest);
                                         response.putHeader("content-type", Formats.JSON.mimeTypes());
-                                        promise.complete(toBytes(binaryResponse.data().toJsonString()));
+                                        promise.complete(toBytes(binaryResponse.data().createToJsonPrintable()
+                                                .toJsonString()));
                                     }, (result) -> handleResult(routingContext, result));
                                 });
                             } else {
