@@ -97,6 +97,10 @@ public class SolutionCalculator implements Processor<Perspective, Perspective> {
             logs().appendError(t);
             formUpdate.withProperty(ERRORS, perspective("The program had an internal error and therefore a solution could not be calculated."));
         }
+        if (formUpdate.namedChildren(ERRORS).isEmpty()) {
+            // Ensures, that the error field in the front end is cleared, if no errors are present.
+            formUpdate.withProperty(ERRORS, perspective(""));
+        }
         return response(formUpdate);
     }
 
