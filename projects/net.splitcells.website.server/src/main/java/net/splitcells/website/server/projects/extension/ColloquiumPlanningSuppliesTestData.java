@@ -49,21 +49,26 @@ public class ColloquiumPlanningSuppliesTestData implements ProjectsRendererExten
     @Override
     public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         if (PATH.equals(path)) {
-            final var testData = stringBuilder();
-            final int examDayCountPerWeek = 5;
-            for (int roomNumber = 1; roomNumber <= 6; ++roomNumber) {
-                for (int week = 1; week <= 2; ++week) {
-                    for (int examDay = 1; examDay <= 5; ++examDay) {
-                        for (int shift = 1; shift <= 5; ++shift) {
-                            testData.append(modulus(examDay, examDayCountPerWeek) + 1
-                                    + (week - 1) * 7 + "," + shift + "," + roomNumber + "\n");
-                        }
+
+            return Optional.of(binaryMessage(StringUtils.toBytes(testData()), Formats.TEXT_PLAIN));
+        }
+        return Optional.empty();
+    }
+
+    public static String testData() {
+        final var testData = stringBuilder();
+        final int examDayCountPerWeek = 5;
+        for (int roomNumber = 1; roomNumber <= 6; ++roomNumber) {
+            for (int week = 1; week <= 2; ++week) {
+                for (int examDay = 1; examDay <= 5; ++examDay) {
+                    for (int shift = 1; shift <= 5; ++shift) {
+                        testData.append(modulus(examDay, examDayCountPerWeek) + 1
+                                + (week - 1) * 7 + "," + shift + "," + roomNumber + "\n");
                     }
                 }
             }
-            return Optional.of(binaryMessage(StringUtils.toBytes(testData.toString()), Formats.TEXT_PLAIN));
         }
-        return Optional.empty();
+        return testData.toString();
     }
 
     @Override

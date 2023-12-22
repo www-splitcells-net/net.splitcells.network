@@ -49,26 +49,30 @@ public class ColloquiumPlanningDemandsTestData implements ProjectsRendererExtens
     @Override
     public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         if (PATH.equals(path)) {
-            final var testData = stringBuilder();
-            final var randomness = randomness();
-            final var nameGenerator = IdentifiedNameGenerator.identifiedNameGenerator();
-            final Set<String> examinerNames = setOfUniques();
-            range(0, 40).forEach(i -> examinerNames.add(nameGenerator.nextName()));
-            final List<String> examinerNameList = list();
-            examinerNameList.addAll(examinerNames);
-            final Set<String> checkerNames = setOfUniques();
-            range(0, 41).forEach(i -> checkerNames.add(nameGenerator.nextName()));
-            final List<String> checkerNamesList = list();
-            checkerNamesList.addAll(checkerNames);
-            for (int student = 1; student <= 88; ++student) {
-                var studentName = nameGenerator.nextName();
-                for (int exam = 1; exam <= 177 / 88; ++exam) {
-                    testData.append(studentName + "," + randomness.chooseOneOf(examinerNameList) + "," + randomness.chooseOneOf(checkerNamesList) + "\n");
-                }
-            }
-            return Optional.of(binaryMessage(StringUtils.toBytes(testData.toString()), Formats.TEXT_PLAIN));
+            return Optional.of(binaryMessage(StringUtils.toBytes(testData()), Formats.TEXT_PLAIN));
         }
         return Optional.empty();
+    }
+
+    public static String testData() {
+        final var testData = stringBuilder();
+        final var randomness = randomness();
+        final var nameGenerator = IdentifiedNameGenerator.identifiedNameGenerator();
+        final Set<String> examinerNames = setOfUniques();
+        range(0, 40).forEach(i -> examinerNames.add(nameGenerator.nextName()));
+        final List<String> examinerNameList = list();
+        examinerNameList.addAll(examinerNames);
+        final Set<String> checkerNames = setOfUniques();
+        range(0, 41).forEach(i -> checkerNames.add(nameGenerator.nextName()));
+        final List<String> checkerNamesList = list();
+        checkerNamesList.addAll(checkerNames);
+        for (int student = 1; student <= 88; ++student) {
+            var studentName = nameGenerator.nextName();
+            for (int exam = 1; exam <= 177 / 88; ++exam) {
+                testData.append(studentName + "," + randomness.chooseOneOf(examinerNameList) + "," + randomness.chooseOneOf(checkerNamesList) + "\n");
+            }
+        }
+        return testData.toString();
     }
 
     @Override
