@@ -60,6 +60,10 @@
             <rendering-target id="net-splitcells-gel-ui-calculate-solution-form-solution-data">No data present yet.
             </rendering-target>
             <text-area id="net-splitcells-gel-ui-editor-form-solution"></text-area>
+            <chapter>
+                <title>Rating</title>
+                <text-area id="net-splitcells-gel-ui-editor-form-solution-rating"/>
+            </chapter>
         </chapter>
     </form>
 </article>

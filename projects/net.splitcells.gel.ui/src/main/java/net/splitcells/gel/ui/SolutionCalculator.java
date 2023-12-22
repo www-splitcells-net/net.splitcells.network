@@ -17,6 +17,7 @@ package net.splitcells.gel.ui;
 
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Trail;
+import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
@@ -31,6 +32,8 @@ public class SolutionCalculator implements Processor<Perspective, Perspective> {
 
     public static final Trail PATH = Trail.trail("net/splitcells/gel/ui/calculate-solution.form");
     public static final String PROBLEM_DEFINITION = "net-splitcells-gel-ui-editor-form-problem-definition";
+
+    public static final String SOLUTION_RATING = "net-splitcells-gel-ui-editor-form-solution-rating";
     public static final String SOLUTION = "net-splitcells-gel-ui-editor-form-solution";
     public static final String DEMANDS = "net-splitcells-gel-ui-editor-form-demands";
     public static final String SUPPLIES = "net-splitcells-gel-ui-editor-form-supplies";
@@ -76,6 +79,7 @@ public class SolutionCalculator implements Processor<Perspective, Perspective> {
                 }
                 defaultOptimization().optimize(solution);
                 formUpdate.withProperty(SOLUTION, solution.toSimplifiedCSV());
+                formUpdate.withProperty(SOLUTION_RATING, solution.constraint().rating().toPerspective());
             }
             if (problemParsing.errorMessages().hasElements() || !isProblemParsed) {
                 final var errorReport = perspective("Errors solving the given problem.");
