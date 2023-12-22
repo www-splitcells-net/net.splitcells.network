@@ -30,6 +30,7 @@ import java.util.Optional;
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.dem.utils.StringUtils.stringBuilder;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
@@ -49,11 +50,13 @@ public class ColloquiumPlanningSuppliesTestData implements ProjectsRendererExten
     public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         if (PATH.equals(path)) {
             final var testData = stringBuilder();
+            final int examDayCountPerWeek = 5;
             for (int roomNumber = 1; roomNumber <= 6; ++roomNumber) {
                 for (int week = 1; week <= 2; ++week) {
                     for (int examDay = 1; examDay <= 5; ++examDay) {
                         for (int shift = 1; shift <= 5; ++shift) {
-                            testData.append(examDay + "," + shift + "," + roomNumber + "\n");
+                            testData.append(modulus(examDay, examDayCountPerWeek) + 1
+                                    + (week - 1) * 7 + "," + shift + "," + roomNumber + "\n");
                         }
                     }
                 }
