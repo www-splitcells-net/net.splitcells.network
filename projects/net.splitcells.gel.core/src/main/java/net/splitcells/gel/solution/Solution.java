@@ -45,6 +45,7 @@ import java.util.function.Function;
 /**
  * <p>The 80-20 rule maintains that 80% of outcomes come from 20% of causes. - Pareto principle - Vilfredo Pareto
  * </p>
+ * <p>TODO Clean up optimize functions. Their usage is too complicated.</p>
  * <p>TODO IDEA Is it possible to model everything of a solution as one database? Does this make sense?
  * Does this make anything easier, by being able to store a solution as one singular thing which is a simple table?
  * Maybe one could implement a very low level compatibility system based on this for other software?</p>
