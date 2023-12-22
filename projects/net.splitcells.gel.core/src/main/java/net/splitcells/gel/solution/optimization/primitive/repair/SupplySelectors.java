@@ -47,8 +47,6 @@ public class SupplySelectors {
                         final var supplySelection = freeSupplies.get(indexSelector.apply(freeSupplies.size() - 1));
                         demandsUsed.add(demand);
                         solution.assign(demand, supplySelection);
-                    } else {
-                        throw executionException("No free supplies available for repair.");
                     }
                 });
             });
