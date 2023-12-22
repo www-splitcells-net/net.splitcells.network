@@ -71,14 +71,14 @@ public class SolutionCalculator implements Processor<Perspective, Perspective> {
                         .data()
                         .namedChildren(DEMANDS);
                 if (demandDefinitions.hasElements()) {
-                    solution.demandsFree().withAddSimplifiedCsv(
+                    solution.demands().withAddSimplifiedCsv(
                             standardizeInput(demandDefinitions.get(0).child(0).name()));
                 }
                 final var supplyDefinitions = request
                         .data()
                         .namedChildren(SUPPLIES);
                 if (supplyDefinitions.hasElements()) {
-                    solution.suppliesFree().withAddSimplifiedCsv(
+                    solution.supplies().withAddSimplifiedCsv(
                             standardizeInput(supplyDefinitions.get(0).child(0).name()));
                 }
                 constraintGroupBasedRepair(repairConfig()).optimize(solution);
