@@ -92,10 +92,11 @@ public class PerspectiveTest {
 
     @UnitTest
     public void testToJsonStringWithNamedDictionary() {
-        final var testSubject = perspective("name\r\n")
-                .withProperty("1", "2")
-                .withProperty("3", "4")
-                .withProperty("4", "5");
+        final var testSubject = perspective("").withChild(
+                perspective("name\r\n")
+                        .withProperty("1", "2")
+                        .withProperty("3", "4")
+                        .withProperty("4", "5"));
         requireEquals(testSubject.toJsonString(), "{\"name\\r\\n\":{\"1\":\"2\",\"3\":\"4\",\"4\":\"5\"}}");
     }
 

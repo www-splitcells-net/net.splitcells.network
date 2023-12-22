@@ -456,6 +456,13 @@ public interface Perspective extends PerspectiveView {
         return htmlList;
     }
 
+    default Perspective createToJsonPrintable() {
+        if (name().isEmpty()) {
+            return this;
+        }
+        return perspective("").withChild(this);
+    }
+
     default String toJsonString() {
         return toJsonString(jsonConfig());
     }
@@ -495,7 +502,7 @@ public interface Perspective extends PerspectiveView {
                 } else {
                     require(isThisANamedDictionary);
                     if (config.isTopElement()) {
-                        jsonString.append("{\"" + encodeJsonString(name()) + "\":{");
+                        throw executionException("Top " + Perspective.class.getSimpleName() + " is not allowed to have a name, as JSON does not support a name for the top element.");
                     } else {
                         jsonString.append("\"" + encodeJsonString(name()) + "\":{");
                     }
