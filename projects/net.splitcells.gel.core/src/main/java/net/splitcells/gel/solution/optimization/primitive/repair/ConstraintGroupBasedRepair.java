@@ -130,7 +130,7 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
                         .ifPresent(f -> freeDefyingGroupOfConstraintGroup(solution, f)));
         final var demandGrouping = demandGroupings
                 .stream()
-                .reduce(map(), (a, b) -> a.withMerged(b, Set::with));
+                .reduce(map(), (a, b) -> a.withMergedEntries(b, Set::with));
         repair(solution, demandGrouping);
     }
 

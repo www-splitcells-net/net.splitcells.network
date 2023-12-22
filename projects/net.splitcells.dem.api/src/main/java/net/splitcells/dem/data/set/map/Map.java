@@ -54,6 +54,13 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
      */
     Map<Key, Value> ensurePresence(Key key, Value value);
 
+    /**
+     * Works like {@link #ensurePresence(Object, Object)}, but returns the given value instead.
+     *
+     * @param key
+     * @param value
+     * @return
+     */
     Value ensurePresenceAndValue(Key key, Value value);
 
 
@@ -91,6 +98,44 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
 
     default Map<Key, Value> withMerged(Map<Key, Value> args, BiFunction<Value, Value, Value> mergeFunction) {
         args.forEach((aKey, aVal) -> this.merge(aKey, aVal, mergeFunction));
+        return this;
+    }
+
+    /**
+     * Add mappings to this, which are not present yet.
+     * Mappings with already present keys are ignored.
+     *
+     * @param args This contains the mappings to be added.
+     * @return Returns this.
+     */
+    default Map<Key, Value> withMissingEntries(Map<Key, Value> args) {
+        args.entrySet().forEach(e -> {
+            if (!containsKey(e.getKey())) {
+                put(e.getKey(), e.getValue());
+            }
+        });
+        return this;
+    }
+
+    /**
+     * Add mappings as given to this, which are not present yet.
+     * Mappings with already present keys are used to update the existing value
+     * for the respective key in this via a merger function.
+     *
+     * @param args
+     * @param merger
+     * @return
+     */
+    default Map<Key, Value> withMergedEntries(Map<Key, Value> args, BiFunction<Value, Value, Value> merger) {
+        args.entrySet().forEach(e -> {
+            final var key = e.getKey();
+            final var existingValue = get(key);
+            if (existingValue == null) {
+                put(key, e.getValue());
+            } else {
+                ensurePresence(key, merger.apply(get(key), e.getValue()));
+            }
+        });
         return this;
     }
 
