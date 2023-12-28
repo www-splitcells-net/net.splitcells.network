@@ -156,7 +156,7 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Perspective>
                     parsedConstraint.errorMessages().withAppended(rater.errorMessages());
                     return parsedConstraint;
                 }
-                return parsedConstraint.withValue(parentConstraint.then(rater.value().get()));
+                return parsedConstraint.withValue(parentConstraint.then(rater.value().orElseThrow()));
             }
             parsedConstraint.withErrorMessage(perspective("Could not parse argument of then constraint: "
                     + arguments.getText()));
