@@ -54,10 +54,26 @@ This reduces the portability of CommonMark converter implementations
 In other words, it is easier to convert a generic tree structure file format to CommonMark,
 than the other way around.
 
+Limit the usage of CommonMark features as much as possible.
+
 [CommonMark](https://spec.commonmark.org/0.29) is used for simple flowing text or documents describing tasks and their progress.
 All inlined artifacts of the flowing text should be integrated via links.
 Inline LaTex that is compatible to MathJax is used for mathematics formulas
 and is the only exception to this rule.
+
+Metadata can be stored at the beginning of the document via a special section:
+
+```
+---
+attribute-name: attribute value
+SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+---
+```
+
+This format is supported by many static blog generators like Jekyll, Hugo and next.js,
+and therefore supported by this project.
+The reason for such, is the fact, that [there does not seem to be any intent to support meta data in in CommonMark anytime soon](https://talk.commonmark.org/t/standardized-metadata-layer/2429).
 
 Note: Contrary to popular believe Mārtiņš Avots believes it should be possible,
 to create a simplified CommonMark grammar via BNF,
