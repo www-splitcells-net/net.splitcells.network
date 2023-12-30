@@ -1,17 +1,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<!--
-  		SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
-  		SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
-	-->
-	<modelVersion>4.0.0</modelVersion>
-	<artifactId>network.blog</artifactId>
-	<name>Splitcells Network Blog</name>
-	<packaging>pom</packaging>
-	<parent>
-		<groupId>net.splitcells</groupId>
-		<artifactId>pom-java-minimal</artifactId>
-		<version>${revision}</version>
-		<relativePath>../net.splitcells.pom.java.minimal/pom.xml</relativePath>
-	</parent>
+    <!--
+          SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+          SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+    -->
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>network.blog</artifactId>
+    <name>Splitcells Network Blog</name>
+    <parent>
+        <groupId>net.splitcells</groupId>
+        <artifactId>pom-java-defaults</artifactId>
+        <version>${revision}</version>
+        <relativePath>../net.splitcells.pom.java.defaults/pom.xml</relativePath>
+    </parent>
+    <dependencies>
+        <dependency>
+            <groupId>net.splitcells</groupId>
+            <artifactId>dem.ext</artifactId>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
 </project>
