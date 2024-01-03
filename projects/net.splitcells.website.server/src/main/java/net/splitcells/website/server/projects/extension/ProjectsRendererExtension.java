@@ -27,27 +27,27 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 
 public interface ProjectsRendererExtension {
-    Optional<BinaryMessage> renderFile(String path, @Deprecated ProjectsRendererI projectsRendererI, Config config);
+    Optional<BinaryMessage> renderFile(String path, @Deprecated ProjectsRendererI projectsRenderer, Config config);
 
-    default Perspective extendProjectLayout(Perspective layout, @Deprecated ProjectsRendererI projectsRendererI) {
+    default Perspective extendProjectLayout(Perspective layout, @Deprecated ProjectsRendererI projectsRenderer) {
         return layout;
     }
 
     /**
      * The paths are relative to the website's {@link Config#rootPath()}.
      * 
-     * @param projectsRendererI
+     * @param projectsRenderer
      * @return Set of paths relative to {@link Config#rootPath()}.
      */
-    Set<Path> projectPaths(@Deprecated ProjectsRendererI projectsRendererI);
+    Set<Path> projectPaths(@Deprecated ProjectsRendererI projectsRenderer);
 
     /**
      * The paths are relative to the website's {@link Config#rootPath()}.
      *
-     * @param projectsRendererI
+     * @param projectsRenderer
      * @return Set of paths relative to {@link Config#rootPath()}.
      */
-    default Set<Path> relevantProjectPaths(@Deprecated ProjectsRendererI projectsRendererI) {
-        return projectPaths(projectsRendererI);
+    default Set<Path> relevantProjectPaths(@Deprecated ProjectsRendererI projectsRenderer) {
+        return projectPaths(projectsRenderer);
     }
 }
