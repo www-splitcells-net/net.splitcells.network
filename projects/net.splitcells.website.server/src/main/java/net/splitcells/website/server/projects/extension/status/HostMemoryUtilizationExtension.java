@@ -53,6 +53,7 @@ public class HostMemoryUtilizationExtension implements ProjectsRendererExtension
             final var meta = perspective("meta", SEW);
             meta.withChild(perspective("path", SEW).withText(path));
             meta.withChild(perspective("title", SEW).withText("Host RAM Utilization"));
+            meta.withChild(perspective("full-screen-by-default", SEW).withText("true"));
             page.withChild(meta);
             page.withProperty("content", SEW, perspective("csv-chart-lines", SEW)
                     .withProperty("path", SEW, "/" + CSV_PATH));
