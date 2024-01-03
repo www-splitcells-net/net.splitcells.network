@@ -40,6 +40,16 @@ article p img {
 	   See status badges on READMEs.
 	   This is achieved, by having no empty lines between images in CommonMark source code. */
 	}
+.net-splitcells-website-pop-up {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--background-color-selected-priority-0);
+    z-index: 1000000001;
+    padding: 4em;
+    }
 ol {
     /* Numbering of list items is not done, because CSS does not seem to have a way,
      * to adjust the padding/margin of the left according to the size of the biggest list item number.

@@ -280,6 +280,28 @@ httpRequest.send(null);]]>
             No data present yet.
         </div>
     </xsl:template>
+    <xsl:template match="s:only-for-general-public">
+        <!-- This flag is not rendered by default. -->
+    </xsl:template>
+    <xsl:template match="s:accept-notification">
+        <!-- This button is not rendered by default. -->
+    </xsl:template>
+    <xsl:template match="s:notification">
+        <xsl:if test="./only-for-general-public/node() = 'true'">
+
+        </xsl:if>
+        <xsl:variable name="quote">'</xsl:variable>
+        <div class="net-splitcells-website-pop-up">
+            <xsl:attribute name="id" select="generate-id(.)"/>
+            <xsl:apply-templates select="./*"/>
+            <xsl:if test="./s:accept-notification">
+                <div class="net-splitcells-button net-splitcells-action-button net-splitcells-component-priority-0">
+                    <xsl:attribute name="onclick" select="concat('unshowElement(document.getElementById(', $quote, generate-id(.), $quote, '))')"/>
+                    <xsl:value-of select="./s:accept-notification"/>
+                </div>
+            </xsl:if>
+        </div>
+    </xsl:template>
     <xsl:template match="s:chapter">
         <xsl:call-template name="chapter-with-priority">
             <xsl:with-param name="node" select="."/>
@@ -1017,7 +1039,8 @@ request.onload = function() {
     };
 }
 request.open("GET", csvPath);
-request.send();]]></script>
+request.send();]]>
+        </script>
     </xsl:template>
     <xsl:template match="s:import">
         <xsl:choose>
