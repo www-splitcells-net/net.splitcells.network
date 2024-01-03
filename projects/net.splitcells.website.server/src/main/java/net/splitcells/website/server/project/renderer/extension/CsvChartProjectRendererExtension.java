@@ -48,6 +48,9 @@ public class CsvChartProjectRendererExtension implements ProjectRendererExtensio
                 final var contentsPath = Xml.elementWithChildren(NameSpaces.SEW, "path");
                 contentsPath.appendChild(Xml.textNode("/" + csvPath));
                 content.appendChild(contentsPath);
+                /* TODO REMOVE The following file is not needed anymore,
+                 * as the CSV content retrieved from front end.
+                 */
                 content.appendChild(Xml.textNode(projectRenderer.projectFileSystem().readString(requestedFile)));
 
                 final var page = Xml.rElement(NameSpaces.SEW, "article");
