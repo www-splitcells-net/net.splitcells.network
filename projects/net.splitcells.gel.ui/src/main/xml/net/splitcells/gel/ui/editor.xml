@@ -33,7 +33,7 @@
                 You are not allowed to upload private data to the server.
             </paragraph>
         </chapter>
-        <accept-notification>I agree, with the Terms of service for using this server.</accept-notification>
+        <accept-notification>I agree, with the terms of service for using this server.</accept-notification>
     </notification>
     <paragraph>
         This editor allows one to define an assignment problem and to let it solve by the Generic Allocator.
