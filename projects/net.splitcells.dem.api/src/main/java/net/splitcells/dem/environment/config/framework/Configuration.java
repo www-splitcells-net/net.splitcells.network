@@ -17,7 +17,11 @@ package net.splitcells.dem.environment.config.framework;
 
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.function.Function;
+
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**
  * TODO Split up into generic dynamically typed and type safe table and this configuration class.
@@ -28,8 +32,10 @@ public interface Configuration extends ConfigurationV {
     default <T> Configuration withInitedOption(Class<? extends Option<T>> key) {
         try {
             return withConfigValue(key, key.getDeclaredConstructor().newInstance().defaultValue());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (Throwable e) {
+            throw executionException(perspective("Could not initialize config with default value.")
+                            .withProperty("key", key.getName())
+                    , e);
         }
     }
 
