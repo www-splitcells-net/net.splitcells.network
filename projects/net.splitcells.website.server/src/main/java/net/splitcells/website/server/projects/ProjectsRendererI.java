@@ -59,6 +59,8 @@ import static net.splitcells.website.server.projects.extension.GlobalChangelogEx
 import static net.splitcells.website.server.projects.extension.LayoutExtension.layoutExtension;
 import static net.splitcells.website.server.projects.extension.LayoutTreeExtension.layoutTreeExtension;
 import static net.splitcells.website.server.projects.extension.TestExtension.testExtension;
+import static net.splitcells.website.server.projects.extension.status.HostCpuUtilizationExtension.hostCpuUtilizationExtension;
+import static net.splitcells.website.server.projects.extension.status.HostMemoryUtilizationExtension.hostMemoryUtilizationExtension;
 import static net.splitcells.website.server.projects.extension.status.NetworkStatusRenderExtension.networkStatusRenderExtension;
 import static net.splitcells.website.server.projects.extension.ProjectsRendererExtensionMerger.projectsRendererExtensionMerger;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -178,7 +180,9 @@ public class ProjectsRendererI implements ProjectsRenderer {
             .withRegisteredExtension(frontMenuExtension())
             .withRegisteredExtension(demConfigExtension())
             .withRegisteredExtension(colloquiumPlanningDemandTestData())
-            .withRegisteredExtension(colloquiumPlanningSuppliesTestData());
+            .withRegisteredExtension(colloquiumPlanningSuppliesTestData())
+            .withRegisteredExtension(hostMemoryUtilizationExtension())
+            .withRegisteredExtension(hostCpuUtilizationExtension());
 
     private ProjectsRendererI(String name
             , ProjectRenderer fallbackRenderer
