@@ -17,11 +17,13 @@ package net.splitcells.dem.environment.resource;
 
 import net.splitcells.dem.data.set.list.ListView;
 
+import java.time.Instant;
+
 /**
  * Provides thread safe access to the data of {@link HostUtilizationRecorder}.
  */
 public interface HostUtilizationRecorderAccess {
-    ListView<Long> times();
+    ListView<Instant> times();
 
     ListView<Long> maxMemory();
 }

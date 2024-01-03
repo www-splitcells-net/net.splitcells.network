@@ -23,7 +23,11 @@ import net.splitcells.dem.utils.StringUtils;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 import java.lang.management.OperatingSystemMXBean;
+import java.text.SimpleDateFormat;
 import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.IntStream;
@@ -38,12 +42,15 @@ public class HostUtilizationRecorder implements Service {
         return new HostUtilizationRecorder();
     }
 
+    private static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ISO_LOCAL_DATE_TIME
+            .withZone(ZoneId.systemDefault());
+
     private final Clock clock = Clock.systemDefaultZone();
 
     private final Runtime runtime = Runtime.getRuntime();
     private final MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
     private final OperatingSystemMXBean osBeam = ManagementFactory.getOperatingSystemMXBean();
-    private final List<Long> times = list();
+    private final List<Instant> times = list();
 
     private final List<Double> cpuCoreAverageLoad = list();
     private final List<Long> maxMemory = list();
@@ -58,7 +65,7 @@ public class HostUtilizationRecorder implements Service {
     private HostUtilizationRecorderAccess access = new HostUtilizationRecorderAccess() {
 
         @Override
-        public ListView<Long> times() {
+        public ListView<Instant> times() {
             return HostUtilizationRecorder.this.times;
         }
 
@@ -82,7 +89,7 @@ public class HostUtilizationRecorder implements Service {
             try {
                 while (true) {
                     synchronized (recorder) {
-                        times.add(clock.millis());
+                        times.add(clock.instant());
                         final var heapMemoryUsage = memoryBean.getHeapMemoryUsage();
                         final var nonHeapMemoryUsage = memoryBean.getNonHeapMemoryUsage();
                         cpuCoreAverageLoad.add(osBeam.getSystemLoadAverage() / osBeam.getAvailableProcessors());
@@ -124,7 +131,7 @@ public class HostUtilizationRecorder implements Service {
             csv.append("time,max memory,used memory,free allocated memory, used heap memory, used none heap memory\n");
             final var measurementCount = s.times().size();
             IntStream.range(0, measurementCount).forEach(i -> {
-                csv.append(s.times().get(i));
+                csv.append(DATE_TIME_FORMAT.format(s.times().get(i)));
                 csv.append(",");
                 csv.append(maxMemory.get(i));
                 csv.append(",");
@@ -147,7 +154,7 @@ public class HostUtilizationRecorder implements Service {
             csv.append("time,cpu core average load\n");
             final var measurementCount = s.times().size();
             IntStream.range(0, measurementCount).forEach(i -> {
-                csv.append(s.times().get(i));
+                csv.append(DATE_TIME_FORMAT.format(s.times().get(i)));
                 csv.append(",");
                 csv.append(cpuCoreAverageLoad.get(i));
                 csv.append("\n");
