@@ -181,7 +181,8 @@ request.onload = function() {
     };
 }
 request.open("GET", csvPath);
-request.send();]]></x:script>
+request.send();]]>
+                    </x:script>
                 </s:content>
             </s:layout.config>
         </xsl:variable>
@@ -209,6 +210,11 @@ request.send();]]></x:script>
                     <s:redirect>
                         <xsl:copy-of select="./s:meta/s:redirect/node()"/>
                     </s:redirect>
+                </xsl:if>
+                <xsl:if test="./s:meta/s:full-screen-by-default">
+                    <s:full-screen-by-default>
+                        <xsl:copy-of select="./s:meta/s:full-screen-by-default/node()"/>
+                    </s:full-screen-by-default>
                 </xsl:if>
                 <xsl:if test="./s:meta/s:republication">
                     <s:republication>
@@ -552,12 +558,24 @@ request.send();]]></x:script>
                                 </link>
                             </xsl:otherwise>
                         </xsl:choose>
-                        <link rel="stylesheet" type="text/css" media="none">
-                            <xsl:attribute name="href">
-                                <xsl:value-of
-                                        select="s:default-root-relative-url('net/splitcells/website/css/layout.column.main.fullscreen.css')"/>
-                            </xsl:attribute>
-                        </link>
+                        <xsl:choose>
+                            <xsl:when test="./s:content/s:meta/s:full-screen-by-default/node() = 'true'">
+                                <link rel="stylesheet" type="text/css">
+                                    <xsl:attribute name="href">
+                                        <xsl:value-of
+                                                select="s:default-root-relative-url('net/splitcells/website/css/layout.column.main.fullscreen.css')"/>
+                                    </xsl:attribute>
+                                </link>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <link rel="stylesheet" type="text/css" media="none">
+                                    <xsl:attribute name="href">
+                                        <xsl:value-of
+                                                select="s:default-root-relative-url('net/splitcells/website/css/layout.column.main.fullscreen.css')"/>
+                                    </xsl:attribute>
+                                </link>
+                            </xsl:otherwise>
+                        </xsl:choose>
                     </head>
                     <body>
                         <header class="Standard_p5 topLightShadow">
@@ -574,23 +592,46 @@ request.send();]]></x:script>
                                                 <xsl:copy-of
                                                         select="$net-splitcells-website-server-config-window-menu"/>
                                                 <div class="net-splitcells-space-filler"></div>
-                                                <div class="net-splitcells-action-button net-splitcells-button-inline page-column-0-full-screen net-splitcells-minimal-not"
-                                                     onclick="javascript: fullScreenEnable();
+                                                <xsl:choose>
+                                                    <xsl:when test="./s:content/s:meta/s:full-screen-by-default/node() = 'true'">
+                                                        <div class="net-splitcells-action-button net-splitcells-button-inline page-column-0-full-screen net-splitcells-minimal-not"
+                                                             style="visibility: hidden; display: none;"
+                                                             onclick="javascript: fullScreenEnable();
 														unshowByCssClass('page-column-0-full-screen');
 										                unshowByCssClass('column_1');
 										                showByCssClass('page-column-0-windowed');
 													">
-                                                    <xsl:text>☐</xsl:text>
-                                                </div>
-                                                <div class="net-splitcells-button-inline net-splitcells-action-button page-column-0-windowed optional"
-                                                     style="visibility: hidden; display: none;"
-                                                     onclick="javascript: fullScreenDisable();
+                                                            <xsl:text>☐</xsl:text>
+                                                        </div>
+                                                        <div class="net-splitcells-button-inline net-splitcells-action-button page-column-0-windowed optional"
+                                                             onclick="javascript: fullScreenDisable();
 													hide('page-column-0-windowed');
 														unshowByCssClass('page-column-0-windowed');
 														showByCssClass('page-column-0-full-screen');
 														showByCssClass('column_1');">
-                                                    <xsl:text>_</xsl:text>
-                                                </div>
+                                                            <xsl:text>_</xsl:text>
+                                                        </div>
+                                                    </xsl:when>
+                                                    <xsl:otherwise>
+                                                        <div class="net-splitcells-action-button net-splitcells-button-inline page-column-0-full-screen net-splitcells-minimal-not"
+                                                             onclick="javascript: fullScreenEnable();
+														unshowByCssClass('page-column-0-full-screen');
+										                unshowByCssClass('column_1');
+										                showByCssClass('page-column-0-windowed');
+													">
+                                                            <xsl:text>☐</xsl:text>
+                                                        </div>
+                                                        <div class="net-splitcells-button-inline net-splitcells-action-button page-column-0-windowed optional"
+                                                             style="visibility: hidden; display: none;"
+                                                             onclick="javascript: fullScreenDisable();
+													hide('page-column-0-windowed');
+														unshowByCssClass('page-column-0-windowed');
+														showByCssClass('page-column-0-full-screen');
+														showByCssClass('column_1');">
+                                                            <xsl:text>_</xsl:text>
+                                                        </div>
+                                                    </xsl:otherwise>
+                                                </xsl:choose>
                                             </div>
                                             <div class="net-splitcells-structural-guide"/>
                                             <div class="splitcells-net-window-menu-line-2 splitcells-net-line net-splitcells-component-priority-1-a">
@@ -646,22 +687,44 @@ request.send();]]></x:script>
                                                 <div class="Right_shadow Standard_p2 splitcells-net-window-menu">
                                                     <div class="Standard_p2 bottomLightShadow splitcells-net-line net-splitcells-minimal-not net-splitcells-component-priority-2">
                                                         <div class="net-splitcells-space-filler"></div>
-                                                        <div class="net-splitcells-action-button net-splitcells-button-inline page-column-1-full-screen optional net-splitcells-minimal-not"
-                                                             onclick="javascript: fullScreenEnable();
+                                                        <xsl:choose>
+                                                            <xsl:when test="./s:content/s:meta/s:full-screen-by-default/node() = 'true'">
+                                                                <div class="net-splitcells-action-button net-splitcells-button-inline page-column-1-full-screen optional net-splitcells-minimal-not"
+                                                                     style="visibility: hidden; display: none;"
+                                                                     onclick="javascript: fullScreenEnable();
 														unshowByCssClass('page-column-1-full-screen');
 										                unshowByCssClass('net-splitcells-content-main');
 										                showByCssClass('page-column-1-windowed');">
-                                                            <xsl:text>☐</xsl:text>
-                                                        </div>
-                                                        <div class="net-splitcells-action-button page-column-1-windowed optional"
-                                                             style="visibility: hidden; display: none;"
-                                                             onclick="javascript: fullScreenDisable();
+                                                                    <xsl:text>☐</xsl:text>
+                                                                </div>
+                                                                <div class="net-splitcells-action-button page-column-1-windowed optional"
+                                                                     onclick="javascript: fullScreenDisable();
 													hide('page-column-1-windowed');
 														unshowByCssClass('page-column-1-windowed');
 														showByCssClass('page-column-1-full-screen');
 														showByCssClass('net-splitcells-content-main');">
-                                                            <xsl:text>_</xsl:text>
-                                                        </div>
+                                                                    <xsl:text>_</xsl:text>
+                                                                </div>
+                                                            </xsl:when>
+                                                            <xsl:otherwise>
+                                                                <div class="net-splitcells-action-button net-splitcells-button-inline page-column-1-full-screen optional net-splitcells-minimal-not"
+                                                                     onclick="javascript: fullScreenEnable();
+														unshowByCssClass('page-column-1-full-screen');
+										                unshowByCssClass('net-splitcells-content-main');
+										                showByCssClass('page-column-1-windowed');">
+                                                                    <xsl:text>☐</xsl:text>
+                                                                </div>
+                                                                <div class="net-splitcells-action-button page-column-1-windowed optional"
+                                                                     style="visibility: hidden; display: none;"
+                                                                     onclick="javascript: fullScreenDisable();
+													hide('page-column-1-windowed');
+														unshowByCssClass('page-column-1-windowed');
+														showByCssClass('page-column-1-full-screen');
+														showByCssClass('net-splitcells-content-main');">
+                                                                    <xsl:text>_</xsl:text>
+                                                                </div>
+                                                            </xsl:otherwise>
+                                                        </xsl:choose>
                                                     </div>
                                                     <div class="net-splitcells-structural-guide"/>
                                                     <div class="net-splitcells-component-priority-2 splitcells-net-window-menu-line-2">

@@ -7,6 +7,8 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
 
 ## [Unreleased]
 ### Major Changes
-* **2023-02-12: \#s148** Explicitly set priority of menu buttons for section headings.
+* **2023-02-12: \#s148**: Explicitly set priority of menu buttons for section headings.
 ### Minor Changes
+* **2024-01-03: \#252**: Setting the `full-screen-by-default` element to `true` in the `meta` element of an article,
+    renders the document with the full screen mode enabled at the start.
 * **2023-02-12: \#218**: Create shorter form of links: `<link url="[URL]">[TEXT]</link>`.
