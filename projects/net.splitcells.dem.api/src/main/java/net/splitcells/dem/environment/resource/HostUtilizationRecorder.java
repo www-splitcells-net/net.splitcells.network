@@ -104,6 +104,7 @@ public class HostUtilizationRecorder implements Service {
             } catch (InterruptedException e) {
                 times.removeAll();
                 maxMemory.removeAll();
+                Thread.currentThread().interrupt();
                 return;
             }
         });
