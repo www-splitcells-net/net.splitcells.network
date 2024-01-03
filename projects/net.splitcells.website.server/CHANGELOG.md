@@ -28,6 +28,10 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
   2. Create interface `ProjectsRenderer` used by `ProjectsRendererI`.
      This way alternative web server implementations are possible.
 ### Minor Changes
+* **2024-01-03: \#252** Provide `isServerForGeneralPublic` config for server,
+    in order to only enable notifications with `only-for-general-public=true`,
+    if `isServerForGeneralPublic` is also true.
+    `isServerForGeneralPublic` is set to true by default.
 * **2023-11-05: \#267** Provide table showing Dem's configuration via `net/splitcells/dem/config.html`.
 * **2023-10-19: \#252** Add `projectsRendererExtensions` to Config in order dynamically add extension to the server.
 * **2023-09-06: \#249**

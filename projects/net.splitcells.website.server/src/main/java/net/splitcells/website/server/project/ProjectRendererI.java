@@ -203,6 +203,10 @@ public class ProjectRendererI implements ProjectRenderer {
                                         .map(js -> "<val>" + js + "</val>")
                                         .reduce("", (a, b) -> a + b) +
                                 "</val>");
+                    } else if ("/net/splitcells/website/server/config/is-server-for-general-public.xml".equals(p)) {
+                        return Optional.of("<val xmlns=\"http://splitcells.net/den.xsd\">"
+                                + config.isServerForGeneralPublic()
+                                + "</val>");
                     }
                     return Optional.empty();
                 });

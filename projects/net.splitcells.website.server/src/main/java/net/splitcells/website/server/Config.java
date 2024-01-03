@@ -184,18 +184,14 @@ public class Config {
     private List<ProjectsRendererExtension> projectsRendererExtension = list();
 
     private ProcessorRegistry<Perspective, Perspective> processor = binaryProcessorRegistry();
-    /*new BinaryProcessor() {
-        @Override
-        public BinaryResponse process(BinaryRequest request) {
-            final var response = binaryResponse();
-            response.data().put(PRIMARY_TEXT_RESPONSE
-                    , binaryMessage(perspective("no-response")
-                                    .toJsonString()
-                                    .getBytes(StandardCharsets.UTF_8)
-                            , JSON));
-            return response;
-        }
-    };*/
+
+    /**
+     * Signals whether this server is available for the general public.
+     * If this is the case, some functionality may to have be changed.
+     * This is typically used in order to show a terms of service or privacy pop-up,
+     * when this web server instance is provided to the general public.
+     */
+    private boolean isServerForGeneralPublic = true;
 
     private Config() {
     }
@@ -438,6 +434,15 @@ public class Config {
 
     public Config withAdditionalProcessor(Trail trail, Processor<Perspective, Perspective> arg) {
         processor.register(trail, arg);
+        return this;
+    }
+
+    public boolean isServerForGeneralPublic() {
+        return isServerForGeneralPublic;
+    }
+
+    public Config withIsServerForGeneralPublic(boolean arg) {
+        isServerForGeneralPublic = arg;
         return this;
     }
 }
