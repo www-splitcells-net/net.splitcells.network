@@ -16,6 +16,8 @@
 package net.splitcells.dem.lang.perspective;
 
 import net.splitcells.dem.data.atom.Bools;
+import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.Xml;
@@ -24,15 +26,18 @@ import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.namespace.NameSpace;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.resource.communication.Sender;
+import net.splitcells.dem.utils.StringUtils;
 import org.assertj.core.api.Assertions;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.atom.Bools.bool;
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.list.Lists.toList;
@@ -43,6 +48,7 @@ import static net.splitcells.dem.resource.communication.Sender.stringSender;
 import static net.splitcells.dem.utils.BinaryUtils.binaryOutputStream;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.StringUtils.multiple;
+import static net.splitcells.dem.utils.StringUtils.stringBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -77,6 +83,10 @@ public interface Perspective extends PerspectiveView {
     default Perspective withProperty(String name, NameSpace nameSpace, String value) {
         return withValue(perspective(name, nameSpace)
                 .withValue(perspective(value, STRING)));
+    }
+
+    default Perspective withProperty(String name, NameSpace nameSpace, Perspective value) {
+        return withValue(perspective(name, nameSpace).withValue(value));
     }
 
     default Perspective withProperty(String name, String value) {
@@ -313,7 +323,9 @@ public interface Perspective extends PerspectiveView {
      *                               if the {@link NameSpace} is not {@link NameSpaces#HTML}, {@link NameSpaces#STRING},
      *                               {@link NameSpaces#NATURAL} or {@link NameSpaces#DEN}.
      * @return
+     * @deprecated Use {@link #toXmlStringWithAllNameSpaceDeclarationsAtTop} instead.
      */
+    @Deprecated
     default String toXmlString(boolean withNameSpaceAttribute) {
         String xmlString = "";
         if (name().isBlank()) {
@@ -369,6 +381,51 @@ public interface Perspective extends PerspectiveView {
             }
         }
         return xmlString;
+    }
+
+    default void visit(Consumer<Perspective> visitor) {
+        visitor.accept(this);
+        children().forEach(c -> c.visit(visitor));
+    }
+
+    default String toXmlStringWithAllNameSpaceDeclarationsAtTop() {
+        final Set<NameSpace> nameSpaces = setOfUniques();
+        visit(p -> nameSpaces.add(p.nameSpace()));
+        if (name().isBlank()) {
+            return "<empty/>";
+        }
+        String xmlString = "";
+        if (children().isEmpty()) {
+            xmlString += "<" + nameSpace().defaultPrefix()
+                    + ":"
+                    + name()
+                    + " "
+                    + nameSpaceDeclarations(nameSpaces)
+                    + "/>";
+        } else {
+            xmlString += "<"
+                    + nameSpace().defaultPrefix()
+                    + ":"
+                    + name()
+                    + " "
+                    + nameSpaceDeclarations(nameSpaces)
+                    + ">";
+            xmlString += children().stream().map(Perspective::toXmlStringWithPrefixes).reduce((a, b) -> a + b).orElse("");
+            xmlString += "</" + nameSpace().defaultPrefix() + ":" + name() + ">";
+        }
+        return xmlString;
+    }
+
+    private static String nameSpaceDeclarations(Set<NameSpace> nameSpaces) {
+        final var declarations = stringBuilder();
+        nameSpaces.forEach(n -> {
+            declarations.append("xmlns:");
+            declarations.append(n.defaultPrefix());
+            declarations.append("=\"");
+            declarations.append(n.uri());
+            declarations.append("\" ");
+        });
+        return declarations.toString();
     }
 
     default String toXmlStringWithPrefixes() {

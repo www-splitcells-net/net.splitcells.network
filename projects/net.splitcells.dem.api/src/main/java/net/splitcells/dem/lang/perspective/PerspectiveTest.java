@@ -148,4 +148,11 @@ public class PerspectiveTest {
                 .toXmlStringWithPrefixes();
         requireEquals(resultData, "<s:test><s:case/></s:test>");
     }
+
+    @UnitTest
+    public void testToXmlStringWithAllNameSpaceDeclarationsAtTop() {
+        final var resultData = perspective("test", SEW).withChild(perspective("case", SEW))
+                .toXmlStringWithAllNameSpaceDeclarationsAtTop();
+        requireEquals(resultData, "<s:test xmlns:s=\"http://splitcells.net/sew.xsd\" ><s:case/></s:test>");
+    }
 }
