@@ -19,6 +19,7 @@ import net.splitcells.dem.data.set.SetT;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
+import net.splitcells.dem.resource.communication.log.Logs;
 import net.splitcells.dem.utils.random.Randomness;
 
 import java.util.Arrays;
@@ -27,6 +28,7 @@ import java.util.Collections;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -51,6 +53,18 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
      */
     default T removeAt(int index) {
         return this.remove(index);
+    }
+
+    default List<T> removeAll() {
+        try {
+            clear();
+        } catch (UnsupportedOperationException e) {
+            logs().appendWarning("Could not clear list natively. Using fallback instead.", e);
+            while (hasElements()) {
+                removeAt(0);
+            }
+        }
+        return this;
     }
 
     @Deprecated
