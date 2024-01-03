@@ -19,6 +19,22 @@
             <d:toDo>Export and import data from Excel format.</d:toDo>
         </d:toDo>
     </meta>
+    <notification>
+        <only-for-general-public>true</only-for-general-public>
+        <chapter>
+            <title>Terms Of Service</title>
+            <paragraph>By using the server you are accepting the following:</paragraph>
+            <paragraph>
+                When data is submitted, your input data is uploaded to the server for processing.
+                For logging the data is stored on the server for up to a year and will not be given to third parties.
+            </paragraph>
+            <paragraph>
+                No guarantees are provided and you are responsible for using the server.
+                You are not allowed to upload private data to the server.
+            </paragraph>
+        </chapter>
+        <accept-notification>I agree, with the Terms of service for using this server.</accept-notification>
+    </notification>
     <paragraph>
         This editor allows one to define an assignment problem and to let it solve by the Generic Allocator.
         Please, define the problem definition and enter the data for demands and supplies in CSV format.
