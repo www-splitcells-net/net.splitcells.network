@@ -105,7 +105,6 @@ public class HostUtilizationRecorder implements Service {
                 times.removeAll();
                 maxMemory.removeAll();
                 Thread.currentThread().interrupt();
-                return;
             }
         });
         newRunner.start();
