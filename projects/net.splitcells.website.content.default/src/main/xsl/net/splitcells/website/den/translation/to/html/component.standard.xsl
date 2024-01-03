@@ -964,50 +964,60 @@ httpRequest.send(null);]]>
         <script src="/net/splitcells/website/js/chart.js"></script>
         <script src="/net/splitcells/website/js/chartjs-plugin-datasource.js"></script>
         <canvas id="myChart"></canvas>
-        <script type="text/javascript">
-            <![CDATA[
-var chartColors = {
-    red: 'rgb(255, 99, 132)',
-    blue: 'rgb(54, 162, 235)'
-};
-
-var color = Chart.helpers.color;
-var config = {
-    type: 'bar',
-    data: {
-        datasets: [{
+        <script type="text/javascript"><![CDATA[
+let chartColors = [];
+for (var i = 0; i != 37; ++i) {
+    chartColors.push('hsl(' + (i *10) + ', 100%, 50%)');
+}
+function createDatasets(numberOfColumns) {
+    let datasets = [];
+    for (var i = 0; i != numberOfColumns; ++i) {
+        datasets.push({
             type: 'line',
-            yAxisID: 'yAxes',
             backgroundColor: 'transparent',
-            borderColor: chartColors.red,
-            pointBackgroundColor: chartColors.red,
-        }]
-    },
-    plugins: [ChartDataSource],
-    options: {
-        scales: {
-            xAxes: [{id: 'xAxes'}],
-            yAxes: [{id: 'yAxes'}]
+            borderColor: chartColors[i],
+            pointBackgroundColor: chartColors[i],
+        });
+    }
+    return datasets;
+}
+let csvPath = ']]><xsl:value-of select="./s:path"/><![CDATA[';
+var request = new XMLHttpRequest();
+request.onload = function() {
+    let numberOfColumns = (request.responseText.split('\n')[0].match(/,/g) || []).length + 1;
+    let color = Chart.helpers.color;
+    let config = {
+        type: 'line',
+        data: {
+            datasets: createDatasets(numberOfColumns)
         },
-        plugins: {
-            datasource: {
-                type: 'csv',
-                url: ']]><xsl:value-of select="./s:path"/><![CDATA[',
-                delimiter: ',',
-                rowMapping: 'index',
-                datasetLabels: true,
-                indexLabels: true
+        plugins: [ChartDataSource],
+        labels: [],
+        options: {
+            scales: {
+                xAxes: [{id: 'xAxes'}],
+                yAxes: [{id: 'yAxes'}]
+            },
+            plugins: {
+                datasource: {
+                    type: 'csv',
+                    url: csvPath,
+                    delimiter: ',',
+                    rowMapping: 'index',
+                    datasetLabels: true,
+                    indexLabels: true
+                }
             }
         }
-    }
-};
+    };
 
-window.onload = function() {
-    var ctx = document.getElementById('myChart').getContext('2d');
-    window.myChart = new Chart(ctx, config);
-};
-]]>
-        </script>
+    window.onload = function() {
+        let ctx = document.getElementById('myChart').getContext('2d');
+        window.myChart = new Chart(ctx, config);
+    };
+}
+request.open("GET", csvPath);
+request.send();]]></script>
     </xsl:template>
     <xsl:template match="s:import">
         <xsl:choose>
