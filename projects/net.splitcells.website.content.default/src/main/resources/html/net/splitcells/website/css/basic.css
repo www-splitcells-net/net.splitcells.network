@@ -337,6 +337,7 @@ td.TextCell {
 	}
 .MainButton_S, .net-splitcells-button {
 	padding-left: 1em;
+	padding-right: 1em;
 	margin-top: .05em;
 	margin-bottom: .05em;
 	font-weight: bold;
