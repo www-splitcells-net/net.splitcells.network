@@ -11,6 +11,7 @@
 }
 .net-splitcells-content-main {
     width: 100% !important;
+    flex: 1;
 }
 .column_1 {
 	width: inherit !important;
