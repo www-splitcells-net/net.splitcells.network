@@ -141,4 +141,11 @@ public class PerspectiveTest {
                         + "    * sed pretium felis:\n"
                         + "        * Aliquam orci nunc\n");
     }
+
+    @UnitTest
+    public void testToXmlStringWithPrefixesAndGenericNameSpaceCase() {
+        final var resultData = perspective("test", SEW).withChild(perspective("case", SEW))
+                .toXmlStringWithPrefixes();
+        requireEquals(resultData, "<s:test><s:case/></s:test>");
+    }
 }

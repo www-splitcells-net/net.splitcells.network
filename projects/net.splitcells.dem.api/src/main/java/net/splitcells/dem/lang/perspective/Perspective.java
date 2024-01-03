@@ -411,7 +411,13 @@ public interface Perspective extends PerspectiveView {
                 xmlString += "</d:" + name() + ">";
             }
         } else {
-            throw executionException("No prefix known for given perspective: " + nameSpace().uri());
+            if (children().isEmpty()) {
+                xmlString += "<" + nameSpace().defaultPrefix() + ":" + name() + "/>";
+            } else {
+                xmlString += "<" + nameSpace().defaultPrefix() + ":" + name() + ">";
+                xmlString += children().stream().map(Perspective::toXmlStringWithPrefixes).reduce((a, b) -> a + b).orElse("");
+                xmlString += "</" + nameSpace().defaultPrefix() + ":" + name() + ">";
+            }
         }
         return xmlString;
     }
