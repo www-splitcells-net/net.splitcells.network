@@ -12,6 +12,7 @@
     <meta>
         <title>Generic Allocation Editor</title>
         <description>Define and solve assignment problems.</description>
+        <full-screen-by-default>true</full-screen-by-default>
         <d:toDo>
             <d:toDo>Import supplies and demands from local file via Tabulator.</d:toDo>
             <d:toDo>Edit supply and demand data via Tabulator for a better use experience.</d:toDo>
