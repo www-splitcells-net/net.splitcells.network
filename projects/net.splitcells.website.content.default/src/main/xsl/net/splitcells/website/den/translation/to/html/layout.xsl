@@ -135,7 +135,7 @@ for (var i = 0; i != 37; ++i) {
 }
 function createDatasets(numberOfColumns) {
     let datasets = [];
-    for (var i = 0; i != numberOfColumns; ++i) {
+    for (var i = 0; i != numberOfColumns - 1; ++i) {
         datasets.push({
             type: 'line',
             backgroundColor: 'transparent',
