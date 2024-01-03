@@ -242,6 +242,7 @@ footer {
         }
     .column_1 {
         width: var(--column-standard-width);
+        flex: 1;
         }
     }
 @media (max-width: 59em) and (min-width: 53.25em) {
