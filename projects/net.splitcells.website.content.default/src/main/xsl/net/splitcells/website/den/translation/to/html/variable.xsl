@@ -16,7 +16,7 @@
 
 ]]>&#10;&#10;&#10;&#9;
     </xsl:variable>
-    <xsl:variable name="siteName" select="'Splitcells Network'"/>
+    <xsl:variable name="siteName" select="'Splitcells™ Network'"/>
     <xsl:variable name="site.description" select="'splitcells.net by Mārtiņš Avots NOS'"/>
     <xsl:variable name="generation.style">
         <!-- Currently, only standard and minimal are supported. -->
