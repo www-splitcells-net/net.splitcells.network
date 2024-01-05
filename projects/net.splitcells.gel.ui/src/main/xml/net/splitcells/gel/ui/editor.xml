@@ -61,11 +61,11 @@
             <title>Problem Data</title>
             <chapter minimized="true">
                 <title>Demands</title>
-                <text-area id="net-splitcells-gel-ui-editor-form-demands" initial-content-at="http://localhost:8443/net/splitcells/gel/ui/colloquium-planning-demands-test-data.csv"><![CDATA[]]></text-area>
+                <text-area id="net-splitcells-gel-ui-editor-form-demands" initial-content-at="/net/splitcells/gel/ui/colloquium-planning-demands-test-data.csv"><![CDATA[]]></text-area>
             </chapter>
             <chapter minimized="true">
                 <title>Supplies</title>
-                <text-area id="net-splitcells-gel-ui-editor-form-supplies" initial-content-at="http://localhost:8443/net/splitcells/gel/ui/colloquium-planning-supplies-test-data.csv"><![CDATA[]]></text-area>
+                <text-area id="net-splitcells-gel-ui-editor-form-supplies" initial-content-at="/net/splitcells/gel/ui/colloquium-planning-supplies-test-data.csv"><![CDATA[]]></text-area>
             </chapter>
         </chapter>
         <chapter>
