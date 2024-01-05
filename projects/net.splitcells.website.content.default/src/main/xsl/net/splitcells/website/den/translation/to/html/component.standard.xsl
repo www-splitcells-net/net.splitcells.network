@@ -263,14 +263,17 @@
             <xsl:apply-templates select="./text()"/>
         </textarea>
         <xsl:if test="./@initial-content-at">
+            <!-- Listening on DOMContentLoaded is required, so that is ensured, that the textarea is available, before writing its default content. -->
             <script type="text/javascript"><![CDATA[
-var httpRequest = new XMLHttpRequest();
-httpRequest.open("GET", "]]><xsl:value-of select="./@initial-content-at"/><![CDATA[", true);
-function listener() {
-    document.getElementById(']]><xsl:value-of select="./@id"/><![CDATA[').innerHTML = this.responseText;
-}
-httpRequest.addEventListener("load", listener);
-httpRequest.send(null);]]>
+document.addEventListener('DOMContentLoaded', function(){
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.open("GET", "]]><xsl:value-of select="./@initial-content-at"/><![CDATA[", true);
+    function listener() {
+        document.getElementById(']]><xsl:value-of select="./@id"/><![CDATA[').innerHTML = this.responseText;
+    }
+    httpRequest.addEventListener("load", listener);
+    httpRequest.send(null);
+});]]>
             </script>
         </xsl:if>
     </xsl:template>
