@@ -12,6 +12,8 @@
 ## Where to start?
 🥅 Understand the [objectives](https://splitcells.net/net/splitcells/network/objectives.html) of the project.
 
+🚑 Get some [community help and support](https://github.com/www-splitcells-net/net.splitcells.network/issues).
+
 🪧 Get to know the main [features](https://splitcells.net/net/splitcells/network/advertisement.html).
 
 🚀 [Model and optimize problems.](http://splitcells.net/net/splitcells/gel/index.html)
