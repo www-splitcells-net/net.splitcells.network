@@ -3,6 +3,7 @@
 SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
+TODO Always use dedicated remotes, as its otherwise harder to work on such repos by hand.
 TODO Use a config object instead of arguments, in order to simplify code.
 TODO Use only python for recursion and not shell, in order simplify command.
 TODO Document that `repo.synchronize` etc. only work on default branch by default.
