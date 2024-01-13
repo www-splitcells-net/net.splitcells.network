@@ -102,6 +102,7 @@ class_member
     | class_member_method_definition
     | class_member_value_declaration
     | Comment_multiline
+    | Line_comment
     ;
 class_constructor
     : javadoc? annotation* Keyword_private name call_arguments statement_body
