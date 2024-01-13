@@ -92,7 +92,7 @@ public class IdentifiedNameGenerator {
             "Dominik",
             "Edgar",
             "Pia",
-            "Günter",
+            "Guenter",
             "Eva",
             "Walter",
             "Christiane",
