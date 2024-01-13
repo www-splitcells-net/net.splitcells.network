@@ -17,7 +17,6 @@ package net.splitcells.dem.environment.config.framework;
 
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.function.Function;
 
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
