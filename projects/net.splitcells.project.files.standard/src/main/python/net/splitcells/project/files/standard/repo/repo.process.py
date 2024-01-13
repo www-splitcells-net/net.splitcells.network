@@ -35,6 +35,7 @@ TODO Make it possible to `repo.synchronize` etc. all branches of a repo.
      The meta repo therefore needs to store some commit info as well and not just the name of the deleted branch.
 TODO Maybe repo process should support just being a wrapper around git submodules,
      that provides easy workflows.
+TODO Handle deletion of sub repos by remote during repo synchronization.
 """
 
 __author__ = "Mārtiņš Avots"
