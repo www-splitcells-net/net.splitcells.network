@@ -51,6 +51,7 @@ lexer grammar Java11Lexer;
     		| 'import java.time.format.DateTimeFormatter;'
     		| 'import java.time.LocalDate;'
     		| 'import java.time.ZonedDateTime;'
+    		| 'import java.time.Instant;'
     		| 'import java.util.function.Consumer;'
     		| 'import java.util.function.Supplier;'
     		| 'import java.util.function.Predicate;'
