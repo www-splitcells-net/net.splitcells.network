@@ -131,6 +131,7 @@ lexer grammar Java11Lexer;
 	Keyword_synchronized: 'synchronized';
 	Keyword_super: 'super';
 	Keyword_throw: 'throw';
+	Keyword_throws: 'throws';
 	Keyword_try: 'try';
 	Keyword_var: 'var';
 	Keyword_while: 'while';

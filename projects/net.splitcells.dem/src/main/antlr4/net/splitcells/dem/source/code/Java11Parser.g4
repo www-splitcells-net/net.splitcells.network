@@ -112,9 +112,10 @@ class_constructor
 class_member_method_definition
     : javadoc? annotation* modifier_visibility? Keyword_static? Keyword_synchronized?
     	type_argument? type_declaration
-        name call_arguments Brace_curly_open statement*
+        name call_arguments  class_member_method_definition_throws? Brace_curly_open statement*
         Brace_curly_closed
     ;
+class_member_method_definition_throws : Keyword_throws name;
 class_member_value_declaration
     : javadoc? annotation? modifier_visibility? Keyword_static? Keyword_final?
         type_declaration? name Equals statement
