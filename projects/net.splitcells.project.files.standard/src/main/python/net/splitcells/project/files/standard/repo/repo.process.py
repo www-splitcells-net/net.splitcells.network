@@ -34,6 +34,11 @@ TODO Make it possible to `repo.synchronize` etc. all branches of a repo.
      Create a new peer meta repo, that contains the names of all deleted branches.
      Beware that different branches can be created over time with the same name.
      The meta repo therefore needs to store some commit info as well and not just the name of the deleted branch.
+     Only using fast forward pushes and merges seems to be a good method,
+     that works great, if no conflicts are present.
+     It may be enough, to fix conflicts always by hand, as these should not occur often.
+     Some kind of options or flags could be used in the future,
+     in order to resolve certain conflicts.
 TODO Maybe repo process should support just being a wrapper around git submodules,
      that provides easy workflows.
 TODO Handle deletion of sub repos by remote during repo synchronization.
