@@ -29,7 +29,8 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * TODO RENAME because it conflicts with {@link java.nio.file.Paths}.
+ * <p>TODO REMOVE Keep in mind, that the Java's Path API is deprecated in this project.</p>
+ * <p>TODO RENAME because it conflicts with {@link java.nio.file.Paths}.</p>
  * <p>
  * TODO Create an own implementation of path like data structure. Such object should have
  * an conversion method, that transforms the path to a file like object, in order to make it easy to interact with it.
@@ -79,5 +80,9 @@ public final class Paths {
         } catch (Throwable th) {
             throw executionException("Could not remove suffix from file name: " + fileName, th);
         }
+    }
+
+    public static String toString(Path path) {
+        return path.toString().replace('\\', '/');
     }
 }

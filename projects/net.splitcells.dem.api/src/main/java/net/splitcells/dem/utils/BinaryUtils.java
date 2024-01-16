@@ -17,6 +17,7 @@ package net.splitcells.dem.utils;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
@@ -29,6 +30,10 @@ public class BinaryUtils {
 
     public static ByteArrayOutputStream binaryOutputStream() {
         return new ByteArrayOutputStream();
+    }
+
+    public static ByteArrayInputStream binaryInputStream(byte[] content) {
+        return new ByteArrayInputStream(content);
     }
 
     public static byte[] emptyByteArray() {

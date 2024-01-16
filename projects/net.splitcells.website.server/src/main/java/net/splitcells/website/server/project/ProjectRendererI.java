@@ -64,6 +64,7 @@ import static net.splitcells.website.server.project.renderer.extension.commonmar
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkProjectRendererExtension.commonMarkExtension;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkReadmeProjectRendererExtension.commonMarkReadmeRenderer;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.RootFileProjectRendererExtension.rootFileProjectRendererExtension;
+import static net.splitcells.website.server.projects.ProjectsRendererSourceCodeFileSystem.projectsRendererSourceCodeFileSystem;
 
 /**
  * <p>TODO Use resource folder for xml, txt and etc.</p>
@@ -104,16 +105,19 @@ public class ProjectRendererI implements ProjectRenderer {
     private final ProjectRendererExtensionMerger renderer = rendererMerger();
     private final Config config;
     private Optional<FileStructureTransformer> transformer = Optional.empty();
+    private Optional<ProjectsRenderer> projectsRenderer;
 
     protected ProjectRendererI(String renderer, FileSystemView projectSrcFolder, FileSystemView xslLibs, FileSystemView resources, String resourceRootPath
             , boolean typedFolder
             , boolean flatRepository
             , SourceValidator sourceValidator
             , FileSystemView projectFolder
-            , Config config) {
+            , Config config
+            , Optional<ProjectsRenderer> projectsRendererArg) {
         if (resourceRootPath.isEmpty()) {
             throw executionException("resourceRootPath is not allowed to be empty. It has to at least be `/`.");
         }
+        projectsRenderer = projectsRendererArg;
         this.typedFolder = typedFolder;
         this.profile = renderer;
         this.projectSrcFolder = projectSrcFolder;
@@ -208,7 +212,8 @@ public class ProjectRendererI implements ProjectRenderer {
                     }
                     return Optional.empty();
                 }
-                , fileSystemVoid());
+                , projectsRenderer.map(p -> (FileSystemView) projectsRendererSourceCodeFileSystem(p))
+                        .orElseGet(() -> fileSystemVoid()));
         if (config.cacheRenderers()) {
             transformer = Optional.of(createdRenderer);
         }
