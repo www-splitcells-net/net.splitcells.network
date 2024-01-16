@@ -156,14 +156,11 @@ public class ProjectRendererI implements ProjectRenderer {
      * IDEA Create mode where the renderer ist cached.
      */
     private FileStructureTransformer renderer() {
-        if (transformer.isEmpty()) {
-            return createRenderer();
-        }
-        return createRenderer();
+        return transformer.orElseGet(this::createRenderer);
     }
 
     private FileStructureTransformer createRenderer() {
-        return fileStructureTransformer(xslLibs
+        final var createdRenderer = fileStructureTransformer(xslLibs
                 , "main." + profile + ".xsl"
                 , sourceValidator
                 , p -> {
@@ -212,6 +209,10 @@ public class ProjectRendererI implements ProjectRenderer {
                     return Optional.empty();
                 }
                 , fileSystemVoid());
+        if (config.cacheRenderers()) {
+            transformer = Optional.of(createdRenderer);
+        }
+        return createdRenderer;
     }
 
     @Override
