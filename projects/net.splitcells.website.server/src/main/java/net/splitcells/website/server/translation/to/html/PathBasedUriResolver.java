@@ -39,6 +39,8 @@ public class PathBasedUriResolver implements URIResolver {
         return new PathBasedUriResolver(folder, extension, configFiles);
     }
 
+    private static final String CONFIG_FOLDER = "/net.splitcells.website.server/";
+
     private final FileSystemView folder;
     private final FileSystemView configFiles;
     /**
@@ -68,9 +70,9 @@ public class PathBasedUriResolver implements URIResolver {
             extensionResolution.setSystemId(Paths.get(href).toString());
             return extensionResolution;
         }
-        if (href.startsWith("/net.splitcells.website.server/")) {
+        if (href.startsWith(CONFIG_FOLDER)) {
             inputStream = configFiles.inputStream(net.splitcells.dem.resource.Paths
-                    .path(href.substring("/net.splitcells.website/current/xml".length())));
+                    .path(href.substring(CONFIG_FOLDER.length())));
         } else {
             final var rVal = new StreamSource(folder.inputStream(Paths.get(href)));
             rVal.setSystemId(Paths.get(href).toString());
