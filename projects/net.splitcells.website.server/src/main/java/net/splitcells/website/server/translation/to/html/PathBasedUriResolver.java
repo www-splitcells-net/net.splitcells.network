@@ -41,6 +41,10 @@ public class PathBasedUriResolver implements URIResolver {
 
     private final FileSystemView folder;
     private final FileSystemView configFiles;
+    /**
+     * Use {@link #configFiles} instead.
+     */
+    @Deprecated
     private final Function<String, Optional<String>> extension;
 
     private PathBasedUriResolver(FileSystemView folder, Function<String, Optional<String>> extension
@@ -64,12 +68,7 @@ public class PathBasedUriResolver implements URIResolver {
             extensionResolution.setSystemId(Paths.get(href).toString());
             return extensionResolution;
         }
-        if (href.startsWith("/net.splitcells.website/current/xml")) {
-            /*
-             * It is expected, that the website server is executed in a project.
-             * This project may contain configs at `/src/main/xml//net.splitcells.website/current/xml/**`.
-             * TODO The current implementation for this is a hack.
-             */
+        if (href.startsWith("/net.splitcells.website.server/")) {
             inputStream = configFiles.inputStream(net.splitcells.dem.resource.Paths
                     .path(href.substring("/net.splitcells.website/current/xml".length())));
         } else {

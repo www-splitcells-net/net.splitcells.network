@@ -42,6 +42,7 @@ import static net.splitcells.dem.lang.Xml.optionalDirectChildElementsByName;
 import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.ContentType.UTF_8;
+import static net.splitcells.dem.resource.FileSystemVoid.fileSystemVoid;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -209,7 +210,8 @@ public class ProjectRendererI implements ProjectRenderer {
                                 + "</val>");
                     }
                     return Optional.empty();
-                });
+                }
+                , fileSystemVoid());
     }
 
     @Override

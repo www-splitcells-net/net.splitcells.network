@@ -19,6 +19,7 @@ import net.splitcells.dem.resource.FileSystemView;
 import net.splitcells.dem.resource.Paths;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.project.validator.SourceValidator;
+import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.translation.to.html.XslTransformer;
 
 import java.util.Optional;
@@ -26,7 +27,6 @@ import java.util.function.Function;
 
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.dem.resource.FileSystemVoid.fileSystemVoid;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.website.server.translation.to.html.PathBasedUriResolver.pathBasedUriResolver;
 
@@ -35,19 +35,27 @@ public class FileStructureTransformer {
     public static FileStructureTransformer fileStructureTransformer(FileSystemView xslLibs
             , String transformerXsl
             , SourceValidator sourceValidator
-            , Function<String, Optional<String>> config) {
-        return new FileStructureTransformer(xslLibs, transformerXsl, sourceValidator, config);
+            , Function<String, Optional<String>> config
+            , FileSystemView configuration) {
+        return new FileStructureTransformer(xslLibs, transformerXsl, sourceValidator, config, configuration);
     }
 
     private final SourceValidator sourceValidator;
     private final String transformerXsl;
+    /**
+     * Use {@link #configuration} instead.
+     */
+    @Deprecated
     private final Function<String, Optional<String>> config;
     private final FileSystemView xslLibs;
+    private final FileSystemView configuration;
 
     private FileStructureTransformer(FileSystemView xslLibs
             , String transformerXsl
             , SourceValidator sourceValidator
-            , Function<String, Optional<String>> config) {
+            , Function<String, Optional<String>> config
+            , FileSystemView configurationArg) {
+        this.configuration = configurationArg;
         this.sourceValidator = sourceValidator;
         this.transformerXsl = transformerXsl;
         this.config = config;
@@ -68,7 +76,7 @@ public class FileStructureTransformer {
             return new XslTransformer
                     (xslLibs.inputStream(Paths.path(transformerXsl))
                             , pathBasedUriResolver(xslLibs
-                            , fileSystemVoid()
+                            , configuration
                             , config::apply));
         } catch (Exception e) {
             throw new RuntimeException(e);

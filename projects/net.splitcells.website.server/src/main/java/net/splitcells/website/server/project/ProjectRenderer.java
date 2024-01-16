@@ -56,7 +56,8 @@ public interface ProjectRenderer extends Renderer {
                 , false
                 , sourceValidator
                 , projectFolder
-                , config);
+                , config
+                , Optional.empty());
     }
 
     static ProjectRenderer projectRenderer(String renderer, FileSystemView projectFolder, FileSystemView xslLibs
@@ -73,7 +74,8 @@ public interface ProjectRenderer extends Renderer {
                 , false
                 , sourceValidator
                 , projectFolder
-                , config);
+                , config
+                , Optional.empty());
     }
 
     FileSystemView projectFileSystem();
