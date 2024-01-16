@@ -98,6 +98,15 @@ public interface ProjectsRenderer {
     Optional<BinaryMessage> render(String path);
 
     /**
+     * Retrieves the source code, for the given path.
+     * This is helpful, if the content of one file, depends on the content of another file.
+     *
+     * @param path This is the path for which the source code is requested.
+     * @return Returns the content, that is used the given path.
+     */
+    Optional<BinaryMessage> sourceCode(String path);
+
+    /**
      * @return All Paths In Relative Form
      */
     Set<Path> projectsPaths();

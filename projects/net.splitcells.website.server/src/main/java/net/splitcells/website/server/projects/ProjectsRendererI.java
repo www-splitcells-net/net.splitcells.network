@@ -21,6 +21,7 @@ import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Files;
+import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
@@ -269,6 +270,24 @@ public class ProjectsRendererI implements ProjectsRenderer {
         } catch (Exception e) {
             throw new RuntimeException("path: " + path + ", normalizedPath: " + normalizedPath, e);
         }
+    }
+
+    @Override
+    public Optional<BinaryMessage> sourceCode(String trail) {
+        final var sourceCodes = renderers
+                .stream()
+                .map(r -> r.sourceCode(trail))
+                .filter(Optional::isPresent)
+                .collect(toList());
+        if (sourceCodes.size() > 1) {
+            throw executionException(perspective("Multiple source codes for one trail. Trail of source code has to be unambiguous.")
+                    .withProperty("trail", trail.toString())
+                    .withProperty("source codes", sourceCodes.toString()));
+        }
+        if (sourceCodes.hasElements()) {
+            return sourceCodes.get(0);
+        }
+        return Optional.empty();
     }
 
     private Optional<BinaryMessage> validateRenderingResult(Optional<BinaryMessage> renderingResult, Path requestedPath) {

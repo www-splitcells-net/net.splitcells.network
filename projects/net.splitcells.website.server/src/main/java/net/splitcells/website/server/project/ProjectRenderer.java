@@ -16,6 +16,7 @@
 package net.splitcells.website.server.project;
 
 import net.splitcells.dem.resource.FileSystemView;
+import net.splitcells.dem.resource.Trail;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.project.validator.SourceValidator;
@@ -83,6 +84,10 @@ public interface ProjectRenderer extends Renderer {
 
     @Deprecated
     Optional<byte[]> renderString(String arg);
+
+    default Optional<BinaryMessage> sourceCode(String path) {
+        return Optional.empty();
+    }
 
     /**
      * TODO  This method should be based on {@link #renderXml(String, LayoutConfig, Config)}.
