@@ -31,6 +31,9 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**
  * <p>
@@ -58,7 +61,7 @@ public class ProjectRendererExtensionMerger implements ProjectRendererExtension 
                 .map(e -> e.metaData(path, projectsRenderer, projectRenderer))
                 .filter(Optional::isPresent)
                 .map(Optional::orElseThrow)
-                .collect(Lists.toList());
+                .collect(toList());
         if (rendering.size() > 1) {
             final var matchedExtensions = rendering.stream()
                     .map(PageMetaData::path)
@@ -81,7 +84,7 @@ public class ProjectRendererExtensionMerger implements ProjectRendererExtension 
         final var rendering = projectRendererExtensions.stream()
                 .map(e -> e.renderFile(path, projectsRenderer, projectRenderer))
                 .filter(e -> e.isPresent())
-                .collect(Lists.toList());
+                .collect(toList());
         if (rendering.size() > 1) {
             final var matchedExtensions = projectRendererExtensions.stream()
                     .filter(r -> r.renderFile(path, projectsRenderer, projectRenderer).isPresent())
@@ -98,6 +101,20 @@ public class ProjectRendererExtensionMerger implements ProjectRendererExtension 
         } else {
             return rendering.get(0);
         }
+    }
+
+    @Override
+    public Optional<BinaryMessage> sourceCode(String path) {
+        final var matches = projectRendererExtensions.stream()
+                .map(s -> s.sourceCode(path))
+                .filter(s -> s.isPresent())
+                .collect(toList());
+        if (matches.hasElements() && matches.size() != 1) {
+            throw executionException(perspective("No unambiguous match for source code found.")
+                    .withProperty("path", path)
+                    .withProperty("matches", matches.toString()));
+        }
+        return matches.get(0);
     }
 
     @Override
