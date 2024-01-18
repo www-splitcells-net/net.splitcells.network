@@ -36,6 +36,7 @@ import net.splitcells.website.server.projects.extension.ProjectsRendererExtensio
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
+import java.util.function.Function;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
@@ -80,6 +81,13 @@ public class ProjectsRendererI implements ProjectsRenderer {
     public static ProjectsRendererI projectsRenderer(String name
             , ProjectRenderer fallbackRenderer
             , List<ProjectRenderer> renderers
+            , Config config) {
+        return new ProjectsRendererI(name, fallbackRenderer, renderers, config);
+    }
+
+    public static ProjectsRendererI projectsRenderer(String name
+            , Function<ProjectsRenderer, ProjectRenderer> fallbackRenderer
+            , Function<ProjectsRenderer, List<ProjectRenderer>> renderers
             , Config config) {
         return new ProjectsRendererI(name, fallbackRenderer, renderers, config);
     }
@@ -194,6 +202,17 @@ public class ProjectsRendererI implements ProjectsRenderer {
         this.renderers = renderers;
         this.config = config;
         config.projectsRendererExtensions().forEach(extension::withRegisteredExtension);
+    }
+
+    private ProjectsRendererI(String name
+            , Function<ProjectsRenderer, ProjectRenderer> fallbackRenderer
+            , Function<ProjectsRenderer, List<ProjectRenderer>> renderers
+            , Config config) {
+        this.profile = name;
+        this.config = config;
+        config.projectsRendererExtensions().forEach(extension::withRegisteredExtension);
+        this.fallbackRenderer = fallbackRenderer.apply(this);
+        this.renderers = renderers.apply(this);
     }
 
     private String normalizedPath(String path) {
