@@ -28,6 +28,9 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StreamUtils.concat;
 
+/**
+ * TODO See {@link FileSystemUnionView}.
+ */
 public class FileSystemUnion implements FileSystemView {
 
     public static FileSystemView fileSystemsUnion(FileSystemView... fileSystems) {
