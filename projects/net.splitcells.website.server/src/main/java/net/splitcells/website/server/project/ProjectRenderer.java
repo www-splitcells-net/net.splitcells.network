@@ -63,6 +63,27 @@ public interface ProjectRenderer extends Renderer {
     static ProjectRenderer projectRenderer(String renderer, FileSystemView projectFolder, FileSystemView xslLibs
             , FileSystemView resources
             , String resourceRootPath
+            , boolean typedFolder
+            , boolean flatRepository
+            , SourceValidator sourceValidator
+            , Config config
+            , ProjectsRenderer projectsRenderer) {
+        return new ProjectRendererI(renderer
+                , projectFolder.subFileSystemView("src/main")
+                , xslLibs
+                , resources
+                , resourceRootPath
+                , true
+                , false
+                , sourceValidator
+                , projectFolder
+                , config
+                , Optional.of(projectsRenderer));
+    }
+
+    static ProjectRenderer projectRenderer(String renderer, FileSystemView projectFolder, FileSystemView xslLibs
+            , FileSystemView resources
+            , String resourceRootPath
             , SourceValidator sourceValidator
             , Config config) {
         return new ProjectRendererI(renderer
@@ -76,6 +97,25 @@ public interface ProjectRenderer extends Renderer {
                 , projectFolder
                 , config
                 , Optional.empty());
+    }
+
+    static ProjectRenderer projectRenderer(String renderer, FileSystemView projectFolder, FileSystemView xslLibs
+            , FileSystemView resources
+            , String resourceRootPath
+            , SourceValidator sourceValidator
+            , Config config
+            , ProjectsRenderer projectsRenderer) {
+        return new ProjectRendererI(renderer
+                , projectFolder
+                , xslLibs
+                , resources
+                , resourceRootPath
+                , true
+                , false
+                , sourceValidator
+                , projectFolder
+                , config
+                , Optional.of(projectsRenderer));
     }
 
     FileSystemView projectFileSystem();
