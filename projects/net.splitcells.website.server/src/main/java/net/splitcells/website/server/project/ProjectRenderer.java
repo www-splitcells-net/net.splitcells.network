@@ -87,7 +87,7 @@ public interface ProjectRenderer extends Renderer {
     @Deprecated
     Optional<byte[]> renderString(String arg);
 
-    default Optional<BinaryMessage> sourceCode(String path) {
+    default Optional<BinaryMessage> sourceCode(String path, ProjectsRenderer projectsRenderer) {
         return Optional.empty();
     }
 

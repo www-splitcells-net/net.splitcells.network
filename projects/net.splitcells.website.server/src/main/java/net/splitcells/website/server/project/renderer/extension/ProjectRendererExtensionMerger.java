@@ -104,9 +104,9 @@ public class ProjectRendererExtensionMerger implements ProjectRendererExtension 
     }
 
     @Override
-    public Optional<BinaryMessage> sourceCode(String path) {
+    public Optional<BinaryMessage> sourceCode(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
         final var matches = projectRendererExtensions.stream()
-                .map(s -> s.sourceCode(path))
+                .map(s -> s.sourceCode(path, projectsRenderer, projectRenderer))
                 .filter(s -> s.isPresent())
                 .collect(toList());
         if (matches.hasElements() && matches.size() != 1) {

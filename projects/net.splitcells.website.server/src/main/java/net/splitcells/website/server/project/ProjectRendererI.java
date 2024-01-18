@@ -231,8 +231,8 @@ public class ProjectRendererI implements ProjectRenderer {
     }
 
     @Override
-    public Optional<BinaryMessage> sourceCode(String path) {
-        return renderer.sourceCode(path);
+    public Optional<BinaryMessage> sourceCode(String path, ProjectsRenderer projectsRenderer) {
+        return renderer.sourceCode(path, projectsRenderer, this);
     }
 
     /**

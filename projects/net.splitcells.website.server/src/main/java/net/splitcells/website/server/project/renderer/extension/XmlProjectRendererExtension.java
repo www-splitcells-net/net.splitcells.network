@@ -19,7 +19,9 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
+import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.utils.StreamUtils;
+import net.splitcells.website.Formats;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.processor.BinaryMessage;
@@ -37,6 +39,7 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
 import static net.splitcells.dem.resource.Paths.removeFileSuffix;
 import static net.splitcells.dem.utils.StreamUtils.emptyStream;
+import static net.splitcells.website.Formats.XML;
 import static net.splitcells.website.server.project.LayoutConfig.layoutConfig;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.project.renderer.PageMetaData.pageMetaData;
@@ -204,6 +207,21 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
                             .resolve(removeFileSuffix(file.getFileName().toString()) + ".html")));
         }
         return emptyStream();
+    }
+
+    @Override
+    public Optional<BinaryMessage> sourceCode(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
+        final String normalizedPath;
+        if (path.endsWith(".html")) {
+            normalizedPath = path.substring(0, path.lastIndexOf(".html")) + ".xml";
+        } else {
+            normalizedPath = path;
+        }
+        final var xmlFile = Path.of("src/main/xml").resolve(normalizedPath);
+        if (projectRenderer.projectFileSystem().isFile(xmlFile)) {
+            return Optional.of(binaryMessage(projectRenderer.projectFileSystem().readFileAsBytes(xmlFile), XML));
+        }
+        return Optional.empty();
     }
 
     @Override

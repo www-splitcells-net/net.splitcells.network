@@ -7,6 +7,9 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
 
 ## [Unreleased]
 ### Major Changes
+* **2024-01-18: \#252** Provide source code of rendered content inside XSL at `/net.splitcells.website.server/source-code/`.
+  The previous configuration file system, which was unused, unusable and available at `/net.splitcells.website/current/xml`,
+  is removed.
 * **2023-10-23: \#252** Rename `net.splitcells.website.server.project.RenderingResult`
     to `net.splitcells.website.server.processor.BinaryMessage` in order to have a clean abstract API
     for the website server communication.

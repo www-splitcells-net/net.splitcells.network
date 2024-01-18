@@ -16,7 +16,7 @@
 package net.splitcells.dem.resource;
 
 public enum ContentType {
-    CSV("csv"), UTF_8("UTF-8"), HTML_TEXT("text/html"), CSS("text/css"), JS("text/javascript"), TEXT("text/plain");
+    CSV("csv"), UTF_8("UTF-8"), HTML_TEXT("text/html"), CSS("text/css"), JS("text/javascript"), TEXT("text/plain"), XML("application/xml");
     private final String codeName;
 
     ContentType(String codeName) {

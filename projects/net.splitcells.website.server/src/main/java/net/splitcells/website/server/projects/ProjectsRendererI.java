@@ -276,7 +276,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
     public Optional<BinaryMessage> sourceCode(String trail) {
         final var sourceCodes = renderers
                 .stream()
-                .map(r -> r.sourceCode(trail))
+                .map(r -> r.sourceCode(trail, this))
                 .filter(Optional::isPresent)
                 .collect(toList());
         if (sourceCodes.size() > 1) {

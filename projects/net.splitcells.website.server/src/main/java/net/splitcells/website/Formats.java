@@ -15,12 +15,18 @@
  */
 package net.splitcells.website;
 
+import net.splitcells.dem.resource.ContentType;
+
+/**
+ * TODO REMOVE This is a duplicate of {@link ContentType}.
+ */
 public enum Formats {
     HTML("text/html")
     , CSS("text/css")
     , CSV("text/csv")
     , TEXT_PLAIN("text/plain")
-    , JSON("application/json");
+    , JSON("application/json")
+    , XML("application/xml");
 
     private final String mimeTypes;
 

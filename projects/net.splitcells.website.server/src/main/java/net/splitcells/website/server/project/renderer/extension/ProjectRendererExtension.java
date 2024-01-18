@@ -59,7 +59,7 @@ public interface ProjectRendererExtension {
         return Optional.empty();
     }
 
-    default Optional<BinaryMessage> sourceCode(String path) {
+    default Optional<BinaryMessage> sourceCode(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
         return Optional.empty();
     }
 
