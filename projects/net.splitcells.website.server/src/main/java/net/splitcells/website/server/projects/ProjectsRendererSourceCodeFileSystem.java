@@ -23,9 +23,13 @@ import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public class ProjectsRendererSourceCodeFileSystem implements FileSystemView {
+    private static final String SOURCE_CODE_FOLDER = "source-code/";
+
     public static ProjectsRendererSourceCodeFileSystem projectsRendererSourceCodeFileSystem(ProjectsRenderer projectsRenderer) {
         return new ProjectsRendererSourceCodeFileSystem(projectsRenderer);
     }
@@ -38,9 +42,15 @@ public class ProjectsRendererSourceCodeFileSystem implements FileSystemView {
 
     @Override
     public InputStream inputStream(Path path) {
-        return BinaryUtils.binaryInputStream(projectsRenderer.sourceCode(Paths.toString(path))
-                .orElseThrow()
-                .getContent());
+        final var pathStr = Paths.toString(path);
+        if (pathStr.startsWith(SOURCE_CODE_FOLDER)) {
+            return BinaryUtils.binaryInputStream(projectsRenderer.sourceCode(pathStr.substring(SOURCE_CODE_FOLDER.length()))
+                    .orElseThrow()
+                    .getContent());
+        }
+        throw executionException(perspective("Unknown root folder.")
+                .withProperty("path", pathStr)
+                .withProperty("projects renderer", projectsRenderer.toString()));
     }
 
     @Override
