@@ -230,6 +230,11 @@ public class ProjectRendererI implements ProjectRenderer {
         return addMissingMetaData(renderInternal(path, projectsRenderer));
     }
 
+    @Override
+    public Optional<BinaryMessage> sourceCode(String path) {
+        return renderer.sourceCode(path);
+    }
+
     /**
      * TODO Create root for each file type, that needs its one processing method.
      */

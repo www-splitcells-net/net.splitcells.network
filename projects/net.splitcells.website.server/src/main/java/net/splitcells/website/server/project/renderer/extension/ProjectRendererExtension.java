@@ -59,6 +59,10 @@ public interface ProjectRendererExtension {
         return Optional.empty();
     }
 
+    default Optional<BinaryMessage> sourceCode(String path) {
+        return Optional.empty();
+    }
+
     /**
      * Renders a file for a given {@code path}.
      *
