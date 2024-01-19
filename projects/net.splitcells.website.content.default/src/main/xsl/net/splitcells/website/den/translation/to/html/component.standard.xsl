@@ -297,9 +297,14 @@ document.addEventListener('DOMContentLoaded', function(){
                     <xsl:attribute name="id" select="generate-id(.)"/>
                     <xsl:choose>
                         <xsl:when test="./s:default-content">
-
-                            <xsl:variable name="defaultContent" select="document(concat('/net.splitcells.website.server/source-code/', ./s:default-content/node(), '.xml'))"/>
-                            <xsl:apply-templates select="$defaultContent"/>
+                            <xsl:choose>
+                                <xsl:when test="document(concat('/net.splitcells.website.server/source-code/', ./s:default-content/node(), '-customization.xml'))">
+                                    <xsl:apply-templates select="document(concat('/net.splitcells.website.server/source-code/', ./s:default-content/node(), '-customization.xml'))"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:apply-templates select="document(concat('/net.splitcells.website.server/source-code/', ./s:default-content/node(), '.xml'))"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:apply-templates select="./*"/>
