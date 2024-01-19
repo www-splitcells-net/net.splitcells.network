@@ -114,6 +114,9 @@ public class ProjectRendererExtensionMerger implements ProjectRendererExtension 
                     .withProperty("path", path)
                     .withProperty("matches", matches.toString()));
         }
+        if (matches.isEmpty()) {
+            return Optional.empty();
+        }
         return matches.get(0);
     }
 
