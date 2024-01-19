@@ -58,15 +58,16 @@ public class ServerService extends ResourceOptionI<Service> {
              * in order to be sure, that the config is set up.
              */
             return projectsRenderer(publicProjectRepository, "public"
-                    , projectRenderer(
+                    , projectsRenderer -> projectRenderer(
                             "public", fileSystemOnLocalHost(privateProjectRepository.resolve("net.splitcells.martins.avots.website/"))
                             , fileSystemOnLocalHost(xslLib)
                             , fileSystemOnLocalHost(privateProjectRepository
                                     .resolve("net.splitcells.martins.avots.website/src/main/resources/html"))
                             , "/"
                             , validator
-                            , config)
-                    , list(projectRenderer("public"
+                            , config
+                            , projectsRenderer)
+                    , projectsRenderer -> list(projectRenderer("public"
                                     , fileSystemOnLocalHost(privateProjectRepository.resolve("net.splitcells.martins.avots.website/"))
                                     , fileSystemOnLocalHost(xslLib)
                                     , fileSystemOnLocalHost(privateProjectRepository

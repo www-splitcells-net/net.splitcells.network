@@ -24,10 +24,13 @@ import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.renderer.ObjectsMediaRenderer;
 import net.splitcells.website.server.project.renderer.ObjectsRenderer;
+import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.project.validator.SourceValidator;
 
 import java.nio.file.Path;
+import java.util.Optional;
+import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
@@ -45,55 +48,60 @@ public class Projects {
                 .orElse(VOID_VALIDATOR);
         return projectsRenderer(projectsRepository
                 , profile
-                , fallbackProjectRenderer(profile, projectsRepository, validator, config)
-                , list()
+                , projectsRenderer -> fallbackProjectRenderer(profile, projectsRepository, validator, config, projectsRenderer)
+                , projectsRenderer -> list()
                 , validator
                 , config);
     }
 
     public static ProjectsRendererI projectsRenderer(Path projectRepository, String profile
-            , ProjectRenderer fallbackProjectRenderer
-            , List<ProjectRenderer> additionalProjects
+            , Function<ProjectsRenderer, ProjectRenderer> fallbackProjectRenderer
+            , Function<ProjectsRenderer, List<ProjectRenderer>> additionalProjects
             , SourceValidator sourceValidator
             , Config config) {
         final var xslLib = projectRepository
                 .resolve("net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/");
         return ProjectsRendererI.projectsRenderer(profile, fallbackProjectRenderer
-                , additionalProjects.withAppended(projectRenderers(profile
-                        , fileSystemOnLocalHost(projectRepository)
-                        , fileSystemOnLocalHost(projectRepository.resolve("../../"))
-                        , sourceValidator
-                        , fileSystemOnLocalHost(xslLib)
-                        , config))
+                , projectsRenderer -> additionalProjects.apply(projectsRenderer)
+                        .withAppended(projectRenderers(profile
+                                , fileSystemOnLocalHost(projectRepository)
+                                , fileSystemOnLocalHost(projectRepository.resolve("../../"))
+                                , sourceValidator
+                                , fileSystemOnLocalHost(xslLib)
+                                , config
+                                , projectsRenderer))
                 , config);
     }
 
     public static ProjectsRendererI projectsRenderer(FileSystem projectClusterRepo, String profile
-            , ProjectRenderer fallbackProjectRenderer
-            , List<ProjectRenderer> additionalProjects
+            , Function<ProjectsRenderer, ProjectRenderer> fallbackProjectRenderer
+            , Function<ProjectsRenderer, List<ProjectRenderer>> additionalProjects
             , SourceValidator sourceValidator
             , FileSystem xslLib
             , Config config) {
         return ProjectsRendererI.projectsRenderer(profile, fallbackProjectRenderer
-                , additionalProjects.withAppended(projectRenderers(profile
+                , projectsRenderer -> additionalProjects.apply(projectsRenderer).withAppended(projectRenderers(profile
                         , projectClusterRepo.subFileSystem("net.splitcells.network/projects/")
                         , projectClusterRepo
                         , sourceValidator
                         , xslLib
-                        , config))
+                        , config
+                        , projectsRenderer))
                 , config);
     }
 
     public static ProjectRenderer fallbackProjectRenderer(String profile, Path projectRepositories
             , SourceValidator sourceValidator
-            , Config config) {
+            , Config config
+            , ProjectsRenderer projectsRenderer) {
         return projectRenderer(profile
                 , fileSystemOnLocalHost(projectRepositories.resolve("net.splitcells.website.content.default/"))
                 , fileSystemOnLocalHost(projectRepositories.resolve("net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/"))
                 , fileSystemOnLocalHost(projectRepositories.resolve("net.splitcells.website.content.default/src/main/resources/content"))
                 , "/"
                 , sourceValidator
-                , config);
+                , config
+                , projectsRenderer);
     }
 
     public static List<ProjectRenderer> projectRenderers(String profile
@@ -101,7 +109,8 @@ public class Projects {
             , FileSystem projectClusterRepo
             , SourceValidator sourceValidator
             , FileSystem xslLib
-            , Config config) {
+            , Config config
+            , ProjectsRenderer projectsRenderer) {
         final var projectRenderers = list(projectRenderer
                         (profile
                                 , integratedProjectRepo.subFileSystem("net.splitcells.dem/")
@@ -109,7 +118,8 @@ public class Projects {
                                 , integratedProjectRepo.subFileSystem("net.splitcells.website.content.default/src/main/resources/html")
                                 , "/net/splitcells/dem"
                                 , sourceValidator
-                                , config)
+                                , config
+                                , projectsRenderer)
                 , projectRenderer
                         (profile
                                 , integratedProjectRepo.subFileSystem("net.splitcells.network/")
@@ -117,7 +127,8 @@ public class Projects {
                                 , integratedProjectRepo.subFileSystem("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/network"
                                 , sourceValidator
-                                , config)
+                                , config
+                                , projectsRenderer)
                 , projectRenderer
                         (profile
                                 , integratedProjectRepo.subFileSystem("net.splitcells.gel.doc/")
@@ -125,7 +136,8 @@ public class Projects {
                                 , integratedProjectRepo.subFileSystem("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/gel"
                                 , sourceValidator
-                                , config)
+                                , config
+                                , projectsRenderer)
                 , projectRenderer
                         (profile
                                 , integratedProjectRepo.subFileSystem("net.splitcells.gel.core/")
@@ -133,7 +145,8 @@ public class Projects {
                                 , integratedProjectRepo.subFileSystem("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/gel"
                                 , sourceValidator
-                                , config)
+                                , config
+                                , projectsRenderer)
                 , projectRenderer
                         (profile
                                 , integratedProjectRepo.subFileSystem("net.splitcells.gel.ext/")
@@ -141,7 +154,8 @@ public class Projects {
                                 , integratedProjectRepo.subFileSystem("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/gel"
                                 , sourceValidator
-                                , config)
+                                , config
+                                , projectsRenderer)
                 , projectRenderer
                         (profile
                                 , integratedProjectRepo.subFileSystem("net.splitcells.system/")
@@ -149,7 +163,8 @@ public class Projects {
                                 , integratedProjectRepo.subFileSystem("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/system"
                                 , sourceValidator
-                                , config)
+                                , config
+                                , projectsRenderer)
                 , projectRenderer
                         (profile
                                 , integratedProjectRepo.subFileSystem("net.splitcells.website.content.default/")
@@ -157,7 +172,8 @@ public class Projects {
                                 , integratedProjectRepo.subFileSystem("net.splitcells.website.content.default/src/main/resources/html")
                                 , "/net/splitcells/website"
                                 , sourceValidator
-                                , config)
+                                , config
+                                , projectsRenderer)
                 , projectRenderer
                         (profile
                                 , integratedProjectRepo.subFileSystem("net.splitcells.website.server/")
@@ -165,7 +181,8 @@ public class Projects {
                                 , integratedProjectRepo.subFileSystem("net.splitcells.website.content.default/src/main/resources/html")
                                 , "/"
                                 , sourceValidator
-                                , config)
+                                , config
+                                , projectsRenderer)
                 , projectRenderer
                         (profile
                                 , integratedProjectRepo.subFileSystem("net.splitcells.os.state.interface/")
@@ -173,7 +190,8 @@ public class Projects {
                                 , integratedProjectRepo.subFileSystem("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/os/state/interface"
                                 , sourceValidator
-                                , config)
+                                , config
+                                , projectsRenderer)
                 , projectRenderer
                         (profile
                                 , integratedProjectRepo.subFileSystem("net.splitcells.dem.api/")
@@ -181,7 +199,8 @@ public class Projects {
                                 , integratedProjectRepo.subFileSystem("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/dem"
                                 , sourceValidator
-                                , config)
+                                , config
+                                , projectsRenderer)
                 , projectRenderer
                         (profile
                                 , integratedProjectRepo.subFileSystem("net.splitcells.dem.core/")
@@ -189,7 +208,8 @@ public class Projects {
                                 , integratedProjectRepo.subFileSystem("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/dem"
                                 , sourceValidator
-                                , config)
+                                , config
+                                , projectsRenderer)
                 , projectRenderer
                         (profile
                                 , integratedProjectRepo.subFileSystem("net.splitcells.network.worker/")
@@ -197,7 +217,8 @@ public class Projects {
                                 , integratedProjectRepo.subFileSystem("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/network/worker"
                                 , sourceValidator
-                                , config)
+                                , config
+                                , projectsRenderer)
                 , projectRenderer
                         (profile
                                 , integratedProjectRepo.subFileSystem("net.splitcells.cin/")
@@ -205,7 +226,8 @@ public class Projects {
                                 , integratedProjectRepo.subFileSystem("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/cin"
                                 , sourceValidator
-                                , config)
+                                , config
+                                , projectsRenderer)
                 , Dem.configValue(ObjectsRenderer.class)
                 , Dem.configValue(ObjectsMediaRenderer.class)
         );
@@ -216,7 +238,8 @@ public class Projects {
                     , integratedProjectRepo.subFileSystem("net.splitcells.martins.avots.website/src/main/resources/html")
                     , "/"
                     , sourceValidator
-                    , config));
+                    , config
+                    , projectsRenderer));
         }
         if (projectClusterRepo.isDirectory("net.splitcells.network.media")) {
             projectRenderers.add(projectRenderer
@@ -226,7 +249,8 @@ public class Projects {
                             , integratedProjectRepo.subFileSystem("net.splitcells.website.content.default/src/main/resources/html")
                             , "/net/splitcells"
                             , sourceValidator
-                            , config));
+                            , config
+                            , projectsRenderer));
         }
         if (projectClusterRepo.isDirectory("net.splitcells.network.log")) {
             projectRenderers.add(projectRenderer
@@ -236,7 +260,8 @@ public class Projects {
                             , integratedProjectRepo.subFileSystem("net.splitcells.website.content.default/src/main/resources/html")
                             , "/"
                             , sourceValidator
-                            , config));
+                            , config
+                            , projectsRenderer));
         } else {
             logs().append("Project 'net.splitcells.network.log' does not exist.", LogLevel.WARNING);
         }
@@ -248,7 +273,8 @@ public class Projects {
                             , integratedProjectRepo.subFileSystem("net.splitcells.website.content.default/src/main/resources/html")
                             , "/"
                             , sourceValidator
-                            , config));
+                            , config
+                            , projectsRenderer));
         } else {
             logs().append("Project 'net.splitcells.symbiosis' does not exist.", LogLevel.WARNING);
         }
