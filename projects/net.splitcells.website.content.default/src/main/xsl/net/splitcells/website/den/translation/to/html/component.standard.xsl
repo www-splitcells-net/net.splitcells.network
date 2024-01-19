@@ -295,7 +295,16 @@ document.addEventListener('DOMContentLoaded', function(){
                 <xsl:variable name="quote">'</xsl:variable>
                 <div class="net-splitcells-website-pop-up">
                     <xsl:attribute name="id" select="generate-id(.)"/>
-                    <xsl:apply-templates select="./*"/>
+                    <xsl:choose>
+                        <xsl:when test="./s:default-content">
+
+                            <xsl:variable name="defaultContent" select="document(concat('/net.splitcells.website.server/source-code/', ./s:default-content/node(), '.xml'))"/>
+                            <xsl:apply-templates select="$defaultContent"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:apply-templates select="./*"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                     <xsl:if test="./s:accept-notification">
                         <div class="net-splitcells-button net-splitcells-action-button net-splitcells-component-priority-0">
                             <xsl:attribute name="onclick" select="concat('unshowElement(document.getElementById(', $quote, generate-id(.), $quote, '))')"/>
