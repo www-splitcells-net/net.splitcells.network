@@ -21,7 +21,7 @@
     </meta>
     <notification>
         <only-for-general-public>true</only-for-general-public>
-        <default-content>net/splitcells/gel/ui/editor-notification-content-default</default-content>
+        <default-content>net/splitcells/website/server/form-notification-content-default</default-content>
         <accept-notification>I agree, with the terms of service for using this server.</accept-notification>
     </notification>
     <paragraph>
