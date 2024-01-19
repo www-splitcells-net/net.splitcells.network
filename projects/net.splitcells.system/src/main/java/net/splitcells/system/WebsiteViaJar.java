@@ -34,10 +34,12 @@ import net.splitcells.website.content.defaults.WebsiteContentDefaultsFileSystem;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.validator.SourceValidator;
+import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 
 import java.nio.file.Path;
 import java.util.Optional;
+import java.util.function.Function;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -118,35 +120,35 @@ public class WebsiteViaJar {
         final var projectsRepository = config.mainProjectRepositoryPath().orElse(Path.of("../"));
         final var validator = VOID_VALIDATOR;
         // TODO config.xmlSchema().map(s -> (SourceValidator) validatorViaSchema(s)).orElse(VOID_VALIDATOR);
-        final var additionalProjectRenderers = config.additionalProjects().stream()
-                .map(project ->
-                        projectRenderer(profile
-                                , project.projectFiles()
-                                , configValue(WebsiteContentDefaultsFileSystem.class)
-                                        .subFileSystemView("src/main/xsl/net/splitcells/website/den/translation/to/html/")
-                                , configValue(WebsiteContentDefaultsFileSystem.class)
-                                        .subFileSystemView("src/main/resources/html")
-                                , project.rootPath()
-                                , validator
-                                , config))
-                .collect(toList());
         return projectsRenderer(projectsRepository
                 , profile
-                , fallbackProjectRenderer(profile, projectsRepository, validator, config)
-                , additionalProjectRenderers
+                , projectsRenderer -> fallbackProjectRenderer(projectsRenderer, profile, projectsRepository, validator, config)
+                , projectsRenderer -> config.additionalProjects().stream()
+                        .map(project ->
+                                projectRenderer(profile
+                                        , project.projectFiles()
+                                        , configValue(WebsiteContentDefaultsFileSystem.class)
+                                                .subFileSystemView("src/main/xsl/net/splitcells/website/den/translation/to/html/")
+                                        , configValue(WebsiteContentDefaultsFileSystem.class)
+                                                .subFileSystemView("src/main/resources/html")
+                                        , project.rootPath()
+                                        , validator
+                                        , config
+                                        , projectsRenderer))
+                        .collect(toList())
                 , validator
                 , config);
     }
 
     public static ProjectsRendererI projectsRenderer(Path projectRepository, String profile
-            , ProjectRenderer fallbackProjectRenderer
-            , List<ProjectRenderer> additionalProjects
+            , Function<ProjectsRenderer, ProjectRenderer> fallbackProjectRenderer
+            , Function<ProjectsRenderer, List<ProjectRenderer>> additionalProjects
             , SourceValidator sourceValidator
             , Config config) {
         return ProjectsRendererI.projectsRenderer(profile, fallbackProjectRenderer, additionalProjects, config);
     }
 
-    public static ProjectRenderer fallbackProjectRenderer(String profile, Path projectRepositories
+    public static ProjectRenderer fallbackProjectRenderer(ProjectsRenderer projectsRenderer, String profile, Path projectRepositories
             , SourceValidator sourceValidator
             , Config config) {
         return projectRenderer(profile
@@ -157,6 +159,7 @@ public class WebsiteViaJar {
                         .subFileSystemView("src/main/resources/html")
                 , "/"
                 , sourceValidator
-                , config);
+                , config
+                , projectsRenderer);
     }
 }
