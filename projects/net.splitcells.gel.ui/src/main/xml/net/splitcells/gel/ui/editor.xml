@@ -21,17 +21,7 @@
     </meta>
     <notification>
         <only-for-general-public>true</only-for-general-public>
-        <chapter>
-            <title>Terms Of Service</title>
-            <paragraph>By using the server you are accepting the following:</paragraph>
-            <paragraph>
-                When data is submitted, your input data is uploaded to the server for processing.
-                For logging the data is stored on the server for up to a year and will not be given to third parties.
-            </paragraph>
-            <paragraph>
-                No guarantees are provided and you are responsible for using the server.
-            </paragraph>
-        </chapter>
+        <default-content>net/splitcells/gel/ui/editor-notification-content-default</default-content>
         <accept-notification>I agree, with the terms of service for using this server.</accept-notification>
     </notification>
     <paragraph>
