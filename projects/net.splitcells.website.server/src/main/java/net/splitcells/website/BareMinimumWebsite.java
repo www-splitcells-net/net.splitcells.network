@@ -54,16 +54,17 @@ public class BareMinimumWebsite {
                     .withIsSecured(false)
                     .withDetailedXslMenu(Optional.of(readFileAsString(Paths.get("projects/net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/detailed-menu.xsl"))));
             final var xslLib = Paths.get("projects/net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/");
-            final var projectRenderer = projectRenderer("public"
-                    , fileSystemOnLocalHost(Paths.get("projects/net.splitcells.website.content.minimal/"))
-                    , fileSystemOnLocalHost(xslLib)
-                    , fileSystemOnLocalHost(Paths.get("projects/net.splitcells.website.content.default/src/main/resources/html"))
-                    , "/"
-                    , VOID_VALIDATOR
-                    , config);
             final var targetFolder = Paths.get("target/minimal-test-website");
             Files.createDirectory(targetFolder);
-            projectsRenderer("public", projectRenderer, list(), config).serveTo(targetFolder);
+            projectsRenderer("public", projectsRenderer -> projectRenderer("public"
+                            , fileSystemOnLocalHost(Paths.get("projects/net.splitcells.website.content.minimal/"))
+                            , fileSystemOnLocalHost(xslLib)
+                            , fileSystemOnLocalHost(Paths.get("projects/net.splitcells.website.content.default/src/main/resources/html"))
+                            , "/"
+                            , VOID_VALIDATOR
+                            , config
+                            , projectsRenderer)
+                    , projectsRenderer -> list(), config).serveTo(targetFolder);
         });
     }
 }
