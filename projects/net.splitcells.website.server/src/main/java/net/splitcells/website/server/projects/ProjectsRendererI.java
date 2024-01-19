@@ -79,13 +79,6 @@ public class ProjectsRendererI implements ProjectsRenderer {
     private static final String LAYOUT_PATH = "/net/splitcells/website/layout/build.html";
 
     public static ProjectsRendererI projectsRenderer(String name
-            , ProjectRenderer fallbackRenderer
-            , List<ProjectRenderer> renderers
-            , Config config) {
-        return new ProjectsRendererI(name, fallbackRenderer, renderers, config);
-    }
-
-    public static ProjectsRendererI projectsRenderer(String name
             , Function<ProjectsRenderer, ProjectRenderer> fallbackRenderer
             , Function<ProjectsRenderer, List<ProjectRenderer>> renderers
             , Config config) {

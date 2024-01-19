@@ -7,6 +7,7 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
 
 ## [Unreleased]
 ### Major Changes
+* **2024-01-19: \#252** `ProjectRendererI` now required `ProjectsRenderer` in order to provide source code.
 * **2024-01-18: \#252** Provide source code of rendered content inside XSL at `/net.splitcells.website.server/source-code/`.
   The previous configuration file system, which was unused, unusable and available at `/net.splitcells.website/current/xml`,
   is removed.
