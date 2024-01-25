@@ -73,6 +73,12 @@ public class PerspectiveTest {
     }
 
     @UnitTest
+    public void testEncodeJsonString() {
+        final var testSubject = perspective("").withChild(perspective("\n\r\t\""));
+        requireEquals(testSubject.toJsonString(), "[\"\\n\\r\\t\\\"\"]");
+    }
+
+    @UnitTest
     public void testToJsonStringWithArray() {
         final var testSubject = perspective("")
                 .withChild(perspective("1\n"))
