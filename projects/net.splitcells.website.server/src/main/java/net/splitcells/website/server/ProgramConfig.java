@@ -67,7 +67,7 @@ public class ProgramConfig {
         return isPathUrl;
     }
 
-    public ProgramConfig withUrl(boolean arg) {
+    public ProgramConfig withIsPathUrl(boolean arg) {
         isPathUrl = arg;
         return this;
     }
