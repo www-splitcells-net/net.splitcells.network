@@ -28,7 +28,9 @@ public class ProgramConfig {
     private final String name;
     private final String path;
     private Optional<String> description = Optional.empty();
+
     private Optional<String> logoPath = Optional.empty();
+    private boolean isPathUrl = false;
 
     private ProgramConfig(String nameArg, String pathArg) {
         name = nameArg;
@@ -58,6 +60,15 @@ public class ProgramConfig {
 
     public ProgramConfig withLogoPath(Optional<String> arg) {
         logoPath = arg;
+        return this;
+    }
+
+    public boolean isPathUrl() {
+        return isPathUrl;
+    }
+
+    public ProgramConfig withUrl(boolean arg) {
+        isPathUrl = arg;
         return this;
     }
 }

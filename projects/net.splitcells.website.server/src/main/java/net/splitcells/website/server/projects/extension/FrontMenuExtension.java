@@ -61,7 +61,11 @@ public class FrontMenuExtension implements ProjectsRendererExtension {
                     .forEach(pc -> {
                         final var card = perspective("card", SEW);
                         card.withChild(perspective("name", SEW).withText(pc.name()));
-                        card.withChild(perspective("path", SEW).withText(pc.path()));
+                        if (pc.isPathUrl()) {
+                            card.withChild(perspective("url", SEW).withText(pc.path()));
+                        } else {
+                            card.withChild(perspective("path", SEW).withText(pc.path()));
+                        }
                         if (pc.description().isPresent())
                             card.withChild(perspective("description", SEW)
                                     .withText(pc.description().orElseThrow()));
