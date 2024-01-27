@@ -65,9 +65,8 @@ and our [changelog](https://splitcells.net/net/splitcells/CHANGELOG.global.html)
 ## Infrastructure
 * Rendered Documentation via [a personal website](https://splitcells.net/net/splitcells/network/README.html)
 * Tickets are managed [Github](https://github.com/www-splitcells-net/net.splitcells.network/issues) ([projects](https://github.com/www-splitcells-net/net.splitcells.network/projects?query=is%3Aopen)) for the community,
-  [Sourcehut's todo](https://todo.sr.ht/~splitcells-net/net.splitcells.network)  ([active tickets](https://todo.sr.ht/~splitcells-net/net.splitcells.network?search=label%3A%22active%22) and [all tickets](https://todo.sr.ht/~splitcells-net/net.splitcells.network)) for tickets related to the webserver, and
-  for complex and important tickets a [Blog](https://splitcells-net.srht.site/net.splitcells.network.community.via.hugo) (Source code is [here](https://git.sr.ht/~splitcells-net/net.splitcells.network.community.via.hugo).)
-  and its [standard project](https://splitcells-net.srht.site/net.splitcells.network.community.via.hugo/blog/9999-12-21-splitcells-network-projects/) is used.
+  [Sourcehut's todo](https://todo.sr.ht/~splitcells-net/net.splitcells.network)  ([active tickets](https://todo.sr.ht/~splitcells-net/net.splitcells.network?search=label%3A%22active%22) and [all tickets](https://todo.sr.ht/~splitcells-net/net.splitcells.network)) for tickets related to the webserver.
+* For complex and documented tickets a [repo](https://github.com/www-splitcells-net/net.splitcells.network.community) is used.
 * Repository Hosts:
   * [Github](https://github.com/www-splitcells-net/net.splitcells.network) is used mainly for general software development.
   * [Gitlab](https://gitlab.com/splitcells-net/net.splitcells.network) is currently used only for continuous integration (CI).
