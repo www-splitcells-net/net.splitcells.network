@@ -56,7 +56,7 @@ public class MetaDataI implements MetaDataView, MetaDataWriter {
 
     @Override
     public String toString() {
-        return toPrettyString(toDom());
+        return toPerspective().toXmlString();
     }
 
     @Override

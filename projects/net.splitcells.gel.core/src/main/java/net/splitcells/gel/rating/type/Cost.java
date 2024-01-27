@@ -165,6 +165,6 @@ public class Cost implements Rating {
 
     @Override
     public String toString() {
-        return Xml.toPrettyString(toDom());
+        return toPerspective().toXmlString();
     }
 }

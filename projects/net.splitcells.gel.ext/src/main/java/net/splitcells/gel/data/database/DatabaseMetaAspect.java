@@ -148,11 +148,11 @@ public class DatabaseMetaAspect implements Database {
     @Override
     public void remove(Line line) {
         if (TRACING) {
-            logs().append(event(REMOVE.value()
-                                    + PATH_ACCESS_SYMBOL.value()
-                                    + Database.class.getSimpleName()
-                            , path().toString()
-                            , elementWithChildren(LINE.value(), line.toDom()))
+            logs().append(perspective(REMOVE.value()
+                            + PATH_ACCESS_SYMBOL.value()
+                            + Database.class.getSimpleName())
+                            .withProperty("path", path().toString())
+                            .withProperty(LINE.value(), line.toPerspective())
                     , this, LogLevel.DEBUG);
         }
         database.remove(line);

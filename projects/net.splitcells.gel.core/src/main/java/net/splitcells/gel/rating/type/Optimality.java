@@ -110,7 +110,7 @@ public class Optimality implements Rating {
 
     @Override
     public String toString() {
-        return Xml.toPrettyString(toDom());
+        return toPerspective().toXmlString();
     }
 
     public double value() {

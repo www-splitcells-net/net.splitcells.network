@@ -38,10 +38,10 @@ public class LayoutRenderer {
         projectsRenderer(Config.create()).build();
         final var layout = perspective("layout", NATURAL);
         Stream.concat(
-                Files.walk_recursively(Paths.get("../net.splitcells.os.state.interface/src/main/bash"))
-                        .filter(Files::is_file)
-                , Files.walk_recursively(Paths.get("../net.splitcells.os.state.interface/src/main/python"))
-                        .filter(Files::is_file))
+                        Files.walk_recursively(Paths.get("../net.splitcells.os.state.interface/src/main/bash"))
+                                .filter(Files::is_file)
+                        , Files.walk_recursively(Paths.get("../net.splitcells.os.state.interface/src/main/python"))
+                                .filter(Files::is_file))
                 .sorted()
                 .forEach(file -> extend(layout, list(file.toFile().getName().split("\\."))));
         System.out.println(Paths.get(System.getProperty("user.home"))
@@ -53,8 +53,7 @@ public class LayoutRenderer {
                         .resolve("Documents/projects/net.splitcells.martins.avots.support.system/private")
                         .resolve("net.splitcells.martins.avots.support.system/src/main/")
                         .resolve("xml/net/splitcells/martins/avots/support/system/layout.xml")
-                , Xml.toPrettyString(perspective("", NameSpaces.NATURAL)
-                        .withChild(layout).toDom()));
+                , layout.toXmlString());
     }
 
     public static void extend(Perspective perspective, List<String> path) {

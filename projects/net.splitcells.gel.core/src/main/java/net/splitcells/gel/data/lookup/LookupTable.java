@@ -211,11 +211,11 @@ public class LookupTable implements Table {
             content.requireAbsenceOf(line.index());
         }
         if (TRACING) {
-            logs().append(Xml.elementWithChildren("register.LookupTable"
-                            , Xml.elementWithChildren("subject", textNode(path().toString()))
-                            , line.toDom()
-                    )
-                    , this, DEBUG);
+            logs().append(perspective("register.LookupTable")
+                            .withProperty("path", path().toString())
+                            .withProperty("line", line.toPerspective())
+                    , this
+                    , DEBUG);
         }
         if (useExperimentalRawLineCache) {
             if (rawLinesCache.size() < line.index()) {
@@ -257,11 +257,10 @@ public class LookupTable implements Table {
 
     public void removeRegistration(Line line) {
         if (TRACING) {
-            logs().append(Xml.elementWithChildren("deregister." + getClass().getSimpleName()
-                            , Xml.elementWithChildren("subject", textNode(path().toString()))
-                            , Xml.elementWithChildren("content", textNode(content.toString()))
-                            , line.toDom()
-                    )
+            logs().append(perspective("deregister." + getClass().getSimpleName())
+                            .withProperty("subject", path().toString())
+                            .withProperty("content", content.toString())
+                            .withProperty("line", line.toPerspective())
                     , this, DEBUG);
         }
         if (ENFORCING_UNIT_CONSISTENCY) {

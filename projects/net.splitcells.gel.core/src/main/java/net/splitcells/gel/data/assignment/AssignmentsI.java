@@ -186,14 +186,12 @@ public class AssignmentsI implements Assignments {
         if (TRACING) {
             requireNotNull(demand, "Cannot allocate without demand.");
             requireNotNull(supply, "Cannot allocate without supply.");
-            logs().append
-                    (event(ALLOCATE.value() + PATH_ACCESS_SYMBOL.value() + Assignments.class.getSimpleName()
-                                    , path().toString()
-                                    , Xml.elementWithChildren(DEMAND.value(), demand.toDom())
-                                    , Xml.elementWithChildren(SUPPLY.value(), supply.toDom()))
-                            , this
-                            , DEBUG
-                    );
+            logs().append(perspective(ALLOCATE.value() + PATH_ACCESS_SYMBOL.value() + Assignments.class.getSimpleName())
+                            .withProperty("path", path().toString())
+                            .withProperty("demand", demand.toPerspective())
+                            .withProperty("supply", supply.toPerspective())
+                    , this
+                    , DEBUG);
         }
         if (ENFORCING_UNIT_CONSISTENCY) {
             list(demand.context()).requireContainsOneOf(demands_free, demands);
@@ -319,20 +317,14 @@ public class AssignmentsI implements Assignments {
         final var demand = demandOfAssignment(allocation);
         final var supply = supplyOfAssignment(allocation);
         if (TRACING) {
-            logs().append
-                    (Xml.event(REMOVE.value()
-                                            + PATH_ACCESS_SYMBOL.value()
-                                            + Assignments.class.getSimpleName()
-                                    , path().toString()
-                                    , Xml.elementWithChildren(ALLOCATION.value()
-                                            , allocation.toDom())
-                                    , Xml.elementWithChildren(DEMAND.value()
-                                            , demand.toDom())
-                                    , Xml.elementWithChildren(SUPPLY.value()
-                                            , supply.toDom()))
-                            , this
-                            , DEBUG
-                    );
+            logs().append(perspective(REMOVE.value()
+                            + PATH_ACCESS_SYMBOL.value()
+                            + Assignments.class.getSimpleName())
+                            .withProperty("path", path().toString())
+                            .withProperty("demand", demand.toPerspective())
+                            .withProperty("supply", supply.toPerspective())
+                    , this
+                    , DEBUG);
         }
         if (ENFORCING_UNIT_CONSISTENCY) {
             list(demand.context()).requireContainsOneOf(demands, demands_used);

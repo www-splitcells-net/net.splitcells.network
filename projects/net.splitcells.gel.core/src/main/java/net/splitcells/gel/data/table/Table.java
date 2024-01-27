@@ -302,9 +302,8 @@ public interface Table extends Discoverable, Domable, Identifiable {
                                 final var cellValue = rElement(FODS_TEXT, "p");
                                 cellElement.appendChild(cellValue);
                                 if (value instanceof Domable) {
-                                    final var domValue = ((Domable) value).toDom();
                                     cellValue.appendChild
-                                            (textNode(toPrettyString(domValue)));
+                                            (textNode(((Domable) value).toPerspective().toXmlString()));
                                 } else {
                                     cellValue.appendChild(textNode(value.toString()));
                                 }

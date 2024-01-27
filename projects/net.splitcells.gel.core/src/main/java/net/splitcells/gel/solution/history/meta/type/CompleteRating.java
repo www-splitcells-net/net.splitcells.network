@@ -43,7 +43,7 @@ public final class CompleteRating implements MetaData<Rating>, Domable {
 
     @Override
     public String toString() {
-        return Xml.toPrettyString(toDom());
+        return toPerspective().toXmlString();
     }
 
     @Override

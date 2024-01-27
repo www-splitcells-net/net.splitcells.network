@@ -73,6 +73,6 @@ public class Allocation implements Domable {
 
     @Override
     public String toString() {
-        return Xml.toPrettyString(toDom());
+        return toPerspective().toXmlString();
     }
 }

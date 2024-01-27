@@ -103,7 +103,7 @@ public class LineI implements Line {
                 domValue = perspective("");
             } else {
                 if (value instanceof Domable) {
-                    domValue = perspective(Xml.toPrettyString(((Domable) value).toDom()));
+                    domValue = ((Domable) value).toPerspective();
                 } else {
                     domValue = perspective(value.toString());
                 }

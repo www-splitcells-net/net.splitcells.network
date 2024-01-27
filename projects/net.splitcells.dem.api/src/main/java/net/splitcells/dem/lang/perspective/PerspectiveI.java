@@ -57,12 +57,7 @@ public class PerspectiveI implements Perspective {
 	}
 
 	/**
-	 * TODO This method should not print {@link #toDom()},
-	 * because such strings can get very big,
-	 * which may cause huge performance problems for debuggers in IDEs,
-	 * which are calling {@link #toString()} very frequently.
-	 *
-	 * @return String representation of this.
+	 * @return Returns a descriptive string representation of this.
 	 *
 	 */
 	@Override
@@ -70,6 +65,6 @@ public class PerspectiveI implements Perspective {
 		if (WARNING) {
 			logs().appendUnimplementedWarning(PerspectiveI.class);
 		}
-		return "not-implemented-yet";
+		return toXmlString();
 	}
 }

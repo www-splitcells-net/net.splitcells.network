@@ -132,7 +132,7 @@ public interface Line extends Domable {
                 domValue = perspective("");
             } else {
                 if (value instanceof Domable) {
-                    domValue = perspective(Xml.toPrettyString(((Domable) value).toDom()), STRING);
+                    domValue = ((Domable) value).toPerspective();
                 } else {
                     domValue = perspective(value.toString(), STRING);
                 }

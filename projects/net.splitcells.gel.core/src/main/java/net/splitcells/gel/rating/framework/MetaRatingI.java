@@ -275,7 +275,7 @@ public class MetaRatingI implements MetaRating {
 
     @Override
     public String toString() {
-        return Xml.toPrettyString(toDom());
+        return toPerspective().toXmlString();
     }
 
     @Override
