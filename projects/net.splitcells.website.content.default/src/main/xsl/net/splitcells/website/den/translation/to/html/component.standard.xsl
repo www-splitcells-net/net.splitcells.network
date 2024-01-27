@@ -563,6 +563,10 @@ document.addEventListener('DOMContentLoaded', function(){
                             <xsl:copy-of
                                     select="replace(concat($site-instance-host-root-path, s:string-remove-whitespace(./s:path), '.html'), '//', '/')"/>
                         </xsl:when>
+                        <xsl:when test="./s:url">
+                            <xsl:copy-of
+                                    select="./s:url"/>
+                        </xsl:when>
                         <xsl:otherwise>
                             <xsl:message terminate="true"/>
                         </xsl:otherwise>
