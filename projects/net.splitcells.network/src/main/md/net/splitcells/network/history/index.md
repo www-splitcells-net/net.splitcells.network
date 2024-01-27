@@ -1,3 +1,7 @@
+----
+* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
 # History Of Splitcells Network Project
 ## The Beginnings
 * [The History Of The Dependency Manager](../../../../../../../../../projects/net.splitcells.dem/src/main/xml/net/splitcells/dem/history.xml)
