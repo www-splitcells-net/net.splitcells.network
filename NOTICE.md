@@ -363,3 +363,8 @@ CodeMirror
 * License: MIT: https://github.com/codemirror/dev/blob/main/LICENSE
 * Website: https://codemirror.net/
 * Source Code: https://github.com/codemirror/dev/
+
+Electron
+* License: MIT: https://github.com/electron/electron/blob/main/LICENSE
+* https://www.electronjs.org/
+* Source Code: https://github.com/electron/electron
