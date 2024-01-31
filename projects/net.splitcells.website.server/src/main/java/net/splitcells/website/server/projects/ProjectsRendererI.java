@@ -85,6 +85,9 @@ public class ProjectsRendererI implements ProjectsRenderer {
         return new ProjectsRendererI(name, fallbackRenderer, renderers, config);
     }
 
+    /**
+     * TODO This method should not require a write to the local file system.
+     */
     @Override
     public void build() {
         final var generatedFilesPath = Paths.get("target", "generated");
