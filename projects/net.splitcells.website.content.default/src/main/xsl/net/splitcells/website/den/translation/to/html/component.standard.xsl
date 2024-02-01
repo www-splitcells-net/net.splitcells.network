@@ -714,6 +714,16 @@ document.addEventListener('DOMContentLoaded', function(){
                             <xsl:when test="s:url">
                                 <xsl:apply-templates select="s:url"/>
                             </xsl:when>
+                            <xsl:when test="@post">
+                                <xsl:variable name="postLink">
+                                    <xsl:copy-of select="$site-instance-root-path-default"/>
+                                    <xsl:text></xsl:text>
+                                    <xsl:apply-templates
+                                            select="@post"/>
+                                    <xsl:text>.html</xsl:text>
+                                </xsl:variable>
+                                <xsl:value-of select="replace($postLink, '//', '/')"/>
+                            </xsl:when>
                             <xsl:when test="s:post">
                                 <xsl:variable name="postLink">
                                     <xsl:copy-of select="$site-instance-root-path-default"/>
@@ -730,7 +740,14 @@ document.addEventListener('DOMContentLoaded', function(){
                         </xsl:choose>
                     </xsl:attribute>
                     <xsl:text>&#160;</xsl:text>
-                    <xsl:apply-templates select="s:text"/>
+                    <xsl:choose>
+                        <xsl:when test="s:text">
+                            <xsl:apply-templates select="s:text"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:apply-templates select="node()"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                     <xsl:text>&#160;</xsl:text>
                 </xsl:element>
             </xsl:otherwise>
