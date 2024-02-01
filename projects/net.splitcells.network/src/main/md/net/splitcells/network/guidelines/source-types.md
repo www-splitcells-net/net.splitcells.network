@@ -46,7 +46,7 @@ Secondary formats in general often require a lot of additional code in order to 
 which makes it hard to support these, convert these or port these.
 
 ### CommonMark
-CommonMark itself is not suitable as a primary file format,
+[CommonMark](https://spec.commonmark.org/0.29) itself is not suitable as a primary file format,
 [as does not seem to have a formal grammar](https://talk.commonmark.org/t/commonmark-formal-grammar/46/26)
 and it seems there is no intention to have one.
 This reduces the portability of CommonMark converter implementations
@@ -54,9 +54,10 @@ This reduces the portability of CommonMark converter implementations
 In other words, it is easier to convert a generic tree structure file format to CommonMark,
 than the other way around.
 
-Limit the usage of CommonMark features as much as possible.
+Limit the usage of CommonMark features as much as possible for complex documents.
+For documents only containing images, flowing text or nested lists CommonMark is suitable format,
+because of its simplicity and portability.
 
-[CommonMark](https://spec.commonmark.org/0.29) is used for simple flowing text or documents describing tasks and their progress.
 All inlined artifacts of the flowing text should be integrated via links.
 Inline LaTex that is compatible to MathJax is used for mathematics formulas
 and is the only exception to this rule.
