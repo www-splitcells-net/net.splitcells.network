@@ -773,12 +773,22 @@ document.addEventListener('DOMContentLoaded', function(){
     </xsl:template>
     <xsl:template match="s:list">
         <ol>
-            <xsl:apply-templates select="./node()"/>
+            <xsl:apply-templates select="./node()" mode="list"/>
         </ol>
     </xsl:template>
-    <xsl:template match="s:item">
+    <xsl:template match="s:item" mode="list">
         <li>
             <xsl:apply-templates select="./node()"/>
+        </li>
+    </xsl:template>
+    <xsl:template match="s:link" mode="list">
+        <li>
+            <xsl:apply-templates select="."/>
+        </li>
+    </xsl:template>
+    <xsl:template match="s:list" mode="list">
+        <li>
+            <xsl:apply-templates select="."/>
         </li>
     </xsl:template>
     <xsl:template match="s:post">
