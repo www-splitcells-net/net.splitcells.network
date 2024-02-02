@@ -48,6 +48,8 @@ import static net.splitcells.dem.utils.reflection.ClassesRelated.callerClass;
  * and passing it through everywhere.
  * </p>
  * <p>TODO Introduce dependency injection for documentation.</p>
+ * <p>TODO Support communication to a running {@link #process(Runnable)}. This could be used,
+ * in order to close the process by another process.</p>
  */
 @JavaLegacyArtifact
 public class Dem {
