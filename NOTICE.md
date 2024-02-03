@@ -364,7 +364,9 @@ CodeMirror
 * Website: https://codemirror.net/
 * Source Code: https://github.com/codemirror/dev/
 
-Electron
-* License: MIT: https://github.com/electron/electron/blob/main/LICENSE
-* https://www.electronjs.org/
-* Source Code: https://github.com/electron/electron
+JavaFX
+* License: GNU General Public License version 2 with the Classpath Exception
+    * https://central.sonatype.com/artifact/org.openjfx/javafx
+    * https://gluonhq.com/products/javafx/
+* Website: https://openjfx.io/
+* Source Code: https://github.com/openjdk/jfx
