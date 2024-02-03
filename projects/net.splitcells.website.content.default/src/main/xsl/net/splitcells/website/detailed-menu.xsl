@@ -20,6 +20,13 @@
         <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific">
             <xsl:attribute name="href">
                 <xsl:value-of
+                        select="s:default-root-relative-url('net/splitcells/website/server/front-menu.html')"/>
+            </xsl:attribute>
+            Front Menu
+        </a>
+        <a class="net-splitcells-button net-splitcells-component-priority-3 user-specific">
+            <xsl:attribute name="href">
+                <xsl:value-of
                         select="s:default-root-relative-url('net/splitcells/website/main-menu.html')"/>
             </xsl:attribute>
             Main Menu
