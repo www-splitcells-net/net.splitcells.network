@@ -271,8 +271,8 @@ public class World {
             , Attribute<Integer> xCoordinate
             , Attribute<Integer> yCoordinate) {
         return playerValuePersistenceClassifier(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate,
-                (centerStartPositions, centerEndPositions) -> !centerStartPositions
-                        .anyMatch(l -> l.value(playerAttribute) == playerValue)
+                (centerStartPositions, centerEndPositions) -> centerStartPositions
+                        .noneMatch(l -> l.value(playerAttribute) == playerValue)
                 , "isDead");
     }
 
@@ -303,7 +303,7 @@ public class World {
             , Attribute<Integer> yCoordinate) {
         return playerValuePersistenceClassifier(playerValue, playerAttribute, timeAttribute, xCoordinate, yCoordinate
                 , (centerStartPositions, centerEndPositions) ->
-                        !centerStartPositions.anyMatch(l -> l.value(playerAttribute) == playerValue)
+                        centerStartPositions.noneMatch(l -> l.value(playerAttribute) == playerValue)
                                 && centerEndPositions.anyMatch(l -> l.value(playerAttribute) == playerValue)
                 , "reproduction");
     }
