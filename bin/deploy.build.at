@@ -42,6 +42,8 @@ Use `cat ~/Documents/projects/net.splitcells.martins.avots.support.system/public
 
 The main reason for ". ~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin" is the fact,
 that back then commands provided by the export where used by "./bin/test.via.network.worker".
+
+TODO Execute Build in pod instead. See "live.splitcells.net".
 """)
 	argsParser.add_argument('--target-server', dest='targetServer', type = str, required = True)
 	argsParser.add_argument('--user', type = str, required = True)
