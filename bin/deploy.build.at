@@ -23,7 +23,8 @@ if __name__ == '__main__':
 	if environ.get('log_level') == 'debug':
 		logging.basicConfig(level=logging.DEBUG)
 	argsParser = argparse.ArgumentParser(
-		description="""Deploys the build process to a different server.
+		description="""Deploys the build process to a different server via a push mechanism.
+This is useful, when the server is not always online or does not have access to a server hosting the repos.
 
 Steps required on the target computer to set this up:
 * The computer deploying the build process needs ssh access to the target server.
@@ -35,6 +36,9 @@ Steps required on the target computer to set this up:
 
 `journalctl --follow --unit build` can be used in order to follow the log of the service in real time.
 Use `cat ~/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.log/target/test.via.network.worker.log` in order to view the build logs written to a file.
+
+The main reason for ". ~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin" is the fact,
+that back then commands provided by the export where used by "./bin/test.via.network.worker".
 """)
 	argsParser.add_argument('--target-server', dest='targetServer', type = str, required = True)
 	argsParser.add_argument('--user', type = str, required = True)
