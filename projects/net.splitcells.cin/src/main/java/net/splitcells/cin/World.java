@@ -96,7 +96,6 @@ public class World {
                 .sorted(ASCENDING_INTEGERS)
                 .collect(toList());
         require(times.size() > 2);
-        final var minTime = times.firstValue().orElseThrow();
         final var currentTime = times.lastValue().orElseThrow();
         /* TODO final var obsoleteDemands = world.allocations().demands().lookup(WORLD_TIME, minTime).unorderedLines();
         obsoleteDemands.forEach(od -> world.demands().remove(od));*/
