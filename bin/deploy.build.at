@@ -33,6 +33,9 @@ Steps required on the target computer to set this up:
 * Install all required software on the target server.
   This is usually Python 3 and Java 21.
 * Configure git via `git config --global user.email && git config --global user.name`.
+* Make sure that `~/.profile` exists and is executable.
+  The file is allowed to be empty.
+  Edit `~/.profile` and add required settings for the server (i.e. extending the PATH).
 
 `journalctl --follow --unit build` can be used in order to follow the log of the service in real time.
 Use `cat ~/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.log/target/test.via.network.worker.log` in order to view the build logs written to a file.
@@ -50,7 +53,7 @@ that back then commands provided by the export where used by "./bin/test.via.net
 		git push {0}:/home/{1}/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.bom master:net-splitcells-martins-avots-connection
 		cd ../net.splitcells.network
 		ssh -t {0} sudo systemctl reset-failed # Ensure, that service instance of previous run is not present, in case the previous run failed.
-		ssh -t {0} systemctl is-active build || ssh -t {0} sudo systemd-run --uid={1} --unit=build --working-directory='/home/{1}/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.bom' 'sh -c "git merge net-splitcells-martins-avots-connection && cd ../net.splitcells.network && git merge net-splitcells-martins-avots-connection && . ~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin && {2}"'
+		ssh -t {0} systemctl is-active build || ssh -t {0} sudo systemd-run --uid={1} --unit=build --working-directory='/home/{1}/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.bom' 'sh -c "git merge net-splitcells-martins-avots-connection && cd ../net.splitcells.network && git merge net-splitcells-martins-avots-connection && . ~/.profile && . ~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin && {2}"'
 		cd ../net.splitcells.network.log/
 		if git ls-remote --heads {0}:/home/{1}/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.log master; then
 			git pull --ff {0}:/home/{1}/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.log master
