@@ -16,14 +16,19 @@
 package net.splitcells.gel.rating.rater.framework;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
+import static net.splitcells.dem.utils.DeprecationException.deprecationException;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.environment.config.StaticFlags;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.communication.log.LogLevel;
+import net.splitcells.dem.resource.communication.log.Logs;
 import net.splitcells.gel.common.Language;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
@@ -106,11 +111,17 @@ public interface Rater extends PubliclyTyped<Rater>
 
     @Override
     default Node toDom() {
-        final var dom = Xml.elementWithChildren(getClass().getSimpleName());
+        throw deprecationException();
+    }
+
+    @Override
+    default Perspective toPerspective() {
+        final var perspective = perspective(getClass().getSimpleName());
         if (!arguments().isEmpty()) {
-            dom.appendChild(Xml.element2(Language.ARGUMENTATION.value(), arguments().stream().map(arg -> arg.toDom())));
+            perspective.withChild(perspective(Language.ARGUMENTATION.value())
+                    .withChildren(arguments().stream().map(Domable::toPerspective)));
         }
-        return dom;
+        return perspective;
     }
 
     /**
