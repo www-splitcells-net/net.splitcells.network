@@ -25,7 +25,7 @@ import net.splitcells.gel.ui.GelUiFileSystem;
 import net.splitcells.gel.ui.SolutionCalculator;
 import net.splitcells.network.NetworkFileSystem;
 import net.splitcells.network.blog.NetworkBlogFileSystem;
-import net.splitcells.network.worker.NetworkWorkerFileSystem;
+import net.splitcells.network.worker.via.java.NetworkWorkerFileSystem;
 import net.splitcells.os.state.interfaces.OsiFileSystem;
 import net.splitcells.os.state.interfaces.lib.OsiLibFileSystem;
 import net.splitcells.project.files.standard.ProjectStandardFileSystem;
@@ -76,7 +76,7 @@ public class WebsiteViaJar {
                         , configValue(NetworkFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/network/blog/"
                         , configValue(NetworkBlogFileSystem.class)))
-                .withAdditionalProject(projectConfig("/net/splitcells/network/worker/"
+                .withAdditionalProject(projectConfig("/net/splitcells/network/worker/via/java/"
                         , configValue(NetworkWorkerFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/os/state/interface/"
                         , configValue(OsiFileSystem.class)))

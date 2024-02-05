@@ -44,7 +44,7 @@ import static net.splitcells.dem.utils.CommonFunctions.asString;
 import static net.splitcells.dem.utils.CommonFunctions.getBytes;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StreamUtils.stream;
-import static net.splitcells.network.worker.Logger.logger;
+import static net.splitcells.network.worker.via.java.Logger.logger;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.projects.extension.status.StatusReport.statusReport;
 

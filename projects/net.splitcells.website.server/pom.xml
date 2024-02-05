@@ -32,7 +32,7 @@
         </dependency>
         <dependency>
             <groupId>net.splitcells</groupId>
-            <artifactId>network.worker</artifactId>
+            <artifactId>network.worker.via.java</artifactId>
             <version>${revision}</version>
         </dependency>
         <dependency>

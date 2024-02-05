@@ -13,14 +13,11 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.network.worker;
+package net.splitcells.network.worker.via.java;
 
-import net.splitcells.dem.environment.config.framework.OptionI;
+import net.splitcells.dem.lang.annotations.ReturnsThis;
 
-import static net.splitcells.dem.resource.FileSystemVoid.fileSystemVoid;
-
-public class NetworkLog extends OptionI<net.splitcells.dem.resource.FileSystem> {
-    public NetworkLog() {
-        super(() -> fileSystemVoid());
-    }
+public interface Repository {
+    @ReturnsThis
+    Repository commitAll();
 }

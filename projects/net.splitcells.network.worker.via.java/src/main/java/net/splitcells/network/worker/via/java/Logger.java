@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.network.worker;
+package net.splitcells.network.worker.via.java;
 
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.ProgramName;
@@ -37,7 +37,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.resource.ContentType.CSV;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
-import static net.splitcells.network.worker.Repositories.repository;
+import static net.splitcells.network.worker.via.java.Repositories.repository;
 
 /**
  * <p>Logs the runtime of tests into a project folder

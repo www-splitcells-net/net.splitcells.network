@@ -39,7 +39,7 @@ public class SourceCodeCheck {
         checkJavaSourceCodeProject(Path.of("../net.splitcells.gel.ui"));
         checkJavaSourceCodeProject(Path.of("../net.splitcells.dem.api"));
         checkJavaSourceCodeProject(Path.of("../net.splitcells.gel.core"));
-        checkJavaSourceCodeProject(Path.of("../net.splitcells.network.worker"));
+        checkJavaSourceCodeProject(Path.of("../net.splitcells.network.worker.via.java"));
         checkJavaSourceCodeProject(Path.of("../net.splitcells.gel.sheath"));
         checkJavaSourceCodeProject(Path.of("../net.splitcells.dem.merger"));
         checkJavaSourceCodeProject(Path.of("../net.splitcells.dem.core"));

@@ -13,27 +13,38 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.network.worker;
+package net.splitcells.network.worker.via.java;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.environment.config.ProgramName;
+import net.splitcells.dem.resource.FileSystems;
+import net.splitcells.dem.resource.host.SystemUtils;
 
+import static net.splitcells.dem.Dem.config;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.testing.Test.testExtensively;
+import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
+import static net.splitcells.dem.resource.Paths.userHome;
 import static net.splitcells.dem.testing.Test.testUnits;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
-import static net.splitcells.network.worker.Logger.logger;
+import static net.splitcells.network.worker.via.java.Logger.logger;
 
-public class ExtensiveTester {
+/**
+ * Executes tests and logs their result.
+ */
+public class Builder {
     public static void main(String... args) {
         if (args.length != 1) {
             throw new IllegalArgumentException("Exactly one argument is required, but " + args.length + " were given. The argument is the id of the test executor.");
         }
-        Dem.process(() -> testExtensively(list(logger()))
-                , env -> env.config().withConfigValue(ProgramName.class, args[0]));
+        Dem.process(() -> testUnits(list(logger()))
+                , env -> env.config().withConfigValue(ProgramName.class, args[0])
+                        .withConfigValue(NetworkLog.class
+                                , fileSystemOnLocalHost(config()
+                                        .configValue(ProjectsFolder.class)
+                                        .resolve("net.splitcells.network.log"))));
     }
 
-    private ExtensiveTester() {
+    private Builder() {
         throw constructorIllegal();
     }
 }

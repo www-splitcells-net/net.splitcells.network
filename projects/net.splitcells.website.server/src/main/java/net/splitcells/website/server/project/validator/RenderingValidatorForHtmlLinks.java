@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
 import static net.splitcells.dem.Dem.config;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
-import static net.splitcells.network.worker.Logger.logger;
+import static net.splitcells.network.worker.via.java.Logger.logger;
 
 /**
  * Checks whether rendered HTML documents relative links can be rendered

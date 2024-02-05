@@ -5,7 +5,7 @@
         SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
     -->
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>network.worker</artifactId>
+    <artifactId>network.worker.via.java</artifactId>
     <name>Network Worker</name>
     <parent>
         <groupId>net.splitcells</groupId>

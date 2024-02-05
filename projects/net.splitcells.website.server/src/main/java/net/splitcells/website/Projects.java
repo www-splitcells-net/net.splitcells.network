@@ -212,10 +212,10 @@ public class Projects {
                                 , projectsRenderer)
                 , projectRenderer
                         (profile
-                                , integratedProjectRepo.subFileSystem("net.splitcells.network.worker/")
+                                , integratedProjectRepo.subFileSystem("net.splitcells.network.worker.via.java/")
                                 , xslLib
                                 , integratedProjectRepo.subFileSystem("net.splitcells.martins.avots.website/src/main/resources/html")
-                                , "/net/splitcells/network/worker"
+                                , "/net/splitcells/network/worker/via/java"
                                 , sourceValidator
                                 , config
                                 , projectsRenderer)
