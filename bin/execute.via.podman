@@ -7,7 +7,7 @@
 executionName="$1"
 executionCommand="$2"
 # Prepare file system.
-mkdir -p $HOME/Documents/projects/net.splitcells.cache/m2
+mkdir -p $HOME/Documents/projects/net.splitcells.network.worker/m2/
 mkdir -p ./target/
 cp -f Dockerfile-Template "target/Dockerfile-$executionName"
 echo 'ENTRYPOINT '$executionCommand >> "target/Dockerfile-$executionName"
@@ -16,5 +16,5 @@ podman run --name "$executionName" \
   --rm \
   -v $HOME/Documents:/root/Documents \
   -v $HOME/.ssh:/root/.ssh \
-  -v $HOME/Documents/projects/net.splitcells.cache/m2:/root/.m2 \
+  -v $HOME/Documents/projects/net.splitcells.network.worker/m2:/root/.m2 \
   "localhost/$executionName"
