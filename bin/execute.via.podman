@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+#
+# Execute a arbitrary command inside a container, while always using the same volume for cache.
+# Script's arguments
+executionName="$1"
+executionCommand="$2"
+# Prepare file system.
+mkdir -p $HOME/Documents/projects/net.splitcells.cache/m2
+mkdir -p ./target/
+cp -f Dockerfile-Template "target/Dockerfile-$executionName"
+echo 'ENTRYPOINT '$executionCommand >> "target/Dockerfile-$executionName"
+podman build -f "target/Dockerfile-$executionName" --tag "localhost/$executionName"
+podman run --name "$executionName" \
+  --rm \
+  -v $HOME/Documents:/root/Documents \
+  -v $HOME/.ssh:/root/.ssh \
+  -v $HOME/Documents/projects/net.splitcells.cache/m2:/root/.m2 \
+  "localhost/$executionName"
