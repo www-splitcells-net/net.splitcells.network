@@ -1,6 +1,6 @@
-# Splitcells™ Worker
+# Splitcells™ Network Worker
 
-> The Splitcells™ Worker provides commands for working on the repos and servers of the project cluster.
+> The Splitcells™ Network Worker provides commands for working on the repos and servers of the project cluster.
 
 The commands' functionality can be provided by multiple backends:
 * The simplest backend is based on CLI tools, provided by the operation system.
