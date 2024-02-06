@@ -20,7 +20,7 @@ mkdir -p $HOME/Documents/projects/net.splitcells.network.worker.cache/.m2/
 mkdir -p $HOME/Documents/projects/net.splitcells.network.worker.cache/.ssh/
 mkdir -p ./target/
 # Only one run per $executionName is possible, therefor a randomized file name is not required.
-cp -f Dockerfile-Template "target/Dockerfile-$executionName"
+cp -f Dockerfile-Execute-Template "target/Dockerfile-$executionName"
 echo 'ENTRYPOINT '$executionCommand >> "target/Dockerfile-$executionName"
 podman build -f "target/Dockerfile-$executionName" --tag "localhost/$executionName"
 podman run --name "$executionName" \\
