@@ -1,4 +1,3 @@
 # Splitcells™ Worker
 
-Provides commands for working on the repos of the project cluster and synchronizing servers,
-that host such repos.
+Provides commands for working on the repos and servers of the project cluster.
