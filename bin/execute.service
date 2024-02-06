@@ -23,6 +23,7 @@ CMD ["-cp", "./jars/*", "$CLASS_FOR_EXECUTION"]
 EXPOSE 80
 """
 executeViaPodman = """
+set -e
 podman kill $NAME_FOR_EXECUTION || echo Service $NAME_FOR_EXECUTION was not already running.
 podman build -f "target/Dockerfile-$NAME_FOR_EXECUTION" --tag localhost/$NAME_FOR_EXECUTION
 podman run --name $NAME_FOR_EXECUTION --rm --publish 8080:8443 --detach localhost/$NAME_FOR_EXECUTION
