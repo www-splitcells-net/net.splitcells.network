@@ -16,6 +16,8 @@
 package net.splitcells.gel.ui;
 
 import net.splitcells.dem.Dem;
+import net.splitcells.dem.data.atom.Bools;
+import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.CapabilityTest;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
@@ -26,6 +28,9 @@ import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.projects.extension.ColloquiumPlanningDemandsTestData;
 import net.splitcells.website.server.projects.extension.ColloquiumPlanningSuppliesTestData;
 
+import java.util.Optional;
+
+import static net.splitcells.dem.data.atom.Bools.truthful;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requirePresenceOf;
@@ -59,17 +64,21 @@ public class SolutionCalculatorTest {
 
     @UnitTest
     public void testDemonstrationExample() {
-        final var problemDefinition = Dem.configValue(GelUiFileSystem.class)
-                .readString("src/main/resources/html/net/splitcells/gel/ui/examples/school-course-scheduling-problem.txt");
-        final String demands = ColloquiumPlanningDemandsTestData.testData();
-        final String supplies = ColloquiumPlanningSuppliesTestData.testData();
-        final var testResult = solutionCalculator().process(request(SolutionCalculator.PATH
-                , perspective("")
-                        .withProperty(PROBLEM_DEFINITION, perspective(problemDefinition))
-                        .withProperty(DEMANDS, perspective(demands))
-                        .withProperty(SUPPLIES, perspective(supplies))));
-        requireEquals(testResult.data().namedChildren(SOLUTION_RATING).get(0).child(0)
-                        .createToJsonPrintable().toJsonString()
-                , "{\"Cost\":\"0.0\"}");
+        Dem.process(() -> {
+                            final var problemDefinition = Dem.configValue(GelUiFileSystem.class)
+                                    .readString("src/main/resources/html/net/splitcells/gel/ui/examples/school-course-scheduling-problem.txt");
+                            final String demands = ColloquiumPlanningDemandsTestData.testData();
+                            final String supplies = ColloquiumPlanningSuppliesTestData.testData();
+                            final var testResult = solutionCalculator().process(request(SolutionCalculator.PATH
+                                    , perspective("")
+                                            .withProperty(PROBLEM_DEFINITION, perspective(problemDefinition))
+                                            .withProperty(DEMANDS, perspective(demands))
+                                            .withProperty(SUPPLIES, perspective(supplies))));
+                            requireEquals(testResult.data().namedChildren(SOLUTION_RATING).get(0).child(0)
+                                            .createToJsonPrintable().toJsonString()
+                                    , "{\"Cost\":\"0.0\"}");
+                        },
+                        env -> env.config().withConfigValue(IsDeterministic.class, Optional.of(truthful())))
+                .requireErrorFree();
     }
 }
