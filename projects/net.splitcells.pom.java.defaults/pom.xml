@@ -212,12 +212,13 @@
                         <artifactId>maven-dependency-plugin</artifactId>
                         <executions>
                             <execution>
+                                <id>deployable-jar-folder-dependency-copy</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>copy-dependencies</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${project.build.directory}/jars</outputDirectory>
+                                    <outputDirectory>${project.build.directory}/deployable-jars</outputDirectory>
                                 </configuration>
                             </execution>
                         </executions>
