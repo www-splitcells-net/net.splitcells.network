@@ -264,6 +264,7 @@ name
     | Keyword_JavaLegacyArtifact
     | Keyword_super
     | Keyword_var
+    | Keyword_Java
     ;
 operator
 	: Keysymbol_not_equals
