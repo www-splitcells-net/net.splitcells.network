@@ -36,6 +36,8 @@ import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearIni
 
 public class TimeStepsTest {
 
+    private static final String WITH_EVEN_START_TIME = " with even start time";
+
     @Test
     public void testTimeEvenSteps() {
         final var time = attribute(Integer.class, "time");
@@ -69,20 +71,20 @@ public class TimeStepsTest {
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
-                .forEach(g -> requireEquals(g.name().get(), FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with even start time"));
+                .forEach(g -> requireEquals(g.name().get(), FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_EVEN_START_TIME));
         testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
-                .forEach(g -> requireEquals(g.name().get(), FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with even start time"));
+                .forEach(g -> requireEquals(g.name().get(), FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_EVEN_START_TIME));
         testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with even start time"
+                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_EVEN_START_TIME
                         , FOR_ALL.value() + " " + timeStepId(0, 1)
                         , FOR_ALL.value() + " " + timeStepId(0, 1)));
         testSubject.assign(testSubject.demandsFree().orderedLine(0)
@@ -93,7 +95,7 @@ public class TimeStepsTest {
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with even start time"
+                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_EVEN_START_TIME
                         , FOR_ALL.value() + " " + timeStepId(0, 1)
                         , FOR_ALL.value() + " " + timeStepId(0, 1)
                         , FOR_ALL.value() + " " + timeStepId(2, 3)
@@ -104,12 +106,12 @@ public class TimeStepsTest {
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with even start time"
+                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_EVEN_START_TIME
                         , FOR_ALL.value() + " " + timeStepId(0, 1)
                         , FOR_ALL.value() + " " + timeStepId(0, 1)
                         , FOR_ALL.value() + " " + timeStepId(2, 3)
                         , FOR_ALL.value() + " " + timeStepId(2, 3)
-                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with even start time"));
+                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_EVEN_START_TIME));
         testSubject.undoAssignment(testSubject.demandsUsed().orderedLine(0),
                 testSubject.suppliesUsed().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
@@ -120,17 +122,17 @@ public class TimeStepsTest {
                         , FOR_ALL.value() + " " + timeStepId(0, 1)
                         , FOR_ALL.value() + " " + timeStepId(2, 3)
                         , FOR_ALL.value() + " " + timeStepId(2, 3)
-                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with even start time"));
+                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_EVEN_START_TIME));
         testSubject.undoAssignment(testSubject.demandsUsed().orderedLine(0),
                 testSubject.suppliesUsed().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with even start time"
+                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_EVEN_START_TIME
                         , FOR_ALL.value() + " " + timeStepId(2, 3)
                         , FOR_ALL.value() + " " + timeStepId(2, 3)
-                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with even start time"));
+                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_EVEN_START_TIME));
         testSubject.undoAssignment(testSubject.demandsUsed().orderedLine(0),
                 testSubject.suppliesUsed().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
@@ -139,22 +141,22 @@ public class TimeStepsTest {
                 .mapped(g -> g.name().orElseThrow())
                 .assertEquals(list(FOR_ALL.value() + " " + timeStepId(2, 3)
                         , FOR_ALL.value() + " " + timeStepId(2, 3)
-                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with even start time"));
+                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_EVEN_START_TIME));
         testSubject.undoAssignment(testSubject.demandsUsed().orderedLine(0),
                 testSubject.suppliesUsed().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with even start time"
-                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with even start time"));
+                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_EVEN_START_TIME
+                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_EVEN_START_TIME));
         testSubject.undoAssignment(testSubject.demandsUsed().orderedLine(0),
                 testSubject.suppliesUsed().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with even start time"));
+                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_EVEN_START_TIME));
         testSubject.undoAssignment(testSubject.demandsUsed().orderedLine(0),
                 testSubject.suppliesUsed().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
