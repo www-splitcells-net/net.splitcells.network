@@ -12,18 +12,24 @@
     <chapter>
         <title>Project Management</title>
         <paragraph>
-            Tickets of a project need to be actively managed and need to be up-to-date.
-            Otherwise, there is a great chance, that the project is not manageable.
+            Active tickets need to be actively managed and need to be up-to-date.
+            Otherwise, there is a great chance, that a project or service is not manageable.
+            A list prioritizing tickets should not contain more than 10 tickets without reason,
+            but a project can have an unlimited amount of ticket prioritization lists.
         </paragraph>
         <paragraph>
             The more tickets are located at a project, the more it should be considered,
-            to remove these tickets from the project.
-            Move these to a location, where the tickets do not have to be constantly updated for project management.
+            to move these tickets to somewhere else.
+            Move these to a location, where the tickets do not have to be constantly updated for project management and
+            do hinder an overview of the respective project.
             For instance, if a ticket inside a project is a ticket for fixing a bug inside a module,
             consider moving the ticket to the module's ticket system, documentation or to write an appropriate TODO
             inside the affected module's source code.
             Another target location is an archive project.
-            The project <quote>net.splitcells.network.community</quote> is such a project.
+            The project <quote>net.splitcells.network.community</quote> can be used for such archives and
+            is a good way to avoid noise in the version history and to limit the source code's file size.
+            Generally anything consisting of a list of things without any priority ordering,
+            can be considered an archive.
         </paragraph>
     </chapter>
     <chapter>
