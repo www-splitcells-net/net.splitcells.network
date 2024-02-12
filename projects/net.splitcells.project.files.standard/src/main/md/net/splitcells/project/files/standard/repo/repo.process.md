@@ -12,48 +12,56 @@
  
 Illustration of an exemplary repo structure:
 ```
-User home folder
-└── Documents
-    ├── main-repo
-    │   ├── sub-repo-1
-    │   └── sub-repo-2
-    ├── peer-repo-1
-    └── peer-repo-2
+Meta repo root
+├── Repo of organization Alpha
+│   ├── Project Gamma
+│   ├── Project Delta
+│   └── ...
+├── Repo of organization Beta
+│   ├── Project Zeta
+│   ├── Project Eta
+│   └── ...
 ```
+The command repo process (`repo.process` is the name in the shell)
+provides a highly portable and simple way to process a set of repos as one repo.
+Its config files are simple,
+so that either complex programs can process such repos
+or people with nothing more than a shell and git can work on such repos.
 
-Repo process (`repo.process` is the name in the shell) is a command,
-that enables one to iterate over a set of repos,
-in order to interact with them as one.
-The iteration process accomplishes this,
-by generating scripts, configs or similar
-in order to enable other software to work on the repos like one.
+This is especially useful, when during an initial repo clone some software is not setup yet.
+The simplicity is also helpful for describing the setup procedure of complex development projects
+consisting of multiple git repos and without requiring additional tools to be installed during the setup.
 
-The primary purpose of this tool is to synchronize repos across multiple servers and computers.
-
-This is mainly done, by providing a program,
+Initially this tool was created to synchronize repos across multiple servers and computers.
+This is mainly done, by providing the `repo.process` program,
 that takes a root repo and a command pattern as an argument.
 Repo process iterates over all sub repositories,
-generates a command via the given pattern for each repo and
+generates commands via the given pattern for each repo and
 executes the generated command for each sub repo.
+Depending on the requirements,
+this can even be used in order to add new or remove old repos from servers. 
 
 The repos are assumed to be organized in a tree structure.
 Therefore, the root repo (here called meta repo) contains the sub repos,
 but usually does not provide version control of the sub repos
 (for Git repos the subs are generally listed in `.gitignore`).
-By default, every meta repo has a list of all subs stored in a file under version control.
+So the main difference between repo process and git's submodule is the fact,
+that repo process is usually not used to have an exact inventory of repos and their current commit.
+Instead repo process often manages the individual repos much more loosely.
+
+By default, every meta repo has a list of all sub repos stored in a file under version control of the meta repo.
 
 In order to make this VCS independent, additional `repo.*` commands are provided,
 that are built on top of repo process.
-For instance, `repo.commit.all` is defined to commit all file changes of the current repo and its sub.
+For instance, `repo.commit.all` is defined to commit all file changes of the current repo and its subs,
+but it relies on other additional backend implementations,
+that actually do this job.
 
 [Here](https://splitcells-net.srht.site/blog/2022-01-10-a-case-for-repo-process/)
 the initial blog article,
 explaining the reasoning behind repo process,
 can be found.
 
-TODO: The program supports a dry mode,
-where an SH script is generated,
-that contains all commands needed in order to achieve a certain goal.
 # Implementation Details
 > Every abstraction leaks.
 
