@@ -93,14 +93,17 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown, c
 		raise Exception('`./.net.splitcells.os.state.interface.repo/subs.json` is present, but deprecated and unsupported.')
 	subListPath=Path('./.net.splitcells.os.state.interface.repo/sub-repo-names')
 	if subListPath.is_file():
+		raise Exception('`./.net.splitcells.os.state.interface.repo/sub-repo-names` is present, but deprecated and unsupported.')
+	subListPath=Path('./bin/net.splitcells.osi.repos.children')
+	if subListPath.is_file():
 		subListQuery = subprocess.run([subListPath], stdout=subprocess.PIPE)
 		subRepos = []
 		for subRepo in subListQuery.stdout.decode('utf-8').split("\n"):
 			if not subRepo == "" and not subRepo.isspace():
 				subRepos.append(subRepo)
 		for currentSubDir in Path('.').iterdir():
-			# Hidden files aka dotfiles are ignored.
-			if not currentSubDir.name.startswith('.') and currentSubDir.is_dir():
+			# Hidden files aka dotfiles and bin folders are ignored.
+			if currentSubDir.is_dir() and not currentSubDir.name.startswith('.') and not currentSubDir.name.startswith('bin'):
 				subName = currentSubDir.name
 				if not subName in subRepos:
 					unknownSubRepoScript = 'set -e; cd ' + subName + ' ; repo.process' + " --command='" + commandForUnknown + "' --host=" + host + ' --relative-path=' + relativePath + '/' + subName
