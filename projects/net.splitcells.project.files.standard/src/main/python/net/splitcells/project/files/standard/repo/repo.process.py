@@ -102,7 +102,7 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown, c
 			if not subRepo == "" and not subRepo.isspace():
 				subRepos.append(subRepo)
 		for currentSubDir in Path('.').iterdir():
-			# Hidden files aka dotfiles and bin folders are ignored.
+			# Hidden files aka dotfiles and the bin folder are ignored.
 			if currentSubDir.is_dir() and not currentSubDir.name.startswith('.') and not currentSubDir.name.startswith('bin'):
 				subName = currentSubDir.name
 				if not subName in subRepos:
