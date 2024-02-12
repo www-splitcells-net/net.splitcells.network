@@ -234,7 +234,7 @@
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${project.build.directory}/jars</outputDirectory>
+                                    <outputDirectory>${project.build.directory}/deployable-jars</outputDirectory>
                                     <resources>
                                         <resource>
                                             <directory>${project.build.directory}</directory>
