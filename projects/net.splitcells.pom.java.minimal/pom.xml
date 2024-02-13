@@ -8,6 +8,15 @@
     <groupId>net.splitcells</groupId>
     <artifactId>pom-java-minimal</artifactId>
     <version>${revision}</version>
+    <parent>
+        <!-- This is used in order to inherit version properties, which are updated regularly.
+            By using the BOM as a parent no commits are needed in the build config,
+            in order to update the build process. -->
+        <groupId>net.splitcells</groupId>
+        <artifactId>network.bom</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../../../net.splitcells.network.bom/pom.xml</relativePath>
+    </parent>
     <packaging>pom</packaging>
     <name>splitcells.net ecosystem</name>
     <description>We provide an open source ecosystem centered around optimization and operations research.</description>
