@@ -56,6 +56,13 @@ function unshowByCssClass(cssClass) {
     hide(cssClass);
     undisplay(cssClass);
     }
+function unshowByTagName(elementName) {
+	var elements = document.getElementsByTagName(elementName);
+	for (var i = 0; i < elements.length; i++) {
+		elements[i].style.display = "none";
+		elements[i].style.visibility = "hidden";
+		}
+	}
 function showByCssClass(cssClass) {
     unhide(cssClass);
     display(cssClass);

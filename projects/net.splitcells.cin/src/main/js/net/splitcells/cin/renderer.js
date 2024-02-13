@@ -36,9 +36,7 @@ camera.position.z = 5;
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.domElement.style.height = "50%";
-renderer.domElement.style.width = "100%";
-document.getElementById("net-splitcells-canvas-main").appendChild(renderer.domElement);
+document.getElementById("topElement").appendChild(renderer.domElement);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;

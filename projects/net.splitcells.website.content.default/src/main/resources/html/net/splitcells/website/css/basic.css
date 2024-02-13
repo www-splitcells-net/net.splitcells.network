@@ -25,6 +25,12 @@ li code::before,
 p code::before {
 	content: "”";
 	}
+main canvas {
+    position: absolute;
+    z-index: -1;
+    height: 100% !important;
+    width: 100% !important;
+}
 article p img {
     /* Styling for pictures linked by the CommonMark backend.
        These are always wrapped in p elements. */
