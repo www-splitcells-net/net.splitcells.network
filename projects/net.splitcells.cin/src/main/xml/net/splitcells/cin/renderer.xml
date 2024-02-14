@@ -48,12 +48,6 @@ unshowByCssClass('menu');
                     <s:url>renderer.html?world_import_from=live&amp;render_specific_time=1&amp;debug_enabled=1</s:url>
                 </s:link>
             </s:item>
-            <s:item>
-                <s:link>
-                    <s:text>Live Fullscreen View (Currently this is only for self hosting.)</s:text>
-                    <s:url>renderer.fullscreen.html?world_import_from=live&amp;render_latest_time=1&amp;debug_enabled</s:url>
-                </s:link>
-            </s:item>
         </s:list>
         <s:paragraph>On Firefox this site has to be opened with the JavaScript debugger opened.
             On Firefox the page sometimes has to be reloaded,
