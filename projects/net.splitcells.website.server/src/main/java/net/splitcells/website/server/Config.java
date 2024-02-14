@@ -193,6 +193,23 @@ public class Config {
      */
     private boolean isServerForGeneralPublic = true;
 
+    /**
+     * <p>Signals whether the client is expected to support client side downloads.
+     * If enabled, downloads created via a client side JavaScript framework,
+     * must be stored in an hidden HTML element
+     * with the id `net-splitcells-website-server-download-content` instead of creating a normal download.
+     * The download's default file name is stored in an hidden HTML  with the id
+     * `net-splitcells-website-server-download-name-default`.</p>
+     * <p>This is used for GUI frameworks like JavaFX, which do no seem to support downloads,
+     * created by JavaScript inside the web page.
+     * Instead, a client is used, that periodically searches the current page for the HTML elements,
+     * with the download data.
+     * If it is present, the content's are parsed and a download/safe dialog is created.
+     * Afterwards, the element's content are deleted.
+     * </p>
+     */
+    private boolean isDownloadingViaHtmlElement = false;
+
     private Config() {
     }
 
@@ -444,5 +461,14 @@ public class Config {
     public Config withIsServerForGeneralPublic(boolean arg) {
         isServerForGeneralPublic = arg;
         return this;
+    }
+
+    public Config withIsDownloadingViaHtmlElement(boolean arg) {
+        isDownloadingViaHtmlElement = arg;
+        return this;
+    }
+
+    public boolean isDownloadingViaHtmlElement() {
+        return isDownloadingViaHtmlElement;
     }
 }
