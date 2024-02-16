@@ -59,6 +59,7 @@ import static net.splitcells.website.server.project.renderer.extension.SvgProjec
 import static net.splitcells.website.server.project.renderer.extension.TextProjectRendererExtension.textExtension;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.project.renderer.extension.XmlProjectRendererExtension.xmlRenderer;
+import static net.splitcells.website.server.project.renderer.extension.ZipProjectRendererExtension.zipRenderer;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkChangelogEventProjectRendererExtension.commonMarkChangelogEventRenderer;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkChangelogProjectRendererExtension.commonMarkChangelogRenderer;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkProjectRendererExtension.commonMarkExtension;
@@ -147,7 +148,7 @@ public class ProjectRendererI implements ProjectRenderer {
                 .registerExtension(rootFileProjectRendererExtension("DEVELOPMENT"))
                 .registerExtension(rootFileProjectRendererExtension("BUILD"))
                 .registerExtension(rootFileProjectRendererExtension("CONTRIBUTING"))
-
+                .registerExtension(zipRenderer())
                 .registerExtension(svgRenderer());
         if (config.cacheRenderers()) {
             transformer = Optional.of(createRenderer());
