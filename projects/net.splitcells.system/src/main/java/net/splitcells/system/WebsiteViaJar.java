@@ -16,6 +16,7 @@
 package net.splitcells.system;
 
 import net.splitcells.cin.CinFileSystem;
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.DemFileSystem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.GelCoreFileSystem;
@@ -33,6 +34,8 @@ import net.splitcells.website.WebsiteServerFileSystem;
 import net.splitcells.website.content.defaults.WebsiteContentDefaultsFileSystem;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
+import net.splitcells.website.server.project.renderer.ObjectsMediaRenderer;
+import net.splitcells.website.server.project.renderer.ObjectsRenderer;
 import net.splitcells.website.server.project.validator.SourceValidator;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.ProjectsRendererI;
@@ -136,6 +139,8 @@ public class WebsiteViaJar {
                                         , config
                                         , projectsRenderer))
                         .collect(toList())
+                        .withAppended(Dem.configValue(ObjectsRenderer.class)
+                                , Dem.configValue(ObjectsMediaRenderer.class))
                 , validator
                 , config);
     }
