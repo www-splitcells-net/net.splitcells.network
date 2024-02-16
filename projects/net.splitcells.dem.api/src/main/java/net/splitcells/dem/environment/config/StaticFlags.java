@@ -42,7 +42,7 @@ import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
  * <p>IDEA Get values out of properties file.</p>
  */
 public final class StaticFlags {
-    private static final String ENFORCING_UNIT_CONSISTENCY_KEY = "net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY";
+    public static final String ENFORCING_UNIT_CONSISTENCY_KEY = "net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY";
     /**
      *
      */
