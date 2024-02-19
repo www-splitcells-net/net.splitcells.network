@@ -5,7 +5,7 @@
   <p>Together we are more than the sum of our cells.</p>
 </div>
 
-> We provide an open source [ecosystem](https://splitcells.net/net/splitcells/gel/index.html) centered around optimization and operations research.
+> We provide an open source [ecosystem](https://splitcells.net/net/splitcells/gel/index.html) centred around optimization and operations research.
 > The [shell framework OSI](https://splitcells.net/net/splitcells/os/state/interface/README.html) is used to ease the ecosystem's development,
 > by integrating local development projects with the developer's computer and programs.
 
