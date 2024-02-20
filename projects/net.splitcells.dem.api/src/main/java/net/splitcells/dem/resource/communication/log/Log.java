@@ -105,6 +105,14 @@ public interface Log extends ListWA<LogMessage<Perspective>>, Resource {
                 error.withProperty("message", throwable.getMessage());
             }
             error.withProperty("stack-trace", throwableToString(throwable));
+            if (throwable.getCause() != null) {
+                final var cause = perspective("cause");
+                if (throwable.getCause().getMessage() != null) {
+                    cause.withProperty("message", throwable.getCause().getMessage());
+                }
+                cause.withProperty("stack-trace", throwableToString(throwable.getCause()));
+                error.withChild(cause);
+            }
             return append(logMessage(error, NO_CONTEXT, LogLevel.CRITICAL));
         } catch (Throwable th) {
             // This is a fallback, if the error could not be logged.
