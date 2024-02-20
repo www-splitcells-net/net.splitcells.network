@@ -17,7 +17,7 @@ import subprocess
 dockerFileServiceTemplate = """
 FROM docker.io/eclipse-temurin:21-jdk-jammy
 RUN apt update
-COPY jars/* /root/Documents/projects/$NAME_FOR_EXECUTION/jars/
+COPY deployable-jars/* /root/Documents/projects/$NAME_FOR_EXECUTION/jars/
 WORKDIR /root/Documents/projects/$NAME_FOR_EXECUTION
 ENTRYPOINT ["/opt/java/openjdk/bin/java"]
 CMD ["-cp", "./jars/*", "$CLASS_FOR_EXECUTION"]
