@@ -31,6 +31,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.resource.FileSystemVoid.fileSystemVoid;
 import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
@@ -49,7 +50,7 @@ public class ObjectsRendererI implements ProjectRenderer {
 
     @Override
     public FileSystem projectFileSystem() {
-        return fileSystemOnLocalHost(Path.of("/invalid/"));
+        return fileSystemVoid();
     }
 
     public synchronized ObjectsRendererI withObject(DiscoverableRenderer object) {
