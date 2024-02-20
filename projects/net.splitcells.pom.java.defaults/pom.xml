@@ -31,7 +31,7 @@
         <maven.compiler.release>${java.version}</maven.compiler.release>
     </properties>
     <build>
-        <finalName>${groupId}.${artifactId}-${version}</finalName>
+        <finalName>${groupId}.${artifactId}-${project.version}</finalName>
         <sourceDirectory>src/main/java</sourceDirectory>
         <testSourceDirectory>src/main/java</testSourceDirectory>
         <plugins>
