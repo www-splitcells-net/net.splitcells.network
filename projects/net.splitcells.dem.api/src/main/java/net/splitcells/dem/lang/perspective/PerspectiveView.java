@@ -36,11 +36,12 @@ public interface PerspectiveView extends Domable {
     String name();
 
     default String xmlName() {
-        return name().replace("<", "&lt;")
+        return name()
+                .replace("&", "&amp;")
+                .replace("<", "&lt;")
                 .replace(">", "&gt;")
                 .replace("\"", "&quot;")
                 .replace("'", "&apos;")
-                .replace("&", "&amp;")
                 .replace("~", "&Tilde;");
     }
 

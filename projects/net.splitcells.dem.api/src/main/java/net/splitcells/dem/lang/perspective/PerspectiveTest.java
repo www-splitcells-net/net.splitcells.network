@@ -26,6 +26,12 @@ import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.BinaryUtils.binaryOutputStream;
 
 public class PerspectiveTest {
+
+    @UnitTest
+    public void testXmlName() {
+        requireEquals(perspective("&<>\"'~").xmlName(), "&amp;&lt;&gt;&quot;&apos;&Tilde;");
+    }
+
     @UnitTest
     public void testToXmlString() {
         final var article = perspective("article", SEW);
