@@ -724,6 +724,14 @@ document.addEventListener('DOMContentLoaded', function(){
                                 </xsl:variable>
                                 <xsl:value-of select="replace($postLink, '//', '/')"/>
                             </xsl:when>
+                            <xsl:when test="s:file">
+                                <xsl:variable name="fileLink">
+                                    <xsl:copy-of select="$site-instance-root-path-default"/>
+                                    <xsl:text></xsl:text>
+                                    <xsl:apply-templates select="s:file/node()"/>
+                                </xsl:variable>
+                                <xsl:value-of select="replace($fileLink, '//', '/')"/>
+                            </xsl:when>
                             <xsl:when test="s:post">
                                 <xsl:variable name="postLink">
                                     <xsl:copy-of select="$site-instance-root-path-default"/>
