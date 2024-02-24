@@ -48,6 +48,7 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 
 public class TimeSteps implements Rater {
     public static final String NO_TIME_STEP_GROUP = "no-time-step-group";
+    public static final String WITH_UNEVEN_START_TIME = " with uneven start time";
     /**
      * Option that tries to improve the performance,
      * when set to true,
@@ -175,7 +176,7 @@ public class TimeSteps implements Rater {
                 if (this.isStartTimeEven) {
                     groupName = NO_TIME_STEP_GROUP + " with even start time";
                 } else {
-                    groupName = NO_TIME_STEP_GROUP + " with uneven start time";
+                    groupName = NO_TIME_STEP_GROUP + WITH_UNEVEN_START_TIME;
                 }
                 rating.additions().put(addition, localRating()
                         .withPropagationTo(list())

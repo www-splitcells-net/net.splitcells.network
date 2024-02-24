@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import static java.util.stream.IntStream.range;
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.cin.raters.deprecated.TimeSteps.NO_TIME_STEP_GROUP;
+import static net.splitcells.cin.raters.deprecated.TimeSteps.WITH_UNEVEN_START_TIME;
 import static net.splitcells.cin.raters.deprecated.TimeSteps.timeStepId;
 import static net.splitcells.cin.raters.deprecated.TimeSteps.timeSteps;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -199,20 +200,20 @@ public class TimeStepsTest {
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
-                .forEach(g -> requireEquals(g.name().get(), FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with uneven start time"));
+                .forEach(g -> requireEquals(g.name().get(), FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_UNEVEN_START_TIME));
         testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
-                .forEach(g -> requireEquals(g.name().get(), FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with uneven start time"));
+                .forEach(g -> requireEquals(g.name().get(), FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_UNEVEN_START_TIME));
         testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with uneven start time"
+                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_UNEVEN_START_TIME
                         , FOR_ALL.value() + " " + timeStepId(1, 2)
                         , FOR_ALL.value() + " " + timeStepId(1, 2)));
         testSubject.assign(testSubject.demandsFree().orderedLine(0)
@@ -221,17 +222,17 @@ public class TimeStepsTest {
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with uneven start time"
+                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_UNEVEN_START_TIME
                         , FOR_ALL.value() + " " + timeStepId(1, 2)
                         , FOR_ALL.value() + " " + timeStepId(1, 2)
-                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with uneven start time"));
+                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_UNEVEN_START_TIME));
         testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with uneven start time"
+                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_UNEVEN_START_TIME
                         , FOR_ALL.value() + " " + timeStepId(1, 2)
                         , FOR_ALL.value() + " " + timeStepId(1, 2)
                         , FOR_ALL.value() + " " + timeStepId(3, 4)
@@ -242,12 +243,12 @@ public class TimeStepsTest {
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with uneven start time"
+                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_UNEVEN_START_TIME
                         , FOR_ALL.value() + " " + timeStepId(1, 2)
                         , FOR_ALL.value() + " " + timeStepId(1, 2)
                         , FOR_ALL.value() + " " + timeStepId(3, 4)
                         , FOR_ALL.value() + " " + timeStepId(3, 4)
-                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with uneven start time"));
+                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_UNEVEN_START_TIME));
         testSubject.undoAssignment(testSubject.demandsUsed().orderedLine(0)
                 , testSubject.suppliesUsed().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
@@ -258,17 +259,17 @@ public class TimeStepsTest {
                         , FOR_ALL.value() + " " + timeStepId(1, 2)
                         , FOR_ALL.value() + " " + timeStepId(3, 4)
                         , FOR_ALL.value() + " " + timeStepId(3, 4)
-                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with uneven start time"));
+                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_UNEVEN_START_TIME));
         testSubject.undoAssignment(testSubject.demandsUsed().orderedLine(0)
                 , testSubject.suppliesUsed().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with uneven start time"
+                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_UNEVEN_START_TIME
                         , FOR_ALL.value() + " " + timeStepId(3, 4)
                         , FOR_ALL.value() + " " + timeStepId(3, 4)
-                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with uneven start time"));
+                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_UNEVEN_START_TIME));
         testSubject.undoAssignment(testSubject.demandsUsed().orderedLine(0)
                 , testSubject.suppliesUsed().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
@@ -277,22 +278,22 @@ public class TimeStepsTest {
                 .mapped(g -> g.name().orElseThrow())
                 .assertEquals(list(FOR_ALL.value() + " " + timeStepId(3, 4)
                         , FOR_ALL.value() + " " + timeStepId(3, 4)
-                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with uneven start time"));
+                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_UNEVEN_START_TIME));
         testSubject.undoAssignment(testSubject.demandsUsed().orderedLine(0)
                 , testSubject.suppliesUsed().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with uneven start time"
-                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with uneven start time"));
+                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_UNEVEN_START_TIME
+                        , FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_UNEVEN_START_TIME));
         testSubject.undoAssignment(testSubject.demandsUsed().orderedLine(0)
                 , testSubject.suppliesUsed().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + " with uneven start time"));
+                .assertEquals(list(FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_UNEVEN_START_TIME));
         testSubject.undoAssignment(testSubject.demandsUsed().orderedLine(0)
                 , testSubject.suppliesUsed().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
