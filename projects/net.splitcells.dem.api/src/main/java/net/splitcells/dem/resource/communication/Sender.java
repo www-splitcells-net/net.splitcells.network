@@ -39,7 +39,11 @@ public interface Sender<T> extends ListWA<T>, Resource {
 
             @Override
             public <R extends ListWA<String>> R append(String arg) {
-                printer.println(arg);
+                /* The new line ending added by println at the end of the argument is
+                 * dependent on the current operation system.
+                 * To make the program portable, the line ending is done via a constant.
+                 */
+                printer.print(arg + "\n");
                 printer.flush();
                 return (R) this;
             }
