@@ -19,19 +19,11 @@
 ## API Compatibility
 There is no guarantee of backwards compatibility.
 
-All API changes are located and categorized in the [Changelog](https://splitcells.net/net/splitcells/CHANGELOG.global.html).
+Many API changes are located and categorized in the changelogs of the corresponding project.
 Breaking changes are tried to be omitted, but there is no guarantee for that.
-The author of the software use this project as a dependency for their own
-private code.
-So there is at least an interest, to keep breaking changes to a minimum.
-On the other hand, the API is not polished,
-so there will be breaking changes to the API.
 
-Absolute backward compatibility creates a maintenance burden and if any kind
-of backward compatibility is required it may be best to just contact this
-project.
-We do not break backward compatibility just for fun and would like to support
-efforts to minimize breaking changes.
+Absolute backward compatibility creates a maintenance burden,
+but we do not break backward compatibility just for fun.
 
 You can try to decrease the likelihood of breaking a certain feature,
 by contributing an appropriate test case/suite for this feature.
