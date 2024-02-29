@@ -110,12 +110,12 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
 
     @Override
     public InputStream inputStream(Path path) {
-        return clazz.getResourceAsStream("/" + basePath + path.toString());
+        return clazz.getResourceAsStream(normalize("/" + basePath + path.toString()));
     }
 
     @Override
     public String readString(Path path) {
-        final var resourcePath = ("/" + basePath + path.toString()).replace("\\", "/");
+        final var resourcePath = normalize("/" + basePath + path.toString());
         try {
             return readAsString(clazz.getResourceAsStream(resourcePath));
         } catch (Throwable th) {
@@ -128,7 +128,7 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
 
     @Override
     public Optional<String> readStringIfPresent(Path path) {
-        final var resourcePath = ("/" + basePath + path.toString()).replace("\\", "/");
+        final var resourcePath = normalize("/" + basePath + path.toString());
         final var fileContent = clazz.getResourceAsStream(resourcePath);
         if (fileContent != null) {
             try {
@@ -346,7 +346,7 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
 
     public FileSystemView subFileSystemView(String path) {
         return new FileSystemViaClassResourcesImpl(clazz
-                , (basePath + path + "/").replaceAll("//", "/")
+                , normalize(basePath + path + "/")
                 , resourceList
                 , populatedResourceList);
     }
