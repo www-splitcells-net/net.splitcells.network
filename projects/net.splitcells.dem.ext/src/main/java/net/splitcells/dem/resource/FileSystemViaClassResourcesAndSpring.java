@@ -73,13 +73,13 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
 
     @Override
     public InputStream inputStream(Path path) {
-        return clazz.getResourceAsStream("/" + basePath + path.toString());
+        return clazz.getResourceAsStream(normalize("/" + basePath + path.toString()));
     }
 
     @Override
     public String readString(Path path) {
         try {
-            return readAsString(resourceResolver.getResource(normalize(path)).getInputStream());
+            return readAsString(resourceResolver.getResource(normalize("/" + basePath + path)).getInputStream());
         } catch (Throwable th) {
             throw executionException(perspective("Could not read file from class path resources:")
                             .withProperty("path requested", path.toString())
@@ -124,11 +124,11 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
     }
 
     private String normalize(String path) {
-        return path.replace("./", "").replace("//", "/");
+        return path.replace("./", "").replace("//", "/").replace("\\", "/");
     }
 
     private String normalize(Path path) {
-        return ("/" + basePath + path.toString()).replace("\\", "/");
+        return normalize(path.toString());
     }
 
     @Override
@@ -277,7 +277,7 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
     @Override
     public byte[] readFileAsBytes(Path path) {
         try {
-            return resourceResolver.getResource(normalize(path)).getInputStream().readAllBytes();
+            return resourceResolver.getResource(normalize("/" + basePath + path)).getInputStream().readAllBytes();
         } catch (IOException e) {
             throw executionException(e);
         }
