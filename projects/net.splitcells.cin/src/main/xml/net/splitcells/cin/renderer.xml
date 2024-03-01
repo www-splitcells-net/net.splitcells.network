@@ -38,13 +38,19 @@ unshowByCssClass('menu');
         <s:list>
             <s:item>
                 <s:link>
-                    <s:text>Live Renderer View (Currently this is only for self hosting.)</s:text>
+                    <s:text>Live view (Currently this is only for self hosting.)</s:text>
                     <s:url>renderer.html?world_import_from=live&amp;render_latest_time=1&amp;debug_enabled=1</s:url>
                 </s:link>
             </s:item>
             <s:item>
                 <s:link>
-                    <s:text>Live Renderer View for Specific Time (Currently this is only for self hosting.)</s:text>
+                    <s:text>Live view for specific time (Currently this is only for self hosting.)</s:text>
+                    <s:url>renderer.html?world_import_from=live&amp;render_specific_time=1&amp;debug_enabled=1</s:url>
+                </s:link>
+            </s:item>
+            <s:item>
+                <s:link>
+                    <s:text>Live view for specific time in fullscreen (Currently this is only for self hosting.)</s:text>
                     <s:url>renderer.html?world_import_from=live&amp;render_specific_time=1&amp;debug_enabled=1</s:url>
                 </s:link>
             </s:item>
