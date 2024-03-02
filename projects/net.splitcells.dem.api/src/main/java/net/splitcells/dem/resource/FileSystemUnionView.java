@@ -37,6 +37,8 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
  */
 public class FileSystemUnionView implements FileSystemView {
 
+    private static final String UNAMBIGUOUS_PATH = "Could find unambiguous file system match.";
+
     public static FileSystemUnionView fileSystemUnionView(List<FileSystemView> fileSystems) {
         return new FileSystemUnionView(fileSystems);
     }
@@ -52,7 +54,7 @@ public class FileSystemUnionView implements FileSystemView {
                 .filter(f -> f.isFile(path))
                 .collect(toList());
         if (matches.size() != 1) {
-            throw executionException(perspective("Could find unambiguous file system match.")
+            throw executionException(perspective(UNAMBIGUOUS_PATH)
                     .withProperty("path", path.toString())
                     .withProperty("matches", matches.toString()));
         }
@@ -84,7 +86,7 @@ public class FileSystemUnionView implements FileSystemView {
                 .filter(f -> f)
                 .collect(toList());
         if (matches.size() != 1) {
-            throw executionException(perspective("Could find unambiguous file system match.")
+            throw executionException(perspective(UNAMBIGUOUS_PATH)
                     .withProperty("path", path.toString())
                     .withProperty("matches", matches.toString()));
         }
@@ -98,7 +100,7 @@ public class FileSystemUnionView implements FileSystemView {
                 .filter(f -> f)
                 .collect(toList());
         if (matches.size() != 1) {
-            throw executionException(perspective("Could find unambiguous file system match.")
+            throw executionException(perspective(UNAMBIGUOUS_PATH)
                     .withProperty("path", path.toString())
                     .withProperty("matches", matches.toString()));
         }
