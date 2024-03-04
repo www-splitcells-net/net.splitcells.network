@@ -92,6 +92,21 @@ public class Dem {
     }
 
     /**
+     * <p>Provides {@link net.splitcells.dem.environment.resource.Service}s as described by the configurator.
+     * In other words, this method executes a program decoratively,
+     * by configuring the {@link Environment} and waiting indefinitely,
+     * so that {@link net.splitcells.dem.environment.resource.Service}s can provide functionality.</p>
+     * <p>TODO Provide any mechanism for each {@link Option} to
+     * declare all other {@link Option}s, that are required for it initialization.
+     * Currently, this is solved by manually initializing the {@link Option}s in the correct order.</p>
+     *
+     * @param configurator This describes the program's configuration.
+     */
+    public static void serve(Consumer<Environment> configurator) {
+        process(Dem::waitIndefinitely, configurator);
+    }
+
+    /**
      * Defines and executes a program.
      * <p>
      * TODO Support stacking.
