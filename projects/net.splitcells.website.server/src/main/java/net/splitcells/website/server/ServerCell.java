@@ -20,6 +20,16 @@ import net.splitcells.dem.environment.Cell;
 
 public class ServerCell implements Cell {
     @Override
+    public String groupId() {
+        return "net.splitcells";
+    }
+
+    @Override
+    public String artifactId() {
+        return "website.server";
+    }
+
+    @Override
     public void accept(Environment env) {
         env.config().withInitedOption(ServerService.class);
     }
