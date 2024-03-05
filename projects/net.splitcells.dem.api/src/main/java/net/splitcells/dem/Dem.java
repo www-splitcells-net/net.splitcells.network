@@ -15,6 +15,9 @@
  */
 package net.splitcells.dem;
 
+import net.splitcells.dem.data.atom.Thing;
+import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.environment.Cell;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.environment.EnvironmentI;
 import net.splitcells.dem.environment.EnvironmentV;
@@ -32,7 +35,9 @@ import java.util.concurrent.Semaphore;
 import java.util.function.Consumer;
 
 import static net.splitcells.dem.ProcessResult.processResult;
+import static net.splitcells.dem.data.atom.Thing.instance;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.environment.config.StaticFlags.logStaticFlags;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.communication.log.LogLevel.UNKNOWN_ERROR;
@@ -97,13 +102,13 @@ public class Dem {
      * by configuring the {@link Environment} and waiting indefinitely,
      * so that {@link net.splitcells.dem.environment.resource.Service}s can provide functionality.</p>
      * <p>TODO Provide any mechanism for each {@link Option} to
-     * declare all other {@link Option}s, that are required for it initialization.
+     * declare all other {@link Option}s, that are required for its initialization.
      * Currently, this is solved by manually initializing the {@link Option}s in the correct order.</p>
      *
-     * @param configurator This describes the program's configuration.
+     * @param cells This describes the program's configuration.
      */
-    public static void serve(Consumer<Environment> configurator) {
-        process(Dem::waitIndefinitely, configurator);
+    public static void serve(Class<? extends Cell>... cells) {
+        process(Dem::waitIndefinitely, env -> listWithValuesOf(cells).forEach(env::withCell));
     }
 
     /**
