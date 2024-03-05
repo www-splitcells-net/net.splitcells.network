@@ -5,6 +5,7 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2024-03-05 \#170** Deprecate `OptionI` in order to remove all abstraction classes in the future.
 * **2023-10-25 \#242** `net.splitcells.dem.data.set.map.Map#put` now throws an exception,
     if the key is already present.
     This is done, because in this case, there is an increased chance, of a programming bug being present.
