@@ -17,6 +17,8 @@ package net.splitcells.dem.data.atom;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
+import java.lang.reflect.InvocationTargetException;
+
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 public interface Thing {
@@ -41,5 +43,13 @@ public interface Thing {
     @JavaLegacyBody
     static int hashCode(Object... args) {
         return java.util.Objects.hash(args);
+    }
+
+    static <T> T instance(Class<? extends T> clazz) {
+        try {
+            return clazz.getDeclaredConstructor().newInstance();
+        } catch (Throwable t) {
+            throw executionException(t);
+        }
     }
 }

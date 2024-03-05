@@ -20,6 +20,8 @@ import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
 
+import static net.splitcells.dem.data.atom.Thing.instance;
+
 /**
  * <p>TODO Merge dem.environment package content into dem.resources package.</p>
  * <p>TODO Create a meta config in form of a table, in order to add arbitrary information, methods etc. to a config.
@@ -31,11 +33,16 @@ import net.splitcells.dem.resource.communication.Flushable;
  */
 public interface Environment extends EnvironmentV, Service {
 
-	/**
-	 * It is not allowed to be called multiple times.
-	 */
-	void init();
+    /**
+     * It is not allowed to be called multiple times.
+     */
+    void init();
 
-	Configuration config();
+    Configuration config();
+
+    default Environment withCell(Class<? extends Cell> clazz) {
+        config().withInitedOption(clazz).configValue(clazz).accept(this);
+        return this;
+    }
 
 }
