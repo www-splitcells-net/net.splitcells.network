@@ -22,9 +22,11 @@ import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import java.util.*;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 
 /**
@@ -95,11 +97,20 @@ public class ConfigurationI implements Configuration {
 
     @Override
     public <T> void process(Class<? extends T> type, Function<T, T> processor) {
-        config_store.entrySet().forEach(entry -> {
+        listWithValuesOf(config_store.entrySet()).forEach(entry -> {
             if (type.isAssignableFrom(entry.getValue().getClass())) {
                 entry.setValue(
                         processor.apply(((T) entry.getValue()))
                 );
+            }
+        });
+    }
+
+    @Override
+    public <KeyType extends Class<? extends Option<ValueType>>, ValueType> void consume(KeyType type, BiConsumer<KeyType, ValueType> consumer) {
+        listWithValuesOf(config_store.entrySet()).forEach(entry -> {
+            if (type.isAssignableFrom((KeyType) entry.getKey())) {
+                consumer.accept((KeyType) entry.getKey(), (ValueType) entry.getValue());
             }
         });
     }

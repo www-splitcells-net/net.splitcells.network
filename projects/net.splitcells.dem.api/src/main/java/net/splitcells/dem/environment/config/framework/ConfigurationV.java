@@ -17,10 +17,21 @@ package net.splitcells.dem.environment.config.framework;
 
 import net.splitcells.dem.data.set.Set;
 
+import java.util.function.BiConsumer;
+
 public interface ConfigurationV {
     <T> T configValue(Class<? extends Option<T>> key);
 
     Object configValueUntyped(Object key);
 
     Set<Class<? extends Option<?>>> keys();
+
+    /**
+     * Consumes a certain type of {@link Option} and {@link Option#defaultValue()}.
+     *
+     * @param type        Type of {@link Option}, that will be processed.
+     * @param consumer    Function that consumes the corresponding {@link Option} and their values.
+     * @param <ValueType> Type of {@link Option#defaultValue()}, that will be consumed.
+     */
+    <KeyType extends Class<? extends Option<ValueType>>, ValueType> void consume(KeyType type, BiConsumer<KeyType, ValueType> consumer);
 }

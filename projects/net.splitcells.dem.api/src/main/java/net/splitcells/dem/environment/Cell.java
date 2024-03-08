@@ -37,8 +37,22 @@ import static net.splitcells.dem.utils.StreamUtils.stream;
  * Another goal of this API is to bundle all configurations of a Java module,
  * at one place and relying more on convention instead of configuration.</p>
  * <p>Classes implementing this method, are required to provide a public constructor without arguments.</p>
+ * <p>New properties should not be added to this interface directly,
+ * but should be added via the `Cell#accept` dynamically.
+ * For one, we want to avoid bloating the Cell interface.
+ * Furthermore,
+ * a mechanism is required whereby value of some {@link Cell} properties is replaceable by the caller.
+ * For instance,
+ * a filesystem associated with a {@link Cell} is a file system view based on class resources by default in most cases.
+ * When a developer wants to edit the data of the read only filesystem,
+ * it would be efficient,
+ * if the developer could edit the source files and test the edit without an application restart in the IDE.
+ * Replacing the file system view based on class resources of a {@link Cell} with a file system view backed
+ * by the source code, would make this possible.
+ * In effect, properties associated with a {@link Cell} should be configured via dependency injection of {@link Dem},
+ * when possible.</p>
  * <p>The word Module was not used, because java imports {@link java.lang.Module} by default,
- * which causes uncomfortableness, when trying to adjust the default import.
+ * which causes uncomfortableness in the IDE, when trying to adjust the default import.
  * The word unit was not used, in order to avoid confusion regarding unit tests.
  * The word cell was used, as it is also used in the project name ;)</p>
  */
@@ -58,10 +72,6 @@ public interface Cell extends Consumer<Environment>, Discoverable, Option<Consum
      * that contains this interface implementation.
      */
     String artifactId();
-
-    default FileSystemView fileSystemView() {
-        return fileSystemViaClassResources(Dem.class, groupId(), artifactId());
-    }
 
     /**
      * This method is declared here, in order to improve the autocompletion of the parameter name by IDEs.

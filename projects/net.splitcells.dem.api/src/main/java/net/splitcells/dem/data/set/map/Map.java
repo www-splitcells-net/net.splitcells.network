@@ -27,6 +27,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
@@ -174,5 +175,9 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
         if (size() != arg) {
             throw executionException("Map should be size of " + arg + " but has size of " + size() + " instead: " + this);
         }
+    }
+
+    default Map<Key, Value> shallowCopy() {
+        return map(this);
     }
 }

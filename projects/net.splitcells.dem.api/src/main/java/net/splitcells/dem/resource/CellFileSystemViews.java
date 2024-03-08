@@ -13,24 +13,15 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.website.server;
+package net.splitcells.dem.resource;
 
-import net.splitcells.dem.environment.Environment;
-import net.splitcells.dem.environment.Cell;
+import net.splitcells.dem.environment.config.framework.Option;
 
-public class ServerCell implements Cell {
+import static net.splitcells.dem.resource.FileSystemRegistry.fileSystemRegistry;
+
+public class CellFileSystemViews implements Option<FileSystemRegistry<Class<?>>> {
     @Override
-    public String groupId() {
-        return "net.splitcells";
-    }
-
-    @Override
-    public String artifactId() {
-        return "website.server";
-    }
-
-    @Override
-    public void accept(Environment env) {
-        env.config().withInitedOption(ServerService.class);
+    public FileSystemRegistry<Class<?>> defaultValue() {
+        return fileSystemRegistry();
     }
 }

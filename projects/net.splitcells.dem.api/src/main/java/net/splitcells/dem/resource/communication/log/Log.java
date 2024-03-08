@@ -141,6 +141,15 @@ public interface Log extends ListWA<LogMessage<Perspective>>, Resource {
         return append(logMessage(warning, NO_CONTEXT, LogLevel.CRITICAL));
     }
 
+    default Log appendWarning(Perspective warning) {
+        final var exception = executionException("warning");
+        final var message = perspective("warning");
+        message.withProperty("message", message);
+        message.withProperty("stack-trace", throwableToString(exception));
+        return append(logMessage(warning, NO_CONTEXT, LogLevel.CRITICAL));
+    }
+
+
     default Log appendWarning(String message, Throwable throwable) {
         return appendWarning(perspective(message), throwable);
     }
