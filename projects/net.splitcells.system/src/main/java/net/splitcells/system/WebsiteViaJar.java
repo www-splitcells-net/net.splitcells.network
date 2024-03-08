@@ -120,12 +120,10 @@ public class WebsiteViaJar {
 
     public static ProjectsRendererI projectsRenderer(Config config) {
         final var profile = "public";
-        final var projectsRepository = config.mainProjectRepositoryPath().orElse(Path.of("../"));
         final var validator = VOID_VALIDATOR;
         // TODO config.xmlSchema().map(s -> (SourceValidator) validatorViaSchema(s)).orElse(VOID_VALIDATOR);
-        return projectsRenderer(projectsRepository
-                , profile
-                , projectsRenderer -> fallbackProjectRenderer(projectsRenderer, profile, projectsRepository, validator, config)
+        return projectsRenderer(profile
+                , projectsRenderer -> fallbackProjectRenderer(projectsRenderer, profile, validator, config)
                 , projectsRenderer -> config.additionalProjects().stream()
                         .map(project ->
                                 projectRenderer(profile
@@ -145,7 +143,7 @@ public class WebsiteViaJar {
                 , config);
     }
 
-    public static ProjectsRendererI projectsRenderer(Path projectRepository, String profile
+    public static ProjectsRendererI projectsRenderer(String profile
             , Function<ProjectsRenderer, ProjectRenderer> fallbackProjectRenderer
             , Function<ProjectsRenderer, List<ProjectRenderer>> additionalProjects
             , SourceValidator sourceValidator
@@ -153,7 +151,7 @@ public class WebsiteViaJar {
         return ProjectsRendererI.projectsRenderer(profile, fallbackProjectRenderer, additionalProjects, config);
     }
 
-    public static ProjectRenderer fallbackProjectRenderer(ProjectsRenderer projectsRenderer, String profile, Path projectRepositories
+    public static ProjectRenderer fallbackProjectRenderer(ProjectsRenderer projectsRenderer, String profile
             , SourceValidator sourceValidator
             , Config config) {
         return projectRenderer(profile
