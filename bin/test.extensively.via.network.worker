@@ -1,0 +1,29 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+
+# Do not use OSI commands like `echo.error` in order to keep the test script portable.
+set -e
+startTime=$(date +%s)
+networkProjectFolder=$(pwd)
+rm -rf  ~/.m2/repository/net/splitcells/ # Ensure, that local m2 cache, does not hide an error.
+echo 'Some logs of the build are located at `../net.splitcells.network.log/target`.'
+cd ../net.splitcells.network.bom
+    mvn clean install
+    cd ../net.splitcells.network
+logFolder=../net.splitcells.network.log/src/main/csv/net/splitcells/network/worker/builder/warnings/
+logFile=$logFolder/$(hostname).csv
+test -d ../net.splitcells.network.log/target || mkdir ../net.splitcells.network.log/target
+    test -f ../net.splitcells.network.log/target/test.via.network.worker.log && rm ../net.splitcells.network.log/target/test.via.network.worker.log
+    mvn clean install -DskipTests 2>&1 | tee ../net.splitcells.network.log/target/test.via.network.worker.log
+    numberOfWarnings=$(cat ../net.splitcells.network.log/target/test.via.network.worker.log | grep --ignore-case warning | wc -l)
+mkdir -p $logFolder
+test -f $logFile || echo 'Date,Number Of Warnings' >> $logFile
+echo $(date +'%Y-%m-%d')','$numberOfWarnings >> $logFile
+cd ../net.splitcells.network/projects/net.splitcells.system
+cat bin/execute.extensive.tester
+bin/execute.extensive.tester || >&2 echo '`net.splitcells.system/bin/execute` was not successful.'
+endTime=$(date +%s)
+completionRuntimeFolder=$networkProjectFolder/../net.splitcells.network.log/src/main/csv/net/splitcells/network/worker/builder/runtime/complete/
+mkdir -p "$completionRuntimeFolder"
+echo runTime=$(($endTime - startTime)) >> "$completionRuntimeFolder/$(hostname).csv"
