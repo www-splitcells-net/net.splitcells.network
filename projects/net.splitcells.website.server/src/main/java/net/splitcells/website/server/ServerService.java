@@ -51,7 +51,7 @@ public class ServerService extends ResourceOptionI<Service> {
         });
     }
 
-    private static ProjectsRendererI projectsRenderer(Config config) {
+    public static ProjectsRendererI projectsRenderer(Config config) {
         final var profile = "public";
         final var validator = VOID_VALIDATOR;
         return projectsRenderer(profile
@@ -74,14 +74,14 @@ public class ServerService extends ResourceOptionI<Service> {
                 , config);
     }
 
-    private static ProjectsRendererI projectsRenderer(String profile
+    public static ProjectsRendererI projectsRenderer(String profile
             , Function<ProjectsRenderer, ProjectRenderer> fallbackProjectRenderer
             , Function<ProjectsRenderer, List<ProjectRenderer>> additionalProjects
             , Config config) {
         return ProjectsRendererI.projectsRenderer(profile, fallbackProjectRenderer, additionalProjects, config);
     }
 
-    private static ProjectRenderer fallbackProjectRenderer(ProjectsRenderer projectsRenderer, String profile
+    public static ProjectRenderer fallbackProjectRenderer(ProjectsRenderer projectsRenderer, String profile
             , SourceValidator sourceValidator
             , Config config) {
         return projectRenderer(profile

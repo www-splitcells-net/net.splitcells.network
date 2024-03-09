@@ -33,6 +33,8 @@ import net.splitcells.project.files.standard.ProjectStandardFileSystem;
 import net.splitcells.website.WebsiteServerFileSystem;
 import net.splitcells.website.content.defaults.WebsiteContentDefaultsFileSystem;
 import net.splitcells.website.server.Config;
+import net.splitcells.website.server.ServerService;
+import net.splitcells.website.server.WebsiteServerCell;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.renderer.ObjectsMediaRenderer;
 import net.splitcells.website.server.project.renderer.ObjectsRenderer;
@@ -118,51 +120,49 @@ public class WebsiteViaJar {
                 .withAdditionalProcessor(SolutionCalculator.PATH, solutionCalculator());
     }
 
+    /**
+     * Use {@link ServerService#projectsRenderer(Config)} instead.
+     *
+     * @param config
+     * @return
+     */
+    @Deprecated
     public static ProjectsRendererI projectsRenderer(Config config) {
-        final var profile = "public";
-        final var validator = VOID_VALIDATOR;
-        // TODO config.xmlSchema().map(s -> (SourceValidator) validatorViaSchema(s)).orElse(VOID_VALIDATOR);
-        return projectsRenderer(profile
-                , projectsRenderer -> fallbackProjectRenderer(projectsRenderer, profile, validator, config)
-                , projectsRenderer -> config.additionalProjects().stream()
-                        .map(project ->
-                                projectRenderer(profile
-                                        , project.projectFiles()
-                                        , configValue(WebsiteContentDefaultsFileSystem.class)
-                                                .subFileSystemView("src/main/xsl/net/splitcells/website/den/translation/to/html/")
-                                        , configValue(WebsiteContentDefaultsFileSystem.class)
-                                                .subFileSystemView("src/main/resources/html")
-                                        , project.rootPath()
-                                        , validator
-                                        , config
-                                        , projectsRenderer))
-                        .collect(toList())
-                        .withAppended(Dem.configValue(ObjectsRenderer.class)
-                                , Dem.configValue(ObjectsMediaRenderer.class))
-                , validator
-                , config);
+        return ServerService.projectsRenderer(config);
     }
 
+    /**
+     * Use {@link ServerService#projectsRenderer(String, Function, Function, Config)} instead.
+     *
+     * @param profile
+     * @param fallbackProjectRenderer
+     * @param additionalProjects
+     * @param sourceValidator
+     * @param config
+     * @return
+     */
+    @Deprecated
     public static ProjectsRendererI projectsRenderer(String profile
             , Function<ProjectsRenderer, ProjectRenderer> fallbackProjectRenderer
             , Function<ProjectsRenderer, List<ProjectRenderer>> additionalProjects
             , SourceValidator sourceValidator
             , Config config) {
-        return ProjectsRendererI.projectsRenderer(profile, fallbackProjectRenderer, additionalProjects, config);
+        return ServerService.projectsRenderer(profile, fallbackProjectRenderer, additionalProjects, config);
     }
 
+    /**
+     * Use {@link ServerService#fallbackProjectRenderer(ProjectsRenderer, String, SourceValidator, Config)} instead.
+     *
+     * @param projectsRenderer
+     * @param profile
+     * @param sourceValidator
+     * @param config
+     * @return
+     */
+    @Deprecated
     public static ProjectRenderer fallbackProjectRenderer(ProjectsRenderer projectsRenderer, String profile
             , SourceValidator sourceValidator
             , Config config) {
-        return projectRenderer(profile
-                , configValue(WebsiteContentDefaultsFileSystem.class)
-                , configValue(WebsiteContentDefaultsFileSystem.class)
-                        .subFileSystemView("src/main/xsl/net/splitcells/website/den/translation/to/html/")
-                , configValue(WebsiteContentDefaultsFileSystem.class)
-                        .subFileSystemView("src/main/resources/html")
-                , "/"
-                , sourceValidator
-                , config
-                , projectsRenderer);
+        return ServerService.fallbackProjectRenderer(projectsRenderer, profile, sourceValidator, config);
     }
 }
