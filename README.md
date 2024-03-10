@@ -5,6 +5,7 @@
 **TODO** This repo's content probably should be moved to the main repo,
 as one of the main repos goals is to provide an interface for multiple backend.
 This split just causes more work.
+This repo is maybe not needed at all.
 
 The commands' functionality can be provided by multiple backends:
 * The simplest backend is based on CLI tools, provided by the operation system.
