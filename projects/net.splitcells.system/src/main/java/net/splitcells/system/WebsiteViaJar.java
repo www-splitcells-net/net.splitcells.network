@@ -110,7 +110,7 @@ public class WebsiteViaJar {
                 .withAdditionalCssFile("net/splitcells/website/css/theme.css")
                 .withAdditionalCssFile("net/splitcells/website/css/tabulator.min.css")
                 .withAdditionalProgramConfig(programConfig("Splitcells Network Technical Project Documentation"
-                        , "/net/splitcells/network/README")
+                        , "/net/splitcells/network/hub/README")
                         .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/community.2016.12.11.chrom.0.dina4.jpg"))
                         .withDescription(Optional.of("We provide an open source ecosystem centered around optimization and operations research.")))
                 .withAdditionalProgramConfig(programConfig("Generic Allocation Editor"
