@@ -130,7 +130,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
         renderingValidator.startReport("build" + config.rootPath());
         build();
         projectsPaths().stream()
-                .map(path -> config.rootPath() + path.toString())
+                .map(path -> (config.rootPath() + path.toString()).replace('\\', '/'))
                 .map(path -> {
                     // TODO This is a hack.
                     if (path.endsWith(".md")) {
