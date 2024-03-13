@@ -338,7 +338,7 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
     @Override
     public byte[] readFileAsBytes(Path path) {
         try {
-            return clazz.getResourceAsStream("/" + basePath + path.toString()).readAllBytes();
+            return clazz.getResourceAsStream(normalize("/" + basePath + path.toString())).readAllBytes();
         } catch (IOException e) {
             throw executionException(e);
         }
