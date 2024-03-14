@@ -8,7 +8,9 @@
 // Define all global variables in this section.
 
 import * as THREE from 'three';
-import { OrbitControls } from 'OrbitControls';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+// Define all global variables in this section.
 
 var worldSceneObjects = [];
     // Contains the list of all interactable scene objects.
