@@ -1,11 +1,15 @@
 /* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-// Three.js API doc: https://threejs.org/docs/
-// Papa Parse: https://www.papaparse.com/
-// Architecture: define all base variables first and than operate on these only via methods.
-
-// Define all global variables in this section.
+/* Three.js API doc: https://threejs.org/docs/
+ * Papa Parse: https://www.papaparse.com/
+ * Architecture: define all base variables first and than operate on these only via methods.
+ */
+/* A bundler like rollup was not used, as the developer could not get it running with rollup.
+ * The Three.js project and most Three.js developers seem to prefer to just link to the Three.js bundle and
+ * its addons.
+ * Therefore, it was decided to not further pursuit bundlers for now.
+ */
 
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
