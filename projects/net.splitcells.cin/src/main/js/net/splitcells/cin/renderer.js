@@ -31,22 +31,31 @@ var worldVariables = {
     render_latest_time: true,
     world_import_from: undefined,
     load_time_last: undefined,
-    load_data_function:  undefined
+    load_data_function:  undefined,
 };
 const worldSceneObjectDefaultColor = 0x7D7D7D;
 const worldSceneObjectHighlightedColor = 0x8D8D8D;
 
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 5;
+var scene = new THREE.Scene();
 
-const renderer = new THREE.WebGLRenderer();
+var renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.getElementById("topElement").appendChild(renderer.domElement);
 
-const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
-controls.enablePan = false;
+/* TODO Currently, an isometric view is used in order to avoid clipping and
+ * only kind of landscape are currently being viewed.
+ *
+ * const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+ * const controls = new OrbitControls(camera, renderer.domElement);
+ * controls.enableDamping = true;
+ * controls.enablePan = false;
+ * camera.position.set(0, 10, 20)
+ */
+var camera = new THREE.OrthographicCamera(window.innerWidth / -2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / -2, 1, 1000);
+camera.zoom = 100;
+camera.updateProjectionMatrix();
+camera.updateMatrix();
+scene.add(camera);
 
 if (window != undefined) {
     const browserUrl = window.location.search;
@@ -129,12 +138,10 @@ function render_loop(currentTime) {
     let numberOfSecondsSince = (currentTime - worldVariables.load_time_last);
     if (numberOfSecondsSince > 1000) {
         worldVariables.load_time_last = currentTime;
-        load_loop();
+        // load_loop(); // TODO This does currently damage the camera's position.
     }
     update_by_gamepad(currentTime);
     renderer.render(scene, camera);
-    controls.update();
-    requestAnimationFrame(render_loop);
 }
 
 function update_by_gamepad(currentTime) {
@@ -166,13 +173,13 @@ function update_by_gamepad(currentTime) {
 
 function addLightToScene() {
     const mainLightColor = 0xFFFFFF;
-    const mainLightIntensity = 1;
+    const mainLightIntensity = 10;
     const mainLight = new THREE.PointLight(mainLightColor, mainLightIntensity);
-    mainLight.position.set(0, 1000, 1000);
+    mainLight.position.set(0, 1, 0);
     scene.add(mainLight);
 
     const ambientLightColor = 0xFFFFFF;
-    const ambientLightIntensity = .5;
+    const ambientLightIntensity = 1;
     const ambientLight = new THREE.AmbientLight(ambientLightColor, ambientLightIntensity);
     scene.add(ambientLight);
 }
@@ -189,7 +196,7 @@ function worldScenesObject_remove_by_index(i) {
 
 function worldScenesObject_clear() {
     let size = worldSceneObjects.length;
-    for (var i = 0; i < size; i++) {
+    for (let i = 0; i < size; i++) {
         if (worldSceneObjects[i] != undefined) {
             worldScenesObject_remove_by_index(i);
         }
@@ -212,7 +219,6 @@ function worldSceneObjects_import(updatedData) {
                 latestTime = rowTime;
             }
         }
-        console.log('Rendering latest time of '.concat(latestTime, '.'));
     }
     for (rowIndex = 1; rowIndex < updatedData.length; rowIndex++) {
         let row = updatedData[rowIndex];
@@ -294,16 +300,18 @@ function camera_focus_worldSceneObject_nearest_on_condition(condition) {
 }
 
 function camera_focus_on_sceneObject(sceneObject) {
+    if (sceneObject == undefined) {
+        console.log('Warning: camera_focus_on_sceneObject: sceneObject is undefined: ' + sceneObject);
+        return;
+    }
     let camera_focus_current = worldVariables.camera_focus_current;
     if (camera_focus_current != undefined) {
         camera_focus_current.material.color.setHex(worldSceneObjectDefaultColor);
     }
-    controls.target.x = sceneObject.position.x;
-    controls.target.z = sceneObject.position.y;
-    controls.target.z = sceneObject.position.z;
+    camera.position.set(sceneObject.position.x + 50, 50, sceneObject.position.z + 50);
+    camera.lookAt(sceneObject.position.x, sceneObject.position.y, sceneObject.position.z);
     sceneObject.material.color.setHex(worldSceneObjectHighlightedColor);
     worldVariables.camera_focus_current = sceneObject;
-    controls.update();
 }
 
 function listenToInput() {
@@ -330,15 +338,17 @@ function listenToInput() {
 function camera_position_initialize() {
     let chosenFocus = worldSceneObject_get_random();
     camera_focus_on_sceneObject(chosenFocus);
-    worldVariables.camera_focus_current = chosenFocus;
 }
 
-function load_init() {
+function init() {
     worldVariables.last_load_function((results) => {
         worldSceneObjects_import(results.data);
         addLightToScene();
         listenToInput();
         camera_position_initialize();
+        renderer.setAnimationLoop(() => {
+            render_loop();
+        });
     });
 }
 
@@ -376,5 +386,4 @@ if (worldVariables.world_import_from == undefined) {
                 , complete: completeFunction});
     }
 }
-load_init();
-render_loop();
+init();
