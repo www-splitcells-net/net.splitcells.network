@@ -64,7 +64,7 @@ public class LayoutUtils {
     }
 
     public static Perspective extendPerspectiveWithSimplePath(Perspective current, Path relativeProjectPath) {
-        for (final var element : list(relativeProjectPath.toString().split("/"))
+        for (final var element : list(relativeProjectPath.toString().replace('\\', '/').split("/"))
                 .stream()
                 .filter(e -> !"".contentEquals(e))
                 .collect(toList())) {
