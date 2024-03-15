@@ -83,6 +83,12 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
         return Optional.empty();
     }
 
+    /**
+     * @param path
+     * @param projectsRenderer
+     * @param projectRenderer
+     * @return This is the {@link ProjectRenderer#projectFileSystem()} path to the XML source code of the requested path.
+     */
     private Optional<Path> xmlPath(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
         if (path.endsWith(".html")) {
             final var xmlFile = Path.of("src/main/xml")
