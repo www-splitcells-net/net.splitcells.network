@@ -8,6 +8,7 @@
 .project
 ### Maven ###
 target/
+.flattened-pom.xml
 ### Python
 .pydevproject
 
