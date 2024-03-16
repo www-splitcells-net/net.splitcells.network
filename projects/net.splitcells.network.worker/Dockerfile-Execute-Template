@@ -1,0 +1,6 @@
+FROM docker.io/eclipse-temurin:21-jdk-jammy
+RUN apt update
+RUN apt install --yes maven git python3
+VOLUME /root/Documents/
+VOLUME /root/.ssh/
+VOLUME /root/.m2

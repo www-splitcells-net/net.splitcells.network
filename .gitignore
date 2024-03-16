@@ -13,12 +13,10 @@ projects/net.splitcells.dem/src/main/antlr4/net/splitcells/dem/source/code/Java1
 .project
 ### Maven ###
 target/
+.flattened-pom.xml
 ### Python
 .pydevproject
 
 .vagrant/
-# The following is created by Maven during bild.
-.flattened-pom.xml
-
 # Log files created by Java crash dumps.
 *.log

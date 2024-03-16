@@ -1,0 +1,50 @@
+#!/usr/bin/env python3
+"""
+SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+"""
+
+__author__ = "Mārtiņš Avots"
+__authors__ = ["Contributors To The `net.splitcells.*` Projects"]
+__copyright__ = "Copyright 2024"
+__license__ = "EPL-2.0 OR GPL-2.0-or-later"
+
+import argparse
+import logging
+import subprocess
+
+executeViaPodman = """
+executionName="$1"
+executionCommand="$2"
+# Prepare file system.
+mkdir -p $HOME/Documents/projects/net.splitcells.network.worker.cache/.m2/
+mkdir -p $HOME/Documents/projects/net.splitcells.network.worker.cache/.ssh/
+mkdir -p ./target/
+# Only one run per $executionName is possible, therefor a randomized file name is not required.
+cp -f Dockerfile-Execute-Template "target/Dockerfile-$executionName"
+echo 'ENTRYPOINT '$executionCommand >> "target/Dockerfile-$executionName"
+podman build -f "target/Dockerfile-$executionName" --tag "localhost/$executionName"
+podman run --name "$executionName" \\
+  --rm \\
+  -v $HOME/Documents:/root/Documents \\
+  -v $HOME/Documents/projects/net.splitcells.network.worker.cache/.ssh:/root/.ssh \\
+  -v $HOME/Documents/projects/net.splitcells.network.worker.cache/.m2:/root/.m2 \\
+  "localhost/$executionName"
+rm "target/Dockerfile-$executionName"
+"""
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--name', dest='name', required=True, help="This is the name of the task being executed.")
+    parser.add_argument('--command', dest='command', required=True
+                        , help="This is the shell command, to execute the task."
+                               + "It consists of only one program call."
+                               + " If scripts need to be executed one can use `sh -c \"[script]\"`.")
+    parsedArgs = parser.parse_args()
+    executionScript = (executeViaPodman
+                       .replace('"$1"', "'" + parsedArgs.name + "'")
+                       .replace('"$2"', "'" + parsedArgs.command + "'"))
+    returnCode = subprocess.call(executionScript, shell='True')
+    if returnCode != 0:
+        logging.error("Could not execute given command.");
+    exit(returnCode)
