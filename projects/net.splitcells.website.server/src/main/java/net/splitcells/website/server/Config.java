@@ -21,6 +21,7 @@ import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.ProcessorRegistry;
+import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
 
@@ -396,6 +397,21 @@ public class Config {
 
     public Config withAdditionalProject(ProjectConfig project) {
         additionalProjects.add(project);
+        return this;
+    }
+
+    /**
+     * TODO This is a hack. It would be better to collect all matching {@link ProjectRenderer} for a requested path and
+     * choose the one, with the longest {@link ProjectRenderer#resourceRootPath2()}.
+     *
+     * @param project Adds the given project to the start of {@link #additionalProjects}.
+     *                This is used when multiple {@link ProjectRenderer#resourceRootPath2()} share a common prefix with
+     *                a given requested path.
+     *                Matches at the start of {@link #additionalProjects} are prioritized over matches at the end.
+     * @return
+     */
+    public Config withAdditionalProjectAtStart(ProjectConfig project) {
+        additionalProjects.addFirst(project);
         return this;
     }
 
