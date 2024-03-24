@@ -37,7 +37,6 @@
         <module>projects/net.splitcells.website.content.minimal</module>
         <module>projects/net.splitcells.sep</module>
         <module>projects/net.splitcells.network</module>
-        <module>projects/net.splitcells.network.blog</module>
         <module>projects/net.splitcells.network.worker.via.java</module>
         <module>projects/net.splitcells.cin</module>
         <module>projects/net.splitcells.system</module>

@@ -9,6 +9,9 @@
 * Releases are done every time an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
+* **2023-09-15** Migrate articles of `net.splitcells.network.blog` to `net.splitcells.network.community` and
+  delete the project `net.splitcells.network.blog`,
+  because the blog provides insight into
 * **2023-09-15 \#281** Rename `net.splitcells.network.worker` to `net.splitcells.network.worker.via.java`.
   It is required for a new `net.splitcells.network.worker` project.
   This new project will integrate different implementations of the network worker and provide a common interface for that.

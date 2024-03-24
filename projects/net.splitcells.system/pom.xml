@@ -68,10 +68,5 @@
             <artifactId>project.files.standard</artifactId>
             <version>${revision}</version>
         </dependency>
-        <dependency>
-            <groupId>net.splitcells</groupId>
-            <artifactId>network.blog</artifactId>
-            <version>${revision}</version>
-        </dependency>
     </dependencies>
 </project>
