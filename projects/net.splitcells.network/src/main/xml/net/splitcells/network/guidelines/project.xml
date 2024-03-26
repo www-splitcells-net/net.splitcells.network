@@ -80,6 +80,11 @@
                     the interface of the project.
                     It therefore should contain the test suite of the project.
                 </item>
+                <item>
+                    Core: this part contains the Implementation and the API.
+                    This is helpful, if a minimal implementation is required,
+                    in order to have an API.
+                </item>
                 <item>Extension (Ext): Contains alternative implementations, plugins, extensions, etc. for the project.
                 </item>
                 <item>Environment (Env): contains things, that are relevant for the project,
