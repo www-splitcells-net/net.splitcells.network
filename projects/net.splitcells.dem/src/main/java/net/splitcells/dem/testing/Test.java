@@ -48,6 +48,7 @@ import static org.junit.platform.launcher.TagFilter.includeTags;
  * <p>TODO Find tests with incorrect tags.</p>
  * <p>TODO Simplify code by removing duplicate code.</p>
  * <p>TODO Testing without Maven seems to be faster.</p>
+ * <p>TODO Execute test during production use in order to find errors and to conduct stress tests.</p>
  */
 @JavaLegacyArtifact
 public class Test {
