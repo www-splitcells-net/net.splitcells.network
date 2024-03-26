@@ -25,7 +25,11 @@ li code::before,
 p code::before {
 	content: "”";
 	}
-main canvas {
+main canvas:not(#myChart) {
+    /* TODO ":not(#myChart)" is a hack,
+     * because the intent is to select the "three.js" renderer of "net.splitcells.cin",
+     * which should be done directly and not in this manner.
+     */
     position: absolute;
     z-index: -1;
     height: 100% !important;
