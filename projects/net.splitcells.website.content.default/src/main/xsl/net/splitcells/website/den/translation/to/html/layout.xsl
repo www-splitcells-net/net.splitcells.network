@@ -727,7 +727,7 @@ request.send();]]>
                                         <a class="net-splitcells-button-inline">
                                             <xsl:attribute name="href">
                                                 <xsl:value-of
-                                                        select="s:default-root-relative-url('net/splitcells/network/hubREADME.html')"/>
+                                                        select="s:default-root-relative-url('net/splitcells/network/hub/README.html')"/>
                                             </xsl:attribute>
                                             <xsl:value-of select="$siteName"/>
                                         </a>
