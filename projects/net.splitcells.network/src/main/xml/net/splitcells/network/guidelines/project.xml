@@ -83,7 +83,8 @@
                 <item>
                     Core: this part contains the Implementation and the API.
                     This is helpful, if a minimal implementation is required,
-                    in order to have an API.
+                    in order to have an API,
+                    or if an API with a bundled minimal implementation is useful for bootstrapping purposes.
                 </item>
                 <item>Extension (Ext): Contains alternative implementations, plugins, extensions, etc. for the project.
                 </item>
