@@ -1107,7 +1107,8 @@ request.send();]]>
                 </xsl:variable>
                 <xsl:choose>
                     <xsl:when test="$fromVariable='net-splitcells-website-server-config-menu-detailed'">
-                        <xsl:copy-of select="$net-splitcells-website-server-config-menu-detailed"/>
+                        <xsl:apply-templates select="$net-splitcells-website-server-config-menu-detailed"/>
+
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:message terminate="true" select="'Unknown variable.'"/>
