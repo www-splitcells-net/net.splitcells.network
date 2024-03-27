@@ -19,6 +19,7 @@ import io.vertx.core.AbstractVerticle;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.MultiMap;
+import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
 import io.vertx.core.buffer.Buffer;
@@ -33,16 +34,20 @@ import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.communication.log.LogLevel;
+import net.splitcells.dem.resource.communication.log.Logs;
 import net.splitcells.website.Formats;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
 import net.splitcells.website.server.processor.BinaryMessage;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.Semaphore;
 import java.util.function.Function;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.log.LogLevel.WARNING;
@@ -89,10 +94,10 @@ public class Server {
                 System.setProperty("vertx.maxEventLoopExecuteTime", "1000000");
                 System.setProperty("log4j.rootLogger", "DEBUG, stdout");
                 vertx = Vertx.vertx(new VertxOptions()
-                        .setMaxEventLoopExecuteTimeUnit(SECONDS)
-                        .setMaxEventLoopExecuteTime(60L)
-                        .setBlockedThreadCheckInterval(60_000L))
-                ;
+                                .setMaxEventLoopExecuteTimeUnit(SECONDS)
+                                .setMaxEventLoopExecuteTime(60L)
+                                .setBlockedThreadCheckInterval(60_000L))
+                        .exceptionHandler(t -> Logs.logs().appendError(t));
                 final var deploymentOptions = new DeploymentOptions()
                         .setMaxWorkerExecuteTimeUnit(SECONDS)
                         .setMaxWorkerExecuteTime(60L);
@@ -102,9 +107,9 @@ public class Server {
                         return config.processor().process(request);
                     }
                 };
-                vertx.deployVerticle(new AbstractVerticle() {
+                final var deployResult = vertx.deployVerticle(new AbstractVerticle() {
                     @Override
-                    public void start() {
+                    public void start(Promise<Void> startPromise) {
                         // TODO Errors are not logged.
                         final var webServerOptions = new HttpServerOptions();
                         if (config.isSecured()) {
@@ -175,11 +180,40 @@ public class Server {
                         router.errorHandler(500, e -> {
                             logs().appendError(e.failure());
                         });
-                        final var server = vertx.createHttpServer(webServerOptions);//
-                        server.requestHandler(router);//
-                        server.listen();
+                        final var server = vertx.createHttpServer(webServerOptions);
+                        server.requestHandler(router);
+                        server.exceptionHandler(th ->
+                                Logs.logs().appendError(executionException("An error occurred at the HTTP server .", th)));
+                        server.listen((result) -> {
+                            if (result.failed()) {
+                                startPromise.fail(result.cause());
+                            } else {
+                                startPromise.complete();
+                            }
+                        });
                     }
                 }, deploymentOptions);
+                final var deployWaiter = new Semaphore(1);
+                final List<Throwable> errors = list();
+                try {
+                    deployWaiter.acquire();
+                } catch (Throwable t) {
+                    throw executionException("Could not start HTTP server.");
+                }
+                deployResult.onComplete(result -> {
+                    if (result.failed()) {
+                        errors.add(result.cause());
+                    }
+                    deployWaiter.release();
+                });
+                try {
+                    deployWaiter.acquire();
+                } catch (Throwable t) {
+                    throw executionException("An error occurred during start of the HTTP server.");
+                }
+                if (!errors.isEmpty()) {
+                    throw executionException("Could not start HTTP server.", errors.getFirst());
+                }
             }
         };
     }
