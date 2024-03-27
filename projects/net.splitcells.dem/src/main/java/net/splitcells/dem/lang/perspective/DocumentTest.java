@@ -19,6 +19,7 @@ import net.splitcells.dem.Dem;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.Logs;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
+import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.dem.lang.perspective.Den.priority;
 import static net.splitcells.dem.lang.perspective.Den.project;
@@ -29,9 +30,14 @@ import static net.splitcells.dem.lang.perspective.Den.todo;
 import static net.splitcells.dem.lang.perspective.Den.val;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 
+/**
+ * This is only a demonstration, that XML like documents, can be stored as Java code.
+ */
+@Deprecated
 public class DocumentTest {
 
-    public static void main(String... args) {
+    @UnitTest
+    public void test() {
         Dem.process(() -> {
         }, (env) -> {
             env.config()
