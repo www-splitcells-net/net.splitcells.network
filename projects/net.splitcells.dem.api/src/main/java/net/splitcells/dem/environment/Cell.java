@@ -29,7 +29,8 @@ import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystem
 import static net.splitcells.dem.utils.StreamUtils.stream;
 
 /**
- * <p>This interface provides a single point of entry for a Java module based on {@link Dem}.</p>
+ * <p>This interface provides a single point of entry for a Java module based on {@link Dem}.
+ * It bundles all settings of a module at one place.</p>
  * <p>An instance of this interface describes the configuration of a program,
  * that can be executed via {@link Dem#serve(Class[])}.
  * Such a program provides its functionality via {@link Service}.
