@@ -19,6 +19,14 @@ import net.splitcells.dem.data.set.list.List;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 
+/**
+ * <p>Provides a path for the object, that implements the interface.
+ * This makes the object identifiable in a {@link net.splitcells.dem.resource.FileSystem}
+ * or the webserver.</p>
+ * <p>IDEA Provide a tree structure, that ensures, that every {@link Discoverable} has a unique path and
+ * in order to get better performance,
+ * when a object is search by a path prefix.</p>
+ */
 public interface Discoverable {
 
     Discoverable NO_CONTEXT = () -> list();
