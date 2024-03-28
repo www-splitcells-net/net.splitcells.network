@@ -47,10 +47,20 @@ public class Config {
         return new Config();
     }
 
-    private boolean isSecured = true;
+    /**
+     * A SSL-Keystore is required for securing the web server.
+     * No SSL-Keystore is required by default, in order to easy minimal deployments.
+     */
+    private boolean isSecured = false;
 
-    private Optional<String> sslKeystorePassword = Optional.of("password");
-    private Optional<Path> sslKeystoreFile = Optional.of(Paths.get("target/keystore.p12"));
+    /**
+     * No SSL-Keystore is required by default, in order to easy minimal deployments.
+     */
+    private Optional<String> sslKeystorePassword = Optional.empty();
+    /**
+     * No SSL-Keystore is required by default, in order to easy minimal deployments.
+     */
+    private Optional<Path> sslKeystoreFile = Optional.empty();
 
     /**
      * TODO Use variable for storing the contents of the XSD in order to be file system independent,
@@ -89,7 +99,12 @@ public class Config {
      * <p>Replaces {@link #layoutRelevant}.</p>
      */
     private Optional<Perspective> layoutRelevantPerspective = Optional.empty();
-    private int openPort = 443;
+    /**
+     * A port bigger than 1023 is used, as on Linux port between 0-1023 are privileged ports.
+     * This means opening such a port requires additional user privileges and
+     * therefore complicates deployments with minimal configs.<
+     */
+    private int openPort = 8443;
     private String generationStyle = "standard";
     /**
      * Lists all CSS files, that should be used for the layouts instead of the standard ones, used by the layout.
