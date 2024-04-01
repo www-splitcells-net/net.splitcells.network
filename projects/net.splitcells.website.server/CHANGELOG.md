@@ -7,6 +7,9 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
 
 ## [Unreleased]
 ### Major Changes
+* **2024-04-01:** [\#c15 Speed up static website deployment](https://codeberg.org/splitcells-net/net.splitcells.network.community/issues/15)
+  by providing Config for static website rendering.
+  Currently, this is used to disable tests during the execution of the `TestExtension`.
 * **2024-01-19: \#252** `ProjectRendererI` now required `ProjectsRenderer` in order to provide source code.
 * **2024-01-18: \#252** Provide source code of rendered content inside XSL at `/net.splitcells.website.server/source-code/`.
   The previous configuration file system, which was unused, unusable and available at `/net.splitcells.website/current/xml`,

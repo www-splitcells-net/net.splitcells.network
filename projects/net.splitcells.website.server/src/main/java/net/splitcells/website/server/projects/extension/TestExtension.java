@@ -49,6 +49,11 @@ public class TestExtension implements ProjectsRendererExtension {
                                         + "Otherwise, there would an endless test recursion.</p>"
                                 , LayoutConfig.layoutConfig(PATH));
             }
+            if (config.isRenderingStaticWebsite()) {
+                return projectsRenderer.renderContent
+                        ("<p xmlns=\"http://www.w3.org/1999/xhtml\">Tests are disabled on this static website version.</p>"
+                                , LayoutConfig.layoutConfig(PATH));
+            }
             try {
                 if (Test.testUnits()) {
                     return projectsRenderer.renderContent
