@@ -70,6 +70,12 @@ public class WebsiteViaJar {
         return config(Config.create());
     }
 
+    /**
+     * @param arg
+     * @return
+     * @deprecated TODO Move this method into {@link SystemCell}.
+     */
+    @Deprecated
     public static Config config(Config arg) {
         return arg
                 .withAdditionalProject(projectConfig("/net/splitcells/cin/"

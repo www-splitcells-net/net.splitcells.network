@@ -7,6 +7,7 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
 
 ## [Unreleased]
 ### Major Changes
+* **2024-04-01: \#c15** Discourage server configuration without dependency injection.
 * **2024-04-01:** [\#c15 Speed up static website deployment](https://codeberg.org/splitcells-net/net.splitcells.network.community/issues/15)
   by providing Config for static website rendering.
   Currently, this is used to disable tests during the execution of the `TestExtension`.
