@@ -41,5 +41,6 @@ public interface ConnectingConstructor<T> {
      *
      * @param subject Object to be processed.
      */
-    void connect(T subject);
+    T connect(T subject);
+
 }

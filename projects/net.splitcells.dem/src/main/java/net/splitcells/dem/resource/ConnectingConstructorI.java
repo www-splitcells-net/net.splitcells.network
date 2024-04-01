@@ -41,7 +41,8 @@ public class ConnectingConstructorI<T> implements ConnectingConstructor<T> {
     }
 
     @Override
-    public void connect(T subject) {
+    public T connect(T subject) {
         connectors.forEach(connector -> connector.accept(subject));
+        return subject;
     }
 }

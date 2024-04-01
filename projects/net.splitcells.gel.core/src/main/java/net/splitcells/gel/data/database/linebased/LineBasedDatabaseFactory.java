@@ -65,8 +65,8 @@ public class LineBasedDatabaseFactory implements DatabaseFactory {
     }
 
     @Override
-    public void connect(Database subject) {
-        connector.connect(subject);
+    public Database connect(Database subject) {
+        return connector.connect(subject);
     }
 
     @Override

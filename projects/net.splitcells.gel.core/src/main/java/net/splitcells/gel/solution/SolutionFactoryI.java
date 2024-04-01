@@ -55,8 +55,8 @@ public class SolutionFactoryI implements SolutionFactory {
     }
 
     @Override
-    public void connect(Solution subject) {
-        connectors.connect(subject);
+    public Solution connect(Solution subject) {
+        return connectors.connect(subject);
     }
 
     @Override
