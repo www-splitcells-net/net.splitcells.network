@@ -1,3 +1,7 @@
+----
+* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+* SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+----
 # Splitcells™ Network Worker
 > The Splitcells™ Network Worker provides commands for working on the repos and servers of the project cluster.
 
