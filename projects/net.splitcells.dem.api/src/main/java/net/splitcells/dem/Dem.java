@@ -55,6 +55,8 @@ import static net.splitcells.dem.utils.reflection.ClassesRelated.callerClass;
  * <p>TODO Introduce dependency injection for documentation.</p>
  * <p>TODO Support communication to a running {@link #process(Runnable)}. This could be used,
  * in order to close the process by another process.</p>
+ * <p>TODO New threads should have process thread, should have appropriate names,
+ * so that debuggers and profiles are easier to use.</p>
  */
 @JavaLegacyArtifact
 public class Dem {
