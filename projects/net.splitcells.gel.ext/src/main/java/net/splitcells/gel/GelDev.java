@@ -50,6 +50,10 @@ import static net.splitcells.gel.GelEnv.process;
 import static net.splitcells.website.Projects.projectsRenderer;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
+/**
+ * @deprecated TODO Use {@link net.splitcells.dem.environment.Cell} API instead.
+ */
+@Deprecated
 public final class GelDev {
     private GelDev() {
         throw constructorIllegal();
