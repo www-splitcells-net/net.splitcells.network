@@ -29,6 +29,7 @@ import net.splitcells.dem.resource.communication.log.MessageFilter;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.dem.utils.random.DeterministicRootSourceSeed;
 import net.splitcells.gel.data.database.Databases;
+import net.splitcells.gel.data.lookup.LookupTables;
 import net.splitcells.gel.solution.Solutions;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.ServerService;
@@ -154,5 +155,21 @@ public final class GelDev {
                         return path.withAppended(path.removeAt(path.size() - 1) + ".csv");
                     }
                 }));
+        env.config().configValue(LookupTables.class).withConnector(lookupTable -> ObjectsRenderer.registerObject(new DiscoverableRenderer() {
+            @Override
+            public String render() {
+                return lookupTable.toHtmlTable().toHtmlString();
+            }
+
+            @Override
+            public Optional<String> title() {
+                return Optional.of(lookupTable.path().toString());
+            }
+
+            @Override
+            public List<String> path() {
+                return lookupTable.path();
+            }
+        }));
     }
 }

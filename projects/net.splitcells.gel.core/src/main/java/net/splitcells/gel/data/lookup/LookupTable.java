@@ -29,11 +29,13 @@ import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.resource.ConnectingConstructorI.connectingConstructor;
 import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import net.splitcells.dem.data.set.Set;
@@ -42,6 +44,8 @@ import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.resource.ConnectingConstructor;
+import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -72,33 +76,54 @@ public class LookupTable implements Table {
 
     private final boolean useExperimentalRawLineCache;
 
-    /**
-     * @param table The {@link Table} on which the lookup will be performed.
-     * @param name  This is the name of the {@link LookupTable} being constructed.
-     * @return An instance, where no {@link Line} of {@link Table} is {@link #register(Line)}.
-     */
-    public static LookupTable lookupTable(Table table, String name) {
-        return new LookupTable(table, name, USE_EXPERIMENTAL_RAW_LINE_CACHE);
+    public static LookupTableFactory lookupTableFactory() {
+        return new LookupTableFactory() {
+            private final ConnectingConstructor<LookupTable> connector = connectingConstructor();
+
+            @Override
+            public ConnectingConstructor<LookupTable> withConnector(Consumer<LookupTable> connector) {
+                this.connector.withConnector(connector);
+                return this;
+            }
+
+            @Override
+            public LookupTable connect(LookupTable subject) {
+                return connector.connect(subject);
+            }
+
+            @Override
+            public LookupTable lookupTable(Table table, String name) {
+                return connector.connect(LookupTable.lookupTable(table, name));
+            }
+
+            @Override
+            public LookupTable lookupTable(Table table, Attribute<?> attribute) {
+                return LookupTable.lookupTable(table, attribute);
+            }
+
+            @Override
+            public LookupTable lookupTable(Table table, Attribute<?> attribute, boolean cacheRawLines) {
+                return LookupTable.lookupTable(table, attribute, cacheRawLines);
+            }
+        };
     }
 
-    /**
-     * @param table     The {@link Table} on which the lookup will be performed.
-     * @param attribute The {@link Attribute}, that will be looked up.
-     * @return An instance, where no {@link Line} of {@link Table} is {@link #register(Line)}.
-     */
-    public static LookupTable lookupTable(Table table, Attribute<?> attribute) {
+    private static LookupTable lookupTable(Table table, String name) {
+        return new LookupTable(table, name, USE_EXPERIMENTAL_RAW_LINE_CACHE);
+    }
+    private static LookupTable lookupTable(Table table, Attribute<?> attribute) {
         return new LookupTable(table, attribute.name(), USE_EXPERIMENTAL_RAW_LINE_CACHE);
     }
 
-    public static LookupTable lookupTable(Table table, Attribute<?> attribute, boolean cacheRawLines) {
+    private static LookupTable lookupTable(Table table, Attribute<?> attribute, boolean cacheRawLines) {
         return new LookupTable(table, attribute.name(), cacheRawLines);
     }
 
-    protected LookupTable(Table table, String name) {
+    private LookupTable(Table table, String name) {
         this(table, name, USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE);
     }
 
-    protected LookupTable(Table table, String name, boolean useExperimentalRawLineCache) {
+    private LookupTable(Table table, String name, boolean useExperimentalRawLineCache) {
         this.tableView = table;
         this.name = name;
         columns = table.headerView().stream()

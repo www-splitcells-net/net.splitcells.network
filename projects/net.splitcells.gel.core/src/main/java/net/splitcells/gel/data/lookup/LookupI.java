@@ -19,7 +19,7 @@ import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
-import static net.splitcells.gel.data.lookup.LookupTable.lookupTable;
+import static net.splitcells.gel.data.lookup.LookupTables.lookupTable;
 
 import java.util.function.Predicate;
 
@@ -133,7 +133,7 @@ public class LookupI<T> implements Lookup<T> {
     @Override
     public Table lookup(Predicate<T> predicate) {
         if (!complexContent.containsKey(predicate)) {
-            final var lookup = LookupTable.lookupTable(table, predicate.toString());
+            final var lookup = LookupTables.lookupTable(table, predicate.toString());
             complexContent.put(predicate, lookup);
             table
                     .rawLinesView()
