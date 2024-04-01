@@ -17,6 +17,7 @@ package net.splitcells.system;
 
 import net.splitcells.dem.environment.Cell;
 import net.splitcells.dem.environment.Environment;
+import net.splitcells.website.server.ServerConfig;
 import net.splitcells.website.server.WebsiteServerCell;
 
 import static net.splitcells.dem.Dem.serve;
@@ -26,6 +27,7 @@ public class SystemCell implements Cell {
     public static void main(String... args) {
         serve(SystemCell.class);
     }
+
     @Override
     public String groupId() {
         return "net.splitcells";
@@ -38,6 +40,7 @@ public class SystemCell implements Cell {
 
     @Override
     public void accept(Environment env) {
+        env.config().withConfigValue(ServerConfig.class, WebsiteViaJar.config(env.config().configValue(ServerConfig.class)));
         env.withCell(WebsiteServerCell.class);
     }
 }

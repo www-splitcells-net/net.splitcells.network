@@ -60,8 +60,18 @@ public class WebsiteViaJar {
         throw constructorIllegal();
     }
 
+    /**
+     * @return
+     * @deprecated TODO This method is used for versions, where the server is not managed by {@link Dem}.
+     * Remove the callers and after that remove this method.
+     */
+    @Deprecated
     public static Config config() {
-        return Config.create()
+        return config(Config.create());
+    }
+
+    public static Config config(Config arg) {
+        return arg
                 .withAdditionalProject(projectConfig("/net/splitcells/cin/"
                         , configValue(CinFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/dem/"
