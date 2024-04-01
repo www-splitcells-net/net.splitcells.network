@@ -21,6 +21,7 @@ import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.dem.resource.communication.log.LogLevel;
+import net.splitcells.dem.resource.communication.log.Logs;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
@@ -31,9 +32,11 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.FileSystemVoid.fileSystemVoid;
 import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 public class ObjectsRendererI implements ProjectRenderer {
@@ -54,7 +57,26 @@ public class ObjectsRendererI implements ProjectRenderer {
     }
 
     public synchronized ObjectsRendererI withObject(DiscoverableRenderer object) {
-        objects.put(Path.of(pathPrefix + "/" + object.path().stream().reduce((a, b) -> a + "/" + b).orElseThrow()), object);
+        final var path = Path.of(pathPrefix + "/" + object.path().stream().reduce((a, b) -> a + "/" + b).orElseThrow());
+        Optional<Path> alternativePath = Optional.empty();
+        if (objects.containsKey(path)) {
+            // This makes it easier to analyse problems, when the same path is present multiple times.
+            int i = 0;
+            do {
+                alternativePath = Optional.of(Path.of(pathPrefix + "/" + object.path().stream().reduce((a, b) -> a + "/" + b)
+                        .orElseThrow()
+                        + "."
+                        + ++i));
+            } while (objects.containsKey(alternativePath.orElseThrow()));
+            logs().appendWarning(perspective("Discoverable path is already registered. Using alternative path for rendering instead.")
+                            .withProperty("object", object.toString())
+                            .withProperty("path", path.toString())
+                            .withProperty("alternative path", alternativePath.orElseThrow().toString())
+                    , executionException("Discoverable path is already registered."));
+            objects.put(alternativePath.orElseThrow(), object);
+        } else {
+            objects.put(path, object);
+        }
         return this;
     }
 
