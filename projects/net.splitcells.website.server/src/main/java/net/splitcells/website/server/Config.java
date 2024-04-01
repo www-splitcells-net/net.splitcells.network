@@ -227,6 +227,11 @@ public class Config {
      * </p>
      */
     private boolean isDownloadingViaHtmlElement = false;
+    /**
+     * If set to true, it is assumed, that the server is used to render the server as a static website once.
+     * This option is used, in order to improve the runtime in this use case.
+     */
+    private boolean isRenderingStaticWebsite = false;
 
     private Config() {
     }
@@ -503,5 +508,14 @@ public class Config {
 
     public boolean isDownloadingViaHtmlElement() {
         return isDownloadingViaHtmlElement;
+    }
+
+    public boolean isRenderingStaticWebsite() {
+        return isRenderingStaticWebsite;
+    }
+
+    public Config withIsRenderingStaticWebsite(boolean arg) {
+        isRenderingStaticWebsite = arg;
+        return this;
     }
 }
