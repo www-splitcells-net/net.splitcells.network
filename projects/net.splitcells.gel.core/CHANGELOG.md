@@ -5,6 +5,9 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2024-04-01 #170** Deprecate ResourceOptionI.
+  Implement the ResourceOption API directly instead,
+  by implementing the `Option#defaulValue()` instead of implementing this via the default constructor.
 * **2023-06-27 #170** `Line#values()` are now read only, in order to allow more performant code,
   by not requiring lines to provide a new copy of line values for every `Line#values()` call. 
 * **2023-06-21 #170** `Table#columnsView` now only returns a read-only access to the columns,

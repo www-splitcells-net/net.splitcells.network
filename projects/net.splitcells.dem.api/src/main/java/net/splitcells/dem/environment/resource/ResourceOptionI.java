@@ -22,12 +22,8 @@ import net.splitcells.dem.resource.communication.Flushable;
 import java.util.function.Supplier;
 
 /**
- * TODO Instead of an abstract class, create multiple {@link ResourceOption} sub
- * interfaces, so that inheritance is not required by default,
- * in order to implement {@link net.splitcells.dem.environment.config.framework.Option}s
- * and {@link ResourceOption}s easily.
- * 
  * @param <T> Type Of Resource
+ * @deprecated Use {@link ResourceOption} interface directly instead.
  */
 public class ResourceOptionI<T extends Resource> extends OptionI<T> implements ResourceOption<T> {
     public ResourceOptionI(Supplier<T> arg_default_value) {
