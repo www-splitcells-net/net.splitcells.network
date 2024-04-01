@@ -46,7 +46,25 @@ import static net.splitcells.website.server.project.validator.SourceValidatorVia
 public class ServerService extends ResourceOptionI<Service> {
     public ServerService() {
         super(() -> {
-            return projectsRenderer(Dem.configValue(ServerConfig.class)).httpServer();
+            return new Service() {
+                Service httpServer;
+
+                @Override
+                public void start() {
+                    httpServer = projectsRenderer(Dem.configValue(ServerConfig.class)).httpServer();
+                    httpServer.start();
+                }
+
+                @Override
+                public void close() {
+                    httpServer.close();
+                }
+
+                @Override
+                public void flush() {
+                    httpServer.flush();
+                }
+            };
         });
     }
 
