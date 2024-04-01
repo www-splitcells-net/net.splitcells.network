@@ -25,7 +25,8 @@ import static net.splitcells.dem.data.set.list.Lists.list;
  * or the webserver.</p>
  * <p>IDEA Provide a tree structure, that ensures, that every {@link Discoverable} has a unique path and
  * in order to get better performance,
- * when a object is search by a path prefix.</p>
+ * when a object is search by a path prefix.
+ * In this case, duplicate {@link #path()} are also easier to avoid.</p>
  */
 public interface Discoverable {
 
