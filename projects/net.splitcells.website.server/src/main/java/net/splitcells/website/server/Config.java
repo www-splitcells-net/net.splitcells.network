@@ -26,7 +26,6 @@ import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
@@ -143,8 +142,11 @@ public class Config {
             , "/");
 
     /**
-     * States whether {@link net.splitcells.website.server.project.Renderer}s may cache certain parts,
+     * <p>States whether {@link net.splitcells.website.server.project.Renderer}s may cache certain parts,
      * like the output and styling information, or not.
+     * Setting this to true, speeds up the rendering, but makes it impossible to reload the data of renderers quickly
+     * during development and thereby generally slows down the development speed.</p>
+     * <p>TODO Set this to true by default in order to speed up default production settings.</p>
      */
     private boolean cacheRenderers = false;
 
