@@ -5,37 +5,34 @@
             SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
             SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
         -->
-        <title>Splitcells Network's Objective</title>
+        <title>Splitcells Network's objective</title>
     </meta>
-    <paragraph>
-        We provide an open source ecosystem centered around optimization and operations research,
-        in order to achieve the following:
-    </paragraph>
-    <list>
-        <item>Provide software and documentation to create and optimize problems based on a simple but powerful assignment model.</item>
-        <item>
-            Empower people to model and reason about complex systems,
-            built out of inter connected optimization problems.
-        </item>
-        <item>Enable the user to understand the results given a solver and an optimization system.</item>
-        <item>Develop new optimization algorithms.</item>
-        <item>Provide compatibility between different optimization systems.</item>
-    </list>
-    <paragraph>
-        The sub project Crisis Network (Cin) is the main playground in order to demonstrate and evaluate the results.
-        It is a game, that allows one to inject optimization problems into a shared world,
-        in order to create a system with an enormous amount of complexity,
-        thereby bringing the modelers and solvers to its limits and beyond.
-    </paragraph>
-    <paragraph>
-        A game was chosen for this, in order to a have a concept on how to create and maintain a complex system,
-        that still makes sense,
-        when looked at by humans.
-        There is not much more demotivating, than to optimize systems,
-        that are complex and have no semantic meaning.
-        A game also has a very high requirement for a good UI regarding the optimization software and
-        therefore incentives one to not neglect the UI too much.
-        At last, a game can be advertised to a larger audience,
-        than optimization software.
-    </paragraph>
+    <chapter>
+        <title>Abstract goals of the Network project</title>
+        <paragraph>
+            We provide an open source ecosystem centered around optimization and operations research,
+            in order to achieve the following:
+        </paragraph>
+        <list>
+            <item>Provide software and documentation to create and optimize problems based on a simple but powerful assignment model.</item>
+            <item>
+                Empower people to model and reason about complex systems,
+                built out of inter connected optimization problems.
+            </item>
+            <item>Enable the user to understand the results given a solver and an optimization system.</item>
+            <item>Develop new optimization algorithms.</item>
+            <item>Provide compatibility between different optimization systems.</item>
+        </list>
+    </chapter>
+    <chapter>
+        <title>Sub Projects to achieve the abstract goals</title>
+        <paragraph>
+            In the following is a list of sub projects,
+            that demonstrate how the general goals of the project are fulfilled.
+        </paragraph>
+        <list>
+            <link post="/net/splitcells/network/objectives/cin-project">Crisis Network Project</link>
+            <link post="/net/splitcells/network/objectives/school-organization-project">School Organization Project</link>
+        </list>
+    </chapter>
 </article>
