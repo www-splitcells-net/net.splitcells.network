@@ -158,6 +158,6 @@ public interface ProjectsRenderer {
             }
             pathElements.removeAt(pathElements.size() - 1);
         }
-        return relevantParentPages;
+        return relevantParentPages.reverse();
     }
 }
