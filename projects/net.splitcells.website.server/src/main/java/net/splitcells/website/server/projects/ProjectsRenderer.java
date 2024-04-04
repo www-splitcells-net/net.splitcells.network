@@ -138,26 +138,87 @@ public interface ProjectsRenderer {
      */
     Optional<BinaryMessage> renderContent(String content, LayoutConfig metaContent);
 
-    default List<PageMetaData> relevantParentPages(String path) {
+    /**
+     * Returns a list of relevant parent documents,
+     * that can be used to navigate the website backwards in the topic hierarchy.
+     * This list is offered to the user, in order to help the user to travers the website.
+     *
+     * @param path
+     * @return Returns a list of relevant parent pages for the given part,
+     * that itself represents a path to the current documents excluding the current document.
+     * So at max only one element per parent folder is returned.
+     * The list is sorted ascending order to the parent pages folder length.
+     * This makes this list consistent to the given path.
+     */
+    default List<PageMetaData> relevantParentPage(String path) {
         final List<PageMetaData> relevantParentPages = list();
         final var pathElements = listWithValuesOf(path.split("/"));
         while (pathElements.hasElements()) {
             pathElements.removeAt(pathElements.size() - 1);
-            pathElements.withAppended("index.html");
-            final var potentialPath = pathElements.stream().reduce("", (a, b) -> a + "/" + b).substring(1);
-            final var potentialPage = config().layoutPerspective().orElseThrow().pathOfDenValueTree(potentialPath);
-            if (potentialPage.isPresent()) {
-                final var parentPage = potentialPage.orElseThrow().stream()
-                        .map(e -> e.propertyInstance(NAME, DEN).orElseThrow().valueName())
-                        .reduce("", (a, b) -> a + "/" + b)
-                        .substring(1);
-                if (!parentPage.equals(path)) {
-                    final var potentialMetaData = metaData(parentPage);
-                    potentialMetaData.ifPresent(relevantParentPages::withAppended);
-                }
-            }
-            pathElements.removeAt(pathElements.size() - 1);
+
+            relevantParentPage(path, pathElements, "index.html", this)
+                    .or(() -> relevantParentPage(path, pathElements, "README.html", this))
+                    .or(() -> relevantParentPage(path, pathElements, this))
+                    .ifPresent(relevantParentPages::add);
+            ;
         }
         return relevantParentPages.reverse();
+    }
+
+    private static Optional<PageMetaData> relevantParentPage(String path
+            , List<String> pathElements
+            , String parentFileName
+            , ProjectsRenderer projectsRenderer) {
+        final var potentialPath = pathElements.shallowCopy()
+                .withAppended(parentFileName)
+                .stream()
+                .reduce("", (a, b) -> a + "/" + b)
+                .substring(1);
+        final var potentialPage = projectsRenderer.config().layoutPerspective().orElseThrow().pathOfDenValueTree(potentialPath);
+        if (potentialPage.isPresent()) {
+            final var parentPage = potentialPage.orElseThrow().stream()
+                    .map(e -> e.propertyInstance(NAME, DEN).orElseThrow().valueName())
+                    .reduce("", (a, b) -> a + "/" + b)
+                    .substring(1);
+            if (!parentPage.equals(path)) {
+                return projectsRenderer.metaData(parentPage);
+            }
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * @param path
+     * @param pathElements
+     * @param projectsRenderer
+     * @return Returns the {@link PageMetaData} of the document, that has the same parent as the parent's parent of
+     * the given path and whose file name is the parent's name of the given path plus ".html".
+     */
+    private static Optional<PageMetaData> relevantParentPage(String path
+            , List<String> pathElements
+            , ProjectsRenderer projectsRenderer) {
+        pathElements = pathElements.shallowCopy();
+        final var folderName = pathElements.removeLast();
+        final var potentialPath = pathElements
+                .withAppended(folderName + ".html")
+                .stream()
+                .reduce("", (a, b) -> a + "/" + b)
+                .substring(1);
+        final var potentialPage = projectsRenderer.config().layoutPerspective().orElseThrow().pathOfDenValueTree(potentialPath);
+        if (potentialPage.isPresent()) {
+            final var parentPage = potentialPage.orElseThrow().stream()
+                    .map(e -> e.propertyInstance(NAME, DEN).orElseThrow().valueName())
+                    .reduce("", (a, b) -> a + "/" + b)
+                    .substring(1);
+            if (!parentPage.equals(path)) {
+                final var relevantParentPage = projectsRenderer.metaData(parentPage);
+                final var meta = relevantParentPage.orElseThrow();
+                if (pathElements.get(pathElements.size() - 2).equals(meta.title().orElse(folderName))) {
+                    meta.withAlternativeNameOfIndexedFolder(Optional.of(folderName));
+                }
+                return relevantParentPage;
+            }
+        }
+        return Optional.empty();
     }
 }

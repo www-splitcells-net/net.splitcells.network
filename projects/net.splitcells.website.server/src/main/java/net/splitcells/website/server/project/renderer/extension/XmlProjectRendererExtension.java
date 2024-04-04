@@ -19,9 +19,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
-import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.utils.StreamUtils;
-import net.splitcells.website.Formats;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.processor.BinaryMessage;
@@ -159,15 +157,24 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
                 pathContext += localPathContext.get().toXmlStringWithPrefixes();
             }
             var metaData = "";
-            final var queriedMetaData = projectsRenderer.relevantParentPages(path);
+            final var queriedMetaData = projectsRenderer.relevantParentPage(path);
             if (queriedMetaData.hasElements()) {
                 final var relevantParentPages = optionalDirectChildElementsByName(metaElement, "relevant-parent-pages", NameSpaces.SEW)
                         .orElseGet(() -> document.createElementNS(NameSpaces.SEW.uri(), "relevant-parent-pages"));
                 queriedMetaData.forEach(m -> {
                     final var parent = document.createElementNS(NameSpaces.SEW.uri(), "parent");
                     parent.setAttribute("path", m.path());
-                    parent.setAttribute("title", m.title().orElse(path));
-                    parent.setAttribute("parent-folder", m.parentFolder().orElse(projectsRenderer.config().sitesName()));
+                    //parent.setAttribute("title", m.title().orElse(path));
+                    //parent.setAttribute("indexed-folder-name", m.indexedFolderName().orElse(projectsRenderer.config().sitesName()));
+                    parent.setAttribute("title", m.title()
+                            .or(() -> {
+                                if (m.path().contains("/")) {
+                                    return Optional.of(m.path());
+                                } else {
+                                    return Optional.of(projectsRenderer.config().sitesName());
+                                }
+                            })
+                            .orElse(path));
                     relevantParentPages.appendChild(parent);
                 });
                 metaData += Xml.toPrettyWithoutHeaderString(relevantParentPages);

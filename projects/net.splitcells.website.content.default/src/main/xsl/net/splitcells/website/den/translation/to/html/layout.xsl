@@ -376,8 +376,7 @@ request.send();]]>
                                                 <xsl:value-of
                                                         select="s:default-root-relative-url(./@path)"/>
                                             </xsl:attribute>
-                                            <xsl:value-of
-                                                    select="./@parent-folder"/>
+                                            <xsl:value-of select="./@title"/>
                                         </a>
                                     </li>
                                 </xsl:for-each>

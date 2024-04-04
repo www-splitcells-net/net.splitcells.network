@@ -404,7 +404,7 @@ public class ProjectRendererI implements ProjectRenderer {
             metaElement.appendChild(pathElement);
         }
         if (path.isPresent()) {
-            final var relevantParentPages = projectsRenderer.relevantParentPages(path.get());
+            final var relevantParentPages = projectsRenderer.relevantParentPage(path.get());
             if (relevantParentPages.hasElements()) {
 
                 final var container = optionalDirectChildElementsByName(metaElement, "relevant-parent-pages", SEW)
@@ -416,8 +416,16 @@ public class ProjectRendererI implements ProjectRenderer {
                 relevantParentPages.forEach(m -> {
                     final var parent = elementWithChildren(SEW, "parent");
                     parent.setAttribute("path", m.path());
-                    parent.setAttribute("title", m.title().orElse(path.get()));
-                    parent.setAttribute("parent-folder", m.parentFolder().orElse(config.sitesName()));
+                    parent.setAttribute("title", m.title()
+                            .or(() -> m.indexedFolderName())
+                            .or(() -> {
+                                if (m.path().contains("/")) {
+                                    return Optional.of(m.path());
+                                } else {
+                                    return Optional.of(config.sitesName());
+                                }
+                            })
+                            .orElse(path.get()));
                     container.appendChild(parent);
                 });
                 metaElement.appendChild(container);

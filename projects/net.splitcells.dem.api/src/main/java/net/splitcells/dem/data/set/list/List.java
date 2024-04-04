@@ -88,6 +88,12 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
         return this;
     }
 
+    /**
+     *
+     * @param offset An offset of 0 removes the last element in the list.
+     *               An offset of 1 removes the second last element in the list.
+     * @return
+     */
     default List<T> withRemovedFromBehind(int offset) {
         remove(size() - 1 - offset);
         return this;
