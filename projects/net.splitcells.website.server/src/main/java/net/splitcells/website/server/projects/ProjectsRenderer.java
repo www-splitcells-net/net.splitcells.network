@@ -144,8 +144,8 @@ public interface ProjectsRenderer {
         while (pathElements.hasElements()) {
             pathElements.removeAt(pathElements.size() - 1);
             pathElements.withAppended("index.html");
-            final var potentialPage = config().layoutPerspective().orElseThrow().pathOfDenValueTree
-                    (pathElements.stream().reduce("", (a, b) -> a + "/" + b).substring(1));
+            final var potentialPath = pathElements.stream().reduce("", (a, b) -> a + "/" + b).substring(1);
+            final var potentialPage = config().layoutPerspective().orElseThrow().pathOfDenValueTree(potentialPath);
             if (potentialPage.isPresent()) {
                 final var parentPage = potentialPage.orElseThrow().stream()
                         .map(e -> e.propertyInstance(NAME, DEN).orElseThrow().valueName())

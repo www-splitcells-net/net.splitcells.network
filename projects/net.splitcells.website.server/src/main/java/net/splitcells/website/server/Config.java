@@ -128,6 +128,8 @@ public class Config {
      * with a path not starting with {@link #rootPath} will not return anything.
      */
     private String rootPath = "/";
+
+    private String sitesName = "splitcells.net";
     /**
      * This is the root index file of the website.
      */
@@ -516,6 +518,15 @@ public class Config {
 
     public Config withIsRenderingStaticWebsite(boolean arg) {
         isRenderingStaticWebsite = arg;
+        return this;
+    }
+
+    public String sitesName() {
+        return sitesName;
+    }
+
+    public Config withSitesName(String arg) {
+        sitesName = arg;
         return this;
     }
 }

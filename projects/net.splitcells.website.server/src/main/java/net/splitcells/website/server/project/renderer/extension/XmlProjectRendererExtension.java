@@ -167,6 +167,7 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
                     final var parent = document.createElementNS(NameSpaces.SEW.uri(), "parent");
                     parent.setAttribute("path", m.path());
                     parent.setAttribute("title", m.title().orElse(path));
+                    parent.setAttribute("parent-folder", m.parentFolder().orElse(projectsRenderer.config().sitesName()));
                     relevantParentPages.appendChild(parent);
                 });
                 metaData += Xml.toPrettyWithoutHeaderString(relevantParentPages);

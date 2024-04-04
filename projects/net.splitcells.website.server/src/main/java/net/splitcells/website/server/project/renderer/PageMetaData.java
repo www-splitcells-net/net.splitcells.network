@@ -42,6 +42,14 @@ public class PageMetaData {
         return title;
     }
 
+    public Optional<String> parentFolder() {
+        final var pathSplit = path.split("/");
+        if (pathSplit.length == 0 || pathSplit.length == 1) {
+            return Optional.empty();
+        }
+        return Optional.of(pathSplit[pathSplit.length - 2]);
+    }
+
     @Override
     public String toString() {
         return path + title.map(t -> ", " + t).orElse("");

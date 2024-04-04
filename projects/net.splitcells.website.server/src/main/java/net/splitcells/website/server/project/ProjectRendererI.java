@@ -417,6 +417,7 @@ public class ProjectRendererI implements ProjectRenderer {
                     final var parent = elementWithChildren(SEW, "parent");
                     parent.setAttribute("path", m.path());
                     parent.setAttribute("title", m.title().orElse(path.get()));
+                    parent.setAttribute("parent-folder", m.parentFolder().orElse(config.sitesName()));
                     container.appendChild(parent);
                 });
                 metaElement.appendChild(container);

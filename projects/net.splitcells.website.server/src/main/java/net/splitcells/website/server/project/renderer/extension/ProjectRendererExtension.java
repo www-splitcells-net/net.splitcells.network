@@ -29,6 +29,7 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.website.server.project.renderer.PageMetaData.pageMetaData;
 
 /**
  * TODO Do not only test {@link #projectPaths(ProjectRenderer)},
@@ -56,6 +57,16 @@ public interface ProjectRendererExtension {
     }
 
     default Optional<PageMetaData> metaData(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
+        if (projectPaths(projectRenderer).contains(Path.of(path))) {
+            final var metaData = pageMetaData(path);
+            if (path.contains("/")) {
+                final var pathSplit = path.split("/");
+                metaData.withTitle(Optional.of(pathSplit[pathSplit.length - 1]));
+            } else {
+                metaData.withTitle(Optional.of(path));
+            }
+            return Optional.of(metaData);
+        }
         return Optional.empty();
     }
 
