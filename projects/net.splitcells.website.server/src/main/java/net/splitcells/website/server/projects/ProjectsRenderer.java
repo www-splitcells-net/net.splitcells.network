@@ -151,8 +151,10 @@ public interface ProjectsRenderer {
                         .map(e -> e.propertyInstance(NAME, DEN).orElseThrow().valueName())
                         .reduce("", (a, b) -> a + "/" + b)
                         .substring(1);
-                final var potentialMetaData = metaData(parentPage);
-                potentialMetaData.ifPresent(relevantParentPages::withAppended);
+                if (!parentPage.equals(path)) {
+                    final var potentialMetaData = metaData(parentPage);
+                    potentialMetaData.ifPresent(relevantParentPages::withAppended);
+                }
             }
             pathElements.removeAt(pathElements.size() - 1);
         }
