@@ -10,6 +10,8 @@ function net_splitcells_gel_ui_editor_form_submit() {
     config['form-id'] = 'net-splitcells-gel-ui-editor-form'
     config['submit-button-id'] = 'net-splitcells-gel-ui-calculate-solution-form-submit-1';
     config['on-submission-completion'] = () => {
+        // TODO Use paging for table.
+        // TODO Inject Tabulator in order to avoid direct dependency.
         net_splitcells_gel_ui_editor_form_solution = new Tabulator("#net-splitcells-gel-ui-calculate-solution-form-solution-data"
             , {data: document.getElementById('net-splitcells-gel-ui-editor-form-solution').value
             , importFormat: 'csv'
