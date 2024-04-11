@@ -41,6 +41,9 @@ public class DefaultOptimization implements OnlineOptimization {
         onlineLinearInitialization().optimize(solution);
         final var maxDepth = solution.constraint().longestConstraintPathLength();
         for (int currentDepth = 0; currentDepth <= maxDepth; ++currentDepth) {
+            /**
+             * TODO Use {@link net.splitcells.gel.solution.optimization.meta.Escalator}.
+             */
             final int execCount = currentDepth + 1;
             for (int i = 0; i < execCount; ++i) {
                 constraintGroupBasedRepair(repairConfig().withMinimumConstraintGroupPath(currentDepth))
