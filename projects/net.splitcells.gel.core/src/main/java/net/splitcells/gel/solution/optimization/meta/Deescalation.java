@@ -22,36 +22,38 @@ import java.util.function.Function;
 
 public class Deescalation implements OnlineOptimization {
 
-    public static OnlineOptimization deescalation(Function<Integer, OnlineOptimization> optimizations, int escalationLevel, int minimum_escalation_level, int maximum_escalation_level) {
+    public static Deescalation deescalation(Function<Integer, OnlineOptimization> optimizations, int escalationLevel, int minimum_escalation_level, int maximum_escalation_level) {
         return new Deescalation(optimizations, escalationLevel, minimum_escalation_level, maximum_escalation_level);
     }
 
     private final Function<Integer, OnlineOptimization> optimizations;
     private int escalationLevel;
-    private final int minimum_escalation_level;
-    private final int maximum_escalation_level;
+    private final int minimumEscalationLevel;
+    private final int maximumEscalationLevel;
 
-    private Deescalation(Function<Integer, OnlineOptimization> optimizations, int escalationLevel, int minimum_escalation_level, int maximum_escalation_level) {
+    private Deescalation(Function<Integer, OnlineOptimization> optimizations, int escalationLevel, int minimumEscalationLevel, int maximumEscalationLevel) {
         this.optimizations = optimizations;
         this.escalationLevel = escalationLevel;
-        this.minimum_escalation_level = minimum_escalation_level;
-        this.maximum_escalation_level = maximum_escalation_level;
+        this.minimumEscalationLevel = minimumEscalationLevel;
+        this.maximumEscalationLevel = maximumEscalationLevel;
     }
 
     @Override
     public void optimize(Solution solution) {
         final var startRating = solution.constraint().rating();
-        if (escalationLevel < minimum_escalation_level) {
+        if (escalationLevel < minimumEscalationLevel) {
             return;
         }
         this.optimizations.apply(escalationLevel).optimize(solution);
         final var nextRating = solution.constraint().rating();
         if (nextRating.betterThan(startRating)) {
-            if (escalationLevel < maximum_escalation_level) {
+            if (escalationLevel < maximumEscalationLevel) {
                 escalationLevel += 1;
             }
         } else {
-            escalationLevel -= 1;
+            if (escalationLevel > minimumEscalationLevel) {
+                escalationLevel -= 1;
+            }
         }
     }
 }

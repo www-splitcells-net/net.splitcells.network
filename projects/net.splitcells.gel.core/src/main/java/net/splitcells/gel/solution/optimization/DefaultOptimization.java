@@ -15,9 +15,11 @@
  */
 package net.splitcells.gel.solution.optimization;
 
+import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.meta.OfflineEscalator;
 
+import static net.splitcells.gel.solution.optimization.meta.Deescalation.deescalation;
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.constraintGroupBasedRepair;
 import static net.splitcells.gel.solution.optimization.primitive.repair.RepairConfig.repairConfig;
@@ -41,15 +43,16 @@ public class DefaultOptimization implements OnlineOptimization {
     public void optimize(Solution solution) {
         onlineLinearInitialization().optimize(solution);
         final var maxDepth = solution.constraint().longestConstraintPathLength();
-        for (int currentDepth = 0; currentDepth <= maxDepth; ++currentDepth) {
-            /**
-             * TODO Use {@link OfflineEscalator}.
-             */
-            final int execCount = currentDepth + 1;
-            for (int i = 0; i < execCount; ++i) {
-                constraintGroupBasedRepair(repairConfig().withMinimumConstraintGroupPath(currentDepth))
-                        .optimize(solution);
-            }
+        final var deescalation = deescalation(currentDepth -> s -> {
+                    final int execCount = currentDepth + 1;
+                    for (int j = 0; j < execCount; ++j) {
+                        constraintGroupBasedRepair(repairConfig().withMinimumConstraintGroupPath(currentDepth))
+                                .optimize(s);
+                    }
+                }
+                , maxDepth, 0, maxDepth);
+        for (int x = 0; x <= 100; ++x) {
+            deescalation.optimize(solution);
         }
         // Ensures, that at the end of the optimization all values are assigned.
         onlineLinearInitialization().optimize(solution);

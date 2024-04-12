@@ -62,7 +62,7 @@ public class SolutionCalculatorTest {
                 , "a,b,c,argumentation\n");
     }
 
-    @UnitTest
+    @IntegrationTest
     public void testDemonstrationExample() {
         Dem.process(() -> {
                             final var problemDefinition = Dem.configValue(GelUiFileSystem.class)
@@ -74,6 +74,9 @@ public class SolutionCalculatorTest {
                                             .withProperty(PROBLEM_DEFINITION, perspective(problemDefinition))
                                             .withProperty(DEMANDS, perspective(demands))
                                             .withProperty(SUPPLIES, perspective(supplies))));
+                            requireEquals(testResult.data().namedChildren(SOLUTION_RATING).get(0).child(0)
+                                            .createToJsonPrintable().toJsonString()
+                                    , "{\"Cost\":\"0.0\"}");
                             /* TODO Improve solver to solve this example.
                              * requireEquals(testResult.data().namedChildren(SOLUTION_RATING).get(0).child(0)
                              *               .createToJsonPrintable().toJsonString()
