@@ -16,6 +16,7 @@
 package net.splitcells.gel.solution.optimization;
 
 import net.splitcells.gel.solution.Solution;
+import net.splitcells.gel.solution.optimization.meta.OfflineEscalator;
 
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.constraintGroupBasedRepair;
@@ -42,7 +43,7 @@ public class DefaultOptimization implements OnlineOptimization {
         final var maxDepth = solution.constraint().longestConstraintPathLength();
         for (int currentDepth = 0; currentDepth <= maxDepth; ++currentDepth) {
             /**
-             * TODO Use {@link net.splitcells.gel.solution.optimization.meta.Escalator}.
+             * TODO Use {@link OfflineEscalator}.
              */
             final int execCount = currentDepth + 1;
             for (int i = 0; i < execCount; ++i) {

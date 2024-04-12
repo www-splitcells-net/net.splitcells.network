@@ -30,14 +30,14 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.gel.common.Language.OPTIMIZATION;
 
-public class Escalator implements OfflineOptimization {
+public class OfflineEscalator implements OfflineOptimization {
 
-    public static Escalator escalator(Function<Integer, OfflineOptimization> optimizations) {
-        return new Escalator(optimizations, 0, 0, Integer.MAX_VALUE);
+    public static OfflineEscalator escalator(Function<Integer, OfflineOptimization> optimizations) {
+        return new OfflineEscalator(optimizations, 0, 0, Integer.MAX_VALUE);
     }
 
-    public static Escalator escalator(Function<Integer, OfflineOptimization> optimizations, int escalationLevel, int minimum_escalation_level, int maximum_escalation_level) {
-        return new Escalator(optimizations, escalationLevel, minimum_escalation_level, maximum_escalation_level);
+    public static OfflineEscalator escalator(Function<Integer, OfflineOptimization> optimizations, int escalationLevel, int minimum_escalation_level, int maximum_escalation_level) {
+        return new OfflineEscalator(optimizations, escalationLevel, minimum_escalation_level, maximum_escalation_level);
     }
 
     private final Function<Integer, OfflineOptimization> optimizations;
@@ -45,7 +45,7 @@ public class Escalator implements OfflineOptimization {
     private final int minimum_escalation_level;
     private final int maximum_escalation_level;
 
-    private Escalator(Function<Integer, OfflineOptimization> optimizations, int escalationLevel, int minimum_escalation_level, int maximum_escalation_level) {
+    private OfflineEscalator(Function<Integer, OfflineOptimization> optimizations, int escalationLevel, int minimum_escalation_level, int maximum_escalation_level) {
         this.optimizations = optimizations;
         this.escalationLevel = escalationLevel;
         this.minimum_escalation_level = minimum_escalation_level;
