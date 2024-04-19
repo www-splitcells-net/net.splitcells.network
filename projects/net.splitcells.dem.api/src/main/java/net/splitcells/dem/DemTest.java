@@ -16,6 +16,13 @@
 package net.splitcells.dem;
 
 import net.splitcells.dem.resource.communication.log.MessageFilter;
+import org.junit.jupiter.api.Test;
+
+import java.time.Duration;
+import java.time.Instant;
+
+import static net.splitcells.dem.Dem.sleepAtLeast;
+import static net.splitcells.dem.data.atom.Bools.require;
 
 /**
  * Used for experiments.
@@ -30,5 +37,14 @@ public class DemTest {
             env.config()
                     .withConfigValue(MessageFilter.class, (message) -> true);
         });
+    }
+
+    @Test
+    public void testSleepAtLeast() {
+        final var start = Instant.now();
+        final var waitingTime = 1000l;
+        sleepAtLeast(waitingTime);
+        final var end = Instant.now();
+        require(Duration.between(start, end).toMillis() >= waitingTime);
     }
 }

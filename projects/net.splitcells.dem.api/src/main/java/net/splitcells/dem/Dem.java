@@ -15,8 +15,6 @@
  */
 package net.splitcells.dem;
 
-import net.splitcells.dem.data.atom.Thing;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.Cell;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.environment.EnvironmentI;
@@ -29,13 +27,14 @@ import net.splitcells.dem.resource.communication.log.Logs;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
 
 import java.security.Permission;
+import java.time.Duration;
+import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.concurrent.Semaphore;
 import java.util.function.Consumer;
 
 import static net.splitcells.dem.ProcessResult.processResult;
-import static net.splitcells.dem.data.atom.Thing.instance;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.environment.config.StaticFlags.logStaticFlags;
@@ -293,5 +292,29 @@ public class Dem {
                 throw executionException("System exit is disallowed and not supported: " + status);
             }
         });
+    }
+
+    /**
+     * TODO This method should probably be placed somewhere else.
+     *
+     * @param milliSeconds
+     */
+    public static void sleepAtLeast(long milliSeconds) {
+        try {
+            final var plannedEnd = Instant.now().plusMillis(milliSeconds);
+            Instant currentEnd;
+            long timeLeft;
+            Thread.sleep(milliSeconds);
+            do {
+                currentEnd = Instant.now();
+                if (currentEnd.isAfter(plannedEnd)) {
+                    return;
+                }
+                timeLeft = milliSeconds - Duration.between(currentEnd, plannedEnd).toMillis();
+                Thread.sleep(timeLeft);
+            } while (timeLeft > 0);
+        } catch (Throwable t) {
+            throw executionException(t);
+        }
     }
 }
