@@ -370,3 +370,8 @@ JavaFX
     * https://gluonhq.com/products/javafx/
 * Website: https://openjfx.io/
 * Source Code: https://github.com/openjdk/jfx
+
+ACME4J
+* License: Apache-2.0
+* Website: https://shredzone.org/maven/acme4j/index.html
+* Source Code: https://github.com/shred/acme4j
