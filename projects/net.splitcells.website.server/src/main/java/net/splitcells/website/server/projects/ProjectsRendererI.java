@@ -55,7 +55,6 @@ import static net.splitcells.website.server.project.validator.RenderingValidator
 import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithPath;
 import static net.splitcells.website.server.projects.extension.ColloquiumPlanningDemandsTestData.colloquiumPlanningDemandTestData;
 import static net.splitcells.website.server.projects.extension.ColloquiumPlanningSuppliesTestData.colloquiumPlanningSuppliesTestData;
-import static net.splitcells.website.server.projects.extension.DemConfigExtension.demConfigExtension;
 import static net.splitcells.website.server.projects.extension.FrontMenuExtension.frontMenuExtension;
 import static net.splitcells.website.server.projects.extension.GlobalChangelogExtension.globalChangelogExtension;
 import static net.splitcells.website.server.projects.extension.LayoutExtension.layoutExtension;
@@ -183,7 +182,6 @@ public class ProjectsRendererI implements ProjectsRenderer {
             .withRegisteredExtension(layoutTreeExtension())
             .withRegisteredExtension(testExtension())
             .withRegisteredExtension(frontMenuExtension())
-            .withRegisteredExtension(demConfigExtension())
             .withRegisteredExtension(colloquiumPlanningDemandTestData())
             .withRegisteredExtension(colloquiumPlanningSuppliesTestData())
             .withRegisteredExtension(hostMemoryUtilizationExtension())

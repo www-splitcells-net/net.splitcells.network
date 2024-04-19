@@ -33,9 +33,15 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 
 /**
  * Renders the {@link Configuration} of the current {@link Dem#config()}.
+ *
+ * @deprecated This is deprecated for now, as the config can contain security sensitive info and
+ * no authorization system exists for this project yet.
+ * When an authorization is present, this may enabled in the future.
  */
+@Deprecated
 public class DemConfigExtension implements ProjectsRendererExtension {
-    public static DemConfigExtension demConfigExtension() {
+    @Deprecated
+    private static DemConfigExtension demConfigExtension() {
         return new DemConfigExtension();
     }
 
