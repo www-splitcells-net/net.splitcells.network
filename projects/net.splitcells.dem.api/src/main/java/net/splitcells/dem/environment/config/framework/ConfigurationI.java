@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.environment.config.framework;
 
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.map.typed.TypedMap;
@@ -23,6 +24,7 @@ import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import java.util.*;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
@@ -33,6 +35,10 @@ import static net.splitcells.dem.data.set.map.Maps.map;
  * <p>TODO {@link Configuration} consistency check could be implemented via {@link #subscribers}.
  * Automatic {@link Option} update based on other {@link Option} updates should not be done via these {@link #subscribers}.</p>
  * <p>TODO Use {@link TypedMap}, instead of {@link Map}, in order to reduce the amount of reflection usage.</p>
+ * <p>TODO Ensure, that config value's identity cannot be replaced after executing the environment consumer at {@link Dem#process(Runnable, Consumer)}.
+ * Config values can be mutable, in order to manage states inside the config,
+ * but the users of {@link Configuration} can rely on the fact,
+ * that the config values are final after the environment consumer's execution.</p>
  */
 @JavaLegacyArtifact
 public class ConfigurationI implements Configuration {
