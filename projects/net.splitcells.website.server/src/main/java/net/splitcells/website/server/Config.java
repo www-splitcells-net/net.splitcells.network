@@ -15,6 +15,7 @@
  */
 package net.splitcells.website.server;
 
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.perspective.Perspective;
@@ -24,6 +25,7 @@ import net.splitcells.website.server.processor.ProcessorRegistry;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
+import net.splitcells.website.server.projects.extension.ProjectsRendererExtensions;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -201,7 +203,7 @@ public class Config {
     private List<ProjectConfig> additionalProjects = list();
 
     private List<ProgramConfig> programConfigs = list();
-    private List<ProjectsRendererExtension> projectsRendererExtension = list();
+    private List<ProjectsRendererExtension> projectsRendererExtension = Dem.configValue(ProjectsRendererExtensions.class);
 
     private ProcessorRegistry<Perspective, Perspective> processor = binaryProcessorRegistry();
 
