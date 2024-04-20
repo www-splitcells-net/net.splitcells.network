@@ -35,10 +35,8 @@ public class LayoutConfig {
     private final String path;
     private Optional<String> title = Optional.empty();
 
-    @Deprecated
     private Optional<Perspective> localPathContext = Optional.empty();
 
-    @Deprecated
     private Optional<Perspective> relevantLocalPathContext = Optional.empty();
 
     private LayoutConfig(String path) {
@@ -54,31 +52,20 @@ public class LayoutConfig {
     }
 
     /**
-     * TODO In the future, there should be probably something like an {@link LayoutConfig},
-     * that is internal to the main renderer,
-     * in order to prevent an incorrect {@code localPathContext},
-     * because only the main renderer can determine the correct {@code localPathContext}.
      *
      * @return These are all paths, that are children, to {@link #path},
      * and which can be requested from relevant {@link Renderer}.
      */
-    @Deprecated
     public Optional<Perspective> localPathContext() {
         return localPathContext;
     }
 
     /**
-     * TODO In the future, there should be probably something like an {@link LayoutConfig},
-     * that is internal to the main renderer,
-     * in order to prevent an incorrect {@code relevantLocalPathContext}.
-     * Extension should only be allowed to determine a subset of {@link #localPathContext},
-     * which should be provided by the main renderer.
      *
      * @return These are all paths, that are children, to {@link #path},
      * which can be requested from relevant {@link Renderer} and
      * which are relevant to the user.
      */
-    @Deprecated
     public Optional<Perspective> relevantLocalPathContext() {
         return relevantLocalPathContext;
     }
@@ -94,7 +81,6 @@ public class LayoutConfig {
      * @param localPathContext The Local Path Context
      * @return This
      */
-    @Deprecated
     public LayoutConfig withLocalPathContext(Optional<Perspective> localPathContext) {
         this.localPathContext = localPathContext;
         return this;
@@ -106,7 +92,6 @@ public class LayoutConfig {
      * @param relevantLocalPathContext The Relevant Local Path Context
      * @return This
      */
-    @Deprecated
     public LayoutConfig withRelevantLocalPathContext(Optional<Perspective> relevantLocalPathContext) {
         this.relevantLocalPathContext = relevantLocalPathContext;
         return this;
