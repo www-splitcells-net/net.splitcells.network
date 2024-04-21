@@ -132,7 +132,8 @@ public interface ProjectRenderer extends Renderer {
     }
 
     /**
-     * TODO  This method should be based on {@link #renderXml(String, LayoutConfig, Config)}.
+     * <p>TODO This method should be based on {@link #renderXml(String, LayoutConfig, Config)}.</p>
+     * <p>TODO Add links to parent pages to the render result for better navigation.</p>
      *
      * @param path Relative path of document to be rendered.
      */
