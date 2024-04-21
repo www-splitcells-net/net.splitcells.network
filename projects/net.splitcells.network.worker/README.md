@@ -11,6 +11,7 @@ The commands' functionality can be provided by multiple backends:
   It may not provide all functionality.
   In general, this backend focuses on integrating external software into this project.
   This is provided by `bin/worker.*` files at this repo.
+  These commands are intended to be executed at the respective root folder of any repo of the project.
 * More complex backends are used in order to work on these repos with portable code (i.e. written in Java) or
   to provide additional functionality like an UI.
   In general, this backend is used, when the program, build via the boostrapping backend,
