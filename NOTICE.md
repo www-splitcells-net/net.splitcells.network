@@ -380,3 +380,6 @@ Logback
 * License: EPL-1.0 OR LGPL-2.1-or-later
 * Website: https://logback.qos.ch/
 * Source Code: https://github.com/qos-ch/logback
+
+SLF4J
+*

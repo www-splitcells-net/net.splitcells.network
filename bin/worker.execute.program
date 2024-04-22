@@ -29,8 +29,8 @@ set -e
 mkdir -p $HOME/.state/net.splitcells.network.worker/.state
 podman kill $NAME_FOR_EXECUTION || echo Service $NAME_FOR_EXECUTION was not already running.
 podman build -f "target/Dockerfile-$NAME_FOR_EXECUTION" --tag localhost/$NAME_FOR_EXECUTION
-podman run --name $NAME_FOR_EXECUTION --rm \\
-    --publish 8080:8443 localhost/$NAME_FOR_EXECUTION \\
+podman run --name $NAME_FOR_EXECUTION --rm \
+    --publish 8080:8443 localhost/$NAME_FOR_EXECUTION \
     -v $HOME/.state/$NAME_FOR_EXECUTION/.state:/root/.state
 rm "target/Dockerfile-$NAME_FOR_EXECUTION"
 """
