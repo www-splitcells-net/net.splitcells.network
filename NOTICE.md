@@ -375,3 +375,8 @@ ACME4J
 * License: Apache-2.0
 * Website: https://shredzone.org/maven/acme4j/index.html
 * Source Code: https://github.com/shred/acme4j
+
+Logback
+* License: EPL-1.0 OR LGPL-2.1-or-later
+* Website: https://logback.qos.ch/
+* Source Code: https://github.com/qos-ch/logback
