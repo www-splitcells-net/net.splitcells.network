@@ -75,9 +75,9 @@ if __name__ == '__main__':
     with open(file, 'w') as filetowrite:
         filetowrite.write(dockerfile)
     # Create and execute script.
-    executionScript = (executeViaPodman
-                       .replace('"$1"', "'" + parsedArgs.name + "'")
-                       .replace('"$2"', "'" + parsedArgs.command + "'"))
+    executionScript = executeViaPodman.replace('"$1"', "'" + parsedArgs.name + "'")
+    if parsedArgs.command is not None:
+        executionScript = executionScript.replace('"$2"', "'" + parsedArgs.command + "'")
     returnCode = subprocess.call(executionScript, shell='True')
     if returnCode != 0:
         logging.error("Could not execute given command.");
