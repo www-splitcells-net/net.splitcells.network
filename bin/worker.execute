@@ -2,6 +2,8 @@
 """
 SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+
+TODO Support executing as systemd service. Create a user service for that.
 """
 
 __author__ = "Mārtiņš Avots"
@@ -11,24 +13,39 @@ __license__ = "EPL-2.0 OR GPL-2.0-or-later"
 
 import argparse
 import logging
+import os
 import subprocess
 
-executeViaPodman = """
-executionName="$1"
+dockerFileServiceTemplate = """FROM docker.io/eclipse-temurin:21-jdk-jammy
+RUN apt update
+RUN apt install --yes maven git python3
+VOLUME /root/.local/
+VOLUME /root/Documents/
+VOLUME /root/.ssh/
+VOLUME /root/.m2/
+EXPOSE 80
+"""
+
+javaClassExecutionTemplate = """COPY deployable-jars/* /root/Documents/projects/$NAME_FOR_EXECUTION/jars/
+WORKDIR /root/Documents/projects/$NAME_FOR_EXECUTION
+ENTRYPOINT ["/opt/java/openjdk/bin/java"]
+CMD ["-cp", "./jars/*", "$CLASS_FOR_EXECUTION"]
+"""
+
+executeViaPodman = """executionName="$1"
 executionCommand="$2"
 # Prepare file system.
-mkdir -p $HOME/Documents/projects/net.splitcells.network.worker.cache/.m2/
-mkdir -p $HOME/Documents/projects/net.splitcells.network.worker.cache/.ssh/
+mkdir -p $HOME/.local/state/$executionName/.m2/
+mkdir -p $HOME/.local/state/$executionName/.ssh/
+mkdir -p $HOME/.local/state/$executionName/.local/
 mkdir -p ./target/
-# Only one run per $executionName is possible, therefor a randomized file name is not required.
-cp -f projects/net.splitcells.network.worker/Dockerfile-Execute-Template "target/Dockerfile-$executionName"
-echo 'ENTRYPOINT '$executionCommand >> "target/Dockerfile-$executionName"
 podman build -f "target/Dockerfile-$executionName" --tag "localhost/$executionName"
 podman run --name "$executionName" \\
   --rm \\
   -v $HOME/Documents:/root/Documents \\
-  -v $HOME/Documents/projects/net.splitcells.network.worker.cache/.ssh:/root/.ssh \\
-  -v $HOME/Documents/projects/net.splitcells.network.worker.cache/.m2:/root/.m2 \\
+  -v $HOME/.local/state/$executionName/.ssh:/root/.ssh \\
+  -v $HOME/.local/state/$executionName/.m2:/root/.m2 \\
+  -v $HOME/.local/state/$executionName/.local:/root/.local \\
   "localhost/$executionName"
 rm "target/Dockerfile-$executionName"
 """
@@ -36,11 +53,28 @@ rm "target/Dockerfile-$executionName"
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--name', dest='name', required=True, help="This is the name of the task being executed.")
-    parser.add_argument('--command', dest='command', required=True
+    parser.add_argument('--command', dest='command'
                         , help="This is the shell command, to execute the task."
                                + "It consists of only one program call."
                                + " If scripts need to be executed one can use `sh -c \"[script]\"`.")
+    parser.add_argument('--class-for-execution', dest='classForExecution', help="This Java class is executed.")
     parsedArgs = parser.parse_args()
+    # Create Dockerfile.
+    dockerfile = dockerFileServiceTemplate
+    if parsedArgs.command is not None:
+    	dockerfile += 'ENTRYPOINT ' + parsedArgs.command
+    elif parsedArgs.classForExecution is not None:
+        dockerfile += (javaClassExecutionTemplate
+            .replace('$NAME_FOR_EXECUTION', parsedArgs.name)
+            .replace('$CLASS_FOR_EXECUTION', parsedArgs.classForExecution))
+    else:
+    	raise Exception('Either `--command` or `--class-for-execution` needs to be set.')
+    if not os.path.exists('./target'):
+        os.mkdir('./target')
+    file='target/Dockerfile-' + parsedArgs.name
+    with open(file, 'w') as filetowrite:
+        filetowrite.write(dockerfile)
+    # Create and execute script.
     executionScript = (executeViaPodman
                        .replace('"$1"', "'" + parsedArgs.name + "'")
                        .replace('"$2"', "'" + parsedArgs.command + "'"))
