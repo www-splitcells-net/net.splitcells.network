@@ -23,7 +23,6 @@ VOLUME /root/.local/state/
 VOLUME /root/Documents/
 VOLUME /root/.ssh/
 VOLUME /root/.m2/
-EXPOSE 80
 """
 
 javaClassExecutionTemplate = """COPY deployable-jars/* /root/.local/lib/$NAME_FOR_EXECUTION/jars/
@@ -46,6 +45,7 @@ podman run --name "$executionName" \\
   -v $HOME/.local/state/$executionName/.ssh:/root/.ssh \\
   -v $HOME/.local/state/$executionName/.m2:/root/.m2 \\
   -v $HOME/.local/state/$executionName/.local:/root/.local/state \\
+  "$3" \\
   "localhost/$executionName"
 rm -f "target/Dockerfile-$executionName" # `-f` is used, in case the target folder is deleted via `mvn clean install` in `--command`.
 """
@@ -58,6 +58,7 @@ if __name__ == '__main__':
                                + "It consists of only one program call."
                                + " If scripts need to be executed one can use `sh -c \"[script]\"`.")
     parser.add_argument('--class-for-execution', dest='classForExecution', help="This Java class is executed.")
+    parser.add_argument('--port-publishing', dest='portPublishing', help="This is a comma separated list of `host-port:container-port`, that describes the port forwarding on the host.")
     parsedArgs = parser.parse_args()
     # Create Dockerfile.
     dockerfile = dockerFileServiceTemplate
@@ -78,6 +79,11 @@ if __name__ == '__main__':
     executionScript = executeViaPodman.replace('"$1"', "'" + parsedArgs.name + "'")
     if parsedArgs.command is not None:
         executionScript = executionScript.replace('"$2"', "'" + parsedArgs.command + "'")
+    additionalPodmanArgs = ''
+    if parsedArgs.portPublishing is not None:
+        for portMapping in parsedArgs.portPublishing.split(','):
+            additionalPodmanArgs += ' --publish ' + portMapping
+    executionScript = executionScript.replace('"$3"', additionalPodmanArgs)
     returnCode = subprocess.call(executionScript, shell='True')
     if returnCode != 0:
         logging.error("Could not execute given command.");
