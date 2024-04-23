@@ -19,15 +19,15 @@ import subprocess
 dockerFileServiceTemplate = """FROM docker.io/eclipse-temurin:21-jdk-jammy
 RUN apt update
 RUN apt install --yes maven git python3
-VOLUME /root/.local/
+VOLUME /root/.local/state/
 VOLUME /root/Documents/
 VOLUME /root/.ssh/
 VOLUME /root/.m2/
 EXPOSE 80
 """
 
-javaClassExecutionTemplate = """COPY deployable-jars/* /root/Documents/projects/$NAME_FOR_EXECUTION/jars/
-WORKDIR /root/Documents/projects/$NAME_FOR_EXECUTION
+javaClassExecutionTemplate = """COPY deployable-jars/* /root/.local/lib/$NAME_FOR_EXECUTION/jars/
+WORKDIR /root/.local/lib/$NAME_FOR_EXECUTION/
 ENTRYPOINT ["/opt/java/openjdk/bin/java"]
 CMD ["-cp", "./jars/*", "$CLASS_FOR_EXECUTION"]
 """
@@ -45,7 +45,7 @@ podman run --name "$executionName" \\
   -v $HOME/Documents:/root/Documents \\
   -v $HOME/.local/state/$executionName/.ssh:/root/.ssh \\
   -v $HOME/.local/state/$executionName/.m2:/root/.m2 \\
-  -v $HOME/.local/state/$executionName/.local:/root/.local \\
+  -v $HOME/.local/state/$executionName/.local:/root/.local/state \\
   "localhost/$executionName"
 rm -f "target/Dockerfile-$executionName" # `-f` is used, in case the target folder is deleted via `mvn clean install` in `--command`.
 """
