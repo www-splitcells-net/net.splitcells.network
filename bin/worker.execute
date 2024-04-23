@@ -47,7 +47,7 @@ podman run --name "$executionName" \\
   -v $HOME/.local/state/$executionName/.m2:/root/.m2 \\
   -v $HOME/.local/state/$executionName/.local:/root/.local \\
   "localhost/$executionName"
-rm "target/Dockerfile-$executionName"
+rm -f "target/Dockerfile-$executionName" # `-f` is used, in case the target folder is deleted via `mvn clean install`.
 """
 
 if __name__ == '__main__':
