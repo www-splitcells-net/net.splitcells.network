@@ -200,6 +200,7 @@ public class Server {
                 try {
                     deployWaiter.acquire();
                 } catch (Throwable t) {
+                    Thread.currentThread().interrupt();
                     throw executionException("Could not start HTTP server.");
                 }
                 deployResult.onComplete(result -> {
@@ -211,6 +212,7 @@ public class Server {
                 try {
                     deployWaiter.acquire();
                 } catch (Throwable t) {
+                    Thread.currentThread().interrupt();
                     throw executionException("An error occurred during start of the HTTP server.");
                 }
                 if (!errors.isEmpty()) {
