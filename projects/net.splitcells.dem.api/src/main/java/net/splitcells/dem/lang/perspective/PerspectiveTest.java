@@ -138,20 +138,15 @@ public class PerspectiveTest {
         testData.printCommonMarkString(stringSender(resultData));
         requireEquals(resultData.toString(),
                 "* Lorem ipsum dolor sit amet:\n"
-                        + "    * consectetur adipiscing elit:\n"
-                        + "        * Cras lobortis mi risus\n"
+                        + "    * consectetur adipiscing elit: Cras lobortis mi risus\n"
                         + "    * eu viverra purus feugiat sit amet:\n"
                         + "        * Fusce viverra ipsum in arcu scelerisque egestas:\n"
-                        + "            * Vivamus sagittis commodo eleifend:\n"
-                        + "                * Nullam lobortis purus ut felis viverra vulputate\n"
+                        + "            * Vivamus sagittis commodo eleifend: Nullam lobortis purus ut felis viverra vulputate\n"
                         + "            * Quisque elementum vitae nulla sit amet pretium:\n"
                         + "                * Maecenas nunc urna:\n"
-                        + "                    * ullamcorper dictum pellentesque in:\n"
-                        + "                        * vehicula a magna. Vivamus luctus efficitur ex\n"
-                        + "            * el ultrices erat luctus lacinia:\n"
-                        + "                * Donec vestibulum semper ipsum\n"
-                        + "    * sed pretium felis:\n"
-                        + "        * Aliquam orci nunc\n");
+                        + "                    * ullamcorper dictum pellentesque in: vehicula a magna. Vivamus luctus efficitur ex\n"
+                        + "            * el ultrices erat luctus lacinia: Donec vestibulum semper ipsum\n"
+                        + "    * sed pretium felis: Aliquam orci nunc\n");
     }
 
     @UnitTest

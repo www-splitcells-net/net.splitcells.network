@@ -642,6 +642,11 @@ public interface Perspective extends PerspectiveView {
             }
             return;
         }
+        final var isProperty = children().size() == 1 && children().get(0).children().isEmpty();
+        if (isProperty) {
+            output.append(listPrefix + name() + ": " + children().get(0).name());
+            return;
+        }
         if (!name().isEmpty()) {
             final var lastNameChar = name().charAt(name().length() - 1);
             if (lastNameChar == '.' || lastNameChar == ':') {
