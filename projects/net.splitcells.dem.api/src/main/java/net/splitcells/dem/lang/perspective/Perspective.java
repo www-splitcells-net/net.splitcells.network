@@ -640,25 +640,25 @@ public interface Perspective extends PerspectiveView {
             } else {
                 output.append(listPrefix + name());
             }
-        } else {
-            final var isSimpleList = children().stream().map(c -> c.children().isEmpty()).reduce(true, (a, b) -> a && b);
-            if (!name().isEmpty()) {
-                final var lastNameChar = name().charAt(name().length() - 1);
-                if (lastNameChar == '.' || lastNameChar == ':') {
-                    output.append(listPrefix + name());
-                } else {
-                    output.append(listPrefix + name() + ":");
-                }
-            }
-            if (isSimpleList) {
-                final var newListPrefix = prefix + "    * ";
-                final var newPrefix = newListPrefix;
-                children().forEach(c -> c.printCommonMarkString(output, newPrefix, newListPrefix));
+            return;
+        }
+        if (!name().isEmpty()) {
+            final var lastNameChar = name().charAt(name().length() - 1);
+            if (lastNameChar == '.' || lastNameChar == ':') {
+                output.append(listPrefix + name());
             } else {
-                final var newListPrefix = prefix + "    * ";
-                final var newPrefix = prefix + "    ";
-                children().forEach(c -> c.printCommonMarkString(output, newPrefix, newListPrefix));
+                output.append(listPrefix + name() + ":");
             }
+        }
+        final var isSimpleList = children().stream().map(c -> c.children().isEmpty()).reduce(true, (a, b) -> a && b);
+        if (isSimpleList) {
+            final var newListPrefix = prefix + "    * ";
+            final var newPrefix = newListPrefix;
+            children().forEach(c -> c.printCommonMarkString(output, newPrefix, newListPrefix));
+        } else {
+            final var newListPrefix = prefix + "    * ";
+            final var newPrefix = prefix + "    ";
+            children().forEach(c -> c.printCommonMarkString(output, newPrefix, newListPrefix));
         }
     }
 
