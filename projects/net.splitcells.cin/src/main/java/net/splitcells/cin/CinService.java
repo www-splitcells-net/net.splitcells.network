@@ -72,7 +72,7 @@ public class CinService implements ResourceOption<Service> {
 
             @Override
             public void flush() {
-
+                // There is no known flush operation yet for this service.
             }
         };
     }
