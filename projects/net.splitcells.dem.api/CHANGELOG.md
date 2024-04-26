@@ -46,6 +46,8 @@
      This also makes it possible to use the name `Resource` for an interface
      of resource like things.
 ### Minor Changes
+* **2024-04-26 \#c11**: Create `ServerLog`, that outputs log messages as JSON documents in a single line.
+  This is suitable for log files on servers.
 * **2023-1-13 \#252**: `CommonMarkDui` now provides a logger, that output CommonMark document.
 * **2023-07-12 \#249** Implement FileSystemViaClassResources in order to provide FileSystem API for class resources.
   This can be used in order to provide file systems via jar files.
