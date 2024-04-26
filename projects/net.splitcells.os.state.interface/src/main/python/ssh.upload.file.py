@@ -21,10 +21,10 @@ if __name__ == '__main__':
 	parser.add_argument('--source-file', dest='sourceFile', required=True)
 	parser.add_argument('--target-address', dest='targetAddress', required=True)
 	parsedArgs = parser.parse_args()
-	commandToExecute = 'scp ' + sourceFile + ' ' + targetAddress
+	commandToExecute = 'scp ' + parsedArgs.sourceFile + ' ' + parsedArgs.targetAddress
 	logging.debug("Executing: " + commandToExecute)
 	subprocess.call(commandToExecute, shell='True')
-	returnCode = subprocess.call(subRepoScript, shell='True')
+	returnCode = subprocess.call(commandToExecute, shell='True')
 	if returnCode != 0:
 		logging.error('Error uploading file with return code ' + str(returnCode) + ' from scp.')
 		exit(1)
