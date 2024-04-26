@@ -29,8 +29,6 @@ import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.testing.ReportEntryKey.END_TIME;
-import static net.splitcells.dem.testing.ReportEntryKey.START_TIME;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
@@ -48,7 +46,7 @@ public class TestSuiteI implements TestSuite {
 
     @BeforeEach
     public void prepareTest(TestReporter reporter) {
-        reporter.publishEntry(ReportEntryKey.START_TIME.keyString(), ReportEntryKey.START_TIME.currentValue());
+        reporter.publishEntry(ReportEntryTimeKey.START_TIME.keyString(), ReportEntryTimeKey.START_TIME.currentValue());
     }
 
     @Override
@@ -58,7 +56,7 @@ public class TestSuiteI implements TestSuite {
 
     @AfterEach
     public void endTest(TestReporter reporter) {
-        reporter.publishEntry(ReportEntryKey.END_TIME.keyString(), ReportEntryKey.END_TIME.currentValue());
+        reporter.publishEntry(ReportEntryTimeKey.END_TIME.keyString(), ReportEntryTimeKey.END_TIME.currentValue());
     }
 
     public void test(Stream<DynamicTest> tests) {
