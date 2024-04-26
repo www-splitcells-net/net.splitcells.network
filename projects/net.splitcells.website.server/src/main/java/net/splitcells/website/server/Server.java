@@ -40,6 +40,7 @@ import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
 import net.splitcells.website.server.processor.BinaryMessage;
+import net.splitcells.website.server.vertx.DocumentNotFound;
 
 import java.util.List;
 import java.util.Optional;
@@ -70,7 +71,8 @@ public class Server {
     }
 
     /**
-     * TODO This is code duplication.
+     * <p>TODO This is code duplication.</p>
+     * <p>TODO Move this code into vertx package, in order to contain {@link io.vertx} dependencies.</p>
      *
      * @param renderer renderer
      */
@@ -168,7 +170,7 @@ public class Server {
                                             response.putHeader("content-type", result.get().getFormat());
                                             promise.complete(result.get().getContent());
                                         } else {
-                                            promise.fail("Could not render path:" + requestPath);
+                                            promise.fail(new DocumentNotFound(requestPath));
                                         }
                                     } catch (Exception e) {
                                         logs().appendError(e);
@@ -220,6 +222,14 @@ public class Server {
 
     private static void handleResult(RoutingContext routingContext, AsyncResult<byte[]> result) {
         final var response = routingContext.response();
+        if (result.failed() && result.cause() instanceof DocumentNotFound) {
+            logs().append(perspective("Could not find render for path")
+                            .withProperty("path", result.cause().getMessage())
+                    , LogLevel.ERROR);
+            response.setStatusCode(404);
+            response.end();
+            return;
+        }
         if (result.failed()) {
             logs().appendError(executionException(perspective("Could not process form:")
                             .withProperty("path", routingContext.request().path())
@@ -294,7 +304,7 @@ public class Server {
                                     response.putHeader("content-type", result.get().getFormat());
                                     promise.complete(result.get().getContent());
                                 } else {
-                                    promise.fail("Could not render path:" + requestPath);
+                                    promise.fail(new DocumentNotFound(requestPath));
                                 }
                             }, (result) -> {
                                 if (result.failed()) {
