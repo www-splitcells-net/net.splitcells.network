@@ -48,6 +48,7 @@ Changes are now written to the root changelog instead.
   This way there is still a command,
   that installs the OSSI project with full functionality.
 ### Minor Changes
+* **2024-04-26 \#c11** Create `ssh.download.file` command.
 * **2022-03-12** `echo.error` now also sends the message to `notify.error`,
   if `$echo_error_notifies_user` is set to true.
   Thereby, it is more easily to know, if some optional feature was not executed during a long command.
