@@ -314,6 +314,7 @@ public class Dem {
                 Thread.sleep(timeLeft);
             } while (timeLeft > 0);
         } catch (Throwable t) {
+            Thread.currentThread().interrupt();
             throw executionException(t);
         }
     }
