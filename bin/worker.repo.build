@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+set -e
+repoFolder=$(basename "$PWD")
+bin/worker.execute \
+    --name=test \
+    --command="sh -c 'cd /root/Documents/projects/net.splitcells.martins.avots.support.system/public/$repoFolder/ && mvn clean install'"
