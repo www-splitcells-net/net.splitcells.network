@@ -5,6 +5,7 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2024-04-28\#c11** Define `MainFileSystem`, that is used in order to store the program's state.
 * **2024-03-05 \#170** Deprecate `OptionI` in order to remove all abstraction classes in the future.
 * **2023-10-25 \#242** `net.splitcells.dem.data.set.map.Map#put` now throws an exception,
     if the key is already present.
