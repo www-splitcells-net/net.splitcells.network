@@ -60,9 +60,6 @@ import static net.splitcells.dem.utils.StringUtils.toBytes;
 import static net.splitcells.website.server.processor.Request.request;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
-/**
- * TODO Create and use server interface, instead of implementation.
- */
 @JavaLegacyArtifact
 public class Server {
 
