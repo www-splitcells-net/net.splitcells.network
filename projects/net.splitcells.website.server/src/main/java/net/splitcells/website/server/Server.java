@@ -26,9 +26,11 @@ import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.ClientAuth;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.http.HttpServerResponse;
+import io.vertx.core.net.PemKeyCertOptions;
 import io.vertx.core.net.PfxOptions;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
@@ -40,6 +42,8 @@ import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
 import net.splitcells.website.server.processor.BinaryMessage;
+import net.splitcells.website.server.security.IdentityPemStore;
+import net.splitcells.website.server.security.SslEnabled;
 import net.splitcells.website.server.vertx.DocumentNotFound;
 
 import java.util.List;
@@ -47,7 +51,9 @@ import java.util.Optional;
 import java.util.concurrent.Semaphore;
 import java.util.function.Function;
 
+import static io.vertx.core.buffer.Buffer.buffer;
 import static java.util.concurrent.TimeUnit.SECONDS;
+import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Trail.trail;
@@ -68,7 +74,6 @@ public class Server {
     }
 
     /**
-     * <p>TODO This is code duplication.</p>
      * <p>TODO Move this code into vertx package, in order to contain {@link io.vertx} dependencies.</p>
      *
      * @param renderer renderer
@@ -120,6 +125,12 @@ public class Server {
                                     .setTrustOptions(new PfxOptions()
                                             .setPath(config.sslKeystoreFile().orElseThrow().toString())
                                             .setPassword(config.sslKeystorePassword().orElseThrow()));
+                        } else if (configValue(SslEnabled.class)) {
+                            webServerOptions.setLogActivity(true)//
+                                    .setSsl(true)//
+                                    .setPemKeyCertOptions(new PemKeyCertOptions()
+                                            .setCertValue(buffer(configValue(IdentityPemStore.class)
+                                                    .orElseThrow())));
                         } else {
                             logs().append(perspective("Webserver is not secured!"), WARNING);
                         }
@@ -236,7 +247,7 @@ public class Server {
             response.setStatusCode(500);
             response.end();
         } else {
-            response.end(Buffer.buffer().appendBytes(result.result()));
+            response.end(buffer().appendBytes(result.result()));
         }
     }
 
@@ -254,7 +265,8 @@ public class Server {
     }
 
     /**
-     * TODO The handlers are out of date. Use the same handlers as {@link #serveToHttpAt(Function, Config)}.
+     * <p>TODO This is code duplication.</p>
+     * <p>TODO The handlers are out of date. Use the same handlers as {@link #serveToHttpAt(Function, Config)}.</p>
      *
      * @param renderer
      * @param config
@@ -311,7 +323,7 @@ public class Server {
                                     response.setStatusCode(500);
                                     response.end();
                                 } else {
-                                    response.end(Buffer.buffer().appendBytes(result.result()));
+                                    response.end(buffer().appendBytes(result.result()));
                                 }
                             });
                         });
