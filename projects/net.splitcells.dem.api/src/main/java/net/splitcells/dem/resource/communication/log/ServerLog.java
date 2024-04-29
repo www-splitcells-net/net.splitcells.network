@@ -25,8 +25,6 @@ import java.util.function.Predicate;
  * <p>Writes logs in a format, that is suitable for servers:
  * every message takes one line in the logs.
  * This makes the logs easier to query with simple tools, when compared to logs with multi line messages.</p>
- * <p>TODO Ensure, that messages logged via {@link #append(LogMessage)}, that contain new line symbols,
- * still only take one line in the logs written via {@link Sender#append(Object)}.</p>
  */
 public class ServerLog implements Log {
     public static Log serverLog(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
