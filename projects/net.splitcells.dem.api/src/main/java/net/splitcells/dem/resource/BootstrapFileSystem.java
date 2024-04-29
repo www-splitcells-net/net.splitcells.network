@@ -17,19 +17,15 @@ package net.splitcells.dem.resource;
 
 import net.splitcells.dem.environment.config.framework.Option;
 
-import static net.splitcells.dem.resource.FileSystemVoid.fileSystemVoid;
-
 /**
- * <p>This {@link FileSystem} is the main storage and is used to persist the program's state.
- * It is the default storage for all files created and permanently owned by the program.
- * Files stored in other {@link FileSystem} should be considered to be owned by other external programs.</p>
- * <p>If the {@link MainFileSystem} is based on another {@link FileSystem},
- * then only {@link BootstrapFileSystem} is allowed to be used.
- * The split is used, in order to separate the content of the program's state from the backend of the state storage.</p>
+ * <p>This is the optional backend of {@link MainFileSystem}.
+ * It represents the implementation of {@link MainFileSystem}.</p>
+ * <p>Metaphorically speaking, in a git repo this file system represents repos's main worktree
+ * plus git's `.git` folder, that contains all meta data for version control.</p>
  */
-public class MainFileSystem implements Option<FileSystem> {
+public class BootstrapFileSystem implements Option<FileSystem> {
     @Override
     public FileSystem defaultValue() {
-        return fileSystemVoid();
+        return FileSystems.fileSystemOnLocalHost(null);
     }
 }
