@@ -19,7 +19,7 @@ import net.splitcells.dem.environment.config.framework.Option;
 
 import java.util.Optional;
 
-public class IdentityPemStore implements Option<Optional<byte[]>> {
+public class PrivateIdentityPemStore implements Option<Optional<byte[]>> {
     @Override
     public Optional<byte[]> defaultValue() {
         return Optional.empty();

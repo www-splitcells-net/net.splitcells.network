@@ -22,7 +22,6 @@ import io.vertx.core.MultiMap;
 import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
-import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.ClientAuth;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.http.HttpServerResponse;
@@ -30,7 +29,6 @@ import io.vertx.core.net.PemKeyCertOptions;
 import io.vertx.core.net.PfxOptions;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
-import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
@@ -42,7 +40,8 @@ import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
 import net.splitcells.website.server.processor.BinaryMessage;
-import net.splitcells.website.server.security.IdentityPemStore;
+import net.splitcells.website.server.security.PrivateIdentityPemStore;
+import net.splitcells.website.server.security.PublicIdentityPemStore;
 import net.splitcells.website.server.security.SslEnabled;
 import net.splitcells.website.server.vertx.DocumentNotFound;
 
@@ -59,7 +58,6 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.log.LogLevel.WARNING;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
-import static net.splitcells.dem.utils.BinaryUtils.binaryOutputStream;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
@@ -129,7 +127,9 @@ public class Server {
                             webServerOptions.setLogActivity(true)//
                                     .setSsl(true)//
                                     .setPemKeyCertOptions(new PemKeyCertOptions()
-                                            .setCertValue(buffer(configValue(IdentityPemStore.class)
+                                            .setKeyValue(buffer(configValue(PrivateIdentityPemStore.class)
+                                                    .orElseThrow()))
+                                            .setCertValue(buffer(configValue(PublicIdentityPemStore.class)
                                                     .orElseThrow())));
                         } else {
                             logs().append(perspective("Webserver is not secured!"), WARNING);
