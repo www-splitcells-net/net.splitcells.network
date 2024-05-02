@@ -36,6 +36,7 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
   2. Create interface `ProjectsRenderer` used by `ProjectsRendererI`.
      This way alternative web server implementations are possible.
 ### Minor Changes
+* **2024-05-02: \#c11** Create `RedirectServer` in order redirect HTTP calls to HTTPS calls. 
 * **2024-02-16: \#252** Support serving zip files.
 * **2024-01-03: \#252** Provide `isServerForGeneralPublic` config for server,
     in order to only enable notifications with `only-for-general-public=true`,
