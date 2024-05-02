@@ -26,6 +26,6 @@ import net.splitcells.dem.environment.config.framework.Option;
 public class HttpPort implements Option<Integer> {
     @Override
     public Integer defaultValue() {
-        return 8081;
+        return 8080;
     }
 }
