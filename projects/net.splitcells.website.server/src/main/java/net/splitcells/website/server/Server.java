@@ -116,8 +116,7 @@ public class Server {
                         // TODO Errors are not logged.
                         final var webServerOptions = new HttpServerOptions();
                         if (config.isSecured()) {
-                            webServerOptions.setLogActivity(true)//
-                                    .setSsl(true)//
+                            webServerOptions.setSsl(true)//
                                     .setKeyCertOptions(new PfxOptions()
                                             .setPath(config.sslKeystoreFile().orElseThrow().toString())
                                             .setPassword(config.sslKeystorePassword().orElseThrow()))
@@ -125,8 +124,7 @@ public class Server {
                                             .setPath(config.sslKeystoreFile().orElseThrow().toString())
                                             .setPassword(config.sslKeystorePassword().orElseThrow()));
                         } else if (configValue(SslEnabled.class)) {
-                            webServerOptions.setLogActivity(true)//
-                                    .setSsl(true)//
+                            webServerOptions.setSsl(true)//
                                     .setPemKeyCertOptions(new PemKeyCertOptions()
                                             .setKeyValue(buffer(configValue(PrivateIdentityPemStore.class)
                                                     .orElseThrow()))
