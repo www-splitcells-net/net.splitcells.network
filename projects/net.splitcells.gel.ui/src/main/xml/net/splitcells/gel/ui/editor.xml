@@ -24,7 +24,7 @@
             <paragraph>Click on the <quote>+</quote> button to enter or edit data of the correspondent chapter.
             </paragraph>
         </description>
-        <full-screen-by-default>true</full-screen-by-default>
+        <pseudo-full-screen-by-default>true</pseudo-full-screen-by-default>
         <d:toDo>
             <d:toDo>Import supplies and demands from local file via Tabulator.</d:toDo>
             <d:toDo>Edit supply and demand data via Tabulator for a better use experience.</d:toDo>

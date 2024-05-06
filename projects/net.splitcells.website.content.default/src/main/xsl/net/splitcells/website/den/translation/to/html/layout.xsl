@@ -558,6 +558,14 @@ request.send();]]>
                                 </link>
                             </xsl:otherwise>
                         </xsl:choose>
+                        <xsl:if test="./s:content/s:meta/s:pseudo-full-screen-by-default/node() = 'true'">
+                            <link rel="stylesheet" type="text/css">
+                                <xsl:attribute name="href">
+                                    <xsl:value-of
+                                            select="s:default-root-relative-url('net/splitcells/website/css/layout.pseudo.fullscreen.css')"/>
+                                </xsl:attribute>
+                            </link>
+                        </xsl:if>
                         <xsl:choose>
                             <xsl:when test="./s:content/s:meta/s:full-screen-by-default/node() = 'true'">
                                 <link rel="stylesheet" type="text/css">
