@@ -34,43 +34,25 @@
             <command id="net-splitcells-gel-ui-calculate-solution-form-submit-1"
                      method="net_splitcells_gel_ui_editor_form_submit">Submit optimization
             </command>
+            <command id="net-splitcells-gel-ui-calculate-solution-form-solution-download-as-csv"
+                     method="net_splitcells_gel_ui_calculate_solution_form_solution_download_as_csv">
+                Download solution
+            </command>
         </commands>
     </meta>
-    <form id="net-splitcells-gel-ui-editor-form"
-          action="/net/splitcells/gel/ui/calculate-solution.form">
-        <chapter>
-            <title>Errors</title>
-            <text-area id="net-splitcells-gel-ui-editor-form-errors"></text-area>
-        </chapter>
+    <notification>
+        <only-for-general-public>true</only-for-general-public>
+        <default-content>net/splitcells/website/server/form-notification-content-default</default-content>
+        <accept-notification>I agree, with the terms of service for using this server.</accept-notification>
+    </notification>
+    <form-editor id="net-splitcells-gel-ui-editor-form"
+                 action="/net/splitcells/gel/ui/calculate-solution.form">
         <library path="net/splitcells/gel/ui/editor"/>
-        <chapter>
-            <title>Problem Definition</title>
-            <text-area id="net-splitcells-gel-ui-editor-form-problem-definition" initial-content-at="/net/splitcells/gel/ui/examples/school-course-scheduling-problem.txt"/>
-        </chapter>
-        <chapter>
-            <title>Problem Data</title>
-            <chapter minimized="true">
-                <title>Demands</title>
-                <text-area id="net-splitcells-gel-ui-editor-form-demands" initial-content-at="/net/splitcells/gel/ui/colloquium-planning-demands-test-data.csv"><![CDATA[]]></text-area>
-            </chapter>
-            <chapter minimized="true">
-                <title>Supplies</title>
-                <text-area id="net-splitcells-gel-ui-editor-form-supplies" initial-content-at="/net/splitcells/gel/ui/colloquium-planning-supplies-test-data.csv"><![CDATA[]]></text-area>
-            </chapter>
-        </chapter>
-        <chapter>
-            <title>Solutions</title>
-            <form-submit-button id="net-splitcells-gel-ui-calculate-solution-form-solution-download-as-csv"
-                                command="net_splitcells_gel_ui_calculate_solution_form_solution_download_as_csv">
-                Download as CSV file.
-            </form-submit-button>
-            <rendering-target id="net-splitcells-gel-ui-calculate-solution-form-solution-data">No data present yet.
-            </rendering-target>
-            <text-area id="net-splitcells-gel-ui-editor-form-solution"></text-area>
-            <chapter>
-                <title>Rating</title>
-                <text-area id="net-splitcells-gel-ui-editor-form-solution-rating"/>
-            </chapter>
-        </chapter>
-    </form>
+        <text-area id="net-splitcells-gel-ui-editor-form-problem-definition" name="Definition" main-tab="true" initial-content-at="/net/splitcells/gel/ui/examples/school-course-scheduling-problem.txt"/>
+        <text-area id="net-splitcells-gel-ui-editor-form-errors" name="Errors"></text-area>
+        <text-area id="net-splitcells-gel-ui-editor-form-demands" name="Demands" initial-content-at="/net/splitcells/gel/ui/colloquium-planning-demands-test-data.csv"><![CDATA[]]></text-area>
+        <text-area id="net-splitcells-gel-ui-editor-form-supplies" name="Supplies" initial-content-at="/net/splitcells/gel/ui/colloquium-planning-supplies-test-data.csv"><![CDATA[]]></text-area>
+        <text-area id="net-splitcells-gel-ui-editor-form-solution" name="Solution" content-type="csv-output"/>
+        <text-area id="net-splitcells-gel-ui-editor-form-solution-rating" name="Rating"/>
+    </form-editor>
 </article>

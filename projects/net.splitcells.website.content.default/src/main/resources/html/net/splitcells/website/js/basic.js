@@ -72,11 +72,14 @@ function unshowElement(element) {
   	element.style.visibility = 'hidden';
 	}
 function showElement(element) {
-    /* The value 'inherit' is not used, as this can cause problems,
-     * when i.e. the element in question is a div containing centered text.
-     */
-	element.style.display = null;
-  	element.style.visibility = null;
+    if (element.style === undefined) {
+    } else {
+        /* The value 'inherit' is not used, as this can cause problems,
+        * when i.e. the element in question is a div containing centered text.
+        */
+	    element.style.display = null;
+      	element.style.visibility = null;
+      	}
 	}
 function hasClass(element, cls) {
 	return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;

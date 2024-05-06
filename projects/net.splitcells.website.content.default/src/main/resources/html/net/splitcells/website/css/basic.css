@@ -9,6 +9,18 @@
 */
 /* TODO Split CSS in CSS without classes and CSS with specifics for this website.
 */
+.net-splitcells-website-form-editor-tab-bar {
+    display: flex;
+    flex-direction: row;
+    }
+.net-splitcells-form-editor {
+    width: 100%;
+    height: 100%;
+    }
+.net-splitcells-website-form-editor-tab-holder {
+    width: 100%;
+    height: 100%;
+    }
 table {
     width: 100%;
     table-layout: fixed;
@@ -351,7 +363,11 @@ td.TextCell {
 	margin-top: .05em;
 	margin-bottom: .05em;
 	font-weight: bold;
-	width: 100%;
+	/* `width: 100%;` is not required: in places where the effect is needed, the element already gets 100% of the width,
+	 * because the button is a div and therefore `display: block;`,
+	 * which kind of implies `width: 100%;`.
+	 * There are places like `display: flex;`, where `width: 100%;` creates visual problems.
+	 */
 	line-height: 1.5em;
 	display: block;
 	}

@@ -245,6 +245,123 @@
             </script>
         </xsl:for-each>
     </xsl:template>
+    <xsl:template match="s:library" mode="net-splitcells-website-form-editor-tab-bar"></xsl:template>
+    <xsl:template match="s:text-area" mode="net-splitcells-website-form-editor-tab-bar">
+        <div class="net-splitcells-button net-splitcells-action-button">
+            <xsl:attribute name="onclick"><![CDATA[javascript:
+unshowByCssClass(']]><xsl:value-of select="./@form-id"/><![CDATA[');
+showById(']]><xsl:value-of select="./@id"/><![CDATA[-tab-content');
+]]>
+            </xsl:attribute>
+            <xsl:apply-templates select="@name"/>
+        </div>
+    </xsl:template>
+    <xsl:template match="s:library" mode="net-splitcells-website-form-editor-tab-content"></xsl:template>
+    <xsl:template match="s:text-area" mode="net-splitcells-website-form-editor-tab-content">
+        <div>
+            <xsl:attribute name="class" select="concat('net-splitcells-website-form-editor-tab ', @form-id)"/>
+            <xsl:attribute name="id" select="concat(./@id, '-tab-content')"/>
+            <xsl:if test="not(./@main-tab = 'true')">
+                <xsl:attribute name="style" select="'display: none; visibility: hidden;'"/>
+            </xsl:if>
+            <xsl:choose>
+                <xsl:when test="@content-type = 'csv-output'">
+                    <div>
+                        <xsl:attribute name="id" select="concat(./@id, '-as-csv-output')"/>
+                        No data present yet.
+                    </div>
+                    <textarea class="net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor-backend">
+                        <xsl:attribute name="id" select="./@id"/>
+                        <xsl:attribute name="name" select="./@id"/>
+                        <xsl:apply-templates select="./text()"/>
+                    </textarea>
+                </xsl:when>
+                <xsl:otherwise>
+                    <div class="net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor">
+                        <xsl:attribute name="net-splitcells-syncs-to" select="./@id"/>
+                        <xsl:apply-templates select="./text()"/>
+                    </div>
+                    <textarea class="net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor-backend">
+                        <xsl:attribute name="id" select="./@id"/>
+                        <xsl:attribute name="name" select="./@id"/>
+                        <xsl:apply-templates select="./text()"/>
+                    </textarea>
+                </xsl:otherwise>
+            </xsl:choose>
+        </div>
+        <xsl:if test="./@initial-content-at">
+            <!-- Listening on DOMContentLoaded is required, so that is ensured, that the textarea is available, before writing its default content. -->
+            <script type="text/javascript"><![CDATA[
+document.addEventListener('DOMContentLoaded', function(){
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.open("GET", "]]><xsl:value-of select="./@initial-content-at"/><![CDATA[", true);
+    function listener() {
+        document.getElementById(']]><xsl:value-of select="./@id"/><![CDATA[').innerHTML = this.responseText;
+    }
+    httpRequest.addEventListener("load", listener);
+    httpRequest.send(null);
+});]]>
+            </script>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="s:form-editor">
+        <form class="net-splitcells-form-editor" method="post" enctype="multipart/form-data">
+            <xsl:attribute name="id" select="./@id"/>
+            <!-- TODO Action paths are a hack, because the server does not support the root path concept,
+                which is actively used for documents hosted be the server. -->
+            <xsl:attribute name="action" select="./@action"/>
+            <xsl:variable name="form-id" select="./@id"/>
+            <div class="net-splitcells-website-form-editor-tab-bar">
+                <xsl:for-each select="./s:text-area">
+                    <xsl:variable name="bar-button">
+                        <s:text-area>
+                            <xsl:attribute name="form-id" select="$form-id"/>
+                            <xsl:attribute name="name" select="./@name"/>
+                            <xsl:attribute name="id" select="./@id"/>
+                            <xsl:if test="./@main-tab">
+                                <xsl:attribute name="main-tab" select="./@main-tab"/>
+                            </xsl:if>
+                            <xsl:if test="./@initial-content-at">
+                                <xsl:attribute name="initial-content-at" select="./@initial-content-at"/>
+                            </xsl:if>
+                            <xsl:if test="./@content-type">
+                                <xsl:attribute name="content-type" select="./@content-type"/>
+                            </xsl:if>
+                            <xsl:copy-of select="./node()"/>
+                        </s:text-area>
+                    </xsl:variable>
+                    <xsl:apply-templates select="$bar-button" mode="net-splitcells-website-form-editor-tab-bar"/>
+                </xsl:for-each>
+            </div>
+            <div class="net-splitcells-website-form-editor-tab-holder">
+                <xsl:for-each select="./s:text-area">
+                    <xsl:variable name="bar-button">
+                        <s:text-area>
+                            <xsl:attribute name="form-id" select="$form-id"/>
+                            <xsl:attribute name="name" select="./@name"/>
+                            <xsl:attribute name="id" select="./@id"/>
+                            <xsl:if test="./@main-tab">
+                                <xsl:attribute name="main-tab" select="./@main-tab"/>
+                            </xsl:if>
+                            <xsl:if test="./@initial-content-at">
+                                <xsl:attribute name="initial-content-at" select="./@initial-content-at"/>
+                            </xsl:if>
+                            <xsl:if test="./@content-type">
+                                <xsl:attribute name="content-type" select="./@content-type"/>
+                            </xsl:if>
+                            <xsl:copy-of select="./node()"/>
+                        </s:text-area>
+                    </xsl:variable>
+                    <xsl:apply-templates select="$bar-button" mode="net-splitcells-website-form-editor-tab-content"/>
+                </xsl:for-each>
+            </div>
+        </form>
+        <xsl:for-each select="./s:library">
+            <script type="text/javascript" charset="utf-8">
+                <xsl:attribute name="src" select="concat(s:default-root-relative-url(./@path), '.js')"/>
+            </script>
+        </xsl:for-each>
+    </xsl:template>
     <xsl:template match="s:form-submit-button">
         <div class="net-splitcells-button net-splitcells-action-button">
             <xsl:attribute name="id" select="./@id"/>

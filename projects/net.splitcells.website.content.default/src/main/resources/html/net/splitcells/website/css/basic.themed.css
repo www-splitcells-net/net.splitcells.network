@@ -5,6 +5,9 @@
 :target {
    background-color: var(--background-color-priority-0) !important;
 }
+.net-splitcells-website-form-editor-tab-bar {
+    box-shadow: inset 0em -0.1em .2em var(--shadow-color-priority-1);
+    }
 html {
     font-family: var(--text-font-family);
 }
