@@ -5,15 +5,30 @@
     display: none;
     visibility: hidden;
     }
-.net-splitcells-content-main {
-    flex-grow: 1;
-    width: auto !important;
+@media (min-width: 59em) {
+    .column_1 {
+        width: 100%;
+        }
     }
-.column_1 {
-    width: 30em !important;
-    flex-grow: 0;
+@media (min-width: 99em) {
+    .column_1 {
+        width: 30em !important;
+        flex-grow: 0;
+        }
     }
-.net-splitcells-content-column {
-    flex-grow: 1;
-    width: auto !important;
+@media (max-width: 73.25em) {
+    .column_1 {
+        width: 100% !important;
+        flex-grow: 0;
+        }
     }
+@media (min-width: 59em) {
+    .net-splitcells-content-main {
+        flex-grow: 1;
+        width: auto !important;
+        }
+    .net-splitcells-content-column {
+        flex-grow: 1;
+        width: auto !important;
+    }
+}
