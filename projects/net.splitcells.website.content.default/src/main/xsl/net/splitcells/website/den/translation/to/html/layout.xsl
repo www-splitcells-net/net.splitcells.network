@@ -226,6 +226,7 @@ request.send();]]>
                         <xsl:copy-of select="./s:meta/s:path.context/node()"/>
                     </s:path.context>
                 </xsl:if>
+                <xsl:copy-of select="./s:meta"/>
                 <s:content>
                     <xsl:copy-of select="./node()"/>
                 </s:content>
@@ -735,6 +736,19 @@ request.send();]]>
                                     <div class="splitcells-net-window-menu-line-2"></div>
                                 </div>
                                 <div class="net-splitcells-menu net-splitcells-priority-4">
+                                    <xsl:if test="./s:meta/s:commands">
+                                        <section class="net-splitcells-component-priority-1">
+                                            <xsl:for-each select="./s:meta/s:commands/s:command">
+                                                <div class="net-splitcells-button net-splitcells-action-button">
+                                                    <xsl:attribute name="onclick" select="concat('javascript: ', ./@method, '()')"/>
+                                                    <xsl:if test="./@id">
+                                                        <xsl:attribute name="id" select="./@id"/>
+                                                    </xsl:if>
+                                                    <xsl:apply-templates select="./node()"/>
+                                                </div>
+                                            </xsl:for-each>
+                                        </section>
+                                    </xsl:if>
                                     <xsl:apply-templates mode="net-splitcells-website-menu"
                                                          select="$net-splitcells-website-server-config-menu-detailed">
                                     </xsl:apply-templates>

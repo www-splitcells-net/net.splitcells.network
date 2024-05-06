@@ -18,12 +18,12 @@
             <d:toDo>Edit supply and demand data via Tabulator for a better use experience.</d:toDo>
             <d:toDo>Export and import data from Excel format.</d:toDo>
         </d:toDo>
+        <commands>
+            <command id="net-splitcells-gel-ui-calculate-solution-form-submit-1"
+                     method="net_splitcells_gel_ui_editor_form_submit">Submit optimization
+            </command>
+        </commands>
     </meta>
-    <notification>
-        <only-for-general-public>true</only-for-general-public>
-        <default-content>net/splitcells/website/server/form-notification-content-default</default-content>
-        <accept-notification>I agree, with the terms of service for using this server.</accept-notification>
-    </notification>
     <paragraph>
         This editor allows one to define an assignment problem and to let it solve by the Generic Allocator.
         Please, define the problem definition and enter the data for demands and supplies in CSV format.
@@ -32,9 +32,6 @@
     </paragraph>
     <paragraph>Click on the <quote>+</quote> button to enter or edit data of the correspondent chapter.
     </paragraph>
-    <form-submit-button id="net-splitcells-gel-ui-calculate-solution-form-submit-1"
-                        command="net_splitcells_gel_ui_editor_form_submit">Submit optimization problem.
-    </form-submit-button>
     <form id="net-splitcells-gel-ui-editor-form"
           action="/net/splitcells/gel/ui/calculate-solution.form">
         <chapter>
