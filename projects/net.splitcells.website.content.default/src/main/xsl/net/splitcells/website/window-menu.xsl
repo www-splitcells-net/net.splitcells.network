@@ -15,15 +15,6 @@
     -->
     <xsl:variable name="net-splitcells-website-server-config-window-menu">
         <xsl:variable name="content">
-            <a class="net-splitcells-button net-splitcells-main-button-project-logo">
-                <xsl:attribute name="href">
-                    <xsl:value-of
-                            select="s:default-root-relative-url('net/splitcells/website/server/front-menu.html')"/>
-                </xsl:attribute>
-            </a>
-            <div class="net-splitcells-error-status-indicator net-splitcells-button-inline"
-                 style="visibility: hidden; display: none;">Error
-            </div>
         </xsl:variable>
         <xsl:apply-templates select="$content"/>
     </xsl:variable>

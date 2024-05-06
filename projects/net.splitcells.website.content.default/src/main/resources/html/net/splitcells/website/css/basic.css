@@ -11,6 +11,7 @@
 */
 .net-splitcells-website-form-editor-tab-bar {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     }
 .net-splitcells-form-editor {

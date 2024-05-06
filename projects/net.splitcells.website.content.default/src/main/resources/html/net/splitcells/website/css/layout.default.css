@@ -81,6 +81,10 @@ footer {
         }
     }
 @media (max-width: 30em) {
+    /* Only one column is visible at one height. */
+    main {
+        width: 100% !important;
+    }
     .optional {
         visibility: hidden !important;
         display: none !important;
@@ -112,10 +116,6 @@ footer {
     .header {
         z-index: 1000 !important;
         }
-    .rightDecoration {
-        visibility: hidden !important;
-        display: none !important;
-        }
     .net-splitcells-content-main {
         width: 100% !important;
         }
@@ -125,14 +125,6 @@ footer {
     .content {
         padding-left: .25em !important;
         }
-    main {
-        width: 100% !important;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        background: transparent linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, var(--background-color-priority-7) 100em) repeat scroll 0% 0%;
-        }
     .section_gallery,
     .change_menu_visibility {
         visibility: visible !important;
@@ -140,14 +132,21 @@ footer {
         font-size: 1.5em;
         }
     }
-@media (max-width: 53.25em) {
+@media (min-width: 53.25em) {
     .minimal-only {
-        /* TODO Rename the class name, so it represents its real meaning. */
-    	display: none;
-    	visibility: hidden:
-    	}
+        display: none;
+        visibility: hidden:
+        }
+    main {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        visibility: inherit;
+        z-index: 1;
+        }
     }
 @media (max-width: 53.25em) {
+    /* Only the window menu and one additional column are visible at any height of the document. */
 	.net-splitcells-minimal-not {
 		display: none;
         visibility: hidden:
@@ -192,10 +191,6 @@ footer {
     main {
         width: 100% !important;
         }
-    .menu {
-        visibility: hidden !important;
-        display: none !important;
-        }
     .change_menu_visibility {
         visibility: visible;/*!important*/
         display: block;/*!important*/
@@ -223,13 +218,6 @@ footer {
     	}
 	}
 @media (min-width: 59em) {
-    main {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        visibility: inherit;
-        z-index: 1;
-        }
     .net-website-content-column {
         display: flex;
         flex-direction: column;

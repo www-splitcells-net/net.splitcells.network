@@ -597,6 +597,16 @@ request.send();]]>
                                     <article>
                                         <div class="splitcells-net-window-menu">
                                             <div class="splitcells-net-line net-splitcells-component-priority-2">
+                                                <a class="net-splitcells-button net-splitcells-main-button-project-logo">
+                                                    <xsl:attribute name="href">
+                                                        <xsl:value-of
+                                                                select="s:default-root-relative-url('net/splitcells/website/server/front-menu.html')"/>
+                                                    </xsl:attribute>
+                                                </a>
+                                                <a class="net-splitcells-button-inline" href="#net-splitcells-detailed-menu">Menu</a>
+                                                <div class="net-splitcells-error-status-indicator net-splitcells-button-inline"
+                                                     style="visibility: hidden; display: none;">Error
+                                                </div>
                                                 <xsl:copy-of
                                                         select="$net-splitcells-website-server-config-window-menu"/>
                                                 <div class="net-splitcells-space-filler"></div>
@@ -723,7 +733,7 @@ request.send();]]>
                                     </div>
                                 </xsl:if>
                             </div>
-                            <div class="menu Left_shadow TextCell Layout net-splitcells-component-priority-4">
+                            <div id="net-splitcells-detailed-menu" class="menu Left_shadow TextCell Layout net-splitcells-component-priority-4">
                                 <div class="Left_shadow net-splitcells-component-priority-0 splitcells-net-title-logo splitcells-net-window-menu">
                                     <div class="splitcells-net-window-menu-line-1">
                                         <a class="net-splitcells-button-inline net-splitcells-main-button-project-logo">
@@ -744,6 +754,10 @@ request.send();]]>
                                     <div class="splitcells-net-window-menu-line-2"></div>
                                 </div>
                                 <div class="net-splitcells-menu net-splitcells-priority-4">
+                                    <a class="net-splitcells-button net-splitcells-action-button net-splitcells-component-priority-1 minimal-only"
+                                       href="#topElement">
+                                        Back to content
+                                    </a>
                                     <xsl:if test="./s:meta/s:commands">
                                         <section class="net-splitcells-component-priority-1">
                                             <xsl:for-each select="./s:meta/s:commands/s:command">
