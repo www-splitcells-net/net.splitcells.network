@@ -47,10 +47,10 @@
                  action="/net/splitcells/gel/ui/calculate-solution.form">
         <library path="net/splitcells/gel/ui/editor"/>
         <text-area id="net-splitcells-gel-ui-editor-form-problem-definition" name="Definition" main-tab="true" initial-content-at="/net/splitcells/gel/ui/examples/school-course-scheduling-problem.txt"/>
-        <text-area id="net-splitcells-gel-ui-editor-form-errors" name="Errors"></text-area>
+        <text-area id="net-splitcells-gel-ui-editor-form-errors" name="Errors" content-types=" error-output "></text-area>
         <text-area id="net-splitcells-gel-ui-editor-form-demands" name="Demands" initial-content-at="/net/splitcells/gel/ui/colloquium-planning-demands-test-data.csv"><![CDATA[]]></text-area>
         <text-area id="net-splitcells-gel-ui-editor-form-supplies" name="Supplies" initial-content-at="/net/splitcells/gel/ui/colloquium-planning-supplies-test-data.csv"><![CDATA[]]></text-area>
-        <text-area id="net-splitcells-gel-ui-editor-form-solution" name="Solution" content-type="csv-output"/>
+        <text-area id="net-splitcells-gel-ui-editor-form-solution" name="Solution" content-types=" csv-output result-output "/>
         <text-area id="net-splitcells-gel-ui-editor-form-solution-rating" name="Rating"/>
     </form-editor>
 </article>

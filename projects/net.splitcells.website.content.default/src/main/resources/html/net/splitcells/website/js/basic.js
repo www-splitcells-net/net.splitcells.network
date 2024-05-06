@@ -166,6 +166,38 @@ function net_splitcells_webserver_form_submit(config) {
             for (const [key, value] of Object.entries(responseObject['net-splitcells-websiter-server-form-update'])) {
                 document.getElementById(key).value = value; // value is used by form elements like textarea.
                 document.getElementById(key).innerHTML = value; // innerHTML is used by div elements inside forms.
+                if (document.getElementById(key).getAttribute('content-types') === undefined) {
+                } else {
+                    if (document.getElementById(key).getAttribute('content-types').includes(' error-output ')) {
+                        if (value === null || value === undefined || value === '') {
+                            var errorButtons = document.getElementsByClassName(key + '-tab-button');
+                            for (var i = 0; i < errorButtons.length; i++) {
+                                errorButtons[i].classList.remove('net-splitcells-action-button-state-has-error');
+                            }
+                            continue;
+                        }
+                        var errorButtons = document.getElementsByClassName(key + '-tab-button');
+                        for (var i = 0; i < errorButtons.length; i++) {
+                            errorButtons[i].classList.add('net-splitcells-action-button-state-has-error');
+                        }
+                    }
+                }
+                if (document.getElementById(key).getAttribute('content-types') === undefined) {
+                } else {
+                    if (document.getElementById(key).getAttribute('content-types').includes(' result-output ')) {
+                        if (value === null || value === undefined || value === '') {
+                            var errorButtons = document.getElementsByClassName(key + '-tab-button');
+                            for (var i = 0; i < errorButtons.length; i++) {
+                                errorButtons[i].classList.remove('net-splitcells-action-button-state-has-update');
+                            }
+                            continue;
+                        }
+                        var errorButtons = document.getElementsByClassName(key + '-tab-button');
+                        for (var i = 0; i < errorButtons.length; i++) {
+                            errorButtons[i].classList.add('net-splitcells-action-button-state-has-update');
+                        }
+                    }
+                }
             }
         }
         config['on-submission-completion']();

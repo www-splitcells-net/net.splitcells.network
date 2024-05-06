@@ -247,12 +247,14 @@
     </xsl:template>
     <xsl:template match="s:library" mode="net-splitcells-website-form-editor-tab-bar"></xsl:template>
     <xsl:template match="s:text-area" mode="net-splitcells-website-form-editor-tab-bar">
-        <div class="net-splitcells-button net-splitcells-action-button">
+        <div>
+            <xsl:attribute name="class" select="concat('net-splitcells-button net-splitcells-action-button ', @id, '-tab-button')" />
             <xsl:attribute name="onclick"><![CDATA[javascript:
 unshowByCssClass(']]><xsl:value-of select="./@form-id"/><![CDATA[');
 showById(']]><xsl:value-of select="./@id"/><![CDATA[-tab-content');
 ]]>
             </xsl:attribute>
+            <xsl:attribute name="content-types" select="@content-types"/>
             <xsl:apply-templates select="@name"/>
         </div>
     </xsl:template>
@@ -265,7 +267,7 @@ showById(']]><xsl:value-of select="./@id"/><![CDATA[-tab-content');
                 <xsl:attribute name="style" select="'display: none; visibility: hidden;'"/>
             </xsl:if>
             <xsl:choose>
-                <xsl:when test="@content-type = 'csv-output'">
+                <xsl:when test="contains(@content-types, ' csv-output ')">
                     <div>
                         <xsl:attribute name="id" select="concat(./@id, '-as-csv-output')"/>
                         No data present yet.
@@ -273,6 +275,7 @@ showById(']]><xsl:value-of select="./@id"/><![CDATA[-tab-content');
                     <textarea class="net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor-backend">
                         <xsl:attribute name="id" select="./@id"/>
                         <xsl:attribute name="name" select="./@id"/>
+                        <xsl:attribute name="content-types" select="@content-types"/>
                         <xsl:apply-templates select="./text()"/>
                     </textarea>
                 </xsl:when>
@@ -284,6 +287,7 @@ showById(']]><xsl:value-of select="./@id"/><![CDATA[-tab-content');
                     <textarea class="net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor-backend">
                         <xsl:attribute name="id" select="./@id"/>
                         <xsl:attribute name="name" select="./@id"/>
+                        <xsl:attribute name="content-types" select="@content-types"/>
                         <xsl:apply-templates select="./text()"/>
                     </textarea>
                 </xsl:otherwise>
@@ -324,9 +328,14 @@ document.addEventListener('DOMContentLoaded', function(){
                             <xsl:if test="./@initial-content-at">
                                 <xsl:attribute name="initial-content-at" select="./@initial-content-at"/>
                             </xsl:if>
-                            <xsl:if test="./@content-type">
-                                <xsl:attribute name="content-type" select="./@content-type"/>
-                            </xsl:if>
+                            <xsl:choose>
+                                <xsl:when test="@content-types">
+                                    <xsl:attribute name="content-types" select="@content-types"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:attribute name="content-types" select="' default '"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
                             <xsl:copy-of select="./node()"/>
                         </s:text-area>
                     </xsl:variable>
@@ -346,9 +355,17 @@ document.addEventListener('DOMContentLoaded', function(){
                             <xsl:if test="./@initial-content-at">
                                 <xsl:attribute name="initial-content-at" select="./@initial-content-at"/>
                             </xsl:if>
-                            <xsl:if test="./@content-type">
-                                <xsl:attribute name="content-type" select="./@content-type"/>
+                            <xsl:if test="./@content-types">
+                                <xsl:attribute name="content-types" select="./@content-types"/>
                             </xsl:if>
+                            <xsl:choose>
+                                <xsl:when test="@content-types">
+                                    <xsl:attribute name="content-types" select="@content-types"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:attribute name="content-types" select="' default '"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
                             <xsl:copy-of select="./node()"/>
                         </s:text-area>
                     </xsl:variable>
