@@ -118,6 +118,13 @@
                 .
                 This way incorrect elements can be detected without any XSD.
             </paragraph>
+            <paragraph>
+                Minimize using named templates with parameters,
+                because it's better to add such parameters to the XML node directly,
+                in order to make every template as generic as possible and to unify passing infos to a template.
+                Minimize using name templates,
+                in order to simplify the template structure.
+            </paragraph>
         </chapter>
     </chapter>
     <chapter>
@@ -179,6 +186,11 @@
                 vs.
                 <quote>node()</quote>
             </title>
+            <paragraph>
+                <quote>*</quote>
+                stands for elements and <quote>node()</quote> stands for anything.
+                Prefer applying templates to anything, in order to avoid accidentally ignoring content for processing.
+            </paragraph>
             <d:todo>normalize-space($variable-name) != ''</d:todo>
         </chapter>
         <chapter>
