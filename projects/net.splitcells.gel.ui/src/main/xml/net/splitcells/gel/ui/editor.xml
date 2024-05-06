@@ -18,10 +18,8 @@
             <paragraph>
                 This editor allows one to define an assignment problem and to let it solve by the Generic Allocator.
                 Please, define the problem definition and enter the data for demands and supplies in CSV format.
-                After executing the optimizer via the <quote>Submit optimization problem.</quote> button,
-                solution will be visible under the chapter <quote>Solutions</quote>.
-            </paragraph>
-            <paragraph>Click on the <quote>+</quote> button to enter or edit data of the correspondent chapter.
+                After executing the optimizer via the <quote>Submit optimizatio</quote> button,
+                the solution will be visible under the tab <quote>Solution</quote>.
             </paragraph>
         </description>
         <pseudo-full-screen-by-default>true</pseudo-full-screen-by-default>
