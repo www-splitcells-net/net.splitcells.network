@@ -11,7 +11,19 @@
     -->
     <meta>
         <title>Generic Allocation Editor</title>
-        <description>Define and solve assignment problems.</description>
+        <description>
+            <paragraph>
+                Define and solve assignment problems.
+            </paragraph>
+            <paragraph>
+                This editor allows one to define an assignment problem and to let it solve by the Generic Allocator.
+                Please, define the problem definition and enter the data for demands and supplies in CSV format.
+                After executing the optimizer via the <quote>Submit optimization problem.</quote> button,
+                solution will be visible under the chapter <quote>Solutions</quote>.
+            </paragraph>
+            <paragraph>Click on the <quote>+</quote> button to enter or edit data of the correspondent chapter.
+            </paragraph>
+        </description>
         <full-screen-by-default>true</full-screen-by-default>
         <d:toDo>
             <d:toDo>Import supplies and demands from local file via Tabulator.</d:toDo>
@@ -24,14 +36,6 @@
             </command>
         </commands>
     </meta>
-    <paragraph>
-        This editor allows one to define an assignment problem and to let it solve by the Generic Allocator.
-        Please, define the problem definition and enter the data for demands and supplies in CSV format.
-        After executing the optimizer via the <quote>Submit optimization problem.</quote> button,
-        solution will be visible under the chapter <quote>Solutions</quote>.
-    </paragraph>
-    <paragraph>Click on the <quote>+</quote> button to enter or edit data of the correspondent chapter.
-    </paragraph>
     <form id="net-splitcells-gel-ui-editor-form"
           action="/net/splitcells/gel/ui/calculate-solution.form">
         <chapter>
