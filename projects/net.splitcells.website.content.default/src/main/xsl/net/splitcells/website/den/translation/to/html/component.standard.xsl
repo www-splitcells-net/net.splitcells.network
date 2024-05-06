@@ -247,8 +247,13 @@
     </xsl:template>
     <xsl:template match="s:library" mode="net-splitcells-website-form-editor-tab-bar"></xsl:template>
     <xsl:template match="s:text-area" mode="net-splitcells-website-form-editor-tab-bar">
+        <xsl:variable name="selectionStyle">
+            <xsl:if test="@main-tab = 'true'">
+                <xsl:value-of select="'net-splitcells-tab-button-selected'"/>
+            </xsl:if>
+        </xsl:variable>
         <div>
-            <xsl:attribute name="class" select="concat('net-splitcells-button net-splitcells-action-button ', @id, '-tab-button ', @form-id, '-tab-button')" />
+            <xsl:attribute name="class" select="concat('net-splitcells-button net-splitcells-action-button ', @id, '-tab-button ', @form-id, '-tab-button ', $selectionStyle)"/>
             <xsl:attribute name="onclick"><![CDATA[javascript:
 unshowByCssClass(']]><xsl:value-of select="./@form-id"/><![CDATA[');
 var anyTabButtons = document.getElementsByClassName(']]><xsl:value-of select="concat(@form-id, '-tab-button')"/><![CDATA[');
