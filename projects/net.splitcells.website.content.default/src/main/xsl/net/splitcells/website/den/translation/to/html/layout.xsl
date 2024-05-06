@@ -743,7 +743,7 @@ request.send();]]>
                                         content of this
                                         html file is licensed under the
                                         <a href="/net/splitcells/network/legal/licenses/EPL-2.0.html">EPL-2.0</a>
-                                        OR <a href="/net/splitcells/network/legal/licenses/MIT.html">MIT</a>.
+                                        OR <a href="/net/splitcells/network/legal/licenses/GPL-2.0-or-later.html">GPL-2.0-or-later</a>.
                                     </p>
                                     <p>Files and other contents, which are linked to by this
                                         HTML file, have their own rulings.
