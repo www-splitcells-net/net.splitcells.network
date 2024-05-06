@@ -18,24 +18,22 @@
         width: 30em !important;
         flex-grow: 0;
         }
-    .net-splitcells-content-main {
-        flex-grow: 1;
-        max-width: calc(100% - 13.5em + 30em) !important;
-        }
+    }
+@media (min-width: 99em) {
     .net-splitcells-content-column {
         flex-grow: 1;
-        max-width: calc(100% - 13.5em + 30em) !important;
-    }
-    }
-@media (min-width: 59em) {
-    .net-splitcells-content-column {
         /* When 3 columns are visible at any height, than this prevents,
          * that a growing element inside the content column (like the Codemirror text editor)
          * grows the content column bigger than its parent.
          */
-        max-width: calc(100% - 13.5em + 30em) !important;
+        width: calc(100% - 13.5em - 30em) !important;
+        width: inherit !important;
         }
     }
+    .net-splitcells-content-main {
+        flex-grow: 1;
+        
+        }
 @media (max-width: 73.25em) {
     .column_1 {
         width: 100% !important;
@@ -49,6 +47,6 @@
         }
     .net-splitcells-content-column {
         flex-grow: 1;
-        width: auto !important;
+        max-width: calc(100% - 13.5em) !important;
     }
 }
