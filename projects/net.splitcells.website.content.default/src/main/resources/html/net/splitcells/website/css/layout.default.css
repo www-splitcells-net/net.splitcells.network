@@ -144,6 +144,13 @@ footer {
         visibility: inherit;
         z-index: 1;
         }
+    .net-splitcells-content-column {
+        /* When 2 columns are visible at any height, than this prevents,
+         * that a growing element inside the content column (like the Codemirror text editor)
+         * grows the content column bigger than its parent.
+         */
+        max-width: calc(100% - 13.5em);
+        }
     }
 @media (max-width: 53.25em) {
     /* Only the window menu and one additional column are visible at any height of the document. */

@@ -9,6 +9,9 @@
 */
 /* TODO Split CSS in CSS without classes and CSS with specifics for this website.
 */
+.menu {
+    width: 13em;
+    }
 .net-splitcells-website-form-editor-tab-bar {
     display: flex;
     flex-wrap: wrap;
