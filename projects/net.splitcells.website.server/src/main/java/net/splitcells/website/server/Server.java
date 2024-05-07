@@ -29,6 +29,8 @@ import io.vertx.core.net.PemKeyCertOptions;
 import io.vertx.core.net.PfxOptions;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
+import io.vertx.ext.web.handler.BasicAuthHandler;
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
@@ -36,6 +38,7 @@ import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.Logs;
 import net.splitcells.website.Formats;
+import net.splitcells.website.server.config.PasswordAuthenticationEnabled;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
@@ -63,6 +66,7 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
 import static net.splitcells.website.server.processor.Request.request;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
+import static net.splitcells.website.server.vertx.DemAuthenticationProvider.demAuthenticationProvider;
 
 @JavaLegacyArtifact
 public class Server {
@@ -138,6 +142,9 @@ public class Server {
                         final var router = Router.router(vertx);
                         router.route("/favicon.ico").handler(a -> {
                         });
+                        if (configValue(PasswordAuthenticationEnabled.class)) {
+                            router.route("/*").handler(BasicAuthHandler.create(demAuthenticationProvider()));
+                        }
                         router.route("/*").handler(routingContext -> {
                             HttpServerResponse response = routingContext.response();
                             if (routingContext.request().path().endsWith(".form")) {
