@@ -34,6 +34,7 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.resource.ConfigFileSystem;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.Logs;
 import net.splitcells.website.Formats;
@@ -65,7 +66,7 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
 import static net.splitcells.website.server.processor.Request.request;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
-import static net.splitcells.website.server.vertx.DemAuthenticationProvider.demAuthenticationProvider;
+import static net.splitcells.website.server.vertx.FileBasedAuthenticationProvider.fileBasedAuthenticationProvider;
 
 @JavaLegacyArtifact
 public class Server {
@@ -142,7 +143,7 @@ public class Server {
                         router.route("/favicon.ico").handler(a -> {
                         });
                         if (configValue(PasswordAuthenticationEnabled.class)) {
-                            router.route("/*").handler(BasicAuthHandler.create(demAuthenticationProvider()));
+                            router.route("/*").handler(BasicAuthHandler.create(fileBasedAuthenticationProvider()));
                         }
                         router.route("/*").handler(routingContext -> {
                             HttpServerResponse response = routingContext.response();
