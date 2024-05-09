@@ -15,7 +15,10 @@
  */
 package net.splitcells.dem.resource;
 
+import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.environment.config.framework.Option;
+
+import static net.splitcells.dem.Dem.configValue;
 
 /**
  * <p>This is the generic default storage for all files created and permanently owned by the program.
@@ -38,6 +41,6 @@ import net.splitcells.dem.environment.config.framework.Option;
 public class BootstrapFileSystem implements Option<FileSystem> {
     @Override
     public FileSystem defaultValue() {
-        return FileSystems.fileSystemOnLocalHost(null);
+        return FileSystems.fileSystemOnLocalHost(Paths.userHome(".local", "state", configValue(ProgramName.class)));
     }
 }
