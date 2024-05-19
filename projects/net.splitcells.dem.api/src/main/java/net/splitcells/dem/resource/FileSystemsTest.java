@@ -17,7 +17,9 @@ package net.splitcells.dem.resource;
 
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
+import net.splitcells.dem.utils.StringUtils;
 
 import java.nio.file.Path;
 
@@ -27,8 +29,10 @@ import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
+import static net.splitcells.dem.resource.FileSystems.temporaryFileSystem;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.StringUtils.toBytes;
 
 public class FileSystemsTest {
     @IntegrationTest
@@ -79,5 +83,17 @@ public class FileSystemsTest {
                             , Path.of("root/another-folder")
                             , Path.of("root/another-folder/test-file.txt")));
         });
+    }
+
+    @IntegrationTest
+    public void testCreateDirectoryPath() {
+        try (final var testSubject = temporaryFileSystem()) {
+            final var testValue = "test value";
+            final var testFolder = "test/folder";
+            final var testFile = testFolder + "/file";
+            testSubject.createDirectoryPath(testFolder);
+            testSubject.writeToFile(testFile, toBytes(testValue));
+            requireEquals(testSubject.readString(testFile), testValue);
+        }
     }
 }

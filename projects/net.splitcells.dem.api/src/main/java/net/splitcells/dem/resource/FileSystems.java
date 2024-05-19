@@ -15,7 +15,10 @@
  */
 package net.splitcells.dem.resource;
 
+import net.splitcells.dem.Dem;
+import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import org.apache.commons.io.FileUtils;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -26,6 +29,7 @@ import java.nio.file.Path;
 import java.util.stream.Stream;
 
 import static java.nio.file.Files.createDirectories;
+import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -55,6 +59,89 @@ public class FileSystems implements FileSystem {
         return new FileSystems(rootPath);
     }
 
+    public static FileSystemResource temporaryFileSystem() {
+        try {
+            final var baseFolder = java.nio.file.Files.createTempDirectory(configValue(ProgramName.class));
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> Files.deleteDirectory(baseFolder)));
+            final var baseFileSystem = fileSystemOnLocalHost(baseFolder);
+            return new FileSystemResource() {
+
+                @Override
+                public void close() {
+                    Files.deleteDirectory(baseFolder);
+                }
+
+                @Override
+                public FileSystem writeToFile(Path path, byte[] content) {
+                    return baseFileSystem.writeToFile(path, content);
+                }
+
+                @Override
+                public FileSystem appendToFile(Path path, byte[] content) {
+                    return baseFileSystem.appendToFile(path, content);
+                }
+
+                @Override
+                public FileSystem subFileSystem(Path path) {
+                    return baseFileSystem.subFileSystem(path);
+                }
+
+                @Override
+                public InputStream inputStream(Path path) {
+                    return baseFileSystem.inputStream(path);
+                }
+
+                @Override
+                public String readString(Path path) {
+                    return baseFileSystem.readString(path);
+                }
+
+                @Override
+                public boolean exists() {
+                    return baseFileSystem.exists();
+                }
+
+                @Override
+                public boolean isFile(Path path) {
+                    return baseFileSystem.isFile(path);
+                }
+
+                @Override
+                public boolean isDirectory(Path path) {
+                    return baseFileSystem.isDirectory(path);
+                }
+
+                @Override
+                public Stream<Path> walkRecursively() {
+                    return baseFileSystem.walkRecursively();
+                }
+
+                @Override
+                public Stream<Path> walkRecursively(Path path) {
+                    return baseFileSystem.walkRecursively(path);
+                }
+
+                @Override
+                public byte[] readFileAsBytes(Path path) {
+                    return baseFileSystem.readFileAsBytes(path);
+                }
+
+                @Override
+                public FileSystemView subFileSystemView(String path) {
+                    return baseFileSystem.subFileSystemView(path);
+                }
+
+                @Override
+                public FileSystem createDirectoryPath(String path) {
+                    baseFileSystem.createDirectoryPath(path);
+                    return this;
+                }
+            };
+        } catch (IOException e) {
+            throw executionException(e);
+        }
+    }
+
     public static FileSystem usersStateFiles() {
         return fileSystemOnLocalHost(Files.usersStateFiles());
     }
@@ -73,7 +160,7 @@ public class FileSystems implements FileSystem {
     @Override
     public FileSystem createDirectoryPath(String path) {
         try {
-            createDirectories(Path.of(path));
+            createDirectories(rootPath.resolve(path));
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
