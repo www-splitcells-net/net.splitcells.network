@@ -255,9 +255,19 @@ public class FileSystems implements FileSystem {
         return subFileSystem(Path.of(path));
     }
 
+    /**
+     * This method does not check, if the sub file system actually {@link #exists()}.
+     * The reason for that is, that expecting a {@link FileSystem} to {@link #exists()} by default,
+     * has no advantages, as any file access later on requires checking,
+     * if the corresponding folder or file exists.
+     * This already implicitly checks, if the sub file system {@link #exists()}.
+     *
+     * @param path
+     * @return
+     */
     @Override
     public FileSystem subFileSystem(Path path) {
-        return fileSystemOnLocalHost(this.rootPath.resolve(path));
+        return new FileSystems(rootPath.resolve(path));
     }
 
     @Override
