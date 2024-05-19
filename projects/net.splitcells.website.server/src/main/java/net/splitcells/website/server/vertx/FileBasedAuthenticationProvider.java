@@ -27,12 +27,24 @@ import net.splitcells.dem.resource.FileSystemView;
 
 import static net.splitcells.dem.Dem.configValue;
 
+/**
+ * Authenticates users via their names and passwords by looking up a file for each user,
+ * that contains the user's password.
+ * These files are located at {@link ConfigFileSystem} + {@link #USER_PASSWORD_FOLDER} + `/<username>`.
+ * The password is the first line of the file.
+ * The reason for the cut at the first line ending is the fact,
+ * that on Linux sometimes a line ending symbol is added to a file
+ * via a text editor without the line ending being visible in the editor (source Mārtiņš Avots).
+ * Furthermore, the line ending symbol can be hard to enter for a user,
+ * because of the UI of the user's computer.
+ */
 @JavaLegacyArtifact
 public class FileBasedAuthenticationProvider implements AuthenticationProvider {
+    private static final String USER_PASSWORD_FOLDER = "net/splitcells/website/server/security/users/";
 
     public static FileBasedAuthenticationProvider fileBasedAuthenticationProvider() {
         return new FileBasedAuthenticationProvider(configValue(ConfigFileSystem.class)
-                .subFileSystem("net/splitcells/website/server/security/users/"));
+                .subFileSystem(USER_PASSWORD_FOLDER));
     }
 
     public static FileBasedAuthenticationProvider fileBasedAuthenticationProvider(FileSystemView userData) {
@@ -55,7 +67,7 @@ public class FileBasedAuthenticationProvider implements AuthenticationProvider {
                     + "` is unknown."));
             return;
         }
-        if (!password.equals(userData.readString(username))) {
+        if (!password.equals(userData.readString(username).split("\n")[0])) {
             resultHandler.handle(Future.failedFuture("False password `"
                     + password
                     + "` for username `"
