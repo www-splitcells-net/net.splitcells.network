@@ -30,7 +30,7 @@ import static net.splitcells.dem.Dem.configValue;
 /**
  * Authenticates users via their names and passwords by looking up a file for each user,
  * that contains the user's password.
- * These files are located at {@link ConfigFileSystem} + {@link #USER_PASSWORD_FOLDER} + `/<username>`.
+ * These files are located at {@link ConfigFileSystem} + {@link #USER_PASSWORD_FOLDER} + `/[username]`.
  * The password is the first line of the file.
  * The reason for the cut at the first line ending is the fact,
  * that on Linux sometimes a line ending symbol is added to a file
