@@ -60,19 +60,22 @@ public class FileBasedAuthenticationProvider implements AuthenticationProvider {
     @Override
     public void authenticate(JsonObject credentials, Handler<AsyncResult<User>> resultHandler) {
         final var username = credentials.getString("username");
-        final var password = credentials.getString("password");
+        final var inputtedPassword = credentials.getString("password");
         if (!userData.isFile(username)) {
             resultHandler.handle(Future.failedFuture("The username `"
                     + username
                     + "` is unknown."));
             return;
         }
-        if (!password.equals(userData.readString(username).split("\n")[0])) {
-            resultHandler.handle(Future.failedFuture("False password `"
-                    + password
+        final var storedPassword = userData.readString(username).split("\n")[0];
+        if (!inputtedPassword.equals(storedPassword)) {
+            resultHandler.handle(Future.failedFuture("False input password `"
+                    + inputtedPassword
                     + "` for username `"
                     + username
-                    + "`"));
+                    + "`. Expecting the password `"
+                    + storedPassword
+                    + "`."));
         }
         resultHandler.handle(Future.succeededFuture(User.fromName(username)));
     }
