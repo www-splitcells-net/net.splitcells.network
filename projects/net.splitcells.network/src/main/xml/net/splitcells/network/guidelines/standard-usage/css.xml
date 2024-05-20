@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns="http://splitcells.net/sew.xsd">
+    <meta>
+        <!--
+            SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+            SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+        -->
+        <title>CSS Guidelines</title>
+    </meta>
+    <chapter>
+        <title>Descendant Combinator</title>
+        <paragraph>Minimize usage of the descendant combinator,
+            as handling of multiple descendant combinator matches can be tricky:
+            in this project there is something like priority level classes used,
+            in order to mark, which visual priority an element has for the user.
+            This in turn controls mainly its colors,
+            as elements with higher priority are drawn with more contrasted and brighter colors,
+            in order to grab the user's attention more.
+        </paragraph>
+        <paragraph>So one might might be tempted to write rules like <quote>priority-level-1 div {...}</quote>.
+            This leads to problems, when container elements with different priority levels are nested and
+            therefore multiple descendant combinators with different priority levels match for one element.
+            The first match according to the css file lines wins.
+        </paragraph>
+        <paragraph>If nesting of container elements with different priority levels can be avoided,
+            descendant combinators are a good idea.
+        </paragraph>
+    </chapter>
+</article>
