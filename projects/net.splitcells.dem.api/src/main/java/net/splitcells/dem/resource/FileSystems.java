@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static java.nio.file.Files.createDirectories;
@@ -273,5 +274,14 @@ public class FileSystems implements FileSystem {
     @Override
     public boolean exists() {
         return java.nio.file.Files.isDirectory(rootPath);
+    }
+
+    @Override
+    public Optional<Path> javaLegacyPath(Path path) {
+        if (path.isAbsolute()) {
+            throw executionException(perspective("The given path is not allowed to be absolute.")
+                    .withProperty("path", path.toString()));
+        }
+        return Optional.of(rootPath.resolve(path));
     }
 }

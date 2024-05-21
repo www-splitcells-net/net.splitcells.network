@@ -15,12 +15,16 @@
  */
 package net.splitcells.dem.resource;
 
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.Optional;
 import java.util.stream.Stream;
+
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**
  * <p>No 2 instances of {@link FileSystem} should have the same class name
@@ -78,4 +82,13 @@ public interface FileSystemView {
     }
 
     FileSystemView subFileSystemView(String path);
+
+    /**
+     * @param path The path relative to this {@link FileSystem}, for which the legacy access object is to be created.
+     * @return This is a {@link Path}, that provides read or write access to the request path.
+     */
+    @JavaLegacy
+    default Optional<Path> javaLegacyPath(Path path) {
+        return Optional.empty();
+    }
 }

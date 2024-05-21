@@ -19,6 +19,7 @@ import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.dem.utils.StringUtils;
 
 import java.nio.file.Path;
@@ -30,6 +31,8 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.resource.FileSystems.temporaryFileSystem;
+import static net.splitcells.dem.resource.Files.processInTemporaryFolder;
+import static net.splitcells.dem.testing.Assertions.assertThrows;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
@@ -39,7 +42,7 @@ public class FileSystemsTest {
     public void testInputStream() {
         final var testData = "78t789tb912dfrf";
         final var testPath = Path.of("test-data.txt");
-        Files.processInTemporaryFolder(path -> {
+        processInTemporaryFolder(path -> {
             final var testSubject = fileSystemOnLocalHost(path);
             testSubject.writeToFile(testPath, testData);
             try {
@@ -55,7 +58,7 @@ public class FileSystemsTest {
     public void testInputStreamWithFolder() {
         final var testData = "78t789tb912dfrf";
         final var testPath = Path.of("test-folder/test-file.txt");
-        Files.processInTemporaryFolder(path -> {
+        processInTemporaryFolder(path -> {
             final var testSubject = fileSystemOnLocalHost(path);
             testSubject.writeToFile(testPath, testData);
             try {
@@ -68,11 +71,25 @@ public class FileSystemsTest {
     }
 
     @IntegrationTest
+    public void testJavaLegacyPath() {
+        processInTemporaryFolder(path -> {
+            fileSystemOnLocalHost(path).javaLegacyPath(Path.of("folder/file.txt"));
+        });
+    }
+
+    @IntegrationTest
+    public void testInvalidJavaLegacyPath() {
+        processInTemporaryFolder
+                (path -> assertThrows(ExecutionException.class
+                        , () -> fileSystemOnLocalHost(path).javaLegacyPath(Path.of("/invalid/path.txt"))));
+    }
+
+    @IntegrationTest
     public void testWalkRecursively() {
         final var testData = list("78t789tb912dfrf", "123124");
         final var testPath = list(Path.of("root/test-folder/test-file.txt")
                 , Path.of("root/another-folder/test-file.txt"));
-        Files.processInTemporaryFolder(path -> {
+        processInTemporaryFolder(path -> {
             final var testSubject = fileSystemOnLocalHost(path);
             range(0, testData.size()).forEach(i -> testSubject.writeToFile(testPath.get(i), testData.get(i)));
             testSubject.walkRecursively(Path.of("root/")).collect(toSetOfUniques())
