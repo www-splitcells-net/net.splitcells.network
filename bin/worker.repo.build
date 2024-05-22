@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 #
-# TODO Make this independent of the current folder like other worker commands.
+# TODO Make repo or project to be build parameterizable.
 set -e
 repoFolder=$(basename "$PWD")
 bin/worker.execute \
