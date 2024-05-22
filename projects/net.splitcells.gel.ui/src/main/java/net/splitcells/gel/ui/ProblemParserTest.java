@@ -15,6 +15,8 @@
  */
 package net.splitcells.gel.ui;
 
+import net.splitcells.dem.Dem;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.constraint.type.ForAll;
@@ -22,6 +24,7 @@ import net.splitcells.gel.constraint.type.Then;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.assertThrows;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requirePresenceOf;
@@ -44,13 +47,21 @@ public class ProblemParserTest {
     }
 
     @UnitTest
+    public void testOutputFormat() {
+        final var resultData = parseProblem(Dem.configValue(GelUiFileSystem.class)
+                .readString("src/main/resources/html/net/splitcells/gel/ui/examples/school-course-scheduling-problem.txt"));
+        resultData.value().orElseThrow().columnAttributesForOutputFormat().requireEqualityTo(list("date"));
+        resultData.value().orElseThrow().rowAttributesForOutputFormat().requireEqualityTo(list("shift", "roomNumber"));
+    }
+
+    @UnitTest
     public void testParseProblem() {
         final var testData = "demands={a=int();b=string()};\n"
                 + "supplies={c=float()};\n"
                 + "constraints=forEach(a).then(hasSize(2));\n"
                 + "constraints().forEach(b).then(allSame(c));\n"
                 + "name=\"testParseProblem\";\n";
-        final var testSubject = parseProblem(testData).value().orElseThrow();
+        final var testSubject = parseProblem(testData).value().orElseThrow().problem();
         final var forEachA = testSubject.constraint().child(0);
         requireEquals(forEachA.type(), ForAll.class);
         requirePresenceOf(forEachA.arguments().get(0).toPerspective().pathOfValueTree(
@@ -93,7 +104,7 @@ public class ProblemParserTest {
                 + "supplies = {c = float()};\n"
                 + "constraints = forAllCombinationsOf(a, b, c);\n"
                 + "name = \"testParseProblem\";\n";
-        final var testSubject = parseProblem(testData).value().orElseThrow();
+        final var testSubject = parseProblem(testData).value().orElseThrow().problem();
         final var forAllCombinationsOf = testSubject.constraint().child(0);
         requireEquals(forAllCombinationsOf.type(), ForAll.class);
         requirePresenceOf(forAllCombinationsOf.arguments().get(0).toPerspective().pathOfValueTree(
