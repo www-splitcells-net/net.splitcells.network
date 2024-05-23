@@ -38,6 +38,11 @@ lexer grammar Java11Lexer;
  *
  * Backslash characters always mark the start of an escape sequence in ANTLR.
  * This is also the case for strings like '\n', which is a new line character.
+ *
+ * TODO User wrapper for date time wrapper, in order to ease things like calculating durations.
+ *
+ * TODO Use only one wrapper for a date time with timezone type, in order to maximize accuracy.
+ * Only create another type, if something like performances becomes important.
  */
 @header {
     package net.splitcells.dem.source.code.antlr;
