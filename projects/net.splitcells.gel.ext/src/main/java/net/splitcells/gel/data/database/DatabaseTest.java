@@ -16,6 +16,7 @@
 package net.splitcells.gel.data.database;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -57,6 +58,25 @@ public class DatabaseTest extends TestSuiteI {
         final var databaseFactories = list(databaseFactory(), lineBasedDatabaseFactory());
         databaseFactories.forEach(df -> df.withAspect(DatabaseMetaAspect::databaseIRef));
         return databaseFactories;
+    }
+
+    @Test
+    public void testToReformattedTable() {
+        final var day = attribute(Integer.class);
+        final var task = attribute(String.class);
+        final var testSubject = database(list(day, task));
+        testSubject.toReformattedTable(list(task), list(day));
+    }
+
+    @Test
+    public void testToReformattedTableWithAdvancedInput() {
+        final var day = attribute(Integer.class);
+        final var timeSlot = attribute(Integer.class);
+        final var room = attribute(String.class);
+        final var testTopic = attribute(String.class);
+        final var examiner = attribute(String.class);
+        final var testSubject = database(list(day, timeSlot, room, testTopic));
+        testSubject.toReformattedTable(list(room), list(day, timeSlot));
     }
 
     @Test

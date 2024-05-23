@@ -327,4 +327,19 @@ public interface Table extends Discoverable, Domable, Identifiable {
                 .findFirst()
                 .orElseThrow();
     }
+
+    /**
+     * <p>Normally a {@link Table} is drawn just like {@link #orderedLines()} is containing its data.
+     * Also, the program works in this format, this is not always the best way to visualize a {@link Table}.</p>
+     * <p>Draws this as {@link Table} in such a way,
+     * that the columns and rows correspond to the given {@link Attribute} values.</p>
+     *
+     * @param columnAttributes
+     * @param rowAttributes
+     * @return
+     */
+    default List<List<String>> toReformattedTable(List<Attribute<? extends Object>> columnAttributes
+            , List<Attribute<? extends Object>> rowAttributes) {
+        return list();
+    }
 }
