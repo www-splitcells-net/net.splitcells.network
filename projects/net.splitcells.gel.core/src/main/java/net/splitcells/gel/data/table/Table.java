@@ -61,7 +61,8 @@ public interface Table extends Discoverable, Domable, Identifiable {
 
     /**
      * @return List containing every {@link Line}, where {@link List#indexOf(Object)} matches {@link Line#index()}.
-     * If there are indexes without a matching {@link Line#index()}, the location in the {@link List} has the element null.
+     * If there are indexes without a matching {@link Line#index()},
+     * the location in the {@link List} has the element null.
      */
     ListView<Line> rawLinesView();
 
@@ -100,8 +101,8 @@ public interface Table extends Discoverable, Domable, Identifiable {
      * Especially, it is expected to be generally faster, than {@link #rawLines()}.
      * Only in select cases {@link #rawLines()} is expected to be faster,
      * where knowledge of the underlining {@link Table} implementation is present.
-     * The reason for this, is the fact, that it is faster to construct {@link #unorderedLinesStream()} via {@link #rawLines()},
-     * than the other way around.</p>
+     * The reason for this, is the fact, that it is faster to construct {@link #unorderedLinesStream()}
+     * via {@link #rawLines()}, than the other way around.</p>
      * <p>There is no guarantee regarding the ordering.</p>
      *
      * @return An ordered {@link Stream} of {@link #orderedLines()}.
@@ -262,7 +263,8 @@ public interface Table extends Discoverable, Domable, Identifiable {
         unorderedLines().forEach(line -> {
             final var row = perspective("tr", HTML);
             row.withChild(perspective("td", HTML).withText(line.index() + ""));
-            headerView().forEach(attribute -> row.withChild(perspective("td", HTML).withText(line.value(attribute).toString())));
+            headerView().forEach(attribute -> row.withChild(perspective("td", HTML)
+                    .withText(line.value(attribute).toString())));
             htmlTable.withChild(row);
         });
         return htmlTable;
