@@ -70,13 +70,22 @@ public class DatabaseTest extends TestSuiteI {
 
     @Test
     public void testToReformattedTableWithAdvancedInput() {
-        final var day = attribute(Integer.class);
-        final var timeSlot = attribute(Integer.class);
-        final var room = attribute(String.class);
-        final var testTopic = attribute(String.class);
-        final var examiner = attribute(String.class);
-        final var testSubject = database(list(day, timeSlot, room, testTopic));
-        testSubject.toReformattedTable(list(room), list(day, timeSlot));
+        final var day = attribute(Integer.class, "day");
+        final var timeSlot = attribute(Integer.class, "time slot");
+        final var room = attribute(String.class, "room");
+        final var testTopic = attribute(String.class, "test topic");
+        final var examiner = attribute(String.class, "examiner");
+        final var testSubject = database(list(day, timeSlot, room, testTopic, examiner));
+        testSubject.addTranslated(list(1, 1, "69", "Algebra", "Lindemann"));
+        testSubject.addTranslated(list(1, 1, "70", "Programming", "Linus"));
+        testSubject.addTranslated(list(1, 2, "69", "Biology", "Lindemann"));
+        testSubject.toReformattedTable(list(room), list(day, timeSlot)).requireEqualityTo(
+                list(list("Algebra", "Biology")
+                        , list("Lindemann", "Lindemann")
+                        , list("Programming", "")
+                        , list("Linus", "")
+                )
+        );
     }
 
     @Test

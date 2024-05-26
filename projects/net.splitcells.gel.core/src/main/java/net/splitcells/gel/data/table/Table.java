@@ -18,6 +18,7 @@ package net.splitcells.gel.data.table;
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.*;
+import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.CsvDocument.csvDocument;
 import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_OFFICE;
 import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_TABLE;
@@ -25,9 +26,11 @@ import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_TEXT;
 import static net.splitcells.dem.lang.Xml.*;
 import static net.splitcells.dem.lang.namespace.NameSpaces.HTML;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 import java.util.Optional;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import net.splitcells.dem.data.Identifiable;
@@ -36,7 +39,9 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.resource.communication.log.Logs;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.attribute.IndexedAttribute;
 import net.splitcells.gel.data.table.column.Column;
@@ -336,10 +341,119 @@ public interface Table extends Discoverable, Domable, Identifiable {
      *
      * @param columnAttributes
      * @param rowAttributes
-     * @return
+     * @return This is a 2 dimensional matrix. The first dimension is the column index and
+     * the second dimension is the row index.
      */
     default List<List<String>> toReformattedTable(List<Attribute<? extends Object>> columnAttributes
             , List<Attribute<? extends Object>> rowAttributes) {
-        return list();
+        final List<Attribute<? extends Object>> freeAttributes = list();
+        final Map<Attribute<? extends Object>, List<String>> sortedAttributeValues = map();
+        final var firstColumn = columnAttributes.get(0);
+        concat(columnAttributes, rowAttributes).forEach(ca -> sortedAttributeValues
+                .put(ca, columnView(ca).values().stream().distinct().sorted().map(e -> "" + e).collect(toList())));
+        final List<Attribute<? extends Object>> unusedAttributes = list();
+        headerView2().forEach(a -> {
+            if (!columnAttributes.contains(a) && !rowAttributes.contains(a)) {
+                unusedAttributes.add(a);
+            }
+        });
+        final int unusedAttributeColumns;
+        if (unusedAttributes.isEmpty()) {
+            unusedAttributeColumns = 0;
+        } else {
+            unusedAttributeColumns = (unusedAttributes.size() - 1) * sortedAttributeValues.get(firstColumn).size();
+        }
+        final Map<Attribute<? extends Object>, Integer> attributeDistances = map();
+        {
+            int rowSum = 1;
+            for (int i = rowAttributes.size() - 1; i >= 0; --i) {
+                rowSum *= sortedAttributeValues.get(rowAttributes.get(i)).size();
+                attributeDistances.put(rowAttributes.get(i), rowSum);
+            }
+        }
+        {
+
+            int columnSum = 1;
+            for (int i = columnAttributes.size() - 1; i >= 0; --i) {
+                columnSum *= sortedAttributeValues.get(columnAttributes.get(i)).size();
+                attributeDistances.put(columnAttributes.get(i), columnSum);
+            }
+        }
+        final List<List<String>> reformattedTable = list();
+        final var ad = attributeDistances.get(firstColumn);
+        final var as = sortedAttributeValues.get(firstColumn).size();
+        final int attributeColumns;
+        if (columnAttributes.size() == 1) {
+            attributeColumns = ad;
+        } else {
+            attributeColumns = ad * as;
+        }
+        final var rowDistance = attributeDistances.get(rowAttributes.get(0));
+        final var rowValues = sortedAttributeValues.get(rowAttributes.get(0)).size();
+        final int rowColumns;
+        if (rowAttributes.size() == 1) {
+            rowColumns = rowDistance;
+        } else {
+            rowColumns = rowDistance * rowValues;
+        }
+        range(0, attributeColumns + unusedAttributeColumns)
+                .forEach(c -> {
+                    final List<String> column = list();
+                    reformattedTable.add(column);
+                    range(0, rowColumns).forEach(r -> column.add(""));
+                });
+        orderedLines().forEach(line -> {
+            final int row;
+            {
+                int tmpRow = 0;
+                for (int i = 0; i < rowAttributes.size(); ++i) {
+                    final var attribute = rowAttributes.get(i);
+                    final var attributeDistance = attributeDistances.get(attribute);
+                    final var attributeIndex = sortedAttributeValues.get(attribute).indexOf("" + line.value(attribute));
+                    if (attributeIndex != 0) {
+                        tmpRow += (attributeDistance * attributeIndex) - 1;
+                    }
+                }
+                row = tmpRow;
+            }
+            final int column;
+            {
+                int tmpColumn = unusedAttributes.size() * sortedAttributeValues.get(firstColumn)
+                        .indexOf("" + line.value(firstColumn));
+                for (int i = 0; i < columnAttributes.size(); ++i) {
+                    final var attribute = rowAttributes.get(i);
+                    final var attributeDistance = attributeDistances.get(attribute);
+                    final var attributeIndex = sortedAttributeValues.get(attribute).indexOf("" + line.value(attribute));
+                    if (attributeIndex != 0) {
+                        tmpColumn += (attributeDistance * attributeIndex) - 1;
+                    }
+                }
+                column = tmpColumn;
+            }
+            if (unusedAttributeColumns == 0) {
+                final var currentCellValue = reformattedTable.get(column).get(row);
+                final String nextCellValue;
+                if (currentCellValue.isEmpty()) {
+                    nextCellValue = "x";
+                } else {
+                    logs().appendWarning(perspective("This code block should not be triggered as every cell should only have values of one line."));
+                    nextCellValue = currentCellValue + ";x";
+                }
+                reformattedTable.get(column).set(row, nextCellValue);
+            } else {
+                range(0, unusedAttributes.size()).forEach(u -> {
+                    final var currentCellValue = reformattedTable.get(column + u).get(row);
+                    final String nextCellValue;
+                    if (currentCellValue.isEmpty()) {
+                        nextCellValue = "" + line.value(unusedAttributes.get(u));
+                    } else {
+                        logs().appendWarning(perspective("This code block should not be triggered as every cell should only have values of one line."));
+                        nextCellValue = currentCellValue + "; " + line.value(unusedAttributes.get(u));
+                    }
+                    reformattedTable.get(column + u).set(row, nextCellValue);
+                });
+            }
+        });
+        return reformattedTable;
     }
 }
