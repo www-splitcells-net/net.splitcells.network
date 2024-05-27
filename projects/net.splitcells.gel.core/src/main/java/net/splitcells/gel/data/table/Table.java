@@ -399,8 +399,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
             }
             final int column;
             {
-                int tmpColumn = unusedAttributes.size() * sortedAttributeValues.get(firstColumn)
-                        .indexOf("" + line.value(firstColumn));
+                int tmpColumn = 0;
                 for (int i = 0; i < columnAttributes.size(); ++i) {
                     final var attribute = rowAttributes.get(i);
                     final var attributeDistance = attributeDistances.get(attribute);
