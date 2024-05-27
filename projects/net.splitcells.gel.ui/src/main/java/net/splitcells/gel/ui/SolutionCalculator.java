@@ -15,15 +15,23 @@
  */
 package net.splitcells.gel.ui;
 
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.CsvDocument;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.utils.StringUtils;
+import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
 
+import java.util.stream.IntStream;
+
+import static java.util.stream.IntStream.rangeClosed;
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.CsvDocument.toCsvString;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
@@ -85,9 +93,16 @@ public class SolutionCalculator implements Processor<Perspective, Perspective> {
                 defaultOptimization().optimize(solution);
                 if (problemParameters.columnAttributesForOutputFormat().hasElements()
                         || problemParameters.rowAttributesForOutputFormat().hasElements()) {
-                    formUpdate.withProperty(SOLUTION, toCsvString(solution.toReformattedTable
+                    final var reformattedSolution = solution.toReformattedTable
                             (problemParameters.columnAttributesForOutputFormat().mapped(solution::attributeByName)
-                                    , problemParameters.rowAttributesForOutputFormat().mapped(solution::attributeByName))));
+                                    , problemParameters.rowAttributesForOutputFormat().mapped(solution::attributeByName));
+                    final List<List<String>> csvContent = list();
+                    csvContent.addAll(rangeClosed(1, reformattedSolution.size())
+                            .mapToObj(i -> "" + i)
+                            .map(i -> i.toString())
+                            .collect(toList()));
+                    csvContent.addAll(reformattedSolution);
+                    formUpdate.withProperty(SOLUTION, toCsvString(csvContent));
                 } else {
                     formUpdate.withProperty(SOLUTION, solution.toSimplifiedCSV());
                 }
