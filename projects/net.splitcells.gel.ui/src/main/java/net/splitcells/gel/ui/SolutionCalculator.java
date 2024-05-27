@@ -15,13 +15,16 @@
  */
 package net.splitcells.gel.ui;
 
+import net.splitcells.dem.lang.CsvDocument;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Trail;
+import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
 
+import static net.splitcells.dem.lang.CsvDocument.toCsvString;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.gel.solution.optimization.DefaultOptimization.defaultOptimization;
@@ -61,8 +64,8 @@ public class SolutionCalculator implements Processor<Perspective, Perspective> {
                     .name());
             final var isProblemParsed = problemParsing.value().isPresent();
             if (isProblemParsed) {
-                final var problemParameters = problemParsing.value();
-                final var solution = problemParameters.orElseThrow()
+                final var problemParameters = problemParsing.value().orElseThrow();
+                final var solution = problemParameters
                         .problem()
                         .asSolution();
                 final var demandDefinitions = request
@@ -80,7 +83,14 @@ public class SolutionCalculator implements Processor<Perspective, Perspective> {
                             standardizeInput(supplyDefinitions.get(0).child(0).name()));
                 }
                 defaultOptimization().optimize(solution);
-                formUpdate.withProperty(SOLUTION, solution.toSimplifiedCSV());
+                if (problemParameters.columnAttributesForOutputFormat().hasElements()
+                        || problemParameters.rowAttributesForOutputFormat().hasElements()) {
+                    formUpdate.withProperty(SOLUTION, toCsvString(solution.toReformattedTable
+                            (problemParameters.columnAttributesForOutputFormat().mapped(solution::attributeByName)
+                                    , problemParameters.rowAttributesForOutputFormat().mapped(solution::attributeByName))));
+                } else {
+                    formUpdate.withProperty(SOLUTION, solution.toSimplifiedCSV());
+                }
                 formUpdate.withProperty(SOLUTION_RATING, solution.constraint().rating().toPerspective());
             }
             if (problemParsing.errorMessages().hasElements() || !isProblemParsed) {

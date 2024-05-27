@@ -21,7 +21,9 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
 import java.io.IOException;
+import java.util.stream.IntStream;
 
+import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 @JavaLegacyArtifact
@@ -29,6 +31,12 @@ public class CsvDocument implements AutoCloseable {
 
     public static CsvDocument csvDocument(List<String> header) {
         return new CsvDocument(header);
+    }
+
+    public static String toCsvString(List<List<String>> content) {
+        final var csvDocument = csvDocument(content.get(0));
+        range(1, content.size()).forEach(i -> csvDocument.addLine(content.get(i)));
+        return csvDocument.toString();
     }
 
     private final StringBuilder result = new StringBuilder();
