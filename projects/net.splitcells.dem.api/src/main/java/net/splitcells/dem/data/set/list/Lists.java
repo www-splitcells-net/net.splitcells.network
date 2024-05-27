@@ -15,12 +15,17 @@
  */
 package net.splitcells.dem.data.set.list;
 
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
+@JavaLegacyArtifact
 public final class Lists {
 
     @JavaLegacyBody
@@ -78,6 +83,24 @@ public final class Lists {
         final List<List<T>> listOfShallowCopies = list();
         rangeClosed(1, numberOfCopies).forEach(i -> listOfShallowCopies.add(listWithValuesOf(element)));
         return listOfShallowCopies;
+    }
+
+    /**
+     * This is an attempt to create large empty lists quickly.
+     *
+     * @param content
+     * @param multiple
+     * @param type
+     * @return
+     * @param <T>
+     */
+    public static <T> List<T> listWithMultiple(T content, int multiple, Class<T> type) {
+        T[] resultContent = (T[]) Array.newInstance(type, multiple);
+        Arrays.fill(resultContent, content);
+        final var list = ListI.<T>_list();
+        list.prepareForSizeOf(multiple);
+        list.addAll(Arrays.asList(resultContent));
+        return list;
     }
 
 }

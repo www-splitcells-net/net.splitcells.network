@@ -21,17 +21,15 @@ import java.util.ArrayList;
 
 @JavaLegacyArtifact
 public class ListI<T> extends ArrayList<T> implements List<T> {
-	public static <T> List<T> _list() {
-		return new ListI<>();
-	}
-	/**
-     * TODO Make private.
-	 */
-	private ListI() {
-	}
+    public static <T> List<T> _list() {
+        return new ListI<>();
+    }
 
-	@Override
-	public void prepareForSizeOf(int targetSize) {
-		this.ensureCapacity(targetSize * 2);
-	}
+    private ListI() {
+    }
+
+    @Override
+    public void prepareForSizeOf(int targetSize) {
+        this.ensureCapacity(targetSize * 2);
+    }
 }
