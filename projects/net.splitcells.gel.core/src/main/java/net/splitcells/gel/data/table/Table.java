@@ -30,7 +30,6 @@ import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 import java.util.Optional;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import net.splitcells.dem.data.Identifiable;
@@ -38,16 +37,11 @@ import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.resource.communication.log.Logs;
+import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.data.database.Database;
-import net.splitcells.gel.data.table.attribute.IndexedAttribute;
-import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
@@ -221,26 +215,13 @@ public interface Table extends Discoverable, Domable, Identifiable {
         final var simplifiedCsv = new StringBuilder();
         simplifiedCsv.append(headerView().stream()
                 .map(Attribute::name)
-                .reduce("", Table::mergeSimplifiedCsvList)
+                .reduce("", StringUtils::mergeSimplifiedCsvList)
                 + "\n");
         unorderedLines().forEach(line -> simplifiedCsv.append(line.values().stream()
                 .map(Object::toString)
-                .reduce("", Table::mergeSimplifiedCsvList)
+                .reduce("", StringUtils::mergeSimplifiedCsvList)
                 + "\n"));
         return simplifiedCsv.toString();
-    }
-
-    public static String mergeSimplifiedCsvList(String a, String b) {
-        if (a.isEmpty() && b.isEmpty()) {
-            return "";
-        }
-        if (a.isEmpty()) {
-            return b;
-        }
-        if (b.isEmpty()) {
-            return a;
-        }
-        return a + "," + b;
     }
 
     default <T> Table lookup(Attribute<T> attribute, T value) {

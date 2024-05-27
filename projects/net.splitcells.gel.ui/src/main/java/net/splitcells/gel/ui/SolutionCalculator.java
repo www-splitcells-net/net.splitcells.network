@@ -61,7 +61,8 @@ public class SolutionCalculator implements Processor<Perspective, Perspective> {
                     .name());
             final var isProblemParsed = problemParsing.value().isPresent();
             if (isProblemParsed) {
-                final var solution = problemParsing.value().orElseThrow()
+                final var problemParameters = problemParsing.value();
+                final var solution = problemParameters.orElseThrow()
                         .problem()
                         .asSolution();
                 final var demandDefinitions = request

@@ -80,4 +80,17 @@ public class StringUtils {
         stackTracePrinter.flush();
         return stackTraceValue.toString();
     }
+
+    public static String mergeSimplifiedCsvList(String a, String b) {
+        if (a.isEmpty() && b.isEmpty()) {
+            return "";
+        }
+        if (a.isEmpty()) {
+            return b;
+        }
+        if (b.isEmpty()) {
+            return a;
+        }
+        return a + "," + b;
+    }
 }

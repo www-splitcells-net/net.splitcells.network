@@ -17,7 +17,6 @@ package net.splitcells.gel.solution;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.Xml.attribute;
-import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_TABLE;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.gel.solution.OptimizationParameters.optimizationParameters;
@@ -25,11 +24,9 @@ import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.problem.Problem;
@@ -333,11 +330,11 @@ public interface Solution extends Problem, SolutionView {
         final var simplifiedCsv = new StringBuilder();
         simplifiedCsv.append(headerView().stream()
                 .map(Attribute::name)
-                .reduce("", Table::mergeSimplifiedCsvList)
+                .reduce("", StringUtils::mergeSimplifiedCsvList)
                 + ",argumentation\n");
         unorderedLines().forEach(line -> simplifiedCsv.append(line.values().stream()
                 .map(Object::toString)
-                .reduce("", Table::mergeSimplifiedCsvList)
+                .reduce("", StringUtils::mergeSimplifiedCsvList)
                 + ","
                 + singleLineArgumentation(line).orElse("")
                 + "\n"));
