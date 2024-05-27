@@ -320,6 +320,10 @@ public interface Table extends Discoverable, Domable, Identifiable {
      * Also, the program works in this format, this is not always the best way to visualize a {@link Table}.</p>
      * <p>Draws this as {@link Table} in such a way,
      * that the columns and rows correspond to the given {@link Attribute} values.</p>
+     * <p>TODO The moment this method is extend the following has to be done,
+     * as otherwise the implementation cost piles up too much.
+     * This should be moved into its own class, in order to better document the variables inside this method.
+     * This also makes it possible to test sub components more easily.</p>
      *
      * @param columnAttributes
      * @param rowAttributes
