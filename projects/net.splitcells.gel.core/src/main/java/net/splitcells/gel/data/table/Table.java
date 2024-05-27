@@ -401,7 +401,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
             {
                 int tmpColumn = 0;
                 for (int i = 0; i < columnAttributes.size(); ++i) {
-                    final var attribute = rowAttributes.get(i);
+                    final var attribute = columnAttributes.get(i);
                     final var attributeDistance = attributeDistances.get(attribute);
                     final var attributeIndex = sortedAttributeValues.get(attribute).indexOf("" + line.value(attribute));
                     if (attributeIndex != 0) {
