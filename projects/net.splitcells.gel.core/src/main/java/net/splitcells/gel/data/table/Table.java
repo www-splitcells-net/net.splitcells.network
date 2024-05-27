@@ -344,20 +344,25 @@ public interface Table extends Discoverable, Domable, Identifiable {
         } else {
             unusedAttributeColumns = (unusedAttributes.size() - 1) * sortedAttributeValues.get(firstColumn).size();
         }
+        /**
+         * For every column/row attribute this map denotes, how many other columns/rows are between its columns.
+         *
+         * Every column of an column/row attribute corresponds to a value of the attribute.
+         * Between any 2 neighbouring attribute column, there is a number of other attribute columns in between.
+         */
         final Map<Attribute<? extends Object>, Integer> attributeDistances = map();
         {
             int rowSum = 1;
             for (int i = rowAttributes.size() - 1; i >= 0; --i) {
-                rowSum *= sortedAttributeValues.get(rowAttributes.get(i)).size();
                 attributeDistances.put(rowAttributes.get(i), rowSum);
+                rowSum *= sortedAttributeValues.get(rowAttributes.get(i)).size();
             }
         }
         {
-
-            int columnSum = 1;
+            int columnSum = unusedAttributes.size() - 1;
             for (int i = columnAttributes.size() - 1; i >= 0; --i) {
-                columnSum *= sortedAttributeValues.get(columnAttributes.get(i)).size();
                 attributeDistances.put(columnAttributes.get(i), columnSum);
+                columnSum *= sortedAttributeValues.get(columnAttributes.get(i)).size();
             }
         }
         final List<List<String>> reformattedTable = list();
