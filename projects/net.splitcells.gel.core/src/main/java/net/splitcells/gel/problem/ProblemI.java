@@ -296,4 +296,9 @@ public class ProblemI implements Problem {
     public Object identity() {
         return this;
     }
+
+    @Override
+    public List<Line> orderedLines() {
+        return assignments.orderedLines();
+    }
 }

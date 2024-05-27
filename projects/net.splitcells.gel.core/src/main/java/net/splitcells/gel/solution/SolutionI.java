@@ -313,4 +313,9 @@ public class SolutionI implements Solution {
     public Object identity() {
         return this;
     }
+
+    @Override
+    public List<Line> orderedLines() {
+        return problem.orderedLines();
+    }
 }

@@ -559,4 +559,9 @@ public class AssignmentsI implements Assignments {
     public Stream<Line> orderedLinesStream() {
         return assignments.orderedLinesStream();
     }
+
+    @Override
+    public List<Line> orderedLines() {
+        return assignments.orderedLines();
+    }
 }
