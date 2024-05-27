@@ -15,5 +15,5 @@ constraints().forEach(student).then(minimalDistance(date, 3));
 constraints().forEach(student).then(minimalDistance(date, 5));
 constraints().forAllCombinationsOf(date, shift, roomNumber).then(hasSize(1));
 name = "colloquiumPlanningDemonstration";
-solution.columnAttributesForOutputFormat(date);
-solution.rowAttributesForOutputFormat(shift, roomNumber);
+solution.columnAttributesForOutputFormat(roomNumber);
+solution.rowAttributesForOutputFormat(date, shift);

@@ -50,8 +50,8 @@ public class ProblemParserTest {
     public void testOutputFormat() {
         final var resultData = parseProblem(Dem.configValue(GelUiFileSystem.class)
                 .readString("src/main/resources/html/net/splitcells/gel/ui/examples/school-course-scheduling-problem.txt"));
-        resultData.value().orElseThrow().columnAttributesForOutputFormat().requireEqualityTo(list("date"));
-        resultData.value().orElseThrow().rowAttributesForOutputFormat().requireEqualityTo(list("shift", "roomNumber"));
+        resultData.value().orElseThrow().columnAttributesForOutputFormat().requireEqualityTo(list("roomNumber"));
+        resultData.value().orElseThrow().rowAttributesForOutputFormat().requireEqualityTo(list("date", "shift"));
     }
 
     @UnitTest
