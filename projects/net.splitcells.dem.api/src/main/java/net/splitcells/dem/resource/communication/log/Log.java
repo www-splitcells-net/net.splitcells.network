@@ -141,6 +141,12 @@ public interface Log extends ListWA<LogMessage<Perspective>>, Resource {
         return append(logMessage(warning, NO_CONTEXT, LogLevel.CRITICAL));
     }
 
+    /**
+     * TODO TOFIX This does not output anything during tests.
+     *
+     * @param warning
+     * @return
+     */
     default Log appendWarning(Perspective warning) {
         final var exception = executionException("warning");
         final var message = perspective("warning");
