@@ -37,6 +37,7 @@ import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.utils.StringUtils;
@@ -359,52 +360,73 @@ public interface Table extends Discoverable, Domable, Identifiable {
             }
         }
         {
-            int columnSum = unusedAttributes.size() - 1;
+            int columnSum;
+            if (unusedAttributes.isEmpty()) {
+                columnSum = 1;
+            } else {
+                columnSum = unusedAttributes.size();
+            }
             for (int i = columnAttributes.size() - 1; i >= 0; --i) {
                 attributeDistances.put(columnAttributes.get(i), columnSum);
                 columnSum *= sortedAttributeValues.get(columnAttributes.get(i)).size();
             }
         }
         final List<List<String>> reformattedTable = list();
-        final var ad = attributeDistances.get(firstColumn);
-        final var as = sortedAttributeValues.get(firstColumn).size();
-        final int attributeColumns;
-        if (columnAttributes.size() == 1) {
-            attributeColumns = ad;
-        } else {
-            attributeColumns = ad * as;
+        {
+            // Create empty result table filled with empty string.
+            final var ad = attributeDistances.get(firstColumn);
+            final var as = sortedAttributeValues.get(firstColumn).size();
+            final int attributeColumns = ad * as;
+            final var rowDistance = attributeDistances.get(rowAttributes.get(0));
+            final var rowValues = sortedAttributeValues.get(rowAttributes.get(0)).size();
+            final int rowColumns;
+            if (rowAttributes.size() == 1) {
+                rowColumns = rowDistance;
+            } else {
+                rowColumns = rowDistance * rowValues;
+            }
+            // `+1` is used for the Tables header.
+            range(0, attributeColumns)
+                    .forEach(c -> reformattedTable.add(listWithMultiple("", rowColumns + 1, String.class)));
         }
-        final var rowDistance = attributeDistances.get(rowAttributes.get(0));
-        final var rowValues = sortedAttributeValues.get(rowAttributes.get(0)).size();
-        final int rowColumns;
-        if (rowAttributes.size() == 1) {
-            rowColumns = rowDistance;
-        } else {
-            rowColumns = rowDistance * rowValues;
-        }
-        range(0, attributeColumns + unusedAttributeColumns)
-                .forEach(c -> {
-                    final List<String> column = list();
-                    reformattedTable.add(column);
-                    range(0, rowColumns).forEach(r -> column.add(""));
+        {
+            // Create header for the result table.
+            range(0, columnAttributes.size()).forEach(c -> {
+                final var attribute = columnAttributes.get(c);
+                final var attributeDistance = attributeDistances.get(attribute);
+                final var attributeValues = sortedAttributeValues.get(attribute);
+                range(0, sortedAttributeValues.get(attribute).size()).forEach(v -> {
+                    final int valueColumn;
+                    if (v != 0) {
+                        valueColumn = attributeDistance * v;
+                    } else {
+                        valueColumn = 0;
+                    }
+                    reformattedTable.get(valueColumn).set(0, attributeValues.get(v));
                 });
+            });
+        }
         orderedLines().forEach(line -> {
             final int row;
             {
-                int tmpRow = 0;
+                int tmpRow = 1; // The first row is a header row.
                 for (int i = 0; i < rowAttributes.size(); ++i) {
                     final var attribute = rowAttributes.get(i);
                     final var attributeDistance = attributeDistances.get(attribute);
                     final var attributeIndex = sortedAttributeValues.get(attribute).indexOf("" + line.value(attribute));
-                    if (attributeIndex != 0) {
-                        tmpRow += (attributeDistance * attributeIndex) - 1;
-                    }
+                    tmpRow += attributeDistance * attributeIndex;
                 }
                 row = tmpRow;
             }
             final int column;
             {
-                int tmpColumn = 0;
+                /**
+                 * These are the number of columns, that are before {@link column} and correspond to attributes,
+                 * that are not part of {@link columnAttributes}.
+                 */
+                final int unusedColumns = (unusedAttributes.size() - 1) * sortedAttributeValues.get(firstColumn)
+                        .indexOf("" + line.value(firstColumn));
+                int tmpColumn = unusedColumns;
                 for (int i = 0; i < columnAttributes.size(); ++i) {
                     final var attribute = columnAttributes.get(i);
                     final var attributeDistance = attributeDistances.get(attribute);
