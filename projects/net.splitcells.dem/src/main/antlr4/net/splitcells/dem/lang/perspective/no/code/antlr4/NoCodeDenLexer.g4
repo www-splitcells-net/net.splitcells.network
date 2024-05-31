@@ -5,7 +5,7 @@ lexer grammar NoCodeDenLexer;
 @header {
     package net.splitcells.dem.lang.perspective.no.code.antlr4;
 }
-DocumentStart: '<ol xmlns="http://www.w3.org/1999/xhtml">';
+DocumentStart: '<ol class="net-splitcells-dem-lang-perspective-no-code-lang" xmlns="http://www.w3.org/1999/xhtml">';
 DocumentEnd: '</ol>';
 Brace_round_open: '(';
 Brace_round_closed: ')';
