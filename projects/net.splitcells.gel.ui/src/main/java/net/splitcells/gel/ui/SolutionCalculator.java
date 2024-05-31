@@ -97,7 +97,7 @@ public class SolutionCalculator implements Processor<Perspective, Perspective> {
                             (problemParameters.columnAttributesForOutputFormat().mapped(solution::attributeByName)
                                     , problemParameters.rowAttributesForOutputFormat().mapped(solution::attributeByName));
                     final List<List<String>> csvContent = list();
-                    csvContent.addAll(rangeClosed(1, reformattedSolution.size())
+                    csvContent.addAll(rangeClosed(1, reformattedSolution.get(0).size())
                             .mapToObj(i -> "" + i)
                             .map(i -> i.toString())
                             .collect(toList()));

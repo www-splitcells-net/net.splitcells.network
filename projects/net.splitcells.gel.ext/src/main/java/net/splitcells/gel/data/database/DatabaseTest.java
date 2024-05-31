@@ -61,11 +61,11 @@ public class DatabaseTest extends TestSuiteI {
     }
 
     @Test
-    public void testToReformattedTable() {
+    public void testToReformattedTableWithEmptyInput() {
         final var day = attribute(Integer.class);
         final var task = attribute(String.class);
         final var testSubject = database(list(day, task));
-        testSubject.toReformattedTable(list(task), list(day));
+        testSubject.toReformattedTable(list(task), list(day)).requireEqualityTo(list());
     }
 
     @Test
@@ -80,14 +80,9 @@ public class DatabaseTest extends TestSuiteI {
         testSubject.addTranslated(list(1, 1, "70", "Programming", "Linus"));
         testSubject.addTranslated(list(1, 2, "69", "Biology", "Lindemann"));
         testSubject.toReformattedTable(list(room), list(day, timeSlot)).requireEqualityTo(
-                list(list("", "", "")
-                        , list("", "", "")
-                        ,list("69", "Algebra", "Biology")
-                        , list("", "Lindemann", "Lindemann")
-                        , list("70", "Programming", "")
-                        , list("", "Linus", "")
-                )
-        );
+                list(list("", "", "69", "", "70", "")
+                        , list("1", "1", "Algebra", "Lindemann", "Programming", "Linus")
+                        , list("", "2", "Biology", "Lindemann", "", "")));
     }
 
     @Test

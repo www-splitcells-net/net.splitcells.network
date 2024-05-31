@@ -27,6 +27,8 @@ import static net.splitcells.dem.lang.Xml.*;
 import static net.splitcells.dem.lang.namespace.NameSpaces.HTML;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
+import static net.splitcells.dem.utils.MathUtils.floorToInt;
+import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 import java.util.Optional;
@@ -40,6 +42,7 @@ import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.utils.MathUtils;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.column.ColumnView;
@@ -333,6 +336,9 @@ public interface Table extends Discoverable, Domable, Identifiable {
      */
     default List<List<String>> toReformattedTable(List<Attribute<? extends Object>> columnAttributes
             , List<Attribute<? extends Object>> rowAttributes) {
+        if (orderedLines().isEmpty()) {
+            return list();
+        }
         final Map<Attribute<? extends Object>, List<String>> sortedAttributeValues = map();
         final var firstColumn = columnAttributes.get(0);
         concat(columnAttributes, rowAttributes).forEach(ca -> sortedAttributeValues
@@ -340,6 +346,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
         final List<Attribute<? extends Object>> unusedAttributes = list();
         final int columnsForRowHeaders = rowAttributes.size();
         final int firstAttributeColumnIndex = columnsForRowHeaders;
+        final int firstAttributeRowIndex = columnAttributes.size();
         headerView2().forEach(a -> {
             if (!columnAttributes.contains(a) && !rowAttributes.contains(a)) {
                 unusedAttributes.add(a);
@@ -377,26 +384,25 @@ public interface Table extends Discoverable, Domable, Identifiable {
                 columnSum *= sortedAttributeValues.get(columnAttributes.get(i)).size();
             }
         }
+        final int attributeColumns = attributeDistances.get(firstColumn)
+                * sortedAttributeValues.get(firstColumn).size();
+        final int numberOfColumns = attributeColumns + columnsForRowHeaders;
         final List<List<String>> reformattedTable = list();
-        {
-            // Create empty result table filled with empty string.
-            final var ad = attributeDistances.get(firstColumn);
-            final var as = sortedAttributeValues.get(firstColumn).size();
-            final int attributeColumns = ad * as;
-            final var rowDistance = attributeDistances.get(rowAttributes.get(0));
-            final var rowValues = sortedAttributeValues.get(rowAttributes.get(0)).size();
-            final int rowColumns;
-            if (rowAttributes.size() == 1) {
-                rowColumns = rowDistance;
-            } else {
-                rowColumns = rowDistance * rowValues;
-            }
-            // `+1` is used for the Tables header.
-            range(0, attributeColumns + columnsForRowHeaders)
-                    .forEach(c -> reformattedTable.add(listWithMultiple("", rowColumns + 1, String.class)));
+
+        // Create empty result table filled with empty string.
+        final var firstRowDistance = attributeDistances.get(rowAttributes.get(0));
+        final var rowValues = sortedAttributeValues.get(rowAttributes.get(0)).size();
+        final int rowValueCount;
+        if (rowAttributes.size() == 1) {
+            rowValueCount = firstRowDistance;
+        } else {
+            rowValueCount = firstRowDistance * rowValues;
         }
+        // `+1` is used for the Tables header.
+        range(0, rowValueCount + 1)
+                .forEach(c -> reformattedTable.add(listWithMultiple("", numberOfColumns, String.class)));
         {
-            // Create header for the result table.
+            // Create column header for the result table.
             range(0, columnAttributes.size()).forEach(c -> {
                 final var attribute = columnAttributes.get(c);
                 final var attributeDistance = attributeDistances.get(attribute);
@@ -408,7 +414,25 @@ public interface Table extends Discoverable, Domable, Identifiable {
                     } else {
                         valueColumn = firstAttributeColumnIndex;
                     }
-                    reformattedTable.get(valueColumn).set(0, attributeValues.get(v));
+                    reformattedTable.get(0).set(valueColumn, attributeValues.get(v));
+                });
+            });
+            // Create row header for the result table.
+            range(0, rowAttributes.size()).forEach(a -> {
+                final var attribute = rowAttributes.get(a);
+                final var attributeValues = sortedAttributeValues.get(attribute);
+                final var valueCount = sortedAttributeValues.get(attribute).size();
+                final var rowDistance = attributeDistances.get(attribute);
+                range(0, rowValueCount).forEach(r -> {
+                    final double distances = (double) r / rowDistance;
+                    final double distanceMod = modulus(r, rowDistance);
+                    final int distanceIndex = floorToInt(distances);
+                    final int valueIndex = modulus(distanceIndex, valueCount);
+                    final var value = attributeValues.get(valueIndex);
+                    if (r == 0 || (!reformattedTable.get(r).get(a).equals(value) && distanceMod == 0)
+                    ) {
+                        reformattedTable.get(r + 1).set(a, value);
+                    }
                 });
             });
         }
@@ -446,10 +470,10 @@ public interface Table extends Discoverable, Domable, Identifiable {
                     logs().appendWarning(perspective("This code block should not be triggered as every cell should only have values of one line."));
                     nextCellValue = currentCellValue + ";x";
                 }
-                reformattedTable.get(column).set(row, nextCellValue);
+                reformattedTable.get(row).set(column, nextCellValue);
             } else {
                 range(0, unusedAttributes.size()).forEach(u -> {
-                    final var currentCellValue = reformattedTable.get(column + u).get(row);
+                    final var currentCellValue = reformattedTable.get(row).get(column + u);
                     final String nextCellValue;
                     if (currentCellValue.isEmpty()) {
                         nextCellValue = "" + line.value(unusedAttributes.get(u));
@@ -457,7 +481,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
                         logs().appendWarning(perspective("This code block should not be triggered as every cell should only have values of one line."));
                         nextCellValue = currentCellValue + "; " + line.value(unusedAttributes.get(u));
                     }
-                    reformattedTable.get(column + u).set(row, nextCellValue);
+                    reformattedTable.get(row).set(column + u, nextCellValue);
                 });
             }
         });
