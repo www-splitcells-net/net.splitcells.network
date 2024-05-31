@@ -97,7 +97,7 @@ public final class MathUtils {
     /**
      * @param dividend This is the dividend of the modulus.
      * @param divisor  This is the divisor of the modulus.
-     * @return {@code dividend mod divisor}
+     * @return {@code dividend mod divisor} returns the reminder of the division of the dividend by the divisor.
      */
     public static int modulus(int dividend, int divisor) {
         if (ENFORCING_UNIT_CONSISTENCY) {
