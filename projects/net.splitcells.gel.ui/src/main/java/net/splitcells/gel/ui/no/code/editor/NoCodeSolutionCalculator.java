@@ -29,7 +29,7 @@ import static net.splitcells.dem.lang.CsvDocument.toCsvString;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.gel.solution.optimization.DefaultOptimization.defaultOptimization;
-import static net.splitcells.gel.ui.ProblemParser.parseProblem;
+import static net.splitcells.gel.ui.no.code.editor.NoCodeProblemParser.parseNoCodeProblem;
 import static net.splitcells.website.server.processor.Response.response;
 
 public class NoCodeSolutionCalculator implements Processor<Perspective, Perspective> {
@@ -58,7 +58,7 @@ public class NoCodeSolutionCalculator implements Processor<Perspective, Perspect
         final var formUpdate = perspective(FORM_UPDATE);
         try {
             PATH.requireEqualityTo(request.trail());
-            final var problemParsing = parseProblem(request
+            final var problemParsing = parseNoCodeProblem(request
                     .data()
                     .namedChild(PROBLEM_DEFINITION)
                     .child(0)

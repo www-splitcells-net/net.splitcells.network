@@ -101,8 +101,8 @@
                                 <configuration>
                                     <sourceDirectory>src/main/antlr4/net/splitcells/dem/lang/perspective/no/code/antlr4</sourceDirectory>
                                     <includes>
-                                        <include>DenLexer.g4</include>
-                                        <include>DenParser.g4</include>
+                                        <include>NoCodeDenLexer.g4</include>
+                                        <include>NoCodeDenParser.g4</include>
                                     </includes>
                                     <visitor>true</visitor>
                                     <listener>true</listener>
