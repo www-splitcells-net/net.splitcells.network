@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:x="http://www.w3.org/1999/xhtml"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:n="http://splitcells.net/natural.xsd"
+         xmlns:d="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
+         xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+    <!--
+        SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+        SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+    -->
+    <meta>
+        <title>Generic Allocation No-Code Editor</title>
+        <description>
+            <paragraph>
+                Define and solve assignment problems.
+            </paragraph>
+            <paragraph>
+                This editor allows one to define an assignment problem and to let it solve by the Generic Allocator.
+                Please, define the problem definition and enter the data for demands and supplies in CSV format.
+                After executing the optimizer via the <quote>Submit optimizatio</quote> button,
+                the solution will be visible under the tab <quote>Solution</quote>.
+            </paragraph>
+        </description>
+        <pseudo-full-screen-by-default>true</pseudo-full-screen-by-default>
+        <d:toDo>
+            <d:toDo>Import supplies and demands from local file via Tabulator.</d:toDo>
+            <d:toDo>Edit supply and demand data via Tabulator for a better use experience.</d:toDo>
+            <d:toDo>Export and import data from Excel format.</d:toDo>
+        </d:toDo>
+        <commands>
+            <command id="net-splitcells-gel-ui-calculate-solution-form-submit-1"
+                     method="net_splitcells_gel_ui_editor_form_submit">Submit optimization
+            </command>
+            <command id="net-splitcells-gel-ui-calculate-solution-form-solution-download-as-csv"
+                     method="net_splitcells_gel_ui_calculate_solution_form_solution_download_as_csv">
+                Download solution
+            </command>
+        </commands>
+    </meta>
+    <form-editor id="net-splitcells-gel-ui-editor-form"
+                 action="/net/splitcells/gel/ui/calculate-solution.form">
+        <library path="net/splitcells/gel/ui/no-code-editor"/>
+        <no-code-editor id="net-splitcells-gel-ui-editor-form-problem-definition"
+                        name="Definition"
+                        main-tab="true"
+                        content-types=" /net/splitcells/gel/ui/no-code-editor-language "
+                        initial-content-at="/net/splitcells/gel/ui/examples/school-course-scheduling-problem.xml"/>
+        <text-area id="net-splitcells-gel-ui-editor-form-errors" name="Errors" content-types=" error-output "></text-area>
+        <text-area id="net-splitcells-gel-ui-editor-form-demands" name="Demands" initial-content-at="/net/splitcells/gel/ui/colloquium-planning-demands-test-data.csv"><![CDATA[]]></text-area>
+        <text-area id="net-splitcells-gel-ui-editor-form-supplies" name="Supplies" initial-content-at="/net/splitcells/gel/ui/colloquium-planning-supplies-test-data.csv"><![CDATA[]]></text-area>
+        <text-area id="net-splitcells-gel-ui-editor-form-solution" name="Solution" content-types=" csv-output result-output "/>
+        <text-area id="net-splitcells-gel-ui-editor-form-solution-rating" name="Rating"/>
+    </form-editor>
+</article>

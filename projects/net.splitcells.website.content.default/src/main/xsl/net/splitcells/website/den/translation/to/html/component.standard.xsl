@@ -271,6 +271,31 @@ for (var i = 0; i < tabButtons.length; i++) {
             <xsl:apply-templates select="@name"/>
         </div>
     </xsl:template>
+    <xsl:template match="s:no-code-editor" mode="net-splitcells-website-form-editor-tab-bar">
+        <xsl:variable name="selectionStyle">
+            <xsl:if test="@main-tab = 'true'">
+                <xsl:value-of select="'net-splitcells-tab-button-selected'"/>
+            </xsl:if>
+        </xsl:variable>
+        <div>
+            <xsl:attribute name="class" select="concat('net-splitcells-button net-splitcells-action-button ', @id, '-tab-button ', @form-id, '-tab-button ', $selectionStyle)"/>
+            <xsl:attribute name="onclick"><![CDATA[javascript:
+unshowByCssClass(']]><xsl:value-of select="./@form-id"/><![CDATA[');
+var anyTabButtons = document.getElementsByClassName(']]><xsl:value-of select="concat(@form-id, '-tab-button')"/><![CDATA[');
+for (var i = 0; i < anyTabButtons.length; i++) {
+    anyTabButtons[i].classList.remove('net-splitcells-tab-button-selected');
+    }
+showById(']]><xsl:value-of select="./@id"/><![CDATA[-tab-content');
+var tabButtons = document.getElementsByClassName(']]><xsl:value-of select="@id"/><![CDATA[-tab-button');
+for (var i = 0; i < tabButtons.length; i++) {
+    tabButtons[i].classList.add('net-splitcells-tab-button-selected');
+    }
+]]>
+            </xsl:attribute>
+            <xsl:attribute name="content-types" select="@content-types"/>
+            <xsl:apply-templates select="@name"/>
+        </div>
+    </xsl:template>
     <xsl:template match="s:library" mode="net-splitcells-website-form-editor-tab-content"></xsl:template>
     <xsl:template match="s:text-area" mode="net-splitcells-website-form-editor-tab-content">
         <div>
@@ -321,6 +346,45 @@ document.addEventListener('DOMContentLoaded', function(){
             </script>
         </xsl:if>
     </xsl:template>
+    <xsl:template match="s:no-code-editor" mode="net-splitcells-website-form-editor-tab-content">
+        <div>
+            <xsl:attribute name="class" select="concat('net-splitcells-website-form-editor-tab ', @form-id)"/>
+            <xsl:attribute name="id" select="concat(./@id, '-tab-content')"/>
+            <xsl:if test="not(./@main-tab = 'true')">
+                <xsl:attribute name="style" select="'display: none; visibility: hidden;'"/>
+            </xsl:if>
+            <xsl:choose>
+                <xsl:when test="contains(@content-types, ' /net/splitcells/gel/ui/no-code-editor-language ')">
+                    <div class="net-splitcells-component-priority-0 net-splitcells-webserver-form-no-code-editor-backend">
+                        <xsl:attribute name="id" select="./@id"/>
+                        <xsl:attribute name="name" select="./@id"/>
+                        <xsl:attribute name="content-types" select="@content-types"/>
+                        <xsl:apply-templates select="./text()"/>
+                    </div>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:message terminate="yes">
+                        Unknown content-types of no-code-editor:
+                        <xsl:value-of select="@content-types"/>
+                    </xsl:message>
+                </xsl:otherwise>
+            </xsl:choose>
+        </div>
+        <xsl:if test="./@initial-content-at">
+            <!-- Listening on DOMContentLoaded is required, so that is ensured, that the textarea is available, before writing its default content. -->
+            <script type="text/javascript"><![CDATA[
+document.addEventListener('DOMContentLoaded', function(){
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.open("GET", "]]><xsl:value-of select="./@initial-content-at"/><![CDATA[", true);
+    function listener() {
+        document.getElementById(']]><xsl:value-of select="./@id"/><![CDATA[').innerHTML = this.responseText;
+    }
+    httpRequest.addEventListener("load", listener);
+    httpRequest.send(null);
+});]]>
+            </script>
+        </xsl:if>
+    </xsl:template>
     <xsl:template match="s:form-editor">
         <form class="net-splitcells-form-editor" method="post" enctype="multipart/form-data">
             <xsl:attribute name="id" select="./@id"/>
@@ -329,6 +393,31 @@ document.addEventListener('DOMContentLoaded', function(){
             <xsl:attribute name="action" select="./@action"/>
             <xsl:variable name="form-id" select="./@id"/>
             <div class="net-splitcells-website-form-editor-tab-bar">
+                <xsl:for-each select="./s:no-code-editor">
+                    <xsl:variable name="bar-button">
+                        <s:text-area>
+                            <xsl:attribute name="form-id" select="$form-id"/>
+                            <xsl:attribute name="name" select="./@name"/>
+                            <xsl:attribute name="id" select="./@id"/>
+                            <xsl:if test="./@main-tab">
+                                <xsl:attribute name="main-tab" select="./@main-tab"/>
+                            </xsl:if>
+                            <xsl:if test="./@initial-content-at">
+                                <xsl:attribute name="initial-content-at" select="./@initial-content-at"/>
+                            </xsl:if>
+                            <xsl:choose>
+                                <xsl:when test="@content-types">
+                                    <xsl:attribute name="content-types" select="@content-types"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:attribute name="content-types" select="' default '"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                            <xsl:copy-of select="./node()"/>
+                        </s:text-area>
+                    </xsl:variable>
+                    <xsl:apply-templates select="$bar-button" mode="net-splitcells-website-form-editor-tab-bar"/>
+                </xsl:for-each>
                 <xsl:for-each select="./s:text-area">
                     <xsl:variable name="bar-button">
                         <s:text-area>
@@ -356,6 +445,34 @@ document.addEventListener('DOMContentLoaded', function(){
                 </xsl:for-each>
             </div>
             <div class="net-splitcells-website-form-editor-tab-holder">
+                <xsl:for-each select="./s:no-code-editor">
+                    <xsl:variable name="bar-button">
+                        <s:no-code-editor>
+                            <xsl:attribute name="form-id" select="$form-id"/>
+                            <xsl:attribute name="name" select="./@name"/>
+                            <xsl:attribute name="id" select="./@id"/>
+                            <xsl:if test="./@main-tab">
+                                <xsl:attribute name="main-tab" select="./@main-tab"/>
+                            </xsl:if>
+                            <xsl:if test="./@initial-content-at">
+                                <xsl:attribute name="initial-content-at" select="./@initial-content-at"/>
+                            </xsl:if>
+                            <xsl:if test="./@content-types">
+                                <xsl:attribute name="content-types" select="./@content-types"/>
+                            </xsl:if>
+                            <xsl:choose>
+                                <xsl:when test="@content-types">
+                                    <xsl:attribute name="content-types" select="@content-types"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:attribute name="content-types" select="' default '"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                            <xsl:copy-of select="./node()"/>
+                        </s:no-code-editor>
+                    </xsl:variable>
+                    <xsl:apply-templates select="$bar-button" mode="net-splitcells-website-form-editor-tab-content"/>
+                </xsl:for-each>
                 <xsl:for-each select="./s:text-area">
                     <xsl:variable name="bar-button">
                         <s:text-area>
