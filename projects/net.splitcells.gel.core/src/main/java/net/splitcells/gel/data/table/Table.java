@@ -346,6 +346,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
         final List<Attribute<? extends Object>> unusedAttributes = list();
         final int columnsForRowHeaders = rowAttributes.size();
         final int firstAttributeColumnIndex = columnsForRowHeaders + 1;
+        final int firstAttributeRowIndex = columnAttributes.size() + 1;
         headerView2().forEach(a -> {
             if (!columnAttributes.contains(a) && !rowAttributes.contains(a)) {
                 unusedAttributes.add(a);
@@ -397,8 +398,8 @@ public interface Table extends Discoverable, Domable, Identifiable {
         } else {
             rowValueCount = firstRowDistance * rowValues;
         }
-        // `+1` is used for the Tables header.
-        range(0, rowValueCount + 1)
+        // `+2` is used for the Tables header.
+        range(0, rowValueCount + 2)
                 // `+1` is used for the names of the columns header.
                 .forEach(c -> reformattedTable.add(listWithMultiple("", numberOfColumns + 1, String.class)));
         {
@@ -418,13 +419,17 @@ public interface Table extends Discoverable, Domable, Identifiable {
                     reformattedTable.get(0).set(valueColumn, attributeValues.get(v));
                 });
             });
+            range(0, attributeColumns).forEach(c -> {
+                final var attribute = unusedAttributes.get(modulus(c, attributeDistances.get(firstColumn)));
+                reformattedTable.get(firstAttributeRowIndex - 1).set(firstAttributeColumnIndex + c, attribute.name());
+            });
             // Create row header for the result table.
             range(0, rowAttributes.size()).forEach(a -> {
                 final var attribute = rowAttributes.get(a);
                 final var attributeValues = sortedAttributeValues.get(attribute);
                 final var valueCount = sortedAttributeValues.get(attribute).size();
                 final var rowDistance = attributeDistances.get(attribute);
-                reformattedTable.get(0).set(a, attribute.name());
+                reformattedTable.get(firstAttributeRowIndex - 1).set(a, attribute.name());
                 range(0, rowValueCount).forEach(r -> {
                     final double distances = (double) r / rowDistance;
                     final double distanceMod = modulus(r, rowDistance);
@@ -433,7 +438,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
                     final var value = attributeValues.get(valueIndex);
                     if (r == 0 || (!reformattedTable.get(r).get(a).equals(value)
                             && distanceMod == 0)) {
-                        reformattedTable.get(r + 1).set(a, value);
+                        reformattedTable.get(r + firstAttributeRowIndex).set(a, value);
                     }
                 });
             });
@@ -441,7 +446,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
         orderedLines().forEach(line -> {
             final int row;
             {
-                int tmpRow = 1; // The first row is a header row.
+                int tmpRow = firstAttributeRowIndex; // The first row is a header row.
                 for (int i = 0; i < rowAttributes.size(); ++i) {
                     final var attribute = rowAttributes.get(i);
                     final var attributeDistance = attributeDistances.get(attribute);
