@@ -320,6 +320,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
      * Also, the program works in this format, this is not always the best way to visualize a {@link Table}.</p>
      * <p>Draws this as {@link Table} in such a way,
      * that the columns and rows correspond to the given {@link Attribute} values.</p>
+     * <p>TODO HACK Currently only one column attributes is working.</p>
      * <p>TODO The moment this method is extend the following has to be done,
      * as otherwise the implementation cost piles up too much.
      * This should be moved into its own class, in order to better document the variables inside this method.
@@ -332,7 +333,6 @@ public interface Table extends Discoverable, Domable, Identifiable {
      */
     default List<List<String>> toReformattedTable(List<Attribute<? extends Object>> columnAttributes
             , List<Attribute<? extends Object>> rowAttributes) {
-        final List<Attribute<? extends Object>> freeAttributes = list();
         final Map<Attribute<? extends Object>, List<String>> sortedAttributeValues = map();
         final var firstColumn = columnAttributes.get(0);
         concat(columnAttributes, rowAttributes).forEach(ca -> sortedAttributeValues
