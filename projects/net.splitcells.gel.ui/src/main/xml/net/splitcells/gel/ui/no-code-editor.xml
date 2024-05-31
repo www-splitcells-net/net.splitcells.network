@@ -39,7 +39,7 @@
         </commands>
     </meta>
     <form-editor id="net-splitcells-gel-ui-editor-form"
-                 action="/net/splitcells/gel/ui/calculate-solution.form">
+                 action="/net/splitcells/gel/ui/calculate-solution-no-code.form">
         <library path="net/splitcells/gel/ui/no-code-editor"/>
         <no-code-editor id="net-splitcells-gel-ui-editor-form-problem-definition"
                         name="Definition"

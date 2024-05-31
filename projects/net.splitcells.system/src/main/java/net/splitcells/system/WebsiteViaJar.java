@@ -23,6 +23,7 @@ import net.splitcells.gel.GelCoreFileSystem;
 import net.splitcells.gel.doc.GelDocFileSystem;
 import net.splitcells.gel.ext.GelExtFileSystem;
 import net.splitcells.gel.ui.GelUiFileSystem;
+import net.splitcells.gel.ui.NoCodeSolutionCalculator;
 import net.splitcells.gel.ui.SolutionCalculator;
 import net.splitcells.network.NetworkFileSystem;
 import net.splitcells.network.worker.via.java.NetworkWorkerFileSystem;
@@ -49,6 +50,7 @@ import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
+import static net.splitcells.gel.ui.NoCodeSolutionCalculator.noCodeSolutionCalculator;
 import static net.splitcells.gel.ui.SolutionCalculator.solutionCalculator;
 import static net.splitcells.website.server.ProgramConfig.programConfig;
 import static net.splitcells.website.server.ProjectConfig.projectConfig;
@@ -130,7 +132,9 @@ public class WebsiteViaJar {
                         , "/net/splitcells/gel/ui/editor")
                         .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/net.splitcells.gel.ui.logo.jpg"))
                         .withDescription(Optional.of("Define and solve assignment problems.")))
-                .withAdditionalProcessor(SolutionCalculator.PATH, solutionCalculator());
+                .withAdditionalProcessor(SolutionCalculator.PATH, solutionCalculator())
+                .withAdditionalProcessor(NoCodeSolutionCalculator.PATH, noCodeSolutionCalculator())
+                ;
     }
 
     /**
