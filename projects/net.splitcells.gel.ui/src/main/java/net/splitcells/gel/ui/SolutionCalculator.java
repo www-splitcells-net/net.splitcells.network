@@ -99,7 +99,6 @@ public class SolutionCalculator implements Processor<Perspective, Perspective> {
                     final List<List<String>> csvContent = list();
                     csvContent.addAll(rangeClosed(1, reformattedSolution.get(0).size())
                             .mapToObj(i -> "" + i)
-                            .map(i -> i.toString())
                             .collect(toList()));
                     csvContent.addAll(reformattedSolution);
                     formUpdate.withProperty(SOLUTION, toCsvString(csvContent));
