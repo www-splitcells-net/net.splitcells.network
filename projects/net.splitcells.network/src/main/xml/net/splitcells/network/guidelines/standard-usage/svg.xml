@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd">
+    <meta>
+        <!--
+            SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+            SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+        -->
+        <title>SVG Guidelines</title>
+    </meta>
+    <chapter>
+        <title>Editors</title>
+        <paragraph>SVGs are either created and edited via an pure SVG editor like
+            <link url="https://inkscape.org/">Inkscape</link>
+            or via the specialised tools
+            <link url="https://excalidraw.com/">Excalidraw</link>
+            and <link url="https://draw.io">draw.io</link>.
+        </paragraph>
+    </chapter>
+</article>
