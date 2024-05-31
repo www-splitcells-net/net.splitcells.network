@@ -19,3 +19,21 @@ function net_splitcells_gel_ui_editor_form_submit() {
     };
     net_splitcells_webserver_form_submit(config);
 }
+function readHtmlFromTextArea(from) {
+    return from.innerHTML.replaceAll('&lt;', '<').replaceAll('&gt;', '>')
+}
+function enhanceNoCodeEditors() {
+	let noCodeEditors = document.querySelectorAll(".net-splitcells-webserver-form-no-code-editor");
+	for (var i = 0; i < noCodeEditors.length; i++) {
+	    let editor = noCodeEditors[i];
+	    let syncTargetId = editor.getAttribute('net-splitcells-syncs-to');
+	    let syncTarget = document.getElementById(syncTargetId);
+	    editor.innerHTML = readHtmlFromTextArea(syncTarget);
+	    let syncTargetObserver = new MutationObserver(function(mutations) {
+            if (editor.innerHTML != readHtmlFromTextArea(syncTarget)) {
+                editor.innerHTML = readHtmlFromTextArea(syncTarget);
+            }
+        });
+        syncTargetObserver.observe(syncTarget, { attributes: true, childList: true, subtree: true,characterData: true});
+	}
+}

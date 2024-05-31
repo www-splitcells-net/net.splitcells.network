@@ -355,12 +355,17 @@ document.addEventListener('DOMContentLoaded', function(){
             </xsl:if>
             <xsl:choose>
                 <xsl:when test="contains(@content-types, ' /net/splitcells/gel/ui/no-code-editor-language ')">
-                    <div class="net-splitcells-component-priority-0 net-splitcells-webserver-form-no-code-editor-backend">
+                    <div class="net-splitcells-component-priority-0 net-splitcells-webserver-form-no-code-editor">
+                        <xsl:attribute name="net-splitcells-syncs-to" select="./@id"/>
+                        <xsl:apply-templates select="./node()"/>
+                    </div>
+                    <textarea class="net-splitcells-component-priority-0 net-splitcells-webserver-form-no-code-editor-backend"
+                    style="display: none; visibility: hidden;">
                         <xsl:attribute name="id" select="./@id"/>
                         <xsl:attribute name="name" select="./@id"/>
                         <xsl:attribute name="content-types" select="@content-types"/>
-                        <xsl:apply-templates select="./text()"/>
-                    </div>
+                        <xsl:apply-templates select="./node()"/>
+                    </textarea>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:message terminate="yes">
@@ -378,6 +383,7 @@ document.addEventListener('DOMContentLoaded', function(){
     httpRequest.open("GET", "]]><xsl:value-of select="./@initial-content-at"/><![CDATA[", true);
     function listener() {
         document.getElementById(']]><xsl:value-of select="./@id"/><![CDATA[').innerHTML = this.responseText;
+        enhanceNoCodeEditors();
     }
     httpRequest.addEventListener("load", listener);
     httpRequest.send(null);
