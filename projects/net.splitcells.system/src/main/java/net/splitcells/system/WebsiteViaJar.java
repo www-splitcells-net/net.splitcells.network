@@ -23,7 +23,7 @@ import net.splitcells.gel.GelCoreFileSystem;
 import net.splitcells.gel.doc.GelDocFileSystem;
 import net.splitcells.gel.ext.GelExtFileSystem;
 import net.splitcells.gel.ui.GelUiFileSystem;
-import net.splitcells.gel.ui.NoCodeSolutionCalculator;
+import net.splitcells.gel.ui.no.code.editor.NoCodeSolutionCalculator;
 import net.splitcells.gel.ui.SolutionCalculator;
 import net.splitcells.network.NetworkFileSystem;
 import net.splitcells.network.worker.via.java.NetworkWorkerFileSystem;
@@ -34,28 +34,22 @@ import net.splitcells.website.WebsiteServerFileSystem;
 import net.splitcells.website.content.defaults.WebsiteContentDefaultsFileSystem;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.ServerService;
-import net.splitcells.website.server.WebsiteServerCell;
 import net.splitcells.website.server.project.ProjectRenderer;
-import net.splitcells.website.server.project.renderer.ObjectsMediaRenderer;
-import net.splitcells.website.server.project.renderer.ObjectsRenderer;
 import net.splitcells.website.server.project.validator.SourceValidator;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 
-import java.nio.file.Path;
 import java.util.Optional;
 import java.util.function.Function;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
-import static net.splitcells.gel.ui.NoCodeSolutionCalculator.noCodeSolutionCalculator;
+import static net.splitcells.gel.ui.no.code.editor.NoCodeSolutionCalculator.noCodeSolutionCalculator;
 import static net.splitcells.gel.ui.SolutionCalculator.solutionCalculator;
 import static net.splitcells.website.server.ProgramConfig.programConfig;
 import static net.splitcells.website.server.ProjectConfig.projectConfig;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
-import static net.splitcells.website.server.project.validator.SourceValidator.VOID_VALIDATOR;
 
 public class WebsiteViaJar {
     private WebsiteViaJar() {
