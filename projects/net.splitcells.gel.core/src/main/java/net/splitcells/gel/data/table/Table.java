@@ -345,8 +345,9 @@ public interface Table extends Discoverable, Domable, Identifiable {
                 .put(ca, columnView(ca).values().stream().distinct().sorted().map(e -> "" + e).collect(toList())));
         final List<Attribute<? extends Object>> unusedAttributes = list();
         final int columnsForRowHeaders = rowAttributes.size();
-        final int firstAttributeColumnIndex = columnsForRowHeaders;
+        final int firstAttributeColumnIndex = columnsForRowHeaders + 1;
         final int firstAttributeRowIndex = columnAttributes.size();
+        final int firstRowHeaderColumnIndex = 1;
         headerView2().forEach(a -> {
             if (!columnAttributes.contains(a) && !rowAttributes.contains(a)) {
                 unusedAttributes.add(a);
@@ -400,7 +401,8 @@ public interface Table extends Discoverable, Domable, Identifiable {
         }
         // `+1` is used for the Tables header.
         range(0, rowValueCount + 1)
-                .forEach(c -> reformattedTable.add(listWithMultiple("", numberOfColumns, String.class)));
+                // `+1` is used for the names of the columns header.
+                .forEach(c -> reformattedTable.add(listWithMultiple("", numberOfColumns + 1, String.class)));
         {
             // Create column header for the result table.
             range(0, columnAttributes.size()).forEach(c -> {
@@ -429,9 +431,9 @@ public interface Table extends Discoverable, Domable, Identifiable {
                     final int distanceIndex = floorToInt(distances);
                     final int valueIndex = modulus(distanceIndex, valueCount);
                     final var value = attributeValues.get(valueIndex);
-                    if (r == 0 || (!reformattedTable.get(r).get(a).equals(value) && distanceMod == 0)
-                    ) {
-                        reformattedTable.get(r + 1).set(a, value);
+                    if (r == 0 || (!reformattedTable.get(r).get(firstRowHeaderColumnIndex + a).equals(value)
+                            && distanceMod == 0)) {
+                        reformattedTable.get(r + 1).set(firstRowHeaderColumnIndex + a, value);
                     }
                 });
             });
