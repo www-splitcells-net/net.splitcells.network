@@ -338,6 +338,8 @@ public interface Table extends Discoverable, Domable, Identifiable {
         concat(columnAttributes, rowAttributes).forEach(ca -> sortedAttributeValues
                 .put(ca, columnView(ca).values().stream().distinct().sorted().map(e -> "" + e).collect(toList())));
         final List<Attribute<? extends Object>> unusedAttributes = list();
+        final int columnsForRowHeaders = rowAttributes.size();
+        final int firstAttributeColumnIndex = columnsForRowHeaders;
         headerView2().forEach(a -> {
             if (!columnAttributes.contains(a) && !rowAttributes.contains(a)) {
                 unusedAttributes.add(a);
@@ -390,7 +392,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
                 rowColumns = rowDistance * rowValues;
             }
             // `+1` is used for the Tables header.
-            range(0, attributeColumns)
+            range(0, attributeColumns + columnsForRowHeaders)
                     .forEach(c -> reformattedTable.add(listWithMultiple("", rowColumns + 1, String.class)));
         }
         {
@@ -402,9 +404,9 @@ public interface Table extends Discoverable, Domable, Identifiable {
                 range(0, sortedAttributeValues.get(attribute).size()).forEach(v -> {
                     final int valueColumn;
                     if (v != 0) {
-                        valueColumn = attributeDistance * v;
+                        valueColumn = firstAttributeColumnIndex + attributeDistance * v;
                     } else {
-                        valueColumn = 0;
+                        valueColumn = firstAttributeColumnIndex;
                     }
                     reformattedTable.get(valueColumn).set(0, attributeValues.get(v));
                 });
@@ -424,7 +426,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
             }
             final int column;
             {
-                int tmpColumn = 0;
+                int tmpColumn = firstAttributeColumnIndex; // The first columns are used as row headers.
                 for (int i = 0; i < columnAttributes.size(); ++i) {
                     final var attribute = columnAttributes.get(i);
                     final var attributeDistance = attributeDistances.get(attribute);

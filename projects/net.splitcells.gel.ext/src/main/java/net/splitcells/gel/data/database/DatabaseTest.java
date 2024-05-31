@@ -80,7 +80,9 @@ public class DatabaseTest extends TestSuiteI {
         testSubject.addTranslated(list(1, 1, "70", "Programming", "Linus"));
         testSubject.addTranslated(list(1, 2, "69", "Biology", "Lindemann"));
         testSubject.toReformattedTable(list(room), list(day, timeSlot)).requireEqualityTo(
-                list(list("69", "Algebra", "Biology")
+                list(list("", "", "")
+                        , list("", "", "")
+                        ,list("69", "Algebra", "Biology")
                         , list("", "Lindemann", "Lindemann")
                         , list("70", "Programming", "")
                         , list("", "Linus", "")
