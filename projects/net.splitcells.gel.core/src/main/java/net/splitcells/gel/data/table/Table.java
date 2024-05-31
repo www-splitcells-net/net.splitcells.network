@@ -424,13 +424,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
             }
             final int column;
             {
-                /**
-                 * These are the number of columns, that are before {@link column} and correspond to attributes,
-                 * that are not part of {@link columnAttributes}.
-                 */
-                final int unusedColumns = (unusedAttributes.size() - 1) * sortedAttributeValues.get(firstColumn)
-                        .indexOf("" + line.value(firstColumn));
-                int tmpColumn = unusedColumns;
+                int tmpColumn = 0;
                 for (int i = 0; i < columnAttributes.size(); ++i) {
                     final var attribute = columnAttributes.get(i);
                     final var attributeDistance = attributeDistances.get(attribute);
