@@ -93,6 +93,22 @@
                                     <outputDirectory>target/antlr4/net/splitcells/dem/lang/perspective/antlr4</outputDirectory>
                                 </configuration>
                             </execution>
+                            <execution>
+                                <id>antlr4-generate-no-code-den-grammar</id>
+                                <goals>
+                                    <goal>antlr4</goal>
+                                </goals>
+                                <configuration>
+                                    <sourceDirectory>src/main/antlr4/net/splitcells/dem/lang/perspective/no/code/antlr4</sourceDirectory>
+                                    <includes>
+                                        <include>DenLexer.g4</include>
+                                        <include>DenParser.g4</include>
+                                    </includes>
+                                    <visitor>true</visitor>
+                                    <listener>true</listener>
+                                    <outputDirectory>target/antlr4/net/splitcells/dem/lang/perspective/no/code/antlr4</outputDirectory>
+                                </configuration>
+                            </execution>
                         </executions>
                     </plugin>
                     <plugin>
