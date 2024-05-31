@@ -5,6 +5,8 @@ lexer grammar NoCodeDenLexer;
 @header {
     package net.splitcells.dem.lang.perspective.no.code.antlr4;
 }
+DocumentStart: '<ol xmlns="http://www.w3.org/1999/xhtml">';
+DocumentEnd: '</ol>';
 Brace_round_open: '(';
 Brace_round_closed: ')';
 Brace_curly_open: '{';
@@ -19,8 +21,6 @@ String: '"' [a-zA-Z0-9_]* '"';
 
 fragment NamePrefix: [a-zA-Z_];
 fragment NameSuffix: [a-zA-Z0-9_];
-fragment DocumentStart: '<ol xmlns="http://www.w3.org/1999/xhtml">';
-fragment DocumentEnd: '</ol>';
 
 /* Ignore whitespace. */
 WS: [ \t\r\n]+ -> skip;

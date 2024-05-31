@@ -31,6 +31,7 @@ import org.antlr.v4.runtime.misc.ParseCancellationException;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<SolutionParameters, Perspective>> {
@@ -65,7 +66,14 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
         return parsedProblem;
     }
 
+    private Result<SolutionParameters, Perspective> result = result();
+
     private NoCodeProblemParser() {
 
+    }
+
+    @Override
+    public Result<SolutionParameters, Perspective> visitSource_unit(net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParser.Source_unitContext sourceUnit) {
+        return result;
     }
 }

@@ -16,8 +16,11 @@
 package net.splitcells.gel.ui.no.code.editor;
 
 import net.splitcells.dem.Dem;
+import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.testing.Result;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.ui.GelUiFileSystem;
+import net.splitcells.gel.ui.SolutionParameters;
 
 import static net.splitcells.gel.ui.no.code.editor.NoCodeProblemParser.parseNoCodeProblem;
 
