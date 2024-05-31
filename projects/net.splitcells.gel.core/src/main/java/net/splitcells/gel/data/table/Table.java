@@ -346,8 +346,6 @@ public interface Table extends Discoverable, Domable, Identifiable {
         final List<Attribute<? extends Object>> unusedAttributes = list();
         final int columnsForRowHeaders = rowAttributes.size();
         final int firstAttributeColumnIndex = columnsForRowHeaders + 1;
-        final int firstAttributeRowIndex = columnAttributes.size();
-        final int firstRowHeaderColumnIndex = 1;
         headerView2().forEach(a -> {
             if (!columnAttributes.contains(a) && !rowAttributes.contains(a)) {
                 unusedAttributes.add(a);
@@ -409,6 +407,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
                 final var attribute = columnAttributes.get(c);
                 final var attributeDistance = attributeDistances.get(attribute);
                 final var attributeValues = sortedAttributeValues.get(attribute);
+                reformattedTable.get(c).set(firstAttributeColumnIndex - 1, attribute.name());
                 range(0, sortedAttributeValues.get(attribute).size()).forEach(v -> {
                     final int valueColumn;
                     if (v != 0) {
@@ -425,15 +424,16 @@ public interface Table extends Discoverable, Domable, Identifiable {
                 final var attributeValues = sortedAttributeValues.get(attribute);
                 final var valueCount = sortedAttributeValues.get(attribute).size();
                 final var rowDistance = attributeDistances.get(attribute);
+                reformattedTable.get(0).set(a, attribute.name());
                 range(0, rowValueCount).forEach(r -> {
                     final double distances = (double) r / rowDistance;
                     final double distanceMod = modulus(r, rowDistance);
                     final int distanceIndex = floorToInt(distances);
                     final int valueIndex = modulus(distanceIndex, valueCount);
                     final var value = attributeValues.get(valueIndex);
-                    if (r == 0 || (!reformattedTable.get(r).get(firstRowHeaderColumnIndex + a).equals(value)
+                    if (r == 0 || (!reformattedTable.get(r).get(a).equals(value)
                             && distanceMod == 0)) {
-                        reformattedTable.get(r + 1).set(firstRowHeaderColumnIndex + a, value);
+                        reformattedTable.get(r + 1).set(a, value);
                     }
                 });
             });
