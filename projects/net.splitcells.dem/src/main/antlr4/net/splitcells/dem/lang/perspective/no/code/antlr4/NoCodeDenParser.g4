@@ -8,7 +8,7 @@ parser grammar NoCodeDenParser;
 options {
     tokenVocab=NoCodeDenLexer;
 }
-source_unit: statement*;
+source_unit: DocumentStart statement* DocumentEnd;
 access: Dot Name function_call_arguments access?;
 block_statement
     : Brace_curly_open Brace_curly_closed

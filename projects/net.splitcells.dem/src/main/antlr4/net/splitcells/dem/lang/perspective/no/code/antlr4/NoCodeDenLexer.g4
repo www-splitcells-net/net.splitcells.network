@@ -19,6 +19,8 @@ String: '"' [a-zA-Z0-9_]* '"';
 
 fragment NamePrefix: [a-zA-Z_];
 fragment NameSuffix: [a-zA-Z0-9_];
+fragment DocumentStart: '<ol xmlns="http://www.w3.org/1999/xhtml">';
+fragment DocumentEnd: '</ol>';
 
 /* Ignore whitespace. */
 WS: [ \t\r\n]+ -> skip;

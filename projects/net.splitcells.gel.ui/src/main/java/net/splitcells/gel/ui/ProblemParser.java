@@ -81,6 +81,10 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
         return parsedProblem;
     }
 
+    private ProblemParser() {
+
+    }
+
     @Override
     public Result<SolutionParameters, Perspective> visitSource_unit(net.splitcells.dem.lang.perspective.antlr4.DenParser.Source_unitContext sourceUnit) {
         visitChildren(sourceUnit);
