@@ -8,7 +8,7 @@ parser grammar NoCodeDenParser;
 options {
     tokenVocab=NoCodeDenLexer;
 }
-source_unit: DocumentStart statement* DocumentEnd;
+source_unit: Document_start statement* Document_end;
 access: Dot Name function_call_arguments access?;
 block_statement
     : Brace_curly_open Brace_curly_closed
@@ -23,11 +23,9 @@ function_call_arguments_element
     | Integer
     | function_call;
 function_call_arguments_next: Comma function_call_arguments_element;
-statement
-    : variable_definition Semicolon
-    | function_call Semicolon;
+statement: variable_definition;
 statement_reversed: Semicolon variable_definition;
-variable_definition
-    : Name Equals function_call
-    | Name Equals String
-    | Name Equals block_statement;
+variable_definition: Lesser_than Name Class_variable_definition Greater_than
+    variable_definition_name
+    Lesser_than Slash Name Greater_than;
+variable_definition_name: Lesser_than Name Class_variable_name Greater_than Name Lesser_than Slash Name Greater_than;
