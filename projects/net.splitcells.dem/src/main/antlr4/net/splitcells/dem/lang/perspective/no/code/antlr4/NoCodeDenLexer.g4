@@ -5,25 +5,33 @@ lexer grammar NoCodeDenLexer;
 @header {
     package net.splitcells.dem.lang.perspective.no.code.antlr4;
 }
-Document_start: '<ol class="net-splitcells-dem-lang-perspective-no-code-lang" xmlns="http://www.w3.org/1999/xhtml">';
-Document_end: '</ol>';
-Class_variable_definition: 'class="net-splitcells-dem-lang-perspective-no-code-variable-definition"';
-Class_variable_name: 'class="net-splitcells-dem-lang-perspective-no-code-variable-name"';
-
 Brace_round_open: '(';
 Brace_round_closed: ')';
 Brace_curly_open: '{';
 Brace_curly_closed: '}';
 Comma: ',';
+Document_start: '<ol class="net-splitcells-dem-lang-perspective-no-code-lang" xmlns="http://www.w3.org/1999/xhtml">';
 Dot: '.';
 Equals: '=';
+Function_call_start: '<span class="net-splitcells-dem-lang-perspective-no-code-function-call">';
+Function_call_name_start: '<span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">';
+Function_call_argument_start: '<span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">';
 Greater_than: '>';
 Lesser_than: '<';
 Integer: [-+]?[0-9]+;
+List_item_end: '</li>';
 Name: NamePrefix NameSuffix*;
+Ordered_list_end: '</ol>';
 Semicolon: ';';
 Slash: '/';
 String: '"' [a-zA-Z0-9_]* '"';
+String_value: [a-zA-Z0-9_]*;
+Span_end: '</span>';
+Variable_access_start: '<li class="net-splitcells-dem-lang-perspective-no-code-variable-access">';
+Variable_definition_name_start: '<span class="net-splitcells-dem-lang-perspective-no-code-variable-name">';
+Variable_definition_start: '<li class="net-splitcells-dem-lang-perspective-no-code-variable-definition">';
+Variable_definition_value_start: '<span class="net-splitcells-dem-lang-perspective-no-code-variable-value">';
+Variable_reference_start: '<span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">';
 
 fragment NamePrefix: [a-zA-Z_];
 fragment NameSuffix: [a-zA-Z0-9_\-];

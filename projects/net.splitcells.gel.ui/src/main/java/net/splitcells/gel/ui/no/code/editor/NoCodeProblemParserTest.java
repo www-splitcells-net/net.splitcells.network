@@ -16,18 +16,22 @@
 package net.splitcells.gel.ui.no.code.editor;
 
 import net.splitcells.dem.Dem;
+import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.ui.GelUiFileSystem;
 import net.splitcells.gel.ui.SolutionParameters;
 
+import static net.splitcells.dem.data.atom.Bools.require;
+import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.gel.ui.no.code.editor.NoCodeProblemParser.parseNoCodeProblem;
 
 public class NoCodeProblemParserTest {
     @UnitTest
     public void test() {
         final var resultData = parseNoCodeProblem(Dem.configValue(GelUiFileSystem.class)
-                .readString("src/main/resources/html/net/splitcells/gel/ui/examples/school-course-scheduling-problem-parsing-test.xml"));
+                .readString("src/main/resources/html/net/splitcells/gel/ui/examples/school-course-scheduling-problem.xml"));
+        require(resultData.errorMessages().isEmpty());
     }
 }

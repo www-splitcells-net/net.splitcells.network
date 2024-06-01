@@ -1,188 +1,247 @@
-<ol xmlns="http://www.w3.org/1999/xhtml">
-    <li>
-        <span>student</span>
-        <span>string</span>
+<ol class="net-splitcells-dem-lang-perspective-no-code-lang" xmlns="http://www.w3.org/1999/xhtml">
+    <li class="net-splitcells-dem-lang-perspective-no-code-variable-definition">
+        <span class="net-splitcells-dem-lang-perspective-no-code-variable-name">student</span>
+        <span class="net-splitcells-dem-lang-perspective-no-code-variable-value">
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">attribute</span>
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">student</span>
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">string</span>
+            </span>
+        </span>
     </li>
-    <li>
-        <span>examiner</span>
-        <span>string</span>
+    <li class="net-splitcells-dem-lang-perspective-no-code-variable-definition">
+        <span class="net-splitcells-dem-lang-perspective-no-code-variable-name">examiner</span>
+        <span class="net-splitcells-dem-lang-perspective-no-code-variable-value">
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">attribute</span>
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">examiner</span>
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">string</span>
+            </span>
+        </span>
     </li>
-    <li>
-        <span>observer</span>
-        <span>string</span>
+    <li class="net-splitcells-dem-lang-perspective-no-code-variable-definition">
+        <span class="net-splitcells-dem-lang-perspective-no-code-variable-name">observer</span>
+        <span class="net-splitcells-dem-lang-perspective-no-code-variable-value">
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">attribute</span>
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">observer</span>
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">string</span>
+            </span>
+        </span>
     </li>
-    <li>
-        <span>date</span>
-        <span>integer</span>
+    <li class="net-splitcells-dem-lang-perspective-no-code-variable-definition">
+        <span class="net-splitcells-dem-lang-perspective-no-code-variable-name">date</span>
+        <span class="net-splitcells-dem-lang-perspective-no-code-variable-value">
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">attribute</span>
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">date</span>
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">integer</span>
+            </span>
+        </span>
     </li>
-    <li>
-        <span>shift</span>
-        <span>integer</span>
+    <li class="net-splitcells-dem-lang-perspective-no-code-variable-definition">
+        <span class="net-splitcells-dem-lang-perspective-no-code-variable-name">shift</span>
+        <span class="net-splitcells-dem-lang-perspective-no-code-variable-value">
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">attribute</span>
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">shift</span>
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">integer</span>
+            </span>
+        </span>
     </li>
-    <li>
-        <span>roomNumber</span>
-        <span>integer</span>
+    <li class="net-splitcells-dem-lang-perspective-no-code-variable-definition">
+        <span class="net-splitcells-dem-lang-perspective-no-code-variable-name">roomNumber</span>
+        <span class="net-splitcells-dem-lang-perspective-no-code-variable-value">
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">attribute</span>
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">roomNumber</span>
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">integer</span>
+            </span>
+        </span>
     </li>
-    <li>
-        <span>demands</span>
-        <span>student</span>
-        <span>examiner</span>
-        <span>observer</span>
+    <li class="net-splitcells-dem-lang-perspective-no-code-variable-definition">
+        <span class="net-splitcells-dem-lang-perspective-no-code-variable-name">demands</span>
+        <span class="net-splitcells-dem-lang-perspective-no-code-variable-value">
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">database</span>
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                    <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">student</span>
+                </span>
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                    <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">examiner</span>
+                </span>
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                    <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">observer</span>
+                </span>
+            </span>
+        </span>
     </li>
-    <li>
-        <span>supplies</span>
-        <span>date</span>
-        <span>shift</span>
-        <span>roomNumber</span>
+    <li class="net-splitcells-dem-lang-perspective-no-code-variable-definition">
+        <span class="net-splitcells-dem-lang-perspective-no-code-variable-name">supplies</span>
+        <span class="net-splitcells-dem-lang-perspective-no-code-variable-value">
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">database</span>
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                    <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">date</span>
+                </span>
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                    <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">shift</span>
+                </span>
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                    <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">roomNumber</span>
+                </span>
+            </span>
+        </span>
     </li>
-    <li>
-        <span>constraints</span>
-        <ol>
-            <li>
-                <span>forEach</span>
-                <span>observer</span>
-                <ol>
-                    <li>
-                        <span>forAllCombinationsOf</span>
-                        <span>observer</span>
-                        <ol>
-                            <li>
-                                <span>then</span>
-                                <ol>
-                                    <li>
-                                        <span>hasSize</span>
-                                        <span>1</span>
-                                    </li>
-                                </ol>
-                            </li>
-                        </ol>
-                    </li>
-                </ol>
-            </li>
-        </ol>
+    <li class="net-splitcells-dem-lang-perspective-no-code-variable-definition">
+        <span class="net-splitcells-dem-lang-perspective-no-code-variable-name">constraints</span>
+        <span class="net-splitcells-dem-lang-perspective-no-code-variable-value">
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">forEach</span>
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                    <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">observer</span>
+                </span>
+            </span>
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">forAllCombinationsOf</span>
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                    <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">date</span>
+                </span>
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                    <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">shift</span>
+                </span>
+            </span>
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">then</span>
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                    <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">hasSize</span>
+                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">1</span>
+                    </span>
+                </span>
+            </span>
+        </span>
     </li>
-    <li>
-        <span>constraints</span>
-        <ol>
-            <li>
-                <span>forEach</span>
-                <span>examiner</span>
-                <ol>
-                    <li>
-                        <span>forAllCombinationsOf</span>
-                        <span>date</span>
-                        <span>shift</span>
-                        <ol>
-                            <li>
-                                <span>then</span>
-                                <ol>
-                                    <li>
-                                        <span>hasSize</span>
-                                        <span>1</span>
-                                    </li>
-                                </ol>
-                            </li>
-                        </ol>
-                    </li>
-                </ol>
-            </li>
-        </ol>
+    <li class="net-splitcells-dem-lang-perspective-no-code-variable-access">
+        <span class="net-splitcells-dem-lang-perspective-no-code-variable-name">constraints</span>
+        <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">forEach</span>
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">examiner</span>
+            </span>
+        </span>
+        <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">forAllCombinationsOf</span>
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">date</span>
+            </span>
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">shift</span>
+            </span>
+        </span>
+        <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">then</span>
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+                    <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">hasSize</span>
+                    <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">1</span>
+                </span>
+            </span>
+        </span>
     </li>
-    <li>
-        <span>constraints</span>
-        <ol>
-            <li>
-                <span>forEach</span>
-                <span>student</span>
-                <ol>
-                    <li>
-                        <span>forAllCombinationsOf</span>
-                        <span>date</span>
-                        <span>shift</span>
-                        <ol>
-                            <li>
-                                <span>then</span>
-                                <ol>
-                                    <li>
-                                        <span>hasSize</span>
-                                        <span>1</span>
-                                    </li>
-                                </ol>
-                            </li>
-                        </ol>
-                    </li>
-                </ol>
-            </li>
-        </ol>
+    <li class="net-splitcells-dem-lang-perspective-no-code-variable-access">
+        <span class="net-splitcells-dem-lang-perspective-no-code-variable-name">constraints</span>
+        <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">forEach</span>
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">student</span>
+            </span>
+        </span>
+        <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">forAllCombinationsOf</span>
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">date</span>
+            </span>
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">shift</span>
+            </span>
+        </span>
+        <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">then</span>
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+                    <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">hasSize</span>
+                    <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">1</span>
+                </span>
+            </span>
+        </span>
     </li>
-    <li>
-        <span>constraints</span>
-        <ol>
-            <li>
-                <span>forEach</span>
-                <span>student</span>
-                <ol>
-                    <li>
-                        <span>then</span>
-                        <ol>
-                            <li>
-                                <span>minimalDistance</span>
-                                <ol>
-                                    <li>
-                                        <span>date</span>
-                                        <span>3</span>
-                                    </li>
-                                </ol>
-                            </li>
-                        </ol>
-                    </li>
-                </ol>
-            </li>
-        </ol>
+    <li class="net-splitcells-dem-lang-perspective-no-code-variable-access">
+        <span class="net-splitcells-dem-lang-perspective-no-code-variable-name">constraints</span>
+        <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">forEach</span>
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">student</span>
+            </span>
+        </span>
+        <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">minimalDistance</span>
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">date</span>
+            </span>
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">3</span>
+        </span>
     </li>
-    <li>
-        <span>constraints</span>
-        <ol>
-            <li>
-                <span>forEach</span>
-                <span>student</span>
-                <ol>
-                    <li>
-                        <span>then</span>
-                        <ol>
-                            <li>
-                                <span>minimalDistance</span>
-                                <ol>
-                                    <li>
-                                        <span>date</span>
-                                        <span>5</span>
-                                    </li>
-                                </ol>
-                            </li>
-                        </ol>
-                    </li>
-                </ol>
-            </li>
-        </ol>
+    <li class="net-splitcells-dem-lang-perspective-no-code-variable-access">
+        <span class="net-splitcells-dem-lang-perspective-no-code-variable-name">constraints</span>
+        <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">forEach</span>
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">student</span>
+            </span>
+        </span>
+        <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">minimalDistance</span>
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">date</span>
+            </span>
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">5</span>
+        </span>
     </li>
-    <li>
-        <span>solution</span>
-        <span>colloquiumPlanningDemonstration</span>
-        <span>demands</span>
-        <span>supplies</span>
+    <li class="net-splitcells-dem-lang-perspective-no-code-variable-definition">
+        <span class="net-splitcells-dem-lang-perspective-no-code-variable-name">solution</span>
+        <span class="net-splitcells-dem-lang-perspective-no-code-variable-value">
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">solution</span>
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">colloquiumPlanningDemonstration</span>
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                    <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">demands</span>
+                </span>
+                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                    <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">supplies</span>
+                </span>
+            </span>
+        </span>
     </li>
-    <li>
-        <span>solution</span>
-        <ol>
-            <li>
-                <span>columnAttributesForOutputFormat</span>
-                <span>roomNumber</span>
-            </li>
-            <li>
-                <span>rowAttributesForOutputFormat</span>
-                <span>date</span>
-                <span>shift</span>
-            </li>
-        </ol>
+    <li class="net-splitcells-dem-lang-perspective-no-code-variable-access">
+        <span class="net-splitcells-dem-lang-perspective-no-code-variable-name">solution</span>
+        <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">columnAttributesForOutputFormat</span>
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">student</span>
+            </span>
+        </span>
+    </li>
+    <li class="net-splitcells-dem-lang-perspective-no-code-variable-access">
+        <span class="net-splitcells-dem-lang-perspective-no-code-variable-name">solution</span>
+        <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">rowAttributesForOutputFormat</span>
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">date</span>
+            </span>
+            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">shift</span>
+            </span>
+        </span>
     </li>
 </ol>

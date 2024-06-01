@@ -8,24 +8,32 @@ parser grammar NoCodeDenParser;
 options {
     tokenVocab=NoCodeDenLexer;
 }
-source_unit: Document_start statement* Document_end;
-access: Dot Name function_call_arguments access?;
-block_statement
-    : Brace_curly_open Brace_curly_closed
-    | Brace_curly_open variable_definition statement_reversed* Brace_curly_closed;
-function_call: Name function_call_arguments? access?;
-function_call_arguments
-    : Brace_round_open Brace_round_closed
-    | Brace_round_open function_call_arguments_element function_call_arguments_next* Brace_round_closed
-    ;
-function_call_arguments_element
-    : Name
-    | Integer
-    | function_call;
-function_call_arguments_next: Comma function_call_arguments_element;
-statement: variable_definition;
-statement_reversed: Semicolon variable_definition;
-variable_definition: Lesser_than Name Class_variable_definition Greater_than
+source_unit: Document_start statement* Ordered_list_end;
+
+function_call: Function_call_start function_call_name function_call_argument* Span_end;
+function_call_name: Function_call_name_start string_value Span_end;
+function_call_argument: Function_call_argument_start value Span_end;
+statement
+    : variable_definition
+    | variable_access;
+string_value
+    : Integer
+    | Name
+    | String_value;
+variable_definition:
+    Variable_definition_start
     variable_definition_name
-    Lesser_than Slash Name Greater_than;
-variable_definition_name: Lesser_than Name Class_variable_name Greater_than Name Lesser_than Slash Name Greater_than;
+    variable_definition_value
+    List_item_end;
+value
+    : string_value
+    | function_call+ /* A list of functions is a function chain. */
+    | variable_reference;
+variable_definition_name: Variable_definition_name_start Name Span_end;
+variable_definition_value: Variable_definition_value_start value Span_end;
+variable_reference: Variable_reference_start Name Span_end;
+variable_access:
+    Variable_access_start
+    variable_definition_name
+    function_call+
+    List_item_end;
