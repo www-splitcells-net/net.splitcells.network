@@ -10,6 +10,9 @@ parser grammar NoCodeDenParser;
  *
  * The no-code version exists,
  * so that users can edit such code without being able to create syntax errors.
+ * The original version is needed,
+ * as the text based coding is much more compact and therefore is easier to edit and read without special software.
+ * The compact version also requires a **lot** less storage space than the no-code version.
  */
 @header {
     package net.splitcells.dem.lang.perspective.no.code.antlr4;
