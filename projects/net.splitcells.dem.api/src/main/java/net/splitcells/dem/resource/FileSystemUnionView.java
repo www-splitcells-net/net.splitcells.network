@@ -38,6 +38,8 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 public class FileSystemUnionView implements FileSystemView {
 
     private static final String UNAMBIGUOUS_PATH = "Could find unambiguous file system match.";
+    private  static final String MATCHES = "matches";
+    private  static final String PATH = "matches";
 
     public static FileSystemUnionView fileSystemUnionView(List<FileSystemView> fileSystems) {
         return new FileSystemUnionView(fileSystems);
@@ -55,8 +57,8 @@ public class FileSystemUnionView implements FileSystemView {
                 .collect(toList());
         if (matches.size() != 1) {
             throw executionException(perspective(UNAMBIGUOUS_PATH)
-                    .withProperty("path", path.toString())
-                    .withProperty("matches", matches.toString()));
+                    .withProperty(PATH, path.toString())
+                    .withProperty(MATCHES, matches.toString()));
         }
         return matches.get(0);
     }
@@ -87,8 +89,8 @@ public class FileSystemUnionView implements FileSystemView {
                 .collect(toList());
         if (matches.size() != 1) {
             throw executionException(perspective(UNAMBIGUOUS_PATH)
-                    .withProperty("path", path.toString())
-                    .withProperty("matches", matches.toString()));
+                    .withProperty(PATH, path.toString())
+                    .withProperty(MATCHES, matches.toString()));
         }
         return matches.hasElements();
     }
@@ -101,8 +103,8 @@ public class FileSystemUnionView implements FileSystemView {
                 .collect(toList());
         if (matches.size() != 1) {
             throw executionException(perspective(UNAMBIGUOUS_PATH)
-                    .withProperty("path", path.toString())
-                    .withProperty("matches", matches.toString()));
+                    .withProperty(PATH, path.toString())
+                    .withProperty(MATCHES, matches.toString()));
         }
         return matches.hasElements();
     }
