@@ -57,6 +57,7 @@ public class ColloquiumPlanningSuppliesTestData implements ProjectsRendererExten
 
     public static String testData() {
         final var testData = stringBuilder();
+        testData.append("date,shift,roomNumber\n");
         final int examDayCountPerWeek = 5;
         for (int roomNumber = 1; roomNumber <= 6; ++roomNumber) {
             for (int week = 1; week <= 2; ++week) {

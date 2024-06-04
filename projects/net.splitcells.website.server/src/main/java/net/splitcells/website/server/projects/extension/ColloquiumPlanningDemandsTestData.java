@@ -56,6 +56,7 @@ public class ColloquiumPlanningDemandsTestData implements ProjectsRendererExtens
 
     public static String testData() {
         final var testData = stringBuilder();
+        testData.append("student,examiner,observer\n");
         final var randomness = randomness();
         final var nameGenerator = IdentifiedNameGenerator.identifiedNameGenerator();
         final Set<String> examinerNames = setOfUniques();

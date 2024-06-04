@@ -80,15 +80,29 @@ public class SolutionCalculator implements Processor<Perspective, Perspective> {
                         .data()
                         .namedChildren(DEMANDS);
                 if (demandDefinitions.hasElements()) {
+                    final var demandsCsv = demandDefinitions.get(0).child(0).name();
+                    final var firstLineEnding = demandsCsv.indexOf('\n');
+                    final var firstLine = demandsCsv.substring(0, firstLineEnding);
+                    for (var attribute : firstLine.split(",")) {
+                        solution.demands().attributeByName(attribute.replace("\n", "")
+                                .replace("\r", ""));
+                    }
                     solution.demands().withAddSimplifiedCsv(
-                            standardizeInput(demandDefinitions.get(0).child(0).name()));
+                            standardizeInput(demandsCsv.substring(firstLineEnding + 1)));
                 }
                 final var supplyDefinitions = request
                         .data()
                         .namedChildren(SUPPLIES);
                 if (supplyDefinitions.hasElements()) {
+                    final var suppliesCsv = supplyDefinitions.get(0).child(0).name();
+                    final var firstLineEnding = suppliesCsv.indexOf('\n');
+                    final var firstLine = suppliesCsv.substring(0, firstLineEnding);
+                    for (var attribute : firstLine.split(",")) {
+                        solution.supplies().attributeByName(attribute.replace("\n", "")
+                                .replace("\r", ""));
+                    }
                     solution.supplies().withAddSimplifiedCsv(
-                            standardizeInput(supplyDefinitions.get(0).child(0).name()));
+                            standardizeInput(suppliesCsv.substring(firstLineEnding + 1)));
                 }
                 defaultOptimization().optimize(solution);
                 if (problemParameters.columnAttributesForOutputFormat().hasElements()
