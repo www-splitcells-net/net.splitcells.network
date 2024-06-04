@@ -1,6 +1,8 @@
 parser grammar DenParser;
 /* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+ *
+ * This is a grammar for the minimal programming language called Den, that describes arbitrary code.
  */
 @header {
     package net.splitcells.dem.lang.perspective.antlr4;

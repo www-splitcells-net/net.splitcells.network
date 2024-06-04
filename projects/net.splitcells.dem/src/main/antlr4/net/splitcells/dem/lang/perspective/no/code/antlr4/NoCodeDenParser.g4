@@ -1,6 +1,15 @@
 parser grammar NoCodeDenParser;
 /* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+ *
+ * This is a grammar for the no-code version of the minimal programming language called Den,
+ * that describes arbitrary code.
+ * No-code version means in this context,
+ * that this grammar describes the HTML code used to visualize the original programming language Den
+ * as a syntax tree.
+ *
+ * The no-code version exists,
+ * so that users can edit such code without being able to create syntax errors.
  */
 @header {
     package net.splitcells.dem.lang.perspective.no.code.antlr4;
