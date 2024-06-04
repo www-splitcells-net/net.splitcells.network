@@ -9,7 +9,9 @@ parser grammar DenParser;
  * as it conflicts with Discovery based Networks of Perspectives and Changes (=Den).
  * On the other hand, it makes sense to have an overarching Den XML standard,
  * based on sew.xml for natural languages,
- * den.xml for variable and tree storage,
+ * variable-tree.xml for variable storage as a tree,
+ * document-tree.xml for storage of all variables of all documents as one variable tree,
+ * which is used as a basis for link and path formats,
  * and programming.xml for links, interactions and integration with other formats.
  * Such a standard could have also an text based Den standard version,
  * that also contains the 3 components,
