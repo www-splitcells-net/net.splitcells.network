@@ -14,6 +14,7 @@ parser grammar DenParser;
  * Such a standard could have also an text based Den standard version,
  * that also contains the 3 components,
  * but is not based on existing standards like XML and therefore can be much more compact and simple.
+ * Note, that the Perspective model, is the framework for the Den model.
  */
 @header {
     package net.splitcells.dem.lang.perspective.antlr4;
