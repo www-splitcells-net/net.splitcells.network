@@ -7,4 +7,4 @@ cd ..
   test -d net.splitcells.network.hub || git clone git@github.com:www-splitcells-net/net.splitcells.network.hub.git
   sh -c "cd net.splitcells.network.hub; git pull --ff-only"
   net.splitcells.network.hub/bin/net.splitcells.osi.repos.peers | xargs -i sh -c "test -d {} || git clone git@github.com:www-splitcells-net/{}.git"
-  net.splitcells.network.hub/bin/net.splitcells.osi.repos.peers | xargs -i sh -c "cd {} && git clean -xfd && git reset --hard && git pull --ff-only"
+  net.splitcells.network.hub/bin/net.splitcells.osi.repos.peers | xargs -i sh -c "cd {} && git clean -xfd && git reset --hard && git pull --ff-only || echo Could not pull repo {}"
