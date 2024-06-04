@@ -531,7 +531,7 @@ public interface Perspective extends PerspectiveView {
     }
 
     private static String encodeJsonString(String arg) {
-        return arg.replaceAll("\\\\", "\\\\\\\\")
+        return arg.replace("\\\\", "\\\\\\\\")
                 .replace("\n", "\\n")
                 .replace("\r", "\\r")
                 .replace("\t", "\\t")
