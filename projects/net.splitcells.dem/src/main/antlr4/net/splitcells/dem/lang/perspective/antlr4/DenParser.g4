@@ -3,6 +3,10 @@ parser grammar DenParser;
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  *
  * This is a grammar for the minimal programming language called Den, that describes arbitrary code.
+ *
+ * TODO Use another name for this language, in order to avoid confusion with Den XML.
+ * Den XML should be probably called something else as well,
+ * as it conflicts with Discovery based Networks of Perspectives and Changes (=Den).
  */
 @header {
     package net.splitcells.dem.lang.perspective.antlr4;
