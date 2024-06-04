@@ -42,6 +42,8 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
  * implementations.</p>
  * <p>TODO Split this up in read only query and builder based on query.
  * Somehow illegal queries need to be marked via interface.</p>
+ * <p>TODO IDEA Use the {@link Query} API to not only provide a builder for {@link Constraint} trees,
+ * but also to do data queries.</p>
  */
 public interface Query {
 
