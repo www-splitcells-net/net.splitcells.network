@@ -7,6 +7,13 @@ parser grammar DenParser;
  * TODO Use another name for this language, in order to avoid confusion with Den XML.
  * Den XML should be probably called something else as well,
  * as it conflicts with Discovery based Networks of Perspectives and Changes (=Den).
+ * On the other hand, it makes sense to have an overarching Den XML standard,
+ * based on sew.xml for natural languages,
+ * den.xml for variable and tree storage,
+ * and programming.xml for links, interactions and integration with other formats.
+ * Such a standard could have also an text based Den standard version,
+ * that also contains the 3 components,
+ * but is not based on existing standards like XML and therefore can be much more compact and simple.
  */
 @header {
     package net.splitcells.dem.lang.perspective.antlr4;
