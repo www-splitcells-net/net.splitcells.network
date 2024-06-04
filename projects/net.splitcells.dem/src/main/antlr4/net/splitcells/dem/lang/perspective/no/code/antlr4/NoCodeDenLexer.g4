@@ -5,12 +5,14 @@ lexer grammar NoCodeDenLexer;
 @header {
     package net.splitcells.dem.lang.perspective.no.code.antlr4;
 }
+Body_start: '<body>';
+Body_end: '</body>';
 Brace_round_open: '(';
 Brace_round_closed: ')';
 Brace_curly_open: '{';
 Brace_curly_closed: '}';
 Comma: ',';
-Document_start: '<ol class="net-splitcells-dem-lang-perspective-no-code-lang" xmlns="http://www.w3.org/1999/xhtml">';
+Document_start: '<!DOCTYPE html>';
 Dot: '.';
 Equals: '=';
 Function_call_start: '<span class="net-splitcells-dem-lang-perspective-no-code-function-call">';
@@ -19,8 +21,11 @@ Function_call_argument_start: '<span class="net-splitcells-dem-lang-perspective-
 Greater_than: '>';
 Lesser_than: '<';
 Integer: [-+]?[0-9]+;
+Html_start: '<html xmlns="http://www.w3.org/1999/xhtml">';
+Html_end: '</html>';
 List_item_end: '</li>';
 Name: NamePrefix NameSuffix*;
+No_code_start: '<ol class="net-splitcells-dem-lang-perspective-no-code-lang">';
 Ordered_list_end: '</ol>';
 Semicolon: ';';
 Slash: '/';

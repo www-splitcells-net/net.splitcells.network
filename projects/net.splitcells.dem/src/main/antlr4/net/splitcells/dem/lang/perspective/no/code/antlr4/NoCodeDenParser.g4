@@ -8,8 +8,15 @@ parser grammar NoCodeDenParser;
 options {
     tokenVocab=NoCodeDenLexer;
 }
-source_unit: Document_start statement* Ordered_list_end;
-
+source_unit:
+    Document_start
+    Html_start
+    Body_start
+    No_code_start
+    statement*
+    Ordered_list_end /* This relates to No_code_tart. */
+    Body_end
+    Html_end;
 function_call: Function_call_start function_call_name function_call_argument* Span_end;
 function_call_name: Function_call_name_start string_value Span_end;
 function_call_argument: Function_call_argument_start value Span_end;
