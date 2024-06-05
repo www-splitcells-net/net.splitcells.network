@@ -114,7 +114,7 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
     @Override
     public Result<SolutionParameters, Perspective> visitVariable_definition(NoCodeDenParser.Variable_definitionContext ctx) {
         final var variableName = ctx.variable_definition_name().Name().getText();
-        if (strings.containsKey(variableName)) {
+        if (strings.containsKey(variableName) || attributes.containsKey(variableName) || databases.containsKey(variableName)) {
             result.withErrorMessage(perspective("Variable with this name already exists.")
                     .withProperty(CONTENT, ctx.getText()));
             return null;
@@ -129,12 +129,10 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
                     .withProperty(CONTENT, ctx.getText()));
             return null;
         }
-        if (ctx.variable_definition_value().value().string_value() == null) {
-            result.withErrorMessage(perspective("Variable definition's value is not present.")
-                    .withProperty(CONTENT, ctx.getText()));
+        if (ctx.variable_definition_value().value().string_value() != null) {
+            strings.put(variableName, ctx.variable_definition_value().value().string_value().getText());
             return null;
         }
-        strings.put(variableName, ctx.variable_definition_value().value().string_value().getText());
         return null;
     }
 }
