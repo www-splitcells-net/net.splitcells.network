@@ -131,6 +131,12 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
         }
         if (ctx.variable_definition_value().value().string_value() != null) {
             strings.put(variableName, ctx.variable_definition_value().value().string_value().getText());
+        } else if (ctx.variable_definition_value().value().function_call() != null) {
+            if (ctx.variable_definition_value().value().function_call().size() < 1) {
+                result.withErrorMessage(perspective("Variable definition with a function call chain as its value, needs at least one function call, but has none.")
+                        .withProperty(CONTENT, ctx.getText()));
+                return null;
+            }
         } else if (ctx.variable_definition_value().value().variable_reference() != null) {
             result.withErrorMessage(perspective("Variable definition with a variable reference as its value is not supported.")
                     .withProperty(CONTENT, ctx.getText()));
