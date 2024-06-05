@@ -131,6 +131,10 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
         }
         if (ctx.variable_definition_value().value().string_value() != null) {
             strings.put(variableName, ctx.variable_definition_value().value().string_value().getText());
+        } else if (ctx.variable_definition_value().value().variable_reference() != null) {
+            result.withErrorMessage(perspective("Variable definition with a variable reference as its value is not supported.")
+                    .withProperty(CONTENT, ctx.getText()));
+            return null;
         } else {
             result.withErrorMessage(perspective("Variable definition is missing a value.")
                     .withProperty(CONTENT, ctx.getText()));
