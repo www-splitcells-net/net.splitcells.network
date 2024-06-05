@@ -23,7 +23,6 @@ import net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParserBaseVis
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.ui.ProblemParser;
 import net.splitcells.gel.ui.SolutionParameters;
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.CharStreams;
@@ -33,22 +32,21 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
-import java.util.Optional;
-
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
-import static net.splitcells.gel.problem.ProblemI.problem;
-import static net.splitcells.gel.ui.QueryParser.parseQuery;
 
 public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<SolutionParameters, Perspective>> {
     private static final String NAME = "name";
     private static final String DEMANDS = "demands";
     private static final String SUPPLIES = "supplies";
     private static final String CONTENT = "content";
+    private static final String DATABASE = "database";
+    private static final String ATTRIBUTE = "attribute";
 
     public static Result<SolutionParameters, Perspective> parseNoCodeProblem(String arg) {
         final var lexer = new net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenLexer(CharStreams.fromString(arg));
@@ -134,6 +132,18 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
         } else if (ctx.variable_definition_value().value().function_call() != null) {
             if (ctx.variable_definition_value().value().function_call().size() < 1) {
                 result.withErrorMessage(perspective("Variable definition with a function call chain as its value, needs at least one function call, but has none.")
+                        .withProperty(CONTENT, ctx.getText()));
+                return null;
+            }
+            final var functionName = ctx.variable_definition_value().value().function_call().get(0);
+            if (functionName.equals(DATABASE)) {
+                logs().appendUnimplementedWarning(NoCodeProblemParser.class);
+                return null;
+            } else if (functionName.equals(ATTRIBUTE)) {
+                logs().appendUnimplementedWarning(NoCodeProblemParser.class);
+                return null;
+            } else {
+                result.withErrorMessage(perspective("Unknown first function name in function chain for variable definition.")
                         .withProperty(CONTENT, ctx.getText()));
                 return null;
             }
