@@ -18,6 +18,7 @@ package net.splitcells.gel.ui.no.code.editor;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParser;
 import net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParserBaseVisitor;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.data.database.Database;
@@ -47,6 +48,7 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
     private static final String NAME = "name";
     private static final String DEMANDS = "demands";
     private static final String SUPPLIES = "supplies";
+    private static final String CONTENT = "content";
 
     public static Result<SolutionParameters, Perspective> parseNoCodeProblem(String arg) {
         final var lexer = new net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenLexer(CharStreams.fromString(arg));
@@ -107,5 +109,32 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
             }
         }
         return result;
+    }
+
+    @Override
+    public Result<SolutionParameters, Perspective> visitVariable_definition(NoCodeDenParser.Variable_definitionContext ctx) {
+        final var variableName = ctx.variable_definition_name().Name().getText();
+        if (strings.containsKey(variableName)) {
+            result.withErrorMessage(perspective("Variable with this name already exists.")
+                    .withProperty(CONTENT, ctx.getText()));
+            return null;
+        }
+        if (ctx.variable_definition_value() == null || ctx.variable_definition_value().value() == null) {
+            result.withErrorMessage(perspective("Variable definition is missing a name.")
+                    .withProperty(CONTENT, ctx.getText()));
+            return null;
+        }
+        if (ctx.variable_definition_value() == null || ctx.variable_definition_value().value() == null) {
+            result.withErrorMessage(perspective("Variable definition is missing a value.")
+                    .withProperty(CONTENT, ctx.getText()));
+            return null;
+        }
+        if (ctx.variable_definition_value().value().string_value() == null) {
+            result.withErrorMessage(perspective("Variable definition's value is not present.")
+                    .withProperty(CONTENT, ctx.getText()));
+            return null;
+        }
+        strings.put(variableName, ctx.variable_definition_value().value().string_value().getText());
+        return null;
     }
 }
