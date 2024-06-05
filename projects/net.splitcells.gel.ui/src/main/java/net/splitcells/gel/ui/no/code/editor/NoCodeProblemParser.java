@@ -131,6 +131,9 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
         }
         if (ctx.variable_definition_value().value().string_value() != null) {
             strings.put(variableName, ctx.variable_definition_value().value().string_value().getText());
+        } else {
+            result.withErrorMessage(perspective("Variable definition is missing a value.")
+                    .withProperty(CONTENT, ctx.getText()));
             return null;
         }
         return null;
