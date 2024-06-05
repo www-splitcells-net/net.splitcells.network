@@ -16,9 +16,12 @@
 package net.splitcells.gel.ui.no.code.editor;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParserBaseVisitor;
 import net.splitcells.dem.testing.Result;
+import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.ui.ProblemParser;
 import net.splitcells.gel.ui.SolutionParameters;
 import org.antlr.v4.runtime.BaseErrorListener;
@@ -29,12 +32,22 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
+import java.util.Optional;
+
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
+import static net.splitcells.gel.problem.ProblemI.problem;
+import static net.splitcells.gel.ui.QueryParser.parseQuery;
 
 public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<SolutionParameters, Perspective>> {
+    private static final String NAME = "name";
+    private static final String DEMANDS = "demands";
+    private static final String SUPPLIES = "supplies";
+
     public static Result<SolutionParameters, Perspective> parseNoCodeProblem(String arg) {
         final var lexer = new net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenLexer(CharStreams.fromString(arg));
         final var parser = new net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParser(new CommonTokenStream(lexer));
@@ -67,6 +80,7 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
     }
 
     private Result<SolutionParameters, Perspective> result = result();
+    private Map<String, String> strings = map();
     private Map<String, Attribute<? extends Object>> attributes = map();
     private Map<String, Database> databases = map();
 
@@ -78,6 +92,20 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
 
     @Override
     public Result<SolutionParameters, Perspective> visitSource_unit(net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParser.Source_unitContext sourceUnit) {
+        visitChildren(sourceUnit);
+        if (strings.containsKey(NAME) && databases.containsKey(DEMANDS) && databases.containsKey(SUPPLIES) && result.errorMessages().isEmpty()) {
+            final var assignments = assignments(strings.get(NAME), databases.get(DEMANDS), databases.get(SUPPLIES));
+        } else {
+            if (!strings.containsKey(NAME)) {
+                result.withErrorMessage(perspective("No name was defined via `name=\"[...]\"`."));
+            }
+            if (!databases.containsKey(DEMANDS)) {
+                result.withErrorMessage(perspective("No demands was defined via `demands=\"[...]\"`."));
+            }
+            if (!databases.containsKey(SUPPLIES)) {
+                result.withErrorMessage(perspective("No supplies was defined via `supplies=\"[...]\"`."));
+            }
+        }
         return result;
     }
 }
