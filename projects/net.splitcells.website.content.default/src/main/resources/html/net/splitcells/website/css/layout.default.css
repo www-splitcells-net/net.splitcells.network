@@ -17,7 +17,7 @@ body {
 footer {
     flex: auto;
     min-height: 5em;
-    z-index: 100;
+    z-index: 3;
 }
 .net-splitcells-content-column-left-border {
     order: 3;
@@ -60,7 +60,7 @@ footer {
 	width: 4.5em;
 	display: flex;
 	flex-direction: row;
-	z-index: 90;
+	z-index: 2;
 	order: 8;
 	}
 @media (max-width: 23.25em) {
@@ -114,7 +114,7 @@ footer {
         display: none !important;
         }
     .header {
-        z-index: 1000 !important;
+        z-index: 4 !important;
         }
     .net-splitcells-content-main {
         width: 100% !important;
@@ -175,7 +175,7 @@ footer {
         display: none !important;
     }
     .header {
-        z-index: 1000 !important;
+        z-index: 4 !important;
         }
     .change_menu_content {
         font-size: 1em !important;

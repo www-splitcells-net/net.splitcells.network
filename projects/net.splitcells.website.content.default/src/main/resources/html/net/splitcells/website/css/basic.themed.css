@@ -325,7 +325,7 @@ main {
 	border-left: solid;
 	border-left-color: var(--background-color-structural-guide);
 	border-left-width: .25em;
-	z-index: 10000;
+	z-index: 5;
 	}
 .net-splitcells-content-main,
 .net-splitcells-component-priority-1 {
@@ -388,7 +388,7 @@ a {
 .net-splitcells-content-column-left-border,
 .net-splitcells-meta-column-left-border,
 .net-splitcells-right-decoration-left-border {
-    z-index: 10000;
+    z-index: 5;
     width:.25em;
     background-color: var(--background-color-structural-guide);
     }
