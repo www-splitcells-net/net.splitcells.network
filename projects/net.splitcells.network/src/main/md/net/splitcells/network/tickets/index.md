@@ -36,6 +36,17 @@ if a versioned documents of the tickets are required or not.
 
 ## Ticket Numbering
 
+New commit messages reference issues via a hashtag as a prefix and an issue number as a suffix.
+This provides the most compatibility to ticket systems of git hosters and
+makes it easier to handle commit messages.
+This scheme does not provide unambiguous ids for tickets,
+because the issue numbers come from different ticket systems.
+This should not cause many problems in practice,
+as it is unlikely, that 2 tickets with the same ticket number are processed at the same time.
+Thereby, there are probably some commits between 2 tickets with the same ticket number.
+
+The following is obsolete for new commits:
+
 Tickets are referenced with a hashtag and prefix in order to indicate the
 server, that hosts the ticket:
 for example `#g1` stands for the first Github issue and `#s1` for the first
