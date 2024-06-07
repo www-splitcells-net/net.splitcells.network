@@ -211,6 +211,11 @@ public class HistoryForDatabase implements History {
     }
 
     @Override
+    public String name() {
+        return "history of " + database.name();
+    }
+
+    @Override
     public List<Attribute<Object>> headerView() {
         return history.headerView();
     }

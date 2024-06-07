@@ -213,6 +213,11 @@ public class SolutionI implements Solution {
         this.problem.subscribeToAfterRemoval(listener);
     }
 
+    @Override
+    public String name() {
+        return problem.name();
+    }
+
     @SuppressWarnings("all")
     public List<Attribute<Object>> headerView() {
         return this.problem.headerView();

@@ -205,6 +205,11 @@ public class ProblemI implements Problem {
     }
 
     @Override
+    public String name() {
+        return assignments.name();
+    }
+
+    @Override
     public List<Attribute<Object>> headerView() {
         return this.assignments.headerView();
     }

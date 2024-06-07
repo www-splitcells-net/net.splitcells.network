@@ -101,6 +101,11 @@ public class AllocationStateLookup implements Database {
     }
 
     @Override
+    public String name() {
+        throw notImplementedYet();
+    }
+
+    @Override
     public List<Attribute<Object>> headerView() {
         throw notImplementedYet();
     }

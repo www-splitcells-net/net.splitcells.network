@@ -29,6 +29,7 @@ import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
@@ -106,7 +107,11 @@ public interface SetT<T> extends Collection<T> {
     }
 
     default void requireContentsOf(BiPredicate<T, T> comparer, T... requiredContent) {
-        StreamUtils.stream(requiredContent).forEach(c -> {
+        requireContentsOf(comparer, setOfUniques(requiredContent));
+    }
+
+    default void requireContentsOf(BiPredicate<T, T> comparer, Collection<T> requiredContent) {
+        requiredContent.forEach(c -> {
             final var contains = stream().map(t -> comparer.test(t, c)).filter(t -> t).findFirst().orElse(false);
             if (!contains) {
                 throw executionException(perspective("Set should contain following contents in any order, but does not.")
@@ -116,6 +121,18 @@ public interface SetT<T> extends Collection<T> {
                 );
             }
         });
+    }
+
+
+    default boolean hasContentOf(BiPredicate<T, T> comparer, Collection<T> requiredContent) {
+        return requiredContent.stream().map(c -> stream()
+                        .map(t -> comparer.test(t, c))
+                        .filter(t -> t)
+                        .findFirst()
+                        .orElse(false))
+                .filter(c -> c)
+                .findFirst()
+                .orElse(false);
     }
 
     default void requireContentsOf(SetT<T> content) {

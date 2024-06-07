@@ -24,21 +24,19 @@ import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.ui.SolutionParameters;
-import org.antlr.v4.runtime.BaseErrorListener;
-import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.CommonToken;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.RecognitionException;
-import org.antlr.v4.runtime.Recognizer;
+import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
+import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
+import static net.splitcells.gel.data.database.Databases.database;
 import static net.splitcells.gel.data.table.attribute.Attributes.parseAttribute;
 
 public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<SolutionParameters, Perspective>> {
@@ -63,6 +61,12 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
         final var parser = new NoCodeProblemParser();
         parser.parseNoCodeProblemIntern(arg);
         return parser.attributes;
+    }
+
+    public static Map<String, Database> parseNoCodeDatabases(String arg) {
+        final var parser = new NoCodeProblemParser();
+        parser.parseNoCodeProblemIntern(arg);
+        return parser.databases;
     }
 
     private Result<SolutionParameters, Perspective> parseNoCodeProblemIntern(String arg) {
@@ -155,7 +159,43 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
             final var functionCall = ctx.variable_definition_value().value().function_call().get(0);
             final var functionName = functionCall.function_call_name().string_value().getText();
             if (functionName.equals(DATABASE)) {
-                logs().appendUnimplementedWarning(NoCodeProblemParser.class);
+                if (functionCall.function_call_argument().size() < 2) {
+                    result.withErrorMessage(perspective("The function database requires at least arguments.")
+                            .withProperty("Actual arguments given", functionCall.function_call_argument().toString())
+                            .withProperty(CONTENT, ctx.getText()));
+                    return null;
+                }
+                final var databaseNameText = functionCall.function_call_argument(0);
+                if (databaseNameText.value().string_value() == null) {
+                    result.withErrorMessage(perspective("The database name (first argument) needs to be string value, but is not.")
+                            .withProperty(CONTENT, ctx.getText()));
+                    return null;
+                }
+                final var databaseName = databaseNameText.value().string_value().getText();
+                if (databases.containsKey(variableName)) {
+                    result.withErrorMessage(perspective("A variable with this name already exists.")
+                            .withProperty("variable name", variableName)
+                            .withProperty(CONTENT, ctx.getText()));
+                    return null;
+                }
+                final List<Attribute<? extends Object>> databaseAttributes = list();
+                for (int i = 1; i < functionCall.function_call_argument().size(); ++i) {
+                    final var attributeText = functionCall.function_call_argument(i).value();
+                    if (attributeText.variable_reference() == null) {
+                        result.withErrorMessage(perspective("The database attributes needs to be attribute references, but are not.")
+                                .withProperty("invalid attribute", attributeText.getText())
+                                .withProperty(CONTENT, ctx.getText()));
+                        return null;
+                    }
+                    if (!attributes.containsKey(attributeText.variable_reference().Name().getText())) {
+                        result.withErrorMessage(perspective("A unknown variable is referenced via the namename.")
+                                .withProperty("invalid attribute", attributeText.getText())
+                                .withProperty(CONTENT, ctx.getText()));
+                        return null;
+                    }
+                    databaseAttributes.add(attributes.get(attributeText.variable_reference().Name().getText()));
+                }
+                databases.put(databaseName, database(databaseName, NO_CONTEXT, databaseAttributes));
                 return null;
             } else if (functionName.equals(ATTRIBUTE)) {
                 if (functionCall.function_call_argument().size() != 2) {

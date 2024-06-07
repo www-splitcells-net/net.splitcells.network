@@ -200,6 +200,11 @@ public class SimplifiedAnnealingProblem implements Solution {
     }
 
     @Override
+    public String name() {
+        return "Simplified annealing problem of " + originalSolution.name();
+    }
+
+    @Override
     public List<Attribute<Object>> headerView() {
         return originalSolution.headerView();
     }

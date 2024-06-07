@@ -67,6 +67,7 @@
                 <span class="net-splitcells-dem-lang-perspective-no-code-variable-value">
                     <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
                         <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">database</span>
+                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">exams</span>
                         <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
                             <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">student</span>
                         </span>
@@ -84,6 +85,7 @@
                 <span class="net-splitcells-dem-lang-perspective-no-code-variable-value">
                     <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
                         <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">database</span>
+                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">available-appointments</span>
                         <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
                             <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">date</span>
                         </span>

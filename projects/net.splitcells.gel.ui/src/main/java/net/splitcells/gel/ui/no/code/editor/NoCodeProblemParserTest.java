@@ -16,18 +16,11 @@
 package net.splitcells.gel.ui.no.code.editor;
 
 import net.splitcells.dem.Dem;
-import net.splitcells.dem.data.atom.Bools;
-import net.splitcells.dem.data.set.Sets;
-import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.testing.Result;
 import net.splitcells.dem.testing.annotations.UnitTest;
-import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.ui.GelUiFileSystem;
-import net.splitcells.gel.ui.SolutionParameters;
 
-import static net.splitcells.dem.data.atom.Bools.require;
-import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.gel.data.database.Databases.database;
 import static net.splitcells.gel.data.table.attribute.AttributeI.integerAttribute;
 import static net.splitcells.gel.data.table.attribute.AttributeI.stringAttribute;
 import static net.splitcells.gel.ui.no.code.editor.NoCodeProblemParser.*;
@@ -51,5 +44,20 @@ public class NoCodeProblemParserTest {
                 , integerAttribute("date")
                 , integerAttribute("shift")
                 , integerAttribute("roomNumber"));
+    }
+
+    @UnitTest
+    public void testDatabaseParsing() {
+        final var parsedAttributes = parseNoCodeDatabases(Dem.configValue(GelUiFileSystem.class)
+                .readString("src/main/resources/html/net/splitcells/gel/ui/examples/school-course-scheduling-problem.xml"));
+        setOfUniques(parsedAttributes.values()).requireContentsOf((a, b) -> a.isEqualFormat(b),
+                setOfUniques(database("exams"
+                                , stringAttribute("student")
+                                , stringAttribute("examiner")
+                                , stringAttribute("observer")),
+                        database("available-appointments"
+                                , integerAttribute("date")
+                                , integerAttribute("shift")
+                                , integerAttribute("roomNumber"))));
     }
 }

@@ -488,6 +488,11 @@ public class HistoryI implements History {
     }
 
     @Override
+    public String name() {
+        return "history of " + solution.name();
+    }
+
+    @Override
     public List<Attribute<Object>> headerView() {
         if (!isRegisterEventIsEnabled) {
             throw executionException(ERROR_HISTORY_DISABLED);

@@ -245,6 +245,11 @@ public class SolutionAspect implements Solution {
     }
 
     @Override
+    public String name() {
+        return solution.name();
+    }
+
+    @Override
     public List<Attribute<Object>> headerView() {
         return solution.headerView();
     }

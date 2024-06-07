@@ -383,6 +383,11 @@ public class AssignmentsI implements Assignments {
     }
 
     @Override
+    public String name() {
+        return names;
+    }
+
+    @Override
     public List<Attribute<Object>> headerView() {
         return assignments.headerView();
     }

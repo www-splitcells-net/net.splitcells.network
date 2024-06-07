@@ -234,6 +234,11 @@ public class HistoryRef implements History {
     }
 
     @Override
+    public String name() {
+        return history.name();
+    }
+
+    @Override
     public List<Attribute<Object>> headerView() {
         return history.headerView();
     }

@@ -189,6 +189,11 @@ public class DatabaseMetaAspect implements Database {
     }
 
     @Override
+    public String name() {
+        return database.name();
+    }
+
+    @Override
     public List<Attribute<Object>> headerView() {
         return database.headerView();
     }

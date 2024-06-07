@@ -173,6 +173,11 @@ public class LineBasedDatabase implements Database {
     }
 
     @Override
+    public String name() {
+        return name;
+    }
+
+    @Override
     public List<Attribute<Object>> headerView() {
         return attributes;
     }

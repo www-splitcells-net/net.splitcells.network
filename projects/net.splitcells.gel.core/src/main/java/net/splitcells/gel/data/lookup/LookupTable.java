@@ -135,6 +135,11 @@ public class LookupTable implements Table {
     }
 
     @Override
+    public String name() {
+        return name;
+    }
+
+    @Override
     public List<Attribute<Object>> headerView() {
         return tableView.headerView();
     }

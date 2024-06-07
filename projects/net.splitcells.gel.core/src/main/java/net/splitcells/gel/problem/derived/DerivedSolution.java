@@ -206,6 +206,11 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
+    public String name() {
+        return assignments.name();
+    }
+
+    @Override
     public List<Attribute<Object>> headerView() {
         return assignments.headerView();
     }

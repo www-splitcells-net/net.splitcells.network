@@ -16,6 +16,7 @@
 package net.splitcells.gel.data.table;
 
 import static java.util.stream.IntStream.range;
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -53,6 +54,8 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 
 public interface Table extends Discoverable, Domable, Identifiable {
     boolean GET_LINE_VIA_STREAM = true;
+
+    String name();
 
     List<Attribute<Object>> headerView();
 
@@ -493,5 +496,10 @@ public interface Table extends Discoverable, Domable, Identifiable {
             }
         });
         return reformattedTable;
+    }
+
+    default boolean isEqualFormat(Database otherDatabase) {
+        return setOfUniques(headerView()).hasContentOf((a, b) -> a.equalContentTo(b), otherDatabase.headerView())
+                && name().equals(otherDatabase.name());
     }
 }
