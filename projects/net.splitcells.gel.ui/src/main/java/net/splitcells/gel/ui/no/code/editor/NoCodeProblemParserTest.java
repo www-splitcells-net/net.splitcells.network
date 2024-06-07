@@ -26,11 +26,13 @@ import net.splitcells.gel.ui.SolutionParameters;
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.gel.ui.no.code.editor.NoCodeProblemParser.parseNoCodeProblem;
+import static net.splitcells.gel.ui.no.code.editor.NoCodeProblemParser.parseNoCodeStrings;
 
 public class NoCodeProblemParserTest {
     @UnitTest
-    public void test() {
-        final var resultData = parseNoCodeProblem(Dem.configValue(GelUiFileSystem.class)
-                .readString("src/main/resources/html/net/splitcells/gel/ui/examples/school-course-scheduling-problem.xml"));
+    public void testStringParsing() {
+        parseNoCodeStrings(Dem.configValue(GelUiFileSystem.class)
+                .readString("src/main/resources/html/net/splitcells/gel/ui/examples/school-course-scheduling-problem.xml"))
+                .keySet2().requireEmptySet();
     }
 }

@@ -49,6 +49,16 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
     private static final String ATTRIBUTE = "attribute";
 
     public static Result<SolutionParameters, Perspective> parseNoCodeProblem(String arg) {
+        return new NoCodeProblemParser().parseNoCodeProblemIntern(arg);
+    }
+
+    public static Map<String, String> parseNoCodeStrings(String arg) {
+        final var parser = new NoCodeProblemParser();
+        parser.parseNoCodeProblemIntern(arg);
+        return parser.strings;
+    }
+
+    private Result<SolutionParameters, Perspective> parseNoCodeProblemIntern(String arg) {
         final var lexer = new net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenLexer(CharStreams.fromString(arg));
         final var parser = new net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParser(new CommonTokenStream(lexer));
         final List<Perspective> parsingErrors = list();
@@ -74,7 +84,7 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
                 }
             }
         });
-        final var parsedProblem = new NoCodeProblemParser().visitSource_unit(parser.source_unit());
+        final var parsedProblem = visitSource_unit(parser.source_unit());
         parsedProblem.errorMessages().withAppended(parsingErrors);
         return parsedProblem;
     }
