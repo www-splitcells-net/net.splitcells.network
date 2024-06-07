@@ -89,10 +89,10 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
         return parsedProblem;
     }
 
-    private Result<SolutionParameters, Perspective> result = result();
-    private Map<String, String> strings = map();
-    private Map<String, Attribute<? extends Object>> attributes = map();
-    private Map<String, Database> databases = map();
+    private final Result<SolutionParameters, Perspective> result = result();
+    private final Map<String, String> strings = map();
+    private final Map<String, Attribute<? extends Object>> attributes = map();
+    private final Map<String, Database> databases = map();
 
     private final SolutionParameters solutionParameters = SolutionParameters.solutionParameters();
 
