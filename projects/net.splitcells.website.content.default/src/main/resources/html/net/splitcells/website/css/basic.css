@@ -16,6 +16,13 @@
     padding: 1em;
     width: 10em;
     }
+ .net-splitcells-gel-ui-editor-no-code-help-pop-up {
+    position: absolute;
+    background-color: var(--background-color-selected-priority-0);
+    z-index: 1;
+    padding: 1em;
+    width: 10em;
+}
 .net-splitcells-dem-lang-perspective-no-code-action {
     padding-right: .1em;
     padding-left: .1em;

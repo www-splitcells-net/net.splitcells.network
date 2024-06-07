@@ -65,7 +65,8 @@ function enhanceVariableDefinitionName(variableDefinition) {
             }
             actionMenu = document.createElement("div");
             actionMenu.className = "net-splitcells-dem-lang-perspective-no-code-action-menu"
-            actionMenu.innerHTML = "Variable Actions";
+            actionMenu.innerHTML = 'Variable Actions <ol><li onclick="alert(1);">Rename variable</li><li onclick="net_splitcells_gel_ui_editor_no_code_variable_definition_help_show(this);">Help</li></ol>';
+
             actionButton.appendChild(actionMenu);
         };
         actionButton.className = "net-splitcells-dem-lang-perspective-no-code-action"
@@ -74,4 +75,10 @@ function enhanceVariableDefinitionName(variableDefinition) {
         actionButton.id = 'net-splitcells-dem-lang-perspective-no-code-action-' + ++net_splitcells_gel_ui_editor_no_code_last_node_id;
         variableDefinition.insertBefore(actionButton, child.nextSibling);
     }
+}
+function net_splitcells_gel_ui_editor_no_code_variable_definition_help_show(helpAction) {
+    let helpWindow = document.createElement("div");
+    helpWindow.innerHTML = "Help description";
+    helpWindow.className = 'net-splitcells-gel-ui-editor-no-code-help-pop-up';
+    helpAction.parentNode.parentNode.parentNode.appendChild(helpWindow);
 }
