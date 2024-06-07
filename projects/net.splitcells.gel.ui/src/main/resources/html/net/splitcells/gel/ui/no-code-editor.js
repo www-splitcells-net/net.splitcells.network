@@ -82,5 +82,5 @@ function net_splitcells_gel_ui_editor_no_code_variable_definition_help_show(help
     let helpWindow = document.createElement("div");
     helpWindow.innerHTML = 'Help description  <iframe class="net-splitcells-gel-ui-editor-no-code-help-pop-up-iframe" src="variable-definition-help.html" title="W3Schools Free Online Web Tutorials"></iframe> ';
     helpWindow.className = 'net-splitcells-gel-ui-editor-no-code-help-pop-up';
-    helpAction.parentNode.parentNode.appendChild(helpWindow);
+    helpAction.parentNode.insertBefore(helpWindow, helpAction.nextSibling);
 }
