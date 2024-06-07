@@ -60,6 +60,11 @@ public class MapAttribute<T> implements Attribute<Map<Class<T>, T>> {
     }
 
     @Override
+    public Class<?> type() {
+        return Map.class;
+    }
+
+    @Override
     public void assertArgumentCompatibility(Object arg) {
         if (isInstanceOf(arg).isFalse()) {
             throw executionException("Given object not compatible to attribute: name=" + name

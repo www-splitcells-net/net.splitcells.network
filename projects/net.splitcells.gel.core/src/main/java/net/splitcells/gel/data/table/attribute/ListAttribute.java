@@ -70,6 +70,11 @@ public class ListAttribute<T> implements Attribute<List<T>> {
     }
 
     @Override
+    public Class<?> type() {
+        return List.class;
+    }
+
+    @Override
     public void assertArgumentCompatibility(Object arg) {
         if (isInstanceOf(arg).isFalse()) {
             throw executionException("Given object not compatible to list attribute: name=" + name

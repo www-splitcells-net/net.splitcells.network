@@ -39,6 +39,7 @@ import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
+import static net.splitcells.gel.data.table.attribute.Attributes.parseAttribute;
 
 public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<SolutionParameters, Perspective>> {
     private static final String NAME = "name";
@@ -151,12 +152,37 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
                         .withProperty(CONTENT, ctx.getText()));
                 return null;
             }
-            final var functionName = ctx.variable_definition_value().value().function_call().get(0);
+            final var functionCall = ctx.variable_definition_value().value().function_call().get(0);
+            final var functionName = functionCall.function_call_name().string_value().getText();
             if (functionName.equals(DATABASE)) {
                 logs().appendUnimplementedWarning(NoCodeProblemParser.class);
                 return null;
             } else if (functionName.equals(ATTRIBUTE)) {
-                logs().appendUnimplementedWarning(NoCodeProblemParser.class);
+                if (functionCall.function_call_argument().size() != 2) {
+                    result.withErrorMessage(perspective("The function attribute requires exactly 2 arguments.")
+                            .withProperty("Actual arguments given", functionCall.function_call_argument().toString())
+                            .withProperty(CONTENT, ctx.getText()));
+                    return null;
+                }
+                final var attributeName = functionCall.function_call_argument(0);
+                if (attributeName.value().string_value() == null) {
+                    result.withErrorMessage(perspective("The attributes name (first argument) needs to be string value, but is not.")
+                            .withProperty(CONTENT, ctx.getText()));
+                    return null;
+                }
+                final var attributeType = functionCall.function_call_argument(1);
+                if (attributeType.value().string_value() == null) {
+                    result.withErrorMessage(perspective("The attributes type (second argument) needs to be string value, but is not.")
+                            .withProperty(CONTENT, ctx.getText()));
+                    return null;
+                }
+                final var attributeParsing = parseAttribute(attributeName.value().string_value().getText(), attributeType.value().string_value().getText());
+                if (attributeParsing.defective()) {
+                    result.errorMessages().addAll(attributeParsing.errorMessages());
+                    return null;
+                }
+                final var newAttribute = attributeParsing.value().orElseThrow();
+                attributes.put(newAttribute.name(), newAttribute);
                 return null;
             } else {
                 result.withErrorMessage(perspective("Unknown first function name in function chain for variable definition.")

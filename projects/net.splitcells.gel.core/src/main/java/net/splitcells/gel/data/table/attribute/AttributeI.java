@@ -89,6 +89,11 @@ public final class AttributeI<T> implements Attribute<T> {
     }
 
     @Override
+    public Class<?> type() {
+        return type;
+    }
+
+    @Override
     public void assertArgumentCompatibility(Object arg) {
         if (!type.isAssignableFrom(arg.getClass())) {
             throw executionException("Given object not compatible to attribute: name=" + name
@@ -116,5 +121,10 @@ public final class AttributeI<T> implements Attribute<T> {
     @Override
     public T deserializeValue(String value) {
         return deserializer.apply(value);
+    }
+
+    @Override
+    public String toString() {
+        return "attribute: name = " + name + ", type = " + type.getName();
     }
 }

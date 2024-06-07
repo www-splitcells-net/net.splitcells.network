@@ -41,6 +41,8 @@ public interface Attribute<T> extends Domable {
 
     Bool isInstanceOf(Object arg);
 
+    Class<?> type();
+
     /**
      * Asserts that {@link #isInstanceOf} returns {@code true} given {@code arg}.
      * If this not the case, an exception with an description is thrown.
@@ -51,6 +53,10 @@ public interface Attribute<T> extends Domable {
 
     default T deserializeValue(String value) {
         throw new UnsupportedOperationException();
+    }
+
+    default boolean equalContentTo(Attribute<?> otherAttribute) {
+        return name().equals(otherAttribute.name()) && type().equals(otherAttribute.type());
     }
 
 }

@@ -22,6 +22,7 @@ import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.dem.lang.perspective.antlr4.DenParserBaseVisitor;
+import net.splitcells.gel.data.table.attribute.Attributes;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
@@ -31,9 +32,6 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
-import static net.splitcells.gel.data.table.attribute.AttributeI.floatAttribute;
-import static net.splitcells.gel.data.table.attribute.AttributeI.integerAttribute;
-import static net.splitcells.gel.data.table.attribute.AttributeI.stringAttribute;
 import static net.splitcells.gel.ui.QueryParser.parseQuery;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
 import static net.splitcells.gel.data.database.Databases.database;
@@ -128,7 +126,7 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
             final List<Attribute<? extends Object>> demandAttributes = list();
             final var firstDemandAttribute = ctx.block_statement().variable_definition();
             if (firstDemandAttribute != null) {
-                final var parsedAttribute = parseAttribute(firstDemandAttribute.Name().getText()
+                final var parsedAttribute = Attributes.parseAttribute(firstDemandAttribute.Name().getText()
                         , firstDemandAttribute.function_call().Name().getText());
                 final var parsedAttributeValue = parsedAttribute.value();
                 if (parsedAttributeValue.isPresent()) {
@@ -138,7 +136,7 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
             }
             final var additionalDemandAttributes = ctx.block_statement().statement_reversed();
             additionalDemandAttributes.forEach(da -> {
-                        final var parsedAttribute = parseAttribute(da.variable_definition().Name().getText()
+                        final var parsedAttribute = Attributes.parseAttribute(da.variable_definition().Name().getText()
                                 , da.variable_definition().function_call().Name().getText());
                         if (parsedAttribute.value().isPresent()) {
                             demandAttributes.add(parsedAttribute.value().get());
@@ -155,7 +153,7 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
             final List<Attribute<? extends Object>> supplyAttributes = list();
             final var firstSupplyAttribute = ctx.block_statement().variable_definition();
             if (firstSupplyAttribute != null) {
-                final var parsedAttribute = parseAttribute(firstSupplyAttribute.Name().getText()
+                final var parsedAttribute = Attributes.parseAttribute(firstSupplyAttribute.Name().getText()
                         , firstSupplyAttribute.function_call().Name().getText());
                 final var parsedAttributeValue = parsedAttribute.value();
                 if (parsedAttributeValue.isPresent()) {
@@ -165,7 +163,7 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
             }
             final var additionalSupplyAttributes = ctx.block_statement().statement_reversed();
             additionalSupplyAttributes.forEach(sa -> {
-                final var parsedAttribute = parseAttribute(sa.variable_definition().Name().getText()
+                final var parsedAttribute = Attributes.parseAttribute(sa.variable_definition().Name().getText()
                         , sa.variable_definition().function_call().Name().getText());
                 if (parsedAttribute.value().isPresent()) {
                     supplyAttributes.add(parsedAttribute.value().get());
@@ -175,20 +173,6 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
             supplies = Optional.of(database(supplyAttributes));
         }
         return null;
-    }
-
-    private Result<Attribute<? extends Object>, Perspective> parseAttribute(String name, String type) {
-        final Result<Attribute<? extends Object>, Perspective> parsedAttribute = result();
-        if (type.equals("int")) {
-            return parsedAttribute.withValue(integerAttribute(name));
-        } else if (type.equals("float")) {
-            return parsedAttribute.withValue(floatAttribute(name));
-        } else if (type.equals("string")) {
-            return parsedAttribute.withValue(stringAttribute(name));
-        }
-        return parsedAttribute.withErrorMessage(perspective("Unknown attribute type.")
-                .withProperty("name", name)
-                .withProperty("type", type));
     }
 
     @Override

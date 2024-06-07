@@ -15,11 +15,31 @@
  */
 package net.splitcells.gel.data.table.attribute;
 
+import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.testing.Result;
+
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.testing.Mocking.anyClass;
 import static net.splitcells.dem.testing.Mocking.anyString;
+import static net.splitcells.dem.testing.Result.result;
+import static net.splitcells.gel.data.table.attribute.AttributeI.*;
 
 public class Attributes {
 	public static Attribute<?> attributeATO() {
 		return AttributeI.attribute(anyClass(), anyString());
+	}
+
+	public static Result<Attribute<? extends Object>, Perspective> parseAttribute(String name, String type) {
+		final Result<Attribute<? extends Object>, Perspective> parsedAttribute = result();
+		if (type.equals("int") || type.equals("integer")) {
+			return parsedAttribute.withValue(integerAttribute(name));
+		} else if (type.equals("float")) {
+			return parsedAttribute.withValue(floatAttribute(name));
+		} else if (type.equals("string")) {
+			return parsedAttribute.withValue(stringAttribute(name));
+		}
+		return parsedAttribute.withErrorMessage(perspective("Unknown attribute type.")
+				.withProperty("name", name)
+				.withProperty("type", type));
 	}
 }

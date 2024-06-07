@@ -57,6 +57,11 @@ public class MetaAttribute<T> implements Attribute<Class<T>> {
     }
 
     @Override
+    public Class<?> type() {
+        return Class.class;
+    }
+
+    @Override
     public void assertArgumentCompatibility(Object arg) {
         if (isInstanceOf(arg).isFalse()) {
             throw executionException("Given object not compatible to attribute: name=" + name
