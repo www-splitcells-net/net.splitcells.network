@@ -40,12 +40,13 @@ import static net.splitcells.gel.data.database.Databases.database;
 import static net.splitcells.gel.data.table.attribute.Attributes.parseAttribute;
 
 public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<SolutionParameters, Perspective>> {
-    private static final String NAME = "name";
-    private static final String DEMANDS = "demands";
-    private static final String SUPPLIES = "supplies";
-    private static final String CONTENT = "content";
-    private static final String DATABASE = "database";
     private static final String ATTRIBUTE = "attribute";
+    private static final String CONTENT = "content";
+    private static final String DEMANDS = "demands";
+    private static final String DATABASE = "database";
+    private static final String NAME = "name";
+    private static final String SUPPLIES = "supplies";
+
 
     public static Result<SolutionParameters, Perspective> parseNoCodeProblem(String arg) {
         return new NoCodeProblemParser().parseNoCodeProblemIntern(arg);
