@@ -53,6 +53,16 @@ function enhanceVariableDefinitionName(variableDefinition) {
         }
         let actionButton = document.createElement("span");
         actionButton.onclick = function() {
+            for (var j = 0; j < actionButton.childNodes.length; j++) {
+                if (actionButton.childNodes[j].className == "net-splitcells-dem-lang-perspective-no-code-action-menu") {
+                    actionButton.removeChild(actionButton.childNodes[j]);
+                    return;
+                }
+            }
+            var actionMenus = document.getElementsByClassName("net-splitcells-dem-lang-perspective-no-code-action-menu");
+            for (var j = 0; j < actionMenus.length; j++) {
+                actionMenus[j].parentNode.removeChild(actionMenus[j]);
+            }
             actionMenu = document.createElement("div");
             actionMenu.className = "net-splitcells-dem-lang-perspective-no-code-action-menu"
             actionMenu.innerHTML = "Variable Actions";
