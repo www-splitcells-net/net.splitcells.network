@@ -1,6 +1,7 @@
 /* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
+ var net_splitcells_gel_ui_editor_no_code_last_node_id = -1;
 let net_splitcells_gel_ui_editor_form_solution = null;
 function net_splitcells_gel_ui_calculate_solution_form_solution_download_as_csv() {
     net_splitcells_gel_ui_editor_form_solution.download("csv", "solution.csv", {delimiter:","});
@@ -35,5 +36,25 @@ function enhanceNoCodeEditors() {
             }
         });
         syncTargetObserver.observe(syncTarget, { attributes: true, childList: true, subtree: true,characterData: true});
+        var variableDefinitions = document.getElementsByClassName("net-splitcells-dem-lang-perspective-no-code-variable-definition");
+        for (var i = 0; i < variableDefinitions.length; i++) {
+            enhanceVariableDefinitionName(variableDefinitions[i]);
+        }
 	}
+}
+function enhanceVariableDefinitionName(variableDefinition) {
+    for (var i = 0; i < variableDefinition.childNodes.length; i++) {
+        let child = variableDefinition.childNodes[i];
+        if (child.className == undefined) {
+            continue;
+        }
+        if (!hasClass(child, 'net-splitcells-dem-lang-perspective-no-code-variable-name')) {
+            continue;
+        }
+        let actionButton = document.createElement("span");
+        actionButton.className = "net-splitcells-dem-lang-perspective-no-code-action"
+        actionButton.innerHTML = "☰";
+        actionButton.id = 'net-splitcells-dem-lang-perspective-no-code-action-' + ++net_splitcells_gel_ui_editor_no_code_last_node_id
+        variableDefinition.insertBefore(actionButton, child.nextSibling);
+    }
 }
