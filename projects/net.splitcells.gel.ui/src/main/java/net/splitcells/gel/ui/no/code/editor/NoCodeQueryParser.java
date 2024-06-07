@@ -46,7 +46,7 @@ import static net.splitcells.gel.ui.no.code.editor.NoCodeRaterParser.parseNoCode
 public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, Perspective>> {
     private static final String AFFECTED_CONTENT = "affected content";
 
-    public static Result<Query, Perspective> parseQuery(NoCodeDenParser.Source_unitContext sourceUnit
+    public static Result<Query, Perspective> parseNoCodeQuery(NoCodeDenParser.Source_unitContext sourceUnit
             , Assignments assignments) {
         final var parser = new NoCodeQueryParser(assignments);
         parser.visitSource_unit(sourceUnit);
@@ -69,7 +69,7 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
 
     @Override
     public Result<Query, Perspective> visitVariable_definition(NoCodeDenParser.Variable_definitionContext ctx) {
-        if (ctx.variable_definition_name().getText().equals("constraints")) {
+        if (ctx.variable_definition_name().Name().getText().equals("constraints")) {
             visitFunction_call(ctx.variable_definition_value().value().function_call(), 0);
         }
         return nextConstraint;
@@ -78,11 +78,11 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
     private Result<Query, Perspective> visitFunction_call(java.util.List<NoCodeDenParser.Function_callContext> functionCallChain
             , int currentIndex) {
         final var firstCall = functionCallChain.get(currentIndex);
-        nextConstraint = parseQuery(firstCall.function_call_name().getText()
+        nextConstraint = parseQuery(firstCall.function_call_name().string_value().getText()
                 , firstCall.function_call_argument());
         if (currentIndex < functionCallChain.size() - 1 && nextConstraint.value().isPresent()) {
             final var childConstraintParser = new NoCodeQueryParser(assignments, nextConstraint.value().orElseThrow());
-            final var intermediate = childConstraintParser.visitFunction_call(functionCallChain, currentIndex);
+            final var intermediate = childConstraintParser.visitFunction_call(functionCallChain, ++currentIndex);
             nextConstraint.errorMessages().withAppended(intermediate.errorMessages());
         }
         return nextConstraint;
@@ -103,7 +103,7 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
                 return parsedConstraint;
             } else if (arguments.size() == 1) {
                 parsedConstraint.withValue(parentConstraint.forAll
-                        (assignments.attributeByName(arguments.get(0).value().string_value().getText())));
+                        (assignments.attributeByName(arguments.get(0).value().variable_reference().Name().getText())));
                 return parsedConstraint;
             } else if (arguments.size() > 1) {
                 return parsedConstraint

@@ -60,4 +60,18 @@ public class NoCodeProblemParserTest {
                                 , integerAttribute("shift")
                                 , integerAttribute("roomNumber"))));
     }
+
+    @UnitTest
+    public void testProblemParsing() {
+        final var testResult = parseNoCodeProblem(Dem.configValue(GelUiFileSystem.class)
+                .readString("src/main/resources/html/net/splitcells/gel/ui/examples/school-course-scheduling-problem.xml"));
+        testResult.requireWorking();
+        setOfUniques(testResult.value().orElseThrow().problem().headerView2()).requireContentsOf((a, b) -> a.equalContentTo(b)
+                , stringAttribute("student")
+                , stringAttribute("examiner")
+                , stringAttribute("observer")
+                , integerAttribute("date")
+                , integerAttribute("shift")
+                , integerAttribute("roomNumber"));
+    }
 }

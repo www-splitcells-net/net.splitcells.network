@@ -15,11 +15,14 @@
  */
 package net.splitcells.dem.testing;
 
+import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;
 
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**
  * Stores the results of a calculation.
@@ -61,5 +64,12 @@ public class Result<Value, Message> {
 
     public boolean defective() {
         return value.isEmpty() || errorMessages.hasElements();
+    }
+
+    public void requireWorking() {
+        if (defective()) {
+            throw executionException(perspective("Result is defective")
+                    .withProperty("error messages", errorMessages.toString()));
+        }
     }
 }

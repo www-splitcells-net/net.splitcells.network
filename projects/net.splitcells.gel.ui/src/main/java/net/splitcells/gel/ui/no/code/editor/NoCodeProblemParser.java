@@ -38,6 +38,8 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
 import static net.splitcells.gel.data.database.Databases.database;
 import static net.splitcells.gel.data.table.attribute.Attributes.parseAttribute;
+import static net.splitcells.gel.problem.ProblemI.problem;
+import static net.splitcells.gel.ui.no.code.editor.NoCodeQueryParser.parseNoCodeQuery;
 
 public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<SolutionParameters, Perspective>> {
     private static final String ATTRIBUTE = "attribute";
@@ -45,6 +47,7 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
     private static final String DEMANDS = "demands";
     private static final String DATABASE = "database";
     private static final String NAME = "name";
+    private static final String SOLUTION = "solution";
     private static final String SUPPLIES = "supplies";
 
 
@@ -105,6 +108,7 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
     private final Map<String, String> strings = map();
     private final Map<String, Attribute<? extends Object>> attributes = map();
     private final Map<String, Database> databases = map();
+    private NoCodeDenParser.Source_unitContext currentSourceUnit;
 
     private final SolutionParameters solutionParameters = SolutionParameters.solutionParameters();
 
@@ -114,26 +118,18 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
 
     @Override
     public Result<SolutionParameters, Perspective> visitSource_unit(net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParser.Source_unitContext sourceUnit) {
+        currentSourceUnit = sourceUnit;
         visitChildren(sourceUnit);
-        if (strings.containsKey(NAME) && databases.containsKey(DEMANDS) && databases.containsKey(SUPPLIES) && result.errorMessages().isEmpty()) {
-            final var assignments = assignments(strings.get(NAME), databases.get(DEMANDS), databases.get(SUPPLIES));
-        } else {
-            if (!strings.containsKey(NAME)) {
-                result.withErrorMessage(perspective("No name was defined via `name=\"[...]\"`."));
-            }
-            if (!databases.containsKey(DEMANDS)) {
-                result.withErrorMessage(perspective("No demands was defined via `demands=\"[...]\"`."));
-            }
-            if (!databases.containsKey(SUPPLIES)) {
-                result.withErrorMessage(perspective("No supplies was defined via `supplies=\"[...]\"`."));
-            }
-        }
+        currentSourceUnit = null;
         return result;
     }
 
     @Override
     public Result<SolutionParameters, Perspective> visitVariable_definition(NoCodeDenParser.Variable_definitionContext ctx) {
         final var variableName = ctx.variable_definition_name().Name().getText();
+        if (variableName.equals("constraints")) {
+            return null;
+        }
         if (strings.containsKey(variableName) || attributes.containsKey(variableName) || databases.containsKey(variableName)) {
             result.withErrorMessage(perspective("Variable with this name already exists.")
                     .withProperty(CONTENT, ctx.getText()));
@@ -159,7 +155,30 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
             }
             final var functionCall = ctx.variable_definition_value().value().function_call().get(0);
             final var functionName = functionCall.function_call_name().string_value().getText();
-            if (functionName.equals(DATABASE)) {
+            if (functionName.equals(SOLUTION)) {
+                if (!variableName.equals(SOLUTION)) {
+                    result.withErrorMessage(perspective("A solution can only be defined for the variable name solution.")
+                            .withProperty("Given variable name", variableName)
+                            .withProperty(CONTENT, ctx.getText()));
+                    return null;
+                }
+                if (functionCall.function_call_argument().size() != 3) {
+                    result.withErrorMessage(perspective("A solution requires 3 arguments: variable name, demands, supplies")
+                            .withProperty(CONTENT, ctx.getText()));
+                    return null;
+                }
+                final var assignments = assignments(functionCall.function_call_argument(0).value().string_value().getText()
+                        , databases.get(functionCall.function_call_argument(1).value().variable_reference().Name().getText())
+                        , databases.get(functionCall.function_call_argument(2).value().variable_reference().Name().getText()));
+                final var parsedQuery = parseNoCodeQuery(currentSourceUnit, assignments);
+                result.errorMessages().withAppended(parsedQuery.errorMessages());
+                if (parsedQuery.defective()) {
+                    parsedQuery.errorMessages().forEach(result::withErrorMessage);
+                    return result;
+                }
+                solutionParameters.withProblem(problem(assignments, parsedQuery.value().orElseThrow().root().orElseThrow()));
+                result.withValue(solutionParameters);
+            } else if (functionName.equals(DATABASE)) {
                 if (functionCall.function_call_argument().size() < 2) {
                     result.withErrorMessage(perspective("The function database requires at least arguments.")
                             .withProperty("Actual arguments given", functionCall.function_call_argument().toString())
@@ -196,7 +215,7 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
                     }
                     databaseAttributes.add(attributes.get(attributeText.variable_reference().Name().getText()));
                 }
-                databases.put(databaseName, database(databaseName, NO_CONTEXT, databaseAttributes));
+                databases.put(variableName, database(databaseName, NO_CONTEXT, databaseAttributes));
                 return null;
             } else if (functionName.equals(ATTRIBUTE)) {
                 if (functionCall.function_call_argument().size() != 2) {
