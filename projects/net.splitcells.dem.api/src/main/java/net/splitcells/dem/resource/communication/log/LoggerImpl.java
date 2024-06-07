@@ -24,18 +24,18 @@ import java.util.function.Predicate;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
-public class LogImpl implements Log {
+public class LoggerImpl implements Logger {
 
     private static final boolean ENABLE_EXPERIMENTAL_XML_RENDERING = true;
 
-    public static LogImpl logBasedOnPerspective(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
-        return new LogImpl(output, messageFilter);
+    public static LoggerImpl logBasedOnPerspective(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
+        return new LoggerImpl(output, messageFilter);
     }
 
     private final Sender<String> output;
     private final Predicate<LogMessage<Perspective>> messageFilter;
 
-    private LogImpl(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
+    private LoggerImpl(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
         this.output = output;
         this.messageFilter = messageFilter;
     }

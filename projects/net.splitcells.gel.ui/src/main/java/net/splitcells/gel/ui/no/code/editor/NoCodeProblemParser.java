@@ -58,6 +58,12 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
         return parser.strings;
     }
 
+    public static Map<String, Attribute<? extends Object>> parseNoCodeAttributes(String arg) {
+        final var parser = new NoCodeProblemParser();
+        parser.parseNoCodeProblemIntern(arg);
+        return parser.attributes;
+    }
+
     private Result<SolutionParameters, Perspective> parseNoCodeProblemIntern(String arg) {
         final var lexer = new net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenLexer(CharStreams.fromString(arg));
         final var parser = new net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParser(new CommonTokenStream(lexer));

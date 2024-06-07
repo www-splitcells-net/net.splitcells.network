@@ -21,20 +21,28 @@ import net.splitcells.dem.resource.communication.Sender;
 
 import java.util.function.Predicate;
 
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.utils.TimeUtils.currentLocalTime;
+
 /**
- * <p>Writes logs in a format, that is suitable for servers:
- * every message takes one line in the logs.
- * This makes the logs easier to query with simple tools, when compared to logs with multi line messages.</p>
+ * <p>TODO Print each stack strace only once in log, in order to not clutter the log.
+ * If a stack trace is logged a second time an appropriate anchor link should be created.
+ * Only cache a limited number of stack traces.
+ * Avoid using hashes for caching stack traces in order to rule out low probability hash conflicts.
+ * </p>
+ * <p>This is a user friendly logger, that stores it's log as CommonMark document.
+ * Such a log also looks nice in issue on platforms like SourceHut or GitHub and
+ * probably also looks nice for not technical users.</p>
  */
-public class ServerLog implements Log {
-    public static Log serverLog(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
-        return new ServerLog(output, messageFilter);
+public class CommonMarkLogger implements Logger {
+    public static Logger commonMarkDui(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
+        return new CommonMarkLogger(output, messageFilter);
     }
 
     private final Sender<String> output;
     private final Predicate<LogMessage<Perspective>> messageFilter;
 
-    private ServerLog(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
+    private CommonMarkLogger(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
         this.output = output;
         this.messageFilter = messageFilter;
     }
@@ -42,7 +50,8 @@ public class ServerLog implements Log {
     @Override
     public <R extends ListWA<LogMessage<Perspective>>> R append(LogMessage<Perspective> arg) {
         if (messageFilter.test(arg)) {
-            output.append(arg.content().createToJsonPrintable().toJsonString());
+            perspective(currentLocalTime() + ": " + arg.content().name())
+                    .withChildren(arg.content().children()).printCommonMarkString(output);
         }
         return (R) this;
     }

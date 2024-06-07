@@ -15,14 +15,13 @@
  */
 package net.splitcells.dem.resource.communication.log;
 
-import net.splitcells.dem.resource.communication.Sender;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.dem.resource.communication.log.ServerLog.serverLog;
+import static net.splitcells.dem.resource.communication.log.ServerLogger.serverLog;
 
-public class ServerLogTest {
+public class ServerLoggerTest {
     @UnitTest
     public void test() {
         final SenderStub<String> results = SenderStub.create();

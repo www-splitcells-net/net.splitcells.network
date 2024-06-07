@@ -15,15 +15,10 @@
  */
 package net.splitcells.dem.resource.communication.log;
 
-import org.junit.jupiter.api.Test;
+import net.splitcells.dem.environment.resource.Resource;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 
-public class LogLevelTest {
-    @Test
-    public void testPrioritySmallerThanOrder() {
-        assertThat(LogLevel.ERROR.smallerThan(LogLevel.DEBUG)).isFalse();
-        assertThat(LogLevel.DEBUG.smallerThan(LogLevel.DEBUG)).isFalse();
-        assertThat(LogLevel.DEBUG.smallerThan(LogLevel.ERROR)).isTrue();
-    }
+public interface Logger extends Log, Resource {
 }

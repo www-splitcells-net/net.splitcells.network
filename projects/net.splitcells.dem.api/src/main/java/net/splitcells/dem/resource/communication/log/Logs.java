@@ -22,7 +22,7 @@ import net.splitcells.dem.resource.communication.Sender;
 import java.util.function.Predicate;
 
 import static net.splitcells.dem.Dem.environment;
-import static net.splitcells.dem.resource.communication.log.CommonMarkLog.commonMarkDui;
+import static net.splitcells.dem.resource.communication.log.CommonMarkLogger.commonMarkDui;
 
 /**
  * <p>TODO Create compact and standardize log format.
@@ -32,9 +32,9 @@ import static net.splitcells.dem.resource.communication.log.CommonMarkLog.common
  * so that rendering can be separated from the rest.
  * </p>
  */
-public class Logs extends ResourceOptionI<Log> {
+public class Logs extends ResourceOptionI<Logger> {
     /**
-     * {@link CommonMarkLog#commonMarkDui(Sender, Predicate)} is used by default,
+     * {@link CommonMarkLogger#commonMarkDui(Sender, Predicate)} is used by default,
      * as it looks nice in consoles and on websites supporting CommonMark rendering.
      */
     public Logs() {

@@ -16,7 +16,6 @@
 package net.splitcells.dem.resource.communication.log;
 
 import net.splitcells.dem.data.set.list.ListWA;
-import net.splitcells.dem.environment.resource.Resource;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.dom.Domable;
@@ -35,14 +34,13 @@ import static net.splitcells.dem.utils.NotImplementedYet.TODO_NOT_IMPLEMENTED_YE
 import static net.splitcells.dem.utils.StringUtils.throwableToString;
 
 /**
- * <p>Rename this to Log.</p>
  * <p>TODO Render stack traces as one line optionally.
  * Maybe this should be somehow be optionally supported for
  * messages consisting of multiple lines.
  * In other words, this may be should be implemented as a general
  * functionality in order to provide one message one line logs.</p>
  */
-public interface Log extends ListWA<LogMessage<Perspective>>, Resource {
+public interface Log extends ListWA<LogMessage<Perspective>> {
 
     default Log append(String name) {
         return append(logMessage(perspective(name), NO_CONTEXT, LogLevel.DEBUG));

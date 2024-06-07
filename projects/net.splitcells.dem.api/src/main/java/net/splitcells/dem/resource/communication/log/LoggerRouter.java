@@ -33,7 +33,7 @@ import java.util.function.Predicate;
 import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
-import static net.splitcells.dem.resource.communication.log.LogImpl.logBasedOnPerspective;
+import static net.splitcells.dem.resource.communication.log.LoggerImpl.logBasedOnPerspective;
 import static net.splitcells.dem.resource.Files.createDirectory;
 
 /**
@@ -48,16 +48,16 @@ import static net.splitcells.dem.resource.Files.createDirectory;
  */
 @Deprecated
 @JavaLegacyArtifact
-public class LogRouter implements Log {
+public class LoggerRouter implements Logger {
 
-    public static LogRouter uiRouter(Predicate<LogMessage<Perspective>> messageFilter) {
-        return new LogRouter(messageFilter);
+    public static LoggerRouter uiRouter(Predicate<LogMessage<Perspective>> messageFilter) {
+        return new LoggerRouter(messageFilter);
     }
 
-    private final Map<List<String>, Log> routing = map();
+    private final Map<List<String>, Logger> routing = map();
     private final Predicate<LogMessage<Perspective>> messageFilter;
 
-    private LogRouter(Predicate<LogMessage<Perspective>> messageFilter) {
+    private LoggerRouter(Predicate<LogMessage<Perspective>> messageFilter) {
         this.messageFilter = messageFilter;
     }
 
@@ -113,12 +113,12 @@ public class LogRouter implements Log {
 
     @Override
     public void close() {
-        routing.values().forEach(Log::close);
+        routing.values().forEach(Logger::close);
         routing.clear();
     }
 
     @Override
     public void flush() {
-        routing.values().forEach(Log::flush);
+        routing.values().forEach(Logger::flush);
     }
 }
