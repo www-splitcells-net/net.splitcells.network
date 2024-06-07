@@ -52,9 +52,16 @@ function enhanceVariableDefinitionName(variableDefinition) {
             continue;
         }
         let actionButton = document.createElement("span");
+        actionButton.onclick = function() {
+            actionMenu = document.createElement("div");
+            actionMenu.className = "net-splitcells-dem-lang-perspective-no-code-action-menu"
+            actionMenu.innerHTML = "Variable Actions";
+            actionButton.appendChild(actionMenu);
+        };
         actionButton.className = "net-splitcells-dem-lang-perspective-no-code-action"
         actionButton.innerHTML = "☰";
-        actionButton.id = 'net-splitcells-dem-lang-perspective-no-code-action-' + ++net_splitcells_gel_ui_editor_no_code_last_node_id
+
+        actionButton.id = 'net-splitcells-dem-lang-perspective-no-code-action-' + ++net_splitcells_gel_ui_editor_no_code_last_node_id;
         variableDefinition.insertBefore(actionButton, child.nextSibling);
     }
 }
