@@ -17,7 +17,9 @@ package net.splitcells.dem.data.set.map;
 
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.environment.config.IsDeterministic;
-import org.junit.jupiter.api.Test;
+import net.splitcells.dem.testing.Assertions;
+import net.splitcells.dem.testing.annotations.UnitTest;
+import net.splitcells.dem.utils.ExecutionException;
 
 import java.util.Optional;
 
@@ -25,10 +27,11 @@ import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.Dem.process;
 import static net.splitcells.dem.data.set.map.MapFI_configured.mapFI_configured;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.testing.Assertions.assertThrows;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MapsTest {
-    @Test
+    @UnitTest
     public void testForDefaultFactory() {
         assertThat
                 (process(() -> assertThat(mapFI_configured().map()._isDeterministic()).contains(false)
@@ -43,7 +46,7 @@ public class MapsTest {
                 .isFalse();
     }
 
-    @Test
+    @UnitTest
     public void testForDeterministicFactory() {
         assertThat
                 (process(() -> assertThat(mapFI_configured().map()._isDeterministic()).contains(true)
@@ -59,5 +62,49 @@ public class MapsTest {
                                 .withConfigValue(Maps.class, mapFI_configured())
                 ).hasError())
                 .isFalse();
+    }
+
+    @UnitTest
+    public void testRequireEqualityTo() {
+        final Map<Integer, Integer> thiz = map();
+        thiz.put(1, 2);
+        final Map<Integer, Integer> requiredContent = map();
+        requiredContent.put(1, 2);
+        thiz.requireEqualityTo(requiredContent);
+    }
+
+    @UnitTest
+    public void testRequireEqualityToWithUnequalValues() {
+        assertThrows(ExecutionException.class, () -> {
+            final Map<Integer, Integer> thiz = map();
+            thiz.put(1, 2);
+            final Map<Integer, Integer> requiredContent = map();
+            requiredContent.put(1, 3);
+            thiz.requireEqualityTo(requiredContent);
+        });
+    }
+
+    @UnitTest
+    public void testRequireEqualityToWithMoreKeysInThis() {
+        assertThrows(ExecutionException.class, () -> {
+            final Map<Integer, Integer> thiz = map();
+            thiz.put(1, 2);
+            thiz.put(2, 3);
+            final Map<Integer, Integer> requiredContent = map();
+            requiredContent.put(1, 3);
+            thiz.requireEqualityTo(requiredContent);
+        });
+    }
+
+    @UnitTest
+    public void testRequireEqualityToWithMoreKeysInRequiredContent() {
+        assertThrows(ExecutionException.class, () -> {
+            final Map<Integer, Integer> thiz = map();
+            thiz.put(1, 2);
+            final Map<Integer, Integer> requiredContent = map();
+            requiredContent.put(2, 3);
+            requiredContent.put(1, 3);
+            thiz.requireEqualityTo(requiredContent);
+        });
     }
 }
