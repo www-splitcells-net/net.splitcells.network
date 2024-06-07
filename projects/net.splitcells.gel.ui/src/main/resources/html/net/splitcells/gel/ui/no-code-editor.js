@@ -51,8 +51,9 @@ function enhanceVariableDefinitionName(variableDefinition) {
         if (!hasClass(child, 'net-splitcells-dem-lang-perspective-no-code-variable-name')) {
             continue;
         }
-        let actionButton = document.createElement("span");
-        actionButton.onclick = function() {
+        let actionButtonTrigger = document.createElement("span");
+        actionButtonTrigger.innerHTML = "☰";
+        actionButtonTrigger.onclick = function() {
             for (var j = 0; j < actionButton.childNodes.length; j++) {
                 if (actionButton.childNodes[j].className == "net-splitcells-dem-lang-perspective-no-code-action-menu") {
                     actionButton.removeChild(actionButton.childNodes[j]);
@@ -69,9 +70,10 @@ function enhanceVariableDefinitionName(variableDefinition) {
 
             actionButton.appendChild(actionMenu);
         };
-        actionButton.className = "net-splitcells-dem-lang-perspective-no-code-action"
-        actionButton.innerHTML = "☰";
 
+        let actionButton = document.createElement("span");
+        actionButton.className = "net-splitcells-dem-lang-perspective-no-code-action-button"
+        actionButton.appendChild(actionButtonTrigger);
         actionButton.id = 'net-splitcells-dem-lang-perspective-no-code-action-' + ++net_splitcells_gel_ui_editor_no_code_last_node_id;
         variableDefinition.insertBefore(actionButton, child.nextSibling);
     }
