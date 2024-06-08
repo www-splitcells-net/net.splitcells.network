@@ -126,7 +126,10 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
             parsedConstraint.withValue(parentConstraint.forAllCombinationsOf(combination));
             return parsedConstraint;
         } else if (constraintType.equals(THEN_NAME)) {
-            if (arguments == null && arguments.isEmpty()) {
+            if (arguments == null) {
+                return parsedConstraint.withErrorMessage(perspective("Then constraint requires at least one argument, but argument list is null."));
+            }
+            if (arguments.isEmpty()) {
                 return parsedConstraint
                         .withErrorMessage(perspective("Then constraint requires at least one argument.")
                                 .withProperty(AFFECTED_CONTENT
