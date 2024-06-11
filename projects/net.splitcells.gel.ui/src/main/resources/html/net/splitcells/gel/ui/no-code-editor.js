@@ -36,19 +36,17 @@ function enhanceNoCodeEditors() {
             }
         });
         syncTargetObserver.observe(syncTarget, { attributes: true, childList: true, subtree: true,characterData: true});
-        var variableDefinitions = document.getElementsByClassName("net-splitcells-dem-lang-perspective-no-code-variable-definition");
-        for (var i = 0; i < variableDefinitions.length; i++) {
-            enhanceVariableDefinitionName(variableDefinitions[i]);
-        }
+        net_splitcells_gel_ui_editor_no_code_variable_definition_names_enhance();
+        net_splitcells_gel_ui_editor_no_code_function_calls_enhance();
 	}
 }
-function enhanceVariableDefinitionName(variableDefinition) {
-    for (var i = 0; i < variableDefinition.childNodes.length; i++) {
-        let child = variableDefinition.childNodes[i];
+function net_splitcells_gel_ui_editor_no_code_generic_enhance(astElement, config) {
+    for (var i = 0; i < astElement.childNodes.length; i++) {
+        let child = astElement.childNodes[i];
         if (child.className == undefined) {
             continue;
         }
-        if (!hasClass(child, 'net-splitcells-dem-lang-perspective-no-code-variable-name')) {
+        if (!hasClass(child, config.cssClass)) {
             continue;
         }
         let actionButtonTrigger = document.createElement("span");
@@ -66,8 +64,10 @@ function enhanceVariableDefinitionName(variableDefinition) {
             }
             actionMenu = document.createElement("div");
             actionMenu.className = "net-splitcells-dem-lang-perspective-no-code-action-menu"
-            actionMenu.innerHTML = 'Variable Actions <ol><li onclick="net_splitcells_gel_ui_editor_no_code_variable_definition_rename_pop_up(this);">Rename variable</li>'
-                + '<li onclick="net_splitcells_gel_ui_editor_no_code_variable_definition_help_show(this);">Help</li>'
+            actionMenu.innerHTML = '<h1>'
+                + config.title
+                + '</h1><ol>'
+                + config.actionList
                 + '<li onclick="net_splitcells_gel_ui_editor_no_code_action_menu_close();">Close</li>'
                 + '</ol>';
 
@@ -78,7 +78,27 @@ function enhanceVariableDefinitionName(variableDefinition) {
         actionButton.className = "net-splitcells-dem-lang-perspective-no-code-action-button"
         actionButton.appendChild(actionButtonTrigger);
         actionButton.id = 'net-splitcells-dem-lang-perspective-no-code-action-' + ++net_splitcells_gel_ui_editor_no_code_last_node_id;
-        variableDefinition.insertBefore(actionButton, child.nextSibling);
+        astElement.insertBefore(actionButton, child.nextSibling);
+    }
+}
+function net_splitcells_gel_ui_editor_no_code_function_calls_enhance() {
+    var functionCalls = document.getElementsByClassName("net-splitcells-dem-lang-perspective-no-code-function-call");
+    for (var i = 0; i < functionCalls.length; i++) {
+        net_splitcells_gel_ui_editor_no_code_generic_enhance(functionCalls[i], {
+            cssClass : 'net-splitcells-dem-lang-perspective-no-code-function-call-name'
+            , title : 'Function Actions'
+            , actionList : '<li onclick="net_splitcells_gel_ui_editor_no_code_function_call_name_help_show(this);">Help</li>'
+        });
+    }
+}
+function net_splitcells_gel_ui_editor_no_code_variable_definition_names_enhance() {
+    var functionCalls = document.getElementsByClassName("net-splitcells-dem-lang-perspective-no-code-variable-definition");
+    for (var i = 0; i < functionCalls.length; i++) {
+        net_splitcells_gel_ui_editor_no_code_generic_enhance(functionCalls[i], {
+            cssClass : 'net-splitcells-dem-lang-perspective-no-code-variable-name'
+            , title : 'Variable Actions'
+            , actionList : '<li onclick="net_splitcells_gel_ui_editor_no_code_variable_definition_help_show(this);">Help</li>'
+        });
     }
 }
 function net_splitcells_gel_ui_editor_no_code_action_menu_close() {
@@ -115,18 +135,44 @@ function net_splitcells_gel_ui_editor_no_code_variable_definition_rename(variabl
     variableName.innerHTML = renameInput.value;
 }
 function net_splitcells_gel_ui_editor_no_code_variable_definition_help_show(helpAction) {
-    net_splitcells_gel_ui_editor_no_code_pop_ups_close();
-    let helpWindow = document.createElement("div");
-    /* Using iframes, makes the help navigable by allowing to read the user related help texts via this pop-up without
-     * requiring a new visual navigation element.
-     */
-    helpWindow.innerHTML = '<h1>Help description</h1><div class="net-splitcells-button net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_pop_ups_close();">Close</div>  <iframe class="net-splitcells-gel-ui-editor-no-code-pop-up-iframe" src="variable-definition-help.html"></iframe> ';
-    helpWindow.className = 'net-splitcells-gel-ui-editor-no-code-pop-up';
-    helpAction.parentNode.insertBefore(helpWindow, helpAction.nextSibling);
+    net_splitcells_gel_ui_editor_no_code_help_via_dynamic_name(helpAction, {
+        helpSubject: 'variable-definition'
+        , helpType: 'general'
+    });
 }
 function net_splitcells_gel_ui_editor_no_code_pop_ups_close() {
     let existingPopUps = document.getElementsByClassName("net-splitcells-gel-ui-editor-no-code-pop-up");
     for (var i = 0; i < existingPopUps.length; i++) {
         existingPopUps[i].parentNode.removeChild(existingPopUps[i]);
     }
+}
+function net_splitcells_gel_ui_editor_no_code_help_via_dynamic_name(helpAction, config) {
+    net_splitcells_gel_ui_editor_no_code_pop_ups_close();
+    let helpWindow = document.createElement("div");
+
+    let helpSubject;
+    if (config.helpSubject !== undefined) {
+        helpSubject = config.helpSubject;
+    } else {
+        let astElement = helpAction.parentNode.parentNode.parentNode.parentNode;
+        let nameHolder = astElement.getElementsByClassName(config.nameHolderCss)[0];
+        helpSubject = nameHolder.innerHTML;
+    }
+    /* Using iframes, makes the help navigable by allowing to read the user related help texts via this pop-up without
+         * requiring a new visual navigation element.
+         */
+    helpWindow.innerHTML = '<h1>Help description</h1><div class="net-splitcells-button net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_pop_ups_close();">Close</div>'
+    + '<iframe class="net-splitcells-gel-ui-editor-no-code-pop-up-iframe" src="help/'
+    + config.helpType
+    + '/'
+    + helpSubject
+    + '.html"></iframe> ';
+    helpWindow.className = 'net-splitcells-gel-ui-editor-no-code-pop-up';
+    helpAction.parentNode.insertBefore(helpWindow, helpAction.nextSibling);
+}
+function net_splitcells_gel_ui_editor_no_code_function_call_name_help_show(helpAction) {
+    net_splitcells_gel_ui_editor_no_code_help_via_dynamic_name(helpAction, {
+        nameHolderCss: 'net-splitcells-dem-lang-perspective-no-code-function-call-name'
+        , helpType: 'function-call'
+    });
 }
