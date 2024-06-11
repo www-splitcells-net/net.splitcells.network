@@ -66,7 +66,7 @@ function enhanceVariableDefinitionName(variableDefinition) {
             }
             actionMenu = document.createElement("div");
             actionMenu.className = "net-splitcells-dem-lang-perspective-no-code-action-menu"
-            actionMenu.innerHTML = 'Variable Actions <ol><li onclick="alert(1);">Rename variable</li><li onclick="net_splitcells_gel_ui_editor_no_code_variable_definition_help_show(this);">Help</li></ol>';
+            actionMenu.innerHTML = 'Variable Actions <ol><li onclick="net_splitcells_gel_ui_editor_no_code_variable_definition_rename(this);">Rename variable</li><li onclick="net_splitcells_gel_ui_editor_no_code_variable_definition_help_show(this);">Help</li></ol>';
 
             actionButton.appendChild(actionMenu);
         };
@@ -77,6 +77,16 @@ function enhanceVariableDefinitionName(variableDefinition) {
         actionButton.id = 'net-splitcells-dem-lang-perspective-no-code-action-' + ++net_splitcells_gel_ui_editor_no_code_last_node_id;
         variableDefinition.insertBefore(actionButton, child.nextSibling);
     }
+}
+function net_splitcells_gel_ui_editor_no_code_variable_definition_rename(renameAction) {
+    net_splitcells_gel_ui_editor_no_code_pop_ups_close();
+    let renameWindow = document.createElement("div");
+    /* Using iframes, makes the help navigable by allowing to read the user related help texts via this pop-up without
+     * requiring a new visual navigation element.
+     */
+    renameWindow.innerHTML = '<h1>Rename variable</h1>';
+    renameWindow.className = 'net-splitcells-gel-ui-editor-no-code-pop-up';
+    renameAction.parentNode.insertBefore(renameWindow, renameAction.nextSibling);
 }
 function net_splitcells_gel_ui_editor_no_code_variable_definition_help_show(helpAction) {
     net_splitcells_gel_ui_editor_no_code_pop_ups_close();
