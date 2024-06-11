@@ -79,8 +79,15 @@ function enhanceVariableDefinitionName(variableDefinition) {
     }
 }
 function net_splitcells_gel_ui_editor_no_code_variable_definition_help_show(helpAction) {
+    net_splitcells_gel_ui_editor_no_code_pop_ups_close();
     let helpWindow = document.createElement("div");
-    helpWindow.innerHTML = 'Help description  <iframe class="net-splitcells-gel-ui-editor-no-code-help-pop-up-iframe" src="variable-definition-help.html" title="W3Schools Free Online Web Tutorials"></iframe> ';
-    helpWindow.className = 'net-splitcells-gel-ui-editor-no-code-help-pop-up';
+    helpWindow.innerHTML = 'Help description  <iframe class="net-splitcells-gel-ui-editor-no-code-pop-up-iframe" src="variable-definition-help.html"></iframe> ';
+    helpWindow.className = 'net-splitcells-gel-ui-editor-no-code-pop-up';
     helpAction.parentNode.insertBefore(helpWindow, helpAction.nextSibling);
+}
+function net_splitcells_gel_ui_editor_no_code_pop_ups_close() {
+    let existingPopUps = document.getElementsByClassName("net-splitcells-gel-ui-editor-no-code-pop-up");
+    for (var i = 0; i < existingPopUps.length; i++) {
+        existingPopUps[i].parentNode.removeChild(existingPopUps[i]);
+    }
 }

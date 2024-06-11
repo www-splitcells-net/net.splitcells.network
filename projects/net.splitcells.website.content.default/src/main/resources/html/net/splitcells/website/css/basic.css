@@ -16,13 +16,13 @@
     padding: 1em;
     width: 10em;
     }
- .net-splitcells-gel-ui-editor-no-code-help-pop-up {
+ .net-splitcells-gel-ui-editor-no-code-pop-up {
     position: absolute;
     background-color: var(--background-color-selected-priority-0);
     z-index: 8;
     padding: 1em;
 }
-.net-splitcells-gel-ui-editor-no-code-help-pop-up-iframe {
+.net-splitcells-gel-ui-editor-no-code-pop-up-iframe {
     width: 40em;
     height: 40em;
 }
