@@ -110,6 +110,7 @@ function net_splitcells_gel_ui_editor_no_code_variable_references_enhance() {
             cssClass : 'net-splitcells-dem-lang-perspective-no-code-variable-reference'
             , title : 'Variable Reference Actions'
             , actionList : '<li onclick="net_splitcells_gel_ui_editor_no_code_variable_references_enhance_help_show(this);">Help</li>'
+                + '<li onclick="net_splitcells_gel_ui_editor_no_code_variable_references_set_pop_up(this);">Set reference</li>'
         });
     }
 }
@@ -180,6 +181,28 @@ function net_splitcells_gel_ui_editor_no_code_variable_definition_rename_pop_up(
 }
 function net_splitcells_gel_ui_editor_no_code_variable_definition_rename(variableName, renameInput) {
     variableName.innerHTML = renameInput.value;
+}
+function net_splitcells_gel_ui_editor_no_code_variable_references_set_pop_up(setAction) {
+    net_splitcells_gel_ui_editor_no_code_pop_ups_close();
+    let menu = setAction.parentNode.parentNode.parentNode;
+    let literalHolder = menu.parentNode;
+    let literalElement = literalHolder.children[Array.from(literalHolder.children).indexOf(menu) - 1];
+    let setWindow = document.createElement("div");
+    setWindow.innerHTML = '<h1>Set literal value</h1><div class="net-splitcells-button net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_pop_ups_close();">Close</div>';
+    setWindow.className = 'net-splitcells-gel-ui-editor-no-code-pop-up';
+
+    let variableDefinitions = document.getElementsByClassName("net-splitcells-dem-lang-perspective-no-code-variable-definition");
+    for (var i = 0; i < variableDefinitions.length; i++) {
+        let variableName = variableDefinitions[i].getElementsByClassName("net-splitcells-dem-lang-perspective-no-code-variable-name")[0];
+        let setSubmit = document.createElement("div");
+        setSubmit.className = 'net-splitcells-button net-splitcells-action-button';
+        setSubmit.onclick = function() {
+            literalElement.innerHTML = variableName.innerHTML;
+        };
+        setSubmit.innerHTML = variableName.innerHTML;
+        setWindow.appendChild(setSubmit);
+    }
+    setAction.parentNode.insertBefore(setWindow, setAction.nextSibling);
 }
 function net_splitcells_gel_ui_editor_no_code_literal_set_pop_up(setAction) {
     net_splitcells_gel_ui_editor_no_code_pop_ups_close();
