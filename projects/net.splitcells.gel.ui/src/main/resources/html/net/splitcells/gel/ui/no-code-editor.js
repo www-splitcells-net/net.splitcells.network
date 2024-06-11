@@ -43,14 +43,34 @@ function enhanceNoCodeEditors() {
 	}
 }
 function net_splitcells_gel_ui_editor_no_code_generic_enhance(astElement, config) {
-    for (var i = 0; i < astElement.childNodes.length; i++) {
-        let child = astElement.childNodes[i];
-        if (child.className == undefined) {
-            continue;
+    let targets = [];
+    if (config.onlyLiteral !== undefined && config.onlyLiteral) {
+        for (var i = 0; i < astElement.childNodes.length; i++) {
+            let child = astElement.childNodes[i];
+            if (child.className == undefined) {
+                continue;
+            }
+            if (!hasClass(child, config.cssClass)) {
+                    continue;
+            }
+            if (child.childElementCount === 0) {
+                targets.push(child);
+            }
         }
-        if (!hasClass(child, config.cssClass)) {
-            continue;
+    } else {
+        for (var i = 0; i < astElement.childNodes.length; i++) {
+            let child = astElement.childNodes[i];
+            if (child.className == undefined) {
+                continue;
+            }
+            if (!hasClass(child, config.cssClass)) {
+                    continue;
+            }
+            targets.push(child);
         }
+    }
+    for (var i = 0; i < targets.length; i++) {
+        let child = targets[i];
         let actionButtonTrigger = document.createElement("span");
         actionButtonTrigger.innerHTML = "☰";
         actionButtonTrigger.onclick = function() {
@@ -111,6 +131,12 @@ function net_splitcells_gel_ui_editor_no_code_function_calls_enhance() {
             , title : 'Function Actions'
             , actionList : '<li onclick="net_splitcells_gel_ui_editor_no_code_function_call_name_help_show(this);">Help</li>'
         });
+        net_splitcells_gel_ui_editor_no_code_generic_enhance(functionCalls[i], {
+                    cssClass : 'net-splitcells-dem-lang-perspective-no-code-function-call-argument'
+                    , onlyLiteral : true
+                    , title : 'Literal Actions'
+                    , actionList : '<li onclick="net_splitcells_gel_ui_editor_no_code_literal_help_show(this);">Help</li>'
+                });
     }
 }
 function net_splitcells_gel_ui_editor_no_code_variable_definition_names_enhance() {
@@ -207,6 +233,12 @@ function net_splitcells_gel_ui_editor_no_code_variable_references_enhance_help_s
 function net_splitcells_gel_ui_editor_no_code_variable_access_help_show(helpAction) {
     net_splitcells_gel_ui_editor_no_code_help_via_dynamic_name(helpAction, {
         helpSubject: 'variable-access'
+        , helpType: 'general'
+    });
+}
+function net_splitcells_gel_ui_editor_no_code_literal_help_show(helpAction) {
+    net_splitcells_gel_ui_editor_no_code_help_via_dynamic_name(helpAction, {
+        helpSubject: 'literal'
         , helpType: 'general'
     });
 }
