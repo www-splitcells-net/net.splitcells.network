@@ -146,6 +146,7 @@ function net_splitcells_gel_ui_editor_no_code_variable_definition_names_enhance(
             cssClass : 'net-splitcells-dem-lang-perspective-no-code-variable-name'
             , title : 'Variable Actions'
             , actionList : '<li onclick="net_splitcells_gel_ui_editor_no_code_variable_definition_help_show(this);">Help</li>'
+                + '<li onclick="net_splitcells_gel_ui_editor_no_code_variable_definition_rename_pop_up(this);">Rename variable</li>'
         });
     }
 }
