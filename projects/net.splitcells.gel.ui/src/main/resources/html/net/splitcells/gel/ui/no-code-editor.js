@@ -84,7 +84,7 @@ function net_splitcells_gel_ui_editor_no_code_variable_definition_help_show(help
     /* Using iframes, makes the help navigable by allowing to read the user related help texts via this pop-up without
      * requiring a new visual navigation element.
      */
-    helpWindow.innerHTML = 'Help description  <iframe class="net-splitcells-gel-ui-editor-no-code-pop-up-iframe" src="variable-definition-help.html"></iframe> ';
+    helpWindow.innerHTML = '<h1>Help description</h1><div class="net-splitcells-button net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_pop_ups_close();">close</div>  <iframe class="net-splitcells-gel-ui-editor-no-code-pop-up-iframe" src="variable-definition-help.html"></iframe> ';
     helpWindow.className = 'net-splitcells-gel-ui-editor-no-code-pop-up';
     helpAction.parentNode.insertBefore(helpWindow, helpAction.nextSibling);
 }
