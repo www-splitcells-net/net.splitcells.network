@@ -38,6 +38,7 @@ function enhanceNoCodeEditors() {
         syncTargetObserver.observe(syncTarget, { attributes: true, childList: true, subtree: true,characterData: true});
         net_splitcells_gel_ui_editor_no_code_variable_definition_names_enhance();
         net_splitcells_gel_ui_editor_no_code_function_calls_enhance();
+        net_splitcells_gel_ui_editor_no_code_variable_references_enhance();
 	}
 }
 function net_splitcells_gel_ui_editor_no_code_generic_enhance(astElement, config) {
@@ -79,6 +80,16 @@ function net_splitcells_gel_ui_editor_no_code_generic_enhance(astElement, config
         actionButton.appendChild(actionButtonTrigger);
         actionButton.id = 'net-splitcells-dem-lang-perspective-no-code-action-' + ++net_splitcells_gel_ui_editor_no_code_last_node_id;
         astElement.insertBefore(actionButton, child.nextSibling);
+    }
+}
+function net_splitcells_gel_ui_editor_no_code_variable_references_enhance() {
+    var arguments = document.getElementsByClassName("net-splitcells-dem-lang-perspective-no-code-function-call-argument");
+    for (var i = 0; i < arguments.length; i++) {
+        net_splitcells_gel_ui_editor_no_code_generic_enhance(arguments[i], {
+            cssClass : 'net-splitcells-dem-lang-perspective-no-code-variable-reference'
+            , title : 'Variable Reference Actions'
+            , actionList : '<li onclick="net_splitcells_gel_ui_editor_no_code_variable_references_enhance_help_show(this);">Help</li>'
+        });
     }
 }
 function net_splitcells_gel_ui_editor_no_code_function_calls_enhance() {
@@ -174,5 +185,11 @@ function net_splitcells_gel_ui_editor_no_code_function_call_name_help_show(helpA
     net_splitcells_gel_ui_editor_no_code_help_via_dynamic_name(helpAction, {
         nameHolderCss: 'net-splitcells-dem-lang-perspective-no-code-function-call-name'
         , helpType: 'function-call'
+    });
+}
+function net_splitcells_gel_ui_editor_no_code_variable_references_enhance_help_show(helpAction) {
+net_splitcells_gel_ui_editor_no_code_help_via_dynamic_name(helpAction, {
+        helpSubject: 'variable-reference'
+        , helpType: 'general'
     });
 }
