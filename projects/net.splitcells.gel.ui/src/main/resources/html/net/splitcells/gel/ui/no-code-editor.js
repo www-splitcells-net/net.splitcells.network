@@ -67,8 +67,8 @@ function net_splitcells_gel_ui_editor_no_code_generic_enhance(astElement, config
             actionMenu.innerHTML = '<h1>'
                 + config.title
                 + '</h1><ol>'
+                + '<li onclick="net_splitcells_gel_ui_editor_no_code_action_menu_close();">Close</li>' // Close is placed on top, so that a action pop-up can also be closed via a closure of the action menu.
                 + config.actionList
-                + '<li onclick="net_splitcells_gel_ui_editor_no_code_action_menu_close();">Close</li>'
                 + '</ol>';
 
             actionButton.appendChild(actionMenu);
