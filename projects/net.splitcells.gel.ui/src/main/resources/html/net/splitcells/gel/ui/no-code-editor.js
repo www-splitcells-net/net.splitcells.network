@@ -81,6 +81,9 @@ function enhanceVariableDefinitionName(variableDefinition) {
 function net_splitcells_gel_ui_editor_no_code_variable_definition_help_show(helpAction) {
     net_splitcells_gel_ui_editor_no_code_pop_ups_close();
     let helpWindow = document.createElement("div");
+    /* Using iframes, makes the help navigable by allowing to read the user related help texts via this pop-up without
+     * requiring a new visual navigation element.
+     */
     helpWindow.innerHTML = 'Help description  <iframe class="net-splitcells-gel-ui-editor-no-code-pop-up-iframe" src="variable-definition-help.html"></iframe> ';
     helpWindow.className = 'net-splitcells-gel-ui-editor-no-code-pop-up';
     helpAction.parentNode.insertBefore(helpWindow, helpAction.nextSibling);
