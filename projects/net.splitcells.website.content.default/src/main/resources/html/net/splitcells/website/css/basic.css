@@ -31,7 +31,48 @@
     padding-left: .1em;
     position: relative;
     display: inline-block;
-    }
+}
+.net-splitcells-dem-lang-perspective-no-code-function-call-argument:nth-child(2):before {
+    content: "(";
+}
+.net-splitcells-dem-lang-perspective-no-code-function-call-argument:last-child:after {
+    content: ")";
+}
+.net-splitcells-dem-lang-perspective-no-code-function-call-argument:not(:last-child):after {
+    content: ",";
+}
+.net-splitcells-dem-lang-perspective-no-code-function-call .net-splitcells-dem-lang-perspective-no-code-function-call:before {
+    content: ""
+}
+.net-splitcells-dem-lang-perspective-no-code-function-call .net-splitcells-dem-lang-perspective-no-code-function-call {
+    display: inline;
+    margin-left: 0em;
+}
+.net-splitcells-dem-lang-perspective-no-code-function-call {
+    display: block;
+    margin-left: 3em;
+}
+.net-splitcells-dem-lang-perspective-no-code-function-call:before {
+    content: "- ";
+    font-family: Palatino, Palatino Linotype, Palatino LT STD, Book Antiqua, Georgia, serif;
+    font-weight: normal;
+}
+.net-splitcells-dem-lang-perspective-no-code-variable-name:hover
+,.net-splitcells-dem-lang-perspective-no-code-function-call-name:hover
+,.net-splitcells-dem-lang-perspective-no-code-variable-reference:hover
+,.net-splitcells-dem-lang-perspective-no-code-literal:hover
+{
+    font-weight: bolder;
+    font-family: var(--text-font-family);
+}
+.net-splitcells-dem-lang-perspective-no-code-variable-name:after {
+    content: " =";
+    font-family: Palatino, Palatino Linotype, Palatino LT STD, Book Antiqua, Georgia, serif;
+    font-weight: normal;
+}
+.net-splitcells-dem-lang-perspective-no-code-lang {
+    font-family: Palatino, Palatino Linotype, Palatino LT STD, Book Antiqua, Georgia, serif;
+}
 .net-splitcells-website-form-editor-tab-bar {
     display: flex;
     flex-wrap: wrap;
