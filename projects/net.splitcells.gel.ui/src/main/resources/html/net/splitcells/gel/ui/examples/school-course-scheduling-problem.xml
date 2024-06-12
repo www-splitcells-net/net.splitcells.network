@@ -7,8 +7,12 @@
                 <span class="net-splitcells-dem-lang-perspective-no-code-variable-value">
                     <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
                         <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">attribute</span>
-                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">student</span>
-                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">string</span>
+                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                            <span class="net-splitcells-dem-lang-perspective-no-code-literal">student</span>
+                        </span>
+                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                            <span class="net-splitcells-dem-lang-perspective-no-code-literal">string</span>
+                        </span>
                     </span>
                 </span>
             </li>
@@ -17,8 +21,12 @@
                 <span class="net-splitcells-dem-lang-perspective-no-code-variable-value">
                     <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
                         <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">attribute</span>
-                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">examiner</span>
-                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">string</span>
+                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                            <span class="net-splitcells-dem-lang-perspective-no-code-literal">examiner</span>
+                        </span>
+                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                            <span class="net-splitcells-dem-lang-perspective-no-code-literal">string</span>
+                        </span>
                     </span>
                 </span>
             </li>
@@ -27,8 +35,12 @@
                 <span class="net-splitcells-dem-lang-perspective-no-code-variable-value">
                     <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
                         <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">attribute</span>
-                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">observer</span>
-                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">string</span>
+                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                            <span class="net-splitcells-dem-lang-perspective-no-code-literal">observer</span>
+                        </span>
+                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                            <span class="net-splitcells-dem-lang-perspective-no-code-literal">string</span>
+                        </span>
                     </span>
                 </span>
             </li>
@@ -37,8 +49,12 @@
                 <span class="net-splitcells-dem-lang-perspective-no-code-variable-value">
                     <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
                         <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">attribute</span>
-                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">date</span>
-                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">integer</span>
+                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                            <span class="net-splitcells-dem-lang-perspective-no-code-literal">date</span>
+                        </span>
+                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                            <span class="net-splitcells-dem-lang-perspective-no-code-literal">integer</span>
+                        </span>
                     </span>
                 </span>
             </li>
@@ -47,8 +63,12 @@
                 <span class="net-splitcells-dem-lang-perspective-no-code-variable-value">
                     <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
                         <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">attribute</span>
-                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">shift</span>
-                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">integer</span>
+                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                            <span class="net-splitcells-dem-lang-perspective-no-code-literal">shift</span>
+                        </span>
+                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                            <span class="net-splitcells-dem-lang-perspective-no-code-literal">integer</span>
+                        </span>
                     </span>
                 </span>
             </li>
@@ -57,8 +77,12 @@
                 <span class="net-splitcells-dem-lang-perspective-no-code-variable-value">
                     <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
                         <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">attribute</span>
-                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">roomNumber</span>
-                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">integer</span>
+                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                            <span class="net-splitcells-dem-lang-perspective-no-code-literal">roomNumber</span>
+                        </span>
+                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                            <span class="net-splitcells-dem-lang-perspective-no-code-literal">integer</span>
+                        </span>
                     </span>
                 </span>
             </li>
@@ -67,7 +91,9 @@
                 <span class="net-splitcells-dem-lang-perspective-no-code-variable-value">
                     <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
                         <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">database</span>
-                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">exams</span>
+                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                            <span class="net-splitcells-dem-lang-perspective-no-code-literal">exams</span>
+                        </span>
                         <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
                             <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">student</span>
                         </span>
@@ -85,7 +111,9 @@
                 <span class="net-splitcells-dem-lang-perspective-no-code-variable-value">
                     <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
                         <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">database</span>
-                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">available-appointments</span>
+                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                            <span class="net-splitcells-dem-lang-perspective-no-code-literal">available-appointments</span>
+                        </span>
                         <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
                             <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">date</span>
                         </span>
@@ -121,7 +149,9 @@
                         <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
                             <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
                                 <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">hasSize</span>
-                                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">1</span>
+                                <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                                    <span class="net-splitcells-dem-lang-perspective-no-code-literal">1</span>
+                                </span>
                             </span>
                         </span>
                     </span>
@@ -149,7 +179,11 @@
                     <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
                         <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
                             <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">hasSize</span>
-                            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">1</span>
+                            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                                <span class="net-splitcells-dem-lang-perspective-no-code-literal">
+                                    <span class="net-splitcells-dem-lang-perspective-no-code-literal">1</span>
+                                </span>
+                            </span>
                         </span>
                     </span>
                 </span>
@@ -176,7 +210,9 @@
                     <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
                         <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
                             <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">hasSize</span>
-                            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">1</span>
+                            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                                <span class="net-splitcells-dem-lang-perspective-no-code-literal">1</span>
+                            </span>
                         </span>
                     </span>
                 </span>
@@ -194,7 +230,9 @@
                     <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
                         <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">date</span>
                     </span>
-                    <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">3</span>
+                    <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                        <span class="net-splitcells-dem-lang-perspective-no-code-literal">3</span>
+                    </span>
                 </span>
             </li>
             <li class="net-splitcells-dem-lang-perspective-no-code-variable-access">
@@ -210,7 +248,9 @@
                     <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
                         <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">date</span>
                     </span>
-                    <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">5</span>
+                    <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                        <span class="net-splitcells-dem-lang-perspective-no-code-literal">5</span>
+                    </span>
                 </span>
             </li>
             <li class="net-splitcells-dem-lang-perspective-no-code-variable-definition">
@@ -218,7 +258,9 @@
                 <span class="net-splitcells-dem-lang-perspective-no-code-variable-value">
                     <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
                         <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">solution</span>
-                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">colloquiumPlanningDemonstration</span>
+                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                            <span class="net-splitcells-dem-lang-perspective-no-code-literal">colloquiumPlanningDemonstration</span>
+                        </span>
                         <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
                             <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">demands</span>
                         </span>
