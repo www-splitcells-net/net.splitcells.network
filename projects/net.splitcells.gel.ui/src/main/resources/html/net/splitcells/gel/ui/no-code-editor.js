@@ -42,6 +42,26 @@ function enhanceNoCodeEditors() {
         net_splitcells_gel_ui_editor_no_code_variable_access_enhance();
 	}
 }
+function net_splitcells_gel_ui_editor_no_code_generic_enhance2(astElement, config) {
+    astElement.onclick = function() {
+        for (var j = 0; j < astElement.parentNode.childNodes.length; j++) {
+            if (astElement.parentNode.childNodes[j].className == "net-splitcells-dem-lang-perspective-no-code-action-menu") {
+                astElement.parentNode.removeChild(astElement.parentNode.childNodes[j]);
+                return;
+            }
+        }
+        net_splitcells_gel_ui_editor_no_code_action_menu_close();
+        actionMenu = document.createElement("div");
+        actionMenu.className = "net-splitcells-dem-lang-perspective-no-code-action-menu"
+        actionMenu.innerHTML = '<h1>'
+            + config.title
+            + '</h1><ol>'
+            + '<li onclick="net_splitcells_gel_ui_editor_no_code_action_menu_close();">Close</li>' // Close is placed on top, so that a action pop-up can also be closed via a closure of the action menu.
+            + config.actionList
+            + '</ol>'
+        astElement.parentNode.insertBefore(actionMenu, astElement.nextSibling);
+    };
+}
 function net_splitcells_gel_ui_editor_no_code_generic_enhance(astElement, config) {
     let targets = [];
     if (config.onlyLiteral !== undefined && config.onlyLiteral) {
@@ -142,11 +162,10 @@ function net_splitcells_gel_ui_editor_no_code_function_calls_enhance() {
     }
 }
 function net_splitcells_gel_ui_editor_no_code_variable_definition_names_enhance() {
-    var functionCalls = document.getElementsByClassName("net-splitcells-dem-lang-perspective-no-code-variable-definition");
-    for (var i = 0; i < functionCalls.length; i++) {
-        net_splitcells_gel_ui_editor_no_code_generic_enhance(functionCalls[i], {
-            cssClass : 'net-splitcells-dem-lang-perspective-no-code-variable-name'
-            , title : 'Variable Actions'
+    var variableDefinitions = document.getElementsByClassName('net-splitcells-dem-lang-perspective-no-code-variable-name');
+    for (var i = 0; i < variableDefinitions.length; i++) {
+        net_splitcells_gel_ui_editor_no_code_generic_enhance2(variableDefinitions[i], {
+            title : 'Variable Actions'
             , actionList : '<li onclick="net_splitcells_gel_ui_editor_no_code_variable_definition_help_show(this);">Help</li>'
                 + '<li onclick="net_splitcells_gel_ui_editor_no_code_variable_definition_rename_pop_up(this);">Rename variable</li>'
         });
