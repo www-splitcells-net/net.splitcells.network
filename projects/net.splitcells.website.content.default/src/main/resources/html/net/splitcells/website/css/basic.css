@@ -68,6 +68,9 @@
 .net-splitcells-dem-lang-perspective-no-code-variable-access .net-splitcells-dem-lang-perspective-no-code-variable-reference:after {
     content: ":";
 }
+.net-splitcells-dem-lang-perspective-no-code-function-call .net-splitcells-dem-lang-perspective-no-code-variable-reference:after {
+    content: "";
+}
 .net-splitcells-dem-lang-perspective-no-code-variable-name:after {
     content: " =";
     font-family: Palatino, Palatino Linotype, Palatino LT STD, Book Antiqua, Georgia, serif;
