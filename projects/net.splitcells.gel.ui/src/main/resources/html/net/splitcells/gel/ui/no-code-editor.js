@@ -39,7 +39,6 @@ function enhanceNoCodeEditors() {
         net_splitcells_gel_ui_editor_no_code_variable_definition_names_enhance();
         net_splitcells_gel_ui_editor_no_code_function_calls_enhance();
         net_splitcells_gel_ui_editor_no_code_variable_references_enhance();
-        net_splitcells_gel_ui_editor_no_code_variable_access_enhance();
 	}
 }
 function net_splitcells_gel_ui_editor_no_code_generic_enhance(astElement, config) {
@@ -69,15 +68,6 @@ function net_splitcells_gel_ui_editor_no_code_variable_references_enhance() {
             title : 'Variable Reference Actions'
             , actionList : '<li onclick="net_splitcells_gel_ui_editor_no_code_variable_references_enhance_help_show(this);">Help</li>'
                 + '<li onclick="net_splitcells_gel_ui_editor_no_code_variable_references_set_pop_up(this);">Set reference</li>'
-        });
-    }
-}
-function net_splitcells_gel_ui_editor_no_code_variable_access_enhance() {
-    var arguments = document.getElementsByClassName("net-splitcells-dem-lang-perspective-no-code-variable-name");
-    for (var i = 0; i < arguments.length; i++) {
-        net_splitcells_gel_ui_editor_no_code_generic_enhance(arguments[i], {
-            title : 'Variable Access Actions'
-            , actionList : '<li onclick="net_splitcells_gel_ui_editor_no_code_variable_access_help_show(this);">Help</li>'
         });
     }
 }
