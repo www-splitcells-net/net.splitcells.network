@@ -130,7 +130,7 @@ function net_splitcells_gel_ui_editor_no_code_variable_definition_rename(variabl
 }
 function net_splitcells_gel_ui_editor_no_code_variable_references_set_pop_up(setAction) {
     net_splitcells_gel_ui_editor_no_code_pop_ups_close();
-    let menu = setAction.parentNode.parentNode.parentNode;
+    let menu = setAction.parentNode.parentNode;
     let literalHolder = menu.parentNode;
     let literalElement = literalHolder.children[Array.from(literalHolder.children).indexOf(menu) - 1];
     let setWindow = document.createElement("div");
