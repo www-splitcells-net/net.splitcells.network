@@ -198,7 +198,7 @@ function net_splitcells_gel_ui_editor_no_code_help_via_dynamic_name(helpAction, 
     /* Using iframes, makes the help navigable by allowing to read the user related help texts via this pop-up without
      * requiring a new visual navigation element.
      */
-    helpWindow.innerHTML = '<h1>Help description</h1><div class="net-splitcells-button net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_pop_ups_close();">Close</div>'
+    helpWindow.innerHTML = '<div class="net-splitcells-no-code-help-title"><span class="net-splitcells-no-code-help-title-name">Help</span><span class="net-splitcells-action-button net-splitcells-no-code-help-close" onclick="net_splitcells_gel_ui_editor_no_code_pop_ups_close();">X</span></div>'
     + '<iframe class="net-splitcells-gel-ui-editor-no-code-pop-up-iframe" src="help/'
     + config.helpType
     + '/'
