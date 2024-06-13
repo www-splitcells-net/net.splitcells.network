@@ -77,4 +77,12 @@
 
     --background-color-activity-animation-end:#ff9900;
     --foreground-color-activity-animation-end:#000000;
+
+    /* The roundness of the corner signals to the user, that something is a button,
+     * that will cause an action in the current page.
+     * It is chosen as small as possible, to have this signalling effect,
+     * and as small as possible to not disrupt the overhaul style by adding shapes,
+     * that are in contrast with the rest of the layout.
+     */
+    --border-radius-for-actions:.25em;
 	}

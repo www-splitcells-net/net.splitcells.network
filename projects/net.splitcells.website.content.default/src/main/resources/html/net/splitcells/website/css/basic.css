@@ -15,7 +15,7 @@
     z-index: 8;
     padding-bottom: 1em;
     font-family: var(--text-font-family);
-    border-radius: .25em;
+    border-radius: var(--border-radius-for-actions);
     border: 0.125em solid var(--background-color-priority-4);
     box-shadow: 0em 0.1em .2em var(--shadow-color-structural-guide);
     left: 1em;
@@ -92,7 +92,7 @@
     padding-bottom: 1em;
     width: 15em;
     font-family: var(--text-font-family);
-    border-radius: .25em;
+    border-radius: var(--border-radius-for-actions);
     border: 0.125em solid var(--background-color-priority-4);
     box-shadow: 0em 0.1em .2em var(--shadow-color-structural-guide);
 }
