@@ -55,7 +55,6 @@ function net_splitcells_gel_ui_editor_no_code_generic_enhance(astElement, config
         actionMenu.innerHTML = '<div class="net-splitcells-no-code-action-menu-title"><span class="net-splitcells-no-code-action-menu-title-name">'
             + config.title
             + '</span><span class="net-splitcells-action-button net-splitcells-no-code-action-menu-close" onclick="net_splitcells_gel_ui_editor_no_code_action_menu_close();">X</span></div>'
-            + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_action_menu_close();">Close</div>' // Close is placed on top, so that a action pop-up can also be closed via a closure of the action menu.
             + config.actionList;
         astElement.parentNode.insertBefore(actionMenu, astElement.nextSibling);
     };
@@ -65,8 +64,8 @@ function net_splitcells_gel_ui_editor_no_code_variable_references_enhance() {
     for (var i = 0; i < arguments.length; i++) {
         net_splitcells_gel_ui_editor_no_code_generic_enhance(arguments[i], {
             title : 'Variable Reference Actions'
-            , actionList : '<li onclick="net_splitcells_gel_ui_editor_no_code_variable_references_enhance_help_show(this);">Help</li>'
-                + '<li onclick="net_splitcells_gel_ui_editor_no_code_variable_references_set_pop_up(this);">Set reference</li>'
+            , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_variable_references_set_pop_up(this);">Set reference</div>'
+                + '<div onclick="net_splitcells_gel_ui_editor_no_code_variable_references_enhance_help_show(this);">Help</div>'
         });
     }
 }
@@ -75,15 +74,15 @@ function net_splitcells_gel_ui_editor_no_code_function_calls_enhance() {
     for (var i = 0; i < functionCalls.length; i++) {
         net_splitcells_gel_ui_editor_no_code_generic_enhance(functionCalls[i], {
             title : 'Function Actions'
-            , actionList : '<li onclick="net_splitcells_gel_ui_editor_no_code_function_call_name_help_show(this);">Help</li>'
+            , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_function_call_name_help_show(this);">Help</div>'
         });
     }
     var literals = document.getElementsByClassName("net-splitcells-dem-lang-perspective-no-code-literal");
     for (var i = 0; i < literals.length; i++) {
         net_splitcells_gel_ui_editor_no_code_generic_enhance(literals[i], {
             title : 'Literal Actions'
-            , actionList : '<li onclick="net_splitcells_gel_ui_editor_no_code_literal_help_show(this);">Help</li>'
-                + '<li onclick="net_splitcells_gel_ui_editor_no_code_literal_set_pop_up(this);">Set Value</li>'
+            , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_literal_set_pop_up(this);">Set Value</div>'
+                + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_literal_help_show(this);">Help</div>'
         });
     }
 }
@@ -92,8 +91,8 @@ function net_splitcells_gel_ui_editor_no_code_variable_definition_names_enhance(
     for (var i = 0; i < variableDefinitions.length; i++) {
         net_splitcells_gel_ui_editor_no_code_generic_enhance(variableDefinitions[i], {
             title : 'Variable Actions'
-            , actionList : '<li onclick="net_splitcells_gel_ui_editor_no_code_variable_definition_help_show(this);">Help</li>'
-                + '<li onclick="net_splitcells_gel_ui_editor_no_code_variable_definition_rename_pop_up(this);">Rename variable</li>'
+            , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_variable_definition_rename_pop_up(this);">Rename variable</div>'
+                + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_variable_definition_help_show(this);">Help</div>'
         });
     }
 }
@@ -107,7 +106,7 @@ function net_splitcells_gel_ui_editor_no_code_action_menu_close() {
 function net_splitcells_gel_ui_editor_no_code_variable_definition_rename_pop_up(renameAction) {
     net_splitcells_gel_ui_editor_no_code_pop_ups_close();
     let renameWindow = document.createElement("div");
-    let variableDefinition = renameAction.parentNode.parentNode.parentNode.parentNode;
+    let variableDefinition = renameAction.parentNode.parentNode;
     let variableName = variableDefinition.getElementsByClassName("net-splitcells-dem-lang-perspective-no-code-variable-name")[0];
     renameWindow.innerHTML = '<h1>Rename variable</h1><div class="net-splitcells-button net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_pop_ups_close();">Close</div>';
     let renameInput = document.createElement("input");
@@ -151,11 +150,11 @@ function net_splitcells_gel_ui_editor_no_code_variable_references_set_pop_up(set
 }
 function net_splitcells_gel_ui_editor_no_code_literal_set_pop_up(setAction) {
     net_splitcells_gel_ui_editor_no_code_pop_ups_close();
-    let menu = setAction.parentNode.parentNode;
+    let menu = setAction.parentNode;
     let literalHolder = menu.parentNode;
     let literalElement = literalHolder.children[Array.from(literalHolder.children).indexOf(menu) - 1];
     let setWindow = document.createElement("div");
-    setWindow.innerHTML = '<h1>Set literal value</h1><div class="net-splitcells-button net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_pop_ups_close();">Close</div>';
+    setWindow.innerHTML = '<h1>Set literal value</h1>';
     let setInput = document.createElement("input");
     setInput.type = 'text';
     setInput.value = literalElement.innerHTML;

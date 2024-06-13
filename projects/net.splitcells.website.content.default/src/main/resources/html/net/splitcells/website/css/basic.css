@@ -20,6 +20,9 @@
     box-shadow: 0em 0.1em .2em var(--shadow-color-structural-guide);
     left: 1em;
 }
+.net-splitcells-gel-ui-editor-no-code-pop-up input {
+    width: 100%;
+}
 .net-splitcells-no-code-help-title {
     bacgkround-color: var(--background-color-priority-1);
     font-weight: normal;
