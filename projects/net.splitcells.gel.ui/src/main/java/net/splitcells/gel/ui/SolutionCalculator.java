@@ -23,6 +23,7 @@ import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.type.Cost;
+import net.splitcells.gel.ui.no.code.editor.NoCodeSolutionCalculator;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
@@ -39,6 +40,15 @@ import static net.splitcells.gel.solution.optimization.DefaultOptimization.defau
 import static net.splitcells.gel.ui.ProblemParser.parseProblem;
 import static net.splitcells.website.server.processor.Response.response;
 
+/**
+ * The code editor based on {@link SolutionCalculator} and the no-code editor based on {@link NoCodeSolutionCalculator}
+ * have overlapping functionality, which is ok for now.
+ * The reason for this is, that the code editor has a lot smaller file size footprint for its source code,
+ * than the no-code editor.
+ * Furthermore, the handling of both is so different,
+ * that it might be a good idea to wait,
+ * if the no-code variant is truly universally good enough.
+ */
 public class SolutionCalculator implements Processor<Perspective, Perspective> {
 
     public static final Trail PATH = Trail.trail("net/splitcells/gel/ui/calculate-solution.form");
