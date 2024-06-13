@@ -9,7 +9,12 @@
 */
 /* TODO Split CSS in CSS without classes and CSS with specifics for this website.
 */
- .net-splitcells-gel-ui-editor-no-code-pop-up {
+.net-splitcells-dem-lang-perspective-no-code-subject {
+    /* This is something, that is selected and for which an action menu is opened. */
+    font-weight: bolder;
+    font-family: var(--text-font-family);
+}
+.net-splitcells-gel-ui-editor-no-code-pop-up {
     position: absolute;
     background-color: var(--background-color-selected-priority-0);
     z-index: 8;
@@ -116,12 +121,18 @@
 }
 .net-splitcells-dem-lang-perspective-no-code-function-call-name:after {
     content: " (";
+    font-family: var(--no-code-text-font-family);
+    font-weight: normal;
 }
 .net-splitcells-dem-lang-perspective-no-code-function-call-argument:last-child:after {
     content: ")";
+    font-family: var(--no-code-text-font-family);
+    font-weight: normal;
 }
 .net-splitcells-dem-lang-perspective-no-code-function-call-argument:not(:last-child):after {
     content: ",";
+    font-family: var(--no-code-text-font-family);
+    font-weight: normal;
 }
 .net-splitcells-dem-lang-perspective-no-code-function-call .net-splitcells-dem-lang-perspective-no-code-function-call:before {
     content: ""
@@ -136,7 +147,7 @@
 }
 .net-splitcells-dem-lang-perspective-no-code-function-call:before {
     content: "- ";
-    font-family: Palatino, Palatino Linotype, Palatino LT STD, Book Antiqua, Georgia, serif;
+    font-family: var(--no-code-text-font-family);
     font-weight: normal;
 }
 .net-splitcells-dem-lang-perspective-no-code-variable-name:hover
@@ -155,11 +166,11 @@
 }
 .net-splitcells-dem-lang-perspective-no-code-variable-name:after {
     content: " =";
-    font-family: Palatino, Palatino Linotype, Palatino LT STD, Book Antiqua, Georgia, serif;
+    font-family: var(--no-code-text-font-family);
     font-weight: normal;
 }
 .net-splitcells-dem-lang-perspective-no-code-lang {
-    font-family: Palatino, Palatino Linotype, Palatino LT STD, Book Antiqua, Georgia, serif;
+    font-family: var(--no-code-text-font-family);
 }
 .net-splitcells-website-form-editor-tab-bar {
     display: flex;

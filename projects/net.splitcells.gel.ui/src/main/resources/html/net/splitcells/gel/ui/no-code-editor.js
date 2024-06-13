@@ -46,12 +46,14 @@ function net_splitcells_gel_ui_editor_no_code_generic_enhance(astElement, config
         for (var j = 0; j < astElement.parentNode.childNodes.length; j++) {
             if (astElement.parentNode.childNodes[j].className == "net-splitcells-dem-lang-perspective-no-code-action-menu") {
                 astElement.parentNode.removeChild(astElement.parentNode.childNodes[j]);
+                net_splitcells_gel_ui_editor_no_code_action_menu_close();
                 return;
             }
         }
         net_splitcells_gel_ui_editor_no_code_action_menu_close();
+        astElement.className += ' net-splitcells-dem-lang-perspective-no-code-subject ';
         actionMenu = document.createElement("div");
-        actionMenu.className = "net-splitcells-dem-lang-perspective-no-code-action-menu"
+        actionMenu.className = "net-splitcells-dem-lang-perspective-no-code-action-menu";
         actionMenu.innerHTML = '<div class="net-splitcells-no-code-action-menu-title"><span class="net-splitcells-no-code-action-menu-title-name">'
             + config.title
             + '</span><span class="net-splitcells-action-button net-splitcells-no-code-action-menu-close" onclick="net_splitcells_gel_ui_editor_no_code_action_menu_close();">X</span></div>'
@@ -97,6 +99,10 @@ function net_splitcells_gel_ui_editor_no_code_variable_definition_names_enhance(
     }
 }
 function net_splitcells_gel_ui_editor_no_code_action_menu_close() {
+    var actionSubjects = document.getElementsByClassName("net-splitcells-dem-lang-perspective-no-code-subject");
+    for (var i = 0; i < actionSubjects.length; i++) {
+        actionSubjects[i].classList.remove("net-splitcells-dem-lang-perspective-no-code-subject");
+    }
     net_splitcells_gel_ui_editor_no_code_pop_ups_close();
     var actionMenus = document.getElementsByClassName("net-splitcells-dem-lang-perspective-no-code-action-menu");
     for (var i = 0; i < actionMenus.length; i++) {
