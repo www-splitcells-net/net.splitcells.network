@@ -114,8 +114,8 @@
     margin-bottom: 1em;
     background-color: var(--background-color-priority-0);
 }
-.net-splitcells-dem-lang-perspective-no-code-function-call-argument:nth-child(2):before {
-    content: "(";
+.net-splitcells-dem-lang-perspective-no-code-function-call-name:after {
+    content: " (";
 }
 .net-splitcells-dem-lang-perspective-no-code-function-call-argument:last-child:after {
     content: ")";
