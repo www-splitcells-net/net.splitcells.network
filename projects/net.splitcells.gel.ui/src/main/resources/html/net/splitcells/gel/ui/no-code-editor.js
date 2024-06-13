@@ -52,12 +52,11 @@ function net_splitcells_gel_ui_editor_no_code_generic_enhance(astElement, config
         net_splitcells_gel_ui_editor_no_code_action_menu_close();
         actionMenu = document.createElement("div");
         actionMenu.className = "net-splitcells-dem-lang-perspective-no-code-action-menu"
-        actionMenu.innerHTML = '<h1>'
+        actionMenu.innerHTML = '<div class="net-splitcells-no-code-action-menu-title"><span class="net-splitcells-no-code-action-menu-title-name">'
             + config.title
-            + '</h1><ol>'
-            + '<li onclick="net_splitcells_gel_ui_editor_no_code_action_menu_close();">Close</li>' // Close is placed on top, so that a action pop-up can also be closed via a closure of the action menu.
-            + config.actionList
-            + '</ol>'
+            + '</span><span class="net-splitcells-action-button net-splitcells-no-code-action-menu-close" onclick="net_splitcells_gel_ui_editor_no_code_action_menu_close();">X</span></div>'
+            + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_action_menu_close();">Close</div>' // Close is placed on top, so that a action pop-up can also be closed via a closure of the action menu.
+            + config.actionList;
         astElement.parentNode.insertBefore(actionMenu, astElement.nextSibling);
     };
 }
