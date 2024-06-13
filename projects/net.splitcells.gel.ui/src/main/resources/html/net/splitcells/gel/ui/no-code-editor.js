@@ -63,9 +63,9 @@ function net_splitcells_gel_ui_editor_no_code_variable_references_enhance() {
     var arguments = document.getElementsByClassName("net-splitcells-dem-lang-perspective-no-code-variable-reference");
     for (var i = 0; i < arguments.length; i++) {
         net_splitcells_gel_ui_editor_no_code_generic_enhance(arguments[i], {
-            title : 'Variable Reference Actions'
+            title : 'Reference Actions'
             , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_variable_references_set_pop_up(this);">Set reference</div>'
-                + '<div onclick="net_splitcells_gel_ui_editor_no_code_variable_references_enhance_help_show(this);">Help</div>'
+                + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_variable_references_enhance_help_show(this);">Help</div>'
         });
     }
 }
@@ -108,7 +108,9 @@ function net_splitcells_gel_ui_editor_no_code_variable_definition_rename_pop_up(
     let renameWindow = document.createElement("div");
     let variableDefinition = renameAction.parentNode.parentNode;
     let variableName = variableDefinition.getElementsByClassName("net-splitcells-dem-lang-perspective-no-code-variable-name")[0];
-    renameWindow.innerHTML = '<h1>Rename variable</h1><div class="net-splitcells-button net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_pop_ups_close();">Close</div>';
+    renameWindow.innerHTML = '<div class="net-splitcells-no-code-action-menu-title"><span class="net-splitcells-no-code-action-menu-title-name">Rename variable</span>'
+    + '<span class="net-splitcells-action-button net-splitcells-no-code-action-menu-close" onclick="net_splitcells_gel_ui_editor_no_code_pop_ups_close();">X</span>'
+    + '</div>';
     let renameInput = document.createElement("input");
     renameInput.type = 'text';
     renameInput.value = variableName.innerHTML;
@@ -128,11 +130,14 @@ function net_splitcells_gel_ui_editor_no_code_variable_definition_rename(variabl
 }
 function net_splitcells_gel_ui_editor_no_code_variable_references_set_pop_up(setAction) {
     net_splitcells_gel_ui_editor_no_code_pop_ups_close();
-    let menu = setAction.parentNode.parentNode;
+    let menu = setAction.parentNode;
     let literalHolder = menu.parentNode;
     let literalElement = literalHolder.children[Array.from(literalHolder.children).indexOf(menu) - 1];
     let setWindow = document.createElement("div");
-    setWindow.innerHTML = '<h1>Set literal value</h1><div class="net-splitcells-button net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_pop_ups_close();">Close</div>';
+
+    setWindow.innerHTML = '<div class="net-splitcells-no-code-action-menu-title"><span class="net-splitcells-no-code-action-menu-title-name">Set literal value</span>'
+        + '<span class="net-splitcells-action-button net-splitcells-no-code-action-menu-close" onclick="net_splitcells_gel_ui_editor_no_code_pop_ups_close();">X</span>'
+        + '</div>';
     setWindow.className = 'net-splitcells-gel-ui-editor-no-code-pop-up';
 
     let variableDefinitions = document.getElementsByClassName("net-splitcells-dem-lang-perspective-no-code-variable-definition");
@@ -154,7 +159,9 @@ function net_splitcells_gel_ui_editor_no_code_literal_set_pop_up(setAction) {
     let literalHolder = menu.parentNode;
     let literalElement = literalHolder.children[Array.from(literalHolder.children).indexOf(menu) - 1];
     let setWindow = document.createElement("div");
-    setWindow.innerHTML = '<h1>Set literal value</h1>';
+    setWindow.innerHTML = '<div class="net-splitcells-no-code-action-menu-title"><span class="net-splitcells-no-code-action-menu-title-name">Set literal value</span>'
+            + '<span class="net-splitcells-action-button net-splitcells-no-code-action-menu-close" onclick="net_splitcells_gel_ui_editor_no_code_pop_ups_close();">X</span>'
+            + '</div>';
     let setInput = document.createElement("input");
     setInput.type = 'text';
     setInput.value = literalElement.innerHTML;
