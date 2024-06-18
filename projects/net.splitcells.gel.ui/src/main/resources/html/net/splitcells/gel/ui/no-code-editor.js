@@ -36,10 +36,13 @@ function enhanceNoCodeEditors() {
             }
         });
         syncTargetObserver.observe(syncTarget, { attributes: true, childList: true, subtree: true,characterData: true});
-        net_splitcells_gel_ui_editor_no_code_variable_definition_names_enhance();
-        net_splitcells_gel_ui_editor_no_code_function_calls_enhance();
-        net_splitcells_gel_ui_editor_no_code_variable_references_enhance();
+        net_splitcells_gel_ui_editor_no_code_enhance();
 	}
+}
+function net_splitcells_gel_ui_editor_no_code_enhance() {
+    net_splitcells_gel_ui_editor_no_code_variable_definition_names_enhance();
+    net_splitcells_gel_ui_editor_no_code_function_calls_enhance();
+    net_splitcells_gel_ui_editor_no_code_variable_references_enhance();
 }
 function net_splitcells_gel_ui_editor_no_code_generic_enhance(astElement, config) {
     astElement.onclick = function() {
@@ -346,16 +349,35 @@ function net_splitcells_gel_ui_editor_no_code_function_call_append_pop_up(append
         + '</div>';
     setWindow.className = 'net-splitcells-gel-ui-editor-no-code-pop-up';
 
-    for (var i = 0; i < allowedFunctionCalls.length; i++) {
+    var requestFunctionMeta = new XMLHttpRequest();
+    requestFunctionMeta.open("GET", "/net/splitcells/gel/ui/no/code/editor/function-meta.json", true);
+    requestFunctionMeta.onload = (e) => {
+        var functionMeta = JSON.parse(requestFunctionMeta.responseText);
+        net_splitcells_gel_ui_editor_no_code_function_call_append_pop_up_meta(functionCall, setWindow, allowedFunctionCalls, appendButton, functionMeta);
+    };
+    requestFunctionMeta.send(null);
+}
+function net_splitcells_gel_ui_editor_no_code_function_call_append_pop_up_meta(functionCall, setWindow, allowedFunctionCalls, appendButton, functionMeta) {
+    for (var i = 0; i < allowedFunctionCalls.length; ++i) {
         let possibleName = allowedFunctionCalls[i];
         let setSubmit = document.createElement("div");
         setSubmit.className = 'net-splitcells-button net-splitcells-action-button';
         setSubmit.onclick = function() {
             let newFunctionCall = document.createElement('div');
+            let numberOfArguments = functionMeta[possibleName]['number-of-arguments'];
             newFunctionCall.className = 'net-splitcells-dem-lang-perspective-no-code-function-call';
             newFunctionCall.innerHTML = '<span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">' + possibleName + '</span>';
+            if (numberOfArguments !== undefined) {
+                for (var j = 0; j < numberOfArguments; ++j) {
+                    newFunctionCall.innerHTML += '<span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument"><span class="net-splitcells-dem-lang-perspective-no-code-undefined">?</span></span>';
+                }
+            }
+            if (functionMeta[possibleName]['has-variable-arguments']) {
+                newFunctionCall.innerHTML += '<span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument"><span class="net-splitcells-dem-lang-perspective-no-code-var-arg">...</span></span>';
+            }
             functionCall.parentNode.insertBefore(newFunctionCall, functionCall.nextSibling);
             net_splitcells_gel_ui_editor_no_code_action_menu_close();
+            net_splitcells_gel_ui_editor_no_code_enhance();
         };
         setSubmit.innerHTML = possibleName;
         setWindow.appendChild(setSubmit);

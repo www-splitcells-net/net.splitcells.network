@@ -45,6 +45,7 @@ import java.util.function.Function;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
+import static net.splitcells.gel.ui.no.code.editor.FunctionMeta.functionMeta;
 import static net.splitcells.gel.ui.no.code.editor.Functions.functions;
 import static net.splitcells.gel.ui.no.code.editor.NoCodeSolutionCalculator.noCodeSolutionCalculator;
 import static net.splitcells.gel.ui.SolutionCalculator.solutionCalculator;
@@ -132,6 +133,7 @@ public class WebsiteViaJar {
                 .withAdditionalProcessor(NoCodeSolutionCalculator.PATH, noCodeSolutionCalculator())
                 .withAdditionalProjectsRendererExtension(topLevelFunctions())
                 .withAdditionalProjectsRendererExtension(functions())
+                .withAdditionalProjectsRendererExtension(functionMeta())
                 ;
     }
 
