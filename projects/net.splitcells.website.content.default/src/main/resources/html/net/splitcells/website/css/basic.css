@@ -159,6 +159,9 @@
 {
     font-weight: bolder;
     font-family: var(--text-font-family);
+    background-color: var(--background-color-activity);
+    border-radius: var(--border-radius-for-actions);
+    padding: .2em;
 }
 .net-splitcells-dem-lang-perspective-no-code-variable-access .net-splitcells-dem-lang-perspective-no-code-variable-reference:after {
     content: ":";
