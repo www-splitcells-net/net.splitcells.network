@@ -224,12 +224,17 @@
                     </span>
                 </span>
                 <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
-                    <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">minimalDistance</span>
+                    <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">then</span>
                     <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
-                        <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">date</span>
-                    </span>
-                    <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
-                        <span class="net-splitcells-dem-lang-perspective-no-code-literal">3</span>
+                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+                            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">minimalDistance</span>
+                            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                                <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">date</span>
+                            </span>
+                            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                                <span class="net-splitcells-dem-lang-perspective-no-code-literal">3</span>
+                            </span>
+                        </span>
                     </span>
                 </span>
             </li>
@@ -242,12 +247,17 @@
                     </span>
                 </span>
                 <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
-                    <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">minimalDistance</span>
+                    <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">then</span>
                     <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
-                        <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">date</span>
-                    </span>
-                    <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
-                        <span class="net-splitcells-dem-lang-perspective-no-code-literal">5</span>
+                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
+                            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">minimalDistance</span>
+                            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                                <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">date</span>
+                            </span>
+                            <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
+                                <span class="net-splitcells-dem-lang-perspective-no-code-literal">5</span>
+                            </span>
+                        </span>
                     </span>
                 </span>
             </li>
