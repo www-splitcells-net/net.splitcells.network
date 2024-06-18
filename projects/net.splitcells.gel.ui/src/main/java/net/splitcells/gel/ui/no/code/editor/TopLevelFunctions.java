@@ -67,8 +67,8 @@ public class TopLevelFunctions implements ProjectsRendererExtension {
             return Optional.of(binaryMessage(toBytes("["
                     + "\"attribute\""
                     + ",\"database\""
-                    + ",\"solution\""
                     + ",\"forEach\""
+                    + ",\"solution\""
                     + "]"), Formats.JSON));
         }
         return Optional.empty();
