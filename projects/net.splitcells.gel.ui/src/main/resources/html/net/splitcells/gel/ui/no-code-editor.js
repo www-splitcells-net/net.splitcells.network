@@ -78,6 +78,7 @@ function net_splitcells_gel_ui_editor_no_code_function_calls_enhance() {
             title : 'Function Actions'
             , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_function_call_delete(this);">Delete function call</div>'
                 + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_function_call_set(this);">Set called function</div>'
+                + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_function_call_append(this);">Append function call</div>'
                 + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_function_call_name_help_show(this);">Help</div>'
         });
     }
@@ -318,4 +319,46 @@ function net_splitcells_gel_ui_editor_no_code_function_call_set_pop_up(setAction
         setWindow.appendChild(setSubmit);
     }
     setAction.parentNode.insertBefore(setWindow, setAction.nextSibling);
+}
+function net_splitcells_gel_ui_editor_no_code_function_call_append(appendButton) {
+let functionCall = appendButton.parentNode.parentNode;
+    let functionCallHolder = functionCall.parentNode.parentNode;
+    if (hasClass(functionCall.parentNode, 'net-splitcells-dem-lang-perspective-no-code-variable-access')) {
+        functionCallHolder = functionCall.parentNode;
+    }
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.open("GET", "/net/splitcells/gel/ui/no/code/editor/functions.json", true);
+    httpRequest.onload = (e) => {
+        var topLevelFunctions = JSON.parse(httpRequest.responseText);
+        net_splitcells_gel_ui_editor_no_code_function_call_append_pop_up(appendButton, topLevelFunctions);
+    };
+    httpRequest.send(null);
+}
+function net_splitcells_gel_ui_editor_no_code_function_call_append_pop_up(appendButton, allowedFunctionCalls) {
+    net_splitcells_gel_ui_editor_no_code_pop_ups_close();
+    let menu = appendButton.parentNode;
+    let functionCall = menu.parentNode;
+    let callName = functionCall.children[Array.from(functionCall.children).indexOf(menu) - 1];
+    let setWindow = document.createElement("div");
+
+    setWindow.innerHTML = '<div class="net-splitcells-no-code-action-menu-title"><span class="net-splitcells-no-code-action-menu-title-name">Append function call</span>'
+        + '<span class="net-splitcells-action-button net-splitcells-no-code-action-menu-close" onclick="net_splitcells_gel_ui_editor_no_code_pop_ups_close();">X</span>'
+        + '</div>';
+    setWindow.className = 'net-splitcells-gel-ui-editor-no-code-pop-up';
+
+    for (var i = 0; i < allowedFunctionCalls.length; i++) {
+        let possibleName = allowedFunctionCalls[i];
+        let setSubmit = document.createElement("div");
+        setSubmit.className = 'net-splitcells-button net-splitcells-action-button';
+        setSubmit.onclick = function() {
+            let newFunctionCall = document.createElement('div');
+            newFunctionCall.className = 'net-splitcells-dem-lang-perspective-no-code-function-call';
+            newFunctionCall.innerHTML = '<span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">' + possibleName + '</span>';
+            functionCall.parentNode.insertBefore(newFunctionCall, functionCall.nextSibling);
+            net_splitcells_gel_ui_editor_no_code_action_menu_close();
+        };
+        setSubmit.innerHTML = possibleName;
+        setWindow.appendChild(setSubmit);
+    }
+    appendButton.parentNode.insertBefore(setWindow, appendButton.nextSibling);
 }
