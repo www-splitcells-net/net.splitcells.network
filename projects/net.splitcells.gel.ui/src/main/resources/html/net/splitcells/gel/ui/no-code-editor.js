@@ -76,7 +76,8 @@ function net_splitcells_gel_ui_editor_no_code_function_calls_enhance() {
     for (var i = 0; i < functionCalls.length; i++) {
         net_splitcells_gel_ui_editor_no_code_generic_enhance(functionCalls[i], {
             title : 'Function Actions'
-            , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_function_call_name_help_show(this);">Help</div>'
+            , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_function_call_delete(this);">Delete function call</div>'
+                + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_function_call_name_help_show(this);">Help</div>'
         });
     }
     var literals = document.getElementsByClassName("net-splitcells-dem-lang-perspective-no-code-literal");
@@ -94,6 +95,7 @@ function net_splitcells_gel_ui_editor_no_code_variable_definition_names_enhance(
         net_splitcells_gel_ui_editor_no_code_generic_enhance(variableDefinitions[i], {
             title : 'Variable Actions'
             , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_variable_definition_rename_pop_up(this);">Rename variable</div>'
+                + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_variable_definition_delete(this);">Delete variable</div>'
                 + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_variable_definition_help_show(this);">Help</div>'
         });
     }
@@ -241,4 +243,8 @@ function net_splitcells_gel_ui_editor_no_code_literal_help_show(helpAction) {
         helpSubject: 'literal'
         , helpType: 'general'
     });
+}
+function net_splitcells_gel_ui_editor_no_code_function_call_delete(deleteButton) {
+    deleteButton.parentNode.parentNode.parentNode.removeChild(deleteButton.parentNode.parentNode);
+}
 }
