@@ -317,6 +317,8 @@ function net_splitcells_gel_ui_editor_no_code_function_call_set_pop_up(setAction
         setSubmit.className = 'net-splitcells-button net-splitcells-action-button';
         setSubmit.onclick = function() {
             callName.innerHTML = possibleName;
+            $(functionCall).children('.net-splitcells-dem-lang-perspective-no-code-function-call-argument').remove();
+            net_splitcells_gel_ui_editor_no_code_function_call_add_arguments(functionCall, possibleName);
         };
         setSubmit.innerHTML = possibleName;
         setWindow.appendChild(setSubmit);
@@ -348,39 +350,39 @@ function net_splitcells_gel_ui_editor_no_code_function_call_append_pop_up(append
         + '<span class="net-splitcells-action-button net-splitcells-no-code-action-menu-close" onclick="net_splitcells_gel_ui_editor_no_code_pop_ups_close();">X</span>'
         + '</div>';
     setWindow.className = 'net-splitcells-gel-ui-editor-no-code-pop-up';
-
-    var requestFunctionMeta = new XMLHttpRequest();
-    requestFunctionMeta.open("GET", "/net/splitcells/gel/ui/no/code/editor/function-meta.json", true);
-    requestFunctionMeta.onload = (e) => {
-        var functionMeta = JSON.parse(requestFunctionMeta.responseText);
-        net_splitcells_gel_ui_editor_no_code_function_call_append_pop_up_meta(functionCall, setWindow, allowedFunctionCalls, appendButton, functionMeta);
-    };
-    requestFunctionMeta.send(null);
-}
-function net_splitcells_gel_ui_editor_no_code_function_call_append_pop_up_meta(functionCall, setWindow, allowedFunctionCalls, appendButton, functionMeta) {
     for (var i = 0; i < allowedFunctionCalls.length; ++i) {
         let possibleName = allowedFunctionCalls[i];
         let setSubmit = document.createElement("div");
         setSubmit.className = 'net-splitcells-button net-splitcells-action-button';
         setSubmit.onclick = function() {
             let newFunctionCall = document.createElement('div');
-            let numberOfArguments = functionMeta[possibleName]['number-of-arguments'];
             newFunctionCall.className = 'net-splitcells-dem-lang-perspective-no-code-function-call';
             newFunctionCall.innerHTML = '<span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">' + possibleName + '</span>';
-            if (numberOfArguments !== undefined) {
-                for (var j = 0; j < numberOfArguments; ++j) {
-                    newFunctionCall.innerHTML += '<span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument"><span class="net-splitcells-dem-lang-perspective-no-code-undefined">?</span></span>';
-                }
-            }
-            if (functionMeta[possibleName]['has-variable-arguments']) {
-                newFunctionCall.innerHTML += '<span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument"><span class="net-splitcells-dem-lang-perspective-no-code-var-arg">...</span></span>';
-            }
-            functionCall.parentNode.insertBefore(newFunctionCall, functionCall.nextSibling);
-            net_splitcells_gel_ui_editor_no_code_action_menu_close();
-            net_splitcells_gel_ui_editor_no_code_enhance();
+            $(functionCall).after(newFunctionCall);
+            net_splitcells_gel_ui_editor_no_code_function_call_add_arguments(newFunctionCall, possibleName);
         };
         setSubmit.innerHTML = possibleName;
         setWindow.appendChild(setSubmit);
     }
     appendButton.parentNode.insertBefore(setWindow, appendButton.nextSibling);
+
+}
+function net_splitcells_gel_ui_editor_no_code_function_call_add_arguments(functionCall, functionName) {
+     var requestFunctionMeta = new XMLHttpRequest();
+    requestFunctionMeta.open("GET", "/net/splitcells/gel/ui/no/code/editor/function-meta.json", true);
+    requestFunctionMeta.onload = (e) => {
+        var functionMeta = JSON.parse(requestFunctionMeta.responseText);
+        let numberOfArguments = functionMeta[functionName]['number-of-arguments'];
+        if (numberOfArguments !== undefined) {
+            for (var j = 0; j < numberOfArguments; ++j) {
+                functionCall.innerHTML += '<span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument"><span class="net-splitcells-dem-lang-perspective-no-code-undefined">?</span></span>';
+            }
+        }
+        if (functionMeta[functionName]['has-variable-arguments']) {
+            functionCall.innerHTML += '<span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument"><span class="net-splitcells-dem-lang-perspective-no-code-var-arg">...</span></span>';
+        }
+        net_splitcells_gel_ui_editor_no_code_action_menu_close();
+        net_splitcells_gel_ui_editor_no_code_enhance(); // TODO Could be speed up, by applying enhance only on the new function call.
+    };
+    requestFunctionMeta.send(null);
 }
