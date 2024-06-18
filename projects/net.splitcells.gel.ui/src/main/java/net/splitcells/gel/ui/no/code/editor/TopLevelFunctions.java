@@ -21,6 +21,7 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.resource.FileSystemView;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.utils.StringUtils;
+import net.splitcells.gel.constraint.Query;
 import net.splitcells.website.Formats;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.processor.BinaryMessage;
@@ -50,6 +51,16 @@ public class TopLevelFunctions implements ProjectsRendererExtension {
 
     }
 
+    /**
+     * TODO HACK This data should be queried from the {@link Query} interface,
+     * in order to avoid duplicating this information.
+     * Currently, the {@link Query} interface does not provide this information.
+     *
+     * @param path
+     * @param projectsRenderer
+     * @param config
+     * @return
+     */
     @Override
     public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRenderer, Config config) {
         if (PATH.equals(path)) {
