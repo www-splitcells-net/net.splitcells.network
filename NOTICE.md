@@ -382,4 +382,12 @@ Logback
 * Source Code: https://github.com/qos-ch/logback
 
 SLF4J
-*
+* License: MIT
+* Source Code: https://github.com/qos-ch/slf4j
+* Website: https://slf4j.org/
+
+jQuery
+* License: MIT
+* Reason: jQuery is used in order to simplify HTML manipulation in JavaScript for the UI
+* Source Code: https://github.com/jquery/jquery
+* Website: https://jquery.com/
