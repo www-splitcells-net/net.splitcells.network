@@ -247,4 +247,6 @@ function net_splitcells_gel_ui_editor_no_code_literal_help_show(helpAction) {
 function net_splitcells_gel_ui_editor_no_code_function_call_delete(deleteButton) {
     deleteButton.parentNode.parentNode.parentNode.removeChild(deleteButton.parentNode.parentNode);
 }
+function net_splitcells_gel_ui_editor_no_code_variable_definition_delete(deleteButton) {
+    deleteButton.parentNode.parentNode.parentNode.removeChild(deleteButton.parentNode.parentNode);
 }
