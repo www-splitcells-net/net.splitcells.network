@@ -162,6 +162,7 @@
     background-color: var(--background-color-activity);
     border-radius: var(--border-radius-for-actions);
     padding: .2em;
+    box-shadow: .1em .1em .1em var(--shadow-color-priority-1);
 }
 .net-splitcells-dem-lang-perspective-no-code-variable-access .net-splitcells-dem-lang-perspective-no-code-variable-reference:after {
     content: ":";
