@@ -77,6 +77,7 @@ function net_splitcells_gel_ui_editor_no_code_function_calls_enhance() {
         net_splitcells_gel_ui_editor_no_code_generic_enhance(functionCalls[i], {
             title : 'Function Actions'
             , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_function_call_delete(this);">Delete function call</div>'
+                + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_function_call_set(this);">Set called function</div>'
                 + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_function_call_name_help_show(this);">Help</div>'
         });
     }
@@ -249,4 +250,56 @@ function net_splitcells_gel_ui_editor_no_code_function_call_delete(deleteButton)
 }
 function net_splitcells_gel_ui_editor_no_code_variable_definition_delete(deleteButton) {
     deleteButton.parentNode.parentNode.parentNode.removeChild(deleteButton.parentNode.parentNode);
+}
+function net_splitcells_gel_ui_editor_no_code_function_call_set(setButton) {
+    let functionCall = setButton.parentNode.parentNode;
+    let functionCallHolder = functionCall.parentNode.parentNode;
+    if (hasClass(functionCallHolder, 'net-splitcells-dem-lang-perspective-no-code-variable-definition')) {
+        let isFirstFunctionCall = false;
+        let variableValue = functionCallHolder.getElementsByClassName('net-splitcells-dem-lang-perspective-no-code-variable-value')[0];
+        for (var i = 0; i < variableValue.children.length; i++) {
+            let child = variableValue.children[i];
+            if (functionCall.isSameNode(child)) {
+                isFirstFunctionCall = true;
+                break;
+            }
+            if (hasClass(child, "net-splitcells-dem-lang-perspective-no-code-function-call")) {
+                break;
+            }
+        }
+        if (!isFirstFunctionCall) {
+            return;
+        }
+        var httpRequest = new XMLHttpRequest();
+        httpRequest.open("GET", "/net/splitcells/gel/ui/no/code/editor/top-level-functions.json", true);
+        httpRequest.onload = (e) => {
+            var topLevelFunctions = JSON.parse(httpRequest.responseText);
+            net_splitcells_gel_ui_editor_no_code_function_call_set_pop_up(setButton, topLevelFunctions);
+        };
+        httpRequest.send(null);
+    }
+}
+function net_splitcells_gel_ui_editor_no_code_function_call_set_pop_up(setAction, topLevelFunctions) {
+    net_splitcells_gel_ui_editor_no_code_pop_ups_close();
+    let menu = setAction.parentNode;
+    let functionCall = menu.parentNode;
+    let callName = functionCall.children[Array.from(functionCall.children).indexOf(menu) - 1];
+    let setWindow = document.createElement("div");
+
+    setWindow.innerHTML = '<div class="net-splitcells-no-code-action-menu-title"><span class="net-splitcells-no-code-action-menu-title-name">Set function call</span>'
+        + '<span class="net-splitcells-action-button net-splitcells-no-code-action-menu-close" onclick="net_splitcells_gel_ui_editor_no_code_pop_ups_close();">X</span>'
+        + '</div>';
+    setWindow.className = 'net-splitcells-gel-ui-editor-no-code-pop-up';
+
+    for (var i = 0; i < topLevelFunctions.length; i++) {
+        let possibleName = topLevelFunctions[i];
+        let setSubmit = document.createElement("div");
+        setSubmit.className = 'net-splitcells-button net-splitcells-action-button';
+        setSubmit.onclick = function() {
+            callName.innerHTML = possibleName;
+        };
+        setSubmit.innerHTML = possibleName;
+        setWindow.appendChild(setSubmit);
+    }
+    setAction.parentNode.insertBefore(setWindow, setAction.nextSibling);
 }

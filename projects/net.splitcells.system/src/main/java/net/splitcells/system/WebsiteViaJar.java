@@ -47,6 +47,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.gel.ui.no.code.editor.NoCodeSolutionCalculator.noCodeSolutionCalculator;
 import static net.splitcells.gel.ui.SolutionCalculator.solutionCalculator;
+import static net.splitcells.gel.ui.no.code.editor.TopLevelFunctions.topLevelFunctions;
 import static net.splitcells.website.server.ProgramConfig.programConfig;
 import static net.splitcells.website.server.ProjectConfig.projectConfig;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
@@ -128,6 +129,7 @@ public class WebsiteViaJar {
                         .withDescription(Optional.of("Define and solve assignment problems.")))
                 .withAdditionalProcessor(SolutionCalculator.PATH, solutionCalculator())
                 .withAdditionalProcessor(NoCodeSolutionCalculator.PATH, noCodeSolutionCalculator())
+                .withAdditionalProjectsRendererExtension(topLevelFunctions())
                 ;
     }
 

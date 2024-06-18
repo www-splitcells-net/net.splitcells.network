@@ -8,8 +8,8 @@ httpRequest.onload = (e) => {
     function setContent(node) {
         node.innerHTML = status
     };
-document
-    .querySelectorAll("a[class$='net-splitcells-network-status']")
-    .forEach(setContent);
+    document
+        .querySelectorAll("a[class$='net-splitcells-network-status']")
+        .forEach(setContent);
 };
 httpRequest.send(null);
