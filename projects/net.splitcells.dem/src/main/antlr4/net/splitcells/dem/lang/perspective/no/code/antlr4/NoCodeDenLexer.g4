@@ -23,6 +23,7 @@ Lesser_than: '<';
 Integer: [-+]?[0-9]+;
 Html_start: '<html xmlns="http://www.w3.org/1999/xhtml">';
 Html_end: '</html>';
+Literal_start: '<span class="net-splitcells-dem-lang-perspective-no-code-literal">';
 List_item_end: '</li>';
 Name: NamePrefix NameSuffix*;
 No_code_start: '<ol class="net-splitcells-dem-lang-perspective-no-code-lang">';

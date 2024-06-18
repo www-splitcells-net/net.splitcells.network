@@ -45,7 +45,7 @@ variable_definition:
     variable_definition_value
     List_item_end;
 value
-    : string_value
+    : Literal_start string_value Span_end
     | function_call+ /* A list of functions is a function chain. */
     | variable_reference;
 variable_definition_name: Variable_definition_name_start Name Span_end;
@@ -53,6 +53,6 @@ variable_definition_value: Variable_definition_value_start value Span_end;
 variable_reference: Variable_reference_start Name Span_end;
 variable_access:
     Variable_access_start
-    variable_definition_name
+    variable_reference
     function_call+
     List_item_end;
