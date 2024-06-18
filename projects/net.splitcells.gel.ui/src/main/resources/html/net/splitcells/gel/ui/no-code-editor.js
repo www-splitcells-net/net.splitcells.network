@@ -270,14 +270,30 @@ function net_splitcells_gel_ui_editor_no_code_function_call_set(setButton) {
         if (!isFirstFunctionCall) {
             return;
         }
-        var httpRequest = new XMLHttpRequest();
-        httpRequest.open("GET", "/net/splitcells/gel/ui/no/code/editor/top-level-functions.json", true);
-        httpRequest.onload = (e) => {
-            var topLevelFunctions = JSON.parse(httpRequest.responseText);
-            net_splitcells_gel_ui_editor_no_code_function_call_set_pop_up(setButton, topLevelFunctions);
-        };
-        httpRequest.send(null);
+    } else if (hasClass(functionCall.parentNode, 'net-splitcells-dem-lang-perspective-no-code-variable-access')) {
+        functionCallHolder = functionCall.parentNode;
+        let isFirstFunctionCall = false;
+        for (var i = 0; i < functionCallHolder.children.length; i++) {
+            let child = functionCallHolder.children[i];
+            if (functionCall.isSameNode(child)) {
+                isFirstFunctionCall = true;
+                break;
+            }
+            if (hasClass(child, "net-splitcells-dem-lang-perspective-no-code-function-call")) {
+                break;
+            }
+        }
+        if (!isFirstFunctionCall) {
+            return;
+        }
     }
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.open("GET", "/net/splitcells/gel/ui/no/code/editor/top-level-functions.json", true);
+    httpRequest.onload = (e) => {
+        var topLevelFunctions = JSON.parse(httpRequest.responseText);
+        net_splitcells_gel_ui_editor_no_code_function_call_set_pop_up(setButton, topLevelFunctions);
+    };
+    httpRequest.send(null);
 }
 function net_splitcells_gel_ui_editor_no_code_function_call_set_pop_up(setAction, topLevelFunctions) {
     net_splitcells_gel_ui_editor_no_code_pop_ups_close();
