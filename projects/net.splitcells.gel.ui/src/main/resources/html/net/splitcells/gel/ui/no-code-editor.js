@@ -43,6 +43,7 @@ function net_splitcells_gel_ui_editor_no_code_enhance() {
     net_splitcells_gel_ui_editor_no_code_variable_definition_names_enhance();
     net_splitcells_gel_ui_editor_no_code_function_calls_enhance();
     net_splitcells_gel_ui_editor_no_code_variable_references_enhance();
+    net_splitcells_gel_ui_editor_no_code_var_arg_enhance();
 }
 function net_splitcells_gel_ui_editor_no_code_generic_enhance(astElement, config) {
     astElement.onclick = function() {
@@ -365,7 +366,6 @@ function net_splitcells_gel_ui_editor_no_code_function_call_append_pop_up(append
         setWindow.appendChild(setSubmit);
     }
     appendButton.parentNode.insertBefore(setWindow, appendButton.nextSibling);
-
 }
 function net_splitcells_gel_ui_editor_no_code_function_call_add_arguments(functionCall, functionName) {
      var requestFunctionMeta = new XMLHttpRequest();
@@ -376,6 +376,11 @@ function net_splitcells_gel_ui_editor_no_code_function_call_add_arguments(functi
         if (numberOfArguments !== undefined) {
             for (var j = 0; j < numberOfArguments; ++j) {
                 functionCall.innerHTML += '<span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument"><span class="net-splitcells-dem-lang-perspective-no-code-undefined">?</span></span>';
+                net_splitcells_gel_ui_editor_no_code_generic_enhance(functionCall, {
+                    title : 'Reference Actions'
+                    , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_variable_references_set_pop_up(this);">Set reference</div>'
+                        + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_variable_references_enhance_help_show(this);">Help</div>'
+                });
             }
         }
         if (functionMeta[functionName]['has-variable-arguments']) {
@@ -385,4 +390,21 @@ function net_splitcells_gel_ui_editor_no_code_function_call_add_arguments(functi
         net_splitcells_gel_ui_editor_no_code_enhance(); // TODO Could be speed up, by applying enhance only on the new function call.
     };
     requestFunctionMeta.send(null);
+}
+function net_splitcells_gel_ui_editor_no_code_var_arg_enhance() {
+    $(".net-splitcells-dem-lang-perspective-no-code-var-arg").each((index, element) => {
+        net_splitcells_gel_ui_editor_no_code_generic_enhance(element, {
+            title : 'Var Arg Actions'
+            , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_var_arg_add(this);">Add variable</div>'
+                + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_var_arg_enhance_help_show(this);">Help</div>'
+        });
+    });
+}
+function net_splitcells_gel_ui_editor_no_code_var_arg_enhance_help_show(helpButton) {
+    net_splitcells_gel_ui_editor_no_code_help_via_dynamic_name(helpButton, {
+            helpSubject: 'variable-arguments'
+            , helpType: 'general'
+        });
+}
+function net_splitcells_gel_ui_editor_no_code_var_arg_add(addButton) {
 }
