@@ -395,7 +395,9 @@ function net_splitcells_gel_ui_editor_no_code_var_arg_enhance() {
     $(".net-splitcells-dem-lang-perspective-no-code-var-arg").each((index, element) => {
         net_splitcells_gel_ui_editor_no_code_generic_enhance(element, {
             title : 'Var Arg Actions'
-            , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_var_arg_add(this);">Add variable</div>'
+            , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_var_arg_add_function_call(this);">Add function call</div>'
+                + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_var_arg_add_literal(this);">Add literal</div>'
+                + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_var_arg_add_variable_reference(this);">Add variable reference</div>'
                 + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_var_arg_enhance_help_show(this);">Help</div>'
         });
     });
@@ -406,5 +408,12 @@ function net_splitcells_gel_ui_editor_no_code_var_arg_enhance_help_show(helpButt
             , helpType: 'general'
         });
 }
-function net_splitcells_gel_ui_editor_no_code_var_arg_add(addButton) {
+function net_splitcells_gel_ui_editor_no_code_var_arg_add_function_call(addButton) {
+    // TODO
+}
+function net_splitcells_gel_ui_editor_no_code_var_arg_add_literal(addButton) {
+    // TODO
+}
+function net_splitcells_gel_ui_editor_no_code_var_arg_add_variable_reference(addButton) {
+    // TODO
 }
