@@ -150,6 +150,10 @@
     font-family: var(--no-code-text-font-family);
     font-weight: normal;
 }
+.net-splitcells-dem-lang-perspective-no-code-action-menu > .net-splitcells-action-button {
+    text-align: left !important;
+    padding-left: 1em;
+}
 .net-splitcells-dem-lang-perspective-no-code-variable-name:hover
 ,.net-splitcells-dem-lang-perspective-no-code-function-call-name:hover
 ,.net-splitcells-dem-lang-perspective-no-code-variable-reference:hover
