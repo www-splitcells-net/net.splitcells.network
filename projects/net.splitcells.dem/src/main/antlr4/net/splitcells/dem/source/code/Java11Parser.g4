@@ -320,6 +320,7 @@ statement
     | statement_for
     | Brace_curly_open statement+ Brace_curly_closed
     | Keyword_while Brace_round_open expression Brace_round_closed statement_body
+    | Keyword_do statement_body Keyword_while Brace_round_open expression Brace_round_closed Semicolon
     | annotation statement
     ;
 statement_for

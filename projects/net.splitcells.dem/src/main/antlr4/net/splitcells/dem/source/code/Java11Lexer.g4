@@ -115,6 +115,7 @@ lexer grammar Java11Lexer;
 	Keyword_class: 'class';
 	Keyword_catch: 'catch';
 	Keyword_default: 'default';
+	Keyword_do: 'do';
 	Keyword_else: 'else';
 	Keyword_else_if: 'else if';
 	Keyword_enum: 'enum';
