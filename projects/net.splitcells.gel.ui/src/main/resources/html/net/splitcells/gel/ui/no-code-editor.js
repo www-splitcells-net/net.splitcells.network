@@ -300,6 +300,7 @@ function net_splitcells_gel_ui_editor_no_code_function_call_set(setButton) {
     };
     httpRequest.send(null);
 }
+// TODO Use net_splitcells_gel_ui_editor_no_code_function_call_add_pop_up instead.
 function net_splitcells_gel_ui_editor_no_code_function_call_set_pop_up(setAction, topLevelFunctions) {
     net_splitcells_gel_ui_editor_no_code_pop_ups_close();
     let menu = setAction.parentNode;
@@ -340,6 +341,8 @@ let functionCall = appendButton.parentNode.parentNode;
     };
     httpRequest.send(null);
 }
+/* TODO Use net_splitcells_gel_ui_editor_no_code_function_call_set_pop_up instead, in order to reduce code duplication.
+ */
 function net_splitcells_gel_ui_editor_no_code_function_call_append_pop_up(appendButton, allowedFunctionCalls) {
     net_splitcells_gel_ui_editor_no_code_pop_ups_close();
     let menu = appendButton.parentNode;
@@ -409,11 +412,54 @@ function net_splitcells_gel_ui_editor_no_code_var_arg_enhance_help_show(helpButt
         });
 }
 function net_splitcells_gel_ui_editor_no_code_var_arg_add_function_call(addButton) {
-    // TODO
+    let menu = addButton.parentNode;
+    let varArg = menu.parentNode;
+    let targetArgument = document.createElement("span");
+    targetArgument.className = "net-splitcells-no-code-update-target";
+    let targetContent = document.createElement("span");
+    targetArgument.appendChild(targetContent);
+    varArg.parentNode.insertBefore(targetArgument, varArg.previousSibling);
+    let popUpTarget = document.createElement("span");
+    addButton.parentNode.insertBefore(popUpTarget, addButton.nextSibling);
+    let httpRequest = new XMLHttpRequest();
+    httpRequest.open("GET", "/net/splitcells/gel/ui/no/code/editor/top-level-functions.json", true);
+    httpRequest.onload = (e) => {
+        var topLevelFunctions = JSON.parse(httpRequest.responseText);
+        net_splitcells_gel_ui_editor_no_code_function_call_add_pop_up(targetContent, popUpTarget, topLevelFunctions, {
+            'update-function' : () => {targetArgument.className = "net-splitcells-dem-lang-perspective-no-code-function-call-argument";}
+        });
+    };
+    httpRequest.send(null);
 }
 function net_splitcells_gel_ui_editor_no_code_var_arg_add_literal(addButton) {
     // TODO
 }
 function net_splitcells_gel_ui_editor_no_code_var_arg_add_variable_reference(addButton) {
     // TODO
+}
+function net_splitcells_gel_ui_editor_no_code_function_call_add_pop_up(functionCallTarget, popUpTarget, allowedFunctionCalls, config) {
+    net_splitcells_gel_ui_editor_no_code_pop_ups_close();
+    let setWindow = document.createElement("div");
+    setWindow.innerHTML = '<div class="net-splitcells-no-code-action-menu-title"><span class="net-splitcells-no-code-action-menu-title-name">Set function call</span>'
+        + '<span class="net-splitcells-action-button net-splitcells-no-code-action-menu-close" onclick="net_splitcells_gel_ui_editor_no_code_pop_ups_close();">X</span>'
+        + '</div>';
+    setWindow.className = 'net-splitcells-gel-ui-editor-no-code-pop-up';
+    for (var i = 0; i < allowedFunctionCalls.length; ++i) {
+        let possibleName = allowedFunctionCalls[i];
+        let setSubmit = document.createElement("div");
+        setSubmit.className = 'net-splitcells-button net-splitcells-action-button';
+        setSubmit.onclick = function() {
+            let newFunctionCall = document.createElement('div');
+            newFunctionCall.className = 'net-splitcells-dem-lang-perspective-no-code-function-call';
+            newFunctionCall.innerHTML = '<span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">' + possibleName + '</span>';
+            functionCallTarget.parentNode.replaceChild(newFunctionCall, functionCallTarget);
+            net_splitcells_gel_ui_editor_no_code_function_call_add_arguments(newFunctionCall, possibleName);
+            if (config['update-function'] !== undefined) {
+                config['update-function']();
+            }
+        };
+        setSubmit.innerHTML = possibleName;
+        setWindow.appendChild(setSubmit);
+    }
+    popUpTarget.parentNode.replaceChild(setWindow, popUpTarget);
 }
