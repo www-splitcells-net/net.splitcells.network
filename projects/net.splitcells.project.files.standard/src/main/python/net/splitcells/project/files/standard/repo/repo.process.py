@@ -42,6 +42,7 @@ TODO Make it possible to `repo.synchronize` etc. all branches of a repo.
 TODO Maybe repo process should support just being a wrapper around git submodules,
      that provides easy workflows.
 TODO Handle deletion of sub repos by remote during repo synchronization.
+TODO Support dry run for easier debugging or in order to generate shell scripts.
 """
 
 __author__ = "Mārtiņš Avots"
