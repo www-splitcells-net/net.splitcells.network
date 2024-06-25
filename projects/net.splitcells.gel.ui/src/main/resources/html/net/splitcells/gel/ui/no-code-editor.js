@@ -23,7 +23,13 @@ function net_splitcells_gel_ui_editor_form_submit() {
 function readHtmlFromTextArea(from) {
     return from.innerHTML.replaceAll('&lt;', '<').replaceAll('&gt;', '>')
 }
-function enhanceNoCodeEditors() {
+/* Add menus the AST elements of a no-code editor.
+ * Menus are nested the following way, whereby the start of each point signals, how such kind of functions are named:
+ * 1. `*_enhance`: Enhance AST elements with top level action menus
+ * 2. `*_pop_up`: Pop-ups are than dynamically added for each action in the menu.
+ * 3. `*_pop_up_[n]`: n-level-pop-ups are used for further recursion, where n starts with 1.
+ */
+function net_splitcells_gel_ui_editor_no_code_enhance() {
 	let noCodeEditors = document.querySelectorAll(".net-splitcells-webserver-form-no-code-editor");
 	for (var i = 0; i < noCodeEditors.length; i++) {
 	    let editor = noCodeEditors[i];
@@ -36,10 +42,10 @@ function enhanceNoCodeEditors() {
             }
         });
         syncTargetObserver.observe(syncTarget, { attributes: true, childList: true, subtree: true,characterData: true});
-        net_splitcells_gel_ui_editor_no_code_enhance();
+        net_splitcells_gel_ui_editor_no_code_ast_element_enhance();
 	}
 }
-function net_splitcells_gel_ui_editor_no_code_enhance() {
+function net_splitcells_gel_ui_editor_no_code_ast_element_enhance() {
     net_splitcells_gel_ui_editor_no_code_variable_definition_names_enhance();
     net_splitcells_gel_ui_editor_no_code_function_calls_enhance();
     net_splitcells_gel_ui_editor_no_code_variable_references_enhance();
@@ -328,7 +334,7 @@ function net_splitcells_gel_ui_editor_no_code_function_call_set_pop_up(setAction
     setAction.parentNode.insertBefore(setWindow, setAction.nextSibling);
 }
 function net_splitcells_gel_ui_editor_no_code_function_call_append(appendButton) {
-let functionCall = appendButton.parentNode.parentNode;
+    let functionCall = appendButton.parentNode.parentNode;
     let functionCallHolder = functionCall.parentNode.parentNode;
     if (hasClass(functionCall.parentNode, 'net-splitcells-dem-lang-perspective-no-code-variable-access')) {
         functionCallHolder = functionCall.parentNode;

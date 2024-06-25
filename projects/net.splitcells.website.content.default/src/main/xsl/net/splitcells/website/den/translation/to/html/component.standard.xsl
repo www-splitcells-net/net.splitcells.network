@@ -383,7 +383,7 @@ document.addEventListener('DOMContentLoaded', function(){
     httpRequest.open("GET", "]]><xsl:value-of select="./@initial-content-at"/><![CDATA[", true);
     function listener() {
         document.getElementById(']]><xsl:value-of select="./@id"/><![CDATA[').innerHTML = this.responseText;
-        enhanceNoCodeEditors();
+        net_splitcells_gel_ui_editor_no_code_enhance();
     }
     httpRequest.addEventListener("load", listener);
     httpRequest.send(null);
