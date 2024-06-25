@@ -43,6 +43,8 @@ TODO Maybe repo process should support just being a wrapper around git submodule
      that provides easy workflows.
 TODO Handle deletion of sub repos by remote during repo synchronization.
 TODO Support dry run for easier debugging or in order to generate shell scripts.
+TODO Create a way to list a sub repos, in order to create a list of repos.
+     This can be used, in order to create config files for other git management software.
 """
 
 __author__ = "Mārtiņš Avots"
