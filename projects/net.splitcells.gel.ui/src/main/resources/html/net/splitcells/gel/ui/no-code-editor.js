@@ -416,8 +416,6 @@ function net_splitcells_gel_ui_editor_no_code_var_arg_add_function_call(addButto
     let varArg = menu.parentNode;
     let targetArgument = document.createElement("span");
     targetArgument.className = "net-splitcells-no-code-update-target";
-    let targetContent = document.createElement("span");
-    targetArgument.appendChild(targetContent);
     varArg.parentNode.insertBefore(targetArgument, varArg.previousSibling);
     let popUpTarget = document.createElement("span");
     addButton.parentNode.insertBefore(popUpTarget, addButton.nextSibling);
@@ -425,7 +423,7 @@ function net_splitcells_gel_ui_editor_no_code_var_arg_add_function_call(addButto
     httpRequest.open("GET", "/net/splitcells/gel/ui/no/code/editor/top-level-functions.json", true);
     httpRequest.onload = (e) => {
         var topLevelFunctions = JSON.parse(httpRequest.responseText);
-        net_splitcells_gel_ui_editor_no_code_function_call_add_pop_up(targetContent, popUpTarget, topLevelFunctions, {
+        net_splitcells_gel_ui_editor_no_code_function_call_add_pop_up(targetArgument, popUpTarget, topLevelFunctions, {
             'update-function' : () => {targetArgument.className = "net-splitcells-dem-lang-perspective-no-code-function-call-argument";}
         });
     };
