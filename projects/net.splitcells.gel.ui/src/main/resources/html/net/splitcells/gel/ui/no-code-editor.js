@@ -396,7 +396,7 @@ function net_splitcells_gel_ui_editor_no_code_function_call_add_arguments(functi
             functionCall.innerHTML += '<span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument"><span class="net-splitcells-dem-lang-perspective-no-code-var-arg">...</span></span>';
         }
         net_splitcells_gel_ui_editor_no_code_action_menu_close();
-        net_splitcells_gel_ui_editor_no_code_enhance(); // TODO Could be speed up, by applying enhance only on the new function call.
+        net_splitcells_gel_ui_editor_no_code_ast_element_enhance(); // TODO Could be speed up, by applying enhance only on the new function call.
     };
     requestFunctionMeta.send(null);
 }
@@ -429,9 +429,7 @@ function net_splitcells_gel_ui_editor_no_code_var_arg_add_function_call(addButto
     httpRequest.open("GET", "/net/splitcells/gel/ui/no/code/editor/top-level-functions.json", true);
     httpRequest.onload = (e) => {
         var topLevelFunctions = JSON.parse(httpRequest.responseText);
-        net_splitcells_gel_ui_editor_no_code_function_call_add_pop_up(targetArgument, popUpTarget, topLevelFunctions, {
-            'update-function' : () => {targetArgument.className = "net-splitcells-dem-lang-perspective-no-code-function-call-argument";}
-        });
+        net_splitcells_gel_ui_editor_no_code_function_call_add_pop_up(targetArgument, popUpTarget, topLevelFunctions, {});
     };
     httpRequest.send(null);
 }
@@ -456,8 +454,9 @@ function net_splitcells_gel_ui_editor_no_code_function_call_add_pop_up(functionC
             let newFunctionCall = document.createElement('div');
             newFunctionCall.className = 'net-splitcells-dem-lang-perspective-no-code-function-call';
             newFunctionCall.innerHTML = '<span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">' + possibleName + '</span>';
-            functionCallTarget.parentNode.replaceChild(newFunctionCall, functionCallTarget);
+            functionCallTarget.appendChild(newFunctionCall);
             net_splitcells_gel_ui_editor_no_code_function_call_add_arguments(newFunctionCall, possibleName);
+            functionCallTarget.className = "net-splitcells-dem-lang-perspective-no-code-function-call-argument";
             if (config['update-function'] !== undefined) {
                 config['update-function']();
             }
