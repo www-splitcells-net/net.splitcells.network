@@ -377,7 +377,7 @@ function net_splitcells_gel_ui_editor_no_code_function_call_append_pop_up(append
     appendButton.parentNode.insertBefore(setWindow, appendButton.nextSibling);
 }
 function net_splitcells_gel_ui_editor_no_code_function_call_add_arguments(functionCall, functionName) {
-     var requestFunctionMeta = new XMLHttpRequest();
+    var requestFunctionMeta = new XMLHttpRequest();
     requestFunctionMeta.open("GET", "/net/splitcells/gel/ui/no/code/editor/function-meta.json", true);
     requestFunctionMeta.onload = (e) => {
         var functionMeta = JSON.parse(requestFunctionMeta.responseText);
