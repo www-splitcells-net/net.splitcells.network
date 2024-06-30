@@ -176,4 +176,9 @@
 }
 .net-splitcells-dem-lang-perspective-no-code-lang {
     font-family: var(--no-code-text-font-family);
+    margin: 0em;
+    padding-left: .1em;
+}
+.net-splitcells-dem-lang-perspective-no-code-lang li {
+    box-shadow: inset -0em -0em .2em var(--shadow-color-priority-1);
 }
