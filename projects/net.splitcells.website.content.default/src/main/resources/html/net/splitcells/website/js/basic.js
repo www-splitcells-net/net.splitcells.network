@@ -5,6 +5,9 @@
 /* RENAME elementId -> css_class
  * RENAME elementId_elements
  */
+ function readHtmlFromTextArea(from) {
+     return from.innerHTML.replaceAll('&lt;', '<').replaceAll('&gt;', '>')
+ }
  function checkAvailibility(cssClass) {
 	var elementsOfCssClass = document.getElementsByClassName(cssClass);
 	for (var i = 0; i < elementsOfCssClass.length; i++) {

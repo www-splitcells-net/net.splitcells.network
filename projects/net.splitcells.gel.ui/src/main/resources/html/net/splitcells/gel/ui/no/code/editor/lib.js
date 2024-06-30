@@ -20,9 +20,6 @@ function net_splitcells_gel_ui_no_code_editor_form_submit() {
     };
     net_splitcells_webserver_form_submit(config);
 }
-function readHtmlFromTextArea(from) {
-    return from.innerHTML.replaceAll('&lt;', '<').replaceAll('&gt;', '>')
-}
 /* Add menus the AST elements of a no-code editor.
  * Menus are nested the following way, whereby the start of each point signals, how such kind of functions are named:
  * 1. `*_enhance`: Enhance AST elements with top level action menus
