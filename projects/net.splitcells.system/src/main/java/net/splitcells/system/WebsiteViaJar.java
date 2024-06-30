@@ -121,6 +121,7 @@ public class WebsiteViaJar {
                 .withAdditionalCssFile("net/splitcells/website/css/den.css")
                 .withAdditionalCssFile("net/splitcells/website/css/layout.default.css")
                 .withAdditionalCssFile("net/splitcells/website/css/theme.css")
+                .withAdditionalCssFile("net/splitcells/gel/ui/no/code/editor/style.css")
                 .withAdditionalCssFile("net/splitcells/website/css/tabulator.min.css")
                 .withAdditionalProgramConfig(programConfig("Splitcells Network Documentation"
                         , "/net/splitcells/network/hub/README")
