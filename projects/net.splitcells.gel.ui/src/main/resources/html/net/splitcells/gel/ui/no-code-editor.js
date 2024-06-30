@@ -93,7 +93,7 @@ function net_splitcells_gel_ui_editor_no_code_function_calls_enhance() {
             title : 'Function Actions'
             , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_function_call_delete(this);">Delete function call</div>'
                 + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_function_call_set(this);">Set called function</div>'
-                + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_function_call_append(this);">Append function call</div>'
+                + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_function_call_add(this);">Append function call</div>'
                 + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_function_call_name_help_show(this);">Help</div>'
             , 'update-target-placement' : (astElement) => $('<span class="net-splitcells-no-code-insert-target"> </span>').insertAfter(astElement.parentNode)
         });
@@ -302,7 +302,7 @@ function net_splitcells_gel_ui_editor_no_code_function_call_set_pop_up(setAction
     }
     setAction.parentNode.insertBefore(setWindow, setAction.nextSibling);
 }
-function net_splitcells_gel_ui_editor_no_code_function_call_append(appendButton) {
+function net_splitcells_gel_ui_editor_no_code_function_call_add(appendButton) {
     let functionCall = $('.net-splitcells-no-code-insert-target').first().get()[0].parentNode;
     var httpRequest = new XMLHttpRequest();
     httpRequest.open("GET", "/net/splitcells/gel/ui/no/code/editor/functions.json", true);
@@ -369,7 +369,7 @@ function net_splitcells_gel_ui_editor_no_code_var_arg_enhance() {
     $(".net-splitcells-dem-lang-perspective-no-code-var-arg").each((index, element) => {
         net_splitcells_gel_ui_editor_no_code_generic_enhance(element, {
             title : 'Var Arg Actions'
-            , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_var_arg_add_function_call(this);">Add function call</div>'
+            , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_function_call_add(this);">Add function call</div>'
                 + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_var_arg_add_literal(this);">Add literal</div>'
                 + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_var_arg_add_variable_reference(this);">Add variable reference</div>'
                 + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_var_arg_enhance_help_show(this);">Help</div>'
@@ -382,20 +382,6 @@ function net_splitcells_gel_ui_editor_no_code_var_arg_enhance_help_show(helpButt
             helpSubject: 'variable-arguments'
             , helpType: 'general'
         });
-}
-function net_splitcells_gel_ui_editor_no_code_var_arg_add_function_call(addButton) {
-    let menu = addButton.parentNode;
-    let varArg = menu.parentNode;
-    let targetArgument = $('.net-splitcells-no-code-insert-target').first().get()[0];
-    let popUpTarget = document.createElement("span");
-    addButton.parentNode.insertBefore(popUpTarget, addButton.nextSibling);
-    let httpRequest = new XMLHttpRequest();
-    httpRequest.open("GET", "/net/splitcells/gel/ui/no/code/editor/top-level-functions.json", true);
-    httpRequest.onload = (e) => {
-        var topLevelFunctions = JSON.parse(httpRequest.responseText);
-        net_splitcells_gel_ui_editor_no_code_function_call_add_pop_up(targetArgument, popUpTarget, topLevelFunctions, {});
-    };
-    httpRequest.send(null);
 }
 function net_splitcells_gel_ui_editor_no_code_var_arg_add_literal(addButton) {
     let setWindow = document.createElement("div");
