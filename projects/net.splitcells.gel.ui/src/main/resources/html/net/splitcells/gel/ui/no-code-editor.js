@@ -217,16 +217,14 @@ function net_splitcells_gel_ui_editor_no_code_pop_ups_close() {
     $('.net-splitcells-no-code-update-subject').removeClass('net-splitcells-no-code-update-subject');
 }
 function net_splitcells_gel_ui_editor_no_code_help_via_dynamic_name(helpAction, config) {
-    net_splitcells_gel_ui_editor_no_code_pop_ups_close();
     let helpWindow = document.createElement("div");
 
     let helpSubject;
     if (config.helpSubject !== undefined) {
         helpSubject = config.helpSubject;
     } else {
-        let astElement = helpAction.parentNode.parentNode.parentNode.parentNode;
-        let nameHolder = astElement.getElementsByClassName(config.nameHolderCss)[0];
-        helpSubject = nameHolder.innerHTML;
+        let astElement = $('.net-splitcells-no-code-update-subject').first().get()[0];
+        helpSubject = astElement.innerHTML;
     }
     /* Using iframes, makes the help navigable by allowing to read the user related help texts via this pop-up without
      * requiring a new visual navigation element.
