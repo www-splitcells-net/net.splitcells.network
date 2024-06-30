@@ -208,6 +208,7 @@ function net_splitcells_gel_ui_editor_no_code_pop_ups_close() {
     for (var i = 0; i < existingPopUps.length; i++) {
         existingPopUps[i].parentNode.removeChild(existingPopUps[i]);
     }
+    $('.net-splitcells-no-code-update-target').remove();
 }
 function net_splitcells_gel_ui_editor_no_code_help_via_dynamic_name(helpAction, config) {
     net_splitcells_gel_ui_editor_no_code_pop_ups_close();
