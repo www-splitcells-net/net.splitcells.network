@@ -466,7 +466,7 @@ function net_splitcells_gel_ui_editor_no_code_function_call_add_pop_up(functionC
             if (config['update-function'] !== undefined) {
                 config['update-function']();
             }
-            net_splitcells_gel_ui_editor_no_code_pop_ups_close();
+            net_splitcells_gel_ui_editor_no_code_action_menu_close();
         };
         setSubmit.innerHTML = possibleName;
         setWindow.appendChild(setSubmit);
