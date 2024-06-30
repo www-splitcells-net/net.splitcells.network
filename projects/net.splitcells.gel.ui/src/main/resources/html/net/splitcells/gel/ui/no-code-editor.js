@@ -465,7 +465,28 @@ function net_splitcells_gel_ui_editor_no_code_var_arg_add_literal(addButton) {
     addButton.parentNode.insertBefore(setWindow, addButton.nextSibling);
 }
 function net_splitcells_gel_ui_editor_no_code_var_arg_add_variable_reference(addButton) {
-    // TODO
+    let setWindow = document.createElement("div");
+    setWindow.innerHTML = '<div class="net-splitcells-no-code-action-menu-title"><span class="net-splitcells-no-code-action-menu-title-name">Set reference</span>'
+        + '<span class="net-splitcells-action-button net-splitcells-no-code-action-menu-close" onclick="net_splitcells_gel_ui_editor_no_code_pop_ups_close();">X</span>'
+        + '</div>';
+    setWindow.className = 'net-splitcells-gel-ui-editor-no-code-pop-up';
+    let variableDefinitions = document.getElementsByClassName("net-splitcells-dem-lang-perspective-no-code-variable-definition");
+    for (var i = 0; i < variableDefinitions.length; i++) {
+        let variableName = variableDefinitions[i].getElementsByClassName("net-splitcells-dem-lang-perspective-no-code-variable-name")[0];
+        let setSubmit = document.createElement("div");
+        setSubmit.className = 'net-splitcells-button net-splitcells-action-button';
+        setSubmit.onclick = function() {
+            $('<span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">'
+                    + '<span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">'
+                    + variableName.innerHTML
+                    + '</span></span>')
+                .replaceAll('.net-splitcells-no-code-insert-target');
+            net_splitcells_gel_ui_editor_no_code_action_menu_close();
+        };
+        setSubmit.innerHTML = variableName.innerHTML;
+        setWindow.appendChild(setSubmit);
+    }
+    addButton.parentNode.insertBefore(setWindow, addButton.nextSibling);
 }
 function net_splitcells_gel_ui_editor_no_code_function_call_add_pop_up(functionCallTarget, popUpTarget, allowedFunctionCalls, config) {
     let setWindow = document.createElement("div");
