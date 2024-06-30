@@ -28,6 +28,17 @@ function readHtmlFromTextArea(from) {
  * 1. `*_enhance`: Enhance AST elements with top level action menus
  * 2. `*_pop_up`: Pop-ups are than dynamically added for each action in the menu.
  * 3. `*_pop_up_[n]`: n-level-pop-ups are used for further recursion, where n starts with 1.
+ *
+ * Any action on the AST elements by buttons,
+ * work independent of the relative location between the AST element and the button.
+ * Thereby, the same functionality has not to be implemented separately for every menu and pop-up type and
+ * new menu structures are easily supported.
+ * In order to achieve this, 2 css classes are placed, when one clicks on a thing, in order to change it,
+ * and deleted afterwards.
+ * The actions select the elements to be updated via these css classes:
+ * 1. The clicked element gets the css class `net-splitcells-no-code-update-subject`.
+ * 2. During the click a empty span with the css class `net-splitcells-no-code-insert-target` is placed,
+ *    at an location, where a new element could be placed.
  */
 function net_splitcells_gel_ui_editor_no_code_enhance() {
 	let noCodeEditors = document.querySelectorAll(".net-splitcells-webserver-form-no-code-editor");
