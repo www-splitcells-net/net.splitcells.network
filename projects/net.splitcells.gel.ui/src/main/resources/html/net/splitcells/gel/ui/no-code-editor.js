@@ -130,10 +130,10 @@ function net_splitcells_gel_ui_editor_no_code_action_menu_close() {
     }
 }
 function net_splitcells_gel_ui_editor_no_code_variable_definition_rename_pop_up(renameAction) {
-    net_splitcells_gel_ui_editor_no_code_pop_ups_close();
     let renameWindow = document.createElement("div");
-    let variableDefinition = renameAction.parentNode.parentNode;
-    let variableName = variableDefinition.getElementsByClassName("net-splitcells-dem-lang-perspective-no-code-variable-name")[0];
+    let variableName = $('.net-splitcells-no-code-update-subject').first().get()[0];
+    let originalName = variableName.innerHTML;
+    let variableDefinition = variableName.parentNode;
     renameWindow.innerHTML = '<div class="net-splitcells-no-code-action-menu-title"><span class="net-splitcells-no-code-action-menu-title-name">Rename variable</span>'
     + '<span class="net-splitcells-action-button net-splitcells-no-code-action-menu-close" onclick="net_splitcells_gel_ui_editor_no_code_pop_ups_close();">X</span>'
     + '</div>';
@@ -145,14 +145,17 @@ function net_splitcells_gel_ui_editor_no_code_variable_definition_rename_pop_up(
     let renameSubmit = document.createElement("div");
     renameSubmit.className = 'net-splitcells-button net-splitcells-action-button';
     renameSubmit.onclick = function() {
-        net_splitcells_gel_ui_editor_no_code_variable_definition_rename(variableName, renameInput);
+        variableName.innerHTML = renameInput.value;
+        $('.net-splitcells-dem-lang-perspective-no-code-variable-reference')
+            .filter(function(){ return $(this).text() === originalName;})
+            .each((index, element) => {
+                element.innerHTML = renameInput.value;
+            });
+        net_splitcells_gel_ui_editor_no_code_action_menu_close();
     };
     renameSubmit.innerHTML = 'Rename';
     renameWindow.appendChild(renameSubmit);
     renameAction.parentNode.insertBefore(renameWindow, renameAction.nextSibling);
-}
-function net_splitcells_gel_ui_editor_no_code_variable_definition_rename(variableName, renameInput) {
-    variableName.innerHTML = renameInput.value;
 }
 function net_splitcells_gel_ui_editor_no_code_variable_references_set_pop_up(setAction) {
     let literalElement = $('.net-splitcells-no-code-update-subject').first().get()[0];
