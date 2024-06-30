@@ -21,4 +21,13 @@
             do not require new line symbols between the start and end tag.
         </paragraph>
     </chapter>
+    <chapter>
+        <title>Perfect quoting</title>
+        <paragraph>
+            Strings with special symbols, that need to represented one to one, as is,
+            is quoted via <quote>&lt;![CDATA[]]&gt;</quote>.
+            This was written down into this guideline, in order to easily find the exact string,
+            without doing an internet search.
+        </paragraph>
+    </chapter>
 </article>
