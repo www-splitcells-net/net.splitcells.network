@@ -46,6 +46,7 @@ function net_splitcells_gel_ui_editor_no_code_enhance() {
 	}
 }
 function net_splitcells_gel_ui_editor_no_code_ast_element_enhance() {
+    net_splitcells_gel_ui_editor_no_code_undefined_enhance();
     net_splitcells_gel_ui_editor_no_code_variable_definition_names_enhance();
     net_splitcells_gel_ui_editor_no_code_function_calls_enhance();
     net_splitcells_gel_ui_editor_no_code_variable_references_enhance();
@@ -106,6 +107,20 @@ function net_splitcells_gel_ui_editor_no_code_function_calls_enhance() {
                 + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_literal_help_show(this);">Help</div>'
         });
     }
+}
+function net_splitcells_gel_ui_editor_no_code_undefined_enhance() {
+    $('.net-splitcells-dem-lang-perspective-no-code-undefined').each((index, element) => {
+        net_splitcells_gel_ui_editor_no_code_generic_enhance(element, {
+            title : 'Undefined Actions'
+            , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_undefined_help_show(this);">Help</div>'
+        });
+    });
+}
+function net_splitcells_gel_ui_editor_no_code_undefined_help_show(helpAction) {
+    net_splitcells_gel_ui_editor_no_code_help_via_dynamic_name(helpAction, {
+        helpSubject: 'undefined'
+        , helpType: 'general'
+    });
 }
 function net_splitcells_gel_ui_editor_no_code_variable_definition_names_enhance() {
     var variableDefinitions = document.getElementsByClassName('net-splitcells-dem-lang-perspective-no-code-variable-name');
