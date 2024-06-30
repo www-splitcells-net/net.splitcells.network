@@ -339,11 +339,7 @@ function net_splitcells_gel_ui_editor_no_code_function_call_set_pop_up(setAction
     setAction.parentNode.insertBefore(setWindow, setAction.nextSibling);
 }
 function net_splitcells_gel_ui_editor_no_code_function_call_append(appendButton) {
-    let functionCall = appendButton.parentNode.parentNode;
-    let functionCallHolder = functionCall.parentNode.parentNode;
-    if (hasClass(functionCall.parentNode, 'net-splitcells-dem-lang-perspective-no-code-variable-access')) {
-        functionCallHolder = functionCall.parentNode;
-    }
+    let functionCall = $('.net-splitcells-no-code-insert-target').first().get()[0].parentNode;
     var httpRequest = new XMLHttpRequest();
     httpRequest.open("GET", "/net/splitcells/gel/ui/no/code/editor/functions.json", true);
     httpRequest.onload = (e) => {
