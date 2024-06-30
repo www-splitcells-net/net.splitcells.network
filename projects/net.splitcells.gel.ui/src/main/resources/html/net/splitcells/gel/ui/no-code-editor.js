@@ -263,6 +263,8 @@ function net_splitcells_gel_ui_editor_no_code_literal_help_show(helpAction) {
 }
 function net_splitcells_gel_ui_editor_no_code_function_call_delete(deleteButton) {
     deleteButton.parentNode.parentNode.parentNode.removeChild(deleteButton.parentNode.parentNode);
+    $('.net-splitcells-no-code-update-subject').remove();
+    net_splitcells_gel_ui_editor_no_code_pop_ups_close();
 }
 function net_splitcells_gel_ui_editor_no_code_variable_definition_delete(deleteButton) {
     deleteButton.parentNode.parentNode.parentNode.removeChild(deleteButton.parentNode.parentNode);
