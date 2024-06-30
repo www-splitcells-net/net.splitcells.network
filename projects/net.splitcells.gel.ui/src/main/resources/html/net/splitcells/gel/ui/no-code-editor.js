@@ -69,6 +69,11 @@ function net_splitcells_gel_ui_editor_no_code_generic_enhance(astElement, config
             + '</span><span class="net-splitcells-action-button net-splitcells-no-code-action-menu-close" onclick="net_splitcells_gel_ui_editor_no_code_action_menu_close();">X</span></div>'
             + config.actionList;
         astElement.parentNode.insertBefore(actionMenu, astElement.nextSibling);
+        if (config['update-target-placement'] == undefined) {
+            $('<span class="net-splitcells-no-code-insert-target"> </span>').insertAfter(astElement);
+        } else {
+            config['update-target-placement'](astElement);
+        }
         astElement.className += ' net-splitcells-no-code-update-subject';
     };
 }
@@ -208,7 +213,7 @@ function net_splitcells_gel_ui_editor_no_code_pop_ups_close() {
     for (var i = 0; i < existingPopUps.length; i++) {
         existingPopUps[i].parentNode.removeChild(existingPopUps[i]);
     }
-    $('.net-splitcells-no-code-update-target').remove();
+    $('.net-splitcells-no-code-insert-target').remove();
     $('.net-splitcells-no-code-update-subject').removeClass('net-splitcells-no-code-update-subject');
 }
 function net_splitcells_gel_ui_editor_no_code_help_via_dynamic_name(helpAction, config) {
@@ -411,6 +416,7 @@ function net_splitcells_gel_ui_editor_no_code_var_arg_enhance() {
                 + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_var_arg_add_literal(this);">Add literal</div>'
                 + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_var_arg_add_variable_reference(this);">Add variable reference</div>'
                 + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_var_arg_enhance_help_show(this);">Help</div>'
+            , 'update-target-placement' : (astElement) => $('<span class="net-splitcells-no-code-insert-target"> </span>').insertBefore(astElement.parentNode)
         });
     });
 }
@@ -423,9 +429,7 @@ function net_splitcells_gel_ui_editor_no_code_var_arg_enhance_help_show(helpButt
 function net_splitcells_gel_ui_editor_no_code_var_arg_add_function_call(addButton) {
     let menu = addButton.parentNode;
     let varArg = menu.parentNode;
-    let targetArgument = document.createElement("span");
-    targetArgument.className = "net-splitcells-no-code-update-target";
-    varArg.parentNode.insertBefore(targetArgument, varArg.previousSibling);
+    let targetArgument = $('.net-splitcells-no-code-insert-target').first().get()[0];
     let popUpTarget = document.createElement("span");
     addButton.parentNode.insertBefore(popUpTarget, addButton.nextSibling);
     let httpRequest = new XMLHttpRequest();
@@ -443,7 +447,6 @@ function net_splitcells_gel_ui_editor_no_code_var_arg_add_variable_reference(add
     // TODO
 }
 function net_splitcells_gel_ui_editor_no_code_function_call_add_pop_up(functionCallTarget, popUpTarget, allowedFunctionCalls, config) {
-    net_splitcells_gel_ui_editor_no_code_pop_ups_close();
     let setWindow = document.createElement("div");
     setWindow.innerHTML = '<div class="net-splitcells-no-code-action-menu-title"><span class="net-splitcells-no-code-action-menu-title-name">Set function call</span>'
         + '<span class="net-splitcells-action-button net-splitcells-no-code-action-menu-close" onclick="net_splitcells_gel_ui_editor_no_code_pop_ups_close();">X</span>'
@@ -463,6 +466,7 @@ function net_splitcells_gel_ui_editor_no_code_function_call_add_pop_up(functionC
             if (config['update-function'] !== undefined) {
                 config['update-function']();
             }
+            net_splitcells_gel_ui_editor_no_code_pop_ups_close();
         };
         setSubmit.innerHTML = possibleName;
         setWindow.appendChild(setSubmit);
