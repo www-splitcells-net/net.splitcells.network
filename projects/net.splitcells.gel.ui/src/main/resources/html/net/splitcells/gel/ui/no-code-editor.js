@@ -61,7 +61,6 @@ function net_splitcells_gel_ui_editor_no_code_generic_enhance(astElement, config
             }
         }
         net_splitcells_gel_ui_editor_no_code_action_menu_close();
-        astElement.className += ' net-splitcells-dem-lang-perspective-no-code-subject ';
         actionMenu = document.createElement("div");
         actionMenu.className = "net-splitcells-dem-lang-perspective-no-code-action-menu";
         actionMenu.innerHTML = '<div class="net-splitcells-no-code-action-menu-title"><span class="net-splitcells-no-code-action-menu-title-name">'
@@ -119,9 +118,9 @@ function net_splitcells_gel_ui_editor_no_code_variable_definition_names_enhance(
     }
 }
 function net_splitcells_gel_ui_editor_no_code_action_menu_close() {
-    var actionSubjects = document.getElementsByClassName("net-splitcells-dem-lang-perspective-no-code-subject");
+    var actionSubjects = document.getElementsByClassName("net-splitcells-no-code-update-subject");
     for (var i = 0; i < actionSubjects.length; i++) {
-        actionSubjects[i].classList.remove("net-splitcells-dem-lang-perspective-no-code-subject");
+        actionSubjects[i].classList.remove("net-splitcells-no-code-update-subject");
     }
     net_splitcells_gel_ui_editor_no_code_pop_ups_close();
     var actionMenus = document.getElementsByClassName("net-splitcells-dem-lang-perspective-no-code-action-menu");
