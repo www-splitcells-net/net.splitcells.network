@@ -9,11 +9,6 @@
 */
 /* TODO Split CSS in CSS without classes and CSS with specifics for this website.
 */
-.net-splitcells-dem-lang-perspective-no-code-subject {
-    /* This is something, that is selected and for which an action menu is opened. */
-    font-weight: bolder;
-    font-family: var(--text-font-family);
-}
 .net-splitcells-gel-ui-editor-no-code-pop-up {
     position: absolute;
     background-color: var(--background-color-selected-priority-0);
@@ -170,6 +165,7 @@
 ,.net-splitcells-dem-lang-perspective-no-code-literal:hover
 ,.net-splitcells-dem-lang-perspective-no-code-undefined:hover
 ,.net-splitcells-dem-lang-perspective-no-code-var-arg:hover
+,.net-splitcells-no-code-update-subject
 {
     font-weight: bolder;
     font-family: var(--text-font-family);
