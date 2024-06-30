@@ -155,10 +155,7 @@ function net_splitcells_gel_ui_editor_no_code_variable_definition_rename(variabl
     variableName.innerHTML = renameInput.value;
 }
 function net_splitcells_gel_ui_editor_no_code_variable_references_set_pop_up(setAction) {
-    net_splitcells_gel_ui_editor_no_code_pop_ups_close();
-    let menu = setAction.parentNode;
-    let literalHolder = menu.parentNode;
-    let literalElement = literalHolder.children[Array.from(literalHolder.children).indexOf(menu) - 1];
+    let literalElement = $('.net-splitcells-no-code-update-subject').first().get()[0];
     let setWindow = document.createElement("div");
 
     setWindow.innerHTML = '<div class="net-splitcells-no-code-action-menu-title"><span class="net-splitcells-no-code-action-menu-title-name">Set reference</span>'
@@ -173,6 +170,7 @@ function net_splitcells_gel_ui_editor_no_code_variable_references_set_pop_up(set
         setSubmit.className = 'net-splitcells-button net-splitcells-action-button';
         setSubmit.onclick = function() {
             literalElement.innerHTML = variableName.innerHTML;
+            net_splitcells_gel_ui_editor_no_code_action_menu_close();
         };
         setSubmit.innerHTML = variableName.innerHTML;
         setWindow.appendChild(setSubmit);
