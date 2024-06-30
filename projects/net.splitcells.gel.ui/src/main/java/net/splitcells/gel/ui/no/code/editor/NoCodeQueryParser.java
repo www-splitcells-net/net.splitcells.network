@@ -120,6 +120,9 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
             }
             final List<Attribute<? extends Object>> combination = list();
             for (final var a : arguments) {
+                if (a.value().Function_call_var_arg() != null) {
+                    continue;
+                }
                 final var attributeName = a.value().variable_reference().Name().getText();
                 combination.add(assignments.attributeByName(attributeName));
             }

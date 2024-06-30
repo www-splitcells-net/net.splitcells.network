@@ -18,6 +18,7 @@ Equals: '=';
 Function_call_start: '<span class="net-splitcells-dem-lang-perspective-no-code-function-call">';
 Function_call_name_start: '<span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">';
 Function_call_argument_start: '<span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">';
+Function_call_var_arg: '<span class="net-splitcells-dem-lang-perspective-no-code-var-arg">...</span>';
 Greater_than: '>';
 Lesser_than: '<';
 Integer: [-+]?[0-9]+;
@@ -38,6 +39,7 @@ Variable_definition_name_start: '<span class="net-splitcells-dem-lang-perspectiv
 Variable_definition_start: '<li class="net-splitcells-dem-lang-perspective-no-code-variable-definition">';
 Variable_definition_value_start: '<span class="net-splitcells-dem-lang-perspective-no-code-variable-value">';
 Variable_reference_start: '<span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">';
+Undefined: '<span class="net-splitcells-dem-lang-perspective-no-code-undefined">?</span>';
 
 fragment NamePrefix: [a-zA-Z_];
 fragment NameSuffix: [a-zA-Z0-9_\-];

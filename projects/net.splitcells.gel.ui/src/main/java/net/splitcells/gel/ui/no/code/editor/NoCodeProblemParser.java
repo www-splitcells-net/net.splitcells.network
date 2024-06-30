@@ -201,6 +201,9 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
                 final List<Attribute<? extends Object>> databaseAttributes = list();
                 for (int i = 1; i < functionCall.function_call_argument().size(); ++i) {
                     final var attributeText = functionCall.function_call_argument(i).value();
+                    if (attributeText.Function_call_var_arg() != null) {
+                        continue;
+                    }
                     if (attributeText.variable_reference() == null) {
                         result.withErrorMessage(perspective("The database attributes needs to be attribute references, but are not.")
                                 .withProperty("invalid attribute", attributeText.getText())
