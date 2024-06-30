@@ -180,10 +180,7 @@ function net_splitcells_gel_ui_editor_no_code_variable_references_set_pop_up(set
     setAction.parentNode.insertBefore(setWindow, setAction.nextSibling);
 }
 function net_splitcells_gel_ui_editor_no_code_literal_set_pop_up(setAction) {
-    net_splitcells_gel_ui_editor_no_code_pop_ups_close();
-    let menu = setAction.parentNode;
-    let literalHolder = menu.parentNode;
-    let literalElement = literalHolder.children[Array.from(literalHolder.children).indexOf(menu) - 1];
+    let literalElement = $('.net-splitcells-no-code-update-subject').first().get()[0];
     let setWindow = document.createElement("div");
     setWindow.innerHTML = '<div class="net-splitcells-no-code-action-menu-title"><span class="net-splitcells-no-code-action-menu-title-name">Set literal value</span>'
             + '<span class="net-splitcells-action-button net-splitcells-no-code-action-menu-close" onclick="net_splitcells_gel_ui_editor_no_code_pop_ups_close();">X</span>'
@@ -197,6 +194,7 @@ function net_splitcells_gel_ui_editor_no_code_literal_set_pop_up(setAction) {
     setSubmit.className = 'net-splitcells-button net-splitcells-action-button';
     setSubmit.onclick = function() {
         literalElement.innerHTML = setInput.value;
+        net_splitcells_gel_ui_editor_no_code_action_menu_close();
     };
     setSubmit.innerHTML = 'Set value';
     setWindow.appendChild(setSubmit);
