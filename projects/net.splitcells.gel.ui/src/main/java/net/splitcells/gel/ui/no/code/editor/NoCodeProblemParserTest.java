@@ -29,14 +29,14 @@ public class NoCodeProblemParserTest {
     @UnitTest
     public void testStringParsing() {
         parseNoCodeStrings(Dem.configValue(GelUiFileSystem.class)
-                .readString("src/main/resources/html/net/splitcells/gel/ui/examples/school-course-scheduling-problem.xml"))
+                .readString("src/main/resources/html/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"))
                 .keySet2().requireEmptySet();
     }
 
     @UnitTest
     public void testAttributeParsing() {
         final var parsedAttributes = parseNoCodeAttributes(Dem.configValue(GelUiFileSystem.class)
-                .readString("src/main/resources/html/net/splitcells/gel/ui/examples/school-course-scheduling-problem.xml"));
+                .readString("src/main/resources/html/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"));
         setOfUniques(parsedAttributes.values()).requireContentsOf((a, b) -> a.equalContentTo(b),
                 stringAttribute("student")
                 , stringAttribute("examiner")
@@ -49,7 +49,7 @@ public class NoCodeProblemParserTest {
     @UnitTest
     public void testDatabaseParsing() {
         final var parsedAttributes = parseNoCodeDatabases(Dem.configValue(GelUiFileSystem.class)
-                .readString("src/main/resources/html/net/splitcells/gel/ui/examples/school-course-scheduling-problem.xml"));
+                .readString("src/main/resources/html/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"));
         setOfUniques(parsedAttributes.values()).requireContentsOf((a, b) -> a.isEqualFormat(b),
                 setOfUniques(database("exams"
                                 , stringAttribute("student")
@@ -64,7 +64,7 @@ public class NoCodeProblemParserTest {
     @UnitTest
     public void testProblemParsing() {
         final var testResult = parseNoCodeProblem(Dem.configValue(GelUiFileSystem.class)
-                .readString("src/main/resources/html/net/splitcells/gel/ui/examples/school-course-scheduling-problem.xml"));
+                .readString("src/main/resources/html/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"));
         testResult.requireWorking();
         setOfUniques(testResult.value().orElseThrow().problem().headerView2()).requireContentsOf((a, b) -> a.equalContentTo(b)
                 , stringAttribute("student")

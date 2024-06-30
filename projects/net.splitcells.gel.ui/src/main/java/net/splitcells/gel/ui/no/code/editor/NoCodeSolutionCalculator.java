@@ -34,15 +34,15 @@ import static net.splitcells.website.server.processor.Response.response;
 
 public class NoCodeSolutionCalculator implements Processor<Perspective, Perspective> {
 
-    public static final Trail PATH = Trail.trail("net/splitcells/gel/ui/calculate-solution-no-code.form");
-    public static final String PROBLEM_DEFINITION = "net-splitcells-gel-ui-editor-form-problem-definition";
+    public static final Trail PATH = Trail.trail("net/splitcells/gel/ui/no/code/editor/calculate-solution.form");
+    public static final String PROBLEM_DEFINITION = "net-splitcells-gel-ui-no-code-editor-form-problem-definition";
 
-    public static final String SOLUTION_RATING = "net-splitcells-gel-ui-editor-form-solution-rating";
-    public static final String SOLUTION = "net-splitcells-gel-ui-editor-form-solution";
-    public static final String DEMANDS = "net-splitcells-gel-ui-editor-form-demands";
-    public static final String SUPPLIES = "net-splitcells-gel-ui-editor-form-supplies";
+    public static final String SOLUTION_RATING = "net-splitcells-gel-ui-no-code-editor-form-solution-rating";
+    public static final String SOLUTION = "net-splitcells-gel-ui-no-code-editor-form-solution";
+    public static final String DEMANDS = "net-splitcells-gel-ui-no-code-editor-form-demands";
+    public static final String SUPPLIES = "net-splitcells-gel-ui-no-code-editor-form-supplies";
 
-    public static final String ERRORS = "net-splitcells-gel-ui-editor-form-errors";
+    public static final String ERRORS = "net-splitcells-gel-ui-no-code-editor-form-errors";
     public static final String FORM_UPDATE = "net-splitcells-websiter-server-form-update";
 
     public static Processor<Perspective, Perspective> noCodeSolutionCalculator() {

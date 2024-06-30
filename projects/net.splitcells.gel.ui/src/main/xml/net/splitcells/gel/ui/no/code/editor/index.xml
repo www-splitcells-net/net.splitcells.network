@@ -29,27 +29,27 @@
             <d:toDo>Export and import data from Excel format.</d:toDo>
         </d:toDo>
         <commands>
-            <command id="net-splitcells-gel-ui-calculate-solution-form-submit-1"
-                     method="net_splitcells_gel_ui_editor_form_submit">Submit optimization
+            <command id="net-splitcells-gel-ui-no-code-editor-calculate-solution-form-submit-1"
+                     method="net_splitcells_gel_ui_no_code_editor_form_submit">Submit optimization
             </command>
-            <command id="net-splitcells-gel-ui-calculate-solution-form-solution-download-as-csv"
-                     method="net_splitcells_gel_ui_calculate_solution_form_solution_download_as_csv">
+            <command id="net-splitcells-gel-ui-no-code-calculate-solution-form-solution-download-as-csv"
+                     method="net_splitcells_gel_ui_editor_no_code_calculate_solution_form_solution_download_as_csv">
                 Download solution
             </command>
         </commands>
     </meta>
-    <form-editor id="net-splitcells-gel-ui-editor-form"
-                 action="/net/splitcells/gel/ui/calculate-solution-no-code.form">
-        <library path="net/splitcells/gel/ui/no-code-editor"/>
-        <no-code-editor id="net-splitcells-gel-ui-editor-form-problem-definition"
+    <form-editor id="net-splitcells-gel-ui-no-code-editor-form"
+                 action="/net/splitcells/gel/ui/no/code/editor/calculate-solution.form">
+        <library path="net/splitcells/gel/ui/no/code/editor/lib"/>
+        <no-code-editor id="net-splitcells-gel-ui-no-code-editor-form-problem-definition"
                         name="Definition"
                         main-tab="true"
                         content-types=" /net/splitcells/gel/ui/no-code-editor-language "
-                        initial-content-at="/net/splitcells/gel/ui/examples/school-course-scheduling-problem.xml"/>
-        <text-area id="net-splitcells-gel-ui-editor-form-errors" name="Errors" content-types=" error-output "></text-area>
-        <text-area id="net-splitcells-gel-ui-editor-form-demands" name="Demands" initial-content-at="/net/splitcells/gel/ui/colloquium-planning-demands-test-data.csv"><![CDATA[]]></text-area>
-        <text-area id="net-splitcells-gel-ui-editor-form-supplies" name="Supplies" initial-content-at="/net/splitcells/gel/ui/colloquium-planning-supplies-test-data.csv"><![CDATA[]]></text-area>
-        <text-area id="net-splitcells-gel-ui-editor-form-solution" name="Solution" content-types=" csv-output result-output "/>
-        <text-area id="net-splitcells-gel-ui-editor-form-solution-rating" name="Rating"/>
+                        initial-content-at="/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"/>
+        <text-area id="net-splitcells-gel-ui-no-code-editor-form-errors" name="Errors" content-types=" error-output "></text-area>
+        <text-area id="net-splitcells-gel-ui-no-code-editor-form-demands" name="Demands" initial-content-at="/net/splitcells/gel/ui/colloquium-planning-demands-test-data.csv"><![CDATA[]]></text-area>
+        <text-area id="net-splitcells-gel-ui-no-code-editor-form-supplies" name="Supplies" initial-content-at="/net/splitcells/gel/ui/colloquium-planning-supplies-test-data.csv"><![CDATA[]]></text-area>
+        <text-area id="net-splitcells-gel-ui-no-code-editor-form-solution" name="Solution" content-types=" csv-output result-output "/>
+        <text-area id="net-splitcells-gel-ui-no-code-editor-form-solution-rating" name="Rating"/>
     </form-editor>
 </article>
