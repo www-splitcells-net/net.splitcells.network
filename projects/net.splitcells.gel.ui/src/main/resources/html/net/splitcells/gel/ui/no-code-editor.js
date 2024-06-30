@@ -69,6 +69,7 @@ function net_splitcells_gel_ui_editor_no_code_generic_enhance(astElement, config
             + '</span><span class="net-splitcells-action-button net-splitcells-no-code-action-menu-close" onclick="net_splitcells_gel_ui_editor_no_code_action_menu_close();">X</span></div>'
             + config.actionList;
         astElement.parentNode.insertBefore(actionMenu, astElement.nextSibling);
+        astElement.className += ' net-splitcells-no-code-update-subject';
     };
 }
 function net_splitcells_gel_ui_editor_no_code_variable_references_enhance() {
