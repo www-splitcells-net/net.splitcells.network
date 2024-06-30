@@ -17,6 +17,7 @@
     .column_1 {
         width: 30em !important;
         flex-grow: 0;
+        min-width: 30em;
         }
     }
 @media (min-width: 99em) {
