@@ -112,12 +112,13 @@ function net_splitcells_gel_ui_editor_no_code_undefined_enhance() {
     $('.net-splitcells-dem-lang-perspective-no-code-undefined').each((index, element) => {
         net_splitcells_gel_ui_editor_no_code_generic_enhance(element, {
             title : 'Undefined Actions'
-            , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_undefined_help_show(this);">Help</div>'
+            , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_variable_references_set_pop_up(this);">Set as variable</div>'
+                + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_undefined_help_show(this);">Help</div>'
         });
     });
 }
-function net_splitcells_gel_ui_editor_no_code_undefined_help_show(helpAction) {
-    net_splitcells_gel_ui_editor_no_code_help_via_dynamic_name(helpAction, {
+function net_splitcells_gel_ui_editor_no_code_undefined_help_show(helpButton) {
+    net_splitcells_gel_ui_editor_no_code_help_via_dynamic_name(helpButton, {
         helpSubject: 'undefined'
         , helpType: 'general'
     });
