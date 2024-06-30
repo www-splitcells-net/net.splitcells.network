@@ -271,41 +271,6 @@ function net_splitcells_gel_ui_editor_no_code_variable_definition_delete(deleteB
     deleteButton.parentNode.parentNode.parentNode.removeChild(deleteButton.parentNode.parentNode);
 }
 function net_splitcells_gel_ui_editor_no_code_function_call_set(setButton) {
-    let functionCall = setButton.parentNode.parentNode;
-    let functionCallHolder = functionCall.parentNode.parentNode;
-    if (hasClass(functionCallHolder, 'net-splitcells-dem-lang-perspective-no-code-variable-definition')) {
-        let isFirstFunctionCall = false;
-        let variableValue = functionCallHolder.getElementsByClassName('net-splitcells-dem-lang-perspective-no-code-variable-value')[0];
-        for (var i = 0; i < variableValue.children.length; i++) {
-            let child = variableValue.children[i];
-            if (functionCall.isSameNode(child)) {
-                isFirstFunctionCall = true;
-                break;
-            }
-            if (hasClass(child, "net-splitcells-dem-lang-perspective-no-code-function-call")) {
-                break;
-            }
-        }
-        if (!isFirstFunctionCall) {
-            return;
-        }
-    } else if (hasClass(functionCall.parentNode, 'net-splitcells-dem-lang-perspective-no-code-variable-access')) {
-        functionCallHolder = functionCall.parentNode;
-        let isFirstFunctionCall = false;
-        for (var i = 0; i < functionCallHolder.children.length; i++) {
-            let child = functionCallHolder.children[i];
-            if (functionCall.isSameNode(child)) {
-                isFirstFunctionCall = true;
-                break;
-            }
-            if (hasClass(child, "net-splitcells-dem-lang-perspective-no-code-function-call")) {
-                break;
-            }
-        }
-        if (!isFirstFunctionCall) {
-            return;
-        }
-    }
     var httpRequest = new XMLHttpRequest();
     httpRequest.open("GET", "/net/splitcells/gel/ui/no/code/editor/top-level-functions.json", true);
     httpRequest.onload = (e) => {
