@@ -316,10 +316,7 @@ function net_splitcells_gel_ui_editor_no_code_function_call_set(setButton) {
 }
 // TODO Use net_splitcells_gel_ui_editor_no_code_function_call_add_pop_up instead.
 function net_splitcells_gel_ui_editor_no_code_function_call_set_pop_up(setAction, topLevelFunctions) {
-    net_splitcells_gel_ui_editor_no_code_pop_ups_close();
-    let menu = setAction.parentNode;
-    let functionCall = menu.parentNode;
-    let callName = functionCall.children[Array.from(functionCall.children).indexOf(menu) - 1];
+    let functionName = $('.net-splitcells-no-code-update-subject').first().get()[0];
     let setWindow = document.createElement("div");
 
     setWindow.innerHTML = '<div class="net-splitcells-no-code-action-menu-title"><span class="net-splitcells-no-code-action-menu-title-name">Set function call</span>'
@@ -332,9 +329,9 @@ function net_splitcells_gel_ui_editor_no_code_function_call_set_pop_up(setAction
         let setSubmit = document.createElement("div");
         setSubmit.className = 'net-splitcells-button net-splitcells-action-button';
         setSubmit.onclick = function() {
-            callName.innerHTML = possibleName;
-            $(functionCall).children('.net-splitcells-dem-lang-perspective-no-code-function-call-argument').remove();
-            net_splitcells_gel_ui_editor_no_code_function_call_add_arguments(functionCall, possibleName);
+            functionName.innerHTML = possibleName;
+            $(functionName.parentNode).children('.net-splitcells-dem-lang-perspective-no-code-function-call-argument').remove();
+            net_splitcells_gel_ui_editor_no_code_function_call_add_arguments(functionName.parentNode, possibleName);
         };
         setSubmit.innerHTML = possibleName;
         setWindow.appendChild(setSubmit);
