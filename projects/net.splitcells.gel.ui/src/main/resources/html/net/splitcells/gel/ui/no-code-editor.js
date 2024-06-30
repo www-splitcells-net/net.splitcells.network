@@ -95,6 +95,7 @@ function net_splitcells_gel_ui_editor_no_code_function_calls_enhance() {
                 + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_function_call_set(this);">Set called function</div>'
                 + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_function_call_append(this);">Append function call</div>'
                 + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_function_call_name_help_show(this);">Help</div>'
+            , 'update-target-placement' : (astElement) => $('<span class="net-splitcells-no-code-insert-target"> </span>').insertAfter(astElement.parentNode)
         });
     }
     var literals = document.getElementsByClassName("net-splitcells-dem-lang-perspective-no-code-literal");
@@ -354,10 +355,9 @@ function net_splitcells_gel_ui_editor_no_code_function_call_append(appendButton)
 /* TODO Use net_splitcells_gel_ui_editor_no_code_function_call_set_pop_up instead, in order to reduce code duplication.
  */
 function net_splitcells_gel_ui_editor_no_code_function_call_append_pop_up(appendButton, allowedFunctionCalls) {
-    net_splitcells_gel_ui_editor_no_code_pop_ups_close();
     let menu = appendButton.parentNode;
-    let functionCall = menu.parentNode;
-    let callName = functionCall.children[Array.from(functionCall.children).indexOf(menu) - 1];
+    let functionName = $('.net-splitcells-no-code-insert-target').first().get();
+    let callName = functionName.innerHTML;
     let setWindow = document.createElement("div");
 
     setWindow.innerHTML = '<div class="net-splitcells-no-code-action-menu-title"><span class="net-splitcells-no-code-action-menu-title-name">Append function call</span>'
@@ -372,8 +372,9 @@ function net_splitcells_gel_ui_editor_no_code_function_call_append_pop_up(append
             let newFunctionCall = document.createElement('div');
             newFunctionCall.className = 'net-splitcells-dem-lang-perspective-no-code-function-call';
             newFunctionCall.innerHTML = '<span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">' + possibleName + '</span>';
-            $(functionCall).after(newFunctionCall);
+            $(newFunctionCall).replaceAll('.net-splitcells-no-code-insert-target');
             net_splitcells_gel_ui_editor_no_code_function_call_add_arguments(newFunctionCall, possibleName);
+            net_splitcells_gel_ui_editor_no_code_pop_ups_close();
         };
         setSubmit.innerHTML = possibleName;
         setWindow.appendChild(setSubmit);
