@@ -11,26 +11,15 @@
     </meta>
     <paragraph>
         The web design focuses on visualizing the structure of the data being presented.
-        It clearly signals the importance of a given element for the current page and
+        It clearly signals the importance of any given element for the current page and
         supports the reader to easily navigate the site to the desired destination.
     </paragraph>
-    <chapter>
-        <title>The Design Of Buttons</title>
-        <paragraph>
-            Buttons for links to other pages and buttons for actions or links to local parts of the current page
-            have different looks and feels.
-        </paragraph>
-        <paragraph>
-            Buttons for links to other pages have a flat look and feel.
-            The button's text is centered or aligned to the left.
-            The buttons themselves should always be aligned to the left.
-        </paragraph>
-        <paragraph>
-            Buttons for actions should look and feel a bit like real buttons.
-            This is done via round corners, a distinct border and a background with linear gradients,
-            that simulate a 3D effect.
-            The text of action buttons is centered,
-            while the action buttons themselves are aligned to the right.
-        </paragraph>
-    </chapter>
+    <paragraph>
+        Things that are interactable and cause an action at the current page,
+        should have inset shadows (in order to imitate a 3D button), be round and bold.
+        Things that are used for navigation should have outset shadows (and therefore be flat),
+        have corners and be bold.
+        Any kind of interactable things should use sans serif fonts and
+        non-interactive things should have serif fonts.
+    </paragraph>
 </article>
