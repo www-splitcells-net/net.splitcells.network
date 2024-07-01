@@ -48,6 +48,9 @@ import static net.splitcells.network.worker.via.java.Logger.logger;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.projects.extension.status.StatusReport.statusReport;
 
+/**
+ * TODO This probably belongs to the network worker project.
+ */
 public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
     private static final String STATUS_DOCUMENT_PATH = "net/splitcells/network/status.html";
     private static final String STATUS_PATH = "net/splitcells/network/status.csv";
