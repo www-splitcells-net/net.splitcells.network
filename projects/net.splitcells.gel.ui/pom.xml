@@ -38,10 +38,12 @@
             <artifactId>htmlunit3-driver</artifactId>
         </dependency>
         <dependency>
+            <!-- This is needed for selenium-java. -->
             <groupId>org.htmlunit</groupId>
             <artifactId>htmlunit</artifactId>
         </dependency>
         <dependency>
+            <!-- This is needed for selenium-java. -->
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
