@@ -15,17 +15,20 @@
  */
 package net.splitcells.gel.ui.no.code.editor;
 
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-
-import java.util.concurrent.TimeUnit;
 
 @JavaLegacy
 public class NoCodeSolutionCalculatorTest {
     public static void main(String... args) {
-        final var browser = new HtmlUnitDriver();
+        System.setProperty("logback.configurationFile", "net/splitcells/network/distro/java/logback/config.xml");
+        final WebDriver browser = new HtmlUnitDriver(true);
         browser.get("http://localhost:8443/net/splitcells/gel/ui/no/code/editor/index.html");
-        System.out.println("title: " + browser.getTitle());
+        browser.findElement(By.id("net-splitcells-gel-ui-no-code-editor-calculate-solution-form-submit-1")).click();
+        Dem.sleepAtLeast(5000);
         browser.close();
     }
 }
