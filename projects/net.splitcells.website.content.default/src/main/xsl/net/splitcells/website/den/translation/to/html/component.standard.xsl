@@ -581,7 +581,7 @@ document.addEventListener('DOMContentLoaded', function(){
                         </xsl:otherwise>
                     </xsl:choose>
                     <xsl:if test="./s:accept-notification">
-                        <div class="net-splitcells-button net-splitcells-action-button net-splitcells-component-priority-0">
+                        <div class="net-splitcells-website-pop-up-confirmation-button net-splitcells-button net-splitcells-action-button net-splitcells-component-priority-0">
                             <xsl:attribute name="onclick" select="concat('unshowElement(document.getElementById(', $quote, generate-id(.), $quote, '))')"/>
                             <xsl:value-of select="./s:accept-notification"/>
                         </div>
