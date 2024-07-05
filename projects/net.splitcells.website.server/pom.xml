@@ -44,5 +44,9 @@
             <artifactId>website.content.default</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>com.microsoft.playwright</groupId>
+            <artifactId>playwright</artifactId>
+        </dependency>
     </dependencies>
 </project>

@@ -15,6 +15,8 @@
  */
 package net.splitcells.website.server.client;
 
-public interface HtmlClientApi {
+import net.splitcells.dem.environment.resource.Resource;
+
+public interface HtmlClientApi extends Resource {
     TabApi openTab(String path);
 }
