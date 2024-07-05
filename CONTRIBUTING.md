@@ -12,8 +12,8 @@
   You thereby confirm compliance with the DCO.
   Help regarding the version control Git can be found
   [here](src/main/md/net/splitcells/network/guidelines/gist/git.md).
-* At least the main author has to sign the last commit with its PGP key.
-  PGP signing helps to ensure source code integrity.
+* At least the main author has to sign the last commit with a PGP or SSH key.
+  Signing helps to audit commit authorship.
   A quickstart and further guidelines for PGP can be found
   [here](src/main/md/net/splitcells/network/guidelines/gist/pgp.md).
 ## API Compatibility
