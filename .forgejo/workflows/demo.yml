@@ -11,8 +11,8 @@ jobs:
           apk update # $(pwd) = /workspace/splitcells-net/net.splitcells.network
           apk add git python3 openjdk21-jdk maven
           cd /workspace/splitcells-net/
-          git clone -–depth 1 https://codeberg.org/splitcells-net/net.splitcells.network.bom.git
-          git clone -–depth 1 https://codeberg.org/splitcells-net/net.splitcells.network.git
+          git clone --depth 1 https://codeberg.org/splitcells-net/net.splitcells.network.bom.git
+          git clone --depth 1 https://codeberg.org/splitcells-net/net.splitcells.network.git
           cd /workspace/splitcells-net/net.splitcells.network.bom
           mvn clean install
           cd /workspace/splitcells-net/net.splitcells.network
