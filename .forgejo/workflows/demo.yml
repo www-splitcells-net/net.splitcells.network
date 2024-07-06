@@ -11,3 +11,6 @@ jobs:
           apk update
           apk add git python3 openjdk21-jdk maven
           echo All Good
+      - uses: actions/checkout@v4
+        with:
+          repository: splitcells-net/net.splitcells.network.bom
