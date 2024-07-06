@@ -7,12 +7,17 @@ jobs:
     container:
       image: alpine:latest
     steps:
-      - run: |
+      - name: Setup Build
+        run: |
           apk update # $(pwd) = /workspace/splitcells-net/net.splitcells.network
           apk add git python3 openjdk21-jdk maven
           cd /workspace/splitcells-net/
           git clone --depth 1 https://codeberg.org/splitcells-net/net.splitcells.network.bom.git
           git clone --depth 1 https://codeberg.org/splitcells-net/net.splitcells.network.git
+      - name: Build
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
           cd /workspace/splitcells-net/net.splitcells.network.bom
           mvn clean install
           cd /workspace/splitcells-net/net.splitcells.network
