@@ -10,10 +10,10 @@ jobs:
       - run: |
           apk update # $(pwd) = /workspace/splitcells-net/net.splitcells.network
           apk add git python3 openjdk21-jdk maven
-          cd ..
+          cd /workspace/splitcells-net/
           git clone https://codeberg.org/splitcells-net/net.splitcells.network.bom.git
-          cd ../net.splitcells.network.bom
+          cd /workspace/splitcells-net/net.splitcells.network.bom
           mvn clean install
-          cd ../net.splitcells.network
+          cd /workspace/splitcells-net/net.splitcells.network
           mvn -B clean install org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=www-splitcells-net_net.splitcells.network -Dsonar.test.exclusions=src/main/java/** -Dsonar.organization=www-splitcells-net -Dsonar.host.url=https://sonarcloud.io # `-Dsonar.inclusions=src/main/**,bin/*` does not seem to work.
           bash <(curl -s https://codecov.io/bash) # Upload tests to codecov.io.
