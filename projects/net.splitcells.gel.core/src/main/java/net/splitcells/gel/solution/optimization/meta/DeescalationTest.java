@@ -18,6 +18,7 @@ package net.splitcells.gel.solution.optimization.meta;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
+import static java.lang.Integer.valueOf;
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
@@ -52,6 +53,6 @@ public class DeescalationTest {
                 }
                 , 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
         rangeClosed(1, 10).forEach(j -> testSubject.optimize(testData));
-        results.requireEqualityTo(rangeClosed(0, 9).mapToObj(i -> (Object) (-i)).collect(toList()));
+        results.requireEqualityTo(rangeClosed(0, 9).mapToObj(i -> valueOf(-i)).collect(toList()));
     }
 }

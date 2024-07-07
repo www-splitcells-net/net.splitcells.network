@@ -103,6 +103,7 @@ class_member
     | class_member_value_declaration
     | Comment_multiline
     | Line_comment
+    | Brace_curly_open statement+ Brace_curly_closed
     ;
 class_constructor
     : javadoc? annotation* Keyword_private name call_arguments statement_body
@@ -166,6 +167,7 @@ expression
     | expression Hyphen_minus Hyphen_minus
     | expression Operator_plus Operator_plus
     | expression_with_prefix
+    | Hyphen_minus expression
     | lambda
     ;
 expression_with_prefix
@@ -311,6 +313,7 @@ statement
     | Keyword_return (expression | reference | name Operator_plus Equals expression | name Hyphen_minus Equals expression)? Semicolon
     | name Operator_plus Equals expression Semicolon
     | name Hyphen_minus Equals expression Semicolon
+    | name Keysymbol_star Equals expression Semicolon
     | expression Semicolon
     | variable_declaration (Equals expression)? Semicolon
     | name access Equals expression Semicolon

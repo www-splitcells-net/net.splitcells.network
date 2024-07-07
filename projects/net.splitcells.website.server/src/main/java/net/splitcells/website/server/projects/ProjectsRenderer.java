@@ -155,12 +155,10 @@ public interface ProjectsRenderer {
         final var pathElements = listWithValuesOf(path.split("/"));
         while (pathElements.hasElements()) {
             pathElements.removeAt(pathElements.size() - 1);
-
             relevantParentPage(path, pathElements, "index.html", this)
                     .or(() -> relevantParentPage(path, pathElements, "README.html", this))
                     .or(() -> relevantParentPage(path, pathElements, this))
                     .ifPresent(relevantParentPages::add);
-            ;
         }
         return relevantParentPages.reverse();
     }
