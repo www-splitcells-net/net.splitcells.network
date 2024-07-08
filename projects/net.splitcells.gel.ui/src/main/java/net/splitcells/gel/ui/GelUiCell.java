@@ -18,9 +18,6 @@ package net.splitcells.gel.ui;
 import net.splitcells.dem.environment.Cell;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.gel.ui.no.code.editor.NoCodeSolutionCalculator;
-import net.splitcells.website.WebsiteServerFileSystem;
-import net.splitcells.website.binaries.BinaryFileSystem;
-import net.splitcells.website.content.defaults.WebsiteContentDefaultsFileSystem;
 import net.splitcells.website.server.ServerConfig;
 import net.splitcells.website.server.WebsiteServerCell;
 
@@ -42,28 +39,10 @@ public class GelUiCell implements Cell {
     @Override
     public void accept(Environment env) {
         env.config().configValue(ServerConfig.class)
-                .withAdditionalProject(projectConfig("/"
-                        , configValue(WebsiteServerFileSystem.class)))
-                .withAdditionalProject(projectConfig("/"
-                        , configValue(BinaryFileSystem.class)))
-                .withAdditionalProject(projectConfig("/"
-                        , configValue(WebsiteContentDefaultsFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/gel/ui/"
                         , configValue(GelUiFileSystem.class)))
-                .withAdditionalJsBackgroundFiles("net/splitcells/website/js/jquery.js")
-                .withAdditionalJsBackgroundFiles("net/splitcells/website/js/codemirror-editor-bundle.js")
-                .withAdditionalJsBackgroundFiles("net/splitcells/website/js/basic.js")
-                .withAdditionalJsBackgroundFiles("net/splitcells/website/js/basic.default.js")
-                .withAdditionalCssFile("net/splitcells/website/css/theme.white.variables.css")
-                .withAdditionalCssFile("net/splitcells/website/css/basic.themed.css")
-                .withAdditionalCssFile("net/splitcells/website/css/basic.css")
-                .withAdditionalCssFile("net/splitcells/website/css/den.css")
-                .withAdditionalCssFile("net/splitcells/website/css/layout.default.css")
-                .withAdditionalCssFile("net/splitcells/website/css/theme.css")
                 .withAdditionalCssFile("net/splitcells/gel/ui/no/code/editor/style.css")
-                .withAdditionalCssFile("net/splitcells/website/css/tabulator.min.css")
-                .withAdditionalProcessor(NoCodeSolutionCalculator.PATH, noCodeSolutionCalculator())
-        ;
+                .withAdditionalProcessor(NoCodeSolutionCalculator.PATH, noCodeSolutionCalculator());
         env.withCell(WebsiteServerCell.class);
     }
 }

@@ -40,6 +40,8 @@
             <artifactId>commons-io</artifactId>
         </dependency>
         <dependency>
+            <!-- TODO In the future, the default content should be dependent on the server and
+            not the other way around. -->
             <groupId>net.splitcells</groupId>
             <artifactId>website.content.default</artifactId>
             <version>${revision}</version>
