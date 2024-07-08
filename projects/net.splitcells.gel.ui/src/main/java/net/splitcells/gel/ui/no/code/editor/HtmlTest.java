@@ -16,15 +16,20 @@
 package net.splitcells.gel.ui.no.code.editor;
 
 import net.splitcells.dem.Dem;
+import net.splitcells.gel.ui.GelUiCell;
 
+import static net.splitcells.dem.Dem.process;
 import static net.splitcells.website.server.client.HtmlClientImpl.htmlClientImpl;
 
 public class HtmlTest {
     public static void main(String... args) {
-        try (final var browser = htmlClientImpl("http://localhost:8443")) {
-            final var tab = browser.openTab("/net/splitcells/gel/ui/no/code/editor/index.html");
-            tab.elementByClass("net-splitcells-website-pop-up-confirmation-button").click();
-            tab.elementById("net-splitcells-gel-ui-no-code-editor-calculate-solution-form-submit-1").click();
-        }
+        process(() -> {
+                    try (final var browser = htmlClientImpl("http://localhost:8443")) {
+                        final var tab = browser.openTab("/net/splitcells/gel/ui/no/code/editor/index.html");
+                        tab.elementByClass("net-splitcells-website-pop-up-confirmation-button").click();
+                        tab.elementById("net-splitcells-gel-ui-no-code-editor-calculate-solution-form-submit-1").click();
+                    }
+                }
+                , GelUiCell.class).requireErrorFree();
     }
 }
