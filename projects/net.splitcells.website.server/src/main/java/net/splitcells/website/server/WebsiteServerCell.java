@@ -15,16 +15,15 @@
  */
 package net.splitcells.website.server;
 
-import net.splitcells.dem.Dem;
 import net.splitcells.dem.DemCell;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.environment.Cell;
 
-import static net.splitcells.dem.Dem.serve;
+import static net.splitcells.dem.Dem.process;
 
 public class WebsiteServerCell implements Cell {
     public static void main(String... args) {
-        serve(WebsiteServerCell.class);
+        process(WebsiteServerCell.class);
     }
     @Override
     public String groupId() {

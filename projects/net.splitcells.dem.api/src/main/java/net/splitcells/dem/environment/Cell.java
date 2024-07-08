@@ -20,19 +20,17 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.dem.resource.FileSystemView;
 
 import java.util.function.Consumer;
 
 import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
 import static net.splitcells.dem.utils.StreamUtils.stream;
 
 /**
  * <p>This interface provides a single point of entry for a Java module based on {@link Dem}.
  * It bundles all settings of a module at one place.</p>
  * <p>An instance of this interface describes the configuration of a program,
- * that can be executed via {@link Dem#serve(Class[])}.
+ * that can be executed via {@link Dem#process(Class[])}.
  * Such a program provides its functionality via {@link Service}.
  * Therefore, {@link Cell} can also be viewed as a {@link Service} orchestration/configuration API.
  * Another goal of this API is to bundle all configurations of a Java module,
