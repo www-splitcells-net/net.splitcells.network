@@ -196,6 +196,9 @@ public interface ProjectsRenderer {
             , List<String> pathElements
             , ProjectsRenderer projectsRenderer) {
         pathElements = pathElements.shallowCopy();
+        if (pathElements.isEmpty()) {
+            return Optional.empty();
+        }
         final var folderName = pathElements.removeLast();
         final var potentialPath = pathElements
                 .withAppended(folderName + ".html")
