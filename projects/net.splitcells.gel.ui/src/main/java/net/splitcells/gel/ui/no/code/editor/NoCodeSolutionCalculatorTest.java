@@ -15,31 +15,20 @@
  */
 package net.splitcells.gel.ui.no.code.editor;
 
-import net.splitcells.dem.Dem;
-import net.splitcells.dem.lang.annotations.JavaLegacy;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import net.splitcells.gel.ui.GelUiCell;
 
-@JavaLegacy
+import static net.splitcells.dem.Dem.process;
+import static net.splitcells.website.server.client.HtmlClientImpl.htmlClientImpl;
+
 public class NoCodeSolutionCalculatorTest {
-    /**
-     * Testing via {@link HtmlUnitDriver} is useful,
-     * as this works in environments without any specific browser.
-     * The downside is the restricted Javascript support,
-     * which on the other hand is useful in order to ensure,
-     * that the web UI also still works with minimal dependencies.
-     * Maybe supporting a text based web version without JavaScript for
-     * i.e. the blind is possible with this as well.
-     *
-     * @param args
-     */
     public static void main(String... args) {
-        System.setProperty("logback.configurationFile", "net/splitcells/network/distro/java/logback/config.xml");
-        final WebDriver browser = new HtmlUnitDriver(true);
-        browser.get("http://localhost:8443/net/splitcells/gel/ui/no/code/editor/index.html");
-        browser.findElement(By.id("net-splitcells-gel-ui-no-code-editor-calculate-solution-form-submit-1")).click();
-        Dem.sleepAtLeast(5000);
-        browser.close();
+        process(() -> {
+                    try (final var browser = htmlClientImpl("http://localhost:8443")) {
+                        final var tab = browser.openTab("/net/splitcells/gel/ui/no/code/editor/index.html");
+                        tab.elementByClass("net-splitcells-website-pop-up-confirmation-button").click();
+                        tab.elementById("net-splitcells-gel-ui-no-code-editor-calculate-solution-form-submit-1").click();
+                    }
+                }
+                , GelUiCell.class).requireErrorFree();
     }
 }
