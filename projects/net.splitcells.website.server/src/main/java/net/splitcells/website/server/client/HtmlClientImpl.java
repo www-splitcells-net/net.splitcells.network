@@ -53,6 +53,11 @@ public class HtmlClientImpl implements HtmlClientApi {
                     public void click() {
                         page.click("." + cssClass);
                     }
+
+                    @Override
+                    public String textContent() {
+                        return page.locator("." + cssClass).textContent();
+                    }
                 };
             }
 
@@ -63,6 +68,11 @@ public class HtmlClientImpl implements HtmlClientApi {
                     @Override
                     public void click() {
                         page.click("#" + id);
+                    }
+
+                    @Override
+                    public String textContent() {
+                        return page.locator("#" + id ).textContent();
                     }
                 };
             }
