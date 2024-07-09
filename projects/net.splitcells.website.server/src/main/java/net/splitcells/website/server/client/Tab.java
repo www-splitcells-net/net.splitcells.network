@@ -15,8 +15,10 @@
  */
 package net.splitcells.website.server.client;
 
-public interface ElementApi {
-    void click();
+import net.splitcells.dem.resource.communication.Closeable;
 
-    String textContent();
+public interface Tab extends Closeable {
+    Element elementByClass(String cssClass);
+
+    Element elementById(String id);
 }
