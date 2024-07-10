@@ -112,7 +112,7 @@ public class Dem {
      *
      * @param cells This describes the program's configuration.
      */
-    public static void process(Class<? extends Cell>... cells) {
+    public static void serve(Class<? extends Cell>... cells) {
         process(Dem::waitIndefinitely, cells);
     }
 
