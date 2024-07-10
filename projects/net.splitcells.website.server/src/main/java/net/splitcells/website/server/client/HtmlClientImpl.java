@@ -20,8 +20,9 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Playwright;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
-import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
-
+/**
+ * TODO Test Firefox and Chromium automatically in tests using a {@link HtmlClient}.
+ */
 @JavaLegacyArtifact
 public class HtmlClientImpl implements HtmlClient {
     /**
