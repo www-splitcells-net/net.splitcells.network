@@ -26,7 +26,7 @@ import static net.splitcells.website.server.client.HtmlClientImpl.htmlClientImpl
 
 public class NoCodeSolutionCalculatorTest {
     @IntegrationTest
-    public void test() {
+    public void testOptimization() {
         process(() -> {
                     try (final var browser = htmlClientImpl("http://localhost:8443")) {
                         final var tab = browser.openTab("/net/splitcells/gel/ui/no/code/editor/index.html");
