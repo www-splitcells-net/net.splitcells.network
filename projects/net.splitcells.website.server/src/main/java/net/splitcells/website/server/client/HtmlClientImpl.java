@@ -16,18 +16,17 @@
 package net.splitcells.website.server.client;
 
 import com.microsoft.playwright.Browser;
-import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
-public class HtmlClientImpl implements HtmlClientApi {
+public class HtmlClientImpl implements HtmlClient {
     /**
      * @param address The URL's schema and authority of the webserver.
      *                For example, `http://localhost:8443` would be such a URL.
      * @return
      */
-    public static HtmlClientApi htmlClientImpl(String address) {
+    public static HtmlClient htmlClientImpl(String address) {
         return new HtmlClientImpl(address);
     }
 
@@ -40,14 +39,14 @@ public class HtmlClientImpl implements HtmlClientApi {
     }
 
     @Override
-    public TabApi openTab(String path) {
+    public Tab openTab(String path) {
         final var page = browser.newPage();
         page.navigate(address + path);
-        return new TabApi() {
+        return new Tab() {
 
             @Override
-            public ElementApi elementByClass(String cssClass) {
-                return new ElementApi() {
+            public Element elementByClass(String cssClass) {
+                return new Element() {
 
                     @Override
                     public void click() {
@@ -62,8 +61,8 @@ public class HtmlClientImpl implements HtmlClientApi {
             }
 
             @Override
-            public ElementApi elementById(String id) {
-                return new ElementApi() {
+            public Element elementById(String id) {
+                return new Element() {
 
                     @Override
                     public void click() {
