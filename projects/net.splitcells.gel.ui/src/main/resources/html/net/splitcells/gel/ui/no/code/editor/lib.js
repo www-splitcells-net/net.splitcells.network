@@ -7,6 +7,8 @@ function net_splitcells_gel_ui_no_code_editor_calculate_solution_form_solution_d
     net_splitcells_gel_ui_no_code_editor_form_solution.download("csv", "solution.csv", {delimiter:","});
 }
 function net_splitcells_gel_ui_no_code_editor_form_submit() {
+    // The close is needed, in order to ensure, that GUI elements are not submitted to the server.
+    net_splitcells_gel_ui_editor_no_code_action_menu_close();
     var config = net_splitcells_webserver_form_submit_config();
     config['form-id'] = 'net-splitcells-gel-ui-no-code-editor-form'
     config['submit-button-id'] = 'net-splitcells-gel-ui-no-code-editor-calculate-solution-form-submit-1';
