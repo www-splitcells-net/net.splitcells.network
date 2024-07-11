@@ -51,5 +51,10 @@
             <groupId>com.microsoft.playwright</groupId>
             <artifactId>playwright</artifactId>
         </dependency>
+        <dependency>
+            <groupId>net.splitcells</groupId>
+            <artifactId>website.content.binaries</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 </project>
