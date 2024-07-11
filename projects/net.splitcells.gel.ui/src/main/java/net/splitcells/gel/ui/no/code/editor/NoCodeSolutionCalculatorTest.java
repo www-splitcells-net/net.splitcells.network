@@ -15,8 +15,8 @@
  */
 package net.splitcells.gel.ui.no.code.editor;
 
+import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.gel.ui.GelUiCell;
-import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.Dem.process;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
@@ -25,7 +25,7 @@ import static net.splitcells.dem.utils.StringUtils.requireNonEmptyString;
 import static net.splitcells.website.server.client.HtmlClientImpl.htmlClientImpl;
 
 public class NoCodeSolutionCalculatorTest {
-    @Test
+    @IntegrationTest
     public void test() {
         process(() -> {
                     try (final var browser = htmlClientImpl("http://localhost:8443")) {
