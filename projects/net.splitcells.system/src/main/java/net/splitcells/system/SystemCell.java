@@ -20,12 +20,12 @@ import net.splitcells.dem.environment.Environment;
 import net.splitcells.website.server.ServerConfig;
 import net.splitcells.website.server.WebsiteServerCell;
 
-import static net.splitcells.dem.Dem.process;
+import static net.splitcells.dem.Dem.serve;
 
 public class SystemCell implements Cell {
 
     public static void main(String... args) {
-        process(SystemCell.class);
+        serve(SystemCell.class);
     }
 
     @Override

@@ -23,12 +23,12 @@ import net.splitcells.website.binaries.BinaryFileSystem;
 import net.splitcells.website.content.defaults.WebsiteContentDefaultsFileSystem;
 
 import static net.splitcells.dem.Dem.configValue;
-import static net.splitcells.dem.Dem.process;
+import static net.splitcells.dem.Dem.serve;
 import static net.splitcells.website.server.ProjectConfig.projectConfig;
 
 public class WebsiteServerCell implements Cell {
     public static void main(String... args) {
-        process(WebsiteServerCell.class);
+        serve(WebsiteServerCell.class);
     }
     @Override
     public String groupId() {
