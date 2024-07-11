@@ -16,15 +16,19 @@
 package net.splitcells.gel.ui.no.code.editor;
 
 import net.splitcells.gel.ui.GelUiCell;
+import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.Dem.process;
+import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.website.server.client.HtmlClientImpl.htmlClientImpl;
 
 public class NoCodeSolutionCalculatorTest {
-    public static void main(String... args) {
+    @Test
+    public void test() {
         process(() -> {
                     try (final var browser = htmlClientImpl("http://localhost:8443")) {
                         final var tab = browser.openTab("/net/splitcells/gel/ui/no/code/editor/index.html");
+                        requireEquals("", tab.elementById("net-splitcells-gel-ui-no-code-editor-form-errors").textContent());
                         tab.elementByClass("net-splitcells-website-pop-up-confirmation-button").click();
                         tab.elementById("net-splitcells-gel-ui-no-code-editor-calculate-solution-form-submit-1").click();
                     }

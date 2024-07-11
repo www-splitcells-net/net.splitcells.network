@@ -17,4 +17,6 @@ package net.splitcells.website.server.client;
 
 public interface ElementApi {
     void click();
+
+    String textContent();
 }
