@@ -19,4 +19,6 @@ public interface Element {
     void click();
 
     String textContent();
+
+    String value();
 }

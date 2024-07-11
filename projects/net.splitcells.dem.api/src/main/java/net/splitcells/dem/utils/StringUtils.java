@@ -93,4 +93,10 @@ public class StringUtils {
         }
         return a + "," + b;
     }
+
+    public static void requireNonEmptyString(String arg) {
+        if (arg.isEmpty()) {
+            throw executionException("String should not be empty, but it is empty.");
+        }
+    }
 }

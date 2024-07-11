@@ -16,10 +16,13 @@
 package net.splitcells.website.server.client;
 
 import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Playwright;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
+@JavaLegacyArtifact
 public class HtmlClientImpl implements HtmlClient {
     /**
      * @param address The URL's schema and authority of the webserver.
@@ -48,14 +51,21 @@ public class HtmlClientImpl implements HtmlClient {
             public Element elementByClass(String cssClass) {
                 return new Element() {
 
+                    final Locator locator = page.locator("." + cssClass);
+
                     @Override
                     public void click() {
-                        page.click("." + cssClass);
+                        locator.click();
                     }
 
                     @Override
                     public String textContent() {
-                        return page.locator("." + cssClass).textContent();
+                        return locator.textContent();
+                    }
+
+                    @Override
+                    public String value() {
+                        return locator.inputValue();
                     }
                 };
             }
@@ -64,14 +74,21 @@ public class HtmlClientImpl implements HtmlClient {
             public Element elementById(String id) {
                 return new Element() {
 
+                    final Locator locator = page.locator("#" + id);
+
                     @Override
                     public void click() {
-                        page.click("#" + id);
+                        locator.click();
                     }
 
                     @Override
                     public String textContent() {
-                        return page.locator("#" + id ).textContent();
+                        return locator.textContent();
+                    }
+
+                    @Override
+                    public String value() {
+                        return locator.inputValue();
                     }
                 };
             }

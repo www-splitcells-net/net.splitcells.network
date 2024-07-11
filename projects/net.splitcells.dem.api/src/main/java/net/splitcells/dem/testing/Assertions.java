@@ -15,12 +15,16 @@
  */
 package net.splitcells.dem.testing;
 
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.utils.ConstructorIllegal;
 
+import java.time.Instant;
 import java.util.Optional;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
@@ -110,5 +114,21 @@ public class Assertions {
             throw executionException("Runnable should throw `" + expectedExceptionType + "` but did throw  `" + th.getClass() + "`.");
         }
         throw executionException("Runnable should throw `" + expectedExceptionType + "` but did not.");
+    }
+
+    public static void waitUntilRequirementIsTrue(long milliSecondsToWait, Supplier<Boolean> condition) {
+        final var plannedEnd = Instant.now().plusMillis(milliSecondsToWait);
+        var compliance = condition.get();
+        while (true) {
+            if (compliance) {
+                return;
+            }
+            compliance = condition.get();
+            if (Instant.now().isAfter(plannedEnd)) {
+                throw executionException(perspective("Condition is not met during wait time.")
+                        .withProperty("milliSecondsToWait", "" + milliSecondsToWait)
+                        .withProperty("condition", "" + condition));
+            }
+        }
     }
 }

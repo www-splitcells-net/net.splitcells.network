@@ -20,6 +20,8 @@ import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.Dem.process;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
+import static net.splitcells.dem.testing.Assertions.waitUntilRequirementIsTrue;
+import static net.splitcells.dem.utils.StringUtils.requireNonEmptyString;
 import static net.splitcells.website.server.client.HtmlClientImpl.htmlClientImpl;
 
 public class NoCodeSolutionCalculatorTest {
@@ -33,6 +35,9 @@ public class NoCodeSolutionCalculatorTest {
                         requireEquals("", tab.elementById("net-splitcells-gel-ui-no-code-editor-form-solution-rating").textContent());
                         tab.elementByClass("net-splitcells-website-pop-up-confirmation-button").click();
                         tab.elementById("net-splitcells-gel-ui-no-code-editor-calculate-solution-form-submit-1").click();
+                        requireEquals("", tab.elementById("net-splitcells-gel-ui-no-code-editor-form-errors").textContent());
+                        waitUntilRequirementIsTrue(1000L * 60, () -> !tab.elementById("net-splitcells-gel-ui-no-code-editor-form-solution").value().isEmpty());
+                        requireNonEmptyString(tab.elementById("net-splitcells-gel-ui-no-code-editor-form-solution-rating").textContent());
                     }
                 }
                 , GelUiCell.class).requireErrorFree();
