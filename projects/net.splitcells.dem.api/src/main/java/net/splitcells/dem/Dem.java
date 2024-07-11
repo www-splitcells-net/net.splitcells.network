@@ -97,6 +97,10 @@ public class Dem {
         thread.start();
     }
 
+    public static ProcessResult process(Runnable program, Class<? extends Cell>... cells) {
+        return process(program, env -> listWithValuesOf(cells).forEach(env::withCell));
+    }
+
     /**
      * <p>Provides {@link net.splitcells.dem.environment.resource.Service}s as described by the configurator.
      * In other words, this method executes a program decoratively,
@@ -108,8 +112,8 @@ public class Dem {
      *
      * @param cells This describes the program's configuration.
      */
-    public static void serve(Class<? extends Cell>... cells) {
-        process(Dem::waitIndefinitely, env -> listWithValuesOf(cells).forEach(env::withCell));
+    public static void process(Class<? extends Cell>... cells) {
+        process(Dem::waitIndefinitely, cells);
     }
 
     /**
