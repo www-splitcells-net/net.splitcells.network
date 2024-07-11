@@ -18,8 +18,13 @@ package net.splitcells.website.server;
 import net.splitcells.dem.DemCell;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.environment.Cell;
+import net.splitcells.website.WebsiteServerFileSystem;
+import net.splitcells.website.binaries.BinaryFileSystem;
+import net.splitcells.website.content.defaults.WebsiteContentDefaultsFileSystem;
 
+import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.Dem.process;
+import static net.splitcells.website.server.ProjectConfig.projectConfig;
 
 public class WebsiteServerCell implements Cell {
     public static void main(String... args) {
@@ -35,9 +40,33 @@ public class WebsiteServerCell implements Cell {
         return "website.server";
     }
 
+    /**
+     * TODO In the future, the default content should be dependent on the server and not the other way around.
+     * The same goes for the {@link BinaryFileSystem}.
+     *
+     * @param env the input argument
+     */
     @Override
     public void accept(Environment env) {
         env.withCell(DemCell.class);
+        env.config().configValue(ServerConfig.class)
+                .withAdditionalProject(projectConfig("/"
+                        , configValue(WebsiteServerFileSystem.class)))
+                .withAdditionalProject(projectConfig("/"
+                        , configValue(BinaryFileSystem.class)))
+                .withAdditionalProject(projectConfig("/"
+                        , configValue(WebsiteContentDefaultsFileSystem.class)))
+                .withAdditionalJsBackgroundFiles("net/splitcells/website/js/jquery.js")
+                .withAdditionalJsBackgroundFiles("net/splitcells/website/js/codemirror-editor-bundle.js")
+                .withAdditionalJsBackgroundFiles("net/splitcells/website/js/basic.js")
+                .withAdditionalJsBackgroundFiles("net/splitcells/website/js/basic.default.js")
+                .withAdditionalCssFile("net/splitcells/website/css/theme.white.variables.css")
+                .withAdditionalCssFile("net/splitcells/website/css/basic.themed.css")
+                .withAdditionalCssFile("net/splitcells/website/css/basic.css")
+                .withAdditionalCssFile("net/splitcells/website/css/den.css")
+                .withAdditionalCssFile("net/splitcells/website/css/layout.default.css")
+                .withAdditionalCssFile("net/splitcells/website/css/theme.css")
+                .withAdditionalCssFile("net/splitcells/website/css/tabulator.min.css");
         env.config().withInitedOption(ServerService.class);
     }
 }

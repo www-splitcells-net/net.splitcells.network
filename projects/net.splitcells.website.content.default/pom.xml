@@ -18,5 +18,14 @@
             <artifactId>dem</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <!-- TODO This is currently only needed for jQuery, which is the basic JavaScript dependency for all basic UI.
+                Avoid hard requirement of this dependency, which source code is outside of this repo.
+                Only one dependency is acceptable for this core repo and this is `net.splitcells.network.bom`.
+            -->
+            <groupId>net.splitcells</groupId>
+            <artifactId>website.content.binaries</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 </project>
