@@ -19,7 +19,6 @@ import net.splitcells.dem.DemCell;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.environment.Cell;
 import net.splitcells.website.WebsiteServerFileSystem;
-import net.splitcells.website.binaries.BinaryFileSystem;
 import net.splitcells.website.content.defaults.WebsiteContentDefaultsFileSystem;
 
 import static net.splitcells.dem.Dem.configValue;
@@ -42,7 +41,6 @@ public class WebsiteServerCell implements Cell {
 
     /**
      * TODO In the future, the default content should be dependent on the server and not the other way around.
-     * The same goes for the {@link BinaryFileSystem}.
      *
      * @param env the input argument
      */
@@ -52,8 +50,6 @@ public class WebsiteServerCell implements Cell {
         env.config().configValue(ServerConfig.class)
                 .withAdditionalProject(projectConfig("/"
                         , configValue(WebsiteServerFileSystem.class)))
-                .withAdditionalProject(projectConfig("/"
-                        , configValue(BinaryFileSystem.class)))
                 .withAdditionalProject(projectConfig("/"
                         , configValue(WebsiteContentDefaultsFileSystem.class)))
                 .withAdditionalJsBackgroundFiles("net/splitcells/website/js/jquery.js")

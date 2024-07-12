@@ -18,14 +18,44 @@
             <artifactId>dem</artifactId>
             <version>${revision}</version>
         </dependency>
-        <dependency>
-            <!-- TODO This is currently only needed for jQuery, which is the basic JavaScript dependency for all basic UI.
-                Avoid hard requirement of this dependency, which source code is outside of this repo.
-                Only one dependency is acceptable for this core repo and this is `net.splitcells.network.bom`.
-            -->
-            <groupId>net.splitcells</groupId>
-            <artifactId>website.content.binaries</artifactId>
-            <version>${revision}</version>
-        </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.7.1</version>
+                <executions>
+                    <execution>
+                        <id>unpack</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.webjars</groupId>
+                                    <artifactId>jquery</artifactId>
+                                    <version>${jquery.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>false</overWrite>
+                                    <outputDirectory>${project.build.directory}/classes/net.splitcells.website.content.default.resources/src/main/resources/html/net/splitcells/website/js/</outputDirectory>
+                                    <destFileName></destFileName>
+                                    <fileMappers>
+                                        <fileMapper implementation="org.codehaus.plexus.components.io.filemappers.FlattenFileMapper"/>
+                                        <org.codehaus.plexus.components.io.filemappers.RegExpFileMapper>
+                                            <pattern>.+</pattern>
+                                            <replacement>jquery.js</replacement>
+                                        </org.codehaus.plexus.components.io.filemappers.RegExpFileMapper>
+                                    </fileMappers>
+                                    <includes>META-INF/resources/webjars/jquery/${jquery.version}/jquery.min.js</includes>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
