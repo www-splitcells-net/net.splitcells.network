@@ -62,7 +62,7 @@ public class SolutionCalculatorTest {
                 , "a,b,c,argumentation\n");
     }
 
-    @IntegrationTest
+    @CapabilityTest
     public void testDemonstrationExample() {
         Dem.process(() -> {
                             final var problemDefinition = Dem.configValue(GelUiFileSystem.class)
