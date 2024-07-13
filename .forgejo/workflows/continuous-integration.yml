@@ -5,7 +5,7 @@ jobs:
   test:
     runs-on: docker
     container:
-      image: alpine:latest
+      image: ubuntu:latest # This is required, because playwright does not work in `alpine:latest`.
     steps:
       - name: Setup Build
         run: |
