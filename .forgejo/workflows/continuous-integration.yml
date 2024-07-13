@@ -24,4 +24,4 @@ jobs:
           mvn clean install
           cd /workspace/splitcells-net/net.splitcells.network
           mvn -B clean install org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=www-splitcells-net_net.splitcells.network -Dsonar.test.exclusions=src/main/java/** -Dsonar.organization=www-splitcells-net -Dsonar.host.url=https://sonarcloud.io # `-Dsonar.inclusions=src/main/**,bin/*` does not seem to work.
-          bash <(curl -s https://codecov.io/bash) # Upload tests to codecov.io.
+          bash -c 'bash <(curl -s https://codecov.io/bash)' # Upload tests to codecov.io. As the default shell is sh, a bash wrapping is used.
