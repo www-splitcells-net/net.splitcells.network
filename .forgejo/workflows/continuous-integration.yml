@@ -5,7 +5,9 @@ jobs:
   test:
     runs-on: docker
     container:
-      image: ubuntu:latest # This is required, because playwright does not work in `alpine:latest`.
+      image: ubuntu:latest
+        # This is required, because playwright does not work in `alpine:latest`.
+        # Maybe this could be fixed via `playwright.driver.tmpdir`. See https://github.com/microsoft/playwright-java/issues/728
     steps:
       - name: Setup Build
         run: |
