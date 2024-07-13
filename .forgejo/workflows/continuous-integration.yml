@@ -9,8 +9,8 @@ jobs:
     steps:
       - name: Setup Build
         run: |
-          apk update # $(pwd) = /workspace/splitcells-net/net.splitcells.network
-          apk add bash curl git python3 openjdk21-jdk maven
+          apt update # $(pwd) = /workspace/splitcells-net/net.splitcells.network
+          apt install -y bash curl git python3 openjdk-21-jdk maven
           cd /workspace/splitcells-net/
           git clone --depth 1 https://codeberg.org/splitcells-net/net.splitcells.network.bom.git
           git clone --depth 1 https://codeberg.org/splitcells-net/net.splitcells.network.git
