@@ -20,3 +20,6 @@ target/
 .vagrant/
 # Log files created by Java crash dumps.
 *.log
+
+# This dependency file is placed in the source code, so that it is available in developer mode for the webserver.
+projects/net.splitcells.website.content.default/src/main/resources/html/net/splitcells/website/js/jquery.js
