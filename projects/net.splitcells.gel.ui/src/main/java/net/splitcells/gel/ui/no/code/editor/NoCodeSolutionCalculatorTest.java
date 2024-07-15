@@ -35,8 +35,8 @@ public class NoCodeSolutionCalculatorTest {
                         requireEquals("", tab.elementById("net-splitcells-gel-ui-no-code-editor-form-solution-rating").textContent());
                         tab.elementByClass("net-splitcells-website-pop-up-confirmation-button").click();
                         tab.elementById("net-splitcells-gel-ui-no-code-editor-calculate-solution-form-submit-1").click();
-                        requireEquals("", tab.elementById("net-splitcells-gel-ui-no-code-editor-form-errors").textContent());
                         waitUntilRequirementIsTrue(1000L * 60, () -> !tab.elementById("net-splitcells-gel-ui-no-code-editor-form-solution").value().isEmpty());
+                        requireEquals("", tab.elementById("net-splitcells-gel-ui-no-code-editor-form-errors").textContent());
                         requireNonEmptyString(tab.elementById("net-splitcells-gel-ui-no-code-editor-form-solution-rating").textContent());
                     }
                 }
