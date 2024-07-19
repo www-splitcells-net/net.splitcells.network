@@ -98,11 +98,6 @@ public class GroupMultiplier implements Rater {
     }
 
     @Override
-    public Node argumentation(GroupId group, Table allocations) {
-        return Xml.textNode(getClass().getSimpleName());
-    }
-
-    @Override
     public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
         return classifiers.stream()
                 .map(classifier -> classifier.toString())

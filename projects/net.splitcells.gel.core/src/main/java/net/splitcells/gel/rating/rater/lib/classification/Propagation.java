@@ -67,11 +67,6 @@ public class Propagation implements Rater {
     }
 
     @Override
-    public Node argumentation(GroupId group, Table allocations) {
-        return Xml.elementWithChildren(PROPAGTION.value());
-    }
-
-    @Override
     public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
         return "";
     }

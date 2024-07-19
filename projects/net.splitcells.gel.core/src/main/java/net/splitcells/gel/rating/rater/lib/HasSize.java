@@ -88,18 +88,6 @@ public class HasSize implements Rater {
     }
 
     @Override
-    public Node argumentation(GroupId group, Table allocations) {
-        final var argumentation = Xml.elementWithChildren(HasSize.class.getSimpleName());
-        argumentation.appendChild(
-                Xml.elementWithChildren("target-size"
-                        , Xml.textNode(targetSize + "")));
-        argumentation.appendChild(
-                Xml.elementWithChildren("actual-size"
-                        , Xml.textNode(allocations.size() + "")));
-        return argumentation;
-    }
-
-    @Override
     public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
         return "size should be " + targetSize + ", but is " + groupsLineProcessing.size();
     }

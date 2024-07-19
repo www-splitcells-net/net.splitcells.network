@@ -352,19 +352,6 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
     }
 
     @Override
-    public Node argumentation(GroupId group, Table allocations) {
-        final var reasoning = Xml.elementWithChildren("min-distance");
-        reasoning.appendChild(
-                Xml.elementWithChildren("minimum"
-                        , Xml.textNode(minimumDistance + "")));
-        reasoning.appendChild(
-                Xml.elementWithChildren("order"
-                        , Xml.textNode(comparator.toString())));
-        defyingSorted(allocations).forEach(e -> reasoning.appendChild(e.toDom()));
-        return reasoning;
-    }
-
-    @Override
     public List<Domable> arguments() {
         return Lists.list
                 (perspective("minimumDistance").withChild(perspective("" + minimumDistance))

@@ -74,13 +74,6 @@ public class ConstantRater implements Rater {
     }
 
     @Override
-    public Node argumentation(GroupId group, Table allocations) {
-        final var argumentation = Xml.elementWithChildren("constant-ratings");
-        argumentation.appendChild(rating.toDom());
-        return argumentation;
-    }
-
-    @Override
     public List<Domable> arguments() {
         return list(rating);
     }

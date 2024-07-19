@@ -104,11 +104,6 @@ public interface Rater extends PubliclyTyped<Rater>
         return Rater.class;
     }
 
-    @Deprecated
-    default Node argumentation(GroupId group, Table allocations) {
-        throw notImplementedYet(getClass().getName());
-    }
-
     @Override
     default Node toDom() {
         throw deprecationException();

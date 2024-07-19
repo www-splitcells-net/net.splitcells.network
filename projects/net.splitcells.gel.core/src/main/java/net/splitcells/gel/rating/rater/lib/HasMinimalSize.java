@@ -82,18 +82,6 @@ public class HasMinimalSize implements Rater {
     }
 
     @Override
-    public Node argumentation(GroupId group, Table allocations) {
-        final var argumentation = Xml.elementWithChildren(HasMinimalSize.class.getSimpleName());
-        argumentation.appendChild(
-                Xml.elementWithChildren("minimal-size"
-                        , Xml.textNode(minimalSize + "")));
-        argumentation.appendChild(
-                Xml.elementWithChildren("actual-size"
-                        , Xml.textNode(allocations.size() + "")));
-        return argumentation;
-    }
-
-    @Override
     public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
         return "size should be at least" + minimalSize + ", but is " + groupsLineProcessing.size();
     }

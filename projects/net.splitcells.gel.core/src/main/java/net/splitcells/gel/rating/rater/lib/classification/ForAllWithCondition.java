@@ -79,15 +79,6 @@ public class ForAllWithCondition<T> implements Rater {
     }
 
     @Override
-    public Node argumentation(GroupId group, Table allocations) {
-        final var argumentation = Xml.elementWithChildren("for-all-with-condition");
-        final var attributeDescription = Xml.elementWithChildren("condition");
-        argumentation.appendChild(attributeDescription);
-        attributeDescription.appendChild(Xml.textNode(condition.toString()));
-        return argumentation;
-    }
-
-    @Override
     public void addContext(Discoverable contexts) {
         this.contexts.add(contexts);
     }

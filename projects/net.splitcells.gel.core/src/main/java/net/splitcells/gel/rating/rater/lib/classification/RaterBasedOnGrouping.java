@@ -82,13 +82,6 @@ public class RaterBasedOnGrouping implements Rater {
     }
 
     @Override
-    public Node argumentation(GroupId group, Table allocations) {
-        final var reasoning = Xml.elementWithChildren("group-by");
-        reasoning.appendChild(grouping.argumentation(group, allocations));
-        return reasoning;
-    }
-
-    @Override
     public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
         return grouping.toSimpleDescription(line, groupsLineProcessing, incomingGroup);
     }

@@ -177,14 +177,6 @@ public class RaterBasedOnLineValue implements Rater {
     }
 
     @Override
-    public Node argumentation(GroupId group, Table allocations) {
-        final var argumentation = Xml.elementWithChildren(Language.GROUP.value());
-        argumentation.appendChild
-                (Xml.textNode(group.name().orElse("missing-group-name")));
-        return argumentation;
-    }
-
-    @Override
     public void addContext(Discoverable contexts) {
         this.contexts.add(contexts);
     }
