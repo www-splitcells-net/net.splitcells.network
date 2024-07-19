@@ -170,7 +170,7 @@
     box-shadow: .1em .1em .1em var(--shadow-color-priority-1);
 }
 .net-splitcells-dem-lang-perspective-no-code-variable-access .net-splitcells-dem-lang-perspective-no-code-variable-reference:after {
-    content: ":";
+    content: " :";
 }
 .net-splitcells-dem-lang-perspective-no-code-function-call .net-splitcells-dem-lang-perspective-no-code-variable-reference:after {
     content: "";
