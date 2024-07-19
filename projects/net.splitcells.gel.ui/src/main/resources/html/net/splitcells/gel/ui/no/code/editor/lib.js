@@ -338,9 +338,18 @@ function net_splitcells_gel_ui_editor_no_code_function_call_set_pop_up(setAction
         let setSubmit = document.createElement("div");
         setSubmit.className = 'net-splitcells-button net-splitcells-action-button';
         setSubmit.onclick = function() {
-            functionName.innerHTML = possibleName;
-            $(functionName.parentNode).children('.net-splitcells-dem-lang-perspective-no-code-function-call-argument').remove();
-            net_splitcells_gel_ui_editor_no_code_function_call_add_arguments(functionName.parentNode, possibleName);
+            if (!hasClass(functionName.parentNode, 'net-splitcells-dem-lang-perspective-no-code-function-call')) {
+                let newFunctionCall = $('<span class="net-splitcells-dem-lang-perspective-no-code-function-call">'
+                                    + '<span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">'
+                                    + possibleName
+                                    + '</span></span>').get()[0];
+                functionName.replaceWith(newFunctionCall);
+                net_splitcells_gel_ui_editor_no_code_function_call_add_arguments(newFunctionCall, possibleName);
+            } else {
+                functionName.innerHTML = possibleName;
+                $(functionName.parentNode).children('.net-splitcells-dem-lang-perspective-no-code-function-call-argument').remove();
+                net_splitcells_gel_ui_editor_no_code_function_call_add_arguments(functionName.parentNode, possibleName);
+            }
         };
         setSubmit.innerHTML = possibleName;
         setWindow.appendChild(setSubmit);
