@@ -478,26 +478,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
 
     @Override
     public Element toDom() {
-        final var dom = Xml.elementWithChildren(type().getSimpleName());
-        if (!arguments().isEmpty()) {
-            arguments().forEach(arg -> dom.appendChild(Xml.elementWithChildren(ARGUMENTATION.value(), arg.toDom())));
-        }
-        dom.appendChild(Xml.elementWithChildren("rating", rating().toDom()));
-        {
-            final var ratings = Xml.elementWithChildren("ratings");
-            dom.appendChild(ratings);
-            lineProcessing.columnView(INCOMING_CONSTRAINT_GROUP)
-                    .lookup(injectionGroup())
-                    .unorderedLines()
-                    .forEach(line -> ratings.appendChild(line.toDom()));
-        }
-        childrenView().forEach(child ->
-                dom.appendChild(
-                        child.toPerspective(
-                                setOfUniques(results
-                                        .columnView(RESULTING_CONSTRAINT_GROUP)
-                                        .values())).toDom()));
-        return dom;
+        return (Element) toPerspective().toDom();
     }
 
     @Override
