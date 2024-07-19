@@ -59,6 +59,7 @@ import static net.splitcells.dem.utils.reflection.ClassesRelated.callerClass;
  */
 @JavaLegacyArtifact
 public class Dem {
+    public static final String MAVEN_GROUP_ID = "net.splitcells";
     /**
      * Currently it would be enough to use a static variable instead.
      * Thread locals are required in order to implement a tree of programs as a cactus stack (https://wiki.c2.com/?CactusStack).
