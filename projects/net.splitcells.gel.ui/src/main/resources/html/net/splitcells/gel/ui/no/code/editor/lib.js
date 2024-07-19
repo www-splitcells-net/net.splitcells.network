@@ -134,13 +134,21 @@ function net_splitcells_gel_ui_editor_no_code_function_calls_enhance() {
 }
 function net_splitcells_gel_ui_editor_no_code_undefined_enhance() {
     $('.net-splitcells-dem-lang-perspective-no-code-undefined').each((index, element) => {
-        net_splitcells_gel_ui_editor_no_code_generic_enhance(element, {
-            title : 'Undefined Actions'
-            , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_function_call_set(this);">Set as function call</div>'
-                + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_literal_set_pop_up(this);">Set as literal</div>'
-                + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_variable_references_set_pop_up(this);">Set as variable</div>'
-                + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_undefined_help_show(this);">Help</div>'
-        });
+        if (hasClass(element.parentNode, 'net-splitcells-dem-lang-perspective-no-code-function-call')) {
+            net_splitcells_gel_ui_editor_no_code_generic_enhance(element, {
+                title : 'Undefined Actions'
+                , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_function_call_set(this);">Set as function call</div>'
+                    + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_undefined_help_show(this);">Help</div>'
+            });
+        } else {
+            net_splitcells_gel_ui_editor_no_code_generic_enhance(element, {
+                title : 'Undefined Actions'
+                , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_function_call_set(this);">Set as function call</div>'
+                    + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_literal_set_pop_up(this);">Set as literal</div>'
+                    + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_variable_references_set_pop_up(this);">Set as variable</div>'
+                    + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_undefined_help_show(this);">Help</div>'
+            });
+        }
     });
 }
 function net_splitcells_gel_ui_editor_no_code_undefined_help_show(helpButton) {
@@ -516,6 +524,15 @@ function net_splitcells_gel_ui_editor_no_code_append_variable_definition() {
         + '<span class="net-splitcells-dem-lang-perspective-no-code-variable-value"><span class="net-splitcells-dem-lang-perspective-no-code-undefined">?</span></span>'
         + '</li>')
     $(newVariableDefinition).replaceAll('.net-splitcells-no-code-append-target');
+    net_splitcells_gel_ui_editor_no_code_ast_element_enhance();
+    net_splitcells_gel_ui_editor_no_code_action_menu_close();
+}
+function net_splitcells_gel_ui_editor_no_code_append_variable_access() {
+    let newVariableAccess = $('<li class="net-splitcells-dem-lang-perspective-no-code-variable-access">'
+        + '<span class="net-splitcells-dem-lang-perspective-no-code-variable-reference"><span class="net-splitcells-dem-lang-perspective-no-code-undefined">?</span></span>'
+        + '<span class="net-splitcells-dem-lang-perspective-no-code-function-call-name"><span class="net-splitcells-dem-lang-perspective-no-code-undefined">?</span></span>'
+        + '</li>')
+    $(newVariableAccess).replaceAll('.net-splitcells-no-code-append-target');
     net_splitcells_gel_ui_editor_no_code_ast_element_enhance();
     net_splitcells_gel_ui_editor_no_code_action_menu_close();
 }
