@@ -48,14 +48,18 @@ copies of these are inside the program's source code.
 These have their own copyright and licensing.
 
 * MathJax:
-  * License: Apache 2.0 License
-  * Site: https://www.mathjax.org/
+    * License: Apache 2.0 License
+    * Site: https://www.mathjax.org/
 * Chart.js:
-  * License: MIT
-  * [Source Code](https://github.com/chartjs/Chart.js)
+    * License: MIT
+    * [Source Code](https://github.com/chartjs/Chart.js)
 * chartjs-plugin-datasource:
-  * License: MIT
-  * [Source Code](https://nagix.github.io/chartjs-plugin-datasource)
+    * License: MIT
+    * [Source Code](https://nagix.github.io/chartjs-plugin-datasource)
+* dragula:
+    * License: MIT 
+    * [Website](https://bevacqua.github.io/dragula/)
+    * [Source Code](https://github.com/bevacqua/dragula)
 
 * [License files/text](./src/main/txt/net/splitcells/network/legal/licenses)
 

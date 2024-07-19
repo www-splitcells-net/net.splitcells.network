@@ -115,6 +115,7 @@ public class WebsiteViaJar {
                 .withAdditionalJsBackgroundFiles("net/splitcells/website/js/codemirror-editor-bundle.js")
                 .withAdditionalJsBackgroundFiles("net/splitcells/website/js/basic.js")
                 .withAdditionalJsBackgroundFiles("net/splitcells/website/js/basic.default.js")
+                .withAdditionalJsBackgroundFiles("net/splitcells/website/js/dragula.min.js")
                 .withAdditionalCssFile("net/splitcells/website/css/theme.white.variables.css")
                 .withAdditionalCssFile("net/splitcells/website/css/basic.themed.css")
                 .withAdditionalCssFile("net/splitcells/website/css/basic.css")
@@ -123,6 +124,7 @@ public class WebsiteViaJar {
                 .withAdditionalCssFile("net/splitcells/website/css/theme.css")
                 .withAdditionalCssFile("net/splitcells/gel/ui/no/code/editor/style.css")
                 .withAdditionalCssFile("net/splitcells/website/css/tabulator.min.css")
+                .withAdditionalCssFile("net/splitcells/website/css/dragula.min.css")
                 .withAdditionalProgramConfig(programConfig("Splitcells Network Documentation"
                         , "/net/splitcells/network/hub/README")
                         .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/community.2016.12.11.chrom.0.dina4.jpg"))
