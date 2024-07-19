@@ -17,8 +17,12 @@ package net.splitcells.website.server.client;
 
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+
+import static net.splitcells.dem.data.set.list.Lists.list;
 
 /**
  * TODO Test Firefox and Chromium automatically in tests using a {@link HtmlClient}.
@@ -37,6 +41,7 @@ public class HtmlClientImpl implements HtmlClient {
     private final Playwright playwright = Playwright.create();
     private final Browser browser = playwright.firefox().launch();
     private final String address;
+    private final List<Page> openTabs = list();
 
     private HtmlClientImpl(String addressArg) {
         address = addressArg;
@@ -45,6 +50,7 @@ public class HtmlClientImpl implements HtmlClient {
     @Override
     public Tab openTab(String path) {
         final var page = browser.newPage();
+        openTabs.add(page);
         page.navigate(address + path);
         return new Tab() {
 
@@ -103,6 +109,7 @@ public class HtmlClientImpl implements HtmlClient {
 
     @Override
     public void close() {
+        openTabs.forEach(Page::close);
         playwright.close();
     }
 
