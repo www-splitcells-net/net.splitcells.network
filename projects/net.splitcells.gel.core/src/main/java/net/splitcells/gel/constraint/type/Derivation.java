@@ -137,11 +137,6 @@ public final class Derivation implements Constraint {
     }
 
     @Override
-    public Element toDom(Set<GroupId> groups) {
-        throw notImplementedYet();
-    }
-
-    @Override
     public Perspective toPerspective(Set<GroupId> groups) {
         return derivationTarget.toPerspective(groups);
     }

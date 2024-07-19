@@ -493,10 +493,10 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         }
         childrenView().forEach(child ->
                 dom.appendChild(
-                        child.toDom(
+                        child.toPerspective(
                                 setOfUniques(results
                                         .columnView(RESULTING_CONSTRAINT_GROUP)
-                                        .values()))));
+                                        .values())).toDom()));
         return dom;
     }
 
@@ -544,39 +544,6 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         childrenView().forEach(child ->
                 dom.withChild(
                         child.toPerspective(
-                                groups.stream().
-                                        map(group -> lineProcessing
-                                                .columnView(INCOMING_CONSTRAINT_GROUP)
-                                                .lookup(group)
-                                                .unorderedLines()
-                                                .stream()
-                                                .map(groupLines -> groupLines.value(RESULTING_CONSTRAINT_GROUP))
-                                                .collect(toSetOfUniques()))
-                                        .flatMap(resultingGroupings -> resultingGroupings.stream())
-                                        .collect(toSetOfUniques()))));
-        return dom;
-    }
-
-    @Override
-    public Element toDom(Set<GroupId> groups) {
-        final var dom = Xml.elementWithChildren(type().getSimpleName());
-        if (!arguments().isEmpty()) {
-            arguments().forEach(arg -> dom.appendChild(Xml.elementWithChildren(ARGUMENTATION.value(), arg.toDom())));
-        }
-        dom.appendChild(Xml.elementWithChildren("rating", rating(groups).toDom()));
-        {
-            final var ratings = Xml.elementWithChildren("ratings");
-            dom.appendChild(ratings);
-            groups.forEach(group ->
-                    lineProcessing
-                            .columnView(INCOMING_CONSTRAINT_GROUP)
-                            .lookup(group)
-                            .unorderedLines().
-                            forEach(line -> ratings.appendChild(line.toDom())));
-        }
-        childrenView().forEach(child ->
-                dom.appendChild(
-                        child.toDom(
                                 groups.stream().
                                         map(group -> lineProcessing
                                                 .columnView(INCOMING_CONSTRAINT_GROUP)

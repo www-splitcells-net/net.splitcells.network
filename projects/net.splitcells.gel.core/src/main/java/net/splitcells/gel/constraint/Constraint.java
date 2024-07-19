@@ -204,10 +204,6 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
 
     Table lineProcessing();
 
-    Element toDom();
-
-    Element toDom(Set<GroupId> groups);
-
     Perspective toPerspective(Set<GroupId> groups);
 
     @Deprecated

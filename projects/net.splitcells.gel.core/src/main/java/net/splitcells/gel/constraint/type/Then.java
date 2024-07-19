@@ -185,11 +185,6 @@ public class Then implements Constraint {
     }
 
     @Override
-    public Element toDom(Set<GroupId> groups) {
-        return constraint.toDom(groups);
-    }
-
-    @Override
     public Perspective toPerspective(Set<GroupId> groups) {
         return constraint.toPerspective(groups);
     }
