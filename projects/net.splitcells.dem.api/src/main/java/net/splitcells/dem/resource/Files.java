@@ -19,6 +19,7 @@ import net.bytebuddy.implementation.bytecode.Throw;
 import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.lang.perspective.Perspective;
 import org.apache.commons.io.FileUtils;
 import org.w3c.dom.Node;
 
@@ -129,6 +130,11 @@ public interface Files {
     @Deprecated
     static void writeToFile(Path path, Node node) {
         writeToFile(path, toPrettyString(node));
+    }
+
+    @Deprecated
+    static void writeToFile(Path path, Perspective content) {
+        writeToFile(path, content.toXmlString());
     }
 
     @Deprecated

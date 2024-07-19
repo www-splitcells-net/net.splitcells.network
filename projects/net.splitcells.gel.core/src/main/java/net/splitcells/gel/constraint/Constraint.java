@@ -250,13 +250,13 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
                 .collect(toSetOfUniques());
     }
 
-    default Element graph() {
-        final var graph = Xml.rElement(GEL, type().getSimpleName());
+    default Perspective graph() {
+        final var graph = perspective(type().getSimpleName());
         if (!arguments().isEmpty()) {
-            arguments().forEach(arg -> graph.appendChild(Xml.elementWithChildren(ARGUMENTATION.value(), arg.toPerspective().toDom())));
+            arguments().forEach(arg -> graph.withProperty(ARGUMENTATION.value(), arg.toPerspective()));
         }
         childrenView().forEach(child -> {
-            graph.appendChild(child.graph());
+            graph.withChild(child.graph());
         });
         return graph;
     }
