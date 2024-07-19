@@ -61,6 +61,9 @@ function net_splitcells_gel_ui_editor_no_code_ast_element_enhance() {
     net_splitcells_gel_ui_editor_no_code_function_calls_enhance();
     net_splitcells_gel_ui_editor_no_code_variable_references_enhance();
     net_splitcells_gel_ui_editor_no_code_var_arg_enhance();
+    $('.net-splitcells-dem-lang-perspective-no-code-lang').each((index, noCode) => {
+        dragula([noCode]);
+    });
 }
 function net_splitcells_gel_ui_editor_no_code_generic_enhance(astElement, config) {
     astElement.onclick = function() {
