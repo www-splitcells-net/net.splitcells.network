@@ -184,7 +184,9 @@ function net_splitcells_gel_ui_editor_no_code_variable_definition_rename_pop_up(
     + '</div>';
     let renameInput = document.createElement("input");
     renameInput.type = 'text';
-    renameInput.value = variableName.innerHTML;
+    if (!(variableName instanceof Element)) {
+        renameInput.value = variableName.innerHTML;
+    }
     renameWindow.appendChild(renameInput);
     renameWindow.className = 'net-splitcells-gel-ui-editor-no-code-pop-up';
     let renameSubmit = document.createElement("div");
