@@ -1,8 +1,0 @@
-#!/usr/bin/env sh
-# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
-# SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
-#
-# This executes tests, that should not have relevant side effects for the host.
-# Test executors and therefore `./bin/test.via.*` commands, are not tested via tests.
-# These commands have to be tested by the appropriate hosts themselves.
-./bin/test.minimal
