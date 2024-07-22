@@ -32,6 +32,11 @@
             <command id="net-splitcells-gel-ui-no-code-editor-calculate-solution-form-submit-1"
                      method="net_splitcells_gel_ui_no_code_editor_form_submit">Submit optimization
             </command>
+            <command id="net-splitcells-gel-ui-no-code-editor-form-problem-definition-download"
+                     method="net_splitcells_gel_ui_no_code_editor_definition_downloadStringAsFile"
+                     target-id="net-splitcells-gel-ui-no-code-editor-form-problem-definition">
+                Download definition
+            </command>
             <command id="net-splitcells-gel-ui-no-code-calculate-solution-form-solution-download-as-csv"
                      method="net_splitcells_gel_ui_editor_no_code_calculate_solution_form_solution_download_as_csv">
                 Download solution

@@ -761,13 +761,31 @@ request.send();]]>
                                     <xsl:if test="./s:meta/s:commands">
                                         <section class="net-splitcells-component-priority-1">
                                             <xsl:for-each select="./s:meta/s:commands/s:command">
-                                                <div class="net-splitcells-button net-splitcells-action-button">
-                                                    <xsl:attribute name="onclick" select="concat('javascript: ', ./@method, '()')"/>
-                                                    <xsl:if test="./@id">
-                                                        <xsl:attribute name="id" select="./@id"/>
-                                                    </xsl:if>
-                                                    <xsl:apply-templates select="./node()"/>
-                                                </div>
+                                                <xsl:choose>
+                                                    <xsl:when test="./@target-id">
+                                                        <xsl:variable name="onClick">
+                                                            <xsl:value-of select="concat('javascript: ', ./@method, '(document.getElementById(&quot;')"/>
+                                                            <xsl:value-of select="./@target-id"/>
+                                                            <xsl:value-of select="'&quot;))'"/>
+                                                        </xsl:variable>
+                                                        <div class="net-splitcells-button net-splitcells-action-button">
+                                                            <xsl:attribute name="onclick" select="$onClick"/>
+                                                            <xsl:if test="./@id">
+                                                                <xsl:attribute name="id" select="./@id"/>
+                                                            </xsl:if>
+                                                            <xsl:apply-templates select="./node()"/>
+                                                        </div>
+                                                    </xsl:when>
+                                                    <xsl:otherwise>
+                                                        <div class="net-splitcells-button net-splitcells-action-button">
+                                                            <xsl:attribute name="onclick" select="concat('javascript: ', ./@method, '()')"/>
+                                                            <xsl:if test="./@id">
+                                                                <xsl:attribute name="id" select="./@id"/>
+                                                            </xsl:if>
+                                                            <xsl:apply-templates select="./node()"/>
+                                                        </div>
+                                                    </xsl:otherwise>
+                                                </xsl:choose>
                                             </xsl:for-each>
                                         </section>
                                     </xsl:if>

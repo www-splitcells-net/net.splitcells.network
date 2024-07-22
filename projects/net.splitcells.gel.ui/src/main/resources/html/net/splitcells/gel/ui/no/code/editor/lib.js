@@ -539,3 +539,7 @@ function net_splitcells_gel_ui_editor_no_code_append_variable_access() {
     net_splitcells_gel_ui_editor_no_code_ast_element_enhance();
     net_splitcells_gel_ui_editor_no_code_action_menu_close();
 }
+function net_splitcells_gel_ui_no_code_editor_definition_downloadStringAsFile(editor) {
+    downloadStringAsFile(editor.value, 'problem-definition.html');
+}
+}

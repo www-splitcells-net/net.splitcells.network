@@ -212,3 +212,13 @@ function net_splitcells_webserver_form_submit(config) {
     request.open("post", form.action);
     request.send(data);
 }
+function downloadStringAsFile(string, filename) {
+    // The element does not have to be added to the document, in order to be used.
+    let downloader = document.createElement('a');
+    downloader.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(string));
+    downloader.download = filename;
+
+    downloader.style.display = 'none';
+    downloader.style.visibility = 'hidden';
+    downloader.click();
+}
