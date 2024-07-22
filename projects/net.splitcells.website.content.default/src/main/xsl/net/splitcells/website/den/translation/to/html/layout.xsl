@@ -621,7 +621,7 @@ request.send();]]>
 													">
                                                             <xsl:text>☐</xsl:text>
                                                         </div>
-                                                        <div class="net-splitcells-button-inline net-splitcells-action-button page-column-0-windowed optional"
+                                                        <div class="net-splitcells-button-inline net-splitcells-action-button net-splitcells-action-text-button page-column-0-windowed optional"
                                                              onclick="javascript: fullScreenDisable();
 													hide('page-column-0-windowed');
 														unshowByCssClass('page-column-0-windowed');
@@ -768,7 +768,7 @@ request.send();]]>
                                                             <xsl:value-of select="./@target-id"/>
                                                             <xsl:value-of select="'&quot;))'"/>
                                                         </xsl:variable>
-                                                        <div class="net-splitcells-button net-splitcells-action-button">
+                                                        <div class="net-splitcells-button net-splitcells-action-button net-splitcells-action-text-button">
                                                             <xsl:attribute name="onclick" select="$onClick"/>
                                                             <xsl:if test="./@id">
                                                                 <xsl:attribute name="id" select="./@id"/>
@@ -777,7 +777,7 @@ request.send();]]>
                                                         </div>
                                                     </xsl:when>
                                                     <xsl:otherwise>
-                                                        <div class="net-splitcells-button net-splitcells-action-button">
+                                                        <div class="net-splitcells-button net-splitcells-action-button net-splitcells-action-text-button">
                                                             <xsl:attribute name="onclick" select="concat('javascript: ', ./@method, '()')"/>
                                                             <xsl:if test="./@id">
                                                                 <xsl:attribute name="id" select="./@id"/>
