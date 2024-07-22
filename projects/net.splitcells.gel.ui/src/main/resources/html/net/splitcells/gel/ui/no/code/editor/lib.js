@@ -546,6 +546,12 @@ function net_splitcells_gel_ui_no_code_editor_definition_upload(editor) {
     uploadFileAsString((uploadContent) => {
         // TODO Why is `editor.innerHTML = uploadContent;` required? Otherwise, this is not working.
         editor.innerHTML = uploadContent;
+        /* This does not seem to be necessary, as `editor.innerHTML = uploadContent;` is enough,
+         * but it is not known why.
+         * In order to be sure, that no corner case is triggered in the future,
+         * that causes `editor.innerHTML = uploadContent;` to fail,
+         * this line kept for now.
+         */
         editor.value = uploadContent;
     });
 }
