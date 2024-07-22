@@ -542,4 +542,10 @@ function net_splitcells_gel_ui_editor_no_code_append_variable_access() {
 function net_splitcells_gel_ui_no_code_editor_definition_downloadStringAsFile(editor) {
     downloadStringAsFile(editor.value, 'problem-definition.html');
 }
+function net_splitcells_gel_ui_no_code_editor_definition_upload(editor) {
+    uploadFileAsString((uploadContent) => {
+        // TODO Why is `editor.innerHTML = uploadContent;` required? Otherwise, this is not working.
+        editor.innerHTML = uploadContent;
+        editor.value = uploadContent;
+    });
 }

@@ -222,3 +222,18 @@ function downloadStringAsFile(string, filename) {
     downloader.style.visibility = 'hidden';
     downloader.click();
 }
+function uploadFileAsString(reactor) {
+    uploader = document.createElement("input")
+    uploader.type = 'file'
+    uploader.style.display = 'none'
+    uploader.style.visibility = 'hidden';
+    uploader.onchange = function(uploadEvent) {
+        var file = uploadEvent.target.files[0];
+        var fileReader = new FileReader();
+        fileReader.onload = function(fileEvent) {
+            reactor(fileEvent.target.result);
+        }
+        fileReader.readAsText(file)
+    }
+    uploader.click();
+}

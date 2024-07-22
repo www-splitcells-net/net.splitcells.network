@@ -41,6 +41,11 @@
                      method="net_splitcells_gel_ui_editor_no_code_calculate_solution_form_solution_download_as_csv">
                 Download solution
             </command>
+            <command id="net-splitcells-gel-ui-no-code-editor-form-problem-definition-upload"
+                     method="net_splitcells_gel_ui_no_code_editor_definition_upload"
+                     target-id="net-splitcells-gel-ui-no-code-editor-form-problem-definition">
+                Upload definition
+            </command>
         </commands>
     </meta>
     <notification>
