@@ -73,6 +73,14 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
         return parser.databases;
     }
 
+    @Override
+    public Result<SolutionParameters, Perspective> visitVariable_access(NoCodeDenParser.Variable_accessContext ctx) {
+        if (SOLUTION.equals(ctx.variable_reference().Name().getText())) {
+
+        }
+        return null;
+    }
+
     private Result<SolutionParameters, Perspective> parseNoCodeProblemIntern(String arg) {
         final var lexer = new net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenLexer(CharStreams.fromString(arg));
         final var parser = new net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParser(new CommonTokenStream(lexer));
