@@ -73,6 +73,18 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
         return parser.databases;
     }
 
+    private final Result<SolutionParameters, Perspective> result = result();
+    private final Map<String, String> strings = map();
+    private final Map<String, Attribute<? extends Object>> attributes = map();
+    private final Map<String, Database> databases = map();
+    private NoCodeDenParser.Source_unitContext currentSourceUnit;
+
+    private final SolutionParameters solutionParameters = SolutionParameters.solutionParameters();
+
+    private NoCodeProblemParser() {
+
+    }
+
     @Override
     public Result<SolutionParameters, Perspective> visitVariable_access(NoCodeDenParser.Variable_accessContext ctx) {
         if (SOLUTION.equals(ctx.variable_reference().Name().getText())) {
@@ -110,18 +122,6 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
         final var parsedProblem = visitSource_unit(parser.source_unit());
         parsedProblem.errorMessages().withAppended(parsingErrors);
         return parsedProblem;
-    }
-
-    private final Result<SolutionParameters, Perspective> result = result();
-    private final Map<String, String> strings = map();
-    private final Map<String, Attribute<? extends Object>> attributes = map();
-    private final Map<String, Database> databases = map();
-    private NoCodeDenParser.Source_unitContext currentSourceUnit;
-
-    private final SolutionParameters solutionParameters = SolutionParameters.solutionParameters();
-
-    private NoCodeProblemParser() {
-
     }
 
     @Override
