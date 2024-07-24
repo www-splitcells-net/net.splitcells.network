@@ -41,8 +41,14 @@ import static net.splitcells.gel.data.table.attribute.Attributes.parseAttribute;
 import static net.splitcells.gel.problem.ProblemI.problem;
 import static net.splitcells.gel.ui.no.code.editor.NoCodeQueryParser.parseNoCodeQuery;
 
+/**
+ * TODO There should only be one parser based on {@link Perspective} as input.
+ * The {@link Perspective} would be produced via dedicated parsers for each grammar.
+ * Thereby, duplicate problem parsing logic could be avoided.
+ */
 public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<SolutionParameters, Perspective>> {
     private static final String ATTRIBUTE = "attribute";
+    private static final String CONSTRAINTS = "constraints";
     private static final String CONTENT = "content";
     private static final String DEMANDS = "demands";
     private static final String DATABASE = "database";
@@ -85,10 +91,37 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
 
     }
 
+    /**
+     * Nothing needs to be done for variable access for {@link #CONSTRAINTS},
+     * as this is handled by {@link NoCodeQueryParser}.
+     *
+     * @param ctx the parse tree
+     * @return
+     */
     @Override
     public Result<SolutionParameters, Perspective> visitVariable_access(NoCodeDenParser.Variable_accessContext ctx) {
-        if (SOLUTION.equals(ctx.variable_reference().Name().getText())) {
-
+        final var referencedName = ctx.variable_reference().Name().getText();
+        if (SOLUTION.equals(referencedName)) {
+            if (ctx.function_call().size() > 1) {
+                result.withErrorMessage(perspective("Variable access for " + SOLUTION + " is only supported for 1 function call, but more where given.")
+                        .withProperty("variable access", ctx.getText()));
+            }
+            final var functionCallname = ctx.function_call(0).function_call_name().string_value().getText();
+            if ("columnAttributesForOutputFormat".equals(functionCallname)) {
+                ctx.function_call(0).function_call_argument()
+                        .forEach(arg -> solutionParameters
+                                .columnAttributesForOutputFormat()
+                                .add(arg.value().variable_reference().Name().getText()));
+            } else if ("rowAttributesForOutputFormat".equals(functionCallname)) {
+                ctx.function_call(0).function_call_argument()
+                        .forEach(arg -> solutionParameters
+                                .rowAttributesForOutputFormat()
+                                .add(arg.value().variable_reference().Name().getText()));
+            }
+        } else if (CONSTRAINTS.equals(referencedName)) {
+            return null;
+        } else {
+            result.withErrorMessage(perspective("Only function calls"));
         }
         return null;
     }
