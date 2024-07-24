@@ -298,7 +298,7 @@
                 <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
                     <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">columnAttributesForOutputFormat</span>
                     <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
-                        <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">student</span>
+                        <span class="net-splitcells-dem-lang-perspective-no-code-variable-reference">roomNumber</span>
                     </span>
                 </span>
             </li>
