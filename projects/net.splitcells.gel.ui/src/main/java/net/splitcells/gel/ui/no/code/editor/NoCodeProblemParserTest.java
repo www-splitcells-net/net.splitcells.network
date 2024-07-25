@@ -115,4 +115,12 @@ public class NoCodeProblemParserTest {
                 , integerAttribute("shift")
                 , integerAttribute("roomNumber"));
     }
+
+    @UnitTest
+    public void testProblemParsing2() {
+        final var testResult = parseNoCodeProblem(Dem.configValue(GelUiFileSystem.class)
+                .readString("src/main/resources/html/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"));
+        testResult.value().get().columnAttributesForOutputFormat().requireEqualityTo(list("roomNumber"));
+        testResult.value().get().rowAttributesForOutputFormat().requireEqualityTo(list("date", "shift"));
+    }
 }
