@@ -48,9 +48,9 @@ public class NoCodeProblemParserTest {
 
     @UnitTest
     public void testDatabaseParsing() {
-        final var parsedAttributes = parseNoCodeDatabases(Dem.configValue(GelUiFileSystem.class)
+        final var parsedDatabases = parseNoCodeDatabases(Dem.configValue(GelUiFileSystem.class)
                 .readString("src/main/resources/html/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"));
-        setOfUniques(parsedAttributes.values()).requireContentsOf((a, b) -> a.isEqualFormat(b),
+        setOfUniques(parsedDatabases.values()).requireContentsOf((a, b) -> a.isEqualFormat(b),
                 setOfUniques(database("exams"
                                 , stringAttribute("student")
                                 , stringAttribute("examiner")
