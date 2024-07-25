@@ -78,6 +78,7 @@
   2. Rename `SupplySelector` to `SupplyOfflineSelector`.
   3. Rename `SupplySelectors` to `SupplyOfflineSelectors`.
 ### Minor Changes
+* **2024-07-24 \#24** Constraint queries can now be used to check for the existence of constraint nodes without creating new constraints.
 * **2023-12-22 ##252**: `DefaultOptimization` now provides the recommended optimizer for problems in general.
 * **2023-06-14 ##170**: Add `DatabaseI#addWithSameHeaderPrefix` as a faster alternative to `DatabaseI#add`,
   if the line's header to be added to the database is a prefix to the database's header.

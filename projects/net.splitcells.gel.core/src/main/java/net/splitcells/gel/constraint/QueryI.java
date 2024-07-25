@@ -38,9 +38,7 @@ import java.util.Optional;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.lang.perspective.antlr4.DenParser;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.data.assignment.Assignments;
@@ -60,6 +58,17 @@ public class QueryI implements Query, QueryEditor {
 
     public static Query query(Constraint constraint) {
         return new QueryI(constraint, setOfUniques(constraint.injectionGroup()), Optional.of(constraint));
+    }
+
+    /**
+     * @param constraint
+     * @param isBuilderArg If true, then this builder will not add new {@link Constraint#childrenView()}.
+     *                     In this case, the {@link Query} is a read only selector for {@link Constraint}
+     *                     based on a fluent API.
+     * @return
+     */
+    public static Query query(Constraint constraint, boolean isBuilderArg) {
+        return new QueryI(constraint, setOfUniques(constraint.injectionGroup()), Optional.of(constraint), isBuilderArg);
     }
 
     public static Query query(Constraint constraint, Assignments subject) {
@@ -100,8 +109,18 @@ public class QueryI implements Query, QueryEditor {
     private final List<Constraint> constraintPath;
     private final Set<GroupId> groups;
     private final Optional<Assignments> subject;
+    /**
+     * If true, then this builder will not add new {@link Constraint#childrenView()}.
+     * In this case, the {@link Query} is a read only selector for {@link Constraint}
+     * based on a fluent API.
+     */
+    private final boolean isBuilder;
 
     private QueryI(Constraint currentInjectionGroup, Set<GroupId> groups, Optional<Constraint> root) {
+        this(currentInjectionGroup, groups, root, true);
+    }
+
+    private QueryI(Constraint currentInjectionGroup, Set<GroupId> groups, Optional<Constraint> root, boolean isBuilderArg) {
         this.currentConstraint = currentInjectionGroup;
         this.groups = groups;
         this.root = root;
@@ -110,6 +129,7 @@ public class QueryI implements Query, QueryEditor {
             constraintPath.add(root.get());
         }
         subject = Optional.empty();
+        isBuilder = isBuilderArg;
     }
 
     private QueryI(Constraint currentInjectionGroup, Set<GroupId> groups, Optional<Constraint> root, Assignments subject) {
@@ -121,6 +141,7 @@ public class QueryI implements Query, QueryEditor {
             constraintPath.add(root.get());
         }
         this.subject = Optional.of(subject);
+        isBuilder = true;
     }
 
     private QueryI(Constraint currentInjectionGroup, Set<GroupId> groups, Optional<Constraint> root, List<Constraint> constraintPath) {
@@ -129,6 +150,7 @@ public class QueryI implements Query, QueryEditor {
         this.root = root;
         this.constraintPath = constraintPath;
         subject = Optional.empty();
+        isBuilder = true;
     }
 
     private QueryI(Constraint currentInjectionGroup, Set<GroupId> groups, Optional<Constraint> root, List<Constraint> constraintPath, Assignments subject) {
@@ -137,6 +159,7 @@ public class QueryI implements Query, QueryEditor {
         this.root = root;
         this.constraintPath = constraintPath;
         this.subject = Optional.of(subject);
+        isBuilder = true;
     }
 
     @Override
@@ -161,11 +184,15 @@ public class QueryI implements Query, QueryEditor {
                                 .columnView(Constraint.RESULTING_CONSTRAINT_GROUP)
                                 .values());
             }
-        } else {
+        } else if (isBuilder) {
             resultBase = Optional.of(ForAlls.forEach(classifier
                     , Optional.of(discoverable(currentConstraint.path()))));
             currentConstraint.withChildren(resultBase.get());
             resultingGroups.addAll(groups);
+        } else {
+            throw executionException(perspective("Could not find forAll child constraint with given classifier.")
+                    .withProperty("classifier", classifier.toPerspective())
+                    .withProperty("current constraint", currentConstraint.toPerspective()));
         }
         return nextQueryPathElement(resultingGroups, resultBase.get());
     }
@@ -199,11 +226,15 @@ public class QueryI implements Query, QueryEditor {
                                 .columnView(Constraint.RESULTING_CONSTRAINT_GROUP)
                                 .values());
             }
-        } else {
+        } else if (isBuilder) {
             resultBase = Optional.of(ForAlls.forEach(attribute
                     , Optional.of(discoverable(currentConstraint.path()))));
             currentConstraint.withChildren(resultBase.get());
             resultingGroup.addAll(groups);
+        } else {
+            throw executionException(perspective("Could not find forAll child constraint with given attribute.")
+                    .withProperty("classifier", attribute.toPerspective())
+                    .withProperty("current constraint", currentConstraint.toPerspective()));
         }
         return nextQueryPathElement(resultingGroup, resultBase.get());
     }
@@ -226,6 +257,10 @@ public class QueryI implements Query, QueryEditor {
                 }).reduce(ensureSingle());
         if (resultBase.isPresent()) {
             return nextQueryPathElement(setOfUniques(groups), resultBase.get());
+        }
+        if (!isBuilder) {
+            throw executionException(perspective("Could not find forAll child constraint.")
+                    .withProperty("current constraint", currentConstraint.toPerspective()));
         }
         final var forAll = ForAlls.forAll(Optional.of(discoverable(currentConstraint.path())));
         currentConstraint.withChildren(forAll);
@@ -250,10 +285,14 @@ public class QueryI implements Query, QueryEditor {
                                 .columnView(Constraint.RESULTING_CONSTRAINT_GROUP)
                                 .values());
             }
-        } else {
+        } else if (isBuilder) {
             resultBase = Optional.of(Then.then(rater, Optional.of(discoverable(currentConstraint.path()))));
             currentConstraint.withChildren(resultBase.get());
             resultingGroups.addAll(groups);
+        } else {
+            throw executionException(perspective("Could not find then child constraint with given rater.")
+                    .withProperty("classifier", rater.toPerspective())
+                    .withProperty("current constraint", currentConstraint.toPerspective()));
         }
         return nextQueryPathElement(resultingGroups, resultBase.get());
     }
@@ -293,12 +332,16 @@ public class QueryI implements Query, QueryEditor {
                                 .columnView(Constraint.RESULTING_CONSTRAINT_GROUP)
                                 .values());
             }
-        } else {
+        } else if (isBuilder) {
             resultBase = Optional.of(ForAlls.forEach(forAllValueCombinations(attributes)
                     , Optional.of(discoverable(currentConstraint.path()))));
             currentConstraint.withChildren(resultBase.get());
             root.ifPresent(Constraint::recalculateProcessing);
             resultingGroups.addAll(groups);
+        } else {
+            throw executionException(perspective("Could not find given forAllCombinationsOf of attributes child constraint.")
+                    .withProperty("classifier", attributes.toString())
+                    .withProperty("current constraint", currentConstraint.toPerspective()));
         }
         return nextQueryPathElement(resultingGroups, resultBase.get());
     }
@@ -342,6 +385,11 @@ public class QueryI implements Query, QueryEditor {
             final var f = ForAlls.forEach(c, Optional.of(discoverable(currentConstraint.path()
                     .withAppended("" + currentConstraint.childrenView().size()))));
             f.withChildren(forAllCatcher);
+            if (!isBuilder) {
+                throw executionException(perspective("Could not find forAll child constraint with given classifiers.")
+                        .withProperty("classifier", classifiers.toString())
+                        .withProperty("current constraint", currentConstraint.toPerspective()));
+            }
             currentConstraint.withChildren(f);
         });
         return nextQueryPathElement(setOfUniques(), forAllCatcher);
