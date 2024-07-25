@@ -15,10 +15,8 @@
  */
 package net.splitcells.gel.constraint;
 
-import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.dem.utils.ExecutionException;
-import net.splitcells.gel.constraint.type.ForAll;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.assertThrows;
@@ -75,7 +73,7 @@ public class QueryTest {
     }
 
     @UnitTest
-    public void testConstraintErrorForAllWithAttributes() {
+    public void testParseConstraintErrorForAllWithAttributes() {
         assertThrows(ExecutionException.class
                 , () -> {
                     final var d = attribute(Integer.class, "d");
@@ -86,14 +84,14 @@ public class QueryTest {
                             .withSupplyAttributes(s)
                             .withNoSupplies()
                             .withConstraint(r -> {
-                                r.constraint(FOR_ALL_NAME, list(hasSize(1)), list(d));
+                                r.parseConstraint(FOR_ALL_NAME, list(hasSize(1)), list(d));
                                 return r;
                             });
                 });
     }
 
     @UnitTest
-    public void testConstraintThenWithTooManyRaters() {
+    public void testParseConstraintThenWithTooManyRaters() {
         assertThrows(ExecutionException.class
                 , () -> {
                     final var d = attribute(Integer.class, "d");
@@ -104,14 +102,14 @@ public class QueryTest {
                             .withSupplyAttributes(s)
                             .withNoSupplies()
                             .withConstraint(r -> {
-                                r.constraint(THEN_NAME, list(hasSize(1), hasSize(1)), list());
+                                r.parseConstraint(THEN_NAME, list(hasSize(1), hasSize(1)), list());
                                 return r;
                             });
                 });
     }
 
     @UnitTest
-    public void testConstraintThenWithAttributes() {
+    public void testParseConstraintThenWithAttributes() {
         assertThrows(ExecutionException.class
                 , () -> {
                     final var d = attribute(Integer.class, "d");
@@ -122,14 +120,14 @@ public class QueryTest {
                             .withSupplyAttributes(s)
                             .withNoSupplies()
                             .withConstraint(r -> {
-                                r.constraint(THEN_NAME, list(hasSize(1)), list(s));
+                                r.parseConstraint(THEN_NAME, list(hasSize(1)), list(s));
                                 return r;
                             });
                 });
     }
 
     @UnitTest
-    public void testConstraintForAllCombinationsWithRaters() {
+    public void testParseConstraintForAllCombinationsWithRaters() {
         assertThrows(ExecutionException.class
                 , () -> {
                     final var d = attribute(Integer.class, "d");
@@ -140,7 +138,7 @@ public class QueryTest {
                             .withSupplyAttributes(s)
                             .withNoSupplies()
                             .withConstraint(r -> {
-                                r.constraint(FOR_ALL_VALUE_COMBINATIONS_NAME, list(hasSize(1)), list(s));
+                                r.parseConstraint(FOR_ALL_VALUE_COMBINATIONS_NAME, list(hasSize(1)), list(s));
                                 return r;
                             });
                 });

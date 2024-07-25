@@ -20,8 +20,6 @@ import java.util.Optional;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.lang.perspective.PerspectiveView;
-import net.splitcells.dem.lang.perspective.antlr4.DenParser;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -95,7 +93,7 @@ public interface Query {
 
     Query forAll(List<Rater> classifiers);
 
-    Query constraint(String constraintType, List<Rater> raters, List<Attribute<? extends Object>> attributes);
+    Query parseConstraint(String constraintType, List<Rater> raters, List<Attribute<? extends Object>> attributes);
 
     Result<Query, Perspective> constraintResult(String type, List<Rater> raters, List<Attribute<? extends Object>> attributes);
 }

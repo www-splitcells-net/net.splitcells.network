@@ -348,7 +348,7 @@ public class QueryI implements Query, QueryEditor {
     }
 
     @Override
-    public Query constraint(String constraintType, List<Rater> raters, List<Attribute<? extends Object>> attributes) {
+    public Query parseConstraint(String constraintType, List<Rater> raters, List<Attribute<? extends Object>> attributes) {
         final var constraint = constraintResult(constraintType, raters, attributes);
         if (constraint.errorMessages().hasElements()) {
             throw executionException(perspective("Could not construct constraints.").withChildren(constraint.errorMessages()));

@@ -5,6 +5,7 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2024-07-25 \#24** Rename `Query#constraint` to `Query#parseConstraint` in order to mark the intent better.  
 * **2024-04-01 #170** Deprecate ResourceOptionI.
   Implement the ResourceOption API directly instead,
   by implementing the `Option#defaulValue()` instead of implementing this via the default constructor.
