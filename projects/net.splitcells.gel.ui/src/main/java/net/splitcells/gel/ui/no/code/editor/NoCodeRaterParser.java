@@ -76,7 +76,8 @@ public class NoCodeRaterParser extends NoCodeDenParserBaseVisitor<Result<Rater, 
             final var attribute = assignments.attributeByName(functionCall.function_call_argument()
                     .get(0)
                     .value()
-                    .string_value()
+                    .variable_reference()
+                    .Name()
                     .getText());
 
             final var minimumDistance = Double.parseDouble(functionCall.function_call_argument()
