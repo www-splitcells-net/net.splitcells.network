@@ -75,6 +75,14 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
         return nextConstraint;
     }
 
+    @Override
+    public Result<Query, Perspective> visitVariable_access(NoCodeDenParser.Variable_accessContext ctx) {
+        if (ctx.variable_reference().Name().getText().equals("constraints")) {
+            visitFunction_call(ctx.function_call(), 0);
+        }
+        return nextConstraint;
+    }
+
     private Result<Query, Perspective> visitFunction_call(java.util.List<NoCodeDenParser.Function_callContext> functionCallChain
             , int currentIndex) {
         final var firstCall = functionCallChain.get(currentIndex);

@@ -16,13 +16,20 @@
 package net.splitcells.gel.ui.no.code.editor;
 
 import net.splitcells.dem.Dem;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.testing.annotations.UnitTest;
+import net.splitcells.gel.constraint.QueryI;
+import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.ui.GelUiFileSystem;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.data.database.Databases.database;
 import static net.splitcells.gel.data.table.attribute.AttributeI.integerAttribute;
 import static net.splitcells.gel.data.table.attribute.AttributeI.stringAttribute;
+import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
+import static net.splitcells.gel.rating.rater.lib.MinimalDistance.minimalDistance;
 import static net.splitcells.gel.ui.no.code.editor.NoCodeProblemParser.*;
 
 public class NoCodeProblemParserTest {
@@ -35,15 +42,49 @@ public class NoCodeProblemParserTest {
 
     @UnitTest
     public void testAttributeParsing() {
-        final var parsedAttributes = parseNoCodeAttributes(Dem.configValue(GelUiFileSystem.class)
+        final var problem = parseNoCodeProblem(Dem.configValue(GelUiFileSystem.class)
+                .readString("src/main/resources/html/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"))
+                .value()
+                .get()
+                .problem();
+        final var observer = problem.allocations().attributeByName("observer");
+        final var examiner = problem.allocations().attributeByName("examiner");
+        final var student = problem.allocations().attributeByName("student");
+        final var date = problem.allocations().attributeByName("date");
+        final var shift = problem.allocations().attributeByName("shift");
+        query(problem.constraint(), false)
+                .forAll(observer)
+                .forAllCombinationsOf(list(date, shift))
+                .then(hasSize(1));
+        query(problem.constraint(), false)
+                .forAll(examiner)
+                .forAllCombinationsOf(list(date, shift))
+                .then(hasSize(1));
+        query(problem.constraint(), false)
+                .forAll(student)
+                .forAllCombinationsOf(list(date, shift))
+                .then(hasSize(1));
+        query(problem.constraint(), false)
+                .forAll(student)
+                .then(minimalDistance((Attribute<Double>) date, 3));
+        query(problem.constraint(), false)
+                .forAll(student)
+                .then(minimalDistance((Attribute<Double>) date, 5));
+    }
+
+    @UnitTest
+    public void testConstraintParsing() {
+        final var parsedDatabases = parseNoCodeDatabases(Dem.configValue(GelUiFileSystem.class)
                 .readString("src/main/resources/html/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"));
-        setOfUniques(parsedAttributes.values()).requireContentsOf((a, b) -> a.equalContentTo(b),
-                stringAttribute("student")
-                , stringAttribute("examiner")
-                , stringAttribute("observer")
-                , integerAttribute("date")
-                , integerAttribute("shift")
-                , integerAttribute("roomNumber"));
+        setOfUniques(parsedDatabases.values()).requireContentsOf((a, b) -> a.isEqualFormat(b),
+                setOfUniques(database("exams"
+                                , stringAttribute("student")
+                                , stringAttribute("examiner")
+                                , stringAttribute("observer")),
+                        database("available-appointments"
+                                , integerAttribute("date")
+                                , integerAttribute("shift")
+                                , integerAttribute("roomNumber"))));
     }
 
     @UnitTest
