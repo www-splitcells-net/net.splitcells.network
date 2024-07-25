@@ -95,6 +95,12 @@ public interface SetT<T> extends Collection<T> {
         }
     }
 
+    /**
+     * Checks if all elements of the given content is present in this at any order and
+     * throws an {@link Exception} otherwise.
+     *
+     * @param content
+     */
     default void requireContentsOf(T... content) {
         StreamUtils.stream(content).forEach(c -> {
             if (!contains(c)) {
@@ -106,10 +112,24 @@ public interface SetT<T> extends Collection<T> {
         });
     }
 
+    /**
+     * Checks if all elements of the given content is present in this at any order and
+     * throws an {@link Exception} otherwise.
+     *
+     * @param comparer
+     * @param requiredContent
+     */
     default void requireContentsOf(BiPredicate<T, T> comparer, T... requiredContent) {
         requireContentsOf(comparer, setOfUniques(requiredContent));
     }
 
+    /**
+     * Checks if all elements of the given content is present in this at any order and
+     * throws an {@link Exception} otherwise.
+     *
+     * @param comparer
+     * @param requiredContent
+     */
     default void requireContentsOf(BiPredicate<T, T> comparer, Collection<T> requiredContent) {
         requiredContent.forEach(c -> {
             final var contains = stream().map(t -> comparer.test(t, c)).filter(t -> t).findFirst().orElse(false);
@@ -135,6 +155,12 @@ public interface SetT<T> extends Collection<T> {
                 .orElse(false);
     }
 
+    /**
+     * Checks if all elements of the given content is present in this at any order and
+     * throws an {@link Exception} otherwise.
+     *
+     * @param content
+     */
     default void requireContentsOf(SetT<T> content) {
         content.forEach(c -> {
             if (!contains(c)) {
