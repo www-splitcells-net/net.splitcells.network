@@ -184,6 +184,8 @@ function net_splitcells_gel_ui_editor_no_code_action_menu_close() {
     for (var i = 0; i < actionMenus.length; i++) {
         actionMenus[i].parentNode.removeChild(actionMenus[i]);
     }
+    $('.net-splitcells-no-code-insert-target').remove();
+    $('.net-splitcells-no-code-update-subject').removeClass('net-splitcells-no-code-update-subject');
 }
 function net_splitcells_gel_ui_editor_no_code_variable_definition_rename_pop_up(renameAction) {
     let renameWindow = document.createElement("div");
@@ -270,8 +272,6 @@ function net_splitcells_gel_ui_editor_no_code_pop_ups_close() {
     for (var i = 0; i < existingPopUps.length; i++) {
         existingPopUps[i].parentNode.removeChild(existingPopUps[i]);
     }
-    $('.net-splitcells-no-code-insert-target').remove();
-    $('.net-splitcells-no-code-update-subject').removeClass('net-splitcells-no-code-update-subject');
 }
 function net_splitcells_gel_ui_editor_no_code_help_via_dynamic_name(helpAction, config) {
     let helpWindow = document.createElement("div");
