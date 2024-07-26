@@ -8,4 +8,11 @@
     <meta>
         <title>Help Regarding Undefined Values</title>
     </meta>
+    <paragraph>
+        Undefined values are often represented by a <quote>?</quote>.
+        These represent a location, where a value needs to be set,
+        but where a value is not set yet.
+        In its place, anything can be set, that can provide a value.
+        These can be function calls, literals and variable references, for example.
+    </paragraph>
 </article>
