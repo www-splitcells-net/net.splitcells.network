@@ -44,7 +44,7 @@ public class FunctionMeta implements ProjectsRendererExtension {
     private static final Set<String> varArgumentsPerFunctions = setOfUniques();
     private static final Set<String> functionNames = setOfUniques();
 
-    {
+    static {
         argumentsPerFunctions.put("attribute", 2);
         argumentsPerFunctions.put("database", 1);
         argumentsPerFunctions.put("forEach", 1);
