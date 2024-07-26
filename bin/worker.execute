@@ -56,7 +56,9 @@ if __name__ == '__main__':
     parser.add_argument('--command', dest='command'
                         , help="This is the shell command, to execute the task."
                                + "It consists of only one program call."
-                               + " If scripts need to be executed one can use `sh -c \"[script]\"`.")
+                               + " If scripts need to be executed one can use `sh -c \"[script]\"`."
+                               + " Use this only, in order to integrate the environment with the software."
+                               + " Prefer `--class-for-execution` instead.")
     parser.add_argument('--class-for-execution', dest='classForExecution', help="This Java class is executed.")
     parser.add_argument('--port-publishing', dest='portPublishing', help="This is a comma separated list of `host-port:container-port`, that describes the port forwarding on the host.")
     parsedArgs = parser.parse_args()
