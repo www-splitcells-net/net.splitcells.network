@@ -8,4 +8,12 @@
     <meta>
         <title>Variable arguments help</title>
     </meta>
+    <paragraph>
+        Variable arguments are often represented by
+        <quote>...</quote>.
+        These represent a location,
+        where an arbitrary number of additional arguments can be added to a function call.
+        For instance, a function for creating tables,
+        takes an arbitrary number of column definitions, in order to define the table format.
+    </paragraph>
 </article>
