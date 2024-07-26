@@ -8,4 +8,10 @@
     <meta>
         <title>Variable Reference Help</title>
     </meta>
+    <paragraph>
+        A variable reference passes the reference to the value of the variable to a thing.
+        This is typical for function calls,
+        where the arguments of a function call are variable references.
+        It can also be used, to set the value of another variable definition.
+    </paragraph>
 </article>
