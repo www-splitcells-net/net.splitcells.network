@@ -8,4 +8,8 @@
     <meta>
         <title>Variable Definition Help</title>
     </meta>
+    <paragraph>
+        A variable is an association of a name with a value.
+        This provides a way to reference and track a thing via its name.
+    </paragraph>
 </article>
