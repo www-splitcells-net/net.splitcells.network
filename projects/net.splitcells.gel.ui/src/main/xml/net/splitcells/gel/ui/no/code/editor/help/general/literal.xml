@@ -8,4 +8,8 @@
     <meta>
         <title>Literal help</title>
     </meta>
+    <paragraph>
+        A literal is a string value.
+        So, it's basically a sequence of characters like <quote>this is a string</quote>.
+    </paragraph>
 </article>
