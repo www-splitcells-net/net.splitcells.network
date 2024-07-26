@@ -31,8 +31,8 @@ ENTRYPOINT ["/opt/java/openjdk/bin/java"]
 CMD ["-cp", "./jars/*", "$CLASS_FOR_EXECUTION"]
 """
 
-executeViaPodman = """executionName="$1"
-executionCommand="$2"
+executeViaPodman = """executionName="$executionName"
+executionCommand="$executionCommand"
 # Prepare file system.
 mkdir -p $HOME/.local/state/$executionName/.m2/
 mkdir -p $HOME/.local/state/$executionName/.ssh/
@@ -78,9 +78,9 @@ if __name__ == '__main__':
     with open(file, 'w') as filetowrite:
         filetowrite.write(dockerfile)
     # Create and execute script.
-    executionScript = executeViaPodman.replace('"$1"', "'" + parsedArgs.name + "'")
+    executionScript = executeViaPodman.replace('"$executionName"', "'" + parsedArgs.name + "'")
     if parsedArgs.command is not None:
-        executionScript = executionScript.replace('"$2"', "'" + parsedArgs.command + "'")
+        executionScript = executionScript.replace('"$executionCommand"', "'" + parsedArgs.command + "'")
     additionalPodmanArgs = ''
     if parsedArgs.portPublishing is not None:
         for portMapping in parsedArgs.portPublishing.split(','):
