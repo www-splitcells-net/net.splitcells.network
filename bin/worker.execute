@@ -45,7 +45,7 @@ podman run --name "$executionName" \\
   -v $HOME/.local/state/$executionName/.ssh:/root/.ssh \\
   -v $HOME/.local/state/$executionName/.m2:/root/.m2 \\
   -v $HOME/.local/state/$executionName/.local:/root/.local/state \\
-  "$3" \\
+  "$podmanParameters" \\
   "localhost/$executionName"
 rm -f "target/Dockerfile-$executionName" # `-f` is used, in case the target folder is deleted via `mvn clean install` in `--command`.
 """
@@ -85,7 +85,7 @@ if __name__ == '__main__':
     if parsedArgs.portPublishing is not None:
         for portMapping in parsedArgs.portPublishing.split(','):
             additionalPodmanArgs += ' --publish ' + portMapping
-    executionScript = executionScript.replace('"$3"', additionalPodmanArgs)
+    executionScript = executionScript.replace('"$podmanParameters"', additionalPodmanArgs)
     returnCode = subprocess.call(executionScript, shell='True')
     if returnCode != 0:
         logging.error("Could not execute given command.");
