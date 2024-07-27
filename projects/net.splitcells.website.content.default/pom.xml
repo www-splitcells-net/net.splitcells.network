@@ -51,17 +51,6 @@
                                     </fileMappers>
                                     <includes>META-INF/resources/webjars/jquery/${jquery.version}/jquery.min.js</includes>
                                 </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>unpack</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
                                 <artifactItem>
                                     <groupId>org.webjars</groupId>
                                     <artifactId>jquery</artifactId>
