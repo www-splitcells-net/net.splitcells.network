@@ -28,7 +28,7 @@
                 <executions>
                     <execution>
                         <id>unpack-for-developer-mode</id>
-                        <phase>process-resources</phase>
+                        <phase>generate-resources</phase>
                         <goals>
                             <goal>unpack</goal>
                         </goals>
@@ -56,7 +56,7 @@
                     </execution>
                     <execution>
                         <id>unpack</id>
-                        <phase>process-resources</phase>
+                        <phase>generate-resources</phase>
                         <goals>
                             <goal>unpack</goal>
                         </goals>
