@@ -45,7 +45,7 @@ public class NoCodeProblemParserTest {
         final var problem = parseNoCodeProblem(Dem.configValue(GelUiFileSystem.class)
                 .readString("src/main/resources/html/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"))
                 .value()
-                .get()
+                .orElseThrow()
                 .problem();
         final var observer = problem.allocations().attributeByName("observer");
         final var examiner = problem.allocations().attributeByName("examiner");
@@ -120,7 +120,7 @@ public class NoCodeProblemParserTest {
     public void testProblemParsing2() {
         final var testResult = parseNoCodeProblem(Dem.configValue(GelUiFileSystem.class)
                 .readString("src/main/resources/html/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"));
-        testResult.value().get().columnAttributesForOutputFormat().requireEqualityTo(list("roomNumber"));
-        testResult.value().get().rowAttributesForOutputFormat().requireEqualityTo(list("date", "shift"));
+        testResult.value().orElseThrow().columnAttributesForOutputFormat().requireEqualityTo(list("roomNumber"));
+        testResult.value().orElseThrow().rowAttributesForOutputFormat().requireEqualityTo(list("date", "shift"));
     }
 }
