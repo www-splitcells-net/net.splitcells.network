@@ -37,7 +37,8 @@ Steps required on the target computer to set this up:
   The file is allowed to be empty.
   Edit `~/.profile` and add required settings for the server (i.e. extending the PATH).
 
-`journalctl --follow --unit build` can be used in order to follow the log of the service in real time.
+`journalctl --follow --unit build` can be used, in order to follow the log of the service in real time.
+`systemctl status build` can be used, in order to check the state of the deployment.
 Use `cat ~/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network.log/target/test.via.network.worker.log` in order to view the build logs written to a file.
 
 The main reason for ". ~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin" is the fact,
