@@ -17,6 +17,8 @@ package net.splitcells.dem.lang.namespace;
 
 import net.splitcells.dem.lang.perspective.Perspective;
 
+import java.util.Optional;
+
 import static net.splitcells.dem.lang.namespace.NameSpace.nameSpace;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
@@ -28,6 +30,8 @@ public class NameSpaces {
             "urn:oasis:names:tc:opendocument:xmlns:style:1.0");
     public static final NameSpace FODS_FO = nameSpace("fo",
             "urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0");
+    public static final NameSpace FODS_FO_ATTRIBUTE = nameSpace("fo",
+            "urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0", Optional.of(true));
     public static final NameSpace FODS_TABLE = nameSpace("table",
             "urn:oasis:names:tc:opendocument:xmlns:table:1.0");
     public static final NameSpace FODS_TEXT = nameSpace("text", "urn:oasis:names:tc:opendocument:xmlns:text:1.0");
