@@ -75,6 +75,7 @@ public class NQueenProblemTest extends TestSuiteI {
     public void test_8_queen_problem_with_rolling_the_dice() {
         // TODO Setting the randomness seed.
         final Solution testSubject = nQueenProblem(8, 8).asSolution();
+        testSubject.history().withRegisterEventIsEnabled(true);
         testSubject.optimize(offlineLinearInitialization());
         testSubject.optimize(functionalHillClimber(UsedSupplySwitcher.usedSupplySwitcher(6), 50));
         testSubject.optimize(functionalHillClimber(UsedSupplySwitcher.usedSupplySwitcher(8), 100));
