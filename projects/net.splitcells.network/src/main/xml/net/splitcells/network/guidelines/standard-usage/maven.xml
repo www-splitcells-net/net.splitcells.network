@@ -39,34 +39,146 @@
             the dependencies of POM components more easily.
             This is especially the case, when each input path has at most one corresponding output path.
         </paragraph>
-        <chapter><title>Required Data</title>
+        <chapter>
+            <title>Required Data</title>
             <paragraph>This is mainly based on
                 <link>
                     <url>https://central.sonatype.org/publish/requirements/</url>
                     <text>Sonatype's release requirements</text>
-                </link>.
-                The following elements are required, in order to be releasable:</paragraph>
+                </link>
+                .
+                The following elements are required, in order to be releasable:
+            </paragraph>
             <list>
-                <item><quote>parent</quote> is required, in order to standardize POMs for non root POMs.</item>
+                <item>
+                    <quote>parent</quote>
+                    is required, in order to standardize POMs for non root POMs.
+                </item>
                 <item>name</item>
                 <item>description</item>
                 <item>url</item>
                 <item>licenses/license</item>
                 <item>scm/[url,connection,developerConnection]</item>
                 <item><quote>developers/developer</quote>, but only the main developers are required.
-                    It's best to list those people, who take responsibility for the project.</item>
+                    It's best to list those people, who take responsibility for the project.
+                </item>
             </list>
         </chapter>
-        <chapter><title>Support Documentation</title>
-            <paragraph>If there is any non-obvious problem with Maven or while using Maven,
-                it is helpful to use the flags `--errors --debug` (which is equal to `-X and -e`),
-                in order to get more details.
-            </paragraph>
-            <paragraph>Never exit a state with the current thread marked as interrupted,
-                as this will make the test failed.
-                Also, note that the error message will not be very useful in this case,
-                if `--errors --debug`  is not used: `[ERROR] Failed to execute goal org.codehaus.mojo:exec-maven-plugin:1.1:java (default-cli) on project [...]: An exception occured while executing the Java class. java.lang.InterruptedException -> [Help 1]
-            `</paragraph>
+        <chapter>
+            <title>Support Documentation</title>
+            <chapter>
+                <title>General</title>
+                <paragraph>If there is any non-obvious problem with Maven or while using Maven,
+                    it is helpful to use the flags `--errors --debug` (which is equal to `-X and -e`),
+                    in order to get more details.
+                </paragraph>
+                <paragraph>Never exit a state with the current thread marked as interrupted,
+                    as this will make the test failed.
+                    Also, note that the error message will not be very useful in this case,
+                    if `--errors --debug` is not used: `[ERROR] Failed to execute goal org.codehaus.mojo:exec-maven-plugin:1.1:java (default-cli) on project [...]: An exception occured while executing the Java class. java.lang.InterruptedException -> [Help 1]
+                </paragraph>
+            </chapter>
+            <chapter>
+                <title>maven-dependency-plugin</title>
+                <paragraph>When executing the unpack goal, one needs to consider, that by default,
+                    for every <quote>artifactItems</quote> any dependency is only unpacked once.
+                    If one creates multiple executions of <quote>maven-dependency-plugin</quote>,
+                    where each contains the same artifactItem,
+                    only the first execution will actually unpack the dependency and
+                    copy the unpacked files to the output folder.
+                    The following config, will only copy files of the jquery dependency
+                    to the folder <quote>${basedir}/folder/a</quote>!
+                </paragraph>
+                <code_block><![CDATA[<build>
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.7.1</version>
+        <executions>
+            <execution>
+                <id>unpack-a</id>
+                <phase>generate-resources</phase>
+                <goals>
+                    <goal>unpack</goal>
+                </goals>
+                <configuration>
+                    <artifactItems>
+                        <artifactItem>
+                            <groupId>org.webjars</groupId>
+                            <artifactId>jquery</artifactId>
+                            <version>3.7.1</version>
+                            <outputDirectory>${basedir}/folder/a</outputDirectory>
+                            [...]
+                        </artifactItem>
+                    </artifactItems>
+                </configuration>
+            </execution>
+            <execution>
+                <id>unoack-b</id>
+                <phase>generate-resources</phase>
+                <goals>
+                    <goal>unpack</goal>
+                </goals>
+                <configuration>
+                    <artifactItems>
+                        <artifactItem>
+                            <groupId>org.webjars</groupId>
+                            <artifactId>jquery</artifactId>
+                            <version>3.7.1</version>
+                            <outputDirectory>${basedir}/folder/b</outputDirectory>
+                            [...]
+                        </artifactItem>
+                    </artifactItems>
+                </configuration>
+            </execution>
+        </executions>
+    </plugin>
+</build>
+]]></code_block>
+                <paragraph>
+                    Maven outputs a warning in this case, but this is documented here,
+                    because the warning <quote>skipping unpack</quote> can be quite irritating and unsuspicious.
+                    <quote>maven-dependency-plugin</quote> implements this skipping detection by
+                    putting an empty marker file for each unpacked dependency,
+                    at <quote>target/dependency-maven-plugin-markers/*</quote> (<quote>${project.build.directory}/dependency-maven-plugin-markers/*</quote>).
+                    Each such marker file contains the GAV coordinates of each unpacked dependency.
+                    In order to avoid this problem, one can place a dependency multiple times
+                    as an <quote>artifactItem</quote> inside a single <quote>artifactItems</quote>:</paragraph>
+                <code_block><![CDATA[<build>
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.7.1</version>
+        <executions>
+            <execution>
+                <id>unpack-a</id>
+                <phase>generate-resources</phase>
+                <goals>
+                    <goal>unpack</goal>
+                </goals>
+                <configuration>
+                    <artifactItems>
+                        <artifactItem>
+                            <groupId>org.webjars</groupId>
+                            <artifactId>jquery</artifactId>
+                            <version>3.7.1</version>
+                            <outputDirectory>${basedir}/folder/a</outputDirectory>
+                            [...]
+                        </artifactItem>
+                        <artifactItem>
+                            <groupId>org.webjars</groupId>
+                            <artifactId>jquery</artifactId>
+                            <version>3.7.1</version>
+                            <outputDirectory>${basedir}/folder/b</outputDirectory>
+                            [...]
+                        </artifactItem>
+                    </artifactItems>
+                </configuration>
+            </execution>
+        </executions>
+    </plugin>
+</build>]]></code_block>
+            </chapter>
         </chapter>
     </chapter>
 </article>
