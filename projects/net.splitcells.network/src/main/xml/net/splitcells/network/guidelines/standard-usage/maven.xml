@@ -11,29 +11,30 @@
     </meta>
     <chapter>
         <title>Maven POM Guidelines</title>
-        <paragraph>Use Maven POM only for simple configurations and avoid complex custom builds, if possible.
-            If complex custom builds cannot be avoided, prefer complex custom build steps via a minimal
-            number of additional plugins.
-            For this prefer 2 pipelines: The first pipeline builds the software stack in default format and makes it
-            executable.
-            The second pipeline uses these plugins to execute the complex custom build steps.
+        <paragraph>Use Maven POM only for simple configurations and avoid complex custom-builds in any single project.
+            If complex custom-builds cannot be avoided, try splitting up the project in multiple simpler ones,
+            so that each build step is more easily understandable.
+            This can sometimes be done, by having simple base projects,
+            which are than combined via projects, that are dedicated to only merging projects into one.
         </paragraph>
         <paragraph>The reason for this is the fact, that in a Maven POM every component is dependent on every other
             component and that good logs or dependencies between components are hard to understand.
-            This is caused by Maven's design.
+            This is caused by Maven's declarative design,
+            which lacks double-entry bookkeeping regarding its inputs and outputs.
         </paragraph>
         <paragraph>This problem is a none issue (most of the time), when one applies plugins like surefire for testing,
             sets the version of the Java compiler or uses the spotbugs plugin in order to find bugs.
             All of these none issues have in common, that they are either setting something general
             or writing something general to a folder.
+            When one starts to transform and convert files via code (like ANT via the AntRun) in the POM,
+            things start to get complicated and hard to understand.
+            Therefore, avoid writing complex transformation rules in Maven POMs and
+            instead prefer simple mapping rules when possible.
         </paragraph>
-        <paragraph>When one starts to copy, move, delete, transform etc. files via code (like ANT via the AntRun) in the
-            POM, things start to get complicated and hard to understand.
-            Therefore, avoid writing code in Maven POMs.
-        </paragraph>
-        <paragraph>Create a dedicated plugin, that contains all this code.
-            Then one only needs to define the input paths, the outputs paths and transformation configuration for each
-            such plugin.
+        <paragraph>
+            If complex file transformation rules are not avoidable,
+            consider a dedicated plugin, that contains all possible transformation rules.
+            Then one only needs to define the input paths and the outputs paths such a plugin.
             If the input and output paths are chosen smartly, one can also use the paths in order to understand
             the dependencies of POM components more easily.
             This is especially the case, when each input path has at most one corresponding output path.
@@ -57,7 +58,7 @@
             </list>
         </chapter>
         <chapter><title>Support Documentation</title>
-            <paragraph>If there is any non obvious problem with Maven or while using Maven,
+            <paragraph>If there is any non-obvious problem with Maven or while using Maven,
                 it is helpful to use the flags `--errors --debug` (which is equal to `-X and -e`),
                 in order to get more details.
             </paragraph>
