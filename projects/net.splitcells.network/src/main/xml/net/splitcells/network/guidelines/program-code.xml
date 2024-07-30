@@ -14,6 +14,11 @@
         The use of standard/common code conventions also makes it easier to integrate other code easier
         and in a more consistent way.
     </paragraph>
+    <paragraph>
+        Use double-entry bookkeeping for the inputs and the outputs of the program.
+        Inputs without any relation to the outputs of the program, should cause errors.
+        Otherwise, the program's configuration and input gets hard to understand pretty quickly.
+    </paragraph>
     <paragraph>Avoid side effects, as it makes it harder to understand a program.
         Avoid inheritance, because it makes it harder to write easily portable
         side effect free code under certain conditions.
