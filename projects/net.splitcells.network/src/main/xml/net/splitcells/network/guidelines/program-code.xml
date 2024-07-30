@@ -20,18 +20,16 @@
         Otherwise, the program's configuration and input gets hard to understand pretty quickly.
     </paragraph>
     <paragraph>Avoid side effects, as it makes it harder to understand a program.
-        Avoid inheritance, because it makes it harder to write easily portable
-        side effect free code under certain conditions.
     </paragraph>
-    <paragraph>Inheritance works great as adhoc wrappers and type and implementation extenders.
+    <paragraph>Inheritance works great as adhoc wrappers and type and implementation extenders,
+        but nothing more.
         Inheritance does not support swapping out the parent implementation,
         which makes it often not portable in practice.
     </paragraph>
-    <paragraph>State intent and not actions. Therefore, pointer or index arithmetic should be avoided.</paragraph>
+    <paragraph>State intent and not actions.</paragraph>
     <chapter>
         <title>Identifiers</title>
-        <paragraph>Readability is preferred over compactness,
-            but compactness is still important.
+        <paragraph>Readability is preferred over compactness, but compactness is still important.
         </paragraph>
         <paragraph>Every full name should have an unambiguous meaning.
             This means a renaming would be valid in general,
@@ -57,9 +55,7 @@
             An appropriate main method should be provided, so the tests can be executed as a program.
             This ensures that tests are nothing special and therefore independent of the build system.
         </paragraph>
-        <paragraph>Every implemented feature should be tested.
-            Also, every project command should be tested as well.
-        </paragraph>
+        <paragraph>Everything should be tested.</paragraph>
         <paragraph>Any kind of error testing method like the `orElseThrow` method of Java's Optional class,
             should have a required error message argument.
             Otherwise, it is unnecessarily hard to debug errors of users, whose computer cannot be accessed.
