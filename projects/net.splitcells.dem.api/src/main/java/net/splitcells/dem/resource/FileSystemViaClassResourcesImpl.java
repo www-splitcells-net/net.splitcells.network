@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.resource;
 
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
@@ -29,6 +30,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Files.readAsString;
@@ -84,10 +86,10 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
      */
     private final String basePath;
     private final Class<?> clazz;
-    private List<String> resourceList;
+    private Set<String> resourceList;
     private final boolean populatedResourceList;
 
-    private FileSystemViaClassResourcesImpl(Class<?> clazz, String basePath, List<String> resourceListArg, boolean populatedResourceListArg) {
+    private FileSystemViaClassResourcesImpl(Class<?> clazz, String basePath, Set<String> resourceListArg, boolean populatedResourceListArg) {
         this.clazz = clazz;
         this.basePath = basePath;
         this.resourceList = resourceListArg;
@@ -97,7 +99,7 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
     private FileSystemViaClassResourcesImpl(Class<?> clazz, String basePath, String resourceListPath) {
         this.clazz = clazz;
         this.basePath = basePath;
-        resourceList = list();
+        resourceList = setOfUniques();
         final var resourceListContent = clazz.getResourceAsStream("/" + resourceListPath);
         populatedResourceList = resourceListContent != null;
         if (populatedResourceList) {
@@ -108,14 +110,50 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
 
     }
 
+    /**
+     * @see {@link #requireValidResourcePath(String)}
+     * @param path Path starts with `/`.
+     */
+    private boolean isResourcePathValid(String path) {
+        if (populatedResourceList) {
+            return resourceList.contains(path.substring(1));
+        }
+        return true;
+    }
+
+    /**
+     * This method exists, in order to double-check, if a resource exists.
+     * It tries to catch a situation, where a resource is present in the class loader,
+     * but is not present in the {@link #resourceList}.
+     * Thereby, invalid builds are attempted to be found.
+     *
+     * @param path Path starts with `/`.
+     */
+    private void requireValidResourcePath(String path) {
+        if (populatedResourceList) {
+            if (!resourceList.contains(path.substring(1))) {
+                throw executionException(perspective("Unknown path requested.")
+                        .withProperty("requested path", path));
+            }
+        } else if (resourceList.hasElements()) {
+            throw executionException(perspective(getClass().getName() + " is not consistent, because the resource list has elements even though it is not populated.")
+                    .withProperty("Is resource list populated?", "" + populatedResourceList)
+                    .withProperty("Resource List", resourceList.toString())
+                    .withProperty("Does resource exists natively?", "" + (clazz.getResourceAsStream(path) != null)));
+        }
+    }
+
     @Override
     public InputStream inputStream(Path path) {
-        return clazz.getResourceAsStream(normalize("/" + basePath + path.toString()));
+        final var resourcePath = normalize("/" + basePath + path.toString());
+        requireValidResourcePath(resourcePath);
+        return clazz.getResourceAsStream(resourcePath);
     }
 
     @Override
     public String readString(Path path) {
         final var resourcePath = normalize("/" + basePath + path.toString());
+        requireValidResourcePath(resourcePath);
         try {
             return readAsString(clazz.getResourceAsStream(resourcePath));
         } catch (Throwable th) {
@@ -130,7 +168,7 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
     public Optional<String> readStringIfPresent(Path path) {
         final var resourcePath = normalize("/" + basePath + path.toString());
         final var fileContent = clazz.getResourceAsStream(resourcePath);
-        if (fileContent != null) {
+        if (fileContent != null && isResourcePathValid(resourcePath)) {
             try {
                 return Optional.of(readAsString(fileContent));
             } catch (Throwable th) {
@@ -338,7 +376,9 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
     @Override
     public byte[] readFileAsBytes(Path path) {
         try {
-            return clazz.getResourceAsStream(normalize("/" + basePath + path.toString())).readAllBytes();
+            final var resourcePath = normalize("/" + basePath + path.toString());
+            requireValidResourcePath(resourcePath);
+            return clazz.getResourceAsStream(resourcePath).readAllBytes();
         } catch (IOException e) {
             throw executionException(e);
         }
