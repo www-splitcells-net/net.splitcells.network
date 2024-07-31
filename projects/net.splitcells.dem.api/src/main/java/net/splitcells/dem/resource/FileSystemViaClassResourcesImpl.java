@@ -32,6 +32,7 @@ import java.util.stream.Stream;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Files.readAsString;
 import static net.splitcells.dem.resource.Files.walk_recursively;
@@ -115,7 +116,7 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
      * @param path Path starts with `/`.
      */
     private boolean isResourcePathValid(String path) {
-        if (populatedResourceList) {
+        if (populatedResourceList && ENFORCING_UNIT_CONSISTENCY) {
             return resourceList.contains(path.substring(1));
         }
         return true;
@@ -130,16 +131,18 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
      * @param path Path starts with `/`.
      */
     private void requireValidResourcePath(String path) {
-        if (populatedResourceList) {
-            if (!resourceList.contains(path.substring(1))) {
-                throw executionException(perspective("Unknown path requested.")
-                        .withProperty("requested path", path));
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            if (populatedResourceList) {
+                if (!resourceList.contains(path.substring(1))) {
+                    throw executionException(perspective("Unknown path requested.")
+                            .withProperty("requested path", path));
+                }
+            } else if (resourceList.hasElements()) {
+                throw executionException(perspective(getClass().getName() + " is not consistent, because the resource list has elements even though it is not populated.")
+                        .withProperty("Is resource list populated?", "" + populatedResourceList)
+                        .withProperty("Resource List", resourceList.toString())
+                        .withProperty("Does resource exists natively?", "" + (clazz.getResourceAsStream(path) != null)));
             }
-        } else if (resourceList.hasElements()) {
-            throw executionException(perspective(getClass().getName() + " is not consistent, because the resource list has elements even though it is not populated.")
-                    .withProperty("Is resource list populated?", "" + populatedResourceList)
-                    .withProperty("Resource List", resourceList.toString())
-                    .withProperty("Does resource exists natively?", "" + (clazz.getResourceAsStream(path) != null)));
         }
     }
 
