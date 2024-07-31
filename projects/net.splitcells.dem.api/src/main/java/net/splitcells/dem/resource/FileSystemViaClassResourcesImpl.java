@@ -141,7 +141,7 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
                 throw executionException(perspective(getClass().getName() + " is not consistent, because the resource list has elements even though it is not populated.")
                         .withProperty("Is resource list populated?", "" + populatedResourceList)
                         .withProperty("Resource List", resourceList.toString())
-                        .withProperty("Does resource exists natively?", "" + (clazz.getResourceAsStream(path) != null)));
+                        .withProperty("Does resource exist natively?", "" + (clazz.getResourceAsStream(path) != null)));
             }
         }
     }
