@@ -214,7 +214,6 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
                 final var parsedQuery = parseNoCodeQuery(currentSourceUnit, assignments);
                 result.errorMessages().withAppended(parsedQuery.errorMessages());
                 if (parsedQuery.defective()) {
-                    parsedQuery.errorMessages().forEach(result::withErrorMessage);
                     return result;
                 }
                 solutionParameters.withProblem(problem(assignments, parsedQuery.value().orElseThrow().root().orElseThrow()));
