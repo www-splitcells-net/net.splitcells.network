@@ -51,7 +51,13 @@ function net_splitcells_gel_ui_editor_no_code_enhance() {
                 editor.innerHTML = readHtmlFromTextArea(syncTarget);
             }
         });
-        syncTargetObserver.observe(syncTarget, { attributes: true, childList: true, subtree: true,characterData: true});
+	    let editorObserver = new MutationObserver(function(mutations) {
+            if (readHtmlFromTextArea(syncTarget) != editor.innerHtml) {
+                syncTarget.innerHTML = editor.innerHTML;
+            }
+        });
+        syncTargetObserver.observe(syncTarget, { attributes: true, childList: true, subtree: true, characterData: true});
+        editorObserver.observe(editor, { attributes: true, childList: true, subtree: true, characterData: true});
         net_splitcells_gel_ui_editor_no_code_ast_element_enhance();
 	}
 }
