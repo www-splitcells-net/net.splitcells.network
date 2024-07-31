@@ -70,6 +70,7 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
     @Override
     public Result<Query, Perspective> visitVariable_definition(NoCodeDenParser.Variable_definitionContext ctx) {
         if (ctx.variable_definition_name().Name().getText().equals("constraints")) {
+            nextConstraint.withValue(parentConstraint);
             visitFunction_call(ctx.variable_definition_value().value().function_call(), 0);
         }
         return nextConstraint;
@@ -78,6 +79,7 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
     @Override
     public Result<Query, Perspective> visitVariable_access(NoCodeDenParser.Variable_accessContext ctx) {
         if (ctx.variable_reference().Name().getText().equals("constraints")) {
+            nextConstraint.withValue(parentConstraint);
             visitFunction_call(ctx.function_call(), 0);
         }
         return nextConstraint;
@@ -86,17 +88,28 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
     private Result<Query, Perspective> visitFunction_call(java.util.List<NoCodeDenParser.Function_callContext> functionCallChain
             , int currentIndex) {
         final var firstCall = functionCallChain.get(currentIndex);
-        nextConstraint = parseQuery(firstCall.function_call_name().string_value().getText()
-                , firstCall.function_call_argument());
-        if (currentIndex < functionCallChain.size() - 1 && nextConstraint.value().isPresent()) {
+        final var parseResults = parseQuery(firstCall.function_call_name().string_value().getText()
+                , firstCall.function_call_argument()
+                , firstCall);
+        if (parseResults.value().isPresent()) {
+            nextConstraint.withValue(parseResults.value().orElseThrow())
+                    .errorMessages().withAppended(parseResults.errorMessages());
+        } else {
+            nextConstraint.errorMessages().withAppended(parseResults.errorMessages());
+            return nextConstraint;
+        }
+
+        if (currentIndex < functionCallChain.size() - 1) {
             final var childConstraintParser = new NoCodeQueryParser(assignments, nextConstraint.value().orElseThrow());
             final var intermediate = childConstraintParser.visitFunction_call(functionCallChain, ++currentIndex);
+            nextConstraint.withValue(intermediate.value().orElseThrow());
             nextConstraint.errorMessages().withAppended(intermediate.errorMessages());
         }
         return nextConstraint;
     }
 
-    private Result<Query, Perspective> parseQuery(String constraintType, java.util.List<NoCodeDenParser.Function_call_argumentContext> arguments) {
+    private Result<Query, Perspective> parseQuery(String constraintType, java.util.List<NoCodeDenParser.Function_call_argumentContext> arguments
+            , NoCodeDenParser.Function_callContext constraintFunctionCall) {
         final Result<Query, Perspective> parsedConstraint = result();
         if (constraintType.equals(FOR_ALL_NAME)) {
             if (arguments != null && arguments.size() > 0) {
@@ -160,7 +173,9 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
             }
             return parsedConstraint.withValue(parentConstraint.then(rater.value().orElseThrow()));
         } else {
-            return parentConstraint.constraintResult(constraintType, list(), list());
+            return parsedConstraint.withErrorMessage(perspective("Unknown constraint type")
+                    .withProperty(AFFECTED_CONTENT, constraintFunctionCall.getText())
+                    .withProperty("constraint type", constraintType));
         }
         return parsedConstraint;
     }
