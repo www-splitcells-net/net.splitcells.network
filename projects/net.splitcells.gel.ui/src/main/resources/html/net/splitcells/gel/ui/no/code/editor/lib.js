@@ -233,6 +233,7 @@ function net_splitcells_gel_ui_editor_no_code_variable_references_set_pop_up(set
         setSubmit.className = 'net-splitcells-button net-splitcells-action-button';
         setSubmit.onclick = function() {
             literalElement.innerHTML = variableName.innerHTML;
+            literalElement.className = 'net-splitcells-dem-lang-perspective-no-code-variable-reference';
             net_splitcells_gel_ui_editor_no_code_action_menu_close();
         };
         setSubmit.innerHTML = variableName.innerHTML;
