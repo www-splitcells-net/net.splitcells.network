@@ -407,7 +407,7 @@ request.send();]]>
                             </s:list>
                         </s:chapter>
                     </xsl:if>
-                    <s:chapter id="net-splitcells-website-file-browser">
+                    <s:chapter>
                         <s:title>Relevant Local Path Context</s:title>
                         <xsl:variable name="file-path-environment-relevant">
                             <xsl:call-template name="file-path-environment-relevant">
@@ -724,7 +724,7 @@ request.send();]]>
                                                         </div>
                                                     </div>
                                                     <div class="net-splitcells-structural-guide"/>
-                                                    <div class="net-splitcells-component-priority-2 splitcells-net-window-menu-line-2">
+                                                    <div id="net-splitcells-website-file-browser" class="net-splitcells-component-priority-2 splitcells-net-window-menu-line-2">
                                                         <div class="splitcells-net-line-title">Meta</div>
                                                     </div>
                                                 </div>
