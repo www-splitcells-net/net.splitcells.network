@@ -153,6 +153,10 @@ footer {
         }
     .menu {
         width: 13em;
+        /* min/max-width is needed, when `/net/splitcells/website/css/layout.column.main.fullscreen.css` is active,
+           as otherwise the menu gets smaller. */
+        min-width: 13em;
+        max-width: 13em;
         }}
     }
 @media (max-width: 53.25em) {
