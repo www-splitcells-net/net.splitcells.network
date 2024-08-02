@@ -25,6 +25,10 @@
             <page>/net/splitcells/website/layout</page>
         </option>
         <option>
+            <name>Website's Tree Layout</name>
+            <page>/net/splitcells/website/layout/tree</page>
+        </option>
+        <option>
             <name>Refresh Layout</name>
             <page>/net/splitcells/website/layout/build</page>
         </option>
