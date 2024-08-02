@@ -407,7 +407,7 @@ request.send();]]>
                             </s:list>
                         </s:chapter>
                     </xsl:if>
-                    <s:chapter>
+                    <s:chapter id="net-splitcells-website-file-browser">
                         <s:title>Relevant Local Path Context</s:title>
                         <xsl:variable name="file-path-environment-relevant">
                             <xsl:call-template name="file-path-environment-relevant">
@@ -604,6 +604,7 @@ request.send();]]>
                                                     </xsl:attribute>
                                                 </a>
                                                 <a class="net-splitcells-button-inline" href="#net-splitcells-detailed-menu">Menu</a>
+                                                <a class="net-splitcells-button-inline" href="#net-splitcells-website-file-browser">Explore!</a>
                                                 <div class="net-splitcells-error-status-indicator net-splitcells-button-inline"
                                                      style="visibility: hidden; display: none;">Error
                                                 </div>

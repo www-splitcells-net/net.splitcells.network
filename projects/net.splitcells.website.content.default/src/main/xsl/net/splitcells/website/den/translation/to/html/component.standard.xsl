@@ -256,7 +256,8 @@
             <xsl:attribute name="class" select="concat('net-splitcells-button net-splitcells-action-button ', @id, '-tab-button ', @form-id, '-tab-button ', $selectionStyle)"/>
             <xsl:attribute name="onclick"><![CDATA[javascript:
 unshowByCssClass(']]><xsl:value-of select="./@form-id"/><![CDATA[');
-var anyTabButtons = document.getElementsByClassName(']]><xsl:value-of select="concat(@form-id, '-tab-button')"/><![CDATA[');
+var anyTabButtons = document.getElementsByClassName(']]>
+                <xsl:value-of select="concat(@form-id, '-tab-button')"/><![CDATA[');
 for (var i = 0; i < anyTabButtons.length; i++) {
     anyTabButtons[i].classList.remove('net-splitcells-tab-button-selected');
     }
@@ -281,7 +282,8 @@ for (var i = 0; i < tabButtons.length; i++) {
             <xsl:attribute name="class" select="concat('net-splitcells-button net-splitcells-action-button ', @id, '-tab-button ', @form-id, '-tab-button ', $selectionStyle)"/>
             <xsl:attribute name="onclick"><![CDATA[javascript:
 unshowByCssClass(']]><xsl:value-of select="./@form-id"/><![CDATA[');
-var anyTabButtons = document.getElementsByClassName(']]><xsl:value-of select="concat(@form-id, '-tab-button')"/><![CDATA[');
+var anyTabButtons = document.getElementsByClassName(']]>
+                <xsl:value-of select="concat(@form-id, '-tab-button')"/><![CDATA[');
 for (var i = 0; i < anyTabButtons.length; i++) {
     anyTabButtons[i].classList.remove('net-splitcells-tab-button-selected');
     }
@@ -360,7 +362,7 @@ document.addEventListener('DOMContentLoaded', function(){
                         <xsl:apply-templates select="./node()"/>
                     </div>
                     <textarea class="net-splitcells-component-priority-0 net-splitcells-webserver-form-no-code-editor-backend"
-                    style="display: none; visibility: hidden;">
+                              style="display: none; visibility: hidden;">
                         <xsl:attribute name="id" select="./@id"/>
                         <xsl:attribute name="name" select="./@id"/>
                         <xsl:attribute name="content-types" select="@content-types"/>
@@ -617,7 +619,16 @@ document.addEventListener('DOMContentLoaded', function(){
                 </section>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:variable name="id" select="generate-id(.)"/>
+                <xsl:variable name="id">
+                    <xsl:choose>
+                        <xsl:when test="@id">
+                            <xsl:value-of select="@id"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="generate-id(.)"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
                 <section>
                     <xsl:attribute name="id" select="$id"/>
                     <div class="heading">
