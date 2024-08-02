@@ -124,7 +124,13 @@ li:nth-child(odd) {
     background: var(--paragraph-background-color-priority-1-a);
     }
 ol ol:last-child {
-    border-left:none;
+    /* border-left:none;
+     * It is better to have some visual guidelines, regarding the indentation of an element.
+     * This guideline, needs to be very weak, because it otherwise adds to much visual noise,
+     * without a reasonable amount of visual functionality.
+     * Therefore, disabling the visual guideline of the left border is not used.
+     */
+    border-left: 1px solid rgba(100,100,100, 0.125);
     }
 pre {
     overflow-x: auto;
