@@ -162,8 +162,16 @@ footer {
 @media (max-width: 53.25em) {
     /* Only the window menu and one additional column are visible at any height of the document. */
 	.net-splitcells-minimal-not {
-		display: none;
-        visibility: hidden:
+		display: none !important;
+        visibility: hidden !important;
+    	}
+    }
+/* TODO This query is broken. */
+@media (max-width: 53.25em) {
+    /* Only the window menu and one additional column are visible at any height of the document. */
+	.net-splitcells-minimal-not {
+		display: none !important;
+        visibility: hidden !important;
     	}
     .main {
         background-image: none;
