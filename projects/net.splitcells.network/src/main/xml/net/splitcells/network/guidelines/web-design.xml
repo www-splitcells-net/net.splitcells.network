@@ -22,4 +22,16 @@
         Any kind of interactable things should use sans serif fonts and
         non-interactive things should have serif fonts.
     </paragraph>
+    <paragraph>
+        Non-text visual elements like additional lines and boxes,
+        can be used in order to visualize the connections, groupings and structures of things,
+        but they create noise, that distract a lot.
+        Prefer to do this only, when needed from the content's and functionalitie's perspective and
+        not in order to make something nice.
+        Try to use text and character symbols (UTF-8) first,
+        in order to visualize the structure of something.
+        This is not something, that is a hard rule,
+        but be wary on changing design decisions regarding this aspect repeatedly.
+        See design of no-code editor, where this aspect in design is hard to finalize.
+    </paragraph>
 </article>
