@@ -77,7 +77,8 @@ public class Server {
 
     /**
      * <p>TODO Move this code into vertx package, in order to contain {@link io.vertx} dependencies.</p>
-     * <p>TODO Always open 2 p</p>
+     * <p>TODO Always open 2 ports.</p>
+     * <p>TODO Why is Vert.x is used at all? Is Netty (the base of Vert.x) for instance not enough?</p>
      *
      * @param renderer renderer
      */
