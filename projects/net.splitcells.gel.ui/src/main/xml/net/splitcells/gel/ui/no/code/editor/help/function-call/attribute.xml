@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://splitcells.net/sew.xsd">
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd">
     <!--
         SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
         SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
@@ -8,4 +9,10 @@
     <meta>
         <title>Attribute Function Help</title>
     </meta>
+    <paragraph>An attribute defines a column of a database.</paragraph>
+    <d:val name="arguments">
+        <d:val>The first is a literal, that defines the name of the column.</d:val>
+        <d:val>The second is a literal defining the data type of the column.
+        Currently, <quote>string</quote> and <quote>integer</quote> are defined as data types.</d:val>
+    </d:val>
 </article>
