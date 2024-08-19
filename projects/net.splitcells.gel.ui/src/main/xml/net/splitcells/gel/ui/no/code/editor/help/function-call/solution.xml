@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd">
+    <!--
+        SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+        SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+    -->
+    <meta>
+        <title>Solution Function Help</title>
+    </meta>
+    <paragraph>
+        The function solution creates a database of allocations
+        assigning lines of a demand database to lines of a supply database.
+    </paragraph>
+    <d:val name="Arguments">
+        <d:val>The first argument is a literal, that defines the name of the solution database to be created.</d:val>
+        <d:val>The second argument is a reference to the demand database.</d:val>
+        <d:val>The second argument is a reference to the supply database.</d:val>
+    </d:val>
+</article>

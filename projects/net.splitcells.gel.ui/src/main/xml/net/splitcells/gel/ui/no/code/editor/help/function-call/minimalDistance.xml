@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://splitcells.net/sew.xsd">
+    <!--
+        SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+        SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+    -->
+    <meta>
+        <title>
+            <quote>minimalDistance</quote>
+            Function Help
+        </title>
+    </meta>
+    <paragraph>
+        Creates a rater, that requires,
+        that every pair of lines in a group have a distance of at least a given constant value.
+        The function firstly requires an integer attribute, in order to determine the distance between 2 lines,
+        by calculating the integer difference of the line values given the attribute.
+        The second argument is an integer literal, that states the minimal required difference,
+        in order to avoid any cost.
+        The cost of an incoming group is the additional distance required, in order to avoid any cost.
+    </paragraph>
+</article>
