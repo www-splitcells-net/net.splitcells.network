@@ -13,6 +13,6 @@
         </title>
     </meta>
     <paragraph>Creates a constraint node, that takes an attribute and
-        groups all lines of a group by the lines' value.
+        groups all incoming lines of an incoming group by the lines' value corresponding to the given attribute.
     </paragraph>
 </article>
