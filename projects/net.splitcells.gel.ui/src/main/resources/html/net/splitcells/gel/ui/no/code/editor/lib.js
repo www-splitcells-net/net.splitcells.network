@@ -104,16 +104,16 @@ function net_splitcells_gel_ui_editor_no_code_variable_references_enhance() {
     for (var i = 0; i < arguments.length; i++) {
         if (hasClass(arguments[i].parentNode.parentNode, 'net-splitcells-dem-lang-perspective-no-code-lang')) {
             net_splitcells_gel_ui_editor_no_code_generic_enhance(arguments[i], {
-                title : 'Reference Actions'
+                title : 'Access Actions'
                 , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_variable_references_set_pop_up(this);">Set reference</div>'
                     + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_append_variable_definition();">Append variable definition</div>'
                     + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_append_variable_access();">Append variable access</div>'
-                    + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_variable_references_enhance_help_show(this);">Help</div>'
+                    + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_variable_access_enhance_help_show(this);">Help</div>'
                 , 'update-target-placement-additional' : (astElement) => $('<span class="net-splitcells-no-code-append-target"> </span>').insertAfter(astElement.parentNode)
             });
         } else {
             net_splitcells_gel_ui_editor_no_code_generic_enhance(arguments[i], {
-                title : 'Reference Actions'
+                title : 'Reference Access Actions'
                 , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_variable_references_set_pop_up(this);">Set reference</div>'
                     + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_variable_references_enhance_help_show(this);">Help</div>'
             });
@@ -311,6 +311,12 @@ function net_splitcells_gel_ui_editor_no_code_function_call_name_help_show(helpA
 function net_splitcells_gel_ui_editor_no_code_variable_references_enhance_help_show(helpAction) {
     net_splitcells_gel_ui_editor_no_code_help_via_dynamic_name(helpAction, {
         helpSubject: 'variable-reference'
+        , helpType: 'general'
+    });
+}
+function net_splitcells_gel_ui_editor_no_code_variable_access_enhance_help_show(helpAction) {
+    net_splitcells_gel_ui_editor_no_code_help_via_dynamic_name(helpAction, {
+        helpSubject: 'variable-access'
         , helpType: 'general'
     });
 }

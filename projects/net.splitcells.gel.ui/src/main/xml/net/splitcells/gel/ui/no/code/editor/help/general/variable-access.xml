@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://splitcells.net/sew.xsd">
+    <!--
+        SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+        SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+    -->
+    <meta>
+        <title>Variable Access Help</title>
+    </meta>
+    <paragraph>
+        A variable access starts with a reference to a variable and a chain of functions,
+        that are applied to the variable given at the start.
+        The first argument works on the referenced variable and
+        passes its output to the next function in the chain.
+        Thereby, the next function works on the object of the previous function's result.
+    </paragraph>
+</article>
