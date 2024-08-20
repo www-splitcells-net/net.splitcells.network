@@ -192,6 +192,7 @@ function net_splitcells_gel_ui_editor_no_code_action_menu_close() {
         actionMenus[i].parentNode.removeChild(actionMenus[i]);
     }
     $('.net-splitcells-no-code-insert-target').remove();
+    $('.net-splitcells-no-code-append-target').remove();
     $('.net-splitcells-no-code-update-subject').removeClass('net-splitcells-no-code-update-subject');
 }
 function net_splitcells_gel_ui_editor_no_code_variable_definition_rename_pop_up(renameAction) {
@@ -343,6 +344,7 @@ function net_splitcells_gel_ui_editor_no_code_function_call_delete(deleteButton)
 }
 function net_splitcells_gel_ui_editor_no_code_variable_definition_delete(deleteButton) {
     deleteButton.parentNode.parentNode.parentNode.removeChild(deleteButton.parentNode.parentNode);
+    net_splitcells_gel_ui_editor_no_code_pop_ups_close();
 }
 function net_splitcells_gel_ui_editor_no_code_function_call_set(setButton) {
     var httpRequest = new XMLHttpRequest();
