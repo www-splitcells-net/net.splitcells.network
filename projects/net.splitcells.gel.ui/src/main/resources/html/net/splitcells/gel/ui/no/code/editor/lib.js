@@ -105,7 +105,8 @@ function net_splitcells_gel_ui_editor_no_code_variable_references_enhance() {
         if (hasClass(arguments[i].parentNode.parentNode, 'net-splitcells-dem-lang-perspective-no-code-lang')) {
             net_splitcells_gel_ui_editor_no_code_generic_enhance(arguments[i], {
                 title : 'Access Actions'
-                , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_variable_references_set_pop_up(this);">Set reference</div>'
+                , actionList : '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_variable_access_delete(this);">Delete variable access</div>'
+                    + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_variable_references_set_pop_up(this);">Set reference</div>'
                     + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_append_variable_definition();">Append variable definition</div>'
                     + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_append_variable_access();">Append variable access</div>'
                     + '<div class="net-splitcells-action-button" onclick="net_splitcells_gel_ui_editor_no_code_variable_access_enhance_help_show(this);">Help</div>'
@@ -332,8 +333,11 @@ function net_splitcells_gel_ui_editor_no_code_literal_help_show(helpAction) {
         , helpType: 'general'
     });
 }
-function net_splitcells_gel_ui_editor_no_code_function_call_delete(deleteButton) {
+function net_splitcells_gel_ui_editor_no_code_variable_access_delete(deleteButton) {
     deleteButton.parentNode.parentNode.parentNode.removeChild(deleteButton.parentNode.parentNode);
+    net_splitcells_gel_ui_editor_no_code_action_menu_close();
+}
+function net_splitcells_gel_ui_editor_no_code_function_call_delete(deleteButton) {
     $('.net-splitcells-no-code-update-subject').remove();
     net_splitcells_gel_ui_editor_no_code_pop_ups_close();
 }
