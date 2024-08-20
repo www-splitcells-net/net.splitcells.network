@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd">
+    <!--
+        SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+        SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+    -->
+    <meta>
+        <title>
+            <quote>columnAttributesForOutputFormat</quote>
+            Function Help
+        </title>
+    </meta>
+    <paragraph>
+        This function changes the format of the result table.
+        Normally, every column of a solution stands for one attribute of the demands and supplies in the result table.
+        Every row of a solution stands for an allocation with its demand and supply,
+        where every column contains the allocation's value of the corresponding attribute.
+        This function takes a list of attributes and replaces the columns meaning of the result table.
+        In this case every column contains all allocations of a value combination of the given attributes.
+    </paragraph>
+    <paragraph>
+        This in turn allows one to represent the output in a more compact and readable way.
+        In order to understand this formatting, it is best to just try it out.
+        It is best to use this formating function in combination with
+        <link>
+            <text>the function
+                <quote>rowAttributesForOutputFormat</quote>
+            </text>
+            <post>net/splitcells/gel/ui/no/code/editor/help/function-call/rowAttributesForOutputFormat</post>
+        </link>
+        .
+    </paragraph>
+</article>
