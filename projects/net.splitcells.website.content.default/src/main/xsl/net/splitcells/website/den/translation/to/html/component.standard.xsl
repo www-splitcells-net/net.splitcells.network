@@ -256,8 +256,7 @@
             <xsl:attribute name="class" select="concat('net-splitcells-button net-splitcells-action-button ', @id, '-tab-button ', @form-id, '-tab-button ', $selectionStyle)"/>
             <xsl:attribute name="onclick"><![CDATA[javascript:
 unshowByCssClass(']]><xsl:value-of select="./@form-id"/><![CDATA[');
-var anyTabButtons = document.getElementsByClassName(']]>
-                <xsl:value-of select="concat(@form-id, '-tab-button')"/><![CDATA[');
+var anyTabButtons = document.getElementsByClassName(]]><xsl:value-of select="concat('&quot;', @form-id, '-tab-button', '&quot;')"/><![CDATA[);
 for (var i = 0; i < anyTabButtons.length; i++) {
     anyTabButtons[i].classList.remove('net-splitcells-tab-button-selected');
     }
@@ -266,8 +265,7 @@ var tabButtons = document.getElementsByClassName(']]><xsl:value-of select="@id"/
 for (var i = 0; i < tabButtons.length; i++) {
     tabButtons[i].classList.add('net-splitcells-tab-button-selected');
     }
-]]>
-            </xsl:attribute>
+]]></xsl:attribute>
             <xsl:attribute name="content-types" select="@content-types"/>
             <xsl:apply-templates select="@name"/>
         </div>
