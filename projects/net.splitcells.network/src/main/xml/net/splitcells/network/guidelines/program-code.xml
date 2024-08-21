@@ -122,6 +122,8 @@
                 The automatic formatting should also not add new line symbols,
                 as this makes it harder to structure flowing text,
                 where long lines are more acceptable.
+                In XML/XSL automatically added new line symbols also create problems,
+                as these may add new unintended meaning.
                 In most cases, during automatic formatting only whitespaces (without new line symbols) between symbols should be normalized.
             </paragraph>
         </chapter>
