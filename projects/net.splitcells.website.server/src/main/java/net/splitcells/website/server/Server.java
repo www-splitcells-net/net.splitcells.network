@@ -15,7 +15,6 @@
  */
 package net.splitcells.website.server;
 
-import com.microsoft.playwright.Worker;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.DeploymentOptions;
@@ -34,11 +33,9 @@ import io.vertx.ext.web.handler.BasicAuthHandler;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.execution.Effect;
-import net.splitcells.dem.execution.EffectWorkerPool;
 import net.splitcells.dem.execution.Processing;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.resource.ConfigFileSystem;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.Logs;
 import net.splitcells.website.Formats;
@@ -63,7 +60,7 @@ import static io.vertx.core.buffer.Buffer.buffer;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.execution.Processing.processing;
+import static net.splitcells.dem.execution.EffectWorkerPool.effectWorkerPool;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.log.LogLevel.WARNING;
@@ -72,7 +69,6 @@ import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
 import static net.splitcells.website.server.processor.Request.request;
-import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.vertx.FileBasedAuthenticationProvider.fileBasedAuthenticationProvider;
 
 @JavaLegacyArtifact
@@ -85,7 +81,7 @@ public class Server {
     public static Service serveToHttpAt(Supplier<Function<String, Optional<BinaryMessage>>> renderer, Config config) {
         config.withIsMultiThreaded(true);
         return serveToHttpAt(new Function<String, Optional<BinaryMessage>>() {
-            final Effect<Function<String, Optional<BinaryMessage>>> effect = EffectWorkerPool.effectWorkerPool(renderer, 10);
+            final Effect<Function<String, Optional<BinaryMessage>>> effect = effectWorkerPool(renderer, 10);
 
             @Override
             public Optional<BinaryMessage> apply(String requestedPath) {
