@@ -31,7 +31,7 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
  * Processes {@link #events}, that are sent to an  {@link #subjects} asynchronously via multiple {@link EffectWorker}.
  * This therefore provides a way to process events on multiple threads at once.
  *
- * @param <Subject> @param <Subject> The subjects' class that processes the given events asynchronously.
+ * @param <Subject> The subjects' class that processes the given events asynchronously.
  */
 @JavaLegacyArtifact
 public class EffectWorkerPool<Subject> implements Effect<Subject> {
