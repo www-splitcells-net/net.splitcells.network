@@ -86,6 +86,7 @@ public class Server {
             @Override
             public Optional<BinaryMessage> apply(String requestedPath) {
                 final var processing = Processing.<String, Optional<BinaryMessage>>processing();
+                processing.withArgument(null);
                 effect.affect(i -> processing.withResult(i.apply(requestedPath)));
                 return processing.result();
             }

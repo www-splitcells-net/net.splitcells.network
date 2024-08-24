@@ -17,6 +17,8 @@ package net.splitcells.dem.execution;
 
 import net.splitcells.dem.resource.AspectOrientedConstructor;
 
+import java.util.Optional;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -45,4 +47,11 @@ public interface Effect<Subject> {
      *              If this is not adhered to, the program has a race condition and is thereby incorrect.
      */
     void affect(Consumer<Subject> event);
+
+    default <Result> Result affect(BiConsumer<Subject, Processing<Subject, Result>> synchronousEvent) {
+        final var processing = Processing.<Subject, Result>processing();
+        processing.withArgument(null);
+        affect(i -> synchronousEvent.accept(i, processing));
+        return processing.result();
+    }
 }

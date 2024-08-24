@@ -16,6 +16,7 @@
 package net.splitcells.dem.execution;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.ReturnsThis;
 
 import java.util.concurrent.Semaphore;
 
@@ -91,14 +92,21 @@ public class Processing<Argument, Result> {
         }
     }
 
+    public synchronized Processing<Argument, Result> withArgument(Argument argArgument) {
+        argument = argArgument;
+        argumentWaiter.release();
+        return this;
+    }
+
     /**
      * Waits for the {@link #result} to be made available by another thread.
+     * The {@link #argument} needs to be set beforehand.
      *
      * @return
      */
+    @ReturnsThis
     public synchronized Result result() {
         try {
-            argumentWaiter.release();
             resultWaiter.acquire();
             return result;
         } catch (InterruptedException e) {
