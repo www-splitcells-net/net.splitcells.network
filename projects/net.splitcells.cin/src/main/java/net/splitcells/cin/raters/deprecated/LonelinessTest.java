@@ -141,7 +141,6 @@ public class LonelinessTest {
      * {@link TimeSteps} seems to have the same problem.
      */
     @UnitTest
-    @DisabledTest
     public void testLonelinessRemoval() {
         final var time = attribute(Integer.class, TIME);
         final var playerValue = attribute(Integer.class, PLAYER_VALUE);

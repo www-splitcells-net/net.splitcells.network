@@ -15,9 +15,11 @@
  */
 package net.splitcells.gel.data.database;
 
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.testing.TestSuiteI;
+import net.splitcells.gel.constraint.type.framework.ConstraintMultiThreading;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import org.junit.jupiter.api.Disabled;
@@ -112,6 +114,38 @@ public class DatabaseTest extends TestSuiteI {
                 .columnView(LINE)
                 .values()
                 .requireSizeOf(20);
+    }
+
+    @Test
+    public void testMultiThreadedQueryInitialization() {
+        Dem.process(() -> {
+            final var index = attribute(Integer.class);
+            final var testSubject = database(listWithValuesOf(index));
+            rangeClosed(1, 10).forEach(i -> {
+                testSubject.addTranslated(listWithValuesOf(i));
+            });
+            testSubject
+                    .query()
+                    .forAllCombinationsOf(listWithValuesOf(index))
+                    .currentConstraint()
+                    .lines()
+                    .columnView(LINE)
+                    .values()
+                    .requireSizeOf(10);
+            rangeClosed(1, 10).forEach(i -> {
+                testSubject.addTranslated(listWithValuesOf(i));
+            });
+            testSubject
+                    .query()
+                    .forAllCombinationsOf(listWithValuesOf(index))
+                    .currentConstraint()
+                    .lines()
+                    .columnView(LINE)
+                    .values()
+                    .requireSizeOf(20);
+        }, env -> {
+            env.config().withConfigValue(ConstraintMultiThreading.class, true);
+        });
     }
 
     @Tag(UNIT_TEST)
