@@ -95,6 +95,13 @@ public class Dem {
     public static void executeThread(Runnable program) {
         final var thread = new Thread(program);
         thread.setDaemon(true);
+        thread.setUncaughtExceptionHandler((throwingThread, throwable) -> {
+            /**
+             * TODO Sometimes {@link Logs#logs()} does not work. Maybe logging is currently not thread safe?
+             */
+            throwable.printStackTrace();
+            logs().appendError(throwable);
+        });
         thread.start();
     }
 

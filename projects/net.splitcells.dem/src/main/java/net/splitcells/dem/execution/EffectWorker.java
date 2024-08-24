@@ -16,12 +16,14 @@
 package net.splitcells.dem.execution;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.resource.communication.log.Logs;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 import static net.splitcells.dem.Dem.executeThread;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**
@@ -51,6 +53,12 @@ public class EffectWorker<Subject> implements Effect<Subject> {
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                     throw executionException(e);
+                } catch (Throwable th) {
+                    /**
+                     * TODO Sometimes {@link Logs#logs()} does not work. Maybe logging is currently not thread safe?
+                     */
+                    th.printStackTrace();
+                    logs().appendError(th);
                 }
             }
         });
