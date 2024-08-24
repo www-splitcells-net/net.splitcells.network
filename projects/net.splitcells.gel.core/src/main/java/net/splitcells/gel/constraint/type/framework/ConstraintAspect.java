@@ -42,7 +42,8 @@ import java.util.function.Predicate;
 import static net.splitcells.dem.data.set.map.Maps.map;
 
 /**
- * TODO Make this aspect optional for {@link Constraint}s.
+ * <p>TODO Make this aspect optional for {@link Constraint}s.</p>
+ * <p>TODO Create dedicated aspect for rating caching.</p>
  */
 public class ConstraintAspect implements Constraint {
 
