@@ -49,7 +49,7 @@ public class PositionClustersTest {
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(FOR_ALL.value() + " " + groupNameOfPositionCluster(1, 1, 0, 0)
+                .requireContentsOf(list(FOR_ALL.value() + " " + groupNameOfPositionCluster(1, 1, 0, 0)
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(1, 3, 0, 1)
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(3, 3, 1, 1)
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(3, 1, 1, 0)
@@ -123,7 +123,7 @@ public class PositionClustersTest {
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(FOR_ALL.value() + " " + groupNameOfPositionCluster(1, 1, 0, 0)
+                .requireEquals(list(FOR_ALL.value() + " " + groupNameOfPositionCluster(1, 1, 0, 0)
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(1, 1, 0, 0)
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(1, 1, 0, 0)
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(1, 1, 0, 0)
@@ -161,7 +161,7 @@ public class PositionClustersTest {
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list());
+                .requireEquals(list());
     }
 
     @Test
@@ -227,7 +227,7 @@ public class PositionClustersTest {
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(FOR_ALL.value() + " " + groupNameOfPositionCluster(1, -2, 0, 0)
+                .requireEquals(list(FOR_ALL.value() + " " + groupNameOfPositionCluster(1, -2, 0, 0)
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(1, -2, 0, 0)
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(1, -2, 0, 0)
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(1, -2, 0, 0)
@@ -312,7 +312,7 @@ public class PositionClustersTest {
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(FOR_ALL.value() + " " + groupNameOfPositionCluster(-2, -2, 0, 0)
+                .requireEquals(list(FOR_ALL.value() + " " + groupNameOfPositionCluster(-2, -2, 0, 0)
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(-2, -2, 0, 0)
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(-2, -2, 0, 0)
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(-2, -2, 0, 0)
@@ -397,7 +397,7 @@ public class PositionClustersTest {
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(FOR_ALL.value() + " " + groupNameOfPositionCluster(-2, 1, 0, 0)
+                .requireEquals(list(FOR_ALL.value() + " " + groupNameOfPositionCluster(-2, 1, 0, 0)
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(-2, 1, 0, 0)
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(-2, 1, 0, 0)
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(-2, 1, 0, 0)
@@ -423,7 +423,7 @@ public class PositionClustersTest {
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list());
+                .requireEquals(list());
     }
 
     @Test
@@ -489,7 +489,7 @@ public class PositionClustersTest {
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list(FOR_ALL.value() + " " + groupNameOfPositionCluster(2, 2, -1, -1)
+                .requireEquals(list(FOR_ALL.value() + " " + groupNameOfPositionCluster(2, 2, -1, -1)
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(2, 2, -1, -1)
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(2, 2, -1, -1)
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(2, 2, -1, -1)
@@ -515,6 +515,6 @@ public class PositionClustersTest {
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
                 .mapped(g -> g.name().orElseThrow())
-                .assertEquals(list());
+                .requireEquals(list());
     }
 }

@@ -5,6 +5,8 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2024-08-24\#37** Rename `ListView#assertEquals` to `ListView#requireEquals` in order
+  to have a standard naming scheme for all assertion methods.
 * **2024-05-09\#c11**
   1. Define `ConfigFileSystem`, that is used in order to store the program's file based configuration.
   2. Define `UserFileSystem`, that is used in order to store the user's data.

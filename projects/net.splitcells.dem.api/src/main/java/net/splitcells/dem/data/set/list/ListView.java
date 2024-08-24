@@ -73,7 +73,7 @@ public interface ListView<T> extends Collection<T>, java.util.List<T>, Thing {
         }
     }
 
-    default void assertEquals(List<T> arg) {
+    default void requireEquals(List<T> arg) {
         assertThat(this).isEqualTo(arg);
     }
 

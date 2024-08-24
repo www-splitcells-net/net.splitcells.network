@@ -44,7 +44,7 @@ public class QueryTest {
                 }).toProblem()
                 .asSolution();
         final var testProduct = testData.constraint().query().forAll(d).forAll(s).forAll(d).constraintPath();
-        testProduct.assertEquals(list(testData.constraint()
+        testProduct.requireEquals(list(testData.constraint()
                 , testData.constraint().childrenView().get(0)
                 , testData.constraint().childrenView().get(0).childrenView().get(0)
                 , testData.constraint().childrenView().get(0).childrenView().get(0).childrenView().get(0)));
