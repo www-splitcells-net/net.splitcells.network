@@ -35,6 +35,10 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
  */
 @JavaLegacyArtifact
 public class EffectWorkerPool<Subject> implements Effect<Subject> {
+    public static <S> EffectWorkerPool<S> effectWorkerPool(Supplier<S> subjects) {
+        return effectWorkerPool(subjects, 100);
+    }
+
     public static <S> EffectWorkerPool<S> effectWorkerPool(Supplier<S> subjects, int maxSubjectCount) {
         return new EffectWorkerPool<S>(subjects, maxSubjectCount);
     }

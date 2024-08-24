@@ -47,6 +47,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.execution.EffectSynchronization;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.table.Line;
@@ -390,13 +391,30 @@ public class DatabaseI implements Database {
         return rawLines.stream().filter(e -> e != null);
     }
 
+    @EffectSynchronization
     @Override
     public Query query() {
         if (constraint.isEmpty()) {
             final var constraintRoot = forAll();
-            synchronize(constraintRoot);
+            synchronize(new DatabaseSynchronization() {
+
+                @EffectSynchronization
+                @Override
+                public void registerBeforeRemoval(Line removal) {
+                    constraintRoot.registerBeforeRemoval(removal);
+                    constraintRoot.rating();
+                }
+
+                @EffectSynchronization
+                @Override
+                public void registerAddition(Line addition) {
+                    constraintRoot.registerAddition(addition);
+                    constraintRoot.rating();
+                }
+            });
             constraint = Optional.of(constraintRoot);
             unorderedLinesStream().forEach(constraintRoot::registerAddition);
+            constraintRoot.rating();
         }
         return constraint.get().query();
     }

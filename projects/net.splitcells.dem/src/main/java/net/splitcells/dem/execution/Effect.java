@@ -37,6 +37,20 @@ import java.util.function.Function;
  * This wiring mechanism allows one, to inject multithreading functionality into code,
  * that does not have explicit multithreading code via {@link AspectOrientedConstructor#withAspect(Function)}.
  * </p>
+ * <p>In single threaded code, synchronization is done implicitly the following way:
+ * methods returning void are run in parallel and methods returning something are running synchronously and
+ * potentially in another thread.
+ * </p>
+ * <p>Usage guidelines for aspects:</p>
+ * <ol>
+ *     <li>Use {@link #affectSynchronously(Function)}, when wrapping a method, that returns something else then this.</li>
+ *     <li>Use {@link #affectSynchronously(Function)} and return the aspect,
+ *     when wrapping a method, that returns this.</li>
+ *     <li>Use {@link #affect(Consumer)}, when wrapping a method, that returns void.</li>
+ * </ol>
+ * <p>This approach has its downsides as well.
+ * Currently, it seems very hard to verify,
+ * if an aspect implementation of multithreading injection is correct or not.</p>
  *
  * @param <Subject>
  */
@@ -48,10 +62,10 @@ public interface Effect<Subject> {
      */
     void affect(Consumer<Subject> event);
 
-    default <Result> Result affect(BiConsumer<Subject, Processing<Subject, Result>> synchronousEvent) {
+    default <Result> Result affectSynchronously(Function<Subject, Result> synchronousEvent) {
         final var processing = Processing.<Subject, Result>processing();
         processing.withArgument(null);
-        affect(i -> synchronousEvent.accept(i, processing));
+        affect(i -> processing.withResult(synchronousEvent.apply(i)));
         return processing.result();
     }
 }

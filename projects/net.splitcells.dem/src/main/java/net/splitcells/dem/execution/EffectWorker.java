@@ -18,6 +18,7 @@ package net.splitcells.dem.execution;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.resource.communication.log.Logs;
 
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
@@ -33,6 +34,10 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
  */
 @JavaLegacyArtifact
 public class EffectWorker<Subject> implements Effect<Subject> {
+    public static <S> EffectWorker<S> effectWorker(S subject) {
+        return effectWorker(subject, new ArrayBlockingQueue<>(100, true));
+    }
+
     public static <S> EffectWorker<S> effectWorker(S subject, BlockingQueue<Consumer<S>> events) {
         return new <S>EffectWorker(subject, events);
     }

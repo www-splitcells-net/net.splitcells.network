@@ -18,6 +18,7 @@ package net.splitcells.gel.problem;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.execution.EffectSynchronization;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
@@ -51,7 +52,22 @@ public class ProblemI implements Problem {
 
     public static Problem problem(Assignments assignments, Constraint constraint) {
         final var problem = new ProblemI(assignments, constraint);
-        problem.synchronize(constraint);
+        problem.synchronize(new DatabaseSynchronization() {
+
+            @EffectSynchronization
+            @Override
+            public void registerBeforeRemoval(Line removal) {
+                constraint.registerBeforeRemoval(removal);
+                constraint.rating();
+            }
+
+            @EffectSynchronization
+            @Override
+            public void registerAddition(Line addition) {
+                constraint.registerAddition(addition);
+                constraint.rating();
+            }
+        });
         return problem;
     }
 

@@ -18,6 +18,7 @@ package net.splitcells.gel.constraint.type.framework;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.object.Discoverable;
@@ -40,15 +41,20 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.gel.constraint.type.framework.ConstraintThreadingAspect.constraintThreadingAspect;
 
 /**
  * <p>TODO Make this aspect optional for {@link Constraint}s.</p>
  * <p>TODO Create dedicated aspect for rating caching.</p>
+ * <p>TODO Currently, {@link ConstraintThreadingAspect} makes the performance worse.
+ * {@link ConstraintThreadingAspect} seems also to be sometimes buggy.
+ * If the bugs get to costly,
+ * use a new {@link Option}, in order to enable this threading by opting in, instead of out.</p>
  */
 public class ConstraintAspect implements Constraint {
 
-    public static ConstraintAspect constraintAspect(Constraint constraint) {
-        return new ConstraintAspect(constraint);
+    public static Constraint constraintAspect(Constraint constraint) {
+        return constraintThreadingAspect(new ConstraintAspect(constraint));
     }
 
     private final Map<GroupId, Rating> ratingCache = map();
