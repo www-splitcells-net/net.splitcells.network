@@ -15,7 +15,10 @@
  */
 package net.splitcells.dem.execution;
 
+import net.splitcells.dem.resource.AspectOrientedConstructor;
+
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * <p>The {@link Effect} is the base interface in order to contain all side effects.
@@ -30,7 +33,7 @@ import java.util.function.Consumer;
  * The isolated pieces use one thread a piece and are wired together in an asynchronous way,
  * without requiring explicitly asynchronous APIs.
  * This wiring mechanism allows one, to inject multithreading functionality into code,
- * that does not have explicit multithreading code.
+ * that does not have explicit multithreading code via {@link AspectOrientedConstructor#withAspect(Function)}.
  * </p>
  *
  * @param <Subject>
