@@ -15,6 +15,7 @@
  */
 package net.splitcells.website.server;
 
+import com.microsoft.playwright.Worker;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.DeploymentOptions;
@@ -32,6 +33,9 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BasicAuthHandler;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.resource.Service;
+import net.splitcells.dem.execution.Effect;
+import net.splitcells.dem.execution.EffectWorkerPool;
+import net.splitcells.dem.execution.Processing;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.ConfigFileSystem;
@@ -51,12 +55,15 @@ import net.splitcells.website.server.vertx.DocumentNotFound;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import static io.vertx.core.buffer.Buffer.buffer;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.execution.Processing.processing;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.log.LogLevel.WARNING;
@@ -73,6 +80,20 @@ public class Server {
 
     private Server() {
         throw constructorIllegal();
+    }
+
+    public static Service serveToHttpAt(Supplier<Function<String, Optional<BinaryMessage>>> renderer, Config config) {
+        config.withIsMultiThreaded(true);
+        return serveToHttpAt(new Function<String, Optional<BinaryMessage>>() {
+            final Effect<Function<String, Optional<BinaryMessage>>> effect = EffectWorkerPool.effectWorkerPool(renderer, 10);
+
+            @Override
+            public Optional<BinaryMessage> apply(String requestedPath) {
+                final var processing = Processing.<String, Optional<BinaryMessage>>processing();
+                effect.affect(i -> processing.withResult(i.apply(requestedPath)));
+                return processing.result();
+            }
+        }, config);
     }
 
     /**
@@ -102,13 +123,16 @@ public class Server {
                 System.setProperty("vertx.maxEventLoopExecuteTime", "1000000");
                 System.setProperty("log4j.rootLogger", "DEBUG, stdout");
                 vertx = Vertx.vertx(new VertxOptions()
+                                /* TODO The event loop should not be blocked by that much,
+                                 * as other users cannot request a page during the blockage.
+                                 */
                                 .setMaxEventLoopExecuteTimeUnit(SECONDS)
                                 .setMaxEventLoopExecuteTime(60L)
                                 .setBlockedThreadCheckInterval(60_000L))
                         .exceptionHandler(t -> Logs.logs().appendError(t));
                 final var deploymentOptions = new DeploymentOptions()
-                        .setMaxWorkerExecuteTimeUnit(SECONDS)
-                        .setMaxWorkerExecuteTime(60L);
+                        .setMaxWorkerExecuteTimeUnit(TimeUnit.DAYS)
+                        .setMaxWorkerExecuteTime(1L);
                 final var binaryProcessor = new Processor<Perspective, Perspective>() {
                     @Override
                     public synchronized Response<Perspective> process(Request<Perspective> request) {
@@ -142,11 +166,14 @@ public class Server {
                         webServerOptions.setPort(config.openPort());
                         final var router = Router.router(vertx);
                         router.route("/favicon.ico").handler(a -> {
+                            // TODO Nothing needs to be done for now, as this is not supported yet.
                         });
                         if (configValue(PasswordAuthenticationEnabled.class)) {
-                            router.route("/*").handler(BasicAuthHandler.create(fileBasedAuthenticationProvider()));
+                            router.route("/*").blockingHandler
+                                    (BasicAuthHandler.create(fileBasedAuthenticationProvider())
+                                            , config.isSingleThreaded());
                         }
-                        router.route("/*").handler(routingContext -> {
+                        router.route("/*").blockingHandler(routingContext -> {
                             HttpServerResponse response = routingContext.response();
                             if (routingContext.request().path().endsWith(".form")) {
                                 routingContext.response().setChunked(true);
@@ -155,45 +182,47 @@ public class Server {
                             if (routingContext.request().isExpectMultipart()) {
                                 routingContext.request().endHandler(voidz -> {
                                     vertx.<byte[]>executeBlocking((promise) -> {
-                                        final var binaryRequest = parseBinaryRequest(routingContext.request().path()
-                                                , routingContext.request().formAttributes());
-                                        logs().append(perspective("Processing web server binary request.")
-                                                        .withProperty("Binary request", binaryRequest.data())
-                                                , LogLevel.DEBUG);
-                                        final var binaryResponse = binaryProcessor
-                                                .process(binaryRequest);
-                                        response.putHeader("content-type", Formats.JSON.mimeTypes());
-                                        promise.complete(toBytes(binaryResponse.data().createToJsonPrintable()
-                                                .toJsonString()));
-                                    }, (result) -> handleResult(routingContext, result));
+                                                final var binaryRequest = parseBinaryRequest(routingContext.request().path()
+                                                        , routingContext.request().formAttributes());
+                                                logs().append(perspective("Processing web server binary request.")
+                                                                .withProperty("Binary request", binaryRequest.data())
+                                                        , LogLevel.DEBUG);
+                                                final var binaryResponse = binaryProcessor
+                                                        .process(binaryRequest);
+                                                response.putHeader("content-type", Formats.JSON.mimeTypes());
+                                                promise.complete(toBytes(binaryResponse.data().createToJsonPrintable()
+                                                        .toJsonString()));
+                                            }, config.isSingleThreaded()
+                                            , (result) -> handleResult(routingContext, result));
                                 });
                             } else {
                                 vertx.<byte[]>executeBlocking((promise) -> {
-                                    try {
-                                        final String requestPath;
-                                        if ("".equals(routingContext.request().path()) || "/".equals(routingContext.request().path())) {
-                                            requestPath = "index.html";
-                                        } else {
-                                            requestPath = routingContext.request().path();
-                                        }
-                                        logs().append(perspective("Processing web server rendering request.")
-                                                        .withProperty("Raw request path", routingContext.request().path())
-                                                        .withProperty("Interpreted request path", requestPath)
-                                                , LogLevel.DEBUG);
-                                        final var result = renderer.apply(requestPath);
-                                        if (result.isPresent()) {
-                                            response.putHeader("content-type", result.get().getFormat());
-                                            promise.complete(result.get().getContent());
-                                        } else {
-                                            promise.fail(new DocumentNotFound(requestPath));
-                                        }
-                                    } catch (Exception e) {
-                                        logs().appendError(e);
-                                        throw new RuntimeException(e);
-                                    }
-                                }, (result) -> handleResult(routingContext, result));
+                                            try {
+                                                final String requestPath;
+                                                if ("".equals(routingContext.request().path()) || "/".equals(routingContext.request().path())) {
+                                                    requestPath = "index.html";
+                                                } else {
+                                                    requestPath = routingContext.request().path();
+                                                }
+                                                logs().append(perspective("Processing web server rendering request.")
+                                                                .withProperty("Raw request path", routingContext.request().path())
+                                                                .withProperty("Interpreted request path", requestPath)
+                                                        , LogLevel.DEBUG);
+                                                final var result = renderer.apply(requestPath);
+                                                if (result.isPresent()) {
+                                                    response.putHeader("content-type", result.get().getFormat());
+                                                    promise.complete(result.get().getContent());
+                                                } else {
+                                                    promise.fail(new DocumentNotFound(requestPath));
+                                                }
+                                            } catch (Exception e) {
+                                                logs().appendError(e);
+                                                throw new RuntimeException(e);
+                                            }
+                                        }, config.isSingleThreaded()
+                                        , (result) -> handleResult(routingContext, result));
                             }
-                        });
+                        }, config.isSingleThreaded());
                         router.errorHandler(500, e -> {
                             logs().appendError(e.failure());
                         });

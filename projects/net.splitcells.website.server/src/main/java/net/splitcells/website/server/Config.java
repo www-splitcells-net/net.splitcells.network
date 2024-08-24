@@ -237,6 +237,14 @@ public class Config {
      */
     private boolean isRenderingStaticWebsite = false;
 
+    /*
+     * If true, the webserver HTTP backend is instanced as always, but multiple {@link ProjectsRenderer} are created.
+     * Each {@link ProjectsRenderer} is dedicated to one thread and the HTTP backend dedicates each request
+     * to one {@link ProjectsRenderer}.
+     * The thread safety of the resources used by the {@link ProjectsRenderer} are to be ensured by the caller.
+     */
+    private boolean isMultiThreaded = false;
+
     private Config() {
     }
 
@@ -529,6 +537,19 @@ public class Config {
 
     public Config withSitesName(String arg) {
         sitesName = arg;
+        return this;
+    }
+
+    public boolean isMultiThreaded() {
+        return isMultiThreaded;
+    }
+
+    public boolean isSingleThreaded() {
+        return !isMultiThreaded;
+    }
+
+    public Config withIsMultiThreaded(boolean argIsMultiThreaded) {
+        isMultiThreaded = argIsMultiThreaded;
         return this;
     }
 }
