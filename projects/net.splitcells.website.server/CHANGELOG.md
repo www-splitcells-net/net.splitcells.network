@@ -36,6 +36,9 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
   2. Create interface `ProjectsRenderer` used by `ProjectsRendererI`.
      This way alternative web server implementations are possible.
 ### Minor Changes
+* **2024-08-24 \#37:** Provide optional multi-threading of `net.splitcells.website.server.Server#serveToHttpAt`.
+  The multi-threading is achieved by using a copy of the `ProjectsRenderer` for each thread.
+  This minimizes the amount of code needed, in order to achieve thread safety.
 * **2024-05-09: \#c11** Provide `FileSystemViaMemory`.
 * **2024-05-08: \#c11** Provide optional basic authentication in web server
   via the `PasswordAuthenticationEnabled` option.
