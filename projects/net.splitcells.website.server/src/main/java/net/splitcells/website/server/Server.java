@@ -79,6 +79,11 @@ public class Server {
     }
 
     public static Service serveToHttpAt(Supplier<Function<String, Optional<BinaryMessage>>> renderer, Config config) {
+        if (true) {
+            // TODO The web server is not thread safe, even if copies are created.
+            config.withIsMultiThreaded(false);
+            return serveToHttpAt(renderer.get(), config);
+        }
         config.withIsMultiThreaded(true);
         return serveToHttpAt(new Function<String, Optional<BinaryMessage>>() {
             final Effect<Function<String, Optional<BinaryMessage>>> effect = effectWorkerPool(renderer, 10);
