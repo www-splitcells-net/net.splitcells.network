@@ -29,4 +29,9 @@ import java.util.function.Function;
  * </p>
  */
 public @interface EffectSynchronization {
+    /**
+     *
+     * @return The classes for which the synchronization code is present.
+     */
+    Class<?>[] value();
 }

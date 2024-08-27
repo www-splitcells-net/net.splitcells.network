@@ -50,6 +50,7 @@ import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.execution.EffectSynchronization;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
+import net.splitcells.gel.constraint.type.framework.ConstraintAspect;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.LineI;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -391,21 +392,21 @@ public class DatabaseI implements Database {
         return rawLines.stream().filter(e -> e != null);
     }
 
-    @EffectSynchronization
+    @EffectSynchronization(ConstraintAspect.class)
     @Override
     public Query query() {
         if (constraint.isEmpty()) {
             final var constraintRoot = forAll();
             synchronize(new DatabaseSynchronization() {
 
-                @EffectSynchronization
+                @EffectSynchronization(ConstraintAspect.class)
                 @Override
                 public void registerBeforeRemoval(Line removal) {
                     constraintRoot.registerBeforeRemoval(removal);
                     constraintRoot.rating();
                 }
 
-                @EffectSynchronization
+                @EffectSynchronization(ConstraintAspect.class)
                 @Override
                 public void registerAddition(Line addition) {
                     constraintRoot.registerAddition(addition);

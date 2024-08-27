@@ -20,6 +20,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.execution.EffectSynchronization;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.gel.constraint.type.framework.ConstraintAspect;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;
@@ -54,14 +55,14 @@ public class ProblemI implements Problem {
         final var problem = new ProblemI(assignments, constraint);
         problem.synchronize(new DatabaseSynchronization() {
 
-            @EffectSynchronization
+            @EffectSynchronization(ConstraintAspect.class)
             @Override
             public void registerBeforeRemoval(Line removal) {
                 constraint.registerBeforeRemoval(removal);
                 constraint.rating();
             }
 
-            @EffectSynchronization
+            @EffectSynchronization(ConstraintAspect.class)
             @Override
             public void registerAddition(Line addition) {
                 constraint.registerAddition(addition);
