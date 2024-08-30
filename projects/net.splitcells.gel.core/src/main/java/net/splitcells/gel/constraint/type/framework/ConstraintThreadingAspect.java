@@ -26,6 +26,7 @@ import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.constraint.intermediate.data.AllocationRating;
+import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.proposal.Proposal;
@@ -43,6 +44,17 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.execution.EffectWorker.effectWorker;
 import static net.splitcells.dem.execution.EffectWorkerPool.effectWorkerPool;
 
+/**
+ * <p>TODO This aspect does not work,
+ * when one reads data from {@link Constraint} asynchronously via not kind of main thread.
+ * Read access of the {@link Constraint} does not work yet thread safely,
+ * because one does not know which version in history of the stored {@link Constraint} is being accessed and
+ * one does not know how far the synchronization of {@link Constraint} is gone while being accessed.
+ * Therefore, this is a race condition also such read access does not make the {@link Constraint} inconsistent.
+ * The reason for this is the fact,
+ * that {@link Constraint} cannot trigger a synchronization of its parent {@link Constraint}.
+ * Currently, {@link ConstraintThreadingAspect} can only trigger a synchronization of itself.</p>
+ */
 public class ConstraintThreadingAspect implements Constraint {
     public static Constraint constraintThreadingAspect(Constraint constraint) {
         return new ConstraintThreadingAspect(constraint);
