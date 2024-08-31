@@ -10,9 +10,9 @@
         <title>Attribute Function Help</title>
     </meta>
     <paragraph>An attribute defines a column of a database.</paragraph>
-    <d:val name="arguments">
-        <d:val>The first is a literal, that defines the name of the column.</d:val>
-        <d:val>The second is a literal defining the data type of the column.
-        Currently, <quote>string</quote> and <quote>integer</quote> are defined as data types.</d:val>
-    </d:val>
+    <list name="Arguments">
+        <item>The first is a literal, that defines the name of the column.</item>
+        <item>The second is a literal defining the data type of the column.
+        Currently, <quote>string</quote> and <quote>integer</quote> are defined as data types.</item>
+    </list>
 </article>

@@ -10,11 +10,11 @@
         <title>Database Function Help</title>
     </meta>
     <paragraph>The function database creates a table.</paragraph>
-    <d:val name="arguments">
-        <d:val>The first is a literal, that defines the name of the table.</d:val>
-        <d:val>
+    <list name="Arguments">
+        <item>The first is a literal, that defines the name of the table.</item>
+        <item>
             After that a variable number of attributes are provided,
             which define the columns of the table.
-        </d:val>
-    </d:val>
+        </item>
+    </list>
 </article>

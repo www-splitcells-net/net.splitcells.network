@@ -13,9 +13,9 @@
         The function solution creates a database of allocations
         assigning lines of a demand database to lines of a supply database.
     </paragraph>
-    <d:val name="Arguments">
-        <d:val>The first argument is a literal, that defines the name of the solution database to be created.</d:val>
-        <d:val>The second argument is a reference to the demand database.</d:val>
-        <d:val>The second argument is a reference to the supply database.</d:val>
-    </d:val>
+    <list name="Arguments">
+        <item>The first argument is a literal, that defines the name of the solution database to be created.</item>
+        <item>The second argument is a reference to the demand database.</item>
+        <item>The second argument is a reference to the supply database.</item>
+    </list>
 </article>
