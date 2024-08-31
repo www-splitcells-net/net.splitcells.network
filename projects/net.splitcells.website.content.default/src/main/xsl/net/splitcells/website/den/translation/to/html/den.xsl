@@ -207,6 +207,10 @@
         <xsl:param name="is-root">
             <xsl:text>true</xsl:text>
         </xsl:param>
+        <xsl:message terminate="false">
+            den-ast template is deprecated, as its styling result is not acceptable.
+            Use styling similar to nested lists instead.
+        </xsl:message>
         <xsl:variable name="den-document-id" select="generate-id()"/>
         <xsl:variable name="den-document-hide-current-note-id" select="concat($den-document-id, 'hide-current-node')"/>
         <xsl:variable name="content">
