@@ -43,6 +43,7 @@ public final class MapFI_deterministic implements MapF {
 
     @Override
     public void close() {
+        // Nothing needs to be done.
     }
 
 }
