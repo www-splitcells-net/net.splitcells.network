@@ -86,11 +86,6 @@ public class BoolI implements Bool {
         return CommonFunctions.hashCode(value);
     }
 
-    @Override
-    public BoolI clone() {
-        return deepClone(BoolI.class);
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     public <R> R deepClone(Class<? extends R> arg) {
