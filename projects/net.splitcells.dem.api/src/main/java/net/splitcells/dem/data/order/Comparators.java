@@ -25,9 +25,9 @@ import java.util.function.BiFunction;
  * @param <T>
  */
 @JavaLegacyArtifact
-public class Comparators<T> implements Comparator<T> {
+public class Comparators<T> implements Comparison<T> {
 
-    public static final Comparator<Integer> ASCENDING_INTEGERS = comparator((a, b) -> {
+    public static final Comparison<Integer> ASCENDING_INTEGERS = comparator((a, b) -> {
         if (a < b) {
             return Ordering.LESSER_THAN;
         } else if (b < a) {
@@ -36,7 +36,7 @@ public class Comparators<T> implements Comparator<T> {
             return Ordering.EQUAL;
         }
     });
-    public static final Comparator<Double> ASCENDING_DOUBLES = comparator((a, b) -> {
+    public static final Comparison<Double> ASCENDING_DOUBLES = comparator((a, b) -> {
         if (a < b) {
             return Ordering.LESSER_THAN;
         } else if (b < a) {
@@ -45,7 +45,7 @@ public class Comparators<T> implements Comparator<T> {
             return Ordering.EQUAL;
         }
     });
-    public static final Comparator<Boolean> ASCENDING_BOOLEANS = comparator((a, b) -> {
+    public static final Comparison<Boolean> ASCENDING_BOOLEANS = comparator((a, b) -> {
         if (a && !b) {
             return Ordering.GREATER_THAN;
         } else if (!a && b) {
@@ -69,8 +69,8 @@ public class Comparators<T> implements Comparator<T> {
         this.comparator = comparator;
     }
 
-    public static <T> Comparator<T> comparator(BiFunction<T, T, Ordering> comparator) {
-        return new Comparator<T>() {
+    public static <T> Comparison<T> comparator(BiFunction<T, T, Ordering> comparator) {
+        return new Comparison<T>() {
             @Override
             public Ordering compareTo(T a, T b) {
                 return comparator.apply(a, b);
@@ -86,7 +86,7 @@ public class Comparators<T> implements Comparator<T> {
      * @return Wrapped Comparator
      */
     @JavaLegacyArtifact
-    public static <T> Comparator<T> comparatorLegacy(BiFunction<T, T, Integer> comparator) {
+    public static <T> Comparison<T> comparatorLegacy(BiFunction<T, T, Integer> comparator) {
         return legacyComparator(comparator);
 
     }

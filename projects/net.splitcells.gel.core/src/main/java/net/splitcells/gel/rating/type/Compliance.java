@@ -22,13 +22,12 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 
 import java.util.Optional;
 
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.gel.rating.framework.Rating;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
-import net.splitcells.dem.data.order.Comparator;
+import net.splitcells.dem.data.order.Comparison;
 import net.splitcells.dem.data.order.Ordering;
 
 /**
@@ -37,7 +36,7 @@ import net.splitcells.dem.data.order.Ordering;
  * Otherwise, the {@link #value} is equals false.
  */
 public class Compliance implements Rating {
-    private static final Comparator<Boolean> COMPARATOR = ASCENDING_BOOLEANS;
+    private static final Comparison<Boolean> COMPARISON = ASCENDING_BOOLEANS;
     private boolean value;
 
     public static Compliance compliance(boolean value) {
@@ -51,7 +50,7 @@ public class Compliance implements Rating {
     @Override
     public Optional<Ordering> compare_partially_to(Rating arg) {
         if (arg instanceof Compliance) {
-            return Optional.of(COMPARATOR.compareTo(value, ((Compliance) arg).value));
+            return Optional.of(COMPARISON.compareTo(value, ((Compliance) arg).value));
         }
         throw new IllegalArgumentException(arg.getClass().getName());
     }

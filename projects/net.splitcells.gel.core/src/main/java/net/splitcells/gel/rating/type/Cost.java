@@ -30,7 +30,7 @@ import net.splitcells.gel.rating.framework.MetaRating;
 import net.splitcells.gel.rating.framework.Rating;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
-import net.splitcells.dem.data.order.Comparator;
+import net.splitcells.dem.data.order.Comparison;
 import net.splitcells.dem.data.order.Ordering;
 
 /**
@@ -40,7 +40,7 @@ import net.splitcells.dem.data.order.Ordering;
  */
 public class Cost implements Rating {
     private static final Cost NO_COST = cost(0.0);
-    private static final Comparator<Double> COST_VALUE_COMPARATOR = new Comparator<Double>() {
+    private static final Comparison<Double> COST_VALUE_COMPARISON = new Comparison<Double>() {
         @Override
         public Ordering compareTo(Double a, Double b) {
             if (Thing.equals(a, b)) {
@@ -81,7 +81,7 @@ public class Cost implements Rating {
     @Override
     public Optional<Ordering> compare_partially_to(Rating arg) {
         if (arg instanceof Cost) {
-            final var order = COST_VALUE_COMPARATOR.compareTo(value, ((Cost) arg).value());
+            final var order = COST_VALUE_COMPARISON.compareTo(value, ((Cost) arg).value());
             if (order.equals(EQUAL)) {
                 return Optional.of(EQUAL);
             } else if (order.equals(LESSER_THAN)) {

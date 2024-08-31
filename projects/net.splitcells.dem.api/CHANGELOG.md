@@ -5,6 +5,8 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2024-09-01\#32** Rename `net.splitcells.dem.data.order.Comparator` to `Comparison`,
+  in order to avoid confusion with `java.util.Comparator`.
 * **2024-08-24\#37** Rename `ListView#assertEquals` to `ListView#requireEquals` in order
   to have a standard naming scheme for all assertion methods.
 * **2024-05-09\#c11**

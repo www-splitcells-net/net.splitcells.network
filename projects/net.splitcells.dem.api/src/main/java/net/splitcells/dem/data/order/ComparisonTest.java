@@ -23,7 +23,7 @@ import static net.splitcells.dem.data.order.Comparators.ASCENDING_INTEGERS;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class ComparatorTest {
+public class ComparisonTest {
     @Test
     public void testAscendingIntegers() {
         final var object = list(3, 1, 2);

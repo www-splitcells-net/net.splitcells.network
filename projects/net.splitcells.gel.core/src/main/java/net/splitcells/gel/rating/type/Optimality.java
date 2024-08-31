@@ -23,11 +23,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
 
+import net.splitcells.dem.data.order.Comparison;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.rating.framework.Rating;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
-import net.splitcells.dem.data.order.Comparator;
 import net.splitcells.dem.data.order.Ordering;
 
 /**
@@ -40,7 +40,7 @@ import net.splitcells.dem.data.order.Ordering;
  * or worst solution.
  */
 public class Optimality implements Rating {
-    private static final Comparator<Double> OPTIMALITY_VALUE_COMPARATOR = new Comparator<Double>() {
+    private static final Comparison<Double> OPTIMALITY_VALUE_COMPARISON = new Comparison<Double>() {
         @Override
         public int compare(Double a, Double b) {
             return a.compareTo(b);
@@ -65,7 +65,7 @@ public class Optimality implements Rating {
     @Override
     public Optional<Ordering> compare_partially_to(Rating arg) {
         if (arg instanceof Optimality) {
-            return Optional.of(OPTIMALITY_VALUE_COMPARATOR.compareTo(value, ((Optimality) arg).value));
+            return Optional.of(OPTIMALITY_VALUE_COMPARISON.compareTo(value, ((Optimality) arg).value));
         }
         if (arg instanceof Cost) {
             final Cost argCost = ((Cost) arg);

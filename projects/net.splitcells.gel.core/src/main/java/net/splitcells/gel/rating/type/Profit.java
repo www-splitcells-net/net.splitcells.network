@@ -22,16 +22,16 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 import java.util.Optional;
 
+import net.splitcells.dem.data.order.Comparison;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.gel.rating.framework.Rating;
 import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
-import net.splitcells.dem.data.order.Comparator;
 import net.splitcells.dem.data.order.Ordering;
 
 public class Profit implements Rating {
-    private static final Comparator<Double> PROFIT_VALUE_COMPARATOR = new Comparator<Double>() {
+    private static final Comparison<Double> PROFIT_VALUE_COMPARISON = new Comparison<Double>() {
         @Override
         public int compare(Double a, Double b) {
             return a.compareTo(b);
@@ -62,7 +62,7 @@ public class Profit implements Rating {
     @Override
     public Optional<Ordering> compare_partially_to(Rating rating) {
         if (rating instanceof Profit) {
-            return Optional.of(PROFIT_VALUE_COMPARATOR.compareTo(value, ((Profit) rating).value()));
+            return Optional.of(PROFIT_VALUE_COMPARISON.compareTo(value, ((Profit) rating).value()));
         }
         throw new IllegalArgumentException(rating.getClass().getName());
     }

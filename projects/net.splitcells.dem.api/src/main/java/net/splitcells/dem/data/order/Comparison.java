@@ -22,11 +22,13 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 /**
  * Provides an easy to understand for comparing 2 values,
- * that is also type safe.
+ * that is also type safe and easier to use than {@link java.util.Comparator}.
+ * The word Comparator is not used for this class,
+ * in order to avoid confusion with the name of {@link java.util.Comparator}.
  *
  * @param <T>
  */
-public interface Comparator<T> extends java.util.Comparator<T> {
+public interface Comparison<T> extends java.util.Comparator<T> {
 
     default Ordering compareTo(T a, T b) {
         final int rBase = compare(a, b);
@@ -62,9 +64,9 @@ public interface Comparator<T> extends java.util.Comparator<T> {
      * PERFORMANCE improvement of multiple inversions via public parent Comparator
      * access method
      */
-    default Comparator<T> inverted() {
+    default Comparison<T> inverted() {
         var fThis = this;
-        return new Comparator<T>() {
+        return new Comparison<T>() {
 
             @Override
             public Ordering compareTo(T a, T b) {

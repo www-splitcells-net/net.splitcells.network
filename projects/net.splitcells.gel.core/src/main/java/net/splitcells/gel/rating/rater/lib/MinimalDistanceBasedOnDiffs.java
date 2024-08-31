@@ -15,14 +15,13 @@
  */
 package net.splitcells.gel.rating.rater.lib;
 
-import net.splitcells.dem.data.order.Comparator;
+import net.splitcells.dem.data.order.Comparison;
 import net.splitcells.dem.data.order.Comparators;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.config.StaticFlags;
-import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.utils.CommonFunctions;
@@ -35,7 +34,6 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
-import org.w3c.dom.Node;
 
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -78,25 +76,25 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
     @Deprecated
     public static <R> MinimalDistanceBasedOnDiffs<R> minimalDistance(Attribute<R> attribute
             , double minimumDistance
-            , Comparator<R> comparator
+            , Comparison<R> comparison
             , BiFunction<R, R, Double> distanceMeasurer) {
-        return new MinimalDistanceBasedOnDiffs<>(attribute, minimumDistance, comparator, distanceMeasurer);
+        return new MinimalDistanceBasedOnDiffs<>(attribute, minimumDistance, comparison, distanceMeasurer);
     }
 
     private final double minimumDistance;
     private final Attribute<T> attribute;
-    private final Comparator<T> comparator;
+    private final Comparison<T> comparison;
     private final BiFunction<T, T, Double> distanceMeassurer;
     private final List<Discoverable> contextes = list();
 
     private MinimalDistanceBasedOnDiffs
             (Attribute<T> attribute, double minimumDistance
-                    , Comparator<T> comparator
+                    , Comparison<T> comparison
                     , BiFunction<T, T, Double> distanceMeassurer) {
         this.distanceMeassurer = distanceMeassurer;
         this.attribute = attribute;
         this.minimumDistance = minimumDistance;
-        this.comparator = comparator;
+        this.comparison = comparison;
     }
 
     @Override
@@ -356,7 +354,7 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
         return Lists.list
                 (perspective("minimumDistance").withChild(perspective("" + minimumDistance))
                         , perspective("attribute").withChild(attribute.toPerspective())
-                        , perspective("comparator").withChild(perspective("" + comparator))
+                        , perspective("comparator").withChild(perspective("" + comparison))
                         , perspective("distanceMeassurer").withChild(perspective("" + distanceMeassurer)));
     }
 
@@ -365,7 +363,7 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
         if (arg != null && arg instanceof MinimalDistanceBasedOnDiffs) {
             return this.minimumDistance == ((MinimalDistanceBasedOnDiffs) arg).minimumDistance
                     && this.attribute.equals(((MinimalDistanceBasedOnDiffs) arg).attribute)
-                    && this.comparator.equals(((MinimalDistanceBasedOnDiffs) arg).comparator)
+                    && this.comparison.equals(((MinimalDistanceBasedOnDiffs) arg).comparison)
                     && this.distanceMeassurer.equals(((MinimalDistanceBasedOnDiffs) arg).distanceMeassurer);
         }
         return false;
@@ -373,7 +371,7 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
 
     @Override
     public int hashCode() {
-        return CommonFunctions.hashCode(minimumDistance, attribute, comparator, distanceMeassurer);
+        return CommonFunctions.hashCode(minimumDistance, attribute, comparison, distanceMeassurer);
     }
 
     @Override
@@ -391,7 +389,7 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
                 .filter(e -> e != null)
                 .sorted((a, b) -> {
                             try {
-                                return comparator.compare
+                                return comparison.compare
                                         (a.value(LINE).value(attribute)
                                                 , b.value(LINE).value(attribute));
                             } catch (RuntimeException e) {
@@ -407,7 +405,7 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
         return lines.rawLinesView().stream()
                 .filter(e -> e != null)
                 .filter(e -> !e.value(Constraint.RATING).equalz(cost))
-                .sorted((a, b) -> comparator.compare(a.value(LINE).value(attribute), b.value(LINE).value(attribute)))
+                .sorted((a, b) -> comparison.compare(a.value(LINE).value(attribute), b.value(LINE).value(attribute)))
                 .collect(toList());
     }
 

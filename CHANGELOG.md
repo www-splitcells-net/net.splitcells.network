@@ -266,11 +266,11 @@
 * **2021-11-21**: **\#s22**: Rename `net.splitcells.gel.solution.optimization.Optimization`
   to `OfflineOptimization` in order to clarify its meaning.
 * **2021-11-06**:
-  1. **\#10** Rename `net.splitcells.dem.data.order.Comparator.comparator_`.
+  1. **\#10** Rename `net.splitcells.dem.data.order.Comparison.comparator_`.
      to `comparatorLegacy` in order to have a clear name and remove its usage,
      where it is not needed.
   2. **\#10** Rename `net.splitcells.dem.data.order.Comparators.comparators`
-     to `comparator` in order to unify naming.
+     to `comparison` in order to unify naming.
 * **2021-11-05**: `system.update` for Flatpak now does not exit with an error,
   if Flatpak's version itself is deprecated.
   This is done because otherwise the whole update process would be aborted.
