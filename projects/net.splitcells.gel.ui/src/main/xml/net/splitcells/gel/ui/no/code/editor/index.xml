@@ -21,6 +21,12 @@
                 After executing the optimizer via the <quote>Calculate solution</quote> button,
                 the solution will be visible under the tab <quote>Solution</quote>.
             </paragraph>
+            <paragraph>The no-code editor was created,
+                in order to provide a language to define optimization problems for non-technical users.
+                This editor avoids, that users can make syntax errors.
+                It also provides a discoverable GUI option, that informs the users,
+                what can or should be done next in order work on the optimization problem.
+            </paragraph>
         </description>
         <pseudo-full-screen-by-default>true</pseudo-full-screen-by-default>
         <d:toDo>
