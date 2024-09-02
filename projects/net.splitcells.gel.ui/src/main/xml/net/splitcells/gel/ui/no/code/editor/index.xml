@@ -26,6 +26,8 @@
                 This editor avoids, that users can make syntax errors.
                 It also provides a discoverable GUI option, that informs the users,
                 what can or should be done next in order work on the optimization problem.
+                It is also an experiment to provide a GUI access to complex and configurable things
+                interactively in general.
             </paragraph>
         </description>
         <pseudo-full-screen-by-default>true</pseudo-full-screen-by-default>
