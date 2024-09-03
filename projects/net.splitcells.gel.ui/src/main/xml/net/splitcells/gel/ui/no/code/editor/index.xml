@@ -52,7 +52,7 @@
                 Export definition
             </command>
             <command id="net-splitcells-gel-ui-no-code-calculate-solution-form-solution-download-as-csv"
-                     method="net_splitcells_gel_ui_editor_no_code_calculate_solution_form_solution_download_as_csv">
+                     method="net_splitcells_gel_ui_no_code_editor_calculate_solution_form_solution_download_as_csv">
                 Export solution
             </command>
             <command id="net-splitcells-gel-ui-no-code-editor-form-problem-definition-upload"
