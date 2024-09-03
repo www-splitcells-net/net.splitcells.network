@@ -29,6 +29,11 @@
                 It is also an experiment to provide a GUI access to complex and configurable things
                 interactively in general.
             </paragraph>
+            <paragraph>This editor has the same base model as
+                <link post="net/splitcells/gel/ui/editor">the general editor</link>
+                and therefore provides the same functionality,
+                with a different interface.
+            </paragraph>
         </description>
         <pseudo-full-screen-by-default>true</pseudo-full-screen-by-default>
         <d:toDo>

@@ -21,6 +21,11 @@
                 After executing the optimizer via the <quote>Submit optimization</quote> button,
                 the solution will be visible under the tab <quote>Solution</quote>.
             </paragraph>
+            <paragraph>This editor has the same base model as
+                <link post="net/splitcells/gel/ui/no/code/editor/index">the no-code editor</link>
+                and therefore provides the same functionality,
+                with a different interface.
+            </paragraph>
         </description>
         <pseudo-full-screen-by-default>true</pseudo-full-screen-by-default>
         <d:toDo>
