@@ -128,10 +128,14 @@ public class WebsiteViaJar {
                         , "/net/splitcells/network/hub/README")
                         .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/community.2016.12.11.chrom.0.dina4.jpg"))
                         .withDescription(Optional.of("We provide an open source ecosystem centered around optimization and operations research.")))
-                .withAdditionalProgramConfig(programConfig("Generic Allocation Editor"
+                .withAdditionalProgramConfig(programConfig("Generic Allocation No-Code Editor"
+                        , "/net/splitcells/gel/ui/no/code/editor/index")
+                        .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/net.splitcells.gel.ui.no.code.logo.jpg"))
+                        .withDescription(Optional.of("Define and solve assignment problems interactively.")))
+                .withAdditionalProgramConfig(programConfig("Generic Allocation Editor's Tough Love Edition"
                         , "/net/splitcells/gel/ui/editor")
                         .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/net.splitcells.gel.ui.logo.jpg"))
-                        .withDescription(Optional.of("Define and solve assignment problems.")))
+                        .withDescription(Optional.of("Define and solve assignment problems in text form.")))
                 .withAdditionalProcessor(SolutionCalculator.PATH, solutionCalculator())
                 .withAdditionalProcessor(NoCodeSolutionCalculator.PATH, noCodeSolutionCalculator())
                 .withAdditionalProjectsRendererExtension(functions())
