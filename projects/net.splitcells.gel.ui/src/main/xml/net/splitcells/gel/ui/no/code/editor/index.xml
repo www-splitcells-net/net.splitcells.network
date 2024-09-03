@@ -29,7 +29,8 @@
                 It is also an experiment to provide a GUI access to complex and configurable things
                 interactively in general.
             </paragraph>
-            <paragraph>This editor has the same base model as
+            <paragraph>The conceptional documentation<link post="net/splitcells/gel/index">is provided here</link>.
+                This editor has the same base model as
                 <link post="net/splitcells/gel/ui/editor">the general editor</link>
                 and therefore provides the same functionality,
                 with a different interface.
