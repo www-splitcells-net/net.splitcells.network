@@ -3,7 +3,9 @@
  */
 let net_splitcells_gel_ui_editor_form_solution = null;
 function net_splitcells_gel_ui_calculate_solution_form_solution_download_as_csv() {
-    net_splitcells_gel_ui_editor_form_solution.download("csv", "solution.csv", {delimiter:","});
+    if (net_splitcells_gel_ui_editor_form_solution != undefined) {
+        net_splitcells_gel_ui_editor_form_solution.download("csv", "solution.csv", {delimiter:","});
+    }
 }
 function net_splitcells_gel_ui_editor_form_submit() {
     var config = net_splitcells_webserver_form_submit_config();
