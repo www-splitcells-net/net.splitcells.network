@@ -178,6 +178,7 @@ public class Server {
                         router.route("/*").blockingHandler(routingContext -> {
                             HttpServerResponse response = routingContext.response();
                             if (routingContext.request().path().endsWith(".form")) {
+                                // TODO Is setChunked needed? What practical function does it have?
                                 routingContext.response().setChunked(true);
                                 routingContext.request().setExpectMultipart(true);
                             }
