@@ -171,11 +171,19 @@ public class Server {
                             // TODO Nothing needs to be done for now, as this is not supported yet.
                         });
                         if (configValue(PasswordAuthenticationEnabled.class)) {
-                            router.route("/*").blockingHandler
-                                    (BasicAuthHandler.create(fileBasedAuthenticationProvider())
-                                            , config.isSingleThreaded());
+                            /* TODO For multithreading the `router.route("/*").blockingHandler`
+                             * would probably have to be used instead, but it does not work with single thread mode.
+                             * If blockingHandler is used in single threaded mode, the multipart request is sometimes
+                             * not fully downloaded.
+                             */
+                            router.route("/*").handler(BasicAuthHandler.create(fileBasedAuthenticationProvider()));
                         }
-                        router.route("/*").blockingHandler(routingContext -> {
+                        /* TODO For multithreading the `router.route("/*").blockingHandler`
+                         * would probably have to be used instead, but it does not work with single thread mode.
+                         * If blockingHandler is used in single threaded mode, the multipart request is sometimes
+                         * not fully downloaded.
+                         */
+                        router.route("/*").handler(routingContext -> {
                             HttpServerResponse response = routingContext.response();
                             if (routingContext.request().path().endsWith(".form")) {
                                 // TODO Is setChunked needed? What practical function does it have?
@@ -233,7 +241,7 @@ public class Server {
                                         }, config.isSingleThreaded()
                                         , (result) -> handleResult(routingContext, result));
                             }
-                        }, config.isSingleThreaded());
+                        });
                         router.errorHandler(500, e -> {
                             logs().appendError(e.failure());
                         });
