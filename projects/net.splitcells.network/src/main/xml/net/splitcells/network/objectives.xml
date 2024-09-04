@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<article xmlns="http://splitcells.net/sew.xsd">
+<article xmlns="http://splitcells.net/sew.xsd" xmlns:d="http://splitcells.net/den.xsd">
     <meta>
         <!--
             SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
             SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
         -->
         <title>Splitcells Network's objective</title>
+        <d:toDo>Convert each goal or part of it, in order to show, how these are achieved.</d:toDo>
     </meta>
     <chapter>
         <title>Abstract goals of the Network project</title>
