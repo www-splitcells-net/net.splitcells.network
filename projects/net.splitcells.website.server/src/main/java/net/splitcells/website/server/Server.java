@@ -182,13 +182,15 @@ public class Server {
                                 routingContext.request().setExpectMultipart(true);
                             }
                             if (routingContext.request().isExpectMultipart()) {
-                                /* `routingContext.request().bodyHandler(voidz -> {`
+                                /* TODO `routingContext.request().bodyHandler(voidz -> {`
                                  * is required, so that all multipart entries are received from the client.
                                  * Otherwise, the multipart entries are empty.
                                  * `endHandler` works in single threaded environments,
                                  * but does not work in multithreaded environments.
+                                 * On the other hand, the bodyHandler is not enough for multithreading and
+                                 * causes problems with single threaded HTTP server.
                                  */
-                                routingContext.request().bodyHandler(voidz -> {
+                                routingContext.request().endHandler(voidz -> {
                                     vertx.<byte[]>executeBlocking((promise) -> {
                                                 final var binaryRequest = parseBinaryRequest(routingContext.request().path()
                                                         , routingContext.request().formAttributes());
