@@ -81,6 +81,9 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
 
     private final Result<SolutionParameters, Perspective> result = result();
     private final Map<String, String> strings = map();
+    /**
+     * Maps the name of the variable, that contains an attribute, to the attribute.
+     */
     private final Map<String, Attribute<? extends Object>> attributes = map();
     private final Map<String, Database> databases = map();
     private NoCodeDenParser.Source_unitContext currentSourceUnit;
@@ -285,7 +288,7 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
                     return null;
                 }
                 final var newAttribute = attributeParsing.value().orElseThrow();
-                attributes.put(newAttribute.name(), newAttribute);
+                attributes.put(variableName, newAttribute);
                 return null;
             } else {
                 result.withErrorMessage(perspective("Unknown first function name in function chain for variable definition.")
