@@ -58,7 +58,14 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
 
 
     public static Result<SolutionParameters, Perspective> parseNoCodeProblem(String arg) {
-        return new NoCodeProblemParser().parseNoCodeProblemIntern(arg);
+        final var parser = new NoCodeProblemParser();
+        try {
+            parser.parseNoCodeProblemIntern(arg);
+        } catch (Exception e) {
+            logs().appendError(e);
+            parser.result.withErrorMessage(perspective("The program had an internal error and therefore a solution could not be calculated."));
+        }
+        return parser.result;
     }
 
     public static Map<String, String> parseNoCodeStrings(String arg) {
