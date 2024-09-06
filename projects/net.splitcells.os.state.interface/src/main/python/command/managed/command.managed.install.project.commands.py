@@ -2,6 +2,10 @@
 """
 SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+
+TODO Avoid listing sub projects at `~/.config/net.splitcells.os.state.interface/project.repositories.`
+     Use a special file in the root project instead.
+     This would ease migrating the names of such sub projects.
 """
 
 __author__ = "Mārtiņš Avots"
