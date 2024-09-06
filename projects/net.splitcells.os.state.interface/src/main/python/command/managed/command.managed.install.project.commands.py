@@ -25,20 +25,25 @@ class Command:
             , projectPath
             , targetFolder = Path.home().joinpath('bin', 'net.splitcells.os.state.interface.commands.managed')
             ):
-        projectPosixPath = PosixPath(projectPath)
-        self.projectName = projectPosixPath.name
-        self.binFolder = projectPosixPath.joinpath('bin')
+        self.projectPath = PosixPath(projectPath)
+        self.projectName = self.projectPath.name
+        self.binFolder = self.projectPath.joinpath('bin')
         self.targetFolder = targetFolder
     def install(self):
         logging.info("Installing project repository '" + self.projectName + "'.")
         for projectCommand in self.binFolder.rglob("*"):
-            projectCommandContent = "#!/usr/bin/env sh\n" \
-                    + 'cd ' \
-                    + str(projectCommand.resolve().parent.parent) \
-                    + " \n" \
-                    + './bin/' + projectCommand.name + " $@\n"
-            self._installProjectCommand(projectCommand.name, projectCommandContent)
-        repoGui = self.binFolder.joinpath('repo.gui')
+            self._installProjectCommand(projectCommand.name, self._projectCommandContent('./bin/' + projectCommand.name + ' $@'))
+        self._installDefaultCommand('repo.gui')
+    def _installDefaultCommand(self, name):
+        binFile = self.binFolder.joinpath(name)
+        if not binFile.exists():
+            self._installProjectCommand(name, self._projectCommandContent(name + ' $@'))
+    def _projectCommandContent(self, content):
+        return "#!/usr/bin/env sh\n" \
+                + 'cd ' \
+                + str(self.projectPath) \
+                + " \n" \
+                + content
     def _installProjectCommand(self, name, content):
         globalProjectCommandName = self.projectName + '.' + name
         targetCommandFile = self.targetFolder.joinpath(globalProjectCommandName)
