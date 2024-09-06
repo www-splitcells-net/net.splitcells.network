@@ -407,34 +407,27 @@ request.send();]]>
                             </s:list>
                         </s:chapter>
                     </xsl:if>
-                    <s:chapter>
-                        <s:title>Relevant Local Path Context</s:title>
-                        <xsl:variable name="file-path-environment-relevant">
-                            <xsl:call-template name="file-path-environment-relevant">
-                                <xsl:with-param name="path"
-                                                select="./s:path/node()"/>
-                            </xsl:call-template>
-                        </xsl:variable>
+                    <xsl:variable name="relevantLocalPathContext">
                         <xsl:call-template name="file-path-environment-relevant">
                             <xsl:with-param name="path"
                                             select="./s:path/node()"/>
                         </xsl:call-template>
-                    </s:chapter>
-                    <s:chapter>
-                        <s:title>Local Path Context</s:title>
-                        <!-- TODO REMOVE This is deprecated. See #s109.
-                        <xsl:variable name="file-path-environment">
-                            <xsl:call-template name="file-path-environment">
-                                <xsl:with-param name="path"
-                                                select="./s:path/node()"/>
-                            </xsl:call-template>
-                        </xsl:variable>
-                        <xsl:call-template name="file-path-environment">
-                            <xsl:with-param name="path"
-                                            select="./s:path/node()"/>
-                        </xsl:call-template>-->
+                    </xsl:variable>
+                    <xsl:if test="$relevantLocalPathContext != ''">
+                        <s:chapter>
+                            <s:title>Relevant Local Path Context</s:title>
+                            <xsl:copy-of select="$relevantLocalPathContext"/>
+                        </s:chapter>
+                    </xsl:if>
+                    <xsl:variable name="localPathContext">
                         <xsl:apply-templates select="./s:path.context"/>
-                    </s:chapter>
+                    </xsl:variable>
+                    <xsl:if test="$localPathContext != ''">
+                        <s:chapter>
+                            <s:title>Local Path Context</s:title>
+                            <xsl:copy-of select="$localPathContext"/>
+                        </s:chapter>
+                    </xsl:if>
                     <xsl:if test="./s:content/s:meta/rdf:RDF">
                         <s:chapter>
                             <s:title>Resources</s:title>
