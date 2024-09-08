@@ -442,6 +442,7 @@ public interface Perspective extends PerspectiveView {
      * @deprecated Use {@link #toXmlString(XmlConfig)} instead.
      * @return
      */
+    @Deprecated
     default String toXmlStringWithPrefixes() {
         String xmlString = "";
         if (name().isBlank()) {
