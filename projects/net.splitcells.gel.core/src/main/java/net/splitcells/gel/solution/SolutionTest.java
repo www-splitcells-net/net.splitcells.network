@@ -36,6 +36,7 @@ import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.Gel.defineProblem;
+import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineValue.lineValueRater;
@@ -47,6 +48,24 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.Constrai
 import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
 
 public class SolutionTest {
+
+    @Test
+    public void testToFodsTableAnalysis2() {
+        final var d = attribute(Integer.class, "demand");
+        final var s = attribute(Integer.class, "supply");
+        final var testSubject = defineProblem("testPerformance")
+                .withDemandAttributes(d)
+                .withDemands(list(list(0)))
+                .withSupplyAttributes(s)
+                .withSupplies(list(list(0)))
+                .withConstraint(forAll())
+                .toProblem()
+                .asSolution();
+        testSubject.assign(testSubject.demands().orderedLine(0), testSubject.supplies().orderedLine(0));
+        testSubject.toFodsTableAnalysis2().toXmlString();
+        Xml.toPrettyString(testSubject.toFodsTableAnalysis());
+        // TODO Testś content.
+    }
 
     @Test
     @Disabled
