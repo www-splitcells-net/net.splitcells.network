@@ -47,6 +47,7 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
 import static net.splitcells.dem.utils.BinaryUtils.binaryOutputStream;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StringUtils.multiple;
 import static net.splitcells.dem.utils.StringUtils.stringBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -388,6 +389,15 @@ public interface Perspective extends PerspectiveView {
         children().forEach(c -> c.visit(visitor));
     }
 
+    default String toXmlString(XmlConfig xmlConfig) {
+        throw notImplementedYet();
+    }
+
+    /**
+     * @deprecated Use {@link #toXmlString(XmlConfig)} instead.
+     * @return
+     */
+    @Deprecated
     default String toXmlStringWithAllNameSpaceDeclarationsAtTop() {
         final Set<NameSpace> nameSpaces = setOfUniques();
         visit(p -> nameSpaces.add(p.nameSpace()));
@@ -428,6 +438,10 @@ public interface Perspective extends PerspectiveView {
         return declarations.toString();
     }
 
+    /**
+     * @deprecated Use {@link #toXmlString(XmlConfig)} instead.
+     * @return
+     */
     default String toXmlStringWithPrefixes() {
         String xmlString = "";
         if (name().isBlank()) {
