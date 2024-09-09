@@ -17,10 +17,12 @@ package net.splitcells.dem.data.set.map;
 
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.testing.Assertions;
 
 import java.util.HashMap;
 
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 @JavaLegacyArtifact
@@ -46,6 +48,13 @@ public class MapI<Key, Value> extends HashMap<Key, Value> implements Map<Key, Va
     @Override
     public Value ensurePresenceAndValue(Key key, Value value) {
         return super.put(key, value);
+    }
+
+    @Override
+    public Value get(Object key) {
+        final var result = super.get(key);
+        requireNotNull(result);
+        return result;
     }
 
 }
