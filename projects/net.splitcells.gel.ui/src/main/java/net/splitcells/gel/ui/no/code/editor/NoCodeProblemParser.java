@@ -23,6 +23,7 @@ import net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParserBaseVis
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.ui.Editor;
 import net.splitcells.gel.ui.SolutionParameters;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
@@ -39,6 +40,7 @@ import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
 import static net.splitcells.gel.data.database.Databases.database;
 import static net.splitcells.gel.data.table.attribute.Attributes.parseAttribute;
 import static net.splitcells.gel.problem.ProblemI.problem;
+import static net.splitcells.gel.ui.Editor.editor;
 import static net.splitcells.gel.ui.no.code.editor.NoCodeQueryParser.parseNoCodeQuery;
 
 /**
@@ -77,23 +79,19 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
     public static Map<String, Attribute<? extends Object>> parseNoCodeAttributes(String arg) {
         final var parser = new NoCodeProblemParser();
         parser.parseNoCodeProblemIntern(arg);
-        return parser.attributes;
+        return parser.editor.attributeVars();
     }
 
     public static Map<String, Database> parseNoCodeDatabases(String arg) {
         final var parser = new NoCodeProblemParser();
         parser.parseNoCodeProblemIntern(arg);
-        return parser.databases;
+        return parser.editor.databaseVars();
     }
 
     private final Result<SolutionParameters, Perspective> result = result();
     private final Map<String, String> strings = map();
-    /**
-     * Maps the name of the variable, that contains an attribute, to the attribute.
-     */
-    private final Map<String, Attribute<? extends Object>> attributes = map();
-    private final Map<String, Database> databases = map();
     private NoCodeDenParser.Source_unitContext currentSourceUnit;
+    private final Editor editor = editor();
 
     private final SolutionParameters solutionParameters = SolutionParameters.solutionParameters();
 
@@ -181,11 +179,6 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
         if (variableName.equals("constraints")) {
             return null;
         }
-        if (strings.containsKey(variableName) || attributes.containsKey(variableName) || databases.containsKey(variableName)) {
-            result.withErrorMessage(perspective("Variable with this name already exists.")
-                    .withProperty(CONTENT, ctx.getText()));
-            return null;
-        }
         if (ctx.variable_definition_value() == null || ctx.variable_definition_value().value() == null) {
             result.withErrorMessage(perspective("Variable definition is missing a name.")
                     .withProperty(CONTENT, ctx.getText()));
@@ -219,8 +212,8 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
                     return null;
                 }
                 final var assignments = assignments(functionCall.function_call_argument(0).value().string_value().getText()
-                        , databases.get(functionCall.function_call_argument(1).value().variable_reference().Name().getText())
-                        , databases.get(functionCall.function_call_argument(2).value().variable_reference().Name().getText()));
+                        , editor.database(functionCall.function_call_argument(1).value().variable_reference().Name().getText())
+                        , editor.database(functionCall.function_call_argument(2).value().variable_reference().Name().getText()));
                 final var parsedQuery = parseNoCodeQuery(currentSourceUnit, assignments);
                 result.errorMessages().withAppended(parsedQuery.errorMessages());
                 if (parsedQuery.defective()) {
@@ -242,12 +235,6 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
                     return null;
                 }
                 final var databaseName = databaseNameText.value().string_value().getText();
-                if (databases.containsKey(variableName)) {
-                    result.withErrorMessage(perspective("A variable with this name already exists.")
-                            .withProperty("variable name", variableName)
-                            .withProperty(CONTENT, ctx.getText()));
-                    return null;
-                }
                 final List<Attribute<? extends Object>> databaseAttributes = list();
                 for (int i = 1; i < functionCall.function_call_argument().size(); ++i) {
                     final var attributeText = functionCall.function_call_argument(i).value();
@@ -260,15 +247,15 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
                                 .withProperty(CONTENT, ctx.getText()));
                         return null;
                     }
-                    if (!attributes.containsKey(attributeText.variable_reference().Name().getText())) {
+                    if (!editor.hasAttributeVar(attributeText.variable_reference().Name().getText())) {
                         result.withErrorMessage(perspective("A unknown variable is referenced via the namename.")
                                 .withProperty("invalid attribute", attributeText.getText())
                                 .withProperty(CONTENT, ctx.getText()));
                         return null;
                     }
-                    databaseAttributes.add(attributes.get(attributeText.variable_reference().Name().getText()));
+                    databaseAttributes.add(editor.attribute(attributeText.variable_reference().Name().getText()));
                 }
-                databases.put(variableName, database(databaseName, NO_CONTEXT, databaseAttributes));
+                editor.withAttributeVar(variableName, database(databaseName, NO_CONTEXT, databaseAttributes));
                 return null;
             } else if (functionName.equals(ATTRIBUTE)) {
                 if (functionCall.function_call_argument().size() != 2) {
@@ -295,7 +282,7 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
                     return null;
                 }
                 final var newAttribute = attributeParsing.value().orElseThrow();
-                attributes.put(variableName, newAttribute);
+                editor.withAttributeVar(variableName, newAttribute);
                 return null;
             } else {
                 result.withErrorMessage(perspective("Unknown first function name in function chain for variable definition.")
