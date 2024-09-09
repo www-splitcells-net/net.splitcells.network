@@ -54,7 +54,7 @@ public class Editor {
         return databaseVars.get(varName);
     }
 
-    public Editor withAttributeVar(String name, Database value) {
+    public Editor withDatabaseVar(String name, Database value) {
         requireFreeVarName(name);
         databaseVars.put(name, value);
         return this;

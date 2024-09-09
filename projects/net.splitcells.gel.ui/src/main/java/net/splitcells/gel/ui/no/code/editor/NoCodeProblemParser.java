@@ -255,7 +255,7 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
                     }
                     databaseAttributes.add(editor.attribute(attributeText.variable_reference().Name().getText()));
                 }
-                editor.withAttributeVar(variableName, database(databaseName, NO_CONTEXT, databaseAttributes));
+                editor.withDatabaseVar(variableName, database(databaseName, NO_CONTEXT, databaseAttributes));
                 return null;
             } else if (functionName.equals(ATTRIBUTE)) {
                 if (functionCall.function_call_argument().size() != 2) {
