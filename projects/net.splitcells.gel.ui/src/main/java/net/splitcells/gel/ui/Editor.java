@@ -15,7 +15,6 @@
  */
 package net.splitcells.gel.ui;
 
-import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.database.Database;
@@ -55,7 +54,7 @@ public class Editor {
         return this;
     }
 
-    public Attribute<? extends Object> attribute(String varName) {
+    public Attribute<? extends Object> attributeByVarName(String varName) {
         return attributeVars.get(varName);
     }
 
@@ -63,7 +62,7 @@ public class Editor {
         return attributeVars.containsKey(varName);
     }
 
-    public Database database(String varName) {
+    public Database databaseByVarName(String varName) {
         return databaseVars.get(varName);
     }
 

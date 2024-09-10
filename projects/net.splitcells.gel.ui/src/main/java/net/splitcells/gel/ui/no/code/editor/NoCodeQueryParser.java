@@ -17,22 +17,16 @@ package net.splitcells.gel.ui.no.code.editor;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.lang.perspective.antlr4.DenParser;
 import net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParser;
 import net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParserBaseVisitor;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.constraint.Query;
-import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.data.table.attribute.Attributes;
 import net.splitcells.gel.ui.Editor;
-import net.splitcells.gel.ui.QueryParser;
 
 import java.util.Optional;
 
-import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.testing.Result.result;
@@ -41,7 +35,6 @@ import static net.splitcells.gel.constraint.type.ForAll.FOR_ALL_NAME;
 import static net.splitcells.gel.constraint.type.ForAlls.*;
 import static net.splitcells.gel.constraint.type.ForAlls.FOR_ALL_COMBINATIONS_OF;
 import static net.splitcells.gel.constraint.type.Then.THEN_NAME;
-import static net.splitcells.gel.ui.RaterParser.parseRater;
 import static net.splitcells.gel.ui.no.code.editor.NoCodeRaterParser.parseNoCodeRater;
 
 public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, Perspective>> {
@@ -125,7 +118,7 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
                 return parsedConstraint;
             } else if (arguments.size() == 1) {
                 parsedConstraint.withValue(parentConstraint.forAll
-                        (editor.attribute(arguments.get(0).value().variable_reference().Name().getText())));
+                        (editor.attributeByVarName(arguments.get(0).value().variable_reference().Name().getText())));
                 return parsedConstraint;
             } else if (arguments.size() > 1) {
                 return parsedConstraint
@@ -146,7 +139,7 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
                     continue;
                 }
                 final var attributeName = a.value().variable_reference().Name().getText();
-                combination.add(editor.attribute(attributeName));
+                combination.add(editor.attributeByVarName(attributeName));
             }
             parsedConstraint.withValue(parentConstraint.forAllCombinationsOf(combination));
             return parsedConstraint;

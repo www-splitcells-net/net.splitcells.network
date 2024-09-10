@@ -30,7 +30,6 @@ import org.antlr.v4.runtime.misc.ParseCancellationException;
 
 import java.util.Optional;
 
-import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
@@ -214,8 +213,8 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
                     return null;
                 }
                 final var assignments = assignments(functionCall.function_call_argument(0).value().string_value().getText()
-                        , editor.database(functionCall.function_call_argument(1).value().variable_reference().Name().getText())
-                        , editor.database(functionCall.function_call_argument(2).value().variable_reference().Name().getText()));
+                        , editor.databaseByVarName(functionCall.function_call_argument(1).value().variable_reference().Name().getText())
+                        , editor.databaseByVarName(functionCall.function_call_argument(2).value().variable_reference().Name().getText()));
                 final var parsedQuery = parseNoCodeQuery(currentSourceUnit, editor.withAssignments(Optional.of(assignments)));
                 result.errorMessages().withAppended(parsedQuery.errorMessages());
                 if (parsedQuery.defective()) {
@@ -255,7 +254,7 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
                                 .withProperty(CONTENT, ctx.getText()));
                         return null;
                     }
-                    databaseAttributes.add(editor.attribute(attributeText.variable_reference().Name().getText()));
+                    databaseAttributes.add(editor.attributeByVarName(attributeText.variable_reference().Name().getText()));
                 }
                 editor.withDatabaseVar(variableName, database(databaseName, NO_CONTEXT, databaseAttributes));
                 return null;

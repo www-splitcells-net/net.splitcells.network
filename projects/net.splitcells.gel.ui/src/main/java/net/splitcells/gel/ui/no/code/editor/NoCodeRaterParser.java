@@ -17,16 +17,12 @@ package net.splitcells.gel.ui.no.code.editor;
 
 import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.lang.perspective.antlr4.DenParser;
-import net.splitcells.dem.lang.perspective.antlr4.DenParserBaseVisitor;
 import net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParser;
 import net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParserBaseVisitor;
 import net.splitcells.dem.testing.Result;
-import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.ui.Editor;
-import net.splitcells.gel.ui.RaterParser;
 
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.gel.rating.rater.lib.AllSame.ALL_SAME_NAME;
@@ -60,7 +56,7 @@ public class NoCodeRaterParser extends NoCodeDenParserBaseVisitor<Result<Rater, 
                     .getText());
             return rater.withValue(hasSize(argument));
         } else if (functionName.equals(ALL_SAME_NAME)) {
-            return rater.withValue(allSame(editor.attribute(functionCall.function_call_argument()
+            return rater.withValue(allSame(editor.attributeByVarName(functionCall.function_call_argument()
                     .get(0)
                     .value()
                     .string_value()
@@ -74,7 +70,7 @@ public class NoCodeRaterParser extends NoCodeDenParserBaseVisitor<Result<Rater, 
                 return rater.withErrorMessage(perspective("Rater `" + MINIMAL_DISTANCE_NAME + "` requires exactly 2 arguments.")
                         .withProperty("rater", functionCall.getText()));
             }
-            final var attribute = editor.attribute(functionCall.function_call_argument()
+            final var attribute = editor.attributeByVarName(functionCall.function_call_argument()
                     .get(0)
                     .value()
                     .variable_reference()
