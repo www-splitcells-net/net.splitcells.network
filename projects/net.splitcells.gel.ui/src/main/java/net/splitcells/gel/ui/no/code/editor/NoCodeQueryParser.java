@@ -25,6 +25,7 @@ import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.attribute.Attributes;
+import net.splitcells.gel.ui.Editor;
 import net.splitcells.gel.ui.QueryParser;
 
 import java.util.Optional;
@@ -47,23 +48,23 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
     private static final String AFFECTED_CONTENT = "affected content";
 
     public static Result<Query, Perspective> parseNoCodeQuery(NoCodeDenParser.Source_unitContext sourceUnit
-            , Assignments assignments) {
-        final var parser = new NoCodeQueryParser(assignments);
+            , Editor editor) {
+        final var parser = new NoCodeQueryParser(editor);
         parser.visitSource_unit(sourceUnit);
         return parser.nextConstraint;
     }
 
     private final Query parentConstraint;
-    private final Assignments assignments;
+    private final Editor editor;
     private Result<Query, Perspective> nextConstraint = result();
 
-    private NoCodeQueryParser(Assignments assignmentsArg) {
-        assignments = assignmentsArg;
+    private NoCodeQueryParser(Editor editorArg) {
+        editor = editorArg;
         parentConstraint = query(forAll(Optional.of(NO_CONTEXT)));
     }
 
-    private NoCodeQueryParser(Assignments assignmentsArg, Query parentConstraintArg) {
-        assignments = assignmentsArg;
+    private NoCodeQueryParser(Editor editorArg, Query parentConstraintArg) {
+        editor = editorArg;
         parentConstraint = parentConstraintArg;
     }
 
@@ -100,7 +101,7 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
         }
 
         if (currentIndex < functionCallChain.size() - 1) {
-            final var childConstraintParser = new NoCodeQueryParser(assignments, nextConstraint.value().orElseThrow());
+            final var childConstraintParser = new NoCodeQueryParser(editor, nextConstraint.value().orElseThrow());
             final var intermediate = childConstraintParser.visitFunction_call(functionCallChain, ++currentIndex);
             nextConstraint.withValue(intermediate.value().orElseThrow());
             nextConstraint.errorMessages().withAppended(intermediate.errorMessages());
@@ -124,7 +125,7 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
                 return parsedConstraint;
             } else if (arguments.size() == 1) {
                 parsedConstraint.withValue(parentConstraint.forAll
-                        (assignments.attributeByName(arguments.get(0).value().variable_reference().Name().getText())));
+                        (editor.attribute(arguments.get(0).value().variable_reference().Name().getText())));
                 return parsedConstraint;
             } else if (arguments.size() > 1) {
                 return parsedConstraint
@@ -145,7 +146,7 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
                     continue;
                 }
                 final var attributeName = a.value().variable_reference().Name().getText();
-                combination.add(assignments.attributeByName(attributeName));
+                combination.add(editor.attribute(attributeName));
             }
             parsedConstraint.withValue(parentConstraint.forAllCombinationsOf(combination));
             return parsedConstraint;
@@ -166,7 +167,7 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
                                         , arguments.stream().map(a -> a.getText()).toList().toString()));
             }
 
-            final var rater = parseNoCodeRater(arguments.get(0).value().function_call(0), assignments);
+            final var rater = parseNoCodeRater(arguments.get(0).value().function_call(0), editor);
             if (rater.defective()) {
                 parsedConstraint.errorMessages().withAppended(rater.errorMessages());
                 return parsedConstraint;

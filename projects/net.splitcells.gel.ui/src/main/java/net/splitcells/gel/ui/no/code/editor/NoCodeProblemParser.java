@@ -28,6 +28,8 @@ import net.splitcells.gel.ui.SolutionParameters;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
+import java.util.Optional;
+
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -214,7 +216,7 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
                 final var assignments = assignments(functionCall.function_call_argument(0).value().string_value().getText()
                         , editor.database(functionCall.function_call_argument(1).value().variable_reference().Name().getText())
                         , editor.database(functionCall.function_call_argument(2).value().variable_reference().Name().getText()));
-                final var parsedQuery = parseNoCodeQuery(currentSourceUnit, assignments);
+                final var parsedQuery = parseNoCodeQuery(currentSourceUnit, editor.withAssignments(Optional.of(assignments)));
                 result.errorMessages().withAppended(parsedQuery.errorMessages());
                 if (parsedQuery.defective()) {
                     return result;

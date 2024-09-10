@@ -17,8 +17,11 @@ package net.splitcells.gel.ui;
 
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.attribute.Attribute;
+
+import java.util.Optional;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
@@ -31,9 +34,19 @@ public class Editor {
 
     private final Map<String, Attribute<? extends Object>> attributeVars = map();
     private final Map<String, Database> databaseVars = map();
+    private Optional<Assignments> assignments = Optional.empty();
 
     private Editor() {
 
+    }
+
+    public Editor withAssignments(Optional<Assignments> arg) {
+        assignments = arg;
+        return this;
+    }
+
+    public Optional<Assignments> assignments() {
+        return assignments;
     }
 
     public Editor withAttributeVar(String name, Attribute<? extends Object> value) {

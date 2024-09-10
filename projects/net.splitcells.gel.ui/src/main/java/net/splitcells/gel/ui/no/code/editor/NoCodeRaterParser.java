@@ -25,6 +25,7 @@ import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.framework.Rater;
+import net.splitcells.gel.ui.Editor;
 import net.splitcells.gel.ui.RaterParser;
 
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
@@ -36,14 +37,14 @@ import static net.splitcells.gel.rating.rater.lib.MinimalDistance.MINIMAL_DISTAN
 import static net.splitcells.gel.rating.rater.lib.MinimalDistance.has_minimal_distance_of;
 
 public class NoCodeRaterParser extends NoCodeDenParserBaseVisitor<Result<Rater, Perspective>> {
-    public static Result<Rater, Perspective> parseNoCodeRater(NoCodeDenParser.Function_callContext functionCall, Assignments assignments) {
-        return new NoCodeRaterParser(assignments).visitFunction_call(functionCall);
+    public static Result<Rater, Perspective> parseNoCodeRater(NoCodeDenParser.Function_callContext functionCall, Editor editor) {
+        return new NoCodeRaterParser(editor).visitFunction_call(functionCall);
     }
 
-    private final Assignments assignments;
+    private final Editor editor;
 
-    private NoCodeRaterParser(Assignments assignmentsArg) {
-        assignments = assignmentsArg;
+    private NoCodeRaterParser(Editor editorArg) {
+        editor = editorArg;
     }
 
     @Override
@@ -59,7 +60,7 @@ public class NoCodeRaterParser extends NoCodeDenParserBaseVisitor<Result<Rater, 
                     .getText());
             return rater.withValue(hasSize(argument));
         } else if (functionName.equals(ALL_SAME_NAME)) {
-            return rater.withValue(allSame(assignments.attributeByName(functionCall.function_call_argument()
+            return rater.withValue(allSame(editor.attribute(functionCall.function_call_argument()
                     .get(0)
                     .value()
                     .string_value()
@@ -73,7 +74,7 @@ public class NoCodeRaterParser extends NoCodeDenParserBaseVisitor<Result<Rater, 
                 return rater.withErrorMessage(perspective("Rater `" + MINIMAL_DISTANCE_NAME + "` requires exactly 2 arguments.")
                         .withProperty("rater", functionCall.getText()));
             }
-            final var attribute = assignments.attributeByName(functionCall.function_call_argument()
+            final var attribute = editor.attribute(functionCall.function_call_argument()
                     .get(0)
                     .value()
                     .variable_reference()
