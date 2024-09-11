@@ -32,7 +32,7 @@ Ordered_list_end: '</ol>';
 Semicolon: ';';
 Slash: '/';
 String: '"' [a-zA-Z0-9_]* '"';
-String_value: [a-zA-Z0-9_]*;
+String_value: [a-zA-Z0-9_]+;
 Span_end: '</span>';
 Variable_access_start: '<li class="net-splitcells-dem-lang-perspective-no-code-variable-access">';
 Variable_definition_name_start: '<span class="net-splitcells-dem-lang-perspective-no-code-variable-name">';
