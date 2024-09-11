@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:d="http://splitcells.net/den.xsd">
+    <meta>
+        <!--
+            SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+            SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+        -->
+        <title>ANTLR4 Guidelines</title>
+    </meta>
+    <paragraph>These guidelines may not be correct, but show part of the currently used knowledge regarding ANTLR4.
+        Improvements are even big changes to these may be appropriate,
+        in order to fix big misconceptions regarding ANTLR4.
+    </paragraph>
+    <paragraph>Always split grammar into parser und lexer files,
+        as otherwise just getting it running at all causes problems.
+        Do not use string constants in parser files,
+        as these are hard to get working.
+    </paragraph>
+    <paragraph>In order to match generic strings in parsers
+        one should use a dedicated parser rule for each such string type.
+        This allows one to add every relevant token of the lexer into it, after the fact.
+    </paragraph>
+    <paragraph>Avoid using optional parser rules, that at least partly can match any characters,
+        as these destroy most parsing error messages of ANTLR4 and therefore makes it a lot harder
+        to understand syntax errors.
+        See
+        <quote>(.)*? Keysymbol_at Keyword_JavaLegacyArtifact (.)*? EOF</quote> as an example.
+    </paragraph>
+    <paragraph>Do not define tokens, that can match to a zero length string,
+        as this causes OutOfMemoryError exceptions.
+        Therefore, do not define tokens with one element and <quote>*</quote> as qualifier.
+    </paragraph>
+</article>
