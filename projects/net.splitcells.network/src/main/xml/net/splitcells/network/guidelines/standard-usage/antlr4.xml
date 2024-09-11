@@ -10,7 +10,7 @@
         <title>ANTLR4 Guidelines</title>
     </meta>
     <paragraph>These guidelines may not be correct, but show part of the currently used knowledge regarding ANTLR4.
-        Improvements are even big changes to these may be appropriate,
+        Improvements or even big changes to these may be appropriate,
         in order to fix big misconceptions regarding ANTLR4.
     </paragraph>
     <paragraph>Always split grammar into parser und lexer files,
@@ -31,5 +31,6 @@
     <paragraph>Do not define tokens, that can match to a zero length string,
         as this causes OutOfMemoryError exceptions.
         Therefore, do not define tokens with one element and <quote>*</quote> as qualifier.
+        See <quote>String_value: [a-zA-Z0-9_]*;</quote> as a negative example.
     </paragraph>
 </article>
