@@ -17,6 +17,7 @@ package net.splitcells.gel.solution;
 
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.Xml;
+import net.splitcells.dem.lang.perspective.XmlConfig;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.Gel;
 import net.splitcells.gel.data.table.Line;
@@ -31,6 +32,7 @@ import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.lang.perspective.XmlConfig.xmlConfig;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.utils.MathUtils.modulus;
@@ -62,7 +64,7 @@ public class SolutionTest {
                 .toProblem()
                 .asSolution();
         testSubject.assign(testSubject.demands().orderedLine(0), testSubject.supplies().orderedLine(0));
-        testSubject.toFodsTableAnalysis2().toXmlString();
+        testSubject.toFodsTableAnalysis2().toXmlString(xmlConfig());
         Xml.toPrettyString(testSubject.toFodsTableAnalysis());
         // TODO Testś content.
     }

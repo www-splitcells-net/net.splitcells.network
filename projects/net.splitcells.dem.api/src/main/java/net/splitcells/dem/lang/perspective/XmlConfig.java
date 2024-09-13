@@ -20,19 +20,19 @@ public class XmlConfig {
         return new XmlConfig();
     }
 
-    private boolean printNameSpaceAttribute;
-    private boolean printXmlDeclaration;
+    private boolean printNameSpaceAttributeAtTop = true;
+    private boolean printXmlDeclaration = true;
 
     private XmlConfig() {
 
     }
 
-    public boolean printNameSpaceAttribute() {
-        return printNameSpaceAttribute;
+    public boolean printNameSpaceAttributeAtTop() {
+        return printNameSpaceAttributeAtTop;
     }
 
-    public XmlConfig withPrintNameSpaceAttribute(boolean arg) {
-        printNameSpaceAttribute = arg;
+    public XmlConfig withPrintNameSpaceAttributeAtTop(boolean arg) {
+        printNameSpaceAttributeAtTop = arg;
         return this;
     }
 

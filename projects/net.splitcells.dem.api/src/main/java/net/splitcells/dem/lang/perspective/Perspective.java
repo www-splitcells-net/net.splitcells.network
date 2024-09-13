@@ -390,12 +390,42 @@ public interface Perspective extends PerspectiveView {
     }
 
     default String toXmlString(XmlConfig xmlConfig) {
-        throw notImplementedYet();
+        String xmlString = "";
+        if (!xmlConfig.printNameSpaceAttributeAtTop()) {
+            throw notImplementedYet();
+        }
+        if (xmlConfig.printXmlDeclaration()) {
+            xmlString += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+        }
+        final Set<NameSpace> nameSpaces = setOfUniques();
+        visit(p -> nameSpaces.add(p.nameSpace()));
+        if (name().isBlank()) {
+            return "<empty/>";
+        }
+        if (children().isEmpty()) {
+            xmlString += "<" + nameSpace().defaultPrefix()
+                    + ":"
+                    + name()
+                    + " "
+                    + nameSpaceDeclarations(nameSpaces)
+                    + "/>";
+        } else {
+            xmlString += "<"
+                    + nameSpace().defaultPrefix()
+                    + ":"
+                    + name()
+                    + " "
+                    + nameSpaceDeclarations(nameSpaces)
+                    + ">";
+            xmlString += children().stream().map(Perspective::toXmlStringWithPrefixes).reduce((a, b) -> a + b).orElse("");
+            xmlString += "</" + nameSpace().defaultPrefix() + ":" + name() + ">";
+        }
+        return xmlString;
     }
 
     /**
-     * @deprecated Use {@link #toXmlString(XmlConfig)} instead.
      * @return
+     * @deprecated Use {@link #toXmlString(XmlConfig)} instead.
      */
     @Deprecated
     default String toXmlStringWithAllNameSpaceDeclarationsAtTop() {
@@ -439,8 +469,8 @@ public interface Perspective extends PerspectiveView {
     }
 
     /**
-     * @deprecated Use {@link #toXmlString(XmlConfig)} instead.
      * @return
+     * @deprecated Use {@link #toXmlString(XmlConfig)} instead.
      */
     @Deprecated
     default String toXmlStringWithPrefixes() {
