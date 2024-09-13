@@ -8,15 +8,19 @@
     --no-code-text-font-family: Arial, Helvetica, sans-serif;
 
     --column-standard-width:40em;
+
+    /* The foreground/text color differences between the priorities is minimized,
+     * as otherwise, the decreased contrast between the foreground and background colors
+     * worsens the readability too much.
+     */
 	--foreground-color-structural-guide:#000000;
 	--foreground-color-priority-0:#000000;
-
-	--foreground-color-priority-1:#101010;/*standard priority*/
-	--foreground-color-priority-2:#303030;
-	--foreground-color-priority-3:#505050;
-	--foreground-color-priority-4:#606060;
-	--foreground-color-priority-5:#707070;
-	--foreground-color-priority-6:#808080;
+	--foreground-color-priority-1:#080808;/*standard priority*/
+	--foreground-color-priority-2:#0F0F0F;
+	--foreground-color-priority-3:#181818;
+	--foreground-color-priority-4:#1F1F1F;
+	--foreground-color-priority-5:#282828;
+	--foreground-color-priority-6:#2F2F2F;
 
 	--background-color-structural-guide:#FFFFFF;
 	--background-color-priority-0:#F6F6F6;
