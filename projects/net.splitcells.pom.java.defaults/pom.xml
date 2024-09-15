@@ -154,47 +154,28 @@
     </dependencyManagement>
     <dependencies>
         <dependency>
-            <!-- Writing assertions. -->
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.13.2</version>
         </dependency>
         <dependency>
-            <!-- Mockito and PowerMock versions need to be aligned: https://github.com/powermock/powermock/wiki/Mockito#supported-versions -->
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>3.2.4</version>
         </dependency>
         <dependency>
-            <!-- Following classes are used: -->
-            <!-- org.apache.commons.lang3.tuple.* -->
-            <!-- Javadoc: http://commons.apache.org/proper/commons-lang/javadocs/api-3.4/allclasses-noframe.html -->
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.8.1</version>
         </dependency>
         <dependency>
-            <!-- Used in order to generate Javadoc based on "http://splitcells.net/sew.xsd". -->
-            <!-- Homepage: http://javaparser.org/ -->
-            <!-- Javadoc: http://static.javadoc.io/com.github.javaparser/javaparser-core/3.5.17/allclasses-noframe.html -->
             <groupId>com.github.javaparser</groupId>
             <artifactId>javaparser-symbol-solver-core</artifactId>
-            <version>3.6.2</version>
         </dependency>
         <dependency>
-            <!-- Library for Functional Programming -->
-            <!-- http://www.vavr.io/vavr-docs/ -->
-            <!-- Javadoc: https://www.javadoc.io/static/io.vavr/vavr/0.10.3/allclasses-noframe.html -->
-            <!-- vavr-test is not used, because JUnit 5 also supports property based testing. -->
             <groupId>io.vavr</groupId>
             <artifactId>vavr</artifactId>
-            <version>0.10.3</version>
         </dependency>
         <dependency>
-            <!-- XSL Processor -->
             <groupId>net.sf.saxon</groupId>
             <artifactId>Saxon-HE</artifactId>
-            <version>9.8.0-11</version>
         </dependency>
     </dependencies>
     <profiles>
