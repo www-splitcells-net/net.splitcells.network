@@ -37,7 +37,7 @@ public class FundamentalWorldRules implements Rater {
             , Attribute<Integer> positionX
             , Attribute<Integer> positionY
             , Attribute<Integer> value) {
-        return new FundamentalWorldRules(worldTime, positionX, positionX, value);
+        return new FundamentalWorldRules(worldTime, positionX, positionY, value);
     }
 
     private final Attribute<Integer> worldTime;
