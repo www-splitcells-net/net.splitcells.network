@@ -186,5 +186,9 @@
     padding-left: .1em;
 }
 .net-splitcells-dem-lang-perspective-no-code-lang li {
-    box-shadow: inset -0em -0em .2em var(--shadow-color-priority-1);
+    margin-top: 0em;
+    margin-right: 0em;
+    margin-bottom: 0em;
+    padding-top: .25em;
+    padding-bottom: .25em;
 }
