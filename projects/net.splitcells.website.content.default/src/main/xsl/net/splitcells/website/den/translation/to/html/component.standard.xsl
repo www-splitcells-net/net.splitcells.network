@@ -570,7 +570,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     <xsl:choose>
                         <xsl:when test="./s:default-content">
                             <xsl:choose>
-                                <xsl:when test="document(concat('/net.splitcells.website.server/source-code/', ./s:default-content/node(), '-customization.xml'))">
+                                <xsl:when test="doc-available(concat('/net.splitcells.website.server/source-code/', ./s:default-content/node(), '-customization.xml'))">
                                     <xsl:apply-templates select="document(concat('/net.splitcells.website.server/source-code/', ./s:default-content/node(), '-customization.xml'))"/>
                                 </xsl:when>
                                 <xsl:otherwise>
