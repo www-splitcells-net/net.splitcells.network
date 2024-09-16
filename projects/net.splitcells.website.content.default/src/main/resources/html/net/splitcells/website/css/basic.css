@@ -495,10 +495,10 @@ article h3 {
 	margin-bottom: 2em;
 	}
 .Text {
-	font-family: Palatino, Palatino Linotype, Palatino LT STD, Book Antiqua, Georgia, serif;
+	font-family: var(--text-flowing-font);
 	}
 p:not(.NonStandard) {
-	font-family: Palatino, Palatino Linotype, Palatino LT STD, Book Antiqua, Georgia, serif;
+	font-family: var(--text-flowing-font);
 	}
 article {
 	width: 100%;
@@ -671,7 +671,8 @@ p {
 	margin-bottom: 1.4em;
 	padding-left: 1em;
 	padding-right: 1em;
-	box-shadow: 0em 0.25em 0.25em -0.1em var(--shadow-color-priority-3);
+	/* The shadow is reduced as much as possible, in order to reduce GUI noise. */
+	box-shadow: 0em 0.1em 0.1em -0.1em var(--shadow-color-priority-3);
 	}
 ol p {
 	font-family: Palatino,Palatino Linotype,Palatino LT STD,Book Antiqua,Georgia,serif;
@@ -702,3 +703,6 @@ ol p {
 .pg-canvas
 	{position: absolute;
 	}
+blockquote {
+    box-shadow: 0em 0.1em 0.1em -0.1em var(--shadow-color-priority-3);
+}
