@@ -73,6 +73,8 @@ public class PathBasedUriResolver implements URIResolver {
         if (href.startsWith(CONFIG_FOLDER)) {
             inputStream = configFiles.inputStream(net.splitcells.dem.resource.Paths
                     .path(href.substring(CONFIG_FOLDER.length())));
+        } else if (!folder.isFile(Paths.get(href))) {
+            return null;
         } else {
             final var rVal = new StreamSource(folder.inputStream(Paths.get(href)));
             rVal.setSystemId(Paths.get(href).toString());
