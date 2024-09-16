@@ -16,6 +16,9 @@
             or via the specialised tools
             <link url="https://excalidraw.com/">Excalidraw</link>
             and <link url="https://draw.io">draw.io</link>.
+            <d:toDo>Note that there is currently a problem, where SVG images look different on the browsers and Inkscape.
+                A fix for this problem is not known.
+            </d:toDo>
         </paragraph>
     </chapter>
 </article>
