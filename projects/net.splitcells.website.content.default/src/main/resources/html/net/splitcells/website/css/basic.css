@@ -54,7 +54,10 @@ article p img {
 	max-width: 100%;
 	margin-left: auto;
 	margin-right: auto;
-	/* display: block;
+	display: block;
+	/* The following is not valid anymore. Block display works with multiple images in a row.
+	   See status badges on README, where the images are located in a list item.
+	   `display: block;`
 	   This does not seem to be required,
 	   because pictures with the full width of the enclosing paragraph should usually be placed in a paragraph without any other pictures in the same paragraphs.
 	   By not using block display, one can place multiple images on the same line,
