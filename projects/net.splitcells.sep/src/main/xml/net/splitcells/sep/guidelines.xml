@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns="http://splitcells.net/sew.xsd">
+    <!--
+        SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+        SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+    -->
+    <meta>
+        <title>Optimization Guidelines</title>
+    </meta>
+    <paragraph>When one composes an allocation problem out of multiple ones,
+        start with the sub problem,
+        that allocates the most important resources first.
+        This is especially the case, where the problem is modeled via a chain of allocations.
+        There the first allocation database represents the demands or supplies of the second allocation database and so on.
+        Thereby, the solver first allocates the most important resources first.
+        The rating of the most important resources therefore gives the solver an immediate feedback
+        regarding the possible allocations of secondary resources.
+        When this is done the other way around by allocating secondary resources first,
+        there is often the problem, that not enough feedback is present to allocate secondary resources in a useful way.
+        Complying with constraints of secondary resources also can easily lead to local optima.
+    </paragraph>
+</article>
