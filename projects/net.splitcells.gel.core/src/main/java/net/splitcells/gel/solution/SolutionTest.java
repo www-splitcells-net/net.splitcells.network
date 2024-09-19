@@ -65,8 +65,7 @@ public class SolutionTest {
                 .asSolution();
         testSubject.assign(testSubject.demands().orderedLine(0), testSubject.supplies().orderedLine(0));
         testSubject.toFodsTableAnalysis2().toXmlString(xmlConfig());
-        Xml.toPrettyString(testSubject.toFodsTableAnalysis());
-        // TODO Testś content.
+        // TODO Test content without using a big string in this repo, in order to not bloat this repo.
     }
 
     @Test
