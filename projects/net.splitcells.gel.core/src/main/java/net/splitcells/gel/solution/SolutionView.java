@@ -152,7 +152,7 @@ public interface SolutionView extends ProblemView {
         writeToFile(targetFolder.resolve("index.xml"), "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                 + "<project xmlns=\"http://splitcells.net/den.xsd\">"
                 + "</project>");
-        writeToFile(targetFolder.resolve("result.analysis.fods"), toFodsTableAnalysis());
+        writeToFile(targetFolder.resolve("result.analysis.fods"), toFodsTableAnalysis2());
         writeToFile(targetFolder.resolve("constraint.graph.xml"), constraint().graph());
         writeToFile(targetFolder.resolve("constraint.rating.xml"), constraint().rating().toDom());
         writeToFile(targetFolder.resolve("constraint.state.xml"), constraint().toPerspective());
@@ -202,30 +202,6 @@ public interface SolutionView extends ProblemView {
         return fodsTableAnalysis;
     }
 
-    default Element toFodsTableAnalysis() {
-        final var fodsTableAnalysis = rElement(FODS_OFFICE, "document");
-        fodsTableAnalysis.setAttribute("xmlns:fo", FODS_FO.uri());
-        fodsTableAnalysis.setAttribute("xmlns:style", FODS_STYLE.uri());
-        fodsTableAnalysis.appendChild(fodsStyling());
-        final var analysisContent = elementWithChildren(FODS_OFFICE, "body");
-        fodsTableAnalysis.setAttributeNode(attribute(FODS_OFFICE, "mimetype", "application/vnd.oasis.opendocument.spreadsheet"));
-        fodsTableAnalysis.appendChild(analysisContent);
-        {
-            final var spreadsheet = elementWithChildren(FODS_OFFICE, "spreadsheet");
-            analysisContent.appendChild(spreadsheet);
-            final var table = rElement(FODS_TABLE, "table");
-            spreadsheet.appendChild(table);
-            table.setAttributeNode(attribute(FODS_TABLE, "name", "values"));
-            {
-                table.appendChild(attributesOfFodsAnalysis());
-                unorderedLines().stream().
-                        map(this::toLinesFodsAnalysis)
-                        .forEach(e -> table.appendChild(e));
-            }
-        }
-        return fodsTableAnalysis;
-    }
-
     private static Perspective fodsStyling2() {
         final var automaticStyling = perspective("automatic-styles", FODS_OFFICE);
         automaticStyling.withChild(fodsStyling_style2(1, "#dee6ef"));
@@ -233,16 +209,6 @@ public interface SolutionView extends ProblemView {
         automaticStyling.withChild(fodsStyling_style2(3, "#ffdbb6"));
         automaticStyling.withChild(fodsStyling_style2(4, "#ffd7d7"));
         automaticStyling.withChild(fodsStyling_style2(Integer.MAX_VALUE, "#e0c2cd"));
-        return automaticStyling;
-    }
-
-    private static Element fodsStyling() {
-        final var automaticStyling = rElement(FODS_OFFICE, "automatic-styles");
-        automaticStyling.appendChild(fodsStyling_style(1, "#dee6ef"));
-        automaticStyling.appendChild(fodsStyling_style(2, "#fff5ce"));
-        automaticStyling.appendChild(fodsStyling_style(3, "#ffdbb6"));
-        automaticStyling.appendChild(fodsStyling_style(4, "#ffd7d7"));
-        automaticStyling.appendChild(fodsStyling_style(Integer.MAX_VALUE, "#e0c2cd"));
         return automaticStyling;
     }
 
@@ -255,24 +221,6 @@ public interface SolutionView extends ProblemView {
                 .withXmlAttribute("background-color", backgroundColor, FODS_FO));
         style.withChild(perspective("text-properties", FODS_STYLE)
                 .withXmlAttribute("color", "#000000", FODS_FO));
-        return style;
-    }
-
-    private static Element fodsStyling_style(int reasoningComplexity, String backgroundColor) {
-        final var style = rElement(FODS_STYLE, "style");
-        style.setAttributeNodeNS(attribute(FODS_STYLE, "name", "reasoning-complexity-" + reasoningComplexity));
-        style.setAttributeNodeNS(attribute(FODS_STYLE, "family", "table-cell"));
-        style.setAttributeNodeNS(attribute(FODS_STYLE, "parent-style-name", "Default"));
-        {
-            final var table_cell_properties = elementWithChildren(FODS_STYLE, "table-cell-properties");
-            table_cell_properties.setAttributeNodeNS(attribute(FODS_FO, "background-color", backgroundColor));
-            style.appendChild(table_cell_properties);
-        }
-        {
-            final var textProperties = elementWithChildren(FODS_STYLE, "text-properties");
-            textProperties.setAttributeNodeNS(attribute(FODS_FO, "color", "#000000"));
-            style.appendChild(textProperties);
-        }
         return style;
     }
 
@@ -305,45 +253,6 @@ public interface SolutionView extends ProblemView {
             rating.withChild(ratingValue);
             attributes.withChild(rating);
             ratingValue.withChild(constraint().rating().toPerspective());
-        }
-        return attributes;
-    }
-
-    default Element attributesOfFodsAnalysis() {
-        final var attributes = elementWithChildren(FODS_TABLE, "table-row");
-        headerView().stream().map(att -> att.name()).map(attName -> {
-            final var tableElement = elementWithChildren(FODS_TABLE, "table-cell");
-            final var tableValue = rElement(FODS_TEXT, "p");
-            tableElement.appendChild(tableValue);
-            tableValue.appendChild(Xml.textNode(attName));
-            return tableElement;
-        }).forEach(attributeDescription -> attributes.appendChild(attributeDescription));
-        {
-            final var tableElement = elementWithChildren(FODS_TABLE, "table-cell");
-            final var tableValue = rElement(FODS_TEXT, "p");
-            tableElement.appendChild(tableValue);
-            tableValue.appendChild(Xml.textNode("cost"));
-            attributes.appendChild(tableElement);
-        }
-        {
-            final var tableElement = elementWithChildren(FODS_TABLE, "table-cell");
-            final var tableValue = rElement(FODS_TEXT, "p");
-            tableElement.appendChild(tableValue);
-            tableValue.appendChild(Xml.textNode("allocation cost argumentation"));
-            attributes.appendChild(tableElement);
-        }
-        {
-            final var rating = elementWithChildren(FODS_TABLE, "table-cell");
-            final var ratingValue = rElement(FODS_TEXT, "p");
-            rating.appendChild(ratingValue);
-            attributes.appendChild(rating);
-            ratingValue.appendChild(
-                    Xml.textNode(
-                            toPrettyWithoutHeaderString(
-                                    constraint()
-                                            .rating()
-                                            .toDom()
-                            )));
         }
         return attributes;
     }
@@ -390,55 +299,6 @@ public interface SolutionView extends ProblemView {
                             allocationArgumentation.withProperty("style-name", FODS_TABLE, "reasoning-complexity-" + reasoningComplexity);
                         }
                         allocationArgumentationValue.withChild(perspective(Perspective.toStringPathsDescription(argumentationPaths)));
-                    });
-        }
-        return tableLine;
-    }
-
-    default Element toLinesFodsAnalysis(Line allocation) {
-        final var tableLine = elementWithChildren(FODS_TABLE, "table-row");
-        {
-            headerView().stream().map(attribute -> allocation.value(attribute)).map(value -> {
-                final var tableElement = elementWithChildren(FODS_TABLE, "table-cell");
-                final var tableValue = rElement(FODS_TEXT, "p");
-                tableElement.appendChild(tableValue);
-                tableValue.appendChild(Xml.textNode(value.toString()));
-                return tableElement;
-            }).forEach(tableCell -> tableLine.appendChild(tableCell));
-        }
-        {
-            final var allocationCost = elementWithChildren(FODS_TABLE, "table-cell");
-            tableLine.appendChild(allocationCost);
-            final var allocation_cost_value = rElement(FODS_TEXT, "p");
-            allocationCost.appendChild(allocation_cost_value);
-            allocation_cost_value.appendChild(
-                    textNode(""
-                            + constraint()
-                            .rating(allocation)
-                            .asMetaRating()
-                            .getContentValue(Cost.class)
-                            .value()));
-        }
-        {
-            final var allocationArgumentation = elementWithChildren(FODS_TABLE, "table-cell");
-            final var allocationArgumentationValue = rElement(FODS_TEXT, "p");
-            tableLine.appendChild(allocationArgumentation);
-            allocationArgumentation.appendChild(allocationArgumentationValue);
-            constraint().naturalArgumentation(allocation, constraint().injectionGroup())
-                    .ifPresent(argumentation -> {
-                        final var argumentationPaths = argumentation.toStringPaths();
-                        if (!argumentationPaths.isEmpty()) {
-                            final int reasoningComplexity;
-                            if (argumentationPaths.size() > 4) {
-                                reasoningComplexity = Integer.MAX_VALUE;
-                            } else {
-                                reasoningComplexity = argumentationPaths.size();
-                            }
-                            allocationArgumentation.setAttributeNodeNS(attribute(FODS_TABLE, "style-name", "reasoning-complexity-" + reasoningComplexity));
-                        }
-                        allocationArgumentationValue.appendChild
-                                (Xml.textNode
-                                        (Perspective.toStringPathsDescription(argumentationPaths)));
                     });
         }
         return tableLine;
