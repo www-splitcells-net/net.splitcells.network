@@ -19,6 +19,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.XmlConfig;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.history.History;
@@ -172,6 +173,13 @@ public interface SolutionView extends ProblemView {
         writeToFile(targetFolder.resolve("results.fods"), toFods());
     }
 
+    /**
+     * Using a dedicated XML class might have been a better idea, instead of returning a {@link Perspective},
+     * as building an AST via {@link Perspective} is kind of cumbersome.
+     * On the other hand, duplicate String rendering methods can be avoided this way.
+     *
+     * @return Returns a perspective designed for {@link Perspective#toXmlString(XmlConfig)}.
+     */
     default Perspective toFodsTableAnalysis2() {
         final var fodsTableAnalysis = perspective("document", FODS_OFFICE);
         fodsTableAnalysis.withChild(fodsStyling2());
@@ -239,6 +247,9 @@ public interface SolutionView extends ProblemView {
 
     private static Perspective fodsStyling_style2(int reasoningComplexity, String backgroundColor) {
         final var style = perspective("style", FODS_STYLE);
+        style.withChild(perspective("attribute", XML_SYNTAX)
+                .withChildren(perspective("name", FODS_STYLE)
+                        , perspective("reasoning-complexity-" + reasoningComplexity)));
         style.withProperty("name", FODS_STYLE, "reasoning-complexity-" + reasoningComplexity);
         style.withProperty("family", FODS_STYLE, "table-cell");
         style.withProperty("parent-style-name", FODS_STYLE, "Default");

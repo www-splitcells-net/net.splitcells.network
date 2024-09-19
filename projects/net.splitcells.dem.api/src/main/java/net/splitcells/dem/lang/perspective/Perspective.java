@@ -401,6 +401,19 @@ public interface Perspective extends PerspectiveView {
             visit(p -> nameSpaces.add(p.nameSpace()));
             name += nameSpaceDeclarations(nameSpaces);
         }
+        name += children().stream()
+                .map(c -> {
+                    if (c.nameSpace().equals(XML_SYNTAX) && c.name().equals("attribute")) {
+                        final var cName = c.child(0);
+                        return cName.nameSpace().defaultPrefix()
+                                + ":"
+                                + cName.name()
+                                + "=\""
+                                + c.child(1).name()
+                                + "\"";
+                    }
+                    return "";
+                }).reduce("", (a, b) -> a + " " + b);
         return name;
     }
 
