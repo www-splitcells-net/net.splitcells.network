@@ -13,4 +13,7 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
-systemctl hibernate
+# Starting with a certain version of systemd, you need to run the command with appropriate privileges.
+# Before that, systemctl would ask for username and password in order to get appropriate privileges,
+# if these were not present.
+sudo systemctl hibernate
