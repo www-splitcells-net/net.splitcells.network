@@ -16,15 +16,11 @@
 package net.splitcells.gel.solution;
 
 import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.lang.Xml;
-import net.splitcells.dem.lang.perspective.XmlConfig;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.Gel;
 import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.rating.type.Cost;
-import net.splitcells.gel.solution.optimization.primitive.UsedSupplySwitcher;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -33,7 +29,6 @@ import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.perspective.XmlConfig.xmlConfig;
-import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
@@ -42,7 +37,6 @@ import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineValue.lineValueRater;
-import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.solution.optimization.meta.hill.climber.FunctionalHillClimber.functionalHillClimber;
 import static net.splitcells.gel.solution.optimization.primitive.OfflineLinearInitialization.offlineLinearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
@@ -64,7 +58,7 @@ public class SolutionTest {
                 .toProblem()
                 .asSolution();
         testSubject.assign(testSubject.demands().orderedLine(0), testSubject.supplies().orderedLine(0));
-        testSubject.toFodsTableAnalysis2().toXmlString(xmlConfig());
+        testSubject.toFodsTableAnalysis().toXmlString(xmlConfig());
         // TODO Test content without using a big string in this repo, in order to not bloat this repo.
     }
 
@@ -105,7 +99,7 @@ public class SolutionTest {
         testSubject.history().withRegisterEventIsEnabled(true);
         testSubject.optimize(offlineLinearInitialization());
         writeToFile(environment().config().configValue(ProcessPath.class).resolve("analysis2.fods")
-                , testSubject.toFodsTableAnalysis2());
+                , testSubject.toFodsTableAnalysis());
     }
 
     private static Problem pseudoNQueenProblem(int rows, int columns) {

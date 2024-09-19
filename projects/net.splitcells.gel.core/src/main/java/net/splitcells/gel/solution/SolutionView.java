@@ -16,8 +16,6 @@
 package net.splitcells.gel.solution;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.Xml;
-import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.lang.perspective.XmlConfig;
 import net.splitcells.dem.resource.host.ProcessPath;
@@ -34,7 +32,6 @@ import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.lib.classification.ForAllAttributeValues;
 import net.splitcells.gel.rating.rater.lib.classification.ForAllValueCombinations;
 import net.splitcells.gel.rating.rater.lib.classification.RaterBasedOnGrouping;
-import org.w3c.dom.Element;
 
 import java.nio.file.Path;
 
@@ -45,8 +42,6 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
-import static net.splitcells.dem.lang.Xml.*;
-import static net.splitcells.dem.lang.Xml.toPrettyWithoutHeaderString;
 import static net.splitcells.dem.resource.Files.*;
 import static net.splitcells.gel.rating.type.Cost.cost;
 
@@ -152,7 +147,7 @@ public interface SolutionView extends ProblemView {
         writeToFile(targetFolder.resolve("index.xml"), "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                 + "<project xmlns=\"http://splitcells.net/den.xsd\">"
                 + "</project>");
-        writeToFile(targetFolder.resolve("result.analysis.fods"), toFodsTableAnalysis2());
+        writeToFile(targetFolder.resolve("result.analysis.fods"), toFodsTableAnalysis());
         writeToFile(targetFolder.resolve("constraint.graph.xml"), constraint().graph());
         writeToFile(targetFolder.resolve("constraint.rating.xml"), constraint().rating().toDom());
         writeToFile(targetFolder.resolve("constraint.state.xml"), constraint().toPerspective());
@@ -180,10 +175,10 @@ public interface SolutionView extends ProblemView {
      *
      * @return Returns a perspective designed for {@link Perspective#toXmlString(XmlConfig)}.
      */
-    default Perspective toFodsTableAnalysis2() {
+    default Perspective toFodsTableAnalysis() {
         final var fodsTableAnalysis = perspective("document", FODS_OFFICE)
                 .withXmlAttribute("mimetype", "application/vnd.oasis.opendocument.spreadsheet", FODS_OFFICE)
-                .withChild(fodsStyling2());
+                .withChild(fodsStyling());
         final var analysisContent = perspective("body", FODS_OFFICE);
         fodsTableAnalysis.withChild(analysisContent);
         {
@@ -193,26 +188,26 @@ public interface SolutionView extends ProblemView {
             spreadsheet.withChild(table);
             table.withProperty("name", FODS_TABLE, "values");
             {
-                table.withChild(attributesOfFodsAnalysis2());
+                table.withChild(attributesOfFodsAnalysis());
                 unorderedLines().stream().
-                        map(this::toLinesFodsAnalysis2)
+                        map(this::toLinesFodsAnalysis)
                         .forEach(table::withChild);
             }
         }
         return fodsTableAnalysis;
     }
 
-    private static Perspective fodsStyling2() {
+    private static Perspective fodsStyling() {
         final var automaticStyling = perspective("automatic-styles", FODS_OFFICE);
-        automaticStyling.withChild(fodsStyling_style2(1, "#dee6ef"));
-        automaticStyling.withChild(fodsStyling_style2(2, "#fff5ce"));
-        automaticStyling.withChild(fodsStyling_style2(3, "#ffdbb6"));
-        automaticStyling.withChild(fodsStyling_style2(4, "#ffd7d7"));
-        automaticStyling.withChild(fodsStyling_style2(Integer.MAX_VALUE, "#e0c2cd"));
+        automaticStyling.withChild(fodsStylingStyle(1, "#dee6ef"));
+        automaticStyling.withChild(fodsStylingStyle(2, "#fff5ce"));
+        automaticStyling.withChild(fodsStylingStyle(3, "#ffdbb6"));
+        automaticStyling.withChild(fodsStylingStyle(4, "#ffd7d7"));
+        automaticStyling.withChild(fodsStylingStyle(Integer.MAX_VALUE, "#e0c2cd"));
         return automaticStyling;
     }
 
-    private static Perspective fodsStyling_style2(int reasoningComplexity, String backgroundColor) {
+    private static Perspective fodsStylingStyle(int reasoningComplexity, String backgroundColor) {
         final var style = perspective("style", FODS_STYLE);
         style.withXmlAttribute("name", "reasoning-complexity-" + reasoningComplexity, FODS_STYLE);
         style.withXmlAttribute("attribute", "table-cell", FODS_STYLE);
@@ -224,7 +219,7 @@ public interface SolutionView extends ProblemView {
         return style;
     }
 
-    default Perspective attributesOfFodsAnalysis2() {
+    default Perspective attributesOfFodsAnalysis() {
         final var attributes = perspective("table-row", FODS_TABLE);
         headerView().stream().map(Attribute::name).map(attName -> {
             final var tableElement = perspective("table-cell", FODS_TABLE);
@@ -257,7 +252,7 @@ public interface SolutionView extends ProblemView {
         return attributes;
     }
 
-    default Perspective toLinesFodsAnalysis2(Line allocation) {
+    default Perspective toLinesFodsAnalysis(Line allocation) {
         final var tableLine = perspective("table-row", FODS_TABLE);
         {
             headerView().stream().map(attribute -> allocation.value(attribute)).map(value -> {

@@ -83,7 +83,7 @@ public class NQueenProblemTest extends TestSuiteI {
         writeToFile(environment().config().configValue(ProcessPath.class).resolve("history.fods")
                 , testSubject.history().toFods());
         writeToFile(environment().config().configValue(ProcessPath.class).resolve("analysis.fods")
-                , testSubject.toFodsTableAnalysis2());
+                , testSubject.toFodsTableAnalysis());
         testSubject.constraint().rating().requireEqualsTo(cost(0));
     }
 
@@ -140,7 +140,7 @@ public class NQueenProblemTest extends TestSuiteI {
             writeToFile(environment().config().configValue(ProcessPath.class).resolve("history.fods")
                     , testSubject.history().toFods());
             writeToFile(environment().config().configValue(ProcessPath.class).resolve("analysis.fods")
-                    , testSubject.toFodsTableAnalysis2());
+                    , testSubject.toFodsTableAnalysis());
             logs().append(testSubject.constraint().rating(), Optional.empty(), LogLevel.UNKNOWN_ERROR);
             testSubject.constraint().rating().requireEqualsTo(cost(0));
         }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
