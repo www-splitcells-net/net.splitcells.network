@@ -15,7 +15,9 @@
  */
 package net.splitcells.dem.lang.perspective;
 
-public class XmlConfig {
+import net.splitcells.dem.object.DeepCloneable2;
+
+public class XmlConfig implements DeepCloneable2<XmlConfig> {
     public static XmlConfig xmlConfig() {
         return new XmlConfig();
     }
@@ -43,5 +45,12 @@ public class XmlConfig {
     public XmlConfig withPrintXmlDeclaration(boolean arg) {
         printXmlDeclaration = arg;
         return this;
+    }
+
+    @Override
+    public XmlConfig deepClone() {
+        return xmlConfig()
+                .withPrintNameSpaceAttributeAtTop(printNameSpaceAttributeAtTop)
+                .withPrintXmlDeclaration(printXmlDeclaration);
     }
 }

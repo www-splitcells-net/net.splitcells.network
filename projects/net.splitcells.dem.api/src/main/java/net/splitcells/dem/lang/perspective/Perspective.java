@@ -391,12 +391,15 @@ public interface Perspective extends PerspectiveView {
 
     default String toXmlString(XmlConfig xmlConfig) {
         String xmlString = "";
+        final var childConfig = xmlConfig.deepClone();
         if (!xmlConfig.printNameSpaceAttributeAtTop()) {
             throw notImplementedYet();
         }
         if (xmlConfig.printXmlDeclaration()) {
             xmlString += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+            childConfig.withPrintXmlDeclaration(false);
         }
+
         final Set<NameSpace> nameSpaces = setOfUniques();
         visit(p -> nameSpaces.add(p.nameSpace()));
         if (name().isBlank()) {
@@ -417,7 +420,9 @@ public interface Perspective extends PerspectiveView {
                     + " "
                     + nameSpaceDeclarations(nameSpaces)
                     + ">";
-            xmlString += children().stream().map(Perspective::toXmlStringWithPrefixes).reduce((a, b) -> a + b).orElse("");
+            xmlString += children().stream()
+                    .map(c -> c.toXmlString(childConfig))
+                    .reduce((a, b) -> a + b).orElse("");
             xmlString += "</" + nameSpace().defaultPrefix() + ":" + name() + ">";
         }
         return xmlString;
