@@ -455,6 +455,7 @@ public interface Perspective extends PerspectiveView {
         } else {
             xmlString += "<" + toXmlElementStartName(xmlConfig) + ">";
             xmlString += children().stream()
+                    .filter(c -> !c.nameSpace().equals(XML_SYNTAX))
                     .map(c -> c.toXmlString(childConfig))
                     .reduce((a, b) -> a + b).orElse("");
             xmlString += "</" + toXmlElementName(xmlConfig) + ">";
