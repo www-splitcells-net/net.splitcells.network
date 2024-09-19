@@ -247,22 +247,13 @@ public interface SolutionView extends ProblemView {
 
     private static Perspective fodsStyling_style2(int reasoningComplexity, String backgroundColor) {
         final var style = perspective("style", FODS_STYLE);
-        style.withChild(perspective("attribute", XML_SYNTAX)
-                .withChildren(perspective("name", FODS_STYLE)
-                        , perspective("reasoning-complexity-" + reasoningComplexity)));
-        style.withProperty("name", FODS_STYLE, "reasoning-complexity-" + reasoningComplexity);
-        style.withProperty("family", FODS_STYLE, "table-cell");
-        style.withProperty("parent-style-name", FODS_STYLE, "Default");
-        {
-            final var table_cell_properties = perspective("table-cell-properties", FODS_STYLE);
-            table_cell_properties.withProperty("background-color", FODS_FO, backgroundColor);
-            style.withChild(table_cell_properties);
-        }
-        {
-            final var textProperties = perspective("text-properties", FODS_STYLE);
-            textProperties.withProperty("color", FODS_FO, "#000000");
-            style.withChild(textProperties);
-        }
+        style.withXmlAttribute("name", "reasoning-complexity-" + reasoningComplexity, FODS_STYLE);
+        style.withXmlAttribute("attribute", "table-cell", FODS_STYLE);
+        style.withXmlAttribute("parent-style-name", "Default", FODS_STYLE);
+        style.withChild(perspective("table-cell-properties", FODS_STYLE)
+                .withXmlAttribute("background-color", backgroundColor, FODS_FO));
+        style.withChild(perspective("text-properties", FODS_STYLE)
+                .withXmlAttribute("color", "#000000", FODS_FO));
         return style;
     }
 

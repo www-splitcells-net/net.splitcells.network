@@ -389,6 +389,11 @@ public interface Perspective extends PerspectiveView {
         children().forEach(c -> c.visit(visitor));
     }
 
+    default Perspective withXmlAttribute(String attributeName, String attributeValue, NameSpace nameSpace) {
+        return withChild(perspective("attribute", XML_SYNTAX)
+                .withChildren(perspective(attributeName, nameSpace), perspective(attributeValue)));
+    }
+
     /**
      * @param xmlConfig This configures the output.
      * @return Returns the XML element name of the current {@link Perspective} optionally with a prefix and/or namespace declarations.
