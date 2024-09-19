@@ -181,8 +181,9 @@ public interface SolutionView extends ProblemView {
      * @return Returns a perspective designed for {@link Perspective#toXmlString(XmlConfig)}.
      */
     default Perspective toFodsTableAnalysis2() {
-        final var fodsTableAnalysis = perspective("document", FODS_OFFICE);
-        fodsTableAnalysis.withChild(fodsStyling2());
+        final var fodsTableAnalysis = perspective("document", FODS_OFFICE)
+                .withXmlAttribute("mimetype", "application/vnd.oasis.opendocument.spreadsheet", FODS_OFFICE)
+                .withChild(fodsStyling2());
         final var analysisContent = perspective("body", FODS_OFFICE);
         fodsTableAnalysis.withChild(analysisContent);
         {
