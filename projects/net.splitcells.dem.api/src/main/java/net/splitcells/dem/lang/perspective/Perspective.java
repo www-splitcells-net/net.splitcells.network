@@ -446,7 +446,9 @@ public interface Perspective extends PerspectiveView {
             xmlString += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
             childConfig.withPrintXmlDeclaration(false);
         }
-
+        if (nameSpace().equals(STRING)) {
+            return name();
+        }
         if (name().isBlank()) {
             return "<empty/>";
         }
