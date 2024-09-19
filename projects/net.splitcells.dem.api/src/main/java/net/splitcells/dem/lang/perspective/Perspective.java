@@ -389,41 +389,57 @@ public interface Perspective extends PerspectiveView {
         children().forEach(c -> c.visit(visitor));
     }
 
+    /**
+     * @param xmlConfig This configures the output.
+     * @return Returns the XML element name of the current {@link Perspective} optionally with a prefix and/or namespace declarations.
+     * The String ends with a whitespace.
+     */
+    default String toXmlElementStartName(XmlConfig xmlConfig) {
+        var name = toXmlElementName(xmlConfig) + " ";
+        if (xmlConfig.printNameSpaceAttributeAtTop()) {
+            final Set<NameSpace> nameSpaces = setOfUniques();
+            visit(p -> nameSpaces.add(p.nameSpace()));
+            name += nameSpaceDeclarations(nameSpaces);
+        }
+        return name;
+    }
+
+    /**
+     * @param xmlConfig This configures the output.
+     * @return Returns the XML element name of the current {@link Perspective} optionally with a prefix.
+     */
+    default String toXmlElementName(XmlConfig xmlConfig) {
+        return nameSpace().defaultPrefix() + ":" + name();
+    }
+
+    /**
+     * TODO Support escaping most important characters.
+     *
+     * @param xmlConfig
+     * @return
+     */
     default String toXmlString(XmlConfig xmlConfig) {
         String xmlString = "";
         final var childConfig = xmlConfig.deepClone();
-        if (!xmlConfig.printNameSpaceAttributeAtTop()) {
-            throw notImplementedYet();
+        if (xmlConfig.printNameSpaceAttributeAtTop()) {
+            childConfig.withPrintNameSpaceAttributeAtTop(false);
         }
         if (xmlConfig.printXmlDeclaration()) {
             xmlString += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
             childConfig.withPrintXmlDeclaration(false);
         }
 
-        final Set<NameSpace> nameSpaces = setOfUniques();
-        visit(p -> nameSpaces.add(p.nameSpace()));
         if (name().isBlank()) {
             return "<empty/>";
         }
         if (children().isEmpty()) {
-            xmlString += "<" + nameSpace().defaultPrefix()
-                    + ":"
-                    + name()
-                    + " "
-                    + nameSpaceDeclarations(nameSpaces)
-                    + "/>";
+            xmlString += "<" + toXmlElementStartName(xmlConfig) + "/>";
         } else {
-            xmlString += "<"
-                    + nameSpace().defaultPrefix()
-                    + ":"
-                    + name()
-                    + " "
-                    + nameSpaceDeclarations(nameSpaces)
-                    + ">";
+            xmlString += "<" + toXmlElementStartName(xmlConfig) + ">";
             xmlString += children().stream()
                     .map(c -> c.toXmlString(childConfig))
                     .reduce((a, b) -> a + b).orElse("");
-            xmlString += "</" + nameSpace().defaultPrefix() + ":" + name() + ">";
+            xmlString += "</" + toXmlElementName(xmlConfig) + ">";
         }
         return xmlString;
     }
