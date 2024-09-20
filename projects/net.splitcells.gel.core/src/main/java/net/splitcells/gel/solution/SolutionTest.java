@@ -45,21 +45,17 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSel
 
 public class SolutionTest {
 
+    /**
+     * <p>TODO Use some general test problem template.</p>
+     * <p>TODO Test with some {@link Line} with {@link Cost#noCost()} and some {@link Line}.</p>
+     * <p>TODO Test content without using a big string in this repo, in order to not bloat this repo.</p>
+     */
     @Test
-    public void testToFodsTableAnalysis2() {
-        final var d = attribute(Integer.class, "demand");
-        final var s = attribute(Integer.class, "supply");
-        final var testSubject = defineProblem("testPerformance")
-                .withDemandAttributes(d)
-                .withDemands(list(list(0)))
-                .withSupplyAttributes(s)
-                .withSupplies(list(list(0)))
-                .withConstraint(forAll())
-                .toProblem()
-                .asSolution();
-        testSubject.assign(testSubject.demands().orderedLine(0), testSubject.supplies().orderedLine(0));
+    public void testToFodsTableAnalysis() {
+        final Solution testSubject = pseudoNQueenProblem(8, 8).asSolution();
+        testSubject.history().withRegisterEventIsEnabled(true);
+        testSubject.optimize(offlineLinearInitialization());
         testSubject.toFodsTableAnalysis().toXmlString(xmlConfig());
-        // TODO Test content without using a big string in this repo, in order to not bloat this repo.
     }
 
     @Test
@@ -84,22 +80,6 @@ public class SolutionTest {
                     , 1), a -> solution -> {
             }, false).optimize(testSubject);
         });
-    }
-
-    /**
-     * <p>TODO Use some general test problem template.</p>
-     * <p>TODO Test with some {@link Line} with {@link Cost#noCost()} and some {@link Line}.</p>
-     * <p>TODO Test content.</p>
-     * <p>TODO Don't write the result to files outside the build folder,
-     * in order to avoid messing up the user's computer files.</p>
-     */
-    @Test
-    public void testToFodsTableAnalysis() {
-        final Solution testSubject = pseudoNQueenProblem(8, 8).asSolution();
-        testSubject.history().withRegisterEventIsEnabled(true);
-        testSubject.optimize(offlineLinearInitialization());
-        writeToFile(environment().config().configValue(ProcessPath.class).resolve("analysis2.fods")
-                , testSubject.toFodsTableAnalysis());
     }
 
     private static Problem pseudoNQueenProblem(int rows, int columns) {
