@@ -179,21 +179,17 @@ public interface SolutionView extends ProblemView {
         final var fodsTableAnalysis = perspective("document", FODS_OFFICE)
                 .withXmlAttribute("mimetype", "application/vnd.oasis.opendocument.spreadsheet", FODS_OFFICE)
                 .withChild(fodsStyling());
-        final var analysisContent = perspective("body", FODS_OFFICE);
-        fodsTableAnalysis.withChild(analysisContent);
-        {
-            final var spreadsheet = perspective("spreadsheet", FODS_OFFICE);
-            analysisContent.withChild(spreadsheet);
-            final var table = perspective("table", FODS_TABLE);
-            spreadsheet.withChild(table);
-            table.withProperty("name", FODS_TABLE, "values");
-            {
-                table.withChild(attributesOfFodsAnalysis());
-                unorderedLines().stream().
-                        map(this::toLinesFodsAnalysis)
-                        .forEach(table::withChild);
-            }
-        }
+        final var body = perspective("body", FODS_OFFICE);
+        fodsTableAnalysis.withChild(body);
+        final var spreadsheet = perspective("spreadsheet", FODS_OFFICE);
+        body.withChild(spreadsheet);
+        final var table = perspective("table", FODS_TABLE);
+        spreadsheet.withChild(table);
+        table.withProperty("name", FODS_TABLE, "values");
+        table.withChild(attributesOfFodsAnalysis());
+        unorderedLines().stream().
+                map(this::toLinesFodsAnalysis)
+                .forEach(table::withChild);
         return fodsTableAnalysis;
     }
 
