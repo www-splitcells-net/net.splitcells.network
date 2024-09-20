@@ -313,7 +313,7 @@ public class DatabaseMetaAspect implements Database {
     }
 
     @Override
-    public Element toFods() {
+    public Perspective toFods() {
         return database.toFods();
     }
 }

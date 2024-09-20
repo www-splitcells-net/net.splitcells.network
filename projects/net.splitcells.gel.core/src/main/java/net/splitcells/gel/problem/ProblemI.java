@@ -296,7 +296,7 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public Element toFods() {
+    public Perspective toFods() {
         return this.assignments.toFods();
     }
 

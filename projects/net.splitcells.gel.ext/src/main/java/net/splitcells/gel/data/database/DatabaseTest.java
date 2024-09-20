@@ -70,7 +70,7 @@ public class DatabaseTest extends TestSuiteI {
         rangeClosed(1, 10).forEach(i -> {
             testSubject.addTranslated(listWithValuesOf(i));
         });
-        testSubject.toFods2().toXmlString(xmlConfig());
+        testSubject.toFods().toXmlString(xmlConfig());
     }
 
     @Test

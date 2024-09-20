@@ -20,6 +20,7 @@ import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.XmlConfig;
 import org.apache.commons.io.FileUtils;
 import org.w3c.dom.Node;
 
@@ -35,6 +36,7 @@ import java.util.stream.Stream;
 
 import static java.nio.file.Files.createDirectories;
 import static net.splitcells.dem.lang.Xml.toPrettyString;
+import static net.splitcells.dem.lang.perspective.XmlConfig.xmlConfig;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**
@@ -134,7 +136,7 @@ public interface Files {
 
     @Deprecated
     static void writeToFile(Path path, Perspective content) {
-        writeToFile(path, content.toXmlString());
+        writeToFile(path, content.toXmlString(xmlConfig()));
     }
 
     @Deprecated

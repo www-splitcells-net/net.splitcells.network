@@ -263,7 +263,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
         return htmlTable;
     }
 
-    default Perspective toFods2() {
+    default Perspective toFods() {
         final var fods = perspective("document", FODS_OFFICE)
                 .withXmlAttribute("mimetype", "application/vnd.oasis.opendocument.spreadsheet", FODS_OFFICE);
         final var body = perspective("body", FODS_OFFICE);
@@ -294,53 +294,6 @@ public interface Table extends Discoverable, Domable, Identifiable {
                         return cell;
                     }).forEach(tableElement -> tableLine.withChild(tableElement));
         });
-        return fods;
-    }
-
-    default Element toFods() {
-        final var fods = rElement(FODS_OFFICE, "document");
-        final var body = elementWithChildren(FODS_OFFICE, "body");
-        fods.setAttributeNode
-                (attribute(FODS_OFFICE, "mimetype", "application/vnd.oasis.opendocument.spreadsheet"));
-        fods.appendChild(body);
-        {
-            final var spreadsheet = elementWithChildren(FODS_OFFICE, "spreadsheet");
-            body.appendChild(spreadsheet);
-            final var table = rElement(FODS_TABLE, "table");
-            spreadsheet.appendChild(table);
-            table.setAttributeNode(attribute(FODS_TABLE, "name", "values"));
-            {
-                final var header = elementWithChildren(FODS_TABLE, "table-row");
-                table.appendChild(header);
-                headerView().stream()
-                        .map(att -> att.name())
-                        .map(attName -> {
-                            final var tableElements = elementWithChildren(FODS_TABLE, "table-cell");
-                            final var tableValue = rElement(FODS_TEXT, "p");
-                            tableElements.appendChild(tableValue);
-                            tableValue.appendChild(textNode(attName));
-                            return tableElements;
-                        }).forEach(attDesc -> header.appendChild(attDesc));
-                unorderedLines().forEach(line -> {
-                    final var tableLine = elementWithChildren(FODS_TABLE, "table-row");
-                    table.appendChild(tableLine);
-                    headerView().stream()
-                            .map(attribute -> line.value(attribute))
-                            .map(value -> {
-                                final var cellElement = elementWithChildren(FODS_TABLE, "table-cell");
-                                final var cellValue = rElement(FODS_TEXT, "p");
-                                cellElement.appendChild(cellValue);
-                                if (value instanceof Domable) {
-                                    cellValue.appendChild
-                                            (textNode(((Domable) value).toPerspective().toXmlString()));
-                                } else {
-                                    cellValue.appendChild(textNode(value.toString()));
-                                }
-                                return cellElement;
-                            }).forEach(tableElement -> tableLine.appendChild(tableElement));
-                });
-            }
-        }
         return fods;
     }
 

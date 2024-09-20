@@ -290,7 +290,7 @@ public class SolutionI implements Solution {
     }
 
     @SuppressWarnings("all")
-    public org.w3c.dom.Element toFods() {
+    public Perspective toFods() {
         return this.problem.toFods();
     }
 
