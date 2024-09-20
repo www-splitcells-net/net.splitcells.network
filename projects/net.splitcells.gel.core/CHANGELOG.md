@@ -5,7 +5,7 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
-* **2024-09-20 \#26** Migrate `Table#toFods` and `SolutionView#toFodsTableAnalysis` from XML to Perspective.
+* **2024-09-20 \#26** Migrate `Table#toFods`, `SolutionView#toFodsTableAnalysis` and `History#toAnalysisFods` from XML to Perspective.
 * **2024-07-25 \#24** Rename `Query#constraint` to `Query#parseConstraint` in order to mark the intent better.  
 * **2024-04-01 #170** Deprecate ResourceOptionI.
   Implement the ResourceOption API directly instead,

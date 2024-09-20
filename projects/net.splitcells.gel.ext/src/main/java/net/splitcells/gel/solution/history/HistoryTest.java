@@ -15,7 +15,7 @@
  */
 package net.splitcells.gel.solution.history;
 
-import net.splitcells.gel.constraint.type.Then;
+import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.solution.history.meta.type.AllocationRating;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -23,9 +23,11 @@ import org.junit.jupiter.api.Test;
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.lang.perspective.XmlConfig.xmlConfig;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.TestTypes.BENCHMARK_RUNTIME;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
+import static net.splitcells.gel.constraint.type.Then.then;
 import static net.splitcells.gel.rating.rater.lib.ConstantRater.constantRater;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
@@ -38,6 +40,26 @@ import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearIni
 
 public class HistoryTest {
 
+
+    /**
+     * TODO Test content.
+     */
+    @UnitTest
+    public void testToAnalysisFods() {
+        final var testSubject = defineProblem("testToAnalysisFods")
+                .withDemandAttributes()
+                .withDemands(rangeClosed(1, 10).mapToObj(i -> list()).collect(toList()))
+                .withSupplyAttributes()
+                .withSupplies(rangeClosed(1, 10).mapToObj(i -> list()).collect(toList()))
+                .withConstraint(then(constantRater(cost(7))))
+                .toProblem()
+                .asSolution();
+        testSubject.history().processWithHistory(() -> {
+            testSubject.optimize(onlineLinearInitialization());
+        });
+        testSubject.history().toAnalysisFods().toXmlString(xmlConfig());
+    }
+
     @Tag(BENCHMARK_RUNTIME)
     @Test
     public void test_rest_to_beginning_runtime() {
@@ -46,7 +68,7 @@ public class HistoryTest {
                 .withDemands(rangeClosed(1, 100000).mapToObj(i -> list()).collect(toList()))
                 .withSupplyAttributes()
                 .withSupplies(rangeClosed(1, 100000).mapToObj(i -> list()).collect(toList()))
-                .withConstraint(Then.then(constantRater(cost(7))))
+                .withConstraint(then(constantRater(cost(7))))
                 .toProblem()
                 .asSolution();
         testSubject.history().processWithHistory(() -> {
@@ -63,7 +85,7 @@ public class HistoryTest {
                 .withDemands(list(list()))
                 .withSupplyAttributes()
                 .withSupplies(list(list()))
-                .withConstraint(Then.then(constantRater(cost(7))))
+                .withConstraint(then(constantRater(cost(7))))
                 .toProblem()
                 .asSolution();
         testSubject.history().processWithHistory(() -> {
@@ -89,7 +111,7 @@ public class HistoryTest {
                         , list()
                         , list()
                         , list()))
-                .withConstraint(Then.then(constantRater(cost(7))))
+                .withConstraint(then(constantRater(cost(7))))
                 .toProblem()
                 .asSolution();
         solution.history().processWithHistory(() -> {
@@ -110,7 +132,7 @@ public class HistoryTest {
                 .withDemands(list(list()))
                 .withSupplyAttributes()
                 .withSupplies(list(list()))
-                .withConstraint(Then.then(constantRater(cost(7))))
+                .withConstraint(then(constantRater(cost(7))))
                 .toProblem()
                 .asSolution();
         solution.history().processWithHistory(() -> {
@@ -147,7 +169,7 @@ public class HistoryTest {
                 .withDemands(list(list()))
                 .withSupplyAttributes()
                 .withSupplies(list(list()))
-                .withConstraint(Then.then(constantRater(cost(7))))
+                .withConstraint(then(constantRater(cost(7))))
                 .toProblem()
                 .asSolution();
         solution.history().processWithHistory(() -> {

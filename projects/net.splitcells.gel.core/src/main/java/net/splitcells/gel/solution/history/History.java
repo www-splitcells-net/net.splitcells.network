@@ -15,12 +15,13 @@
  */
 package net.splitcells.gel.solution.history;
 
-import static net.splitcells.dem.lang.Xml.*;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
-import static net.splitcells.dem.utils.FodsUtility.tableCell;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.XmlConfig.xmlConfig;
+import static net.splitcells.dem.utils.FodsUtility.tableCell2;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 
-import net.splitcells.dem.lang.Xml;
+import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.history.event.Allocation;
@@ -32,7 +33,6 @@ import net.splitcells.gel.solution.history.meta.MetaDataView;
 import net.splitcells.gel.solution.history.meta.type.AllocationRating;
 import net.splitcells.gel.solution.history.meta.type.CompleteRating;
 import net.splitcells.gel.solution.Solution;
-import org.w3c.dom.Element;
 
 import java.util.function.Supplier;
 
@@ -158,44 +158,50 @@ public interface History extends Assignments, AfterAdditionSubscriber, BeforeRem
      * but where each field of the complex {@link Attribute}s gets a distinct colum.
      * This makes it easier to analyse the history, by improving the searchability by column values.
      */
-    default Element toAnalysisFods() {
-        final var fods = rElement(FODS_OFFICE, "document");
-        final var body = elementWithChildren(FODS_OFFICE, "body");
-        fods.setAttributeNode
-                (Xml.attribute(FODS_OFFICE, "mimetype", "application/vnd.oasis.opendocument.spreadsheet"));
-        fods.appendChild(body);
-        {
-            final var spreadsheet = elementWithChildren(FODS_OFFICE, "spreadsheet");
-            body.appendChild(spreadsheet);
-            final var table = rElement(FODS_TABLE, "table");
-            spreadsheet.appendChild(table);
-            table.setAttributeNode(Xml.attribute(FODS_TABLE, "name", "values"));
-            {
-                final var header = elementWithChildren(FODS_TABLE, "table-row");
-                table.appendChild(header);
-                header.appendChild(tableCell(ALLOCATION_ID.name()));
-                header.appendChild(tableCell("allocation-type"));
-                if (!unorderedLines().isEmpty()) {
-                    // TODO HACK Prevents errors if the history is empty.
-                    unorderedLines().get(0).value(ALLOCATION_EVENT).demand().context().headerView().forEach(a -> header.appendChild(tableCell("demand-" + a.name())));
-                    unorderedLines().get(0).value(ALLOCATION_EVENT).supply().context().headerView().forEach(a -> header.appendChild(tableCell("supply-" + a.name())));
-                }
-                header.appendChild(tableCell("allocation-cost"));
-                header.appendChild(tableCell("complete-cost"));
-                header.appendChild(tableCell(META_DATA.name()));
-                unorderedLines().forEach(line -> {
-                    final var tableLine = elementWithChildren(FODS_TABLE, "table-row");
-                    table.appendChild(tableLine);
-                    tableLine.appendChild(tableCell("" + line.value(ALLOCATION_ID)));
-                    tableLine.appendChild(tableCell(line.value(ALLOCATION_EVENT).type().name()));
-                    line.value(ALLOCATION_EVENT).demand().context().headerView().forEach(a -> tableLine.appendChild(tableCell(line.value(ALLOCATION_EVENT).demand().value(a).toString())));
-                    line.value(ALLOCATION_EVENT).supply().context().headerView().forEach(a -> tableLine.appendChild(tableCell(line.value(ALLOCATION_EVENT).supply().value(a).toString())));
-                    tableLine.appendChild(tableCell("" + line.value(META_DATA).value(AllocationRating.class).get().value().asMetaRating().getContentValue(Cost.class).value()));
-                    tableLine.appendChild(tableCell("" + line.value(META_DATA).value(CompleteRating.class).get().value().asMetaRating().getContentValue(Cost.class).value()));
-                    tableLine.appendChild(tableCell(toPrettyString(line.value(META_DATA).toDom())));
-                });
-            }
+    default Perspective toAnalysisFods() {
+        final var fods = perspective("document", FODS_OFFICE)
+                .withXmlAttribute("mimetype", "application/vnd.oasis.opendocument.spreadsheet", FODS_OFFICE);
+        final var body = perspective("body", FODS_OFFICE);
+        fods.withChild(body);
+        final var spreadSheet = perspective("spreadsheet", FODS_OFFICE);
+        body.withChild(spreadSheet);
+        final var table = perspective("table", FODS_TABLE);
+        spreadSheet.withChild(table);
+        table.withProperty("name", FODS_TABLE, "values");
+        final var header = perspective("table-row", FODS_TABLE);
+        table.withChild(header);
+        headerView().stream()
+                .map(att -> att.name())
+                .map(attName -> {
+                    final var cell = perspective("table-cell", FODS_TABLE);
+                    cell.withChild(perspective("p", FODS_TEXT).withChild(perspective(attName)));
+                    return cell;
+                }).forEach(attDesc -> header.withChild(attDesc));
+        if (!unorderedLines().isEmpty()) {
+            // TODO HACK Prevents errors if the history is empty.
+            unorderedLines().get(0).value(ALLOCATION_EVENT).demand().context().headerView()
+                    .forEach(a -> header.withChild(tableCell2("demand-" + a.name())));
+            unorderedLines().get(0).value(ALLOCATION_EVENT).supply().context().headerView()
+                    .forEach(a -> header.withChild(tableCell2("supply-" + a.name())));
         }
+        header.withChild(tableCell2("allocation-cost"));
+        header.withChild(tableCell2("complete-cost"));
+        header.withChild(tableCell2(META_DATA.name()));
+        unorderedLines().forEach(line -> {
+            final var tableLine = perspective("table-row", FODS_TABLE);
+            table.withChild(tableLine);
+            tableLine.withChild(tableCell2("" + line.value(ALLOCATION_ID)));
+            tableLine.withChild(tableCell2(line.value(ALLOCATION_EVENT).type().name()));
+            line.value(ALLOCATION_EVENT).demand().context().headerView()
+                    .forEach(a -> tableLine.withChild(tableCell2(line.value(ALLOCATION_EVENT).demand().value(a).toString())));
+            line.value(ALLOCATION_EVENT).supply().context().headerView()
+                    .forEach(a -> tableLine.withChild(tableCell2(line.value(ALLOCATION_EVENT).supply().value(a).toString())));
+            tableLine.withChild(tableCell2("1"));
+            tableLine.withChild(tableCell2("2"));
+            tableLine.withChild(tableCell2("" + line.value(META_DATA).value(AllocationRating.class).get().value().asMetaRating().getContentValue(Cost.class).value()));
+            tableLine.withChild(tableCell2("" + line.value(META_DATA).value(CompleteRating.class).get().value().asMetaRating().getContentValue(Cost.class).value()));
+            tableLine.withChild(tableCell2(line.value(META_DATA).toPerspective().toXmlString(xmlConfig().withPrintXmlDeclaration(false))));
+        });
         return fods;
     }
 }
