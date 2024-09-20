@@ -18,6 +18,7 @@ package net.splitcells.gel.data.database;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.lang.perspective.XmlConfig;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.gel.constraint.type.framework.ConstraintMultiThreading;
 import net.splitcells.gel.data.table.Line;
@@ -34,6 +35,7 @@ import java.util.stream.Stream;
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.lang.perspective.XmlConfig.xmlConfig;
 import static net.splitcells.dem.testing.Assertions.assertThrows;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireNull;
@@ -60,6 +62,15 @@ public class DatabaseTest extends TestSuiteI {
         final var databaseFactories = list(databaseFactory(), lineBasedDatabaseFactory());
         databaseFactories.forEach(df -> df.withAspect(DatabaseMetaAspect::databaseIRef));
         return databaseFactories;
+    }
+
+    @Test
+    public void testToFods() {
+        final var testSubject = database(listWithValuesOf(attribute(Integer.class)));
+        rangeClosed(1, 10).forEach(i -> {
+            testSubject.addTranslated(listWithValuesOf(i));
+        });
+        testSubject.toFods2().toXmlString(xmlConfig());
     }
 
     @Test

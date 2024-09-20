@@ -263,6 +263,40 @@ public interface Table extends Discoverable, Domable, Identifiable {
         return htmlTable;
     }
 
+    default Perspective toFods2() {
+        final var fods = perspective("document", FODS_OFFICE)
+                .withXmlAttribute("mimetype", "application/vnd.oasis.opendocument.spreadsheet", FODS_OFFICE);
+        final var body = perspective("body", FODS_OFFICE);
+        fods.withChild(body);
+        final var spreadSheet = perspective("spreadsheet", FODS_OFFICE);
+        body.withChild(spreadSheet);
+        final var table = perspective("table", FODS_TABLE);
+        spreadSheet.withChild(table);
+        table.withProperty("name", FODS_TABLE, "values");
+        final var header = perspective("table-row", FODS_TABLE);
+        table.withChild(header);
+        headerView().stream()
+                .map(att -> att.name())
+                .map(attName -> {
+                    final var cell = perspective("table-cell", FODS_TABLE);
+                    cell.withChild(perspective("p", FODS_TEXT).withChild(perspective(attName)));
+                    return cell;
+                }).forEach(attDesc -> header.withChild(attDesc));
+        unorderedLines().forEach(line -> {
+            final var tableLine = perspective("table-row", FODS_TABLE);
+            table.withChild(tableLine);
+            headerView().stream()
+                    .map(attribute -> line.value(attribute))
+                    .map(value -> {
+                        final var cell = perspective("table-cell", FODS_TABLE);
+                        cell
+                                .withChild(perspective("p", FODS_TEXT).withChild(perspective(value.toString())));
+                        return cell;
+                    }).forEach(tableElement -> tableLine.withChild(tableElement));
+        });
+        return fods;
+    }
+
     default Element toFods() {
         final var fods = rElement(FODS_OFFICE, "document");
         final var body = elementWithChildren(FODS_OFFICE, "body");
