@@ -58,6 +58,17 @@ public class SolutionTest {
         testSubject.toFodsTableAnalysis().toXmlString(xmlConfig());
     }
 
+    /**
+     * Don't write the result to files outside the build folder, in order to avoid messing up the user's computer files.
+     */
+    @Test
+    public void testCreateStandardAnalysis() {
+        final Solution testSubject = pseudoNQueenProblem(8, 8).asSolution();
+        testSubject.history().withRegisterEventIsEnabled(true);
+        testSubject.optimize(offlineLinearInitialization());
+        testSubject.createStandardAnalysis();
+    }
+
     @Test
     @Disabled
     public void testPerformance() {
