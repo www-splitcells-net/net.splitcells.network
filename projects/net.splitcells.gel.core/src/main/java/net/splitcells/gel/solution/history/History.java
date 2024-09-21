@@ -18,7 +18,7 @@ package net.splitcells.gel.solution.history;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.lang.perspective.XmlConfig.xmlConfig;
-import static net.splitcells.dem.utils.FodsUtility.tableCell2;
+import static net.splitcells.dem.utils.FodsUtility.tableCell;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 
 import net.splitcells.dem.lang.perspective.Perspective;
@@ -180,27 +180,27 @@ public interface History extends Assignments, AfterAdditionSubscriber, BeforeRem
         if (!unorderedLines().isEmpty()) {
             // TODO HACK Prevents errors if the history is empty.
             unorderedLines().get(0).value(ALLOCATION_EVENT).demand().context().headerView()
-                    .forEach(a -> header.withChild(tableCell2("demand-" + a.name())));
+                    .forEach(a -> header.withChild(tableCell("demand-" + a.name())));
             unorderedLines().get(0).value(ALLOCATION_EVENT).supply().context().headerView()
-                    .forEach(a -> header.withChild(tableCell2("supply-" + a.name())));
+                    .forEach(a -> header.withChild(tableCell("supply-" + a.name())));
         }
-        header.withChild(tableCell2("allocation-cost"));
-        header.withChild(tableCell2("complete-cost"));
-        header.withChild(tableCell2(META_DATA.name()));
+        header.withChild(tableCell("allocation-cost"));
+        header.withChild(tableCell("complete-cost"));
+        header.withChild(tableCell(META_DATA.name()));
         unorderedLines().forEach(line -> {
             final var tableLine = perspective("table-row", FODS_TABLE);
             table.withChild(tableLine);
-            tableLine.withChild(tableCell2("" + line.value(ALLOCATION_ID)));
-            tableLine.withChild(tableCell2(line.value(ALLOCATION_EVENT).type().name()));
+            tableLine.withChild(tableCell("" + line.value(ALLOCATION_ID)));
+            tableLine.withChild(tableCell(line.value(ALLOCATION_EVENT).type().name()));
             line.value(ALLOCATION_EVENT).demand().context().headerView()
-                    .forEach(a -> tableLine.withChild(tableCell2(line.value(ALLOCATION_EVENT).demand().value(a).toString())));
+                    .forEach(a -> tableLine.withChild(tableCell(line.value(ALLOCATION_EVENT).demand().value(a).toString())));
             line.value(ALLOCATION_EVENT).supply().context().headerView()
-                    .forEach(a -> tableLine.withChild(tableCell2(line.value(ALLOCATION_EVENT).supply().value(a).toString())));
-            tableLine.withChild(tableCell2("1"));
-            tableLine.withChild(tableCell2("2"));
-            tableLine.withChild(tableCell2("" + line.value(META_DATA).value(AllocationRating.class).get().value().asMetaRating().getContentValue(Cost.class).value()));
-            tableLine.withChild(tableCell2("" + line.value(META_DATA).value(CompleteRating.class).get().value().asMetaRating().getContentValue(Cost.class).value()));
-            tableLine.withChild(tableCell2(line.value(META_DATA).toPerspective().toXmlString(xmlConfig().withPrintXmlDeclaration(false))));
+                    .forEach(a -> tableLine.withChild(tableCell(line.value(ALLOCATION_EVENT).supply().value(a).toString())));
+            tableLine.withChild(tableCell("1"));
+            tableLine.withChild(tableCell("2"));
+            tableLine.withChild(tableCell("" + line.value(META_DATA).value(AllocationRating.class).get().value().asMetaRating().getContentValue(Cost.class).value()));
+            tableLine.withChild(tableCell("" + line.value(META_DATA).value(CompleteRating.class).get().value().asMetaRating().getContentValue(Cost.class).value()));
+            tableLine.withChild(tableCell(line.value(META_DATA).toPerspective().toXmlString(xmlConfig().withPrintXmlDeclaration(false))));
         });
         return fods;
     }
