@@ -25,9 +25,11 @@ import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**
- * Stores the results of a calculation.
+ * <p>Stores the results of a calculation.
  * There may not be any value present,
  * if, for instance, the calculation was not successful.
+ * This does only make sense, if multiple errors are somehow to be combined.</p>
+ *
  *
  * @param <Value>
  * @param <Message>

@@ -38,6 +38,16 @@ import static net.splitcells.gel.data.database.Databases.database;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.problem.ProblemI.problem;
 
+/**
+ * TODO Throwing exceptions works better, if one just ones to abort the process and return an error.
+ * For this an {@link RuntimeException} is required, that states,
+ * that it is an user facing message.
+ * Create an error factory and manager, in order to avoid Java's throw statement.
+ * This makes it easier to switch between different technologies (i.e. RuntimeException vs {@link System#exit(int)})
+ * for error handling and focus on the error handling structure and API.
+ * Note, the exceptions work best, if it used as an abort of the current processing context
+ * (i.e. processing the request of a user and cleaning up all request specific data on error).
+ */
 public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameters, Perspective>> {
 
     private Optional<String> name = Optional.empty();
