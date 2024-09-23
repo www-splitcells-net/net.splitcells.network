@@ -111,6 +111,7 @@ public class LookupTable implements Table {
     private static LookupTable lookupTable(Table table, String name) {
         return new LookupTable(table, name, USE_EXPERIMENTAL_RAW_LINE_CACHE);
     }
+
     private static LookupTable lookupTable(Table table, Attribute<?> attribute) {
         return new LookupTable(table, attribute.name(), USE_EXPERIMENTAL_RAW_LINE_CACHE);
     }
@@ -315,10 +316,10 @@ public class LookupTable implements Table {
         }
         if (TRACING) {
             logs().append(
-                    Xml.elementWithChildren("after.deregister." + getClass().getSimpleName()
-                            , Xml.elementWithChildren("subject", textNode(path().toString()))
-                            , Xml.elementWithChildren("content", textNode(content.toString()))
-                            , line.toDom())
+                    perspective("after.deregister." + getClass().getSimpleName()).withChildren(
+                            perspective("subject").withChild(perspective(path().toString()))
+                            , perspective("content").withChild(perspective(content.toString()))
+                            , line.toPerspective())
                     , this, DEBUG);
         }
     }
