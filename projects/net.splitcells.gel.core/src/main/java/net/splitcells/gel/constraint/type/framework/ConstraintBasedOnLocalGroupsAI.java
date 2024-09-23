@@ -73,7 +73,6 @@ import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import net.splitcells.gel.solution.Solution;
-import org.w3c.dom.Element;
 
 /**
  * TODO TOFIX {@link #path()} was hacked together, without quality control.

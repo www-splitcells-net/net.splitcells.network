@@ -53,7 +53,6 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.solution.history.meta.type.AllocationNaturalArgumentation;
 import net.splitcells.gel.solution.history.meta.type.AllocationRating;
 import net.splitcells.gel.solution.history.meta.type.CompleteRating;
-import org.w3c.dom.Node;
 
 import java.util.function.Supplier;
 

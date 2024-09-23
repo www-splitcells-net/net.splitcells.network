@@ -27,7 +27,6 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.lang.perspective.PerspectiveI;
 import net.splitcells.gel.data.table.Line;
-import org.w3c.dom.Element;
 import net.splitcells.dem.lang.dom.Domable;
 
 /**

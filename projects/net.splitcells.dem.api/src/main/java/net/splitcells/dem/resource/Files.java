@@ -22,7 +22,6 @@ import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.lang.perspective.XmlConfig;
 import org.apache.commons.io.FileUtils;
-import org.w3c.dom.Node;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -127,11 +126,6 @@ public interface Files {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Deprecated
-    static void writeToFile(Path path, Node node) {
-        writeToFile(path, toPrettyString(node));
     }
 
     @Deprecated

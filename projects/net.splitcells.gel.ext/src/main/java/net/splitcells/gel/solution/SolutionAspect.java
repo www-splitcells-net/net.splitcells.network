@@ -37,7 +37,6 @@ import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.history.History;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
-import org.w3c.dom.Node;
 
 import java.util.function.Function;
 

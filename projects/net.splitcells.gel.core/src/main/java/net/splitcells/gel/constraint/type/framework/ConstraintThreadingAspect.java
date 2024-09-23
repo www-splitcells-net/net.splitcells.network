@@ -33,7 +33,6 @@ import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.gel.rating.framework.LocalRating;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.solution.Solution;
-import org.w3c.dom.Node;
 
 import java.util.Optional;
 import java.util.function.Function;

@@ -35,8 +35,6 @@ import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.attribute.IndexedAttribute;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 /**
  * TODO {@link Line}s and {@link Table}s should be typed. Use a meta {@link Attribute}, which

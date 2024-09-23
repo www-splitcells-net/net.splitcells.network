@@ -26,7 +26,6 @@ import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.LinePointer;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.column.ColumnView;
-import org.w3c.dom.Node;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;

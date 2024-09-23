@@ -47,7 +47,6 @@ import net.splitcells.dem.utils.MathUtils;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.column.ColumnView;
-import org.w3c.dom.Element;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.table.attribute.Attribute;

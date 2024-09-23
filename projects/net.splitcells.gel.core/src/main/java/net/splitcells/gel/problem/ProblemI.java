@@ -36,8 +36,6 @@ import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.solution.Solution;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 import java.util.function.Function;
 

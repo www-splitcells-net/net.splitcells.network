@@ -232,12 +232,10 @@ public class DatabaseI implements Database {
 
     private Line addTranslated(List<Object> lineValues, int index) {
         if (TRACING) {
-            logs().append(
-                    event("addTranslatingAt." + Database.class.getSimpleName()
-                            , path().toString()
-                            , elementWithChildren("index", textNode("" + index))
-                            , elementWithChildren("line-values", textNode(lineValues.toString()))
-                    )
+            logs().append(perspective("addTranslatingAt." + Database.class.getSimpleName())
+                            .withProperty("path", path().toString())
+                            .withProperty("index", "" + index)
+                            .withProperty("line-values", lineValues.toString())
                     , this
                     , DEBUG
             );

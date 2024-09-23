@@ -18,7 +18,6 @@ package net.splitcells.gel.data.table;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.perspective.Perspective;
-import org.w3c.dom.Node;
 
 import java.util.Optional;
 

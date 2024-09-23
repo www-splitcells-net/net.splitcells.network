@@ -35,7 +35,6 @@ import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.rating.type.Optimality;
 import net.splitcells.gel.rating.type.Profit;
-import org.w3c.dom.Node;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.data.order.Ordering;
 import net.splitcells.dem.data.set.map.Map;

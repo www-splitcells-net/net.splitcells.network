@@ -25,7 +25,6 @@ import java.util.Optional;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.gel.rating.framework.Rating;
-import org.w3c.dom.Element;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.data.order.Comparison;
 import net.splitcells.dem.data.order.Ordering;

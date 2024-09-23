@@ -21,7 +21,6 @@ import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.object.Discoverable;
-import org.w3c.dom.Node;
 
 import java.util.Optional;
 
@@ -76,11 +75,6 @@ public interface Log extends ListWA<LogMessage<Perspective>> {
 
     default Log append(Perspective perspective, LogLevel logLevel) {
         return append(logMessage(perspective, NO_CONTEXT, logLevel));
-    }
-
-    @Deprecated
-    default Log append(Node content, Discoverable context, LogLevel logLevel) {
-        return append(logMessage(perspective(TODO_NOT_IMPLEMENTED_YET), context, logLevel));
     }
 
     default Log append(Domable content, Discoverable context, LogLevel logLevel) {

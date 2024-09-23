@@ -39,7 +39,6 @@ import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
-import org.w3c.dom.Node;
 
 public class ForAllValueCombinations implements Rater {
 

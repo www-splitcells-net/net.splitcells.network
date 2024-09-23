@@ -19,7 +19,6 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.resource.ResourceOptionI;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import org.w3c.dom.Element;
 
 import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.list.Lists.*;
@@ -87,18 +86,6 @@ public class Databases extends ResourceOptionI<DatabaseFactory> {
 
     public static Database database2(String name, Discoverable parent, List<Attribute<Object>> attributes) {
         return environment().config().configValue(Databases.class).database2(name, parent, attributes);
-    }
-
-    /**
-     * TODO REMOVE Every database should have a name.
-     *
-     * @param attributes
-     * @param fods
-     * @return
-     */
-    @Deprecated
-    public static Database databaseOfFods(List<Attribute<?>> attributes, Element fods) {
-        return environment().config().configValue(Databases.class).databaseOfFods(attributes, fods);
     }
 
     /**

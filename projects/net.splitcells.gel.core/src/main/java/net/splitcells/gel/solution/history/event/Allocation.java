@@ -19,7 +19,6 @@ import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.gel.data.table.Line;
-import org.w3c.dom.Node;
 
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.gel.common.Language.*;

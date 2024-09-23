@@ -27,7 +27,6 @@ import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.perspective.Perspective;
-import org.w3c.dom.Node;
 
 public class MetaDataI implements MetaDataView, MetaDataWriter {
     public static MetaDataI metaData() {

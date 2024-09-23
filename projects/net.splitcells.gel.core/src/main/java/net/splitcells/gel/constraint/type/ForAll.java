@@ -42,7 +42,6 @@ import net.splitcells.gel.rating.rater.lib.classification.ForAllAttributeValues;
 import net.splitcells.gel.rating.rater.lib.classification.Propagation;
 import net.splitcells.gel.rating.rater.lib.classification.RaterBasedOnGrouping;
 import net.splitcells.gel.solution.Solution;
-import org.w3c.dom.Element;
 
 import java.util.Optional;
 import java.util.function.BiFunction;

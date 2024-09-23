@@ -55,7 +55,6 @@ import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.LinePointer;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.column.ColumnView;
-import org.w3c.dom.Element;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;

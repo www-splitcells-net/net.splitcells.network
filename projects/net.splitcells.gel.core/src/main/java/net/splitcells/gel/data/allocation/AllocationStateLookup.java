@@ -25,7 +25,6 @@ import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
-import org.w3c.dom.Node;
 
 import java.util.function.Predicate;
 

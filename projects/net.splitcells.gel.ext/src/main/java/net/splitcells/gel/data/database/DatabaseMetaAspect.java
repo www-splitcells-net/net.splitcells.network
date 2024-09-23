@@ -24,8 +24,6 @@ import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.column.ColumnView;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 import java.util.stream.Stream;
 
@@ -134,11 +132,10 @@ public class DatabaseMetaAspect implements Database {
         }
         final var translatedAddition = database.addTranslated(lineValues);
         if (TRACING) {
-            logs().append(
-                    event("addTranslating." + Database.class.getSimpleName()
-                            , path().toString()
-                            , elementWithChildren("index", textNode("" + translatedAddition.index()))
-                            , elementWithChildren("line-values", textNode(lineValues.toString())))
+            logs().append(perspective("addTranslating." + Database.class.getSimpleName())
+                            .withProperty("path", path().toString())
+                            .withProperty("index", "" + translatedAddition.index())
+                            .withProperty("line-values", lineValues.toString())
                     , this, DEBUG
             );
         }

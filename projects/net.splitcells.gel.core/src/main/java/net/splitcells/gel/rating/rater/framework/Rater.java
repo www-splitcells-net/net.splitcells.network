@@ -38,7 +38,6 @@ import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.lib.RaterBasedOnLineValue;
 import net.splitcells.gel.solution.Solution;
-import org.w3c.dom.Node;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.list.List;

@@ -33,7 +33,6 @@ import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.rating.type.Optimality;
 import net.splitcells.gel.solution.history.History;
-import org.w3c.dom.Node;
 
 import java.util.function.Function;
 

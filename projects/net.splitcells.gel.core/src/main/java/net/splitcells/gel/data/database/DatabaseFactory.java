@@ -24,7 +24,6 @@ import net.splitcells.dem.resource.ConnectingConstructor;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import org.w3c.dom.Element;
 
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
@@ -62,6 +61,7 @@ public interface DatabaseFactory extends AspectOrientedResource<Database>, Conne
 
     Database database(String name, Discoverable parent, List<Attribute<? extends Object>> attributes);
 
+    /* TODO Restore this unused method and create feature with it.
     default Database databaseOfFods(List<Attribute<?>> attributes, Element fods) {
         final var databaseOfFods = database(attributes);
         final var body = directChildElementByName(fods, "body", FODS_OFFICE);
@@ -85,5 +85,5 @@ public interface DatabaseFactory extends AspectOrientedResource<Database>, Conne
                                 .get()
                                 .getTextContent()))
                 .collect(toList());
-    }
+    }*/
 }

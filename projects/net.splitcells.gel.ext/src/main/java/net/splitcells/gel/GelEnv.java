@@ -29,7 +29,6 @@ import net.splitcells.gel.solution.history.HistoryRefFactory;
 
 import java.util.function.Consumer;
 
-import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 public final class GelEnv {

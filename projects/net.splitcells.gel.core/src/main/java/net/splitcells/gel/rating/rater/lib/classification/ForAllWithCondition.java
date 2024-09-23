@@ -26,7 +26,6 @@ import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
-import org.w3c.dom.Node;
 
 import java.util.function.Predicate;
 

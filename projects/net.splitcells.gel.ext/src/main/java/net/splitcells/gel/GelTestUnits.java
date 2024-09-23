@@ -18,7 +18,6 @@ package net.splitcells.gel;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
 
-import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.testing.Test.testUnits;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.gel.GelEnv.standardDeveloperConfigurator;
