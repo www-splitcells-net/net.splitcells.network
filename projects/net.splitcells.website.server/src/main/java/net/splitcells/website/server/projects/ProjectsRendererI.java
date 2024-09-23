@@ -18,7 +18,6 @@ package net.splitcells.website.server.projects;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.resource.Service;
-import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.perspective.Perspective;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.Trail;
@@ -45,6 +44,7 @@ import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.XmlConfig.xmlConfig;
 import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.resource.Paths.path;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
@@ -106,7 +106,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
         {
             final var relevantLayout = perspective(VAL, NATURAL);
             this.relevantProjectsPaths().forEach(p -> extendPerspectiveWithPath(relevantLayout, p));
-            config.withLayoutRelevant(Xml.toPrettyString(relevantLayout.toDom()));
+            config.withLayoutRelevant(relevantLayout.toXmlString(xmlConfig()));
         }
         {
             final var simpleRelevantLayout = perspective("relevant-layout", NATURAL);
@@ -120,7 +120,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
         }
         final var layout = perspective(VAL, NATURAL);
         this.projectsPaths().forEach(p -> extendPerspectiveWithPath(layout, p));
-        config.withLayout(Xml.toPrettyString(layout.toDom()));
+        config.withLayout(layout.toXmlString(xmlConfig()));
         return layout;
     }
 
