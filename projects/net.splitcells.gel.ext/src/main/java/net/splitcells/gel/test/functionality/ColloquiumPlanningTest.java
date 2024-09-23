@@ -75,6 +75,11 @@ public class ColloquiumPlanningTest extends TestSuiteI {
     public static final Attribute<Integer> DATE = integerAttribute("date");
     public static final Attribute<Integer> ROOM_NUMBER = integerAttribute("room-number");
 
+    /**
+     * <p>TODO Too many teachers are present. Therefore, the problem is probably to easy.
+     * Creating a new harder instance would be best, because these values are of historical value.</p>
+     * <p>The number students, examiners etc., where created from a real instance at a school.</p>
+     */
     @CapabilityTest
     public void testRandomInstanceSolving() {
         Dem.process(() -> {
