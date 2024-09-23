@@ -77,8 +77,6 @@ lexer grammar Java11Lexer;
     		| 'import java.util.Iterator;'
     		| 'import java.util.ListIterator;'
     		| 'import java.util.Collection;'
-    		| 'import org.w3c.dom.Element;'
-    		| 'import org.w3c.dom.Node;'
     		;
 	Arrow: '->';
 	Bigger_than: '>';
