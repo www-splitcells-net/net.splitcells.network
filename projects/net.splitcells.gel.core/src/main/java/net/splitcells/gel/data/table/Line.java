@@ -168,4 +168,26 @@ public interface Line extends Domable {
         });
         return dom;
     }
+
+    @Override
+    default Perspective toPerspective() {
+        final var root = perspective(Line.class.getSimpleName());
+        root.withProperty(INDEX.value(), "" + index());
+        context().headerView().forEach(attribute -> {
+            final var attributeValue = context().columnView(attribute).get(index());
+            final Perspective attributeRender;
+            if (attributeValue == null) {
+                attributeRender = perspective("");
+            } else {
+                if (attributeValue instanceof Domable) {
+                    attributeRender = ((Domable) attributeValue).toPerspective();
+                } else {
+                    attributeRender = perspective(attributeValue.toString());
+                }
+            }
+            root.withProperty(TYPE.value(), attribute.name());
+            root.withProperty(VALUE.value(), attributeRender);
+        });
+        return root;
+    }
 }
