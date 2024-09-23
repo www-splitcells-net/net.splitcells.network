@@ -257,15 +257,6 @@ public class MetaRatingI implements MetaRating {
     }
 
     @Override
-    public Node toDom() {
-        if (1 == ratingMap.size()) {
-            return ratingMap.values().iterator().next().toDom();
-        }
-        final var dom = Xml.elementWithChildren(MetaRating.class.getSimpleName());
-        return dom;
-    }
-
-    @Override
     public Perspective toPerspective() {
         if (1 == ratingMap.size()) {
             return ratingMap.values().iterator().next().toPerspective();

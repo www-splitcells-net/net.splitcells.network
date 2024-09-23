@@ -39,18 +39,6 @@ public interface LinePointer extends Domable {
     Optional<Line> interpret(Table context);
 
     @Override
-    default Node toDom() {
-        final var dom = Xml.elementWithChildren(LinePointer.class.getSimpleName());
-        final var rinda = interpret();
-        if (rinda.isPresent()) {
-            dom.appendChild(rinda.get().toDom());
-        } else {
-            dom.appendChild(Xml.elementWithChildren("indekss", textNode(index() + "")));
-        }
-        return dom;
-    }
-
-    @Override
     default Perspective toPerspective() {
         final var dom = perspective(LinePointer.class.getSimpleName());
         final var line = interpret();

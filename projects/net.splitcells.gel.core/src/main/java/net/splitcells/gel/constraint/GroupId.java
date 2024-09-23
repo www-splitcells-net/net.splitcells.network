@@ -105,16 +105,6 @@ public class GroupId implements Domable {
     }
 
     @Override
-    public Element toDom() {
-        final var dom = Xml.elementWithChildren("group");
-        if (name.isPresent()) {
-            dom.appendChild(Xml.elementWithChildren("name", textNode(name.get())));
-        }
-        dom.appendChild(Xml.elementWithChildren("id", textNode(this.hashCode() + "")));
-        return dom;
-    }
-
-    @Override
     public Perspective toPerspective() {
         final var perspective = perspective("group");
         perspective.withProperty("name", name.get());

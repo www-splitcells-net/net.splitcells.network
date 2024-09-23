@@ -105,11 +105,6 @@ public interface Rater extends PubliclyTyped<Rater>
     }
 
     @Override
-    default Node toDom() {
-        throw deprecationException();
-    }
-
-    @Override
     default Perspective toPerspective() {
         final var perspective = perspective(getClass().getSimpleName());
         if (!arguments().isEmpty()) {

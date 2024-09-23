@@ -187,13 +187,6 @@ public class RaterBasedOnLineValue implements Rater {
     }
 
     @Override
-    public Element toDom() {
-        final Element dom = Xml.elementWithChildren(getClass().getSimpleName());
-        dom.appendChild(Xml.elementWithChildren("args", arguments().get(0).toDom()));
-        return dom;
-    }
-
-    @Override
     public Perspective toPerspective() {
         return perspective(getClass().getSimpleName()).withProperty("args", arguments().get(0).toPerspective());
     }

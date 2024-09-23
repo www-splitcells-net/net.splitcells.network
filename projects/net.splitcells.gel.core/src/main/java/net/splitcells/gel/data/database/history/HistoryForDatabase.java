@@ -256,11 +256,6 @@ public class HistoryForDatabase implements History {
     }
 
     @Override
-    public Node toDom() {
-        return history.toDom();
-    }
-
-    @Override
     public List<String> path() {
         return history.path();
     }

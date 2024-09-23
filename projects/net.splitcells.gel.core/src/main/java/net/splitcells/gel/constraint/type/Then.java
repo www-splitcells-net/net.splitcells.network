@@ -180,11 +180,6 @@ public class Then implements Constraint {
     }
 
     @Override
-    public Element toDom() {
-        return constraint.toDom();
-    }
-
-    @Override
     public Perspective toPerspective(Set<GroupId> groups) {
         return constraint.toPerspective(groups);
     }
@@ -212,5 +207,10 @@ public class Then implements Constraint {
     @Override
     public Constraint withChildren(Function<Query, Query> builder) {
         return constraint.withChildren(builder);
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        return constraint.toPerspective();
     }
 }

@@ -51,11 +51,6 @@ public class AllocationStateLookup implements Database {
     }
 
     @Override
-    public Node toDom() {
-        throw notImplementedYet();
-    }
-
-    @Override
     public List<String> path() {
         throw notImplementedYet();
     }

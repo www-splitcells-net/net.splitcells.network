@@ -174,11 +174,6 @@ public class DatabaseMetaAspect implements Database {
     }
 
     @Override
-    public Node toDom() {
-        return database.toDom();
-    }
-
-    @Override
     public Perspective toPerspective() {
         return database.toPerspective();
     }

@@ -101,11 +101,6 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public Node toDom() {
-        return allocations.toDom();
-    }
-
-    @Override
     public List<String> path() {
         return allocations.path();
     }

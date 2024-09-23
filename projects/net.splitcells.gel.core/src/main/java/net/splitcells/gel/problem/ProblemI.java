@@ -305,10 +305,6 @@ public class ProblemI implements Problem {
         return this.assignments.path();
     }
 
-    public Node toDom() {
-        return this.assignments.toDom();
-    }
-
     @Override
     public Perspective toPerspective() {
         return assignments.toPerspective();

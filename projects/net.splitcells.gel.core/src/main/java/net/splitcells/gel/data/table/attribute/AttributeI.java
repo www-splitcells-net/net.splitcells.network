@@ -104,14 +104,6 @@ public final class AttributeI<T> implements Attribute<T> {
     }
 
     @Override
-    public Element toDom() {
-        return Xml.elementWithChildren(Attribute.class.getSimpleName()
-                , Xml.elementWithChildren(Language.NAME.value(), textNode(name))
-                , Xml.elementWithChildren(type.getSimpleName())
-        );
-    }
-
-    @Override
     public Perspective toPerspective() {
         return perspective(Attribute.class.getSimpleName())
                 .withProperty(Language.NAME.value(), name)

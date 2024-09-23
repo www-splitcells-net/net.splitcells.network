@@ -123,11 +123,6 @@ public class MetaRatingMergerI implements MetaRatingMerger {
     }
 
     @Override
-    public Element toDom() {
-        return Xml.elementWithChildren(MetaRatingMerger.class.getSimpleName());
-    }
-
-    @Override
     public Perspective toPerspective() {
         return perspective(MetaRatingMerger.class.getSimpleName());
     }

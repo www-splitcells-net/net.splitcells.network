@@ -217,27 +217,6 @@ public interface Perspective extends PerspectiveView {
         return this;
     }
 
-    @JavaLegacyBody
-    @Override
-    default org.w3c.dom.Node toDom() {
-        final org.w3c.dom.Node dom;
-        // HACK Use generic rendering specifics based on argument.
-        if (STRING.equals(nameSpace()) && children().isEmpty() ||
-                TEXT.equals(nameSpace()) && children().isEmpty()) {
-            dom = Xml.textNode(name());
-        } else {
-            if (name().contains(" ")) {
-                final var element = Xml.rElement(nameSpace(), "val");
-                element.setAttributeNode(Xml.attribute("name", name()));
-                dom = element;
-            } else {
-                dom = Xml.rElement(nameSpace(), name());
-            }
-        }
-        children().forEach(child -> dom.appendChild(child.toDom()));
-        return dom;
-    }
-
     @ReturnsThis
     default Perspective withPath(Perspective path, String propertyName, NameSpace nameSpace) {
         return withPath(this, path, propertyName, nameSpace);

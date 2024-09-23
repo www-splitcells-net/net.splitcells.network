@@ -164,11 +164,6 @@ public class ConstraintAspect implements Constraint {
     }
 
     @Override
-    public Node toDom() {
-        return constraint.toDom();
-    }
-
-    @Override
     public Perspective toPerspective(Set<GroupId> groups) {
         return constraint.toPerspective(groups);
     }
@@ -205,5 +200,10 @@ public class ConstraintAspect implements Constraint {
     @Override
     public Proposal propose(Proposal proposal) {
         return constraint.propose(proposal);
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        return constraint.toPerspective();
     }
 }

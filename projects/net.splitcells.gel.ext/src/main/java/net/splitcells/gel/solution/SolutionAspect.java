@@ -290,11 +290,6 @@ public class SolutionAspect implements Solution {
     }
 
     @Override
-    public Node toDom() {
-        return solution.toDom();
-    }
-
-    @Override
     public Perspective toPerspective() {
         return solution.toPerspective();
     }

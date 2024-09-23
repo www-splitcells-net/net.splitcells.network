@@ -251,11 +251,6 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public Node toDom() {
-        return assignments.toDom();
-    }
-
-    @Override
     public Perspective toPerspective() {
         return assignments.toPerspective();
     }

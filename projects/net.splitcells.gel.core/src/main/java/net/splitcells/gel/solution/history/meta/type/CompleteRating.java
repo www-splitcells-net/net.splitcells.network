@@ -47,13 +47,6 @@ public final class CompleteRating implements MetaData<Rating>, Domable {
     }
 
     @Override
-    public Node toDom() {
-        final var dom = Xml.elementWithChildren(getClass().getSimpleName());
-        dom.appendChild(rating.toDom());
-        return dom;
-    }
-
-    @Override
     public Perspective toPerspective() {
         return perspective(getClass().getSimpleName()).withChild(rating.toPerspective());
     }

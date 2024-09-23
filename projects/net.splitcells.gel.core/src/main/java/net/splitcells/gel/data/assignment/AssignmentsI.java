@@ -512,16 +512,6 @@ public class AssignmentsI implements Assignments {
     }
 
     @Override
-    public Element toDom() {
-        final var dom = Xml.elementWithChildren(Assignments.class.getSimpleName());
-        dom.appendChild(textNode(path().toString()));
-        rawLinesView().stream()
-                .filter(line -> line != null)
-                .forEach(line -> dom.appendChild(line.toDom()));
-        return dom;
-    }
-
-    @Override
     public Perspective toPerspective() {
         final var dom = perspective(Assignments.class.getSimpleName());
         dom.withChild(perspective(path().toString()));

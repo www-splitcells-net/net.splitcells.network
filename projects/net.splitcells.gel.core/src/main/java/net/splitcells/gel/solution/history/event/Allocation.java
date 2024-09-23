@@ -52,18 +52,6 @@ public class Allocation implements Domable {
     }
 
     @Override
-    public Node toDom() {
-        final var allocation = Xml.elementWithChildren(ALLOCATION.value());
-        allocation.appendChild
-                (Xml.elementWithChildren(TYPE.value()).appendChild(Xml.textNode(type.name())));
-        allocation.appendChild
-                (Xml.elementWithChildren(DEMAND2.value()).appendChild(demand.toDom()));
-        allocation.appendChild
-                (Xml.elementWithChildren(SUPPLY.value()).appendChild(supply.toDom()));
-        return allocation;
-    }
-
-    @Override
     public Perspective toPerspective() {
         return perspective(ALLOCATION.value())
                 .withProperty(TYPE.value(), type.name())

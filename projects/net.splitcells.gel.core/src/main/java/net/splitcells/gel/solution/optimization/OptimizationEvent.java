@@ -62,15 +62,6 @@ public final class OptimizationEvent implements Domable {
     }
 
     @Override
-    public Node toDom() {
-        final var dom = Xml.elementWithChildren(getClass().getSimpleName());
-        dom.setAttribute(StepType.class.getSimpleName(), stepType.name());
-        dom.appendChild(Xml.elementWithChildren(Language.DEMAND.value(), demand.toDom()));
-        dom.appendChild(Xml.elementWithChildren(Language.SUPPLY.value(), supply.toDom()));
-        return dom;
-    }
-
-    @Override
     public Perspective toPerspective() {
         return perspective(getClass().getSimpleName())
                 .withProperty(StepType.class.getSimpleName(), stepType.name())

@@ -137,15 +137,6 @@ public interface Database extends Table {
     void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber);
 
     @Override
-    default Node toDom() {
-        final var dom = elementWithChildren(getClass().getSimpleName());
-        rawLinesView().stream()
-                .filter(line -> line != null)
-                .forEach(line -> dom.appendChild(line.toDom()));
-        return dom;
-    }
-
-    @Override
     default Perspective toPerspective() {
         final var dom = perspective(getClass().getSimpleName());
         rawLinesView().stream()

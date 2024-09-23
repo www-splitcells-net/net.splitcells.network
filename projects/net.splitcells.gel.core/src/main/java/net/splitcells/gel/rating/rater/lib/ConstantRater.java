@@ -89,13 +89,6 @@ public class ConstantRater implements Rater {
     }
 
     @Override
-    public Element toDom() {
-        final var dom = Xml.elementWithChildren(getClass().getSimpleName());
-        dom.appendChild(rating.toDom());
-        return dom;
-    }
-
-    @Override
     public Perspective toPerspective() {
         return perspective(getClass().getSimpleName()).withChild(rating.toPerspective());
     }

@@ -581,11 +581,6 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Node toDom() {
-        throw notImplementedYet();
-    }
-
-    @Override
     public List<String> path() {
         return assignments.path();
     }

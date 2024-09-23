@@ -5,6 +5,7 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2024-09-23\#26** Remove deprecated `Domable#toDom`.
 * **2024-09-01\#32** Rename `net.splitcells.dem.data.order.Comparator` to `Comparison`,
   in order to avoid confusion with `java.util.Comparator`.
 * **2024-08-24\#37** Rename `ListView#assertEquals` to `ListView#requireEquals` in order

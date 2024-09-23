@@ -60,27 +60,6 @@ public class MetaDataI implements MetaDataView, MetaDataWriter {
     }
 
     @Override
-    public Node toDom() {
-        final var dom = Xml.elementWithChildren(META_DATA.value());
-        data.forEach((key, value) -> {
-            final var data = Xml.elementWithChildren(META_DATA.value());
-            final var keyData = Xml.elementWithChildren(KEY.value());
-            keyData.appendChild(textNode(key.getName()));
-            final var valueData = Xml.elementWithChildren(VALUE.value());
-            {
-                if (value instanceof Domable) {
-                    valueData.appendChild(((Domable) value).toDom());
-                } else {
-                    valueData.appendChild(textNode(value.toString()));
-                }
-            }
-            dom.appendChild(keyData);
-            dom.appendChild(valueData);
-        });
-        return dom;
-    }
-
-    @Override
     public Perspective toPerspective() {
         final var dom = perspective(META_DATA.value());
         data.forEach((key, value) -> {

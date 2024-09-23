@@ -132,11 +132,6 @@ public final class Derivation implements Constraint {
     }
 
     @Override
-    public Element toDom() {
-        throw notImplementedYet();
-    }
-
-    @Override
     public Perspective toPerspective(Set<GroupId> groups) {
         return derivationTarget.toPerspective(groups);
     }
@@ -196,5 +191,10 @@ public final class Derivation implements Constraint {
     @Override
     public net.splitcells.dem.data.set.Set<net.splitcells.dem.data.set.list.List<String>> paths() {
         throw notImplementedYet();
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        return derivationTarget.toPerspective();
     }
 }

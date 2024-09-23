@@ -477,11 +477,6 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
     }
 
     @Override
-    public Element toDom() {
-        return (Element) toPerspective().toDom();
-    }
-
-    @Override
     public Perspective toPerspective() {
         final var dom = perspective(type().getSimpleName());
         if (!arguments().isEmpty()) {

@@ -341,20 +341,6 @@ public class LookupTable implements Table {
     }
 
     @Override
-    public Element toDom() {
-        final var rVal = Xml.elementWithChildren(LookupTable.class.getSimpleName());
-        // REMOVE
-        rVal.appendChild(textNode("" + hashCode()));
-        rVal.appendChild(Xml.elementWithChildren("subject", textNode(path().toString())));
-        rVal.appendChild(Xml.elementWithChildren("content", textNode(content.toString())));
-        content.forEach(i -> rVal.appendChild(rawLinesView().get(i).toDom()));
-        if (ENFORCING_UNIT_CONSISTENCY) {
-            content.forEach(i -> requireNotNull(rawLinesView().get(i)));
-        }
-        return rVal;
-    }
-
-    @Override
     public Perspective toPerspective() {
         final var rVal = perspective(LookupTable.class.getSimpleName());
         // REMOVE

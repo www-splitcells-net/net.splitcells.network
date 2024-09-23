@@ -33,11 +33,6 @@ public class AllocationNaturalArgumentation implements MetaData<String> {
     }
 
     @Override
-    public Node toDom() {
-        return perspective(allocationNaturalArgumentation).toDom();
-    }
-
-    @Override
     public Perspective toPerspective() {
         return perspective(allocationNaturalArgumentation);
     }

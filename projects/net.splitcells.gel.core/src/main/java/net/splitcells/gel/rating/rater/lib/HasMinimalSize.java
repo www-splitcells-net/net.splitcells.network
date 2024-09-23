@@ -32,6 +32,7 @@ import org.w3c.dom.Node;
 
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 import static net.splitcells.gel.rating.type.Cost.cost;
@@ -121,7 +122,7 @@ public class HasMinimalSize implements Rater {
 
     @Override
     public List<Domable> arguments() {
-        return list(() -> Xml.elementWithChildren(HasMinimalSize.class.getSimpleName(), Xml.textNode("" + minimalSize)));
+        return list(() -> perspective(HasMinimalSize.class.getSimpleName()).withChild(perspective("" + minimalSize)));
     }
 
     @Override

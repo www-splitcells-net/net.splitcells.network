@@ -90,11 +90,6 @@ public class SimplifiedAnnealingProblem implements Solution {
     }
 
     @Override
-    public Node toDom() {
-        return originalSolution.toDom();
-    }
-
-    @Override
     public List<String> path() {
         return originalSolution.path();
     }

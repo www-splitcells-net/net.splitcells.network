@@ -204,8 +204,8 @@ public class ForAll implements Constraint {
     }
 
     @Override
-    public Element toDom() {
-        return constraint.toDom();
+    public Perspective toPerspective() {
+        return constraint.toPerspective();
     }
 
     @Override

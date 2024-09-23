@@ -172,11 +172,6 @@ public class ConstraintThreadingAspect implements Constraint {
     }
 
     @Override
-    public Node toDom() {
-        return constraintEffect.affectSynchronously(c -> c.toDom());
-    }
-
-    @Override
     public List<String> path() {
         return constraintEffect.affectSynchronously(c -> c.path());
     }
@@ -211,5 +206,10 @@ public class ConstraintThreadingAspect implements Constraint {
     @Override
     public Set<List<String>> paths() {
         return constraintEffect.affectSynchronously(c -> c.paths());
+    }
+
+    @Override
+    public Perspective toPerspective() {
+        return constraintEffect.affectSynchronously(c -> c.toPerspective());
     }
 }

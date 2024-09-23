@@ -299,11 +299,6 @@ public class SolutionI implements Solution {
         return this.problem.path();
     }
 
-    @SuppressWarnings("all")
-    public org.w3c.dom.Node toDom() {
-        return this.problem.toDom();
-    }
-
     @Override
     public Perspective toPerspective() {
         return problem.toPerspective();

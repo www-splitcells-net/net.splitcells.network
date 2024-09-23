@@ -72,14 +72,6 @@ public class MetaAttribute<T> implements Attribute<Class<T>> {
     }
 
     @Override
-    public Element toDom() {
-        return Xml.elementWithChildren(name
-                , Xml.elementWithChildren(getClass().getSimpleName())
-                , Xml.elementWithChildren(type.getSimpleName())
-        );
-    }
-
-    @Override
     public Perspective toPerspective() {
         return perspective(name)
                 .withProperty(Language.NAME.value(), getClass().getSimpleName())

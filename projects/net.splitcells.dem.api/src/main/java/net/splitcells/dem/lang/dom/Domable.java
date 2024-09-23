@@ -23,19 +23,13 @@ import static net.splitcells.dem.utils.NotImplementedYet.TODO_NOT_IMPLEMENTED_YE
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
- * XML descriptions for instances of this interfaces can be created.
+ * Perspective representations for instances of this interfaces can be created.
  * This can be seen as an alternative to String.
  */
 public interface Domable {
-    @Deprecated
-    Node toDom();
 
     /**
-     * This method exists in order to avoid breaking backward compatibility.
-     *
      * @return Perspective Representing The Object
      */
-    default Perspective toPerspective() {
-        return perspective(TODO_NOT_IMPLEMENTED_YET + toString());
-    }
+    Perspective toPerspective();
 }

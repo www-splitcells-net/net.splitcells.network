@@ -102,13 +102,6 @@ public class Profit implements Rating {
     }
 
     @Override
-    public Element toDom() {
-        final org.w3c.dom.Element dom = Xml.elementWithChildren(this.getClass().getSimpleName());
-        dom.appendChild(Xml.textNode("" + value));
-        return dom;
-    }
-
-    @Override
     public Perspective toPerspective() {
         return perspective(this.getClass().getSimpleName()).withChild(perspective("" + value));
     }
