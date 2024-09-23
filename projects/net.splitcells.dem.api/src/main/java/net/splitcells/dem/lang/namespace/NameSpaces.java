@@ -50,6 +50,10 @@ public class NameSpaces {
     public static final NameSpace HTML = nameSpace("html", "http://www.w3.org/1999/xhtml");
     public static final String LINK = "link";
     public static final String URL = "url";
+    /**
+     * <p>Represents string trees with no schema.</p>
+     * <p>TODO Renaming this to something like UNSTRUCTURED would be probably better.</p>
+     */
     public static final NameSpace NATURAL = nameSpace("n", "http://splitcells.net/natural.xsd");
     public static final String VAL = "val";
     public static final String NAME = "name";
