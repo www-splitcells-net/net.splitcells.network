@@ -178,12 +178,11 @@ public class Server {
                              */
                             router.route("/*").handler(BasicAuthHandler.create(fileBasedAuthenticationProvider()));
                         }
-                        /* TODO For multithreading the `router.route("/*").blockingHandler`
-                         * would probably have to be used instead, but it does not work with single thread mode.
-                         * If blockingHandler is used in single threaded mode, the multipart request is sometimes
-                         * not fully downloaded.
+                        /* The BodyHandler ensures, that all parts of a multipart request are available
+                         * at the next handler in a multi threaded context,
+                         * by downloading/receiving all data from the request.
                          */
-                        router.route("/*").handler(routingContext -> {
+                        router.route().handler(BodyHandler.create()).handler(routingContext -> {
                             HttpServerResponse response = routingContext.response();
                             if (routingContext.request().path().endsWith(".form")) {
                                 // TODO Is setChunked needed? What practical function does it have?
