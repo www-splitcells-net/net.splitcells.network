@@ -30,6 +30,7 @@ import io.vertx.core.net.PfxOptions;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BasicAuthHandler;
+import io.vertx.ext.web.handler.BodyHandler;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.execution.Effect;
@@ -78,12 +79,14 @@ public class Server {
         throw constructorIllegal();
     }
 
+    /**
+     * TODO Create stress test.
+     *
+     * @param renderer
+     * @param config
+     * @return
+     */
     public static Service serveToHttpAt(Supplier<Function<String, Optional<BinaryMessage>>> renderer, Config config) {
-        if (true) {
-            // TODO The web server is not thread safe, even if copies are created.
-            config.withIsMultiThreaded(false);
-            return serveToHttpAt(renderer.get(), config);
-        }
         config.withIsMultiThreaded(true);
         return serveToHttpAt(new Function<String, Optional<BinaryMessage>>() {
             final Effect<Function<String, Optional<BinaryMessage>>> effect = effectWorkerPool(renderer, 10);
@@ -132,9 +135,13 @@ public class Server {
                                 .setMaxEventLoopExecuteTime(60L)
                                 .setBlockedThreadCheckInterval(60_000L))
                         .exceptionHandler(t -> Logs.logs().appendError(t));
+                // TODO Use own worker pool/executor provided by Dem.
                 final var deploymentOptions = new DeploymentOptions()
-                        .setMaxWorkerExecuteTimeUnit(TimeUnit.DAYS)
+                        .setWorkerPoolName(Server.class.getName())
+                        .setWorkerPoolSize(20)
+                        .setMaxWorkerExecuteTimeUnit(TimeUnit.DAYS)// TODO Limit blocking.
                         .setMaxWorkerExecuteTime(1L);
+                // TODO Make binaryProcessor thread safe.
                 final var binaryProcessor = new Processor<Perspective, Perspective>() {
                     @Override
                     public Response<Perspective> process(Request<Perspective> request) {
@@ -168,7 +175,10 @@ public class Server {
                         webServerOptions.setPort(config.openPort());
                         final var router = Router.router(vertx);
                         router.route("/favicon.ico").handler(a -> {
-                            // TODO Nothing needs to be done for now, as this is not supported yet.
+                            /* TODO Nothing needs to be done for now, as this is not supported yet,
+                             * but a response is required.
+                             */
+
                         });
                         if (configValue(PasswordAuthenticationEnabled.class)) {
                             /* TODO For multithreading the `router.route("/*").blockingHandler`
@@ -184,35 +194,20 @@ public class Server {
                          */
                         router.route().handler(BodyHandler.create()).handler(routingContext -> {
                             HttpServerResponse response = routingContext.response();
-                            if (routingContext.request().path().endsWith(".form")) {
-                                // TODO Is setChunked needed? What practical function does it have?
-                                routingContext.response().setChunked(true);
-                                routingContext.request().setExpectMultipart(true);
-                            }
                             if (routingContext.request().isExpectMultipart()) {
-                                /* TODO `routingContext.request().bodyHandler(voidz -> {`
-                                 * is required, so that all multipart entries are received from the client.
-                                 * Otherwise, the multipart entries are empty.
-                                 * `endHandler` works in single threaded environments,
-                                 * but does not work in multithreaded environments.
-                                 * On the other hand, the bodyHandler is not enough for multithreading and
-                                 * causes problems with single threaded HTTP server.
-                                 */
-                                routingContext.request().endHandler(voidz -> {
-                                    vertx.<byte[]>executeBlocking((promise) -> {
-                                                final var binaryRequest = parseBinaryRequest(routingContext.request().path()
-                                                        , routingContext.request().formAttributes());
-                                                logs().append(perspective("Processing web server binary request.")
-                                                                .withProperty("Binary request", binaryRequest.data())
-                                                        , LogLevel.DEBUG);
-                                                final var binaryResponse = binaryProcessor
-                                                        .process(binaryRequest);
-                                                response.putHeader("content-type", Formats.JSON.mimeTypes());
-                                                promise.complete(toBytes(binaryResponse.data().createToJsonPrintable()
-                                                        .toJsonString()));
-                                            }, config.isSingleThreaded()
-                                            , (result) -> handleResult(routingContext, result));
-                                });
+                                vertx.<byte[]>executeBlocking((promise) -> {
+                                            final var binaryRequest = parseBinaryRequest(routingContext.request().path()
+                                                    , routingContext.request().formAttributes());
+                                            logs().append(perspective("Processing web server binary request.")
+                                                            .withProperty("Binary request", binaryRequest.data())
+                                                    , LogLevel.DEBUG);
+                                            final var binaryResponse = binaryProcessor
+                                                    .process(binaryRequest);
+                                            response.putHeader("content-type", Formats.JSON.mimeTypes());
+                                            promise.complete(toBytes(binaryResponse.data().createToJsonPrintable()
+                                                    .toJsonString()));
+                                        }, config.isSingleThreaded()
+                                        , (result) -> handleResult(routingContext, result));
                             } else {
                                 vertx.<byte[]>executeBlocking((promise) -> {
                                             try {
@@ -226,6 +221,10 @@ public class Server {
                                                                 .withProperty("Raw request path", routingContext.request().path())
                                                                 .withProperty("Interpreted request path", requestPath)
                                                         , LogLevel.DEBUG);
+                                                /* TODO This style creates duplicate threads. Use a callback for the response instead.
+                                                 * Callbacks would also make the renderer queue requests,
+                                                 * which avoids holding one thread for each parallel request.
+                                                 */
                                                 final var result = renderer.apply(requestPath);
                                                 if (result.isPresent()) {
                                                     response.putHeader("content-type", result.get().getFormat());
@@ -281,7 +280,9 @@ public class Server {
                     throw executionException("Could not start HTTP server.", errors.getFirst());
                 }
             }
-        };
+        }
+
+                ;
     }
 
     private static void handleResult(RoutingContext routingContext, AsyncResult<byte[]> result) {
@@ -327,7 +328,8 @@ public class Server {
      * @return
      */
     @Deprecated
-    public static Service serveAsAuthenticatedHttpsAt(Function<String, Optional<BinaryMessage>> renderer, Config config) {
+    public static Service serveAsAuthenticatedHttpsAt
+    (Function<String, Optional<BinaryMessage>> renderer, Config config) {
         return new Service() {
             Vertx vertx;
 
@@ -354,6 +356,7 @@ public class Server {
                                 .setMaxFormAttributeSize(100_000_000);
                         final var router = Router.router(vertx);
                         router.route("/favicon.ico").handler(a -> {
+                            // TODO
                         });
                         router.route("/*").handler(routingContext -> {
                             HttpServerResponse response = routingContext.response();
