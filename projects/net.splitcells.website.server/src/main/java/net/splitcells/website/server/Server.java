@@ -192,7 +192,7 @@ public class Server {
                          * at the next handler in a multi threaded context,
                          * by downloading/receiving all data from the request.
                          */
-                        router.route().handler(BodyHandler.create()).handler(routingContext -> {
+                        router.route().useNormalizedPath(true).handler(BodyHandler.create()).handler(routingContext -> {
                             HttpServerResponse response = routingContext.response();
                             if (routingContext.request().isExpectMultipart()) {
                                 vertx.<byte[]>executeBlocking((promise) -> {
