@@ -137,7 +137,7 @@ public class Server {
                         .setMaxWorkerExecuteTime(1L);
                 final var binaryProcessor = new Processor<Perspective, Perspective>() {
                     @Override
-                    public synchronized Response<Perspective> process(Request<Perspective> request) {
+                    public Response<Perspective> process(Request<Perspective> request) {
                         return config.processor().process(request);
                     }
                 };
