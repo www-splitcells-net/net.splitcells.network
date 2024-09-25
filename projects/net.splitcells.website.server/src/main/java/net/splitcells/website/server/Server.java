@@ -243,17 +243,17 @@ public class Server {
                         router.errorHandler(500, e -> {
                             logs().appendError(e.failure());
                         });
-                        final var server = vertx.createHttpServer(webServerOptions);
-                        server.requestHandler(router);
-                        server.exceptionHandler(th ->
-                                Logs.logs().appendError(executionException("An error occurred at the HTTP server .", th)));
-                        server.listen((result) -> {
-                            if (result.failed()) {
-                                startPromise.fail(result.cause());
-                            } else {
-                                startPromise.complete();
-                            }
-                        });
+                        vertx.createHttpServer(webServerOptions)
+                                .requestHandler(router)
+                                .exceptionHandler(th ->
+                                        Logs.logs().appendError(executionException("An error occurred at the HTTP server .", th)))
+                                .listen((result) -> {
+                                    if (result.failed()) {
+                                        startPromise.fail(result.cause());
+                                    } else {
+                                        startPromise.complete();
+                                    }
+                                });
                     }
                 }, deploymentOptions);
                 final var deployWaiter = new Semaphore(1);
@@ -280,9 +280,7 @@ public class Server {
                     throw executionException("Could not start HTTP server.", errors.getFirst());
                 }
             }
-        }
-
-                ;
+        };
     }
 
     private static void handleResult(RoutingContext routingContext, AsyncResult<byte[]> result) {
@@ -320,8 +318,8 @@ public class Server {
     }
 
     /**
-     * <p>TODO This is code duplication.</p>
-     * <p>TODO The handlers are out of date. Use the same handlers as {@link #serveToHttpAt(Function, Config)}.</p>
+     * <p>TODO This is code duplication.
+     * Move this functionality into {@link #serveToHttpAt(Function, Config)} via {@link Config}.</p>
      *
      * @param renderer
      * @param config
