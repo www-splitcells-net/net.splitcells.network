@@ -51,6 +51,8 @@ import static org.w3c.dom.Node.ELEMENT_NODE;
 /**
  * Currently XML is used as the base of all documents.
  * If it is not suitable anymore, it will be replaced by {@link net.splitcells.dem.lang.perspective.Perspective}.
+ * Use this only, in order to parse, render and transform XML.
+ * Do not handle XML content in Java code directly via this API or Java's XML API!
  */
 @JavaLegacyArtifact
 public final class Xml {
@@ -104,10 +106,12 @@ public final class Xml {
         return TRANSFORMER;
     }
 
+    @Deprecated
     public static Element elementWithChildren(NameSpace nameSpace, String name) {
         return ROOT_DOCUMENT.createElement(nameSpace.prefixedName(name));
     }
 
+    @Deprecated
     public static Element rElement(NameSpace nameSpace, String name) {
         try {
             final var rVal = ROOT_DOCUMENT.createElement(nameSpace.prefixedName(name));
@@ -118,6 +122,7 @@ public final class Xml {
         }
     }
 
+    @Deprecated
     public static Element elementWithChildren(NameSpace nameSpace, String name, String value) {
         final var rVal = ROOT_DOCUMENT.createElement(nameSpace.prefixedName(name));
         elementWithChildren(rVal, textNode(value));
@@ -134,10 +139,12 @@ public final class Xml {
         return rVal;
     }
 
+    @Deprecated
     public static Node textNode(String text) {
         return ROOT_DOCUMENT.createTextNode(text);
     }
 
+    @Deprecated
     public static Element elementWithChildren(String name) {
         try {
             return ROOT_DOCUMENT.createElement(name);
@@ -147,6 +154,7 @@ public final class Xml {
         }
     }
 
+    @Deprecated
     public static Element elementWithChildren(Element element, Attr... attributes) {
         for (Attr attribute : attributes) {
             element.setAttributeNode(attribute);
@@ -154,32 +162,39 @@ public final class Xml {
         return element;
     }
 
+    @Deprecated
     public static Element element2(String name, Stream<Node> nodes) {
         return elementWithChildren(elementWithChildren(name), nodes.collect(toList()));
     }
 
+    @Deprecated
     public static Element elementWithChildren(String name, Stream<Node> nodes) {
         return elementWithChildren(elementWithChildren(name), nodes.collect(toList()));
     }
 
+    @Deprecated
     public static Element elementWithChildren(String name, Node... nodes) {
         return elementWithChildren(elementWithChildren(name), nodes);
     }
 
+    @Deprecated
     public static Element elementWithChildren(String name, NameSpace nameSpace, Node... nodes) {
         return elementWithChildren(name, nameSpace, asList(nodes));
     }
 
+    @Deprecated
     public static Element elementWithChildren(String name, NameSpace nameSpace, Collection<Node> nodes) {
         final var element = elementWithChildren(name, nameSpace);
         nodes.forEach(node -> element.appendChild(node));
         return element;
     }
 
+    @Deprecated
     public static Element elementWithChildren(Element element, Node... nodes) {
         return elementWithChildren(element, asList(nodes));
     }
 
+    @Deprecated
     public static Element elementWithChildren(Element element, Collection<Node> nodes) {
         for (Node node : nodes) {
             if (node != null) {
@@ -205,12 +220,14 @@ public final class Xml {
         return rVal;
     }
 
+    @Deprecated
     public static Attr attribute(NameSpace nameSpace, String name, String value) {
         final var rVal = ROOT_DOCUMENT.createAttribute(nameSpace.prefixedName(name));
         rVal.setNodeValue(value);
         return rVal;
     }
 
+    @Deprecated
     public static Attr attribute(String name, String value) {
         final var rVal = ROOT_DOCUMENT.createAttribute(name);
         rVal.setNodeValue(value);
@@ -274,6 +291,7 @@ public final class Xml {
         return result.getWriter().toString();
     }
 
+    @Deprecated
     public static Element directChildElementByName(Element element, String name, NameSpace nameSpace) {
         final var nodeList = element.getChildNodes();
         final var directChildrenByName = directChildElementsByName(element, name, nameSpace)
@@ -284,12 +302,14 @@ public final class Xml {
         return directChildrenByName.get(0);
     }
 
+    @Deprecated
     public static Stream<Element> directChildElementsByName(Element element, String name, NameSpace nameSpace) {
         return directChildElements(element)
                 .filter(node -> nameSpace.uri().equals(node.getNamespaceURI()))
                 .filter(node -> node.getLocalName().equals(name));
     }
 
+    @Deprecated
     public static Optional<Element> optionalDirectChildElementsByName(Element element, String name, NameSpace nameSpace) {
         return directChildElements(element)
                 .filter(node -> nameSpace.uri().equals(node.getNamespaceURI()))
@@ -297,12 +317,14 @@ public final class Xml {
                 .findFirst();
     }
 
+    @Deprecated
     public static Stream<Node> directChildNodes(Element element) {
         final var nodeList = element.getChildNodes();
         return IntStream.range(0, nodeList.getLength())
                 .mapToObj(i -> nodeList.item(i));
     }
 
+    @Deprecated
     public static Stream<Element> directChildElements(Element element) {
         return directChildNodes(element)
                 .filter(node -> node.getNodeType() == ELEMENT_NODE)
