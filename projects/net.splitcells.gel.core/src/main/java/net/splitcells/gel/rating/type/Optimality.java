@@ -17,16 +17,15 @@ package net.splitcells.gel.rating.type;
 
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.data.order.Ordering.EQUAL;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
 
 import net.splitcells.dem.data.order.Comparison;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.gel.rating.framework.Rating;
-import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.data.order.Ordering;
 
 /**
@@ -96,7 +95,7 @@ public class Optimality implements Rating {
     }
 
     @Override
-    public Perspective toPerspective() {
+    public Tree toPerspective() {
         return perspective(this.getClass().getSimpleName()).withChild(perspective("" + value));
     }
 

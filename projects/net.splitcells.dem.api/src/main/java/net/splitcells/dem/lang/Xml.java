@@ -18,13 +18,13 @@ package net.splitcells.dem.lang;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.namespace.NameSpace;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.utils.ExecutionException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -50,7 +50,7 @@ import static org.w3c.dom.Node.ELEMENT_NODE;
 
 /**
  * Currently XML is used as the base of all documents.
- * If it is not suitable anymore, it will be replaced by {@link net.splitcells.dem.lang.perspective.Perspective}.
+ * If it is not suitable anymore, it will be replaced by {@link Tree}.
  * Use this only, in order to parse, render and transform XML.
  * Do not handle XML content in Java code directly via this API or Java's XML API!
  */

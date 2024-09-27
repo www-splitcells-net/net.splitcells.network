@@ -25,7 +25,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
 import static net.splitcells.dem.lang.namespace.NameSpaces.GEL;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -47,11 +47,10 @@ import java.util.stream.Stream;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.namespace.NameSpaces;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.constraint.QueryI;
@@ -476,7 +475,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
     }
 
     @Override
-    public Perspective toPerspective() {
+    public Tree toPerspective() {
         final var dom = perspective(type().getSimpleName());
         if (!arguments().isEmpty()) {
             arguments().forEach(arg -> dom.withProperty(ARGUMENTATION.value(), arg.toPerspective()));
@@ -500,7 +499,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
     }
 
     @Override
-    public Perspective toPerspective(Set<GroupId> groups) {
+    public Tree toPerspective(Set<GroupId> groups) {
         final var dom = perspective(type().getSimpleName());
         if (!arguments().isEmpty()) {
             arguments().forEach(arg -> dom.withProperty(ARGUMENTATION.value(), arg.toPerspective()));
@@ -556,7 +555,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
     }
 
     @Override
-    public Optional<Perspective> naturalArgumentation(GroupId group) {
+    public Optional<Tree> naturalArgumentation(GroupId group) {
         final var naturalArgumentation = lineProcessing
                 .columnView(INCOMING_CONSTRAINT_GROUP)
                 .lookup(group)
@@ -576,7 +575,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
     }
 
     @Override
-    public Optional<Perspective> naturalArgumentation(Line line, GroupId group, Predicate<AllocationRating> allocationSelector) {
+    public Optional<Tree> naturalArgumentation(Line line, GroupId group, Predicate<AllocationRating> allocationSelector) {
         final var localArgumentation = localNaturalArgumentation(line, group, allocationSelector);
         final var childrenArgumentation = childrenArgumentation(line, group, allocationSelector);
         if (localArgumentation.isEmpty() && childrenArgumentation.isEmpty()) {
@@ -591,7 +590,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         }
     }
 
-    private List<Perspective> childrenArgumentation
+    private List<Tree> childrenArgumentation
             (Line line, GroupId group, Predicate<AllocationRating> allocationSelector) {
         return lineProcessing
                 .columnView(LINE)

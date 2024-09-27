@@ -15,9 +15,7 @@
  */
 package net.splitcells.website.server.project;
 
-import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.lang.annotations.ReturnsThis;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 
 import java.util.Optional;
 
@@ -35,9 +33,9 @@ public class LayoutConfig {
     private final String path;
     private Optional<String> title = Optional.empty();
 
-    private Optional<Perspective> localPathContext = Optional.empty();
+    private Optional<Tree> localPathContext = Optional.empty();
 
-    private Optional<Perspective> relevantLocalPathContext = Optional.empty();
+    private Optional<Tree> relevantLocalPathContext = Optional.empty();
 
     private LayoutConfig(String path) {
         this.path = path;
@@ -56,7 +54,7 @@ public class LayoutConfig {
      * @return These are all paths, that are children, to {@link #path},
      * and which can be requested from relevant {@link Renderer}.
      */
-    public Optional<Perspective> localPathContext() {
+    public Optional<Tree> localPathContext() {
         return localPathContext;
     }
 
@@ -66,7 +64,7 @@ public class LayoutConfig {
      * which can be requested from relevant {@link Renderer} and
      * which are relevant to the user.
      */
-    public Optional<Perspective> relevantLocalPathContext() {
+    public Optional<Tree> relevantLocalPathContext() {
         return relevantLocalPathContext;
     }
 
@@ -81,7 +79,7 @@ public class LayoutConfig {
      * @param localPathContext The Local Path Context
      * @return This
      */
-    public LayoutConfig withLocalPathContext(Optional<Perspective> localPathContext) {
+    public LayoutConfig withLocalPathContext(Optional<Tree> localPathContext) {
         this.localPathContext = localPathContext;
         return this;
     }
@@ -92,7 +90,7 @@ public class LayoutConfig {
      * @param relevantLocalPathContext The Relevant Local Path Context
      * @return This
      */
-    public LayoutConfig withRelevantLocalPathContext(Optional<Perspective> relevantLocalPathContext) {
+    public LayoutConfig withRelevantLocalPathContext(Optional<Tree> relevantLocalPathContext) {
         this.relevantLocalPathContext = relevantLocalPathContext;
         return this;
     }

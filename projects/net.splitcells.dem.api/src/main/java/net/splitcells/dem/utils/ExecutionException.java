@@ -16,8 +16,7 @@
 package net.splitcells.dem.utils;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.lang.annotations.JavaLegacyBody;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 
 @JavaLegacyArtifact
 public class ExecutionException extends RuntimeException {
@@ -27,7 +26,7 @@ public class ExecutionException extends RuntimeException {
     }
 
     /**
-     * TODO Support {@link net.splitcells.dem.lang.perspective.Perspective} as message.
+     * TODO Support {@link Tree} as message.
      *
      * @param message This message describes reason for the exception.
      * @return This is an exception, that can be thrown in order to abort the execution.
@@ -36,11 +35,11 @@ public class ExecutionException extends RuntimeException {
         return new ExecutionException(message);
     }
 
-    public static ExecutionException executionException(Perspective message) {
+    public static ExecutionException executionException(Tree message) {
         return new ExecutionException(message.toXmlString());
     }
 
-    public static ExecutionException executionException(Perspective message, Throwable t) {
+    public static ExecutionException executionException(Tree message, Throwable t) {
         return new ExecutionException(message.toXmlString(), t);
     }
 

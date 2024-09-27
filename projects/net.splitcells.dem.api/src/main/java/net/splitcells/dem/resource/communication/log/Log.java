@@ -19,17 +19,16 @@ import net.splitcells.dem.data.set.list.ListWA;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.dom.Domable;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.object.Discoverable;
 
 import java.util.Optional;
 
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.resource.communication.log.LogMessageI.logMessage;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
-import static net.splitcells.dem.utils.NotImplementedYet.TODO_NOT_IMPLEMENTED_YET;
 import static net.splitcells.dem.utils.StringUtils.throwableToString;
 
 /**
@@ -39,7 +38,7 @@ import static net.splitcells.dem.utils.StringUtils.throwableToString;
  * In other words, this may be should be implemented as a general
  * functionality in order to provide one message one line logs.</p>
  */
-public interface Log extends ListWA<LogMessage<Perspective>> {
+public interface Log extends ListWA<LogMessage<Tree>> {
 
     default Log append(String name) {
         return append(logMessage(perspective(name), NO_CONTEXT, LogLevel.DEBUG));
@@ -73,8 +72,8 @@ public interface Log extends ListWA<LogMessage<Perspective>> {
         return append(logMessage(domable.toPerspective(), NO_CONTEXT, logLevel));
     }
 
-    default Log append(Perspective perspective, LogLevel logLevel) {
-        return append(logMessage(perspective, NO_CONTEXT, logLevel));
+    default Log append(Tree tree, LogLevel logLevel) {
+        return append(logMessage(tree, NO_CONTEXT, logLevel));
     }
 
     default Log append(Domable content, Discoverable context, LogLevel logLevel) {
@@ -85,7 +84,7 @@ public interface Log extends ListWA<LogMessage<Perspective>> {
         return append(logMessage(content.toPerspective(), context.orElse(NO_CONTEXT), logLevel));
     }
 
-    default Log append(Perspective content, Discoverable context, LogLevel logLevel) {
+    default Log append(Tree content, Discoverable context, LogLevel logLevel) {
         return append(logMessage(content, context, logLevel));
     }
 
@@ -139,7 +138,7 @@ public interface Log extends ListWA<LogMessage<Perspective>> {
      * @param warning
      * @return
      */
-    default Log appendWarning(Perspective warning) {
+    default Log appendWarning(Tree warning) {
         final var exception = executionException("warning");
         final var message = perspective("warning");
         message.withProperty("message", message);
@@ -152,7 +151,7 @@ public interface Log extends ListWA<LogMessage<Perspective>> {
         return appendWarning(perspective(message), throwable);
     }
 
-    default Log appendWarning(Perspective message, Throwable throwable) {
+    default Log appendWarning(Tree message, Throwable throwable) {
         final var throwablePerspective = perspective("throwable");
         throwablePerspective.withProperty("message", throwable.getMessage());
         throwablePerspective.withProperty("stack-trace", throwableToString(throwable));

@@ -15,10 +15,9 @@
  */
 package net.splitcells.dem.lang.dom;
 
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.dem.utils.NotImplementedYet.TODO_NOT_IMPLEMENTED_YET;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
@@ -30,5 +29,5 @@ public interface Domable {
     /**
      * @return Perspective Representing The Object
      */
-    Perspective toPerspective();
+    Tree toPerspective();
 }

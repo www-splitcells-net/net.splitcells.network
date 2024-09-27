@@ -36,7 +36,7 @@ import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.execution.Effect;
 import net.splitcells.dem.execution.Processing;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.Logs;
 import net.splitcells.website.Formats;
@@ -62,7 +62,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.execution.EffectWorkerPool.effectWorkerPool;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.log.LogLevel.WARNING;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
@@ -142,9 +142,9 @@ public class Server {
                         .setMaxWorkerExecuteTimeUnit(TimeUnit.DAYS)// TODO Limit blocking.
                         .setMaxWorkerExecuteTime(1L);
                 // TODO Make binaryProcessor thread safe.
-                final var binaryProcessor = new Processor<Perspective, Perspective>() {
+                final var binaryProcessor = new Processor<Tree, Tree>() {
                     @Override
-                    public Response<Perspective> process(Request<Perspective> request) {
+                    public Response<Tree> process(Request<Tree> request) {
                         return config.processor().process(request);
                     }
                 };
@@ -304,7 +304,7 @@ public class Server {
         }
     }
 
-    private static Request<Perspective> parseBinaryRequest(String path, MultiMap multiMap) {
+    private static Request<Tree> parseBinaryRequest(String path, MultiMap multiMap) {
         final var pathSplit = Lists.listWithValuesOf(path.split("/"));
         if (!pathSplit.isEmpty() && "".equals(pathSplit.get(0))) {
             pathSplit.removeAt(0);

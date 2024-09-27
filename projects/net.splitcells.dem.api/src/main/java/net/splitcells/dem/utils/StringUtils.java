@@ -20,7 +20,7 @@ import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import java.nio.charset.StandardCharsets;
 import java.util.stream.IntStream;
 
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 

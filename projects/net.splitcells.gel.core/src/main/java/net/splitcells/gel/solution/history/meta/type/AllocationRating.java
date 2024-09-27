@@ -15,11 +15,10 @@
  */
 package net.splitcells.gel.solution.history.meta.type;
 
-import net.splitcells.dem.lang.Xml;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.gel.rating.framework.Rating;
 
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 
 public class AllocationRating implements MetaData<Rating> {
 
@@ -39,7 +38,7 @@ public class AllocationRating implements MetaData<Rating> {
     }
 
     @Override
-    public Perspective toPerspective() {
+    public Tree toPerspective() {
         return perspective(getClass().getSimpleName()).withChild(rating.toPerspective());
     }
 }

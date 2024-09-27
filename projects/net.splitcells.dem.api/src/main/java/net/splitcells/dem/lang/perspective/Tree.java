@@ -15,26 +15,19 @@
  */
 package net.splitcells.dem.lang.perspective;
 
-import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.lang.Xml;
-import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.namespace.NameSpace;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.resource.communication.Sender;
-import net.splitcells.dem.utils.StringUtils;
-import org.assertj.core.api.Assertions;
 
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import static net.splitcells.dem.data.atom.Bools.bool;
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
@@ -43,17 +36,18 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.perspective.JsonConfig.jsonConfig;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
 import static net.splitcells.dem.utils.BinaryUtils.binaryOutputStream;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
-import static net.splitcells.dem.utils.StringUtils.multiple;
 import static net.splitcells.dem.utils.StringUtils.stringBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * <p>Interface for adhoc and dynamic trees.</p>
+ * <p>Interface for adhoc and dynamic trees.
+ * Originally, this was called Perspective,
+ * as this has its origins from the `net.splitcells.symbiosis` project.</p>
  * <p>
  * There is no distinction between text, attributes and elements like in XML, as there is no
  * actual meaning in this distinction. In XML this is used for rendering and
@@ -71,40 +65,40 @@ import static org.assertj.core.api.Assertions.assertThat;
  * A perspective has a value, if it only contains exactly one value.
  * A perspective has children, if it contains multiple values.</p>
  */
-public interface Perspective extends PerspectiveView {
+public interface Tree extends TreeView {
 
     Pattern _VALID_XML_NAME = Pattern.compile("[a-zA-Z][a-zA-Z0-9-_\\.]*");
 
-    List<Perspective> children();
+    List<Tree> children();
 
-    default Perspective withText(String text) {
+    default Tree withText(String text) {
         return withValues(perspective(text, STRING));
     }
 
-    default Perspective withProperty(String name, NameSpace nameSpace, String value) {
+    default Tree withProperty(String name, NameSpace nameSpace, String value) {
         return withValue(perspective(name, nameSpace)
                 .withValue(perspective(value, STRING)));
     }
 
-    default Perspective withProperty(String name, NameSpace nameSpace, Perspective value) {
+    default Tree withProperty(String name, NameSpace nameSpace, Tree value) {
         return withValue(perspective(name, nameSpace).withValue(value));
     }
 
-    default Perspective withProperty(String name, String value) {
+    default Tree withProperty(String name, String value) {
         return withValue(perspective(name)
                 .withValue(perspective(value, STRING)));
     }
 
-    default Perspective withProperty(String name, Perspective value) {
+    default Tree withProperty(String name, Tree value) {
         return withValue(perspective(name).withValue(value));
     }
 
-    default Perspective withValues(Perspective... args) {
+    default Tree withValues(Tree... args) {
         children().addAll(list(args));
         return this;
     }
 
-    default List<Perspective> propertiesWithValue(String name, NameSpace nameSpace, String value) {
+    default List<Tree> propertiesWithValue(String name, NameSpace nameSpace, String value) {
         return propertyInstances(name, nameSpace).stream()
                 .filter(property -> property.value().get().name().equals(value))
                 .collect(toList());
@@ -133,7 +127,7 @@ public interface Perspective extends PerspectiveView {
                 .collect(toList());
     }
 
-    default List<Perspective> propertyInstances(String name, NameSpace nameSpace) {
+    default List<Tree> propertyInstances(String name, NameSpace nameSpace) {
         return children().stream()
                 .filter(property -> name.equals(property.name()))
                 .filter(property -> nameSpace.equals(property.nameSpace()))
@@ -142,14 +136,14 @@ public interface Perspective extends PerspectiveView {
                 .collect(Lists.toList());
     }
 
-    default List<Perspective> propertyInstances(String name) {
+    default List<Tree> propertyInstances(String name) {
         return children().stream()
                 .filter(property -> name.equals(property.name()))
                 .filter(property -> property.children().size() == 1)
                 .collect(Lists.toList());
     }
 
-    default Optional<Perspective> propertyInstance(String name, NameSpace nameSpace) {
+    default Optional<Tree> propertyInstance(String name, NameSpace nameSpace) {
         final var propertyInstances = propertyInstances(name, nameSpace);
         assertThat(propertyInstances).hasSizeLessThan(2);
         if (propertyInstances.isEmpty()) {
@@ -158,7 +152,7 @@ public interface Perspective extends PerspectiveView {
         return Optional.of(propertyInstances.get(0));
     }
 
-    default Optional<Perspective> propertyInstance(String name) {
+    default Optional<Tree> propertyInstance(String name) {
         final var propertyInstances = propertyInstances(name);
         assertThat(propertyInstances).hasSizeLessThan(2);
         if (propertyInstances.isEmpty()) {
@@ -167,7 +161,7 @@ public interface Perspective extends PerspectiveView {
         return Optional.of(propertyInstances.get(0));
     }
 
-    default Optional<Perspective> childNamed(String name, NameSpace nameSpace) {
+    default Optional<Tree> childNamed(String name, NameSpace nameSpace) {
         final var children = children().stream()
                 .filter(child -> nameSpace.equals(child.nameSpace()) && name.equals(child.name()))
                 .collect(toList());
@@ -177,52 +171,52 @@ public interface Perspective extends PerspectiveView {
         return Optional.of(children.get(0));
     }
 
-    default List<Perspective> namedChildren(String name) {
+    default List<Tree> namedChildren(String name) {
         return children().stream()
                 .filter(child -> name.equals(child.name()))
                 .collect(toList());
     }
 
-    default Perspective namedChild(String name) {
+    default Tree namedChild(String name) {
         return namedChildren(name).get(0);
     }
 
-    default Perspective child(int index) {
+    default Tree child(int index) {
         return children().get(index);
     }
 
-    default Perspective withChildren(Perspective... argChildren) {
+    default Tree withChildren(Tree... argChildren) {
         Stream.of(argChildren).forEach(children()::add);
         return this;
     }
 
-    default Perspective withChildren(List<Perspective> argChildren) {
+    default Tree withChildren(List<Tree> argChildren) {
         argChildren.forEach(children()::add);
         return this;
     }
 
-    default Perspective withChildren(Stream<Perspective> argChildren) {
+    default Tree withChildren(Stream<Tree> argChildren) {
         argChildren.forEach(children()::add);
         return this;
     }
 
-    default Perspective withChild(Perspective arg) {
+    default Tree withChild(Tree arg) {
         children().add(arg);
         return this;
     }
 
     @Deprecated
-    default Perspective withValue(Perspective arg) {
+    default Tree withValue(Tree arg) {
         children().add(arg);
         return this;
     }
 
     @ReturnsThis
-    default Perspective withPath(Perspective path, String propertyName, NameSpace nameSpace) {
+    default Tree withPath(Tree path, String propertyName, NameSpace nameSpace) {
         return withPath(this, path, propertyName, nameSpace);
     }
 
-    default Perspective withPath(Perspective... path) {
+    default Tree withPath(Tree... path) {
         var current = this;
         for (int i = 0; i < path.length; ++i) {
             final var next = path[i];
@@ -232,7 +226,7 @@ public interface Perspective extends PerspectiveView {
         return this;
     }
 
-    private static Perspective withPath(Perspective current, Perspective path, String propertyName, NameSpace nameSpace) {
+    private static Tree withPath(Tree current, Tree path, String propertyName, NameSpace nameSpace) {
         final var propertyInstances = path.propertyInstances(propertyName, nameSpace);
         if (propertyInstances.isEmpty()) {
             return current;
@@ -243,7 +237,7 @@ public interface Perspective extends PerspectiveView {
         final var propertyHosters = current.children().stream()
                 .filter(child -> child.propertiesWithValue(propertyName, nameSpace, propertyValue).size() == 1)
                 .collect(toList());
-        final Perspective child;
+        final Tree child;
         if (propertyHosters.isEmpty()) {
             // HACK Use generic rendering specifics based on argument.
             child = perspective(NameSpaces.VAL, NATURAL)
@@ -270,18 +264,18 @@ public interface Perspective extends PerspectiveView {
                 htmlString += "<" + name() + "/>";
             } else {
                 htmlString += "<" + name() + ">";
-                htmlString += children().stream().map(Perspective::toHtmlString).reduce((a, b) -> a + b).orElse("");
+                htmlString += children().stream().map(Tree::toHtmlString).reduce((a, b) -> a + b).orElse("");
                 htmlString += "</" + name() + ">";
             }
         } else if (nameSpace().equals(STRING)) {
             htmlString += name();
-            htmlString += children().stream().map(Perspective::toHtmlString).reduce((a, b) -> a + b).orElse("");
+            htmlString += children().stream().map(Tree::toHtmlString).reduce((a, b) -> a + b).orElse("");
         } else if (nameSpace().equals(NATURAL) || nameSpace().equals(DEN)) {
             if (children().isEmpty()) {
                 htmlString += "<" + name() + "/>";
             } else {
                 htmlString += "<" + name() + ">";
-                htmlString += children().stream().map(Perspective::toHtmlString).reduce((a, b) -> a + b).orElse("");
+                htmlString += children().stream().map(Tree::toHtmlString).reduce((a, b) -> a + b).orElse("");
                 htmlString += "</" + name() + ">";
             }
         } else {
@@ -363,19 +357,19 @@ public interface Perspective extends PerspectiveView {
         return xmlString;
     }
 
-    default void visit(Consumer<Perspective> visitor) {
+    default void visit(Consumer<Tree> visitor) {
         visitor.accept(this);
         children().forEach(c -> c.visit(visitor));
     }
 
-    default Perspective withXmlAttribute(String attributeName, String attributeValue, NameSpace nameSpace) {
+    default Tree withXmlAttribute(String attributeName, String attributeValue, NameSpace nameSpace) {
         return withChild(perspective("attribute", XML_SYNTAX)
                 .withChildren(perspective(attributeName, nameSpace), perspective(attributeValue)));
     }
 
     /**
      * @param xmlConfig This configures the output.
-     * @return Returns the XML element name of the current {@link Perspective} optionally with a prefix and/or namespace declarations.
+     * @return Returns the XML element name of the current {@link Tree} optionally with a prefix and/or namespace declarations.
      * The String ends with a whitespace.
      */
     default String toXmlElementStartName(XmlConfig xmlConfig) {
@@ -403,7 +397,7 @@ public interface Perspective extends PerspectiveView {
 
     /**
      * @param xmlConfig This configures the output.
-     * @return Returns the XML element name of the current {@link Perspective} optionally with a prefix.
+     * @return Returns the XML element name of the current {@link Tree} optionally with a prefix.
      */
     default String toXmlElementName(XmlConfig xmlConfig) {
         return nameSpace().defaultPrefix() + ":" + name();
@@ -471,7 +465,7 @@ public interface Perspective extends PerspectiveView {
                     + " "
                     + nameSpaceDeclarations(nameSpaces)
                     + ">";
-            xmlString += children().stream().map(Perspective::toXmlStringWithPrefixes).reduce((a, b) -> a + b).orElse("");
+            xmlString += children().stream().map(Tree::toXmlStringWithPrefixes).reduce((a, b) -> a + b).orElse("");
             xmlString += "</" + nameSpace().defaultPrefix() + ":" + name() + ">";
         }
         return xmlString;
@@ -503,7 +497,7 @@ public interface Perspective extends PerspectiveView {
                 xmlString += xmlName();
             } else {
                 xmlString += "<d:val name=\"" + xmlName() + "\">";
-                xmlString += children().stream().map(Perspective::toXmlStringWithPrefixes).reduce((a, b) -> a + b).orElse("");
+                xmlString += children().stream().map(Tree::toXmlStringWithPrefixes).reduce((a, b) -> a + b).orElse("");
                 xmlString += "</d:val>";
             }
         } else if (nameSpace().equals(HTML)) {
@@ -511,18 +505,18 @@ public interface Perspective extends PerspectiveView {
                 xmlString += "<x:" + name() + "/>";
             } else {
                 xmlString += "<x:" + name() + ">";
-                xmlString += children().stream().map(Perspective::toXmlStringWithPrefixes).reduce((a, b) -> a + b).orElse("");
+                xmlString += children().stream().map(Tree::toXmlStringWithPrefixes).reduce((a, b) -> a + b).orElse("");
                 xmlString += "</x:" + name() + ">";
             }
         } else if (nameSpace().equals(STRING)) {
             xmlString += xmlName();
-            xmlString += children().stream().map(Perspective::toXmlStringWithPrefixes).reduce((a, b) -> a + b).orElse("");
+            xmlString += children().stream().map(Tree::toXmlStringWithPrefixes).reduce((a, b) -> a + b).orElse("");
         } else if (nameSpace().equals(NATURAL)) {
             if (children().isEmpty()) {
                 xmlString += "<n:" + name() + "/>";
             } else {
                 xmlString += "<n:" + name() + ">";
-                xmlString += children().stream().map(Perspective::toXmlStringWithPrefixes).reduce((a, b) -> a + b).orElse("");
+                xmlString += children().stream().map(Tree::toXmlStringWithPrefixes).reduce((a, b) -> a + b).orElse("");
                 xmlString += "</n:" + name() + ">";
             }
         } else if (nameSpace().equals(DEN)) {
@@ -530,7 +524,7 @@ public interface Perspective extends PerspectiveView {
                 xmlString += "<d:" + name() + "/>";
             } else {
                 xmlString += "<d:" + name() + ">";
-                xmlString += children().stream().map(Perspective::toXmlStringWithPrefixes).reduce((a, b) -> a + b).orElse("");
+                xmlString += children().stream().map(Tree::toXmlStringWithPrefixes).reduce((a, b) -> a + b).orElse("");
                 xmlString += "</d:" + name() + ">";
             }
         } else {
@@ -538,7 +532,7 @@ public interface Perspective extends PerspectiveView {
                 xmlString += "<" + nameSpace().defaultPrefix() + ":" + name() + "/>";
             } else {
                 xmlString += "<" + nameSpace().defaultPrefix() + ":" + name() + ">";
-                xmlString += children().stream().map(Perspective::toXmlStringWithPrefixes).reduce((a, b) -> a + b).orElse("");
+                xmlString += children().stream().map(Tree::toXmlStringWithPrefixes).reduce((a, b) -> a + b).orElse("");
                 xmlString += "</" + nameSpace().defaultPrefix() + ":" + name() + ">";
             }
         }
@@ -546,7 +540,7 @@ public interface Perspective extends PerspectiveView {
     }
 
     @ReturnsThis
-    default Perspective extendWith(List<String> path) {
+    default Tree extendWith(List<String> path) {
         if (path.isEmpty()) {
             return this;
         }
@@ -585,7 +579,7 @@ public interface Perspective extends PerspectiveView {
         return htmlList;
     }
 
-    default Perspective createToJsonPrintable() {
+    default Tree createToJsonPrintable() {
         if (name().isEmpty()) {
             return this;
         }
@@ -635,7 +629,7 @@ public interface Perspective extends PerspectiveView {
                 } else {
                     require(isThisANamedDictionary);
                     if (config.isTopElement()) {
-                        throw executionException("Top " + Perspective.class.getSimpleName() + " is not allowed to have a name, as JSON does not support a name for the top element.");
+                        throw executionException("Top " + Tree.class.getSimpleName() + " is not allowed to have a name, as JSON does not support a name for the top element.");
                     } else {
                         jsonString.append("\"" + encodeJsonString(name()) + "\":{");
                     }
@@ -733,7 +727,7 @@ public interface Perspective extends PerspectiveView {
         }
     }
 
-    default Perspective subtree(List<String> path) {
+    default Tree subtree(List<String> path) {
         if (path.isEmpty()) {
             return this;
         }
@@ -745,7 +739,7 @@ public interface Perspective extends PerspectiveView {
                 .subtree(path);
     }
 
-    default Perspective subtreeByName(String... path) {
+    default Tree subtreeByName(String... path) {
         if (path.length == 0) {
             return this;
         }
@@ -765,11 +759,11 @@ public interface Perspective extends PerspectiveView {
     }
 
     /**
-     * TODO It would be best to return a copy of {@link Perspective} instead of {@code this}.
+     * TODO It would be best to return a copy of {@link Tree} instead of {@code this}.
      *
      * @return return
      */
-    default Perspective toPerspective() {
+    default Tree toPerspective() {
         return this;
     }
 
@@ -780,7 +774,7 @@ public interface Perspective extends PerspectiveView {
      * @return
      */
     @Deprecated
-    default Optional<List<Perspective>> pathOfDenValueTree(String stringPath) {
+    default Optional<List<Tree>> pathOfDenValueTree(String stringPath) {
         return pathOfDenValueTree(listWithValuesOf(stringPath.split("/")));
     }
 
@@ -791,9 +785,9 @@ public interface Perspective extends PerspectiveView {
      * @return
      */
     @Deprecated
-    default Optional<List<Perspective>> pathOfDenValueTree(List<String> stringPath) {
-        final List<Perspective> path = listWithValuesOf();
-        Perspective currentNode = this;
+    default Optional<List<Tree>> pathOfDenValueTree(List<String> stringPath) {
+        final List<Tree> path = listWithValuesOf();
+        Tree currentNode = this;
         while (stringPath.hasElements()) {
             final var currentPathElement = stringPath.remove(0);
             final var nextPathPerspective = currentNode.children().stream()
@@ -815,23 +809,23 @@ public interface Perspective extends PerspectiveView {
         return Optional.of(path);
     }
 
-    default Optional<List<Perspective>> pathOfValueTree(String... stringPath) {
+    default Optional<List<Tree>> pathOfValueTree(String... stringPath) {
         return pathOfValueTree(PathQueryConfig.pathQueryConfig(), listWithValuesOf(stringPath));
     }
 
-    default Optional<List<Perspective>> pathOfValueTree(PathQueryConfig config, String... stringPath) {
+    default Optional<List<Tree>> pathOfValueTree(PathQueryConfig config, String... stringPath) {
         return pathOfValueTree(config, listWithValuesOf(stringPath));
     }
 
     /**
-     * The {@link NameSpace} of the {@link Perspective} is ignored in this method.
+     * The {@link NameSpace} of the {@link Tree} is ignored in this method.
      *
-     * @param stringPath List of {@link Perspective#name()} describing a path starting with {@code this}.
-     * @return The list of {@link Perspective} corresponding to a path
+     * @param stringPath List of {@link Tree#name()} describing a path starting with {@code this}.
+     * @return The list of {@link Tree} corresponding to a path
      */
-    default Optional<List<Perspective>> pathOfValueTree(PathQueryConfig config, List<String> stringPath) {
-        final List<Perspective> path = listWithValuesOf();
-        Perspective currentNode = this;
+    default Optional<List<Tree>> pathOfValueTree(PathQueryConfig config, List<String> stringPath) {
+        final List<Tree> path = listWithValuesOf();
+        Tree currentNode = this;
         if (config.checkRootNode()) {
             if (!name().equals(stringPath.remove(0))) {
                 return Optional.empty();

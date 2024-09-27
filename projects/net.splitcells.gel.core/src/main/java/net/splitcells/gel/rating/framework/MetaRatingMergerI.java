@@ -19,7 +19,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.data.set.map.Maps.typeMapping;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
@@ -28,9 +28,7 @@ import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.lang.Xml;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.dem.data.order.Ordering;
 import net.splitcells.dem.data.set.map.Map;
@@ -122,7 +120,7 @@ public class MetaRatingMergerI implements MetaRatingMerger {
     }
 
     @Override
-    public Perspective toPerspective() {
+    public Tree toPerspective() {
         return perspective(MetaRatingMerger.class.getSimpleName());
     }
 }

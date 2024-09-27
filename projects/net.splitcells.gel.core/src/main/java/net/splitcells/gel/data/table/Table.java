@@ -24,9 +24,8 @@ import static net.splitcells.dem.lang.CsvDocument.csvDocument;
 import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_OFFICE;
 import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_TABLE;
 import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_TEXT;
-import static net.splitcells.dem.lang.Xml.*;
 import static net.splitcells.dem.lang.namespace.NameSpaces.HTML;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.MathUtils.floorToInt;
 import static net.splitcells.dem.utils.MathUtils.modulus;
@@ -40,10 +39,8 @@ import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.utils.MathUtils;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.column.ColumnView;
@@ -246,7 +243,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
                         .reduce(true, (a, b) -> a && b));
     }
 
-    default Perspective toHtmlTable() {
+    default Tree toHtmlTable() {
         final var htmlTable = perspective("table", HTML);
         final var header = perspective("tr", HTML);
         header.withChild(perspective("th", HTML).withText("index"));
@@ -262,7 +259,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
         return htmlTable;
     }
 
-    default Perspective toFods() {
+    default Tree toFods() {
         final var fods = perspective("document", FODS_OFFICE)
                 .withXmlAttribute("mimetype", "application/vnd.oasis.opendocument.spreadsheet", FODS_OFFICE);
         final var body = perspective("body", FODS_OFFICE);

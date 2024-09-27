@@ -16,7 +16,7 @@
 package net.splitcells.website.server.projects.extension;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.projects.ProjectsRendererI;
@@ -29,7 +29,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 public interface ProjectsRendererExtension {
     Optional<BinaryMessage> renderFile(String path, @Deprecated ProjectsRendererI projectsRenderer, Config config);
 
-    default Perspective extendProjectLayout(Perspective layout, @Deprecated ProjectsRendererI projectsRenderer) {
+    default Tree extendProjectLayout(Tree layout, @Deprecated ProjectsRendererI projectsRenderer) {
         return layout;
     }
 

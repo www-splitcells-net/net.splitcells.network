@@ -20,11 +20,9 @@ import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.lang.namespace.NameSpaces.GEL;
 import static net.splitcells.dem.lang.namespace.NameSpaces.HTML;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.dem.lang.perspective.XmlConfig.xmlConfig;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
@@ -41,15 +39,13 @@ import java.util.function.Predicate;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.lang.perspective.XmlConfig;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.gel.solution.Solution;
-import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.utils.reflection.PubliclyConstructed;
@@ -133,19 +129,19 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
      *
      * @return
      */
-    default Optional<Perspective> naturalArgumentation() {
+    default Optional<Tree> naturalArgumentation() {
         return naturalArgumentation(injectionGroup());
     }
 
-    Optional<Perspective> naturalArgumentation(GroupId group);
+    Optional<Tree> naturalArgumentation(GroupId group);
 
     Optional<Discoverable> mainContext();
 
-    default Optional<Perspective> naturalArgumentation(Line subject, GroupId group) {
+    default Optional<Tree> naturalArgumentation(Line subject, GroupId group) {
         return naturalArgumentation(subject, group, AllocationSelector::selectLinesWithCost);
     }
 
-    Optional<Perspective> naturalArgumentation(Line line, GroupId group, Predicate<AllocationRating> allocationSelector);
+    Optional<Tree> naturalArgumentation(Line line, GroupId group, Predicate<AllocationRating> allocationSelector);
 
     default Rating rating(Set<GroupId> groups) {
         return groups.stream().
@@ -205,7 +201,7 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
 
     Table lineProcessing();
 
-    Perspective toPerspective(Set<GroupId> groups);
+    Tree toPerspective(Set<GroupId> groups);
 
     @Deprecated
     default Set<GroupId> childGroups(Line lines, Constraint subject) {
@@ -247,7 +243,7 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
                 .collect(toSetOfUniques());
     }
 
-    default Perspective graph() {
+    default Tree graph() {
         final var graph = perspective(type().getSimpleName());
         if (!arguments().isEmpty()) {
             arguments().forEach(arg -> graph.withProperty(ARGUMENTATION.value(), arg.toPerspective()));
@@ -317,14 +313,14 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
         registeredAdditions.entrySet().forEach(e -> e.getValue().forEach(l -> registerAdditions(e.getKey(), l)));
     }
 
-    default Perspective renderToHtml() {
+    default Tree renderToHtml() {
         final var html = perspective("ol", HTML);
         html.withChild(renderCurrentNodeToHtml());
         html.withChildren(childrenView().stream().map(Constraint::renderToHtml));
         return html;
     }
 
-    default Perspective renderCurrentNodeToHtml() {
+    default Tree renderCurrentNodeToHtml() {
         final var html = perspective("li", HTML);
         html.withChild(perspective(toString(), STRING));
         return html;

@@ -17,7 +17,7 @@ package net.splitcells.gel.rating.rater.lib;
 
 import net.splitcells.dem.data.order.Comparators;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
@@ -33,8 +33,7 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
-import static net.splitcells.dem.utils.NotImplementedYet.TODO_NOT_IMPLEMENTED_YET;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineGroup.groupRater;
@@ -128,7 +127,7 @@ public class AllSame {
                     }
 
                     @Override
-                    public Perspective toPerspective() {
+                    public Tree toPerspective() {
                         return perspective("all-same").withProperty("attribute", attribute.toPerspective());
                     }
                 }

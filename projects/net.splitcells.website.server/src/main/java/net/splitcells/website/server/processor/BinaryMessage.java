@@ -17,7 +17,7 @@ package net.splitcells.website.server.processor;
 
 import net.splitcells.website.Formats;
 
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 
 public class BinaryMessage {
     /**

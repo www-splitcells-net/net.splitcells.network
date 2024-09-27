@@ -20,13 +20,12 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.execution.Effect;
 import net.splitcells.dem.lang.dom.Domable;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.constraint.intermediate.data.AllocationRating;
-import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.proposal.Proposal;
@@ -82,7 +81,7 @@ public class ConstraintThreadingAspect implements Constraint {
     }
 
     @Override
-    public Optional<Perspective> naturalArgumentation(GroupId group) {
+    public Optional<Tree> naturalArgumentation(GroupId group) {
         return constraintEffect.affectSynchronously(c -> c.naturalArgumentation(group));
     }
 
@@ -92,7 +91,7 @@ public class ConstraintThreadingAspect implements Constraint {
     }
 
     @Override
-    public Optional<Perspective> naturalArgumentation(Line line, GroupId group, Predicate<AllocationRating> allocationSelector) {
+    public Optional<Tree> naturalArgumentation(Line line, GroupId group, Predicate<AllocationRating> allocationSelector) {
         return constraintEffect.affectSynchronously(c -> c.naturalArgumentation(line, group, allocationSelector));
     }
 
@@ -151,7 +150,7 @@ public class ConstraintThreadingAspect implements Constraint {
     }
 
     @Override
-    public Perspective toPerspective(Set<GroupId> groups) {
+    public Tree toPerspective(Set<GroupId> groups) {
         return constraintEffect.affectSynchronously(c -> c.toPerspective(groups));
     }
 
@@ -208,7 +207,7 @@ public class ConstraintThreadingAspect implements Constraint {
     }
 
     @Override
-    public Perspective toPerspective() {
+    public Tree toPerspective() {
         return constraintEffect.affectSynchronously(c -> c.toPerspective());
     }
 }

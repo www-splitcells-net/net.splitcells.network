@@ -18,7 +18,7 @@ package net.splitcells.gel.data.database;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
@@ -32,9 +32,7 @@ import static net.splitcells.dem.data.atom.DescribedBool.describedBool;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
-import static net.splitcells.dem.lang.Xml.event;
-import static net.splitcells.dem.lang.Xml.textNode;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
@@ -171,7 +169,7 @@ public class DatabaseMetaAspect implements Database {
     }
 
     @Override
-    public Perspective toPerspective() {
+    public Tree toPerspective() {
         return database.toPerspective();
     }
 
@@ -300,12 +298,12 @@ public class DatabaseMetaAspect implements Database {
     }
 
     @Override
-    public Perspective toHtmlTable() {
+    public Tree toHtmlTable() {
         return database.toHtmlTable();
     }
 
     @Override
-    public Perspective toFods() {
+    public Tree toFods() {
         return database.toFods();
     }
 }

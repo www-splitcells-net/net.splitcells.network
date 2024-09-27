@@ -15,12 +15,11 @@
  */
 package net.splitcells.gel.solution.history.meta.type;
 
-import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.gel.rating.framework.Rating;
 
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 
 public final class CompleteRating implements MetaData<Rating>, Domable {
 
@@ -46,7 +45,7 @@ public final class CompleteRating implements MetaData<Rating>, Domable {
     }
 
     @Override
-    public Perspective toPerspective() {
+    public Tree toPerspective() {
         return perspective(getClass().getSimpleName()).withChild(rating.toPerspective());
     }
 }

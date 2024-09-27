@@ -16,15 +16,14 @@
 package net.splitcells.gel.solution.optimization;
 
 import net.splitcells.dem.data.atom.Thing;
-import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.gel.common.Language;
 import net.splitcells.gel.data.table.LinePointer;
 
 import static net.splitcells.dem.lang.Xml.attribute;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 
 /**
  * To have whatsoever he wishes is in no man’s power;
@@ -61,7 +60,7 @@ public final class OptimizationEvent implements Domable {
     }
 
     @Override
-    public Perspective toPerspective() {
+    public Tree toPerspective() {
         return perspective(getClass().getSimpleName())
                 .withProperty(StepType.class.getSimpleName(), stepType.name())
                 .withProperty(Language.DEMAND.value(), demand.toPerspective())

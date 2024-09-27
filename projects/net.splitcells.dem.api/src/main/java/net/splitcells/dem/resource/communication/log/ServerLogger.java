@@ -16,7 +16,7 @@
 package net.splitcells.dem.resource.communication.log;
 
 import net.splitcells.dem.data.set.list.ListWA;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.resource.communication.Sender;
 
 import java.util.function.Predicate;
@@ -27,20 +27,20 @@ import java.util.function.Predicate;
  * This makes the logs easier to query with simple tools, when compared to logs with multi line messages.</p>
  */
 public class ServerLogger implements Logger {
-    public static Logger serverLog(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
+    public static Logger serverLog(Sender<String> output, Predicate<LogMessage<Tree>> messageFilter) {
         return new ServerLogger(output, messageFilter);
     }
 
     private final Sender<String> output;
-    private final Predicate<LogMessage<Perspective>> messageFilter;
+    private final Predicate<LogMessage<Tree>> messageFilter;
 
-    private ServerLogger(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
+    private ServerLogger(Sender<String> output, Predicate<LogMessage<Tree>> messageFilter) {
         this.output = output;
         this.messageFilter = messageFilter;
     }
 
     @Override
-    public <R extends ListWA<LogMessage<Perspective>>> R append(LogMessage<Perspective> arg) {
+    public <R extends ListWA<LogMessage<Tree>>> R append(LogMessage<Tree> arg) {
         if (messageFilter.test(arg)) {
             output.append(arg.content().createToJsonPrintable().toJsonString());
         }

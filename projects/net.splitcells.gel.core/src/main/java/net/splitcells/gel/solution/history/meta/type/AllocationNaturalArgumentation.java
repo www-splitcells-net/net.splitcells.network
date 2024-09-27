@@ -15,10 +15,9 @@
  */
 package net.splitcells.gel.solution.history.meta.type;
 
-import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.lang.perspective.PerspectiveI;
+import net.splitcells.dem.lang.perspective.Tree;
 
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 
 public class AllocationNaturalArgumentation implements MetaData<String> {
     public static AllocationNaturalArgumentation allocationNaturalArgumentation(String allocationNaturalArgumentation) {
@@ -32,7 +31,7 @@ public class AllocationNaturalArgumentation implements MetaData<String> {
     }
 
     @Override
-    public Perspective toPerspective() {
+    public Tree toPerspective() {
         return perspective(allocationNaturalArgumentation);
     }
 

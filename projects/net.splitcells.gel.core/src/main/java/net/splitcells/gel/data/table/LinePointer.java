@@ -15,15 +15,13 @@
  */
 package net.splitcells.gel.data.table;
 
-import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 
 import java.util.Optional;
 
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
-import static net.splitcells.dem.lang.Xml.textNode;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 
 public interface LinePointer extends Domable {
     Table context();
@@ -38,7 +36,7 @@ public interface LinePointer extends Domable {
     Optional<Line> interpret(Table context);
 
     @Override
-    default Perspective toPerspective() {
+    default Tree toPerspective() {
         final var dom = perspective(LinePointer.class.getSimpleName());
         final var line = interpret();
         if (line.isPresent()) {

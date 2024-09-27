@@ -18,7 +18,7 @@ package net.splitcells.website.server;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.ProcessorRegistry;
@@ -33,7 +33,7 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.website.server.processor.ProcessorRegistry.binaryProcessorRegistry;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
@@ -92,14 +92,14 @@ public class Config {
      * <p>This is a tree structure containing all paths supported by the renderer.</p>
      * <p>Replaces {@link #layout}.</p>
      */
-    private Optional<Perspective> layoutPerspective = Optional.empty();
+    private Optional<Tree> layoutPerspective = Optional.empty();
 
     /**
      * <p>This is a tree structure containing all paths supported by the renderer,
      * that are relevant to the targeted common user.</p>
      * <p>Replaces {@link #layoutRelevant}.</p>
      */
-    private Optional<Perspective> layoutRelevantPerspective = Optional.empty();
+    private Optional<Tree> layoutRelevantPerspective = Optional.empty();
     /**
      * A port bigger than 1023 is used, as on Linux port between 0-1023 are privileged ports.
      * This means opening such a port requires additional user privileges and
@@ -205,7 +205,7 @@ public class Config {
     private List<ProgramConfig> programConfigs = list();
     private List<ProjectsRendererExtension> projectsRendererExtension = Dem.configValue(ProjectsRendererExtensions.class);
 
-    private ProcessorRegistry<Perspective, Perspective> processor = binaryProcessorRegistry();
+    private ProcessorRegistry<Tree, Tree> processor = binaryProcessorRegistry();
 
     /**
      * Signals whether this server is available for the general public.
@@ -334,26 +334,26 @@ public class Config {
         return cacheRenderers;
     }
 
-    public Optional<Perspective> layoutPerspective() {
+    public Optional<Tree> layoutPerspective() {
         return layoutPerspective;
     }
 
-    public Optional<Perspective> layoutPerspectiveSubtree(List<String> path) {
+    public Optional<Tree> layoutPerspectiveSubtree(List<String> path) {
         return layoutPerspective;
     }
 
     @ReturnsThis
-    public Config withLayoutPerspective(Optional<Perspective> arg) {
+    public Config withLayoutPerspective(Optional<Tree> arg) {
         layoutPerspective = arg;
         return this;
     }
 
-    public Optional<Perspective> layoutRelevantPerspective() {
+    public Optional<Tree> layoutRelevantPerspective() {
         return layoutRelevantPerspective;
     }
 
     @ReturnsThis
-    public Config withLayoutRelevantPerspective(Optional<Perspective> arg) {
+    public Config withLayoutRelevantPerspective(Optional<Tree> arg) {
         layoutRelevantPerspective = arg;
         return this;
     }
@@ -495,11 +495,11 @@ public class Config {
         return projectsRendererExtension;
     }
 
-    public ProcessorRegistry<Perspective, Perspective> processor() {
+    public ProcessorRegistry<Tree, Tree> processor() {
         return processor;
     }
 
-    public Config withAdditionalProcessor(Trail trail, Processor<Perspective, Perspective> arg) {
+    public Config withAdditionalProcessor(Trail trail, Processor<Tree, Tree> arg) {
         processor.register(trail, arg);
         return this;
     }

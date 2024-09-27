@@ -17,10 +17,9 @@ package net.splitcells.gel.data.table;
 
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.list.Lists.*;
-import static net.splitcells.dem.lang.Xml.textNode;
 import static net.splitcells.dem.lang.namespace.NameSpaces.HTML;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.gel.common.Language.CONTENT;
 import static net.splitcells.gel.common.Language.INDEX;
 import static net.splitcells.gel.common.Language.TYPE;
@@ -28,11 +27,9 @@ import static net.splitcells.gel.common.Language.VALUE;
 import static net.splitcells.gel.data.table.LinePointerI.linePointer;
 
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.namespace.NameSpaces;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.attribute.IndexedAttribute;
 
@@ -120,12 +117,12 @@ public interface Line extends Domable {
                 .collect(toList());
     }
 
-    default Perspective toHtmlPerspective() {
+    default Tree toHtmlPerspective() {
         final var perspective = perspective(Line.class.getSimpleName(), HTML);
         perspective.withProperty("div", HTML, "" + index());
         context().headerView().forEach(attribute -> {
             final var value = context().columnView(attribute).get(index());
-            final Perspective domValue;
+            final Tree domValue;
             if (value == null) {
                 domValue = perspective("");
             } else {
@@ -144,12 +141,12 @@ public interface Line extends Domable {
     }
 
     @Override
-    default Perspective toPerspective() {
+    default Tree toPerspective() {
         final var root = perspective(Line.class.getSimpleName());
         root.withProperty(INDEX.value(), "" + index());
         context().headerView().forEach(attribute -> {
             final var attributeValue = context().columnView(attribute).get(index());
-            final Perspective attributeRender;
+            final Tree attributeRender;
             if (attributeValue == null) {
                 attributeRender = perspective("");
             } else {

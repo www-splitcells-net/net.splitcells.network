@@ -21,7 +21,7 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.StartTime;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.resource.host.ProcessPath;
 
 import java.io.FileNotFoundException;
@@ -50,19 +50,19 @@ import static net.splitcells.dem.resource.Files.createDirectory;
 @JavaLegacyArtifact
 public class LoggerRouter implements Logger {
 
-    public static LoggerRouter uiRouter(Predicate<LogMessage<Perspective>> messageFilter) {
+    public static LoggerRouter uiRouter(Predicate<LogMessage<Tree>> messageFilter) {
         return new LoggerRouter(messageFilter);
     }
 
     private final Map<List<String>, Logger> routing = map();
-    private final Predicate<LogMessage<Perspective>> messageFilter;
+    private final Predicate<LogMessage<Tree>> messageFilter;
 
-    private LoggerRouter(Predicate<LogMessage<Perspective>> messageFilter) {
+    private LoggerRouter(Predicate<LogMessage<Tree>> messageFilter) {
         this.messageFilter = messageFilter;
     }
 
     @Override
-    public <R extends ListWA<LogMessage<Perspective>>> R append(LogMessage<Perspective> arg) {
+    public <R extends ListWA<LogMessage<Tree>>> R append(LogMessage<Tree> arg) {
         if (messageFilter.test(arg)) {
             if (!routing.containsKey(arg.path())) {
                 Path consolePath;

@@ -17,7 +17,7 @@ package net.splitcells.gel.ui.no.code.editor;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParser;
 import net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParserBaseVisitor;
 import net.splitcells.dem.testing.Result;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.Result.result;
@@ -45,11 +45,11 @@ import static net.splitcells.gel.ui.Editor.editor;
 import static net.splitcells.gel.ui.no.code.editor.NoCodeQueryParser.parseNoCodeQuery;
 
 /**
- * TODO There should only be one parser based on {@link Perspective} as input.
- * The {@link Perspective} would be produced via dedicated parsers for each grammar.
+ * TODO There should only be one parser based on {@link Tree} as input.
+ * The {@link Tree} would be produced via dedicated parsers for each grammar.
  * Thereby, duplicate problem parsing logic could be avoided.
  */
-public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<SolutionParameters, Perspective>> {
+public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<SolutionParameters, Tree>> {
     private static final String ATTRIBUTE = "attribute";
     private static final String CONSTRAINTS = "constraints";
     private static final String CONTENT = "content";
@@ -60,7 +60,7 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
     private static final String SUPPLIES = "supplies";
 
 
-    public static Result<SolutionParameters, Perspective> parseNoCodeProblem(String arg) {
+    public static Result<SolutionParameters, Tree> parseNoCodeProblem(String arg) {
         final var parser = new NoCodeProblemParser();
         try {
             parser.parseNoCodeProblemIntern(arg);
@@ -89,7 +89,7 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
         return parser.editor.databaseVars();
     }
 
-    private final Result<SolutionParameters, Perspective> result = result();
+    private final Result<SolutionParameters, Tree> result = result();
     private final Map<String, String> strings = map();
     private NoCodeDenParser.Source_unitContext currentSourceUnit;
     private final Editor editor = editor();
@@ -108,7 +108,7 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
      * @return
      */
     @Override
-    public Result<SolutionParameters, Perspective> visitVariable_access(NoCodeDenParser.Variable_accessContext ctx) {
+    public Result<SolutionParameters, Tree> visitVariable_access(NoCodeDenParser.Variable_accessContext ctx) {
         final var referencedName = ctx.variable_reference().Name().getText();
         if (SOLUTION.equals(referencedName)) {
             if (ctx.function_call().size() > 1) {
@@ -135,10 +135,10 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
         return null;
     }
 
-    private Result<SolutionParameters, Perspective> parseNoCodeProblemIntern(String arg) {
+    private Result<SolutionParameters, Tree> parseNoCodeProblemIntern(String arg) {
         final var lexer = new net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenLexer(CharStreams.fromString(arg));
         final var parser = new net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParser(new CommonTokenStream(lexer));
-        final List<Perspective> parsingErrors = list();
+        final List<Tree> parsingErrors = list();
         parser.addErrorListener(new BaseErrorListener() {
             // Ensures, that error messages are not hidden.
             @Override
@@ -167,7 +167,7 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
     }
 
     @Override
-    public Result<SolutionParameters, Perspective> visitSource_unit(net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParser.Source_unitContext sourceUnit) {
+    public Result<SolutionParameters, Tree> visitSource_unit(net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParser.Source_unitContext sourceUnit) {
         currentSourceUnit = sourceUnit;
         visitChildren(sourceUnit);
         currentSourceUnit = null;
@@ -175,7 +175,7 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
     }
 
     @Override
-    public Result<SolutionParameters, Perspective> visitVariable_definition(NoCodeDenParser.Variable_definitionContext ctx) {
+    public Result<SolutionParameters, Tree> visitVariable_definition(NoCodeDenParser.Variable_definitionContext ctx) {
         final var variableName = ctx.variable_definition_name().Name().getText();
         if (variableName.equals("constraints")) {
             return null;

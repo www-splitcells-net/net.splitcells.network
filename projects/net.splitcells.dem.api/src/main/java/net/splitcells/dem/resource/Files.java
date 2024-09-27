@@ -15,12 +15,10 @@
  */
 package net.splitcells.dem.resource;
 
-import net.bytebuddy.implementation.bytecode.Throw;
 import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
-import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.lang.perspective.XmlConfig;
+import net.splitcells.dem.lang.perspective.Tree;
 import org.apache.commons.io.FileUtils;
 
 import java.io.FileOutputStream;
@@ -28,13 +26,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import static java.nio.file.Files.createDirectories;
-import static net.splitcells.dem.lang.Xml.toPrettyString;
 import static net.splitcells.dem.lang.perspective.XmlConfig.xmlConfig;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
@@ -129,7 +125,7 @@ public interface Files {
     }
 
     @Deprecated
-    static void writeToFile(Path path, Perspective content) {
+    static void writeToFile(Path path, Tree content) {
         writeToFile(path, content.toXmlString(xmlConfig()));
     }
 

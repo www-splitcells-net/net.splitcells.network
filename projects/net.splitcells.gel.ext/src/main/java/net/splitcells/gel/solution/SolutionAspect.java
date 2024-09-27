@@ -20,7 +20,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.assignment.Assignments;
@@ -41,7 +41,7 @@ import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.gel.common.Language.RATING;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
@@ -289,7 +289,7 @@ public class SolutionAspect implements Solution {
     }
 
     @Override
-    public Perspective toPerspective() {
+    public Tree toPerspective() {
         return solution.toPerspective();
     }
 

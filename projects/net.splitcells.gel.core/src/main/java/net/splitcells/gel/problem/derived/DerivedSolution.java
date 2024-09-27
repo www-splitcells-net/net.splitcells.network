@@ -18,7 +18,7 @@ package net.splitcells.gel.problem.derived;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.LinePointer;
@@ -29,7 +29,6 @@ import net.splitcells.gel.solution.history.Histories;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.database.Database;
@@ -250,7 +249,7 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public Perspective toPerspective() {
+    public Tree toPerspective() {
         return assignments.toPerspective();
     }
 

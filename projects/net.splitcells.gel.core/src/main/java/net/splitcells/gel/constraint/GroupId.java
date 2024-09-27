@@ -17,15 +17,12 @@ package net.splitcells.gel.constraint;
 
 import static net.splitcells.dem.data.set.map.typed.TypedMapI.typedMap;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
-import static net.splitcells.dem.lang.Xml.textNode;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 
 import java.util.Optional;
 
 import net.splitcells.dem.data.set.map.typed.TypedMapView;
-import net.splitcells.dem.lang.Xml;
-import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.lang.perspective.PerspectiveI;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.dem.lang.dom.Domable;
 
@@ -104,7 +101,7 @@ public class GroupId implements Domable {
     }
 
     @Override
-    public Perspective toPerspective() {
+    public Tree toPerspective() {
         final var perspective = perspective("group");
         perspective.withProperty("name", name.get());
         perspective.withProperty("id", hashCode() + "");

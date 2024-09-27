@@ -17,15 +17,14 @@ package net.splitcells.gel.data.table.attribute;
 
 import static net.splitcells.dem.data.atom.Bools.bool;
 import static net.splitcells.dem.data.atom.Bools.untrue;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.gel.common.Language;
 
-import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.data.atom.Bool;
 
 public class MapAttribute<T> implements Attribute<Map<Class<T>, T>> {
@@ -74,7 +73,7 @@ public class MapAttribute<T> implements Attribute<Map<Class<T>, T>> {
     }
 
     @Override
-    public Perspective toPerspective() {
+    public Tree toPerspective() {
         return perspective(name)
                 .withProperty(Language.NAME.value(), getClass().getSimpleName())
                 .withProperty(Language.TYPE.value(), type.getSimpleName());

@@ -16,7 +16,7 @@
 package net.splitcells.website.server.project.renderer.extension;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.processor.BinaryMessage;
@@ -94,7 +94,7 @@ public interface ProjectRendererExtension {
      * @param projectRenderer Project Rendered To Be Extended
      * @return
      */
-    default Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer) {
+    default Tree extendProjectLayout(Tree layout, ProjectRenderer projectRenderer) {
         return layout;
     }
 
@@ -103,8 +103,8 @@ public interface ProjectRendererExtension {
      * <p>
      * This is only provided, because it was easier to implement this without errors,
      * compared to {@link #extendProjectLayout}.
-     * This will probably change, when {@link Perspective} code is better tested and reviewed,
-     * also a code to transform such a set to a {@link Perspective} layout, might always be useful.
+     * This will probably change, when {@link Tree} code is better tested and reviewed,
+     * also a code to transform such a set to a {@link Tree} layout, might always be useful.
      *
      * @param projectRenderer Project Rendered To Be Extended
      * @return Paths relative to project's root path. Absolute paths are not supported.

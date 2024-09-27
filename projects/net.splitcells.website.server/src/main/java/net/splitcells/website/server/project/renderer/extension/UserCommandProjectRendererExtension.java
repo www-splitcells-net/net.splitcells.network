@@ -17,7 +17,7 @@ package net.splitcells.website.server.project.renderer.extension;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.namespace.NameSpaces;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.dem.resource.FileSystems;
 import net.splitcells.website.server.Config;
@@ -32,7 +32,7 @@ import java.util.Optional;
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
@@ -82,7 +82,7 @@ public class UserCommandProjectRendererExtension implements ProjectRendererExten
     }
 
     @Override
-    public Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer) {
+    public Tree extendProjectLayout(Tree layout, ProjectRenderer projectRenderer) {
         if (BIN_FOLDER.isDirectory(BIN_FOLDER_PATH)) {
             LayoutUtils.extendPerspectiveWithPath(layout, Path.of(RENDERING_PATH));
         }

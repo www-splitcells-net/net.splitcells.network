@@ -18,7 +18,7 @@ package net.splitcells.gel.solution;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.LinePointer;
@@ -26,7 +26,6 @@ import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.solution.history.History;
 import net.splitcells.gel.solution.history.Histories;
 import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.data.table.column.Column;
 import net.splitcells.gel.data.table.column.ColumnView;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
@@ -290,7 +289,7 @@ public class SolutionI implements Solution {
     }
 
     @SuppressWarnings("all")
-    public Perspective toFods() {
+    public Tree toFods() {
         return this.problem.toFods();
     }
 
@@ -300,7 +299,7 @@ public class SolutionI implements Solution {
     }
 
     @Override
-    public Perspective toPerspective() {
+    public Tree toPerspective() {
         return problem.toPerspective();
     }
 

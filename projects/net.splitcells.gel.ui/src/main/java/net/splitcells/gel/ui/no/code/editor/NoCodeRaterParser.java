@@ -16,7 +16,7 @@
 package net.splitcells.gel.ui.no.code.editor;
 
 import net.splitcells.dem.data.atom.Integers;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParser;
 import net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParserBaseVisitor;
 import net.splitcells.dem.testing.Result;
@@ -24,7 +24,7 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.ui.Editor;
 
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.gel.rating.rater.lib.AllSame.ALL_SAME_NAME;
 import static net.splitcells.gel.rating.rater.lib.AllSame.allSame;
 import static net.splitcells.gel.rating.rater.lib.HasSize.HAS_SIZE_NAME;
@@ -32,8 +32,8 @@ import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.lib.MinimalDistance.MINIMAL_DISTANCE_NAME;
 import static net.splitcells.gel.rating.rater.lib.MinimalDistance.has_minimal_distance_of;
 
-public class NoCodeRaterParser extends NoCodeDenParserBaseVisitor<Result<Rater, Perspective>> {
-    public static Result<Rater, Perspective> parseNoCodeRater(NoCodeDenParser.Function_callContext functionCall, Editor editor) {
+public class NoCodeRaterParser extends NoCodeDenParserBaseVisitor<Result<Rater, Tree>> {
+    public static Result<Rater, Tree> parseNoCodeRater(NoCodeDenParser.Function_callContext functionCall, Editor editor) {
         return new NoCodeRaterParser(editor).visitFunction_call(functionCall);
     }
 
@@ -44,8 +44,8 @@ public class NoCodeRaterParser extends NoCodeDenParserBaseVisitor<Result<Rater, 
     }
 
     @Override
-    public Result<Rater, Perspective> visitFunction_call(NoCodeDenParser.Function_callContext functionCall) {
-        final Result<Rater, Perspective> rater = Result.result();
+    public Result<Rater, Tree> visitFunction_call(NoCodeDenParser.Function_callContext functionCall) {
+        final Result<Rater, Tree> rater = Result.result();
         final var functionName = functionCall.function_call_name().string_value().getText();
         if (functionName.equals(HAS_SIZE_NAME)) {
             final int argument = Integers.parse(functionCall.function_call_argument()

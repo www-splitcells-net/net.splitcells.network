@@ -16,10 +16,8 @@
 package net.splitcells.website.server.project;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpace;
-import net.splitcells.dem.lang.namespace.NameSpaces;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.website.server.Config;
 import net.splitcells.dem.resource.Files;
 
@@ -28,7 +26,7 @@ import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.NATURAL;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.website.Projects.projectsRenderer;
 
 @Deprecated
@@ -56,19 +54,19 @@ public class LayoutRenderer {
                 , layout.toXmlString());
     }
 
-    public static void extend(Perspective perspective, List<String> path) {
-        extend(perspective, path, NATURAL);
+    public static void extend(Tree tree, List<String> path) {
+        extend(tree, path, NATURAL);
     }
 
-    public static void extend(Perspective perspective, List<String> path, NameSpace nameSpaces) {
+    public static void extend(Tree tree, List<String> path, NameSpace nameSpaces) {
         if (path.isEmpty()) {
             return;
         }
-        final Perspective nextChild = perspective
+        final Tree nextChild = tree
                 .childNamed(path.get(0), nameSpaces)
                 .orElseGet(() -> {
                     final var nextChild2 = perspective(path.get(0), nameSpaces);
-                    perspective.withChild(nextChild2);
+                    tree.withChild(nextChild2);
                     return nextChild2;
                 });
         path.remove(0);

@@ -16,32 +16,23 @@
 package net.splitcells.gel.ui;
 
 import net.splitcells.dem.Dem;
-import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.environment.config.IsDeterministic;
-import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.CapabilityTest;
-import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
-import net.splitcells.gel.constraint.type.ForAll;
-import net.splitcells.gel.constraint.type.Then;
-import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.projects.extension.ColloquiumPlanningDemandsTestData;
 import net.splitcells.website.server.projects.extension.ColloquiumPlanningSuppliesTestData;
 
 import java.util.Optional;
 
 import static net.splitcells.dem.data.atom.Bools.truthful;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
-import static net.splitcells.dem.testing.Assertions.requirePresenceOf;
-import static net.splitcells.gel.ui.ProblemParser.parseProblem;
 import static net.splitcells.gel.ui.SolutionCalculator.DEMANDS;
 import static net.splitcells.gel.ui.SolutionCalculator.PROBLEM_DEFINITION;
 import static net.splitcells.gel.ui.SolutionCalculator.SOLUTION_RATING;
 import static net.splitcells.gel.ui.SolutionCalculator.SUPPLIES;
 import static net.splitcells.gel.ui.SolutionCalculator.solutionCalculator;
 import static net.splitcells.website.server.processor.Request.request;
-import static net.splitcells.website.server.projects.extension.ColloquiumPlanningDemandsTestData.colloquiumPlanningDemandTestData;
 
 public class SolutionCalculatorTest {
     @UnitTest

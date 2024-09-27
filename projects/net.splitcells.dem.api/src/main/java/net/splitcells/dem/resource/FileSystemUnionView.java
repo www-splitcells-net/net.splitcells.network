@@ -16,16 +16,14 @@
 package net.splitcells.dem.resource;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.utils.StreamUtils;
 
 import java.io.InputStream;
 import java.nio.file.Path;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 

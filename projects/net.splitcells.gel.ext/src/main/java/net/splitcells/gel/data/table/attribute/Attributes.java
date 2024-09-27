@@ -15,10 +15,10 @@
  */
 package net.splitcells.gel.data.table.attribute;
 
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.testing.Result;
 
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.testing.Mocking.anyClass;
 import static net.splitcells.dem.testing.Mocking.anyString;
 import static net.splitcells.dem.testing.Result.result;
@@ -29,8 +29,8 @@ public class Attributes {
 		return AttributeI.attribute(anyClass(), anyString());
 	}
 
-	public static Result<Attribute<? extends Object>, Perspective> parseAttribute(String name, String type) {
-		final Result<Attribute<? extends Object>, Perspective> parsedAttribute = result();
+	public static Result<Attribute<? extends Object>, Tree> parseAttribute(String name, String type) {
+		final Result<Attribute<? extends Object>, Tree> parsedAttribute = result();
 		if (type.equals("int") || type.equals("integer")) {
 			return parsedAttribute.withValue(integerAttribute(name));
 		} else if (type.equals("float")) {

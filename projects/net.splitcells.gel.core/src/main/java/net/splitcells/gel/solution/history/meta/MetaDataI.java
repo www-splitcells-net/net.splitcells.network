@@ -15,18 +15,15 @@
  */
 package net.splitcells.gel.solution.history.meta;
 
-import static net.splitcells.dem.lang.Xml.textNode;
-import static net.splitcells.dem.lang.Xml.toPrettyString;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.gel.common.Language.*;
 
 import java.util.Optional;
 
-import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 
 public class MetaDataI implements MetaDataView, MetaDataWriter {
     public static MetaDataI metaData() {
@@ -59,7 +56,7 @@ public class MetaDataI implements MetaDataView, MetaDataWriter {
     }
 
     @Override
-    public Perspective toPerspective() {
+    public Tree toPerspective() {
         final var dom = perspective(META_DATA.value());
         data.forEach((key, value) -> {
             final var data = perspective(META_DATA.value());

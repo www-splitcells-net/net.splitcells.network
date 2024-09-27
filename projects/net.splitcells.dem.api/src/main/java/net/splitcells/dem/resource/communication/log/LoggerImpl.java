@@ -16,39 +16,39 @@
 package net.splitcells.dem.resource.communication.log;
 
 import net.splitcells.dem.data.set.list.ListWA;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.resource.communication.Sender;
 
 import java.util.function.Predicate;
 
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public class LoggerImpl implements Logger {
 
     private static final boolean ENABLE_EXPERIMENTAL_XML_RENDERING = true;
 
-    public static LoggerImpl logBasedOnPerspective(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
+    public static LoggerImpl logBasedOnPerspective(Sender<String> output, Predicate<LogMessage<Tree>> messageFilter) {
         return new LoggerImpl(output, messageFilter);
     }
 
     private final Sender<String> output;
-    private final Predicate<LogMessage<Perspective>> messageFilter;
+    private final Predicate<LogMessage<Tree>> messageFilter;
 
-    private LoggerImpl(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
+    private LoggerImpl(Sender<String> output, Predicate<LogMessage<Tree>> messageFilter) {
         this.output = output;
         this.messageFilter = messageFilter;
     }
 
     @Override
-    public <R extends ListWA<LogMessage<Perspective>>> R append(LogMessage<Perspective> arg) {
+    public <R extends ListWA<LogMessage<Tree>>> R append(LogMessage<Tree> arg) {
         if (messageFilter.test(arg)) {
             print(output, arg.content());
         }
         return (R) this;
     }
 
-    private static void print(Sender<String> output, Perspective content, String prefix) {
+    private static void print(Sender<String> output, Tree content, String prefix) {
         if (ENABLE_EXPERIMENTAL_XML_RENDERING) {
             output.append(content.toXmlString());
         } else {
@@ -77,7 +77,7 @@ public class LoggerImpl implements Logger {
         }
     }
 
-    private static void print(Sender<String> output, Perspective content) {
+    private static void print(Sender<String> output, Tree content) {
         print(output, content, "");
     }
 

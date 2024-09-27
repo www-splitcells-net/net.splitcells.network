@@ -15,21 +15,15 @@
  */
 package net.splitcells.dem.lang.perspective;
 
-import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.namespace.NameSpace;
-import net.splitcells.dem.lang.namespace.NameSpaces;
 
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.dem.lang.namespace.NameSpaces.DEN;
-import static net.splitcells.dem.lang.namespace.NameSpaces.NAME;
-import static net.splitcells.dem.lang.namespace.NameSpaces.VAL;
 
-public interface PerspectiveView extends Domable {
+public interface TreeView extends Domable {
 
     NameSpace nameSpace();
 
@@ -45,7 +39,7 @@ public interface PerspectiveView extends Domable {
                 .replace("~", "&Tilde;");
     }
 
-    default Optional<Perspective> value() {
+    default Optional<Tree> value() {
         if (children().size() == 1) {
             return Optional.of(children().get(0));
         }
@@ -56,7 +50,7 @@ public interface PerspectiveView extends Domable {
         return children().get(0).name();
     }
 
-    ListView<Perspective> children();
+    ListView<Tree> children();
 
     default boolean nameIs(String value, NameSpace nameSpace) {
         return nameSpace().equals(nameSpace) && name().equals(value);

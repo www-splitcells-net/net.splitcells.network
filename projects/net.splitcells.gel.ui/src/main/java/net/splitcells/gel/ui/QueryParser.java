@@ -16,12 +16,11 @@
 package net.splitcells.gel.ui;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.lang.perspective.antlr4.DenParser;
 import net.splitcells.dem.lang.perspective.antlr4.DenParserBaseVisitor;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.constraint.Query;
-import net.splitcells.gel.constraint.type.ForAll;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.attribute.Attribute;
 
@@ -29,7 +28,7 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.gel.constraint.QueryI.query;
@@ -38,9 +37,9 @@ import static net.splitcells.gel.constraint.type.ForAlls.*;
 import static net.splitcells.gel.constraint.type.Then.THEN_NAME;
 import static net.splitcells.gel.ui.RaterParser.parseRater;
 
-public class QueryParser extends DenParserBaseVisitor<Result<Query, Perspective>> {
+public class QueryParser extends DenParserBaseVisitor<Result<Query, Tree>> {
 
-    public static Result<Query, Perspective> parseQuery(DenParser.Source_unitContext sourceUnit
+    public static Result<Query, Tree> parseQuery(DenParser.Source_unitContext sourceUnit
             , Assignments assignments) {
         final var parser = new QueryParser(assignments);
         parser.visitSource_unit(sourceUnit);
@@ -49,7 +48,7 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Perspective>
 
     private final Query parentConstraint;
     private final Assignments assignments;
-    private Result<Query, Perspective> nextConstraint = result();
+    private Result<Query, Tree> nextConstraint = result();
 
     private QueryParser(Assignments assignmentsArg) {
         assignments = assignmentsArg;
@@ -62,7 +61,7 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Perspective>
     }
 
     @Override
-    public Result<Query, Perspective> visitVariable_definition(DenParser.Variable_definitionContext ctx) {
+    public Result<Query, Tree> visitVariable_definition(DenParser.Variable_definitionContext ctx) {
         if (ctx.Name().getText().equals("constraints")) {
             visitFunction_call(ctx.function_call());
         }
@@ -70,7 +69,7 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Perspective>
     }
 
     @Override
-    public Result<Query, Perspective> visitAccess(DenParser.AccessContext access) {
+    public Result<Query, Tree> visitAccess(DenParser.AccessContext access) {
         nextConstraint = parseQuery(access.Name().getText(), access.function_call_arguments());
         if (access.access() != null) {
             final var childConstraintParser = new QueryParser(assignments, nextConstraint.value().orElseThrow());
@@ -80,8 +79,8 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Perspective>
         return nextConstraint;
     }
 
-    private Result<Query, Perspective> parseQuery(String constraintType, DenParser.Function_call_argumentsContext arguments) {
-        final Result<Query, Perspective> parsedConstraint = result();
+    private Result<Query, Tree> parseQuery(String constraintType, DenParser.Function_call_argumentsContext arguments) {
+        final Result<Query, Tree> parsedConstraint = result();
         if (constraintType.equals(FOR_ALL_NAME)) {
             if (arguments.function_call_arguments_element() != null) {
                 return parsedConstraint.withErrorMessage(perspective("ForAll does not support arguments: " + arguments.getText()));
@@ -201,7 +200,7 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Perspective>
     }
 
     @Override
-    public Result<Query, Perspective> visitFunction_call(DenParser.Function_callContext functionCall) {
+    public Result<Query, Tree> visitFunction_call(DenParser.Function_callContext functionCall) {
         nextConstraint = parseQuery(functionCall.Name().getText()
                 , functionCall.function_call_arguments());
         if (functionCall.access() != null && nextConstraint.value().isPresent()) {
@@ -213,7 +212,7 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Perspective>
     }
 
     @Override
-    public Result<Query, Perspective> visitStatement(DenParser.StatementContext statement) {
+    public Result<Query, Tree> visitStatement(DenParser.StatementContext statement) {
         if (statement.variable_definition() != null) {
             return visitVariable_definition(statement.variable_definition());
         } else if (statement.function_call() != null

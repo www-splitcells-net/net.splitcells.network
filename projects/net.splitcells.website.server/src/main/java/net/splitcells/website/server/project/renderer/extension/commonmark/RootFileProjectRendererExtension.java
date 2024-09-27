@@ -16,8 +16,7 @@
 package net.splitcells.website.server.project.renderer.extension.commonmark;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.lang.perspective.Perspective;
-import net.splitcells.dem.resource.communication.log.Logs;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.website.server.project.LayoutUtils;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.processor.BinaryMessage;
@@ -28,7 +27,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
@@ -70,7 +69,7 @@ public class RootFileProjectRendererExtension implements ProjectRendererExtensio
     }
 
     @Override
-    public Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer) {
+    public Tree extendProjectLayout(Tree layout, ProjectRenderer projectRenderer) {
         if (projectRenderer.projectFileSystem().isFile(Path.of(rootFile + ".md"))) {
             LayoutUtils.extendPerspectiveWithPath(layout
                     , Path.of(projectRenderer.resourceRootPath().substring(1)).resolve(rootFile + ".html"));

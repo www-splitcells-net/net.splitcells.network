@@ -15,13 +15,12 @@
  */
 package net.splitcells.dem.testing;
 
-import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;
 
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**

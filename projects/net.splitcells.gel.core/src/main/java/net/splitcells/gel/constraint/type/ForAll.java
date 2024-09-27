@@ -22,9 +22,8 @@ import static net.splitcells.gel.rating.rater.lib.classification.RaterBasedOnGro
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.dom.Domable;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Query;
@@ -148,7 +147,7 @@ public class ForAll implements Constraint {
     }
 
     @Override
-    public Optional<Perspective> naturalArgumentation(GroupId group) {
+    public Optional<Tree> naturalArgumentation(GroupId group) {
         return constraint.naturalArgumentation(group);
     }
 
@@ -158,7 +157,7 @@ public class ForAll implements Constraint {
     }
 
     @Override
-    public Optional<Perspective> naturalArgumentation(Line line, GroupId group, Predicate<AllocationRating> allocationSelector) {
+    public Optional<Tree> naturalArgumentation(Line line, GroupId group, Predicate<AllocationRating> allocationSelector) {
         return constraint.naturalArgumentation(line, group, allocationSelector);
     }
 
@@ -203,12 +202,12 @@ public class ForAll implements Constraint {
     }
 
     @Override
-    public Perspective toPerspective() {
+    public Tree toPerspective() {
         return constraint.toPerspective();
     }
 
     @Override
-    public Perspective toPerspective(Set<GroupId> groups) {
+    public Tree toPerspective(Set<GroupId> groups) {
         return constraint.toPerspective(groups);
     }
 

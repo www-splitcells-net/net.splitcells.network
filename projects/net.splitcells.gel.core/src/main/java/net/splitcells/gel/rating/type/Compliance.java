@@ -18,14 +18,13 @@ package net.splitcells.gel.rating.type;
 import static net.splitcells.dem.data.order.Comparators.ASCENDING_BOOLEANS;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 
 import java.util.Optional;
 
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.gel.rating.framework.Rating;
-import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.data.order.Comparison;
 import net.splitcells.dem.data.order.Ordering;
 
@@ -88,7 +87,7 @@ public class Compliance implements Rating {
     }
 
     @Override
-    public Perspective toPerspective() {
+    public Tree toPerspective() {
         return perspective(this.getClass().getSimpleName()).withChild(perspective("" + value));
     }
 }

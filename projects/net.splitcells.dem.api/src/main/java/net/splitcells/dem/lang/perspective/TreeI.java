@@ -23,20 +23,20 @@ import static net.splitcells.dem.environment.config.StaticFlags.WARNING;
 import static net.splitcells.dem.lang.namespace.NameSpaces.TEXT;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 
-public class PerspectiveI implements Perspective {
-	public static Perspective perspective(String value, NameSpace nameSpace) {
-		return new PerspectiveI(value, nameSpace);
+public class TreeI implements Tree {
+	public static Tree perspective(String value, NameSpace nameSpace) {
+		return new TreeI(value, nameSpace);
 	}
 
-	public static Perspective perspective(String value) {
-		return new PerspectiveI(value, TEXT);
+	public static Tree perspective(String value) {
+		return new TreeI(value, TEXT);
 	}
 
 	private final String value;
 	private final NameSpace nameSpace;
-	private final List<Perspective> children = list();
+	private final List<Tree> children = list();
 
-	protected PerspectiveI(String value, NameSpace nameSpace) {
+	protected TreeI(String value, NameSpace nameSpace) {
 		this.value = value;
 		this.nameSpace = nameSpace;
 	}
@@ -52,7 +52,7 @@ public class PerspectiveI implements Perspective {
 	}
 
 	@Override
-	public List<Perspective> children() {
+	public List<Tree> children() {
 		return children;
 	}
 
@@ -63,7 +63,7 @@ public class PerspectiveI implements Perspective {
 	@Override
 	public String toString() {
 		if (WARNING) {
-			logs().appendUnimplementedWarning(PerspectiveI.class);
+			logs().appendUnimplementedWarning(TreeI.class);
 		}
 		return toXmlString();
 	}

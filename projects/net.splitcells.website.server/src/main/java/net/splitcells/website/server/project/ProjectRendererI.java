@@ -19,7 +19,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.lang.namespace.NameSpaces;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.FileSystemView;
 import net.splitcells.dem.resource.Files;
@@ -40,7 +40,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.optionalDirectChildElementsByName;
 import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.resource.ContentType.UTF_8;
 import static net.splitcells.dem.resource.FileSystemVoid.fileSystemVoid;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
@@ -541,7 +541,7 @@ public class ProjectRendererI implements ProjectRenderer {
     }
 
     @Deprecated
-    private static void extendProjectLayout(Perspective layout, Path folder, boolean replaceFileSuffix) {
+    private static void extendProjectLayout(Tree layout, Path folder, boolean replaceFileSuffix) {
         if (Files.isDirectory(folder)) {
             try {
                 Files.walk_recursively(folder)

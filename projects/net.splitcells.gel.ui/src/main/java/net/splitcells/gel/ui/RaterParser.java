@@ -16,7 +16,7 @@
 package net.splitcells.gel.ui;
 
 import net.splitcells.dem.data.atom.Integers;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.lang.perspective.antlr4.DenParser;
 import net.splitcells.dem.lang.perspective.antlr4.DenParserBaseVisitor;
 import net.splitcells.dem.testing.Result;
@@ -24,7 +24,7 @@ import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.framework.Rater;
 
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.gel.rating.rater.lib.AllSame.ALL_SAME_NAME;
 import static net.splitcells.gel.rating.rater.lib.AllSame.allSame;
@@ -33,8 +33,8 @@ import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.lib.MinimalDistance.MINIMAL_DISTANCE_NAME;
 import static net.splitcells.gel.rating.rater.lib.MinimalDistance.has_minimal_distance_of;
 
-public class RaterParser extends DenParserBaseVisitor<Result<Rater, Perspective>> {
-    public static Result<Rater, Perspective> parseRater(DenParser.Function_callContext functionCall, Assignments assignments) {
+public class RaterParser extends DenParserBaseVisitor<Result<Rater, Tree>> {
+    public static Result<Rater, Tree> parseRater(DenParser.Function_callContext functionCall, Assignments assignments) {
         return new RaterParser(assignments).visitFunction_call(functionCall);
     }
 
@@ -45,8 +45,8 @@ public class RaterParser extends DenParserBaseVisitor<Result<Rater, Perspective>
     }
 
     @Override
-    public Result<Rater, Perspective> visitFunction_call(DenParser.Function_callContext functionCall) {
-        final Result<Rater, Perspective> rater = Result.result();
+    public Result<Rater, Tree> visitFunction_call(DenParser.Function_callContext functionCall) {
+        final Result<Rater, Tree> rater = Result.result();
         if (functionCall.Name().getText().equals(HAS_SIZE_NAME)) {
             if (functionCall.function_call_arguments().function_call_arguments_element().Integer() != null) {
                 final int argument = Integers.parse(functionCall

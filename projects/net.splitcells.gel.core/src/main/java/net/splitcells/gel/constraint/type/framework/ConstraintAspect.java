@@ -19,14 +19,12 @@ import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.lang.dom.Domable;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Query;
-import net.splitcells.gel.constraint.Report;
 import net.splitcells.gel.constraint.intermediate.data.AllocationRating;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
@@ -104,7 +102,7 @@ public class ConstraintAspect implements Constraint {
     }
 
     @Override
-    public Optional<Perspective> naturalArgumentation(GroupId group) {
+    public Optional<Tree> naturalArgumentation(GroupId group) {
         return constraint.naturalArgumentation(group);
     }
 
@@ -114,7 +112,7 @@ public class ConstraintAspect implements Constraint {
     }
 
     @Override
-    public Optional<Perspective> naturalArgumentation(Line line, GroupId group, Predicate<AllocationRating> allocationSelector) {
+    public Optional<Tree> naturalArgumentation(Line line, GroupId group, Predicate<AllocationRating> allocationSelector) {
         return constraint.naturalArgumentation(line, group, allocationSelector);
     }
 
@@ -162,7 +160,7 @@ public class ConstraintAspect implements Constraint {
     }
 
     @Override
-    public Perspective toPerspective(Set<GroupId> groups) {
+    public Tree toPerspective(Set<GroupId> groups) {
         return constraint.toPerspective(groups);
     }
 
@@ -201,7 +199,7 @@ public class ConstraintAspect implements Constraint {
     }
 
     @Override
-    public Perspective toPerspective() {
+    public Tree toPerspective() {
         return constraint.toPerspective();
     }
 }

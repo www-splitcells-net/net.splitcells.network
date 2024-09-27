@@ -15,12 +15,12 @@
  */
 package net.splitcells.dem.environment.config;
 
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 
 import java.util.Optional;
 
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
@@ -86,7 +86,7 @@ public final class StaticFlags {
         throw constructorIllegal();
     }
 
-    private static Optional<Perspective> warningIfNotMostPerformant() {
+    private static Optional<Tree> warningIfNotMostPerformant() {
         if (ENFORCING_UNIT_CONSISTENCY || TELLING_STORY || WARNING || TRACING || !INLINE_STANDARD_FACTORIES) {
             return Optional.of(perspective("The most performant settings are not enabled").withChildren(
                     perspective("ENFORCING_UNIT_CONSISTENCY = " + ENFORCING_UNIT_CONSISTENCY)

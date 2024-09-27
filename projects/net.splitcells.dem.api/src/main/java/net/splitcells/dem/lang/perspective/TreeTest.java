@@ -15,17 +15,15 @@
  */
 package net.splitcells.dem.lang.perspective;
 
-import net.splitcells.dem.resource.communication.Sender;
-import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.BinaryUtils.binaryOutputStream;
 
-public class PerspectiveTest {
+public class TreeTest {
 
     @UnitTest
     public void testXmlName() {

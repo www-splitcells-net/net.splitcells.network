@@ -16,7 +16,7 @@
 package net.splitcells.gel.ui.no.code.editor;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
@@ -26,13 +26,13 @@ import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.CsvDocument.toCsvString;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.gel.solution.optimization.DefaultOptimization.defaultOptimization;
 import static net.splitcells.gel.ui.no.code.editor.NoCodeProblemParser.parseNoCodeProblem;
 import static net.splitcells.website.server.processor.Response.response;
 
-public class NoCodeSolutionCalculator implements Processor<Perspective, Perspective> {
+public class NoCodeSolutionCalculator implements Processor<Tree, Tree> {
 
     public static final Trail PATH = Trail.trail("net/splitcells/gel/ui/no/code/editor/calculate-solution.form");
     public static final String PROBLEM_DEFINITION = "net-splitcells-gel-ui-no-code-editor-form-problem-definition";
@@ -45,7 +45,7 @@ public class NoCodeSolutionCalculator implements Processor<Perspective, Perspect
     public static final String ERRORS = "net-splitcells-gel-ui-no-code-editor-form-errors";
     public static final String FORM_UPDATE = "net-splitcells-websiter-server-form-update";
 
-    public static Processor<Perspective, Perspective> noCodeSolutionCalculator() {
+    public static Processor<Tree, Tree> noCodeSolutionCalculator() {
         return new NoCodeSolutionCalculator();
     }
 
@@ -54,7 +54,7 @@ public class NoCodeSolutionCalculator implements Processor<Perspective, Perspect
     }
 
     @Override
-    public Response<Perspective> process(Request<Perspective> request) {
+    public Response<Tree> process(Request<Tree> request) {
         final var formUpdate = perspective(FORM_UPDATE);
         try {
             PATH.requireEqualityTo(request.trail());

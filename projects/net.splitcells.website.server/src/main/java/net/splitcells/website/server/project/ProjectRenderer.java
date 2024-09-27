@@ -16,7 +16,6 @@
 package net.splitcells.website.server.project;
 
 import net.splitcells.dem.resource.FileSystemView;
-import net.splitcells.dem.resource.Trail;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.project.validator.SourceValidator;
@@ -28,7 +27,7 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 
 /**
  * Renders a folder, that is interpreted as a folder containing a project.

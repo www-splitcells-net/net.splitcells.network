@@ -16,7 +16,7 @@
 package net.splitcells.gel.solution;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.lang.perspective.XmlConfig;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.rating.type.Cost;
@@ -40,7 +40,7 @@ import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.resource.Files.*;
 import static net.splitcells.gel.rating.type.Cost.cost;
@@ -163,19 +163,19 @@ public interface SolutionView extends ProblemView {
         writeToFile(targetFolder.resolve("constraint.natural-argumentation.txt")
                 , constraint()
                         .naturalArgumentation()
-                        .map(Perspective::toStringPathsDescription)
+                        .map(Tree::toStringPathsDescription)
                         .orElse(""));
         writeToFile(targetFolder.resolve("results.fods"), toFods());
     }
 
     /**
-     * Using a dedicated XML class might have been a better idea, instead of returning a {@link Perspective},
-     * as building an AST via {@link Perspective} is kind of cumbersome.
+     * Using a dedicated XML class might have been a better idea, instead of returning a {@link Tree},
+     * as building an AST via {@link Tree} is kind of cumbersome.
      * On the other hand, duplicate String rendering methods can be avoided this way.
      *
-     * @return Returns a perspective designed for {@link Perspective#toXmlString(XmlConfig)}.
+     * @return Returns a perspective designed for {@link Tree#toXmlString(XmlConfig)}.
      */
-    default Perspective toFodsTableAnalysis() {
+    default Tree toFodsTableAnalysis() {
         final var fodsTableAnalysis = perspective("document", FODS_OFFICE)
                 .withXmlAttribute("mimetype", "application/vnd.oasis.opendocument.spreadsheet", FODS_OFFICE)
                 .withChild(fodsStyling());
@@ -193,7 +193,7 @@ public interface SolutionView extends ProblemView {
         return fodsTableAnalysis;
     }
 
-    private static Perspective fodsStyling() {
+    private static Tree fodsStyling() {
         final var automaticStyling = perspective("automatic-styles", FODS_OFFICE);
         automaticStyling.withChild(fodsStylingStyle(1, "#dee6ef"));
         automaticStyling.withChild(fodsStylingStyle(2, "#fff5ce"));
@@ -203,7 +203,7 @@ public interface SolutionView extends ProblemView {
         return automaticStyling;
     }
 
-    private static Perspective fodsStylingStyle(int reasoningComplexity, String backgroundColor) {
+    private static Tree fodsStylingStyle(int reasoningComplexity, String backgroundColor) {
         final var style = perspective("style", FODS_STYLE);
         style.withXmlAttribute("name", "reasoning-complexity-" + reasoningComplexity, FODS_STYLE);
         style.withXmlAttribute("attribute", "table-cell", FODS_STYLE);
@@ -215,7 +215,7 @@ public interface SolutionView extends ProblemView {
         return style;
     }
 
-    default Perspective attributesOfFodsAnalysis() {
+    default Tree attributesOfFodsAnalysis() {
         final var attributes = perspective("table-row", FODS_TABLE);
         headerView().stream().map(Attribute::name).map(attName -> {
             final var tableElement = perspective("table-cell", FODS_TABLE);
@@ -248,7 +248,7 @@ public interface SolutionView extends ProblemView {
         return attributes;
     }
 
-    default Perspective toLinesFodsAnalysis(Line allocation) {
+    default Tree toLinesFodsAnalysis(Line allocation) {
         final var tableLine = perspective("table-row", FODS_TABLE);
         {
             headerView().stream().map(attribute -> allocation.value(attribute)).map(value -> {
@@ -289,7 +289,7 @@ public interface SolutionView extends ProblemView {
                             }
                             allocationArgumentation.withProperty("style-name", FODS_TABLE, "reasoning-complexity-" + reasoningComplexity);
                         }
-                        allocationArgumentationValue.withChild(perspective(Perspective.toStringPathsDescription(argumentationPaths)));
+                        allocationArgumentationValue.withChild(perspective(Tree.toStringPathsDescription(argumentationPaths)));
                     });
         }
         return tableLine;

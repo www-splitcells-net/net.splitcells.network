@@ -16,11 +16,10 @@
 package net.splitcells.gel.solution.history.event;
 
 import net.splitcells.dem.lang.dom.Domable;
-import net.splitcells.dem.lang.Xml;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.gel.data.table.Line;
 
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.gel.common.Language.*;
 
 public class Allocation implements Domable {
@@ -51,7 +50,7 @@ public class Allocation implements Domable {
     }
 
     @Override
-    public Perspective toPerspective() {
+    public Tree toPerspective() {
         return perspective(ALLOCATION.value())
                 .withProperty(TYPE.value(), type.name())
                 .withProperty(DEMAND2.value(), demand.toPerspective())

@@ -17,10 +17,9 @@ package net.splitcells.website.server.project.renderer.extension;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.PageMetaData;
@@ -32,7 +31,7 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**
@@ -121,7 +120,7 @@ public class ProjectRendererExtensionMerger implements ProjectRendererExtension 
     }
 
     @Override
-    public Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer) {
+    public Tree extendProjectLayout(Tree layout, ProjectRenderer projectRenderer) {
         projectRendererExtensions.forEach(e -> e.extendProjectLayout(layout, projectRenderer));
         return layout;
     }

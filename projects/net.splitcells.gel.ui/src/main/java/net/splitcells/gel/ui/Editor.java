@@ -23,7 +23,7 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 public class Editor {

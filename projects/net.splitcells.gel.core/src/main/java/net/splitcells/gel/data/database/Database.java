@@ -16,7 +16,7 @@
 package net.splitcells.gel.data.database;
 
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.table.Line;
@@ -28,7 +28,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
@@ -136,7 +136,7 @@ public interface Database extends Table {
     void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber);
 
     @Override
-    default Perspective toPerspective() {
+    default Tree toPerspective() {
         final var dom = perspective(getClass().getSimpleName());
         rawLinesView().stream()
                 .filter(line -> line != null)

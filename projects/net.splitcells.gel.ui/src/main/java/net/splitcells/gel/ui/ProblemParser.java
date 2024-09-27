@@ -16,7 +16,7 @@
 package net.splitcells.gel.ui;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.lang.perspective.antlr4.DenParser;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.data.database.Database;
@@ -29,7 +29,7 @@ import org.antlr.v4.runtime.misc.ParseCancellationException;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.gel.ui.QueryParser.parseQuery;
@@ -48,7 +48,7 @@ import static net.splitcells.gel.problem.ProblemI.problem;
  * Note, the exceptions work best, if it used as an abort of the current processing context
  * (i.e. processing the request of a user and cleaning up all request specific data on error).
  */
-public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameters, Perspective>> {
+public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameters, Tree>> {
 
     private Optional<String> name = Optional.empty();
 
@@ -56,12 +56,12 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
     private Optional<Database> supplies = Optional.empty();
     private final SolutionParameters solutionParameters = SolutionParameters.solutionParameters();
 
-    private Result<SolutionParameters, Perspective> result = result();
+    private Result<SolutionParameters, Tree> result = result();
 
-    public static Result<SolutionParameters, Perspective> parseProblem(String arg) {
+    public static Result<SolutionParameters, Tree> parseProblem(String arg) {
         final var lexer = new net.splitcells.dem.lang.perspective.antlr4.DenLexer(CharStreams.fromString(arg));
         final var parser = new net.splitcells.dem.lang.perspective.antlr4.DenParser(new CommonTokenStream(lexer));
-        final List<Perspective> parsingErrors = list();
+        final List<Tree> parsingErrors = list();
         parser.addErrorListener(new BaseErrorListener() {
             // Ensures, that error messages are not hidden.
             @Override
@@ -94,7 +94,7 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
     }
 
     @Override
-    public Result<SolutionParameters, Perspective> visitSource_unit(net.splitcells.dem.lang.perspective.antlr4.DenParser.Source_unitContext sourceUnit) {
+    public Result<SolutionParameters, Tree> visitSource_unit(net.splitcells.dem.lang.perspective.antlr4.DenParser.Source_unitContext sourceUnit) {
         visitChildren(sourceUnit);
         if (name.isPresent() && demands.isPresent() && supplies.isPresent() && result.errorMessages().isEmpty()) {
             final var assignments = assignments(name.orElseThrow(), demands.orElseThrow(), supplies.orElseThrow());
@@ -120,7 +120,7 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
     }
 
     @Override
-    public Result<SolutionParameters, Perspective> visitVariable_definition(net.splitcells.dem.lang.perspective.antlr4.DenParser.Variable_definitionContext ctx) {
+    public Result<SolutionParameters, Tree> visitVariable_definition(net.splitcells.dem.lang.perspective.antlr4.DenParser.Variable_definitionContext ctx) {
         final var ctxName = ctx.Name().getText();
         if (ctxName.equals("name")) {
             if (name.isPresent()) {
@@ -186,7 +186,7 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
     }
 
     @Override
-    public Result<SolutionParameters, Perspective> visitFunction_call(DenParser.Function_callContext ctx) {
+    public Result<SolutionParameters, Tree> visitFunction_call(DenParser.Function_callContext ctx) {
         final var subjectName = ctx.Name().getText();
         if (ctx.Name().getText().equals("constraints")) {
             return null;

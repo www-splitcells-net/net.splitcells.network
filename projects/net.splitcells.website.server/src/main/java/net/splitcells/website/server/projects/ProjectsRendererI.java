@@ -18,9 +18,8 @@ package net.splitcells.website.server.projects;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.resource.Service;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.resource.Files;
-import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
@@ -43,7 +42,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.lang.perspective.XmlConfig.xmlConfig;
 import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.resource.Paths.path;
@@ -99,7 +98,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
         generatedFiles.writeToFile(Path.of("layout." + profile + ".xml"), createLayout().toXmlString());
     }
 
-    private Perspective createLayout() {
+    private Tree createLayout() {
         config.withLayout("<element>This is a placeholder. "
                 + "This is used, so that calling projectsPaths returns a link to the layout."
                 + "</element>");
@@ -344,7 +343,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
     }
 
     @Deprecated
-    private List<Perspective> s(Perspective current, String element) {
+    private List<Tree> s(Tree current, String element) {
         final var children = current.children().stream()
                 .filter(child -> child.nameIs(VAL, NATURAL))
                 .filter(child -> child.propertyInstances(NAME, NATURAL).stream()

@@ -16,12 +16,12 @@
 package net.splitcells.dem.resource.communication.log;
 
 import net.splitcells.dem.data.set.list.ListWA;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.resource.communication.Sender;
 
 import java.util.function.Predicate;
 
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.utils.TimeUtils.currentLocalTime;
 
 /**
@@ -35,20 +35,20 @@ import static net.splitcells.dem.utils.TimeUtils.currentLocalTime;
  * probably also looks nice for not technical users.</p>
  */
 public class CommonMarkLogger implements Logger {
-    public static Logger commonMarkDui(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
+    public static Logger commonMarkDui(Sender<String> output, Predicate<LogMessage<Tree>> messageFilter) {
         return new CommonMarkLogger(output, messageFilter);
     }
 
     private final Sender<String> output;
-    private final Predicate<LogMessage<Perspective>> messageFilter;
+    private final Predicate<LogMessage<Tree>> messageFilter;
 
-    private CommonMarkLogger(Sender<String> output, Predicate<LogMessage<Perspective>> messageFilter) {
+    private CommonMarkLogger(Sender<String> output, Predicate<LogMessage<Tree>> messageFilter) {
         this.output = output;
         this.messageFilter = messageFilter;
     }
 
     @Override
-    public <R extends ListWA<LogMessage<Perspective>>> R append(LogMessage<Perspective> arg) {
+    public <R extends ListWA<LogMessage<Tree>>> R append(LogMessage<Tree> arg) {
         if (messageFilter.test(arg)) {
             perspective(currentLocalTime() + ": " + arg.content().name())
                     .withChildren(arg.content().children()).printCommonMarkString(output);

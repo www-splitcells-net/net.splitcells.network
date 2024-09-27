@@ -16,7 +16,7 @@
 package net.splitcells.gel.ui.no.code.editor;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParser;
 import net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParserBaseVisitor;
 import net.splitcells.dem.testing.Result;
@@ -27,7 +27,7 @@ import net.splitcells.gel.ui.Editor;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.gel.constraint.QueryI.query;
@@ -37,10 +37,10 @@ import static net.splitcells.gel.constraint.type.ForAlls.FOR_ALL_COMBINATIONS_OF
 import static net.splitcells.gel.constraint.type.Then.THEN_NAME;
 import static net.splitcells.gel.ui.no.code.editor.NoCodeRaterParser.parseNoCodeRater;
 
-public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, Perspective>> {
+public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, Tree>> {
     private static final String AFFECTED_CONTENT = "affected content";
 
-    public static Result<Query, Perspective> parseNoCodeQuery(NoCodeDenParser.Source_unitContext sourceUnit
+    public static Result<Query, Tree> parseNoCodeQuery(NoCodeDenParser.Source_unitContext sourceUnit
             , Editor editor) {
         final var parser = new NoCodeQueryParser(editor);
         parser.visitSource_unit(sourceUnit);
@@ -49,7 +49,7 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
 
     private final Query parentConstraint;
     private final Editor editor;
-    private Result<Query, Perspective> nextConstraint = result();
+    private Result<Query, Tree> nextConstraint = result();
 
     private NoCodeQueryParser(Editor editorArg) {
         editor = editorArg;
@@ -62,7 +62,7 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
     }
 
     @Override
-    public Result<Query, Perspective> visitVariable_definition(NoCodeDenParser.Variable_definitionContext ctx) {
+    public Result<Query, Tree> visitVariable_definition(NoCodeDenParser.Variable_definitionContext ctx) {
         if (ctx.variable_definition_name().Name().getText().equals("constraints")) {
             nextConstraint.withValue(parentConstraint);
             visitFunction_call(ctx.variable_definition_value().value().function_call(), 0);
@@ -71,7 +71,7 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
     }
 
     @Override
-    public Result<Query, Perspective> visitVariable_access(NoCodeDenParser.Variable_accessContext ctx) {
+    public Result<Query, Tree> visitVariable_access(NoCodeDenParser.Variable_accessContext ctx) {
         if (ctx.variable_reference().Name().getText().equals("constraints")) {
             nextConstraint.withValue(parentConstraint);
             visitFunction_call(ctx.function_call(), 0);
@@ -79,7 +79,7 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
         return nextConstraint;
     }
 
-    private Result<Query, Perspective> visitFunction_call(java.util.List<NoCodeDenParser.Function_callContext> functionCallChain
+    private Result<Query, Tree> visitFunction_call(java.util.List<NoCodeDenParser.Function_callContext> functionCallChain
             , int currentIndex) {
         final var firstCall = functionCallChain.get(currentIndex);
         final var parseResults = parseQuery(firstCall.function_call_name().string_value().getText()
@@ -102,9 +102,9 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
         return nextConstraint;
     }
 
-    private Result<Query, Perspective> parseQuery(String constraintType, java.util.List<NoCodeDenParser.Function_call_argumentContext> arguments
+    private Result<Query, Tree> parseQuery(String constraintType, java.util.List<NoCodeDenParser.Function_call_argumentContext> arguments
             , NoCodeDenParser.Function_callContext constraintFunctionCall) {
-        final Result<Query, Perspective> parsedConstraint = result();
+        final Result<Query, Tree> parsedConstraint = result();
         if (constraintType.equals(FOR_ALL_NAME)) {
             if (arguments != null && arguments.size() > 0) {
                 return parsedConstraint.withErrorMessage(perspective("ForAll does not support arguments.")

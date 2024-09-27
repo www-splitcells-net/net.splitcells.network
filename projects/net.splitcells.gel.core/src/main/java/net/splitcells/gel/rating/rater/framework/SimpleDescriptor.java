@@ -15,18 +15,18 @@
  */
 package net.splitcells.gel.rating.rater.framework;
 
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.TODO_NOT_IMPLEMENTED_YET;
 
 @FunctionalInterface
 public interface SimpleDescriptor {
     String toSimpleDescription(Line line, Table groupLineProcessing, GroupId incomingGroup);
-    default Perspective toPerspective() {
+    default Tree toPerspective() {
         return perspective(TODO_NOT_IMPLEMENTED_YET + toString());
     }
 }

@@ -19,14 +19,13 @@ import net.splitcells.dem.resource.FileSystemView;
 import net.splitcells.dem.resource.Paths;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.project.validator.SourceValidator;
-import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.translation.to.html.XslTransformer;
 
 import java.util.Optional;
 import java.util.function.Function;
 
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.website.server.translation.to.html.PathBasedUriResolver.pathBasedUriResolver;
 

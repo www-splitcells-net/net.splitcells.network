@@ -15,7 +15,7 @@
  */
 package net.splitcells.website.server.processor;
 
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 
 import java.util.Optional;
 
@@ -26,7 +26,7 @@ import java.util.Optional;
  * <p>TODO Use this API for the webserver instead of {@link net.splitcells.website.server.projects.ProjectsRenderer}.</p>
  * <p>TODO IDEA The most abstract server API concept, is an API,
  * where a path and tree of binary arrays annotated with
- * an ID with a URL format and like {@link Perspective#nameSpace()} for each array is sent to a server,
+ * an ID with a URL format and like {@link Tree#nameSpace()} for each array is sent to a server,
  * that responses with the same kind of binary tree,
  * but without a path.
  * Such an API could model any kind of function signature natively,
@@ -65,7 +65,7 @@ public interface Processor<Source, Target> {
      *                which processor supports which {@link Request#trail()}.</p>
      *                <p>Therefore, an {@link Optional} is not required and does not make the API more future proof.</p>
      *                <p>The type of data itself is generic, so it is possible to chain processors.
-     *                For now {@link Perspective} is preferred as default type,
+     *                For now {@link Tree} is preferred as default type,
      *                because it can hold arbitrary formatted String structures and
      *                binary data can be stored as base64 as well.</p>
      * @return This is the set of requested binary data.

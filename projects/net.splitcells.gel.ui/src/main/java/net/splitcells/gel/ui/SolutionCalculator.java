@@ -16,25 +16,18 @@
 package net.splitcells.gel.ui;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.lang.CsvDocument;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.dem.resource.Trail;
-import net.splitcells.dem.utils.StringUtils;
-import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.ui.no.code.editor.NoCodeSolutionCalculator;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
 
-import java.util.stream.IntStream;
-
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.CsvDocument.toCsvString;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.gel.solution.optimization.DefaultOptimization.defaultOptimization;
 import static net.splitcells.gel.ui.ProblemParser.parseProblem;
@@ -49,7 +42,7 @@ import static net.splitcells.website.server.processor.Response.response;
  * that it might be a good idea to wait,
  * if the no-code variant is truly universally good enough.
  */
-public class SolutionCalculator implements Processor<Perspective, Perspective> {
+public class SolutionCalculator implements Processor<Tree, Tree> {
 
     public static final Trail PATH = Trail.trail("net/splitcells/gel/ui/calculate-solution.form");
     public static final String PROBLEM_DEFINITION = "net-splitcells-gel-ui-editor-form-problem-definition";
@@ -62,7 +55,7 @@ public class SolutionCalculator implements Processor<Perspective, Perspective> {
     public static final String ERRORS = "net-splitcells-gel-ui-editor-form-errors";
     public static final String FORM_UPDATE = "net-splitcells-websiter-server-form-update";
 
-    public static Processor<Perspective, Perspective> solutionCalculator() {
+    public static Processor<Tree, Tree> solutionCalculator() {
         return new SolutionCalculator();
     }
 
@@ -71,7 +64,7 @@ public class SolutionCalculator implements Processor<Perspective, Perspective> {
     }
 
     @Override
-    public Response<Perspective> process(Request<Perspective> request) {
+    public Response<Tree> process(Request<Tree> request) {
         final var formUpdate = perspective(FORM_UPDATE);
         try {
             PATH.requireEqualityTo(request.trail());

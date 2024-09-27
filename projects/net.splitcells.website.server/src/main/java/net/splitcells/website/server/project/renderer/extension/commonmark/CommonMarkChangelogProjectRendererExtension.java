@@ -16,7 +16,7 @@
 package net.splitcells.website.server.project.renderer.extension.commonmark;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.website.server.project.LayoutUtils;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.processor.BinaryMessage;
@@ -56,7 +56,7 @@ public class CommonMarkChangelogProjectRendererExtension implements ProjectRende
     }
 
     @Override
-    public Perspective extendProjectLayout(Perspective layout, ProjectRenderer projectRenderer) {
+    public Tree extendProjectLayout(Tree layout, ProjectRenderer projectRenderer) {
         if (projectRenderer.projectFileSystem().isFile(CHANGELOG)) {
             LayoutUtils.extendPerspectiveWithPath(layout
                     , Path.of(projectRenderer.resourceRootPath().substring(1))

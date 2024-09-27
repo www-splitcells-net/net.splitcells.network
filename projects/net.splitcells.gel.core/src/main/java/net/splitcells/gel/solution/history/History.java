@@ -16,12 +16,12 @@
 package net.splitcells.gel.solution.history;
 
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.lang.perspective.XmlConfig.xmlConfig;
 import static net.splitcells.dem.utils.FodsUtility.tableCell;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.history.event.Allocation;
@@ -158,7 +158,7 @@ public interface History extends Assignments, AfterAdditionSubscriber, BeforeRem
      * but where each field of the complex {@link Attribute}s gets a distinct colum.
      * This makes it easier to analyse the history, by improving the searchability by column values.
      */
-    default Perspective toAnalysisFods() {
+    default Tree toAnalysisFods() {
         final var fods = perspective("document", FODS_OFFICE)
                 .withXmlAttribute("mimetype", "application/vnd.oasis.opendocument.spreadsheet", FODS_OFFICE);
         final var body = perspective("body", FODS_OFFICE);

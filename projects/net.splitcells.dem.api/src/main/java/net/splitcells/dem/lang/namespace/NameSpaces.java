@@ -15,12 +15,12 @@
  */
 package net.splitcells.dem.lang.namespace;
 
-import net.splitcells.dem.lang.perspective.Perspective;
+import net.splitcells.dem.lang.perspective.Tree;
 
 import java.util.Optional;
 
 import static net.splitcells.dem.lang.namespace.NameSpace.nameSpace;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 public class NameSpaces {
@@ -41,7 +41,7 @@ public class NameSpaces {
     public static final NameSpace NAME_SPACE = nameSpace("ns", "http://splitcells.net/namespace.xsd");
     public static final NameSpace DEN = nameSpace("d", "http://splitcells.net/den.xsd");
     /**
-     * Namespace in order to code XML syntax specifics into an {@link Perspective}.
+     * Namespace in order to code XML syntax specifics into an {@link Tree}.
      */
     public static final NameSpace XML_SYNTAX = nameSpace("a", "http://splitcells.net/xml.xsd");
     public static final NameSpace GEL = nameSpace("d", "http://splitcells.net/gel.xsd");
@@ -64,7 +64,7 @@ public class NameSpaces {
         throw constructorIllegal();
     }
 
-    public static Perspective string(String value) {
+    public static Tree string(String value) {
         return perspective(value, STRING);
     }
 }

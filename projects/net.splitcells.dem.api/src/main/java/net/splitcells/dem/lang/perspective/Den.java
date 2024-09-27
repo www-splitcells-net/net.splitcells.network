@@ -19,55 +19,55 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
+import static net.splitcells.dem.lang.perspective.TreeI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 public class Den {
 
-    public static Perspective val(String name) {
+    public static Tree val(String name) {
         return perspective("val").withProperty("name", name);
     }
 
-    public static Perspective project(Perspective... arg) {
+    public static Tree project(Tree... arg) {
         return perspective("project");
     }
 
-    public static Perspective todo(Perspective... arg) {
+    public static Tree todo(Tree... arg) {
         return perspective("todo");
     }
 
-    public static Perspective todo(String text, Perspective... arg) {
+    public static Tree todo(String text, Tree... arg) {
         return perspective("todo");
     }
 
-    public static Perspective priority(Perspective... arg) {
+    public static Tree priority(Tree... arg) {
         return perspective("priority");
     }
 
-    public static Perspective queue(Perspective... arg) {
+    public static Tree queue(Tree... arg) {
         return perspective("queue");
     }
 
-    public static Perspective scheduling(Perspective... arg) {
+    public static Tree scheduling(Tree... arg) {
         return perspective("scheduling");
     }
 
-    public static Perspective solution(Perspective... arg) {
+    public static Tree solution(Tree... arg) {
         return perspective("solution");
     }
 
-    public static Perspective subtree(Perspective perspective, List<String> path) {
+    public static Tree subtree(Tree tree, List<String> path) {
         if (path.isEmpty()) {
-            return perspective;
+            return tree;
         }
         final var next = path.remove(0);
-        final var fittingChild = perspective.children().stream()
+        final var fittingChild = tree.children().stream()
                 .filter(child -> child.nameIs(NameSpaces.VAL, NameSpaces.DEN))
                 .filter(child -> child.propertyInstances(NameSpaces.NAME, NameSpaces.DEN).stream()
                         .anyMatch(property -> property.value().get().name().equals(next)))
                 .findFirst();
         if (fittingChild.isEmpty()) {
-            throw executionException("Looking for `" + next + "` but only found `" + perspective.children() + "`.");
+            throw executionException("Looking for `" + next + "` but only found `" + tree.children() + "`.");
         }
         return subtree(fittingChild.get()
                 , path);
