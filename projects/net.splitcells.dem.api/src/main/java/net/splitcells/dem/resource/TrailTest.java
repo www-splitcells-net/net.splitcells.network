@@ -62,6 +62,14 @@ public class TrailTest {
 
     @UnitTest
     public void testWithoutPrefixElementsIllegalRemoval() {
+        assertThrows(ExecutionException.class, () -> withoutPrefixElements("/../../..", 1));
+        assertThrows(ExecutionException.class, () -> withoutPrefixElements("../../..", 4));
+        assertThrows(ExecutionException.class, () -> withoutPrefixElements("../../..", -1));
+    }
+
+    @UnitTest
+    public void testWithoutSuffixElementsIllegalRemoval() {
+        assertThrows(ExecutionException.class, () -> withoutPrefixElements("/../../..", 1));
         assertThrows(ExecutionException.class, () -> withoutPrefixElements("../../..", 4));
         assertThrows(ExecutionException.class, () -> withoutPrefixElements("../../..", -1));
     }
