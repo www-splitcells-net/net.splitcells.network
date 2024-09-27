@@ -27,7 +27,7 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 
 /**
  * Renders a folder, that is interpreted as a folder containing a project.

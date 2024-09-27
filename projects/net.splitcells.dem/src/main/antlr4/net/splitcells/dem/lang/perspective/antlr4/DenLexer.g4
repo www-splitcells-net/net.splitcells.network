@@ -3,7 +3,7 @@ lexer grammar DenLexer;
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
 @header {
-    package net.splitcells.dem.lang.perspective.antlr4;
+    package net.splitcells.dem.lang.tree.antlr4;
 }
 Brace_round_open: '(';
 Brace_round_closed: ')';

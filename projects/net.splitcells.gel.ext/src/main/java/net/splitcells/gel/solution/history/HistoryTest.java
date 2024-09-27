@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.lang.perspective.XmlConfig.xmlConfig;
+import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.TestTypes.BENCHMARK_RUNTIME;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;

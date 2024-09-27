@@ -19,7 +19,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
-import net.splitcells.dem.lang.perspective.Tree;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.PageMetaData;
@@ -31,7 +31,7 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**

@@ -18,12 +18,12 @@ package net.splitcells.gel.data.table;
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.gel.common.Language.*;
 
 import net.splitcells.dem.data.atom.Thing;
-import net.splitcells.dem.lang.perspective.Tree;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.data.table.attribute.IndexedAttribute;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.gel.data.table.attribute.Attribute;

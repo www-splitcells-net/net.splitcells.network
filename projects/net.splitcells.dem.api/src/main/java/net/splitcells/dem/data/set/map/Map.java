@@ -24,7 +24,7 @@ import java.util.function.Supplier;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 @JavaLegacyArtifact

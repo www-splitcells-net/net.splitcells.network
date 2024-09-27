@@ -20,7 +20,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.execution.Effect;
 import net.splitcells.dem.lang.dom.Domable;
-import net.splitcells.dem.lang.perspective.Tree;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;

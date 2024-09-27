@@ -27,7 +27,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.dem.resource.FileSystemViaClassResourcesImpl.resourceBasePath;
 import static net.splitcells.dem.resource.Files.readAsString;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;

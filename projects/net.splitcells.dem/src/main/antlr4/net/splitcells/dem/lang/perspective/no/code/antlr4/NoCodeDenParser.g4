@@ -15,7 +15,7 @@ parser grammar NoCodeDenParser;
  * The compact version also requires a **lot** less storage space than the no-code version.
  */
 @header {
-    package net.splitcells.dem.lang.perspective.no.code.antlr4;
+    package net.splitcells.dem.lang.tree.no.code.antlr4;
 }
 options {
     tokenVocab=NoCodeDenLexer;

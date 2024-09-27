@@ -17,7 +17,7 @@ package net.splitcells.website.server.project.renderer.extension;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.namespace.NameSpaces;
-import net.splitcells.dem.lang.perspective.Tree;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.dem.resource.FileSystems;
 import net.splitcells.website.server.Config;
@@ -32,7 +32,7 @@ import java.util.Optional;
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 

@@ -19,12 +19,12 @@ import net.splitcells.dem.data.set.list.ListWA;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.dom.Domable;
-import net.splitcells.dem.lang.perspective.Tree;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.object.Discoverable;
 
 import java.util.Optional;
 
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.resource.communication.log.LogMessageI.logMessage;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;

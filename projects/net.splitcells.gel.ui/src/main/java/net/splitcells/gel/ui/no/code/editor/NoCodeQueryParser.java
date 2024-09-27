@@ -16,9 +16,9 @@
 package net.splitcells.gel.ui.no.code.editor;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.perspective.Tree;
-import net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParser;
-import net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParserBaseVisitor;
+import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenParser;
+import net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenParserBaseVisitor;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -27,7 +27,7 @@ import net.splitcells.gel.ui.Editor;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.gel.constraint.QueryI.query;

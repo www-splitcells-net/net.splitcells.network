@@ -90,7 +90,7 @@
                                     </includes>
                                     <visitor>true</visitor>
                                     <listener>true</listener>
-                                    <outputDirectory>target/antlr4/net/splitcells/dem/lang/perspective/antlr4</outputDirectory>
+                                    <outputDirectory>target/antlr4/net/splitcells/dem/lang/tree/antlr4</outputDirectory>
                                 </configuration>
                             </execution>
                             <execution>
@@ -106,7 +106,7 @@
                                     </includes>
                                     <visitor>true</visitor>
                                     <listener>true</listener>
-                                    <outputDirectory>target/antlr4/net/splitcells/dem/lang/perspective/no/code/antlr4</outputDirectory>
+                                    <outputDirectory>target/antlr4/net/splitcells/dem/lang/tree/no/code/antlr4</outputDirectory>
                                 </configuration>
                             </execution>
                         </executions>

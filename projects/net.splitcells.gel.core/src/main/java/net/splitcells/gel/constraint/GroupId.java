@@ -17,12 +17,12 @@ package net.splitcells.gel.constraint;
 
 import static net.splitcells.dem.data.set.map.typed.TypedMapI.typedMap;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 
 import java.util.Optional;
 
 import net.splitcells.dem.data.set.map.typed.TypedMapView;
-import net.splitcells.dem.lang.perspective.Tree;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.dem.lang.dom.Domable;
 

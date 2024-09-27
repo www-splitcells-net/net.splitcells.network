@@ -18,7 +18,7 @@ package net.splitcells.dem.resource.communication.log;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.dem.resource.communication.log.ServerLogger.serverLog;
 
 public class ServerLoggerTest {

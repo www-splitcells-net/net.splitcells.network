@@ -16,8 +16,8 @@
 package net.splitcells.gel.solution;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.perspective.Tree;
-import net.splitcells.dem.lang.perspective.XmlConfig;
+import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.lang.tree.XmlConfig;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.history.History;
@@ -40,7 +40,7 @@ import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.resource.Files.*;
 import static net.splitcells.gel.rating.type.Cost.cost;

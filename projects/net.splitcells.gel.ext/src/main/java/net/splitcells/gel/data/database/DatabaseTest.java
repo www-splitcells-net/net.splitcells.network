@@ -17,8 +17,6 @@ package net.splitcells.gel.data.database;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.lang.perspective.XmlConfig;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.gel.constraint.type.framework.ConstraintMultiThreading;
 import net.splitcells.gel.data.table.Line;
@@ -29,18 +27,16 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.dem.lang.perspective.XmlConfig.xmlConfig;
+import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
 import static net.splitcells.dem.testing.Assertions.assertThrows;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireNull;
 import static net.splitcells.dem.testing.Mocking.anyObject;
-import static net.splitcells.dem.testing.Mocking.anyString;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.data.database.DatabaseIFactory.databaseFactory;

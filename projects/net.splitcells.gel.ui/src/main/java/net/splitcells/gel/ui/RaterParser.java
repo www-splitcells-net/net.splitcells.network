@@ -16,15 +16,15 @@
 package net.splitcells.gel.ui;
 
 import net.splitcells.dem.data.atom.Integers;
-import net.splitcells.dem.lang.perspective.Tree;
-import net.splitcells.dem.lang.perspective.antlr4.DenParser;
-import net.splitcells.dem.lang.perspective.antlr4.DenParserBaseVisitor;
+import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.lang.tree.antlr4.DenParser;
+import net.splitcells.dem.lang.tree.antlr4.DenParserBaseVisitor;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.framework.Rater;
 
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.gel.rating.rater.lib.AllSame.ALL_SAME_NAME;
 import static net.splitcells.gel.rating.rater.lib.AllSame.allSame;

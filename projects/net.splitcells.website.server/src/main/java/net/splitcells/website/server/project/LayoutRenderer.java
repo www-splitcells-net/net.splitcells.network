@@ -17,7 +17,7 @@ package net.splitcells.website.server.project;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.namespace.NameSpace;
-import net.splitcells.dem.lang.perspective.Tree;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.website.server.Config;
 import net.splitcells.dem.resource.Files;
 
@@ -26,7 +26,7 @@ import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.NATURAL;
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.website.Projects.projectsRenderer;
 
 @Deprecated

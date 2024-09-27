@@ -16,14 +16,14 @@
 package net.splitcells.gel.solution.history.meta;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.gel.common.Language.*;
 
 import java.util.Optional;
 
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.lang.perspective.Tree;
+import net.splitcells.dem.lang.tree.Tree;
 
 public class MetaDataI implements MetaDataView, MetaDataWriter {
     public static MetaDataI metaData() {

@@ -18,7 +18,7 @@ package net.splitcells.dem.lang;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.namespace.NameSpace;
-import net.splitcells.dem.lang.perspective.Tree;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.utils.ExecutionException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;

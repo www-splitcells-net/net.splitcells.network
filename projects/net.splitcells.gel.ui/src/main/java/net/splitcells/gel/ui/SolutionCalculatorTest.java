@@ -25,7 +25,7 @@ import net.splitcells.website.server.projects.extension.ColloquiumPlanningSuppli
 import java.util.Optional;
 
 import static net.splitcells.dem.data.atom.Bools.truthful;
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.gel.ui.SolutionCalculator.DEMANDS;
 import static net.splitcells.gel.ui.SolutionCalculator.PROBLEM_DEFINITION;

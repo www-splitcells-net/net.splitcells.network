@@ -15,11 +15,11 @@
  */
 package net.splitcells.dem.utils;
 
-import net.splitcells.dem.lang.perspective.Tree;
+import net.splitcells.dem.lang.tree.Tree;
 
 import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_TABLE;
 import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_TEXT;
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 /**

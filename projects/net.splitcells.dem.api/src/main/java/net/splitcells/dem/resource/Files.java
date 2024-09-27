@@ -18,7 +18,7 @@ package net.splitcells.dem.resource;
 import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
-import net.splitcells.dem.lang.perspective.Tree;
+import net.splitcells.dem.lang.tree.Tree;
 import org.apache.commons.io.FileUtils;
 
 import java.io.FileOutputStream;
@@ -31,7 +31,7 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import static java.nio.file.Files.createDirectories;
-import static net.splitcells.dem.lang.perspective.XmlConfig.xmlConfig;
+import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**

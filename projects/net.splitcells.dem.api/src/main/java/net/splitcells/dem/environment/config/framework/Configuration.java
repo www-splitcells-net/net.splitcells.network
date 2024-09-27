@@ -19,7 +19,7 @@ import net.splitcells.dem.lang.annotations.ReturnsThis;
 
 import java.util.function.Function;
 
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**

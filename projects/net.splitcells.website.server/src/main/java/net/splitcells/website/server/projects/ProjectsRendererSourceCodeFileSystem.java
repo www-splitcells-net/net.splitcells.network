@@ -23,7 +23,7 @@ import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 

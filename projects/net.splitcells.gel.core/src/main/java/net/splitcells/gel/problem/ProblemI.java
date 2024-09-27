@@ -19,7 +19,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.execution.EffectSynchronization;
-import net.splitcells.dem.lang.perspective.Tree;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.constraint.type.framework.ConstraintAspect;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.database.DatabaseSynchronization;

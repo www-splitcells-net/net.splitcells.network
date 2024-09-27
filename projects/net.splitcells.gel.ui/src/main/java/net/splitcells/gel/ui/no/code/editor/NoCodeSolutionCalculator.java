@@ -16,7 +16,7 @@
 package net.splitcells.gel.ui.no.code.editor;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.perspective.Tree;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
@@ -26,7 +26,7 @@ import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.CsvDocument.toCsvString;
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.gel.solution.optimization.DefaultOptimization.defaultOptimization;
 import static net.splitcells.gel.ui.no.code.editor.NoCodeProblemParser.parseNoCodeProblem;

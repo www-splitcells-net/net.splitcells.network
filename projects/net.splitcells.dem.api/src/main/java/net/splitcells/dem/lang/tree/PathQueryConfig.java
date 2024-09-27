@@ -13,22 +13,20 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.dem.lang.perspective;
+package net.splitcells.dem.lang.tree;
 
-public class JsonConfig {
-    public static JsonConfig jsonConfig() {
-        return new JsonConfig();
-    }
-    private boolean isTopElement = true;
-    private JsonConfig() {
-
+public class PathQueryConfig {
+    public static PathQueryConfig pathQueryConfig() {
+        return new PathQueryConfig();
     }
 
-    public boolean isTopElement() {
-        return isTopElement;
+    private boolean checkRootNode = true;
+
+    private PathQueryConfig() {
+
     }
-    public JsonConfig withIsTopElement(boolean isTopElementArg) {
-        isTopElement = isTopElementArg;
-        return this;
+
+    public boolean checkRootNode() {
+        return checkRootNode;
     }
 }

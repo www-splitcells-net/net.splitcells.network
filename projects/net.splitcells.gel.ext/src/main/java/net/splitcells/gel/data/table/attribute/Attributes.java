@@ -15,10 +15,10 @@
  */
 package net.splitcells.gel.data.table.attribute;
 
-import net.splitcells.dem.lang.perspective.Tree;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.testing.Result;
 
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.dem.testing.Mocking.anyClass;
 import static net.splitcells.dem.testing.Mocking.anyString;
 import static net.splitcells.dem.testing.Result.result;

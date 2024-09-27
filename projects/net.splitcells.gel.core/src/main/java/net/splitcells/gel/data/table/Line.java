@@ -19,7 +19,7 @@ import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.lang.namespace.NameSpaces.HTML;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.gel.common.Language.CONTENT;
 import static net.splitcells.gel.common.Language.INDEX;
 import static net.splitcells.gel.common.Language.TYPE;
@@ -29,7 +29,7 @@ import static net.splitcells.gel.data.table.LinePointerI.linePointer;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.perspective.Tree;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.attribute.IndexedAttribute;
 

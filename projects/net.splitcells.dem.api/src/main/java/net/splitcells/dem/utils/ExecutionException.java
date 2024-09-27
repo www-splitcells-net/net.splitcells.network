@@ -16,7 +16,7 @@
 package net.splitcells.dem.utils;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.lang.perspective.Tree;
+import net.splitcells.dem.lang.tree.Tree;
 
 @JavaLegacyArtifact
 public class ExecutionException extends RuntimeException {

@@ -18,7 +18,7 @@ package net.splitcells.website.server;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
-import net.splitcells.dem.lang.perspective.Tree;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.ProcessorRegistry;
@@ -33,7 +33,7 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.website.server.processor.ProcessorRegistry.binaryProcessorRegistry;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 

@@ -16,7 +16,7 @@
 package net.splitcells.dem.resource.communication.log;
 
 import net.splitcells.dem.environment.config.framework.OptionI;
-import net.splitcells.dem.lang.perspective.Tree;
+import net.splitcells.dem.lang.tree.Tree;
 
 import java.util.function.Predicate;
 

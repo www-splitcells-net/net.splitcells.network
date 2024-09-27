@@ -18,7 +18,7 @@ package net.splitcells.gel.constraint.type;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.dom.Domable;
-import net.splitcells.dem.lang.perspective.Tree;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.constraint.Constraint;
@@ -37,7 +37,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import static net.splitcells.dem.lang.namespace.NameSpaces.GEL;
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public final class Derivation implements Constraint {

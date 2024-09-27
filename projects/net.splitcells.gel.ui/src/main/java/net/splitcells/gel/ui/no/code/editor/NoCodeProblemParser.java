@@ -17,9 +17,9 @@ package net.splitcells.gel.ui.no.code.editor;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.lang.perspective.Tree;
-import net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParser;
-import net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParserBaseVisitor;
+import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenParser;
+import net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenParserBaseVisitor;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.attribute.Attribute;
@@ -32,7 +32,7 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.Result.result;
@@ -136,8 +136,8 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
     }
 
     private Result<SolutionParameters, Tree> parseNoCodeProblemIntern(String arg) {
-        final var lexer = new net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenLexer(CharStreams.fromString(arg));
-        final var parser = new net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParser(new CommonTokenStream(lexer));
+        final var lexer = new net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenLexer(CharStreams.fromString(arg));
+        final var parser = new net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenParser(new CommonTokenStream(lexer));
         final List<Tree> parsingErrors = list();
         parser.addErrorListener(new BaseErrorListener() {
             // Ensures, that error messages are not hidden.
@@ -167,7 +167,7 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
     }
 
     @Override
-    public Result<SolutionParameters, Tree> visitSource_unit(net.splitcells.dem.lang.perspective.no.code.antlr4.NoCodeDenParser.Source_unitContext sourceUnit) {
+    public Result<SolutionParameters, Tree> visitSource_unit(net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenParser.Source_unitContext sourceUnit) {
         currentSourceUnit = sourceUnit;
         visitChildren(sourceUnit);
         currentSourceUnit = null;

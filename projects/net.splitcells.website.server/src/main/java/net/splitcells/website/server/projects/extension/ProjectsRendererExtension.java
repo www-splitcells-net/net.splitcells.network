@@ -16,7 +16,7 @@
 package net.splitcells.website.server.projects.extension;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.lang.perspective.Tree;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.projects.ProjectsRendererI;

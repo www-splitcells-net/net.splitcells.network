@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 
 import static java.nio.file.Files.createDirectories;
 import static net.splitcells.dem.Dem.configValue;
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 

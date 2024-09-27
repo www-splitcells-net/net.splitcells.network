@@ -5,6 +5,8 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2024-09-27** Rename `net.splitcells.dem.lang.perspective.Perspective*`
+  to `net.splitcells.dem.lang.tree.Tree*` in order to make code compact and more readable.
 * **2024-09-23\#26** Remove deprecated `Domable#toDom`.
 * **2024-09-01\#32** Rename `net.splitcells.dem.data.order.Comparator` to `Comparison`,
   in order to avoid confusion with `java.util.Comparator`.

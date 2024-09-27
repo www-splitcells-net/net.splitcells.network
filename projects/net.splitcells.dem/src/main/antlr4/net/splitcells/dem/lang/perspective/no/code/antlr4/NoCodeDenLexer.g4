@@ -3,7 +3,7 @@ lexer grammar NoCodeDenLexer;
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
 @header {
-    package net.splitcells.dem.lang.perspective.no.code.antlr4;
+    package net.splitcells.dem.lang.tree.no.code.antlr4;
 }
 Body_start: '<body>';
 Body_end: '</body>';

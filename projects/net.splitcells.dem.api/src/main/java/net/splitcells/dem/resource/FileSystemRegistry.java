@@ -22,7 +22,7 @@ import net.splitcells.dem.environment.resource.Service;
 import static net.splitcells.dem.Dem.config;
 import static net.splitcells.dem.data.atom.Thing.instance;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 

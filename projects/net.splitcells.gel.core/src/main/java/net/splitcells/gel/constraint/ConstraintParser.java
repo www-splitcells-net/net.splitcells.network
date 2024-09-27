@@ -16,7 +16,7 @@
 package net.splitcells.gel.constraint;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.lang.perspective.antlr4.DenParser;
+import net.splitcells.dem.lang.tree.antlr4.DenParser;
 
 import java.util.Optional;
 

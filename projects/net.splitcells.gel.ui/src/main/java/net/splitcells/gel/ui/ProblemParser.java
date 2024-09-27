@@ -16,12 +16,12 @@
 package net.splitcells.gel.ui;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.perspective.Tree;
-import net.splitcells.dem.lang.perspective.antlr4.DenParser;
+import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.lang.tree.antlr4.DenParser;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.dem.lang.perspective.antlr4.DenParserBaseVisitor;
+import net.splitcells.dem.lang.tree.antlr4.DenParserBaseVisitor;
 import net.splitcells.gel.data.table.attribute.Attributes;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
@@ -29,7 +29,7 @@ import org.antlr.v4.runtime.misc.ParseCancellationException;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.gel.ui.QueryParser.parseQuery;
@@ -59,8 +59,8 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
     private Result<SolutionParameters, Tree> result = result();
 
     public static Result<SolutionParameters, Tree> parseProblem(String arg) {
-        final var lexer = new net.splitcells.dem.lang.perspective.antlr4.DenLexer(CharStreams.fromString(arg));
-        final var parser = new net.splitcells.dem.lang.perspective.antlr4.DenParser(new CommonTokenStream(lexer));
+        final var lexer = new net.splitcells.dem.lang.tree.antlr4.DenLexer(CharStreams.fromString(arg));
+        final var parser = new net.splitcells.dem.lang.tree.antlr4.DenParser(new CommonTokenStream(lexer));
         final List<Tree> parsingErrors = list();
         parser.addErrorListener(new BaseErrorListener() {
             // Ensures, that error messages are not hidden.
@@ -94,7 +94,7 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
     }
 
     @Override
-    public Result<SolutionParameters, Tree> visitSource_unit(net.splitcells.dem.lang.perspective.antlr4.DenParser.Source_unitContext sourceUnit) {
+    public Result<SolutionParameters, Tree> visitSource_unit(net.splitcells.dem.lang.tree.antlr4.DenParser.Source_unitContext sourceUnit) {
         visitChildren(sourceUnit);
         if (name.isPresent() && demands.isPresent() && supplies.isPresent() && result.errorMessages().isEmpty()) {
             final var assignments = assignments(name.orElseThrow(), demands.orElseThrow(), supplies.orElseThrow());
@@ -120,7 +120,7 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
     }
 
     @Override
-    public Result<SolutionParameters, Tree> visitVariable_definition(net.splitcells.dem.lang.perspective.antlr4.DenParser.Variable_definitionContext ctx) {
+    public Result<SolutionParameters, Tree> visitVariable_definition(net.splitcells.dem.lang.tree.antlr4.DenParser.Variable_definitionContext ctx) {
         final var ctxName = ctx.Name().getText();
         if (ctxName.equals("name")) {
             if (name.isPresent()) {

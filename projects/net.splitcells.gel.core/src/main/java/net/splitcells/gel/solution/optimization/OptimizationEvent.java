@@ -17,13 +17,13 @@ package net.splitcells.gel.solution.optimization;
 
 import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.lang.dom.Domable;
-import net.splitcells.dem.lang.perspective.Tree;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.common.Language;
 import net.splitcells.gel.data.table.LinePointer;
 
 import static net.splitcells.dem.lang.Xml.attribute;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 
 /**
  * To have whatsoever he wishes is in no man’s power;

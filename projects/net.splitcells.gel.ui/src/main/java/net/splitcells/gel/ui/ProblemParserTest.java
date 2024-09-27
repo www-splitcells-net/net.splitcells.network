@@ -16,8 +16,6 @@
 package net.splitcells.gel.ui;
 
 import net.splitcells.dem.Dem;
-import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.constraint.type.ForAll;
 import net.splitcells.gel.constraint.type.Then;
@@ -25,7 +23,6 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.testing.Assertions.assertThrows;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requirePresenceOf;
 import static net.splitcells.gel.rating.rater.lib.classification.ForAllValueCombinations.FOR_ALL_VALUE_COMBINATIONS_NAME;
@@ -35,8 +32,8 @@ public class ProblemParserTest {
     @UnitTest
     public void test() {
         final var testData = "demands=forAll().then();";
-        final var lexer = new net.splitcells.dem.lang.perspective.antlr4.DenLexer(CharStreams.fromString(testData));
-        final var parser = new net.splitcells.dem.lang.perspective.antlr4.DenParser(new CommonTokenStream(lexer));
+        final var lexer = new net.splitcells.dem.lang.tree.antlr4.DenLexer(CharStreams.fromString(testData));
+        final var parser = new net.splitcells.dem.lang.tree.antlr4.DenParser(new CommonTokenStream(lexer));
         final var testResult = parser.source_unit();
         requireEquals(testResult.statement().get(0).variable_definition().Name().getText()
                 , "demands");

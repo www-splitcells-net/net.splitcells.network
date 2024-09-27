@@ -19,7 +19,7 @@ parser grammar DenParser;
  * Note, that the Perspective model, is the framework for the Den model.
  */
 @header {
-    package net.splitcells.dem.lang.perspective.antlr4;
+    package net.splitcells.dem.lang.tree.antlr4;
 }
 options {
     tokenVocab=DenLexer;

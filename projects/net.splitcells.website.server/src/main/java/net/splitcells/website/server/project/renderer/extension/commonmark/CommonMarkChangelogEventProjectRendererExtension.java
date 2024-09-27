@@ -18,7 +18,7 @@ package net.splitcells.website.server.project.renderer.extension.commonmark;
 import net.splitcells.dem.data.order.Comparators;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.perspective.Tree;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.ContentType;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutUtils;

@@ -15,10 +15,10 @@
  */
 package net.splitcells.gel.solution.history.meta.type;
 
-import net.splitcells.dem.lang.perspective.Tree;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.rating.framework.Rating;
 
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 
 public class AllocationRating implements MetaData<Rating> {
 

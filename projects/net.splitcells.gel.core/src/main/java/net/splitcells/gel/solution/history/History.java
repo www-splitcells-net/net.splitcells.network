@@ -16,12 +16,12 @@
 package net.splitcells.gel.solution.history;
 
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
-import static net.splitcells.dem.lang.perspective.XmlConfig.xmlConfig;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
 import static net.splitcells.dem.utils.FodsUtility.tableCell;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 
-import net.splitcells.dem.lang.perspective.Tree;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.history.event.Allocation;

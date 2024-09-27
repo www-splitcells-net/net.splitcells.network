@@ -15,7 +15,7 @@
  */
 package net.splitcells.website.server.processor;
 
-import net.splitcells.dem.lang.perspective.Tree;
+import net.splitcells.dem.lang.tree.Tree;
 
 import java.util.Optional;
 

@@ -16,7 +16,7 @@
 package net.splitcells.gel.rating.rater.framework;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -24,7 +24,7 @@ import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.environment.config.StaticFlags;
-import net.splitcells.dem.lang.perspective.Tree;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.gel.common.Language;

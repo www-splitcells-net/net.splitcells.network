@@ -16,7 +16,6 @@
 package net.splitcells.gel.solution;
 
 import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.Gel;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.problem.Problem;
@@ -25,10 +24,9 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static java.util.stream.IntStream.rangeClosed;
-import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.dem.lang.perspective.XmlConfig.xmlConfig;
+import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
 import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.Gel.defineProblem;

@@ -20,7 +20,7 @@ import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import java.util.HashMap;
 
-import static net.splitcells.dem.lang.perspective.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
