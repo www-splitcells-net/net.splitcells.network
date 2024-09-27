@@ -31,7 +31,7 @@ public class AllocationNaturalArgumentation implements MetaData<String> {
     }
 
     @Override
-    public Tree toPerspective() {
+    public Tree toTree() {
         return perspective(allocationNaturalArgumentation);
     }
 

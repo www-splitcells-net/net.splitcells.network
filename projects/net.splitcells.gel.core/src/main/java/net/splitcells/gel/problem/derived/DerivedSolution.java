@@ -249,8 +249,8 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public Tree toPerspective() {
-        return assignments.toPerspective();
+    public Tree toTree() {
+        return assignments.toTree();
     }
 
     @Override

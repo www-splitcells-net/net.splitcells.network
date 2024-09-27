@@ -200,7 +200,7 @@ public interface History extends Assignments, AfterAdditionSubscriber, BeforeRem
             tableLine.withChild(tableCell("2"));
             tableLine.withChild(tableCell("" + line.value(META_DATA).value(AllocationRating.class).get().value().asMetaRating().getContentValue(Cost.class).value()));
             tableLine.withChild(tableCell("" + line.value(META_DATA).value(CompleteRating.class).get().value().asMetaRating().getContentValue(Cost.class).value()));
-            tableLine.withChild(tableCell(line.value(META_DATA).toPerspective().toXmlString(xmlConfig().withPrintXmlDeclaration(false))));
+            tableLine.withChild(tableCell(line.value(META_DATA).toTree().toXmlString(xmlConfig().withPrintXmlDeclaration(false))));
         });
         return fods;
     }

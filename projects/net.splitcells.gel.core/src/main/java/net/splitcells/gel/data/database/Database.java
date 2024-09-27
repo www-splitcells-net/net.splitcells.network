@@ -136,11 +136,11 @@ public interface Database extends Table {
     void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber);
 
     @Override
-    default Tree toPerspective() {
+    default Tree toTree() {
         final var dom = perspective(getClass().getSimpleName());
         rawLinesView().stream()
                 .filter(line -> line != null)
-                .forEach(line -> dom.withChild(line.toPerspective()));
+                .forEach(line -> dom.withChild(line.toTree()));
         return dom;
     }
 

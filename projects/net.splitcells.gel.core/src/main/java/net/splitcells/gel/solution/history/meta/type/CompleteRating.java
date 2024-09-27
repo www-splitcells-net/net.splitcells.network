@@ -41,11 +41,11 @@ public final class CompleteRating implements MetaData<Rating>, Domable {
 
     @Override
     public String toString() {
-        return toPerspective().toXmlString();
+        return toTree().toXmlString();
     }
 
     @Override
-    public Tree toPerspective() {
-        return perspective(getClass().getSimpleName()).withChild(rating.toPerspective());
+    public Tree toTree() {
+        return perspective(getClass().getSimpleName()).withChild(rating.toTree());
     }
 }

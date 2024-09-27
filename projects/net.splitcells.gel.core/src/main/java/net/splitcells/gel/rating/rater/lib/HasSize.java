@@ -157,7 +157,7 @@ public class HasSize implements Rater {
     }
 
     @Override
-    public Tree toPerspective() {
+    public Tree toTree() {
         return perspective("has-size").withProperty("target-size", targetSize + "");
     }
 }

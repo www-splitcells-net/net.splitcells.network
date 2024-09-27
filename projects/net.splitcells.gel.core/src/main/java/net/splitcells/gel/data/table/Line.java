@@ -127,7 +127,7 @@ public interface Line extends Domable {
                 domValue = perspective("");
             } else {
                 if (value instanceof Domable) {
-                    domValue = ((Domable) value).toPerspective();
+                    domValue = ((Domable) value).toTree();
                 } else {
                     domValue = perspective(value.toString(), STRING);
                 }
@@ -141,7 +141,7 @@ public interface Line extends Domable {
     }
 
     @Override
-    default Tree toPerspective() {
+    default Tree toTree() {
         final var root = perspective(Line.class.getSimpleName());
         root.withProperty(INDEX.value(), "" + index());
         context().headerView().forEach(attribute -> {
@@ -151,7 +151,7 @@ public interface Line extends Domable {
                 attributeRender = perspective("");
             } else {
                 if (attributeValue instanceof Domable) {
-                    attributeRender = ((Domable) attributeValue).toPerspective();
+                    attributeRender = ((Domable) attributeValue).toTree();
                 } else {
                     attributeRender = perspective(attributeValue.toString());
                 }

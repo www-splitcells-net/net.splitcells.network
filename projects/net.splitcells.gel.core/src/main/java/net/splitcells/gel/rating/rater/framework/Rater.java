@@ -101,11 +101,11 @@ public interface Rater extends PubliclyTyped<Rater>
     }
 
     @Override
-    default Tree toPerspective() {
+    default Tree toTree() {
         final var perspective = perspective(getClass().getSimpleName());
         if (!arguments().isEmpty()) {
             perspective.withChild(perspective(Language.ARGUMENTATION.value())
-                    .withChildren(arguments().stream().map(Domable::toPerspective)));
+                    .withChildren(arguments().stream().map(Domable::toTree)));
         }
         return perspective;
     }

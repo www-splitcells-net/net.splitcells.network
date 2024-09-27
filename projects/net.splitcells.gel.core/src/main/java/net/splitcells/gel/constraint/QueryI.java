@@ -191,8 +191,8 @@ public class QueryI implements Query, QueryEditor {
             resultingGroups.addAll(groups);
         } else {
             throw executionException(perspective("Could not find forAll child constraint with given classifier.")
-                    .withProperty("classifier", classifier.toPerspective())
-                    .withProperty("current constraint", currentConstraint.toPerspective()));
+                    .withProperty("classifier", classifier.toTree())
+                    .withProperty("current constraint", currentConstraint.toTree()));
         }
         return nextQueryPathElement(resultingGroups, resultBase.get());
     }
@@ -233,8 +233,8 @@ public class QueryI implements Query, QueryEditor {
             resultingGroup.addAll(groups);
         } else {
             throw executionException(perspective("Could not find forAll child constraint with given attribute.")
-                    .withProperty("classifier", attribute.toPerspective())
-                    .withProperty("current constraint", currentConstraint.toPerspective()));
+                    .withProperty("classifier", attribute.toTree())
+                    .withProperty("current constraint", currentConstraint.toTree()));
         }
         return nextQueryPathElement(resultingGroup, resultBase.get());
     }
@@ -260,7 +260,7 @@ public class QueryI implements Query, QueryEditor {
         }
         if (!isBuilder) {
             throw executionException(perspective("Could not find forAll child constraint.")
-                    .withProperty("current constraint", currentConstraint.toPerspective()));
+                    .withProperty("current constraint", currentConstraint.toTree()));
         }
         final var forAll = ForAlls.forAll(Optional.of(discoverable(currentConstraint.path())));
         currentConstraint.withChildren(forAll);
@@ -291,8 +291,8 @@ public class QueryI implements Query, QueryEditor {
             resultingGroups.addAll(groups);
         } else {
             throw executionException(perspective("Could not find then child constraint with given rater.")
-                    .withProperty("classifier", rater.toPerspective())
-                    .withProperty("current constraint", currentConstraint.toPerspective()));
+                    .withProperty("classifier", rater.toTree())
+                    .withProperty("current constraint", currentConstraint.toTree()));
         }
         return nextQueryPathElement(resultingGroups, resultBase.get());
     }
@@ -341,7 +341,7 @@ public class QueryI implements Query, QueryEditor {
         } else {
             throw executionException(perspective("Could not find given forAllCombinationsOf of attributes child constraint.")
                     .withProperty("classifier", attributes.toString())
-                    .withProperty("current constraint", currentConstraint.toPerspective()));
+                    .withProperty("current constraint", currentConstraint.toTree()));
         }
         return nextQueryPathElement(resultingGroups, resultBase.get());
     }
@@ -388,7 +388,7 @@ public class QueryI implements Query, QueryEditor {
             if (!isBuilder) {
                 throw executionException(perspective("Could not find forAll child constraint with given classifiers.")
                         .withProperty("classifier", classifiers.toString())
-                        .withProperty("current constraint", currentConstraint.toPerspective()));
+                        .withProperty("current constraint", currentConstraint.toTree()));
             }
             currentConstraint.withChildren(f);
         });

@@ -149,8 +149,8 @@ public interface SolutionView extends ProblemView {
                 + "</project>");
         writeToFile(targetFolder.resolve("result.analysis.fods"), toFodsTableAnalysis());
         writeToFile(targetFolder.resolve("constraint.graph.xml"), constraint().graph());
-        writeToFile(targetFolder.resolve("constraint.rating.xml"), constraint().rating().toPerspective());
-        writeToFile(targetFolder.resolve("constraint.state.xml"), constraint().toPerspective());
+        writeToFile(targetFolder.resolve("constraint.rating.xml"), constraint().rating().toTree());
+        writeToFile(targetFolder.resolve("constraint.state.xml"), constraint().toTree());
         writeToFile(targetFolder.resolve("demands.fods"), demands().toFods());
         writeToFile(targetFolder.resolve("demands.free.fods"), demandsFree().toFods());
         writeToFile(targetFolder.resolve("demands.used.fods"), demandsUsed().toFods());
@@ -243,7 +243,7 @@ public interface SolutionView extends ProblemView {
             final var ratingValue = perspective("p", FODS_TEXT);
             rating.withChild(ratingValue);
             attributes.withChild(rating);
-            ratingValue.withChild(constraint().rating().toPerspective());
+            ratingValue.withChild(constraint().rating().toTree());
         }
         return attributes;
     }

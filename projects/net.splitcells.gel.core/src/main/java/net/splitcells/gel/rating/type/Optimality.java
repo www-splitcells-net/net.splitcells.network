@@ -95,13 +95,13 @@ public class Optimality implements Rating {
     }
 
     @Override
-    public Tree toPerspective() {
+    public Tree toTree() {
         return perspective(this.getClass().getSimpleName()).withChild(perspective("" + value));
     }
 
     @Override
     public String toString() {
-        return toPerspective().toXmlString();
+        return toTree().toXmlString();
     }
 
     public double value() {

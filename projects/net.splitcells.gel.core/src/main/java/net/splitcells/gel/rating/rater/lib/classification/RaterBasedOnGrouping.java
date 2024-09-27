@@ -108,7 +108,7 @@ public class RaterBasedOnGrouping implements Rater {
     }
 
     @Override
-    public Tree toPerspective() {
-        return perspective("rater-based-on-grouping").withProperty("grouping", grouping.toPerspective());
+    public Tree toTree() {
+        return perspective("rater-based-on-grouping").withProperty("grouping", grouping.toTree());
     }
 }

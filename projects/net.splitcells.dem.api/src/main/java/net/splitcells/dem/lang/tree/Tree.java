@@ -763,7 +763,7 @@ public interface Tree extends TreeView {
      *
      * @return return
      */
-    default Tree toPerspective() {
+    default Tree toTree() {
         return this;
     }
 

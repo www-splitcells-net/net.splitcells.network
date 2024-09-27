@@ -207,7 +207,7 @@ public class ConstraintThreadingAspect implements Constraint {
     }
 
     @Override
-    public Tree toPerspective() {
-        return constraintEffect.affectSynchronously(c -> c.toPerspective());
+    public Tree toTree() {
+        return constraintEffect.affectSynchronously(c -> c.toTree());
     }
 }

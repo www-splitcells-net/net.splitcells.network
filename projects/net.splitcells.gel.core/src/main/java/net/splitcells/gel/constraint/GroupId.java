@@ -101,7 +101,7 @@ public class GroupId implements Domable {
     }
 
     @Override
-    public Tree toPerspective() {
+    public Tree toTree() {
         final var perspective = perspective("group");
         perspective.withProperty("name", name.get());
         perspective.withProperty("id", hashCode() + "");

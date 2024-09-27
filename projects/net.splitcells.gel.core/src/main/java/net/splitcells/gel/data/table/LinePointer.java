@@ -36,11 +36,11 @@ public interface LinePointer extends Domable {
     Optional<Line> interpret(Table context);
 
     @Override
-    default Tree toPerspective() {
+    default Tree toTree() {
         final var dom = perspective(LinePointer.class.getSimpleName());
         final var line = interpret();
         if (line.isPresent()) {
-            dom.withChild(line.get().toPerspective());
+            dom.withChild(line.get().toTree());
         } else {
             dom.withProperty("index", index() + "");
         }

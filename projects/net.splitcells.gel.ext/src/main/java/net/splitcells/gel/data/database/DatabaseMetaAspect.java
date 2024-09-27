@@ -147,7 +147,7 @@ public class DatabaseMetaAspect implements Database {
                             + PATH_ACCESS_SYMBOL.value()
                             + Database.class.getSimpleName())
                             .withProperty("path", path().toString())
-                            .withProperty(LINE.value(), line.toPerspective())
+                            .withProperty(LINE.value(), line.toTree())
                     , this, LogLevel.DEBUG);
         }
         database.remove(line);
@@ -169,8 +169,8 @@ public class DatabaseMetaAspect implements Database {
     }
 
     @Override
-    public Tree toPerspective() {
-        return database.toPerspective();
+    public Tree toTree() {
+        return database.toTree();
     }
 
     @Override

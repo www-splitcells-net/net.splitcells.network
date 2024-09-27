@@ -86,7 +86,7 @@ public class FunctionalHillClimber implements OfflineOptimization {
             if (TRACING) {
                 recommendations.forEach
                         (suggestion -> logs().append
-                                (suggestion.toPerspective()
+                                (suggestion.toTree()
                                         , () -> solution.path().withAppended
                                                 (OfflineOptimization.class.getSimpleName()
                                                         , getClass().getSimpleName())

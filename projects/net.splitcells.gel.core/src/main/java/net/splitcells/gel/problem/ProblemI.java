@@ -303,8 +303,8 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public Tree toPerspective() {
-        return assignments.toPerspective();
+    public Tree toTree() {
+        return assignments.toTree();
     }
 
     @Override

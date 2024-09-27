@@ -299,8 +299,8 @@ public class SolutionI implements Solution {
     }
 
     @Override
-    public Tree toPerspective() {
-        return problem.toPerspective();
+    public Tree toTree() {
+        return problem.toTree();
     }
 
     @Override

@@ -193,7 +193,7 @@ public final class Derivation implements Constraint {
     }
 
     @Override
-    public Tree toPerspective() {
-        return derivationTarget.toPerspective();
+    public Tree toTree() {
+        return derivationTarget.toTree();
     }
 }

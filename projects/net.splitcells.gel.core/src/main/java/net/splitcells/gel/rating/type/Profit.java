@@ -100,7 +100,7 @@ public class Profit implements Rating {
     }
 
     @Override
-    public Tree toPerspective() {
+    public Tree toTree() {
         return perspective(this.getClass().getSimpleName()).withChild(perspective("" + value));
     }
 }

@@ -289,8 +289,8 @@ public class SolutionAspect implements Solution {
     }
 
     @Override
-    public Tree toPerspective() {
-        return solution.toPerspective();
+    public Tree toTree() {
+        return solution.toTree();
     }
 
     @Override

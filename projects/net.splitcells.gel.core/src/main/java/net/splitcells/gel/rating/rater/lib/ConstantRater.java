@@ -86,8 +86,8 @@ public class ConstantRater implements Rater {
     }
 
     @Override
-    public Tree toPerspective() {
-        return perspective(getClass().getSimpleName()).withChild(rating.toPerspective());
+    public Tree toTree() {
+        return perspective(getClass().getSimpleName()).withChild(rating.toTree());
     }
 
     @Override

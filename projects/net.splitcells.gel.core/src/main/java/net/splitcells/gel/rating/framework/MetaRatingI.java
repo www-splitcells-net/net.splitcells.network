@@ -255,16 +255,16 @@ public class MetaRatingI implements MetaRating {
     }
 
     @Override
-    public Tree toPerspective() {
+    public Tree toTree() {
         if (1 == ratingMap.size()) {
-            return ratingMap.values().iterator().next().toPerspective();
+            return ratingMap.values().iterator().next().toTree();
         }
         return perspective(MetaRating.class.getSimpleName());
     }
 
     @Override
     public String toString() {
-        return toPerspective().toXmlString();
+        return toTree().toXmlString();
     }
 
     @Override

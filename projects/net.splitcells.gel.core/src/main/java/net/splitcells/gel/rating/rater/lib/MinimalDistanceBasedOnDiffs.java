@@ -353,7 +353,7 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
     public List<Domable> arguments() {
         return Lists.list
                 (perspective("minimumDistance").withChild(perspective("" + minimumDistance))
-                        , perspective("attribute").withChild(attribute.toPerspective())
+                        , perspective("attribute").withChild(attribute.toTree())
                         , perspective("comparator").withChild(perspective("" + comparison))
                         , perspective("distanceMeassurer").withChild(perspective("" + distanceMeassurer)));
     }

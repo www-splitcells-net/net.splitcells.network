@@ -181,8 +181,8 @@ public class AssignmentsI implements Assignments {
             requireNotNull(supply, "Cannot allocate without supply.");
             logs().append(perspective(ALLOCATE.value() + PATH_ACCESS_SYMBOL.value() + Assignments.class.getSimpleName())
                             .withProperty("path", path().toString())
-                            .withProperty("demand", demand.toPerspective())
-                            .withProperty("supply", supply.toPerspective())
+                            .withProperty("demand", demand.toTree())
+                            .withProperty("supply", supply.toTree())
                     , this
                     , DEBUG);
         }
@@ -314,8 +314,8 @@ public class AssignmentsI implements Assignments {
                             + PATH_ACCESS_SYMBOL.value()
                             + Assignments.class.getSimpleName())
                             .withProperty("path", path().toString())
-                            .withProperty("demand", demand.toPerspective())
-                            .withProperty("supply", supply.toPerspective())
+                            .withProperty("demand", demand.toTree())
+                            .withProperty("supply", supply.toTree())
                     , this
                     , DEBUG);
         }
@@ -505,12 +505,12 @@ public class AssignmentsI implements Assignments {
     }
 
     @Override
-    public Tree toPerspective() {
+    public Tree toTree() {
         final var dom = perspective(Assignments.class.getSimpleName());
         dom.withChild(perspective(path().toString()));
         rawLinesView().stream()
                 .filter(line -> line != null)
-                .forEach(line -> dom.withChild(line.toPerspective()));
+                .forEach(line -> dom.withChild(line.toTree()));
         return dom;
     }
 

@@ -73,7 +73,7 @@ public class MapAttribute<T> implements Attribute<Map<Class<T>, T>> {
     }
 
     @Override
-    public Tree toPerspective() {
+    public Tree toTree() {
         return perspective(name)
                 .withProperty(Language.NAME.value(), getClass().getSimpleName())
                 .withProperty(Language.TYPE.value(), type.getSimpleName());

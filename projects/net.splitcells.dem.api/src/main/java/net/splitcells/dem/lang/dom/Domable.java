@@ -27,7 +27,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 public interface Domable {
 
     /**
-     * @return Perspective Representing The Object
+     * @return Returns a {@link Tree} representing the current object.
      */
-    Tree toPerspective();
+    Tree toTree();
 }

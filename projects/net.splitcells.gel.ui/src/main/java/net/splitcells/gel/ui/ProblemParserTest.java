@@ -61,7 +61,7 @@ public class ProblemParserTest {
         final var testSubject = parseProblem(testData).value().orElseThrow().problem();
         final var forEachA = testSubject.constraint().child(0);
         requireEquals(forEachA.type(), ForAll.class);
-        requirePresenceOf(forEachA.arguments().get(0).toPerspective().pathOfValueTree(
+        requirePresenceOf(forEachA.arguments().get(0).toTree().pathOfValueTree(
                 "rater-based-on-grouping"
                 , "grouping"
                 , "for-all-attribute-values"
@@ -71,13 +71,13 @@ public class ProblemParserTest {
                 , "a"));
         final var thenHasSize2 = forEachA.child(0);
         requireEquals(thenHasSize2.type(), Then.class);
-        requirePresenceOf(thenHasSize2.arguments().get(0).toPerspective().pathOfValueTree(
+        requirePresenceOf(thenHasSize2.arguments().get(0).toTree().pathOfValueTree(
                 "has-size"
                 , "target-size"
                 , "2"));
         final var forEachB = testSubject.constraint().child(1);
         requireEquals(forEachB.type(), ForAll.class);
-        requirePresenceOf(forEachB.arguments().get(0).toPerspective().pathOfValueTree(
+        requirePresenceOf(forEachB.arguments().get(0).toTree().pathOfValueTree(
                 "rater-based-on-grouping"
                 , "grouping"
                 , "for-all-attribute-values"
@@ -87,7 +87,7 @@ public class ProblemParserTest {
                 , "b"));
         final var thenAllSameC = forEachB.child(0);
         requireEquals(thenAllSameC.type(), Then.class);
-        requirePresenceOf(thenAllSameC.arguments().get(0).toPerspective().pathOfValueTree(
+        requirePresenceOf(thenAllSameC.arguments().get(0).toTree().pathOfValueTree(
                 "all-same"
                 , "attribute"
                 , "Attribute"
@@ -104,7 +104,7 @@ public class ProblemParserTest {
         final var testSubject = parseProblem(testData).value().orElseThrow().problem();
         final var forAllCombinationsOf = testSubject.constraint().child(0);
         requireEquals(forAllCombinationsOf.type(), ForAll.class);
-        requirePresenceOf(forAllCombinationsOf.arguments().get(0).toPerspective().pathOfValueTree(
+        requirePresenceOf(forAllCombinationsOf.arguments().get(0).toTree().pathOfValueTree(
                 "rater-based-on-grouping"
                 , "grouping"
                 , FOR_ALL_VALUE_COMBINATIONS_NAME
@@ -112,7 +112,7 @@ public class ProblemParserTest {
                 , "Attribute"
                 , "name"
                 , "a"));
-        final var attributes = forAllCombinationsOf.arguments().get(0).toPerspective()
+        final var attributes = forAllCombinationsOf.arguments().get(0).toTree()
                 .subtreeByName("grouping"
                         , FOR_ALL_VALUE_COMBINATIONS_NAME
                         , "attributes");

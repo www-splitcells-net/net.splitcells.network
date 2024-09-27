@@ -191,7 +191,7 @@ public class RaterBasedOnLineGroup implements Rater {
     }
 
     @Override
-    public Tree toPerspective() {
+    public Tree toTree() {
         return simpleDescriptor.toPerspective();
     }
 }

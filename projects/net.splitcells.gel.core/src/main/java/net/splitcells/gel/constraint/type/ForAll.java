@@ -202,8 +202,8 @@ public class ForAll implements Constraint {
     }
 
     @Override
-    public Tree toPerspective() {
-        return constraint.toPerspective();
+    public Tree toTree() {
+        return constraint.toTree();
     }
 
     @Override

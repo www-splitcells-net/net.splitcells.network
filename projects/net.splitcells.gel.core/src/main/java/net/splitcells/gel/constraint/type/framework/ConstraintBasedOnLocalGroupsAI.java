@@ -250,7 +250,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         if (TRACING) {
             logs().append
                     (perspective("register-additions." + Constraint.class.getSimpleName())
-                                    .withChild(perspective("additions").withChild(addition.toPerspective()))
+                                    .withChild(perspective("additions").withChild(addition.toTree()))
                                     .withProperty("injectionGroup", injectionGroup.toString())
                             , this
                             , DEBUG);
@@ -475,19 +475,19 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
     }
 
     @Override
-    public Tree toPerspective() {
+    public Tree toTree() {
         final var dom = perspective(type().getSimpleName());
         if (!arguments().isEmpty()) {
-            arguments().forEach(arg -> dom.withProperty(ARGUMENTATION.value(), arg.toPerspective()));
+            arguments().forEach(arg -> dom.withProperty(ARGUMENTATION.value(), arg.toTree()));
         }
-        dom.withProperty("rating", rating().toPerspective());
+        dom.withProperty("rating", rating().toTree());
         {
             final var ratings = perspective("ratings");
             dom.withChild(ratings);
             lineProcessing.columnView(INCOMING_CONSTRAINT_GROUP)
                     .lookup(injectionGroup())
                     .unorderedLines()
-                    .forEach(line -> ratings.withChild(line.toPerspective()));
+                    .forEach(line -> ratings.withChild(line.toTree()));
         }
         childrenView().forEach(child ->
                 dom.withChild(
@@ -502,9 +502,9 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
     public Tree toPerspective(Set<GroupId> groups) {
         final var dom = perspective(type().getSimpleName());
         if (!arguments().isEmpty()) {
-            arguments().forEach(arg -> dom.withProperty(ARGUMENTATION.value(), arg.toPerspective()));
+            arguments().forEach(arg -> dom.withProperty(ARGUMENTATION.value(), arg.toTree()));
         }
-        dom.withProperty("rating", rating(groups).toPerspective());
+        dom.withProperty("rating", rating(groups).toTree());
         {
             final var ratings = perspective("ratings");
             dom.withChild(ratings);
@@ -513,7 +513,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
                             .columnView(INCOMING_CONSTRAINT_GROUP)
                             .lookup(group)
                             .unorderedLines().
-                            forEach(line -> ratings.withChild(line.toPerspective())));
+                            forEach(line -> ratings.withChild(line.toTree())));
         }
         childrenView().forEach(child ->
                 dom.withChild(

@@ -240,7 +240,7 @@ public class LookupTable implements Table {
         if (TRACING) {
             logs().append(perspective("register.LookupTable")
                             .withProperty("path", path().toString())
-                            .withProperty("line", line.toPerspective())
+                            .withProperty("line", line.toTree())
                     , this
                     , DEBUG);
         }
@@ -287,7 +287,7 @@ public class LookupTable implements Table {
             logs().append(perspective("deregister." + getClass().getSimpleName())
                             .withProperty("subject", path().toString())
                             .withProperty("content", content.toString())
-                            .withProperty("line", line.toPerspective())
+                            .withProperty("line", line.toTree())
                     , this, DEBUG);
         }
         if (ENFORCING_UNIT_CONSISTENCY) {
@@ -315,7 +315,7 @@ public class LookupTable implements Table {
                     perspective("after.deregister." + getClass().getSimpleName()).withChildren(
                             perspective("subject").withChild(perspective(path().toString()))
                             , perspective("content").withChild(perspective(content.toString()))
-                            , line.toPerspective())
+                            , line.toTree())
                     , this, DEBUG);
         }
     }
@@ -337,13 +337,13 @@ public class LookupTable implements Table {
     }
 
     @Override
-    public Tree toPerspective() {
+    public Tree toTree() {
         final var rVal = perspective(LookupTable.class.getSimpleName());
         // REMOVE
         rVal.withProperty("hashCode", "" + hashCode());
         rVal.withProperty("subject", path().toString());
         rVal.withProperty("content", content.toString());
-        content.forEach(i -> rVal.withChild(rawLinesView().get(i).toPerspective()));
+        content.forEach(i -> rVal.withChild(rawLinesView().get(i).toTree()));
         if (ENFORCING_UNIT_CONSISTENCY) {
             content.forEach(i -> requireNotNull(rawLinesView().get(i)));
         }

@@ -118,7 +118,7 @@ public class ForAllAttributeValues implements Rater {
     }
 
     @Override
-    public Tree toPerspective() {
-        return perspective("for-all-attribute-values").withProperty("attribute", attribute.toPerspective());
+    public Tree toTree() {
+        return perspective("for-all-attribute-values").withProperty("attribute", attribute.toTree());
     }
 }

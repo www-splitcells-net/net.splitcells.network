@@ -122,7 +122,7 @@ public class SolutionCalculator implements Processor<Tree, Tree> {
                 } else {
                     formUpdate.withProperty(SOLUTION, solution.toSimplifiedCSV());
                 }
-                formUpdate.withProperty(SOLUTION_RATING, solution.constraint().rating().toPerspective());
+                formUpdate.withProperty(SOLUTION_RATING, solution.constraint().rating().toTree());
             }
             if (problemParsing.errorMessages().hasElements() || !isProblemParsed) {
                 final var errorReport = perspective("Errors solving the given problem.");

@@ -87,7 +87,7 @@ public class LineI implements Line {
     }
 
     @Override
-    public Tree toPerspective() {
+    public Tree toTree() {
         final var perspective = perspective(Line.class.getSimpleName());
         perspective.withProperty(INDEX.value(), "" + index);
         context.headerView().forEach(attribute -> {
@@ -97,7 +97,7 @@ public class LineI implements Line {
                 domValue = perspective("");
             } else {
                 if (value instanceof Domable) {
-                    domValue = ((Domable) value).toPerspective();
+                    domValue = ((Domable) value).toTree();
                 } else {
                     domValue = perspective(value.toString());
                 }

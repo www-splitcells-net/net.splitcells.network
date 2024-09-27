@@ -52,11 +52,11 @@ public class MetaDataI implements MetaDataView, MetaDataWriter {
 
     @Override
     public String toString() {
-        return toPerspective().toXmlString();
+        return toTree().toXmlString();
     }
 
     @Override
-    public Tree toPerspective() {
+    public Tree toTree() {
         final var dom = perspective(META_DATA.value());
         data.forEach((key, value) -> {
             final var data = perspective(META_DATA.value());
@@ -65,7 +65,7 @@ public class MetaDataI implements MetaDataView, MetaDataWriter {
             final var valueData = perspective(VALUE.value());
             {
                 if (value instanceof Domable) {
-                    valueData.withChild(((Domable) value).toPerspective());
+                    valueData.withChild(((Domable) value).toTree());
                 } else {
                     valueData.withChild(perspective(value.toString()));
                 }

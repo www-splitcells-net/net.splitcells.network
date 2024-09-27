@@ -305,7 +305,7 @@ public interface Solution extends Problem, SolutionView {
     default void createAnalysis() {
         final var dataContainer = dataContainer();
         createDirectory(dataContainer);
-        writeToFile(dataContainer.resolve("solution.constraint.toDom.xml"), constraint().toPerspective());
+        writeToFile(dataContainer.resolve("solution.constraint.toDom.xml"), constraint().toTree());
         writeToFile(dataContainer.resolve("solution.constraint.graph.xml"), constraint().graph());
     }
 

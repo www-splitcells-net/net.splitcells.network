@@ -120,7 +120,7 @@ public class MetaRatingMergerI implements MetaRatingMerger {
     }
 
     @Override
-    public Tree toPerspective() {
+    public Tree toTree() {
         return perspective(MetaRatingMerger.class.getSimpleName());
     }
 }

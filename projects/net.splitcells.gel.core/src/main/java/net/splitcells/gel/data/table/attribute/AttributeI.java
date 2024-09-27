@@ -101,7 +101,7 @@ public final class AttributeI<T> implements Attribute<T> {
     }
 
     @Override
-    public Tree toPerspective() {
+    public Tree toTree() {
         return perspective(Attribute.class.getSimpleName())
                 .withProperty(Language.NAME.value(), name)
                 .withProperty(Language.TYPE.value(), type.getSimpleName());

@@ -183,8 +183,8 @@ public class RaterBasedOnLineValue implements Rater {
     }
 
     @Override
-    public Tree toPerspective() {
-        return perspective(getClass().getSimpleName()).withProperty("args", arguments().get(0).toPerspective());
+    public Tree toTree() {
+        return perspective(getClass().getSimpleName()).withProperty("args", arguments().get(0).toTree());
     }
 
     @Override

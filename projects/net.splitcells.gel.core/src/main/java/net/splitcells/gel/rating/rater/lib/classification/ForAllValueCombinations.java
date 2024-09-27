@@ -119,9 +119,9 @@ public class ForAllValueCombinations implements Rater {
     }
 
     @Override
-    public Tree toPerspective() {
+    public Tree toTree() {
         return perspective(FOR_ALL_VALUE_COMBINATIONS_NAME)
-                .withChild(perspective("attributes").withChildren(listWithValuesOf(attributes.mapped(Domable::toPerspective))));
+                .withChild(perspective("attributes").withChildren(listWithValuesOf(attributes.mapped(Domable::toTree))));
     }
 
     @Override

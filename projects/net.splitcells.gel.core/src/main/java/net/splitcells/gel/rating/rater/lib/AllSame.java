@@ -128,7 +128,7 @@ public class AllSame {
 
                     @Override
                     public Tree toPerspective() {
-                        return perspective("all-same").withProperty("attribute", attribute.toPerspective());
+                        return perspective("all-same").withProperty("attribute", attribute.toTree());
                     }
                 }
         );

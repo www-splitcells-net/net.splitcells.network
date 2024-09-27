@@ -69,7 +69,7 @@ public interface Log extends ListWA<LogMessage<Tree>> {
     }
 
     default Log append(Domable domable, LogLevel logLevel) {
-        return append(logMessage(domable.toPerspective(), NO_CONTEXT, logLevel));
+        return append(logMessage(domable.toTree(), NO_CONTEXT, logLevel));
     }
 
     default Log append(Tree tree, LogLevel logLevel) {
@@ -77,11 +77,11 @@ public interface Log extends ListWA<LogMessage<Tree>> {
     }
 
     default Log append(Domable content, Discoverable context, LogLevel logLevel) {
-        return append(logMessage(content.toPerspective(), context, logLevel));
+        return append(logMessage(content.toTree(), context, logLevel));
     }
 
     default Log append(Domable content, Optional<Discoverable> context, LogLevel logLevel) {
-        return append(logMessage(content.toPerspective(), context.orElse(NO_CONTEXT), logLevel));
+        return append(logMessage(content.toTree(), context.orElse(NO_CONTEXT), logLevel));
     }
 
     default Log append(Tree content, Discoverable context, LogLevel logLevel) {

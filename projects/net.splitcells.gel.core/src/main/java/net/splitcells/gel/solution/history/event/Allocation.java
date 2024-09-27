@@ -50,15 +50,15 @@ public class Allocation implements Domable {
     }
 
     @Override
-    public Tree toPerspective() {
+    public Tree toTree() {
         return perspective(ALLOCATION.value())
                 .withProperty(TYPE.value(), type.name())
-                .withProperty(DEMAND2.value(), demand.toPerspective())
-                .withProperty(SUPPLY.value(), supply.toPerspective());
+                .withProperty(DEMAND2.value(), demand.toTree())
+                .withProperty(SUPPLY.value(), supply.toTree());
     }
 
     @Override
     public String toString() {
-        return toPerspective().toXmlString();
+        return toTree().toXmlString();
     }
 }

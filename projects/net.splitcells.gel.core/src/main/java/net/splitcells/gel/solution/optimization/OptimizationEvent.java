@@ -60,11 +60,11 @@ public final class OptimizationEvent implements Domable {
     }
 
     @Override
-    public Tree toPerspective() {
+    public Tree toTree() {
         return perspective(getClass().getSimpleName())
                 .withProperty(StepType.class.getSimpleName(), stepType.name())
-                .withProperty(Language.DEMAND.value(), demand.toPerspective())
-                .withProperty(Language.SUPPLY.value(), supply.toPerspective());
+                .withProperty(Language.DEMAND.value(), demand.toTree())
+                .withProperty(Language.SUPPLY.value(), supply.toTree());
     }
 
     @Override
