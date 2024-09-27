@@ -16,17 +16,20 @@
 package net.splitcells.website.server.project.renderer.extension.commonmark;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.website.server.Config;
 import org.commonmark.node.Link;
 import org.junit.jupiter.api.Test;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.LinkTranslator.linkTranslator;
+import static net.splitcells.website.server.projects.ProjectsRendererI.projectsRenderer;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @JavaLegacyArtifact
 public class LinkTranslatorTest {
     @Test
     public void testSourceRelativeLink() {
-        final var testSubject = linkTranslator();
+        final var testSubject = linkTranslator("", projectsRenderer("test", a -> null, a -> list(), Config.create()));
         final var testData = new Link("./src/main/md/net/splitcells/network/guidelines/changelog.md", "here");
         testSubject.visit(testData);
         assertThat(testData.getDestination()).isEqualTo("/net/splitcells/network/guidelines/changelog.html");
@@ -34,7 +37,7 @@ public class LinkTranslatorTest {
 
     @Test
     public void testSourceRelativeParentLink() {
-        final var testSubject = linkTranslator();
+        final var testSubject = linkTranslator("", projectsRenderer("test", a -> null, a -> list(), Config.create()));
         final var testData = new Link("../../../../../../src/main/xml/net/splitcells/gel/objectives.xml", "here");
         testSubject.visit(testData);
         assertThat(testData.getDestination()).isEqualTo("/net/splitcells/gel/objectives.html");
@@ -42,7 +45,7 @@ public class LinkTranslatorTest {
 
     @Test
     public void testSourceProjectParentRelativeLink() {
-        final var testSubject = linkTranslator();
+        final var testSubject = linkTranslator("", projectsRenderer("test", a -> null, a -> list(), Config.create()));
         final var testData = new Link("../../../../../../../../projects/net.splitcells.gel.sheath/src/main/md/net/splitcells/gel/test/functionality/n-queen-problem.md", "here");
         testSubject.visit(testData);
         assertThat(testData.getDestination()).isEqualTo("/net/splitcells/gel/test/functionality/n-queen-problem.html");
@@ -50,7 +53,7 @@ public class LinkTranslatorTest {
 
     @Test
     public void testSourceProjectRelativeLink() {
-        final var testSubject = linkTranslator();
+        final var testSubject = linkTranslator("", projectsRenderer("test", a -> null, a -> list(), Config.create()));
         final var testData = new Link("src/main/xml-pom/net/splitcells/network/build-with-github-snapshot.pom.xml", "here");
         testSubject.visit(testData);
         assertThat(testData.getDestination()).isEqualTo("/net/splitcells/network/build-with-github-snapshot.pom.html");

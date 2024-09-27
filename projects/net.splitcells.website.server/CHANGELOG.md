@@ -7,6 +7,8 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
 
 ## [Unreleased]
 ### Major Changes
+* **2024-09-27: \#45** Support relative links in CommonMark documents.
+  This makes the community repo easier to handle.
 * **2024-09-24: \#38** Make web server thread safe, by providing a dedicated renderer for each thread.
 * **2024-04-01: \#c15** Discourage server configuration without dependency injection.
 * **2024-04-01:** [\#c15 Speed up static website deployment](https://codeberg.org/splitcells-net/net.splitcells.network.community/issues/15)

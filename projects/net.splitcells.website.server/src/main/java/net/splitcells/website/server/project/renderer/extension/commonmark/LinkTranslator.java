@@ -16,12 +16,20 @@
 package net.splitcells.website.server.project.renderer.extension.commonmark;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.resource.Trail;
 import net.splitcells.website.server.project.validator.RenderingValidator;
+import net.splitcells.website.server.projects.ProjectsRenderer;
 import org.commonmark.node.AbstractVisitor;
 import org.commonmark.node.Image;
 import org.commonmark.node.Link;
 
+import java.nio.file.Path;
 import java.util.regex.Pattern;
+
+import static net.splitcells.dem.resource.Trail.elementCount;
+import static net.splitcells.dem.resource.Trail.parentCount;
+import static net.splitcells.dem.resource.Trail.withoutPrefixElements;
+import static net.splitcells.dem.resource.Trail.withoutSuffixElements;
 
 /**
  * <p>This class translates links inside CommonMark documents.
@@ -45,12 +53,23 @@ public class LinkTranslator extends AbstractVisitor {
      */
     private static Pattern SUB_PROJECT_README = Pattern.compile("(\\./)?projects/[a-zA-Z\\.]+/README.md");
 
-    public static LinkTranslator linkTranslator() {
-        return new LinkTranslator();
+    private static Pattern RELATIVE_PATH = Pattern.compile("(../)+.*");
+
+    private final String currentPath;
+    /**
+     * Number of elements inside {@link #currentPath}.
+     */
+    private final int currentElementCount;
+    private final ProjectsRenderer projectsRenderer;
+
+    public static LinkTranslator linkTranslator(String currentPath, ProjectsRenderer projectsRenderer) {
+        return new LinkTranslator(currentPath, projectsRenderer);
     }
 
-    private LinkTranslator() {
-
+    private LinkTranslator(String argCurrentPath, ProjectsRenderer argProjectsRenderer) {
+        currentPath = argCurrentPath;
+        projectsRenderer = argProjectsRenderer;
+        currentElementCount = elementCount(currentPath);
     }
 
     @Override
@@ -81,6 +100,19 @@ public class LinkTranslator extends AbstractVisitor {
                     .replace(".", "/")
                     .replaceAll("/md", ".md");
         } else {
+            final var parentCount = parentCount(destinationWithoutProtocol);
+            if (parentCount < currentElementCount) {
+                final var relativePath = adjustFileSuffix(withoutSuffixElements(currentPath, parentCount)
+                        + "/"
+                        + withoutPrefixElements(destinationWithoutProtocol, parentCount))
+                        .replace("//", "/");
+                if (RELATIVE_PATH.matcher(destinationWithoutProtocol).matches()
+                        && projectsRenderer.projectsPaths().contains(Path.of(relativePath))) {
+                    link.setDestination("/" + relativePath);
+                    visitChildren(link);
+                    return;
+                }
+            }
             normalizedDestination = destinationWithoutProtocol.replace("../", "")
                     .replaceAll("^(\\./)?src\\/main\\/[a-z\\-]+\\/", "/")
                     .replaceAll("projects\\/[a-z\\.]+\\/src/main/[a-z]+/", "/")
@@ -88,14 +120,27 @@ public class LinkTranslator extends AbstractVisitor {
                     .replace("//", "/");
         }
         link.setDestination(protocol + normalizedDestination);
+        if (protocol.isEmpty()) {
+            link.setDestination(adjustFileSuffix(link.getDestination()));
+        }
+        visitChildren(link);
+    }
+
+    /**
+     * Determines the rendered path on the server given the source file path.
+     *
+     * @param path
+     * @return
+     */
+    private static String adjustFileSuffix(String path) {
         // TODO This should only be done if, the link is relative and contains "src/main/md".
-        if (link.getDestination().endsWith(".md") && protocol.isEmpty()) {
-            link.setDestination(link.getDestination().substring(0, link.getDestination().length() - 3) + ".html");
+        if (path.endsWith(".md")) {
+            return path.substring(0, path.length() - 3) + ".html";
         }
         // TODO This should only be done if, the link is relative and contains "src/main/xml".
-        if (link.getDestination().endsWith(".xml") && protocol.isEmpty()) {
-            link.setDestination(link.getDestination().substring(0, link.getDestination().length() - 4) + ".html");
+        if (path.endsWith(".xml")) {
+            return path.substring(0, path.length() - 4) + ".html";
         }
-        this.visitChildren(link);
+        return path;
     }
 }

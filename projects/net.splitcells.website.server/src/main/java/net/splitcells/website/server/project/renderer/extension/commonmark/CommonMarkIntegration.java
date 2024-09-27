@@ -17,6 +17,7 @@ package net.splitcells.website.server.project.renderer.extension.commonmark;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.Xml;
+import net.splitcells.dem.resource.Trail;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.projects.ProjectsRenderer;
@@ -25,6 +26,9 @@ import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 
 import java.util.Optional;
+
+import static net.splitcells.dem.resource.Trail.withoutSuffixElements;
+import static net.splitcells.website.server.project.renderer.extension.commonmark.LinkTranslator.linkTranslator;
 
 public class CommonMarkIntegration {
 
@@ -71,7 +75,7 @@ public class CommonMarkIntegration {
             contentToRender = arg;
         }
         final var parsed = parser.parse(contentToRender);
-        parsed.accept(LinkTranslator.linkTranslator());
+        parsed.accept(linkTranslator(withoutSuffixElements(path, 1), projectsRenderer));
         return projectRenderer
                 .renderHtmlBodyContent(renderer.render(parsed)
                         , title

@@ -21,15 +21,20 @@ import net.splitcells.dem.data.set.list.ListView;
 
 import java.nio.file.Path;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.lang.perspective.PerspectiveI.perspective;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**
  * <p>TODO Ensure that only trails, that adhere to guidelines are accepted.</p>
- * Similar functionality as {@link Path}, that avoids the distinction between
- * relative and absolute {@link Path} instances.
+ * <p>Represents a path for things like file systems.
+ * It is called {@link Trail} instead of Path in order to avoid confusion with Java's {@link Path} class.
+ * It has similar functionality as {@link Path}, but has no protocol or binding to any file system driver.
+ * This also avoids the distinction between relative and absolute {@link Path} instances,
+ * as only relative paths are allowed.
  * Thereby bugs are avoided,
- * that are created via {@link Path#resolve(Path)} by accidentally mixing relative and absolute paths.
+ * that are created via {@link Path#resolve(Path)} by accidentally mixing relative and absolute paths.</p>
  */
 public class Trail implements Thing {
     public static Trail trail(String... content) {
@@ -67,5 +72,107 @@ public class Trail implements Thing {
     @Override
     public int hashCode() {
         return Thing.hashCode(content);
+    }
+
+    /**
+     * Determines how many levels of parent directories, the start of the path is located at.
+     *
+     * @param path This is a Unix path.
+     * @return The number of `../` at the beginning of the path.
+     */
+    public static int parentCount(String path) {
+        final var split = path.replaceAll("//", "/").split("/");
+        int count = 0;
+        for (int i = 0; i < split.length; i++) {
+            if ("..".equals(split[i])) {
+                count++;
+            } else {
+                return count;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * @param path             This is the relative path to be processed.
+     * @param elementsToRemove Number of starting elements to remove.
+     * @return Path without the given number of element at the start given the path argument.
+     */
+    public static String withoutPrefixElements(String path, int elementsToRemove) {
+        final var split = path.replaceAll("/+", "/").split("/");
+        String result = "";
+        if (path.startsWith("/")) {
+            throw executionException(perspective("Only relative paths are supported.")
+                    .withProperty("path", path)
+                    .withProperty("elementsToRemove", elementsToRemove + ""));
+        }
+        if (split.length < elementsToRemove) {
+            throw executionException(perspective("Trying to remove more prefix elements from path than present.")
+                    .withProperty("path", path)
+                    .withProperty("elementsToRemove", elementsToRemove + ""));
+        }
+        if (0 > elementsToRemove) {
+            throw executionException(perspective("Cannot remove negative amount of prefix elements.")
+                    .withProperty("path", path)
+                    .withProperty("elementsToRemove", elementsToRemove + ""));
+        }
+        var first = true;
+        for (int i = 0; i + elementsToRemove < split.length; i++) {
+            if (first) {
+                result += split[i + elementsToRemove];
+                first = false;
+            } else {
+                result += "/" + split[i + elementsToRemove];
+            }
+
+        }
+        return result;
+    }
+
+    /**
+     * @param path             This is the relative path to be processed.
+     * @param elementsToRemove Number of ending elements to remove.
+     * @return Path without the given number of element at the end given the path argument.
+     */
+    public static String withoutSuffixElements(String path, int elementsToRemove) {
+        final var split = path.replaceAll("/+", "/").split("/");
+        String result = "";
+        if (path.startsWith("/")) {
+            throw executionException(perspective("Only relative paths are supported.")
+                    .withProperty("path", path)
+                    .withProperty("elementsToRemove", elementsToRemove + ""));
+        }
+        if (split.length < elementsToRemove) {
+            throw executionException(perspective("Trying to remove more suffix elements from path than present.")
+                    .withProperty("path", path)
+                    .withProperty("elementsToRemove", elementsToRemove + ""));
+        }
+        if (0 > elementsToRemove) {
+            throw executionException(perspective("Cannot remove negative amount of suffix elements.")
+                    .withProperty("path", path)
+                    .withProperty("elementsToRemove", elementsToRemove + ""));
+        }
+        var first = true;
+        for (int i = 0; i < split.length - elementsToRemove; i++) {
+            if (first) {
+                result += split[i];
+                first = false;
+            } else {
+                result += "/" + split[i];
+            }
+
+        }
+        return result;
+    }
+
+    public static int elementCount(String path) {
+        var normalizedPath = path.replaceAll("/+", "/");
+        if (normalizedPath.startsWith("/") && normalizedPath.length() > 1) {
+            normalizedPath = normalizedPath.substring(1);
+        }
+        if (normalizedPath.endsWith("/") && normalizedPath.length() > 1) {
+            normalizedPath = normalizedPath.substring(0, normalizedPath.length() - 1);
+        }
+        return normalizedPath.split("/").length;
     }
 }
