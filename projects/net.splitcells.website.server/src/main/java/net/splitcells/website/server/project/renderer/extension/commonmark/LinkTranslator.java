@@ -39,6 +39,10 @@ import java.util.regex.Pattern;
 public class LinkTranslator extends AbstractVisitor {
 
     private static Pattern PROTOCOL = Pattern.compile("([a-z]+://)(.*)");
+    /**
+     * Matches to paths that point to a sub project's README in a git repository.
+     * This helpful, when the sub projects' READMEs are embedded into the software.
+     */
     private static Pattern SUB_PROJECT_README = Pattern.compile("(\\./)?projects/[a-zA-Z\\.]+/README.md");
 
     public static LinkTranslator linkTranslator() {
