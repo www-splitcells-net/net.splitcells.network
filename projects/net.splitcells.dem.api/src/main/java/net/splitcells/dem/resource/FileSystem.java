@@ -76,4 +76,16 @@ public interface FileSystem extends FileSystemView {
     default FileSystem createDirectoryPath(String path) {
         throw notImplementedYet();
     }
+    /**
+     * This method is used, in order make {@link FileSystem} compatible with tools,
+     * that can only work with {@link Path}.
+     * These tools are external dependencies and this method should not be used by core code.
+     *
+     * @param path The path relative to this {@link FileSystem}, for which the legacy access object is to be created.
+     * @return This is a {@link Path}, that provides read or write access to the request path.
+     */
+    @JavaLegacy
+    default Optional<Path> javaLegacyPath(Path path) {
+        return Optional.empty();
+    }
 }
