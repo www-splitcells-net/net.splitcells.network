@@ -100,17 +100,19 @@ public class LinkTranslator extends AbstractVisitor {
                     .replace(".", "/")
                     .replaceAll("/md", ".md");
         } else {
-            final var parentCount = parentCount(destinationWithoutProtocol);
-            if (parentCount < currentElementCount) {
-                final var relativePath = adjustFileSuffix(withoutSuffixElements(currentPath, parentCount)
-                        + "/"
-                        + withoutPrefixElements(destinationWithoutProtocol, parentCount))
-                        .replace("//", "/");
-                if (RELATIVE_PATH.matcher(destinationWithoutProtocol).matches()
-                        && projectsRenderer.projectsPaths().contains(Path.of(relativePath))) {
-                    link.setDestination("/" + relativePath);
-                    visitChildren(link);
-                    return;
+            if (destinationWithoutProtocol.startsWith("../")) {
+                final var parentCount = parentCount(destinationWithoutProtocol);
+                if (parentCount < currentElementCount) {
+                    final var relativePath = adjustFileSuffix(withoutSuffixElements(currentPath, parentCount)
+                            + "/"
+                            + withoutPrefixElements(destinationWithoutProtocol, parentCount))
+                            .replace("//", "/");
+                    if (RELATIVE_PATH.matcher(destinationWithoutProtocol).matches()
+                            && projectsRenderer.projectsPaths().contains(Path.of(relativePath))) {
+                        link.setDestination("/" + relativePath);
+                        visitChildren(link);
+                        return;
+                    }
                 }
             }
             normalizedDestination = destinationWithoutProtocol.replace("../", "")
