@@ -66,12 +66,15 @@ public interface FileSystemView {
         return isDirectory(Path.of(path));
     }
 
+    @JavaLegacy
     Stream<Path> walkRecursively();
 
+    @JavaLegacy
     default Stream<Path> walkRecursively(String path) {
         return walkRecursively(Path.of(path));
     }
 
+    @JavaLegacy
     Stream<Path> walkRecursively(Path path);
 
     byte[] readFileAsBytes(Path path);
