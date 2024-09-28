@@ -281,4 +281,9 @@ public class FileSystems implements FileSystem {
         }
         return Optional.of(rootPath.resolve(path));
     }
+
+    @Override
+    public Optional<Path> javaLegacyPath() {
+        return Optional.of(rootPath);
+    }
 }

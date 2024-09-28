@@ -15,9 +15,11 @@
  */
 package net.splitcells.dem.resource;
 
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 
 import java.nio.file.Path;
+import java.util.Optional;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
@@ -76,6 +78,20 @@ public interface FileSystem extends FileSystemView {
     default FileSystem createDirectoryPath(String path) {
         throw notImplementedYet();
     }
+
+    /**
+     * This method is used, in order make {@link FileSystem} compatible with tools,
+     * that can only work with {@link Path}.
+     * These tools are external dependencies and this method should not be used by core code.
+     *
+     * @return Returns the {@link Path}, that points to the same directory as this {@link FileSystem},
+     * if this {@link FileSystem} supports creating such a {@link Path} object.
+     */
+    @JavaLegacy
+    default Optional<Path> javaLegacyPath() {
+        return Optional.empty();
+    }
+
     /**
      * This method is used, in order make {@link FileSystem} compatible with tools,
      * that can only work with {@link Path}.
