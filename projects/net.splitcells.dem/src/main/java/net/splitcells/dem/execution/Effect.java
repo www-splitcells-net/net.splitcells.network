@@ -36,6 +36,7 @@ import java.util.function.Function;
  * without requiring explicitly asynchronous APIs.
  * This wiring mechanism allows one, to inject multithreading functionality into code,
  * that does not have explicit multithreading code via {@link AspectOrientedConstructor#withAspect(Function)}.
+ * Minimizing the amount of multithreading code is an explicit goal of this interface.
  * </p>
  * <p>In single threaded code, synchronization is done implicitly the following way:
  * methods returning void are run in parallel and methods returning something are running synchronously and
