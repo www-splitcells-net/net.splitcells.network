@@ -32,6 +32,10 @@ import static net.splitcells.dem.data.set.list.Lists.list;
  */
 @JavaLegacyArtifact
 public class HtmlClientImpl implements HtmlClient {
+    /**
+     *
+     * @return Provides an HTTP based HTML client, for {@link net.splitcells.website.server.ServerService}.
+     */
     public static HtmlClient htmlClientImpl() {
         return new HtmlClientImpl("http://localhost:" + Dem.configValue(ServerConfig.class).openPort());
     }
