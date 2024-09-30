@@ -184,4 +184,11 @@
             Inheritance does not support swapping out the parent implementation, which makes it often not portable in practice.
         </paragraph>
     </chapter>
+    <chapter>
+        <title>External Guidelines</title>
+        <paragraph>The following external code guidelines can be considered for this project.
+            The guidelines are ordered by descending priority:
+        </paragraph>
+        <list><link url="https://github.com/tigerbeetle/tigerbeetle/blob/main/docs/TIGER_STYLE.md">Tiger Style by TigerBeetle</link></list>
+    </chapter>
 </article>
