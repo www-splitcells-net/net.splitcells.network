@@ -10,6 +10,14 @@
         <title>Project Life Cycle Guidelines</title>
     </meta>
     <chapter>
+        <title>Management Process</title>
+        <paragraph>Every feature, that directly implements a stated objective,
+            requires a feature document or user story.
+            The documentation has to provide a mapping between objectives and solutions,
+            which basically serves a double-entry bookkeeping for the goals.
+        </paragraph>
+    </chapter>
+    <chapter>
         <title>Development Process</title>
         <paragraph>
             Do not assume that better skills, more intelligence, working harder, etc. automatically lead to a
