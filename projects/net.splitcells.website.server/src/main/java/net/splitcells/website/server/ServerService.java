@@ -68,6 +68,15 @@ public class ServerService extends ResourceOptionI<Service> {
         });
     }
 
+    /**
+     * Also the settings are determined via {@link ServerConfig},
+     * this construction method works on arbitrary {@link Config},
+     * because it could be the case, the multiple web servers needed to be created inside on {@link Dem#process(Runnable)}
+     * in the future.
+     *
+     * @param config
+     * @return
+     */
     public static ProjectsRendererI projectsRenderer(Config config) {
         final var profile = "public";
         final var validator = VOID_VALIDATOR;
