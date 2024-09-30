@@ -9,24 +9,20 @@
         -->
         <title>General Code Guidelines</title>
     </meta>
-    <paragraph>The programming code should prioritize adaptability and readability.
-        This can be made by making it easy to refactor the code or to translate it to a completely other language.
-        The use of standard/common code conventions also makes it easier to integrate other code easier
-        and in a more consistent way.
-    </paragraph>
-    <paragraph>
-        Use double-entry bookkeeping for the inputs and the outputs of the program.
-        Inputs without any relation to the outputs of the program, should cause errors.
-        Otherwise, the program's configuration and input gets hard to understand pretty quickly.
-    </paragraph>
-    <paragraph>Avoid side effects, as it makes it harder to understand a program.
-    </paragraph>
-    <paragraph>Inheritance works great as adhoc wrappers and type and implementation extenders,
-        but nothing more.
-        Inheritance does not support swapping out the parent implementation,
-        which makes it often not portable in practice.
-    </paragraph>
-    <paragraph>State intent and not actions.</paragraph>
+    <chapter>
+        <title>Main Focus</title>
+        <paragraph>If there is no reason otherwise, use common/external code conventions and guidelines by default.</paragraph>
+        <paragraph>The programming code should prioritize portability, adaptability, stability, performance and readability.
+            This can be made by making it easy to refactor the code or to translate it to a completely other language.
+        </paragraph>
+        <paragraph>
+            Use double-entry bookkeeping for the inputs and the outputs of the program.
+            This can be implemented via Logs.
+            Inputs without any relation to the outputs of the program, should cause errors.
+            Otherwise, the program's configuration and input gets hard to understand pretty quickly.
+        </paragraph>
+        <paragraph>Minimize side effects, as it makes it harder to understand a program.</paragraph>
+    </chapter>
     <chapter>
         <title>Identifiers</title>
         <paragraph>Readability is preferred over compactness, but compactness is still important.
@@ -89,34 +85,33 @@
                 Implicit runtime tests are generally speaking optional and not part of the main interface contract.
                 In other words no code is allowed to rely on the fact,
                 that it will be informed about errors implicitly.
+                This is done, so that the practical best runtime performance can be measured,
+                when the software's performance is compared to others.
+                This way, there is less incentive's to omit writing certain runtime checks.
             </paragraph>
             <paragraph>It has to be explicitly stated, if, for instance, argument checking is part of the interface.
                 These types of checks are not considered to be tests in this context.
             </paragraph>
         </chapter>
-        <chapter>
-            <title>Self Reporting</title>
-            <paragraph>Each test should have an error message, in order to minimize the time in order to understand an
-                error. This is especially important,
-                if the test is run during the execution of the program by an external user.
-            </paragraph>
-        </chapter>
     </chapter>
     <chapter>
         <title>Code Formatting</title>
-        <paragraph>The code should be formatted in such a way that the
-            required space is minimized and
-            the readability and navigability of the text is maximized.
-            Empty lines are omitted, if indentation is enough to easily separate code blocks.
-        </paragraph>
-        <paragraph>
-            Trailing special symbols like commas in lists are preferred to leading symbols,
-            as this is the most common way.
-            Thereby, generally speaking, the overall structure of the source code is visible on the left side,
-            whereas the meaning of the structure is located on the right side.
-        </paragraph>
         <chapter>
-            <title>Automatic Formatting</title>
+            <title>Code Format</title>
+            <paragraph>The code should be formatted in such a way that the
+                required space is minimized and
+                the readability and navigability of the text is maximized.
+                Empty lines are omitted, if indentation is enough to easily separate code blocks.
+            </paragraph>
+            <paragraph>
+                Trailing special symbols like commas in lists are preferred to leading symbols,
+                as this is the most common way.
+                Thereby, generally speaking, the overall structure of the source code is visible on the left side,
+                whereas the meaning of the structure is located on the right side.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>Settings for Automatic Formatting</title>
             <paragraph>Automatic code styling/formatting should never remove already present new line characters,
                 as otherwise it is hard to structure large code statements.
                 The automatic formatting should also not add new line symbols,
@@ -131,7 +126,7 @@
     <chapter>
         <title>Dependencies</title>
         <paragraph>
-            Maximize the replaceability of external dependencies.
+            Maximize the replace ability of external dependencies.
             Minimize dependency on concrete versions of the dependencies.
             Prefer own interfaces and avoid accessing external things.
             Use dependency injection via static methods as this supports most paradigms and implementations.
@@ -153,60 +148,25 @@
     </chapter>
     <chapter>
         <title>Namespace</title>
-        <paragraph>Try to create a common dictionary of words. Each word
-            should be used for one meaning if possible.
-            This makes
-            it easier to
-            create names for new things, to find new things by its name and to
-            understand described things.
+        <paragraph>Try to create a common dictionary of words.
+            Each word should be used for one meaning if possible.
+            This makes it easier to create names for new things, to find new things by its name and to understand described things.
         </paragraph>
-        <paragraph>Use prefixes if multiple dictionaries have to be used in a
-            document.
-            This helps to associate each text with
-            its correct meaning.
+        <paragraph>Use prefixes if multiple dictionaries have to be used in a document.
+            This helps to associate each text with its correct meaning.
         </paragraph>
-        <paragraph>Avoid importing the same things over and over again in
-            each file.
-            If possible create dictionary documents
-            that contain all
-            imports and link
-            to these dictionaries in each document. Minimize the
-            number of dictionary documents
-            which
-            are linked to from a given
-            document.
-            Minimize the number of individual imports in non dictionary
-            documents.
+        <paragraph>Avoid importing the same things over and over again in each file.
+            If possible create dictionary documents that contain all imports and link to these dictionaries in each document.
+            Minimize the number of dictionary documents which are linked to from a given document.
+            Minimize the number of individual imports in non dictionary documents.
         </paragraph>
     </chapter>
     <chapter>
         <title>Logging</title>
-        <paragraph>By default settings only events,
-            that require action, signal overhaul execution progress for the log inspector should be shown.
-            Log code should be separated from the actual as much as possible,
-            in order to reduce noise of regular program code.
+        <paragraph>By default settings only events, that require action, signal overhaul execution progress for the log inspector should be shown.
+            Log code should be separated from the actual as much as possible, in order to reduce noise of regular program code.
             This is especially the case for trace logging.
         </paragraph>
-        <chapter>
-            <title>Logging as Event Log</title>
-            <paragraph>Model the (interactive) console and log files as event logs/queues.
-                The subject/publisher of the event should always be directly or indirectly identifiable.
-                This way it is ensured that the history of the execution is shown,
-                which allows one understand the execution and interact with it.
-                In the ideal case one can reproduce the history of each object.
-            </paragraph>
-        </chapter>
-        <chapter>
-            <title>Logging As Double Entry Bookkeeping</title>
-            <paragraph>Logging has to provide a form of double entry bookkeeping.
-                Especially for the programs configuration, inputs and outputs.
-            </paragraph>
-            <paragraph>
-                Therefore, the log has to signal for every thing,
-                where the thing is coming from, what has happened to the thing and where the thing is going to.
-                Where is a config value coming from, how is it interpreted and what component is using the config value.
-            </paragraph>
-        </chapter>
     </chapter>
     <chapter>
         <title>Support</title>
@@ -216,6 +176,12 @@
         </paragraph>
         <paragraph>If a support documentation is needed, try to structure it in the form of a decision tree,
             that finds the appropriate problem and solution given a set of symptoms.
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>Java Specifics</title>
+        <paragraph>Inheritance works great as adhoc wrappers and type and implementation extenders, but nothing more.
+            Inheritance does not support swapping out the parent implementation, which makes it often not portable in practice.
         </paragraph>
     </chapter>
 </article>
