@@ -147,21 +147,6 @@
         </paragraph>
     </chapter>
     <chapter>
-        <title>Namespace</title>
-        <paragraph>Try to create a common dictionary of words.
-            Each word should be used for one meaning if possible.
-            This makes it easier to create names for new things, to find new things by its name and to understand described things.
-        </paragraph>
-        <paragraph>Use prefixes if multiple dictionaries have to be used in a document.
-            This helps to associate each text with its correct meaning.
-        </paragraph>
-        <paragraph>Avoid importing the same things over and over again in each file.
-            If possible create dictionary documents that contain all imports and link to these dictionaries in each document.
-            Minimize the number of dictionary documents which are linked to from a given document.
-            Minimize the number of individual imports in non dictionary documents.
-        </paragraph>
-    </chapter>
-    <chapter>
         <title>Logging</title>
         <paragraph>By default settings only events, that require action, signal overhaul execution progress for the log inspector should be shown.
             Log code should be separated from the actual as much as possible, in order to reduce noise of regular program code.
