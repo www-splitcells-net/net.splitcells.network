@@ -46,7 +46,7 @@
         </paragraph>
     </chapter>
     <chapter>
-        <title>Testing</title>
+        <title>Testing, Runtime Checks and Assertions</title>
         <paragraph>It should be possible to execute the tests programmatically inside the program.
             An appropriate main method should be provided, so the tests can be executed as a program.
             This ensures that tests are nothing special and therefore independent of the build system.
