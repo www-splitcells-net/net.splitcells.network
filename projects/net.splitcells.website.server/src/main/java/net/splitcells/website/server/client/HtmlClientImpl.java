@@ -19,8 +19,11 @@ import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.website.server.Config;
+import net.splitcells.website.server.ServerConfig;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 
@@ -29,20 +32,16 @@ import static net.splitcells.dem.data.set.list.Lists.list;
  */
 @JavaLegacyArtifact
 public class HtmlClientImpl implements HtmlClient {
-    /**
-     * @param address The URL's schema and authority of the webserver.
-     *                For example, `http://localhost:8443` would be such a URL.
-     * @return
-     * @deprecated TODO Create a version, that knows the address to be tested,
-     * because this client is used for testing the local UI and not a remote one.
-     */
-    @Deprecated
-    public static HtmlClient htmlClientImpl(String address) {
-        return new HtmlClientImpl(address);
+    public static HtmlClient htmlClientImpl() {
+        return new HtmlClientImpl("http://localhost:" + Dem.configValue(ServerConfig.class).openPort());
     }
 
     private final Playwright playwright = Playwright.create();
     private final Browser browser = playwright.firefox().launch();
+    /**
+     * The URL's schema and authority of the webserver.
+     * For example, `http://localhost:8443` would be such a URL.
+     */
     private final String address;
     private final List<Page> openTabs = list();
 

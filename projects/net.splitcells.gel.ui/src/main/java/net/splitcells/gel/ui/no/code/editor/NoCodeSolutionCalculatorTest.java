@@ -28,7 +28,7 @@ public class NoCodeSolutionCalculatorTest {
     @IntegrationTest
     public void testOptimization() {
         process(() -> {
-                    try (final var browser = htmlClientImpl("http://localhost:8443")) {
+                    try (final var browser = htmlClientImpl()) {
                         final var tab = browser.openTab("/net/splitcells/gel/ui/no/code/editor/index.html");
                         requireEquals("", tab.elementById("net-splitcells-gel-ui-no-code-editor-form-errors").textContent());
                         requireEquals("", tab.elementById("net-splitcells-gel-ui-no-code-editor-form-solution").textContent());
