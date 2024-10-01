@@ -40,7 +40,7 @@ public class CinService implements ResourceOption<Service> {
         return new Service() {
             @Override
             public void start() {
-                Dem.executeThread(() -> {
+                Dem.executeThread("Cin", () -> {
                     final var network = network();
                     final var currentWorldHistory = worldHistory(WORLD_HISTORY, list(), list());
                     reportRuntime(() -> {

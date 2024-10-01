@@ -48,7 +48,7 @@ public class EffectWorker<Subject> implements Effect<Subject> {
     private EffectWorker(Subject argSubject, BlockingQueue<Consumer<Subject>> argEvents) {
         events = argEvents;
         subject = argSubject;
-        executeThread(() -> {
+        executeThread("Effect Worker", () -> {
             while (true) {
                 try {
                     final var nextEvent = events.poll(365, TimeUnit.DAYS);

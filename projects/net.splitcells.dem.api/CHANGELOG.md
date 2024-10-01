@@ -5,6 +5,7 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2024-09-27\#37** `Dem#executeThread(Runnable)` now also requires a name for the thread.
 * **2024-09-27** Rename `net.splitcells.dem.lang.perspective.Perspective*`
   to `net.splitcells.dem.lang.tree.Tree*` in order to make code compact and more readable.
   Also, rename `Domable#toPerspective()` to `Domable#toTree()`.

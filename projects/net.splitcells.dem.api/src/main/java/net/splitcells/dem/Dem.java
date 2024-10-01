@@ -92,9 +92,10 @@ public class Dem {
      *
      * @param program This is the code, that the thread executes.
      */
-    public static void executeThread(Runnable program) {
+    public static void executeThread(String name, Runnable program) {
         final var thread = new Thread(program);
         thread.setDaemon(true);
+        thread.setName(name);
         thread.setUncaughtExceptionHandler((throwingThread, throwable) -> {
             /**
              * TODO Sometimes {@link Logs#logs()} does not work. Maybe logging is currently not thread safe?
