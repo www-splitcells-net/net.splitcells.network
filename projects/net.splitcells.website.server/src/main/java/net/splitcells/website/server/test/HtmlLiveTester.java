@@ -19,19 +19,42 @@ import net.splitcells.dem.Dem;
 import net.splitcells.dem.environment.resource.ResourceOption;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.resource.communication.log.LogLevel;
-import net.splitcells.dem.resource.communication.log.Logs;
+
+import static java.util.stream.IntStream.range;
+import static net.splitcells.dem.Dem.configValue;
+import static net.splitcells.dem.Dem.executeThread;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 
 /**
  * Executes tests via the GUI of the webserver during {@link Dem#process(Runnable)}.
+ * Currently, the testers are never stopped, as there is no need to.
  */
-public class UiTester implements ResourceOption<Service> {
+public class HtmlLiveTester implements ResourceOption<Service> {
     @Override
     public Service defaultValue() {
         return new Service() {
 
             @Override
             public void start() {
-                Logs.logs().append("Starting `" + UiTester.class.getName() + "`.", LogLevel.INFO);
+                logs().append("Starting `" + HtmlLiveTester.class.getName() + "`.", LogLevel.INFO);
+                range(0, configValue(HtmlLiveTesterCount.class)).forEach(i -> {
+                    executeTest(i);
+                });
+            }
+
+            private void executeTest(int testId) {
+                executeThread("HtmlLiveTester-" + testId, () -> {
+                    try {
+                        logs().append("Starting UI test thread " + testId + ".", LogLevel.DEBUG);
+                        configValue(HtmlLiveTest.class).run();
+                        logs().append("Successfully completing UI test thread " + testId + ".", LogLevel.DEBUG);
+                    } catch (Throwable t) {
+                        logs().appendWarning("Aborting UI test thread " + testId + " on error.", t);
+                    } finally {
+                        Dem.sleepAtLeast(10_000);
+                        executeTest(testId);
+                    }
+                });
             }
 
             @Override
