@@ -179,6 +179,7 @@ public class Dem {
                 throw new RuntimeException(e);
             }
         });
+        root.setName(program.getClass().getPackageName() + "." + program.getClass().getSimpleName());
         // A thread is used in order to not contaminate the current context/process.
         root.start();
         try {
