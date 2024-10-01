@@ -19,7 +19,7 @@ import subprocess
 dockerFileServiceTemplate = """FROM docker.io/eclipse-temurin:21-jdk-jammy
 RUN apt update
 RUN apt install --yes maven git python3
-RUN apt clean # This fixes install errors for chromium-browser.
+RUN apt clean # This fixes install errors for chromium-browser. It is unknown why this is the case.
 RUN apt update
 RUN apt install --yes chromium-browser
     # chromium-browser is required in order to start a browser via playwright.
