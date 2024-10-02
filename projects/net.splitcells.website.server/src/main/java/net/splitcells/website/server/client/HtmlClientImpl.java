@@ -24,7 +24,9 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.ServerConfig;
+import net.splitcells.website.server.config.PublicDomain;
 
+import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
 
 /**
@@ -33,11 +35,18 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 @JavaLegacyArtifact
 public class HtmlClientImpl implements HtmlClient {
     /**
-     *
-     * @return Provides an HTTP based HTML client, for {@link net.splitcells.website.server.ServerService}.
+     * @return Provides an HTTP based HTML client for {@link net.splitcells.website.server.ServerService}.
      */
     public static HtmlClient htmlClientImpl() {
-        return new HtmlClientImpl("http://localhost:" + Dem.configValue(ServerConfig.class).openPort());
+        return new HtmlClientImpl("http://localhost:" + configValue(ServerConfig.class).openPort());
+    }
+
+    /**
+     * @return Provides an HTTP based HTML client,
+     * that connects to the public facing HTTP interface of {@link net.splitcells.website.server.ServerService}.
+     */
+    public static HtmlClient publicHtmlClient() {
+        return new HtmlClientImpl("http://" + configValue(PublicDomain.class).orElseThrow());
     }
 
     private final Playwright playwright = Playwright.create();
