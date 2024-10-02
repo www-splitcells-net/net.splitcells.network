@@ -44,6 +44,7 @@ mkdir -p ./target/
 podman build -f "target/Dockerfile-$executionName" --tag "localhost/$executionName" --log-level=debug
     # Logging is used, in order to better understand build runtime performance.
 podman run --name "$executionName" \\
+  --network slirp4netns:allow_host_loopback=true \\
   --rm \\
   -v $HOME/Documents:/root/Documents \\
   -v $HOME/.local/state/$executionName/.ssh:/root/.ssh \\
@@ -51,6 +52,8 @@ podman run --name "$executionName" \\
   -v $HOME/.local/state/$executionName/.local:/root/.local/state \\
   "$podmanParameters" \\
   "localhost/$executionName"
+  #
+  # allow_host_loopback is required, so that the software in the container can connect to the host.
 rm -f "target/Dockerfile-$executionName" # `-f` is used, in case the target folder is deleted via `mvn clean install` in `--command`.
 """
 
