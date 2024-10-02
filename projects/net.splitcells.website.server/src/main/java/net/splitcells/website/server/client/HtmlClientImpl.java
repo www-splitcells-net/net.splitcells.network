@@ -24,6 +24,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.ServerConfig;
+import net.splitcells.website.server.config.InternalPublicPort;
 import net.splitcells.website.server.config.PublicDomain;
 
 import static net.splitcells.dem.Dem.configValue;
@@ -49,7 +50,9 @@ public class HtmlClientImpl implements HtmlClient {
      * HTTPS is assumed, because it is expected that public facing servers encrypt their communication.
      */
     public static HtmlClient publicHtmlClient() {
-        return new HtmlClientImpl("https://" + configValue(PublicDomain.class).orElseThrow());
+        return new HtmlClientImpl("https://"
+                + configValue(PublicDomain.class).orElseThrow()
+                + configValue(InternalPublicPort.class).map(port -> ":" + port).orElse(""));
     }
 
     private final Playwright playwright = Playwright.create();
