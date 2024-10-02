@@ -23,7 +23,6 @@ if __name__ == '__main__':
 	parsedArgs = parser.parse_args()
 	commandToExecute = 'scp ' + parsedArgs.remoteFileAddress + ' ' + parsedArgs.targetFile
 	logging.debug("Executing: " + commandToExecute)
-	subprocess.call(commandToExecute, shell='True')
 	returnCode = subprocess.call(commandToExecute, shell='True')
 	if returnCode != 0:
 		logging.error('Error downloading file with return code ' + str(returnCode) + ' from scp.')
