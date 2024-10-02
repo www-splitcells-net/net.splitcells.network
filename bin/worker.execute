@@ -41,7 +41,8 @@ mkdir -p $HOME/.local/state/$executionName/.m2/
 mkdir -p $HOME/.local/state/$executionName/.ssh/
 mkdir -p $HOME/.local/state/$executionName/.local/
 mkdir -p ./target/
-podman build -f "target/Dockerfile-$executionName" --tag "localhost/$executionName"
+podman build -f "target/Dockerfile-$executionName" --tag "localhost/$executionName" --log-level=debug
+    # Logging is used, in order to better understand build runtime performance.
 podman run --name "$executionName" \\
   --rm \\
   -v $HOME/Documents:/root/Documents \\
