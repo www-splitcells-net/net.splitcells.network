@@ -42,11 +42,14 @@ public class HtmlClientImpl implements HtmlClient {
     }
 
     /**
-     * @return Provides an HTTP based HTML client,
-     * that connects to the public facing HTTP interface of {@link net.splitcells.website.server.ServerService}.
+     * TODO Determine protocol via configuration.
+     *
+     * @return Provides an HTTP based HTMLs client,
+     * that connects to the public facing HTTPs interface of {@link net.splitcells.website.server.ServerService}.
+     * HTTPS is assumed, because it is expected that public facing servers encrypt their communication.
      */
     public static HtmlClient publicHtmlClient() {
-        return new HtmlClientImpl("http://" + configValue(PublicDomain.class).orElseThrow());
+        return new HtmlClientImpl("https://" + configValue(PublicDomain.class).orElseThrow());
     }
 
     private final Playwright playwright = Playwright.create();
