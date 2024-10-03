@@ -56,9 +56,25 @@ import static org.w3c.dom.Node.ELEMENT_NODE;
  */
 @JavaLegacyArtifact
 public final class Xml {
+    /**
+     * Using this is deprecated, because it causes race conditions.
+     */
+    @Deprecated
     private static final Transformer TRANSFORMER = Xml.newTransformer();
+    /**
+     * Using this is deprecated, because it causes race conditions.
+     */
+    @Deprecated
     private static final Transformer UNDECLARED_TRANSFORMER = Xml.newTransformer();
+    /**
+     * Using this is deprecated, because it causes race conditions.
+     */
+    @Deprecated
     private static final DocumentBuilder ROOT_DOCUMENT_BUILDER = Xml.rootDocumentBuilder();
+    /**
+     * Using this is deprecated, because it causes race conditions.
+     */
+    @Deprecated
     private static final Document ROOT_DOCUMENT = ROOT_DOCUMENT_BUILDER.newDocument();
 
     public static Document document() {
@@ -258,7 +274,7 @@ public final class Xml {
 
     public static Document parse(Path file) {
         try {
-            return ROOT_DOCUMENT_BUILDER.parse(file.toFile());
+            return Xml.rootDocumentBuilder().parse(file.toFile());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -266,7 +282,7 @@ public final class Xml {
 
     public static Document parse(InputStream document) {
         try {
-            return ROOT_DOCUMENT_BUILDER.parse(document);
+            return Xml.rootDocumentBuilder().parse(document);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
