@@ -22,6 +22,7 @@ import net.splitcells.website.server.Config;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkChangelogEventProjectRendererExtension;
 import net.splitcells.website.server.projects.ProjectsRendererI;
+import net.splitcells.website.server.projects.RenderRequest;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -63,6 +64,11 @@ public class GlobalChangelogExtension implements ProjectsRendererExtension {
                             , TEXT_HTML.toString()));
         }
         return Optional.empty();
+    }
+
+    @Override
+    public boolean requiresAuthentication(RenderRequest request) {
+        return false;
     }
 
     @Override

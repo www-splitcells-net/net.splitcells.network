@@ -41,6 +41,8 @@ public interface ProjectsRendererExtension {
                 , projectsRenderer.config()));
     }
 
+    boolean requiresAuthentication(RenderRequest request);
+
     @Deprecated
     default Tree extendProjectLayout(Tree layout, @Deprecated ProjectsRendererI projectsRenderer) {
         return layout;

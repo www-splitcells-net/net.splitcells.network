@@ -22,6 +22,7 @@ import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.projects.ProjectsRendererI;
+import net.splitcells.website.server.projects.RenderRequest;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
 
 import java.nio.file.Path;
@@ -68,6 +69,11 @@ public class HostMemoryUtilizationExtension implements ProjectsRendererExtension
                     , HTML_TEXT.codeName()));
         }
         return Optional.empty();
+    }
+
+    @Override
+    public boolean requiresAuthentication(RenderRequest request) {
+        return false;
     }
 
     @Override

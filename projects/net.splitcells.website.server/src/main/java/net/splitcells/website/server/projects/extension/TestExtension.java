@@ -21,6 +21,7 @@ import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.projects.ProjectsRendererI;
+import net.splitcells.website.server.projects.RenderRequest;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -67,6 +68,11 @@ public class TestExtension implements ProjectsRendererExtension {
             }
         }
         return Optional.empty();
+    }
+
+    @Override
+    public boolean requiresAuthentication(RenderRequest request) {
+        return false;
     }
 
     private Optional<BinaryMessage> errorReport(ProjectsRendererI projectsRenderer) {

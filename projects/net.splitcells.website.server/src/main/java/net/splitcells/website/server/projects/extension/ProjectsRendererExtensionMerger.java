@@ -23,6 +23,7 @@ import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.projects.ProjectsRendererI;
+import net.splitcells.website.server.projects.RenderRequest;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -68,6 +69,11 @@ public class ProjectsRendererExtensionMerger implements ProjectsRendererExtensio
         } else {
             return rendering.get(0);
         }
+    }
+
+    @Override
+    public boolean requiresAuthentication(RenderRequest request) {
+        return false;
     }
 
     @Override

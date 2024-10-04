@@ -21,6 +21,7 @@ import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.projects.ProjectsRendererI;
+import net.splitcells.website.server.projects.RenderRequest;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -81,6 +82,11 @@ public class FrontMenuExtension implements ProjectsRendererExtension {
                     , HTML_TEXT.codeName()));
         }
         return Optional.empty();
+    }
+
+    @Override
+    public boolean requiresAuthentication(RenderRequest request) {
+        return false;
     }
 
     @Override

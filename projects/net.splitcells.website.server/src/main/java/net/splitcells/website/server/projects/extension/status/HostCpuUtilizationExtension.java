@@ -60,6 +60,11 @@ public class HostCpuUtilizationExtension implements ProjectsRendererExtension {
     }
 
     @Override
+    public boolean requiresAuthentication(RenderRequest request) {
+        return request.trail().equalContents(REPORT_PATH) || request.trail().equalContents(CSV_PATH);
+    }
+
+    @Override
     public RenderResponse render(RenderRequest request, ProjectsRenderer projectsRenderer) {
         if (missesRole(request.user(), ADMIN_ROLE)
                 && (request.trail().equalContents(REPORT_PATH))

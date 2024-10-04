@@ -158,8 +158,9 @@ public class ProjectsRendererI implements ProjectsRenderer {
 
     @Override
     public Service httpServer() {
+        logs().appendWarning(tree("`ProjectsRenderer#httpServer()` should not be used anymore. Use `Server#serveToHttpAt()` instead, because multi threading is not supported for `ProjectsRenderer#httpServer()`."));
         build();
-        return Server.serveToHttpAt(requestPath -> render(requestPath), config);
+        return Server.serveToHttpAt(() -> this, config);
     }
 
     @Override
@@ -422,5 +423,15 @@ public class ProjectsRendererI implements ProjectsRenderer {
     @Override
     public Optional<BinaryMessage> renderContent(String content, LayoutConfig metaContent) {
         return Optional.of(binaryMessage(fallbackRenderer.renderXml(content, metaContent, config).orElseThrow(), TEXT_HTML.toString()));
+    }
+
+    @Override
+    public boolean requiresAuthentication(RenderRequest request) {
+        for (final var ext : extensions) {
+            if (ext.requiresAuthentication(request)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
