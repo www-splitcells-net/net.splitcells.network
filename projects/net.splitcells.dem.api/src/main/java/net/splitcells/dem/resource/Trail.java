@@ -59,6 +59,12 @@ public class Trail implements Thing {
         return content;
     }
 
+    public String unixPathString() {
+        return content.stream()
+                .filter(e -> !e.isEmpty())
+                .reduce((a, b) -> a + "/" + b).orElse("");
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Trail) {

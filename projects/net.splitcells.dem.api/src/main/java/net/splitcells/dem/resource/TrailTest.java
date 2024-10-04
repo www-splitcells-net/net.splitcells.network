@@ -21,6 +21,7 @@ import net.splitcells.dem.utils.ExecutionException;
 
 import static net.splitcells.dem.resource.Trail.elementCount;
 import static net.splitcells.dem.resource.Trail.parentCount;
+import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.Trail.withoutPrefixElements;
 import static net.splitcells.dem.resource.Trail.withoutSuffixElements;
 import static net.splitcells.dem.testing.Assertions.assertThrows;
@@ -32,6 +33,15 @@ public class TrailTest {
         requireEquals(parentCount("../../../a/../../b/../c/.."), 3);
         requireEquals(parentCount("/../../../a/../../b/../c/.."), 0);
         requireEquals(parentCount("/a/../../../a/../../b/../c/.."), 0);
+    }
+
+    @UnitTest
+    public void testUnixPathString() {
+        requireEquals(trail("abc").unixPathString(), "abc");
+        requireEquals(trail("a", "b", "c").unixPathString(), "a/b/c");
+        requireEquals(trail().unixPathString(), "");
+        requireEquals(trail("", "", "").unixPathString(), "");
+        requireEquals(trail("a", "", "c").unixPathString(), "a/c");
     }
 
     @UnitTest
