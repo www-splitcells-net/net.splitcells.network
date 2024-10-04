@@ -18,20 +18,23 @@ package net.splitcells.website.server.projects;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.RequestImpl;
+import net.splitcells.website.server.security.authentication.User;
 
 import java.util.Optional;
 
 public class RenderRequest implements Request<Optional<byte[]>> {
-    public static RenderRequest renderRequest(Trail trail, Optional<byte[]> data) {
-        return new RenderRequest(trail, data);
+    public static RenderRequest renderRequest(Trail trail, Optional<byte[]> data, User user) {
+        return new RenderRequest(trail, data, user);
     }
 
     private Trail trail;
     private final Optional<byte[]> data;
+    private final User user;
 
-    private RenderRequest(Trail trailArg, Optional<byte[]> dataArg) {
+    private RenderRequest(Trail trailArg, Optional<byte[]> dataArg, User userArg) {
         trail = trailArg;
         data = dataArg;
+        user = userArg;
     }
 
     public Optional<byte[]> data() {
@@ -40,5 +43,14 @@ public class RenderRequest implements Request<Optional<byte[]>> {
 
     public Trail trail() {
         return trail;
+    }
+
+    /**
+     * @return The user, that sent the request.
+     * I did not name it requester, because otherwise a function pointer would be `RenderRequest::requester`.
+     * This makes it harder to read, as a word would kind of be present 2 times.
+     */
+    public User user() {
+        return user;
     }
 }
