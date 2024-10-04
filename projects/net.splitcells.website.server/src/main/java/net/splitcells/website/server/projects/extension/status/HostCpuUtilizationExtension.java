@@ -28,6 +28,8 @@ import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.RenderRequest;
 import net.splitcells.website.server.projects.RenderResponse;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
+import net.splitcells.website.server.security.authorization.Authorization;
+import net.splitcells.website.server.security.authorization.Role;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -40,6 +42,8 @@ import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.projects.RenderResponse.renderResponse;
+import static net.splitcells.website.server.security.authorization.Authorization.missesRole;
+import static net.splitcells.website.server.security.authorization.Role.ADMIN_ROLE;
 
 public class HostCpuUtilizationExtension implements ProjectsRendererExtension {
 
@@ -56,6 +60,9 @@ public class HostCpuUtilizationExtension implements ProjectsRendererExtension {
 
     @Override
     public RenderResponse render(RenderRequest request, ProjectsRenderer projectsRenderer) {
+        if (missesRole(request.user(), ADMIN_ROLE)) {
+            return renderResponse(Optional.empty());
+        }
         if (request.trail().equalContents(REPORT_PATH)) {
             final var page = tree("article", SEW);
             final var meta = tree("meta", SEW);

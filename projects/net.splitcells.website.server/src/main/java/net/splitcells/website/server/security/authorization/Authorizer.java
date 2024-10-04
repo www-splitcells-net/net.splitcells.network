@@ -15,14 +15,8 @@
  */
 package net.splitcells.website.server.security.authorization;
 
-public class Role {
-    public static Role ANONYMOUS_ROLE = role();
-    public static Role ADMIN_ROLE = role();
-    public static Role role() {
-        return new Role();
-    }
+import net.splitcells.website.server.security.authentication.User;
 
-    private Role() {
-
-    }
+public interface Authorizer {
+    boolean hasRole(User user, Role role);
 }
