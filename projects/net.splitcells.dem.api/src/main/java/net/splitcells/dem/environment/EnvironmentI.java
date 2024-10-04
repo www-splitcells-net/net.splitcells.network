@@ -23,9 +23,11 @@ import net.splitcells.dem.environment.config.framework.Configuration;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
+import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.host.ProcessPath;
 
 import static net.splitcells.dem.environment.config.framework.ConfigurationI.configuration;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 
 public class EnvironmentI implements Environment {
 
@@ -50,6 +52,7 @@ public class EnvironmentI implements Environment {
     @Override
     public void start() {
         config.process(Service.class, s -> {
+            logs().append("Starting `" + s.getClass().getName() + "` service.", LogLevel.DEBUG);
             s.start();
             return s;
         });
@@ -70,12 +73,11 @@ public class EnvironmentI implements Environment {
 
     @Override
     public void close() {
-        config.process
-                (Closeable.class
-                        , r -> {
-                            r.close();
-                            return r;
-                        });
+        config.process(Closeable.class, r -> {
+            logs().append("Closing `" + r.getClass().getName() + "`.", LogLevel.DEBUG);
+            r.close();
+            return r;
+        });
     }
 
 }
