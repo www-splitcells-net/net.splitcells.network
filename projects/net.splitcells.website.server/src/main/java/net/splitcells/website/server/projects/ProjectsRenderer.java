@@ -35,6 +35,8 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.namespace.NameSpaces.DEN;
 import static net.splitcells.dem.lang.namespace.NameSpaces.NAME;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.website.server.project.LayoutConfig.layoutConfig;
+import static net.splitcells.website.server.projects.RenderResponse.renderResponse;
 
 /**
  * <p>Provides a file system like API to project files,
@@ -115,7 +117,7 @@ public interface ProjectsRenderer {
      * @return
      */
     default RenderResponse render(RenderRequest request) {
-        return RenderResponse.renderResponse(Optional.empty());
+        return renderResponse(Optional.empty());
     }
 
     /**
@@ -158,6 +160,11 @@ public interface ProjectsRenderer {
      * @return This is the rendered String.
      */
     Optional<BinaryMessage> renderContent(String content, LayoutConfig metaContent);
+
+    default RenderResponse renderMissingAccessRights(RenderRequest request) {
+        return renderResponse(renderContent("<p xmlns=\"http://www.w3.org/1999/xhtml\">You do not have the rights to access this page.</p>"
+                , layoutConfig(request.trail().unixPathString())));
+    }
 
     /**
      * Returns a list of relevant parent documents,

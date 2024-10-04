@@ -23,6 +23,7 @@ import net.splitcells.dem.resource.Trail;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.processor.Request;
+import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.RenderRequest;
@@ -61,7 +62,7 @@ public class HostCpuUtilizationExtension implements ProjectsRendererExtension {
     @Override
     public RenderResponse render(RenderRequest request, ProjectsRenderer projectsRenderer) {
         if (missesRole(request.user(), ADMIN_ROLE)) {
-            return renderResponse(Optional.empty());
+            return projectsRenderer.renderMissingAccessRights(request);
         }
         if (request.trail().equalContents(REPORT_PATH)) {
             final var page = tree("article", SEW);
