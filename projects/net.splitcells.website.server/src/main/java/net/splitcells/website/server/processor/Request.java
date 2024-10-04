@@ -19,6 +19,13 @@ import net.splitcells.dem.resource.Trail;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
 
+/**
+ * This is the base class for all requests.
+ * In the worst case scenario, the requests are user input or even comes from a public source.
+ * Always treat such requests as potentially malicious.
+ *
+ * @param <T> This is the data, that is provided as additional arguments for the requests.
+ */
 public class Request<T> {
     public static <T> Request<T> request(Trail trail, T data) {
         return new Request<>(trail, data);
