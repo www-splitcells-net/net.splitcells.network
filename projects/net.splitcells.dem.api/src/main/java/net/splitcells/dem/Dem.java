@@ -20,11 +20,14 @@ import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.environment.EnvironmentI;
 import net.splitcells.dem.environment.EnvironmentV;
 import net.splitcells.dem.environment.config.EndTime;
+import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.environment.config.framework.ConfigurationV;
 import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.Logs;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
+import net.splitcells.dem.utils.StringUtils;
 
 import java.security.Permission;
 import java.time.Duration;
@@ -38,9 +41,11 @@ import static net.splitcells.dem.ProcessResult.processResult;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.environment.config.StaticFlags.logStaticFlags;
+import static net.splitcells.dem.lang.tree.TreeI.perspective;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.communication.log.LogLevel.UNKNOWN_ERROR;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.StringUtils.throwableToString;
 import static net.splitcells.dem.utils.reflection.ClassesRelated.callerClass;
 
 /**
@@ -142,11 +147,15 @@ public class Dem {
                 final var processEnvironment = initializeProcess(program.getClass(), configurator);
                 processEnvironment.start();
                 try {
+                    logs().append("Executing `" + configValue(ProgramName.class) + "`.");
                     // TOFIX Does not write log file on short programs that throws an exception.
                     program.run();
                 } catch (Throwable t) {
                     // TODO Somehow mark this error specially, so its clear, that this error caused execution failure.
-                    logs().appendError(t);
+                    logs().append(perspective("`" + configValue(ProgramName.class) + "` has an error.")
+                                    .withProperty("Error Message", t.getMessage())
+                                    .withProperty("Stack Trace", throwableToString(t))
+                            , LogLevel.ERROR);
                     processResult.hasError(true);
                     /** Note that thread should handle all exceptions,
                      * because some are using {@link Thread#getThreadGroup()} and {@link ThreadGroup#},
@@ -159,6 +168,7 @@ public class Dem {
                      * if any thread has uncaught exceptions.
                      */
                 } finally {
+                    logs().append("Stopping `" + configValue(ProgramName.class) + "`.");
                     processEnvironment.config().withConfigValue(EndTime.class, Optional.of(ZonedDateTime.now()));
                     processEnvironment.close();
                     CURRENT.remove();
