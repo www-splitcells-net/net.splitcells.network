@@ -17,7 +17,7 @@ package net.splitcells.dem.lang.dom;
 
 import net.splitcells.dem.lang.tree.Tree;
 
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**

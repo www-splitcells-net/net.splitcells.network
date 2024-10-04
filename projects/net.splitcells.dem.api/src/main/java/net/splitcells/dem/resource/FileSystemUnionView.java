@@ -23,7 +23,7 @@ import java.nio.file.Path;
 import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
@@ -54,7 +54,7 @@ public class FileSystemUnionView implements FileSystemView {
                 .filter(f -> f.isFile(path))
                 .collect(toList());
         if (matches.size() != 1) {
-            throw executionException(perspective(UNAMBIGUOUS_PATH)
+            throw executionException(tree(UNAMBIGUOUS_PATH)
                     .withProperty(PATH, path.toString())
                     .withProperty(MATCHES, matches.toString()));
         }
@@ -86,7 +86,7 @@ public class FileSystemUnionView implements FileSystemView {
                 .filter(f -> f)
                 .collect(toList());
         if (matches.size() != 1) {
-            throw executionException(perspective(UNAMBIGUOUS_PATH)
+            throw executionException(tree(UNAMBIGUOUS_PATH)
                     .withProperty(PATH, path.toString())
                     .withProperty(MATCHES, matches.toString()));
         }
@@ -100,7 +100,7 @@ public class FileSystemUnionView implements FileSystemView {
                 .filter(f -> f)
                 .collect(toList());
         if (matches.size() != 1) {
-            throw executionException(perspective(UNAMBIGUOUS_PATH)
+            throw executionException(tree(UNAMBIGUOUS_PATH)
                     .withProperty(PATH, path.toString())
                     .withProperty(MATCHES, matches.toString()));
         }

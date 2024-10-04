@@ -17,7 +17,7 @@ package net.splitcells.gel.data.table.attribute;
 
 import static net.splitcells.dem.data.atom.Bools.bool;
 import static net.splitcells.dem.data.atom.Bools.untrue;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 
@@ -74,7 +74,7 @@ public class MapAttribute<T> implements Attribute<Map<Class<T>, T>> {
 
     @Override
     public Tree toTree() {
-        return perspective(name)
+        return tree(name)
                 .withProperty(Language.NAME.value(), getClass().getSimpleName())
                 .withProperty(Language.TYPE.value(), type.getSimpleName());
     }

@@ -27,7 +27,7 @@ import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.ConnectingConstructorI.connectingConstructor;
 import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
@@ -238,7 +238,7 @@ public class LookupTable implements Table {
             content.requireAbsenceOf(line.index());
         }
         if (TRACING) {
-            logs().append(perspective("register.LookupTable")
+            logs().append(tree("register.LookupTable")
                             .withProperty("path", path().toString())
                             .withProperty("line", line.toTree())
                     , this
@@ -284,7 +284,7 @@ public class LookupTable implements Table {
 
     public void removeRegistration(Line line) {
         if (TRACING) {
-            logs().append(perspective("deregister." + getClass().getSimpleName())
+            logs().append(tree("deregister." + getClass().getSimpleName())
                             .withProperty("subject", path().toString())
                             .withProperty("content", content.toString())
                             .withProperty("line", line.toTree())
@@ -312,9 +312,9 @@ public class LookupTable implements Table {
         }
         if (TRACING) {
             logs().append(
-                    perspective("after.deregister." + getClass().getSimpleName()).withChildren(
-                            perspective("subject").withChild(perspective(path().toString()))
-                            , perspective("content").withChild(perspective(content.toString()))
+                    tree("after.deregister." + getClass().getSimpleName()).withChildren(
+                            tree("subject").withChild(tree(path().toString()))
+                            , tree("content").withChild(tree(content.toString()))
                             , line.toTree())
                     , this, DEBUG);
         }
@@ -338,7 +338,7 @@ public class LookupTable implements Table {
 
     @Override
     public Tree toTree() {
-        final var rVal = perspective(LookupTable.class.getSimpleName());
+        final var rVal = tree(LookupTable.class.getSimpleName());
         // REMOVE
         rVal.withProperty("hashCode", "" + hashCode());
         rVal.withProperty("subject", path().toString());

@@ -18,6 +18,7 @@ package net.splitcells.website.server.project.renderer.extension;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.dem.resource.FileSystems;
 import net.splitcells.website.server.Config;
@@ -32,7 +33,7 @@ import java.util.Optional;
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
@@ -61,7 +62,7 @@ public class UserCommandProjectRendererExtension implements ProjectRendererExten
     @Override
     public Optional<BinaryMessage> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
         if (RENDERING_PATH.equals(path) && BIN_FOLDER.isDirectory(BIN_FOLDER_PATH)) {
-            final var layout = perspective(NameSpaces.VAL, NameSpaces.DEN);
+            final var layout = TreeI.tree(NameSpaces.VAL, NameSpaces.DEN);
             try {
 
                 BIN_FOLDER.walkRecursively(BIN_FOLDER_PATH).forEach(command -> {

@@ -16,11 +16,12 @@
 package net.splitcells.dem.lang.namespace;
 
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.lang.tree.TreeI;
 
 import java.util.Optional;
 
 import static net.splitcells.dem.lang.namespace.NameSpace.nameSpace;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 public class NameSpaces {
@@ -65,6 +66,6 @@ public class NameSpaces {
     }
 
     public static Tree string(String value) {
-        return perspective(value, STRING);
+        return TreeI.tree(value, STRING);
     }
 }

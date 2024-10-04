@@ -18,7 +18,7 @@ package net.splitcells.gel.rating.rater.lib.classification;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
@@ -120,8 +120,8 @@ public class ForAllValueCombinations implements Rater {
 
     @Override
     public Tree toTree() {
-        return perspective(FOR_ALL_VALUE_COMBINATIONS_NAME)
-                .withChild(perspective("attributes").withChildren(listWithValuesOf(attributes.mapped(Domable::toTree))));
+        return tree(FOR_ALL_VALUE_COMBINATIONS_NAME)
+                .withChild(tree("attributes").withChildren(listWithValuesOf(attributes.mapped(Domable::toTree))));
     }
 
     @Override

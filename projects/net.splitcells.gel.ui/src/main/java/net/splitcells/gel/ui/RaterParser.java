@@ -24,7 +24,7 @@ import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.framework.Rater;
 
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.gel.rating.rater.lib.AllSame.ALL_SAME_NAME;
 import static net.splitcells.gel.rating.rater.lib.AllSame.allSame;
@@ -64,13 +64,13 @@ public class RaterParser extends DenParserBaseVisitor<Result<Rater, Tree>> {
             }
         } else if (functionCall.Name().getText().equals(MINIMAL_DISTANCE_NAME)) {
             if (functionCall.function_call_arguments().function_call_arguments_element() == null) {
-                return rater.withErrorMessage(perspective("Rater `" + MINIMAL_DISTANCE_NAME + "` requires exactly 2 arguments, but has none.")
+                return rater.withErrorMessage(tree("Rater `" + MINIMAL_DISTANCE_NAME + "` requires exactly 2 arguments, but has none.")
                         .withProperty("rater", functionCall.getText()));
             }
             final var attribute = assignments.attributeByName(
                     functionCall.function_call_arguments().function_call_arguments_element().Name().getText());
             if (functionCall.function_call_arguments().function_call_arguments_next().size() != 1) {
-                return rater.withErrorMessage(perspective("Rater `" + MINIMAL_DISTANCE_NAME + "` requires exactly 2 arguments.")
+                return rater.withErrorMessage(tree("Rater `" + MINIMAL_DISTANCE_NAME + "` requires exactly 2 arguments.")
                         .withProperty("rater", functionCall.getText()));
             }
             final var minimumDistance = Double.parseDouble(functionCall
@@ -78,6 +78,6 @@ public class RaterParser extends DenParserBaseVisitor<Result<Rater, Tree>> {
             return rater.withValue(has_minimal_distance_of((Attribute<Integer>) attribute, minimumDistance));
 
         }
-        return rater.withErrorMessage(perspective("Unknown rater function: " + functionCall.getText()));
+        return rater.withErrorMessage(tree("Unknown rater function: " + functionCall.getText()));
     }
 }

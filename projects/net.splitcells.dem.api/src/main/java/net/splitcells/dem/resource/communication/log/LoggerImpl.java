@@ -21,7 +21,7 @@ import net.splitcells.dem.resource.communication.Sender;
 
 import java.util.function.Predicate;
 
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public class LoggerImpl implements Logger {

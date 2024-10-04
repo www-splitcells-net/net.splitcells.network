@@ -30,7 +30,7 @@ import net.splitcells.gel.rating.rater.framework.RatingEvent;
 
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 import static net.splitcells.gel.rating.type.Cost.cost;
@@ -120,7 +120,7 @@ public class HasMinimalSize implements Rater {
 
     @Override
     public List<Domable> arguments() {
-        return list(() -> perspective(HasMinimalSize.class.getSimpleName()).withChild(perspective("" + minimalSize)));
+        return list(() -> tree(HasMinimalSize.class.getSimpleName()).withChild(tree("" + minimalSize)));
     }
 
     @Override

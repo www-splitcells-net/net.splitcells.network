@@ -19,7 +19,7 @@ import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.lang.namespace.NameSpaces.HTML;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.gel.common.Language.CONTENT;
 import static net.splitcells.gel.common.Language.INDEX;
 import static net.splitcells.gel.common.Language.TYPE;
@@ -30,6 +30,7 @@ import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.attribute.IndexedAttribute;
 
@@ -118,23 +119,23 @@ public interface Line extends Domable {
     }
 
     default Tree toHtmlPerspective() {
-        final var perspective = perspective(Line.class.getSimpleName(), HTML);
+        final var perspective = TreeI.tree(Line.class.getSimpleName(), HTML);
         perspective.withProperty("div", HTML, "" + index());
         context().headerView().forEach(attribute -> {
             final var value = context().columnView(attribute).get(index());
             final Tree domValue;
             if (value == null) {
-                domValue = perspective("");
+                domValue = tree("");
             } else {
                 if (value instanceof Domable) {
                     domValue = ((Domable) value).toTree();
                 } else {
-                    domValue = perspective(value.toString(), STRING);
+                    domValue = TreeI.tree(value.toString(), STRING);
                 }
             }
-            final var valuePerspective = perspective(VALUE.value(), HTML);
+            final var valuePerspective = TreeI.tree(VALUE.value(), HTML);
             valuePerspective.withProperty(TYPE.value(), HTML, attribute.name());
-            valuePerspective.withChild(perspective(CONTENT.value(), HTML).withChild(domValue));
+            valuePerspective.withChild(TreeI.tree(CONTENT.value(), HTML).withChild(domValue));
             perspective.withChild(valuePerspective);
         });
         return perspective;
@@ -142,18 +143,18 @@ public interface Line extends Domable {
 
     @Override
     default Tree toTree() {
-        final var root = perspective(Line.class.getSimpleName());
+        final var root = tree(Line.class.getSimpleName());
         root.withProperty(INDEX.value(), "" + index());
         context().headerView().forEach(attribute -> {
             final var attributeValue = context().columnView(attribute).get(index());
             final Tree attributeRender;
             if (attributeValue == null) {
-                attributeRender = perspective("");
+                attributeRender = tree("");
             } else {
                 if (attributeValue instanceof Domable) {
                     attributeRender = ((Domable) attributeValue).toTree();
                 } else {
-                    attributeRender = perspective(attributeValue.toString());
+                    attributeRender = tree(attributeValue.toString());
                 }
             }
             root.withProperty(TYPE.value(), attribute.name());

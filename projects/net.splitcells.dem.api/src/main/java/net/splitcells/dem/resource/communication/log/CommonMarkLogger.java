@@ -21,7 +21,7 @@ import net.splitcells.dem.resource.communication.Sender;
 
 import java.util.function.Predicate;
 
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.TimeUtils.currentLocalTime;
 
 /**
@@ -50,7 +50,7 @@ public class CommonMarkLogger implements Logger {
     @Override
     public <R extends ListWA<LogMessage<Tree>>> R append(LogMessage<Tree> arg) {
         if (messageFilter.test(arg)) {
-            perspective(currentLocalTime() + ": " + arg.content().name())
+            tree(currentLocalTime() + ": " + arg.content().name())
                     .withChildren(arg.content().children()).printCommonMarkString(output);
         }
         return (R) this;

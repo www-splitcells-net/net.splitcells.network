@@ -19,6 +19,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.project.LayoutConfig;
@@ -42,7 +43,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
 import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.resource.Paths.path;
@@ -103,21 +104,21 @@ public class ProjectsRendererI implements ProjectsRenderer {
                 + "This is used, so that calling projectsPaths returns a link to the layout."
                 + "</element>");
         {
-            final var relevantLayout = perspective(VAL, NATURAL);
+            final var relevantLayout = TreeI.tree(VAL, NATURAL);
             this.relevantProjectsPaths().forEach(p -> extendPerspectiveWithPath(relevantLayout, p));
             config.withLayoutRelevant(relevantLayout.toXmlString(xmlConfig()));
         }
         {
-            final var simpleRelevantLayout = perspective("relevant-layout", NATURAL);
+            final var simpleRelevantLayout = TreeI.tree("relevant-layout", NATURAL);
             this.relevantProjectsPaths().forEach(p -> extendPerspectiveWithSimplePath(simpleRelevantLayout, p));
             config.withLayoutRelevantPerspective(Optional.of(simpleRelevantLayout));
         }
         {
-            final var simpleLayout = perspective("layout", NATURAL);
+            final var simpleLayout = TreeI.tree("layout", NATURAL);
             this.projectsPaths().forEach(p -> extendPerspectiveWithSimplePath(simpleLayout, p));
             config.withLayoutPerspective(Optional.of(simpleLayout));
         }
-        final var layout = perspective(VAL, NATURAL);
+        final var layout = TreeI.tree(VAL, NATURAL);
         this.projectsPaths().forEach(p -> extendPerspectiveWithPath(layout, p));
         config.withLayout(layout.toXmlString(xmlConfig()));
         return layout;
@@ -142,7 +143,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
                         Files.createDirectory(targetPath.getParent());
                         Files.writeToFile(targetPath, render(path).orElseThrow().getContent());
                     } catch (Exception e) {
-                        throw executionException(perspective("Could not serve path to file system.")
+                        throw executionException(tree("Could not serve path to file system.")
                                         .withProperty("target", target.toString())
                                         .withProperty("path", path.toString())
                                 , e);
@@ -241,7 +242,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
                 return extensionRendering;
             }
             if (normalizedPath.equals(LAYOUT_PATH)) {
-                logs().append(perspective("Refreshing layout."), LogLevel.INFO);
+                logs().append(tree("Refreshing layout."), LogLevel.INFO);
                 this.build();
                 return render("/");
             }
@@ -275,7 +276,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
                     .filter(Optional::isPresent)
                     .findFirst();
             if (renderingResult.isEmpty()) {
-                logs().append(perspective("Path could not be found: " + normalizedPath), LogLevel.ERROR);
+                logs().append(tree("Path could not be found: " + normalizedPath), LogLevel.ERROR);
                 return validateRenderingResult(Optional.empty(), Path.of(normalizedPath));
             }
             return validateRenderingResult(renderingResult.get(), Path.of(normalizedPath));
@@ -292,7 +293,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
                 .filter(Optional::isPresent)
                 .collect(toList());
         if (sourceCodes.size() > 1) {
-            throw executionException(perspective("Multiple source codes for one trail. Trail of source code has to be unambiguous.")
+            throw executionException(tree("Multiple source codes for one trail. Trail of source code has to be unambiguous.")
                     .withProperty("trail", trail.toString())
                     .withProperty("source codes", sourceCodes.toString()));
         }
@@ -306,7 +307,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
         try {
             renderingValidator.validate(renderingResult, this, requestedPath);
         } catch (Throwable th) {
-            logs().appendWarning(perspective("Could not validate rendering result:")
+            logs().appendWarning(tree("Could not validate rendering result:")
                             .withProperty("rendering result", renderingResult.toString())
                             .withProperty("requested path", requestedPath.toString())
                     , th);

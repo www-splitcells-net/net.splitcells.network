@@ -23,7 +23,7 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 public class Editor {
@@ -88,12 +88,12 @@ public class Editor {
 
     private void requireFreeVarName(String name) {
         if (attributeVars.containsKey(name)) {
-            throw executionException(perspective("Attribute variable with name already present.")
+            throw executionException(tree("Attribute variable with name already present.")
                     .withProperty("New attribute variable name", name)
                     .withProperty("Attribute variables", attributeVars.toString()));
         }
         if (databaseVars.containsKey(name)) {
-            throw executionException(perspective("Database variable with name already present.")
+            throw executionException(tree("Database variable with name already present.")
                     .withProperty("New attribute variable name", name)
                     .withProperty("Attribute variables", databaseVars.toString()));
         }

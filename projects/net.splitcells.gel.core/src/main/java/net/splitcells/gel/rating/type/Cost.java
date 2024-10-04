@@ -18,7 +18,7 @@ package net.splitcells.gel.rating.type;
 import static net.splitcells.dem.data.atom.Bools.bool;
 import static net.splitcells.dem.data.order.Ordering.*;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 import java.util.Optional;
@@ -151,7 +151,7 @@ public class Cost implements Rating {
 
     @Override
     public Tree toTree() {
-        return perspective(this.getClass().getSimpleName()).withChild(perspective("" + value));
+        return tree(this.getClass().getSimpleName()).withChild(tree("" + value));
     }
 
     @Override

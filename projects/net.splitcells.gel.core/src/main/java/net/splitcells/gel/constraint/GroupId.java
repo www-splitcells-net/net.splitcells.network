@@ -17,7 +17,7 @@ package net.splitcells.gel.constraint;
 
 import static net.splitcells.dem.data.set.map.typed.TypedMapI.typedMap;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 
 import java.util.Optional;
 
@@ -102,7 +102,7 @@ public class GroupId implements Domable {
 
     @Override
     public Tree toTree() {
-        final var perspective = perspective("group");
+        final var perspective = tree("group");
         perspective.withProperty("name", name.get());
         perspective.withProperty("id", hashCode() + "");
         return perspective;

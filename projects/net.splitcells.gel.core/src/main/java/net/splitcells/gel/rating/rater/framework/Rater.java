@@ -16,7 +16,7 @@
 package net.splitcells.gel.rating.rater.framework;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -102,9 +102,9 @@ public interface Rater extends PubliclyTyped<Rater>
 
     @Override
     default Tree toTree() {
-        final var perspective = perspective(getClass().getSimpleName());
+        final var perspective = tree(getClass().getSimpleName());
         if (!arguments().isEmpty()) {
-            perspective.withChild(perspective(Language.ARGUMENTATION.value())
+            perspective.withChild(tree(Language.ARGUMENTATION.value())
                     .withChildren(arguments().stream().map(Domable::toTree)));
         }
         return perspective;

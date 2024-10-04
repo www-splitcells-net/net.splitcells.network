@@ -41,7 +41,7 @@ import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.gel.common.Language.RATING;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
@@ -106,11 +106,11 @@ public class SolutionAspect implements Solution {
         }
         final var result = solution.optimize(event, parameters);
         if (StaticFlags.TELLING_STORY) {
-            logs().append(perspective("" + constraint().rating().asMetaRating().getContentValue(Cost.class).value())
+            logs().append(tree("" + constraint().rating().asMetaRating().getContentValue(Cost.class).value())
                     , () -> path().withAppended("optimize", "after", "cost")
                     , LogLevel.DEBUG);
             if (isComplete()) {
-                logs().append(perspective(this.history().size() + ", " + constraint().rating().asMetaRating().getContentValue(Cost.class).value())
+                logs().append(tree(this.history().size() + ", " + constraint().rating().asMetaRating().getContentValue(Cost.class).value())
                         , () -> path().withAppended("isComplete", "optimize", "after", "cost")
                         , LogLevel.DEBUG);
             }

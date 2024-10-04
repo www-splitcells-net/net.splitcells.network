@@ -33,7 +33,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.Files.readAsString;
 import static net.splitcells.dem.resource.Files.walk_recursively;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
@@ -134,11 +134,11 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
         if (ENFORCING_UNIT_CONSISTENCY) {
             if (populatedResourceList) {
                 if (!resourceList.contains(path.substring(1))) {
-                    throw executionException(perspective("Unknown path requested.")
+                    throw executionException(tree("Unknown path requested.")
                             .withProperty("requested path", path));
                 }
             } else if (resourceList.hasElements()) {
-                throw executionException(perspective(getClass().getName() + " is not consistent, because the resource list has elements even though it is not populated.")
+                throw executionException(tree(getClass().getName() + " is not consistent, because the resource list has elements even though it is not populated.")
                         .withProperty("Is resource list populated?", "" + populatedResourceList)
                         .withProperty("Resource List", resourceList.toString())
                         .withProperty("Does resource exist natively?", "" + (clazz.getResourceAsStream(path) != null)));
@@ -160,7 +160,7 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
         try {
             return readAsString(clazz.getResourceAsStream(resourcePath));
         } catch (Throwable th) {
-            throw executionException(perspective("Could not read file from class path resources:")
+            throw executionException(tree("Could not read file from class path resources:")
                             .withProperty("path requested", path.toString())
                             .withProperty("calculated resource path", resourcePath)
                     , th);
@@ -175,7 +175,7 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
             try {
                 return Optional.of(readAsString(fileContent));
             } catch (Throwable th) {
-                throw executionException(perspective("Could not optionally read file from class path resources:")
+                throw executionException(tree("Could not optionally read file from class path resources:")
                                 .withProperty("path requested", path.toString())
                                 .withProperty("calculated resource path", path.toString())
                         , th);
@@ -258,12 +258,12 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
                     .getResource("/net/");
         }
         if (testResource == null) {
-            throw executionException(perspective("Could not test default protocol for resources of the class loader via the `net` source code package."));
+            throw executionException(tree("Could not test default protocol for resources of the class loader via the `net` source code package."));
         }
         final var resourceTestPath = testResource
                 .getProtocol();
         if (resourceTestPath == null) {
-            throw executionException(perspective("Could not determine default protocol for resources of the class loader."));
+            throw executionException(tree("Could not determine default protocol for resources of the class loader."));
         }
         return resourceTestPath;
     }
@@ -296,7 +296,7 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
                         final var dirURL = clazz.getClassLoader().getResource("/" + pathStr);
                         final var explenationCount = countChar(dirURL.getPath(), '!');
                         if (explenationCount == 0) {
-                            throw executionException(perspective("Cannot process jar path, as no explanation mark is present in the class loader path. This indicates, that the resource is not located inside a jar:")
+                            throw executionException(tree("Cannot process jar path, as no explanation mark is present in the class loader path. This indicates, that the resource is not located inside a jar:")
                                     .withProperty("clazz", clazz.toString())
                                     .withProperty("path", path.toString())
                                     .withProperty("pathStr", pathStr)

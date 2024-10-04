@@ -24,7 +24,7 @@ import static net.splitcells.dem.data.atom.Integers.requireNotNegative;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
@@ -230,7 +230,7 @@ public class DatabaseI implements Database {
 
     private Line addTranslated(List<Object> lineValues, int index) {
         if (TRACING) {
-            logs().append(perspective("addTranslatingAt." + Database.class.getSimpleName())
+            logs().append(tree("addTranslatingAt." + Database.class.getSimpleName())
                             .withProperty("path", path().toString())
                             .withProperty("index", "" + index)
                             .withProperty("line-values", lineValues.toString())

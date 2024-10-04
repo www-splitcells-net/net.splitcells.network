@@ -28,7 +28,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
@@ -137,7 +137,7 @@ public interface Database extends Table {
 
     @Override
     default Tree toTree() {
-        final var dom = perspective(getClass().getSimpleName());
+        final var dom = tree(getClass().getSimpleName());
         rawLinesView().stream()
                 .filter(line -> line != null)
                 .forEach(line -> dom.withChild(line.toTree()));

@@ -27,7 +27,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.FileSystemViaClassResourcesImpl.resourceBasePath;
 import static net.splitcells.dem.resource.Files.readAsString;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
@@ -81,7 +81,7 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
         try {
             return readAsString(resourceResolver.getResource(normalize("/" + basePath + path)).getInputStream());
         } catch (Throwable th) {
-            throw executionException(perspective("Could not read file from class path resources:")
+            throw executionException(tree("Could not read file from class path resources:")
                             .withProperty("path requested", path.toString())
                             .withProperty("calculated resource path", path.toString())
                     , th);
@@ -95,7 +95,7 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
             try {
                 return Optional.of(readAsString(fileContent.getInputStream()));
             } catch (Throwable th) {
-                throw executionException(perspective("Could not optionally read file from class path resources:")
+                throw executionException(tree("Could not optionally read file from class path resources:")
                                 .withProperty("path requested", path.toString())
                                 .withProperty("calculated resource path", path.toString())
                         , th);
@@ -145,7 +145,7 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
                 logs().appendError(t);
                 isDirectory = false;
             }
-            logs().append(perspective("isDirectory")
+            logs().append(tree("isDirectory")
                             .withProperty("path", path.toString())
                             .withProperty("clazz", clazz.getName())
                             .withProperty("isDirectory", isDirectory + "")
@@ -190,7 +190,7 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
     public Stream<Path> walkRecursively(Path path) {
         if (isFile(path)) {
             if (IS_TRACING) {
-                logs().append(perspective("Call of walkRecursively")
+                logs().append(tree("Call of walkRecursively")
                                 .withProperty("path", path.toString())
                                 .withProperty("clazz", clazz.getName())
                                 .withProperty("result", "Path is hot a folder and therefore nothing can be walked except for the path itself.")
@@ -200,13 +200,13 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
         }
         if (IS_TRACING) {
             if (isDirectory(path)) {
-                logs().append(perspective("Call of walkRecursively")
+                logs().append(tree("Call of walkRecursively")
                                 .withProperty("path", path.toString())
                                 .withProperty("clazz", clazz.getName())
                                 .withProperty("result", "Path is a folder.")
                         , LogLevel.INFO);
             } else {
-                logs().append(perspective("Call of walkRecursively")
+                logs().append(tree("Call of walkRecursively")
                                 .withProperty("path", path.toString())
                                 .withProperty("clazz", clazz.getName())
                                 .withProperty("result", "Path is not a folder.")
@@ -215,7 +215,7 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
         }
         try {
             if (IS_TRACING) {
-                logs().append(perspective("Call of walkRecursively")
+                logs().append(tree("Call of walkRecursively")
                                 .withProperty("path", path.toString())
                                 .withProperty("clazz", clazz.getName())
                                 .withProperty("result candidates"
@@ -267,7 +267,7 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
             }
             return pathChildren;
         } catch (Throwable e) {
-            throw executionException(perspective("Could walk resources recursively:")
+            throw executionException(tree("Could walk resources recursively:")
                             .withProperty("path", path.toString())
                             .withProperty("clazz", clazz.toString())
                     , e);

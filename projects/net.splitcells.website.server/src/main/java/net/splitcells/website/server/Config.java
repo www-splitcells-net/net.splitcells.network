@@ -33,7 +33,7 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.website.server.processor.ProcessorRegistry.binaryProcessorRegistry;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 

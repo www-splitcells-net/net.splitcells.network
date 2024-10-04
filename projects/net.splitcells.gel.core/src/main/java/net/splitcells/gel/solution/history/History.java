@@ -16,12 +16,13 @@
 package net.splitcells.gel.solution.history;
 
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
 import static net.splitcells.dem.utils.FodsUtility.tableCell;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.history.event.Allocation;
@@ -159,22 +160,22 @@ public interface History extends Assignments, AfterAdditionSubscriber, BeforeRem
      * This makes it easier to analyse the history, by improving the searchability by column values.
      */
     default Tree toAnalysisFods() {
-        final var fods = perspective("document", FODS_OFFICE)
+        final var fods = TreeI.tree("document", FODS_OFFICE)
                 .withXmlAttribute("mimetype", "application/vnd.oasis.opendocument.spreadsheet", FODS_OFFICE);
-        final var body = perspective("body", FODS_OFFICE);
+        final var body = TreeI.tree("body", FODS_OFFICE);
         fods.withChild(body);
-        final var spreadSheet = perspective("spreadsheet", FODS_OFFICE);
+        final var spreadSheet = TreeI.tree("spreadsheet", FODS_OFFICE);
         body.withChild(spreadSheet);
-        final var table = perspective("table", FODS_TABLE);
+        final var table = TreeI.tree("table", FODS_TABLE);
         spreadSheet.withChild(table);
         table.withProperty("name", FODS_TABLE, "values");
-        final var header = perspective("table-row", FODS_TABLE);
+        final var header = TreeI.tree("table-row", FODS_TABLE);
         table.withChild(header);
         headerView().stream()
                 .map(att -> att.name())
                 .map(attName -> {
-                    final var cell = perspective("table-cell", FODS_TABLE);
-                    cell.withChild(perspective("p", FODS_TEXT).withChild(perspective(attName)));
+                    final var cell = TreeI.tree("table-cell", FODS_TABLE);
+                    cell.withChild(TreeI.tree("p", FODS_TEXT).withChild(tree(attName)));
                     return cell;
                 }).forEach(attDesc -> header.withChild(attDesc));
         if (!unorderedLines().isEmpty()) {
@@ -188,7 +189,7 @@ public interface History extends Assignments, AfterAdditionSubscriber, BeforeRem
         header.withChild(tableCell("complete-cost"));
         header.withChild(tableCell(META_DATA.name()));
         unorderedLines().forEach(line -> {
-            final var tableLine = perspective("table-row", FODS_TABLE);
+            final var tableLine = TreeI.tree("table-row", FODS_TABLE);
             table.withChild(tableLine);
             tableLine.withChild(tableCell("" + line.value(ALLOCATION_ID)));
             tableLine.withChild(tableCell(line.value(ALLOCATION_EVENT).type().name()));

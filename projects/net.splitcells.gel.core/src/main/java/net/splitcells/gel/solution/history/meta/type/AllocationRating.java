@@ -18,7 +18,7 @@ package net.splitcells.gel.solution.history.meta.type;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.rating.framework.Rating;
 
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 
 public class AllocationRating implements MetaData<Rating> {
 
@@ -39,6 +39,6 @@ public class AllocationRating implements MetaData<Rating> {
 
     @Override
     public Tree toTree() {
-        return perspective(getClass().getSimpleName()).withChild(rating.toTree());
+        return tree(getClass().getSimpleName()).withChild(rating.toTree());
     }
 }

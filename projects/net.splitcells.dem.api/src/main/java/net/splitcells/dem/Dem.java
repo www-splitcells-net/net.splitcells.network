@@ -27,7 +27,6 @@ import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.Logs;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
-import net.splitcells.dem.utils.StringUtils;
 
 import java.security.Permission;
 import java.time.Duration;
@@ -41,7 +40,7 @@ import static net.splitcells.dem.ProcessResult.processResult;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.environment.config.StaticFlags.logStaticFlags;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.communication.log.LogLevel.UNKNOWN_ERROR;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
@@ -152,7 +151,7 @@ public class Dem {
                     program.run();
                 } catch (Throwable t) {
                     // TODO Somehow mark this error specially, so its clear, that this error caused execution failure.
-                    logs().append(perspective("`" + configValue(ProgramName.class) + "` has an error.")
+                    logs().append(tree("`" + configValue(ProgramName.class) + "` has an error.")
                                     .withProperty("Error Message", t.getMessage())
                                     .withProperty("Stack Trace", throwableToString(t))
                             , LogLevel.ERROR);

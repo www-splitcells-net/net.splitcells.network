@@ -19,41 +19,41 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 public class Den {
 
     public static Tree val(String name) {
-        return perspective("val").withProperty("name", name);
+        return tree("val").withProperty("name", name);
     }
 
     public static Tree project(Tree... arg) {
-        return perspective("project");
+        return tree("project");
     }
 
     public static Tree todo(Tree... arg) {
-        return perspective("todo");
+        return tree("todo");
     }
 
     public static Tree todo(String text, Tree... arg) {
-        return perspective("todo");
+        return tree("todo");
     }
 
     public static Tree priority(Tree... arg) {
-        return perspective("priority");
+        return tree("priority");
     }
 
     public static Tree queue(Tree... arg) {
-        return perspective("queue");
+        return tree("queue");
     }
 
     public static Tree scheduling(Tree... arg) {
-        return perspective("scheduling");
+        return tree("scheduling");
     }
 
     public static Tree solution(Tree... arg) {
-        return perspective("solution");
+        return tree("solution");
     }
 
     public static Tree subtree(Tree tree, List<String> path) {

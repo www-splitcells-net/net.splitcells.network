@@ -40,7 +40,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.optionalDirectChildElementsByName;
 import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.ContentType.UTF_8;
 import static net.splitcells.dem.resource.FileSystemVoid.fileSystemVoid;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
@@ -432,7 +432,7 @@ public class ProjectRendererI implements ProjectRenderer {
             }
         }
         final var contentAsString = Xml.toPrettyString(content);
-        logs().append(perspective(contentAsString), LogLevel.DEBUG);
+        logs().append(tree(contentAsString), LogLevel.DEBUG);
         try {
             return Optional.of(renderer()
                     .transform(contentAsString)

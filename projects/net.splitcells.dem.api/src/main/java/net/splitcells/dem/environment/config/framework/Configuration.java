@@ -19,7 +19,7 @@ import net.splitcells.dem.lang.annotations.ReturnsThis;
 
 import java.util.function.Function;
 
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**
@@ -32,7 +32,7 @@ public interface Configuration extends ConfigurationV {
         try {
             return withConfigValue(key, key.getDeclaredConstructor().newInstance().defaultValue());
         } catch (Throwable e) {
-            throw executionException(perspective("Could not initialize config with default value.")
+            throw executionException(tree("Could not initialize config with default value.")
                             .withProperty("key", key.getName())
                     , e);
         }

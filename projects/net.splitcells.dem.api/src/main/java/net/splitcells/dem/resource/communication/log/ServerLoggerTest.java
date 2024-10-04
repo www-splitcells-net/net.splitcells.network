@@ -18,7 +18,7 @@ package net.splitcells.dem.resource.communication.log;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.ServerLogger.serverLog;
 
 public class ServerLoggerTest {
@@ -26,11 +26,11 @@ public class ServerLoggerTest {
     public void test() {
         final SenderStub<String> results = SenderStub.create();
         try (final var testSubject = serverLog(results, arg -> LogLevel.TRACE.smallerThan(arg.priority()))) {
-            testSubject.append(perspective("1"), LogLevel.TRACE);
-            testSubject.append(perspective("2"), LogLevel.INFO);
+            testSubject.append(tree("1"), LogLevel.TRACE);
+            testSubject.append(tree("2"), LogLevel.INFO);
             testSubject.flush();
             results.storage().requireEqualityTo(list("[\"2\"]"));
-            testSubject.append(perspective("object").withProperty("attribute", "value"), LogLevel.WARNING);
+            testSubject.append(tree("object").withProperty("attribute", "value"), LogLevel.WARNING);
         }
         results.storage().requireEqualityTo(list("[\"2\"]", "{\"object\": {\"attribute\": [\"value\"]}}"));
     }

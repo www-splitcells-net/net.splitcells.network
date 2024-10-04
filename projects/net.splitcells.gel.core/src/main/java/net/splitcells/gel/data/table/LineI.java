@@ -18,7 +18,7 @@ package net.splitcells.gel.data.table;
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.gel.common.Language.*;
 
@@ -88,23 +88,23 @@ public class LineI implements Line {
 
     @Override
     public Tree toTree() {
-        final var perspective = perspective(Line.class.getSimpleName());
+        final var perspective = tree(Line.class.getSimpleName());
         perspective.withProperty(INDEX.value(), "" + index);
         context.headerView().forEach(attribute -> {
             final var value = context.columnView(attribute).get(index);
             final Tree domValue;
             if (value == null) {
-                domValue = perspective("");
+                domValue = tree("");
             } else {
                 if (value instanceof Domable) {
                     domValue = ((Domable) value).toTree();
                 } else {
-                    domValue = perspective(value.toString());
+                    domValue = tree(value.toString());
                 }
             }
-            final var valuePerspective = perspective(VALUE.value());
+            final var valuePerspective = tree(VALUE.value());
             valuePerspective.withProperty(TYPE.value(), attribute.name());
-            valuePerspective.withChild(perspective(CONTENT.value()).withChild(domValue));
+            valuePerspective.withChild(tree(CONTENT.value()).withChild(domValue));
             perspective.withChild(valuePerspective);
         });
         return perspective;

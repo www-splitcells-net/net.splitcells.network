@@ -19,7 +19,7 @@ import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.rating.framework.Rating;
 
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 
 public final class CompleteRating implements MetaData<Rating>, Domable {
 
@@ -46,6 +46,6 @@ public final class CompleteRating implements MetaData<Rating>, Domable {
 
     @Override
     public Tree toTree() {
-        return perspective(getClass().getSimpleName()).withChild(rating.toTree());
+        return tree(getClass().getSimpleName()).withChild(rating.toTree());
     }
 }

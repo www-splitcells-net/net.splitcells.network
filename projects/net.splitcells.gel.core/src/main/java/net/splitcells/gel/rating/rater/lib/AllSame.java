@@ -33,7 +33,7 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineGroup.groupRater;
@@ -128,7 +128,7 @@ public class AllSame {
 
                     @Override
                     public Tree toPerspective() {
-                        return perspective("all-same").withProperty("attribute", attribute.toTree());
+                        return tree("all-same").withProperty("attribute", attribute.toTree());
                     }
                 }
         );

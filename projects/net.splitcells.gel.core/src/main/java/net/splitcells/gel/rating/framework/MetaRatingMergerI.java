@@ -19,7 +19,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.data.set.map.Maps.typeMapping;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
@@ -121,6 +121,6 @@ public class MetaRatingMergerI implements MetaRatingMerger {
 
     @Override
     public Tree toTree() {
-        return perspective(MetaRatingMerger.class.getSimpleName());
+        return tree(MetaRatingMerger.class.getSimpleName());
     }
 }

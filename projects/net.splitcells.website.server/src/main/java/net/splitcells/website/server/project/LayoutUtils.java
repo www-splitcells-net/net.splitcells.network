@@ -18,13 +18,14 @@ package net.splitcells.website.server.project;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.lang.tree.TreeI;
 
 import java.nio.file.Path;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 public class LayoutUtils {
@@ -48,7 +49,7 @@ public class LayoutUtils {
                     .collect(Lists.toList());
             final Tree child;
             if (children.isEmpty()) {
-                child = perspective(NameSpaces.VAL, NameSpaces.NATURAL)
+                child = TreeI.tree(NameSpaces.VAL, NameSpaces.NATURAL)
                         .withProperty(NameSpaces.NAME, NameSpaces.NATURAL, element);
                 current.withChild(child);
             } else {
@@ -57,9 +58,9 @@ public class LayoutUtils {
             current = child;
         }
         current.withChild(
-                perspective(NameSpaces.LINK, NameSpaces.DEN)
-                        .withChild(perspective(NameSpaces.URL, NameSpaces.DEN)
-                                .withChild(perspective("/" + relativeProjectPath.toString(), STRING))));
+                TreeI.tree(NameSpaces.LINK, NameSpaces.DEN)
+                        .withChild(TreeI.tree(NameSpaces.URL, NameSpaces.DEN)
+                                .withChild(TreeI.tree("/" + relativeProjectPath.toString(), STRING))));
         return current;
     }
 
@@ -75,7 +76,7 @@ public class LayoutUtils {
                     .collect(Lists.toList());
             final Tree child;
             if (children.isEmpty()) {
-                child = perspective(NameSpaces.VAL, NameSpaces.DEN)
+                child = TreeI.tree(NameSpaces.VAL, NameSpaces.DEN)
                         .withProperty(NameSpaces.NAME, NameSpaces.DEN, element);
                 current.withChild(child);
             } else {
@@ -84,9 +85,9 @@ public class LayoutUtils {
             current = child;
         }
         current.withChild(
-                perspective(NameSpaces.LINK, NameSpaces.DEN)
-                        .withChild(perspective(NameSpaces.URL, NameSpaces.DEN)
-                                .withChild(perspective("/" + relativeProjectPath.toString(), STRING))));
+                TreeI.tree(NameSpaces.LINK, NameSpaces.DEN)
+                        .withChild(TreeI.tree(NameSpaces.URL, NameSpaces.DEN)
+                                .withChild(TreeI.tree("/" + relativeProjectPath.toString(), STRING))));
         return current;
     }
 }

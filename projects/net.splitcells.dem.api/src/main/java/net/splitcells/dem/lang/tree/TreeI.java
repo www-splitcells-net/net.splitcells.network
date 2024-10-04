@@ -24,11 +24,11 @@ import static net.splitcells.dem.lang.namespace.NameSpaces.TEXT;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 
 public class TreeI implements Tree {
-	public static Tree perspective(String value, NameSpace nameSpace) {
+	public static Tree tree(String value, NameSpace nameSpace) {
 		return new TreeI(value, nameSpace);
 	}
 
-	public static Tree perspective(String value) {
+	public static Tree tree(String value) {
 		return new TreeI(value, TEXT);
 	}
 

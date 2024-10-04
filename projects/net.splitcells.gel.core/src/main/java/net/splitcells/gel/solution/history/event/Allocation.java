@@ -19,7 +19,7 @@ import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.data.table.Line;
 
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.gel.common.Language.*;
 
 public class Allocation implements Domable {
@@ -51,7 +51,7 @@ public class Allocation implements Domable {
 
     @Override
     public Tree toTree() {
-        return perspective(ALLOCATION.value())
+        return tree(ALLOCATION.value())
                 .withProperty(TYPE.value(), type.name())
                 .withProperty(DEMAND2.value(), demand.toTree())
                 .withProperty(SUPPLY.value(), supply.toTree());

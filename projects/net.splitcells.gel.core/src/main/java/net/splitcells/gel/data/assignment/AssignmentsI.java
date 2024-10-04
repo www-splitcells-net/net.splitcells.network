@@ -19,7 +19,7 @@ import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
@@ -179,7 +179,7 @@ public class AssignmentsI implements Assignments {
         if (TRACING) {
             requireNotNull(demand, "Cannot allocate without demand.");
             requireNotNull(supply, "Cannot allocate without supply.");
-            logs().append(perspective(ALLOCATE.value() + PATH_ACCESS_SYMBOL.value() + Assignments.class.getSimpleName())
+            logs().append(tree(ALLOCATE.value() + PATH_ACCESS_SYMBOL.value() + Assignments.class.getSimpleName())
                             .withProperty("path", path().toString())
                             .withProperty("demand", demand.toTree())
                             .withProperty("supply", supply.toTree())
@@ -310,7 +310,7 @@ public class AssignmentsI implements Assignments {
         final var demand = demandOfAssignment(allocation);
         final var supply = supplyOfAssignment(allocation);
         if (TRACING) {
-            logs().append(perspective(REMOVE.value()
+            logs().append(tree(REMOVE.value()
                             + PATH_ACCESS_SYMBOL.value()
                             + Assignments.class.getSimpleName())
                             .withProperty("path", path().toString())
@@ -432,7 +432,7 @@ public class AssignmentsI implements Assignments {
     public Set<Line> assignmentsOfSupply(Line supply) {
         if (ENFORCING_UNIT_CONSISTENCY) {
             if (!usedSupplyIndexes_to_allocationIndexes.containsKey(supply.index())) {
-                throw executionException(perspective("No allocations for the given supply are present.")
+                throw executionException(tree("No allocations for the given supply are present.")
                         .withProperty("supply index", "" + supply.index())
                         .withProperty("context path", "" + supply.context().path())
                 );
@@ -506,8 +506,8 @@ public class AssignmentsI implements Assignments {
 
     @Override
     public Tree toTree() {
-        final var dom = perspective(Assignments.class.getSimpleName());
-        dom.withChild(perspective(path().toString()));
+        final var dom = tree(Assignments.class.getSimpleName());
+        dom.withChild(tree(path().toString()));
         rawLinesView().stream()
                 .filter(line -> line != null)
                 .forEach(line -> dom.withChild(line.toTree()));

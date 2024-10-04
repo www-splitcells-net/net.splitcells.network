@@ -19,7 +19,7 @@ import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.environment.config.StaticFlags.WARNING;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.object.Discoverable.discoverable;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.Result.result;
@@ -190,7 +190,7 @@ public class QueryI implements Query, QueryEditor {
             currentConstraint.withChildren(resultBase.get());
             resultingGroups.addAll(groups);
         } else {
-            throw executionException(perspective("Could not find forAll child constraint with given classifier.")
+            throw executionException(tree("Could not find forAll child constraint with given classifier.")
                     .withProperty("classifier", classifier.toTree())
                     .withProperty("current constraint", currentConstraint.toTree()));
         }
@@ -232,7 +232,7 @@ public class QueryI implements Query, QueryEditor {
             currentConstraint.withChildren(resultBase.get());
             resultingGroup.addAll(groups);
         } else {
-            throw executionException(perspective("Could not find forAll child constraint with given attribute.")
+            throw executionException(tree("Could not find forAll child constraint with given attribute.")
                     .withProperty("classifier", attribute.toTree())
                     .withProperty("current constraint", currentConstraint.toTree()));
         }
@@ -259,7 +259,7 @@ public class QueryI implements Query, QueryEditor {
             return nextQueryPathElement(setOfUniques(groups), resultBase.get());
         }
         if (!isBuilder) {
-            throw executionException(perspective("Could not find forAll child constraint.")
+            throw executionException(tree("Could not find forAll child constraint.")
                     .withProperty("current constraint", currentConstraint.toTree()));
         }
         final var forAll = ForAlls.forAll(Optional.of(discoverable(currentConstraint.path())));
@@ -290,7 +290,7 @@ public class QueryI implements Query, QueryEditor {
             currentConstraint.withChildren(resultBase.get());
             resultingGroups.addAll(groups);
         } else {
-            throw executionException(perspective("Could not find then child constraint with given rater.")
+            throw executionException(tree("Could not find then child constraint with given rater.")
                     .withProperty("classifier", rater.toTree())
                     .withProperty("current constraint", currentConstraint.toTree()));
         }
@@ -339,7 +339,7 @@ public class QueryI implements Query, QueryEditor {
             root.ifPresent(Constraint::recalculateProcessing);
             resultingGroups.addAll(groups);
         } else {
-            throw executionException(perspective("Could not find given forAllCombinationsOf of attributes child constraint.")
+            throw executionException(tree("Could not find given forAllCombinationsOf of attributes child constraint.")
                     .withProperty("classifier", attributes.toString())
                     .withProperty("current constraint", currentConstraint.toTree()));
         }
@@ -386,7 +386,7 @@ public class QueryI implements Query, QueryEditor {
                     .withAppended("" + currentConstraint.childrenView().size()))));
             f.withChildren(forAllCatcher);
             if (!isBuilder) {
-                throw executionException(perspective("Could not find forAll child constraint with given classifiers.")
+                throw executionException(tree("Could not find forAll child constraint with given classifiers.")
                         .withProperty("classifier", classifiers.toString())
                         .withProperty("current constraint", currentConstraint.toTree()));
             }
@@ -399,7 +399,7 @@ public class QueryI implements Query, QueryEditor {
     public Query parseConstraint(String constraintType, List<Rater> raters, List<Attribute<? extends Object>> attributes) {
         final var constraint = constraintResult(constraintType, raters, attributes);
         if (constraint.errorMessages().hasElements()) {
-            throw executionException(perspective("Could not construct constraints.").withChildren(constraint.errorMessages()));
+            throw executionException(tree("Could not construct constraints.").withChildren(constraint.errorMessages()));
         }
         return constraint.value().orElseThrow();
     }
@@ -409,7 +409,7 @@ public class QueryI implements Query, QueryEditor {
         final Result<Query, Tree> constraint = result();
         if (constraintType.equals(FOR_ALL_VALUE_COMBINATIONS_NAME)) {
             if (raters.hasElements()) {
-                return constraint.withErrorMessage(perspective("No raters are allowed for parsing of `" + FOR_ALL_VALUE_COMBINATIONS_NAME + "` constraint.")
+                return constraint.withErrorMessage(tree("No raters are allowed for parsing of `" + FOR_ALL_VALUE_COMBINATIONS_NAME + "` constraint.")
                         .withProperty("constraint type", constraintType)
                         .withProperty("raters", raters.toString())
                         .withProperty("attributes", attributes.toString()));
@@ -420,7 +420,7 @@ public class QueryI implements Query, QueryEditor {
                 return constraint.withValue(forAll(attributes.get(0)));
             }
             if (attributes.hasElements()) {
-                return constraint.withErrorMessage(perspective("No attributes are allowed for parsing of `" + FOR_ALL_NAME + "` constraint.")
+                return constraint.withErrorMessage(tree("No attributes are allowed for parsing of `" + FOR_ALL_NAME + "` constraint.")
                         .withProperty("constraint type", constraintType)
                         .withProperty("raters", raters.toString())
                         .withProperty("attributes", attributes.toString()));
@@ -428,20 +428,20 @@ public class QueryI implements Query, QueryEditor {
             return constraint.withValue(forAll(raters));
         } else if (constraintType.equals(THEN_NAME)) {
             if (raters.size() != 1) {
-                return constraint.withErrorMessage(perspective("Invalid number of raters given for parsing a `" + THEN_NAME + "` constraint. A `" + THEN_NAME + "` constraint requires exactly one rater.")
+                return constraint.withErrorMessage(tree("Invalid number of raters given for parsing a `" + THEN_NAME + "` constraint. A `" + THEN_NAME + "` constraint requires exactly one rater.")
                         .withProperty("constraint type", constraintType)
                         .withProperty("raters", raters.toString())
                         .withProperty("attributes", attributes.toString()));
             }
             if (attributes.hasElements()) {
-                return constraint.withErrorMessage(perspective("No attributes are not allowed for parsing of `" + THEN_NAME + "` constraint.")
+                return constraint.withErrorMessage(tree("No attributes are not allowed for parsing of `" + THEN_NAME + "` constraint.")
                         .withProperty("constraint type", constraintType)
                         .withProperty("raters", raters.toString())
                         .withProperty("attributes", attributes.toString()));
             }
             return constraint.withValue(then(raters.get(0)));
         } else {
-            return constraint.withErrorMessage(perspective("Unknown constraint type given for constraint parsing.")
+            return constraint.withErrorMessage(tree("Unknown constraint type given for constraint parsing.")
                     .withProperty("constraint type", constraintType)
                     .withProperty("raters", raters.toString())
                     .withProperty("attributes", attributes.toString()));

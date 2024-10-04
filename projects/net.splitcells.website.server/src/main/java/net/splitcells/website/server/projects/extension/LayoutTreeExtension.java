@@ -26,7 +26,7 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 
 /**
  * TODO The rendering is currently not useful,
@@ -46,7 +46,7 @@ public class LayoutTreeExtension implements ProjectsRendererExtension {
     @Override
     public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         if (PATH.equals(path) && config.layout().isPresent()) {
-            final var layout = perspective("layout");
+            final var layout = tree("layout");
             projectsRendererI.projectsPaths().forEach(p -> layout.extendWith(list(p.toString().split("/"))));
             return projectsRendererI.renderContent
                     ("<ol xmlns=\"http://www.w3.org/1999/xhtml\">"

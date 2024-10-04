@@ -29,7 +29,7 @@ import java.util.Optional;
 import static net.splitcells.dem.Dem.config;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 
 /**
  * Renders the {@link Configuration} of the current {@link Dem#config()}.

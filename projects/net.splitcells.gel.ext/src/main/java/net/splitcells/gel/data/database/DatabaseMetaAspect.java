@@ -32,7 +32,7 @@ import static net.splitcells.dem.data.atom.DescribedBool.describedBool;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
@@ -100,13 +100,13 @@ public class DatabaseMetaAspect implements Database {
     public void remove(int lineIndex) {
         if (ENFORCING_UNIT_CONSISTENCY) {
             if (database.rawLinesView().size() <= lineIndex) {
-                throw executionException(perspective("Cannot remove line by index, because the index is bigger than the biggest index in the database.")
+                throw executionException(tree("Cannot remove line by index, because the index is bigger than the biggest index in the database.")
                         .withText("lineIndex = " + lineIndex)
                         .withText("database = " + database.path())
                         .withText("database.size() = " + database.size()));
             }
             if (database.rawLinesView().get(lineIndex) == null) {
-                throw executionException(perspective("Cannot remove line by index, because this line was already removed.")
+                throw executionException(tree("Cannot remove line by index, because this line was already removed.")
                         .withText("lineIndex = " + lineIndex)
                         .withText("database = " + database.path()));
             }
@@ -130,7 +130,7 @@ public class DatabaseMetaAspect implements Database {
         }
         final var translatedAddition = database.addTranslated(lineValues);
         if (TRACING) {
-            logs().append(perspective("addTranslating." + Database.class.getSimpleName())
+            logs().append(tree("addTranslating." + Database.class.getSimpleName())
                             .withProperty("path", path().toString())
                             .withProperty("index", "" + translatedAddition.index())
                             .withProperty("line-values", lineValues.toString())
@@ -143,7 +143,7 @@ public class DatabaseMetaAspect implements Database {
     @Override
     public void remove(Line line) {
         if (TRACING) {
-            logs().append(perspective(REMOVE.value()
+            logs().append(tree(REMOVE.value()
                             + PATH_ACCESS_SYMBOL.value()
                             + Database.class.getSimpleName())
                             .withProperty("path", path().toString())

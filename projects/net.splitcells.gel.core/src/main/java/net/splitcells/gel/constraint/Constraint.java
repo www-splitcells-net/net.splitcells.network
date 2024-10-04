@@ -22,7 +22,7 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.namespace.NameSpaces.HTML;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
@@ -40,6 +40,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.table.Line;
@@ -244,7 +245,7 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
     }
 
     default Tree graph() {
-        final var graph = perspective(type().getSimpleName());
+        final var graph = tree(type().getSimpleName());
         if (!arguments().isEmpty()) {
             arguments().forEach(arg -> graph.withProperty(ARGUMENTATION.value(), arg.toTree()));
         }
@@ -314,15 +315,15 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
     }
 
     default Tree renderToHtml() {
-        final var html = perspective("ol", HTML);
+        final var html = TreeI.tree("ol", HTML);
         html.withChild(renderCurrentNodeToHtml());
         html.withChildren(childrenView().stream().map(Constraint::renderToHtml));
         return html;
     }
 
     default Tree renderCurrentNodeToHtml() {
-        final var html = perspective("li", HTML);
-        html.withChild(perspective(toString(), STRING));
+        final var html = TreeI.tree("li", HTML);
+        html.withChild(TreeI.tree(toString(), STRING));
         return html;
     }
 

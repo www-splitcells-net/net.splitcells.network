@@ -24,7 +24,7 @@ import java.util.function.Supplier;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 @JavaLegacyArtifact
@@ -176,13 +176,13 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
     default void requireEqualityTo(Map<Key, Value> requiredContent) {
         requiredContent.keySet2().forEach(requiredKey -> {
             if (!containsKey(requiredKey)) {
-                throw executionException(perspective("2 sets should be equal, but are not.")
+                throw executionException(tree("2 sets should be equal, but are not.")
                         .withProperty("this", toString())
                         .withProperty("requiredContent", requiredContent.toString())
                         .withProperty("Missing key in this", requiredKey.toString()));
             }
             if (!requiredContent.get(requiredKey).equals(get(requiredKey))) {
-                throw executionException(perspective("2 sets should be equal, but are not.")
+                throw executionException(tree("2 sets should be equal, but are not.")
                         .withProperty("this", toString())
                         .withProperty("requiredContent", requiredContent.toString())
                         .withProperty("Unequal value for key", requiredKey.toString())
@@ -192,13 +192,13 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
         });
         keySet2().forEach(key -> {
             if (!requiredContent.containsKey(key)) {
-                throw executionException(perspective("2 sets should be equal, but are not.")
+                throw executionException(tree("2 sets should be equal, but are not.")
                         .withProperty("this", toString())
                         .withProperty("requiredContent", requiredContent.toString())
                         .withProperty("Missing key in required content", key.toString()));
             }
             if (!requiredContent.get(key).equals(get(key))) {
-                throw executionException(perspective("2 sets should be equal, but are not.")
+                throw executionException(tree("2 sets should be equal, but are not.")
                         .withProperty("this", toString())
                         .withProperty("requiredContent", requiredContent.toString())
                         .withProperty("Unequal value for key", key.toString())

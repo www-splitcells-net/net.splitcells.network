@@ -23,7 +23,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
@@ -124,7 +124,7 @@ public class Assertions {
             }
             compliance = condition.get();
             if (Instant.now().isAfter(plannedEnd)) {
-                throw executionException(perspective("Condition is not met during wait time.")
+                throw executionException(tree("Condition is not met during wait time.")
                         .withProperty("milliSecondsToWait", "" + milliSecondsToWait)
                         .withProperty("condition", "" + condition));
             }

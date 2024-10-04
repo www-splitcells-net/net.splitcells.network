@@ -18,6 +18,7 @@ package net.splitcells.website.server.project;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.namespace.NameSpace;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.website.server.Config;
 import net.splitcells.dem.resource.Files;
 
@@ -26,7 +27,7 @@ import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.NATURAL;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.website.Projects.projectsRenderer;
 
 @Deprecated
@@ -34,7 +35,7 @@ public class LayoutRenderer {
     public static void main(String... args) {
         // TODO privateProjectsRenderer().build();
         projectsRenderer(Config.create()).build();
-        final var layout = perspective("layout", NATURAL);
+        final var layout = TreeI.tree("layout", NATURAL);
         Stream.concat(
                         Files.walk_recursively(Paths.get("../net.splitcells.os.state.interface/src/main/bash"))
                                 .filter(Files::is_file)
@@ -65,7 +66,7 @@ public class LayoutRenderer {
         final Tree nextChild = tree
                 .childNamed(path.get(0), nameSpaces)
                 .orElseGet(() -> {
-                    final var nextChild2 = perspective(path.get(0), nameSpaces);
+                    final var nextChild2 = TreeI.tree(path.get(0), nameSpaces);
                     tree.withChild(nextChild2);
                     return nextChild2;
                 });

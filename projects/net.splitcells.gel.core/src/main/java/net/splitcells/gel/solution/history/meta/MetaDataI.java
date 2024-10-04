@@ -16,7 +16,7 @@
 package net.splitcells.gel.solution.history.meta;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.gel.common.Language.*;
 
 import java.util.Optional;
@@ -57,17 +57,17 @@ public class MetaDataI implements MetaDataView, MetaDataWriter {
 
     @Override
     public Tree toTree() {
-        final var dom = perspective(META_DATA.value());
+        final var dom = tree(META_DATA.value());
         data.forEach((key, value) -> {
-            final var data = perspective(META_DATA.value());
-            final var keyData = perspective(KEY.value());
-            keyData.withChild(perspective(key.getName()));
-            final var valueData = perspective(VALUE.value());
+            final var data = tree(META_DATA.value());
+            final var keyData = tree(KEY.value());
+            keyData.withChild(tree(key.getName()));
+            final var valueData = tree(VALUE.value());
             {
                 if (value instanceof Domable) {
                     valueData.withChild(((Domable) value).toTree());
                 } else {
-                    valueData.withChild(perspective(value.toString()));
+                    valueData.withChild(tree(value.toString()));
                 }
             }
             dom.withChild(keyData);

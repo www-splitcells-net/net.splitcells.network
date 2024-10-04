@@ -27,7 +27,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
@@ -53,7 +53,7 @@ public class RootFileProjectRendererExtension implements ProjectRendererExtensio
         final var readmePath = Path.of(rootFile + ".md");
         if (path.endsWith(rootFile + ".html")) {
             if (!path.startsWith(projectRenderer.resourceRootPath2().toString().replace('\\', '/').substring(1))) {
-                logs().appendWarning(perspective("Matching project's root path is not a prefix of the requested path.")
+                logs().appendWarning(tree("Matching project's root path is not a prefix of the requested path.")
                         .withProperty("requested path", path)
                         .withProperty("matching project's root path", projectRenderer.resourceRootPath2().toString()));
             }

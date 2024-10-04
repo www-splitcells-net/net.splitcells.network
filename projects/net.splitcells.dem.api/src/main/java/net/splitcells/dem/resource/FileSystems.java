@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 
 import static java.nio.file.Files.createDirectories;
 import static net.splitcells.dem.Dem.configValue;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
@@ -51,7 +51,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 public class FileSystems implements FileSystem {
     public static FileSystem fileSystemOnLocalHost(Path rootPath) {
         if (!java.nio.file.Files.isDirectory(rootPath)) {
-            throw executionException(perspective("Could not create file system API for given folder, because the folder does not exist:")
+            throw executionException(tree("Could not create file system API for given folder, because the folder does not exist:")
                     .withProperty("rootPath", rootPath.toString()));
         }
         return new FileSystems(rootPath);
@@ -276,7 +276,7 @@ public class FileSystems implements FileSystem {
     @Override
     public Optional<Path> javaLegacyPath(Path path) {
         if (path.isAbsolute()) {
-            throw executionException(perspective("The given path is not allowed to be absolute.")
+            throw executionException(tree("The given path is not allowed to be absolute.")
                     .withProperty("path", path.toString()));
         }
         return Optional.of(rootPath.resolve(path));

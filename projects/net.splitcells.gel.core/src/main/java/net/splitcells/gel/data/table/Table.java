@@ -25,7 +25,7 @@ import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_OFFICE;
 import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_TABLE;
 import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_TEXT;
 import static net.splitcells.dem.lang.namespace.NameSpaces.HTML;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.MathUtils.floorToInt;
 import static net.splitcells.dem.utils.MathUtils.modulus;
@@ -41,6 +41,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.column.ColumnView;
@@ -244,15 +245,15 @@ public interface Table extends Discoverable, Domable, Identifiable {
     }
 
     default Tree toHtmlTable() {
-        final var htmlTable = perspective("table", HTML);
-        final var header = perspective("tr", HTML);
-        header.withChild(perspective("th", HTML).withText("index"));
-        headerView().forEach(attribute -> header.withChild(perspective("th", HTML).withText(attribute.name())));
+        final var htmlTable = TreeI.tree("table", HTML);
+        final var header = TreeI.tree("tr", HTML);
+        header.withChild(TreeI.tree("th", HTML).withText("index"));
+        headerView().forEach(attribute -> header.withChild(TreeI.tree("th", HTML).withText(attribute.name())));
         htmlTable.withChild(header);
         unorderedLines().forEach(line -> {
-            final var row = perspective("tr", HTML);
-            row.withChild(perspective("td", HTML).withText(line.index() + ""));
-            headerView().forEach(attribute -> row.withChild(perspective("td", HTML)
+            final var row = TreeI.tree("tr", HTML);
+            row.withChild(TreeI.tree("td", HTML).withText(line.index() + ""));
+            headerView().forEach(attribute -> row.withChild(TreeI.tree("td", HTML)
                     .withText(line.value(attribute).toString())));
             htmlTable.withChild(row);
         });
@@ -260,33 +261,33 @@ public interface Table extends Discoverable, Domable, Identifiable {
     }
 
     default Tree toFods() {
-        final var fods = perspective("document", FODS_OFFICE)
+        final var fods = TreeI.tree("document", FODS_OFFICE)
                 .withXmlAttribute("mimetype", "application/vnd.oasis.opendocument.spreadsheet", FODS_OFFICE);
-        final var body = perspective("body", FODS_OFFICE);
+        final var body = TreeI.tree("body", FODS_OFFICE);
         fods.withChild(body);
-        final var spreadSheet = perspective("spreadsheet", FODS_OFFICE);
+        final var spreadSheet = TreeI.tree("spreadsheet", FODS_OFFICE);
         body.withChild(spreadSheet);
-        final var table = perspective("table", FODS_TABLE);
+        final var table = TreeI.tree("table", FODS_TABLE);
         spreadSheet.withChild(table);
         table.withProperty("name", FODS_TABLE, "values");
-        final var header = perspective("table-row", FODS_TABLE);
+        final var header = TreeI.tree("table-row", FODS_TABLE);
         table.withChild(header);
         headerView().stream()
                 .map(att -> att.name())
                 .map(attName -> {
-                    final var cell = perspective("table-cell", FODS_TABLE);
-                    cell.withChild(perspective("p", FODS_TEXT).withChild(perspective(attName)));
+                    final var cell = TreeI.tree("table-cell", FODS_TABLE);
+                    cell.withChild(TreeI.tree("p", FODS_TEXT).withChild(tree(attName)));
                     return cell;
                 }).forEach(attDesc -> header.withChild(attDesc));
         unorderedLines().forEach(line -> {
-            final var tableLine = perspective("table-row", FODS_TABLE);
+            final var tableLine = TreeI.tree("table-row", FODS_TABLE);
             table.withChild(tableLine);
             headerView().stream()
                     .map(attribute -> line.value(attribute))
                     .map(value -> {
-                        final var cell = perspective("table-cell", FODS_TABLE);
+                        final var cell = TreeI.tree("table-cell", FODS_TABLE);
                         cell
-                                .withChild(perspective("p", FODS_TEXT).withChild(perspective(value.toString())));
+                                .withChild(TreeI.tree("p", FODS_TEXT).withChild(tree(value.toString())));
                         return cell;
                     }).forEach(tableElement -> tableLine.withChild(tableElement));
         });
@@ -460,7 +461,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
                 if (currentCellValue.isEmpty()) {
                     nextCellValue = "x";
                 } else {
-                    logs().appendWarning(perspective("This code block should not be triggered as every cell should only have values of one line."));
+                    logs().appendWarning(tree("This code block should not be triggered as every cell should only have values of one line."));
                     nextCellValue = currentCellValue + ";x";
                 }
                 reformattedTable.get(row).set(column, nextCellValue);
@@ -471,7 +472,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
                     if (currentCellValue.isEmpty()) {
                         nextCellValue = "" + line.value(unusedAttributes.get(u));
                     } else {
-                        logs().appendWarning(perspective("This code block should not be triggered as every cell should only have values of one line."));
+                        logs().appendWarning(tree("This code block should not be triggered as every cell should only have values of one line."));
                         nextCellValue = currentCellValue + "; " + line.value(unusedAttributes.get(u));
                     }
                     reformattedTable.get(row).set(column + u, nextCellValue);

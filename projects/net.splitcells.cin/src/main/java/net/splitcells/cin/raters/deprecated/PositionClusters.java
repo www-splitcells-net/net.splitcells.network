@@ -29,7 +29,7 @@ import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.data.set.map.typed.TypedMapI.typedMap;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.MathUtils.absolute;
 import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -214,7 +214,7 @@ public class PositionClusters implements Rater {
     public List<Domable> arguments() {
         return list(xAttribute
                 , yAttribute
-                , perspective("" + xCenterOffset)
-                , perspective("" + yCenterOffset));
+                , tree("" + xCenterOffset)
+                , tree("" + yCenterOffset));
     }
 }

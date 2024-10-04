@@ -31,7 +31,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.MathUtils.absolute;
 import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.dem.utils.MathUtils.sign;
@@ -92,7 +92,7 @@ public class TimeSteps implements Rater {
 
     @Override
     public List<Domable> arguments() {
-        return list(timeAttribute, perspective("" + isStartTimeEven));
+        return list(timeAttribute, tree("" + isStartTimeEven));
     }
 
     @Override

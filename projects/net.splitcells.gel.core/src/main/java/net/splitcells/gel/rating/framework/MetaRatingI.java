@@ -16,7 +16,7 @@
 package net.splitcells.gel.rating.framework;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.data.order.Ordering.EQUAL;
@@ -259,7 +259,7 @@ public class MetaRatingI implements MetaRating {
         if (1 == ratingMap.size()) {
             return ratingMap.values().iterator().next().toTree();
         }
-        return perspective(MetaRating.class.getSimpleName());
+        return tree(MetaRating.class.getSimpleName());
     }
 
     @Override

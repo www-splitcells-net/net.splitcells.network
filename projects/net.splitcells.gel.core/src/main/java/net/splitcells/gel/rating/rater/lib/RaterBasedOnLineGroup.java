@@ -32,7 +32,7 @@ import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.framework.*;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
@@ -162,7 +162,7 @@ public class RaterBasedOnLineGroup implements Rater {
     @Override
     public List<Domable> arguments() {
         // TODO
-        return list(perspective("Arguments not implemented."));
+        return list(tree("Arguments not implemented."));
     }
 
     @Override

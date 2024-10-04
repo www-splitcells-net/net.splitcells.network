@@ -21,7 +21,7 @@ import net.splitcells.dem.lang.tree.Tree;
 import java.util.Optional;
 
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 
 public interface LinePointer extends Domable {
     Table context();
@@ -37,7 +37,7 @@ public interface LinePointer extends Domable {
 
     @Override
     default Tree toTree() {
-        final var dom = perspective(LinePointer.class.getSimpleName());
+        final var dom = tree(LinePointer.class.getSimpleName());
         final var line = interpret();
         if (line.isPresent()) {
             dom.withChild(line.get().toTree());

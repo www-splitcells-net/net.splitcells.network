@@ -16,7 +16,7 @@
 package net.splitcells.gel.rating.rater.lib.classification;
 
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
@@ -109,6 +109,6 @@ public class RaterBasedOnGrouping implements Rater {
 
     @Override
     public Tree toTree() {
-        return perspective("rater-based-on-grouping").withProperty("grouping", grouping.toTree());
+        return tree("rater-based-on-grouping").withProperty("grouping", grouping.toTree());
     }
 }

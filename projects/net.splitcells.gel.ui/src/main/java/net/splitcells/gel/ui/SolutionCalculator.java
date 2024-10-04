@@ -27,7 +27,7 @@ import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.CsvDocument.toCsvString;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.gel.solution.optimization.DefaultOptimization.defaultOptimization;
 import static net.splitcells.gel.ui.ProblemParser.parseProblem;
@@ -65,7 +65,7 @@ public class SolutionCalculator implements Processor<Tree, Tree> {
 
     @Override
     public Response<Tree> process(Request<Tree> request) {
-        final var formUpdate = perspective(FORM_UPDATE);
+        final var formUpdate = tree(FORM_UPDATE);
         try {
             PATH.requireEqualityTo(request.trail());
             final var problemParsing = parseProblem(request
@@ -125,20 +125,20 @@ public class SolutionCalculator implements Processor<Tree, Tree> {
                 formUpdate.withProperty(SOLUTION_RATING, solution.constraint().rating().toTree());
             }
             if (problemParsing.errorMessages().hasElements() || !isProblemParsed) {
-                final var errorReport = perspective("Errors solving the given problem.");
+                final var errorReport = tree("Errors solving the given problem.");
                 if (!isProblemParsed) {
-                    errorReport.withChild(perspective("Could not parse problem."));
+                    errorReport.withChild(tree("Could not parse problem."));
                 }
                 errorReport.withChildren(problemParsing.errorMessages());
                 formUpdate.withProperty(ERRORS, errorReport.toCommonMarkString());
             }
         } catch (Throwable t) {
             logs().appendError(t);
-            formUpdate.withProperty(ERRORS, perspective("The program had an internal error and therefore a solution could not be calculated."));
+            formUpdate.withProperty(ERRORS, tree("The program had an internal error and therefore a solution could not be calculated."));
         }
         if (formUpdate.namedChildren(ERRORS).isEmpty()) {
             // Ensures, that the error field in the front end is cleared, if no errors are present.
-            formUpdate.withProperty(ERRORS, perspective(""));
+            formUpdate.withProperty(ERRORS, tree(""));
         }
         return response(formUpdate);
     }

@@ -24,7 +24,7 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.ui.Editor;
 
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.gel.rating.rater.lib.AllSame.ALL_SAME_NAME;
 import static net.splitcells.gel.rating.rater.lib.AllSame.allSame;
 import static net.splitcells.gel.rating.rater.lib.HasSize.HAS_SIZE_NAME;
@@ -63,11 +63,11 @@ public class NoCodeRaterParser extends NoCodeDenParserBaseVisitor<Result<Rater, 
                     .getText())));
         } else if (functionName.equals(MINIMAL_DISTANCE_NAME)) {
             if (functionCall.function_call_argument() == null || functionCall.function_call_argument().isEmpty()) {
-                return rater.withErrorMessage(perspective("Rater `" + MINIMAL_DISTANCE_NAME + "` requires exactly 2 arguments, but has none.")
+                return rater.withErrorMessage(tree("Rater `" + MINIMAL_DISTANCE_NAME + "` requires exactly 2 arguments, but has none.")
                         .withProperty("rater", functionCall.getText()));
             }
             if (functionCall.function_call_argument().size() != 2) {
-                return rater.withErrorMessage(perspective("Rater `" + MINIMAL_DISTANCE_NAME + "` requires exactly 2 arguments.")
+                return rater.withErrorMessage(tree("Rater `" + MINIMAL_DISTANCE_NAME + "` requires exactly 2 arguments.")
                         .withProperty("rater", functionCall.getText()));
             }
             final var attribute = editor.attributeByVarName(functionCall.function_call_argument()
@@ -86,6 +86,6 @@ public class NoCodeRaterParser extends NoCodeDenParserBaseVisitor<Result<Rater, 
             return rater.withValue(has_minimal_distance_of((Attribute<Integer>) attribute, minimumDistance));
 
         }
-        return rater.withErrorMessage(perspective("Unknown rater function: " + functionCall.getText()));
+        return rater.withErrorMessage(tree("Unknown rater function: " + functionCall.getText()));
     }
 }

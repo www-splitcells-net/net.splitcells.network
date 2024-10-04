@@ -18,6 +18,7 @@ package net.splitcells.website.server.projects.extension.status;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.environment.resource.HostUtilizationRecordService;
+import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.projects.ProjectsRendererI;
@@ -28,7 +29,7 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
@@ -49,13 +50,13 @@ public class HostCpuUtilizationExtension implements ProjectsRendererExtension {
     @Override
     public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRenderer, Config config) {
         if (path.equals("/" + REPORT_PATH)) {
-            final var page = perspective("article", SEW);
-            final var meta = perspective("meta", SEW);
-            meta.withChild(perspective("path", SEW).withText(path));
-            meta.withChild(perspective("title", SEW).withText("Host CPU Utilization"));
-            meta.withChild(perspective("full-screen-by-default", SEW).withText("true"));
+            final var page = TreeI.tree("article", SEW);
+            final var meta = TreeI.tree("meta", SEW);
+            meta.withChild(TreeI.tree("path", SEW).withText(path));
+            meta.withChild(TreeI.tree("title", SEW).withText("Host CPU Utilization"));
+            meta.withChild(TreeI.tree("full-screen-by-default", SEW).withText("true"));
             page.withChild(meta);
-            page.withProperty("content", SEW, perspective("csv-chart-lines", SEW)
+            page.withProperty("content", SEW, TreeI.tree("csv-chart-lines", SEW)
                     .withProperty("path", SEW, "/" + CSV_PATH));
             return Optional.of(binaryMessage(projectsRenderer.projectRenderers().get(0)
                             .renderRawXml(page.toXmlStringWithAllNameSpaceDeclarationsAtTop(), config)

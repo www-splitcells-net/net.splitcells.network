@@ -31,7 +31,7 @@ import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 @JavaLegacyArtifact
@@ -134,7 +134,7 @@ public interface SetT<T> extends Collection<T> {
         requiredContent.forEach(c -> {
             final var contains = stream().map(t -> comparer.test(t, c)).filter(t -> t).findFirst().orElse(false);
             if (!contains) {
-                throw executionException(perspective("Set should contain following contents in any order, but does not.")
+                throw executionException(tree("Set should contain following contents in any order, but does not.")
                         .withProperty("this", toString())
                         .withProperty("required content", listWithValuesOf(requiredContent).toString())
                         .withProperty("missing content element", c.toString())

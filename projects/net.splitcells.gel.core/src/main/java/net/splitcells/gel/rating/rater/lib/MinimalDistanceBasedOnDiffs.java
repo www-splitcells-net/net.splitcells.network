@@ -44,7 +44,7 @@ import static net.splitcells.dem.data.atom.DescribedBool.describedBool;
 import static net.splitcells.dem.data.order.Comparators.ASCENDING_DOUBLES;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.MathUtils.absolute;
 import static net.splitcells.gel.constraint.Constraint.LINE;
@@ -352,10 +352,10 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
     @Override
     public List<Domable> arguments() {
         return Lists.list
-                (perspective("minimumDistance").withChild(perspective("" + minimumDistance))
-                        , perspective("attribute").withChild(attribute.toTree())
-                        , perspective("comparator").withChild(perspective("" + comparison))
-                        , perspective("distanceMeassurer").withChild(perspective("" + distanceMeassurer)));
+                (tree("minimumDistance").withChild(tree("" + minimumDistance))
+                        , tree("attribute").withChild(attribute.toTree())
+                        , tree("comparator").withChild(tree("" + comparison))
+                        , tree("distanceMeassurer").withChild(tree("" + distanceMeassurer)));
     }
 
     @Override

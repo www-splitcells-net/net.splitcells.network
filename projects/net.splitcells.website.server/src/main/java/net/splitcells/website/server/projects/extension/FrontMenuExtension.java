@@ -16,6 +16,7 @@
 package net.splitcells.website.server.projects.extension;
 
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.processor.BinaryMessage;
@@ -27,7 +28,7 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
@@ -50,28 +51,28 @@ public class FrontMenuExtension implements ProjectsRendererExtension {
                     .filter(s -> !s.isEmpty())
                     .collect(toList())
                     .withRemovedFromBehind(0);
-            final var article = perspective("article", SEW);
-            article.withChild(perspective("meta", SEW)
-                    .withChildren(perspective("title", SEW).withText("Front Menu")
-                            , perspective("description", SEW)
+            final var article = TreeI.tree("article", SEW);
+            article.withChild(TreeI.tree("meta", SEW)
+                    .withChildren(TreeI.tree("title", SEW).withText("Front Menu")
+                            , TreeI.tree("description", SEW)
                                     .withText("Contains all major programs and documents of this site.")));
-            final var deck = perspective("deck", SEW);
-            article.withPath(perspective("content", SEW), deck);
+            final var deck = TreeI.tree("deck", SEW);
+            article.withPath(TreeI.tree("content", SEW), deck);
             config.programConfigs()
                     .forEach(pc -> {
-                        final var card = perspective("card", SEW);
-                        card.withChild(perspective("name", SEW).withText(pc.name()));
+                        final var card = TreeI.tree("card", SEW);
+                        card.withChild(TreeI.tree("name", SEW).withText(pc.name()));
                         if (pc.isPathUrl()) {
-                            card.withChild(perspective("url", SEW).withText(pc.path()));
+                            card.withChild(TreeI.tree("url", SEW).withText(pc.path()));
                         } else {
-                            card.withChild(perspective("path", SEW).withText(pc.path()));
+                            card.withChild(TreeI.tree("path", SEW).withText(pc.path()));
                         }
                         if (pc.description().isPresent())
-                            card.withChild(perspective("description", SEW)
+                            card.withChild(TreeI.tree("description", SEW)
                                     .withText(pc.description().orElseThrow()));
                         if (pc.logoPath().isPresent())
-                            card.withPath(perspective("logos", SEW)
-                                    , perspective("image", SEW).withText(pc.logoPath().orElseThrow()));
+                            card.withPath(TreeI.tree("logos", SEW)
+                                    , TreeI.tree("image", SEW).withText(pc.logoPath().orElseThrow()));
                         deck.withChild(card);
                     });
             return Optional.of(binaryMessage(projectsRendererI.projectRenderers().get(0)

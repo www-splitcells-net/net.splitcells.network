@@ -23,7 +23,7 @@ import net.splitcells.gel.data.table.LinePointer;
 
 import static net.splitcells.dem.lang.Xml.attribute;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 
 /**
  * To have whatsoever he wishes is in no man’s power;
@@ -61,7 +61,7 @@ public final class OptimizationEvent implements Domable {
 
     @Override
     public Tree toTree() {
-        return perspective(getClass().getSimpleName())
+        return tree(getClass().getSimpleName())
                 .withProperty(StepType.class.getSimpleName(), stepType.name())
                 .withProperty(Language.DEMAND.value(), demand.toTree())
                 .withProperty(Language.SUPPLY.value(), supply.toTree());

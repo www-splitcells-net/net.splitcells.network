@@ -29,7 +29,7 @@ import org.antlr.v4.runtime.misc.ParseCancellationException;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.gel.ui.QueryParser.parseQuery;
@@ -69,14 +69,14 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
                     throws ParseCancellationException {
                 if (offendingSymbol instanceof CommonToken) {
                     final var token = (CommonToken) offendingSymbol;
-                    parsingErrors.add(perspective("Could not parse problem definition:")
+                    parsingErrors.add(tree("Could not parse problem definition:")
                             .withProperty("line", "" + line)
                             .withProperty("column", "" + charPositionInLine)
                             .withProperty("invalid text", "`" + token.toString(recognizer) + "`")
                             .withProperty("invalid token", "`" + token.getText() + "`")
                             .withProperty("error", msg));
                 } else {
-                    parsingErrors.add(perspective("Could not parse problem definition:")
+                    parsingErrors.add(tree("Could not parse problem definition:")
                             .withProperty("line", "" + line)
                             .withProperty("column", "" + charPositionInLine)
                             .withProperty("invalid text", "`" + offendingSymbol.toString() + "`")
@@ -107,13 +107,13 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
             result.withValue(solutionParameters);
         } else {
             if (name.isEmpty()) {
-                result.withErrorMessage(perspective("No name was defined via `name=\"[...]\"`."));
+                result.withErrorMessage(tree("No name was defined via `name=\"[...]\"`."));
             }
             if (demands.isEmpty()) {
-                result.withErrorMessage(perspective("No demands was defined via `demands=\"[...]\"`."));
+                result.withErrorMessage(tree("No demands was defined via `demands=\"[...]\"`."));
             }
             if (supplies.isEmpty()) {
-                result.withErrorMessage(perspective("No supplies was defined via `supplies=\"[...]\"`."));
+                result.withErrorMessage(tree("No supplies was defined via `supplies=\"[...]\"`."));
             }
         }
         return result;
@@ -124,13 +124,13 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
         final var ctxName = ctx.Name().getText();
         if (ctxName.equals("name")) {
             if (name.isPresent()) {
-                result.withErrorMessage(perspective("Names are not allowed to be defined multiple times."));
+                result.withErrorMessage(tree("Names are not allowed to be defined multiple times."));
                 return null;
             }
             name = Optional.of(ctxName);
         } else if (ctxName.equals("demands")) {
             if (demands.isPresent()) {
-                result.withErrorMessage(perspective("Demands are not allowed to be defined multiple times."));
+                result.withErrorMessage(tree("Demands are not allowed to be defined multiple times."));
                 return null;
             }
             final List<Attribute<? extends Object>> demandAttributes = list();
@@ -157,7 +157,7 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
             demands = Optional.of(database(demandAttributes));
         } else if (ctxName.equals("supplies")) {
             if (supplies.isPresent()) {
-                result.withErrorMessage(perspective("Supplies are not allowed to be defined multiple times."));
+                result.withErrorMessage(tree("Supplies are not allowed to be defined multiple times."));
                 return null;
             }
             final List<Attribute<? extends Object>> supplyAttributes = list();
@@ -192,12 +192,12 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
             return null;
         }
         if (ctx.access() == null && ctx.function_call_arguments() == null) {
-            result.withErrorMessage(perspective("Empty function calls are not supported at the top level.")
+            result.withErrorMessage(tree("Empty function calls are not supported at the top level.")
                     .withProperty("function call", ctx.getText()));
             return null;
         }
         if (ctx.access() == null && ctx.function_call_arguments() != null && !ctx.Name().getText().equals("constraints")) {
-            result.withErrorMessage(perspective("Only the constraints function is allowed to be called at the top level without a subject.")
+            result.withErrorMessage(tree("Only the constraints function is allowed to be called at the top level without a subject.")
                     .withProperty("function call", ctx.getText()));
             return null;
         }
@@ -217,7 +217,7 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
                     .forEach(e -> solutionParameters.rowAttributesForOutputFormat()
                             .add(e.function_call_arguments_element().Name().getText()));
         } else {
-            result.withErrorMessage(perspective("There is an unknown top level function call.")
+            result.withErrorMessage(tree("There is an unknown top level function call.")
                     .withProperty("subject name", subjectName)
                     .withProperty("function name", functionName));
         }

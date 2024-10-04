@@ -19,6 +19,7 @@ import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.IsDeterministic;
+import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
 import net.splitcells.dem.testing.TestSuiteI;
@@ -42,7 +43,7 @@ import static net.splitcells.dem.data.atom.Bools.bool;
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.MathUtils.intervalClosed;
 import static net.splitcells.dem.utils.MathUtils.modulus;
@@ -170,13 +171,13 @@ public class ColloquiumPlanningTest extends TestSuiteI {
                 return;
             }
             logs().append(
-                    perspective(i + ""
+                    TreeI.tree(i + ""
                             , STRING)
                     , () -> list("debugging")
                     , LogLevel.DEBUG);
             testSubject.optimizeWithFunction(ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(3), (currentSolution, step) -> {
                 logs().append(
-                        perspective(ZonedDateTime.now().toString()
+                        TreeI.tree(ZonedDateTime.now().toString()
                                         + testSubject.constraint().rating().asMetaRating().getContentValue(Cost.class).value()
                                         + currentSolution.isComplete()
                                         + currentSolution.demandsFree().size()
@@ -187,7 +188,7 @@ public class ColloquiumPlanningTest extends TestSuiteI {
             });
             testSubject.optimizeWithFunction(simpleConstraintGroupBasedOfflineRepair(4, 2), (currentSolution, step) -> {
                 logs().append(
-                        perspective(ZonedDateTime.now().toString()
+                        TreeI.tree(ZonedDateTime.now().toString()
                                         + testSubject.constraint().rating().asMetaRating().getContentValue(Cost.class).value()
                                         + currentSolution.isComplete()
                                         + currentSolution.demandsFree().size()
@@ -198,7 +199,7 @@ public class ColloquiumPlanningTest extends TestSuiteI {
             });
             testSubject.optimizeWithFunction(simpleConstraintGroupBasedOfflineRepair(4, 3), (currentSolution, step) -> {
                 logs().append(
-                        perspective(ZonedDateTime.now().toString()
+                        TreeI.tree(ZonedDateTime.now().toString()
                                         + testSubject.constraint().rating().asMetaRating().getContentValue(Cost.class).value()
                                         + currentSolution.isComplete()
                                         + currentSolution.demandsFree().size()
@@ -209,7 +210,7 @@ public class ColloquiumPlanningTest extends TestSuiteI {
             });
             testSubject.optimizeWithFunction(ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(1), (currentSolution, step) -> {
                 logs().append(
-                        perspective(ZonedDateTime.now().toString()
+                        TreeI.tree(ZonedDateTime.now().toString()
                                         + testSubject.constraint().rating().asMetaRating().getContentValue(Cost.class).value()
                                         + currentSolution.isComplete()
                                         + currentSolution.demandsFree().size()

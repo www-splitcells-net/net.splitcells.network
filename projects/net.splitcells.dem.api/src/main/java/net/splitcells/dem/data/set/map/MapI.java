@@ -20,7 +20,7 @@ import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import java.util.HashMap;
 
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
@@ -37,7 +37,7 @@ public class MapI<Key, Value> extends HashMap<Key, Value> implements Map<Key, Va
     public Value put(Key key, Value value) {
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY
                 && containsKey(key)) {
-            throw executionException(perspective("Key already exists")
+            throw executionException(tree("Key already exists")
                     .withProperty("key", key.toString())
                     .withProperty("value", value.toString()));
         }

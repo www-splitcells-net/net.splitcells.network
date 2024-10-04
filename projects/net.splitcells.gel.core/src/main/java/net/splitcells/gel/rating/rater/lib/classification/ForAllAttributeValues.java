@@ -16,7 +16,7 @@
 package net.splitcells.gel.rating.rater.lib.classification;
 
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -119,6 +119,6 @@ public class ForAllAttributeValues implements Rater {
 
     @Override
     public Tree toTree() {
-        return perspective("for-all-attribute-values").withProperty("attribute", attribute.toTree());
+        return tree("for-all-attribute-values").withProperty("attribute", attribute.toTree());
     }
 }

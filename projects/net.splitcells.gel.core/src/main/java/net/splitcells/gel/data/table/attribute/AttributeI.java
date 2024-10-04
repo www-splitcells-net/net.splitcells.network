@@ -17,7 +17,7 @@ package net.splitcells.gel.data.table.attribute;
 
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.data.atom.Bools.bool;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 import net.splitcells.dem.lang.tree.Tree;
@@ -102,7 +102,7 @@ public final class AttributeI<T> implements Attribute<T> {
 
     @Override
     public Tree toTree() {
-        return perspective(Attribute.class.getSimpleName())
+        return tree(Attribute.class.getSimpleName())
                 .withProperty(Language.NAME.value(), name)
                 .withProperty(Language.TYPE.value(), type.getSimpleName());
     }

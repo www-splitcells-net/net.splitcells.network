@@ -31,7 +31,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.FileSystemVoid.fileSystemVoid;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
@@ -66,7 +66,7 @@ public class ObjectsRendererI implements ProjectRenderer {
                         + "."
                         + ++i));
             } while (objects.containsKey(alternativePath.orElseThrow()));
-            logs().appendWarning(perspective("Discoverable path is already registered. Using alternative path for rendering instead.")
+            logs().appendWarning(tree("Discoverable path is already registered. Using alternative path for rendering instead.")
                             .withProperty("object", object.toString())
                             .withProperty("path", path.toString())
                             .withProperty("alternative path", alternativePath.orElseThrow().toString())

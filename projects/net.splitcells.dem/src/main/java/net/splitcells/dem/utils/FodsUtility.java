@@ -16,10 +16,11 @@
 package net.splitcells.dem.utils;
 
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.lang.tree.TreeI;
 
 import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_TABLE;
 import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_TEXT;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 /**
@@ -32,7 +33,7 @@ public class FodsUtility {
     }
 
     public static Tree tableCell(String cellContent) {
-        return perspective("table-cell", FODS_TABLE)
-                .withChild(perspective("p", FODS_TEXT).withChild(perspective(cellContent)));
+        return TreeI.tree("table-cell", FODS_TABLE)
+                .withChild(TreeI.tree("p", FODS_TEXT).withChild(tree(cellContent)));
     }
 }

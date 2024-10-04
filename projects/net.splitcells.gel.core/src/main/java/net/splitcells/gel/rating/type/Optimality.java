@@ -17,7 +17,7 @@ package net.splitcells.gel.rating.type;
 
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.data.order.Ordering.EQUAL;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -96,7 +96,7 @@ public class Optimality implements Rating {
 
     @Override
     public Tree toTree() {
-        return perspective(this.getClass().getSimpleName()).withChild(perspective("" + value));
+        return tree(this.getClass().getSimpleName()).withChild(tree("" + value));
     }
 
     @Override

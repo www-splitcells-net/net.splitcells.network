@@ -17,7 +17,7 @@ package net.splitcells.website.server.processor;
 
 import net.splitcells.website.Formats;
 
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 
 public class BinaryMessage {
     /**
@@ -54,7 +54,7 @@ public class BinaryMessage {
 
     @Override
     public String toString() {
-        return perspective("RenderingResult:")
+        return tree("RenderingResult:")
                 .withProperty("format", format)
                 .withProperty("content", new String(content))
                 .toXmlString();

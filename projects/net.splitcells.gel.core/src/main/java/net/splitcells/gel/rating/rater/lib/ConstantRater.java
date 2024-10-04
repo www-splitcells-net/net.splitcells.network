@@ -17,7 +17,7 @@ package net.splitcells.gel.rating.rater.lib;
 
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 
@@ -87,7 +87,7 @@ public class ConstantRater implements Rater {
 
     @Override
     public Tree toTree() {
-        return perspective(getClass().getSimpleName()).withChild(rating.toTree());
+        return tree(getClass().getSimpleName()).withChild(rating.toTree());
     }
 
     @Override

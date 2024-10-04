@@ -25,7 +25,7 @@ import net.splitcells.website.server.projects.extension.ColloquiumPlanningSuppli
 import java.util.Optional;
 
 import static net.splitcells.dem.data.atom.Bools.truthful;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.gel.ui.SolutionCalculator.DEMANDS;
 import static net.splitcells.gel.ui.SolutionCalculator.PROBLEM_DEFINITION;
@@ -43,8 +43,8 @@ public class SolutionCalculatorTest {
                 + "constraints().forEach(b).then(allSame(c));\n"
                 + "name=\"testParseProblem\";\n";
         final var testResult = solutionCalculator().process(request(SolutionCalculator.PATH
-                , perspective("").withProperty(PROBLEM_DEFINITION,
-                        perspective(testData))));
+                , tree("").withProperty(PROBLEM_DEFINITION,
+                        tree(testData))));
         requireEquals(testResult.data()
                         .propertyInstance(SolutionCalculator.SOLUTION)
                         .orElseThrow()
@@ -61,10 +61,10 @@ public class SolutionCalculatorTest {
                             final String demands = ColloquiumPlanningDemandsTestData.testData();
                             final String supplies = ColloquiumPlanningSuppliesTestData.testData();
                             final var testResult = solutionCalculator().process(request(SolutionCalculator.PATH
-                                    , perspective("")
-                                            .withProperty(PROBLEM_DEFINITION, perspective(problemDefinition))
-                                            .withProperty(DEMANDS, perspective(demands))
-                                            .withProperty(SUPPLIES, perspective(supplies))));
+                                    , tree("")
+                                            .withProperty(PROBLEM_DEFINITION, tree(problemDefinition))
+                                            .withProperty(DEMANDS, tree(demands))
+                                            .withProperty(SUPPLIES, tree(supplies))));
                             requireEquals(testResult.data().namedChildren(SOLUTION_RATING).get(0).child(0)
                                             .createToJsonPrintable().toJsonString()
                                     , "{\"Cost\":\"0.0\"}");

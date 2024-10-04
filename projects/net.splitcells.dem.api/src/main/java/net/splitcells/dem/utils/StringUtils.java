@@ -20,7 +20,7 @@ import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import java.nio.charset.StandardCharsets;
 import java.util.stream.IntStream;
 
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
@@ -42,7 +42,7 @@ public class StringUtils {
         if (target.startsWith(prefix)) {
             return target.substring(prefix.length());
         }
-        throw executionException(perspective("`target` does not start with `prefix`.")
+        throw executionException(tree("`target` does not start with `prefix`.")
                 .withProperty("prefix", prefix)
                 .withProperty("target", target));
     }

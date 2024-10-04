@@ -27,7 +27,7 @@ import net.splitcells.gel.ui.Editor;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.gel.constraint.QueryI.query;
@@ -107,7 +107,7 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
         final Result<Query, Tree> parsedConstraint = result();
         if (constraintType.equals(FOR_ALL_NAME)) {
             if (arguments != null && arguments.size() > 0) {
-                return parsedConstraint.withErrorMessage(perspective("ForAll does not support arguments.")
+                return parsedConstraint.withErrorMessage(tree("ForAll does not support arguments.")
                         .withProperty(AFFECTED_CONTENT
                                 , arguments.stream().map(a -> a.getText()).toList().toString()));
             }
@@ -122,14 +122,14 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
                 return parsedConstraint;
             } else if (arguments.size() > 1) {
                 return parsedConstraint
-                        .withErrorMessage(perspective("ForEach does not support multiple arguments.")
+                        .withErrorMessage(tree("ForEach does not support multiple arguments.")
                                 .withProperty(AFFECTED_CONTENT
                                         , arguments.stream().map(a -> a.getText()).toList().toString()));
             }
-            return parsedConstraint.withErrorMessage(perspective("Could not parse ForEach, because of unknown reason."));
+            return parsedConstraint.withErrorMessage(tree("Could not parse ForEach, because of unknown reason."));
         } else if (constraintType.equals(FOR_ALL_COMBINATIONS_OF)) {
             if (arguments.size() < 2) {
-                return parsedConstraint.withErrorMessage(perspective(FOR_ALL_COMBINATIONS_OF + " requires at least 2 arguments.")
+                return parsedConstraint.withErrorMessage(tree(FOR_ALL_COMBINATIONS_OF + " requires at least 2 arguments.")
                         .withProperty(AFFECTED_CONTENT
                                 , arguments.stream().map(a -> a.getText()).toList().toString()));
             }
@@ -145,17 +145,17 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
             return parsedConstraint;
         } else if (constraintType.equals(THEN_NAME)) {
             if (arguments == null) {
-                return parsedConstraint.withErrorMessage(perspective("Then constraint requires at least one argument, but argument list is null."));
+                return parsedConstraint.withErrorMessage(tree("Then constraint requires at least one argument, but argument list is null."));
             }
             if (arguments.isEmpty()) {
                 return parsedConstraint
-                        .withErrorMessage(perspective("Then constraint requires at least one argument.")
+                        .withErrorMessage(tree("Then constraint requires at least one argument.")
                                 .withProperty(AFFECTED_CONTENT
                                         , arguments.stream().map(a -> a.getText()).toList().toString()));
             }
             if (arguments.size() > 1) {
                 return parsedConstraint
-                        .withErrorMessage(perspective("Then constraint only support one argument at maximum")
+                        .withErrorMessage(tree("Then constraint only support one argument at maximum")
                                 .withProperty(AFFECTED_CONTENT
                                         , arguments.stream().map(a -> a.getText()).toList().toString()));
             }
@@ -167,7 +167,7 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
             }
             return parsedConstraint.withValue(parentConstraint.then(rater.value().orElseThrow()));
         } else {
-            return parsedConstraint.withErrorMessage(perspective("Unknown constraint type")
+            return parsedConstraint.withErrorMessage(tree("Unknown constraint type")
                     .withProperty(AFFECTED_CONTENT, constraintFunctionCall.getText())
                     .withProperty("constraint type", constraintType));
         }

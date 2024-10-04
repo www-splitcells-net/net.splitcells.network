@@ -24,7 +24,7 @@ import net.splitcells.dem.object.Discoverable;
 
 import java.util.Optional;
 
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.resource.communication.log.LogMessageI.logMessage;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
@@ -41,11 +41,11 @@ import static net.splitcells.dem.utils.StringUtils.throwableToString;
 public interface Log extends ListWA<LogMessage<Tree>> {
 
     default Log append(String name) {
-        return append(logMessage(perspective(name), NO_CONTEXT, LogLevel.DEBUG));
+        return append(logMessage(tree(name), NO_CONTEXT, LogLevel.DEBUG));
     }
 
     default Log append(String message, LogLevel logLevel) {
-        return append(logMessage(perspective(message), NO_CONTEXT, logLevel));
+        return append(logMessage(tree(message), NO_CONTEXT, logLevel));
     }
 
     /**
@@ -91,13 +91,13 @@ public interface Log extends ListWA<LogMessage<Tree>> {
     @JavaLegacyBody
     default Log appendError(Throwable throwable) {
         try {
-            final var error = perspective("error");
+            final var error = tree("error");
             if (throwable.getMessage() != null) {
                 error.withProperty("message", throwable.getMessage());
             }
             error.withProperty("stack-trace", throwableToString(throwable));
             if (throwable.getCause() != null) {
-                final var cause = perspective("cause");
+                final var cause = tree("cause");
                 if (throwable.getCause().getMessage() != null) {
                     cause.withProperty("message", throwable.getCause().getMessage());
                 }
@@ -126,7 +126,7 @@ public interface Log extends ListWA<LogMessage<Tree>> {
      * @return
      */
     default Log appendWarning(Throwable throwable) {
-        final var warning = perspective("warning");
+        final var warning = tree("warning");
         warning.withProperty("message", throwable.getMessage());
         warning.withProperty("stack-trace", throwableToString(throwable));
         return append(logMessage(warning, NO_CONTEXT, LogLevel.CRITICAL));
@@ -140,7 +140,7 @@ public interface Log extends ListWA<LogMessage<Tree>> {
      */
     default Log appendWarning(Tree warning) {
         final var exception = executionException("warning");
-        final var message = perspective("warning");
+        final var message = tree("warning");
         message.withProperty("message", message);
         message.withProperty("stack-trace", throwableToString(exception));
         return append(logMessage(warning, NO_CONTEXT, LogLevel.CRITICAL));
@@ -148,11 +148,11 @@ public interface Log extends ListWA<LogMessage<Tree>> {
 
 
     default Log appendWarning(String message, Throwable throwable) {
-        return appendWarning(perspective(message), throwable);
+        return appendWarning(tree(message), throwable);
     }
 
     default Log appendWarning(Tree message, Throwable throwable) {
-        final var throwablePerspective = perspective("throwable");
+        final var throwablePerspective = tree("throwable");
         throwablePerspective.withProperty("message", throwable.getMessage());
         throwablePerspective.withProperty("stack-trace", throwableToString(throwable));
         return append(logMessage(message.withChild(throwablePerspective), NO_CONTEXT, LogLevel.CRITICAL));

@@ -31,7 +31,7 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**
@@ -109,7 +109,7 @@ public class ProjectRendererExtensionMerger implements ProjectRendererExtension 
                 .filter(s -> s.isPresent())
                 .collect(toList());
         if (matches.hasElements() && matches.size() != 1) {
-            throw executionException(perspective("No unambiguous match for source code found.")
+            throw executionException(tree("No unambiguous match for source code found.")
                     .withProperty("path", path)
                     .withProperty("matches", matches.toString()));
         }

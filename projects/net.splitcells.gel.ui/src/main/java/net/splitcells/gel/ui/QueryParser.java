@@ -28,7 +28,7 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.gel.constraint.QueryI.query;
@@ -83,7 +83,7 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Tree>> {
         final Result<Query, Tree> parsedConstraint = result();
         if (constraintType.equals(FOR_ALL_NAME)) {
             if (arguments.function_call_arguments_element() != null) {
-                return parsedConstraint.withErrorMessage(perspective("ForAll does not support arguments: " + arguments.getText()));
+                return parsedConstraint.withErrorMessage(tree("ForAll does not support arguments: " + arguments.getText()));
             }
             parsedConstraint.withValue(parentConstraint.forAll());
         } else if (constraintType.equals(FOR_EACH_NAME)) {
@@ -92,7 +92,7 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Tree>> {
                 // TODO FIX
                 if (arguments.function_call_arguments_element().function_call() != null
                         && !arguments.function_call_arguments_element().function_call().isEmpty()) {
-                    return parsedConstraint.withErrorMessage(perspective("Function call arguments are not supported for "
+                    return parsedConstraint.withErrorMessage(tree("Function call arguments are not supported for "
                             + FOR_ALL_NAME
                             + " constraint: "
                             + arguments.getText()));
@@ -105,12 +105,12 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Tree>> {
                         .filter(da -> da.name().equals(attributeName))
                         .collect(toList());
                 if (attributeMatches.isEmpty()) {
-                    return parsedConstraint.withErrorMessage(perspective("Attribute for constraint argument not found.")
+                    return parsedConstraint.withErrorMessage(tree("Attribute for constraint argument not found.")
                             .withProperty("constraint type", constraintType)
                             .withProperty("not found attribute name", attributeName));
                 }
                 if (attributeMatches.size() != 1) {
-                    return parsedConstraint.withErrorMessage(perspective("For each constraint argument only exact one attribute match is allowed, but multiple were found.")
+                    return parsedConstraint.withErrorMessage(tree("For each constraint argument only exact one attribute match is allowed, but multiple were found.")
                             .withProperty("constraint type", constraintType)
                             .withProperty("attributes matches", attributeMatches.toString())
                             .withProperty("searched attribute name", attributeName));
@@ -120,33 +120,33 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Tree>> {
             }
             if (!arguments.function_call_arguments_next().isEmpty()) {
                 return parsedConstraint
-                        .withErrorMessage(perspective("ForEach does not support multiple arguments: "
+                        .withErrorMessage(tree("ForEach does not support multiple arguments: "
                                 + arguments.getText()));
             }
-            return parsedConstraint.withErrorMessage(perspective("Invalid program state."));
+            return parsedConstraint.withErrorMessage(tree("Invalid program state."));
         } else if (constraintType.equals(FOR_ALL_COMBINATIONS_OF)) {
             if (arguments.function_call_arguments_element() != null) {
                 if (arguments.function_call_arguments_element().function_call() != null
                         && !arguments.function_call_arguments_element().function_call().isEmpty()) {
-                    return parsedConstraint.withErrorMessage(perspective("Function call arguments are not supported for "
+                    return parsedConstraint.withErrorMessage(tree("Function call arguments are not supported for "
                             + FOR_ALL_COMBINATIONS_OF
                             + " constraint: "
                             + arguments.getText()));
                 }
                 final var attributeMatches = parseAttributes(arguments);
                 if (attributeMatches.isEmpty()) {
-                    return parsedConstraint.withErrorMessage(perspective("Attribute for constraint argument not found.")
+                    return parsedConstraint.withErrorMessage(tree("Attribute for constraint argument not found.")
                             .withProperty("constraint type", constraintType)
                             .withProperty("arguments", arguments.getText()));
                 }
                 parsedConstraint.withValue(parentConstraint.forAllCombinationsOf(attributeMatches.get()));
                 return parsedConstraint;
             }
-            return parsedConstraint.withErrorMessage(perspective(FOR_ALL_COMBINATIONS_OF + " constraint type required arguments, but has none."));
+            return parsedConstraint.withErrorMessage(tree(FOR_ALL_COMBINATIONS_OF + " constraint type required arguments, but has none."));
         } else if (constraintType.equals(THEN_NAME)) {
             if (arguments.function_call_arguments_element() == null) {
                 return parsedConstraint
-                        .withErrorMessage(perspective("Then constraint requires at least one argument: "
+                        .withErrorMessage(tree("Then constraint requires at least one argument: "
                                 + arguments.getText()));
             }
             if (arguments.function_call_arguments_element().function_call() != null) {
@@ -157,7 +157,7 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Tree>> {
                 }
                 return parsedConstraint.withValue(parentConstraint.then(rater.value().orElseThrow()));
             }
-            parsedConstraint.withErrorMessage(perspective("Could not parse argument of then constraint: "
+            parsedConstraint.withErrorMessage(tree("Could not parse argument of then constraint: "
                     + arguments.getText()));
         } else {
             return parentConstraint.constraintResult(constraintType, list(), list());
@@ -192,7 +192,7 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Tree>> {
                 .map(e -> (Attribute<? extends Object>) e)
                 .collect(toList());
         if (attributeMatches.size() != 1) {
-            nextConstraint.withErrorMessage(perspective("Could not find attribute by name.")
+            nextConstraint.withErrorMessage(tree("Could not find attribute by name.")
                     .withProperty("name", name));
             return Optional.empty();
         }
@@ -219,7 +219,7 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Tree>> {
                 && statement.function_call().Name().getText().equals("constraints")) {
             if (statement.function_call().access().isEmpty()) {
                 return nextConstraint
-                        .withErrorMessage(perspective("Empty constraint is not allowed: " + statement.getText()));
+                        .withErrorMessage(tree("Empty constraint is not allowed: " + statement.getText()));
             }
             if (statement.function_call().access() != null) {
                 final var childConstraintParser = new QueryParser(assignments, parentConstraint);

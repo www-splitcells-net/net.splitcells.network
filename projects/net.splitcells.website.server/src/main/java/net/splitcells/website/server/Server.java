@@ -62,7 +62,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.execution.EffectWorkerPool.effectWorkerPool;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.log.LogLevel.WARNING;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
@@ -169,7 +169,7 @@ public class Server {
                                             .setCertValue(buffer(configValue(PublicIdentityPemStore.class)
                                                     .orElseThrow())));
                         } else {
-                            logs().append(perspective("Webserver is not secured!"), WARNING);
+                            logs().append(tree("Webserver is not secured!"), WARNING);
                         }
                         webServerOptions.setMaxFormAttributeSize(100_000_000);
                         webServerOptions.setPort(config.openPort());
@@ -198,7 +198,7 @@ public class Server {
                                 vertx.<byte[]>executeBlocking((promise) -> {
                                             final var binaryRequest = parseBinaryRequest(routingContext.request().path()
                                                     , routingContext.request().formAttributes());
-                                            logs().append(perspective("Processing web server binary request.")
+                                            logs().append(tree("Processing web server binary request.")
                                                             .withProperty("Binary request", binaryRequest.data())
                                                     , LogLevel.DEBUG);
                                             final var binaryResponse = binaryProcessor
@@ -217,7 +217,7 @@ public class Server {
                                                 } else {
                                                     requestPath = routingContext.request().path();
                                                 }
-                                                logs().append(perspective("Processing web server rendering request.")
+                                                logs().append(tree("Processing web server rendering request.")
                                                                 .withProperty("Raw request path", routingContext.request().path())
                                                                 .withProperty("Interpreted request path", requestPath)
                                                         , LogLevel.DEBUG);
@@ -286,7 +286,7 @@ public class Server {
     private static void handleResult(RoutingContext routingContext, AsyncResult<byte[]> result) {
         final var response = routingContext.response();
         if (result.failed() && result.cause() instanceof DocumentNotFound) {
-            logs().append(perspective("Could not find render for path")
+            logs().append(tree("Could not find render for path")
                             .withProperty("path", result.cause().getMessage())
                     , LogLevel.ERROR);
             response.setStatusCode(404);
@@ -294,7 +294,7 @@ public class Server {
             return;
         }
         if (result.failed()) {
-            logs().appendError(executionException(perspective("Could not process form:")
+            logs().appendError(executionException(tree("Could not process form:")
                             .withProperty("path", routingContext.request().path())
                     , result.cause()));
             response.setStatusCode(500);
@@ -309,7 +309,7 @@ public class Server {
         if (!pathSplit.isEmpty() && "".equals(pathSplit.get(0))) {
             pathSplit.removeAt(0);
         }
-        final var requestData = perspective("");
+        final var requestData = tree("");
         multiMap.entries().forEach(entry -> {
             requestData.withProperty(entry.getKey(), entry.getValue());
         });

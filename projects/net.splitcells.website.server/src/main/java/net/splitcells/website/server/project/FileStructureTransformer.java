@@ -15,6 +15,7 @@
  */
 package net.splitcells.website.server.project;
 
+import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.resource.FileSystemView;
 import net.splitcells.dem.resource.Paths;
 import net.splitcells.dem.resource.communication.log.LogLevel;
@@ -25,7 +26,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.website.server.translation.to.html.PathBasedUriResolver.pathBasedUriResolver;
 
@@ -84,7 +85,7 @@ public class FileStructureTransformer {
 
     public String transform(String content) {
         sourceValidator.validate(content).ifPresent(error -> {
-            logs().append(perspective(error, STRING), LogLevel.ERROR);
+            logs().append(TreeI.tree(error, STRING), LogLevel.ERROR);
         });
         return transformer().transform(content);
     }

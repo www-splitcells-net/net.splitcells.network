@@ -19,7 +19,7 @@ import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.Lambdas.describedFunction;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
@@ -166,8 +166,8 @@ public class RaterBasedOnLineValue implements Rater {
 
     @Override
     public List<Domable> arguments() {
-        return list(perspective(getClass().getSimpleName())
-                .withChild(perspective(classifier.toString()
+        return list(tree(getClass().getSimpleName())
+                .withChild(tree(classifier.toString()
                         + " "
                         + rater.toString())));
     }
@@ -184,7 +184,7 @@ public class RaterBasedOnLineValue implements Rater {
 
     @Override
     public Tree toTree() {
-        return perspective(getClass().getSimpleName()).withProperty("args", arguments().get(0).toTree());
+        return tree(getClass().getSimpleName()).withProperty("args", arguments().get(0).toTree());
     }
 
     @Override

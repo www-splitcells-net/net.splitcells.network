@@ -22,7 +22,7 @@ import net.splitcells.dem.environment.resource.Service;
 import static net.splitcells.dem.Dem.config;
 import static net.splitcells.dem.data.atom.Thing.instance;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 
@@ -41,7 +41,7 @@ public class FileSystemRegistry<Key> implements Service {
         if (false) {
             // TODO Remove this code, when it is clear, that it is really not needed.
             if (content.containsKey(key)) {
-                logs().appendWarning(perspective("Ignoring file system registration, as it is already present.")
+                logs().appendWarning(tree("Ignoring file system registration, as it is already present.")
                         .withProperty("key", key.toString())
                         .withProperty("old value", content.get(key).toString())
                         .withProperty("new value", fileSystemView.toString()));

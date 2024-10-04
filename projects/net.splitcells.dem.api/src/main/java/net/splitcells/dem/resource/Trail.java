@@ -23,7 +23,7 @@ import java.nio.file.Path;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**
@@ -102,17 +102,17 @@ public class Trail implements Thing {
         final var split = path.replaceAll("/+", "/").split("/");
         String result = "";
         if (path.startsWith("/")) {
-            throw executionException(perspective("Only relative paths are supported.")
+            throw executionException(tree("Only relative paths are supported.")
                     .withProperty("path", path)
                     .withProperty("elementsToRemove", elementsToRemove + ""));
         }
         if (split.length < elementsToRemove) {
-            throw executionException(perspective("Trying to remove more prefix elements from path than present.")
+            throw executionException(tree("Trying to remove more prefix elements from path than present.")
                     .withProperty("path", path)
                     .withProperty("elementsToRemove", elementsToRemove + ""));
         }
         if (0 > elementsToRemove) {
-            throw executionException(perspective("Cannot remove negative amount of prefix elements.")
+            throw executionException(tree("Cannot remove negative amount of prefix elements.")
                     .withProperty("path", path)
                     .withProperty("elementsToRemove", elementsToRemove + ""));
         }
@@ -138,17 +138,17 @@ public class Trail implements Thing {
         final var split = path.replaceAll("/+", "/").split("/");
         String result = "";
         if (path.startsWith("/")) {
-            throw executionException(perspective("Only relative paths are supported.")
+            throw executionException(tree("Only relative paths are supported.")
                     .withProperty("path", path)
                     .withProperty("elementsToRemove", elementsToRemove + ""));
         }
         if (split.length < elementsToRemove) {
-            throw executionException(perspective("Trying to remove more suffix elements from path than present.")
+            throw executionException(tree("Trying to remove more suffix elements from path than present.")
                     .withProperty("path", path)
                     .withProperty("elementsToRemove", elementsToRemove + ""));
         }
         if (0 > elementsToRemove) {
-            throw executionException(perspective("Cannot remove negative amount of suffix elements.")
+            throw executionException(tree("Cannot remove negative amount of suffix elements.")
                     .withProperty("path", path)
                     .withProperty("elementsToRemove", elementsToRemove + ""));
         }

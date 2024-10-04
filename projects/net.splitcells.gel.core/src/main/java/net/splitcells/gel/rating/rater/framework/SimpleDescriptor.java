@@ -20,13 +20,13 @@ import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
 
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.NotImplementedYet.TODO_NOT_IMPLEMENTED_YET;
 
 @FunctionalInterface
 public interface SimpleDescriptor {
     String toSimpleDescription(Line line, Table groupLineProcessing, GroupId incomingGroup);
     default Tree toPerspective() {
-        return perspective(TODO_NOT_IMPLEMENTED_YET + toString());
+        return tree(TODO_NOT_IMPLEMENTED_YET + toString());
     }
 }

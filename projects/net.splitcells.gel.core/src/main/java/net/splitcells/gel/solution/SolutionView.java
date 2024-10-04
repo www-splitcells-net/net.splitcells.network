@@ -17,6 +17,7 @@ package net.splitcells.gel.solution;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.lang.tree.XmlConfig;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.rating.type.Cost;
@@ -40,7 +41,7 @@ import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.resource.Files.*;
 import static net.splitcells.gel.rating.type.Cost.cost;
@@ -176,14 +177,14 @@ public interface SolutionView extends ProblemView {
      * @return Returns a perspective designed for {@link Tree#toXmlString(XmlConfig)}.
      */
     default Tree toFodsTableAnalysis() {
-        final var fodsTableAnalysis = perspective("document", FODS_OFFICE)
+        final var fodsTableAnalysis = TreeI.tree("document", FODS_OFFICE)
                 .withXmlAttribute("mimetype", "application/vnd.oasis.opendocument.spreadsheet", FODS_OFFICE)
                 .withChild(fodsStyling());
-        final var body = perspective("body", FODS_OFFICE);
+        final var body = TreeI.tree("body", FODS_OFFICE);
         fodsTableAnalysis.withChild(body);
-        final var spreadsheet = perspective("spreadsheet", FODS_OFFICE);
+        final var spreadsheet = TreeI.tree("spreadsheet", FODS_OFFICE);
         body.withChild(spreadsheet);
-        final var table = perspective("table", FODS_TABLE);
+        final var table = TreeI.tree("table", FODS_TABLE);
         spreadsheet.withChild(table);
         table.withProperty("name", FODS_TABLE, "values");
         table.withChild(attributesOfFodsAnalysis());
@@ -194,7 +195,7 @@ public interface SolutionView extends ProblemView {
     }
 
     private static Tree fodsStyling() {
-        final var automaticStyling = perspective("automatic-styles", FODS_OFFICE);
+        final var automaticStyling = TreeI.tree("automatic-styles", FODS_OFFICE);
         automaticStyling.withChild(fodsStylingStyle(1, "#dee6ef"));
         automaticStyling.withChild(fodsStylingStyle(2, "#fff5ce"));
         automaticStyling.withChild(fodsStylingStyle(3, "#ffdbb6"));
@@ -204,43 +205,43 @@ public interface SolutionView extends ProblemView {
     }
 
     private static Tree fodsStylingStyle(int reasoningComplexity, String backgroundColor) {
-        final var style = perspective("style", FODS_STYLE);
+        final var style = TreeI.tree("style", FODS_STYLE);
         style.withXmlAttribute("name", "reasoning-complexity-" + reasoningComplexity, FODS_STYLE);
         style.withXmlAttribute("attribute", "table-cell", FODS_STYLE);
         style.withXmlAttribute("parent-style-name", "Default", FODS_STYLE);
-        style.withChild(perspective("table-cell-properties", FODS_STYLE)
+        style.withChild(TreeI.tree("table-cell-properties", FODS_STYLE)
                 .withXmlAttribute("background-color", backgroundColor, FODS_FO));
-        style.withChild(perspective("text-properties", FODS_STYLE)
+        style.withChild(TreeI.tree("text-properties", FODS_STYLE)
                 .withXmlAttribute("color", "#000000", FODS_FO));
         return style;
     }
 
     default Tree attributesOfFodsAnalysis() {
-        final var attributes = perspective("table-row", FODS_TABLE);
+        final var attributes = TreeI.tree("table-row", FODS_TABLE);
         headerView().stream().map(Attribute::name).map(attName -> {
-            final var tableElement = perspective("table-cell", FODS_TABLE);
-            final var tableValue = perspective("p", FODS_TEXT);
+            final var tableElement = TreeI.tree("table-cell", FODS_TABLE);
+            final var tableValue = TreeI.tree("p", FODS_TEXT);
             tableElement.withChild(tableValue);
-            tableValue.withChild(perspective(attName));
+            tableValue.withChild(tree(attName));
             return tableElement;
         }).forEach(attributes::withChild);
         {
-            final var tableElement = perspective("table-cell", FODS_TABLE);
-            final var tableValue = perspective("p", FODS_TEXT);
+            final var tableElement = TreeI.tree("table-cell", FODS_TABLE);
+            final var tableValue = TreeI.tree("p", FODS_TEXT);
             tableElement.withChild(tableValue);
-            tableValue.withChild(perspective("cost"));
+            tableValue.withChild(tree("cost"));
             attributes.withChild(tableElement);
         }
         {
-            final var tableElement = perspective("table-cell", FODS_TABLE);
-            final var tableValue = perspective("p", FODS_TEXT);
+            final var tableElement = TreeI.tree("table-cell", FODS_TABLE);
+            final var tableValue = TreeI.tree("p", FODS_TEXT);
             tableElement.withChild(tableValue);
-            tableValue.withChild(perspective("allocation cost argumentation"));
+            tableValue.withChild(tree("allocation cost argumentation"));
             attributes.withChild(tableElement);
         }
         {
-            final var rating = perspective("table-cell", FODS_TABLE);
-            final var ratingValue = perspective("p", FODS_TEXT);
+            final var rating = TreeI.tree("table-cell", FODS_TABLE);
+            final var ratingValue = TreeI.tree("p", FODS_TEXT);
             rating.withChild(ratingValue);
             attributes.withChild(rating);
             ratingValue.withChild(constraint().rating().toTree());
@@ -249,23 +250,23 @@ public interface SolutionView extends ProblemView {
     }
 
     default Tree toLinesFodsAnalysis(Line allocation) {
-        final var tableLine = perspective("table-row", FODS_TABLE);
+        final var tableLine = TreeI.tree("table-row", FODS_TABLE);
         {
             headerView().stream().map(attribute -> allocation.value(attribute)).map(value -> {
-                final var tableElement = perspective("table-cell", FODS_TABLE);
-                final var tableValue = perspective("p", FODS_TEXT);
+                final var tableElement = TreeI.tree("table-cell", FODS_TABLE);
+                final var tableValue = TreeI.tree("p", FODS_TEXT);
                 tableElement.withChild(tableValue);
-                tableValue.withChild(perspective(value.toString()));
+                tableValue.withChild(tree(value.toString()));
                 return tableElement;
             }).forEach(tableCell -> tableLine.withChild(tableCell));
         }
         {
-            final var allocationCost = perspective("table-cell", FODS_TABLE);
+            final var allocationCost = TreeI.tree("table-cell", FODS_TABLE);
             tableLine.withChild(allocationCost);
-            final var allocation_cost_value = perspective("p", FODS_TEXT);
+            final var allocation_cost_value = TreeI.tree("p", FODS_TEXT);
             allocationCost.withChild(allocation_cost_value);
             allocation_cost_value.withChild(
-                    perspective(""
+                    tree(""
                             + constraint()
                             .rating(allocation)
                             .asMetaRating()
@@ -273,8 +274,8 @@ public interface SolutionView extends ProblemView {
                             .value()));
         }
         {
-            final var allocationArgumentation = perspective("table-cell", FODS_TABLE);
-            final var allocationArgumentationValue = perspective("p", FODS_TEXT);
+            final var allocationArgumentation = TreeI.tree("table-cell", FODS_TABLE);
+            final var allocationArgumentationValue = TreeI.tree("p", FODS_TEXT);
             tableLine.withChild(allocationArgumentation);
             allocationArgumentation.withChild(allocationArgumentationValue);
             constraint().naturalArgumentation(allocation, constraint().injectionGroup())
@@ -289,7 +290,7 @@ public interface SolutionView extends ProblemView {
                             }
                             allocationArgumentation.withProperty("style-name", FODS_TABLE, "reasoning-complexity-" + reasoningComplexity);
                         }
-                        allocationArgumentationValue.withChild(perspective(Tree.toStringPathsDescription(argumentationPaths)));
+                        allocationArgumentationValue.withChild(tree(Tree.toStringPathsDescription(argumentationPaths)));
                     });
         }
         return tableLine;

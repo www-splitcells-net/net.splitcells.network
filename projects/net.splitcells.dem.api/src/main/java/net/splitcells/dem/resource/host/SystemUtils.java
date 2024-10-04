@@ -24,7 +24,7 @@ import java.io.*;
 import java.nio.file.Path;
 import java.util.Arrays;
 
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.host.ShellResult.shellResult;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
@@ -157,7 +157,7 @@ public final class SystemUtils {
     }
 
     public static void executeProgram(String... command) {
-        logs().append(perspective("Executing program.").withChild(perspective(Arrays.toString(command))), LogLevel.DEBUG);
+        logs().append(tree("Executing program.").withChild(tree(Arrays.toString(command))), LogLevel.DEBUG);
         final Process process;
         try {
             process = Runtime.getRuntime().exec(command);

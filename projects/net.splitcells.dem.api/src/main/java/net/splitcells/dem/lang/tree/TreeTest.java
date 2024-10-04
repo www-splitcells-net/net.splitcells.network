@@ -18,7 +18,7 @@ package net.splitcells.dem.lang.tree;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.BinaryUtils.binaryOutputStream;
@@ -27,14 +27,14 @@ public class TreeTest {
 
     @UnitTest
     public void testXmlName() {
-        requireEquals(perspective("&<>\"'~").xmlName(), "&amp;&lt;&gt;&quot;&apos;&Tilde;");
+        requireEquals(tree("&<>\"'~").xmlName(), "&amp;&lt;&gt;&quot;&apos;&Tilde;");
     }
 
     @UnitTest
     public void testToXmlString() {
-        final var article = perspective("article", SEW);
-        final var content = perspective("content", SEW);
-        content.withChild(perspective("deck", SEW));
+        final var article = TreeI.tree("article", SEW);
+        final var content = TreeI.tree("content", SEW);
+        content.withChild(TreeI.tree("deck", SEW));
         article.withChild(content);
         requireEquals(article.toXmlString(true)
                 , "<article xmlns=\"http://splitcells.net/sew.xsd\"><content><deck/></content></article>");
@@ -42,18 +42,18 @@ public class TreeTest {
 
     @UnitTest
     public void testWithPath() {
-        final var testSubject = perspective("article", SEW)
-                .withPath(perspective("content", SEW)
-                        , perspective("deck", SEW));
+        final var testSubject = TreeI.tree("article", SEW)
+                .withPath(TreeI.tree("content", SEW)
+                        , TreeI.tree("deck", SEW));
         requireEquals(testSubject.toXmlString(true)
                 , "<article xmlns=\"http://splitcells.net/sew.xsd\"><content><deck/></content></article>");
     }
 
     @UnitTest
     public void testToJsonStringWithPathToDictionary() {
-        final var testSubject = perspective("")
-                .withChild(perspective("path start")
-                        .withChild(perspective("path end")
+        final var testSubject = tree("")
+                .withChild(tree("path start")
+                        .withChild(tree("path end")
                                 .withProperty("a", "b")
                                 .withProperty("b", "c")));
         requireEquals(testSubject.toJsonString(), "{\"path start\": {\"path end\":{\"a\":\"b\",\"b\":\"c\"}}}");
@@ -61,39 +61,39 @@ public class TreeTest {
 
     @UnitTest
     public void testToJsonStringWithPathToArray() {
-        final var testSubject = perspective("")
-                .withChild(perspective("path start")
-                        .withChild(perspective("path end")
-                                .withChildren(perspective("1"), perspective("2"))));
+        final var testSubject = tree("")
+                .withChild(tree("path start")
+                        .withChild(tree("path end")
+                                .withChildren(tree("1"), tree("2"))));
         requireEquals(testSubject.toJsonString(), "{\"path start\": {\"path end\": [\"1\",\"2\"]}}");
     }
 
     @UnitTest
     public void testToJsonStringWithNamedArray() {
-        final var testSubject = perspective("")
-                .withChild(perspective("name")
-                        .withChildren(perspective("3"), perspective("4")));
+        final var testSubject = tree("")
+                .withChild(tree("name")
+                        .withChildren(tree("3"), tree("4")));
         requireEquals(testSubject.toJsonString(), "{\"name\": [\"3\",\"4\"]}");
     }
 
     @UnitTest
     public void testEncodeJsonString() {
-        final var testSubject = perspective("").withChild(perspective("\\\n\r\t\""));
+        final var testSubject = tree("").withChild(tree("\\\n\r\t\""));
         requireEquals(testSubject.toJsonString(), "[\"\\\\\\n\\r\\t\\\"\"]");
     }
 
     @UnitTest
     public void testToJsonStringWithArray() {
-        final var testSubject = perspective("")
-                .withChild(perspective("1\n"))
-                .withChild(perspective("2\r"))
-                .withChild(perspective("3"));
+        final var testSubject = tree("")
+                .withChild(tree("1\n"))
+                .withChild(tree("2\r"))
+                .withChild(tree("3"));
         requireEquals(testSubject.toJsonString(), "[\"1\\n\",\"2\\r\",\"3\"]");
     }
 
     @UnitTest
     public void testToJsonStringWithDictionary() {
-        final var testSubject = perspective("")
+        final var testSubject = tree("")
                 .withProperty("1", "2\n")
                 .withProperty("3", "4")
                 .withProperty("4", "5\r");
@@ -102,8 +102,8 @@ public class TreeTest {
 
     @UnitTest
     public void testToJsonStringWithNamedDictionary() {
-        final var testSubject = perspective("").withChild(
-                perspective("name\r\n")
+        final var testSubject = tree("").withChild(
+                tree("name\r\n")
                         .withProperty("1", "2")
                         .withProperty("3", "4")
                         .withProperty("4", "5"));
@@ -112,9 +112,9 @@ public class TreeTest {
 
     @UnitTest
     public void testToJsonStringWithNestedDictionary() {
-        final var testSubject = perspective("")
+        final var testSubject = tree("")
                 .withProperty("1", "2")
-                .withChild(perspective("test")
+                .withChild(tree("test")
                         .withProperty("a", "b\r")
                         .withProperty("c", "d\n")
                 )
@@ -125,12 +125,12 @@ public class TreeTest {
     @UnitTest
     public void testPrintCommonMarkString() {
         final var resultData = binaryOutputStream();
-        final var testData = perspective("Lorem ipsum dolor sit amet")
+        final var testData = tree("Lorem ipsum dolor sit amet")
                 .withProperty("consectetur adipiscing elit", "Cras lobortis mi risus")
-                .withProperty("eu viverra purus feugiat sit amet", perspective("Fusce viverra ipsum in arcu scelerisque egestas")
+                .withProperty("eu viverra purus feugiat sit amet", tree("Fusce viverra ipsum in arcu scelerisque egestas")
                         .withProperty("Vivamus sagittis commodo eleifend", "Nullam lobortis purus ut felis viverra vulputate")
                         .withProperty("Quisque elementum vitae nulla sit amet pretium"
-                                , perspective("Maecenas nunc urna").withProperty("ullamcorper dictum pellentesque in", "vehicula a magna. Vivamus luctus efficitur ex"))
+                                , tree("Maecenas nunc urna").withProperty("ullamcorper dictum pellentesque in", "vehicula a magna. Vivamus luctus efficitur ex"))
                         .withProperty("el ultrices erat luctus lacinia", "Donec vestibulum semper ipsum"))
                 .withProperty("sed pretium felis", "Aliquam orci nunc");
         testData.printCommonMarkString(stringSender(resultData));
@@ -149,14 +149,14 @@ public class TreeTest {
 
     @UnitTest
     public void testToXmlStringWithPrefixesAndGenericNameSpaceCase() {
-        final var resultData = perspective("test", SEW).withChild(perspective("case", SEW))
+        final var resultData = TreeI.tree("test", SEW).withChild(TreeI.tree("case", SEW))
                 .toXmlStringWithPrefixes();
         requireEquals(resultData, "<s:test><s:case/></s:test>");
     }
 
     @UnitTest
     public void testToXmlStringWithAllNameSpaceDeclarationsAtTop() {
-        final var resultData = perspective("test", SEW).withChild(perspective("case", SEW))
+        final var resultData = TreeI.tree("test", SEW).withChild(TreeI.tree("case", SEW))
                 .toXmlStringWithAllNameSpaceDeclarationsAtTop();
         requireEquals(resultData, "<s:test xmlns:s=\"http://splitcells.net/sew.xsd\" ><s:case/></s:test>");
     }

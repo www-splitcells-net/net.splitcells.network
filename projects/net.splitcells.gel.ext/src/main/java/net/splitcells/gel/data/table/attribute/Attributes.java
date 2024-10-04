@@ -18,7 +18,7 @@ package net.splitcells.gel.data.table.attribute;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.testing.Result;
 
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Mocking.anyClass;
 import static net.splitcells.dem.testing.Mocking.anyString;
 import static net.splitcells.dem.testing.Result.result;
@@ -38,7 +38,7 @@ public class Attributes {
 		} else if (type.equals("string")) {
 			return parsedAttribute.withValue(stringAttribute(name));
 		}
-		return parsedAttribute.withErrorMessage(perspective("Unknown attribute type.")
+		return parsedAttribute.withErrorMessage(tree("Unknown attribute type.")
 				.withProperty("name", name)
 				.withProperty("type", type));
 	}

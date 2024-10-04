@@ -20,7 +20,7 @@ import net.splitcells.dem.resource.communication.log.LogLevel;
 
 import java.util.Optional;
 
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
@@ -88,11 +88,11 @@ public final class StaticFlags {
 
     private static Optional<Tree> warningIfNotMostPerformant() {
         if (ENFORCING_UNIT_CONSISTENCY || TELLING_STORY || WARNING || TRACING || !INLINE_STANDARD_FACTORIES) {
-            return Optional.of(perspective("The most performant settings are not enabled").withChildren(
-                    perspective("ENFORCING_UNIT_CONSISTENCY = " + ENFORCING_UNIT_CONSISTENCY)
-                    , perspective("TELLING_STORY = " + TELLING_STORY)
-                    , perspective("WARNING = " + WARNING)
-                    , perspective("INLINE_STANDARD_FACTORIES = " + INLINE_STANDARD_FACTORIES)));
+            return Optional.of(tree("The most performant settings are not enabled").withChildren(
+                    tree("ENFORCING_UNIT_CONSISTENCY = " + ENFORCING_UNIT_CONSISTENCY)
+                    , tree("TELLING_STORY = " + TELLING_STORY)
+                    , tree("WARNING = " + WARNING)
+                    , tree("INLINE_STANDARD_FACTORIES = " + INLINE_STANDARD_FACTORIES)));
         }
         return Optional.empty();
     }
@@ -101,7 +101,7 @@ public final class StaticFlags {
      * This method logs, whether the settings have some notable bad side effects.
      */
     public static void logStaticFlags() {
-        final var staticFlagsOverridden = perspective("static-flags-overridden");
+        final var staticFlagsOverridden = tree("static-flags-overridden");
         if (!ENFORCING_UNIT_CONSISTENCY) {
             staticFlagsOverridden.withText("`" + ENFORCING_UNIT_CONSISTENCY_KEY + "` set to `false` and therefore simple errors are not checked.");
         }

@@ -25,7 +25,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
 import static net.splitcells.dem.lang.namespace.NameSpaces.GEL;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -51,6 +51,7 @@ import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.constraint.QueryI;
@@ -249,8 +250,8 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         // TODO Move this to a different project.
         if (TRACING) {
             logs().append
-                    (perspective("register-additions." + Constraint.class.getSimpleName())
-                                    .withChild(perspective("additions").withChild(addition.toTree()))
+                    (tree("register-additions." + Constraint.class.getSimpleName())
+                                    .withChild(tree("additions").withChild(addition.toTree()))
                                     .withProperty("injectionGroup", injectionGroup.toString())
                             , this
                             , DEBUG);
@@ -476,13 +477,13 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
 
     @Override
     public Tree toTree() {
-        final var dom = perspective(type().getSimpleName());
+        final var dom = tree(type().getSimpleName());
         if (!arguments().isEmpty()) {
             arguments().forEach(arg -> dom.withProperty(ARGUMENTATION.value(), arg.toTree()));
         }
         dom.withProperty("rating", rating().toTree());
         {
-            final var ratings = perspective("ratings");
+            final var ratings = tree("ratings");
             dom.withChild(ratings);
             lineProcessing.columnView(INCOMING_CONSTRAINT_GROUP)
                     .lookup(injectionGroup())
@@ -500,13 +501,13 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
 
     @Override
     public Tree toPerspective(Set<GroupId> groups) {
-        final var dom = perspective(type().getSimpleName());
+        final var dom = tree(type().getSimpleName());
         if (!arguments().isEmpty()) {
             arguments().forEach(arg -> dom.withProperty(ARGUMENTATION.value(), arg.toTree()));
         }
         dom.withProperty("rating", rating(groups).toTree());
         {
-            final var ratings = perspective("ratings");
+            final var ratings = tree("ratings");
             dom.withChild(ratings);
             groups.forEach(group ->
                     lineProcessing
@@ -568,7 +569,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         if (naturalArgumentation.isEmpty()) {
             return Optional.empty();
         }
-        final var localArgumentation = perspective(EMPTY_STRING.value(), GEL);
+        final var localArgumentation = TreeI.tree(EMPTY_STRING.value(), GEL);
         naturalArgumentation
                 .forEach(naturalReasoning -> naturalReasoning.ifPresent(localArgumentation::withChild));
         return Optional.of(localArgumentation);
@@ -581,11 +582,11 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         if (localArgumentation.isEmpty() && childrenArgumentation.isEmpty()) {
             return Optional.empty();
         } else if (!localArgumentation.isEmpty()) {
-            return Optional.of(perspective(EMPTY_STRING.value(), GEL)
-                    .withChild(perspective(localArgumentation.get(), NameSpaces.STRING))
+            return Optional.of(TreeI.tree(EMPTY_STRING.value(), GEL)
+                    .withChild(TreeI.tree(localArgumentation.get(), NameSpaces.STRING))
                     .withChildren(childrenArgumentation));
         } else {
-            return Optional.of(perspective(EMPTY_STRING.value(), GEL)
+            return Optional.of(TreeI.tree(EMPTY_STRING.value(), GEL)
                     .withChildren(childrenArgumentation));
         }
     }

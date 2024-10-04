@@ -36,7 +36,7 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.JsonConfig.jsonConfig;
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
 import static net.splitcells.dem.utils.BinaryUtils.binaryOutputStream;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
@@ -72,25 +72,25 @@ public interface Tree extends TreeView {
     List<Tree> children();
 
     default Tree withText(String text) {
-        return withValues(perspective(text, STRING));
+        return withValues(TreeI.tree(text, STRING));
     }
 
     default Tree withProperty(String name, NameSpace nameSpace, String value) {
-        return withValue(perspective(name, nameSpace)
-                .withValue(perspective(value, STRING)));
+        return withValue(TreeI.tree(name, nameSpace)
+                .withValue(TreeI.tree(value, STRING)));
     }
 
     default Tree withProperty(String name, NameSpace nameSpace, Tree value) {
-        return withValue(perspective(name, nameSpace).withValue(value));
+        return withValue(TreeI.tree(name, nameSpace).withValue(value));
     }
 
     default Tree withProperty(String name, String value) {
-        return withValue(perspective(name)
-                .withValue(perspective(value, STRING)));
+        return withValue(tree(name)
+                .withValue(TreeI.tree(value, STRING)));
     }
 
     default Tree withProperty(String name, Tree value) {
-        return withValue(perspective(name).withValue(value));
+        return withValue(tree(name).withValue(value));
     }
 
     default Tree withValues(Tree... args) {
@@ -240,7 +240,7 @@ public interface Tree extends TreeView {
         final Tree child;
         if (propertyHosters.isEmpty()) {
             // HACK Use generic rendering specifics based on argument.
-            child = perspective(NameSpaces.VAL, NATURAL)
+            child = TreeI.tree(NameSpaces.VAL, NATURAL)
                     .withProperty(NameSpaces.NAME, NATURAL, propertyValue);
             final var elementLinking = path.childNamed(LINK, DEN);
             if (elementLinking.isPresent()) {
@@ -363,8 +363,8 @@ public interface Tree extends TreeView {
     }
 
     default Tree withXmlAttribute(String attributeName, String attributeValue, NameSpace nameSpace) {
-        return withChild(perspective("attribute", XML_SYNTAX)
-                .withChildren(perspective(attributeName, nameSpace), perspective(attributeValue)));
+        return withChild(TreeI.tree("attribute", XML_SYNTAX)
+                .withChildren(TreeI.tree(attributeName, nameSpace), tree(attributeValue)));
     }
 
     /**
@@ -549,7 +549,7 @@ public interface Tree extends TreeView {
                 .filter(child -> child.name().equals(next))
                 .findFirst();
         if (match.isEmpty()) {
-            final var nextPerspective = perspective(next);
+            final var nextPerspective = tree(next);
             this.withChild(nextPerspective);
             nextPerspective.extendWith(path);
         } else {
@@ -583,7 +583,7 @@ public interface Tree extends TreeView {
         if (name().isEmpty()) {
             return this;
         }
-        return perspective("").withChild(this);
+        return tree("").withChild(this);
     }
 
     default String toJsonString() {
@@ -749,7 +749,7 @@ public interface Tree extends TreeView {
                     .filter(child -> child.name().equals(element))
                     .findFirst();
             if (next.isEmpty()) {
-                throw executionException(perspective("Could not find " + getClass().getName() + " child by name.")
+                throw executionException(tree("Could not find " + getClass().getName() + " child by name.")
                         .withProperty("path", listWithValuesOf(path).toString())
                         .withProperty("searched", element));
             }

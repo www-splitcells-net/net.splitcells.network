@@ -23,7 +23,7 @@ import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
@@ -48,7 +48,7 @@ public class ProjectsRendererSourceCodeFileSystem implements FileSystemView {
                     .orElseThrow()
                     .getContent());
         }
-        throw executionException(perspective("Unknown root folder.")
+        throw executionException(tree("Unknown root folder.")
                 .withProperty("path", pathStr)
                 .withProperty("projects renderer", projectsRenderer.toString()));
     }

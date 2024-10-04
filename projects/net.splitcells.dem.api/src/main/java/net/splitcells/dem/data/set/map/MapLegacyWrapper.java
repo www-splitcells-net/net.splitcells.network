@@ -22,7 +22,7 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 
-import static net.splitcells.dem.lang.tree.TreeI.perspective;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 @JavaLegacyArtifact
@@ -84,7 +84,7 @@ public class MapLegacyWrapper<Key, Value> implements Map<Key, Value> {
     public Value put(Key key, Value value) {
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY
                 && containsKey(key)) {
-            throw executionException(perspective("Key already exists")
+            throw executionException(tree("Key already exists")
                     .withProperty("key", key.toString())
                     .withProperty("value", value.toString()));
         }
