@@ -19,7 +19,10 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.processor.BinaryMessage;
+import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.ProjectsRendererI;
+import net.splitcells.website.server.projects.RenderRequest;
+import net.splitcells.website.server.projects.RenderResponse;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -27,15 +30,25 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 
 public interface ProjectsRendererExtension {
-    Optional<BinaryMessage> renderFile(String path, @Deprecated ProjectsRendererI projectsRenderer, Config config);
+    @Deprecated
+    default Optional<BinaryMessage> renderFile(String path, @Deprecated ProjectsRendererI projectsRenderer, Config config) {
+        return Optional.empty();
+    }
 
+    default RenderResponse render(RenderRequest request, ProjectsRenderer projectsRenderer) {
+        return RenderResponse.renderResponse(renderFile(request.trail().unixPathString()
+                , (ProjectsRendererI) projectsRenderer // TODO HACK
+                , projectsRenderer.config()));
+    }
+
+    @Deprecated
     default Tree extendProjectLayout(Tree layout, @Deprecated ProjectsRendererI projectsRenderer) {
         return layout;
     }
 
     /**
      * The paths are relative to the website's {@link Config#rootPath()}.
-     * 
+     *
      * @param projectsRenderer
      * @return Set of paths relative to {@link Config#rootPath()}.
      */

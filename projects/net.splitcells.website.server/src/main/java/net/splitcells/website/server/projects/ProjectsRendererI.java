@@ -32,6 +32,7 @@ import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.project.validator.RenderingValidator;
 import net.splitcells.website.server.Server;
 import net.splitcells.website.server.Config;
+import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtensionMerger;
 
 import java.nio.file.Path;
@@ -187,10 +188,13 @@ public class ProjectsRendererI implements ProjectsRenderer {
             .withRegisteredExtension(frontMenuExtension())
             .withRegisteredExtension(colloquiumPlanningDemandTestData())
             .withRegisteredExtension(colloquiumPlanningSuppliesTestData())
-            .withRegisteredExtension(hostMemoryUtilizationExtension())
-            .withRegisteredExtension(hostCpuUtilizationExtension());
+            .withRegisteredExtension(hostMemoryUtilizationExtension());
 
-    private final List<ProjectsRenderer> extensions = list();
+    private final List<ProjectsRendererExtension> extensions = list();
+
+    {
+        extensions.withAppended(hostCpuUtilizationExtension());
+    }
 
     private ProjectsRendererI(String name
             , ProjectRenderer fallbackRenderer
@@ -239,13 +243,13 @@ public class ProjectsRendererI implements ProjectsRenderer {
             return renderResponse(deprecatedRender);
         }
         final var responses = extensions.stream()
-                .map(e -> e.render(request))
+                .map(e -> e.render(request, this))
                 .filter(r -> r.data().isPresent())
                 .collect(toList());
         if (responses.isEmpty()) {
-            return RenderResponse.renderResponse(Optional.empty());
+            return renderResponse(Optional.empty());
         }
-        if (responses.size() > 0) {
+        if (responses.size() > 1) {
             logs().appendWarning(tree("Multiple matches for one requests. Choosing first one as final response.")
                     .withProperty("trail", request.trail().unixPathString()));
         }

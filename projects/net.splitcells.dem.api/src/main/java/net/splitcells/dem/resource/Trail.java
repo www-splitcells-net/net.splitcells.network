@@ -18,11 +18,13 @@ package net.splitcells.dem.resource;
 import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.object.Equality_;
 
 import java.nio.file.Path;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
@@ -36,9 +38,9 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
  * Thereby bugs are avoided,
  * that are created via {@link Path#resolve(Path)} by accidentally mixing relative and absolute paths.</p>
  */
-public class Trail implements Thing {
+public class Trail implements Thing, Equality_<Trail> {
     public static Trail trail(String... content) {
-        return new Trail(listWithValuesOf(content));
+        return new Trail(listWithValuesOf(content).stream().filter(e -> !e.isEmpty()).collect(toList()));
     }
 
     public static Trail trail(List<String> content) {
@@ -46,7 +48,7 @@ public class Trail implements Thing {
     }
 
     public static Trail trail(String path) {
-        return new Trail(listWithValuesOf(path.split("/")));
+        return new Trail(listWithValuesOf(path.split("/")).stream().filter(e -> !e.isEmpty()).collect(toList()));
     }
 
     private final List<String> content;
@@ -63,6 +65,10 @@ public class Trail implements Thing {
         return content.stream()
                 .filter(e -> !e.isEmpty())
                 .reduce((a, b) -> a + "/" + b).orElse("");
+    }
+
+    public String toString() {
+        return unixPathString();
     }
 
     @Override
@@ -180,5 +186,10 @@ public class Trail implements Thing {
             normalizedPath = normalizedPath.substring(0, normalizedPath.length() - 1);
         }
         return normalizedPath.split("/").length;
+    }
+
+    @Override
+    public <A extends Trail> boolean equalContents(A arg) {
+        return content.equals(arg.content());
     }
 }
