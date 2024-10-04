@@ -45,6 +45,8 @@ import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
 import net.splitcells.website.server.processor.BinaryMessage;
+import net.splitcells.website.server.projects.RenderRequest;
+import net.splitcells.website.server.projects.RenderResponse;
 import net.splitcells.website.server.security.encryption.PrivateIdentityPemStore;
 import net.splitcells.website.server.security.encryption.PublicIdentityPemStore;
 import net.splitcells.website.server.security.encryption.SslEnabled;
@@ -70,6 +72,7 @@ import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
 import static net.splitcells.website.server.processor.Request.request;
+import static net.splitcells.website.server.projects.RenderRequest.renderRequest;
 import static net.splitcells.website.server.vertx.FileBasedAuthenticationProvider.fileBasedAuthenticationProvider;
 
 @JavaLegacyArtifact
@@ -86,14 +89,14 @@ public class Server {
      * @param config
      * @return
      */
-    public static Service serveToHttpAt(Supplier<Function<String, Optional<BinaryMessage>>> renderer, Config config) {
+    public static Service serveToHttpAt(Supplier<Function<RenderRequest, RenderResponse>> renderer, Config config) {
         config.withIsMultiThreaded(true);
-        return serveToHttpAt(new Function<String, Optional<BinaryMessage>>() {
-            final Effect<Function<String, Optional<BinaryMessage>>> effect = effectWorkerPool(renderer, 10);
+        return serveToHttpAt(new Function<RenderRequest, RenderResponse>() {
+            final Effect<Function<RenderRequest, RenderResponse>> effect = effectWorkerPool(renderer, 10);
 
             @Override
-            public Optional<BinaryMessage> apply(String requestedPath) {
-                final var processing = Processing.<String, Optional<BinaryMessage>>processing();
+            public RenderResponse apply(RenderRequest requestedPath) {
+                final var processing = Processing.<RenderRequest, RenderResponse>processing();
                 processing.withArgument(null);
                 effect.affect(i -> processing.withResult(i.apply(requestedPath)));
                 return processing.result();
@@ -108,7 +111,7 @@ public class Server {
      *
      * @param renderer renderer
      */
-    public static Service serveToHttpAt(Function<String, Optional<BinaryMessage>> renderer, Config config) {
+    public static Service serveToHttpAt(Function<RenderRequest, RenderResponse> renderer, Config config) {
         return new Service() {
             Vertx vertx;
 
@@ -225,10 +228,10 @@ public class Server {
                                                  * Callbacks would also make the renderer queue requests,
                                                  * which avoids holding one thread for each parallel request.
                                                  */
-                                                final var result = renderer.apply(requestPath);
-                                                if (result.isPresent()) {
-                                                    response.putHeader("content-type", result.get().getFormat());
-                                                    promise.complete(result.get().getContent());
+                                                final var result = renderer.apply(renderRequest(trail(requestPath), Optional.empty()));
+                                                if (result.data().isPresent()) {
+                                                    response.putHeader("content-type", result.data().get().getFormat());
+                                                    promise.complete(result.data().get().getContent());
                                                 } else {
                                                     promise.fail(new DocumentNotFound(requestPath));
                                                 }

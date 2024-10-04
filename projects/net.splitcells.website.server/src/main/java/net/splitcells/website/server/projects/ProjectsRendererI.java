@@ -17,6 +17,8 @@ package net.splitcells.website.server.projects;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.TreeI;
@@ -53,6 +55,7 @@ import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiv
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.project.validator.RenderingValidatorForHtmlLinks.renderingValidatorForHtmlLinks;
 import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithPath;
+import static net.splitcells.website.server.projects.RenderResponse.renderResponse;
 import static net.splitcells.website.server.projects.extension.ColloquiumPlanningDemandsTestData.colloquiumPlanningDemandTestData;
 import static net.splitcells.website.server.projects.extension.ColloquiumPlanningSuppliesTestData.colloquiumPlanningSuppliesTestData;
 import static net.splitcells.website.server.projects.extension.FrontMenuExtension.frontMenuExtension;
@@ -187,6 +190,8 @@ public class ProjectsRendererI implements ProjectsRenderer {
             .withRegisteredExtension(hostMemoryUtilizationExtension())
             .withRegisteredExtension(hostCpuUtilizationExtension());
 
+    private final List<ProjectsRenderer> extensions = list();
+
     private ProjectsRendererI(String name
             , ProjectRenderer fallbackRenderer
             , List<ProjectRenderer> renderers
@@ -225,6 +230,26 @@ public class ProjectsRendererI implements ProjectsRenderer {
             startingWithSlash = "/" + translatedPathTmp;
         }
         return startingWithSlash;
+    }
+
+    @Override
+    public RenderResponse render(RenderRequest request) {
+        final var deprecatedRender = render("/" + request.trail().unixPathString());
+        if (deprecatedRender.isPresent()) {
+            return renderResponse(deprecatedRender);
+        }
+        final var responses = extensions.stream()
+                .map(e -> e.render(request))
+                .filter(r -> r.data().isPresent())
+                .collect(toList());
+        if (responses.isEmpty()) {
+            return RenderResponse.renderResponse(Optional.empty());
+        }
+        if (responses.size() > 0) {
+            logs().appendWarning(tree("Multiple matches for one requests. Choosing first one as final response.")
+                    .withProperty("trail", request.trail().unixPathString()));
+        }
+        return responses.get(0);
     }
 
     /**

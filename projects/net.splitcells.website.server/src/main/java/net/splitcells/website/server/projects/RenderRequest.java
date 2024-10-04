@@ -15,9 +15,30 @@
  */
 package net.splitcells.website.server.projects;
 
+import net.splitcells.dem.resource.Trail;
 import net.splitcells.website.server.processor.Request;
+import net.splitcells.website.server.processor.RequestImpl;
 
 import java.util.Optional;
 
-public interface RenderRequest extends Request<Optional<byte[]>> {
+public class RenderRequest implements Request<Optional<byte[]>> {
+    public static RenderRequest renderRequest(Trail trail, Optional<byte[]> data) {
+        return new RenderRequest(trail, data);
+    }
+
+    private Trail trail;
+    private final Optional<byte[]> data;
+
+    private RenderRequest(Trail trailArg, Optional<byte[]> dataArg) {
+        trail = trailArg;
+        data = dataArg;
+    }
+
+    public Optional<byte[]> data() {
+        return data;
+    }
+
+    public Trail trail() {
+        return trail;
+    }
 }
