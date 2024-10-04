@@ -17,9 +17,6 @@ package net.splitcells.website.server.processor;
 
 import net.splitcells.dem.resource.Trail;
 
-import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.website.server.processor.RequestImpl.requestImpl;
-
 /**
  * This is the base class for all requests.
  * In the worst case scenario, the requests are user input or even comes from a public source.
@@ -27,12 +24,24 @@ import static net.splitcells.website.server.processor.RequestImpl.requestImpl;
  *
  * @param <T> This is the data, that is provided as additional arguments for the requests.
  */
-public interface Request<T> {
-    static <T> Request<T> request(Trail trail, T data) {
-        return requestImpl(trail, data);
+public class RequestImpl<T> implements Request<T> {
+    public static <T> RequestImpl<T> requestImpl(Trail trail, T data) {
+        return new RequestImpl<>(trail, data);
     }
 
-    T data();
+    private Trail trail;
+    private final T data;
 
-    Trail trail();
+    private RequestImpl(Trail trailArg, T dataArg) {
+        trail = trailArg;
+        data = dataArg;
+    }
+
+    public T data() {
+        return data;
+    }
+
+    public Trail trail() {
+        return trail;
+    }
 }

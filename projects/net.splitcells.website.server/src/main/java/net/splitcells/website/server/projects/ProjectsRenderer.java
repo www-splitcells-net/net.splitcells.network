@@ -19,6 +19,8 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.website.server.Config;
+import net.splitcells.website.server.processor.Request;
+import net.splitcells.website.server.processor.Response;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.processor.BinaryMessage;
@@ -94,8 +96,27 @@ public interface ProjectsRenderer {
      *
      * @param path This is the path of the file being rendered.
      * @return The rendered file.
+     * @deprecated This is deprecated, as for every request an authorization should be done.
+     * Also, this method is not future proof, as it is hard to add new rendering parameters.
      */
+    @Deprecated
     Optional<BinaryMessage> render(String path);
+
+
+    /**
+     * <p>Renders the file of the given {@param request}.
+     * This file has to be present in {@link #projectsPaths}.</p>
+     * <p>This method and {@link #render(String)} should never return a non empty result for the same path.
+     * This method has an empty default implementation,
+     * because this method was created after {@link #render(String)}.
+     * This method will completely replace {@link #render(String)} in the future.</p>
+     *
+     * @param request
+     * @return
+     */
+    default RenderResponse render(RenderRequest request) {
+        return RenderResponse.renderResponse(Optional.empty());
+    }
 
     /**
      * Retrieves the source code, for the given path.

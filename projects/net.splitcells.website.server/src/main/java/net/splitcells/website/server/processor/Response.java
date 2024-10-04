@@ -15,20 +15,12 @@
  */
 package net.splitcells.website.server.processor;
 
-import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.website.server.processor.ResponseImpl.responseImpl;
 
-public class Response<T> {
-    public static <T> Response<T> response(T data) {
-        return new Response<>(data);
+public interface Response<T> {
+    static <T> Response<T> response(T data) {
+        return responseImpl(data);
     }
 
-    private final T data;
-
-    private Response(T dataArg) {
-        data = dataArg;
-    }
-
-    public T data() {
-        return data;
-    }
+    T data();
 }

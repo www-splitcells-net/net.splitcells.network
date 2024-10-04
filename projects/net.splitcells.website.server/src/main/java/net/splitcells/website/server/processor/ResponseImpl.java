@@ -15,24 +15,18 @@
  */
 package net.splitcells.website.server.processor;
 
-import net.splitcells.dem.resource.Trail;
-
-import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.website.server.processor.RequestImpl.requestImpl;
-
-/**
- * This is the base class for all requests.
- * In the worst case scenario, the requests are user input or even comes from a public source.
- * Always treat such requests as potentially malicious.
- *
- * @param <T> This is the data, that is provided as additional arguments for the requests.
- */
-public interface Request<T> {
-    static <T> Request<T> request(Trail trail, T data) {
-        return requestImpl(trail, data);
+public class ResponseImpl<T> implements Response<T>{
+    public static <T> ResponseImpl<T> responseImpl(T data) {
+        return new ResponseImpl<>(data);
     }
 
-    T data();
+    private final T data;
 
-    Trail trail();
+    private ResponseImpl(T dataArg) {
+        data = dataArg;
+    }
+
+    public T data() {
+        return data;
+    }
 }

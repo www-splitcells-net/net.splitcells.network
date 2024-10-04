@@ -13,26 +13,11 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.website.server.processor;
+package net.splitcells.website.server.projects;
 
-import net.splitcells.dem.resource.Trail;
+import net.splitcells.website.server.processor.Request;
 
-import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.website.server.processor.RequestImpl.requestImpl;
+import java.util.Optional;
 
-/**
- * This is the base class for all requests.
- * In the worst case scenario, the requests are user input or even comes from a public source.
- * Always treat such requests as potentially malicious.
- *
- * @param <T> This is the data, that is provided as additional arguments for the requests.
- */
-public interface Request<T> {
-    static <T> Request<T> request(Trail trail, T data) {
-        return requestImpl(trail, data);
-    }
-
-    T data();
-
-    Trail trail();
+public interface RenderRequest extends Request<Optional<byte[]>> {
 }
