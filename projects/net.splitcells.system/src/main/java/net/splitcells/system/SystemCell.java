@@ -19,8 +19,13 @@ import net.splitcells.dem.environment.Cell;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.website.server.ServerConfig;
 import net.splitcells.website.server.WebsiteServerCell;
+import net.splitcells.website.server.test.HtmlLiveTest;
 
 import static net.splitcells.dem.Dem.serve;
+import static net.splitcells.dem.testing.Assertions.requireEquals;
+import static net.splitcells.dem.testing.Assertions.waitUntilRequirementIsTrue;
+import static net.splitcells.dem.utils.StringUtils.requireNonEmptyString;
+import static net.splitcells.website.server.client.HtmlClientImpl.publicHtmlClient;
 
 public class SystemCell implements Cell {
 
@@ -40,7 +45,22 @@ public class SystemCell implements Cell {
 
     @Override
     public void accept(Environment env) {
-        env.config().withConfigValue(ServerConfig.class, WebsiteViaJar.config(env.config().configValue(ServerConfig.class)));
+        env.config()
+                .withConfigValue(ServerConfig.class, WebsiteViaJar.config(env.config().configValue(ServerConfig.class)))
+                .withConfigValue(HtmlLiveTest.class, () -> {
+                    try (final var browser = publicHtmlClient()) {
+                        final var tab = browser.openTab("/net/splitcells/gel/ui/no/code/editor/index.html");
+                        requireEquals("", tab.elementById("net-splitcells-gel-ui-no-code-editor-form-errors").textContent());
+                        requireEquals("", tab.elementById("net-splitcells-gel-ui-no-code-editor-form-solution").textContent());
+                        requireEquals("", tab.elementById("net-splitcells-gel-ui-no-code-editor-form-solution-rating").textContent());
+                        tab.elementByClass("net-splitcells-website-pop-up-confirmation-button").click();
+                        tab.elementById("net-splitcells-gel-ui-no-code-editor-calculate-solution-form-submit-1").click();
+                        waitUntilRequirementIsTrue(1000L * 60, () -> !tab.elementById("net-splitcells-gel-ui-no-code-editor-form-solution").value().isEmpty());
+                        requireEquals("", tab.elementById("net-splitcells-gel-ui-no-code-editor-form-errors").textContent());
+                        requireNonEmptyString(tab.elementById("net-splitcells-gel-ui-no-code-editor-form-solution-rating").textContent());
+                    }
+                })
+        ;
         env.withCell(WebsiteServerCell.class);
     }
 }
