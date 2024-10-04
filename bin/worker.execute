@@ -21,7 +21,7 @@ RUN apt clean
 RUN apt update # This fixes install errors. It is unknown why this is the case.
 RUN apt install --yes maven git python3 pip
 RUN pip install playwright
-RUN playwright install --with-deps
+RUN playwright install --with-deps # Install all OS dependencies, that are required for Playwright. Otherwise, Playwright cannot be used in Java.
 VOLUME /root/.local/state/
 VOLUME /root/Documents/
 VOLUME /root/.ssh/
