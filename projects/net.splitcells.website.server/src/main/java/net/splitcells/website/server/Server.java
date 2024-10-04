@@ -31,6 +31,7 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BasicAuthHandler;
 import io.vertx.ext.web.handler.BodyHandler;
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.execution.Effect;
@@ -45,6 +46,10 @@ import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
 import net.splitcells.website.server.processor.BinaryMessage;
+import net.splitcells.website.server.project.LayoutConfig;
+import net.splitcells.website.server.project.ProjectRenderer;
+import net.splitcells.website.server.project.renderer.PageMetaData;
+import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.RenderRequest;
 import net.splitcells.website.server.projects.RenderResponse;
 import net.splitcells.website.server.security.authentication.Users;
@@ -53,6 +58,8 @@ import net.splitcells.website.server.security.encryption.PublicIdentityPemStore;
 import net.splitcells.website.server.security.encryption.SslEnabled;
 import net.splitcells.website.server.vertx.DocumentNotFound;
 
+import javax.swing.*;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Semaphore;
@@ -71,6 +78,7 @@ import static net.splitcells.dem.resource.communication.log.LogLevel.WARNING;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
 import static net.splitcells.website.server.processor.Request.request;
 import static net.splitcells.website.server.projects.RenderRequest.renderRequest;
@@ -91,16 +99,89 @@ public class Server {
      * @param config
      * @return
      */
-    public static Service serveToHttpAt(Supplier<Function<RenderRequest, RenderResponse>> renderer, Config config) {
+    public static Service serveToHttpAt(Supplier<ProjectsRenderer> renderer, Config config) {
         config.withIsMultiThreaded(true);
-        return serveToHttpAt(new Function<RenderRequest, RenderResponse>() {
-            final Effect<Function<RenderRequest, RenderResponse>> effect = effectWorkerPool(renderer, 10);
+        return serveToHttpAt(new ProjectsRenderer() {
+            final Effect<ProjectsRenderer> effect = effectWorkerPool(renderer, 10);
 
             @Override
-            public RenderResponse apply(RenderRequest requestedPath) {
-                final var processing = Processing.<RenderRequest, RenderResponse>processing();
+            public void build() {
+                throw notImplementedYet();
+            }
+
+            @Override
+            public void serveTo(Path target) {
+                throw notImplementedYet();
+            }
+
+            @Override
+            public Service httpServer() {
+                throw notImplementedYet();
+            }
+
+            @Override
+            public Service authenticatedHttpsServer() {
+                throw notImplementedYet();
+            }
+
+            @Override
+            public Optional<BinaryMessage> render(String path) {
+                throw notImplementedYet();
+            }
+
+            @Override
+            public RenderResponse render(RenderRequest request) {
+                final var processing = Processing.<ProjectsRenderer, RenderResponse>processing();
                 processing.withArgument(null);
-                effect.affect(i -> processing.withResult(i.apply(requestedPath)));
+                effect.affect(i -> processing.withResult(i.render(request)));
+                return processing.result();
+            }
+
+            @Override
+            public Optional<BinaryMessage> sourceCode(String path) {
+                throw notImplementedYet();
+            }
+
+            @Override
+            public Set<Path> projectsPaths() {
+                throw notImplementedYet();
+            }
+
+            @Override
+            public Set<Path> relevantProjectsPaths() {
+                throw notImplementedYet();
+            }
+
+            @Override
+            public Config config() {
+                throw notImplementedYet();
+            }
+
+            @Override
+            public net.splitcells.dem.data.set.list.List<ProjectRenderer> projectRenderers() {
+                throw notImplementedYet();
+            }
+
+            @Override
+            public Optional<PageMetaData> metaData(String path) {
+                throw notImplementedYet();
+            }
+
+            @Override
+            public Optional<byte[]> renderHtmlBodyContent(String bodyContent, Optional<String> title, Optional<String> path, Config config) {
+                throw notImplementedYet();
+            }
+
+            @Override
+            public Optional<BinaryMessage> renderContent(String content, LayoutConfig metaContent) {
+                throw notImplementedYet();
+            }
+
+            @Override
+            public boolean requiresAuthentication(RenderRequest request) {
+                final var processing = Processing.<ProjectsRenderer, Boolean>processing();
+                processing.withArgument(null);
+                effect.affect(i -> processing.withResult(i.requiresAuthentication(request)));
                 return processing.result();
             }
         }, config);
@@ -113,7 +194,7 @@ public class Server {
      *
      * @param renderer renderer
      */
-    public static Service serveToHttpAt(Function<RenderRequest, RenderResponse> renderer, Config config) {
+    public static Service serveToHttpAt(ProjectsRenderer renderer, Config config) {
         return new Service() {
             Vertx vertx;
 
@@ -185,66 +266,72 @@ public class Server {
                              */
 
                         });
-                        if (configValue(PasswordAuthenticationEnabled.class)) {
-                            /* TODO For multithreading the `router.route("/*").blockingHandler`
-                             * would probably have to be used instead, but it does not work with single thread mode.
-                             * If blockingHandler is used in single threaded mode, the multipart request is sometimes
-                             * not fully downloaded.
-                             */
-                            router.route("/*").handler(BasicAuthHandler.create(fileBasedAuthenticationProvider()));
-                        }
+                        final var authenticator = BasicAuthHandler.create(fileBasedAuthenticationProvider());
+                        final var authenticationEnabled = configValue(PasswordAuthenticationEnabled.class);
                         /* The BodyHandler ensures, that all parts of a multipart request are available
                          * at the next handler in a multi threaded context,
                          * by downloading/receiving all data from the request.
                          */
-                        router.route().useNormalizedPath(true).handler(BodyHandler.create()).handler(routingContext -> {
-                            HttpServerResponse response = routingContext.response();
-                            if (routingContext.request().isExpectMultipart()) {
-                                vertx.<byte[]>executeBlocking((promise) -> {
-                                            final var binaryRequest = parseBinaryRequest(routingContext.request().path()
-                                                    , routingContext.request().formAttributes());
-                                            logs().append(tree("Processing web server binary request.")
-                                                            .withProperty("Binary request", binaryRequest.data())
-                                                    , LogLevel.DEBUG);
-                                            final var binaryResponse = binaryProcessor
-                                                    .process(binaryRequest);
-                                            response.putHeader("content-type", Formats.JSON.mimeTypes());
-                                            promise.complete(toBytes(binaryResponse.data().createToJsonPrintable()
-                                                    .toJsonString()));
-                                        }, config.isSingleThreaded()
-                                        , (result) -> handleResult(routingContext, result));
-                            } else {
-                                vertx.<byte[]>executeBlocking((promise) -> {
-                                            try {
-                                                final String requestPath;
-                                                if ("".equals(routingContext.request().path()) || "/".equals(routingContext.request().path())) {
-                                                    requestPath = "index.html";
-                                                } else {
-                                                    requestPath = routingContext.request().path();
-                                                }
-                                                logs().append(tree("Processing web server rendering request.")
-                                                                .withProperty("Raw request path", routingContext.request().path())
-                                                                .withProperty("Interpreted request path", requestPath)
-                                                        , LogLevel.DEBUG);
-                                                /* TODO This style creates duplicate threads. Use a callback for the response instead.
-                                                 * Callbacks would also make the renderer queue requests,
-                                                 * which avoids holding one thread for each parallel request.
-                                                 */
-                                                final var result = renderer.apply(renderRequest(trail(requestPath), Optional.empty(), ANONYMOUS_USER));
-                                                if (result.data().isPresent()) {
-                                                    response.putHeader("content-type", result.data().get().getFormat());
-                                                    promise.complete(result.data().get().getContent());
-                                                } else {
-                                                    promise.fail(new DocumentNotFound(requestPath));
-                                                }
-                                            } catch (Exception e) {
-                                                logs().appendError(e);
-                                                throw new RuntimeException(e);
+                        router.route().useNormalizedPath(true)
+                                .handler(BodyHandler.create())
+                                .handler(new BasicAuthHandler() {
+                                    @Override
+                                    public void handle(RoutingContext routingContext) {
+                                        if (authenticationEnabled) {
+                                            if (renderer.requiresAuthentication(renderRequest(trail(requestPath(routingContext))
+                                                    , Optional.empty(), ANONYMOUS_USER))) {
+                                                authenticator.handle(routingContext);
+                                            } else {
+                                                routingContext.next();
                                             }
-                                        }, config.isSingleThreaded()
-                                        , (result) -> handleResult(routingContext, result));
-                            }
-                        });
+                                        } else {
+                                            routingContext.next();
+                                        }
+                                    }
+                                })
+                                .handler(routingContext -> {
+                                    HttpServerResponse response = routingContext.response();
+                                    if (routingContext.request().isExpectMultipart()) {
+                                        vertx.<byte[]>executeBlocking((promise) -> {
+                                                    final var binaryRequest = parseBinaryRequest(routingContext.request().path()
+                                                            , routingContext.request().formAttributes());
+                                                    logs().append(tree("Processing web server binary request.")
+                                                                    .withProperty("Binary request", binaryRequest.data())
+                                                            , LogLevel.DEBUG);
+                                                    final var binaryResponse = binaryProcessor
+                                                            .process(binaryRequest);
+                                                    response.putHeader("content-type", Formats.JSON.mimeTypes());
+                                                    promise.complete(toBytes(binaryResponse.data().createToJsonPrintable()
+                                                            .toJsonString()));
+                                                }, config.isSingleThreaded()
+                                                , (result) -> handleResult(routingContext, result));
+                                    } else {
+                                        vertx.<byte[]>executeBlocking((promise) -> {
+                                                    try {
+                                                        final String requestPath = requestPath(routingContext);
+                                                        logs().append(tree("Processing web server rendering request.")
+                                                                        .withProperty("Raw request path", routingContext.request().path())
+                                                                        .withProperty("Interpreted request path", requestPath)
+                                                                , LogLevel.DEBUG);
+                                                        /* TODO This style creates duplicate threads. Use a callback for the response instead.
+                                                         * Callbacks would also make the renderer queue requests,
+                                                         * which avoids holding one thread for each parallel request.
+                                                         */
+                                                        final var result = renderer.render(renderRequest(trail(requestPath), Optional.empty(), ANONYMOUS_USER));
+                                                        if (result.data().isPresent()) {
+                                                            response.putHeader("content-type", result.data().get().getFormat());
+                                                            promise.complete(result.data().get().getContent());
+                                                        } else {
+                                                            promise.fail(new DocumentNotFound(requestPath));
+                                                        }
+                                                    } catch (Exception e) {
+                                                        logs().appendError(e);
+                                                        throw new RuntimeException(e);
+                                                    }
+                                                }, config.isSingleThreaded()
+                                                , (result) -> handleResult(routingContext, result));
+                                    }
+                                });
                         router.errorHandler(500, e -> {
                             logs().appendError(e.failure());
                         });
@@ -288,6 +375,16 @@ public class Server {
         };
     }
 
+    private static String requestPath(RoutingContext routingContext) {
+        final String requestPath;
+        if ("".equals(routingContext.request().path()) || "/".equals(routingContext.request().path())) {
+            requestPath = "index.html";
+        } else {
+            requestPath = routingContext.request().path();
+        }
+        return requestPath;
+    }
+
     private static void handleResult(RoutingContext routingContext, AsyncResult<byte[]> result) {
         final var response = routingContext.response();
         if (result.failed() && result.cause() instanceof DocumentNotFound) {
@@ -324,7 +421,7 @@ public class Server {
 
     /**
      * <p>TODO This is code duplication.
-     * Move this functionality into {@link #serveToHttpAt(Function, Config)} via {@link Config}.</p>
+     * Move this functionality into {@link #serveToHttpAt(ProjectsRenderer, Config)} via {@link Config}.</p>
      *
      * @param renderer
      * @param config
