@@ -17,8 +17,11 @@ package net.splitcells.dem.environment;
 
 import net.splitcells.dem.environment.config.framework.Configuration;
 import net.splitcells.dem.environment.resource.Service;
+import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
+
+import java.util.function.Consumer;
 
 import static net.splitcells.dem.data.atom.Thing.instance;
 
@@ -42,6 +45,11 @@ public interface Environment extends EnvironmentV, Service {
 
     default Environment withCell(Class<? extends Cell> clazz) {
         config().withInitedOption(clazz).configValue(clazz).accept(this);
+        return this;
+    }
+
+    default Environment withConfig(Consumer<Environment> configurator) {
+        configurator.accept(this);
         return this;
     }
 
