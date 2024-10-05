@@ -24,6 +24,7 @@ import java.nio.file.Path;
 import java.util.stream.Stream;
 
 import static net.splitcells.dem.Dem.MAVEN_GROUP_ID;
+import static net.splitcells.dem.DemApiFileSystem.DEM_API;
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.list.Lists.toList;
@@ -60,14 +61,14 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
 
     public void testInputStream(FileSystemViaClassResourcesFactoryApi factory) {
         final var testSubject = factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                , MAVEN_GROUP_ID, "dem.api");
+                , MAVEN_GROUP_ID, DEM_API);
         requireEquals(readAsString(testSubject.inputStream("src/main/resources/net/splitcells/dem/api/test-file.txt"))
                 , "This is a test file of the 20th of July 2023.");
     }
 
     public void testInputStreamForSubFileSystem(FileSystemViaClassResourcesFactoryApi factory) {
         final var testSubject = factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                        , MAVEN_GROUP_ID, "dem.api")
+                        , MAVEN_GROUP_ID, DEM_API)
                 .subFileSystemView("src/main/resources/net/splitcells/dem");
         requireEquals(readAsString(testSubject.inputStream("api/test-file.txt"))
                 , "This is a test file of the 20th of July 2023.");
@@ -75,14 +76,14 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
 
     public void testReadString(FileSystemViaClassResourcesFactoryApi factory) {
         requireEquals(factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                                , MAVEN_GROUP_ID, "dem.api")
+                                , MAVEN_GROUP_ID, DEM_API)
                         .readString("src/main/resources/net/splitcells/dem/api/test-file.txt")
                 , "This is a test file of the 20th of July 2023.");
     }
 
     public void testReadStringForSubFileSystem(FileSystemViaClassResourcesFactoryApi factory) {
         requireEquals(factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                                , MAVEN_GROUP_ID, "dem.api")
+                                , MAVEN_GROUP_ID, DEM_API)
                         .subFileSystemView("src/main/resources/net/splitcells/dem/api")
                         .readString("test-file.txt")
                 , "This is a test file of the 20th of July 2023.");
@@ -94,17 +95,17 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
 
     public void testExistsForSubFileSystem(FileSystemViaClassResourcesFactoryApi factory) {
         require(factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                        , MAVEN_GROUP_ID, "dem.api")
+                        , MAVEN_GROUP_ID, DEM_API)
                 .exists());
         require(factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                        , MAVEN_GROUP_ID, "dem.api")
+                        , MAVEN_GROUP_ID, DEM_API)
                 .subFileSystemView("src/main/resources/net/splitcells/")
                 .exists());
     }
 
     public void testIsFile(FileSystemViaClassResourcesFactoryApi factory) {
         final var testSubject = factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                , MAVEN_GROUP_ID, "dem.api");
+                , MAVEN_GROUP_ID, DEM_API);
         require(testSubject.isFile("src/main/resources/net/splitcells/dem/api/test-file.txt"));
         requireNot(testSubject.isFile("src/main/resources/net/splitcells/dem/api/test-file-not-existing.txt"));
         requireNot(testSubject.isFile("src/main/resources/net/splitcells/dem/api"));
@@ -112,7 +113,7 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
 
     public void testIsDirectory(FileSystemViaClassResourcesFactoryApi factory) {
         final var testSubject = factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                , MAVEN_GROUP_ID, "dem.api");
+                , MAVEN_GROUP_ID, DEM_API);
         requireNot(testSubject.isDirectory("src/main/resources/net/splitcells/dem/api/test-file.txt"));
         requireNot(testSubject.isDirectory("src/main/resources/net/splitcells/dem/api/test-file-not-existing.txt"));
         require(testSubject.isDirectory("src/main/resources/net/splitcells/dem/api"));
@@ -121,7 +122,7 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
 
     public void testIsFileForSubFileSystem(FileSystemViaClassResourcesFactoryApi factory) {
         final var testSubject = factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                        , MAVEN_GROUP_ID, "dem.api")
+                        , MAVEN_GROUP_ID, DEM_API)
                 .subFileSystemView("src/main/resources/net/");
         require(testSubject.isFile("splitcells/dem/api/test-file.txt"));
     }
@@ -129,7 +130,7 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
     public void testWalkRecursively(FileSystemViaClassResourcesFactoryApi factory) {
         final var rootPath = "src/main/resources/net/splitcells/dem/resource/FileSystemViaClassResourcesTest/testWalkRecursively/";
         factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                        , MAVEN_GROUP_ID, "dem.api")
+                        , MAVEN_GROUP_ID, DEM_API)
                 .walkRecursively(rootPath)
                 .collect(toList())
                 .requireContentsOf(Path.of(rootPath)
@@ -143,7 +144,7 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
     public void testWalkRecursivelyOnFile(FileSystemViaClassResourcesFactoryApi factory) {
         final var rootPath = "src/main/resources/net/splitcells/dem/resource/FileSystemViaClassResourcesTest/testWalkRecursively/another-test.txt";
         factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                        , MAVEN_GROUP_ID, "dem.api")
+                        , MAVEN_GROUP_ID, DEM_API)
                 .walkRecursively(rootPath)
                 .collect(toList())
                 .requireContentsOf(Path.of(rootPath));
@@ -152,7 +153,7 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
     public void testWalkRecursivelyForSubFileSystem(FileSystemViaClassResourcesFactoryApi factory) {
         final var rootPath = "testWalkRecursively/";
         factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                        , MAVEN_GROUP_ID, "dem.api")
+                        , MAVEN_GROUP_ID, DEM_API)
                 .subFileSystemView("src/main/resources/net/splitcells/dem/resource/FileSystemViaClassResourcesTest")
                 .walkRecursively(rootPath)
                 .collect(toList())
@@ -166,14 +167,14 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
 
     public void testSubFileSystemView(FileSystemViaClassResourcesFactoryApi factory) {
         final var testSubject = factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                        , MAVEN_GROUP_ID, "dem.api")
+                        , MAVEN_GROUP_ID, DEM_API)
                 .subFileSystemView("src/main/resources/net/splitcells");
         require(testSubject.isFile("dem/api/test-file.txt"));
     }
 
     public void testReadFileAsBytes(FileSystemViaClassResourcesFactoryApi factory) {
         final var testSubject = factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
-                , MAVEN_GROUP_ID, "dem.api");
+                , MAVEN_GROUP_ID, DEM_API);
         requireEquals(new String(testSubject.readFileAsBytes("src/main/resources/net/splitcells/dem/api/test-file.txt"))
                 , "This is a test file of the 20th of July 2023.");
     }
