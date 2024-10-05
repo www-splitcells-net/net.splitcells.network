@@ -13,6 +13,7 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
+# TODO Convert this to Python, as this script too complex for Bash.
 # TODO Document supported repository file structure.
 # Installs user commands.
 
@@ -43,6 +44,7 @@ do
 	if hasPrefix 'repo=' "$property"; then
 		propertyValue=$(echo $property | cut -c6-)
 		cd $propertyValue
+		test -d src/main || { echo "Command repo has no src/main folder, so no commands are defined: $propertyValue"; exit 1; }
 		cd src/main
 		if [ -d "sh" ]; then
 			cd sh
