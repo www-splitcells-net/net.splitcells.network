@@ -1273,6 +1273,13 @@
                                     <goal>report</goal>
                                 </goals>
                             </execution>
+                            <execution>
+                                <phase>verify</phase>
+                                <goals>
+                                    <!-- Only the reports of the direct dependencies are considered by this goal. -->
+                                    <goal>report-aggregate</goal>
+                                </goals>
+                            </execution>
                         </executions>
                     </plugin>
                 </plugins>

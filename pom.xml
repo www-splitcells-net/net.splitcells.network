@@ -41,30 +41,4 @@
         <module>projects/net.splitcells.cin</module>
         <module>projects/net.splitcells.system</module>
     </modules>
-    <profiles>
-        <profile>
-            <id>test-codecov</id>
-            <activation>
-                <property>
-                    <name>env.test_codecov</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>jacoco-maven-plugin</artifactId>
-                        <groupId>org.jacoco</groupId>
-                        <executions>
-                            <execution>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>report-aggregate</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>
