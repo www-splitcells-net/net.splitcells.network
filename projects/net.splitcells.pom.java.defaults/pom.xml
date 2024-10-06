@@ -29,6 +29,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.release>${java.version}</maven.compiler.release>
+        <jacoco.overall.exec>${maven.multiModuleProjectDirectory}/target/jacoco-aggregate/jacoco.exec</jacoco.overall.exec>
     </properties>
     <build>
         <finalName>${groupId}.${artifactId}-${project.version}</finalName>
@@ -1265,6 +1266,10 @@
                                 <goals>
                                     <goal>prepare-agent</goal>
                                 </goals>
+                                <configuration>
+                                    <append>true</append>
+                                    <destFile>${jacoco.overall.exec}</destFile>
+                                </configuration>
                             </execution>
                             <execution>
                                 <id>test-codecov-report</id>
@@ -1272,6 +1277,9 @@
                                 <goals>
                                     <goal>report</goal>
                                 </goals>
+                                <configuration>
+                                    <dataFile>${jacoco.overall.exec}</dataFile>
+                                </configuration>
                             </execution>
                             <execution>
                                 <phase>verify</phase>
