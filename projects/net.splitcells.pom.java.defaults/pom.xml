@@ -1285,6 +1285,7 @@
                                 <phase>verify</phase>
                                 <goals>
                                     <!-- Only the reports of the direct dependencies are considered by this goal. -->
+                                    <!-- If a test covers additional lines of another submodule, then these lines are added to the aggregate report as well. -->
                                     <goal>report-aggregate</goal>
                                 </goals>
                             </execution>
