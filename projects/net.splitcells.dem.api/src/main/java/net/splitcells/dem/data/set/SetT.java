@@ -38,6 +38,16 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
 public interface SetT<T> extends Collection<T> {
 
     /**
+     * This is the replacement for the deprecated {@link #contains(Object)} Java legacy method.
+     *
+     * @param arg
+     * @return
+     */
+    default boolean has(T arg) {
+        return contains(arg);
+    }
+
+    /**
      * This helper method makes it easier to distinguish {@code isEmpty} and {@code !isEmpty}.
      *
      * @return Whether this list has a size bigger than zero.

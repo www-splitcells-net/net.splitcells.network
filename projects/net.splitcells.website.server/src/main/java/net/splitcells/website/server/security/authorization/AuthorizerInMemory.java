@@ -23,9 +23,9 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class AuthorizerInMemory implements Authorizer {
-    public static Authorizer authorizerInMemory(Map<User, Set<User>> userRoleMapping) {
+    public static Authorizer authorizerInMemory(Map<User, Set<Role>> userRoleMapping) {
         return new AuthorizerInMemory((user, role) -> userRoleMapping.getOptionally(user)
-                .map(roles -> roles.contains(role))
+                .map(roles -> roles.has(role))
                 .orElse(false));
     }
 

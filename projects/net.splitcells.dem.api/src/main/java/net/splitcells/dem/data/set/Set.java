@@ -40,6 +40,16 @@ public interface Set<T> extends java.util.Set<T>, SetT<T> {
     }
 
     /**
+     * This method is not type safe and should therefore not be used.
+     *
+     * @param o
+     * @return
+     */
+    @Override
+    @Deprecated
+    boolean contains(Object o);
+
+    /**
      * Adds the given argument to this {@link Set} and throws an exception,
      * if the argument is already present.
      * This is done, because adding an element multiple times without signaling this,
