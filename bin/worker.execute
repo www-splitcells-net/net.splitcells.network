@@ -59,7 +59,7 @@ rm -f "target/Dockerfile-$executionName" # `-f` is used, in case the target fold
 """
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Executes a given program as isolated as possible with program state files being located at `$HOME/.local/state/$executionName/` and user input being located at `$HOME/Documents`. The isolated context is the network worker context.")
+    parser = argparse.ArgumentParser(description="Executes a given program as isolated as possible with all program files being persisted at `$HOME/.local/state/$executionName/` and user input being located at `$HOME/Documents`. Executions with different names have different persisted file locations and are therefore isolated more clearly, whereas executions with the same name are assumed to share data.")
     parser.add_argument('--name', dest='name', required=True, help="This is the name of the task being executed.")
     parser.add_argument('--command', dest='command'
                         , help="This is the shell command, to execute the task."
