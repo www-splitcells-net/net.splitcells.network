@@ -224,6 +224,7 @@ public interface Files {
     }
 
     /**
+     * <p>TODO Use something that is derived from {@link BootstrapFileSystem}.</p>
      * <p>Folder containing the user's temporary (`~/.local/state/&lt;ProgramName&gt;`) files for this program based on {@link ProgramName}.
      * This is based on the <a href="https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html">XDG Base Directory Specification</a>.
      * The format there should abide by the <a href="https://splitcells.net/net/splitcells/network/guidelines/filesystem.html">Software Project File System Standards</a>.
