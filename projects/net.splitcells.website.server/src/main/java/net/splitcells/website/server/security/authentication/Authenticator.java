@@ -16,5 +16,5 @@
 package net.splitcells.website.server.security.authentication;
 
 public interface Authenticator {
-    User userByNameAndPassword(Login login);
+    User userByLogin(Login login);
 }

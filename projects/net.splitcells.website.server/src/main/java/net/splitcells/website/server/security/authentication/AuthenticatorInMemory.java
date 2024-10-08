@@ -35,7 +35,7 @@ public class AuthenticatorInMemory implements Authenticator {
     }
 
     @Override
-    public User userByNameAndPassword(Login login) {
+    public User userByLogin(Login login) {
         return userQuery.apply(login);
     }
 }
