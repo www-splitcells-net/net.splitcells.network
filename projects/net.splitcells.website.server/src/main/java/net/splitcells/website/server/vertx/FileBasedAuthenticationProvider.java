@@ -30,7 +30,7 @@ import static net.splitcells.dem.Dem.configValue;
 /**
  * Authenticates users via their names and passwords by looking up a file for each user,
  * that contains the user's password.
- * These files are located at {@link ConfigFileSystem} + {@link #USER_PASSWORD_FOLDER} + `/[username]`.
+ * These files are located at {@link ConfigFileSystem} + {@link #USER_FOLDER} + `/[username]`.
  * The password is the first line of the file.
  * The reason for the cut at the first line ending is the fact,
  * that on Linux sometimes a line ending symbol is added to a file
@@ -40,11 +40,12 @@ import static net.splitcells.dem.Dem.configValue;
  */
 @JavaLegacyArtifact
 public class FileBasedAuthenticationProvider implements AuthenticationProvider {
-    private static final String USER_PASSWORD_FOLDER = "net/splitcells/website/server/security/users/";
+    private static final String USER_FOLDER = "net/splitcells/website/server/security/users/";
+    public static final String PASSWORD_FILE = "/password";
 
     public static FileBasedAuthenticationProvider fileBasedAuthenticationProvider() {
         return new FileBasedAuthenticationProvider(configValue(ConfigFileSystem.class)
-                .subFileSystem(USER_PASSWORD_FOLDER));
+                .subFileSystem(USER_FOLDER));
     }
 
     public static FileBasedAuthenticationProvider fileBasedAuthenticationProvider(FileSystemView userData) {
@@ -61,13 +62,13 @@ public class FileBasedAuthenticationProvider implements AuthenticationProvider {
     public void authenticate(JsonObject credentials, Handler<AsyncResult<User>> resultHandler) {
         final var username = credentials.getString("username");
         final var inputtedPassword = credentials.getString("password");
-        if (!userData.isFile(username)) {
+        if (!userData.isFile(username + PASSWORD_FILE)) {
             resultHandler.handle(Future.failedFuture("The username `"
                     + username
                     + "` is unknown."));
             return;
         }
-        final var storedPassword = userData.readString(username).split("\n")[0];
+        final var storedPassword = userData.readString(username + PASSWORD_FILE).split("\n")[0];
         if (!inputtedPassword.equals(storedPassword)) {
             resultHandler.handle(Future.failedFuture("False input password `"
                     + inputtedPassword

@@ -26,6 +26,7 @@ import net.splitcells.dem.utils.StringUtils;
 
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.resource.FileSystemViaMemory.fileSystemViaMemory;
+import static net.splitcells.website.server.vertx.FileBasedAuthenticationProvider.PASSWORD_FILE;
 import static net.splitcells.website.server.vertx.FileBasedAuthenticationProvider.fileBasedAuthenticationProvider;
 
 @JavaLegacyArtifact
@@ -35,7 +36,8 @@ public class FileBasedAuthenticationProviderTest {
         final var username = "username-123";
         final var password = "password-456";
         final var userData = fileSystemViaMemory();
-        userData.writeToFile(username, StringUtils.toBytes(password));
+        userData.createDirectoryPath(username);
+        userData.writeToFile(username + PASSWORD_FILE, StringUtils.toBytes(password));
         final var testSubject = fileBasedAuthenticationProvider(userData);
         final var validRequest = new JsonObject("{\"username\":\"" + username + "\",\"password\":\"" + password + "\"}");
         testSubject.authenticate(validRequest, new Handler<>() {

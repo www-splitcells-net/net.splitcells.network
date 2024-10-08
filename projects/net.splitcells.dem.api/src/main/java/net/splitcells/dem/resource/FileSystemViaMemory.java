@@ -130,4 +130,14 @@ public class FileSystemViaMemory implements FileSystem {
     public FileSystemView subFileSystemView(String path) {
         throw notImplementedYet();
     }
+
+    @Override
+    public FileSystem createDirectoryPath(String path) {
+        try {
+            Files.createDirectories(backend.getPath(path));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return this;
+    }
 }
