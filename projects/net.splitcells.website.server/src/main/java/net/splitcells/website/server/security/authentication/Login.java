@@ -15,14 +15,11 @@
  */
 package net.splitcells.website.server.security.authentication;
 
-public class User {
-    public static final User ANONYMOUS_USER = user(Users.class.getName() + ".anonymous");
-    public static final User INVALID_LOGIN = user(Users.class.getName() + ".invalid.login");
-
-    public static User user(String name) {
-        return new User();
+public class Login {
+    public static Login login() {
+        return new Login();
     }
-    private User() {
+    private Login() {
 
     }
 }

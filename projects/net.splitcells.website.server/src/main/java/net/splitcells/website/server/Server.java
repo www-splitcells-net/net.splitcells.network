@@ -52,13 +52,13 @@ import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.RenderRequest;
 import net.splitcells.website.server.projects.RenderResponse;
+import net.splitcells.website.server.security.authentication.User;
 import net.splitcells.website.server.security.authentication.Users;
 import net.splitcells.website.server.security.encryption.PrivateIdentityPemStore;
 import net.splitcells.website.server.security.encryption.PublicIdentityPemStore;
 import net.splitcells.website.server.security.encryption.SslEnabled;
 import net.splitcells.website.server.vertx.DocumentNotFound;
 
-import javax.swing.*;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
@@ -82,7 +82,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
 import static net.splitcells.website.server.processor.Request.request;
 import static net.splitcells.website.server.projects.RenderRequest.renderRequest;
-import static net.splitcells.website.server.security.authentication.Users.ANONYMOUS_USER;
+import static net.splitcells.website.server.security.authentication.User.ANONYMOUS_USER;
 import static net.splitcells.website.server.vertx.FileBasedAuthenticationProvider.fileBasedAuthenticationProvider;
 
 @JavaLegacyArtifact

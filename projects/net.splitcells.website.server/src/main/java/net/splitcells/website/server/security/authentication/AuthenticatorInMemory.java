@@ -15,14 +15,27 @@
  */
 package net.splitcells.website.server.security.authentication;
 
-public class User {
-    public static final User ANONYMOUS_USER = user(Users.class.getName() + ".anonymous");
-    public static final User INVALID_LOGIN = user(Users.class.getName() + ".invalid.login");
+import net.splitcells.dem.data.set.map.Map;
 
-    public static User user(String name) {
-        return new User();
+import java.util.function.Function;
+
+public class AuthenticatorInMemory implements Authenticator {
+    public static Authenticator authenticatorInMemory(Function<Login, User> userLogin) {
+        return new AuthenticatorInMemory(userLogin);
     }
-    private User() {
 
+    public static Authenticator authenticatorInMemory(Map<Login, User> userLogin) {
+        return new AuthenticatorInMemory(login -> userLogin.getOrDefault(login, User.INVALID_LOGIN));
+    }
+
+    private final Function<Login, User> userQuery;
+
+    private AuthenticatorInMemory(Function<Login, User> argUserQuery) {
+        userQuery = argUserQuery;
+    }
+
+    @Override
+    public User userByNameAndPassword(Login login) {
+        return userQuery.apply(login);
     }
 }

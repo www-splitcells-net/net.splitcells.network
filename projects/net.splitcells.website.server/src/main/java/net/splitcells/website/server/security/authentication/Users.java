@@ -15,12 +15,15 @@
  */
 package net.splitcells.website.server.security.authentication;
 
-import static net.splitcells.website.server.security.authentication.User.user;
+import net.splitcells.dem.environment.config.framework.Option;
 
-public class Users {
-    public static final User ANONYMOUS_USER = user(Users.class.getName() + ".public");
+import static net.splitcells.website.server.security.authentication.AuthenticatorInMemory.authenticatorInMemory;
+import static net.splitcells.website.server.security.authentication.User.ANONYMOUS_USER;
 
-    private Users() {
-        
+public class Users implements Option<Authenticator> {
+
+    @Override
+    public Authenticator defaultValue() {
+        return authenticatorInMemory(login -> ANONYMOUS_USER);
     }
 }
