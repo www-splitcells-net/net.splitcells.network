@@ -15,14 +15,48 @@
  */
 package net.splitcells.website.server.security.authentication;
 
+import net.splitcells.dem.environment.config.framework.Option;
+import net.splitcells.website.server.security.authorization.Authorization;
+
+import java.util.Optional;
+
+/**
+ * An instance of this class, is the claim,
+ * that a {@link User} exists at {@link Users} and
+ * where {@link #authenticatedBy} is equals to the value of {@link Users}.
+ * Only {@link Option} objects like {@link Users} or {@link Authorization}
+ * can provide any trustworthy information for any given {@link User}.
+ * Any other kind of user processing,
+ * is invalid for the actual real world process of authentication and/or authorization.
+ */
 public class User {
-    public static final User ANONYMOUS_USER = user(Users.class.getName() + ".anonymous");
-    public static final User INVALID_LOGIN = user(Users.class.getName() + ".invalid.login");
+    public static final User ANONYMOUS_USER = notAuthenticatedUser(Users.class.getName() + ".anonymous");
+    public static final User INVALID_LOGIN = notAuthenticatedUser(Users.class.getName() + ".invalid.login");
 
-    public static User user(String name) {
-        return new User();
+    public static User notAuthenticatedUser(String name) {
+        return new User(name, Optional.empty());
     }
-    private User() {
 
+    public static User user(String name, Authenticator authenticatedBy) {
+        return new User(name, Optional.of(authenticatedBy));
+    }
+
+    private final String name;
+    private final Optional<Authenticator> authenticatedBy;
+
+    private User(String argName, Optional<Authenticator> argAuthenticatedBy) {
+        authenticatedBy = argAuthenticatedBy;
+        name = argName;
+    }
+
+    /**
+     * @return If the return value {@link Optional#isEmpty()}, than this {@link User} is not trustworthy.
+     */
+    public Optional<Authenticator> authenticatedBy() {
+        return authenticatedBy;
+    }
+
+    public String name() {
+        return name;
     }
 }
