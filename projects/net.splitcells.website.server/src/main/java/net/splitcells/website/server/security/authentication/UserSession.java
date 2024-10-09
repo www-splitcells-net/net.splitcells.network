@@ -21,13 +21,15 @@ import net.splitcells.website.server.security.authorization.Authorization;
 import java.util.Optional;
 
 /**
- * An instance of this class, is the claim,
+ * <p>An instance of this class, is the claim,
  * that a {@link UserSession} exists at {@link Authentication},
- * where {@link #authenticatedBy} is equals to the value of {@link Authentication}.
- * Only {@link Option} objects like {@link Authentication} or {@link Authorization}
+ * where {@link #authenticatedBy} is equals to the value of {@link Authentication}.</p>
+ * <p>Only the {@link Option} objects {@link Authentication} or {@link Authorization}
  * can provide any trustworthy information for any given {@link UserSession}.
  * Any other kind of user processing,
  * is untrustworthy for the actual real world process of authentication and/or authorization.
+ * This way, the only way to create a valid {@link UserSession} is by using {@link Authentication}.
+ * No other code can therefore fake a valid {@link UserSession}.</p>
  */
 public class UserSession {
     public static final UserSession ANONYMOUS_USER_SESSION = notAuthenticatedUser();
