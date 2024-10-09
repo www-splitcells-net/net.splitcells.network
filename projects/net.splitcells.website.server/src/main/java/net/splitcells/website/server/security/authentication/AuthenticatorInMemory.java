@@ -50,7 +50,7 @@ public class AuthenticatorInMemory implements Authenticator {
     }
 
     @Override
-    public UserSession userByLogin(Login login) {
+    public UserSession userSession(Login login) {
         final var user = userQuery.apply(login);
         validUserSessions.add(user);
         return user;
