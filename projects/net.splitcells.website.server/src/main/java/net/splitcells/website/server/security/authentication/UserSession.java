@@ -22,33 +22,33 @@ import java.util.Optional;
 
 /**
  * An instance of this class, is the claim,
- * that a {@link User} exists at {@link Users} and
+ * that a {@link UserSession} exists at {@link Users} and
  * where {@link #authenticatedBy} is equals to the value of {@link Users}.
  * Only {@link Option} objects like {@link Users} or {@link Authorization}
- * can provide any trustworthy information for any given {@link User}.
+ * can provide any trustworthy information for any given {@link UserSession}.
  * Any other kind of user processing,
  * is untrustworthy for the actual real world process of authentication and/or authorization.
  */
-public class User {
-    public static final User ANONYMOUS_USER = notAuthenticatedUser();
-    public static final User INVALID_LOGIN = notAuthenticatedUser();
+public class UserSession {
+    public static final UserSession ANONYMOUS_USER_SESSION = notAuthenticatedUser();
+    public static final UserSession INVALID_LOGIN = notAuthenticatedUser();
 
-    public static User notAuthenticatedUser() {
-        return new User(Optional.empty());
+    public static UserSession notAuthenticatedUser() {
+        return new UserSession(Optional.empty());
     }
 
-    public static User user(Authenticator authenticatedBy) {
-        return new User(Optional.of(authenticatedBy));
+    public static UserSession user(Authenticator authenticatedBy) {
+        return new UserSession(Optional.of(authenticatedBy));
     }
 
     private final Optional<Authenticator> authenticatedBy;
 
-    private User(Optional<Authenticator> argAuthenticatedBy) {
+    private UserSession(Optional<Authenticator> argAuthenticatedBy) {
         authenticatedBy = argAuthenticatedBy;
     }
 
     /**
-     * @return If the return value {@link Optional#isEmpty()}, than this {@link User} is not trustworthy.
+     * @return If the return value {@link Optional#isEmpty()}, than this {@link UserSession} is not trustworthy.
      */
     public Optional<Authenticator> authenticatedBy() {
         return authenticatedBy;

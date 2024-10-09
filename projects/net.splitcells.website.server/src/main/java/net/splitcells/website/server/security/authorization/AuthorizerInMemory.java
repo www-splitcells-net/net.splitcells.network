@@ -17,30 +17,29 @@ package net.splitcells.website.server.security.authorization;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.website.server.security.authentication.User;
+import net.splitcells.website.server.security.authentication.UserSession;
 
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 public class AuthorizerInMemory implements Authorizer {
-    public static Authorizer authorizerInMemory(Map<User, Set<Role>> userRoleMapping) {
+    public static Authorizer authorizerInMemory(Map<UserSession, Set<Role>> userRoleMapping) {
         return new AuthorizerInMemory((user, role) -> userRoleMapping.getOptionally(user)
                 .map(roles -> roles.has(role))
                 .orElse(false));
     }
 
-    public static Authorizer authorizerInMemory(BiFunction<User, Role, Boolean> userRoleMapping) {
+    public static Authorizer authorizerInMemory(BiFunction<UserSession, Role, Boolean> userRoleMapping) {
         return new AuthorizerInMemory(userRoleMapping);
     }
 
-    private final BiFunction<User, Role, Boolean> userRoleMapping;
+    private final BiFunction<UserSession, Role, Boolean> userRoleMapping;
 
-    private AuthorizerInMemory(BiFunction<User, Role, Boolean> userRoleMappingArg) {
+    private AuthorizerInMemory(BiFunction<UserSession, Role, Boolean> userRoleMappingArg) {
         userRoleMapping = userRoleMappingArg;
     }
 
     @Override
-    public boolean hasRole(User user, Role role) {
-        return userRoleMapping.apply(user, role);
+    public boolean hasRole(UserSession userSession, Role role) {
+        return userRoleMapping.apply(userSession, role);
     }
 }

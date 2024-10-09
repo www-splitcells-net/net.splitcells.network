@@ -15,8 +15,8 @@
  */
 package net.splitcells.website.server.security.authorization;
 
-import net.splitcells.website.server.security.authentication.User;
+import net.splitcells.website.server.security.authentication.UserSession;
 
 public interface Authorizer {
-    boolean hasRole(User user, Role role);
+    boolean hasRole(UserSession userSession, Role role);
 }

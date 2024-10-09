@@ -16,7 +16,7 @@
 package net.splitcells.website.server.security.authentication;
 
 public interface Authenticator {
-    User userByLogin(Login login);
+    UserSession userByLogin(Login login);
 
-    boolean isValid(User user);
+    boolean isValid(UserSession userSession);
 }

@@ -18,12 +18,12 @@ package net.splitcells.website.server.security.authentication;
 import net.splitcells.dem.environment.config.framework.Option;
 
 import static net.splitcells.website.server.security.authentication.AuthenticatorInMemory.authenticatorInMemory;
-import static net.splitcells.website.server.security.authentication.User.ANONYMOUS_USER;
+import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
 
 public class Users implements Option<Authenticator> {
 
     @Override
     public Authenticator defaultValue() {
-        return authenticatorInMemory(login -> ANONYMOUS_USER);
+        return authenticatorInMemory(login -> ANONYMOUS_USER_SESSION);
     }
 }

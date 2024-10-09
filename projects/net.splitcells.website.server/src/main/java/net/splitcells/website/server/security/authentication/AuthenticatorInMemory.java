@@ -23,47 +23,47 @@ import java.util.function.Function;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 
 public class AuthenticatorInMemory implements Authenticator {
-    public static Authenticator authenticatorInMemory(Function<Login, User> userLogin) {
+    public static Authenticator authenticatorInMemory(Function<Login, UserSession> userLogin) {
         return new AuthenticatorInMemory(userLogin);
     }
 
-    public static Authenticator authenticatorInMemory(Map<Login, User> userLogin) {
-        return new AuthenticatorInMemory(login -> userLogin.getOrDefault(login, User.INVALID_LOGIN));
+    public static Authenticator authenticatorInMemory(Map<Login, UserSession> userLogin) {
+        return new AuthenticatorInMemory(login -> userLogin.getOrDefault(login, UserSession.INVALID_LOGIN));
     }
 
-    private final Function<Login, User> userQuery;
+    private final Function<Login, UserSession> userQuery;
     /**
      * TODO Currently, this is a memory leak,
      * but we do not expect many logins for now.
-     * In the future {@link User} will have to be some kind of user session object instead.
+     * In the future {@link UserSession} will have to be some kind of user session object instead.
      * Meaning, that the user is only valid for a certain duration.
-     * Such info could be added to {@link User} itself and could be used to clear {@link #validUsers}.
+     * Such info could be added to {@link UserSession} itself and could be used to clear {@link #validUserSessions}.
      * In such case some kind of alternative user entity is required as a base for this new user session.
      * Maybe the root user entity is just a user session, with an infinite amount of time?
      * This way, a tree is formed, that represents the user and its actions.
      * On the other hand, it would be a lot easier, to just cache a limited number of valid users.
      */
-    private final Set<User> validUsers = setOfUniques();
+    private final Set<UserSession> validUserSessions = setOfUniques();
 
-    private AuthenticatorInMemory(Function<Login, User> argUserQuery) {
+    private AuthenticatorInMemory(Function<Login, UserSession> argUserQuery) {
         userQuery = argUserQuery;
     }
 
     @Override
-    public User userByLogin(Login login) {
+    public UserSession userByLogin(Login login) {
         final var user = userQuery.apply(login);
-        validUsers.add(user);
+        validUserSessions.add(user);
         return user;
     }
 
     @Override
-    public boolean isValid(User user) {
-        if (user.authenticatedBy().isEmpty()) {
+    public boolean isValid(UserSession userSession) {
+        if (userSession.authenticatedBy().isEmpty()) {
             return false;
         }
-        if (user.authenticatedBy().get() != this) {
+        if (userSession.authenticatedBy().get() != this) {
             return false;
         }
-        return validUsers.has(user);
+        return validUserSessions.has(userSession);
     }
 }
