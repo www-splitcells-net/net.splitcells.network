@@ -30,23 +30,21 @@ import java.util.Optional;
  * is untrustworthy for the actual real world process of authentication and/or authorization.
  */
 public class User {
-    public static final User ANONYMOUS_USER = notAuthenticatedUser(Users.class.getName() + ".anonymous");
-    public static final User INVALID_LOGIN = notAuthenticatedUser(Users.class.getName() + ".invalid.login");
+    public static final User ANONYMOUS_USER = notAuthenticatedUser();
+    public static final User INVALID_LOGIN = notAuthenticatedUser();
 
-    public static User notAuthenticatedUser(String name) {
-        return new User(name, Optional.empty());
+    public static User notAuthenticatedUser() {
+        return new User(Optional.empty());
     }
 
-    public static User user(String name, Authenticator authenticatedBy) {
-        return new User(name, Optional.of(authenticatedBy));
+    public static User user(Authenticator authenticatedBy) {
+        return new User(Optional.of(authenticatedBy));
     }
 
-    private final String name;
     private final Optional<Authenticator> authenticatedBy;
 
-    private User(String argName, Optional<Authenticator> argAuthenticatedBy) {
+    private User(Optional<Authenticator> argAuthenticatedBy) {
         authenticatedBy = argAuthenticatedBy;
-        name = argName;
     }
 
     /**
@@ -54,9 +52,5 @@ public class User {
      */
     public Optional<Authenticator> authenticatedBy() {
         return authenticatedBy;
-    }
-
-    public String name() {
-        return name;
     }
 }
