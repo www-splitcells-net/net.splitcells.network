@@ -20,7 +20,7 @@ import net.splitcells.dem.environment.config.framework.Option;
 import static net.splitcells.website.server.security.authentication.AuthenticatorInMemory.authenticatorInMemory;
 import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
 
-public class Authorization implements Option<Authenticator> {
+public class Authentication implements Option<Authenticator> {
 
     @Override
     public Authenticator defaultValue() {
