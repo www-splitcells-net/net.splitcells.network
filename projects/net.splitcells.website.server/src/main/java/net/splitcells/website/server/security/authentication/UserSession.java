@@ -16,15 +16,14 @@
 package net.splitcells.website.server.security.authentication;
 
 import net.splitcells.dem.environment.config.framework.Option;
-import net.splitcells.website.server.security.authorization.Authorization;
 
 import java.util.Optional;
 
 /**
  * An instance of this class, is the claim,
- * that a {@link UserSession} exists at {@link Users} and
- * where {@link #authenticatedBy} is equals to the value of {@link Users}.
- * Only {@link Option} objects like {@link Users} or {@link Authorization}
+ * that a {@link UserSession} exists at {@link Authorization} and
+ * where {@link #authenticatedBy} is equals to the value of {@link Authorization}.
+ * Only {@link Option} objects like {@link Authorization} or {@link net.splitcells.website.server.security.authorization.Authorization}
  * can provide any trustworthy information for any given {@link UserSession}.
  * Any other kind of user processing,
  * is untrustworthy for the actual real world process of authentication and/or authorization.
