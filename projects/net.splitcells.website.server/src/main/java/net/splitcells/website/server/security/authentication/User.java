@@ -27,7 +27,7 @@ import java.util.Optional;
  * Only {@link Option} objects like {@link Users} or {@link Authorization}
  * can provide any trustworthy information for any given {@link User}.
  * Any other kind of user processing,
- * is invalid for the actual real world process of authentication and/or authorization.
+ * is untrustworthy for the actual real world process of authentication and/or authorization.
  */
 public class User {
     public static final User ANONYMOUS_USER = notAuthenticatedUser(Users.class.getName() + ".anonymous");

@@ -41,6 +41,7 @@ public class AuthenticatorInMemory implements Authenticator {
      * In such case some kind of alternative user entity is required as a base for this new user session.
      * Maybe the root user entity is just a user session, with an infinite amount of time?
      * This way, a tree is formed, that represents the user and its actions.
+     * On the other hand, it would be a lot easier, to just cache a limited number of valid users.
      */
     private final Set<User> validUsers = setOfUniques();
 
