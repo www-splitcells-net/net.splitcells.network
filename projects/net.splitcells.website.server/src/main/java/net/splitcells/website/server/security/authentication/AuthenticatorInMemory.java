@@ -23,15 +23,15 @@ import java.util.function.Function;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 
 public class AuthenticatorInMemory implements Authenticator {
-    public static Authenticator authenticatorInMemory(Function<Login, UserSession> userLogin) {
+    public static Authenticator authenticatorInMemory(Function<BasicLogin, UserSession> userLogin) {
         return new AuthenticatorInMemory(userLogin);
     }
 
-    public static Authenticator authenticatorInMemory(Map<Login, UserSession> userLogin) {
-        return new AuthenticatorInMemory(login -> userLogin.getOrDefault(login, UserSession.INVALID_LOGIN));
+    public static Authenticator authenticatorInMemory(Map<BasicLogin, UserSession> userLogin) {
+        return new AuthenticatorInMemory(basicLogin -> userLogin.getOrDefault(basicLogin, UserSession.INVALID_LOGIN));
     }
 
-    private final Function<Login, UserSession> userQuery;
+    private final Function<BasicLogin, UserSession> userQuery;
     /**
      * TODO Currently, this is a memory leak,
      * but we do not expect many logins for now.
@@ -45,13 +45,13 @@ public class AuthenticatorInMemory implements Authenticator {
      */
     private final Set<UserSession> validUserSessions = setOfUniques();
 
-    private AuthenticatorInMemory(Function<Login, UserSession> argUserQuery) {
+    private AuthenticatorInMemory(Function<BasicLogin, UserSession> argUserQuery) {
         userQuery = argUserQuery;
     }
 
     @Override
-    public UserSession userSession(Login login) {
-        final var user = userQuery.apply(login);
+    public UserSession userSession(BasicLogin basicLogin) {
+        final var user = userQuery.apply(basicLogin);
         validUserSessions.add(user);
         return user;
     }
