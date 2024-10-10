@@ -32,17 +32,6 @@ public class AuthenticatorInMemory implements Authenticator {
     }
 
     private final Function<BasicLogin, UserSession> userQuery;
-    /**
-     * TODO Currently, this is a memory leak,
-     * but we do not expect many logins for now.
-     * In the future {@link UserSession} will have to be some kind of user session object instead.
-     * Meaning, that the user is only valid for a certain duration.
-     * Such info could be added to {@link UserSession} itself and could be used to clear {@link #validUserSessions}.
-     * In such case some kind of alternative user entity is required as a base for this new user session.
-     * Maybe the root user entity is just a user session, with an infinite amount of time?
-     * This way, a tree is formed, that represents the user and its actions.
-     * On the other hand, it would be a lot easier, to just cache a limited number of valid users.
-     */
     private final Set<UserSession> validUserSessions = setOfUniques();
 
     private AuthenticatorInMemory(Function<BasicLogin, UserSession> argUserQuery) {
