@@ -35,6 +35,7 @@ import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.dem.utils.StreamUtils.concat;
 
 public class FileSystemViaClassResourcesTest extends TestSuiteI {
+    private static final String TEST_FILE_PATH = "src/main/resources/net/splitcells/dem/api/test-file.txt";
 
     @Tag(INTEGRATION_TEST)
     @TestFactory
@@ -62,7 +63,7 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
     public void testInputStream(FileSystemViaClassResourcesFactoryApi factory) {
         final var testSubject = factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
                 , MAVEN_GROUP_ID, DEM_API);
-        requireEquals(readAsString(testSubject.inputStream("src/main/resources/net/splitcells/dem/api/test-file.txt"))
+        requireEquals(readAsString(testSubject.inputStream(TEST_FILE_PATH))
                 , "This is a test file of the 20th of July 2023.");
     }
 
@@ -77,7 +78,7 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
     public void testReadString(FileSystemViaClassResourcesFactoryApi factory) {
         requireEquals(factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
                                 , MAVEN_GROUP_ID, DEM_API)
-                        .readString("src/main/resources/net/splitcells/dem/api/test-file.txt")
+                        .readString(TEST_FILE_PATH)
                 , "This is a test file of the 20th of July 2023.");
     }
 
@@ -106,7 +107,7 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
     public void testIsFile(FileSystemViaClassResourcesFactoryApi factory) {
         final var testSubject = factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
                 , MAVEN_GROUP_ID, DEM_API);
-        require(testSubject.isFile("src/main/resources/net/splitcells/dem/api/test-file.txt"));
+        require(testSubject.isFile(TEST_FILE_PATH));
         requireNot(testSubject.isFile("src/main/resources/net/splitcells/dem/api/test-file-not-existing.txt"));
         requireNot(testSubject.isFile("src/main/resources/net/splitcells/dem/api"));
     }
@@ -114,7 +115,7 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
     public void testIsDirectory(FileSystemViaClassResourcesFactoryApi factory) {
         final var testSubject = factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
                 , MAVEN_GROUP_ID, DEM_API);
-        requireNot(testSubject.isDirectory("src/main/resources/net/splitcells/dem/api/test-file.txt"));
+        requireNot(testSubject.isDirectory(TEST_FILE_PATH));
         requireNot(testSubject.isDirectory("src/main/resources/net/splitcells/dem/api/test-file-not-existing.txt"));
         require(testSubject.isDirectory("src/main/resources/net/splitcells/dem/api"));
         requireNot(testSubject.isDirectory("src/main/resources/net/splitcells/dem/api-not-existing"));
@@ -175,7 +176,7 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
     public void testReadFileAsBytes(FileSystemViaClassResourcesFactoryApi factory) {
         final var testSubject = factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
                 , MAVEN_GROUP_ID, DEM_API);
-        requireEquals(new String(testSubject.readFileAsBytes("src/main/resources/net/splitcells/dem/api/test-file.txt"))
+        requireEquals(new String(testSubject.readFileAsBytes(TEST_FILE_PATH))
                 , "This is a test file of the 20th of July 2023.");
     }
 }
