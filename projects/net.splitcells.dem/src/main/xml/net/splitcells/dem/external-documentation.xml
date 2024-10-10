@@ -17,18 +17,9 @@
     <chapter>
         <title>Javadocs</title>
         <list>
-            <item>
-                <link>
-                    <text>Java 8 Classes</text>
-                    <url>https://docs.oracle.com/javase/8/docs/api/allclasses-noframe.html</url>
-                </link>
-            </item>
-            <item>
-                <link>
-                    <text>Junit 5 Classes</text>
-                    <url>https://junit.org/junit5/docs/5.0.2/api/allclasses-noframe.html</url>
-                </link>
-            </item>
+            <link url="https://docs.oracle.com/javase/8/docs/api/allclasses-noframe.html">Java 8 Classes</link>
+            <link url="https://docs.oracle.com/en/java/javase/21/docs/api/allclasses-index.html">Java 21 Classes</link>
+            <link url="https://junit.org/junit5/docs/5.0.2/api/allclasses-noframe.html">Junit 5 Classes</link>
         </list>
     </chapter>
 </article>
