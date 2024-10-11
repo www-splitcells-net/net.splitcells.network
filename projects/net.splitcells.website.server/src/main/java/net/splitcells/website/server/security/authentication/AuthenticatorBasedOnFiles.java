@@ -24,6 +24,17 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
 import static net.splitcells.website.server.security.authentication.UserSession.INVALID_LOGIN;
 
+/**
+ * Authenticates users via their names and passwords by looking up a file for each user,
+ * that contains the user's password.
+ * These files are located at {@link ConfigFileSystem} + {@link #USER_FOLDER} + `/[username]`.
+ * The password is the first line of the file.
+ * The reason for the cut at the first line ending is the fact,
+ * that on Linux sometimes a line ending symbol is added to a file
+ * via a text editor without the line ending being visible in the editor (source Mārtiņš Avots).
+ * Furthermore, the line ending symbol can be hard to enter for a user,
+ * because of the UI of the user's computer.
+ */
 public class AuthenticatorBasedOnFiles implements Authenticator {
     private static final String USER_FOLDER = "net/splitcells/website/server/security/users/";
     public static final String PASSWORD_FILE = "/password";
