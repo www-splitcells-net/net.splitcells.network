@@ -15,6 +15,7 @@
  */
 package net.splitcells.website.server.security.authentication;
 
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.environment.config.framework.Option;
 
 import static net.splitcells.dem.Dem.configValue;
@@ -23,6 +24,9 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.website.server.security.authentication.AuthenticatorInMemory.authenticatorInMemory;
 import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
 
+/**
+ * Any used {@link Authenticator}, has to be thread safe, when a multi thread {@link Dem#process(Runnable)} is used.
+ */
 public class Authentication implements Option<Authenticator> {
 
     @Override

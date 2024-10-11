@@ -71,7 +71,7 @@ public class AuthenticatorBasedOnFiles implements Authenticator {
     }
 
     @Override
-    public UserSession userSession(BasicLogin basicLogin) {
+    public synchronized UserSession userSession(BasicLogin basicLogin) {
         if (!userData.isFile(basicLogin.username() + PASSWORD_FILE)) {
             return ANONYMOUS_USER_SESSION;
         }
@@ -92,7 +92,7 @@ public class AuthenticatorBasedOnFiles implements Authenticator {
     }
 
     @Override
-    public boolean isValid(UserSession userSession) {
+    public synchronized boolean isValid(UserSession userSession) {
         if (ANONYMOUS_USER_SESSION.equals(userSession) || INSECURE_USER_SESSION.equals(userSession)) {
             return true;
         }
