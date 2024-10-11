@@ -35,4 +35,9 @@ public class BasicLogin {
     public String password() {
         return password;
     }
+
+    @Override
+    public String toString() {
+        return getClass().getName() + ": username = " + username;
+    }
 }

@@ -18,11 +18,14 @@ package net.splitcells.website.server.security.authentication;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.resource.ConfigFileSystem;
 import net.splitcells.dem.resource.FileSystemView;
+import net.splitcells.dem.testing.Assertions;
 
 import java.util.regex.Pattern;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
 import static net.splitcells.website.server.security.authentication.UserSession.INSECURE_USER_SESSION;
 
@@ -88,6 +91,10 @@ public class AuthenticatorBasedOnFiles implements Authenticator {
         }
         final var userSession = UserSession.user(this);
         validUserSessions.add(userSession);
+        if (!isValid(userSession)) {
+            throw executionException(tree("Could not create a valid user session, given the login.")
+                    .withProperty("login data", basicLogin.toString()));
+        }
         return userSession;
     }
 
