@@ -21,10 +21,10 @@ import net.splitcells.dem.utils.StringUtils;
 import static net.splitcells.dem.resource.FileSystemViaMemory.fileSystemViaMemory;
 import static net.splitcells.dem.testing.Assertions.requireDistinct;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
+import static net.splitcells.website.server.security.authentication.AuthenticatorBasedOnFiles.PASSWORD_FILE;
 import static net.splitcells.website.server.security.authentication.AuthenticatorBasedOnFiles.authenticatorBasedOnFiles;
 import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
 import static net.splitcells.website.server.security.authentication.UserSession.INSECURE_USER_SESSION;
-import static net.splitcells.website.server.vertx.FileBasedAuthenticationProvider.PASSWORD_FILE;
 
 public class AuthenticatorBasedOnFilesTest {
     @UnitTest
