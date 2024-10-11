@@ -19,6 +19,7 @@ import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.website.server.security.authentication.UserSession;
 
 import static net.splitcells.dem.Dem.configValue;
+import static net.splitcells.website.server.security.authentication.Authentication.requireValid;
 import static net.splitcells.website.server.security.authorization.AuthorizerInMemory.authorizerInMemory;
 import static net.splitcells.website.server.security.authorization.Role.ANONYMOUS_ROLE;
 
@@ -29,10 +30,10 @@ public class Authorization implements Option<Authorizer> {
     }
 
     public static boolean hasRole(UserSession userSession, Role role) {
-        return configValue(Authorization.class).hasRole(userSession, role);
+        return configValue(Authorization.class).hasRole(requireValid(userSession), role);
     }
 
     public static boolean missesRole(UserSession userSession, Role role) {
-        return !configValue(Authorization.class).hasRole(userSession, role);
+        return !configValue(Authorization.class).hasRole(requireValid(userSession), role);
     }
 }

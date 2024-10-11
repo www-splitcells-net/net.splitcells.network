@@ -86,11 +86,16 @@ public class AuthenticatorBasedOnFiles implements Authenticator {
         if (!basicLogin.password().equals(storedPassword)) {
             return INSECURE_USER_SESSION;
         }
-        return UserSession.user(this);
+        final var userSession = UserSession.user(this);
+        validUserSessions.add(userSession);
+        return userSession;
     }
 
     @Override
     public boolean isValid(UserSession userSession) {
+        if (ANONYMOUS_USER_SESSION.equals(userSession) || INSECURE_USER_SESSION.equals(userSession)) {
+            return true;
+        }
         if (userSession.authenticatedBy().isEmpty()) {
             return false;
         }
