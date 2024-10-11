@@ -71,6 +71,10 @@ public class AuthenticatorBasedOnFiles implements Authenticator {
         if (!userData.isFile(basicLogin.username() + PASSWORD_FILE)) {
             return ANONYMOUS_USER_SESSION;
         }
+        /* TODO HACK This was a hack, because the equals method did not work otherwise.
+         * Currently, it is unknown, why some text editors like nano add a new line symbol to the end,
+         * that cannot be seen.
+         */
         final var storedPassword = userData.readString(basicLogin.username() + PASSWORD_FILE).split("\n")[0];
         if (!basicLogin.password().equals(storedPassword)) {
             return INSECURE_USER_SESSION;
