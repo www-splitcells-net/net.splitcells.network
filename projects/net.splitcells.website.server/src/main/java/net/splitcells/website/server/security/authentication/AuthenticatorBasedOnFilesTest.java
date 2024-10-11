@@ -13,24 +13,20 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.website.server.vertx;
+package net.splitcells.website.server.security.authentication;
 
-import io.vertx.core.AsyncResult;
-import io.vertx.core.Handler;
-import io.vertx.core.json.JsonObject;
-import io.vertx.ext.auth.User;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.dem.utils.StringUtils;
 
-import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.resource.FileSystemViaMemory.fileSystemViaMemory;
+import static net.splitcells.dem.testing.Assertions.requireDistinct;
+import static net.splitcells.dem.testing.Assertions.requireEquals;
+import static net.splitcells.website.server.security.authentication.AuthenticatorBasedOnFiles.authenticatorBasedOnFiles;
+import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
+import static net.splitcells.website.server.security.authentication.UserSession.INVALID_LOGIN;
 import static net.splitcells.website.server.vertx.FileBasedAuthenticationProvider.PASSWORD_FILE;
-import static net.splitcells.website.server.vertx.FileBasedAuthenticationProvider.fileBasedAuthenticationProvider;
 
-@JavaLegacyArtifact
-public class FileBasedAuthenticationProviderTest {
+public class AuthenticatorBasedOnFilesTest {
     @UnitTest
     public void test() {
         final var username = "username-123";
@@ -38,22 +34,13 @@ public class FileBasedAuthenticationProviderTest {
         final var userData = fileSystemViaMemory();
         userData.createDirectoryPath(username);
         userData.writeToFile(username + PASSWORD_FILE, StringUtils.toBytes(password));
-        final var testSubject = fileBasedAuthenticationProvider(userData);
-        final var validRequest = new JsonObject("{\"username\":\"" + username + "\",\"password\":\"" + password + "\"}");
-        testSubject.authenticate(validRequest, new Handler<>() {
-
-            @Override
-            public void handle(AsyncResult<User> event) {
-                Assertions.requireEquals(event.result().subject(), username);
-            }
-        });
-        final var invalidRequest = new JsonObject("{\"username\":\"username\",\"password\":\"password\"}");
-        testSubject.authenticate(invalidRequest, new Handler<>() {
-
-            @Override
-            public void handle(AsyncResult<User> event) {
-                require(event.failed());
-            }
-        });
+        final var testSubject = authenticatorBasedOnFiles(userData);
+        final var validLogin = testSubject.userSession(BasicLogin.login(username, password));
+        requireDistinct(validLogin, ANONYMOUS_USER_SESSION);
+        requireDistinct(validLogin, INVALID_LOGIN);
+        requireEquals(testSubject.userSession(BasicLogin.login(username, "not-password"))
+                , INVALID_LOGIN);
+        requireEquals(testSubject.userSession(BasicLogin.login("not-user", "not-password"))
+                , ANONYMOUS_USER_SESSION);
     }
 }

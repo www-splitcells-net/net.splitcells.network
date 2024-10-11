@@ -18,11 +18,11 @@ package net.splitcells.website.server.security.authentication;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.resource.ConfigFileSystem;
 import net.splitcells.dem.resource.FileSystemView;
-import net.splitcells.website.server.vertx.FileBasedAuthenticationProvider;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
+import static net.splitcells.website.server.security.authentication.UserSession.INVALID_LOGIN;
 
 public class AuthenticatorBasedOnFiles implements Authenticator {
     private static final String USER_FOLDER = "net/splitcells/website/server/security/users/";
@@ -62,7 +62,7 @@ public class AuthenticatorBasedOnFiles implements Authenticator {
         }
         final var storedPassword = userData.readString(basicLogin.username() + PASSWORD_FILE).split("\n")[0];
         if (!basicLogin.password().equals(storedPassword)) {
-            return ANONYMOUS_USER_SESSION;
+            return INVALID_LOGIN;
         }
         return UserSession.user(this);
     }

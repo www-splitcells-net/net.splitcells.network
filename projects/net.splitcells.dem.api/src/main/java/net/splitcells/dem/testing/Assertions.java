@@ -75,6 +75,12 @@ public class Assertions {
         }
     }
 
+    public static <T> void requireDistinct(T a, T b) {
+        if (a.equals(b)) {
+            throw executionException("Arguments are required to be equal, but are not: first argument: " + a + ", second argument: " + b);
+        }
+    }
+
     @JavaLegacyBody
     public static void requireIllegalDefaultConstructor(Class<?> clazz) {
         final java.lang.reflect.Constructor<?> constructor;
