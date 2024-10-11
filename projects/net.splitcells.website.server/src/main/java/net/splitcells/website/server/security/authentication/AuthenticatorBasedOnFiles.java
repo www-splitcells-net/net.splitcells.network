@@ -19,13 +19,15 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.resource.ConfigFileSystem;
 import net.splitcells.dem.resource.FileSystemView;
 
+import java.util.regex.Pattern;
+
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
 import static net.splitcells.website.server.security.authentication.UserSession.INSECURE_USER_SESSION;
 
 /**
- * Authenticates users via their names and passwords by looking up a file for each user,
+ * <p>Authenticates users via their names and passwords by looking up a file for each user,
  * that contains the user's password.
  * These files are located at {@link ConfigFileSystem} + {@link #USER_FOLDER} + `/[username]`.
  * The password is the first line of the file.
@@ -33,11 +35,13 @@ import static net.splitcells.website.server.security.authentication.UserSession.
  * that on Linux sometimes a line ending symbol is added to a file
  * via a text editor without the line ending being visible in the editor (source Mārtiņš Avots).
  * Furthermore, the line ending symbol can be hard to enter for a user,
- * because of the UI of the user's computer.
+ * because of the UI of the user's computer.</p>
+ * <p>Only usernames matching to {@link #VALID_USERNAME_SYMBOLS} are allowed.</p>
  */
 public class AuthenticatorBasedOnFiles implements Authenticator {
     private static final String USER_FOLDER = "net/splitcells/website/server/security/users/";
     public static final String PASSWORD_FILE = "/password";
+    private static final Pattern VALID_USERNAME_SYMBOLS = Pattern.compile("[a-zA-Z0-9 \\-]+");
 
     public static Authenticator authenticatorBasedOnFiles() {
         return new AuthenticatorBasedOnFiles(configValue(ConfigFileSystem.class)
@@ -75,6 +79,9 @@ public class AuthenticatorBasedOnFiles implements Authenticator {
          * Currently, it is unknown, why some text editors like nano add a new line symbol to the end,
          * that cannot be seen.
          */
+        if (!VALID_USERNAME_SYMBOLS.matcher(basicLogin.username()).matches()) {
+            return INSECURE_USER_SESSION;
+        }
         final var storedPassword = userData.readString(basicLogin.username() + PASSWORD_FILE).split("\n")[0];
         if (!basicLogin.password().equals(storedPassword)) {
             return INSECURE_USER_SESSION;
