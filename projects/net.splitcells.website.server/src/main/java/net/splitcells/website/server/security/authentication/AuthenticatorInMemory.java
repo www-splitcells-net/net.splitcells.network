@@ -28,7 +28,7 @@ public class AuthenticatorInMemory implements Authenticator {
     }
 
     public static Authenticator authenticatorInMemory(Map<BasicLogin, UserSession> userLogin) {
-        return new AuthenticatorInMemory(basicLogin -> userLogin.getOrDefault(basicLogin, UserSession.INVALID_LOGIN));
+        return new AuthenticatorInMemory(basicLogin -> userLogin.getOrDefault(basicLogin, UserSession.INSECURE_USER_SESSION));
     }
 
     private final Function<BasicLogin, UserSession> userQuery;

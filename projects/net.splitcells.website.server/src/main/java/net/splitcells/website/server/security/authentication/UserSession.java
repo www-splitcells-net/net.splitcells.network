@@ -32,8 +32,21 @@ import java.util.Optional;
  * No other code can therefore fake a valid {@link UserSession}.</p>
  */
 public class UserSession {
+    /**
+     * This {@link UserSession} is created without any {@link BasicLogin},
+     * or a login with an invalid name.
+     * As a username is no secret, this is not considered to be a security issue.
+     * Therefore, this {@link UserSession} represents a user,
+     * that is not registered to this program.
+     * This is also known as a random internet user.
+     */
     public static final UserSession ANONYMOUS_USER_SESSION = notAuthenticatedUser();
-    public static final UserSession INVALID_LOGIN = notAuthenticatedUser();
+    /**
+     * This {@link UserSession} is created by invalid secrets provided by {@link BasicLogin}.
+     * If no special treatment is required,
+     * this user can also be handled exactly like {@link #ANONYMOUS_USER_SESSION}.
+     */
+    public static final UserSession INSECURE_USER_SESSION = notAuthenticatedUser();
 
     public static UserSession notAuthenticatedUser() {
         return new UserSession(Optional.empty());

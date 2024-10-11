@@ -22,15 +22,13 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.auth.User;
 import io.vertx.ext.auth.authentication.AuthenticationProvider;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.resource.ConfigFileSystem;
-import net.splitcells.dem.resource.FileSystemView;
 import net.splitcells.website.server.security.authentication.Authentication;
 import net.splitcells.website.server.security.authentication.Authenticator;
 import net.splitcells.website.server.security.authentication.BasicLogin;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
-import static net.splitcells.website.server.security.authentication.UserSession.INVALID_LOGIN;
+import static net.splitcells.website.server.security.authentication.UserSession.INSECURE_USER_SESSION;
 
 @JavaLegacyArtifact
 public class FileBasedAuthenticationProvider implements AuthenticationProvider {
@@ -57,7 +55,7 @@ public class FileBasedAuthenticationProvider implements AuthenticationProvider {
         final var username = credentials.getString("username");
         final var inputtedPassword = credentials.getString("password");
         final var userSession = authenticator.userSession(BasicLogin.login(username, inputtedPassword));
-        if (INVALID_LOGIN.equals(userSession)) {
+        if (INSECURE_USER_SESSION.equals(userSession)) {
             resultHandler.handle(Future.failedFuture("The password for `"
                     + username
                     + "` is unknown."));

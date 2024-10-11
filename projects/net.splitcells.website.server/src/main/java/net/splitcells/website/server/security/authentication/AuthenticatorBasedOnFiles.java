@@ -22,7 +22,7 @@ import net.splitcells.dem.resource.FileSystemView;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
-import static net.splitcells.website.server.security.authentication.UserSession.INVALID_LOGIN;
+import static net.splitcells.website.server.security.authentication.UserSession.INSECURE_USER_SESSION;
 
 /**
  * Authenticates users via their names and passwords by looking up a file for each user,
@@ -73,7 +73,7 @@ public class AuthenticatorBasedOnFiles implements Authenticator {
         }
         final var storedPassword = userData.readString(basicLogin.username() + PASSWORD_FILE).split("\n")[0];
         if (!basicLogin.password().equals(storedPassword)) {
-            return INVALID_LOGIN;
+            return INSECURE_USER_SESSION;
         }
         return UserSession.user(this);
     }

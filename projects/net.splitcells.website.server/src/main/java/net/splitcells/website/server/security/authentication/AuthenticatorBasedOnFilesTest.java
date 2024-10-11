@@ -23,7 +23,7 @@ import static net.splitcells.dem.testing.Assertions.requireDistinct;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.website.server.security.authentication.AuthenticatorBasedOnFiles.authenticatorBasedOnFiles;
 import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
-import static net.splitcells.website.server.security.authentication.UserSession.INVALID_LOGIN;
+import static net.splitcells.website.server.security.authentication.UserSession.INSECURE_USER_SESSION;
 import static net.splitcells.website.server.vertx.FileBasedAuthenticationProvider.PASSWORD_FILE;
 
 public class AuthenticatorBasedOnFilesTest {
@@ -37,9 +37,9 @@ public class AuthenticatorBasedOnFilesTest {
         final var testSubject = authenticatorBasedOnFiles(userData);
         final var validLogin = testSubject.userSession(BasicLogin.login(username, password));
         requireDistinct(validLogin, ANONYMOUS_USER_SESSION);
-        requireDistinct(validLogin, INVALID_LOGIN);
+        requireDistinct(validLogin, INSECURE_USER_SESSION);
         requireEquals(testSubject.userSession(BasicLogin.login(username, "not-password"))
-                , INVALID_LOGIN);
+                , INSECURE_USER_SESSION);
         requireEquals(testSubject.userSession(BasicLogin.login("not-user", "not-password"))
                 , ANONYMOUS_USER_SESSION);
     }
