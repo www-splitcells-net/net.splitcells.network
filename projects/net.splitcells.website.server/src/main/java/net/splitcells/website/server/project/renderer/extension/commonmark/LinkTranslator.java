@@ -46,7 +46,7 @@ import static net.splitcells.dem.resource.Trail.withoutSuffixElements;
 @JavaLegacyArtifact
 public class LinkTranslator extends AbstractVisitor {
 
-    private static Pattern PROTOCOL = Pattern.compile("([a-z]+://)(.*)");
+    private static final Pattern PROTOCOL = Pattern.compile("([a-z]+://)(.*)");
     /**
      * Matches to paths that point to a sub project's README in a git repository.
      * This helpful, when the sub projects' READMEs are embedded into the software.
