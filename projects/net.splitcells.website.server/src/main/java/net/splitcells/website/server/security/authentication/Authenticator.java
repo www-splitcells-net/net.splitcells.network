@@ -18,5 +18,17 @@ package net.splitcells.website.server.security.authentication;
 public interface Authenticator {
     UserSession userSession(BasicLogin basicLogin);
 
+    /**
+     *
+     * @param userSession
+     * @return Returns true, if the given {@link UserSession} is a valid authentication of a user.
+     * Such {@link UserSession} are primarily ones, that were created by this {@link Authenticator} and is
+     * still valid and therefore its lifetime has not ended yet.
+     * There are also valid {@link UserSession}, that are not created by this,
+     * like {@link UserSession#ANONYMOUS_USER_SESSION} or {@link UserSession#INSECURE_USER_SESSION}.
+     * In other words, a {@link UserSession} is valid, when an {@link BasicLogin} was successfully mapped
+     * to an {@link UserSession}, regardless of the correctness of the user's login data.
+     * Therefore, a given {@link UserSession} is also a report regarding the validity of a corresponding {@link BasicLogin}.
+     */
     boolean isValid(UserSession userSession);
 }
