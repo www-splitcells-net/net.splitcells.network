@@ -24,49 +24,52 @@ import io.vertx.ext.auth.authentication.AuthenticationProvider;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.resource.ConfigFileSystem;
 import net.splitcells.dem.resource.FileSystemView;
+import net.splitcells.website.server.security.authentication.Authentication;
+import net.splitcells.website.server.security.authentication.Authenticator;
+import net.splitcells.website.server.security.authentication.BasicLogin;
 
 import static net.splitcells.dem.Dem.configValue;
+import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
+import static net.splitcells.website.server.security.authentication.UserSession.INVALID_LOGIN;
 
 @JavaLegacyArtifact
 public class FileBasedAuthenticationProvider implements AuthenticationProvider {
-    private static final String USER_FOLDER = "net/splitcells/website/server/security/users/";
-    public static final String PASSWORD_FILE = "/password";
+    public static final String LOGIN_KEY = FileBasedAuthenticationProvider.class.getName() + ".login.key";
 
     public static FileBasedAuthenticationProvider fileBasedAuthenticationProvider() {
-        return new FileBasedAuthenticationProvider(configValue(ConfigFileSystem.class)
-                .subFileSystem(USER_FOLDER));
+        return new FileBasedAuthenticationProvider();
     }
 
-    public static FileBasedAuthenticationProvider fileBasedAuthenticationProvider(FileSystemView userData) {
-        return new FileBasedAuthenticationProvider(userData);
+    private final Authenticator authenticator = configValue(Authentication.class);
+
+    private FileBasedAuthenticationProvider() {
     }
 
-    private final FileSystemView userData;
-
-    private FileBasedAuthenticationProvider(FileSystemView userDataArg) {
-        userData = userDataArg;
-    }
-
+    /**
+     * This method will never log the password entered by the user or the actual password,
+     * in order to avoid security problems.
+     *
+     * @param credentials   The credentials
+     * @param resultHandler The result handler
+     */
     @Override
     public void authenticate(JsonObject credentials, Handler<AsyncResult<User>> resultHandler) {
         final var username = credentials.getString("username");
         final var inputtedPassword = credentials.getString("password");
-        if (!userData.isFile(username + PASSWORD_FILE)) {
+        final var userSession = authenticator.userSession(BasicLogin.login(username, inputtedPassword));
+        if (INVALID_LOGIN.equals(userSession)) {
+            resultHandler.handle(Future.failedFuture("The password for `"
+                    + username
+                    + "` is unknown."));
+            return;
+        } else if (ANONYMOUS_USER_SESSION.equals(userSession)) {
             resultHandler.handle(Future.failedFuture("The username `"
                     + username
                     + "` is unknown."));
             return;
         }
-        final var storedPassword = userData.readString(username + PASSWORD_FILE).split("\n")[0];
-        if (!inputtedPassword.equals(storedPassword)) {
-            resultHandler.handle(Future.failedFuture("False input password `"
-                    + inputtedPassword
-                    + "` for username `"
-                    + username
-                    + "`. Expecting the password `"
-                    + storedPassword
-                    + "`."));
-        }
-        resultHandler.handle(Future.succeededFuture(User.fromName(username)));
+        final var user = User.fromName(username);
+        user.attributes().put(LOGIN_KEY, userSession);
+        resultHandler.handle(Future.succeededFuture(user));
     }
 }
