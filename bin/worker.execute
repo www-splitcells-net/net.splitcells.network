@@ -14,6 +14,7 @@ __license__ = "EPL-2.0 OR GPL-2.0-or-later"
 import argparse
 import logging
 import os
+import shutil
 import subprocess
 
 dockerFileServiceTemplate = """FROM docker.io/eclipse-temurin:21-jdk-jammy
@@ -42,6 +43,7 @@ mkdir -p $HOME/.local/state/$executionName/.m2/
 mkdir -p $HOME/.local/state/$executionName/.ssh/
 mkdir -p $HOME/.local/state/$executionName/.local/
 mkdir -p ./target/
+chmod +x target/program-$executionName
 podman build -f "target/Dockerfile-$executionName" --tag "localhost/$executionName" --log-level=debug
     # Logging is used, in order to better understand build runtime performance.
 podman run --name "$executionName" \\
@@ -67,21 +69,27 @@ if __name__ == '__main__':
                                + " If scripts need to be executed one can use `sh -c \"[script]\"`."
                                + " Use this only, in order to integrate the environment with the software."
                                + " Prefer `--class-for-execution` instead.")
+    parser.add_argument('--executable-path', dest='executablePath', help="Executes the given executable file. Only set this option or --command.")
     parser.add_argument('--class-for-execution', dest='classForExecution', help="This Java class is executed.")
     parser.add_argument('--port-publishing', dest='portPublishing', help="This is a comma separated list of `host-port:container-port`, that describes the port forwarding on the host.")
     parsedArgs = parser.parse_args()
+    if not os.path.exists('./target'):
+        os.mkdir('./target')
     # Create Dockerfile.
     dockerfile = dockerFileServiceTemplate
     if parsedArgs.command is not None:
     	dockerfile += 'ENTRYPOINT ' + parsedArgs.command
+    elif parsedArgs.executablePath is not None:
+        programName = "program-" + parsedArgs.name
+        shutil.copyfile(parsedArgs.executablePath, "./target/" + programName)
+        dockerfile += "ADD ./" + programName + " /root/program\n"
+        dockerfile += 'ENTRYPOINT /root/program'
     elif parsedArgs.classForExecution is not None:
         dockerfile += (javaClassExecutionTemplate
             .replace('$NAME_FOR_EXECUTION', parsedArgs.name)
             .replace('$CLASS_FOR_EXECUTION', parsedArgs.classForExecution))
     else:
     	raise Exception('Either `--command` or `--class-for-execution` needs to be set.')
-    if not os.path.exists('./target'):
-        os.mkdir('./target')
     file='target/Dockerfile-' + parsedArgs.name
     with open(file, 'w') as filetowrite:
         filetowrite.write(dockerfile)

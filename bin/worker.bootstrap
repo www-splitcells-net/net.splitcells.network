@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+set -e
+mkdir -p ~/.local/state/net.splitcells.network.worker/repos
+cd ~/.local/state/net.splitcells.network.worker/repos
+git clone --depth 1 https://codeberg.org/splitcells-net/net.splitcells.network.git
+git clone --depth 1 https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
+cd ~/.local/state/net.splitcells.network.worker/repos/net.splitcells.network
+bin/worker.repos.pull
