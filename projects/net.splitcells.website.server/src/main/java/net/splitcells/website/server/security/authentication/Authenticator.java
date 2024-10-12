@@ -19,6 +19,9 @@ public interface Authenticator {
     UserSession userSession(BasicLogin basicLogin);
 
     /**
+     * TODO Maybe it makes sense, to limit the number of valid {@link UserSession} at any given time,
+     * in order to find bugs in the security system,
+     * where problematic {@link UserSession} with infinite lifetimes are created.
      *
      * @param userSession
      * @return Returns true, if the given {@link UserSession} is a valid authentication of a user.
