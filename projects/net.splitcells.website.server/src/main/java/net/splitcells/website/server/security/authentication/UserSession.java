@@ -33,6 +33,19 @@ import java.util.Optional;
  */
 public class UserSession {
     /**
+     * This method exists, so that valid {@link UserSession} without a login can be checked,
+     * while having a central location for such a default definition.
+     *
+     * @param userSession
+     * @return Returns true if the given {@link UserSession} is one,
+     * that is always expected to be true by default for any given {@link Authentication}.
+     * Any {@link Authentication} is allowed to not discard such {@link UserSession},
+     * but most will accept such.
+     */
+    public static boolean isValidNoLoginStandard(UserSession userSession) {
+        return userSession == ANONYMOUS_USER_SESSION || userSession == INSECURE_USER_SESSION;
+    }
+    /**
      * This {@link UserSession} is created without any {@link BasicLogin},
      * or a login with an invalid name.
      * As a username is no secret, this is not considered to be a security issue.

@@ -18,7 +18,6 @@ package net.splitcells.website.server.security.authentication;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.resource.ConfigFileSystem;
 import net.splitcells.dem.resource.FileSystemView;
-import net.splitcells.dem.testing.Assertions;
 
 import java.util.regex.Pattern;
 
@@ -26,8 +25,7 @@ import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
-import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
-import static net.splitcells.website.server.security.authentication.UserSession.INSECURE_USER_SESSION;
+import static net.splitcells.website.server.security.authentication.UserSession.*;
 
 /**
  * <p>Authenticates users via their names and passwords by looking up a file for each user,
@@ -110,7 +108,7 @@ public class AuthenticatorBasedOnFiles implements Authenticator {
 
     @Override
     public synchronized boolean isValid(UserSession userSession) {
-        if (ANONYMOUS_USER_SESSION.equals(userSession) || INSECURE_USER_SESSION.equals(userSession)) {
+        if (isValidNoLoginStandard(userSession)) {
             return true;
         }
         if (userSession.authenticatedBy().isEmpty()) {

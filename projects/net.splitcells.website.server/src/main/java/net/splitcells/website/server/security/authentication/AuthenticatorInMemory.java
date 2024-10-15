@@ -21,6 +21,7 @@ import net.splitcells.dem.data.set.map.Map;
 import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.website.server.security.authentication.UserSession.isValidNoLoginStandard;
 
 public class AuthenticatorInMemory implements Authenticator {
     public static Authenticator authenticatorInMemory(Function<BasicLogin, UserSession> userLogin) {
@@ -47,6 +48,9 @@ public class AuthenticatorInMemory implements Authenticator {
 
     @Override
     public boolean isValid(UserSession userSession) {
+        if (isValidNoLoginStandard(userSession)) {
+            return true;
+        }
         if (userSession.authenticatedBy().isEmpty()) {
             return false;
         }
