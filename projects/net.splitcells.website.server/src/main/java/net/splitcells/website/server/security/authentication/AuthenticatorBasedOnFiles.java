@@ -40,6 +40,16 @@ import static net.splitcells.website.server.security.authentication.UserSession.
  * Furthermore, the line ending symbol can be hard to enter for a user,
  * because of the UI of the user's computer.</p>
  * <p>Only usernames matching to {@link #VALID_USERNAME_SYMBOLS} are allowed.</p>
+ * <p>TODO Speed up logins by caching these.
+ * This requires one to know, when the user data changes inside {@link #userData}.
+ * This is best solved by having a subscription on {@link #userData}.
+ * Another way of doing this, is to only allow the program to change {@link #userData} via a form and
+ * assuming that the data is not changed by external programs.
+ * Thereby, the form code can trigger the appropriate cache invalidation.
+ * This would be the preferred way.
+ * If the OS does not actively support this, this could also be done via a thread,
+ * that checks the {@link #userData} content every minute regarding the cache content,
+ * but in this case some status info in the admin GUI or user data update form needs to signal the cache status</p>
  */
 public class AuthenticatorBasedOnFiles implements Authenticator {
     private static final String USER_FOLDER = "net/splitcells/website/server/security/users/";
