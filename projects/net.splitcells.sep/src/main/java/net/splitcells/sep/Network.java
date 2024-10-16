@@ -29,6 +29,7 @@ import java.util.function.Function;
 import static net.splitcells.dem.data.set.map.Maps.map;
 
 /**
+ * <p>TODO Migrate this into {@link net.splitcells.gel.ui.Editor}.</p>
  * <p>TODO Clean up the interface and document intent of this.</p>
  * <p>TODO Ensure that all solutions have a name,
  * because otherwise it can get hard pretty easily to distinguish one {@link net.splitcells.gel.problem.Problem}
@@ -37,6 +38,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
  * Note that {@link net.splitcells.dem.execution.EffectSystem} is not in a good
  * state and needs to be fixed first.</p>
  */
+@Deprecated
 public class Network {
     public static Network network() {
         return new Network();
