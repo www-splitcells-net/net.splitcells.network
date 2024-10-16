@@ -48,6 +48,7 @@ import net.splitcells.gel.data.table.column.ColumnView;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
 public interface Table extends Discoverable, Domable, Identifiable {
     boolean GET_LINE_VIA_STREAM = true;
@@ -485,5 +486,24 @@ public interface Table extends Discoverable, Domable, Identifiable {
     default boolean isEqualFormat(Database otherDatabase) {
         return setOfUniques(headerView()).hasContentOf((a, b) -> a.equalContentTo(b), otherDatabase.headerView())
                 && name().equals(otherDatabase.name());
+    }
+
+    default DiscoverableRenderer discoverableRenderer() {
+        return new DiscoverableRenderer() {
+            @Override
+            public String render() {
+                return Table.this.toHtmlTable().toHtmlString();
+            }
+
+            @Override
+            public Optional<String> title() {
+                return Optional.of(Table.this.path().toString());
+            }
+
+            @Override
+            public List<String> path() {
+                return Table.this.path();
+            }
+        };
     }
 }
