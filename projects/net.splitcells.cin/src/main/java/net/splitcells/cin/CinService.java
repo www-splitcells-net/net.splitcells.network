@@ -51,6 +51,7 @@ public class CinService implements ResourceOption<Service> {
                                 .withIncrementedNextTime()
                                 .withSuppliedNextTime()
                                 .withDeletedOldTime()
+                                .withOptimized()
                                 .withUpdatedCurrentTime();
                     }
                 });

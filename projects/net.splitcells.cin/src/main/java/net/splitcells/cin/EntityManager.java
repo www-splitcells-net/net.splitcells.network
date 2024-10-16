@@ -15,12 +15,14 @@
  */
 package net.splitcells.cin;
 
+import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.solution.Solution;
 
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 
@@ -37,6 +39,8 @@ public class EntityManager {
     public static final Attribute<Float> PLAYER_ATTRIBUTE = attribute(Float.class, "player-attribute");
     public static final Attribute<Float> PLAYER_VALUE = attribute(Float.class, "value");
 
+    public static final float PLAYER_ENERGY = 1f;
+
     public static EntityManager entityManager() {
         return new EntityManager();
     }
@@ -48,6 +52,7 @@ public class EntityManager {
     private float currentTime = initTime;
     private float nextTime = currentTime + 1f;
     private int numberOfPlayers = 100;
+    private final Randomness random = randomness();
 
     private EntityManager() {
         entities = defineProblem("entity-manager")
@@ -65,6 +70,12 @@ public class EntityManager {
 
     public Solution entities() {
         return entities;
+    }
+
+    public EntityManager withOptimized() {
+        final var freeDemands = entities.demandsFree().unorderedLines();
+        freeDemands.forEach(fd -> entities.assign(fd, entitySupplies.addTranslated(list(PLAYER_ENERGY, random.integer(1, 100)))));
+        return this;
     }
 
     public EntityManager withIncrementedNextTime() {
