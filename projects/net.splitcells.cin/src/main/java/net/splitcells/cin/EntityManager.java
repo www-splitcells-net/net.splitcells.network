@@ -38,7 +38,7 @@ public class EntityManager {
     public static final Attribute<Integer> TIME = attribute(Integer.class, "time");
     public static final Attribute<Float> PLAYER = attribute(Float.class, "player");
     public static final Attribute<Float> PLAYER_ATTRIBUTE = attribute(Float.class, "player-attribute");
-    public static final Attribute<Float> PLAYER_VALUE = attribute(Float.class, "value");
+    public static final Attribute<Float> PLAYER_VALUE = attribute(Float.class, "player-value");
 
     public static final float PLAYER_ENERGY = 1f;
 
