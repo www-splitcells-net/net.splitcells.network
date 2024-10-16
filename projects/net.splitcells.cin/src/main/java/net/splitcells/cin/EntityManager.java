@@ -15,6 +15,7 @@
  */
 package net.splitcells.cin;
 
+import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.solution.Solution;
 
@@ -33,12 +34,20 @@ public class EntityManager {
     public static final Attribute<Float> ATTRIBUTE = attribute(Float.class, "attribute");
     public static final Attribute<Float> VALUE = attribute(Float.class, "value");
 
-    private EntityManager() {
-
+    public static EntityManager entityManager() {
+        return new EntityManager();
     }
 
-    public static Solution entityManager(String name) {
-        return defineProblem(name)
+    private final Solution entities;
+    private final Database entityDemands;
+    private final Database entitySupplies;
+    private float initTime = 1f;
+    private float currentTime = initTime;
+    private float nextTime = currentTime + 1f;
+    private int numberOfPlayers = 100;
+
+    private EntityManager() {
+        entities = defineProblem("entity-manager")
                 .withDemandAttributes(TIME, OWNER)
                 .withNoDemands()
                 .withSupplyAttributes(ATTRIBUTE, VALUE)
@@ -46,31 +55,51 @@ public class EntityManager {
                 .withConstraint(query -> query)
                 .toProblem()
                 .asSolution()
-                ;
+        ;
+        entityDemands = entities.demands();
+        entitySupplies = entities.supplies();
     }
 
-    public static void initPlayers(Solution entityManager, float initTime, int numberOfPlayers) {
-        final var demands = entityManager.demands();
+    public Solution entities() {
+        return entities;
+    }
+
+    public EntityManager withIncrementedNextTime() {
+        nextTime += 1f;
+        return this;
+    }
+
+    public EntityManager withUpdatedCurrentTime() {
+        currentTime = nextTime;
+        return this;
+    }
+
+    public EntityManager withInitedPlayers() {
         range(0, numberOfPlayers).forEach(i -> {
-            demands.addTranslated(list(initTime, (float) i));
+            entityDemands.addTranslated(list(initTime, (float) i));
         });
+        return this;
     }
 
 
-    public static void supplyNextTime(Solution entityManager, float currentTime, float nextTime) {
-        final var demands = entityManager.demands();
-        demands.lookup(TIME, currentTime).unorderedLinesStream().forEach(demand -> {
-            demands.addTranslated(list(nextTime, demand.value(OWNER)));
+    public EntityManager withSuppliedNextTime() {
+        entityDemands.lookup(TIME, currentTime).unorderedLinesStream().forEach(demand -> {
+            entityDemands.addTranslated(list(nextTime, demand.value(OWNER)));
         });
+        final var freeSupplies = entities.suppliesFree().unorderedLines();
+        freeSupplies.forEach(entitySupplies::remove);
+        return this;
+
     }
 
-    public static void deleteOldTime(Solution entityManager, float currentTime, float oldTime) {
-        final var demands = entityManager.demands();
-        final var deletionCandidates = demands.unorderedLines();
+    public EntityManager withDeletedOldTime() {
+        final var oldTime = currentTime - 10f;
+        final var deletionCandidates = entityDemands.unorderedLines();
         deletionCandidates.forEach(dc -> {
             if (dc.value(TIME) < oldTime) {
-                demands.remove(dc);
+                entityDemands.remove(dc);
             }
         });
+        return this;
     }
 }

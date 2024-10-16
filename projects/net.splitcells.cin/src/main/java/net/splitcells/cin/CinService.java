@@ -41,18 +41,17 @@ public class CinService implements ResourceOption<Service> {
             public void start() {
                 isRunning = true;
                 Dem.executeThread("Cin", () -> {
-                    final var entityManager = entityManager("entity-manager");
-                    registerObject(entityManager.discoverableRenderer());
-                    registerObject(entityManager.demands().discoverableRenderer());
-                    registerObject(entityManager.supplies().discoverableRenderer());
-                    float currentTime = 1f;
-                    float nextTime;
-                    initPlayers(entityManager, currentTime, 100);
+                    final var entityManager = entityManager();
+                    registerObject(entityManager.entities().discoverableRenderer());
+                    registerObject(entityManager.entities().demands().discoverableRenderer());
+                    registerObject(entityManager.entities().supplies().discoverableRenderer());
+                    entityManager.withInitedPlayers();
                     while (isRunning) {
-                        nextTime = currentTime + 1f;
-                        supplyNextTime(entityManager, currentTime, nextTime);
-                        deleteOldTime(entityManager, currentTime, currentTime - 10f);
-                        currentTime = nextTime;
+                        entityManager
+                                .withIncrementedNextTime()
+                                .withSuppliedNextTime()
+                                .withDeletedOldTime()
+                                .withUpdatedCurrentTime();
                         Dem.sleepAtLeast(1000);
                     }
                 });
