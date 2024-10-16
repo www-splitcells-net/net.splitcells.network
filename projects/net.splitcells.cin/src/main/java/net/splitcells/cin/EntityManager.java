@@ -73,8 +73,8 @@ public class EntityManager {
     }
 
     public EntityManager withOptimized() {
-        final var freeDemands = entities.demandsFree().unorderedLines();
-        freeDemands.forEach(fd -> entities.assign(fd, entitySupplies.addTranslated(list(PLAYER_ENERGY, random.integer(1, 100)))));
+        entities.demandsFree().unorderedLines()
+                .forEach(fd -> entities.assign(fd, entitySupplies.addTranslated(list(PLAYER_ENERGY, random.integer(1, 100)))));
         return this;
     }
 
@@ -89,19 +89,15 @@ public class EntityManager {
     }
 
     public EntityManager withInitedPlayers() {
-        range(0, numberOfPlayers).forEach(i -> {
-            entityDemands.addTranslated(list(initTime, (float) i));
-        });
+        range(0, numberOfPlayers).forEach(i -> entityDemands.addTranslated(list(initTime, (float) i)));
         return this;
     }
 
 
     public EntityManager withSuppliedNextTime() {
-        entityDemands.lookup(TIME, currentTime).unorderedLinesStream().forEach(demand -> {
-            entityDemands.addTranslated(list(nextTime, demand.value(PLAYER)));
-        });
-        final var freeSupplies = entities.suppliesFree().unorderedLines();
-        freeSupplies.forEach(entitySupplies::remove);
+        entityDemands.lookup(TIME, currentTime).unorderedLinesStream()
+                .forEach(demand -> entityDemands.addTranslated(list(nextTime, demand.value(PLAYER))));
+        entities.suppliesFree().unorderedLines().forEach(entitySupplies::remove);
         return this;
 
     }
