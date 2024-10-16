@@ -13,9 +13,9 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.cin;
+package net.splitcells.cin.deprecated;
 
-import net.splitcells.cin.raters.deprecated.TimeSteps;
+import net.splitcells.cin.deprecated.raters.deprecated.TimeSteps;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
@@ -29,15 +29,15 @@ import net.splitcells.gel.solution.optimization.OnlineOptimization;
 import java.util.Optional;
 
 import static java.util.stream.IntStream.rangeClosed;
-import static net.splitcells.cin.raters.CommitmentAdherence.commitmentAdherence;
-import static net.splitcells.cin.raters.FundamentalWorldRules.fundamentalWorldRules;
-import static net.splitcells.cin.raters.deprecated.CrowdClassifier.crowdClassifier;
-import static net.splitcells.cin.raters.deprecated.Dies.dies;
-import static net.splitcells.cin.raters.deprecated.Loneliness.loneliness;
-import static net.splitcells.cin.raters.deprecated.PlayerValuePersistenceClassifier.playerValuePersistenceClassifier;
-import static net.splitcells.cin.raters.deprecated.PositionClusters.positionClustering;
-import static net.splitcells.cin.raters.deprecated.TimeSteps.overlappingTimeSteps;
-import static net.splitcells.cin.raters.deprecated.TimeSteps.timeSteps;
+import static net.splitcells.cin.deprecated.raters.CommitmentAdherence.commitmentAdherence;
+import static net.splitcells.cin.deprecated.raters.FundamentalWorldRules.fundamentalWorldRules;
+import static net.splitcells.cin.deprecated.raters.deprecated.CrowdClassifier.crowdClassifier;
+import static net.splitcells.cin.deprecated.raters.deprecated.Dies.dies;
+import static net.splitcells.cin.deprecated.raters.deprecated.Loneliness.loneliness;
+import static net.splitcells.cin.deprecated.raters.deprecated.PlayerValuePersistenceClassifier.playerValuePersistenceClassifier;
+import static net.splitcells.cin.deprecated.raters.deprecated.PositionClusters.positionClustering;
+import static net.splitcells.cin.deprecated.raters.deprecated.TimeSteps.overlappingTimeSteps;
+import static net.splitcells.cin.deprecated.raters.deprecated.TimeSteps.timeSteps;
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.order.Comparators.ASCENDING_INTEGERS;
 import static net.splitcells.dem.data.set.list.Lists.list;

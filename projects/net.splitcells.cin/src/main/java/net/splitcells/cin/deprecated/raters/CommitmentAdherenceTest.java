@@ -13,14 +13,14 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.cin.raters;
+package net.splitcells.cin.deprecated.raters;
 
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.Gel;
 import net.splitcells.gel.constraint.Constraint;
 
-import static net.splitcells.cin.raters.CommitmentAdherence.commitmentAdherence;
+import static net.splitcells.cin.deprecated.raters.CommitmentAdherence.commitmentAdherence;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;

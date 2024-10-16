@@ -13,17 +13,17 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.cin.raters.deprecated;
+package net.splitcells.cin.deprecated.raters.deprecated;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static java.util.stream.IntStream.range;
 import static java.util.stream.IntStream.rangeClosed;
-import static net.splitcells.cin.raters.deprecated.TimeSteps.NO_TIME_STEP_GROUP;
-import static net.splitcells.cin.raters.deprecated.TimeSteps.WITH_UNEVEN_START_TIME;
-import static net.splitcells.cin.raters.deprecated.TimeSteps.timeStepId;
-import static net.splitcells.cin.raters.deprecated.TimeSteps.timeSteps;
+import static net.splitcells.cin.deprecated.raters.deprecated.TimeSteps.NO_TIME_STEP_GROUP;
+import static net.splitcells.cin.deprecated.raters.deprecated.TimeSteps.WITH_UNEVEN_START_TIME;
+import static net.splitcells.cin.deprecated.raters.deprecated.TimeSteps.timeStepId;
+import static net.splitcells.cin.deprecated.raters.deprecated.TimeSteps.timeSteps;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.testing.Assertions.requireEquals;

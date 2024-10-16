@@ -13,18 +13,18 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.cin;
+package net.splitcells.cin.deprecated;
 
 import net.splitcells.gel.GelDev;
 import net.splitcells.gel.solution.SolutionView;
 
-import static net.splitcells.cin.World.WORLD_HISTORY;
-import static net.splitcells.cin.World.addNextTime;
-import static net.splitcells.cin.World.allocateBlinker;
-import static net.splitcells.cin.World.allocateRestAsDead;
-import static net.splitcells.cin.World.initWorldHistory;
-import static net.splitcells.cin.World.worldHistory;
-import static net.splitcells.cin.World.worldOptimizer;
+import static net.splitcells.cin.deprecated.World.WORLD_HISTORY;
+import static net.splitcells.cin.deprecated.World.addNextTime;
+import static net.splitcells.cin.deprecated.World.allocateBlinker;
+import static net.splitcells.cin.deprecated.World.allocateRestAsDead;
+import static net.splitcells.cin.deprecated.World.initWorldHistory;
+import static net.splitcells.cin.deprecated.World.worldHistory;
+import static net.splitcells.cin.deprecated.World.worldOptimizer;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
 import static net.splitcells.dem.utils.Time.reportRuntime;

@@ -13,20 +13,19 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.cin.raters;
+package net.splitcells.cin.deprecated.raters;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.solution.Solution;
 
-import static net.splitcells.cin.World.POSITION_X;
-import static net.splitcells.cin.World.POSITION_Y;
-import static net.splitcells.cin.World.VALUE;
-import static net.splitcells.cin.World.WORLD_HISTORY;
-import static net.splitcells.cin.World.WORLD_TIME;
-import static net.splitcells.cin.World.worldHistory;
-import static net.splitcells.cin.World.worldHistory2;
+import static net.splitcells.cin.deprecated.World.POSITION_X;
+import static net.splitcells.cin.deprecated.World.POSITION_Y;
+import static net.splitcells.cin.deprecated.World.VALUE;
+import static net.splitcells.cin.deprecated.World.WORLD_HISTORY;
+import static net.splitcells.cin.deprecated.World.WORLD_TIME;
+import static net.splitcells.cin.deprecated.World.worldHistory2;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listOfShallowCopies;
 
