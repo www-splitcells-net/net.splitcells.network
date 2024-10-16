@@ -52,7 +52,6 @@ public class CinService implements ResourceOption<Service> {
                                 .withSuppliedNextTime()
                                 .withDeletedOldTime()
                                 .withUpdatedCurrentTime();
-                        Dem.sleepAtLeast(1000);
                     }
                 });
             }
