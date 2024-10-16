@@ -21,6 +21,7 @@ import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.solution.Solution;
 
 import static java.util.stream.IntStream.range;
+import static net.splitcells.cin.raters.TimeSteps.overlappingTimeSteps;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
@@ -34,7 +35,7 @@ import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
  * which will than be represented by a meta {@link Solution}.</p>
  */
 public class EntityManager {
-    public static final Attribute<Float> TIME = attribute(Float.class, "time");
+    public static final Attribute<Integer> TIME = attribute(Integer.class, "time");
     public static final Attribute<Float> PLAYER = attribute(Float.class, "player");
     public static final Attribute<Float> PLAYER_ATTRIBUTE = attribute(Float.class, "player-attribute");
     public static final Attribute<Float> PLAYER_VALUE = attribute(Float.class, "value");
@@ -48,9 +49,9 @@ public class EntityManager {
     private final Solution entities;
     private final Database entityDemands;
     private final Database entitySupplies;
-    private float initTime = 1f;
-    private float currentTime = initTime;
-    private float nextTime = currentTime + 1f;
+    private int initTime = 1;
+    private int currentTime = initTime;
+    private int nextTime = currentTime + 1;
     private int numberOfPlayers = 100;
     private final Randomness random = randomness();
 
@@ -60,7 +61,10 @@ public class EntityManager {
                 .withNoDemands()
                 .withSupplyAttributes(PLAYER_ATTRIBUTE, PLAYER_VALUE)
                 .withSupplies()
-                .withConstraint(query -> query)
+                .withConstraint(query -> {
+                    query.forAll(overlappingTimeSteps(TIME));
+                    return query;
+                })
                 .toProblem()
                 .asSolution()
         ;
@@ -79,7 +83,7 @@ public class EntityManager {
     }
 
     public EntityManager withIncrementedNextTime() {
-        nextTime += 1f;
+        nextTime += 1;
         return this;
     }
 
@@ -89,7 +93,7 @@ public class EntityManager {
     }
 
     public EntityManager withInitedPlayers() {
-        range(0, numberOfPlayers).forEach(i -> entityDemands.addTranslated(list(initTime, (float) i)));
+        range(0, numberOfPlayers).forEach(i -> entityDemands.addTranslated(list(initTime, i)));
         return this;
     }
 
@@ -103,7 +107,7 @@ public class EntityManager {
     }
 
     public EntityManager withDeletedOldTime() {
-        final var oldTime = currentTime - 10f;
+        final var oldTime = currentTime - 10;
         final var deletionCandidates = entityDemands.unorderedLines();
         deletionCandidates.forEach(dc -> {
             if (dc.value(TIME) < oldTime) {
