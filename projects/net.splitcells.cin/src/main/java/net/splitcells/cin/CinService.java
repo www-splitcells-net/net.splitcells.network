@@ -46,11 +46,12 @@ public class CinService implements ResourceOption<Service> {
                     registerObject(entityManager.demands().discoverableRenderer());
                     registerObject(entityManager.supplies().discoverableRenderer());
                     float currentTime = 1f;
-                    float nextTime = -1;
+                    float nextTime;
                     initPlayers(entityManager, currentTime, 100);
                     while (isRunning) {
                         nextTime = currentTime + 1f;
                         supplyNextTime(entityManager, currentTime, nextTime);
+                        deleteOldTime(entityManager, currentTime, currentTime - 10f);
                         currentTime = nextTime;
                         Dem.sleepAtLeast(1000);
                     }

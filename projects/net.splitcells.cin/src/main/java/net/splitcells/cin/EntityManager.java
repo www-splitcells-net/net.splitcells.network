@@ -63,4 +63,14 @@ public class EntityManager {
             demands.addTranslated(list(nextTime, demand.value(OWNER)));
         });
     }
+
+    public static void deleteOldTime(Solution entityManager, float currentTime, float oldTime) {
+        final var demands = entityManager.demands();
+        final var deletionCandidates = demands.unorderedLines();
+        deletionCandidates.forEach(dc -> {
+            if (dc.value(TIME) < oldTime) {
+                demands.remove(dc);
+            }
+        });
+    }
 }
