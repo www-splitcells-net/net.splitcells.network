@@ -21,11 +21,11 @@ import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.solution.Solution;
 
 /**
+ * <p>This interface contains information about 2 {@link Solution}, that are linked to each other.
+ * Allocated {@link Line} from {@link #original()} are sent to {@link #dependent()}.</p>
  * <p>TODO Make this interface the main one to create protocols,
  * synchronizing 2 {@link Solution} in a {@link Network},
  * instead of {@link DatabaseSynchronization}.</p>
- * <p>This interface contains information about 2 {@link Solution}, that are linked to each other.
- * Allocated {@link Line} from {@link #original()} are sent to {@link #dependent()}.</p>
  */
 public interface SolutionConnection {
 
