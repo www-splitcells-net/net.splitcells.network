@@ -25,14 +25,17 @@ import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 
 /**
- * Floats instead of doubles are used, as these are used in game development and
- * seem to be better supported on GPUs.
+ * <p>Floats instead of doubles are used, as these are used in game development and
+ * seem to be better supported on GPUs.</p>
+ * <p>TODO Optional {@link Attribute} are used for now and that is OK,
+ * as later the {@link #entities} {@link Database} will be split up into multiple,
+ * which will than be represented by a meta {@link Solution}.</p>
  */
 public class EntityManager {
     public static final Attribute<Float> TIME = attribute(Float.class, "time");
-    public static final Attribute<Float> OWNER = attribute(Float.class, "owner");
-    public static final Attribute<Float> ATTRIBUTE = attribute(Float.class, "attribute");
-    public static final Attribute<Float> VALUE = attribute(Float.class, "value");
+    public static final Attribute<Float> PLAYER = attribute(Float.class, "player");
+    public static final Attribute<Float> PLAYER_ATTRIBUTE = attribute(Float.class, "player-attribute");
+    public static final Attribute<Float> PLAYER_VALUE = attribute(Float.class, "value");
 
     public static EntityManager entityManager() {
         return new EntityManager();
@@ -48,9 +51,9 @@ public class EntityManager {
 
     private EntityManager() {
         entities = defineProblem("entity-manager")
-                .withDemandAttributes(TIME, OWNER)
+                .withDemandAttributes(TIME, PLAYER)
                 .withNoDemands()
-                .withSupplyAttributes(ATTRIBUTE, VALUE)
+                .withSupplyAttributes(PLAYER_ATTRIBUTE, PLAYER_VALUE)
                 .withSupplies()
                 .withConstraint(query -> query)
                 .toProblem()
@@ -84,7 +87,7 @@ public class EntityManager {
 
     public EntityManager withSuppliedNextTime() {
         entityDemands.lookup(TIME, currentTime).unorderedLinesStream().forEach(demand -> {
-            entityDemands.addTranslated(list(nextTime, demand.value(OWNER)));
+            entityDemands.addTranslated(list(nextTime, demand.value(PLAYER)));
         });
         final var freeSupplies = entities.suppliesFree().unorderedLines();
         freeSupplies.forEach(entitySupplies::remove);
