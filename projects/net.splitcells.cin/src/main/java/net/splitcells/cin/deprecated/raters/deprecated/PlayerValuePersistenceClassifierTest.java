@@ -19,7 +19,7 @@ import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.cin.deprecated.raters.deprecated.PlayerValuePersistenceClassifier.playerValuePersistenceClassifier;
 import static net.splitcells.cin.deprecated.raters.deprecated.PositionClusters.positionClusters;
-import static net.splitcells.cin.deprecated.raters.deprecated.TimeSteps.timeSteps;
+import static net.splitcells.cin.raters.TimeSteps.timeSteps;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.requireIllegalDefaultConstructor;
 import static net.splitcells.gel.Gel.defineProblem;

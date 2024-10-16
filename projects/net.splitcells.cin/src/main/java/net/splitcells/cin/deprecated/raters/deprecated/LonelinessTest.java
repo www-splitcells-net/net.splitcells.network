@@ -15,13 +15,12 @@
  */
 package net.splitcells.cin.deprecated.raters.deprecated;
 
-import net.splitcells.dem.Dem;
-import net.splitcells.dem.testing.annotations.DisabledTest;
+import net.splitcells.cin.raters.TimeSteps;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.cin.deprecated.raters.deprecated.Loneliness.loneliness;
 import static net.splitcells.cin.deprecated.raters.deprecated.PositionClusters.positionClusters;
-import static net.splitcells.cin.deprecated.raters.deprecated.TimeSteps.timeSteps;
+import static net.splitcells.cin.raters.TimeSteps.timeSteps;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;

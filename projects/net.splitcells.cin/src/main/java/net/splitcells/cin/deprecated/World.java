@@ -15,7 +15,7 @@
  */
 package net.splitcells.cin.deprecated;
 
-import net.splitcells.cin.deprecated.raters.deprecated.TimeSteps;
+import net.splitcells.cin.raters.TimeSteps;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.Table;
@@ -36,8 +36,8 @@ import static net.splitcells.cin.deprecated.raters.deprecated.Dies.dies;
 import static net.splitcells.cin.deprecated.raters.deprecated.Loneliness.loneliness;
 import static net.splitcells.cin.deprecated.raters.deprecated.PlayerValuePersistenceClassifier.playerValuePersistenceClassifier;
 import static net.splitcells.cin.deprecated.raters.deprecated.PositionClusters.positionClustering;
-import static net.splitcells.cin.deprecated.raters.deprecated.TimeSteps.overlappingTimeSteps;
-import static net.splitcells.cin.deprecated.raters.deprecated.TimeSteps.timeSteps;
+import static net.splitcells.cin.raters.TimeSteps.overlappingTimeSteps;
+import static net.splitcells.cin.raters.TimeSteps.timeSteps;
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.order.Comparators.ASCENDING_INTEGERS;
 import static net.splitcells.dem.data.set.list.Lists.list;
