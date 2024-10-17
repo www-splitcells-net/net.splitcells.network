@@ -49,7 +49,7 @@ public class Counter {
 
     /**
      * TODO This method currently does not calculate the average correctly,
-     * as fo
+     * as the actual time passed between {@link #measurements} is not considered.
      */
     public double averageCount() {
         long sum = 0;
