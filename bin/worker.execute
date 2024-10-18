@@ -43,7 +43,7 @@ mkdir -p $HOME/.local/state/$executionName/.m2/
 mkdir -p $HOME/.local/state/$executionName/.ssh/
 mkdir -p $HOME/.local/state/$executionName/.local/
 mkdir -p ./target/
-test -f target/program-$executionName || chmod +x target/program-$executionName # This file does not exist, when '--executable-path' is not set.
+test -f target/program-$executionName && chmod +x target/program-$executionName # This file does not exist, when '--executable-path' is not set.
 podman build -f "target/Dockerfile-$executionName" --tag "localhost/$executionName" --log-level=debug
     # Logging is used, in order to better understand build runtime performance.
 podman run --name "$executionName" \\
