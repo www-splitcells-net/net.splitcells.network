@@ -13,11 +13,10 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.data;
+package net.splitcells.gel.data.database;
 
 import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.testing.MetaCounter;
-import net.splitcells.gel.data.database.DatabaseCounterAspect;
 import net.splitcells.gel.data.database.Databases;
 
 import static net.splitcells.dem.testing.MetaCounter.metaCounter;
@@ -26,6 +25,6 @@ public class DatabaseModificationCounter implements Option<MetaCounter> {
     @Override
     public MetaCounter defaultValue() {
         return metaCounter().withConfig(env
-                -> env.config().configValue(Databases.class).withAspect(DatabaseCounterAspect::databaseCounterAspect));
+                -> env.config().configValue(Databases.class).withAspect(DatabaseModificationCounterAspect::databaseModificationCounterAspect));
     }
 }

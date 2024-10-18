@@ -17,7 +17,6 @@ package net.splitcells.gel.data.database;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.gel.data.DatabaseCounter;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.column.ColumnView;
@@ -25,7 +24,7 @@ import net.splitcells.gel.data.table.column.ColumnView;
 import static net.splitcells.dem.Dem.configValue;
 
 public class DatabaseModificationCounterAspect implements Database {
-    public static Database databaseCounterAspect(Database database) {
+    public static Database databaseModificationCounterAspect(Database database) {
         return new DatabaseModificationCounterAspect(database);
     }
 
@@ -37,31 +36,31 @@ public class DatabaseModificationCounterAspect implements Database {
 
     @Override
     public Line addTranslated(ListView<?> values) {
-        configValue(DatabaseCounter.class).count(this, 1 + values.size());
+        configValue(DatabaseModificationCounter.class).count(this, 1 + values.size());
         return database.addTranslated(values);
     }
 
     @Override
     public Line add(Line line) {
-        configValue(DatabaseCounter.class).count(this, 1 + line.values().size());
+        configValue(DatabaseModificationCounter.class).count(this, 1 + line.values().size());
         return database.add(line);
     }
 
     @Override
     public Line addWithSameHeaderPrefix(Line line) {
-        configValue(DatabaseCounter.class).count(this, 1 + line.values().size());
+        configValue(DatabaseModificationCounter.class).count(this, 1 + line.values().size());
         return database.addWithSameHeaderPrefix(line);
     }
 
     @Override
     public void remove(int lineIndex) {
-        configValue(DatabaseCounter.class).count(this, 1 + rawLine(lineIndex).values().size());
+        configValue(DatabaseModificationCounter.class).count(this, 1 + rawLine(lineIndex).values().size());
         database.remove(lineIndex);
     }
 
     @Override
     public void remove(Line line) {
-        configValue(DatabaseCounter.class).count(this, 1 + line.values().size());
+        configValue(DatabaseModificationCounter.class).count(this, 1 + line.values().size());
         database.remove(line);
     }
 
