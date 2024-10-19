@@ -64,7 +64,7 @@ public class CinService implements ResourceOption<Service> {
 
             @Override
             public void flush() {
-
+                // No resources are present to be flushed.
             }
         };
     }
