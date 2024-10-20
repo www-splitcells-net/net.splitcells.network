@@ -42,6 +42,7 @@ executionCommand="$executionCommand"
 mkdir -p $HOME/.local/state/$executionName/.m2/
 mkdir -p $HOME/.local/state/$executionName/.ssh/
 mkdir -p $HOME/.local/state/$executionName/.local/
+mkdir -p $HOME/.local/state/$executionName/Documents/
 mkdir -p ./target/
 test -f target/program-$executionName && chmod +x target/program-$executionName # This file does not exist, when '--executable-path' is not set.
 podman build -f "target/Dockerfile-$executionName" --tag "localhost/$executionName" --log-level=debug
@@ -49,7 +50,7 @@ podman build -f "target/Dockerfile-$executionName" --tag "localhost/$executionNa
 podman run --name "$executionName" \\
   --network slirp4netns:allow_host_loopback=true \\
   --rm \\
-  -v $HOME/Documents:/root/Documents \\
+  -v $HOME/.local/state/$executionName/Documents:/root/Documents \\
   -v $HOME/.local/state/$executionName/.ssh:/root/.ssh \\
   -v $HOME/.local/state/$executionName/.m2:/root/.m2 \\
   -v $HOME/.local/state/$executionName/.local:/root/.local/state \\
@@ -59,7 +60,8 @@ podman run --name "$executionName" \\
   # allow_host_loopback is required, so that the software in the container can connect to the host.
 rm -f "target/Dockerfile-$executionName" # `-f` is used, in case the target folder is deleted via `mvn clean install` in `--command`.
 """
-
+def str2bool(arg):
+    return arg == 'true'
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Executes a given program as isolated as possible with all program files being persisted at `$HOME/.local/state/$executionName/` and user input being located at `$HOME/Documents`. Executions with different names have different persisted file locations and are therefore isolated more clearly, whereas executions with the same name are assumed to share data.")
     parser.add_argument('--name', dest='name', required=True, help="This is the name of the task being executed.")
@@ -71,6 +73,7 @@ if __name__ == '__main__':
                                + " Prefer `--class-for-execution` instead.")
     parser.add_argument('--executable-path', dest='executablePath', help="Executes the given executable file. Only set this option or --command.")
     parser.add_argument('--class-for-execution', dest='classForExecution', help="This Java class is executed.")
+    parser.add_argument('--use-host-documents', dest='useHostDocuments', required=False, type=str2bool, default=False, help="Determines whether to mount `~/Documents` or not. This should be avoided, in order to avoid file dependencies to the host system, which makes the execution more portable.")
     parser.add_argument('--port-publishing', dest='portPublishing', help="This is a comma separated list of `host-port:container-port`, that describes the port forwarding on the host.")
     parsedArgs = parser.parse_args()
     if not os.path.exists('./target'):
@@ -102,6 +105,11 @@ if __name__ == '__main__':
         for portMapping in parsedArgs.portPublishing.split(','):
             additionalPodmanArgs += ' --publish ' + portMapping
     executionScript = executionScript.replace('"$podmanParameters"', additionalPodmanArgs)
+    if parsedArgs.useHostDocuments:
+        # TODO This replacement is done in a dirty way. Use a template variable instead.
+        print(executionScript)
+        print("-v $HOME/.local/state/$executionName/Documents:/root/Documents \\")
+        executionScript = executionScript.replace("-v $HOME/.local/state/$executionName/Documents:/root/Documents \\", "-v $HOME/Documents:/root/Documents \\")
     returnCode = subprocess.call(executionScript, shell='True')
     if returnCode != 0:
         logging.error("Could not execute given command.");
