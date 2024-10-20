@@ -4,7 +4,7 @@
 set -e
 mkdir -p ~/.local/state/net.splitcells.network.worker/repos
 cd ~/.local/state/net.splitcells.network.worker/repos
-git clone --depth 1 https://codeberg.org/splitcells-net/net.splitcells.network.git
-git clone --depth 1 https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
+test -d net.splitcells.network || git clone --depth 1 https://codeberg.org/splitcells-net/net.splitcells.network.git
+test -d net.splitcells.network.hub || git clone --depth 1 https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
 cd ~/.local/state/net.splitcells.network.worker/repos/net.splitcells.network
 bin/worker.repos.pull
