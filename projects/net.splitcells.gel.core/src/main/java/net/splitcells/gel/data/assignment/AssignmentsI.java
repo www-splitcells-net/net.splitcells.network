@@ -31,9 +31,7 @@ import static net.splitcells.dem.data.set.list.Lists.concat;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.gel.common.Language.ALLOCATE;
-import static net.splitcells.gel.common.Language.PATH_ACCESS_SYMBOL;
-import static net.splitcells.gel.common.Language.REMOVE;
+import static net.splitcells.gel.common.Language.*;
 import static net.splitcells.gel.data.database.Databases.database2;
 
 import java.util.stream.Stream;
@@ -69,6 +67,10 @@ public class AssignmentsI implements Assignments {
         return new AssignmentsI(name, demands, supplies);
     }
 
+    /**
+     * TODO This is deprecated, because {@link #assignments} already has the fitting name.
+     */
+    @Deprecated
     private final String names;
     private final Database assignments;
 
@@ -95,7 +97,7 @@ public class AssignmentsI implements Assignments {
 
     private AssignmentsI(String name, Database demand, Database supply) {
         this.names = name;
-        assignments = database2(Language.ALLOCATIONS.value() + "/" + name, demand, concat(demand.headerView(), supply.headerView()));
+        assignments = database2(name, () -> demand.path().withAppended(ALLOCATIONS.value()), concat(demand.headerView(), supply.headerView()));
         // TODO Remove code and comment duplications.
         {
             this.demands = demand;
@@ -501,7 +503,7 @@ public class AssignmentsI implements Assignments {
 
     @Override
     public net.splitcells.dem.data.set.list.List<String> path() {
-        return assignments.path().withAppended(names);
+        return assignments.path();
     }
 
     @Override

@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.data.allocations;
 
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.data.table.Line;
@@ -73,6 +74,14 @@ public class AssignmentsTest extends TestSuiteI {
                 .requireContentsOf(list(list(2, 2)));
     }
 
+    @UnitTest
+    public void testPath() {
+        final var demands = database("demands");
+        final var supplies = database("supplies");
+        final var allocations = assignments("test", demands, supplies);
+
+        Assertions.requireEquals(allocations.path(), list("demands", "allocations", "test"));
+    }
 
     @UnitTest
     public void testRawLinesGrowth() {
