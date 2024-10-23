@@ -18,15 +18,22 @@ package net.splitcells.dem.testing;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.Environment;
+import net.splitcells.dem.execution.ImplicitEffect;
 import net.splitcells.dem.object.Discoverable;
 
 import java.util.function.Consumer;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.data.set.map.Maps.synchronizedMap;
 import static net.splitcells.dem.testing.Counter.counter;
 
-public class MetaCounter implements Discoverable{
+/**
+ * This class is thread safe, because performance counters are often observed by other threads.
+ * This way, the main process can process data and log its performance characteristics
+ * without having to explicitly organize a wait time during which other threads can observer the main process's performance data.
+ */
+public class MetaCounter implements Discoverable, ImplicitEffect {
     public static MetaCounter metaCounter(Discoverable path) {
         return new MetaCounter(path);
     }
@@ -34,7 +41,7 @@ public class MetaCounter implements Discoverable{
     /**
      * Maps {@link Discoverable} to {@link Counter}.
      */
-    private Map<List<String>, Counter> counters = map();
+    private Map<List<String>, Counter> counters = synchronizedMap();
     private List<Consumer<Environment>> configs = list();
     private Counter sumCounter = counter();
     private final Discoverable path;
@@ -43,7 +50,7 @@ public class MetaCounter implements Discoverable{
         path = argPath;
     }
 
-    public void count(Discoverable subject, long times) {
+    public synchronized void count(Discoverable subject, long times) {
         final Counter counter;
         final var path = subject.path();
         if (counters.containsKey(path)) {

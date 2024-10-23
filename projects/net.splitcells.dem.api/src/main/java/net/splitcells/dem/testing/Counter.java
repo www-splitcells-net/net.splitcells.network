@@ -18,6 +18,7 @@ package net.splitcells.dem.testing;
 import net.splitcells.dem.data.set.list.List;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.synchronizedList;
 import static net.splitcells.dem.resource.Time.ONE_SECOND_IN_NANOSECONDS;
 import static net.splitcells.dem.resource.Time.elapsedTimeInNanoSeconds;
 import static net.splitcells.dem.testing.Measurement.measurement;
@@ -28,7 +29,7 @@ public class Counter {
         return new Counter();
     }
 
-    private final List<Measurement> measurements = list();
+    private final List<Measurement> measurements = synchronizedList();
     private long lastMeasurementTime = elapsedTimeInNanoSeconds();
     private long currentCount = 0;
 
