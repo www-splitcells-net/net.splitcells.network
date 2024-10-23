@@ -13,7 +13,7 @@ import static net.splitcells.website.server.project.renderer.ObjectsMediaRendere
 
 public class ObjectsMediaRenderer extends OptionI<ObjectsMediaRendererI> {
     public ObjectsMediaRenderer() {
-        super(() -> objectsMediaRenderer(Path.of("/net/splitcells/run/")));
+        super(() -> objectsMediaRenderer(Path.of("/")));
     }
 
     public static void registerMediaObject(DiscoverableMediaRenderer object) {

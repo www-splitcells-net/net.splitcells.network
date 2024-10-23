@@ -14,7 +14,7 @@ import static net.splitcells.website.server.project.renderer.ObjectsRendererI.ob
 
 public class ObjectsRenderer extends OptionI<ObjectsRendererI> {
     public ObjectsRenderer() {
-        super(() -> objectsRenderer(Path.of("/net/splitcells/run/")));
+        super(() -> objectsRenderer(Path.of("/")));
     }
 
     public static void registerObject(DiscoverableRenderer object) {

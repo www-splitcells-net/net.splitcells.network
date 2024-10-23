@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.solution;
 
+import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.object.Discoverable.discoverable;
@@ -30,6 +31,7 @@ import java.util.function.Function;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.environment.config.ProgramsDiscoveryPath;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.constraint.QueryI;
@@ -86,12 +88,16 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
     private void initAllocations() {
         final var assignmentsName = name.orElse(Solution.class.getSimpleName());
         final var problemsDemands = demandsDatabase.orElseGet(() -> {
-            final var d = Databases.database(DEMANDS.value(), () -> list(assignmentsName), demandAttributes);
+            final var d = Databases.database(DEMANDS.value()
+                    , () -> configValue(ProgramsDiscoveryPath.class).path().withAppended(assignmentsName)
+                    , demandAttributes);
             demands.forEach(demand -> d.addTranslated(demand));
             return d;
         });
         final var problemsSupplies = suppliesDatabase.orElseGet(() -> {
-            final var s = Databases.database(SUPPLIES.value(), () -> list(assignmentsName), supplyAttributes);
+            final var s = Databases.database(SUPPLIES.value()
+                    , () -> configValue(ProgramsDiscoveryPath.class).path().withAppended(assignmentsName)
+                    , supplyAttributes);
             supplies.forEach(supply -> s.addTranslated(supply));
             return s;
         });
