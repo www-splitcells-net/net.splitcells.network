@@ -15,7 +15,6 @@
  */
 package net.splitcells.dem.data.set.list;
 
-import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
@@ -91,8 +90,8 @@ public final class Lists {
      * @param content
      * @param multiple
      * @param type
-     * @return
      * @param <T>
+     * @return
      */
     public static <T> List<T> listWithMultiple(T content, int multiple, Class<T> type) {
         T[] resultContent = (T[]) Array.newInstance(type, multiple);
@@ -101,6 +100,10 @@ public final class Lists {
         list.prepareForSizeOf(multiple);
         list.addAll(Arrays.asList(resultContent));
         return list;
+    }
+
+    public static <T> List<T> synchronizedList() {
+        return SynchronizedList._synchronizedList();
     }
 
 }
