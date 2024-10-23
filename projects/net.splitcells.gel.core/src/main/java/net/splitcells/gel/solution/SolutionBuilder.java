@@ -84,21 +84,18 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
     }
 
     private void initAllocations() {
+        final var assignmentsName = name.orElse(Solution.class.getSimpleName());
         final var problemsDemands = demandsDatabase.orElseGet(() -> {
-            // TODO The demands name is a hack.
-            final var d = Databases.database(name.orElse(DEMANDS.value()), null, demandAttributes);
+            final var d = Databases.database(DEMANDS.value(), () -> list(assignmentsName), demandAttributes);
             demands.forEach(demand -> d.addTranslated(demand));
             return d;
         });
         final var problemsSupplies = suppliesDatabase.orElseGet(() -> {
-            final var s = Databases.database(SUPPLIES.value(), null, supplyAttributes);
+            final var s = Databases.database(SUPPLIES.value(), () -> list(assignmentsName), supplyAttributes);
             supplies.forEach(supply -> s.addTranslated(supply));
             return s;
         });
-        assignments = assignments(
-                name.orElse(Solution.class.getSimpleName())
-                , problemsDemands
-                , problemsSupplies);
+        assignments = assignments("solution", problemsDemands, problemsSupplies);
     }
 
     @Override
