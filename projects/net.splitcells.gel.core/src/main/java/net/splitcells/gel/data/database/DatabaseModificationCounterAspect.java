@@ -51,7 +51,7 @@ public class DatabaseModificationCounterAspect implements Database {
                             .withProperty("database", database.path().toString())));
                     return "";
                 }
-                return counter.measurements()
+                return "time,count\n" + counter.measurements()
                         .stream()
                         .map(m -> m.time() + "," + m.value() + "\n")
                         .reduce("", (a, b) -> a + b);

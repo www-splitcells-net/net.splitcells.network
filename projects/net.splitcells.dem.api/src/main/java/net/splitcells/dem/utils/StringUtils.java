@@ -42,8 +42,17 @@ public class StringUtils {
         if (target.startsWith(prefix)) {
             return target.substring(prefix.length());
         }
-        throw executionException(tree("`target` does not start with `prefix`.")
+        throw executionException(tree("The target does not start with the prefix.")
                 .withProperty("prefix", prefix)
+                .withProperty("target", target));
+    }
+
+    public static String removeSuffix(String suffix, String target) {
+        if (target.endsWith(suffix)) {
+            return target.substring(0, target.lastIndexOf(suffix));
+        }
+        throw executionException(tree("The target does not end with the suffix.")
+                .withProperty("suffix", suffix)
                 .withProperty("target", target));
     }
 

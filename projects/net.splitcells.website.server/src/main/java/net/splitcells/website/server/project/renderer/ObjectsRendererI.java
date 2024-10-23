@@ -17,6 +17,7 @@ package net.splitcells.website.server.project.renderer;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.FileSystem;
@@ -32,15 +33,19 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.FileSystemVoid.fileSystemVoid;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
-import static net.splitcells.dem.utils.StringUtils.toBytes;
+import static net.splitcells.dem.utils.StringUtils.*;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 public class ObjectsRendererI implements ProjectRenderer {
+    private static final String CSV_SUFFIX = ".csv.html";
+
     public static ObjectsRendererI objectsRenderer(Path basePath) {
         return new ObjectsRendererI(basePath);
     }
@@ -133,15 +138,31 @@ public class ObjectsRendererI implements ProjectRenderer {
         return Optional.empty();
     }
 
+    private String normalize(Path arg) {
+        final var argString = arg.toString();
+        if (argString.startsWith("/")) {
+            return argString.substring(1);
+        }
+        return argString;
+    }
+
+    private String addCsvHtml(String arg) {
+        if (arg.endsWith(".csv")) {
+            return arg + ".html";
+        }
+        return arg;
+    }
+
     @Override
     public synchronized Set<Path> projectPaths() {
-        return objects.keySet2().with(csvRenderers.keySet2()).stream().map(p -> {
-                    final var ps = p.toString();
-                    if (ps.startsWith("/")) {
-                        return ps.substring(1);
-                    }
-                    return ps;
-                })
+        final var basePaths = objects.keySet2().mapped(this::normalize);
+        final var csvHtmlPaths = csvRenderers.keySet2()
+                .stream()
+                .map(this::normalize)
+                .map(this::addCsvHtml)
+                .collect(toList());
+        return basePaths.withAppended(csvHtmlPaths)
+                .stream()
                 .map(Path::of)
                 .collect(Sets.toSetOfUniques());
     }
@@ -173,6 +194,13 @@ public class ObjectsRendererI implements ProjectRenderer {
                             , Optional.of(relativeArgPath)
                             , projectsRenderer.config()).orElseThrow()
                     , ContentType.HTML_TEXT.toString()));
+        }
+        if (argPath.endsWith(CSV_SUFFIX)) {
+            final var dataPath = removeSuffix(".html", argPath);
+            final var dataPath2 = Path.of(dataPath);
+            if (csvRenderers.containsKey(dataPath2)) {
+                return Optional.of(projectsRenderer.renderCsvGraph(argPath, dataPath, csvRenderers.get(dataPath2).title().orElse("")));
+            }
         }
         if (csvRenderers.containsKey(path)) {
             return Optional.of(binaryMessage(toBytes(csvRenderers.get(path).renderCsv()), ContentType.HTML_TEXT.toString()));
