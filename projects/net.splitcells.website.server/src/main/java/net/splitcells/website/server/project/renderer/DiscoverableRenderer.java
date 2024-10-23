@@ -20,6 +20,10 @@ import net.splitcells.dem.object.Discoverable;
 import java.util.Optional;
 
 public interface DiscoverableRenderer extends Discoverable {
+    /**
+     *
+     * @return This returns an HTML string, that can be embedded into another HTML document.
+     */
     String render();
 
     Optional<String> title();
