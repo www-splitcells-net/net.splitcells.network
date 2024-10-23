@@ -18,7 +18,7 @@ package net.splitcells.gel.constraint.type.framework;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.execution.Effect;
+import net.splitcells.dem.execution.ExplicitEffect;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.object.Discoverable;
@@ -58,7 +58,7 @@ public class ConstraintThreadingAspect implements Constraint {
         return new ConstraintThreadingAspect(constraint);
     }
 
-    private final Effect<Constraint> constraintEffect;
+    private final ExplicitEffect<Constraint> constraintEffect;
 
 
     private ConstraintThreadingAspect(Constraint constraint) {

@@ -17,21 +17,19 @@ package net.splitcells.dem.execution;
 
 import net.splitcells.dem.resource.AspectOrientedConstructor;
 
-import java.util.Optional;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
- * <p>The {@link Effect} is the base interface in order to contain all side effects.
+ * <p>The {@link ExplicitEffect} is the base interface in order to contain all side effects via an explicit API.
  * An effect or side effect is something one can interact with,
  * but where one cannot determine the state of the effect at any given time precisely.
  * The word is a metaphor commonly used in functional programming languages and
  * is used here in a bit similar way but in the context of an OOP language.
  * </p>
  * <p>This side effect containment is also the bases to multithreading injection and
- * therefore {@link Effect} is thread safe by default.
- * The goal of {@link Effect} is to provide a tool in order to split up single threaded code into isolated pieces.
+ * therefore {@link ExplicitEffect} is thread safe by default.
+ * The goal of {@link ExplicitEffect} is to provide a tool in order to split up single threaded code into isolated pieces.
  * The isolated pieces use one thread a piece and are wired together in an asynchronous way,
  * without requiring explicitly asynchronous APIs.
  * This wiring mechanism allows one, to inject multithreading functionality into code,
@@ -55,7 +53,7 @@ import java.util.function.Function;
  *
  * @param <Subject>
  */
-public interface Effect<Subject> {
+public interface ExplicitEffect<Subject> {
     /**
      * @param event The argument of the {@link Consumer} is not allowed to be pasted to code outside the
      *              {@link Consumer} scope.

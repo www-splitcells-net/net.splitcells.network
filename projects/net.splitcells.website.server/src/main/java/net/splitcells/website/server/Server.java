@@ -34,7 +34,7 @@ import io.vertx.ext.web.handler.BodyHandler;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.resource.Service;
-import net.splitcells.dem.execution.Effect;
+import net.splitcells.dem.execution.ExplicitEffect;
 import net.splitcells.dem.execution.Processing;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.tree.Tree;
@@ -102,7 +102,7 @@ public class Server {
     public static Service serveToHttpAt(Supplier<ProjectsRenderer> renderer, Config config) {
         config.withIsMultiThreaded(true);
         return serveToHttpAt(new ProjectsRenderer() {
-            final Effect<ProjectsRenderer> effect = effectWorkerPool(renderer, 10);
+            final ExplicitEffect<ProjectsRenderer> effect = effectWorkerPool(renderer, 10);
 
             @Override
             public void build() {

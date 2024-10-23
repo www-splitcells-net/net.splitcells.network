@@ -33,7 +33,7 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
  * @param <Subject> The subject's class that processes the given events asynchronously.
  */
 @JavaLegacyArtifact
-public class EffectWorker<Subject> implements Effect<Subject> {
+public class EffectWorker<Subject> implements ExplicitEffect<Subject> {
     public static <S> EffectWorker<S> effectWorker(S subject) {
         return effectWorker(subject, new ArrayBlockingQueue<>(100, true));
     }
