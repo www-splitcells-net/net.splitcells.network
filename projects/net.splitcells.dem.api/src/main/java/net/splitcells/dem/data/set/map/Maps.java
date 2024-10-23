@@ -18,8 +18,11 @@ package net.splitcells.dem.data.set.map;
 import net.splitcells.dem.environment.resource.ResourceOptionI;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.map.MapFI_deterministic.mapFI_deterministic;
+import static net.splitcells.dem.data.set.map.MapLegacyWrapper.mapLegacyWrapper;
 
 public class Maps extends ResourceOptionI<MapF> {
 
@@ -79,6 +82,10 @@ public class Maps extends ResourceOptionI<MapF> {
             rVal.put((Class<? extends T>) value.getClass(), value);
         });
         return rVal;
+    }
+
+    public static <K,V> Map<K,V> synchronizedMap() {
+        return mapLegacyWrapper(new ConcurrentHashMap<>(), false);
     }
 
 }
