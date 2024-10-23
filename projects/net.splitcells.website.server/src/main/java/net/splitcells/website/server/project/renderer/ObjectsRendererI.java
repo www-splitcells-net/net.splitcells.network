@@ -21,6 +21,7 @@ import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.dem.resource.communication.log.LogLevel;
+import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
@@ -30,11 +31,13 @@ import net.splitcells.website.server.projects.ProjectsRenderer;
 import java.nio.file.Path;
 import java.util.Optional;
 
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.FileSystemVoid.fileSystemVoid;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.StringUtils.toBytes;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 public class ObjectsRendererI implements ProjectRenderer {
@@ -44,6 +47,7 @@ public class ObjectsRendererI implements ProjectRenderer {
 
     private final String pathPrefix;
     private final Map<Path, DiscoverableRenderer> objects = map();
+    private final Map<Path, CsvRenderer> csvRenderers = map();
 
     private ObjectsRendererI(Path basePath) {
         this.pathPrefix = basePath.toString();
@@ -78,6 +82,30 @@ public class ObjectsRendererI implements ProjectRenderer {
         return this;
     }
 
+    public synchronized ObjectsRendererI withObject(CsvRenderer renderer) {
+        final var path = Path.of(pathPrefix + "/" + renderer.path().stream().reduce((a, b) -> a + "/" + b).orElseThrow());
+        Optional<Path> alternativePath = Optional.empty();
+        if (csvRenderers.containsKey(path)) {
+            // This makes it easier to analyse problems, when the same path is present multiple times.
+            int i = 0;
+            do {
+                alternativePath = Optional.of(Path.of(pathPrefix + "/" + renderer.path().stream().reduce((a, b) -> a + "/" + b)
+                        .orElseThrow()
+                        + "."
+                        + ++i));
+            } while (csvRenderers.containsKey(alternativePath.orElseThrow()));
+            logs().appendWarning(tree("Discoverable path is already registered. Using alternative path for rendering instead.")
+                            .withProperty("object", renderer.toString())
+                            .withProperty("path", path.toString())
+                            .withProperty("alternative path", alternativePath.orElseThrow().toString())
+                    , executionException("Discoverable path is already registered."));
+            csvRenderers.put(alternativePath.orElseThrow(), renderer);
+        } else {
+            csvRenderers.put(path, renderer);
+        }
+        return this;
+    }
+
     @Override
     public synchronized Optional<byte[]> renderString(String arg) {
         logs().append(getClass().getName() + "#renderString not implemented.", LogLevel.WARNING);
@@ -107,7 +135,7 @@ public class ObjectsRendererI implements ProjectRenderer {
 
     @Override
     public synchronized Set<Path> projectPaths() {
-        return objects.keySet().stream().map(p -> {
+        return objects.keySet2().with(csvRenderers.keySet2()).stream().map(p -> {
                     final var ps = p.toString();
                     if (ps.startsWith("/")) {
                         return ps.substring(1);
@@ -120,7 +148,8 @@ public class ObjectsRendererI implements ProjectRenderer {
 
     @Override
     public synchronized Set<Path> relevantProjectPaths() {
-        return Sets.setOfUniques(objects.keySet());
+        return setOfUniques(objects.keySet())
+                .with(csvRenderers.keySet2());
     }
 
     @Override
@@ -144,6 +173,9 @@ public class ObjectsRendererI implements ProjectRenderer {
                             , Optional.of(relativeArgPath)
                             , projectsRenderer.config()).orElseThrow()
                     , ContentType.HTML_TEXT.toString()));
+        }
+        if (csvRenderers.containsKey(path)) {
+            return Optional.of(binaryMessage(toBytes(csvRenderers.get(path).renderCsv()), ContentType.HTML_TEXT.toString()));
         }
         return Optional.empty();
     }

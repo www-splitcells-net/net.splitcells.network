@@ -20,4 +20,8 @@ public class ObjectsRenderer extends OptionI<ObjectsRendererI> {
     public static void registerObject(DiscoverableRenderer object) {
         configValue(ObjectsRenderer.class).withObject(object);
     }
+
+    public static void registerObject(CsvRenderer object) {
+        configValue(ObjectsRenderer.class).withObject(object);
+    }
 }
