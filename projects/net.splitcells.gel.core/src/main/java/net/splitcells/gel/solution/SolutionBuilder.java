@@ -21,6 +21,7 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.object.Discoverable.discoverable;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.common.Language.*;
+import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
 
@@ -121,14 +122,15 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
         if (name.isPresent()) {
             path.withAppended(name.get());
         }
-        return withConstraint(builder.apply(QueryI.query(forAll(Optional.of(discoverable(path))), assignments)).currentConstraint());
+        this.constraint = builder.apply(query(forAll(Optional.of(discoverable(path))), assignments)).currentConstraint();
+        return this;
     }
 
     @Override
     public ProblemGenerator withConstraints(List<Function<Query, Query>> builders) {
         initAllocations();
         final var root = forAll();
-        builders.forEach(b -> b.apply(QueryI.query(root, assignments)));
+        builders.forEach(b -> b.apply(query(root, assignments)));
         return withConstraint(root);
     }
 
