@@ -15,16 +15,44 @@
  */
 package net.splitcells.gel.data.database;
 
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.testing.MetaCounter;
 import net.splitcells.gel.data.database.Databases;
+import net.splitcells.website.server.project.renderer.CsvRenderer;
+import net.splitcells.website.server.project.renderer.ObjectsRenderer;
 
+import java.util.Optional;
+
+import static net.splitcells.dem.object.Discoverable.discoverable;
 import static net.splitcells.dem.testing.MetaCounter.metaCounter;
 
 public class DatabaseModificationCounter implements Option<MetaCounter> {
     @Override
     public MetaCounter defaultValue() {
-        return metaCounter().withConfig(env
+        final var metaCounter = metaCounter(discoverable(DatabaseModificationCounter.class)).withConfig(env
                 -> env.config().configValue(Databases.class).withAspect(DatabaseModificationCounterAspect::databaseModificationCounterAspect));
+        ObjectsRenderer.registerObject(new CsvRenderer() {
+            @Override
+            public String renderCsv() {
+                return "time,count\n" + metaCounter.sumCounter().measurements()
+                        .stream()
+                        .map(m -> m.time() + "," + m.value() + "\n")
+                        .reduce("", (a, b) -> a + b);
+            }
+
+            @Override
+            public Optional<String> title() {
+                return Optional.empty();
+            }
+
+            @Override
+            public List<String> path() {
+                final var path = metaCounter.path();
+                path.set(path.size() - 1, path.get(path.size() - 1) + ".csv");
+                return path;
+            }
+        });
+        return metaCounter;
     }
 }
