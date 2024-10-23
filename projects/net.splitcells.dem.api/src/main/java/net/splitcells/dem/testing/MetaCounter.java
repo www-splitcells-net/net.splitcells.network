@@ -31,7 +31,10 @@ public class MetaCounter {
         return new MetaCounter();
     }
 
-    private Map<Discoverable, Counter> counters = map();
+    /**
+     * Maps {@link Discoverable} to {@link Counter}.
+     */
+    private Map<List<String>, Counter> counters = map();
     private List<Consumer<Environment>> configs = list();
     private Counter sumCounter = counter();
 
@@ -41,17 +44,18 @@ public class MetaCounter {
 
     public void count(Discoverable subject, long times) {
         final Counter counter;
-        if (counters.containsKey(subject)) {
-            counter = counters.get(subject);
+        final var path = subject.path();
+        if (counters.containsKey(path)) {
+            counter = counters.get(path);
         } else {
             counter = counter();
-            counters.put(subject, counter);
+            counters.put(path, counter);
         }
         counter.count(times);
         sumCounter.count(times);
     }
 
-    public Map<Discoverable, Counter> counters() {
+    public Map<List<String>, Counter> counters() {
         return counters;
     }
 
