@@ -26,9 +26,9 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.testing.Counter.counter;
 
-public class MetaCounter {
-    public static MetaCounter metaCounter() {
-        return new MetaCounter();
+public class MetaCounter implements Discoverable{
+    public static MetaCounter metaCounter(Discoverable path) {
+        return new MetaCounter(path);
     }
 
     /**
@@ -37,9 +37,10 @@ public class MetaCounter {
     private Map<List<String>, Counter> counters = map();
     private List<Consumer<Environment>> configs = list();
     private Counter sumCounter = counter();
+    private final Discoverable path;
 
-    private MetaCounter() {
-
+    private MetaCounter(Discoverable argPath) {
+        path = argPath;
     }
 
     public void count(Discoverable subject, long times) {
@@ -71,5 +72,10 @@ public class MetaCounter {
     public MetaCounter withInit(Environment env) {
         configs.forEach(c -> c.accept(env));
         return this;
+    }
+
+    @Override
+    public List<String> path() {
+        return path.path();
     }
 }

@@ -20,6 +20,7 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.object.Discoverable;
 
+import static net.splitcells.dem.object.Discoverable.discoverable;
 import static net.splitcells.dem.utils.reflection.ClassesRelated.simplifiedName;
 
 /**
@@ -32,6 +33,6 @@ import static net.splitcells.dem.utils.reflection.ClassesRelated.simplifiedName;
 public class ProgramsDiscoveryPath implements Option<Discoverable> {
     @Override
     public Discoverable defaultValue() {
-        return () -> Lists.list(simplifiedName(Dem.environment().config().configValue(ProgramRepresentative.class)).split("\\."));
+        return discoverable(Dem.environment().config().configValue(ProgramRepresentative.class));
     }
 }

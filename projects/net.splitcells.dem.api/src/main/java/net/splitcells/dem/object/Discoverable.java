@@ -15,9 +15,12 @@
  */
 package net.splitcells.dem.object;
 
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.environment.config.ProgramRepresentative;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.utils.reflection.ClassesRelated.simplifiedName;
 
 /**
  * <p>Provides a path for the object, that implements the interface.
@@ -33,6 +36,10 @@ public interface Discoverable {
 
     static Discoverable discoverable(List<String> path) {
         return () -> path;
+    }
+
+    static Discoverable discoverable(Class<?> clazz) {
+        return () -> list(simplifiedName(clazz).split("\\."));
     }
 
     /**
