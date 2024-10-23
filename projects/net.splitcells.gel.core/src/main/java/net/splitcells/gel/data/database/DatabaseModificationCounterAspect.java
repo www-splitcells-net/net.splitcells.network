@@ -20,8 +20,16 @@ import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.data.table.Line;
 import net.splitcells.gel.data.table.attribute.Attribute;
 import net.splitcells.gel.data.table.column.ColumnView;
+import net.splitcells.website.server.project.renderer.CsvRenderer;
+import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
+import net.splitcells.website.server.project.renderer.ObjectsRenderer;
+
+import java.util.Optional;
 
 import static net.splitcells.dem.Dem.configValue;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 public class DatabaseModificationCounterAspect implements Database {
     public static Database databaseModificationCounterAspect(Database database) {
@@ -32,6 +40,33 @@ public class DatabaseModificationCounterAspect implements Database {
 
     private DatabaseModificationCounterAspect(Database argDatabase) {
         database = argDatabase;
+        ObjectsRenderer.registerObject(new CsvRenderer() {
+            @Override
+            public String renderCsv() {
+                final var counter = configValue(DatabaseModificationCounter.class)
+                        .counters()
+                        .get(database.path());
+                if (counter == null) {
+                    logs().appendError(executionException(tree("Could not find counter")
+                            .withProperty("database", database.path().toString())));
+                    return "";
+                }
+                return counter.measurements()
+                        .stream()
+                        .map(m -> m.time() + "," + m.value() + "\n")
+                        .reduce("", (a, b) -> a + b);
+            }
+
+            @Override
+            public Optional<String> title() {
+                return Optional.of(path().toString());
+            }
+
+            @Override
+            public List<String> path() {
+                return database.path().withAppended("database-modification-counter.csv");
+            }
+        });
     }
 
     @Override
