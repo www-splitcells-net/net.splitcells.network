@@ -32,9 +32,12 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.dem.lang.namespace.NameSpaces.DEN;
-import static net.splitcells.dem.lang.namespace.NameSpaces.NAME;
+import static net.splitcells.dem.lang.namespace.NameSpaces.*;
+import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.project.LayoutConfig.layoutConfig;
 import static net.splitcells.website.server.projects.RenderResponse.renderResponse;
 
@@ -167,6 +170,21 @@ public interface ProjectsRenderer {
     default RenderResponse renderMissingAccessRights(RenderRequest request) {
         return renderResponse(renderContent("<p xmlns=\"http://www.w3.org/1999/xhtml\">You do not have the rights to access this page.</p>"
                 , layoutConfig(request.trail().unixPathString())));
+    }
+
+    default BinaryMessage renderCsvGraph(String path, String dataPath, String title) {
+        final var page = tree("article", SEW)
+                .withChild(tree("meta", SEW)
+                        .withValues(
+                                tree("path", SEW).withText(path)
+                                , tree("title", SEW).withText(title)
+                                , tree("full-screen-by-default", SEW).withText("true")))
+                .withProperty("content", SEW, tree("csv-chart-lines", SEW)
+                        .withProperty("path", SEW, dataPath));
+        return binaryMessage(projectRenderers().get(0)
+                        .renderRawXml(page.toXmlStringWithAllNameSpaceDeclarationsAtTop(), config())
+                        .orElseThrow()
+                , HTML_TEXT.codeName());
     }
 
     /**
