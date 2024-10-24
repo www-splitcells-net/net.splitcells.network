@@ -15,13 +15,20 @@
  */
 package net.splitcells.website.server.security.access;
 
+import net.splitcells.website.server.security.authentication.Authentication;
 import net.splitcells.website.server.security.authentication.Authenticator;
 import net.splitcells.website.server.security.authentication.BasicLogin;
 import net.splitcells.website.server.security.authentication.UserSession;
 
 import java.util.function.BiConsumer;
 
+import static net.splitcells.dem.Dem.configValue;
+
 public class AccessControlImpl<T extends Firewall> implements AccessControl<T> {
+    public static <R extends Firewall> AccessControl<R> accessControl(AccessSession<R> accessSession) {
+        return new AccessControlImpl<>(configValue(Authentication.class), accessSession);
+    }
+
     public static <R extends Firewall> AccessControl<R> accessControl(Authenticator authenticator
             , AccessSession<R> accessSession) {
         return new AccessControlImpl<>(authenticator, accessSession);
