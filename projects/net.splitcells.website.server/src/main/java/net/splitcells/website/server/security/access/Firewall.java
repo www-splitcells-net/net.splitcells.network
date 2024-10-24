@@ -21,6 +21,7 @@ import net.splitcells.website.server.security.authentication.UserSession;
  * An instance of this is itself responsible to only allow access to sensitive data to callers,
  * that have a {@link UserSession} with appropriate rights.
  * Currently, this is only a marker interface.
+ * In other words, the interface hints, the special care should be taken regarding security.
  */
 public interface Firewall {
 }
