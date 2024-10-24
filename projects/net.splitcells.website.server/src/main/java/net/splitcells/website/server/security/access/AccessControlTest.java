@@ -20,6 +20,7 @@ import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.website.server.security.authentication.UserSession;
 
+import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.FileSystemViaMemory.fileSystemViaMemory;
@@ -40,12 +41,17 @@ public class AccessControlTest {
         final var authenticator = authenticatorBasedOnFiles(userData);
         final List<Firewall> accessCounter = list();
         final List<UserSession> userSessions = list();
-        final Firewall subjectAccessed = new Firewall() {
+        final var subjectAccessed = new Firewall() {
+            boolean isValid = true;
         };
-        final var testSubject = accessControl(authenticator, c -> c.accept(subjectAccessed));
+        final var testSubject = accessControl(authenticator, c -> {
+            c.accept(subjectAccessed);
+            subjectAccessed.isValid = false;
+        });
         testSubject.access((u, a) -> {
             accessCounter.requireEmpty();
             userSessions.requireEmpty();
+            require(subjectAccessed.isValid);
             if (!isValidNoLoginStandard(u)) {
                 userSessions.add(u);
                 accessCounter.add(a);
@@ -54,5 +60,6 @@ public class AccessControlTest {
         accessCounter.requireEquals(list(subjectAccessed));
         userSessions.requireSizeOf(1);
         requireNot(authenticator.isValid(userSessions.get(0)));
+        requireNot(subjectAccessed.isValid);
     }
 }
