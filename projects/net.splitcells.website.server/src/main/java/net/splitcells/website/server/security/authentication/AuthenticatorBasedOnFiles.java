@@ -82,26 +82,26 @@ public class AuthenticatorBasedOnFiles implements Authenticator {
     }
 
     @Override
-    public synchronized UserSession userSession(BasicLogin basicLogin) {
-        if (!userData.isFile(basicLogin.username() + PASSWORD_FILE)) {
+    public synchronized UserSession userSession(Login login) {
+        if (!userData.isFile(login.username() + PASSWORD_FILE)) {
             return ANONYMOUS_USER_SESSION;
         }
         /* TODO HACK This was a hack, because the equals method did not work otherwise.
          * Currently, it is unknown, why some text editors like nano add a new line symbol to the end,
          * that cannot be seen.
          */
-        if (!VALID_USERNAME_SYMBOLS.matcher(basicLogin.username()).matches()) {
+        if (!VALID_USERNAME_SYMBOLS.matcher(login.username()).matches()) {
             return INSECURE_USER_SESSION;
         }
-        final var storedPassword = userData.readString(basicLogin.username() + PASSWORD_FILE).split("\n")[0];
-        if (!basicLogin.password().equals(storedPassword)) {
+        final var storedPassword = userData.readString(login.username() + PASSWORD_FILE).split("\n")[0];
+        if (!login.password().equals(storedPassword)) {
             return INSECURE_USER_SESSION;
         }
         final var userSession = UserSession.user(this);
         validUserSessions.add(userSession);
         if (!isValid(userSession)) {
             throw executionException(tree("Could not create a valid user session, given the login.")
-                    .withProperty("login data", basicLogin.toString()));
+                    .withProperty("login data", login.toString()));
         }
         return userSession;
     }

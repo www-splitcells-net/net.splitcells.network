@@ -46,7 +46,7 @@ public class UserSession {
         return userSession == ANONYMOUS_USER_SESSION || userSession == INSECURE_USER_SESSION;
     }
     /**
-     * This {@link UserSession} is created without any {@link BasicLogin},
+     * This {@link UserSession} is created without any {@link Login},
      * or a login with an invalid name.
      * As a username is no secret, this is not considered to be a security issue.
      * Therefore, this {@link UserSession} represents a user,
@@ -55,7 +55,7 @@ public class UserSession {
      */
     public static final UserSession ANONYMOUS_USER_SESSION = notAuthenticatedUser();
     /**
-     * This {@link UserSession} is created by invalid secrets provided by {@link BasicLogin}.
+     * This {@link UserSession} is created by invalid secrets provided by {@link Login}.
      * If no special treatment is required,
      * this user can also be handled exactly like {@link #ANONYMOUS_USER_SESSION}.
      */

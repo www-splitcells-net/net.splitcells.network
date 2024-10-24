@@ -35,12 +35,12 @@ public class AuthenticatorBasedOnFilesTest {
         userData.createDirectoryPath(username);
         userData.writeToFile(username + PASSWORD_FILE, StringUtils.toBytes(password));
         final var testSubject = authenticatorBasedOnFiles(userData);
-        final var validLogin = testSubject.userSession(BasicLogin.login(username, password));
+        final var validLogin = testSubject.userSession(Login.login(username, password));
         requireDistinct(validLogin, ANONYMOUS_USER_SESSION);
         requireDistinct(validLogin, INSECURE_USER_SESSION);
-        requireEquals(testSubject.userSession(BasicLogin.login(username, "not-password"))
+        requireEquals(testSubject.userSession(Login.login(username, "not-password"))
                 , INSECURE_USER_SESSION);
-        requireEquals(testSubject.userSession(BasicLogin.login("not-user", "not-password"))
+        requireEquals(testSubject.userSession(Login.login("not-user", "not-password"))
                 , ANONYMOUS_USER_SESSION);
     }
 }

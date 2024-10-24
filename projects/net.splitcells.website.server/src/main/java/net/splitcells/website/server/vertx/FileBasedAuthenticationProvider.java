@@ -24,7 +24,7 @@ import io.vertx.ext.auth.authentication.AuthenticationProvider;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.website.server.security.authentication.Authentication;
 import net.splitcells.website.server.security.authentication.Authenticator;
-import net.splitcells.website.server.security.authentication.BasicLogin;
+import net.splitcells.website.server.security.authentication.Login;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
@@ -54,7 +54,7 @@ public class FileBasedAuthenticationProvider implements AuthenticationProvider {
     public void authenticate(JsonObject credentials, Handler<AsyncResult<User>> resultHandler) {
         final var username = credentials.getString("username");
         final var inputtedPassword = credentials.getString("password");
-        final var userSession = authenticator.userSession(BasicLogin.login(username, inputtedPassword));
+        final var userSession = authenticator.userSession(Login.login(username, inputtedPassword));
         if (INSECURE_USER_SESSION.equals(userSession)) {
             resultHandler.handle(Future.failedFuture("The password for `"
                     + username

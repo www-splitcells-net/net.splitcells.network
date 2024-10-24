@@ -17,7 +17,7 @@ package net.splitcells.website.server.security.access;
 
 import net.splitcells.website.server.security.authentication.Authentication;
 import net.splitcells.website.server.security.authentication.Authenticator;
-import net.splitcells.website.server.security.authentication.BasicLogin;
+import net.splitcells.website.server.security.authentication.Login;
 import net.splitcells.website.server.security.authentication.UserSession;
 
 import java.util.function.BiConsumer;
@@ -43,7 +43,7 @@ public class AccessControlImpl<T extends Firewall> implements AccessControl<T> {
     }
 
     @Override
-    public void access(BiConsumer<UserSession, T> action, BasicLogin login) {
+    public void access(BiConsumer<UserSession, T> action, Login login) {
         final var userSession = authenticator.userSession(login);
         try {
             accessSession.access(a -> action.accept(userSession, a));

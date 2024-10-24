@@ -15,15 +15,15 @@
  */
 package net.splitcells.website.server.security.authentication;
 
-public class BasicLogin {
-    public static BasicLogin login(String username, String password) {
-        return new BasicLogin(username, password);
+public class Login {
+    public static Login login(String username, String password) {
+        return new Login(username, password);
     }
 
     private final String username;
     private final String password;
 
-    private BasicLogin(String argUsername, String argPassword) {
+    private Login(String argUsername, String argPassword) {
         username = argUsername;
         password = argPassword;
     }

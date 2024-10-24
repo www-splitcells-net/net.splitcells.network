@@ -16,7 +16,7 @@
 package net.splitcells.website.server.security.authentication;
 
 public interface Authenticator {
-    UserSession userSession(BasicLogin basicLogin);
+    UserSession userSession(Login login);
 
     /**
      * <p>TODO Maybe it makes sense, to limit the number of valid {@link UserSession} at any given time,
@@ -31,9 +31,9 @@ public interface Authenticator {
      * still valid and therefore its lifetime has not ended yet.
      * There are also valid {@link UserSession}, that are not created by this,
      * like {@link UserSession#ANONYMOUS_USER_SESSION} or {@link UserSession#INSECURE_USER_SESSION}.
-     * In other words, a {@link UserSession} is valid, when an {@link BasicLogin} was successfully mapped
+     * In other words, a {@link UserSession} is valid, when an {@link Login} was successfully mapped
      * to an {@link UserSession}, regardless of the correctness of the user's login data.
-     * Therefore, a given {@link UserSession} is also a report regarding the validity of a corresponding {@link BasicLogin}.
+     * Therefore, a given {@link UserSession} is also a report regarding the validity of a corresponding {@link Login}.
      */
     boolean isValid(UserSession userSession);
 

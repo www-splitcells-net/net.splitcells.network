@@ -28,7 +28,7 @@ import static net.splitcells.website.server.security.authentication.UserSession.
  * <p>Any used {@link Authenticator}, has to be thread safe, when a multi thread {@link Dem#process(Runnable)} is used.</p>
  * <p>Keep in mind, the responsibility for the security of such a system is the responsibility of the implementation.
  * Depending on the security requirements, one has to implement features not mentioned or unrelated to this API.
- * For instance, one can ensure that {@link Authenticator#userSession(BasicLogin)} always takes the same amount of time.
+ * For instance, one can ensure that {@link Authenticator#userSession(Login)} always takes the same amount of time.
  * So, keep in mind, that your security requirements should match this {@link Option} value and
  * that this is your responsibility.</p>
  */

@@ -24,24 +24,24 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.website.server.security.authentication.UserSession.isValidNoLoginStandard;
 
 public class AuthenticatorInMemory implements Authenticator {
-    public static Authenticator authenticatorInMemory(Function<BasicLogin, UserSession> userLogin) {
+    public static Authenticator authenticatorInMemory(Function<Login, UserSession> userLogin) {
         return new AuthenticatorInMemory(userLogin);
     }
 
-    public static Authenticator authenticatorInMemory(Map<BasicLogin, UserSession> userLogin) {
+    public static Authenticator authenticatorInMemory(Map<Login, UserSession> userLogin) {
         return new AuthenticatorInMemory(basicLogin -> userLogin.getOrDefault(basicLogin, UserSession.INSECURE_USER_SESSION));
     }
 
-    private final Function<BasicLogin, UserSession> userQuery;
+    private final Function<Login, UserSession> userQuery;
     private final Set<UserSession> validUserSessions = setOfUniques();
 
-    private AuthenticatorInMemory(Function<BasicLogin, UserSession> argUserQuery) {
+    private AuthenticatorInMemory(Function<Login, UserSession> argUserQuery) {
         userQuery = argUserQuery;
     }
 
     @Override
-    public UserSession userSession(BasicLogin basicLogin) {
-        final var user = userQuery.apply(basicLogin);
+    public UserSession userSession(Login login) {
+        final var user = userQuery.apply(login);
         validUserSessions.add(user);
         return user;
     }

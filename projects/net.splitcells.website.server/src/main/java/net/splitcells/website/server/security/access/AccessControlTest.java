@@ -15,27 +15,18 @@
  */
 package net.splitcells.website.server.security.access;
 
-import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.dem.utils.StringUtils;
-import net.splitcells.website.server.security.authentication.Authentication;
-import net.splitcells.website.server.security.authentication.Authenticator;
-import net.splitcells.website.server.security.authentication.BasicLogin;
 import net.splitcells.website.server.security.authentication.UserSession;
 
-import java.util.function.BiConsumer;
-
-import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.FileSystemViaMemory.fileSystemViaMemory;
-import static net.splitcells.dem.testing.Assertions.requireDistinct;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.website.server.security.access.AccessControlImpl.accessControl;
 import static net.splitcells.website.server.security.authentication.AuthenticatorBasedOnFiles.PASSWORD_FILE;
 import static net.splitcells.website.server.security.authentication.AuthenticatorBasedOnFiles.authenticatorBasedOnFiles;
-import static net.splitcells.website.server.security.authentication.BasicLogin.login;
+import static net.splitcells.website.server.security.authentication.Login.login;
 import static net.splitcells.website.server.security.authentication.UserSession.*;
 
 public class AccessControlTest {

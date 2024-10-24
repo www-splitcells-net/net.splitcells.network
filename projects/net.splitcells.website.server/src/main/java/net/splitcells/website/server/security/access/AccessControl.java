@@ -16,7 +16,7 @@
 package net.splitcells.website.server.security.access;
 
 import net.splitcells.website.server.security.authentication.Authenticator;
-import net.splitcells.website.server.security.authentication.BasicLogin;
+import net.splitcells.website.server.security.authentication.Login;
 import net.splitcells.website.server.security.authentication.UserSession;
 
 import java.util.function.BiConsumer;
@@ -38,5 +38,5 @@ public interface AccessControl<T extends Firewall> {
      * @param action
      * @param login
      */
-    void access(BiConsumer<UserSession, T> action, BasicLogin login);
+    void access(BiConsumer<UserSession, T> action, Login login);
 }
