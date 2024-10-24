@@ -19,9 +19,11 @@ public interface Authenticator {
     UserSession userSession(BasicLogin basicLogin);
 
     /**
-     * TODO Maybe it makes sense, to limit the number of valid {@link UserSession} at any given time,
+     * <p>TODO Maybe it makes sense, to limit the number of valid {@link UserSession} at any given time,
      * in order to find bugs in the security system,
-     * where problematic {@link UserSession} with infinite lifetimes are created.
+     * where problematic {@link UserSession} with infinite lifetimes are created.</p>
+     * <p>Consider limiting the amount of valid {@link UserSession} at any one time as
+     * a last resort to catch or notice {@link UserSession} that are valid without indefinitely.</p>
      *
      * @param userSession
      * @return Returns true, if the given {@link UserSession} is a valid authentication of a user.
@@ -34,4 +36,6 @@ public interface Authenticator {
      * Therefore, a given {@link UserSession} is also a report regarding the validity of a corresponding {@link BasicLogin}.
      */
     boolean isValid(UserSession userSession);
+
+    void endSession(UserSession userSession);
 }

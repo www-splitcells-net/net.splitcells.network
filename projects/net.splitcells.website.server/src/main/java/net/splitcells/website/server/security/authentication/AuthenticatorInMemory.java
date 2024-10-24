@@ -59,4 +59,12 @@ public class AuthenticatorInMemory implements Authenticator {
         }
         return validUserSessions.has(userSession);
     }
+
+    @Override
+    public void endSession(UserSession userSession) {
+        if (isValidNoLoginStandard(userSession)) {
+            return;
+        }
+        validUserSessions.remove(userSession);
+    }
 }
