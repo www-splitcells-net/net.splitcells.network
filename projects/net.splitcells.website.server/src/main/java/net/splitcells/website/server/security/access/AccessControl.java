@@ -29,7 +29,7 @@ import java.util.function.BiConsumer;
  */
 public interface AccessControl<T extends Firewall> {
     /**
-     * Provides a {@link T}, that is encapsulated in this, to the running given action.
+     * Provides a {@link T}, that is encapsulated in this, to the given running action.
      * During the run the {@link UserSession} is {@link Authenticator#isValid(UserSession)}
      * as long as the given action is running.
      * The provided {@link T} should only be valid while running the given action and
