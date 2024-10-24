@@ -21,6 +21,12 @@ import net.splitcells.website.server.security.authentication.UserSession;
 
 import java.util.function.BiConsumer;
 
+/**
+ *
+ * @param <T> This is the type of object, whose access is controlled via {@link UserSession}.
+ *           The instance of these themselves are responsible to only allow things,
+ *           that the {@link UserSession} is allowed to do.
+ */
 public interface AccessControl<T extends AutoCloseable> {
     /**
      * Provides a {@link T}, that is encapsulated in this, to the running given action.
