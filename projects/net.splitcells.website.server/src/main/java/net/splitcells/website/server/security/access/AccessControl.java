@@ -23,7 +23,7 @@ import java.util.function.BiConsumer;
 
 public interface AccessControl<T extends AutoCloseable> {
     /**
-     * Provides to a {@link T}, that is encapsulated in this, while running the given action.
+     * Provides a {@link T}, that is encapsulated in this, to the running given action.
      * During the run the {@link UserSession} is {@link Authenticator#isValid(UserSession)}
      * as long as the given action is running.
      * The provided {@link T} should only be valid while running the given action and
