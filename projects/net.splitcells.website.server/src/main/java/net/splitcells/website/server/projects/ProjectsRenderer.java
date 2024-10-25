@@ -25,6 +25,7 @@ import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.PageMetaData;
+import net.splitcells.website.server.security.access.Firewall;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -57,7 +58,7 @@ import static net.splitcells.website.server.projects.RenderResponse.renderRespon
  * that hard coding the project driven rendering into the program code created convoluted code,
  * that was hard to refactor and extend.</p>
  */
-public interface ProjectsRenderer {
+public interface ProjectsRenderer extends Firewall {
     /**
      * <p>
      * Creates all meta info maybe required for rendering.
