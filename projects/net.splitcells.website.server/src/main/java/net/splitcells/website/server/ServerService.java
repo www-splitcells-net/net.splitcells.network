@@ -43,6 +43,9 @@ import static net.splitcells.website.server.project.ProjectRenderer.projectRende
 import static net.splitcells.website.server.project.validator.SourceValidator.VOID_VALIDATOR;
 import static net.splitcells.website.server.project.validator.SourceValidatorViaSchema.validatorViaSchema;
 
+/**
+ * Provides the main web server as a {@link Service}.
+ */
 public class ServerService extends ResourceOptionI<Service> {
     public ServerService() {
         super(() -> {
