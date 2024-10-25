@@ -17,8 +17,17 @@ package net.splitcells.website.server.security.access;
 
 import java.util.function.Consumer;
 
-@FunctionalInterface
 public interface AccessSession<T> {
+    static <R> AccessSession<R> unsecuredStaticAccessSession(R staticValue) {
+        return new AccessSession<>() {
+
+            @Override
+            public void access(Consumer<R> accessor) {
+                accessor.accept(staticValue);
+            }
+        };
+    }
+
     /**
      * <p>Provides access to a typed value for the duration of the accessor's {@link Consumer#accept(Object)}.</p>
      * <p>After that, this class may or may not invalidate the value given to the {@link Consumer}.
