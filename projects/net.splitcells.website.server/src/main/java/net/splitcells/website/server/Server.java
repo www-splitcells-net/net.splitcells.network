@@ -52,6 +52,7 @@ import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.RenderRequest;
 import net.splitcells.website.server.projects.RenderResponse;
+import net.splitcells.website.server.security.access.AccessControl;
 import net.splitcells.website.server.security.authentication.UserSession;
 import net.splitcells.website.server.security.encryption.PrivateIdentityPemStore;
 import net.splitcells.website.server.security.encryption.PublicIdentityPemStore;
@@ -81,6 +82,8 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
 import static net.splitcells.website.server.processor.Request.request;
 import static net.splitcells.website.server.projects.RenderRequest.renderRequest;
+import static net.splitcells.website.server.security.access.AccessControlImpl.accessControl;
+import static net.splitcells.website.server.security.access.AccessSession.unsecuredStaticAccessSession;
 import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
 import static net.splitcells.website.server.vertx.FileBasedAuthenticationProvider.LOGIN_KEY;
 import static net.splitcells.website.server.vertx.FileBasedAuthenticationProvider.fileBasedAuthenticationProvider;
@@ -101,7 +104,7 @@ public class Server {
      */
     public static Service serveToHttpAt(Supplier<ProjectsRenderer> renderer, Config config) {
         config.withIsMultiThreaded(true);
-        return serveToHttpAt(new ProjectsRenderer() {
+        final ProjectsRenderer projectsRenderer = new ProjectsRenderer() {
             final ExplicitEffect<ProjectsRenderer> effect = effectWorkerPool(renderer, 10);
 
             @Override
@@ -184,7 +187,8 @@ public class Server {
                 effect.affect(i -> processing.withResult(i.requiresAuthentication(request)));
                 return processing.result();
             }
-        }, config);
+        };
+        return serveToHttpAt(projectsRenderer, config, accessControl(unsecuredStaticAccessSession(projectsRenderer)));
     }
 
     /**
@@ -194,7 +198,7 @@ public class Server {
      *
      * @param renderer renderer
      */
-    public static Service serveToHttpAt(ProjectsRenderer renderer, Config config) {
+    private static Service serveToHttpAt(@Deprecated ProjectsRenderer renderer, Config config, AccessControl<ProjectsRenderer> renderer2) {
         return new Service() {
             Vertx vertx;
 
@@ -321,15 +325,17 @@ public class Server {
                                                         if (routingContext.user() == null) {
                                                             user = ANONYMOUS_USER_SESSION;
                                                         } else {
-                                                             user = (UserSession) routingContext.user().attributes().getValue(LOGIN_KEY);
+                                                            user = (UserSession) routingContext.user().attributes().getValue(LOGIN_KEY);
                                                         }
-                                                        final var result = renderer.render(renderRequest(trail(requestPath), Optional.empty(), user));
-                                                        if (result.data().isPresent()) {
-                                                            response.putHeader("content-type", result.data().get().getFormat());
-                                                            promise.complete(result.data().get().getContent());
-                                                        } else {
-                                                            promise.fail(new DocumentNotFound(requestPath));
-                                                        }
+                                                        renderer2.access((u, r) -> {
+                                                            final var result = renderer.render(renderRequest(trail(requestPath), Optional.empty(), user));
+                                                            if (result.data().isPresent()) {
+                                                                response.putHeader("content-type", result.data().get().getFormat());
+                                                                promise.complete(result.data().get().getContent());
+                                                            } else {
+                                                                promise.fail(new DocumentNotFound(requestPath));
+                                                            }
+                                                        }, user);
                                                     } catch (Exception e) {
                                                         logs().appendError(e);
                                                         throw new RuntimeException(e);
@@ -427,7 +433,7 @@ public class Server {
 
     /**
      * <p>TODO This is code duplication.
-     * Move this functionality into {@link #serveToHttpAt(ProjectsRenderer, Config)} via {@link Config}.</p>
+     * Move this functionality into {@link #serveToHttpAt(ProjectsRenderer, Config, AccessControl)} via {@link Config}.</p>
      *
      * @param renderer
      * @param config
