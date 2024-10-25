@@ -188,7 +188,7 @@ public class Server {
                 return processing.result();
             }
         };
-        return serveToHttpAt(projectsRenderer, config, accessControl(unsecuredStaticAccessSession(projectsRenderer)));
+        return serveToHttpAt(accessControl(unsecuredStaticAccessSession(projectsRenderer)), config);
     }
 
     /**
@@ -198,7 +198,7 @@ public class Server {
      *
      * @param renderer renderer
      */
-    private static Service serveToHttpAt(@Deprecated ProjectsRenderer renderer, Config config, AccessControl<ProjectsRenderer> renderer2) {
+    private static Service serveToHttpAt(AccessControl<ProjectsRenderer> renderer, Config config) {
         return new Service() {
             Vertx vertx;
 
@@ -282,12 +282,14 @@ public class Server {
                                     @Override
                                     public void handle(RoutingContext routingContext) {
                                         if (authenticationEnabled) {
-                                            if (renderer.requiresAuthentication(renderRequest(trail(requestPath(routingContext))
-                                                    , Optional.empty(), ANONYMOUS_USER_SESSION))) {
-                                                authenticator.handle(routingContext);
-                                            } else {
-                                                routingContext.next();
-                                            }
+                                            renderer.access((u, r) -> {
+                                                if (r.requiresAuthentication(renderRequest(trail(requestPath(routingContext))
+                                                        , Optional.empty(), u))) {
+                                                    authenticator.handle(routingContext);
+                                                } else {
+                                                    routingContext.next();
+                                                }
+                                            }, ANONYMOUS_USER_SESSION);
                                         } else {
                                             routingContext.next();
                                         }
@@ -327,8 +329,8 @@ public class Server {
                                                         } else {
                                                             user = (UserSession) routingContext.user().attributes().getValue(LOGIN_KEY);
                                                         }
-                                                        renderer2.access((u, r) -> {
-                                                            final var result = renderer.render(renderRequest(trail(requestPath), Optional.empty(), user));
+                                                        renderer.access((u, r) -> {
+                                                            final var result = r.render(renderRequest(trail(requestPath), Optional.empty(), user));
                                                             if (result.data().isPresent()) {
                                                                 response.putHeader("content-type", result.data().get().getFormat());
                                                                 promise.complete(result.data().get().getContent());
@@ -433,7 +435,7 @@ public class Server {
 
     /**
      * <p>TODO This is code duplication.
-     * Move this functionality into {@link #serveToHttpAt(ProjectsRenderer, Config, AccessControl)} via {@link Config}.</p>
+     * Move this functionality into {@link #serveToHttpAt(AccessControl, Config)} via {@link Config}.</p>
      *
      * @param renderer
      * @param config
