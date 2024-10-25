@@ -22,10 +22,9 @@ import net.splitcells.website.server.security.authentication.UserSession;
 import java.util.function.BiConsumer;
 
 /**
- *
  * @param <T> This is the type of object, whose access is controlled via {@link UserSession}.
- *           The instance of these themselves are responsible to only allow things,
- *           that the {@link UserSession} is allowed to do.
+ *            The instance of these themselves are responsible to only allow things,
+ *            that the {@link UserSession} is allowed to do.
  */
 public interface AccessControl<T extends Firewall> {
     /**
@@ -35,8 +34,18 @@ public interface AccessControl<T extends Firewall> {
      * The provided {@link T} should only be valid while running the given action and
      * after that {@link AutoCloseable#close()} has to be executed.
      *
-     * @param action
-     * @param login
+     * @param action This is an action, that requires a {@link UserSession} for authorization.
+     * @param login  This is the {@link Login} used, in order to create a {@link UserSession} for authorization.
      */
     void access(BiConsumer<UserSession, T> action, Login login);
+
+    /**
+     * This is the helper method, in case the creation time of the {@link UserSession} cannot full be controlled,
+     * by this {@link AccessControl}.
+     * Keep in mind, that after the access, the user session will be invalidated.
+     *
+     * @param action      This is an action, that requires a {@link UserSession} for authorization.
+     * @param userSession This object authorizes the access for the action.
+     */
+    void access(BiConsumer<UserSession, T> action, UserSession userSession);
 }

@@ -44,7 +44,11 @@ public class AccessControlImpl<T extends Firewall> implements AccessControl<T> {
 
     @Override
     public void access(BiConsumer<UserSession, T> action, Login login) {
-        final var userSession = authenticator.userSession(login);
+        access(action, authenticator.userSession(login));
+    }
+
+    @Override
+    public void access(BiConsumer<UserSession, T> action, UserSession userSession) {
         try {
             accessSession.access(a -> action.accept(userSession, a));
         } finally {
