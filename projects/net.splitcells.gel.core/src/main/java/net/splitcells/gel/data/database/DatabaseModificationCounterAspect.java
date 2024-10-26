@@ -71,31 +71,31 @@ public class DatabaseModificationCounterAspect implements Database {
 
     @Override
     public Line addTranslated(ListView<?> values) {
-        configValue(DatabaseModificationCounter.class).count(this, 1 + values.size());
+        configValue(DatabaseModificationCounter.class).count(this, 1 + (long) values.size());
         return database.addTranslated(values);
     }
 
     @Override
     public Line add(Line line) {
-        configValue(DatabaseModificationCounter.class).count(this, 1 + line.values().size());
+        configValue(DatabaseModificationCounter.class).count(this, 1 + (long) line.values().size());
         return database.add(line);
     }
 
     @Override
     public Line addWithSameHeaderPrefix(Line line) {
-        configValue(DatabaseModificationCounter.class).count(this, 1 + line.values().size());
+        configValue(DatabaseModificationCounter.class).count(this, 1 + (long) line.values().size());
         return database.addWithSameHeaderPrefix(line);
     }
 
     @Override
     public void remove(int lineIndex) {
-        configValue(DatabaseModificationCounter.class).count(this, 1 + rawLine(lineIndex).values().size());
+        configValue(DatabaseModificationCounter.class).count(this, 1 + (long) rawLine(lineIndex).values().size());
         database.remove(lineIndex);
     }
 
     @Override
     public void remove(Line line) {
-        configValue(DatabaseModificationCounter.class).count(this, 1 + line.values().size());
+        configValue(DatabaseModificationCounter.class).count(this, 1 + (long) line.values().size());
         database.remove(line);
     }
 
