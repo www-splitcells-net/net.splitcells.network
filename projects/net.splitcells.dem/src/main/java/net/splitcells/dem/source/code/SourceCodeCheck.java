@@ -34,7 +34,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 public class SourceCodeCheck {
     public static void main(String... arg) {
         checkJavaSourceCodeFile(Path.of(
-                "../net.splitcells.dem.api/src/main/java/net/splitcells/dem/lang/perspective/PerspectiveTest.java"));
+                "../net.splitcells.dem.api/src/main/java/net/splitcells/dem/lang/tree/TreeTest.java"));
         checkJavaSourceCodeProject(Path.of("../net.splitcells.website.server"));
         checkJavaSourceCodeProject(Path.of("../net.splitcells.gel.ui"));
         checkJavaSourceCodeProject(Path.of("../net.splitcells.dem.api"));
