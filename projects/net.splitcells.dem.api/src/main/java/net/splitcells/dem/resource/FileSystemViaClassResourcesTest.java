@@ -37,6 +37,7 @@ import static net.splitcells.dem.utils.StreamUtils.concat;
 public class FileSystemViaClassResourcesTest extends TestSuiteI {
     private static final String TEST_FILE_PATH = "src/main/resources/net/splitcells/dem/api/test-file.txt";
     private static final String TEST_FILE_CONTENT = "This is a test file of the 20th of July 2023.";
+    private static final String DEM_API_FOLDER = "src/main/resources/net/splitcells/dem/api";
 
     @Tag(INTEGRATION_TEST)
     @TestFactory
@@ -86,7 +87,7 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
     public void testReadStringForSubFileSystem(FileSystemViaClassResourcesFactoryApi factory) {
         requireEquals(factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
                                 , MAVEN_GROUP_ID, DEM_API)
-                        .subFileSystemView("src/main/resources/net/splitcells/dem/api")
+                        .subFileSystemView(DEM_API_FOLDER)
                         .readString("test-file.txt")
                 , TEST_FILE_CONTENT);
     }
@@ -110,7 +111,7 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
                 , MAVEN_GROUP_ID, DEM_API);
         require(testSubject.isFile(TEST_FILE_PATH));
         requireNot(testSubject.isFile("src/main/resources/net/splitcells/dem/api/test-file-not-existing.txt"));
-        requireNot(testSubject.isFile("src/main/resources/net/splitcells/dem/api"));
+        requireNot(testSubject.isFile(DEM_API_FOLDER));
     }
 
     public void testIsDirectory(FileSystemViaClassResourcesFactoryApi factory) {
@@ -118,7 +119,7 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
                 , MAVEN_GROUP_ID, DEM_API);
         requireNot(testSubject.isDirectory(TEST_FILE_PATH));
         requireNot(testSubject.isDirectory("src/main/resources/net/splitcells/dem/api/test-file-not-existing.txt"));
-        require(testSubject.isDirectory("src/main/resources/net/splitcells/dem/api"));
+        require(testSubject.isDirectory(DEM_API_FOLDER));
         requireNot(testSubject.isDirectory("src/main/resources/net/splitcells/dem/api-not-existing"));
     }
 
