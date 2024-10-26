@@ -93,7 +93,7 @@ public class Trail implements Thing, Equality_<Trail> {
      * @return The number of `../` at the beginning of the path.
      */
     public static int parentCount(String path) {
-        final var split = path.replaceAll("//", "/").split("/");
+        final var split = path.replace("//", "/").split("/");
         int count = 0;
         for (int i = 0; i < split.length; i++) {
             if ("..".equals(split[i])) {
