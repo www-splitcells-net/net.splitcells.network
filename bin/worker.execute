@@ -17,12 +17,12 @@ import os
 import shutil
 import subprocess
 
-dockerFileServiceTemplate = """FROM docker.io/eclipse-temurin:21-jdk-jammy
+dockerFileServiceTemplate = """FROM docker.io/eclipse-temurin:21-jdk-noble
 RUN apt clean
 RUN apt update # This fixes install errors. It is unknown why this is the case.
 RUN apt install --yes maven git python3 pip
-RUN pip install playwright
-RUN playwright install --with-deps # Install all OS dependencies, that are required for Playwright. Otherwise, Playwright cannot be used in Java.
+RUN pip install --break-system-packages playwright
+RUN playwright install --with-deps firefox # Install all OS dependencies, that are required for Playwright. Otherwise, Playwright cannot be used in Java.
 VOLUME /root/.local/state/
 VOLUME /root/Documents/
 VOLUME /root/.ssh/
@@ -34,8 +34,9 @@ WORKDIR /root/.local/lib/$NAME_FOR_EXECUTION/
 ENTRYPOINT ["/opt/java/openjdk/bin/java"]
 CMD ["-cp", "./jars/*", "$CLASS_FOR_EXECUTION"]
 """
-
-executeViaPodman = """set -e
+# TODO executeViaPodman
+prepareExecution = """set -e
+set -x
 executionName="$executionName"
 executionCommand="$executionCommand"
 # Prepare file system.
@@ -45,8 +46,10 @@ mkdir -p $HOME/.local/state/$executionName/.local/
 mkdir -p $HOME/.local/state/$executionName/Documents/
 mkdir -p ./target/
 test -f target/program-$executionName && chmod +x target/program-$executionName # This file does not exist, when '--executable-path' is not set.
-podman build -f "target/Dockerfile-$executionName" --tag "localhost/$executionName" --log-level=debug
+podman build -f "target/Dockerfile-$executionName" --tag "localhost/$executionName" --log-level=debug 
     # Logging is used, in order to better understand build runtime performance.
+"""
+executeViaPodman = """
 podman run --name "$executionName" \\
   --network slirp4netns:allow_host_loopback=true \\
   --rm \\
@@ -58,6 +61,12 @@ podman run --name "$executionName" \\
   "localhost/$executionName"
   #
   # allow_host_loopback is required, so that the software in the container can connect to the host.
+"""
+publishViaPodman = """
+podman tag $executionName:latest codeberg.org/splitcells-net/$executionName:latest
+podman push codeberg.org/splitcells-net/$executionName:latest
+"""
+cleanUpExecution = """
 rm -f "target/Dockerfile-$executionName" # `-f` is used, in case the target folder is deleted via `mvn clean install` in `--command`.
 """
 def str2bool(arg):
@@ -74,6 +83,8 @@ if __name__ == '__main__':
     parser.add_argument('--executable-path', dest='executablePath', help="Executes the given executable file. Only set this option or --command.")
     parser.add_argument('--class-for-execution', dest='classForExecution', help="This Java class is executed.")
     parser.add_argument('--use-host-documents', dest='useHostDocuments', required=False, type=str2bool, default=False, help="Determines whether to mount `~/Documents` or not. This should be avoided, in order to avoid file dependencies to the host system, which makes the execution more portable.")
+    parser.add_argument('--publish-execution-image', dest='publishExecutionImage', required=False, type=str2bool, default=False, help="If set to true, the given command is not executed, but a container image is published instead.")
+    parser.add_argument('--verbose', dest='publishExecutionImage', required=False, type=str2bool, default=False, help="If set to true, the output is verbose.")
     parser.add_argument('--port-publishing', dest='portPublishing', help="This is a comma separated list of `host-port:container-port`, that describes the port forwarding on the host.")
     parsedArgs = parser.parse_args()
     if not os.path.exists('./target'):
@@ -81,7 +92,7 @@ if __name__ == '__main__':
     # Create Dockerfile.
     dockerfile = dockerFileServiceTemplate
     if parsedArgs.command is not None:
-    	dockerfile += 'ENTRYPOINT ' + parsedArgs.command
+        dockerfile += 'ENTRYPOINT ' + parsedArgs.command
     elif parsedArgs.executablePath is not None:
         programName = "program-" + parsedArgs.name
         shutil.copyfile(parsedArgs.executablePath, "./target/" + programName)
@@ -92,12 +103,18 @@ if __name__ == '__main__':
             .replace('$NAME_FOR_EXECUTION', parsedArgs.name)
             .replace('$CLASS_FOR_EXECUTION', parsedArgs.classForExecution))
     else:
-    	raise Exception('Either `--command` or `--class-for-execution` needs to be set.')
+        raise Exception('Either `--command` or `--class-for-execution` needs to be set.')
     file='target/Dockerfile-' + parsedArgs.name
     with open(file, 'w') as filetowrite:
         filetowrite.write(dockerfile)
     # Create and execute script.
-    executionScript = executeViaPodman.replace('"$executionName"', "'" + parsedArgs.name + "'")
+    executionScript = prepareExecution
+    if parsedArgs.publishExecutionImage:
+        executionScript += publishViaPodman
+    else:
+        executionScript += executeViaPodman
+    executionScript += cleanUpExecution
+    executionScript = executionScript.replace('"$executionName"', parsedArgs.name)
     if parsedArgs.command is not None:
         executionScript = executionScript.replace('"$executionCommand"', "'" + parsedArgs.command + "'")
     additionalPodmanArgs = ''
@@ -110,6 +127,7 @@ if __name__ == '__main__':
         print(executionScript)
         print("-v $HOME/.local/state/$executionName/Documents:/root/Documents \\")
         executionScript = executionScript.replace("-v $HOME/.local/state/$executionName/Documents:/root/Documents \\", "-v $HOME/Documents:/root/Documents \\")
+    # Execute program.
     returnCode = subprocess.call(executionScript, shell='True')
     if returnCode != 0:
         logging.error("Could not execute given command.");
