@@ -46,7 +46,10 @@ mkdir -p $HOME/.local/state/$executionName/.local/
 mkdir -p $HOME/.local/state/$executionName/Documents/
 mkdir -p ./target/
 test -f target/program-$executionName && chmod +x target/program-$executionName # This file does not exist, when '--executable-path' is not set.
-podman build -f "target/Dockerfile-$executionName" --tag "localhost/$executionName" --log-level=debug 
+podman build -f "target/Dockerfile-$executionName" \\
+    --tag "localhost/$executionName" \\
+    --arch string \\
+    --log-level=debug 
     # Logging is used, in order to better understand build runtime performance.
 """
 executeViaPodman = """
@@ -85,6 +88,7 @@ if __name__ == '__main__':
     parser.add_argument('--use-host-documents', dest='useHostDocuments', required=False, type=str2bool, default=False, help="Determines whether to mount `~/Documents` or not. This should be avoided, in order to avoid file dependencies to the host system, which makes the execution more portable.")
     parser.add_argument('--publish-execution-image', dest='publishExecutionImage', required=False, type=str2bool, default=False, help="If set to true, the given command is not executed, but a container image is published instead.")
     parser.add_argument('--verbose', dest='publishExecutionImage', required=False, type=str2bool, default=False, help="If set to true, the output is verbose.")
+    parser.add_argument('--cpu-architecture', dest='cpuArchitecture', help="Set the cpu architecture for the execution.")
     parser.add_argument('--port-publishing', dest='portPublishing', help="This is a comma separated list of `host-port:container-port`, that describes the port forwarding on the host.")
     parsedArgs = parser.parse_args()
     if not os.path.exists('./target'):
@@ -122,11 +126,16 @@ if __name__ == '__main__':
         for portMapping in parsedArgs.portPublishing.split(','):
             additionalPodmanArgs += ' --publish ' + portMapping
     executionScript = executionScript.replace('"$podmanParameters"', additionalPodmanArgs)
+    if parsedArgs.cpuArchitecture is None:
+        executionScript = executionScript.replace('\n    --arch string \\', '')
+    else:
+        executionScript = executionScript.replace('\n    --arch string \\', '\n    --arch ' + parsedArgs.cpuArchitecture + ' \\\n')
     if parsedArgs.useHostDocuments:
         # TODO This replacement is done in a dirty way. Use a template variable instead.
         print(executionScript)
         print("-v $HOME/.local/state/$executionName/Documents:/root/Documents \\")
         executionScript = executionScript.replace("-v $HOME/.local/state/$executionName/Documents:/root/Documents \\", "-v $HOME/Documents:/root/Documents \\")
+    print(executionScript)
     # Execute program.
     returnCode = subprocess.call(executionScript, shell='True')
     if returnCode != 0:
