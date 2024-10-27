@@ -134,9 +134,9 @@ if __name__ == '__main__':
             additionalPodmanArgs += ' --publish ' + portMapping
     executionScript = executionScript.replace('"$podmanParameters"', additionalPodmanArgs)
     if parsedArgs.autoConfigureCpuArchExplicitly:
-        executionScript = executionScript.replace('\n    --arch string \\', '\n    --arch ' + platform.uname().machine + ' \\\n')
+        executionScript = executionScript.replace('\n    --arch string \\\n', '\n    --arch ' + platform.uname().machine + ' \\\n')
     elif parsedArgs.cpuArchitecture is None:
-        executionScript = executionScript.replace('\n    --arch string \\', '')
+        executionScript = executionScript.replace('\n    --arch string \\\n', '')
     else:
         executionScript = executionScript.replace('\n    --arch string \\', '\n    --arch ' + parsedArgs.cpuArchitecture + ' \\\n')
     if parsedArgs.useHostDocuments:
