@@ -14,6 +14,7 @@ __license__ = "EPL-2.0 OR GPL-2.0-or-later"
 import argparse
 import logging
 import os
+import platform
 import shutil
 import subprocess
 
@@ -47,9 +48,9 @@ mkdir -p $HOME/.local/state/$executionName/Documents/
 mkdir -p ./target/
 test -f target/program-$executionName && chmod +x target/program-$executionName # This file does not exist, when '--executable-path' is not set.
 podman build -f "target/Dockerfile-$executionName" \\
-    --tag "localhost/$executionName" \\
+    --tag "localhost/$executionName"  \\
     --arch string \\
-    --log-level=debug 
+    --log-level=debug
     # Logging is used, in order to better understand build runtime performance.
 """
 executeViaPodman = """
@@ -75,7 +76,9 @@ rm -f "target/Dockerfile-$executionName" # `-f` is used, in case the target fold
 def str2bool(arg):
     return arg == 'true'
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Executes a given program as isolated as possible with all program files being persisted at `$HOME/.local/state/$executionName/` and user input being located at `$HOME/Documents`. Executions with different names have different persisted file locations and are therefore isolated more clearly, whereas executions with the same name are assumed to share data.")
+    parser = argparse.ArgumentParser(description="Executes a given program as isolated as possible with all program files being persisted at `$HOME/.local/state/$executionName/` and user input being located at `$HOME/Documents`." \
+            + " Executions with different names have different persisted file locations and are therefore isolated more clearly, whereas executions with the same name are assumed to share data." \
+            + " This is the CLI interface to the Splitcells Network Worker.")
     parser.add_argument('--name', dest='name', required=True, help="This is the name of the task being executed.")
     parser.add_argument('--command', dest='command'
                         , help="This is the shell command, to execute the task."
@@ -89,6 +92,10 @@ if __name__ == '__main__':
     parser.add_argument('--publish-execution-image', dest='publishExecutionImage', required=False, type=str2bool, default=False, help="If set to true, the given command is not executed, but a container image is published instead.")
     parser.add_argument('--verbose', dest='publishExecutionImage', required=False, type=str2bool, default=False, help="If set to true, the output is verbose.")
     parser.add_argument('--cpu-architecture', dest='cpuArchitecture', help="Set the cpu architecture for the execution.")
+    parser.add_argument('--auto-configure-cpu-architecture-explicitly', dest='autoConfigureCpuArchExplicitly', required=False, type=str2bool, default=False
+            , help="If set to false, the command's backend automatically determines the CPU architecture." \
+                + " If set to true, the CPU architecture will be determined by this command and the determined architecture is propagated to the commands backend explicitly." \
+                + " This is useful, because some tools have not a good CPU auto detection (i.e. Podman on RISC-V cannot find the fitting images based on the CPU arch automatically).")
     parser.add_argument('--port-publishing', dest='portPublishing', help="This is a comma separated list of `host-port:container-port`, that describes the port forwarding on the host.")
     parsedArgs = parser.parse_args()
     if not os.path.exists('./target'):
@@ -126,7 +133,9 @@ if __name__ == '__main__':
         for portMapping in parsedArgs.portPublishing.split(','):
             additionalPodmanArgs += ' --publish ' + portMapping
     executionScript = executionScript.replace('"$podmanParameters"', additionalPodmanArgs)
-    if parsedArgs.cpuArchitecture is None:
+    if parsedArgs.autoConfigureCpuArchExplicitly:
+        executionScript = executionScript.replace('\n    --arch string \\', '\n    --arch ' + platform.uname().machine + ' \\\n')
+    elif parsedArgs.cpuArchitecture is None:
         executionScript = executionScript.replace('\n    --arch string \\', '')
     else:
         executionScript = executionScript.replace('\n    --arch string \\', '\n    --arch ' + parsedArgs.cpuArchitecture + ' \\\n')
