@@ -16,8 +16,10 @@
 package net.splitcells.dem.lang.annotations;
 
 /**
- * <p>Marks things that are only present for Java compatibility.
- * Code marked as such is not checked for portability automatically.</p>
+ * <p>Marks things that are only present for compatibility with Java or its ecosystem.
+ * Files containing code marked as such are not checked for portability automatically.
+ * Note that
+ * </p>
  */
 public @interface JavaLegacyArtifact {
 

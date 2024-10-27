@@ -60,6 +60,10 @@ public class SourceCodeCheck {
 
     private static void checkJavaSourceCodeFile(Path file) {
         try {
+            if (java.nio.file.Files.readString(file).contains("\n@JavaLegacyArtifact\n")) {
+                // `@JavaLegacyArtifact` is only allowed to marked
+                return;
+            }
             System.out.println("Checking file: " + file);
             final var lexer = new net.splitcells.dem.source.code.antlr.Java11Lexer
                     (CharStreams.fromFileName(file.toString()));
