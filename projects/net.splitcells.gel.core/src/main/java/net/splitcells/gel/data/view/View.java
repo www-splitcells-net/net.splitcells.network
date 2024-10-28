@@ -39,6 +39,7 @@ import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.TreeI;
@@ -82,7 +83,9 @@ public interface View extends Discoverable, Domable, Identifiable {
      * @return {@link List} of {@link Line}, that is ordered by {@link Line#index()}.
      */
     default List<Line> orderedLines() {
-        throw notImplementedYet(this.getClass().getName() + " does not implemented `orderedLines`.");
+        return rawLines().stream()
+                .filter(e -> e != null)
+                .collect(Lists.toList());
     }
 
     /**

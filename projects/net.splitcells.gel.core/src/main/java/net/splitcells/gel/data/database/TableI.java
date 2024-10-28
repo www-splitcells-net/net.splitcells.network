@@ -380,7 +380,6 @@ public class TableI implements Table {
         return rawLines.stream()
                 .filter(e -> e != null)
                 .collect(Lists.toList());
-
     }
 
     @Override

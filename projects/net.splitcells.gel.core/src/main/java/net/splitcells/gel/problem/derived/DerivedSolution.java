@@ -234,6 +234,11 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
+    public List<Line> orderedLines() {
+        return assignments.orderedLines();
+    }
+
+    @Override
     public int size() {
         return assignments.size();
     }

@@ -239,6 +239,11 @@ public class HistoryForTable implements History {
     }
 
     @Override
+    public List<Line> orderedLines() {
+        return history.orderedLines();
+    }
+
+    @Override
     public int size() {
         return history.size();
     }

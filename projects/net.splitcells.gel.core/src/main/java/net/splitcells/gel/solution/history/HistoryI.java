@@ -546,6 +546,17 @@ public class HistoryI implements History {
     }
 
     @Override
+    public List<Line> orderedLines() {
+        if (!isRegisterEventIsEnabled) {
+            throw executionException(ERROR_HISTORY_DISABLED);
+        }
+        if (isHistoryConsistent) {
+            throw executionException(ERROR_HISTORY_INCONSISTENT);
+        }
+        return assignments.orderedLines();
+    }
+
+    @Override
     public int size() {
         if (!isRegisterEventIsEnabled) {
             throw executionException(ERROR_HISTORY_DISABLED);
