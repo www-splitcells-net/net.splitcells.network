@@ -29,14 +29,14 @@ import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.gel.data.view.attribute.Attribute;
 
 public class LineI implements Line {
-    private final Table context;
+    private final View context;
     private final int index;
 
-    public static Line line(Table context, int index) {
+    public static Line line(View context, int index) {
         return new LineI(context, index);
     }
 
-    protected LineI(Table context, int line) {
+    protected LineI(View context, int line) {
         this.context = context;
         this.index = line;
     }
@@ -57,7 +57,7 @@ public class LineI implements Line {
     }
 
     @Override
-    public Table context() {
+    public View context() {
         return context;
     }
 

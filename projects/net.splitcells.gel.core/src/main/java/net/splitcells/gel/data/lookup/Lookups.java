@@ -16,7 +16,7 @@
 package net.splitcells.gel.data.lookup;
 
 import net.splitcells.dem.environment.resource.ResourceOptionI;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 
 import static net.splitcells.gel.data.lookup.LookupI.lookupI;
@@ -26,7 +26,7 @@ public class Lookups extends ResourceOptionI<LookupFactory> {
         super(() -> new LookupIFactory());
     }
 
-    public static <R> Lookup<R> lookup(Table table, Attribute<R> attribute) {
-        return lookupI(table, attribute);
+    public static <R> Lookup<R> lookup(View view, Attribute<R> attribute) {
+        return lookupI(view, attribute);
     }
 }

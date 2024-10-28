@@ -27,7 +27,7 @@ import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.constraint.intermediate.data.AllocationRating;
 import net.splitcells.gel.data.assignment.Assignments;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.gel.rating.framework.LocalRating;
 import net.splitcells.gel.rating.framework.Rating;
@@ -137,7 +137,7 @@ public final class Derivation implements Constraint {
     }
 
     @Override
-    public Table lines() {
+    public View lines() {
         throw notImplementedYet();
     }
 

@@ -20,7 +20,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import org.junit.jupiter.api.Test;
@@ -48,7 +48,7 @@ public class ConstraintTest {
         final var testSubject = forEach(new Rater() {
 
             @Override
-            public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
+            public RatingEvent ratingAfterAddition(View lines, Line addition, List<Constraint> children, View ratingsBeforeAddition) {
                 final var ratingEvent = ratingEvent();
                 ratingEvent.complexAdditions().put(addition
                         , list(localRating().withRating(noCost()).withPropagationTo(children).withResultingGroupId(group1)
@@ -58,7 +58,7 @@ public class ConstraintTest {
             }
 
             @Override
-            public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
+            public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
                 return "no cost and 2 resulting groups for every line";
             }
 

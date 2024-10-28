@@ -29,7 +29,7 @@ import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.LinePointer;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.gel.problem.derived.DerivedSolution;
@@ -96,8 +96,8 @@ public class SolutionAspect implements Solution {
                     .ifPresent(demandForRemoval
                             -> assertThat(demandForRemoval.context())
                             .describedAs("Context of demand for removal should be part demands or used demands, but is not: Removal context is " + demandForRemoval.context() + ", demands context is " + solution.demands() + " and used demands context is " + solution.demandsUsed() + ".")
-                            .matches(e -> Table.referToSameData(e, solution.demands())
-                                    || Table.referToSameData(e, solution.demandsUsed())));
+                            .matches(e -> View.referToSameData(e, solution.demands())
+                                    || View.referToSameData(e, solution.demandsUsed())));
             event.supply()
                     .interpret()
                     .ifPresent(supplyForRemoval

@@ -35,7 +35,7 @@ import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.attribute.IndexedAttribute;
 
 /**
- * TODO {@link Line}s and {@link Table}s should be typed. Use a meta {@link Attribute}, which
+ * TODO {@link Line}s and {@link View}s should be typed. Use a meta {@link Attribute}, which
  * supports multiple types and just use one attribute type per data base.
  */
 public interface Line extends Domable {
@@ -52,7 +52,7 @@ public interface Line extends Domable {
     /**
      * <p>Retrieves a value associated with this {@link Line} and {@link Attribute}.
      * In order for this to work,
-     * {@link #context()} needs to contain this {@link Attribute} in its {@link Table#headerView()}.</p>
+     * {@link #context()} needs to contain this {@link Attribute} in its {@link View#headerView()}.</p>
      * <p>If possible, {@link #value(IndexedAttribute)} should be used instead,
      * in order to get a better runtime performance.</p>
      *
@@ -65,7 +65,7 @@ public interface Line extends Domable {
     /**
      * <p>Retrieves a value associated with this {@link Line} and {@link Attribute}.
      * In order for this to work,
-     * {@link #context()} needs to contain this {@link IndexedAttribute#attribute()} in its {@link Table#headerView()}
+     * {@link #context()} needs to contain this {@link IndexedAttribute#attribute()} in its {@link View#headerView()}
      * at the same position as {@link IndexedAttribute#headerIndex()}.</p>
      *
      * @param attribute Identifies, which value of a {@link Line} should be retrieved.
@@ -89,7 +89,7 @@ public interface Line extends Domable {
         return linePointer(context(), index());
     }
 
-    Table context();
+    View context();
 
     default boolean equalsTo(Line other) {
         return index() == other.index() && context().equals(other.context());

@@ -21,7 +21,7 @@ import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.column.ColumnView;
 
@@ -288,7 +288,7 @@ public class DatabaseMetaAspect implements Database {
     }
 
     @Override
-    public <T> Table lookup(Attribute<T> attribute, T value) {
+    public <T> View lookup(Attribute<T> attribute, T value) {
         return database.lookup(attribute, value);
     }
 

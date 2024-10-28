@@ -16,7 +16,7 @@
 package net.splitcells.gel.data.view.column;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -150,12 +150,12 @@ public class ColumnViewI<T> implements ColumnView<T> {
     }
 
     @Override
-    public Table lookup(T value) {
+    public View lookup(T value) {
         return column.lookup(value);
     }
 
     @Override
-    public Table lookup(Predicate<T> selector) {
+    public View lookup(Predicate<T> selector) {
         return column.lookup(selector);
     }
 }

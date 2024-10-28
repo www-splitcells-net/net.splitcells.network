@@ -23,7 +23,7 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.TreeI;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.history.event.Allocation;
 import net.splitcells.gel.data.assignment.Assignments;
@@ -54,7 +54,7 @@ import java.util.function.Supplier;
  * because there is no previous state from the perspective of the timeline.
  * In other words, the first state is implicitly recorded by the history,
  * whereas the following states are explicitly recorded.</p>
- * <p>TODO There does not seem to be a need, for this to be an {@link Assignments} instead of {@link Table}.
+ * <p>TODO There does not seem to be a need, for this to be an {@link Assignments} instead of {@link View}.
  * Unfortunately, this fact degrades the performance.</p>
  * <p>IDEA History should only contain primary demand/supply references and no references to used or unused demand/supply,
  * in order to preserve line pointer validity.</p>

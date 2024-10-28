@@ -16,7 +16,7 @@
 package net.splitcells.gel.rating.rater.lib;
 
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.framework.GroupRater;
@@ -45,7 +45,7 @@ public class RegulatedLength {
         return groupRater(new GroupRater() {
 
             @Override
-            public Rating lineRating(Table lines, Optional<Line> addition, Optional<Line> removal) {
+            public Rating lineRating(View lines, Optional<Line> addition, Optional<Line> removal) {
                 final int requiredLength = addition
                         .map(e -> e.value(LINE).value(targetLength))
                         .orElseGet(() -> removal.get().value(LINE).value(targetLength));

@@ -21,7 +21,7 @@ import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.column.ColumnView;
 
@@ -31,15 +31,15 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public class AllocationStateLookup implements Database {
 
-    public static Database allocationStateLookup(Table table, Predicate<Line> selector) {
-        return new AllocationStateLookup(table, selector);
+    public static Database allocationStateLookup(View view, Predicate<Line> selector) {
+        return new AllocationStateLookup(view, selector);
     }
 
-    public static Database allocationStateLookup(Table table, Predicate<Line> selector, List<Attribute<?>> relevantAttributes) {
-        return new AllocationStateLookup(table, selector);
+    public static Database allocationStateLookup(View view, Predicate<Line> selector, List<Attribute<?>> relevantAttributes) {
+        return new AllocationStateLookup(view, selector);
     }
 
-    private AllocationStateLookup(Table table, Predicate<Line> selector) {
+    private AllocationStateLookup(View view, Predicate<Line> selector) {
 
     }
 

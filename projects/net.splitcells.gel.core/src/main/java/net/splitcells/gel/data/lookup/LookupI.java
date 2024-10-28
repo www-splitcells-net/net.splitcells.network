@@ -27,11 +27,11 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 
 /**
- * <p>Provides a view to a subset of a {@link Table} as a {@link Table}.
+ * <p>Provides a view to a subset of a {@link View} as a {@link View}.
  * {@link Line} that are part via the subset are either determined and accessed by a {@link Attribute} value or via custom a {@link Predicate}.
  * </p>
  *
@@ -44,38 +44,38 @@ public class LookupI<T> implements Lookup<T> {
      */
     private static final boolean EXPERIMENTAL_SPEED_UP = false;
 
-    public static <T> Lookup<T> lookupI(Table table, Attribute<T> attribute) {
-        return new LookupI<>(table, attribute);
+    public static <T> Lookup<T> lookupI(View view, Attribute<T> attribute) {
+        return new LookupI<>(view, attribute);
     }
 
-    private final LookupTable lookupTable;
+    private final LookupView lookupTable;
 
-    private final Table table;
-    private final Map<T, LookupTable> content = map();
+    private final View view;
+    private final Map<T, LookupView> content = map();
     private final Attribute<T> attribute;
-    private final Map<Predicate<T>, LookupTable> complexContent = map();
+    private final Map<Predicate<T>, LookupView> complexContent = map();
 
-    private LookupI(Table table, Attribute<T> attribute) {
-        this.table = table;
-        this.lookupTable = lookupTable(table, attribute);
+    private LookupI(View view, Attribute<T> attribute) {
+        this.view = view;
+        this.lookupTable = lookupTable(view, attribute);
         this.attribute = attribute;
-        table.unorderedLinesStream().forEach(e -> register_addition(e.value(attribute), e.index()));
+        view.unorderedLinesStream().forEach(e -> register_addition(e.value(attribute), e.index()));
     }
 
     @Override
     public void register_addition(T addition, int index) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            require(table.rawLinesView().size() > index);
+            require(view.rawLinesView().size() > index);
         }
         {
-            final LookupTable lookupTable;
+            final LookupView lookupTable;
             if (content.containsKey(addition)) {
                 lookupTable = content.get(addition);
             } else {
-                lookupTable = lookupTable(table, attribute, false);
+                lookupTable = lookupTable(view, attribute, false);
                 content.put(addition, lookupTable);
             }
-            lookupTable.register(table.rawLine(index));
+            lookupTable.register(view.rawLine(index));
         }
         register_beforeAddition_atComplexContent(addition, index);
     }
@@ -83,7 +83,7 @@ public class LookupI<T> implements Lookup<T> {
     private void register_beforeAddition_atComplexContent(T addition, int index) {
         complexContent.forEach((predicate, lookupTable) -> {
             if (predicate.test(addition)) {
-                lookupTable.register(table.rawLine(index));
+                lookupTable.register(view.rawLine(index));
             }
         });
     }
@@ -93,14 +93,14 @@ public class LookupI<T> implements Lookup<T> {
         if (ENFORCING_UNIT_CONSISTENCY) {
             requireNotNull(content.get(removal).rawLinesView().get(index));
         }
-        final var line = table.rawLine(index);
+        final var line = view.rawLine(index);
         final var affectedLookupTable = content.get(removal);
         affectedLookupTable.removeRegistration(line);
         final var complexLookupTablesToRemove = Lists.<Predicate<T>>list();
         if (EXPERIMENTAL_SPEED_UP) {
             complexContent.forEach((predicate, lookupTable) -> {
                 if (predicate.test(removal)) {
-                    lookupTable.removeRegistration(table.rawLinesView().get(index));
+                    lookupTable.removeRegistration(view.rawLinesView().get(index));
                     if (lookupTable.isEmpty()) {
                         complexLookupTablesToRemove.add(predicate);
                     }
@@ -111,7 +111,7 @@ public class LookupI<T> implements Lookup<T> {
         } else {
             complexContent.forEach((predicate, lookupTable) -> {
                 if (predicate.test(removal)) {
-                    lookupTable.removeRegistration(table.rawLinesView().get(index));
+                    lookupTable.removeRegistration(view.rawLinesView().get(index));
                 }
             });
         }
@@ -122,7 +122,7 @@ public class LookupI<T> implements Lookup<T> {
     }
 
     @Override
-    public Table lookup(T value) {
+    public View lookup(T value) {
         if (content.containsKey(value)) {
             return content.get(value);
         }
@@ -130,11 +130,11 @@ public class LookupI<T> implements Lookup<T> {
     }
 
     @Override
-    public Table lookup(Predicate<T> predicate) {
+    public View lookup(Predicate<T> predicate) {
         if (!complexContent.containsKey(predicate)) {
-            final var lookup = LookupTables.lookupTable(table, predicate.toString());
+            final var lookup = LookupTables.lookupTable(view, predicate.toString());
             complexContent.put(predicate, lookup);
-            table
+            view
                     .rawLinesView()
                     .stream()
                     .filter(e -> e != null)
@@ -149,7 +149,7 @@ public class LookupI<T> implements Lookup<T> {
 
     @Override
     public List<String> path() {
-        final List<String> path = table.path();
+        final List<String> path = view.path();
         path.add(attribute.name());
         return path;
     }

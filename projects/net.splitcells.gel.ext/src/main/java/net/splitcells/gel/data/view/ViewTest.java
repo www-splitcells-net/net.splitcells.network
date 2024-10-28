@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.mock;
 
-public final class TableTest extends TestSuiteI {
+public final class ViewTest extends TestSuiteI {
 
     /**
      * TODO Use {@link Assignments}.
@@ -52,14 +52,14 @@ public final class TableTest extends TestSuiteI {
         return dynamicTests(this::test_invalid_content_write_access, databaseI());
     }
 
-    private void testEmptyTable(Table emptyTable) {
-        assertThat(emptyTable.headerView().isEmpty());
-        assertThat(emptyTable.rawLinesView().isEmpty());
+    private void testEmptyTable(View emptyView) {
+        assertThat(emptyView.headerView().isEmpty());
+        assertThat(emptyView.rawLinesView().isEmpty());
     }
 
-    private void test_invalid_content_write_access(Table emptyTable) {
+    private void test_invalid_content_write_access(View emptyView) {
         try {
-            emptyTable.rawLinesView().add(mock(Line.class));
+            emptyView.rawLinesView().add(mock(Line.class));
         } catch (RuntimeException e) {
             return;
         }

@@ -38,7 +38,7 @@ import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.rating.rater.framework.Rater;
@@ -67,8 +67,8 @@ public class AllDifferent<T> implements Rater {
     }
 
     @Override
-    public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children
-            , Table ratingsBeforeAddition) {
+    public RatingEvent ratingAfterAddition(View lines, Line addition, List<Constraint> children
+            , View ratingsBeforeAddition) {
         final T value = addition.value(Constraint.LINE).value(attribute);
         final var group = lines.columnView(Constraint.LINE).lookup(predicate(value));
         final var ratingEvent = ratingEvent();
@@ -111,8 +111,8 @@ public class AllDifferent<T> implements Rater {
     }
 
     @Override
-    public RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children
-            , Table ratingsBeforeRemoval) {
+    public RatingEvent rating_before_removal(View lines, Line removal, List<Constraint> children
+            , View ratingsBeforeRemoval) {
         final T value = removal.value(Constraint.LINE).value(attribute);
         final var group = lines.columnView(Constraint.LINE).lookup(predicate(value));
         final var ratingEvent = ratingEvent();
@@ -163,7 +163,7 @@ public class AllDifferent<T> implements Rater {
     }
 
     @Override
-    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
+    public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
         return "all values of " + attribute.name() + " should be different";
     }
 }

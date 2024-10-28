@@ -18,13 +18,13 @@ package net.splitcells.gel.data.assignment;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.LinePointer;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.database.Database;
 
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 
-public interface AssignmentsLiveView extends Table {
+public interface AssignmentsLiveView extends View {
     /**
      * Returns a {@link Database} of all supplies.
      * The {@link Line#index()} of one supply is the same across this database, {@link #suppliesFree()} and {@link #suppliesUsed()}

@@ -33,7 +33,7 @@ import net.splitcells.gel.constraint.type.framework.ConstraintBasedOnLocalGroups
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Report;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.gel.rating.framework.LocalRating;
 import net.splitcells.gel.rating.framework.Rating;
@@ -174,7 +174,7 @@ public class Then implements Constraint {
     }
 
     @Override
-    public Table lineProcessing() {
+    public View lineProcessing() {
         return constraint.lineProcessing();
     }
 
@@ -184,7 +184,7 @@ public class Then implements Constraint {
     }
 
     @Override
-    public Table lines() {
+    public View lines() {
         return constraint.lines();
     }
 

@@ -24,7 +24,7 @@ public class LineSF {
         throw constructorIllegal();
     }
 
-    public static Line emptyLine(Table table) {
+    public static Line emptyLine(View view) {
         throw notImplementedYet();
     }
 

@@ -23,7 +23,7 @@ import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 
 import java.util.Optional;
 
@@ -52,7 +52,7 @@ public class RaterBasedOnLineGroup implements Rater {
         return raterBasedOnLineGroup(new RaterBasedOnLineGroupLambda() {
 
             @Override
-            public RatingEvent rating(Table lines, Optional<Line> addition, Optional<Line> removal, List<Constraint> children) {
+            public RatingEvent rating(View lines, Optional<Line> addition, Optional<Line> removal, List<Constraint> children) {
                 final var lineRating = rater.lineRating(lines, addition, removal);
                 final var ratingEvent = ratingEvent();
                 lines.unorderedLines().stream()
@@ -98,7 +98,7 @@ public class RaterBasedOnLineGroup implements Rater {
         return new RaterBasedOnLineGroup(new RaterBasedOnLineGroupLambda() {
 
             @Override
-            public RatingEvent rating(Table lines, Optional<Line> addition, Optional<Line> removal, List<Constraint> children) {
+            public RatingEvent rating(View lines, Optional<Line> addition, Optional<Line> removal, List<Constraint> children) {
                 final var rating = rater.routing(lines, children);
                 if (addition.isPresent()) {
                     if (rating.removal().contains(addition.get())) {
@@ -166,17 +166,17 @@ public class RaterBasedOnLineGroup implements Rater {
     }
 
     @Override
-    public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
+    public RatingEvent ratingAfterAddition(View lines, Line addition, List<Constraint> children, View ratingsBeforeAddition) {
         return rater.rating(lines, Optional.of(addition), Optional.empty(), children);
     }
 
     @Override
-    public RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children, Table ratingsBeforeRemoval) {
+    public RatingEvent rating_before_removal(View lines, Line removal, List<Constraint> children, View ratingsBeforeRemoval) {
         return rater.rating(lines, Optional.empty(), Optional.of(removal), children);
     }
 
     @Override
-    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
+    public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
         return simpleDescriptor.toSimpleDescription(line, groupsLineProcessing, incomingGroup);
     }
 

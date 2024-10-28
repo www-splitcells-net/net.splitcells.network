@@ -17,7 +17,7 @@ package net.splitcells.gel.rating.rater.framework;
 
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.gel.rating.framework.Rating;
 
@@ -34,7 +34,7 @@ public interface GroupRater {
     static GroupRater describedGroupRater(GroupRater arg, String description) {
         return new GroupRater() {
             @Override
-            public Rating lineRating(Table lines, Optional<Line> addition, Optional<Line> removal) {
+            public Rating lineRating(View lines, Optional<Line> addition, Optional<Line> removal) {
                 return arg.lineRating(lines, addition, removal);
             }
 
@@ -53,7 +53,7 @@ public interface GroupRater {
      * @param removal  removal
      * @return return
      */
-    Rating lineRating(Table lines, Optional<Line> addition, Optional<Line> removal);
+    Rating lineRating(View lines, Optional<Line> addition, Optional<Line> removal);
 
     /**
      * By default, {@link Proposal}s are not processed.

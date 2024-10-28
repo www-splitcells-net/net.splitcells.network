@@ -21,7 +21,7 @@ import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.gel.rating.rater.framework.Rater;
@@ -66,12 +66,12 @@ public class CommitmentAdherence implements Rater {
      * @return
      */
     @Override
-    public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table lineProcessing) {
+    public RatingEvent ratingAfterAddition(View lines, Line addition, List<Constraint> children, View lineProcessing) {
         return ratingEvent();
     }
 
     @Override
-    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
+    public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
         return "Lines are committed up to " + committedTime + " " + time.name() + ".";
     }
 

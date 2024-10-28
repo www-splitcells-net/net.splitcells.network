@@ -18,7 +18,7 @@ package net.splitcells.gel.data.lookup;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.Databases;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.column.Column;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -210,7 +210,7 @@ public class LookupTest extends TestSuiteI {
         final var a = attribute(Integer.class, "a");
         final var b = attribute(Integer.class, "b");
         final var testSubject = Databases.database(list(a, b), list());
-        final Supplier<Table> testValues = () -> testSubject.columnView(a)
+        final Supplier<View> testValues = () -> testSubject.columnView(a)
                 .lookup(1)
                 .columnView(b)
                 .lookup(2);

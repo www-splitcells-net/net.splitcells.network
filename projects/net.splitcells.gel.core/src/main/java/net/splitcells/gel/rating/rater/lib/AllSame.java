@@ -20,7 +20,7 @@ import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.gel.rating.framework.Rating;
@@ -51,7 +51,7 @@ public class AllSame {
         return groupRater(new GroupRater() {
 
                               @Override
-                              public Rating lineRating(Table lines, Optional<Line> addition, Optional<Line> removal) {
+                              public Rating lineRating(View lines, Optional<Line> addition, Optional<Line> removal) {
                                   final Map<T, Integer> valueCounter = map();
                                   lines.unorderedLines()
                                           .stream()
@@ -118,7 +118,7 @@ public class AllSame {
                           },
                 new SimpleDescriptor() {
                     @Override
-                    public String toSimpleDescription(Line line, Table groupLineProcessing, GroupId incomingGroup) {
+                    public String toSimpleDescription(Line line, View groupLineProcessing, GroupId incomingGroup) {
                         final var distinctValues = groupLineProcessing.unorderedLines().stream()
                                 .map(l -> l.value(LINE).value(attribute).toString())
                                 .reduce((a, b) -> a + ", " + b)

@@ -26,7 +26,7 @@ import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.dem.lang.dom.Domable;
@@ -46,7 +46,7 @@ public class Propagation implements Rater {
 
     @Override
     public RatingEvent ratingAfterAddition
-            (Table lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
+            (View lines, Line addition, List<Constraint> children, View ratingsBeforeAddition) {
         final RatingEvent ratingEvent = ratingEvent();
         ratingEvent.additions().put
                 (addition
@@ -59,12 +59,12 @@ public class Propagation implements Rater {
 
     @Override
     public RatingEvent rating_before_removal
-            (Table lines, Line removal, List<Constraint> children, Table ratingsBeforeRemoval) {
+            (View lines, Line removal, List<Constraint> children, View ratingsBeforeRemoval) {
         return ratingEvent();
     }
 
     @Override
-    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
+    public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
         return "";
     }
 

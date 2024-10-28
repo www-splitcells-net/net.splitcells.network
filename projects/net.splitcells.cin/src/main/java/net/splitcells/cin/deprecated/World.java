@@ -18,7 +18,7 @@ package net.splitcells.cin.deprecated;
 import net.splitcells.cin.raters.TimeSteps;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.rating.framework.LocalRating;
 import net.splitcells.gel.rating.rater.framework.Rater;
@@ -229,12 +229,12 @@ public class World {
         return worldsTimeSpace;
     }
 
-    private static void addPosition(Table lines, Line addition, int positionX, int positionY, RatingEvent ratingEvent, LocalRating localRating) {
+    private static void addPosition(View lines, Line addition, int positionX, int positionY, RatingEvent ratingEvent, LocalRating localRating) {
         retrievePosition(lines, positionX + 1, positionY)
                 .ifPresent(neighbour -> ratingEvent.additions().put(addition, localRating));
     }
 
-    private static Optional<Line> retrievePosition(Table lines, int positionX, int positionY) {
+    private static Optional<Line> retrievePosition(View lines, int positionX, int positionY) {
         return lines.columnView(POSITION_X)
                 .lookup(positionX)
                 .columnView(POSITION_Y)

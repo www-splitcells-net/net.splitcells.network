@@ -28,7 +28,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.rating.rater.framework.Rater;
@@ -64,7 +64,7 @@ public class GroupMultiplier implements Rater {
 
     @Override
     public RatingEvent ratingAfterAddition
-            (Table lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
+            (View lines, Line addition, List<Constraint> children, View ratingsBeforeAddition) {
         final var ratingEvent = ratingEvent();
 
         List<GroupId> groupingOfAddition = listWithValuesOf(
@@ -91,12 +91,12 @@ public class GroupMultiplier implements Rater {
 
     @Override
     public RatingEvent rating_before_removal
-            (Table lines, Line removal, List<Constraint> children, Table ratingsBeforeRemoval) {
+            (View lines, Line removal, List<Constraint> children, View ratingsBeforeRemoval) {
         return ratingEvent();
     }
 
     @Override
-    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
+    public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
         return classifiers.stream()
                 .map(classifier -> classifier.toString())
                 .reduce((a, b) -> a + " " + b)

@@ -30,7 +30,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.rating.rater.framework.Rater;
@@ -55,8 +55,8 @@ public class HasSize implements Rater {
     }
 
     @Override
-    public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children
-            , Table ratingsBeforeAddition) {
+    public RatingEvent ratingAfterAddition(View lines, Line addition, List<Constraint> children
+            , View ratingsBeforeAddition) {
         final var individualRating = rating(lines, false);
         final var additionalRatings
                 = rateLines(lines, addition, children, individualRating);
@@ -69,7 +69,7 @@ public class HasSize implements Rater {
         return additionalRatings;
     }
 
-    private RatingEvent rateLines(Table lines, Line changed, List<Constraint> children, Rating cost) {
+    private RatingEvent rateLines(View lines, Line changed, List<Constraint> children, Rating cost) {
         final RatingEvent linesRating = ratingEvent();
         lines.rawLinesView().stream()
                 .filter(e -> e != null)
@@ -86,20 +86,20 @@ public class HasSize implements Rater {
     }
 
     @Override
-    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
+    public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
         return "size should be " + targetSize + ", but is " + groupsLineProcessing.size();
     }
 
     @Override
     public RatingEvent rating_before_removal
-            (Table lines
+            (View lines
                     , Line removal
                     , List<Constraint> children
-                    , Table ratingsBeforeRemoval) {
+                    , View ratingsBeforeRemoval) {
         return rateLines(lines, removal, children, rating(lines, true));
     }
 
-    private Rating rating(Table lines, boolean beforeRemoval) {
+    private Rating rating(View lines, boolean beforeRemoval) {
         final Rating rating;
         final int actualSize;
         if (beforeRemoval) {

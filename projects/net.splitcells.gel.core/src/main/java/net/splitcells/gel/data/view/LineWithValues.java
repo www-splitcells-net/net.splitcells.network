@@ -23,16 +23,16 @@ import static java.util.stream.IntStream.range;
 
 public class LineWithValues implements Line {
 
-    public static Line lineWithValues(Table context, ListView<?> values, int index) {
+    public static Line lineWithValues(View context, ListView<?> values, int index) {
         return new LineWithValues(context, values, index);
     }
 
-    private final Table context;
+    private final View context;
     private final ListView<Attribute<Object>> header;
     private final ListView<?> values;
     private final int index;
 
-    private LineWithValues(Table context, ListView<?> values, int index) {
+    private LineWithValues(View context, ListView<?> values, int index) {
         this.context = context;
         this.values = values;
         this.index = index;
@@ -59,7 +59,7 @@ public class LineWithValues implements Line {
     }
 
     @Override
-    public Table context() {
+    public View context() {
         return context;
     }
 

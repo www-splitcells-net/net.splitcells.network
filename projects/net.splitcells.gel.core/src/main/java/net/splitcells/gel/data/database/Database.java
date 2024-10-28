@@ -20,7 +20,7 @@ import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 
 import static java.util.stream.IntStream.range;
@@ -59,7 +59,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
  * that it makes sense to create more than alternative implementations for {@link Database} in these cases,
  * as otherwise the performance increase is very limited.</p>
  */
-public interface Database extends Table {
+public interface Database extends View {
 
     Line addTranslated(ListView<? extends Object> values);
 
@@ -74,10 +74,10 @@ public interface Database extends Table {
 
     /**
      * This is a faster version of {@link #add(Line)}.
-     * The speed is achieved by requiring the {@link Table#headerView()} of this {@link Database} to be a prefix
-     * to the {@link Table#headerView()} of the given {@link Line#context()}.
-     * In other words, all {@link Table#headerView()}'s {@link Attribute}s of this {@link Database},
-     * need to be present at the same location in {@link Table#headerView()} of the {@link Line#context()}.
+     * The speed is achieved by requiring the {@link View#headerView()} of this {@link Database} to be a prefix
+     * to the {@link View#headerView()} of the given {@link Line#context()}.
+     * In other words, all {@link View#headerView()}'s {@link Attribute}s of this {@link Database},
+     * need to be present at the same location in {@link View#headerView()} of the {@link Line#context()}.
      *
      * @param line
      * @return

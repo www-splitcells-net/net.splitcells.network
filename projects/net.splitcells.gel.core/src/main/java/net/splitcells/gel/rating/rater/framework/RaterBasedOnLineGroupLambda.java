@@ -19,7 +19,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.proposal.Proposal;
 
 import java.util.Optional;
@@ -28,7 +28,7 @@ import static net.splitcells.dem.resource.communication.log.Logs.logs;
 
 @FunctionalInterface
 public interface RaterBasedOnLineGroupLambda {
-    RatingEvent rating(Table lines, Optional<Line> addition, Optional<Line> removal, List<Constraint> children);
+    RatingEvent rating(View lines, Optional<Line> addition, Optional<Line> removal, List<Constraint> children);
 
     default Proposal propose(Proposal proposal) {
         if (StaticFlags.WARNING) {

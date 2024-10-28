@@ -65,7 +65,7 @@ import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.IndexedAttribute;
 import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.gel.rating.framework.LocalRating;
@@ -431,12 +431,12 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
     }
 
     @Override
-    public Table lineProcessing() {
+    public View lineProcessing() {
         return lineProcessing;
     }
 
     @Override
-    public Table lines() {
+    public View lines() {
         return lines;
     }
 

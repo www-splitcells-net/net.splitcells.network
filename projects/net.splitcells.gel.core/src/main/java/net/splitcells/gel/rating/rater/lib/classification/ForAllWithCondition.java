@@ -22,7 +22,7 @@ import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 
@@ -54,7 +54,7 @@ public class ForAllWithCondition<T> implements Rater {
 
     @Override
     public RatingEvent ratingAfterAddition
-            (Table lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
+            (View lines, Line addition, List<Constraint> children, View ratingsBeforeAddition) {
         final List<Constraint> targetChildren;
         if (condition.test(addition.value(LINE))) {
             targetChildren = children;
@@ -72,7 +72,7 @@ public class ForAllWithCondition<T> implements Rater {
     }
 
     @Override
-    public RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children, Table ratingsBeforeRemoval) {
+    public RatingEvent rating_before_removal(View lines, Line removal, List<Constraint> children, View ratingsBeforeRemoval) {
         return ratingEvent();
     }
 
@@ -92,7 +92,7 @@ public class ForAllWithCondition<T> implements Rater {
     }
 
     @Override
-    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
+    public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
         return "For all with condition " + condition;
     }
 }

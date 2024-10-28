@@ -21,7 +21,7 @@ import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
@@ -137,7 +137,7 @@ public class PositionClusters implements Rater {
     }
 
     @Override
-    public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table lineProcessing) {
+    public RatingEvent ratingAfterAddition(View lines, Line addition, List<Constraint> children, View lineProcessing) {
         final int xValWithoutOffset;
         final int yValWithoutOffset;
         final var xVal = addition.value(LINE).value(xAttribute);
@@ -195,12 +195,12 @@ public class PositionClusters implements Rater {
     }
 
     @Override
-    public RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children, Table lineProcessing) {
+    public RatingEvent rating_before_removal(View lines, Line removal, List<Constraint> children, View lineProcessing) {
         return ratingEvent();
     }
 
     @Override
-    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
+    public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
         return "Clusters lines into positions based on "
                 + xAttribute.name()
                 + " for x coordinates, "

@@ -31,7 +31,7 @@ import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
@@ -67,7 +67,7 @@ public class ForAllValueCombinations implements Rater {
 
     @Override
     public RatingEvent ratingAfterAddition
-            (Table lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
+            (View lines, Line addition, List<Constraint> children, View ratingsBeforeAddition) {
         final List<Object> groupValues = list();
         final var lineValue = addition.value(Constraint.LINE);
         attributes.forEach(e -> groupValues.add(lineValue.value(e)));
@@ -94,7 +94,7 @@ public class ForAllValueCombinations implements Rater {
     }
 
     @Override
-    public RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children, Table ratingsBeforeRemoval) {
+    public RatingEvent rating_before_removal(View lines, Line removal, List<Constraint> children, View ratingsBeforeRemoval) {
         return ratingEvent();
     }
 
@@ -125,7 +125,7 @@ public class ForAllValueCombinations implements Rater {
     }
 
     @Override
-    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
+    public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
         return "combinations of "
                 + attributes
                 .stream()

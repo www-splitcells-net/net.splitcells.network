@@ -24,7 +24,7 @@ import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 
 public interface LinePointer extends Domable {
-    Table context();
+    View context();
 
     int index();
 
@@ -33,7 +33,7 @@ public interface LinePointer extends Domable {
     }
 
     @Deprecated
-    Optional<Line> interpret(Table context);
+    Optional<Line> interpret(View context);
 
     @Override
     default Tree toTree() {

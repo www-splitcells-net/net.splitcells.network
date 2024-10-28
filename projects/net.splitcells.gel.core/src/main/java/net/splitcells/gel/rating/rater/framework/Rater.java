@@ -29,7 +29,7 @@ import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.gel.common.Language;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.proposal.Proposal;
@@ -66,7 +66,7 @@ public interface Rater extends PubliclyTyped<Rater>
      * </p>
      *
      * @param lines          The already present lines of the group after the addition.
-     *                       The {@link Table#headerView()} of this is the same as of {@link Constraint#lines()}.
+     *                       The {@link View#headerView()} of this is the same as of {@link Constraint#lines()}.
      *                       In order to check, whether {@code addition} is equal to an element of {@code lines},
      *                       one should not use {@link Line#equalsTo(Line)}, as both have different {@link Line#context()}.
      *                       Compare their {@link Line#index()} instead.
@@ -77,7 +77,7 @@ public interface Rater extends PubliclyTyped<Rater>
      * @param lineProcessing This is the {@link Constraint#lineProcessing()} of the incoming group before the addition.
      * @return
      */
-    RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table lineProcessing);
+    RatingEvent ratingAfterAddition(View lines, Line addition, List<Constraint> children, View lineProcessing);
 
     /**
      * Nothing needs to be done here, if the {@link Rating} of one {@link Line} is not dependent on the rating of another line.
@@ -91,7 +91,7 @@ public interface Rater extends PubliclyTyped<Rater>
      * A {@link Rating} update for the {@code removal} argument is not required,
      * because its {@link Rating} will be automatically removed from the {@link Constraint} during the actual removal.
      */
-    default RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children, Table lineProcessing) {
+    default RatingEvent rating_before_removal(View lines, Line removal, List<Constraint> children, View lineProcessing) {
         return ratingEvent();
     }
 
@@ -119,7 +119,7 @@ public interface Rater extends PubliclyTyped<Rater>
      * @param incomingGroup
      * @return
      */
-    String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup);
+    String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup);
 
     default Set<List<String>> paths() {
         return setOfUniques();

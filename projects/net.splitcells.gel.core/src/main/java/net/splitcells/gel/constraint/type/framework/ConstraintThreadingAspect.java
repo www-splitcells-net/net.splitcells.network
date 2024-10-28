@@ -27,7 +27,7 @@ import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.constraint.intermediate.data.AllocationRating;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.gel.rating.framework.LocalRating;
 import net.splitcells.gel.rating.framework.Rating;
@@ -145,7 +145,7 @@ public class ConstraintThreadingAspect implements Constraint {
     }
 
     @Override
-    public Table lineProcessing() {
+    public View lineProcessing() {
         return constraintEffect.affectSynchronously(c -> c.lineProcessing());
     }
 
@@ -155,7 +155,7 @@ public class ConstraintThreadingAspect implements Constraint {
     }
 
     @Override
-    public Table lines() {
+    public View lines() {
         return constraintEffect.affectSynchronously(c -> c.lines());
     }
 

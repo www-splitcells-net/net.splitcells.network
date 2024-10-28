@@ -29,27 +29,27 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.lookup.Lookup;
 import net.splitcells.gel.data.lookup.Lookups;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 
 public class ColumnI<T> implements Column<T> {
-	public static <R> Column<R> column(Table table, Attribute<R> attribute) {
-		return new ColumnI<>(table, attribute);
+	public static <R> Column<R> column(View view, Attribute<R> attribute) {
+		return new ColumnI<>(view, attribute);
 	}
 
 	private final List<T> content = list();
 	private final Attribute<T> attribute;
-	private final Table table;
+	private final View view;
 	private Optional<Lookup<T>> lookup = Optional.empty();
 
-	private ColumnI(Table table, Attribute<T> attribute) {
+	private ColumnI(View view, Attribute<T> attribute) {
 		this.attribute = attribute;
-		this.table = table;
+		this.view = view;
 	}
 
 	private Lookup<T> ensureInitializedLookup() {
 		if (lookup.isEmpty()) {
-			lookup = Optional.of(Lookups.lookup(table, attribute));
+			lookup = Optional.of(Lookups.lookup(view, attribute));
 		}
 		return lookup.get();
 	}
@@ -175,13 +175,13 @@ public class ColumnI<T> implements Column<T> {
 	}
 
 	@Override
-	public Table lookup(T value) {
+	public View lookup(T value) {
 		ensureInitializedLookup();
 		return lookup.get().lookup(value);
 	}
 
 	@Override
-	public Table lookup(Predicate<T> predicate) {
+	public View lookup(Predicate<T> predicate) {
 		ensureInitializedLookup();
 		return lookup.get().lookup(predicate);
 	}

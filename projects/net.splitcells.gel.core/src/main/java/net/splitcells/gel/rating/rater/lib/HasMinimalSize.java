@@ -23,7 +23,7 @@ import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
@@ -50,8 +50,8 @@ public class HasMinimalSize implements Rater {
     }
 
     @Override
-    public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children
-            , Table ratingsBeforeAddition) {
+    public RatingEvent ratingAfterAddition(View lines, Line addition, List<Constraint> children
+            , View ratingsBeforeAddition) {
         final var individualRating = rating(lines, false);
         final var additionalRatings
                 = rateLines(lines, addition, children, individualRating);
@@ -64,7 +64,7 @@ public class HasMinimalSize implements Rater {
         return additionalRatings;
     }
 
-    private RatingEvent rateLines(Table lines, Line changed, List<Constraint> children, Rating cost) {
+    private RatingEvent rateLines(View lines, Line changed, List<Constraint> children, Rating cost) {
         final RatingEvent linesRating = ratingEvent();
         lines.rawLinesView().stream()
                 .filter(e -> e != null)
@@ -81,20 +81,20 @@ public class HasMinimalSize implements Rater {
     }
 
     @Override
-    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
+    public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
         return "size should be at least" + minimalSize + ", but is " + groupsLineProcessing.size();
     }
 
     @Override
     public RatingEvent rating_before_removal
-            (Table lines
+            (View lines
                     , Line removal
                     , List<Constraint> children
-                    , Table ratingsBeforeRemoval) {
+                    , View ratingsBeforeRemoval) {
         return rateLines(lines, removal, children, rating(lines, true));
     }
 
-    private Rating rating(Table lines, boolean beforeRemoval) {
+    private Rating rating(View lines, boolean beforeRemoval) {
         final Rating rating;
         final int actualSize;
         if (beforeRemoval) {

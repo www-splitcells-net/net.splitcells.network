@@ -16,11 +16,11 @@
 package net.splitcells.gel.data.lookup;
 
 import net.splitcells.dem.environment.config.framework.Option;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 
 import static net.splitcells.dem.Dem.configValue;
-import static net.splitcells.gel.data.lookup.LookupTable.lookupTableFactory;
+import static net.splitcells.gel.data.lookup.LookupView.lookupTableFactory;
 
 public class LookupTables implements Option<LookupTableFactory> {
     @Override
@@ -28,15 +28,15 @@ public class LookupTables implements Option<LookupTableFactory> {
         return lookupTableFactory();
     }
 
-    public static LookupTable lookupTable(Table table, String name) {
-        return configValue(LookupTables.class).lookupTable(table, name);
+    public static LookupView lookupTable(View view, String name) {
+        return configValue(LookupTables.class).lookupTable(view, name);
     }
 
-    public static LookupTable lookupTable(Table table, Attribute<?> attribute) {
-        return configValue(LookupTables.class).lookupTable(table, attribute);
+    public static LookupView lookupTable(View view, Attribute<?> attribute) {
+        return configValue(LookupTables.class).lookupTable(view, attribute);
     }
 
-    public static LookupTable lookupTable(Table table, Attribute<?> attribute, boolean cacheRawLines) {
-        return configValue(LookupTables.class).lookupTable(table, attribute, cacheRawLines);
+    public static LookupView lookupTable(View view, Attribute<?> attribute, boolean cacheRawLines) {
+        return configValue(LookupTables.class).lookupTable(view, attribute, cacheRawLines);
     }
 }

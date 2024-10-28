@@ -29,7 +29,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
@@ -62,7 +62,7 @@ public class ForAllAttributeValues implements Rater {
 
     @Override
     public RatingEvent ratingAfterAddition
-            (Table lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
+            (View lines, Line addition, List<Constraint> children, View ratingsBeforeAddition) {
         final var groupingValue = addition.value(Constraint.LINE).value(attribute);
         final var incomingGroup = addition.value(Constraint.INCOMING_CONSTRAINT_GROUP);
         if (!group.containsKey(incomingGroup)) {
@@ -83,7 +83,7 @@ public class ForAllAttributeValues implements Rater {
 
     @Override
     public RatingEvent rating_before_removal
-            (Table lines, Line removal, List<Constraint> children, Table ratingsBeforeRemoval) {
+            (View lines, Line removal, List<Constraint> children, View ratingsBeforeRemoval) {
         return ratingEvent();
     }
 
@@ -93,7 +93,7 @@ public class ForAllAttributeValues implements Rater {
     }
 
     @Override
-    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
+    public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
         return attribute.name();
     }
 

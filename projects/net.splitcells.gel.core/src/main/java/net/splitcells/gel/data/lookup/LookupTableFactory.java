@@ -17,24 +17,24 @@ package net.splitcells.gel.data.lookup;
 
 import net.splitcells.dem.resource.ConnectingConstructor;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 
-public interface LookupTableFactory extends ConnectingConstructor<LookupTable> {
+public interface LookupTableFactory extends ConnectingConstructor<LookupView> {
 
     /**
-     * @param table The {@link Table} on which the lookup will be performed.
-     * @param name  This is the name of the {@link LookupTable} being constructed.
-     * @return An instance, where no {@link Line} of {@link Table} is {@link LookupTable#register(Line)}.
+     * @param view The {@link View} on which the lookup will be performed.
+     * @param name  This is the name of the {@link LookupView} being constructed.
+     * @return An instance, where no {@link Line} of {@link View} is {@link LookupView#register(Line)}.
      */
-    LookupTable lookupTable(Table table, String name);
+    LookupView lookupTable(View view, String name);
 
     /**
-     * @param table     The {@link Table} on which the lookup will be performed.
+     * @param view     The {@link View} on which the lookup will be performed.
      * @param attribute The {@link Attribute}, that will be looked up.
-     * @return An instance, where no {@link Line} of {@link Table} is {@link LookupTable#register(Line)}.
+     * @return An instance, where no {@link Line} of {@link View} is {@link LookupView#register(Line)}.
      */
-    LookupTable lookupTable(Table table, Attribute<?> attribute);
+    LookupView lookupTable(View view, Attribute<?> attribute);
 
-    LookupTable lookupTable(Table table, Attribute<?> attribute, boolean cacheRawLines);
+    LookupView lookupTable(View view, Attribute<?> attribute, boolean cacheRawLines);
 }

@@ -26,7 +26,7 @@ import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.dem.lang.dom.Domable;
@@ -48,12 +48,12 @@ public class RaterBasedOnGrouping implements Rater {
     }
 
     @Override
-    public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
+    public RatingEvent ratingAfterAddition(View lines, Line addition, List<Constraint> children, View ratingsBeforeAddition) {
         return stripCosts(grouping.ratingAfterAddition(lines, addition, children, ratingsBeforeAddition));
     }
 
     @Override
-    public RatingEvent rating_before_removal(Table lines, Line removal, List<Constraint> children, Table ratingsBeforeRemoval) {
+    public RatingEvent rating_before_removal(View lines, Line removal, List<Constraint> children, View ratingsBeforeRemoval) {
         return stripCosts(grouping.rating_before_removal(lines, removal, children, ratingsBeforeRemoval));
     }
 
@@ -79,7 +79,7 @@ public class RaterBasedOnGrouping implements Rater {
     }
 
     @Override
-    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
+    public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
         return grouping.toSimpleDescription(line, groupsLineProcessing, incomingGroup);
     }
 

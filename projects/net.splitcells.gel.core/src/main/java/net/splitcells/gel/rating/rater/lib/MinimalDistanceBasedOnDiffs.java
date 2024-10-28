@@ -29,7 +29,7 @@ import net.splitcells.dem.utils.MathUtils;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.framework.Rater;
@@ -99,10 +99,10 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
 
     @Override
     public RatingEvent rating_before_removal
-            (Table lines
+            (View lines
                     , Line removal
                     , List<Constraint> children
-                    , Table ratingsBeforeRemoval) {
+                    , View ratingsBeforeRemoval) {
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
             checkConsistency(ratingsBeforeRemoval);
         }
@@ -169,7 +169,7 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
         return ratingEvent;
     }
 
-    private void checkConsistency(Table lineProcessing) {
+    private void checkConsistency(View lineProcessing) {
         final var sortedProcessingLines = sorted(lineProcessing);
         try {
             if (sortedProcessingLines.size() > 1) {
@@ -225,10 +225,10 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
     }
 
     @Override
-    public RatingEvent ratingAfterAddition(Table lines
+    public RatingEvent ratingAfterAddition(View lines
             , Line addition
             , List<Constraint> children
-            , Table ratingsBeforeAddition) {
+            , View ratingsBeforeAddition) {
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
             checkConsistency(ratingsBeforeAddition);
         }
@@ -384,7 +384,7 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
         return contextes.stream().map(Discoverable::path).collect(Sets.toSetOfUniques());
     }
 
-    private List<Line> sorted(Table lines) {
+    private List<Line> sorted(View lines) {
         return lines.rawLinesView().stream()
                 .filter(e -> e != null)
                 .sorted((a, b) -> {
@@ -400,7 +400,7 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
                 .collect(toList());
     }
 
-    private List<Line> defyingSorted(Table lines) {
+    private List<Line> defyingSorted(View lines) {
         final var cost = noCost();
         return lines.rawLinesView().stream()
                 .filter(e -> e != null)
@@ -415,7 +415,7 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
     }
 
     @Override
-    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
+    public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
         final var sorted = sorted(groupsLineProcessing);
         final var minimalDistance = rangeClosed(0, sorted.size() - 2)
                 .filter(i -> sorted.get(i).value(LINE).equalsTo(line) || sorted.get(i + 1).value(LINE).equalsTo(line))

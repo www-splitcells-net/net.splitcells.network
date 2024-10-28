@@ -19,7 +19,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.lookup.Lookup;
 import net.splitcells.gel.data.lookup.Lookups;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.attribute.IndexedAttribute;
 import net.splitcells.gel.data.view.column.Column;
@@ -38,48 +38,48 @@ import static net.splitcells.gel.data.view.attribute.IndexedAttribute.indexedAtt
 
 public class LineBasedColumn<T> implements Column<T> {
 
-    public static <R> LineBasedColumn<R> lineBasedColumn(Table table, Attribute<R> attribute) {
-        return new LineBasedColumn<>(table, attribute);
+    public static <R> LineBasedColumn<R> lineBasedColumn(View view, Attribute<R> attribute) {
+        return new LineBasedColumn<>(view, attribute);
     }
 
     private final IndexedAttribute<T> attribute;
-    private final Table table;
+    private final View view;
     private Optional<Lookup<T>> lookup = Optional.empty();
 
-    private LineBasedColumn(Table table, Attribute<T> attribute) {
-        this.table = table;
-        this.attribute = indexedAttribute(attribute, table);
+    private LineBasedColumn(View view, Attribute<T> attribute) {
+        this.view = view;
+        this.attribute = indexedAttribute(attribute, view);
 
     }
 
     @Override
     public int size() {
-        return table.size();
+        return view.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return table.isEmpty();
+        return view.isEmpty();
     }
 
     @Override
     public boolean contains(Object o) {
-        return table.unorderedLinesStream().anyMatch(l -> o.equals(l.value(attribute)));
+        return view.unorderedLinesStream().anyMatch(l -> o.equals(l.value(attribute)));
     }
 
     @Override
     public Iterator<T> iterator() {
-        return table.orderedLinesStream().map(l -> l.value(attribute)).iterator();
+        return view.orderedLinesStream().map(l -> l.value(attribute)).iterator();
     }
 
     @Override
     public Object[] toArray() {
-        return table.orderedLinesStream().map(l -> l.value(attribute)).collect(toList()).toArray();
+        return view.orderedLinesStream().map(l -> l.value(attribute)).collect(toList()).toArray();
     }
 
     @Override
     public <T1> T1[] toArray(T1[] a) {
-        return table.orderedLinesStream().map(l -> l.value(attribute)).collect(toList()).toArray(a);
+        return view.orderedLinesStream().map(l -> l.value(attribute)).collect(toList()).toArray(a);
     }
 
     @Override
@@ -94,7 +94,7 @@ public class LineBasedColumn<T> implements Column<T> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        return table.unorderedLinesStream().map(l -> l.value(attribute)).collect(toList()).containsAll(c);
+        return view.unorderedLinesStream().map(l -> l.value(attribute)).collect(toList()).containsAll(c);
     }
 
     @Override
@@ -124,7 +124,7 @@ public class LineBasedColumn<T> implements Column<T> {
 
     @Override
     public T get(int index) {
-        return table.rawLine(index).value(attribute);
+        return view.rawLine(index).value(attribute);
     }
 
     @Override
@@ -178,20 +178,20 @@ public class LineBasedColumn<T> implements Column<T> {
     }
 
     @Override
-    public Table lookup(T value) {
+    public View lookup(T value) {
         ensureInitializedLookup();
         return lookup.get().lookup(value);
     }
 
     @Override
-    public Table lookup(Predicate<T> predicate) {
+    public View lookup(Predicate<T> predicate) {
         ensureInitializedLookup();
         return lookup.get().lookup(predicate);
     }
 
     private Lookup<T> ensureInitializedLookup() {
         if (lookup.isEmpty()) {
-            lookup = Optional.of(Lookups.lookup(table, attribute.attribute()));
+            lookup = Optional.of(Lookups.lookup(view, attribute.attribute()));
         }
         return lookup.get();
     }

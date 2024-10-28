@@ -27,21 +27,21 @@ import java.util.function.Predicate;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.column.Column;
 
 public class LookupColumn<T> implements Column<T> {
 
-    private final LookupTable table;
+    private final LookupView table;
     private Optional<Lookup<T>> lookup = Optional.empty();
     private final Attribute<T> attribute;
 
-    public static <T> LookupColumn<T> lookupColumn(LookupTable table, Attribute<T> attribute) {
+    public static <T> LookupColumn<T> lookupColumn(LookupView table, Attribute<T> attribute) {
         return new LookupColumn<>(table, attribute);
     }
 
-    private LookupColumn(LookupTable table, Attribute<T> attribute) {
+    private LookupColumn(LookupView table, Attribute<T> attribute) {
         this.table = table;
         this.attribute = attribute;
     }
@@ -170,13 +170,13 @@ public class LookupColumn<T> implements Column<T> {
     }
 
     @Override
-    public Table lookup(T value) {
+    public View lookup(T value) {
         ensureInitializedLookup();
         return lookup.get().lookup(value);
     }
 
     @Override
-    public Table lookup(Predicate<T> predicate) {
+    public View lookup(Predicate<T> predicate) {
         ensureInitializedLookup();
         return lookup.get().lookup(predicate);
     }

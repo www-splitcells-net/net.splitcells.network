@@ -50,7 +50,7 @@ import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
-public interface Table extends Discoverable, Domable, Identifiable {
+public interface View extends Discoverable, Domable, Identifiable {
     boolean GET_LINE_VIA_STREAM = true;
 
     String name();
@@ -96,7 +96,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
 
     /**
      * <p>This method exists for improved performance compared to calling
-     * <code>lines().stream()</code> on certain {@link Table} implementations.
+     * <code>lines().stream()</code> on certain {@link View} implementations.
      * This is caused by the fact, that this method does not need a copy all {@link Line} references,
      * before constructing this {@link Stream}.</p>
      *
@@ -104,7 +104,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
      * in order to iterate or list all {@link Line}.
      * Especially, it is expected to be generally faster, than {@link #rawLines()}.
      * Only in select cases {@link #rawLines()} is expected to be faster,
-     * where knowledge of the underlining {@link Table} implementation is present.
+     * where knowledge of the underlining {@link View} implementation is present.
      * The reason for this, is the fact, that it is faster to construct {@link #unorderedLinesStream()}
      * via {@link #rawLines()}, than the other way around.</p>
      * <p>There is no guarantee regarding the ordering.</p>
@@ -154,7 +154,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
     }
 
     /**
-     * <p>Retrieves the N-th {@link Line} of this {@link Table},
+     * <p>Retrieves the N-th {@link Line} of this {@link View},
      * where null {@link Line}s are ignored.
      * Therefore, N is not necessarily equals the returned {@link Line#index()}.</p>
      *
@@ -229,7 +229,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
         return simplifiedCsv.toString();
     }
 
-    default <T> Table lookup(Attribute<T> attribute, T value) {
+    default <T> View lookup(Attribute<T> attribute, T value) {
         return columnView(attribute).lookup(value);
     }
 
@@ -295,7 +295,7 @@ public interface Table extends Discoverable, Domable, Identifiable {
         return fods;
     }
 
-    static boolean referToSameData(Table a, Table b) {
+    static boolean referToSameData(View a, View b) {
         return a.path().equals(b.path());
     }
 
@@ -307,9 +307,9 @@ public interface Table extends Discoverable, Domable, Identifiable {
     }
 
     /**
-     * <p>Normally a {@link Table} is drawn just like {@link #orderedLines()} is containing its data.
-     * Also, the program works in this format, this is not always the best way to visualize a {@link Table}.</p>
-     * <p>Draws this as {@link Table} in such a way,
+     * <p>Normally a {@link View} is drawn just like {@link #orderedLines()} is containing its data.
+     * Also, the program works in this format, this is not always the best way to visualize a {@link View}.</p>
+     * <p>Draws this as {@link View} in such a way,
      * that the columns and rows correspond to the given {@link Attribute} values.</p>
      * <p>TODO HACK Currently only one column attributes is working.</p>
      * <p>TODO The moment this method is extend the following has to be done,
@@ -492,17 +492,17 @@ public interface Table extends Discoverable, Domable, Identifiable {
         return new DiscoverableRenderer() {
             @Override
             public String render() {
-                return Table.this.toHtmlTable().toHtmlString();
+                return View.this.toHtmlTable().toHtmlString();
             }
 
             @Override
             public Optional<String> title() {
-                return Optional.of(Table.this.path().toString());
+                return Optional.of(View.this.path().toString());
             }
 
             @Override
             public List<String> path() {
-                return Table.this.path();
+                return View.this.path();
             }
         };
     }

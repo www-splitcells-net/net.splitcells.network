@@ -44,7 +44,7 @@ import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.dem.lang.dom.Domable;
@@ -200,7 +200,7 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
         return QueryI.query(this);
     }
 
-    Table lineProcessing();
+    View lineProcessing();
 
     Tree toPerspective(Set<GroupId> groups);
 
@@ -272,7 +272,7 @@ public interface Constraint extends DatabaseSynchronization, ConstraintWriter, D
      *
      * @return
      */
-    Table lines();
+    View lines();
 
     /**
      * TODO Is this needed anymore?

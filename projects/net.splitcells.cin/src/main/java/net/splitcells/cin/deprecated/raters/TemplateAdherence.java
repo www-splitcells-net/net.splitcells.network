@@ -21,7 +21,7 @@ import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 
@@ -29,14 +29,14 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public class TemplateAdherence implements Rater {
 
-    public static Rater templateAdherence(Table template, Assignments subject) {
+    public static Rater templateAdherence(View template, Assignments subject) {
         return new TemplateAdherence(template, subject);
     }
 
-    private final Table template;
+    private final View template;
     private final Assignments subject;
 
-    private TemplateAdherence(Table template, Assignments subject) {
+    private TemplateAdherence(View template, Assignments subject) {
         this.template = template;
         this.subject = subject;
         throw notImplementedYet();
@@ -49,12 +49,12 @@ public class TemplateAdherence implements Rater {
     }
 
     @Override
-    public RatingEvent ratingAfterAddition(Table lines, Line addition, List<Constraint> children, Table lineProcessing) {
+    public RatingEvent ratingAfterAddition(View lines, Line addition, List<Constraint> children, View lineProcessing) {
         throw notImplementedYet();
     }
 
     @Override
-    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
+    public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
         throw notImplementedYet();
     }
 }

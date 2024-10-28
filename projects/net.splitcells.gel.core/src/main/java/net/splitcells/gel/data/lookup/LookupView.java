@@ -44,25 +44,25 @@ import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.ConnectingConstructor;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.column.Column;
 import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.dem.data.set.list.Lists;
 
 /**
- * <p>Provides a view to a subset of a {@link Table} as a {@link Table}.
- * By default the {@link LookupTable} is empty.
+ * <p>Provides a view to a subset of a {@link View} as a {@link View}.
+ * By default the {@link LookupView} is empty.
  * {@link Line} has to be removed via {@link #register(Line)} and {@link #removeRegistration(Line)}.</p>
  * <p>TODO Test runtime improvements by {@link #USE_EXPERIMENTAL_RUNTIME_IMPROVEMENTS},
  * {@link #USE_EXPERIMENTAL_RAW_LINE_CACHE} and {@link #USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE}.</p>
  */
-public class LookupTable implements Table {
+public class LookupView implements View {
 
     private static final boolean USE_EXPERIMENTAL_RUNTIME_IMPROVEMENTS = true;
     private static final boolean USE_EXPERIMENTAL_RAW_LINE_CACHE = true;
     private static final boolean USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE = true;
-    private final Table tableView;
+    private final View viewView;
     private final String name;
     private final Set<Integer> content = setOfUniques();
     private final List<Column<Object>> columns;
@@ -74,56 +74,56 @@ public class LookupTable implements Table {
 
     public static LookupTableFactory lookupTableFactory() {
         return new LookupTableFactory() {
-            private final ConnectingConstructor<LookupTable> connector = connectingConstructor();
+            private final ConnectingConstructor<LookupView> connector = connectingConstructor();
 
             @Override
-            public ConnectingConstructor<LookupTable> withConnector(Consumer<LookupTable> connector) {
+            public ConnectingConstructor<LookupView> withConnector(Consumer<LookupView> connector) {
                 this.connector.withConnector(connector);
                 return this;
             }
 
             @Override
-            public LookupTable connect(LookupTable subject) {
+            public LookupView connect(LookupView subject) {
                 return connector.connect(subject);
             }
 
             @Override
-            public LookupTable lookupTable(Table table, String name) {
-                return connector.connect(LookupTable.lookupTable(table, name));
+            public LookupView lookupTable(View view, String name) {
+                return connector.connect(LookupView.lookupTable(view, name));
             }
 
             @Override
-            public LookupTable lookupTable(Table table, Attribute<?> attribute) {
-                return LookupTable.lookupTable(table, attribute);
+            public LookupView lookupTable(View view, Attribute<?> attribute) {
+                return LookupView.lookupTable(view, attribute);
             }
 
             @Override
-            public LookupTable lookupTable(Table table, Attribute<?> attribute, boolean cacheRawLines) {
-                return LookupTable.lookupTable(table, attribute, cacheRawLines);
+            public LookupView lookupTable(View view, Attribute<?> attribute, boolean cacheRawLines) {
+                return LookupView.lookupTable(view, attribute, cacheRawLines);
             }
         };
     }
 
-    private static LookupTable lookupTable(Table table, String name) {
-        return new LookupTable(table, name, USE_EXPERIMENTAL_RAW_LINE_CACHE);
+    private static LookupView lookupTable(View view, String name) {
+        return new LookupView(view, name, USE_EXPERIMENTAL_RAW_LINE_CACHE);
     }
 
-    private static LookupTable lookupTable(Table table, Attribute<?> attribute) {
-        return new LookupTable(table, attribute.name(), USE_EXPERIMENTAL_RAW_LINE_CACHE);
+    private static LookupView lookupTable(View view, Attribute<?> attribute) {
+        return new LookupView(view, attribute.name(), USE_EXPERIMENTAL_RAW_LINE_CACHE);
     }
 
-    private static LookupTable lookupTable(Table table, Attribute<?> attribute, boolean cacheRawLines) {
-        return new LookupTable(table, attribute.name(), cacheRawLines);
+    private static LookupView lookupTable(View view, Attribute<?> attribute, boolean cacheRawLines) {
+        return new LookupView(view, attribute.name(), cacheRawLines);
     }
 
-    private LookupTable(Table table, String name) {
-        this(table, name, USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE);
+    private LookupView(View view, String name) {
+        this(view, name, USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE);
     }
 
-    private LookupTable(Table table, String name, boolean useExperimentalRawLineCache) {
-        this.tableView = table;
+    private LookupView(View view, String name, boolean useExperimentalRawLineCache) {
+        this.viewView = view;
         this.name = name;
-        columns = table.headerView().stream()
+        columns = view.headerView().stream()
                 .map(attribute -> LookupColumn.lookupColumn(this, attribute))
                 .collect(toList());
         columnsView = Lists.<ColumnView<Object>>list();
@@ -138,19 +138,19 @@ public class LookupTable implements Table {
 
     @Override
     public List<Attribute<Object>> headerView() {
-        return tableView.headerView();
+        return viewView.headerView();
     }
 
     @Override
     public List<Attribute<? extends Object>> headerView2() {
-        return tableView.headerView2();
+        return viewView.headerView2();
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T> Column<T> columnView(Attribute<T> attribute) {
         int index = 0;
-        for (final var headerAttribute : tableView.headerView()) {
+        for (final var headerAttribute : viewView.headerView()) {
             if (headerAttribute.equals(attribute)) {
                 return (Column<T>) columns.get(index);
             }
@@ -168,7 +168,7 @@ public class LookupTable implements Table {
             return rawLinesHashedCache.getOrDefault(index, null);
         }
         if (content.contains(index)) {
-            return tableView.rawLine(index);
+            return viewView.rawLine(index);
         }
         return null;
     }
@@ -181,7 +181,7 @@ public class LookupTable implements Table {
         if (USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE) {
             return rawLinesHashedCache.values().stream();
         }
-        return content.stream().map(tableView::rawLine).filter(e -> e != null);
+        return content.stream().map(viewView::rawLine).filter(e -> e != null);
     }
 
     /**
@@ -192,9 +192,9 @@ public class LookupTable implements Table {
     @Override
     public ListView<Line> rawLinesView() {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            range(0, tableView.rawLinesView().size()).forEach(i -> {
+            range(0, viewView.rawLinesView().size()).forEach(i -> {
                 if (content.contains(i)) {
-                    requireNotNull(tableView.rawLinesView().get(i));
+                    requireNotNull(viewView.rawLinesView().get(i));
                 } else {
                     content.requireAbsenceOf(i);
                 }
@@ -204,7 +204,7 @@ public class LookupTable implements Table {
             return listView(rawLinesCache);
         }
         if (USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE) {
-            return tableView.rawLinesView().stream().map(l -> {
+            return viewView.rawLinesView().stream().map(l -> {
                 if (l == null) {
                     return null;
                 }
@@ -215,7 +215,7 @@ public class LookupTable implements Table {
             }).collect(toList());
         }
         final var rawLines = Lists.<Line>list();
-        final var parentRawLines = tableView.rawLinesView();
+        final var parentRawLines = viewView.rawLinesView();
         range(0, parentRawLines.size()).forEach(i -> {
             final Line rElement;
             if (content.contains(i)) {
@@ -273,7 +273,7 @@ public class LookupTable implements Table {
         content.add(line.index());
         // TODO PERFORMANCE
         // TODO FIX
-        final var header = tableView.headerView();
+        final var header = viewView.headerView();
         range(0, columns.size()).forEach(i -> {
             // HACK
             final var column = columns.get(i);
@@ -325,20 +325,20 @@ public class LookupTable implements Table {
         return columnsView;
     }
 
-    public Table base() {
-        return tableView;
+    public View base() {
+        return viewView;
     }
 
     @Override
     public List<String> path() {
-        final var path = tableView.path();
-        path.add(LookupTable.class.getSimpleName() + "(" + name + ")");
+        final var path = viewView.path();
+        path.add(LookupView.class.getSimpleName() + "(" + name + ")");
         return path;
     }
 
     @Override
     public Tree toTree() {
-        final var rVal = tree(LookupTable.class.getSimpleName());
+        final var rVal = tree(LookupView.class.getSimpleName());
         // REMOVE
         rVal.withProperty("hashCode", "" + hashCode());
         rVal.withProperty("subject", path().toString());
@@ -352,7 +352,7 @@ public class LookupTable implements Table {
 
     @Override
     public String toString() {
-        return LookupTable.class.getSimpleName() + path().toString();
+        return LookupView.class.getSimpleName() + path().toString();
     }
 
     @Override
@@ -367,13 +367,13 @@ public class LookupTable implements Table {
         contentList.sort(ASCENDING_INTEGERS);
         final var rawLines = Lists.<Line>list();
         range(0, contentList.requireLastValue() + 1).forEach(i -> rawLines.add(null));
-        content.forEach(index -> rawLines.set(index, tableView.rawLine(index)));
+        content.forEach(index -> rawLines.set(index, viewView.rawLine(index)));
         return rawLines;
     }
 
     @Override
     public Line lookupEquals(Attribute<Line> attribute, Line values) {
-        final var rBase = tableView.lookupEquals(attribute, values);
+        final var rBase = viewView.lookupEquals(attribute, values);
         if (content.contains(rBase.index())) {
             return rBase;
         }
@@ -393,6 +393,6 @@ public class LookupTable implements Table {
         }
         final var sortedContent = content.stream().collect(toList());
         sortedContent.sort(ASCENDING_INTEGERS);
-        return sortedContent.stream().map(tableView::rawLine).collect(toList()).stream();
+        return sortedContent.stream().map(viewView::rawLine).collect(toList()).stream();
     }
 }

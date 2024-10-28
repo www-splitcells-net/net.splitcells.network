@@ -21,20 +21,20 @@ import java.util.Optional;
 
 
 public class LinePointerI implements LinePointer {
-    public static LinePointer linePointer(Table context, int index) {
+    public static LinePointer linePointer(View context, int index) {
         return new LinePointerI(context, index);
     }
 
-    private final Table context;
+    private final View context;
     private final int index;
 
-    private LinePointerI(Table context, int index) {
+    private LinePointerI(View context, int index) {
         this.context = context;
         this.index = index;
     }
 
     @Override
-    public Table context() {
+    public View context() {
         return context;
     }
 
@@ -44,7 +44,7 @@ public class LinePointerI implements LinePointer {
     }
 
     @Override
-    public Optional<Line> interpret(Table context) {
+    public Optional<Line> interpret(View context) {
         if (context.rawLinesView().size() <= index) {
             return Optional.empty();
         }

@@ -17,10 +17,10 @@ package net.splitcells.gel.data.lookup;
 
 import java.util.function.Predicate;
 
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 
 public interface LookupComponents<T> {
-	Table lookup(T value);
+	View lookup(T value);
 
-	Table lookup(Predicate<T> predicate);
+	View lookup(Predicate<T> predicate);
 }

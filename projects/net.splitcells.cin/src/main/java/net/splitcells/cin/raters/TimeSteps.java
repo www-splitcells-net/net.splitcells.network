@@ -21,7 +21,7 @@ import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
@@ -96,7 +96,7 @@ public class TimeSteps implements Rater {
     }
 
     @Override
-    public RatingEvent ratingAfterAddition(Table linesOfGroup, Line addition, List<Constraint> children, Table ratingsBeforeAddition) {
+    public RatingEvent ratingAfterAddition(View linesOfGroup, Line addition, List<Constraint> children, View ratingsBeforeAddition) {
         final RatingEvent rating = ratingEvent();
         final var timeValue = addition.value(LINE).value(timeAttribute);
         final var timeSpanModulus = sign(timeValue) * modulus(absolute(timeValue), 2);
@@ -189,7 +189,7 @@ public class TimeSteps implements Rater {
     }
 
     @Override
-    public RatingEvent rating_before_removal(Table linesOfGroup, Line removal, List<Constraint> children, Table ratingsBeforeRemoval) {
+    public RatingEvent rating_before_removal(View linesOfGroup, Line removal, List<Constraint> children, View ratingsBeforeRemoval) {
         final RatingEvent rating = ratingEvent();
         final var timeValue = removal.value(LINE).value(timeAttribute);
         final var timeSpanModulus = sign(timeValue) * modulus(absolute(timeValue), 2);
@@ -266,7 +266,7 @@ public class TimeSteps implements Rater {
     }
 
     @Override
-    public String toSimpleDescription(Line line, Table groupsLineProcessing, GroupId incomingGroup) {
+    public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
         if (isStartTimeEven) {
             return "Groups variables into time steps with even start times via the time attribute " + timeAttribute.name() + ".";
         } else {

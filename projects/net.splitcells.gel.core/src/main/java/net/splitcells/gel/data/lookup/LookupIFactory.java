@@ -15,15 +15,15 @@
  */
 package net.splitcells.gel.data.lookup;
 
-import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 
 import static net.splitcells.gel.data.lookup.LookupI.lookupI;
 
 public class LookupIFactory implements LookupFactory {
     @Override
-    public <R> Lookup<R> lookup(Table table, Attribute<R> attribute) {
-        return lookupI(table, attribute);
+    public <R> Lookup<R> lookup(View view, Attribute<R> attribute) {
+        return lookupI(view, attribute);
     }
 
     @Override
