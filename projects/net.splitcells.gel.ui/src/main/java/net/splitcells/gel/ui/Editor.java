@@ -17,7 +17,7 @@ package net.splitcells.gel.ui;
 
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.gel.data.assignment.Assignments;
-import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.database.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
 
 import java.util.Optional;
@@ -32,7 +32,7 @@ public class Editor {
     }
 
     private final Map<String, Attribute<? extends Object>> attributeVars = map();
-    private final Map<String, Database> databaseVars = map();
+    private final Map<String, Table> databaseVars = map();
     private Optional<Assignments> assignments = Optional.empty();
 
     private Editor() {
@@ -62,11 +62,11 @@ public class Editor {
         return attributeVars.containsKey(varName);
     }
 
-    public Database databaseByVarName(String varName) {
+    public Table databaseByVarName(String varName) {
         return databaseVars.get(varName);
     }
 
-    public Editor withDatabaseVar(String name, Database value) {
+    public Editor withDatabaseVar(String name, Table value) {
         requireFreeVarName(name);
         databaseVars.put(name, value);
         return this;
@@ -82,7 +82,7 @@ public class Editor {
     /**
      * @return Write access is denied via shallow copies.
      */
-    public Map<String, Database> databaseVars() {
+    public Map<String, Table> databaseVars() {
         return databaseVars.shallowCopy();
     }
 

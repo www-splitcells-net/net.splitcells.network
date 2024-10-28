@@ -42,18 +42,18 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.gel.data.database.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.LinePointer;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
-import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 
 /**
  * <p>{@link #demandsUsed()} ()} and {@link #demandsFree()} contain all {@link Line} of {@link #demands()}.</p>
  * <p>Line removal from {@link #demands_free} and {@link #supplies_free} has no subscriptions,
- * because {@link Database} lines can be remove from the {@link Assignments} completely
+ * because {@link Table} lines can be remove from the {@link Assignments} completely
  * or they can be moved to the respectively used tables.</p>
  * <p>TODO Fix {@link #demandOfAssignment(Line)} by using {@link #demandsUsed()}.</p>
  * <p>TODO Fix {@link #supplyOfAssignment} by using {@link #suppliesUsed()}.</p>
@@ -62,7 +62,7 @@ import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
  */
 public class AssignmentsI implements Assignments {
 
-    public static Assignments assignments(String name, Database demands, Database supplies) {
+    public static Assignments assignments(String name, Table demands, Table supplies) {
         return new AssignmentsI(name, demands, supplies);
     }
 
@@ -71,19 +71,19 @@ public class AssignmentsI implements Assignments {
      */
     @Deprecated
     private final String names;
-    private final Database assignments;
+    private final Table assignments;
 
     private final List<AfterAdditionSubscriber> additionSubscriptions = list();
     private final List<BeforeRemovalSubscriber> beforeRemovalSubscriptions = list();
     private final List<BeforeRemovalSubscriber> afterRemovalSubscriptions = list();
 
-    private final Database supplies;
-    private final Database supplies_used;
-    private final Database supplies_free;
+    private final Table supplies;
+    private final Table supplies_used;
+    private final Table supplies_free;
 
-    private final Database demands;
-    private final Database demands_used;
-    private final Database demands_free;
+    private final Table demands;
+    private final Table demands_used;
+    private final Table demands_free;
 
     private final Map<Integer, Integer> allocationsIndex_to_usedDemandIndex = map();
     private final Map<Integer, Integer> allocationsIndex_to_usedSupplyIndex = map();
@@ -94,7 +94,7 @@ public class AssignmentsI implements Assignments {
     private final Map<Integer, Set<Integer>> usedDemandsIndex_to_usedSuppliesIndex = map();
     private final Map<Integer, Set<Integer>> usedSupplyIndex_to_usedDemandsIndex = map();
 
-    private AssignmentsI(String name, Database demand, Database supply) {
+    private AssignmentsI(String name, Table demand, Table supply) {
         this.names = name;
         assignments = database2(name, () -> demand.path().withAppended(ALLOCATIONS.value()), concat(demand.headerView(), supply.headerView()));
         // TODO Remove code and comment duplications.
@@ -146,32 +146,32 @@ public class AssignmentsI implements Assignments {
     }
 
     @Override
-    public Database supplies() {
+    public Table supplies() {
         return supplies;
     }
 
     @Override
-    public Database suppliesUsed() {
+    public Table suppliesUsed() {
         return supplies_used;
     }
 
     @Override
-    public Database suppliesFree() {
+    public Table suppliesFree() {
         return supplies_free;
     }
 
     @Override
-    public Database demands() {
+    public Table demands() {
         return demands;
     }
 
     @Override
-    public Database demandsUsed() {
+    public Table demandsUsed() {
         return demands_used;
     }
 
     @Override
-    public Database demandsFree() {
+    public Table demandsFree() {
         return demands_free;
     }
 

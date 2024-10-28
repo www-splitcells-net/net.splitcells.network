@@ -44,24 +44,24 @@ import static net.splitcells.gel.common.Language.PATH_ACCESS_SYMBOL;
 import static net.splitcells.gel.common.Language.REMOVE;
 
 /**
- * <p>This aspect adds mainly logging and runtime check functionality to {@link Database} instances.</p>
- * <p>TODO Make this an aspect in order to make it usable for other implementations of {@link Database}.</p>
+ * <p>This aspect adds mainly logging and runtime check functionality to {@link Table} instances.</p>
+ * <p>TODO Make this an aspect in order to make it usable for other implementations of {@link Table}.</p>
  * <p>TODO Require the usage of a non empty name during construction.</p>
  * <p>TODO Invalidate Lines pointing to an index where values are already replaced.</p>
  * <p>TODO PERFORMANCE Abstract Database implementation with generic storage in order to
  * simplify implementation and maintenance row and column based Databases.</p>
  * <p>TODO IDEA Implement Java collection interface.</p>
  */
-public class DatabaseMetaAspect implements Database {
+public class TableMetaAspect implements Table {
 
-    public static Database databaseIRef(Database database) {
-        return new DatabaseMetaAspect(database);
+    public static Table databaseIRef(Table table) {
+        return new TableMetaAspect(table);
     }
 
-    final Database database;
+    final Table table;
 
-    private DatabaseMetaAspect(Database database) {
-        this.database = database;
+    private TableMetaAspect(Table table) {
+        this.table = table;
     }
 
     /**
@@ -78,44 +78,44 @@ public class DatabaseMetaAspect implements Database {
     @Override
     public Line add(Line line) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            database.headerView().requireSizeOf(line.context().headerView().size());
-            database.unorderedLines().requireComplianceByEveryElementWith(e -> !line.equalsTo(e));
-            describedBool(line.index() >= database.rawLines().size()
-                            || database.rawLines().get(line.index()) == null
+            table.headerView().requireSizeOf(line.context().headerView().size());
+            table.unorderedLines().requireComplianceByEveryElementWith(e -> !line.equalsTo(e));
+            describedBool(line.index() >= table.rawLines().size()
+                            || table.rawLines().get(line.index()) == null
                     , () -> "path: " + path().toString() + ", line.index(): " + line.index())
                     .required();
-            range(0, database.headerView().size()).forEach(i -> {
-                requireEquals(database.headerView().get(i), line.context().headerView().get(i));
+            range(0, table.headerView().size()).forEach(i -> {
+                requireEquals(table.headerView().get(i), line.context().headerView().get(i));
             });
         }
-        return database.add(line);
+        return table.add(line);
     }
 
     @Override
     public Line addWithSameHeaderPrefix(Line line) {
-        return database.addWithSameHeaderPrefix(line);
+        return table.addWithSameHeaderPrefix(line);
     }
 
     @Override
     public void remove(int lineIndex) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            if (database.rawLinesView().size() <= lineIndex) {
+            if (table.rawLinesView().size() <= lineIndex) {
                 throw executionException(tree("Cannot remove line by index, because the index is bigger than the biggest index in the database.")
                         .withText("lineIndex = " + lineIndex)
-                        .withText("database = " + database.path())
-                        .withText("database.size() = " + database.size()));
+                        .withText("database = " + table.path())
+                        .withText("database.size() = " + table.size()));
             }
-            if (database.rawLinesView().get(lineIndex) == null) {
+            if (table.rawLinesView().get(lineIndex) == null) {
                 throw executionException(tree("Cannot remove line by index, because this line was already removed.")
                         .withText("lineIndex = " + lineIndex)
-                        .withText("database = " + database.path()));
+                        .withText("database = " + table.path()));
             }
         }
-        database.remove(lineIndex);
+        table.remove(lineIndex);
     }
 
     /**
-     * TODO REMOVE Code duplication of {@link DatabaseMetaAspect#addTranslated} methods.
+     * TODO REMOVE Code duplication of {@link TableMetaAspect#addTranslated} methods.
      */
     @Override
     public Line addTranslated(ListView<? extends Object> lineValues) {
@@ -123,14 +123,14 @@ public class DatabaseMetaAspect implements Database {
             /**
              * TODO Check for {@link Attribute} compatibility and not Class compatibility.
              */
-            lineValues.requireSizeOf(database.headerView().size());
+            lineValues.requireSizeOf(table.headerView().size());
             lineValues.stream().forEach(e ->
                     requireNotNull(e, "The line " + lineValues + " should not contain nulls."));
-            range(0, lineValues.size()).forEach(i -> database.headerView().get(i).isInstanceOf(lineValues.get(i)).required());
+            range(0, lineValues.size()).forEach(i -> table.headerView().get(i).isInstanceOf(lineValues.get(i)).required());
         }
-        final var translatedAddition = database.addTranslated(lineValues);
+        final var translatedAddition = table.addTranslated(lineValues);
         if (TRACING) {
-            logs().append(tree("addTranslating." + Database.class.getSimpleName())
+            logs().append(tree("addTranslating." + Table.class.getSimpleName())
                             .withProperty("path", path().toString())
                             .withProperty("index", "" + translatedAddition.index())
                             .withProperty("line-values", lineValues.toString())
@@ -145,93 +145,93 @@ public class DatabaseMetaAspect implements Database {
         if (TRACING) {
             logs().append(tree(REMOVE.value()
                             + PATH_ACCESS_SYMBOL.value()
-                            + Database.class.getSimpleName())
+                            + Table.class.getSimpleName())
                             .withProperty("path", path().toString())
                             .withProperty(LINE.value(), line.toTree())
                     , this, LogLevel.DEBUG);
         }
-        database.remove(line);
+        table.remove(line);
     }
 
     @Override
     public void subscribeToAfterAdditions(AfterAdditionSubscriber subscriber) {
-        database.subscribeToAfterAdditions(subscriber);
+        table.subscribeToAfterAdditions(subscriber);
     }
 
     @Override
     public void subscribeToBeforeRemoval(BeforeRemovalSubscriber subscriber) {
-        database.subscribeToBeforeRemoval(subscriber);
+        table.subscribeToBeforeRemoval(subscriber);
     }
 
     @Override
     public void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber) {
-        database.subscribeToAfterRemoval(subscriber);
+        table.subscribeToAfterRemoval(subscriber);
     }
 
     @Override
     public Tree toTree() {
-        return database.toTree();
+        return table.toTree();
     }
 
     @Override
     public List<String> path() {
-        return database.path();
+        return table.path();
     }
 
     @Override
     public String name() {
-        return database.name();
+        return table.name();
     }
 
     @Override
     public List<Attribute<Object>> headerView() {
-        return database.headerView();
+        return table.headerView();
     }
 
     @Override
     public List<Attribute<? extends Object>> headerView2() {
-        return database.headerView2();
+        return table.headerView2();
     }
 
     @Override
     public <T> ColumnView<T> columnView(Attribute<T> attribute) {
-        return database.columnView(attribute);
+        return table.columnView(attribute);
     }
 
     @Override
     public ListView<ColumnView<Object>> columnsView() {
-        return database.columnsView();
+        return table.columnsView();
     }
 
     @Override
     public ListView<Line> rawLinesView() {
-        return database.rawLinesView();
+        return table.rawLinesView();
     }
 
     @Override
     public int size() {
-        return database.size();
+        return table.size();
     }
 
     @Override
     public List<Line> rawLines() {
-        return database.rawLines();
+        return table.rawLines();
     }
 
     @Override
     public Line lookupEquals(Attribute<Line> attribute, Line values) {
-        return database.lookupEquals(attribute, values);
+        return table.lookupEquals(attribute, values);
     }
 
     @Override
     public Object identity() {
-        return database.identity();
+        return table.identity();
     }
 
     @Override
     public boolean equals(Object arg) {
-        if (arg instanceof Database) {
-            final var castedArg = (Database) arg;
+        if (arg instanceof Table) {
+            final var castedArg = (Table) arg;
             return identity().equals(castedArg.identity());
         }
         throw executionException("Invalid argument type: " + arg);
@@ -239,71 +239,71 @@ public class DatabaseMetaAspect implements Database {
 
     @Override
     public int hashCode() {
-        return database.hashCode();
+        return table.hashCode();
     }
 
     @Override
     public List<Line> orderedLines() {
-        return database.orderedLines();
+        return table.orderedLines();
     }
 
     @Override
     public Stream<Line> unorderedLinesStream() {
-        return database.unorderedLinesStream();
+        return table.unorderedLinesStream();
     }
 
     @Override
     public boolean contains(Line line) {
-        return database.contains(line);
+        return table.contains(line);
     }
 
     @Override
     public List<Line> unorderedLines() {
-        return database.unorderedLines();
+        return table.unorderedLines();
     }
 
     @Override
     public Stream<Line> orderedLinesStream() {
-        return database.orderedLinesStream();
+        return table.orderedLinesStream();
     }
 
     @Override
     public Set<List<Object>> distinctLineValues() {
-        return database.distinctLineValues();
+        return table.distinctLineValues();
     }
 
     @Override
     public Line rawLine(int index) {
-        return database.rawLine(index);
+        return table.rawLine(index);
     }
 
     @Override
     public Line orderedLine(int n) {
-        return database.orderedLine(n);
+        return table.orderedLine(n);
     }
 
     @Override
     public String toCSV() {
-        return database.toCSV();
+        return table.toCSV();
     }
 
     @Override
     public <T> View lookup(Attribute<T> attribute, T value) {
-        return database.lookup(attribute, value);
+        return table.lookup(attribute, value);
     }
 
     @Override
     public Stream<Line> lookupEquals(ListView<Object> values) {
-        return database.lookupEquals(values);
+        return table.lookupEquals(values);
     }
 
     @Override
     public Tree toHtmlTable() {
-        return database.toHtmlTable();
+        return table.toHtmlTable();
     }
 
     @Override
     public Tree toFods() {
-        return database.toFods();
+        return table.toFods();
     }
 }

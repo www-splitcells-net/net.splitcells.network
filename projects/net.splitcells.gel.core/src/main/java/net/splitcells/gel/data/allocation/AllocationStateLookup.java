@@ -19,7 +19,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
-import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.database.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -29,13 +29,13 @@ import java.util.function.Predicate;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
-public class AllocationStateLookup implements Database {
+public class AllocationStateLookup implements Table {
 
-    public static Database allocationStateLookup(View view, Predicate<Line> selector) {
+    public static Table allocationStateLookup(View view, Predicate<Line> selector) {
         return new AllocationStateLookup(view, selector);
     }
 
-    public static Database allocationStateLookup(View view, Predicate<Line> selector, List<Attribute<?>> relevantAttributes) {
+    public static Table allocationStateLookup(View view, Predicate<Line> selector, List<Attribute<?>> relevantAttributes) {
         return new AllocationStateLookup(view, selector);
     }
 

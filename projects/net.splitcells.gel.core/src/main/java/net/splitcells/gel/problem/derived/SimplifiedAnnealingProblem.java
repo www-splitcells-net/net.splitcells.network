@@ -22,7 +22,7 @@ import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
-import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.database.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.LinePointer;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -103,32 +103,32 @@ public class SimplifiedAnnealingProblem implements Solution {
     }
 
     @Override
-    public Database supplies() {
+    public Table supplies() {
         return originalSolution.supplies();
     }
 
     @Override
-    public Database suppliesUsed() {
+    public Table suppliesUsed() {
         return originalSolution.suppliesUsed();
     }
 
     @Override
-    public Database suppliesFree() {
+    public Table suppliesFree() {
         return originalSolution.suppliesFree();
     }
 
     @Override
-    public Database demands() {
+    public Table demands() {
         return originalSolution.demands();
     }
 
     @Override
-    public Database demandsUsed() {
+    public Table demandsUsed() {
         return originalSolution.demandsUsed();
     }
 
     @Override
-    public Database demandsFree() {
+    public Table demandsFree() {
         return originalSolution.demandsFree();
     }
 

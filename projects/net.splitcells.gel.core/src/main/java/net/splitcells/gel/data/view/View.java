@@ -43,7 +43,7 @@ import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.utils.StringUtils;
-import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.database.Table;
 import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
@@ -124,7 +124,7 @@ public interface View extends Discoverable, Domable, Identifiable {
 
     /**
      * @return {@link Line} With Distinct Values
-     * @see Database#query()
+     * @see Table#query()
      */
     @Deprecated
     default List<Line> distinctLines() {
@@ -483,9 +483,9 @@ public interface View extends Discoverable, Domable, Identifiable {
         return reformattedTable;
     }
 
-    default boolean isEqualFormat(Database otherDatabase) {
-        return setOfUniques(headerView()).hasContentOf((a, b) -> a.equalContentTo(b), otherDatabase.headerView())
-                && name().equals(otherDatabase.name());
+    default boolean isEqualFormat(Table otherTable) {
+        return setOfUniques(headerView()).hasContentOf((a, b) -> a.equalContentTo(b), otherTable.headerView())
+                && name().equals(otherTable.name());
     }
 
     default DiscoverableRenderer discoverableRenderer() {

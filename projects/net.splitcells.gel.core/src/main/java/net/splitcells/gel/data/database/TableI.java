@@ -62,7 +62,7 @@ import net.splitcells.dem.object.Discoverable;
  * <p>TODO Make all constructors private. One can use configurators for {@link DatabaseFactory} instead.</p>
  * <p>TODO Test consistency of meta data.</p>
  */
-public class DatabaseI implements Database {
+public class TableI implements Table {
     private final String name;
     private final Optional<Discoverable> parent;
     private final List<Attribute<Object>> attributes;
@@ -82,23 +82,23 @@ public class DatabaseI implements Database {
     private Optional<Constraint> constraint = Optional.empty();
 
     @Deprecated
-    public static Database databaseI(List<Attribute<? extends Object>> attributes) {
-        return new DatabaseI(attributes);
+    public static Table databaseI(List<Attribute<? extends Object>> attributes) {
+        return new TableI(attributes);
     }
 
 
     @Deprecated
-    private DatabaseI(List<Attribute<? extends Object>> attributes) {
+    private TableI(List<Attribute<? extends Object>> attributes) {
         this("", null, attributes.mapped(a -> (Attribute<Object>) a));
     }
 
-    public static Database databaseI(String name, Discoverable parent, List<Attribute<Object>> attributes) {
-        return new DatabaseI(name, parent, attributes);
+    public static Table databaseI(String name, Discoverable parent, List<Attribute<Object>> attributes) {
+        return new TableI(name, parent, attributes);
     }
 
     @Deprecated
     @SuppressWarnings("unchecked")
-    private DatabaseI(String name, Discoverable parent, List<Attribute<Object>> attributes) {
+    private TableI(String name, Discoverable parent, List<Attribute<Object>> attributes) {
         this.name = name;
         this.parent = Optional.ofNullable(parent);
         final List<Attribute<Object>> headerAttributes = list();
@@ -117,31 +117,31 @@ public class DatabaseI implements Database {
         columnsViewView = listView(columnsViewViewList);
     }
 
-    public static Database databaseI(List<Attribute<?>> attributes, Collection<List<Object>> linesValues) {
-        return new DatabaseI(attributes, linesValues);
+    public static Table databaseI(List<Attribute<?>> attributes, Collection<List<Object>> linesValues) {
+        return new TableI(attributes, linesValues);
     }
 
-    public static Database databaseI(String name, Discoverable parent, Attribute<? extends Object>... attributes) {
-        return new DatabaseI(name, parent, attributes);
-    }
-
-    @Deprecated
-    public static Database databaseI(Attribute<?>... attributes) {
-        return new DatabaseI(attributes);
+    public static Table databaseI(String name, Discoverable parent, Attribute<? extends Object>... attributes) {
+        return new TableI(name, parent, attributes);
     }
 
     @Deprecated
-    private DatabaseI(List<Attribute<?>> attributes, Collection<List<Object>> linesValues) {
+    public static Table databaseI(Attribute<?>... attributes) {
+        return new TableI(attributes);
+    }
+
+    @Deprecated
+    private TableI(List<Attribute<?>> attributes, Collection<List<Object>> linesValues) {
         this(attributes);
         linesValues.forEach(line_values -> addTranslated(line_values));
     }
 
-    private DatabaseI(String name, Discoverable parent, Attribute<? extends Object>... attributes) {
+    private TableI(String name, Discoverable parent, Attribute<? extends Object>... attributes) {
         this(name, parent, listWithValuesOf(attributes).mapped(a -> (Attribute<Object>) a));
     }
 
     @Deprecated
-    private DatabaseI(Attribute<?>... attributes) {
+    private TableI(Attribute<?>... attributes) {
         this(listWithValuesOf(attributes));
     }
 
@@ -230,7 +230,7 @@ public class DatabaseI implements Database {
 
     private Line addTranslated(List<Object> lineValues, int index) {
         if (TRACING) {
-            logs().append(tree("addTranslatingAt." + Database.class.getSimpleName())
+            logs().append(tree("addTranslatingAt." + Table.class.getSimpleName())
                             .withProperty("path", path().toString())
                             .withProperty("index", "" + index)
                             .withProperty("line-values", lineValues.toString())
@@ -349,7 +349,7 @@ public class DatabaseI implements Database {
 
     @Override
     public String toString() {
-        return Database.class.getSimpleName() + path().toString();
+        return Table.class.getSimpleName() + path().toString();
     }
 
     @Override
@@ -423,8 +423,8 @@ public class DatabaseI implements Database {
 
     @Override
     public boolean equals(Object arg) {
-        if (arg instanceof Database) {
-            final var castedArg = (Database) arg;
+        if (arg instanceof Table) {
+            final var castedArg = (Table) arg;
             return identity() == castedArg.identity();
         }
         throw executionException("Invalid argument type: " + arg);

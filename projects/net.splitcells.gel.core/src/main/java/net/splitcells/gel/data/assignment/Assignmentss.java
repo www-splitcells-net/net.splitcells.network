@@ -16,7 +16,7 @@
 package net.splitcells.gel.data.assignment;
 
 import net.splitcells.dem.environment.resource.ResourceOptionI;
-import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.database.Table;
 
 import static net.splitcells.dem.Dem.environment;
 
@@ -25,7 +25,7 @@ public class Assignmentss extends ResourceOptionI<AssignmentsFactory> {
         super(() -> new AssignmentsIFactory());
     }
 
-    public static Assignments assignments(String name, Database demands, Database supplies) {
+    public static Assignments assignments(String name, Table demands, Table supplies) {
         return environment().config().configValue(Assignmentss.class).assignments(name, demands, supplies);
     }
 }

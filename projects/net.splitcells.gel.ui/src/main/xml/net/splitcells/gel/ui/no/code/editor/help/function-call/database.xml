@@ -9,7 +9,7 @@
     <meta>
         <title>Database Function Help</title>
     </meta>
-    <paragraph>The function database creates a table.</paragraph>
+    <paragraph>The function table creates a table.</paragraph>
     <list name="Arguments">
         <item>The first is a literal, that defines the name of the table.</item>
         <item>

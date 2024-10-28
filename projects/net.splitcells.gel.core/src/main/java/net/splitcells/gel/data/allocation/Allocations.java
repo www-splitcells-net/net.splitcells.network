@@ -16,7 +16,7 @@
 package net.splitcells.gel.data.allocation;
 
 import net.splitcells.gel.data.assignment.AssignmentsLiveView;
-import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.database.Table;
 import net.splitcells.gel.data.view.Line;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -24,7 +24,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 /**
  * <p>Allows at most one assignment for each one of {@link #demands()} and for each one of {@link #supplies()}.</p>
  */
-public interface Allocations extends Database, AssignmentsLiveView {
+public interface Allocations extends Table, AssignmentsLiveView {
 
     /**
      * Allows to assign at most one assignment for each demand and for each supply.

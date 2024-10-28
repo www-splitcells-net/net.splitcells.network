@@ -40,11 +40,11 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.database.Databases;
+import net.splitcells.gel.data.database.Table;
 import net.splitcells.gel.data.view.LinePointer;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
-import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.assignment.Assignmentss;
 import net.splitcells.gel.data.view.Line;
@@ -376,7 +376,7 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Database supplies() {
+    public Table supplies() {
         if (!isRegisterEventIsEnabled) {
             throw executionException(ERROR_HISTORY_DISABLED);
         }
@@ -387,7 +387,7 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Database suppliesUsed() {
+    public Table suppliesUsed() {
         if (!isRegisterEventIsEnabled) {
             throw executionException(ERROR_HISTORY_DISABLED);
         }
@@ -398,7 +398,7 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Database suppliesFree() {
+    public Table suppliesFree() {
         if (!isRegisterEventIsEnabled) {
             throw executionException(ERROR_HISTORY_DISABLED);
         }
@@ -409,7 +409,7 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Database demands() {
+    public Table demands() {
         if (!isRegisterEventIsEnabled) {
             throw executionException(ERROR_HISTORY_DISABLED);
         }
@@ -420,7 +420,7 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Database demandsUsed() {
+    public Table demandsUsed() {
         if (!isRegisterEventIsEnabled) {
             throw executionException(ERROR_HISTORY_DISABLED);
         }
@@ -431,7 +431,7 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Database demandsFree() {
+    public Table demandsFree() {
         if (!isRegisterEventIsEnabled) {
             throw executionException(ERROR_HISTORY_DISABLED);
         }

@@ -21,7 +21,7 @@ import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
-import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.database.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.LinePointer;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -42,31 +42,31 @@ import static net.splitcells.gel.data.database.history.DatabaseEventType.ADDITIO
 import static net.splitcells.gel.data.database.history.DatabaseEventType.REMOVAL;
 
 /**
- * TODO This is an experimental implementation of {@link History} for {@link Database} instead of {@link Assignments}.
+ * TODO This is an experimental implementation of {@link History} for {@link Table} instead of {@link Assignments}.
  * This is probably not working yet.
  */
-public class HistoryForDatabase implements History {
+public class HistoryForTable implements History {
 
     public static final Attribute<DatabaseEventType> DATABASE_EVENT_TYPE = attribute(DatabaseEventType.class, "database-event-type");
     public static final Attribute<Integer> LINE_INDEX = attribute(Integer.class, "line-index");
 
-    public static HistoryForDatabase historyForDatabase(Database database) {
-        return new HistoryForDatabase(database);
+    public static HistoryForTable historyForDatabase(Table table) {
+        return new HistoryForTable(table);
     }
 
     private static final String ERROR_HISTORY_DISABLED = "History is disabled.";
     private static final String ERROR_HISTORY_INCONSISTENT = "History is inconsistent.";
 
-    private final Database database;
+    private final Table table;
     private Assignments history;
 
-    private HistoryForDatabase(Database database) {
+    private HistoryForTable(Table table) {
         history = assignments(DATABASE_HISTORY.value(),
-                database(HISTORIC_VALUES.value(), database, database.headerView2())
-                , database(EVENTS.value(), database, list(LINE_INDEX, DATABASE_EVENT_TYPE)));
-        this.database = database;
-        database.subscribeToAfterAdditions(this);
-        database.subscribeToBeforeRemoval(this);
+                database(HISTORIC_VALUES.value(), table, table.headerView2())
+                , database(EVENTS.value(), table, list(LINE_INDEX, DATABASE_EVENT_TYPE)));
+        this.table = table;
+        table.subscribeToAfterAdditions(this);
+        table.subscribeToBeforeRemoval(this);
     }
 
     @Override
@@ -159,32 +159,32 @@ public class HistoryForDatabase implements History {
     }
 
     @Override
-    public Database supplies() {
+    public Table supplies() {
         throw notImplementedYet();
     }
 
     @Override
-    public Database suppliesUsed() {
+    public Table suppliesUsed() {
         throw notImplementedYet();
     }
 
     @Override
-    public Database suppliesFree() {
+    public Table suppliesFree() {
         throw notImplementedYet();
     }
 
     @Override
-    public Database demands() {
+    public Table demands() {
         throw notImplementedYet();
     }
 
     @Override
-    public Database demandsUsed() {
+    public Table demandsUsed() {
         throw notImplementedYet();
     }
 
     @Override
-    public Database demandsFree() {
+    public Table demandsFree() {
         throw notImplementedYet();
     }
 
@@ -210,7 +210,7 @@ public class HistoryForDatabase implements History {
 
     @Override
     public String name() {
-        return "history of " + database.name();
+        return "history of " + table.name();
     }
 
     @Override

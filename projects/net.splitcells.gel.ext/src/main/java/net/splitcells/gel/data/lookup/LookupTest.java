@@ -16,7 +16,7 @@
 package net.splitcells.gel.data.lookup;
 
 import net.splitcells.dem.testing.TestSuiteI;
-import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.database.Table;
 import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.column.Column;
@@ -29,13 +29,13 @@ import java.util.function.Supplier;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
-import static net.splitcells.gel.data.database.DatabaseI.databaseI;
+import static net.splitcells.gel.data.database.TableI.databaseI;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 
 /**
- * TODO {@link Database} and {@link Column} should not be based on {@link Lookup}.
- * Instead only {@link Lookup} should depend on {@link Database} and {@link Column} as a regular  subscriber,
- * in order to simplify code. Otherwise it is too hard to add an {@link Lookup} without adding code to {@link Database} and {@link Column} too.
+ * TODO {@link Table} and {@link Column} should not be based on {@link Lookup}.
+ * Instead only {@link Lookup} should depend on {@link Table} and {@link Column} as a regular  subscriber,
+ * in order to simplify code. Otherwise it is too hard to add an {@link Lookup} without adding code to {@link Table} and {@link Column} too.
  */
 public class LookupTest extends TestSuiteI {
     @Test

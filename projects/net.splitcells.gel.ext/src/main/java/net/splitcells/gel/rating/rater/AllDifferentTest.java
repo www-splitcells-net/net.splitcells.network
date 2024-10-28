@@ -16,7 +16,7 @@
 package net.splitcells.gel.rating.rater;
 
 import net.splitcells.dem.testing.TestSuiteI;
-import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.database.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ public class AllDifferentTest extends TestSuiteI {
     @Test
     public void test_rating_with_all_values_different() {
         final Attribute<Integer> attribute = attribute(Integer.class);
-        final Database lineSupplier = database(attribute);
+        final Table lineSupplier = database(attribute);
         final var testSubject = then(allDifferent(attribute));
         testSubject.rating().requireEqualsTo(noCost());
         setOfUniques(testSubject.defying()).requireEmptySet();
@@ -52,7 +52,7 @@ public class AllDifferentTest extends TestSuiteI {
     @Test
     public void test_rating_with_all_values_same() {
         final Attribute<Integer> attribute = attribute(Integer.class);
-        final Database lineSupplier = database(attribute);
+        final Table lineSupplier = database(attribute);
         final var testSubject = then(allDifferent(attribute));
         testSubject.rating().requireEqualsTo(noCost());
         testSubject.register_addition(lineSupplier.addTranslated(list(1)));

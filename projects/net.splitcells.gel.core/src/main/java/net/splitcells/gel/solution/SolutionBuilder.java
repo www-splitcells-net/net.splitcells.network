@@ -36,7 +36,7 @@ import net.splitcells.dem.environment.config.ProgramsDiscoveryPath;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.assignment.Assignments;
-import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.database.Table;
 import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.problem.*;
@@ -46,11 +46,11 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
 
     private List<Attribute<? extends Object>> demandAttributes = list();
     private List<List<Object>> demands = list();
-    private Optional<Database> demandsDatabase = Optional.empty();
+    private Optional<Table> demandsDatabase = Optional.empty();
 
     private List<Attribute<? extends Object>> supplyAttributes = list();
     private List<List<Object>> supplies = list();
-    private Optional<Database> suppliesDatabase = Optional.empty();
+    private Optional<Table> suppliesDatabase = Optional.empty();
     /**
      * Without a good name, it can get very hard to distinguish {@link Solution}
      * instances from one another at one glance.
@@ -190,7 +190,7 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
     }
 
     @Override
-    public DefineSupplyAttributes withDemands(Database demands) {
+    public DefineSupplyAttributes withDemands(Table demands) {
         demandsDatabase = Optional.of(demands);
         return this;
     }
@@ -202,7 +202,7 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
     }
 
     @Override
-    public DefineConstraints withSupplies(Database supplies) {
+    public DefineConstraints withSupplies(Table supplies) {
         suppliesDatabase = Optional.of(supplies);
         return this;
     }

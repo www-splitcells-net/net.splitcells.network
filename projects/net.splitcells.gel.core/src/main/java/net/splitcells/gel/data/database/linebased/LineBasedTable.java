@@ -24,7 +24,7 @@ import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
-import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.database.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.column.ColumnView;
@@ -45,7 +45,7 @@ import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.data.database.linebased.LineBasedColumn.lineBasedColumn;
 import static net.splitcells.gel.data.view.LineWithValues.lineWithValues;
 
-public class LineBasedDatabase implements Database {
+public class LineBasedTable implements Table {
 
     private final String name;
     private final Optional<Discoverable> parent;
@@ -62,11 +62,11 @@ public class LineBasedDatabase implements Database {
     private final Map<Attribute<?>, Integer> typedColumnIndex = map();
     private Optional<Constraint> constraint = Optional.empty();
 
-    public static Database lineBasedDatabase(String name, Optional<Discoverable> parent, List<Attribute<Object>> attributes) {
-        return new LineBasedDatabase(name, parent, attributes);
+    public static Table lineBasedDatabase(String name, Optional<Discoverable> parent, List<Attribute<Object>> attributes) {
+        return new LineBasedTable(name, parent, attributes);
     }
 
-    private LineBasedDatabase(String name, Optional<Discoverable> parent, List<Attribute<Object>> attributes) {
+    private LineBasedTable(String name, Optional<Discoverable> parent, List<Attribute<Object>> attributes) {
         this.name = name;
         this.parent = parent;
         this.attributes = attributes;
@@ -247,8 +247,8 @@ public class LineBasedDatabase implements Database {
 
     @Override
     public boolean equals(Object arg) {
-        if (arg instanceof Database) {
-            final var castedArg = (Database) arg;
+        if (arg instanceof Table) {
+            final var castedArg = (Table) arg;
             return identity() == castedArg.identity();
         }
         throw executionException("Invalid argument type: " + arg);

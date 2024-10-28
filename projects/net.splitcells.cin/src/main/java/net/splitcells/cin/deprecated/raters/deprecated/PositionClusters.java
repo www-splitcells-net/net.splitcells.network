@@ -20,6 +20,7 @@ import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
+import net.splitcells.gel.data.database.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -82,8 +83,8 @@ public class PositionClusters implements Rater {
     }
 
     /**
-     * @param xAttribute This is the x coordinate in the {@link net.splitcells.gel.data.database.Database}.
-     * @param yAttribute This is the y coordinate in the {@link net.splitcells.gel.data.database.Database}.
+     * @param xAttribute This is the x coordinate in the {@link Table}.
+     * @param yAttribute This is the y coordinate in the {@link Table}.
      * @return Returns the list of all overlapping position clusters.
      */
     public static List<Rater> positionClustering(Attribute<Integer> xAttribute, Attribute<Integer> yAttribute) {
@@ -99,8 +100,8 @@ public class PositionClusters implements Rater {
     }
 
     /**
-     * @param xAttribute This is the x coordinate in the {@link net.splitcells.gel.data.database.Database}.
-     * @param yAttribute This is the y coordinate in the {@link net.splitcells.gel.data.database.Database}.
+     * @param xAttribute This is the x coordinate in the {@link Table}.
+     * @param yAttribute This is the y coordinate in the {@link Table}.
      * @return Returns the {@link PositionClusters} with offset of 0.
      */
     public static PositionClusters positionClusters(Attribute<Integer> xAttribute, Attribute<Integer> yAttribute) {
@@ -108,8 +109,8 @@ public class PositionClusters implements Rater {
     }
 
     /**
-     * @param xAttribute    This is the x coordinate in the {@link net.splitcells.gel.data.database.Database}.
-     * @param yAttribute    This is the y coordinate in the {@link net.splitcells.gel.data.database.Database}.
+     * @param xAttribute    This is the x coordinate in the {@link Table}.
+     * @param yAttribute    This is the y coordinate in the {@link Table}.
      * @param xCenterOffset This is the x-axis offset of the position center.
      * @param yCenterOffset This is the y-axis offset of the position center.
      * @return Returns the {@link PositionClusters} with offset of 0.

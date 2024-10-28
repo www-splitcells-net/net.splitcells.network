@@ -16,7 +16,7 @@
 package net.splitcells.gel.problem;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.database.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
 
 public interface DefineDemandAttributes {
@@ -26,5 +26,5 @@ public interface DefineDemandAttributes {
 
     DefineDemands withDemandAttributes(List<Attribute<?>> demandAttributes);
 
-    DefineSupplyAttributes withDemands(Database demands);
+    DefineSupplyAttributes withDemands(Table demands);
 }

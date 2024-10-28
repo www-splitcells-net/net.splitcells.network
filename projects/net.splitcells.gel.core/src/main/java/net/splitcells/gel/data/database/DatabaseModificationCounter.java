@@ -18,7 +18,6 @@ package net.splitcells.gel.data.database;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.testing.MetaCounter;
-import net.splitcells.gel.data.database.Databases;
 import net.splitcells.website.server.project.renderer.CsvRenderer;
 import net.splitcells.website.server.project.renderer.ObjectsRenderer;
 
@@ -31,7 +30,7 @@ public class DatabaseModificationCounter implements Option<MetaCounter> {
     @Override
     public MetaCounter defaultValue() {
         final var metaCounter = metaCounter(discoverable(DatabaseModificationCounter.class)).withConfig(env
-                -> env.config().configValue(Databases.class).withAspect(DatabaseModificationCounterAspect::databaseModificationCounterAspect));
+                -> env.config().configValue(Databases.class).withAspect(TableModificationCounterAspect::databaseModificationCounterAspect));
         ObjectsRenderer.registerObject(new CsvRenderer() {
             @Override
             public String renderCsv() {

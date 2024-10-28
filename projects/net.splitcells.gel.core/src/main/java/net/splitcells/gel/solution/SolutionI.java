@@ -21,6 +21,7 @@ import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
+import net.splitcells.gel.data.database.Table;
 import net.splitcells.gel.data.view.LinePointer;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.solution.history.History;
@@ -29,7 +30,6 @@ import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
-import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
@@ -93,32 +93,32 @@ public class SolutionI implements Solution {
     }
 
     @SuppressWarnings("all")
-    public Database supplies() {
+    public Table supplies() {
         return this.problem.supplies();
     }
 
     @SuppressWarnings("all")
-    public Database suppliesUsed() {
+    public Table suppliesUsed() {
         return this.problem.suppliesUsed();
     }
 
     @SuppressWarnings("all")
-    public Database suppliesFree() {
+    public Table suppliesFree() {
         return this.problem.suppliesFree();
     }
 
     @SuppressWarnings("all")
-    public Database demands() {
+    public Table demands() {
         return this.problem.demands();
     }
 
     @SuppressWarnings("all")
-    public Database demandsUsed() {
+    public Table demandsUsed() {
         return this.problem.demandsUsed();
     }
 
     @SuppressWarnings("all")
-    public Database demandsFree() {
+    public Table demandsFree() {
         return this.problem.demandsFree();
     }
 

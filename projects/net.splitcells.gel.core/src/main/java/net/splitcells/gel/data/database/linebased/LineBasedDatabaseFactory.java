@@ -20,7 +20,7 @@ import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.AspectOrientedConstructor;
 import net.splitcells.dem.resource.AspectOrientedConstructorBase;
 import net.splitcells.dem.resource.ConnectingConstructor;
-import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.database.Table;
 import net.splitcells.gel.data.database.DatabaseFactory;
 import net.splitcells.gel.data.view.attribute.Attribute;
 
@@ -31,12 +31,12 @@ import java.util.function.Function;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.resource.AspectOrientedConstructorBase.aspectOrientedConstructor;
 import static net.splitcells.dem.resource.ConnectingConstructorI.connectingConstructor;
-import static net.splitcells.gel.data.database.linebased.LineBasedDatabase.lineBasedDatabase;
+import static net.splitcells.gel.data.database.linebased.LineBasedTable.lineBasedDatabase;
 
 public class LineBasedDatabaseFactory implements DatabaseFactory {
 
-    private final AspectOrientedConstructorBase<Database> aspects = aspectOrientedConstructor();
-    private final ConnectingConstructor<Database> connector = connectingConstructor();
+    private final AspectOrientedConstructorBase<Table> aspects = aspectOrientedConstructor();
+    private final ConnectingConstructor<Table> connector = connectingConstructor();
 
     public static DatabaseFactory lineBasedDatabaseFactory() {
         return new LineBasedDatabaseFactory();
@@ -47,24 +47,24 @@ public class LineBasedDatabaseFactory implements DatabaseFactory {
     }
 
     @Override
-    public AspectOrientedConstructor<Database> withAspect(Function<Database, Database> aspect) {
+    public AspectOrientedConstructor<Table> withAspect(Function<Table, Table> aspect) {
         aspects.withAspect(aspect);
         return this;
     }
 
     @Override
-    public Database joinAspects(Database arg) {
+    public Table joinAspects(Table arg) {
         return aspects.joinAspects(arg);
     }
 
     @Override
-    public ConnectingConstructor<Database> withConnector(Consumer<Database> connector) {
+    public ConnectingConstructor<Table> withConnector(Consumer<Table> connector) {
         this.connector.withConnector(connector);
         return this;
     }
 
     @Override
-    public Database connect(Database subject) {
+    public Table connect(Table subject) {
         return connector.connect(subject);
     }
 
@@ -79,7 +79,7 @@ public class LineBasedDatabaseFactory implements DatabaseFactory {
     }
 
     @Override
-    public Database database(String name, Attribute<?>... attributes) {
+    public Table database(String name, Attribute<?>... attributes) {
         final var database = joinAspects(lineBasedDatabase(name, Optional.empty()
                 , listWithValuesOf(attributes).mapped(a -> (Attribute<Object>) a)));
         connector.connect(database);
@@ -87,7 +87,7 @@ public class LineBasedDatabaseFactory implements DatabaseFactory {
     }
 
     @Override
-    public Database database(Attribute<?>... attributes) {
+    public Table database(Attribute<?>... attributes) {
         final var database = joinAspects(lineBasedDatabase(getClass().getSimpleName(), Optional.empty()
                 , listWithValuesOf(attributes).mapped(a -> (Attribute<Object>) a)));
         connector.connect(database);
@@ -95,7 +95,7 @@ public class LineBasedDatabaseFactory implements DatabaseFactory {
     }
 
     @Override
-    public Database database(List<Attribute<?>> attributes) {
+    public Table database(List<Attribute<?>> attributes) {
         final var database = joinAspects(lineBasedDatabase(getClass().getSimpleName(), Optional.empty()
                 , attributes.mapped(a -> (Attribute<Object>) a)));
         connector.connect(database);
@@ -103,14 +103,14 @@ public class LineBasedDatabaseFactory implements DatabaseFactory {
     }
 
     @Override
-    public Database database2(String name, Discoverable parent, List<Attribute<Object>> attributes) {
+    public Table database2(String name, Discoverable parent, List<Attribute<Object>> attributes) {
         final var database = joinAspects(lineBasedDatabase(name, Optional.of(parent), attributes));
         connector.connect(database);
         return database;
     }
 
     @Override
-    public Database database(List<Attribute<?>> attributes, List<List<Object>> linesValues) {
+    public Table database(List<Attribute<?>> attributes, List<List<Object>> linesValues) {
         final var database = joinAspects(lineBasedDatabase("", Optional.empty()
                 , attributes.mapped(a -> (Attribute<Object>) a)));
         connector.connect(database);
@@ -119,7 +119,7 @@ public class LineBasedDatabaseFactory implements DatabaseFactory {
     }
 
     @Override
-    public Database database(String name, Discoverable parent, Attribute<?>... attributes) {
+    public Table database(String name, Discoverable parent, Attribute<?>... attributes) {
         final var database = joinAspects(lineBasedDatabase(name, Optional.empty()
                 , listWithValuesOf(attributes).mapped(a -> (Attribute<Object>) a)));
         connector.connect(database);
@@ -127,7 +127,7 @@ public class LineBasedDatabaseFactory implements DatabaseFactory {
     }
 
     @Override
-    public Database database(String name, Discoverable parent, List<Attribute<?>> attributes) {
+    public Table database(String name, Discoverable parent, List<Attribute<?>> attributes) {
         final var database = joinAspects(lineBasedDatabase(name, Optional.empty()
                 , listWithValuesOf(attributes).mapped(a -> (Attribute<Object>) a)));
         connector.connect(database);

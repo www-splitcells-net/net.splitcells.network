@@ -30,24 +30,24 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
-public class DatabaseModificationCounterAspect implements Database {
-    public static Database databaseModificationCounterAspect(Database database) {
-        return new DatabaseModificationCounterAspect(database);
+public class TableModificationCounterAspect implements Table {
+    public static Table databaseModificationCounterAspect(Table table) {
+        return new TableModificationCounterAspect(table);
     }
 
-    private final Database database;
+    private final Table table;
 
-    private DatabaseModificationCounterAspect(Database argDatabase) {
-        database = argDatabase;
+    private TableModificationCounterAspect(Table argTable) {
+        table = argTable;
         ObjectsRenderer.registerObject(new CsvRenderer() {
             @Override
             public String renderCsv() {
                 final var counter = configValue(DatabaseModificationCounter.class)
                         .counters()
-                        .get(database.path());
+                        .get(table.path());
                 if (counter == null) {
                     logs().appendError(executionException(tree("Could not find counter")
-                            .withProperty("database", database.path().toString())));
+                            .withProperty("database", table.path().toString())));
                     return "";
                 }
                 return "time,count\n" + counter.measurements()
@@ -63,7 +63,7 @@ public class DatabaseModificationCounterAspect implements Database {
 
             @Override
             public List<String> path() {
-                return database.path().withAppended("database-modification-counter.csv");
+                return table.path().withAppended("database-modification-counter.csv");
             }
         });
     }
@@ -71,100 +71,100 @@ public class DatabaseModificationCounterAspect implements Database {
     @Override
     public Line addTranslated(ListView<?> values) {
         configValue(DatabaseModificationCounter.class).count(this, 1 + (long) values.size());
-        return database.addTranslated(values);
+        return table.addTranslated(values);
     }
 
     @Override
     public Line add(Line line) {
         configValue(DatabaseModificationCounter.class).count(this, 1 + (long) line.values().size());
-        return database.add(line);
+        return table.add(line);
     }
 
     @Override
     public Line addWithSameHeaderPrefix(Line line) {
         configValue(DatabaseModificationCounter.class).count(this, 1 + (long) line.values().size());
-        return database.addWithSameHeaderPrefix(line);
+        return table.addWithSameHeaderPrefix(line);
     }
 
     @Override
     public void remove(int lineIndex) {
         configValue(DatabaseModificationCounter.class).count(this, 1 + (long) rawLine(lineIndex).values().size());
-        database.remove(lineIndex);
+        table.remove(lineIndex);
     }
 
     @Override
     public void remove(Line line) {
         configValue(DatabaseModificationCounter.class).count(this, 1 + (long) line.values().size());
-        database.remove(line);
+        table.remove(line);
     }
 
     @Override
     public void subscribeToAfterAdditions(AfterAdditionSubscriber subscriber) {
-        database.subscribeToAfterAdditions(subscriber);
+        table.subscribeToAfterAdditions(subscriber);
     }
 
     @Override
     public void subscribeToBeforeRemoval(BeforeRemovalSubscriber subscriber) {
-        database.subscribeToBeforeRemoval(subscriber);
+        table.subscribeToBeforeRemoval(subscriber);
     }
 
     @Override
     public void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber) {
-        database.subscribeToAfterRemoval(subscriber);
+        table.subscribeToAfterRemoval(subscriber);
     }
 
     @Override
     public String name() {
-        return database.name();
+        return table.name();
     }
 
     @Override
     public List<Attribute<Object>> headerView() {
-        return database.headerView();
+        return table.headerView();
     }
 
     @Override
     public List<Attribute<? extends Object>> headerView2() {
-        return database.headerView2();
+        return table.headerView2();
     }
 
     @Override
     public <T> ColumnView<T> columnView(Attribute<T> attribute) {
-        return database.columnView(attribute);
+        return table.columnView(attribute);
     }
 
     @Override
     public ListView<ColumnView<Object>> columnsView() {
-        return database.columnsView();
+        return table.columnsView();
     }
 
     @Override
     public ListView<Line> rawLinesView() {
-        return database.rawLinesView();
+        return table.rawLinesView();
     }
 
     @Override
     public int size() {
-        return database.size();
+        return table.size();
     }
 
     @Override
     public List<Line> rawLines() {
-        return database.rawLines();
+        return table.rawLines();
     }
 
     @Override
     public Line lookupEquals(Attribute<Line> attribute, Line values) {
-        return database.lookupEquals(attribute, values);
+        return table.lookupEquals(attribute, values);
     }
 
     @Override
     public Object identity() {
-        return database.identity();
+        return table.identity();
     }
 
     @Override
     public List<String> path() {
-        return database.path();
+        return table.path();
     }
 }

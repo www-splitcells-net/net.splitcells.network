@@ -18,7 +18,7 @@ package net.splitcells.gel;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.ProcessResult;
 import net.splitcells.dem.environment.Environment;
-import net.splitcells.gel.data.database.DatabaseMetaAspect;
+import net.splitcells.gel.data.database.TableMetaAspect;
 import net.splitcells.gel.data.database.Databases;
 import net.splitcells.gel.data.lookup.LookupIFactory;
 import net.splitcells.gel.data.lookup.Lookups;
@@ -64,7 +64,7 @@ public final class GelEnv {
             env.config()
                     .withConfigValue(Histories.class, new HistoryRefFactory())
                     .withConfigValue(Lookups.class, new LookupIFactory());
-            env.config().configValue(Databases.class).withAspect(DatabaseMetaAspect::databaseIRef);
+            env.config().configValue(Databases.class).withAspect(TableMetaAspect::databaseIRef);
             env.config().configValue(Solutions.class).withAspect(SolutionAspect::solutionAspect);
         };
     }

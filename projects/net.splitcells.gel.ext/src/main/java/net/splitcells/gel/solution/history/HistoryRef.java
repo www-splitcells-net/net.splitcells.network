@@ -20,7 +20,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
-import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.database.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.LinePointer;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -127,32 +127,32 @@ public class HistoryRef implements History {
     }
 
     @Override
-    public Database supplies() {
+    public Table supplies() {
         return history.supplies();
     }
 
     @Override
-    public Database suppliesUsed() {
+    public Table suppliesUsed() {
         return history.suppliesUsed();
     }
 
     @Override
-    public Database suppliesFree() {
+    public Table suppliesFree() {
         return history.suppliesFree();
     }
 
     @Override
-    public Database demands() {
+    public Table demands() {
         return history.demands();
     }
 
     @Override
-    public Database demandsUsed() {
+    public Table demandsUsed() {
         return history.demandsUsed();
     }
 
     @Override
-    public Database demandsFree() {
+    public Table demandsFree() {
         return history.demandsFree();
     }
 

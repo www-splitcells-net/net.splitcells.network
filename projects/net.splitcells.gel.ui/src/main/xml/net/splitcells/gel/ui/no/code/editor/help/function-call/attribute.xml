@@ -9,7 +9,7 @@
     <meta>
         <title>Attribute Function Help</title>
     </meta>
-    <paragraph>An attribute defines a column of a database.</paragraph>
+    <paragraph>An attribute defines a column of a table.</paragraph>
     <list name="Arguments">
         <item>The first is a literal, that defines the name of the column.</item>
         <item>The second is a literal defining the data type of the column.

@@ -30,7 +30,7 @@ public class Databases extends ResourceOptionI<DatabaseFactory> {
     }
 
     @SafeVarargs
-    public static Database database(String name, Attribute<? extends Object>... attributes) {
+    public static Table database(String name, Attribute<? extends Object>... attributes) {
         return environment().config().configValue(Databases.class).database(name, attributes);
     }
 
@@ -42,7 +42,7 @@ public class Databases extends ResourceOptionI<DatabaseFactory> {
      */
     @SafeVarargs
     @Deprecated
-    public static Database database(Attribute<? extends Object>... attributes) {
+    public static Table database(Attribute<? extends Object>... attributes) {
         return environment().config().configValue(Databases.class).database(attributes);
     }
 
@@ -54,11 +54,11 @@ public class Databases extends ResourceOptionI<DatabaseFactory> {
      * @return
      */
     @Deprecated
-    public static Database database(List<Attribute<? extends Object>> attributes, List<List<Object>> linesValues) {
+    public static Table database(List<Attribute<? extends Object>> attributes, List<List<Object>> linesValues) {
         return environment().config().configValue(Databases.class).database(attributes, linesValues);
     }
 
-    public static Database database(String name, Discoverable parent, List<Attribute<? extends Object>> attributes) {
+    public static Table database(String name, Discoverable parent, List<Attribute<? extends Object>> attributes) {
         return environment().config().configValue(Databases.class).database(name, parent, attributes);
     }
 
@@ -69,7 +69,7 @@ public class Databases extends ResourceOptionI<DatabaseFactory> {
      * @return
      */
     @Deprecated
-    public static Database database(List<Attribute<?>> attributes) {
+    public static Table database(List<Attribute<?>> attributes) {
         return environment().config().configValue(Databases.class).database(attributes);
     }
 
@@ -80,11 +80,11 @@ public class Databases extends ResourceOptionI<DatabaseFactory> {
      * @return
      */
     @Deprecated
-    public static Database database2(List<Attribute<Object>> attributes) {
+    public static Table database2(List<Attribute<Object>> attributes) {
         return environment().config().configValue(Databases.class).database(attributes.mapped(a -> (Attribute<Object>) a));
     }
 
-    public static Database database2(String name, Discoverable parent, List<Attribute<Object>> attributes) {
+    public static Table database2(String name, Discoverable parent, List<Attribute<Object>> attributes) {
         return environment().config().configValue(Databases.class).database2(name, parent, attributes);
     }
 

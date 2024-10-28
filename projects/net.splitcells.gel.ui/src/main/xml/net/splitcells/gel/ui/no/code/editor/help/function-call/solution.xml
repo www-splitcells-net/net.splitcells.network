@@ -10,12 +10,12 @@
         <title>Solution Function Help</title>
     </meta>
     <paragraph>
-        The function solution creates a database of allocations
-        assigning lines of a demand database to lines of a supply database.
+        The function solution creates a table of allocations
+        assigning lines of a demand table to lines of a supply table.
     </paragraph>
     <list name="Arguments">
-        <item>The first argument is a literal, that defines the name of the solution database to be created.</item>
-        <item>The second argument is a reference to the demand database.</item>
-        <item>The second argument is a reference to the supply database.</item>
+        <item>The first argument is a literal, that defines the name of the solution table to be created.</item>
+        <item>The second argument is a reference to the demand table.</item>
+        <item>The second argument is a reference to the supply table.</item>
     </list>
 </article>

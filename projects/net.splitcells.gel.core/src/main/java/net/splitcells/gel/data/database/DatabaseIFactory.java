@@ -28,14 +28,14 @@ import java.util.function.Function;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.resource.AspectOrientedConstructorBase.aspectOrientedConstructor;
 import static net.splitcells.dem.resource.ConnectingConstructorI.connectingConstructor;
-import static net.splitcells.gel.data.database.DatabaseI.databaseI;
+import static net.splitcells.gel.data.database.TableI.databaseI;
 
 public class DatabaseIFactory implements DatabaseFactory {
 
-    private final AspectOrientedConstructorBase<Database> aspects = aspectOrientedConstructor();
-    private final ConnectingConstructor<Database> connector = connectingConstructor();
+    private final AspectOrientedConstructorBase<Table> aspects = aspectOrientedConstructor();
+    private final ConnectingConstructor<Table> connector = connectingConstructor();
 
-    public static DatabaseFactory databaseFactory(Consumer<Database> databaseConsumer) {
+    public static DatabaseFactory databaseFactory(Consumer<Table> databaseConsumer) {
         return new DatabaseIFactory(databaseConsumer);
     }
 
@@ -43,9 +43,9 @@ public class DatabaseIFactory implements DatabaseFactory {
         return new DatabaseIFactory();
     }
 
-    private final Consumer<Database> databaseConsumer;
+    private final Consumer<Table> databaseConsumer;
 
-    private DatabaseIFactory(Consumer<Database> databaseConsumer) {
+    private DatabaseIFactory(Consumer<Table> databaseConsumer) {
         this.databaseConsumer = databaseConsumer;
     }
 
@@ -55,35 +55,35 @@ public class DatabaseIFactory implements DatabaseFactory {
     }
 
     @Override
-    public Database database(String name, Attribute<? extends Object>... attributes) {
+    public Table database(String name, Attribute<? extends Object>... attributes) {
         final var database = joinAspects(databaseI(name, null, attributes));
         connector.connect(database);
         return database;
     }
 
     @Override
-    public Database database(Attribute<? extends Object>... attributes) {
+    public Table database(Attribute<? extends Object>... attributes) {
         final var database= joinAspects(databaseI(attributes));
         connector.connect(database);
         return database;
     }
 
     @Override
-    public Database database(List<Attribute<?>> attributes) {
+    public Table database(List<Attribute<?>> attributes) {
         final var database = joinAspects(databaseI(attributes));
         connector.connect(database);
         return database;
     }
 
     @Override
-    public Database database2(String name, Discoverable parent, List<Attribute<Object>> attributes) {
+    public Table database2(String name, Discoverable parent, List<Attribute<Object>> attributes) {
         final var database = joinAspects(databaseI(name, parent, attributes));
         connector.connect(database);
         return database;
     }
 
     @Override
-    public Database database(List<Attribute<? extends Object>> attributes, List<List<Object>> linesValues) {
+    public Table database(List<Attribute<? extends Object>> attributes, List<List<Object>> linesValues) {
         final var database = joinAspects(databaseI(attributes, linesValues));
         connector.connect(database);
         return database;
@@ -91,14 +91,14 @@ public class DatabaseIFactory implements DatabaseFactory {
 
     @Override
     @Deprecated
-    public Database database(String name, Discoverable parent, Attribute<? extends Object>... attributes) {
+    public Table database(String name, Discoverable parent, Attribute<? extends Object>... attributes) {
         final var database = joinAspects(databaseI(name, parent, listWithValuesOf(attributes).mapped(a -> (Attribute<Object>) a)));
         connector.connect(database);
         return database;
     }
 
     @Override
-    public Database database(String name, Discoverable parent, List<Attribute<? extends Object>> attributes) {
+    public Table database(String name, Discoverable parent, List<Attribute<? extends Object>> attributes) {
         final var database = joinAspects(databaseI(name, parent, attributes.mapped(a -> (Attribute<Object>) a)));
         connector.connect(database);
         return database;
@@ -115,23 +115,23 @@ public class DatabaseIFactory implements DatabaseFactory {
     }
 
     @Override
-    public AspectOrientedConstructor<Database> withAspect(Function<Database, Database> aspect) {
+    public AspectOrientedConstructor<Table> withAspect(Function<Table, Table> aspect) {
         return aspects.withAspect(aspect);
     }
 
     @Override
-    public Database joinAspects(Database arg) {
+    public Table joinAspects(Table arg) {
         return aspects.joinAspects(arg);
     }
 
     @Override
-    public ConnectingConstructor withConnector(Consumer<Database> connector) {
+    public ConnectingConstructor withConnector(Consumer<Table> connector) {
         this.connector.withConnector(connector);
         return this;
     }
 
     @Override
-    public Database connect(Database subject) {
+    public Table connect(Table subject) {
         return connector.connect(subject);
     }
 }

@@ -21,7 +21,7 @@ import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
-import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.database.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.LinePointer;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -46,7 +46,7 @@ public class AllocationsI implements Allocations {
 
     private final String name;
     private final Discoverable parent;
-    private final Database allocations;
+    private final Table allocations;
     /**
      * Maps {@link Line#index()} of {@link #allocations} to {@link AllocationState},
      * in order to determine, which data is present.
@@ -55,12 +55,12 @@ public class AllocationsI implements Allocations {
     private final List<Attribute<?>> demandHeader;
     private final List<Attribute<?>> supplyHeader;
 
-    private final Database demands;
-    private final Database demandsFree;
-    private final Database demandsUsed;
-    private final Database supplies;
-    private final Database suppliesFree;
-    private final Database suppliesUsed;
+    private final Table demands;
+    private final Table demandsFree;
+    private final Table demandsUsed;
+    private final Table supplies;
+    private final Table suppliesFree;
+    private final Table suppliesUsed;
 
     private AllocationsI(String name, Discoverable parent
             , List<Attribute<?>> demandHeader
@@ -105,32 +105,32 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public Database supplies() {
+    public Table supplies() {
         return supplies;
     }
 
     @Override
-    public Database suppliesUsed() {
+    public Table suppliesUsed() {
         return suppliesUsed;
     }
 
     @Override
-    public Database suppliesFree() {
+    public Table suppliesFree() {
         return suppliesFree;
     }
 
     @Override
-    public Database demands() {
+    public Table demands() {
         return demands;
     }
 
     @Override
-    public Database demandsUsed() {
+    public Table demandsUsed() {
         return demandsUsed;
     }
 
     @Override
-    public Database demandsFree() {
+    public Table demandsFree() {
         return demandsFree;
     }
 

@@ -17,7 +17,7 @@ package net.splitcells.gel.data.assignment;
 
 import net.splitcells.dem.resource.AspectOrientedConstructor;
 import net.splitcells.dem.resource.AspectOrientedConstructorBase;
-import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.database.Table;
 
 import java.util.function.Function;
 
@@ -38,7 +38,7 @@ public class AssignmentsIFactory implements AssignmentsFactory {
     }
 
     @Override
-    public Assignments assignments(String name, Database demands, Database supplies) {
+    public Assignments assignments(String name, Table demands, Table supplies) {
         return AssignmentsI.assignments(name, demands, supplies);
     }
 

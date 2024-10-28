@@ -52,11 +52,11 @@ import static org.mockito.Mockito.when;
  * <p>
  * TODO Test consistency, when adding or removing many things
  */
-public class DatabaseTest extends TestSuiteI {
+public class TableTest extends TestSuiteI {
 
     public static List<DatabaseFactory> databaseFactories() {
         final var databaseFactories = list(databaseFactory(), lineBasedDatabaseFactory());
-        databaseFactories.forEach(df -> df.withAspect(DatabaseMetaAspect::databaseIRef));
+        databaseFactories.forEach(df -> df.withAspect(TableMetaAspect::databaseIRef));
         return databaseFactories;
     }
 
@@ -164,7 +164,7 @@ public class DatabaseTest extends TestSuiteI {
 
     public void test_incorrectly_typed_values_addition_test(DatabaseFactory databaseFactory) {
         final Attribute<Integer> testAttribute = attribute(Integer.class);
-        final Database testSubject = databaseFactory.database(list(testAttribute));
+        final Table testSubject = databaseFactory.database(list(testAttribute));
         assertThrows(Throwable.class, () -> testSubject.addTranslated(list("")));
     }
 

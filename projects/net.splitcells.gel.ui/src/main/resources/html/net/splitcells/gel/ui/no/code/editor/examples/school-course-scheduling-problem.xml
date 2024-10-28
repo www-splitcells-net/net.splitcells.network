@@ -90,7 +90,7 @@
                 <span class="net-splitcells-dem-lang-perspective-no-code-variable-name">demands</span>
                 <span class="net-splitcells-dem-lang-perspective-no-code-variable-value">
                     <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
-                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">database</span>
+                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">table</span>
                         <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
                             <span class="net-splitcells-dem-lang-perspective-no-code-literal">exams</span>
                         </span>
@@ -113,7 +113,7 @@
                 <span class="net-splitcells-dem-lang-perspective-no-code-variable-name">supplies</span>
                 <span class="net-splitcells-dem-lang-perspective-no-code-variable-value">
                     <span class="net-splitcells-dem-lang-perspective-no-code-function-call">
-                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">database</span>
+                        <span class="net-splitcells-dem-lang-perspective-no-code-function-call-name">table</span>
                         <span class="net-splitcells-dem-lang-perspective-no-code-function-call-argument">
                             <span class="net-splitcells-dem-lang-perspective-no-code-literal">available-appointments</span>
                         </span>

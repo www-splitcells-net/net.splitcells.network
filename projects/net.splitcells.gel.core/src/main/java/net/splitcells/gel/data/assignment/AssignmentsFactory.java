@@ -18,8 +18,8 @@ package net.splitcells.gel.data.assignment;
 
 import net.splitcells.dem.environment.resource.Resource;
 import net.splitcells.dem.resource.AspectOrientedConstructor;
-import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.database.Table;
 
 public interface AssignmentsFactory extends Resource, AspectOrientedConstructor<Assignments> {
-    Assignments assignments(String name, Database demands, Database supply);
+    Assignments assignments(String name, Table demands, Table supply);
 }

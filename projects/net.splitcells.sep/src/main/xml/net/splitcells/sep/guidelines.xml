@@ -11,7 +11,7 @@
         start with the sub problem,
         that allocates the most important resources first.
         This is especially the case, where the problem is modeled via a chain of allocations.
-        There the first allocation database represents the demands or supplies of the second allocation database and so on.
+        There the first allocation table represents the demands or supplies of the second allocation table and so on.
         Thereby, the solver first allocates the most important resources first.
         The rating of the most important resources therefore gives the solver an immediate feedback
         regarding the possible allocations of secondary resources.

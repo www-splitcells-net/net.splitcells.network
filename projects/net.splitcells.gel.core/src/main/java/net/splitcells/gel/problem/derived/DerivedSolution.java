@@ -21,6 +21,7 @@ import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.assignment.Assignments;
+import net.splitcells.gel.data.database.Table;
 import net.splitcells.gel.data.view.LinePointer;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.solution.Solution;
@@ -31,7 +32,6 @@ import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.gel.constraint.Constraint;
-import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 
 import java.util.function.Function;
@@ -104,32 +104,32 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public Database supplies() {
+    public Table supplies() {
         return assignments.supplies();
     }
 
     @Override
-    public Database suppliesUsed() {
+    public Table suppliesUsed() {
         return assignments.suppliesUsed();
     }
 
     @Override
-    public Database suppliesFree() {
+    public Table suppliesFree() {
         return assignments.suppliesFree();
     }
 
     @Override
-    public Database demands() {
+    public Table demands() {
         return assignments.demands();
     }
 
     @Override
-    public Database demandsUsed() {
+    public Table demandsUsed() {
         return assignments.demandsUsed();
     }
 
     @Override
-    public Database demandsFree() {
+    public Table demandsFree() {
         return assignments.demandsFree();
     }
 

@@ -16,7 +16,7 @@
 package net.splitcells.cin;
 
 import net.splitcells.dem.utils.random.Randomness;
-import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.database.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.solution.Solution;
 
@@ -31,7 +31,7 @@ import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
  * <p>Floats instead of doubles are used, as these are used in game development and
  * seem to be better supported on GPUs.</p>
  * <p>TODO Optional {@link Attribute} are used for now and that is OK,
- * as later the {@link #entities} {@link Database} will be split up into multiple,
+ * as later the {@link #entities} {@link Table} will be split up into multiple,
  * which will than be represented by a meta {@link Solution}.</p>
  */
 public class EntityManager {
@@ -47,8 +47,8 @@ public class EntityManager {
     }
 
     private final Solution entities;
-    private final Database entityDemands;
-    private final Database entitySupplies;
+    private final Table entityDemands;
+    private final Table entitySupplies;
     private int initTime = 1;
     private int currentTime = initTime;
     private int nextTime = currentTime + 1;

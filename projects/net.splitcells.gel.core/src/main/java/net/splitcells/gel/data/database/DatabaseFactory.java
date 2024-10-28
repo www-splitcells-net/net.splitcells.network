@@ -23,19 +23,19 @@ import net.splitcells.gel.data.view.attribute.Attribute;
 
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 
-public interface DatabaseFactory extends AspectOrientedResource<Database>, ConnectingConstructor<Database> {
-    Database database(String name, Attribute<? extends Object>... attributes);
+public interface DatabaseFactory extends AspectOrientedResource<Table>, ConnectingConstructor<Table> {
+    Table database(String name, Attribute<? extends Object>... attributes);
 
-    Database database(Attribute<? extends Object>... attributes);
+    Table database(Attribute<? extends Object>... attributes);
 
     @Deprecated
-    default Database database_(List<Attribute<?>> attributes) {
+    default Table database_(List<Attribute<?>> attributes) {
         return database(attributes);
     }
 
-    Database database(List<Attribute<?>> attributes);
+    Table database(List<Attribute<?>> attributes);
 
-    Database database2(String name, Discoverable parent, List<Attribute<Object>> attributes);
+    Table database2(String name, Discoverable parent, List<Attribute<Object>> attributes);
 
     /**
      * TODO REMOVE This method just makes {@link DatabaseFactory} unnecessary complex.
@@ -45,12 +45,12 @@ public interface DatabaseFactory extends AspectOrientedResource<Database>, Conne
      * @return
      */
     @Deprecated
-    Database database(List<Attribute<? extends Object>> attributes, List<List<Object>> linesValues);
+    Table database(List<Attribute<? extends Object>> attributes, List<List<Object>> linesValues);
 
     @Deprecated
-    Database database(String name, Discoverable parent, Attribute<? extends Object>... attributes);
+    Table database(String name, Discoverable parent, Attribute<? extends Object>... attributes);
 
-    Database database(String name, Discoverable parent, List<Attribute<? extends Object>> attributes);
+    Table database(String name, Discoverable parent, List<Attribute<? extends Object>> attributes);
 
     /* TODO Restore this unused method and create feature with it.
     default Database databaseOfFods(List<Attribute<?>> attributes, Element fods) {

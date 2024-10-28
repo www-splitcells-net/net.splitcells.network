@@ -26,7 +26,7 @@ import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
-import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.database.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.LinePointer;
 import net.splitcells.gel.data.view.View;
@@ -194,32 +194,32 @@ public class SolutionAspect implements Solution {
     }
 
     @Override
-    public Database supplies() {
+    public Table supplies() {
         return solution.supplies();
     }
 
     @Override
-    public Database suppliesUsed() {
+    public Table suppliesUsed() {
         return solution.suppliesUsed();
     }
 
     @Override
-    public Database suppliesFree() {
+    public Table suppliesFree() {
         return solution.suppliesFree();
     }
 
     @Override
-    public Database demands() {
+    public Table demands() {
         return solution.demands();
     }
 
     @Override
-    public Database demandsUsed() {
+    public Table demandsUsed() {
         return solution.demandsUsed();
     }
 
     @Override
-    public Database demandsFree() {
+    public Table demandsFree() {
         return solution.demandsFree();
     }
 

@@ -21,7 +21,7 @@ import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenParser;
 import net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenParserBaseVisitor;
 import net.splitcells.dem.testing.Result;
-import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.database.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.ui.Editor;
 import net.splitcells.gel.ui.SolutionParameters;
@@ -83,7 +83,7 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
         return parser.editor.attributeVars();
     }
 
-    public static Map<String, Database> parseNoCodeDatabases(String arg) {
+    public static Map<String, Table> parseNoCodeDatabases(String arg) {
         final var parser = new NoCodeProblemParser();
         parser.parseNoCodeProblemIntern(arg);
         return parser.editor.databaseVars();

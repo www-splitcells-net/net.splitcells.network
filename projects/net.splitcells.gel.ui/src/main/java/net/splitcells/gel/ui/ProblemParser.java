@@ -19,7 +19,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.antlr4.DenParser;
 import net.splitcells.dem.testing.Result;
-import net.splitcells.gel.data.database.Database;
+import net.splitcells.gel.data.database.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.dem.lang.tree.antlr4.DenParserBaseVisitor;
 import net.splitcells.gel.data.view.attribute.Attributes;
@@ -52,8 +52,8 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
 
     private Optional<String> name = Optional.empty();
 
-    private Optional<Database> demands = Optional.empty();
-    private Optional<Database> supplies = Optional.empty();
+    private Optional<Table> demands = Optional.empty();
+    private Optional<Table> supplies = Optional.empty();
     private final SolutionParameters solutionParameters = SolutionParameters.solutionParameters();
 
     private Result<SolutionParameters, Tree> result = result();

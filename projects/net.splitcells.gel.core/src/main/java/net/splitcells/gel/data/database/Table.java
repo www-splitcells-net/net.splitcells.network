@@ -34,7 +34,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 /**
  * <p>TODO Line index randomizer in order to test index calculations.</p>
  * <p>TODO IDEA Make Database easily and comfortable compatible to POJOs and
- * thereby make a type safe interface of {@link Database}</p>
+ * thereby make a type safe interface of {@link Table}</p>
  * <p>TODO IDEA PERFORMANCE A database should be implementable with a byte matrix as backend.
  * Such an performance optimization would make also sense,
  * if one needs to work on an instance of data (i.e. CSV files),
@@ -48,23 +48,23 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
  * in an appropriate additional storage.
  * In order to make this possible with a good performance the interface
  * needs to support primitive types without casting.</p>
- * <p>TODO Create a {@link Database} implementation with in-memory SQL backend (i.e. H2 database) as prerequisite,
- * for example, to GPU backed {@link Database} implementations.
- * This prerequisite would be a comparably easy undertaking compared to a GPU backed {@link Database},
+ * <p>TODO Create a {@link Table} implementation with in-memory SQL backend (i.e. H2 database) as prerequisite,
+ * for example, to GPU backed {@link Table} implementations.
+ * This prerequisite would be a comparably easy undertaking compared to a GPU backed {@link Table},
  * because of the SQL language.
  * Therefore a SQL backed database could show problems,
- * that would be present for GPU backed {@link Database} as well,
+ * that would be present for GPU backed {@link Table} as well,
  * which would be easier to tackle in the SQL context compared to the GPU context.
  * Keep in mind,
- * that it makes sense to create more than alternative implementations for {@link Database} in these cases,
+ * that it makes sense to create more than alternative implementations for {@link Table} in these cases,
  * as otherwise the performance increase is very limited.</p>
  */
-public interface Database extends View {
+public interface Table extends View {
 
     Line addTranslated(ListView<? extends Object> values);
 
     /**
-     * Adds a new {@link Line} to this {@link Database} at the same index, as {@link Line#index()}.
+     * Adds a new {@link Line} to this {@link Table} at the same index, as {@link Line#index()}.
      * The new {@link Line}'s value will be queried from the given {@link Line}.
      *
      * @param line The index and the values of the new {@link Line}.
@@ -74,9 +74,9 @@ public interface Database extends View {
 
     /**
      * This is a faster version of {@link #add(Line)}.
-     * The speed is achieved by requiring the {@link View#headerView()} of this {@link Database} to be a prefix
+     * The speed is achieved by requiring the {@link View#headerView()} of this {@link Table} to be a prefix
      * to the {@link View#headerView()} of the given {@link Line#context()}.
-     * In other words, all {@link View#headerView()}'s {@link Attribute}s of this {@link Database},
+     * In other words, all {@link View#headerView()}'s {@link Attribute}s of this {@link Table},
      * need to be present at the same location in {@link View#headerView()} of the {@link Line#context()}.
      *
      * @param line
@@ -85,11 +85,11 @@ public interface Database extends View {
     Line addWithSameHeaderPrefix(Line line);
 
     /**
-     * This is done to make queries on {@link Database},
+     * This is done to make queries on {@link Table},
      * that are more complex, than {@link #lookup(Attribute, Object)} and similar methods.
      * Keep in mind, that this is the recommended way, to do performant and complex queries.
      *
-     * @return {@link Constraint} that is subscribed to this {@link Database}.
+     * @return {@link Constraint} that is subscribed to this {@link Table}.
      */
     default Query query() {
         throw notImplementedYet();
@@ -98,7 +98,7 @@ public interface Database extends View {
     /**
      * Removes the {@link Line}, where {@link Line#index()} is equal to the argument.
      * Index calculation should be omitted and therefore this method too, if possible.
-     * Unfortunately, this method is needed in case a {@link Line} has to be removed from 2 synchronized {@link Database}.
+     * Unfortunately, this method is needed in case a {@link Line} has to be removed from 2 synchronized {@link Table}.
      *
      * @param lineIndex The {@link Line#index()} to be removed.
      */
@@ -144,7 +144,7 @@ public interface Database extends View {
         return dom;
     }
 
-    default Database withAddSimplifiedCsv(String csvFile) {
+    default Table withAddSimplifiedCsv(String csvFile) {
         final var csvContent = listWithValuesOf(csvFile.split("\n"));
         range(0, csvContent.size()).forEach(i -> {
             final ListView<Object> rawValues = list();
