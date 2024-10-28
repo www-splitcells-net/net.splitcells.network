@@ -54,7 +54,7 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
     private static final String CONSTRAINTS = "constraints";
     private static final String CONTENT = "content";
     private static final String DEMANDS = "demands";
-    private static final String DATABASE = "database";
+    private static final String TABLE = "table";
     private static final String NAME = "name";
     private static final String SOLUTION = "solution";
     private static final String SUPPLIES = "supplies";
@@ -222,7 +222,7 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
                 }
                 solutionParameters.withProblem(problem(assignments, parsedQuery.value().orElseThrow().root().orElseThrow()));
                 result.withValue(solutionParameters);
-            } else if (functionName.equals(DATABASE)) {
+            } else if (functionName.equals(TABLE)) {
                 if (functionCall.function_call_argument().size() < 2) {
                     result.withErrorMessage(tree("The function database requires at least arguments.")
                             .withProperty("Actual arguments given", functionCall.function_call_argument().toString())
