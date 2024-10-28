@@ -51,6 +51,11 @@ import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
+/**
+ * This is a view of a table like thing.
+ * It is named like this in order to adhere to the SQL naming and
+ * thereby makes the naming more relatable by extern people.
+ */
 public interface View extends Discoverable, Domable, Identifiable {
     boolean GET_LINE_VIA_STREAM = true;
 
