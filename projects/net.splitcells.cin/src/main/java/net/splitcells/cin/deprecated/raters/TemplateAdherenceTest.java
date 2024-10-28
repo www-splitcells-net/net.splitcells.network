@@ -15,12 +15,12 @@
  */
 package net.splitcells.cin.deprecated.raters;
 
-import net.splitcells.gel.data.table.Databases;
+import net.splitcells.gel.data.table.Tables;
 
 import static net.splitcells.cin.deprecated.raters.TemplateAdherence.templateAdherence;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.Gel.defineProblem;
-import static net.splitcells.gel.data.table.Databases.table;
+import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.type.Cost.cost;
 
@@ -28,7 +28,7 @@ public class TemplateAdherenceTest {
     public void test() {
         final var demandValue = attribute(Integer.class, "demandValue");
         final var supplyValue = attribute(Integer.class, "supplyValue");
-        final var template = Databases.table("template", demandValue, supplyValue);
+        final var template = Tables.table("template", demandValue, supplyValue);
         template.addTranslated(list(1, 3));
         template.addTranslated(list(2, 2));
         template.addTranslated(list(3, 1));

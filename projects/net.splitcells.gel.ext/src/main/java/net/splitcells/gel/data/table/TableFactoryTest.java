@@ -18,7 +18,7 @@ package net.splitcells.gel.data.table;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DatabaseFactoryTest {
+public class TableFactoryTest {
     /* TODO Restore this unused method and create feature with it.
     @Test
     public void testDatabaseOfFods() {

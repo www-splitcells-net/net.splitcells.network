@@ -16,7 +16,7 @@
 package net.splitcells.gel.solution.optimization;
 
 
-import net.splitcells.gel.data.table.Databases;
+import net.splitcells.gel.data.table.Tables;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
@@ -31,8 +31,8 @@ public class OptimizationEventTest {
     public void test_equals_ofEqualPair() {
         final var demandValue = 0;
         final var supplyValue = 1;
-        final var tableA = Databases.table(attribute(Integer.class));
-        final var tableB = Databases.table(attribute(Integer.class));
+        final var tableA = Tables.table(attribute(Integer.class));
+        final var tableB = Tables.table(attribute(Integer.class));
         final var testSubjectA = optimizationEvent
                 (StepType.REMOVAL
                         , linePointer(tableA, demandValue)
@@ -50,8 +50,8 @@ public class OptimizationEventTest {
         final var demandValue = 0;
         final var supplyValueA = 1;
         final var supplyValueB = 2;
-        final var tableA = Databases.table(attribute(Integer.class));
-        final var tableB = Databases.table(attribute(Integer.class));
+        final var tableA = Tables.table(attribute(Integer.class));
+        final var tableB = Tables.table(attribute(Integer.class));
         final var testSubjectA = optimizationEvent(StepType.REMOVAL, linePointer(tableA, demandValue),
                 linePointer(tableB, supplyValueA));
         final var testSubjectB = optimizationEvent(StepType.REMOVAL, linePointer(tableA, demandValue),

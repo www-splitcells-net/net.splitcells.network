@@ -16,7 +16,7 @@
 package net.splitcells.gel.rating.rater;
 
 import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.gel.data.table.Databases;
+import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.solution.optimization.StepType;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -81,7 +81,7 @@ public class MinimalDistanceTest {
     @Test
     public void testRating() {
         final var attribute = attribute(Double.class);
-        final var lineSupplier = Databases.table(attribute);
+        final var lineSupplier = Tables.table(attribute);
         final var testSubject = then(minimalDistance(attribute, 2));
         {
             assertThat(testSubject.defying()).isEmpty();
@@ -149,7 +149,7 @@ public class MinimalDistanceTest {
     @Test
     public void test_simple_neighbour_defiance() {
         final var attribute = attribute(Double.class);
-        final var lineProducer = Databases.table(attribute);
+        final var lineProducer = Tables.table(attribute);
         final var testSubject = then(minimalDistance(attribute, 2));
         {
             assertThat(testSubject.defying()).isEmpty();

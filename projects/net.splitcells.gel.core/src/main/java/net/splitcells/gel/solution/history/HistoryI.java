@@ -39,7 +39,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.data.assignment.Assignments;
-import net.splitcells.gel.data.table.Databases;
+import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.LinePointer;
 import net.splitcells.gel.solution.Solution;
@@ -79,11 +79,11 @@ public class HistoryI implements History {
     private HistoryI(Solution solution) {
         assignments = Assignmentss.assignments
                 (HISTORY.value()
-                        , Databases.table
+                        , Tables.table
                                 (EVENT.value()
                                         , () -> solution.path().withAppended(HISTORY.value())
                                         , list(ALLOCATION_ID, ALLOCATION_EVENT))
-                        , Databases.table
+                        , Tables.table
                                 (RESULT.value()
                                         , () -> solution.path().withAppended(HISTORY.value())
                                         , list(META_DATA)));

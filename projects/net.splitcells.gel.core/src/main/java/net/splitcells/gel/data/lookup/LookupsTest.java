@@ -15,7 +15,7 @@
  */
 package net.splitcells.gel.data.lookup;
 
-import net.splitcells.gel.data.table.Databases;
+import net.splitcells.gel.data.table.Tables;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +24,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.Gel.defineProblem;
-import static net.splitcells.gel.data.table.Databases.table;
+import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineValue.lineValueRater;
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair;
@@ -36,7 +36,7 @@ public class LookupsTest {
     public void testPerformance() {
         final var a = attribute(Integer.class, "a");
         final var b = attribute(Integer.class, "b");
-        final var testSubject = Databases.table("testPerformance", a, b);
+        final var testSubject = Tables.table("testPerformance", a, b);
         final var s = attribute(Integer.class, "s");
         rangeClosed(1, 100000).forEach(i ->
                 testSubject.addTranslated(list(i, (Object) modulus(i, 10))));

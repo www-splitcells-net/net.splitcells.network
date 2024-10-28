@@ -17,14 +17,14 @@ package net.splitcells.gel.ui.no.code.editor;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.testing.annotations.UnitTest;
-import net.splitcells.gel.data.table.Databases;
+import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.ui.GelUiFileSystem;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.constraint.QueryI.query;
-import static net.splitcells.gel.data.table.Databases.table;
+import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
 import static net.splitcells.gel.data.view.attribute.AttributeI.stringAttribute;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
@@ -76,11 +76,11 @@ public class NoCodeProblemParserTest {
         final var parsedDatabases = parseNoCodeDatabases(Dem.configValue(GelUiFileSystem.class)
                 .readString("src/main/resources/html/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"));
         setOfUniques(parsedDatabases.values()).requireContentsOf((a, b) -> a.isEqualFormat(b),
-                setOfUniques(Databases.table("exams"
+                setOfUniques(Tables.table("exams"
                                 , stringAttribute("student")
                                 , stringAttribute("examiner")
                                 , stringAttribute("observer")),
-                        Databases.table("available-appointments"
+                        Tables.table("available-appointments"
                                 , integerAttribute("date")
                                 , integerAttribute("shift")
                                 , integerAttribute("roomNumber"))));
@@ -91,11 +91,11 @@ public class NoCodeProblemParserTest {
         final var parsedDatabases = parseNoCodeDatabases(Dem.configValue(GelUiFileSystem.class)
                 .readString("src/main/resources/html/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"));
         setOfUniques(parsedDatabases.values()).requireContentsOf((a, b) -> a.isEqualFormat(b),
-                setOfUniques(Databases.table("exams"
+                setOfUniques(Tables.table("exams"
                                 , stringAttribute("student")
                                 , stringAttribute("examiner")
                                 , stringAttribute("observer")),
-                        Databases.table("available-appointments"
+                        Tables.table("available-appointments"
                                 , integerAttribute("date")
                                 , integerAttribute("shift")
                                 , integerAttribute("roomNumber"))));

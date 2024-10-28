@@ -16,11 +16,11 @@
 package net.splitcells.gel.proposal;
 
 import net.splitcells.gel.data.assignment.Assignments;
-import net.splitcells.gel.data.table.Databases;
+import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.solution.Solution;
 
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
-import static net.splitcells.gel.data.table.Databases.table;
+import static net.splitcells.gel.data.table.Tables.table;
 
 public class Proposals implements Proposal {
 
@@ -35,11 +35,11 @@ public class Proposals implements Proposal {
     private Proposals(Solution subject) {
         this.subject = subject;
         this.proposedAssignments = assignments("proposed-allocations"
-                , Databases.table("proposed-demands", subject.demands(), subject.demands().headerView2())
-                , Databases.table("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
+                , Tables.table("proposed-demands", subject.demands(), subject.demands().headerView2())
+                , Tables.table("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
         this.contextAssignments = assignments("context-allocations"
-                , Databases.table("proposed-demands", subject.demands(), subject.demands().headerView2())
-                , Databases.table("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
+                , Tables.table("proposed-demands", subject.demands(), subject.demands().headerView2())
+                , Tables.table("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
     }
 
     /**

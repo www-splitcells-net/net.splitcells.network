@@ -17,7 +17,7 @@ package net.splitcells.gel.data.lookup;
 
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.gel.data.table.Table;
-import net.splitcells.gel.data.table.Databases;
+import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.column.Column;
 import org.junit.jupiter.api.Tag;
@@ -150,7 +150,7 @@ public class LookupTest extends TestSuiteI {
     public void test_nested_lookup_adaption_with_multiple_lines() {
         final var a = attribute(Integer.class, "a");
         final var b = attribute(Integer.class, "b");
-        final var testSubject = Databases.table(a, b);
+        final var testSubject = Tables.table(a, b);
         {
             testSubject
                     .columnView(a)
@@ -209,7 +209,7 @@ public class LookupTest extends TestSuiteI {
     public void testLookupAdaptationToRemoval() {
         final var a = attribute(Integer.class, "a");
         final var b = attribute(Integer.class, "b");
-        final var testSubject = Databases.table(list(a, b), list());
+        final var testSubject = Tables.table(list(a, b), list());
         final Supplier<View> testValues = () -> testSubject.columnView(a)
                 .lookup(1)
                 .columnView(b)

@@ -42,7 +42,7 @@ public class TableModificationCounterAspect implements Table {
         ObjectsRenderer.registerObject(new CsvRenderer() {
             @Override
             public String renderCsv() {
-                final var counter = configValue(DatabaseModificationCounter.class)
+                final var counter = configValue(TableModificationCounter.class)
                         .counters()
                         .get(table.path());
                 if (counter == null) {
@@ -70,31 +70,31 @@ public class TableModificationCounterAspect implements Table {
 
     @Override
     public Line addTranslated(ListView<?> values) {
-        configValue(DatabaseModificationCounter.class).count(this, 1 + (long) values.size());
+        configValue(TableModificationCounter.class).count(this, 1 + (long) values.size());
         return table.addTranslated(values);
     }
 
     @Override
     public Line add(Line line) {
-        configValue(DatabaseModificationCounter.class).count(this, 1 + (long) line.values().size());
+        configValue(TableModificationCounter.class).count(this, 1 + (long) line.values().size());
         return table.add(line);
     }
 
     @Override
     public Line addWithSameHeaderPrefix(Line line) {
-        configValue(DatabaseModificationCounter.class).count(this, 1 + (long) line.values().size());
+        configValue(TableModificationCounter.class).count(this, 1 + (long) line.values().size());
         return table.addWithSameHeaderPrefix(line);
     }
 
     @Override
     public void remove(int lineIndex) {
-        configValue(DatabaseModificationCounter.class).count(this, 1 + (long) rawLine(lineIndex).values().size());
+        configValue(TableModificationCounter.class).count(this, 1 + (long) rawLine(lineIndex).values().size());
         table.remove(lineIndex);
     }
 
     @Override
     public void remove(Line line) {
-        configValue(DatabaseModificationCounter.class).count(this, 1 + (long) line.values().size());
+        configValue(TableModificationCounter.class).count(this, 1 + (long) line.values().size());
         table.remove(line);
     }
 

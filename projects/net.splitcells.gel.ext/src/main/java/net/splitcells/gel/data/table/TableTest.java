@@ -40,7 +40,7 @@ import static net.splitcells.dem.testing.Mocking.anyObject;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.data.table.TableIFactory.databaseFactory;
-import static net.splitcells.gel.data.table.Databases.table;
+import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.table.linebased.LineBasedTableFactory.lineBasedDatabaseFactory;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static org.mockito.ArgumentMatchers.any;

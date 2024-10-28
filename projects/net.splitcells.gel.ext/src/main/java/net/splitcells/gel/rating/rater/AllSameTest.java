@@ -5,12 +5,12 @@
 package net.splitcells.gel.rating.rater;
 
 import net.splitcells.gel.constraint.type.Then;
-import net.splitcells.gel.data.table.Databases;
+import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.rating.type.Cost;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.gel.data.table.Databases.table;
+import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.lib.AllSame.allSame;
 import static net.splitcells.gel.rating.type.Cost.cost;
@@ -23,7 +23,7 @@ public class AllSameTest {
         final var firstValue = 1;
         final var secondValue = 2;
         final var attribute = attribute(Integer.class, "attribute");
-        final var lineSupplier = Databases.table(attribute);
+        final var lineSupplier = Tables.table(attribute);
         final var testValue = Then.then(allSame(attribute));
         final var firstTestValue = lineSupplier.addTranslated(list(firstValue));
         final var secondTestValue = lineSupplier.addTranslated(list(secondValue));

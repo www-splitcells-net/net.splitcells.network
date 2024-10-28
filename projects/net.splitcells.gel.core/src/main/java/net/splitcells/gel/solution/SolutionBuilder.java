@@ -37,7 +37,7 @@ import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.Table;
-import net.splitcells.gel.data.table.Databases;
+import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.problem.*;
 
@@ -88,14 +88,14 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
     private void initAllocations() {
         final var assignmentsName = name.orElse(Solution.class.getSimpleName());
         final var problemsDemands = demandsDatabase.orElseGet(() -> {
-            final var d = Databases.table(DEMANDS.value()
+            final var d = Tables.table(DEMANDS.value()
                     , () -> configValue(ProgramsDiscoveryPath.class).path().withAppended(assignmentsName)
                     , demandAttributes);
             demands.forEach(demand -> d.addTranslated(demand));
             return d;
         });
         final var problemsSupplies = suppliesDatabase.orElseGet(() -> {
-            final var s = Databases.table(SUPPLIES.value()
+            final var s = Tables.table(SUPPLIES.value()
                     , () -> configValue(ProgramsDiscoveryPath.class).path().withAppended(assignmentsName)
                     , supplyAttributes);
             supplies.forEach(supply -> s.addTranslated(supply));

@@ -19,7 +19,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.data.table.Databases;
+import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.rating.rater.framework.Rater;
@@ -32,7 +32,7 @@ import static net.splitcells.gel.constraint.GroupId.group;
 import static net.splitcells.gel.constraint.GroupId.rootGroup;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.constraint.type.ForAlls.forEach;
-import static net.splitcells.gel.data.table.Databases.table;
+import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
@@ -43,7 +43,7 @@ public class ConstraintTest {
     @Test
     public void testMultipleGroupAssignment() {
         final var attribute = attribute(Integer.class);
-        final var lineSupplier = Databases.table(attribute);
+        final var lineSupplier = Tables.table(attribute);
         final var group1 = rootGroup("1");
         final var group2 = rootGroup("2");
         final var testSubject = forEach(new Rater() {

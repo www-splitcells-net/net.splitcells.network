@@ -61,7 +61,7 @@ import net.splitcells.gel.constraint.intermediate.data.AllocationSelector;
 import net.splitcells.gel.constraint.intermediate.data.RoutingRating;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.Table;
-import net.splitcells.gel.data.table.Databases;
+import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
@@ -145,8 +145,8 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         } else {
             parentPath = this;
         }
-        results = Databases.table("results", parentPath, list(RESULTING_CONSTRAINT_GROUP, RATING, PROPAGATION_TO));
-        lines = Databases.table(name + ".lines", parentPath, list(LINE, INCOMING_CONSTRAINT_GROUP));
+        results = Tables.table("results", parentPath, list(RESULTING_CONSTRAINT_GROUP, RATING, PROPAGATION_TO));
+        lines = Tables.table(name + ".lines", parentPath, list(LINE, INCOMING_CONSTRAINT_GROUP));
         lineProcessing = assignments("linesProcessing", lines, results);
         lineProcessing.subscribeToAfterAdditions(this::propagateAddition);
         lineProcessing.subscribeToBeforeRemoval(this::propagateRemoval);

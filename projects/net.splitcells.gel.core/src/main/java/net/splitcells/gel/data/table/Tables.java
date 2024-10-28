@@ -24,14 +24,14 @@ import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.gel.data.table.TableIFactory.databaseFactory;
 
-public class Databases extends ResourceOptionI<TableFactory> {
-    public Databases() {
+public class Tables extends ResourceOptionI<TableFactory> {
+    public Tables() {
         super(() -> databaseFactory());
     }
 
     @SafeVarargs
     public static Table table(String name, Attribute<? extends Object>... attributes) {
-        return environment().config().configValue(Databases.class).table(name, attributes);
+        return environment().config().configValue(Tables.class).table(name, attributes);
     }
 
     /**
@@ -43,7 +43,7 @@ public class Databases extends ResourceOptionI<TableFactory> {
     @SafeVarargs
     @Deprecated
     public static Table table(Attribute<? extends Object>... attributes) {
-        return environment().config().configValue(Databases.class).table(attributes);
+        return environment().config().configValue(Tables.class).table(attributes);
     }
 
     /**
@@ -55,11 +55,11 @@ public class Databases extends ResourceOptionI<TableFactory> {
      */
     @Deprecated
     public static Table table(List<Attribute<? extends Object>> attributes, List<List<Object>> linesValues) {
-        return environment().config().configValue(Databases.class).table(attributes, linesValues);
+        return environment().config().configValue(Tables.class).table(attributes, linesValues);
     }
 
     public static Table table(String name, Discoverable parent, List<Attribute<? extends Object>> attributes) {
-        return environment().config().configValue(Databases.class).table(name, parent, attributes);
+        return environment().config().configValue(Tables.class).table(name, parent, attributes);
     }
 
     /**
@@ -70,7 +70,7 @@ public class Databases extends ResourceOptionI<TableFactory> {
      */
     @Deprecated
     public static Table table(List<Attribute<?>> attributes) {
-        return environment().config().configValue(Databases.class).table(attributes);
+        return environment().config().configValue(Tables.class).table(attributes);
     }
 
     /**
@@ -81,11 +81,11 @@ public class Databases extends ResourceOptionI<TableFactory> {
      */
     @Deprecated
     public static Table table2(List<Attribute<Object>> attributes) {
-        return environment().config().configValue(Databases.class).table(attributes.mapped(a -> (Attribute<Object>) a));
+        return environment().config().configValue(Tables.class).table(attributes.mapped(a -> (Attribute<Object>) a));
     }
 
     public static Table table2(String name, Discoverable parent, List<Attribute<Object>> attributes) {
-        return environment().config().configValue(Databases.class).table2(name, parent, attributes);
+        return environment().config().configValue(Tables.class).table2(name, parent, attributes);
     }
 
     /**

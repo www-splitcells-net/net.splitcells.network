@@ -15,7 +15,7 @@
  */
 package net.splitcells.gel.solution.optimization.primitive;
 
-import net.splitcells.gel.data.table.Databases;
+import net.splitcells.gel.data.table.Tables;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -51,7 +51,7 @@ public class TemplateInitializerTest {
                 .toProblem()
                 .asSolution();
         testProduct.optimize(templateInitializer(
-                Databases.table(list(demandNumber, supplyNumber)
+                Tables.table(list(demandNumber, supplyNumber)
                         , list
                                 (list(2, 1)
                                         , list(2, 1)

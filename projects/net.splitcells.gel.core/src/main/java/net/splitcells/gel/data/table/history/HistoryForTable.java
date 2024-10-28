@@ -21,7 +21,7 @@ import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.AfterAdditionSubscriber;
 import net.splitcells.gel.data.table.BeforeRemovalSubscriber;
-import net.splitcells.gel.data.table.Databases;
+import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.LinePointer;
@@ -37,10 +37,10 @@ import static net.splitcells.gel.common.Language.DATABASE_HISTORY;
 import static net.splitcells.gel.common.Language.EVENTS;
 import static net.splitcells.gel.common.Language.HISTORIC_VALUES;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
-import static net.splitcells.gel.data.table.Databases.table;
+import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
-import static net.splitcells.gel.data.table.history.DatabaseEventType.ADDITION;
-import static net.splitcells.gel.data.table.history.DatabaseEventType.REMOVAL;
+import static net.splitcells.gel.data.table.history.TableEventType.ADDITION;
+import static net.splitcells.gel.data.table.history.TableEventType.REMOVAL;
 
 /**
  * TODO This is an experimental implementation of {@link History} for {@link Table} instead of {@link Assignments}.
@@ -48,7 +48,7 @@ import static net.splitcells.gel.data.table.history.DatabaseEventType.REMOVAL;
  */
 public class HistoryForTable implements History {
 
-    public static final Attribute<DatabaseEventType> DATABASE_EVENT_TYPE = attribute(DatabaseEventType.class, "database-event-type");
+    public static final Attribute<TableEventType> DATABASE_EVENT_TYPE = attribute(TableEventType.class, "database-event-type");
     public static final Attribute<Integer> LINE_INDEX = attribute(Integer.class, "line-index");
 
     public static HistoryForTable historyForDatabase(Table table) {
@@ -63,8 +63,8 @@ public class HistoryForTable implements History {
 
     private HistoryForTable(Table table) {
         history = assignments(DATABASE_HISTORY.value(),
-                Databases.table(HISTORIC_VALUES.value(), table, table.headerView2())
-                , Databases.table(EVENTS.value(), table, list(LINE_INDEX, DATABASE_EVENT_TYPE)));
+                Tables.table(HISTORIC_VALUES.value(), table, table.headerView2())
+                , Tables.table(EVENTS.value(), table, list(LINE_INDEX, DATABASE_EVENT_TYPE)));
         this.table = table;
         table.subscribeToAfterAdditions(this);
         table.subscribeToBeforeRemoval(this);

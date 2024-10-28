@@ -26,11 +26,11 @@ import java.util.Optional;
 import static net.splitcells.dem.object.Discoverable.discoverable;
 import static net.splitcells.dem.testing.MetaCounter.metaCounter;
 
-public class DatabaseModificationCounter implements Option<MetaCounter> {
+public class TableModificationCounter implements Option<MetaCounter> {
     @Override
     public MetaCounter defaultValue() {
-        final var metaCounter = metaCounter(discoverable(DatabaseModificationCounter.class)).withConfig(env
-                -> env.config().configValue(Databases.class).withAspect(TableModificationCounterAspect::tableModificationCounterAspect));
+        final var metaCounter = metaCounter(discoverable(TableModificationCounter.class)).withConfig(env
+                -> env.config().configValue(Tables.class).withAspect(TableModificationCounterAspect::tableModificationCounterAspect));
         ObjectsRenderer.registerObject(new CsvRenderer() {
             @Override
             public String renderCsv() {

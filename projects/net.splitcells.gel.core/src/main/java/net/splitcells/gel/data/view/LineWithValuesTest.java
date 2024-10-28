@@ -16,12 +16,12 @@
 package net.splitcells.gel.data.view;
 
 import net.splitcells.dem.testing.annotations.UnitTest;
-import net.splitcells.gel.data.table.Databases;
+import net.splitcells.gel.data.table.Tables;
 
 import static net.splitcells.dem.data.atom.Integers.requireEqualInts;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
-import static net.splitcells.gel.data.table.Databases.table;
+import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.view.LineWithValues.lineWithValues;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.data.view.attribute.IndexedAttribute.indexedAttribute;
@@ -32,7 +32,7 @@ public class LineWithValuesTest {
         final var attribute1 = attribute(Integer.class);
         final var attribute2 = attribute(Integer.class);
         final var attribute3 = attribute(Integer.class);
-        final var valueTypes = Databases.table(attribute1, attribute2, attribute3);
+        final var valueTypes = Tables.table(attribute1, attribute2, attribute3);
         final var indexedAttribute1 = indexedAttribute(attribute1, valueTypes);
         final var indexedAttribute2 = indexedAttribute(attribute2, valueTypes);
         final var indexedAttribute3 = indexedAttribute(attribute3, valueTypes);

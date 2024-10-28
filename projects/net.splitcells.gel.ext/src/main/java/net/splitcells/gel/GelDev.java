@@ -28,7 +28,7 @@ import net.splitcells.dem.resource.communication.log.IsEchoToFile;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.dem.utils.random.DeterministicRootSourceSeed;
-import net.splitcells.gel.data.table.Databases;
+import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.lookup.LookupTables;
 import net.splitcells.gel.solution.Solutions;
 import net.splitcells.website.server.Config;
@@ -90,7 +90,7 @@ public final class GelDev {
 
     public static void configureForWebserver(Environment env) {
         env.config().withInitedOption(ServerService.class);
-        env.config().configValue(Databases.class)
+        env.config().configValue(Tables.class)
                 .withConnector(database -> ObjectsRenderer.registerObject(new DiscoverableRenderer() {
                     @Override
                     public String render() {

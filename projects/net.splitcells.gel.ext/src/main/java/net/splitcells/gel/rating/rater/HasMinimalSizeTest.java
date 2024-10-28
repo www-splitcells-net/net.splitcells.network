@@ -16,11 +16,11 @@
 package net.splitcells.gel.rating.rater;
 
 import net.splitcells.gel.constraint.type.Then;
-import net.splitcells.gel.data.table.Databases;
+import net.splitcells.gel.data.table.Tables;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.gel.data.table.Databases.table;
+import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.rating.rater.lib.HasMinimalSize.hasMinimalSize;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
@@ -29,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class HasMinimalSizeTest {
     @Test
     public void testRating() {
-        final var lineSupplier = Databases.table();
+        final var lineSupplier = Tables.table();
         final var testValue = Then.then(hasMinimalSize(2));
         assertThat(testValue.complying()).isEmpty();
         assertThat(testValue.defying()).isEmpty();

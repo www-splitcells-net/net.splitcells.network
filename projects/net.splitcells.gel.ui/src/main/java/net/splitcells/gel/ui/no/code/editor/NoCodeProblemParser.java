@@ -21,7 +21,7 @@ import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenParser;
 import net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenParserBaseVisitor;
 import net.splitcells.dem.testing.Result;
-import net.splitcells.gel.data.table.Databases;
+import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.ui.Editor;
@@ -39,7 +39,7 @@ import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
-import static net.splitcells.gel.data.table.Databases.table;
+import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.view.attribute.Attributes.parseAttribute;
 import static net.splitcells.gel.problem.ProblemI.problem;
 import static net.splitcells.gel.ui.Editor.editor;
@@ -257,7 +257,7 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
                     }
                     databaseAttributes.add(editor.attributeByVarName(attributeText.variable_reference().Name().getText()));
                 }
-                editor.withDatabaseVar(variableName, Databases.table(databaseName, NO_CONTEXT, databaseAttributes));
+                editor.withDatabaseVar(variableName, Tables.table(databaseName, NO_CONTEXT, databaseAttributes));
                 return null;
             } else if (functionName.equals(ATTRIBUTE)) {
                 if (functionCall.function_call_argument().size() != 2) {

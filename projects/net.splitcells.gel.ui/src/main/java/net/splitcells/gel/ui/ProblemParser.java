@@ -34,7 +34,7 @@ import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.gel.ui.QueryParser.parseQuery;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
-import static net.splitcells.gel.data.table.Databases.table;
+import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.problem.ProblemI.problem;
 

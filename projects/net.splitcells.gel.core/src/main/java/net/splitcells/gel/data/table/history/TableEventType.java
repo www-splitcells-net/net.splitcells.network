@@ -15,6 +15,6 @@
  */
 package net.splitcells.gel.data.table.history;
 
-public enum DatabaseEventType {
+public enum TableEventType {
     ADDITION, REMOVAL;
 }
