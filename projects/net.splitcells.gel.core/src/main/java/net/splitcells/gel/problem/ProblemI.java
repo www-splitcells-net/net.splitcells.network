@@ -22,7 +22,7 @@ import net.splitcells.dem.execution.EffectSynchronization;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.constraint.type.framework.ConstraintAspect;
 import net.splitcells.gel.data.assignment.Assignments;
-import net.splitcells.gel.data.database.DatabaseSynchronization;
+import net.splitcells.gel.data.database.TableSynchronization;
 import net.splitcells.gel.data.database.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.LinePointer;
@@ -50,7 +50,7 @@ public class ProblemI implements Problem {
 
     public static Problem problem(Assignments assignments, Constraint constraint) {
         final var problem = new ProblemI(assignments, constraint);
-        problem.synchronize(new DatabaseSynchronization() {
+        problem.synchronize(new TableSynchronization() {
 
             @EffectSynchronization(ConstraintAspect.class)
             @Override
@@ -199,7 +199,7 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public void synchronize(DatabaseSynchronization subscriber) {
+    public void synchronize(TableSynchronization subscriber) {
         this.assignments.synchronize(subscriber);
     }
 

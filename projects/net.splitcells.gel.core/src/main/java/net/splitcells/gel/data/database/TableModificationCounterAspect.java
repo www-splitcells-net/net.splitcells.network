@@ -31,7 +31,7 @@ import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 public class TableModificationCounterAspect implements Table {
-    public static Table databaseModificationCounterAspect(Table table) {
+    public static Table tableModificationCounterAspect(Table table) {
         return new TableModificationCounterAspect(table);
     }
 

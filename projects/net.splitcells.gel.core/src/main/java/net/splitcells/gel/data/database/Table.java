@@ -118,7 +118,7 @@ public interface Table extends View {
      *
      * @param subscriber This is the synchronize.
      */
-    default void synchronize(DatabaseSynchronization subscriber) {
+    default void synchronize(TableSynchronization subscriber) {
         subscribeToAfterAdditions(subscriber);
         subscribeToBeforeRemoval(subscriber);
     }

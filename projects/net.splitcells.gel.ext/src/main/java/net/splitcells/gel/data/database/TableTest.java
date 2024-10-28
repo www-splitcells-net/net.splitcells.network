@@ -39,9 +39,9 @@ import static net.splitcells.dem.testing.Assertions.requireNull;
 import static net.splitcells.dem.testing.Mocking.anyObject;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
 import static net.splitcells.gel.constraint.Constraint.LINE;
-import static net.splitcells.gel.data.database.DatabaseIFactory.databaseFactory;
+import static net.splitcells.gel.data.database.TableIFactory.databaseFactory;
 import static net.splitcells.gel.data.database.Databases.database;
-import static net.splitcells.gel.data.database.linebased.LineBasedDatabaseFactory.lineBasedDatabaseFactory;
+import static net.splitcells.gel.data.database.linebased.LineBasedTableFactory.lineBasedDatabaseFactory;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -54,7 +54,7 @@ import static org.mockito.Mockito.when;
  */
 public class TableTest extends TestSuiteI {
 
-    public static List<DatabaseFactory> databaseFactories() {
+    public static List<TableFactory> databaseFactories() {
         final var databaseFactories = list(databaseFactory(), lineBasedDatabaseFactory());
         databaseFactories.forEach(df -> df.withAspect(TableMetaAspect::databaseIRef));
         return databaseFactories;
@@ -162,9 +162,9 @@ public class TableTest extends TestSuiteI {
         return dynamicTests2(this::test_incorrectly_typed_values_addition_test, databaseFactories());
     }
 
-    public void test_incorrectly_typed_values_addition_test(DatabaseFactory databaseFactory) {
+    public void test_incorrectly_typed_values_addition_test(TableFactory tableFactory) {
         final Attribute<Integer> testAttribute = attribute(Integer.class);
-        final Table testSubject = databaseFactory.database(list(testAttribute));
+        final Table testSubject = tableFactory.database(list(testAttribute));
         assertThrows(Throwable.class, () -> testSubject.addTranslated(list("")));
     }
 
@@ -174,8 +174,8 @@ public class TableTest extends TestSuiteI {
         return dynamicTests2(this::test_incorrectly_sized_values_addition_test, databaseFactories());
     }
 
-    public void test_incorrectly_sized_values_addition_test(DatabaseFactory databaseFactory) {
-        assertThrows(Throwable.class, () -> databaseFactory.database().addTranslated(listWithValuesOf(anyObject())));
+    public void test_incorrectly_sized_values_addition_test(TableFactory tableFactory) {
+        assertThrows(Throwable.class, () -> tableFactory.database().addTranslated(listWithValuesOf(anyObject())));
     }
 
     @Tag(UNIT_TEST)
@@ -184,9 +184,9 @@ public class TableTest extends TestSuiteI {
         return dynamicTests2(this::test_single_addition_and_removal, databaseFactories());
     }
 
-    public void test_single_addition_and_removal(DatabaseFactory databaseFactory) {
+    public void test_single_addition_and_removal(TableFactory tableFactory) {
         List<?> lineValues = list();
-        final var voidDatabase = databaseFactory.database();
+        final var voidDatabase = tableFactory.database();
         voidDatabase.unorderedLines().requireEmpty();
         final var addedLine = voidDatabase.addTranslated(lineValues);
         voidDatabase.unorderedLines().requireSizeOf(1);
@@ -201,9 +201,9 @@ public class TableTest extends TestSuiteI {
         return dynamicTests2(this::test_index_preservation_by_add, databaseFactories());
     }
 
-    public void test_index_preservation_by_add(DatabaseFactory databaseFactory) {
+    public void test_index_preservation_by_add(TableFactory tableFactory) {
         final var line = mock(Line.class);
-        final var voidDatabase = databaseFactory.database();
+        final var voidDatabase = tableFactory.database();
         when(line.context()).thenReturn(voidDatabase);
         when(line.value(any(Attribute.class))).thenReturn(1);
         when(line.index()).thenReturn(2);
@@ -219,10 +219,10 @@ public class TableTest extends TestSuiteI {
         return dynamicTests2(this::test_subscriptions, databaseFactories());
     }
 
-    public void test_subscriptions(DatabaseFactory databaseFactory) {
+    public void test_subscriptions(TableFactory tableFactory) {
         final var additionCounter = list(0);// Mutable integer Object required.
         final var removalCounter = list(0);// Mutable integer Object required.
-        final var voidDatabase = databaseFactory.database();
+        final var voidDatabase = tableFactory.database();
         voidDatabase.subscribeToAfterAdditions(additionOf -> additionCounter.set(0, additionCounter.get(0) + 1));
         voidDatabase.subscribeToBeforeRemoval(removalOf -> removalCounter.set(0, removalCounter.get(0) + 1));
         final List<?> lineValues = list();
@@ -242,9 +242,9 @@ public class TableTest extends TestSuiteI {
         return dynamicTests2(this::test_addTranslated_with_too_many_values, databaseFactories());
     }
 
-    public void test_addTranslated_with_too_many_values(DatabaseFactory databaseFactory) {
+    public void test_addTranslated_with_too_many_values(TableFactory tableFactory) {
         assertThrows(Throwable.class, () -> {
-            databaseFactory.database().addTranslated(list(1));
+            tableFactory.database().addTranslated(list(1));
         });
     }
 }

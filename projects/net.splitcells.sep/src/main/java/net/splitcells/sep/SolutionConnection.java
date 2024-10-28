@@ -16,7 +16,7 @@
 package net.splitcells.sep;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.data.database.DatabaseSynchronization;
+import net.splitcells.gel.data.database.TableSynchronization;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.solution.Solution;
 
@@ -25,7 +25,7 @@ import net.splitcells.gel.solution.Solution;
  * Allocated {@link Line} from {@link #original()} are sent to {@link #dependent()}.</p>
  * <p>TODO Make this interface the main one to create protocols,
  * synchronizing 2 {@link Solution} in a {@link Network},
- * instead of {@link DatabaseSynchronization}.</p>
+ * instead of {@link TableSynchronization}.</p>
  */
 public interface SolutionConnection {
 

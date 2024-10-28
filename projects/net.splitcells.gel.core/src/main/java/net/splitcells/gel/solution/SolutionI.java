@@ -20,7 +20,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.data.assignment.Assignments;
-import net.splitcells.gel.data.database.DatabaseSynchronization;
+import net.splitcells.gel.data.database.TableSynchronization;
 import net.splitcells.gel.data.database.Table;
 import net.splitcells.gel.data.view.LinePointer;
 import net.splitcells.gel.rating.framework.Rating;
@@ -193,7 +193,7 @@ public class SolutionI implements Solution {
     }
 
     @SuppressWarnings("all")
-    public void synchronize(DatabaseSynchronization subscriber) {
+    public void synchronize(TableSynchronization subscriber) {
         this.problem.synchronize(subscriber);
     }
 

@@ -42,7 +42,7 @@ import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.resource.host.ProcessPath;
-import net.splitcells.gel.data.database.DatabaseSynchronization;
+import net.splitcells.gel.data.database.TableSynchronization;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.proposal.Proposal;
@@ -70,7 +70,7 @@ import net.splitcells.gel.rating.framework.Rating;
  * for a new allocation or a removal of such on average.
  * </p>
  */
-public interface Constraint extends DatabaseSynchronization, ConstraintWriter, Discoverable, PubliclyTyped<Constraint>, PubliclyConstructed<Domable>, Domable {
+public interface Constraint extends TableSynchronization, ConstraintWriter, Discoverable, PubliclyTyped<Constraint>, PubliclyConstructed<Domable>, Domable {
     Attribute<Line> LINE = attribute(Line.class, "line");
     Attribute<List<Constraint>> PROPAGATION_TO = listAttribute(Constraint.class, "propagation to");
     Attribute<GroupId> INCOMING_CONSTRAINT_GROUP = attribute(GroupId.class, "incoming constraint group");

@@ -30,7 +30,7 @@ public class DatabaseModificationCounter implements Option<MetaCounter> {
     @Override
     public MetaCounter defaultValue() {
         final var metaCounter = metaCounter(discoverable(DatabaseModificationCounter.class)).withConfig(env
-                -> env.config().configValue(Databases.class).withAspect(TableModificationCounterAspect::databaseModificationCounterAspect));
+                -> env.config().configValue(Databases.class).withAspect(TableModificationCounterAspect::tableModificationCounterAspect));
         ObjectsRenderer.registerObject(new CsvRenderer() {
             @Override
             public String renderCsv() {

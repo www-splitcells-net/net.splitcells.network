@@ -23,7 +23,7 @@ import net.splitcells.gel.data.view.attribute.Attribute;
 
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 
-public interface DatabaseFactory extends AspectOrientedResource<Table>, ConnectingConstructor<Table> {
+public interface TableFactory extends AspectOrientedResource<Table>, ConnectingConstructor<Table> {
     Table database(String name, Attribute<? extends Object>... attributes);
 
     Table database(Attribute<? extends Object>... attributes);
@@ -38,7 +38,7 @@ public interface DatabaseFactory extends AspectOrientedResource<Table>, Connecti
     Table database2(String name, Discoverable parent, List<Attribute<Object>> attributes);
 
     /**
-     * TODO REMOVE This method just makes {@link DatabaseFactory} unnecessary complex.
+     * TODO REMOVE This method just makes {@link TableFactory} unnecessary complex.
      *
      * @param attributes
      * @param linesValues

@@ -25,7 +25,7 @@ import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
-import static net.splitcells.gel.data.database.TableI.databaseI;
+import static net.splitcells.gel.data.database.TableI.tableI;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -40,7 +40,7 @@ public final class ViewTest extends TestSuiteI {
     @Tag(UNIT_TEST)
     @TestFactory
     public Stream<DynamicTest> emptyTableTest() {
-        return dynamicTests(this::testEmptyTable, databaseI());
+        return dynamicTests(this::testEmptyTable, tableI());
     }
 
     /**
@@ -49,7 +49,7 @@ public final class ViewTest extends TestSuiteI {
     @Tag(UNIT_TEST)
     @TestFactory
     public Stream<DynamicTest> invalid_content_write_access_tests() {
-        return dynamicTests(this::test_invalid_content_write_access, databaseI());
+        return dynamicTests(this::test_invalid_content_write_access, tableI());
     }
 
     private void testEmptyTable(View emptyView) {

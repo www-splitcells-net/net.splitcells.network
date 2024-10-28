@@ -30,7 +30,7 @@ import net.splitcells.dem.testing.annotations.DisabledTest;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.gel.GelDev;
 import net.splitcells.gel.GelEnv;
-import net.splitcells.gel.data.database.DatabaseSynchronization;
+import net.splitcells.gel.data.database.TableSynchronization;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.rating.rater.framework.Rater;
@@ -814,7 +814,7 @@ public class SchoolCourseSchedulingTest {
             , int optimalNumberOfStudentsPerCourse
             , int maximumNumberOfStudentsPerCourse) {
         final var supplies = database2(solution.headerView());
-        solution.synchronize(new DatabaseSynchronization() {
+        solution.synchronize(new TableSynchronization() {
             @Override
             public void registerAddition(Line line) {
                 rangeClosed(1, maximumNumberOfStudentsPerCourse).forEach(i -> supplies.addTranslated(line.values()));

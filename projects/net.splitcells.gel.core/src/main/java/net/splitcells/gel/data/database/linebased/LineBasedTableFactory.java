@@ -21,7 +21,7 @@ import net.splitcells.dem.resource.AspectOrientedConstructor;
 import net.splitcells.dem.resource.AspectOrientedConstructorBase;
 import net.splitcells.dem.resource.ConnectingConstructor;
 import net.splitcells.gel.data.database.Table;
-import net.splitcells.gel.data.database.DatabaseFactory;
+import net.splitcells.gel.data.database.TableFactory;
 import net.splitcells.gel.data.view.attribute.Attribute;
 
 import java.util.Optional;
@@ -33,16 +33,16 @@ import static net.splitcells.dem.resource.AspectOrientedConstructorBase.aspectOr
 import static net.splitcells.dem.resource.ConnectingConstructorI.connectingConstructor;
 import static net.splitcells.gel.data.database.linebased.LineBasedTable.lineBasedDatabase;
 
-public class LineBasedDatabaseFactory implements DatabaseFactory {
+public class LineBasedTableFactory implements TableFactory {
 
     private final AspectOrientedConstructorBase<Table> aspects = aspectOrientedConstructor();
     private final ConnectingConstructor<Table> connector = connectingConstructor();
 
-    public static DatabaseFactory lineBasedDatabaseFactory() {
-        return new LineBasedDatabaseFactory();
+    public static TableFactory lineBasedDatabaseFactory() {
+        return new LineBasedTableFactory();
     }
 
-    private LineBasedDatabaseFactory() {
+    private LineBasedTableFactory() {
 
     }
 

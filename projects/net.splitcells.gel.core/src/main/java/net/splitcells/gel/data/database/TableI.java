@@ -59,7 +59,7 @@ import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.dem.object.Discoverable;
 
 /**
- * <p>TODO Make all constructors private. One can use configurators for {@link DatabaseFactory} instead.</p>
+ * <p>TODO Make all constructors private. One can use configurators for {@link TableFactory} instead.</p>
  * <p>TODO Test consistency of meta data.</p>
  */
 public class TableI implements Table {
@@ -82,7 +82,7 @@ public class TableI implements Table {
     private Optional<Constraint> constraint = Optional.empty();
 
     @Deprecated
-    public static Table databaseI(List<Attribute<? extends Object>> attributes) {
+    public static Table tableI(List<Attribute<? extends Object>> attributes) {
         return new TableI(attributes);
     }
 
@@ -92,7 +92,7 @@ public class TableI implements Table {
         this("", null, attributes.mapped(a -> (Attribute<Object>) a));
     }
 
-    public static Table databaseI(String name, Discoverable parent, List<Attribute<Object>> attributes) {
+    public static Table tableI(String name, Discoverable parent, List<Attribute<Object>> attributes) {
         return new TableI(name, parent, attributes);
     }
 
@@ -117,16 +117,16 @@ public class TableI implements Table {
         columnsViewView = listView(columnsViewViewList);
     }
 
-    public static Table databaseI(List<Attribute<?>> attributes, Collection<List<Object>> linesValues) {
+    public static Table tableI(List<Attribute<?>> attributes, Collection<List<Object>> linesValues) {
         return new TableI(attributes, linesValues);
     }
 
-    public static Table databaseI(String name, Discoverable parent, Attribute<? extends Object>... attributes) {
+    public static Table tableI(String name, Discoverable parent, Attribute<? extends Object>... attributes) {
         return new TableI(name, parent, attributes);
     }
 
     @Deprecated
-    public static Table databaseI(Attribute<?>... attributes) {
+    public static Table tableI(Attribute<?>... attributes) {
         return new TableI(attributes);
     }
 
@@ -392,7 +392,7 @@ public class TableI implements Table {
     public Query query() {
         if (constraint.isEmpty()) {
             final var constraintRoot = forAll();
-            synchronize(new DatabaseSynchronization() {
+            synchronize(new TableSynchronization() {
 
                 @EffectSynchronization(ConstraintAspect.class)
                 @Override

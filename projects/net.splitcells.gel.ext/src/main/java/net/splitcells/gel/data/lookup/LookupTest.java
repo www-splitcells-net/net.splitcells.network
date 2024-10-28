@@ -29,7 +29,7 @@ import java.util.function.Supplier;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
-import static net.splitcells.gel.data.database.TableI.databaseI;
+import static net.splitcells.gel.data.database.TableI.tableI;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 
 /**
@@ -43,7 +43,7 @@ public class LookupTest extends TestSuiteI {
     public void testMultipleLookupsSimultaneously() {
         final var a = attribute(Integer.class, "a");
         final var b = attribute(Integer.class, "b");
-        final var testSubject = databaseI(a, b);
+        final var testSubject = tableI(a, b);
         testSubject.addTranslated(list(1, 2));
         testSubject.columnView(a).lookup(1).unorderedLines().requireSizeOf(1);
         testSubject.columnView(a).lookup(3).unorderedLines().requireEmpty();
@@ -85,7 +85,7 @@ public class LookupTest extends TestSuiteI {
     public void testNestedLookupWithMultipleLines() {
         final var a = attribute(Integer.class, "a");
         final var b = attribute(Integer.class, "b");
-        final var testSubject = databaseI(a, b);
+        final var testSubject = tableI(a, b);
         testSubject.addTranslated(list(1, 2));
         testSubject.addTranslated(list(1, 2));
         testSubject.addTranslated(list(2, 1));
@@ -197,7 +197,7 @@ public class LookupTest extends TestSuiteI {
     public void testLookupByPredicate() {
         final var a = attribute(Integer.class, "a");
         final var b = attribute(Integer.class, "b");
-        final var testSubject = databaseI(a, b);
+        final var testSubject = tableI(a, b);
         testSubject.addTranslated(list(1, 2));
         final Predicate<Integer> predicate = aa -> aa == 1;
         testSubject.columnView(a).lookup(1).unorderedLines().requireSizeOf(1);

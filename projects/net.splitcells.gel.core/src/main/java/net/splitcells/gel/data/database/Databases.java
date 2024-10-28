@@ -22,9 +22,9 @@ import net.splitcells.gel.data.view.attribute.Attribute;
 
 import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.list.Lists.*;
-import static net.splitcells.gel.data.database.DatabaseIFactory.databaseFactory;
+import static net.splitcells.gel.data.database.TableIFactory.databaseFactory;
 
-public class Databases extends ResourceOptionI<DatabaseFactory> {
+public class Databases extends ResourceOptionI<TableFactory> {
     public Databases() {
         super(() -> databaseFactory());
     }

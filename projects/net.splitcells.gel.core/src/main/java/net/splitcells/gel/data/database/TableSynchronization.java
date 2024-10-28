@@ -15,5 +15,5 @@
  */
 package net.splitcells.gel.data.database;
 
-public interface DatabaseSynchronization extends AfterAdditionSubscriber, BeforeRemovalSubscriber {
+public interface TableSynchronization extends AfterAdditionSubscriber, BeforeRemovalSubscriber {
 }
