@@ -25,7 +25,7 @@ import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
-import static net.splitcells.gel.data.database.TableI.tableI;
+import static net.splitcells.gel.data.table.TableI.tableI;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;

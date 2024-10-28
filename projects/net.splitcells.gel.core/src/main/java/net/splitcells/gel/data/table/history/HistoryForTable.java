@@ -13,15 +13,15 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.data.database.history;
+package net.splitcells.gel.data.table.history;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.data.assignment.Assignments;
-import net.splitcells.gel.data.database.AfterAdditionSubscriber;
-import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
-import net.splitcells.gel.data.database.Table;
+import net.splitcells.gel.data.table.AfterAdditionSubscriber;
+import net.splitcells.gel.data.table.BeforeRemovalSubscriber;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.LinePointer;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -36,10 +36,10 @@ import static net.splitcells.gel.common.Language.DATABASE_HISTORY;
 import static net.splitcells.gel.common.Language.EVENTS;
 import static net.splitcells.gel.common.Language.HISTORIC_VALUES;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
-import static net.splitcells.gel.data.database.Databases.database;
+import static net.splitcells.gel.data.table.Databases.database;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
-import static net.splitcells.gel.data.database.history.DatabaseEventType.ADDITION;
-import static net.splitcells.gel.data.database.history.DatabaseEventType.REMOVAL;
+import static net.splitcells.gel.data.table.history.DatabaseEventType.ADDITION;
+import static net.splitcells.gel.data.table.history.DatabaseEventType.REMOVAL;
 
 /**
  * TODO This is an experimental implementation of {@link History} for {@link Table} instead of {@link Assignments}.

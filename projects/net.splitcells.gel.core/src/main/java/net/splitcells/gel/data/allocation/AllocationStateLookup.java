@@ -17,9 +17,9 @@ package net.splitcells.gel.data.allocation;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.gel.data.database.AfterAdditionSubscriber;
-import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
-import net.splitcells.gel.data.database.Table;
+import net.splitcells.gel.data.table.AfterAdditionSubscriber;
+import net.splitcells.gel.data.table.BeforeRemovalSubscriber;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;

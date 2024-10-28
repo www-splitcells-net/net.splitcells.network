@@ -16,8 +16,8 @@
 package net.splitcells.gel.data.lookup;
 
 import net.splitcells.dem.testing.TestSuiteI;
-import net.splitcells.gel.data.database.Table;
-import net.splitcells.gel.data.database.Databases;
+import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.table.Databases;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.column.Column;
 import org.junit.jupiter.api.Tag;
@@ -29,7 +29,7 @@ import java.util.function.Supplier;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
-import static net.splitcells.gel.data.database.TableI.tableI;
+import static net.splitcells.gel.data.table.TableI.tableI;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 
 /**

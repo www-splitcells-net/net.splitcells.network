@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.data.database.linebased;
+package net.splitcells.gel.data.table.linebased;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
@@ -22,9 +22,9 @@ import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
-import net.splitcells.gel.data.database.AfterAdditionSubscriber;
-import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
-import net.splitcells.gel.data.database.Table;
+import net.splitcells.gel.data.table.AfterAdditionSubscriber;
+import net.splitcells.gel.data.table.BeforeRemovalSubscriber;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.column.ColumnView;
@@ -42,7 +42,7 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StreamUtils.ensureSingle;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
-import static net.splitcells.gel.data.database.linebased.LineBasedColumn.lineBasedColumn;
+import static net.splitcells.gel.data.table.linebased.LineBasedColumn.lineBasedColumn;
 import static net.splitcells.gel.data.view.LineWithValues.lineWithValues;
 
 public class LineBasedTable implements Table {

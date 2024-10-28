@@ -9,7 +9,7 @@ import net.splitcells.gel.rating.type.Cost;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.gel.data.database.Databases.database;
+import static net.splitcells.gel.data.table.Databases.database;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.lib.AllSame.allSame;
 import static net.splitcells.gel.rating.type.Cost.cost;

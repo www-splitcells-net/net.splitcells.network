@@ -16,7 +16,7 @@
 package net.splitcells.gel.rating.rater;
 
 import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.gel.data.database.Databases;
+import net.splitcells.gel.data.table.Databases;
 import net.splitcells.gel.solution.optimization.StepType;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;

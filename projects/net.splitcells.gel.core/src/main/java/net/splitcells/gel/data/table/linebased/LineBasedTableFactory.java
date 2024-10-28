@@ -13,15 +13,15 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.data.database.linebased;
+package net.splitcells.gel.data.table.linebased;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.AspectOrientedConstructor;
 import net.splitcells.dem.resource.AspectOrientedConstructorBase;
 import net.splitcells.dem.resource.ConnectingConstructor;
-import net.splitcells.gel.data.database.Table;
-import net.splitcells.gel.data.database.TableFactory;
+import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.table.TableFactory;
 import net.splitcells.gel.data.view.attribute.Attribute;
 
 import java.util.Optional;
@@ -31,7 +31,7 @@ import java.util.function.Function;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.resource.AspectOrientedConstructorBase.aspectOrientedConstructor;
 import static net.splitcells.dem.resource.ConnectingConstructorI.connectingConstructor;
-import static net.splitcells.gel.data.database.linebased.LineBasedTable.lineBasedDatabase;
+import static net.splitcells.gel.data.table.linebased.LineBasedTable.lineBasedDatabase;
 
 public class LineBasedTableFactory implements TableFactory {
 

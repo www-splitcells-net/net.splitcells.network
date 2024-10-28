@@ -16,7 +16,7 @@
 package net.splitcells.cin;
 
 import net.splitcells.dem.utils.random.Randomness;
-import net.splitcells.gel.data.database.Table;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.solution.Solution;
 

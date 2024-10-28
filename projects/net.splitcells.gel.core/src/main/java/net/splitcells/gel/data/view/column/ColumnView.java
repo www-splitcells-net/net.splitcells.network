@@ -18,7 +18,7 @@ package net.splitcells.gel.data.view.column;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.gel.data.database.Table;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.lookup.LookupComponents;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;

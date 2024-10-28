@@ -17,7 +17,7 @@ package net.splitcells.gel.ui;
 
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.gel.data.assignment.Assignments;
-import net.splitcells.gel.data.database.Table;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
 
 import java.util.Optional;

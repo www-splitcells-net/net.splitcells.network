@@ -19,9 +19,9 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.data.database.AfterAdditionSubscriber;
-import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
-import net.splitcells.gel.data.database.Table;
+import net.splitcells.gel.data.table.AfterAdditionSubscriber;
+import net.splitcells.gel.data.table.BeforeRemovalSubscriber;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.LinePointer;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -34,7 +34,7 @@ import static net.splitcells.gel.data.allocation.AllocationState.ALLOCATION_PRES
 import static net.splitcells.gel.data.allocation.AllocationState.ONLY_DEMAND_PRESENT;
 import static net.splitcells.gel.data.allocation.AllocationState.ONLY_SUPPLY_PRESENT;
 import static net.splitcells.gel.data.allocation.AllocationStateLookup.allocationStateLookup;
-import static net.splitcells.gel.data.database.Databases.database;
+import static net.splitcells.gel.data.table.Databases.database;
 
 public class AllocationsI implements Allocations {
 

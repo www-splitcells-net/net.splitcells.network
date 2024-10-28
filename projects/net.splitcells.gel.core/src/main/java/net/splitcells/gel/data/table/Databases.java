@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.data.database;
+package net.splitcells.gel.data.table;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.resource.ResourceOptionI;
@@ -22,7 +22,7 @@ import net.splitcells.gel.data.view.attribute.Attribute;
 
 import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.list.Lists.*;
-import static net.splitcells.gel.data.database.TableIFactory.databaseFactory;
+import static net.splitcells.gel.data.table.TableIFactory.databaseFactory;
 
 public class Databases extends ResourceOptionI<TableFactory> {
     public Databases() {

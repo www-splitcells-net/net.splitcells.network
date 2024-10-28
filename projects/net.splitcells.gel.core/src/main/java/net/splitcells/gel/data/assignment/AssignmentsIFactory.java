@@ -17,7 +17,7 @@ package net.splitcells.gel.data.assignment;
 
 import net.splitcells.dem.resource.AspectOrientedConstructor;
 import net.splitcells.dem.resource.AspectOrientedConstructorBase;
-import net.splitcells.gel.data.database.Table;
+import net.splitcells.gel.data.table.Table;
 
 import java.util.function.Function;
 

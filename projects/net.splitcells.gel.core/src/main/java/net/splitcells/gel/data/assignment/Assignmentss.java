@@ -16,7 +16,7 @@
 package net.splitcells.gel.data.assignment;
 
 import net.splitcells.dem.environment.resource.ResourceOptionI;
-import net.splitcells.gel.data.database.Table;
+import net.splitcells.gel.data.table.Table;
 
 import static net.splitcells.dem.Dem.environment;
 

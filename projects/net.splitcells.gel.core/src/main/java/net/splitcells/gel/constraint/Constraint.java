@@ -42,7 +42,7 @@ import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.resource.host.ProcessPath;
-import net.splitcells.gel.data.database.TableSynchronization;
+import net.splitcells.gel.data.table.TableSynchronization;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.proposal.Proposal;

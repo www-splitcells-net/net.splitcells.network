@@ -23,7 +23,7 @@ import net.splitcells.gel.ui.GelUiFileSystem;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.constraint.QueryI.query;
-import static net.splitcells.gel.data.database.Databases.database;
+import static net.splitcells.gel.data.table.Databases.database;
 import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
 import static net.splitcells.gel.data.view.attribute.AttributeI.stringAttribute;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;

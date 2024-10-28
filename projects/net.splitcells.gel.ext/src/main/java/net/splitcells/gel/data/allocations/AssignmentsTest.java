@@ -26,7 +26,7 @@ import static net.splitcells.dem.testing.Assertions.assertThrows;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
-import static net.splitcells.gel.data.database.Databases.database;
+import static net.splitcells.gel.data.table.Databases.database;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 
 public class AssignmentsTest extends TestSuiteI {

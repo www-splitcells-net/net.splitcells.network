@@ -16,7 +16,7 @@
 package net.splitcells.gel.solution.optimization;
 
 
-import net.splitcells.gel.data.database.Databases;
+import net.splitcells.gel.data.table.Databases;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;

@@ -19,7 +19,7 @@ import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.solution.Solution;
 
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
-import static net.splitcells.gel.data.database.Databases.database;
+import static net.splitcells.gel.data.table.Databases.database;
 
 public class Proposals implements Proposal {
 

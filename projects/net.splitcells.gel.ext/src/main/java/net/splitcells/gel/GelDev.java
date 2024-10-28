@@ -28,7 +28,7 @@ import net.splitcells.dem.resource.communication.log.IsEchoToFile;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.dem.utils.random.DeterministicRootSourceSeed;
-import net.splitcells.gel.data.database.Databases;
+import net.splitcells.gel.data.table.Databases;
 import net.splitcells.gel.data.lookup.LookupTables;
 import net.splitcells.gel.solution.Solutions;
 import net.splitcells.website.server.Config;

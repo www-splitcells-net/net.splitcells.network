@@ -16,7 +16,7 @@
 package net.splitcells.gel.data.allocation;
 
 import net.splitcells.gel.data.assignment.AssignmentsLiveView;
-import net.splitcells.gel.data.database.Table;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;

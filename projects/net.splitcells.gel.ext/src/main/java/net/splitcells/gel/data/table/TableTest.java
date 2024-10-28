@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.data.database;
+package net.splitcells.gel.data.table;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
@@ -39,9 +39,9 @@ import static net.splitcells.dem.testing.Assertions.requireNull;
 import static net.splitcells.dem.testing.Mocking.anyObject;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
 import static net.splitcells.gel.constraint.Constraint.LINE;
-import static net.splitcells.gel.data.database.TableIFactory.databaseFactory;
-import static net.splitcells.gel.data.database.Databases.database;
-import static net.splitcells.gel.data.database.linebased.LineBasedTableFactory.lineBasedDatabaseFactory;
+import static net.splitcells.gel.data.table.TableIFactory.databaseFactory;
+import static net.splitcells.gel.data.table.Databases.database;
+import static net.splitcells.gel.data.table.linebased.LineBasedTableFactory.lineBasedDatabaseFactory;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;

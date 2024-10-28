@@ -36,8 +36,8 @@ import net.splitcells.dem.environment.config.ProgramsDiscoveryPath;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.assignment.Assignments;
-import net.splitcells.gel.data.database.Table;
-import net.splitcells.gel.data.database.Databases;
+import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.table.Databases;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.problem.*;
 

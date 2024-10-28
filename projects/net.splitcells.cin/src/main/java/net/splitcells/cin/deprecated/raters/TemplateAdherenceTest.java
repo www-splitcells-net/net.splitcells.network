@@ -18,7 +18,7 @@ package net.splitcells.cin.deprecated.raters;
 import static net.splitcells.cin.deprecated.raters.TemplateAdherence.templateAdherence;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.Gel.defineProblem;
-import static net.splitcells.gel.data.database.Databases.database;
+import static net.splitcells.gel.data.table.Databases.database;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.type.Cost.cost;
 
