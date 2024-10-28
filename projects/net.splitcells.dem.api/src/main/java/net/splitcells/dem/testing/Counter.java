@@ -66,6 +66,10 @@ public class Counter {
         return (double) sum / measurements.size();
     }
 
+    public long currentCount() {
+        return measurements.stream().map(Measurement::value).reduce(Long::sum).orElse(0L) + currentCount;
+    }
+
     public List<Measurement> measurements() {
         return measurements;
     }
