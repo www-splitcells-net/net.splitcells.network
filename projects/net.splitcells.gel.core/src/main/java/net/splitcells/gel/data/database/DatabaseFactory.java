@@ -16,21 +16,12 @@
 package net.splitcells.gel.data.database;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.environment.resource.Resource;
-import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.AspectOrientedResource;
 import net.splitcells.dem.resource.ConnectingConstructor;
-import net.splitcells.dem.resource.communication.Closeable;
-import net.splitcells.dem.resource.communication.Flushable;
-import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.view.attribute.Attribute;
 
-import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.lang.Xml.directChildElementByName;
-import static net.splitcells.dem.lang.Xml.directChildElementsByName;
-import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 
 public interface DatabaseFactory extends AspectOrientedResource<Database>, ConnectingConstructor<Database> {
     Database database(String name, Attribute<? extends Object>... attributes);

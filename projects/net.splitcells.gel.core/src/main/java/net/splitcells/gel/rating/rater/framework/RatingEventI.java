@@ -21,7 +21,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.rating.framework.LocalRating;
 
 public class RatingEventI implements RatingEvent {

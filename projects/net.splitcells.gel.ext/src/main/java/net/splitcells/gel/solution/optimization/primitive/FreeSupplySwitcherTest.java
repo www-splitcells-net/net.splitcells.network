@@ -18,13 +18,13 @@ package net.splitcells.gel.solution.optimization.primitive;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.constraint.type.Then;
-import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.view.attribute.Attribute;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
-import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.lib.ConstantRater.constantRater;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;

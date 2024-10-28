@@ -20,7 +20,7 @@ import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.AspectOrientedConstructor;
 import net.splitcells.dem.resource.AspectOrientedConstructorBase;
 import net.splitcells.dem.resource.ConnectingConstructor;
-import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.view.attribute.Attribute;
 
 import java.util.function.Consumer;
 import java.util.function.Function;

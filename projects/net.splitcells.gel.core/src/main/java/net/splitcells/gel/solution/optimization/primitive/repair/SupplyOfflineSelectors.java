@@ -17,7 +17,7 @@ package net.splitcells.gel.solution.optimization.primitive.repair;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
-import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import net.splitcells.gel.solution.optimization.primitive.SupplySelection;
 

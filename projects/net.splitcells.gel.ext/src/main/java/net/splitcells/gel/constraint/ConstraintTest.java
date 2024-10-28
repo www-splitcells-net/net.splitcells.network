@@ -22,7 +22,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.gel.constraint.Constraint.incomingGroupsOfConstraintPath;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
-import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.primitive.OfflineLinearInitialization.offlineLinearInitialization;
 import static org.assertj.core.api.Assertions.assertThat;

@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.data.table.column;
+package net.splitcells.gel.data.view.column;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
@@ -26,12 +26,11 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.data.lookup.Lookup;
 import net.splitcells.gel.data.lookup.Lookups;
-import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.data.table.Table;
-import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.attribute.Attribute;
 
 public class ColumnI<T> implements Column<T> {
 	public static <R> Column<R> column(Table table, Attribute<R> attribute) {

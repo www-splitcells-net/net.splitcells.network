@@ -49,12 +49,12 @@ import net.splitcells.dem.execution.EffectSynchronization;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.constraint.type.framework.ConstraintAspect;
-import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.data.table.LineI;
-import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.data.table.column.Column;
-import net.splitcells.gel.data.table.column.ColumnI;
-import net.splitcells.gel.data.table.column.ColumnView;
+import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.data.view.LineI;
+import net.splitcells.gel.data.view.attribute.Attribute;
+import net.splitcells.gel.data.view.column.Column;
+import net.splitcells.gel.data.view.column.ColumnI;
+import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.dem.object.Discoverable;
 

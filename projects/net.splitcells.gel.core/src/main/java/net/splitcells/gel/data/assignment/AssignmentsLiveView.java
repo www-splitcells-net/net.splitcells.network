@@ -16,9 +16,9 @@
 package net.splitcells.gel.data.assignment;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.data.table.LinePointer;
-import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.data.view.LinePointer;
+import net.splitcells.gel.data.view.Table;
 import net.splitcells.gel.data.database.Database;
 
 

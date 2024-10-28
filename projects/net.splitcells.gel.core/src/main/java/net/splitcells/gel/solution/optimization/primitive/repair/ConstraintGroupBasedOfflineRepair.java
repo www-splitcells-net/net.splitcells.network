@@ -23,7 +23,7 @@ import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.SolutionView;
-import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.solution.optimization.OfflineOptimization;

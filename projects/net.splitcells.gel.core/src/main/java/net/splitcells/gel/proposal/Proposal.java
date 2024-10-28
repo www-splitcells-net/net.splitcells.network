@@ -17,11 +17,11 @@ package net.splitcells.gel.proposal;
 
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.assignment.Assignments;
-import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.solution.Solution;
 
 /**
- * {@link #proposedAllocations} proposes {@link net.splitcells.gel.data.table.Line}s for {@link Assignments}.
+ * {@link #proposedAllocations} proposes {@link net.splitcells.gel.data.view.Line}s for {@link Assignments}.
  * Any one of {@link Assignments#demands()} can have a number of {@link Assignments#supplies()} elements and
  * therefore one of {@link Assignments#demands()} can have multiple elements of {@link Assignments#supplies()},
  * that are part of a plausible {@link Solution} according to this {@link Proposal}.

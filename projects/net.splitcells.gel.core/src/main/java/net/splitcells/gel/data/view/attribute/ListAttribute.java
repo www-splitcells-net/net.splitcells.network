@@ -13,56 +13,31 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.data.table.attribute;
+package net.splitcells.gel.data.view.attribute;
 
-import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.data.atom.Bools.bool;
+import static net.splitcells.dem.data.atom.Bools.untrue;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.common.Language;
 
 import net.splitcells.dem.data.atom.Bool;
 
-import java.util.function.Function;
-
-public final class AttributeI<T> implements Attribute<T> {
+public class ListAttribute<T> implements Attribute<List<T>> {
 
     private final Class<T> type;
     private final String name;
-    private final Function<String, T> deserializer;
 
-    public static <T> Attribute<T> attribute(Class<T> type) {
-        return new AttributeI<>(type, type.getSimpleName());
+    public static <T> ListAttribute<T> listAttribute(Class<T> type, String name) {
+        return new ListAttribute<>(type, name);
     }
 
-    public static Attribute<Integer> integerAttribute(String name) {
-        return new AttributeI<>(Integer.class, name, arg -> Integer.valueOf(arg));
-    }
-
-    public static Attribute<Float> floatAttribute(String name) {
-        return new AttributeI<>(Float.class, name, arg -> Float.valueOf(arg));
-    }
-
-    public static Attribute<String> stringAttribute(String name) {
-        return new AttributeI<>(String.class, name, arg -> arg);
-    }
-
-    public static <T> Attribute<T> attribute(Class<T> type, String name) {
-        return new AttributeI<>(type, name);
-    }
-
-    private AttributeI(Class<T> type, String name) {
-        this(type, name, arg -> {
-            throw new UnsupportedOperationException();
-        });
-    }
-
-    private AttributeI(Class<T> type, String name, Function<String, T> deserializer) {
+    protected ListAttribute(Class<T> type, String name) {
         this.type = type;
         this.name = name;
-        this.deserializer = deserializer;
     }
 
     @Override
@@ -82,18 +57,25 @@ public final class AttributeI<T> implements Attribute<T> {
 
     @Override
     public Bool isInstanceOf(Object arg) {
-        return bool(type.isAssignableFrom(arg.getClass()));
+        if (arg instanceof List<?>) {
+            return bool(
+                    ((List<?>) arg).stream()
+                            .filter(i -> i != null)
+                            .allMatch(i -> type.isAssignableFrom(i.getClass())));
+        } else {
+            return untrue();
+        }
     }
 
     @Override
     public Class<?> type() {
-        return type;
+        return List.class;
     }
 
     @Override
     public void assertArgumentCompatibility(Object arg) {
-        if (!type.isAssignableFrom(arg.getClass())) {
-            throw executionException("Given object not compatible to attribute: name=" + name
+        if (isInstanceOf(arg).isFalse()) {
+            throw executionException("Given object not compatible to list attribute: name=" + name
                     + ", type=" + type
                     + ", givenType=" + arg.getClass()
                     + ", arg=" + arg);
@@ -102,18 +84,8 @@ public final class AttributeI<T> implements Attribute<T> {
 
     @Override
     public Tree toTree() {
-        return tree(Attribute.class.getSimpleName())
-                .withProperty(Language.NAME.value(), name)
+        return tree(name)
+                .withProperty(Language.NAME.value(), getClass().getSimpleName())
                 .withProperty(Language.TYPE.value(), type.getSimpleName());
-    }
-
-    @Override
-    public T deserializeValue(String value) {
-        return deserializer.apply(value);
-    }
-
-    @Override
-    public String toString() {
-        return "attribute: name = " + name + ", type = " + type.getName();
     }
 }

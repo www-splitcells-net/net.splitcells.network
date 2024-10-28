@@ -24,7 +24,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.requireIllegalDefaultConstructor;
 import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.constraint.Constraint.RATING;
-import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;

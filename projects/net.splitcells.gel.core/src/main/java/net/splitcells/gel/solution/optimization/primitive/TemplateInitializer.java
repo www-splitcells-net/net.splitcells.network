@@ -21,8 +21,8 @@ import net.splitcells.gel.solution.SolutionView;
 import net.splitcells.gel.solution.optimization.OfflineOptimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import net.splitcells.gel.solution.optimization.StepType;
-import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.data.view.Table;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;

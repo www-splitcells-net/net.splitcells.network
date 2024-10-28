@@ -17,7 +17,7 @@ package net.splitcells.gel.problem;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.database.Database;
-import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.view.attribute.Attribute;
 
 public interface DefineDemandAttributes {
     DefineDemands withDemandAttributes(Attribute<?>... demandAttributes);

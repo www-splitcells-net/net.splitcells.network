@@ -16,18 +16,16 @@
 package net.splitcells.gel.ui.no.code.editor;
 
 import net.splitcells.dem.Dem;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.testing.annotations.UnitTest;
-import net.splitcells.gel.constraint.QueryI;
-import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.ui.GelUiFileSystem;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.data.database.Databases.database;
-import static net.splitcells.gel.data.table.attribute.AttributeI.integerAttribute;
-import static net.splitcells.gel.data.table.attribute.AttributeI.stringAttribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.stringAttribute;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.lib.MinimalDistance.minimalDistance;
 import static net.splitcells.gel.ui.no.code.editor.NoCodeProblemParser.*;

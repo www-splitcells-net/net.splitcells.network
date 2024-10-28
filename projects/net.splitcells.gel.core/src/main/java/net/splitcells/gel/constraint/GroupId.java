@@ -23,7 +23,7 @@ import java.util.Optional;
 
 import net.splitcells.dem.data.set.map.typed.TypedMapView;
 import net.splitcells.dem.lang.tree.Tree;
-import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.view.Line;
 import net.splitcells.dem.lang.dom.Domable;
 
 /**

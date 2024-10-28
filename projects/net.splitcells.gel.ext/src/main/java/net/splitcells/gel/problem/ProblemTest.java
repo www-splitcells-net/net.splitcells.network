@@ -17,7 +17,7 @@ package net.splitcells.gel.problem;
 
 import net.splitcells.gel.constraint.ConstraintTest;
 import net.splitcells.gel.constraint.type.Then;
-import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.solution.Solution;
 import org.junit.jupiter.api.Test;
 

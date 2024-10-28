@@ -16,7 +16,7 @@
 package net.splitcells.gel.data.lookup;
 
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.data.table.column.ColumnSubscriber;
+import net.splitcells.gel.data.view.column.ColumnSubscriber;
 
 /**
  * IDEA Used/unused demand/supply should be a lookup of the primary demand/supply table.

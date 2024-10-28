@@ -15,8 +15,8 @@
  */
 package net.splitcells.gel.data.lookup;
 
-import net.splitcells.gel.data.table.Table;
-import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.attribute.Attribute;
 
 import static net.splitcells.gel.data.lookup.LookupI.lookupI;
 

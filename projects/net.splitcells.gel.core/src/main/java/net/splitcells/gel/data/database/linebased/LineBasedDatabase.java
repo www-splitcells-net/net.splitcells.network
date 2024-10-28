@@ -18,20 +18,16 @@ package net.splitcells.gel.data.database.linebased;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.database.Database;
-import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.data.table.column.Column;
-import net.splitcells.gel.data.table.column.ColumnI;
-import net.splitcells.gel.data.table.column.ColumnView;
+import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.data.view.attribute.Attribute;
+import net.splitcells.gel.data.view.column.ColumnView;
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -47,7 +43,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StreamUtils.ensureSingle;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.data.database.linebased.LineBasedColumn.lineBasedColumn;
-import static net.splitcells.gel.data.table.LineWithValues.lineWithValues;
+import static net.splitcells.gel.data.view.LineWithValues.lineWithValues;
 
 public class LineBasedDatabase implements Database {
 

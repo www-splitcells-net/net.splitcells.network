@@ -22,8 +22,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.allocation.Allocations;
-import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.data.table.LinePointer;
+import net.splitcells.gel.data.view.Line;
 
 /**
  * <p>Allows multiple assignments for each one of {@link #demands()} and for each one of {@link #supplies()}.</p>

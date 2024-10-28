@@ -17,14 +17,14 @@ package net.splitcells.cin;
 
 import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.data.database.Database;
-import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.solution.Solution;
 
 import static java.util.stream.IntStream.range;
 import static net.splitcells.cin.raters.TimeSteps.overlappingTimeSteps;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
-import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 
 /**

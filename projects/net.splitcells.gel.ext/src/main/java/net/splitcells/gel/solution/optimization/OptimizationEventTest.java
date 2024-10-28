@@ -17,13 +17,12 @@ package net.splitcells.gel.solution.optimization;
 
 
 import net.splitcells.gel.data.database.Databases;
-import net.splitcells.gel.solution.optimization.StepType;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
-import static net.splitcells.gel.data.table.LinePointerI.linePointer;
-import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.data.view.LinePointerI.linePointer;
+import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 

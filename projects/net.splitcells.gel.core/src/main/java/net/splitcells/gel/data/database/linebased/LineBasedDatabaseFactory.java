@@ -16,14 +16,13 @@
 package net.splitcells.gel.data.database.linebased;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.AspectOrientedConstructor;
 import net.splitcells.dem.resource.AspectOrientedConstructorBase;
 import net.splitcells.dem.resource.ConnectingConstructor;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.DatabaseFactory;
-import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.view.attribute.Attribute;
 
 import java.util.Optional;
 import java.util.function.Consumer;

@@ -17,7 +17,7 @@ package net.splitcells.gel.solution.optimization.primitive.repair;
 
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.view.Line;
 
 import java.util.function.Function;
 

@@ -28,7 +28,7 @@ import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.gel.constraint.type.ForAlls.forAllWithValue;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.constraint.type.Then.then;
-import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;

@@ -15,12 +15,9 @@
  */
 package net.splitcells.gel.data.lookup;
 
-import net.splitcells.dem.Dem;
 import net.splitcells.dem.environment.config.framework.Option;
-import net.splitcells.dem.environment.resource.ResourceOption;
-import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.data.table.Table;
-import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.attribute.Attribute;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.gel.data.lookup.LookupTable.lookupTableFactory;

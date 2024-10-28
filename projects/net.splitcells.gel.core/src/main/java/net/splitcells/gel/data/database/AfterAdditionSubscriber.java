@@ -18,7 +18,7 @@ package net.splitcells.gel.data.database;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 
 import net.splitcells.dem.data.set.SetT;
-import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.view.Line;
 
 @FunctionalInterface
 public interface AfterAdditionSubscriber {

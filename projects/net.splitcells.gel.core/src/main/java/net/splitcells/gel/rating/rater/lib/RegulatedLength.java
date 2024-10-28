@@ -15,9 +15,9 @@
  */
 package net.splitcells.gel.rating.rater.lib;
 
-import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.data.table.Table;
-import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.framework.GroupRater;
 import net.splitcells.gel.rating.rater.framework.Rater;

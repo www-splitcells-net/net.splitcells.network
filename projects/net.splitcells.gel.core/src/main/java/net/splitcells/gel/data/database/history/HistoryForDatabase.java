@@ -22,11 +22,10 @@ import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.database.Database;
-import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.data.table.LinePointer;
-import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.data.table.column.Column;
-import net.splitcells.gel.data.table.column.ColumnView;
+import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.data.view.LinePointer;
+import net.splitcells.gel.data.view.attribute.Attribute;
+import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.gel.solution.history.History;
 
 import java.util.function.Supplier;
@@ -38,7 +37,7 @@ import static net.splitcells.gel.common.Language.EVENTS;
 import static net.splitcells.gel.common.Language.HISTORIC_VALUES;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
 import static net.splitcells.gel.data.database.Databases.database;
-import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.data.database.history.DatabaseEventType.ADDITION;
 import static net.splitcells.gel.data.database.history.DatabaseEventType.REMOVAL;
 

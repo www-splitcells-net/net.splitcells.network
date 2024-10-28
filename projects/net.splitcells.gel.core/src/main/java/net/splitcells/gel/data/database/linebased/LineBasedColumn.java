@@ -16,15 +16,13 @@
 package net.splitcells.gel.data.database.linebased;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.lookup.Lookup;
 import net.splitcells.gel.data.lookup.Lookups;
-import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.data.table.Table;
-import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.data.table.attribute.IndexedAttribute;
-import net.splitcells.gel.data.table.column.Column;
+import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.attribute.Attribute;
+import net.splitcells.gel.data.view.attribute.IndexedAttribute;
+import net.splitcells.gel.data.view.column.Column;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -36,7 +34,7 @@ import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.ExecutionException.unsupportedOperation;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
-import static net.splitcells.gel.data.table.attribute.IndexedAttribute.indexedAttribute;
+import static net.splitcells.gel.data.view.attribute.IndexedAttribute.indexedAttribute;
 
 public class LineBasedColumn<T> implements Column<T> {
 

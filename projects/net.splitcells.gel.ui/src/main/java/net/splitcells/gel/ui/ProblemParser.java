@@ -20,9 +20,9 @@ import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.antlr4.DenParser;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.data.database.Database;
-import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.dem.lang.tree.antlr4.DenParserBaseVisitor;
-import net.splitcells.gel.data.table.attribute.Attributes;
+import net.splitcells.gel.data.view.attribute.Attributes;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
@@ -35,7 +35,7 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.gel.ui.QueryParser.parseQuery;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
 import static net.splitcells.gel.data.database.Databases.database;
-import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.problem.ProblemI.problem;
 
 /**

@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.gel.constraint.type.Then.then;
-import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.lib.ConstantRater.constantRater;
 import static net.splitcells.gel.rating.rater.lib.MinimalDistance.minimalDistance;
 import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineValue.lineValueSelector;

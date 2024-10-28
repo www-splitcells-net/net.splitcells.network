@@ -21,8 +21,8 @@ import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
-import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.data.view.Table;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 

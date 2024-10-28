@@ -17,8 +17,8 @@ package net.splitcells.gel.rating.rater.framework;
 
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.constraint.GroupId;
-import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.data.view.Table;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.NotImplementedYet.TODO_NOT_IMPLEMENTED_YET;

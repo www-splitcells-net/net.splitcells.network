@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.data.table;
+package net.splitcells.gel.data.view;
 
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.list.Lists.*;
@@ -24,15 +24,15 @@ import static net.splitcells.gel.common.Language.CONTENT;
 import static net.splitcells.gel.common.Language.INDEX;
 import static net.splitcells.gel.common.Language.TYPE;
 import static net.splitcells.gel.common.Language.VALUE;
-import static net.splitcells.gel.data.table.LinePointerI.linePointer;
+import static net.splitcells.gel.data.view.LinePointerI.linePointer;
 
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.TreeI;
-import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.data.table.attribute.IndexedAttribute;
+import net.splitcells.gel.data.view.attribute.Attribute;
+import net.splitcells.gel.data.view.attribute.IndexedAttribute;
 
 /**
  * TODO {@link Line}s and {@link Table}s should be typed. Use a meta {@link Attribute}, which

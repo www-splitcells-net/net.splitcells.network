@@ -16,7 +16,7 @@
 package net.splitcells.gel.quickstart;
 
 import net.splitcells.gel.Gel;
-import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import org.junit.jupiter.api.Tag;
@@ -30,7 +30,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.testing.TestTypes.CAPABILITY_TEST;
-import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineValue.raterBasedOnLineValue;
 import static net.splitcells.gel.solution.optimization.meta.Backtracking.backtracking;

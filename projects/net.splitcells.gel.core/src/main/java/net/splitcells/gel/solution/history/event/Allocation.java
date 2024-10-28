@@ -17,7 +17,7 @@ package net.splitcells.gel.solution.history.event;
 
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.tree.Tree;
-import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.view.Line;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.gel.common.Language.*;

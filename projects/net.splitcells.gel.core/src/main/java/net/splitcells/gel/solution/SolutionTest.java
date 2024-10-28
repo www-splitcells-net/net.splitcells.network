@@ -17,7 +17,7 @@ package net.splitcells.gel.solution;
 
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.Gel;
-import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.rating.type.Cost;
 import org.junit.jupiter.api.Disabled;
@@ -31,7 +31,7 @@ import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
-import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineValue.lineValueRater;
 import static net.splitcells.gel.solution.optimization.meta.hill.climber.FunctionalHillClimber.functionalHillClimber;

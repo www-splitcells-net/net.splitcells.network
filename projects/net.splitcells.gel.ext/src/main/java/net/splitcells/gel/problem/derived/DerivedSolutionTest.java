@@ -16,7 +16,7 @@
 package net.splitcells.gel.problem.derived;
 
 import net.splitcells.gel.constraint.type.Then;
-import net.splitcells.gel.data.table.attribute.AttributeI;
+import net.splitcells.gel.data.view.attribute.AttributeI;
 import net.splitcells.gel.rating.type.Cost;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;

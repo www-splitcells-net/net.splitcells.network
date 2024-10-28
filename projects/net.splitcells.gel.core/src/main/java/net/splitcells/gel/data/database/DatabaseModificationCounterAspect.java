@@ -17,11 +17,10 @@ package net.splitcells.gel.data.database;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.data.table.column.ColumnView;
+import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.data.view.attribute.Attribute;
+import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.website.server.project.renderer.CsvRenderer;
-import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 import net.splitcells.website.server.project.renderer.ObjectsRenderer;
 
 import java.util.Optional;

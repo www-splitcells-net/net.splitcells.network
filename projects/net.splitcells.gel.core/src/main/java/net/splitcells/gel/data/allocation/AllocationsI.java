@@ -22,10 +22,10 @@ import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.database.AfterAdditionSubscriber;
 import net.splitcells.gel.data.database.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.database.Database;
-import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.data.table.LinePointer;
-import net.splitcells.gel.data.table.attribute.Attribute;
-import net.splitcells.gel.data.table.column.ColumnView;
+import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.data.view.LinePointer;
+import net.splitcells.gel.data.view.attribute.Attribute;
+import net.splitcells.gel.data.view.column.ColumnView;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;

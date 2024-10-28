@@ -22,7 +22,7 @@ import static net.splitcells.cin.deprecated.raters.deprecated.CrowdClassifier.cr
 import static net.splitcells.cin.deprecated.raters.deprecated.PositionClusters.positionClusters;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.requireIllegalDefaultConstructor;
-import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 

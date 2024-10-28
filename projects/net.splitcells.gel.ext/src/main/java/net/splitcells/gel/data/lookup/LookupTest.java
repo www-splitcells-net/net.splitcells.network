@@ -17,10 +17,9 @@ package net.splitcells.gel.data.lookup;
 
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.gel.data.database.Database;
-import net.splitcells.gel.data.database.DatabaseI;
 import net.splitcells.gel.data.database.Databases;
-import net.splitcells.gel.data.table.Table;
-import net.splitcells.gel.data.table.column.Column;
+import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.column.Column;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +30,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.gel.data.database.DatabaseI.databaseI;
-import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 
 /**
  * TODO {@link Database} and {@link Column} should not be based on {@link Lookup}.

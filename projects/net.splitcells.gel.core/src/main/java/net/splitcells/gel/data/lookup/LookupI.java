@@ -26,10 +26,9 @@ import java.util.function.Predicate;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.testing.Assertions;
-import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.data.table.Table;
-import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.attribute.Attribute;
 
 /**
  * <p>Provides a view to a subset of a {@link Table} as a {@link Table}.

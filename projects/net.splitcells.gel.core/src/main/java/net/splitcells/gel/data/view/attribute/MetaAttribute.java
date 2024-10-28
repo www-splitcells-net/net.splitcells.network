@@ -13,29 +13,23 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.data.table.attribute;
+package net.splitcells.gel.data.view.attribute;
 
 import static net.splitcells.dem.data.atom.Bools.bool;
-import static net.splitcells.dem.data.atom.Bools.untrue;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
-import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.common.Language;
 
 import net.splitcells.dem.data.atom.Bool;
 
-public class ListAttribute<T> implements Attribute<List<T>> {
+public class MetaAttribute<T> implements Attribute<Class<T>> {
 
     private final Class<T> type;
     private final String name;
 
-    public static <T> ListAttribute<T> listAttribute(Class<T> type, String name) {
-        return new ListAttribute<>(type, name);
-    }
-
-    protected ListAttribute(Class<T> type, String name) {
+    public MetaAttribute(Class<T> type, String name) {
         this.type = type;
         this.name = name;
     }
@@ -57,25 +51,18 @@ public class ListAttribute<T> implements Attribute<List<T>> {
 
     @Override
     public Bool isInstanceOf(Object arg) {
-        if (arg instanceof List<?>) {
-            return bool(
-                    ((List<?>) arg).stream()
-                            .filter(i -> i != null)
-                            .allMatch(i -> type.isAssignableFrom(i.getClass())));
-        } else {
-            return untrue();
-        }
+        return bool(type.isAssignableFrom((Class<?>) arg));
     }
 
     @Override
     public Class<?> type() {
-        return List.class;
+        return Class.class;
     }
 
     @Override
     public void assertArgumentCompatibility(Object arg) {
         if (isInstanceOf(arg).isFalse()) {
-            throw executionException("Given object not compatible to list attribute: name=" + name
+            throw executionException("Given object not compatible to attribute: name=" + name
                     + ", type=" + type
                     + ", givenType=" + arg.getClass()
                     + ", arg=" + arg);

@@ -22,7 +22,7 @@ import net.splitcells.gel.constraint.Constraint;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.requireIllegalDefaultConstructor;
-import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.proposal.ProposalProcessor.propose;
 import static net.splitcells.gel.rating.rater.lib.AllSame.allSame;
 

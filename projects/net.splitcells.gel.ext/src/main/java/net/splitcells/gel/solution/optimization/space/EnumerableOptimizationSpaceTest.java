@@ -21,7 +21,7 @@ import static net.splitcells.dem.data.atom.Bools.bool;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
-import static net.splitcells.gel.data.table.attribute.AttributeI.integerAttribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.primitive.enumerable.Initializer.initializer;
 import static net.splitcells.gel.solution.optimization.space.EnumerableOptimizationSpaceI.enumerableOptimizationSpace;

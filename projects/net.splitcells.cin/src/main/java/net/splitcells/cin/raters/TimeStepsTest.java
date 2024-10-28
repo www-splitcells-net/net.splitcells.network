@@ -16,7 +16,6 @@
 package net.splitcells.cin.raters;
 
 import net.splitcells.cin.deprecated.raters.deprecated.Loneliness;
-import net.splitcells.cin.raters.TimeSteps;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -33,7 +32,7 @@ import static net.splitcells.dem.testing.TestTypes.EXPERIMENTAL_TEST;
 import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.common.Language.FOR_ALL;
 import static net.splitcells.gel.constraint.Constraint.RESULTING_CONSTRAINT_GROUP;
-import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearDeinitializer.onlineLinearDeinitializer;
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 

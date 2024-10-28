@@ -15,7 +15,7 @@
  */
 package net.splitcells.cin.deprecated.raters.deprecated;
 
-import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.rating.rater.framework.Rater;
 
 import static net.splitcells.cin.deprecated.raters.deprecated.PlayerValuePersistenceClassifier.playerValuePersistenceClassifier;

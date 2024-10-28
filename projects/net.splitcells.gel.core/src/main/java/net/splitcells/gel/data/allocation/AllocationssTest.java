@@ -15,15 +15,13 @@
  */
 package net.splitcells.gel.data.allocation;
 
-import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.testing.annotations.UnitTest;
-import net.splitcells.gel.data.table.attribute.AttributeI;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.testing.Assertions.requireIllegalDefaultConstructor;
 import static net.splitcells.gel.data.allocation.Allocationss.allocations;
-import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 
 public class AllocationssTest {
     @UnitTest

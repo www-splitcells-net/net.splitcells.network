@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.data.table;
+package net.splitcells.gel.data.view;
 
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.gel.data.assignment.Assignments;
@@ -26,7 +26,7 @@ import java.util.stream.Stream;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
 import static net.splitcells.gel.data.database.DatabaseI.databaseI;
-import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.fail;

@@ -16,9 +16,9 @@
 package net.splitcells.gel.data.lookup;
 
 import net.splitcells.dem.resource.ConnectingConstructor;
-import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.data.table.Table;
-import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.data.view.Table;
+import net.splitcells.gel.data.view.attribute.Attribute;
 
 public interface LookupTableFactory extends ConnectingConstructor<LookupTable> {
 

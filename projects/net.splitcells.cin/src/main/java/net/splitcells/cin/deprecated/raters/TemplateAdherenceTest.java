@@ -19,7 +19,7 @@ import static net.splitcells.cin.deprecated.raters.TemplateAdherence.templateAdh
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.data.database.Databases.database;
-import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.type.Cost.cost;
 
 public class TemplateAdherenceTest {

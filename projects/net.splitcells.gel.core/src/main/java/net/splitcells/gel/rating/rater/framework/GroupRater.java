@@ -16,8 +16,8 @@
 package net.splitcells.gel.rating.rater.framework;
 
 import net.splitcells.dem.environment.config.StaticFlags;
-import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.data.view.Table;
 import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.gel.rating.framework.Rating;
 

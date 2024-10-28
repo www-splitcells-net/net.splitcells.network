@@ -21,7 +21,7 @@ import net.splitcells.dem.lang.tree.antlr4.DenParser;
 import net.splitcells.dem.lang.tree.antlr4.DenParserBaseVisitor;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.data.assignment.Assignments;
-import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.rating.rater.framework.Rater;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;

@@ -15,8 +15,7 @@
  */
 package net.splitcells.gel.constraint.intermediate.data;
 
-import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.rating.framework.MetaRating;
+import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.rating.framework.Rating;
 
 public class AllocationRating {

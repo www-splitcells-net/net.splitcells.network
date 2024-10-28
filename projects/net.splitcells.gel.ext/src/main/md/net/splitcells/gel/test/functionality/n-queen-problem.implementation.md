@@ -71,7 +71,7 @@ The following code defines the data format,
 but uses the not yet defined variables `demands` and `suipplies` for the
 actual values for an overview with less clutter:
 ```
-import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 [...]
 final var column = attribute(Integer.class, "column");
 final var row = attribute(Integer.class, "row");
@@ -247,7 +247,7 @@ this:
 package net.splitcells.gel.quickstart;
 
 import net.splitcells.gel.Gel;
-import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import org.junit.jupiter.api.Tag;
@@ -259,7 +259,7 @@ import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineValue.raterBasedOnLineValue;
 import static net.splitcells.gel.solution.optimization.meta.Backtracking.backtracking;

@@ -24,7 +24,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.constraint.Constraint.RESULTING_CONSTRAINT_GROUP;
-import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 
 public class IsAliveTest {
 

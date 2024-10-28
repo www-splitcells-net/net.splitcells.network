@@ -21,7 +21,7 @@ import net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenParser;
 import net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenParserBaseVisitor;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.constraint.Query;
-import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.ui.Editor;
 
 import java.util.Optional;

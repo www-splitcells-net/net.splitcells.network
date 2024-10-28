@@ -23,7 +23,7 @@ import static net.splitcells.dem.testing.Assertions.assertThrows;
 import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.constraint.type.ForAll.FOR_ALL_NAME;
 import static net.splitcells.gel.constraint.type.Then.THEN_NAME;
-import static net.splitcells.gel.data.table.attribute.AttributeI.attribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.lib.classification.ForAllAttributeValues.forAllAttributeValues;
 import static net.splitcells.gel.rating.rater.lib.classification.ForAllValueCombinations.FOR_ALL_VALUE_COMBINATIONS_NAME;

@@ -15,7 +15,7 @@
  */
 package net.splitcells.gel.constraint;
 
-import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.rating.framework.Rating;
 
 public final class Report {

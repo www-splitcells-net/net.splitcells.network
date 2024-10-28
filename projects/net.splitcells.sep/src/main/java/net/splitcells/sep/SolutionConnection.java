@@ -17,7 +17,7 @@ package net.splitcells.sep;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.database.DatabaseSynchronization;
-import net.splitcells.gel.data.table.Line;
+import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.solution.Solution;
 
 /**

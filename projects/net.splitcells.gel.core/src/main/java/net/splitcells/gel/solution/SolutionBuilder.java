@@ -35,11 +35,10 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.config.ProgramsDiscoveryPath;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
-import net.splitcells.gel.constraint.QueryI;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.database.Database;
 import net.splitcells.gel.data.database.Databases;
-import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.problem.*;
 
 

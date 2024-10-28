@@ -25,8 +25,8 @@ import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.tree.Tree;
-import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.data.view.Table;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.dem.lang.dom.Domable;

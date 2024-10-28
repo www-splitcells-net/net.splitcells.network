@@ -22,7 +22,7 @@ import net.splitcells.dem.lang.tree.antlr4.DenParserBaseVisitor;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.assignment.Assignments;
-import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.view.attribute.Attribute;
 
 import java.util.Optional;
 

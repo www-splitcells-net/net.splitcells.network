@@ -13,12 +13,12 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.data.table.attribute;
+package net.splitcells.gel.data.view.attribute;
 
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.atom.Bool;
-import net.splitcells.gel.data.table.Line;
-import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.data.view.Table;
 
 /**
  * This is an interface in order to access values of a {@link Line}.

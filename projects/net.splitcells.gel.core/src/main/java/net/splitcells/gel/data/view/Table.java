@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.data.table;
+package net.splitcells.gel.data.view;
 
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
@@ -44,10 +44,10 @@ import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.data.database.Database;
-import net.splitcells.gel.data.table.column.ColumnView;
+import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
 public interface Table extends Discoverable, Domable, Identifiable {

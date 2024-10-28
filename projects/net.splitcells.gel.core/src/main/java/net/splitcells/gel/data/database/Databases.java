@@ -18,7 +18,7 @@ package net.splitcells.gel.data.database;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.resource.ResourceOptionI;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.data.table.attribute.Attribute;
+import net.splitcells.gel.data.view.attribute.Attribute;
 
 import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.list.Lists.*;
