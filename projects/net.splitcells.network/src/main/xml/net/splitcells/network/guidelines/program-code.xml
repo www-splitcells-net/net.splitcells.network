@@ -43,6 +43,8 @@
         </paragraph>
         <paragraph>For method names prefer using a noun, if the of the method is to retrieve something.
             Use verbs instead, if the goal of the function is to do something or to change something.
+            Use camelcase by default and use a name where every word is separated by an underscore,
+            if the name is a sentence like <quote>test_performance_difference_of_assignments_and_tables</quote>.
         </paragraph>
     </chapter>
     <chapter>
