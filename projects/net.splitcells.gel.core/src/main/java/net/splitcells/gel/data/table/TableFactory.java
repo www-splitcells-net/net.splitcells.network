@@ -24,18 +24,18 @@ import net.splitcells.gel.data.view.attribute.Attribute;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 
 public interface TableFactory extends AspectOrientedResource<Table>, ConnectingConstructor<Table> {
-    Table database(String name, Attribute<? extends Object>... attributes);
+    Table table(String name, Attribute<? extends Object>... attributes);
 
-    Table database(Attribute<? extends Object>... attributes);
+    Table table(Attribute<? extends Object>... attributes);
 
     @Deprecated
-    default Table database_(List<Attribute<?>> attributes) {
-        return database(attributes);
+    default Table _table(List<Attribute<?>> attributes) {
+        return table(attributes);
     }
 
-    Table database(List<Attribute<?>> attributes);
+    Table table(List<Attribute<?>> attributes);
 
-    Table database2(String name, Discoverable parent, List<Attribute<Object>> attributes);
+    Table table2(String name, Discoverable parent, List<Attribute<Object>> attributes);
 
     /**
      * TODO REMOVE This method just makes {@link TableFactory} unnecessary complex.
@@ -45,12 +45,12 @@ public interface TableFactory extends AspectOrientedResource<Table>, ConnectingC
      * @return
      */
     @Deprecated
-    Table database(List<Attribute<? extends Object>> attributes, List<List<Object>> linesValues);
+    Table table(List<Attribute<? extends Object>> attributes, List<List<Object>> linesValues);
 
     @Deprecated
-    Table database(String name, Discoverable parent, Attribute<? extends Object>... attributes);
+    Table table(String name, Discoverable parent, Attribute<? extends Object>... attributes);
 
-    Table database(String name, Discoverable parent, List<Attribute<? extends Object>> attributes);
+    Table table(String name, Discoverable parent, List<Attribute<? extends Object>> attributes);
 
     /* TODO Restore this unused method and create feature with it.
     default Database databaseOfFods(List<Attribute<?>> attributes, Element fods) {

@@ -51,7 +51,7 @@ public class TemplateInitializerTest {
                 .toProblem()
                 .asSolution();
         testProduct.optimize(templateInitializer(
-                Databases.database(list(demandNumber, supplyNumber)
+                Databases.table(list(demandNumber, supplyNumber)
                         , list
                                 (list(2, 1)
                                         , list(2, 1)

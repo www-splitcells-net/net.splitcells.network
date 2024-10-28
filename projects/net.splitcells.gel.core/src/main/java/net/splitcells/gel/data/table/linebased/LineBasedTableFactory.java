@@ -79,7 +79,7 @@ public class LineBasedTableFactory implements TableFactory {
     }
 
     @Override
-    public Table database(String name, Attribute<?>... attributes) {
+    public Table table(String name, Attribute<?>... attributes) {
         final var database = joinAspects(lineBasedDatabase(name, Optional.empty()
                 , listWithValuesOf(attributes).mapped(a -> (Attribute<Object>) a)));
         connector.connect(database);
@@ -87,7 +87,7 @@ public class LineBasedTableFactory implements TableFactory {
     }
 
     @Override
-    public Table database(Attribute<?>... attributes) {
+    public Table table(Attribute<?>... attributes) {
         final var database = joinAspects(lineBasedDatabase(getClass().getSimpleName(), Optional.empty()
                 , listWithValuesOf(attributes).mapped(a -> (Attribute<Object>) a)));
         connector.connect(database);
@@ -95,7 +95,7 @@ public class LineBasedTableFactory implements TableFactory {
     }
 
     @Override
-    public Table database(List<Attribute<?>> attributes) {
+    public Table table(List<Attribute<?>> attributes) {
         final var database = joinAspects(lineBasedDatabase(getClass().getSimpleName(), Optional.empty()
                 , attributes.mapped(a -> (Attribute<Object>) a)));
         connector.connect(database);
@@ -103,14 +103,14 @@ public class LineBasedTableFactory implements TableFactory {
     }
 
     @Override
-    public Table database2(String name, Discoverable parent, List<Attribute<Object>> attributes) {
+    public Table table2(String name, Discoverable parent, List<Attribute<Object>> attributes) {
         final var database = joinAspects(lineBasedDatabase(name, Optional.of(parent), attributes));
         connector.connect(database);
         return database;
     }
 
     @Override
-    public Table database(List<Attribute<?>> attributes, List<List<Object>> linesValues) {
+    public Table table(List<Attribute<?>> attributes, List<List<Object>> linesValues) {
         final var database = joinAspects(lineBasedDatabase("", Optional.empty()
                 , attributes.mapped(a -> (Attribute<Object>) a)));
         connector.connect(database);
@@ -119,7 +119,7 @@ public class LineBasedTableFactory implements TableFactory {
     }
 
     @Override
-    public Table database(String name, Discoverable parent, Attribute<?>... attributes) {
+    public Table table(String name, Discoverable parent, Attribute<?>... attributes) {
         final var database = joinAspects(lineBasedDatabase(name, Optional.empty()
                 , listWithValuesOf(attributes).mapped(a -> (Attribute<Object>) a)));
         connector.connect(database);
@@ -127,7 +127,7 @@ public class LineBasedTableFactory implements TableFactory {
     }
 
     @Override
-    public Table database(String name, Discoverable parent, List<Attribute<?>> attributes) {
+    public Table table(String name, Discoverable parent, List<Attribute<?>> attributes) {
         final var database = joinAspects(lineBasedDatabase(name, Optional.empty()
                 , listWithValuesOf(attributes).mapped(a -> (Attribute<Object>) a)));
         connector.connect(database);

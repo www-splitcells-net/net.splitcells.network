@@ -55,35 +55,35 @@ public class TableIFactory implements TableFactory {
     }
 
     @Override
-    public Table database(String name, Attribute<? extends Object>... attributes) {
+    public Table table(String name, Attribute<? extends Object>... attributes) {
         final var database = joinAspects(TableI.tableI(name, null, attributes));
         connector.connect(database);
         return database;
     }
 
     @Override
-    public Table database(Attribute<? extends Object>... attributes) {
+    public Table table(Attribute<? extends Object>... attributes) {
         final var database= joinAspects(tableI(attributes));
         connector.connect(database);
         return database;
     }
 
     @Override
-    public Table database(List<Attribute<?>> attributes) {
+    public Table table(List<Attribute<?>> attributes) {
         final var database = joinAspects(TableI.tableI(attributes));
         connector.connect(database);
         return database;
     }
 
     @Override
-    public Table database2(String name, Discoverable parent, List<Attribute<Object>> attributes) {
+    public Table table2(String name, Discoverable parent, List<Attribute<Object>> attributes) {
         final var database = joinAspects(TableI.tableI(name, parent, attributes));
         connector.connect(database);
         return database;
     }
 
     @Override
-    public Table database(List<Attribute<? extends Object>> attributes, List<List<Object>> linesValues) {
+    public Table table(List<Attribute<? extends Object>> attributes, List<List<Object>> linesValues) {
         final var database = joinAspects(TableI.tableI(attributes, linesValues));
         connector.connect(database);
         return database;
@@ -91,14 +91,14 @@ public class TableIFactory implements TableFactory {
 
     @Override
     @Deprecated
-    public Table database(String name, Discoverable parent, Attribute<? extends Object>... attributes) {
+    public Table table(String name, Discoverable parent, Attribute<? extends Object>... attributes) {
         final var database = joinAspects(TableI.tableI(name, parent, listWithValuesOf(attributes).mapped(a -> (Attribute<Object>) a)));
         connector.connect(database);
         return database;
     }
 
     @Override
-    public Table database(String name, Discoverable parent, List<Attribute<? extends Object>> attributes) {
+    public Table table(String name, Discoverable parent, List<Attribute<? extends Object>> attributes) {
         final var database = joinAspects(TableI.tableI(name, parent, attributes.mapped(a -> (Attribute<Object>) a)));
         connector.connect(database);
         return database;

@@ -18,6 +18,7 @@ package net.splitcells.gel.data.allocations;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.dem.testing.annotations.UnitTest;
+import net.splitcells.gel.data.table.Databases;
 import net.splitcells.gel.data.view.Line;
 
 import static java.util.stream.IntStream.rangeClosed;
@@ -26,7 +27,7 @@ import static net.splitcells.dem.testing.Assertions.assertThrows;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
-import static net.splitcells.gel.data.table.Databases.database;
+import static net.splitcells.gel.data.table.Databases.table;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 
 public class AssignmentsTest extends TestSuiteI {
@@ -35,11 +36,11 @@ public class AssignmentsTest extends TestSuiteI {
     public void testMultipleAllocationsPerDemand() {
         final var demandValue = attribute(Integer.class, "demandValue");
         final var supplyValue = attribute(Integer.class, "supplyValue");
-        final var demands = database("demand", demandValue);
+        final var demands = Databases.table("demand", demandValue);
         demands.addTranslated(list(0));
         demands.addTranslated(list(1));
         demands.addTranslated(list(2));
-        final var supplies = database("supply", supplyValue);
+        final var supplies = Databases.table("supply", supplyValue);
         supplies.addTranslated(list(0));
         supplies.addTranslated(list(1));
         supplies.addTranslated(list(2));
@@ -76,8 +77,8 @@ public class AssignmentsTest extends TestSuiteI {
 
     @UnitTest
     public void testPath() {
-        final var demands = database("demands");
-        final var supplies = database("supplies");
+        final var demands = Databases.table("demands");
+        final var supplies = Databases.table("supplies");
         final var allocations = assignments("test", demands, supplies);
 
         Assertions.requireEquals(allocations.path(), list("demands", "allocations", "test"));
@@ -85,8 +86,8 @@ public class AssignmentsTest extends TestSuiteI {
 
     @UnitTest
     public void testRawLinesGrowth() {
-        final var demands = database();
-        final var supplies = database();
+        final var demands = Databases.table();
+        final var supplies = Databases.table();
         final var allocations = assignments("test", demands, supplies);
         rangeClosed(1, 10).forEach(i -> {
             final var allocation = allocations.assign(demands.addTranslated(list()), supplies.addTranslated(list()));
@@ -97,8 +98,8 @@ public class AssignmentsTest extends TestSuiteI {
 
     @UnitTest
     public void test_subscribe_to_afterAdditions() {
-        final var demands = database();
-        final var supplies = database();
+        final var demands = Databases.table();
+        final var supplies = Databases.table();
         final var allocations = assignments("test", demands, supplies);
         allocations.subscribeToAfterAdditions(
                 allocation -> requireNotNull(allocations.demandOfAssignment(allocation)));
@@ -109,8 +110,8 @@ public class AssignmentsTest extends TestSuiteI {
 
     @UnitTest
     public void test_subscriber_to_beforeRemoval() {
-        final var demands = database();
-        final var supplies = database();
+        final var demands = Databases.table();
+        final var supplies = Databases.table();
         final var allocations = assignments("test", demands, supplies);
         allocations.subscribeToBeforeRemoval
                 (allocation -> requireNotNull(allocations.demandOfAssignment(allocation)));
@@ -124,8 +125,8 @@ public class AssignmentsTest extends TestSuiteI {
     @UnitTest
     public void test_subscriber_to_afterRemoval() {
         assertThrows(Exception.class, () -> {
-            final var demands = database();
-            final var supplies = database();
+            final var demands = Databases.table();
+            final var supplies = Databases.table();
             final var allocations = assignments("test", demands, supplies);
             allocations.subscribeToAfterRemoval
                     (allocation -> requireNotNull(allocations.demandOfAssignment(allocation)));
@@ -140,10 +141,10 @@ public class AssignmentsTest extends TestSuiteI {
     @UnitTest
     public void test_allocate_and_remove() {
         final var demandAttribute = attribute(Double.class);
-        final var demands = database(demandAttribute);
+        final var demands = Databases.table(demandAttribute);
         demands.addTranslated(list(1.0));
         final var supplyAttribute = attribute(Integer.class);
-        final var supplies = database(supplyAttribute);
+        final var supplies = Databases.table(supplyAttribute);
         supplies.addTranslated(list(2));
         final var testSubject = assignments("test", demands, supplies);
         testSubject.headerView().requireEqualityTo(list(demands.headerView().get(0), supplies.headerView().get(0)));

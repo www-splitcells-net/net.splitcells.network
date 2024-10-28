@@ -150,7 +150,7 @@ public class LookupTest extends TestSuiteI {
     public void test_nested_lookup_adaption_with_multiple_lines() {
         final var a = attribute(Integer.class, "a");
         final var b = attribute(Integer.class, "b");
-        final var testSubject = Databases.database(a, b);
+        final var testSubject = Databases.table(a, b);
         {
             testSubject
                     .columnView(a)
@@ -209,7 +209,7 @@ public class LookupTest extends TestSuiteI {
     public void testLookupAdaptationToRemoval() {
         final var a = attribute(Integer.class, "a");
         final var b = attribute(Integer.class, "b");
-        final var testSubject = Databases.database(list(a, b), list());
+        final var testSubject = Databases.table(list(a, b), list());
         final Supplier<View> testValues = () -> testSubject.columnView(a)
                 .lookup(1)
                 .columnView(b)

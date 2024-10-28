@@ -21,6 +21,7 @@ import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.table.AfterAdditionSubscriber;
 import net.splitcells.gel.data.table.BeforeRemovalSubscriber;
+import net.splitcells.gel.data.table.Databases;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.LinePointer;
@@ -34,7 +35,7 @@ import static net.splitcells.gel.data.allocation.AllocationState.ALLOCATION_PRES
 import static net.splitcells.gel.data.allocation.AllocationState.ONLY_DEMAND_PRESENT;
 import static net.splitcells.gel.data.allocation.AllocationState.ONLY_SUPPLY_PRESENT;
 import static net.splitcells.gel.data.allocation.AllocationStateLookup.allocationStateLookup;
-import static net.splitcells.gel.data.table.Databases.database;
+import static net.splitcells.gel.data.table.Databases.table;
 
 public class AllocationsI implements Allocations {
 
@@ -69,7 +70,7 @@ public class AllocationsI implements Allocations {
         this.parent = parent;
         this.demandHeader = demandHeader;
         this.supplyHeader = supplyHeader;
-        allocations = database(name, parent, listWithValuesOf(demandHeader).withAppended(supplyHeader));
+        allocations = Databases.table(name, parent, listWithValuesOf(demandHeader).withAppended(supplyHeader));
         demands = allocationStateLookup(allocations, line -> {
             final var allocationState = allocationStates.get(line.index());
             return allocationState.equals(ALLOCATION_PRESENT)

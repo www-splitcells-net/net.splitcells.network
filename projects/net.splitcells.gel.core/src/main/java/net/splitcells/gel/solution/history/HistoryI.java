@@ -79,11 +79,11 @@ public class HistoryI implements History {
     private HistoryI(Solution solution) {
         assignments = Assignmentss.assignments
                 (HISTORY.value()
-                        , Databases.database
+                        , Databases.table
                                 (EVENT.value()
                                         , () -> solution.path().withAppended(HISTORY.value())
                                         , list(ALLOCATION_ID, ALLOCATION_EVENT))
-                        , Databases.database
+                        , Databases.table
                                 (RESULT.value()
                                         , () -> solution.path().withAppended(HISTORY.value())
                                         , list(META_DATA)));

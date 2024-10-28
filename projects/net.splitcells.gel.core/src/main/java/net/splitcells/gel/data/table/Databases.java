@@ -30,8 +30,8 @@ public class Databases extends ResourceOptionI<TableFactory> {
     }
 
     @SafeVarargs
-    public static Table database(String name, Attribute<? extends Object>... attributes) {
-        return environment().config().configValue(Databases.class).database(name, attributes);
+    public static Table table(String name, Attribute<? extends Object>... attributes) {
+        return environment().config().configValue(Databases.class).table(name, attributes);
     }
 
     /**
@@ -42,8 +42,8 @@ public class Databases extends ResourceOptionI<TableFactory> {
      */
     @SafeVarargs
     @Deprecated
-    public static Table database(Attribute<? extends Object>... attributes) {
-        return environment().config().configValue(Databases.class).database(attributes);
+    public static Table table(Attribute<? extends Object>... attributes) {
+        return environment().config().configValue(Databases.class).table(attributes);
     }
 
     /**
@@ -54,23 +54,12 @@ public class Databases extends ResourceOptionI<TableFactory> {
      * @return
      */
     @Deprecated
-    public static Table database(List<Attribute<? extends Object>> attributes, List<List<Object>> linesValues) {
-        return environment().config().configValue(Databases.class).database(attributes, linesValues);
+    public static Table table(List<Attribute<? extends Object>> attributes, List<List<Object>> linesValues) {
+        return environment().config().configValue(Databases.class).table(attributes, linesValues);
     }
 
-    public static Table database(String name, Discoverable parent, List<Attribute<? extends Object>> attributes) {
-        return environment().config().configValue(Databases.class).database(name, parent, attributes);
-    }
-
-    /**
-     * TODO REMOVE Every database should have a name.
-     *
-     * @param attributes
-     * @return
-     */
-    @Deprecated
-    public static Table database(List<Attribute<?>> attributes) {
-        return environment().config().configValue(Databases.class).database(attributes);
+    public static Table table(String name, Discoverable parent, List<Attribute<? extends Object>> attributes) {
+        return environment().config().configValue(Databases.class).table(name, parent, attributes);
     }
 
     /**
@@ -80,12 +69,23 @@ public class Databases extends ResourceOptionI<TableFactory> {
      * @return
      */
     @Deprecated
-    public static Table database2(List<Attribute<Object>> attributes) {
-        return environment().config().configValue(Databases.class).database(attributes.mapped(a -> (Attribute<Object>) a));
+    public static Table table(List<Attribute<?>> attributes) {
+        return environment().config().configValue(Databases.class).table(attributes);
     }
 
-    public static Table database2(String name, Discoverable parent, List<Attribute<Object>> attributes) {
-        return environment().config().configValue(Databases.class).database2(name, parent, attributes);
+    /**
+     * TODO REMOVE Every database should have a name.
+     *
+     * @param attributes
+     * @return
+     */
+    @Deprecated
+    public static Table table2(List<Attribute<Object>> attributes) {
+        return environment().config().configValue(Databases.class).table(attributes.mapped(a -> (Attribute<Object>) a));
+    }
+
+    public static Table table2(String name, Discoverable parent, List<Attribute<Object>> attributes) {
+        return environment().config().configValue(Databases.class).table2(name, parent, attributes);
     }
 
     /**

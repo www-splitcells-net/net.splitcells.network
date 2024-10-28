@@ -15,11 +15,12 @@
  */
 package net.splitcells.gel.constraint;
 
+import net.splitcells.gel.data.table.Databases;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.constraint.type.Then.then;
-import static net.splitcells.gel.data.table.Databases.database;
+import static net.splitcells.gel.data.table.Databases.table;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineValue.lineValueBasedOnRater;
 import static net.splitcells.gel.rating.type.Cost.cost;
@@ -32,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ThenTest {
     @Test
     public void test_propagation_of_defiance() {
-        final var lineSupplier = database();
+        final var lineSupplier = Databases.table();
         final var firstDefianceCost = 7.0;
         final var secondDefianceCost = 3.0;
         final var testSubject = then(cost(firstDefianceCost));
@@ -81,7 +82,7 @@ public class ThenTest {
 
     @Test
     public void test_propagation_of_compliance() {
-        final var lineSupplier = database();
+        final var lineSupplier = Databases.table();
         final var testSubject = then(noCost());
         final var propagationValidator = testSubject.withChildren(then(noCost()));
         final var testValue = lineSupplier.addTranslated(list());
@@ -125,7 +126,7 @@ public class ThenTest {
     @Test
     public void test_rating_of_defying() {
         final var defianceCost = 3.0;
-        final var lineSupplier = database();
+        final var lineSupplier = Databases.table();
         final var testSubject = then(cost(defianceCost));
         final var testValue = lineSupplier.addTranslated(list());
         assertThat(testSubject.rating()).isEqualTo(cost(0));
@@ -152,7 +153,7 @@ public class ThenTest {
 
     @Test
     public void test_rating_of_complying() {
-        final var lineSupplier = database();
+        final var lineSupplier = Databases.table();
         final var testSubject = then(noCost());
         final var testValue = lineSupplier.addTranslated(list());
         assertThat(testSubject.rating()).isEqualTo(noCost());
@@ -177,7 +178,7 @@ public class ThenTest {
     @Test
     public void testRating() {
         final double defianceCost = 3.0;
-        final var lineSupplier = database(attribute(String.class));
+        final var lineSupplier = Databases.table(attribute(String.class));
         final var complyingLine = lineSupplier.addTranslated(list("complying"));
         final var defyingLine = lineSupplier.addTranslated(list("defying"));
         final var testSubject = then(lineValueBasedOnRater(line -> {

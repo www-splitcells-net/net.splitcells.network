@@ -21,6 +21,7 @@ import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.AfterAdditionSubscriber;
 import net.splitcells.gel.data.table.BeforeRemovalSubscriber;
+import net.splitcells.gel.data.table.Databases;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.LinePointer;
@@ -36,7 +37,7 @@ import static net.splitcells.gel.common.Language.DATABASE_HISTORY;
 import static net.splitcells.gel.common.Language.EVENTS;
 import static net.splitcells.gel.common.Language.HISTORIC_VALUES;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
-import static net.splitcells.gel.data.table.Databases.database;
+import static net.splitcells.gel.data.table.Databases.table;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.data.table.history.DatabaseEventType.ADDITION;
 import static net.splitcells.gel.data.table.history.DatabaseEventType.REMOVAL;
@@ -62,8 +63,8 @@ public class HistoryForTable implements History {
 
     private HistoryForTable(Table table) {
         history = assignments(DATABASE_HISTORY.value(),
-                database(HISTORIC_VALUES.value(), table, table.headerView2())
-                , database(EVENTS.value(), table, list(LINE_INDEX, DATABASE_EVENT_TYPE)));
+                Databases.table(HISTORIC_VALUES.value(), table, table.headerView2())
+                , Databases.table(EVENTS.value(), table, list(LINE_INDEX, DATABASE_EVENT_TYPE)));
         this.table = table;
         table.subscribeToAfterAdditions(this);
         table.subscribeToBeforeRemoval(this);

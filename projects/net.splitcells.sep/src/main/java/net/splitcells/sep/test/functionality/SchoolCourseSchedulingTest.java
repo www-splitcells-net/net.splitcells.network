@@ -57,8 +57,8 @@ import static net.splitcells.dem.utils.MathUtils.*;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.lambdas.DescriptiveLambda.describedPredicate;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
-import static net.splitcells.gel.data.table.Databases.database;
-import static net.splitcells.gel.data.table.Databases.database2;
+import static net.splitcells.gel.data.table.Databases.table;
+import static net.splitcells.gel.data.table.Databases.table2;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.lib.AllDifferent.allDifferent;
 import static net.splitcells.gel.rating.rater.lib.AllSame.allSame;
@@ -813,7 +813,7 @@ public class SchoolCourseSchedulingTest {
             , int minimalNumberOfStudentsPerCourse
             , int optimalNumberOfStudentsPerCourse
             , int maximumNumberOfStudentsPerCourse) {
-        final var supplies = database2(solution.headerView());
+        final var supplies = table2(solution.headerView());
         solution.synchronize(new TableSynchronization() {
             @Override
             public void registerAddition(Line line) {

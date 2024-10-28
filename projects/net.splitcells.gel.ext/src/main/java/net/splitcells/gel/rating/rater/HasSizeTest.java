@@ -17,10 +17,11 @@ package net.splitcells.gel.rating.rater;
 
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.gel.constraint.type.Then;
+import net.splitcells.gel.data.table.Databases;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.gel.data.table.Databases.database;
+import static net.splitcells.gel.data.table.Databases.table;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
@@ -29,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class HasSizeTest extends TestSuiteI {
     @Test
     public void test_size_requirement_greater_than_one() {
-        final var lineSupplier = database();
+        final var lineSupplier = Databases.table();
         final var testSubject = Then.then(hasSize(2));
         assertThat(testSubject.complying()).isEmpty();
         assertThat(testSubject.defying()).isEmpty();
@@ -81,7 +82,7 @@ public class HasSizeTest extends TestSuiteI {
 
     @Test
     public void testRating() {
-        final var lineSupplier = database();
+        final var lineSupplier = Databases.table();
         final var testValue = Then.then(hasSize(1));
         assertThat(testValue.complying()).isEmpty();
         assertThat(testValue.defying()).isEmpty();

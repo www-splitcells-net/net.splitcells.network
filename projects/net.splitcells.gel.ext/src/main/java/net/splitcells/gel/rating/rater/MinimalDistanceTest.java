@@ -81,7 +81,7 @@ public class MinimalDistanceTest {
     @Test
     public void testRating() {
         final var attribute = attribute(Double.class);
-        final var lineSupplier = Databases.database(attribute);
+        final var lineSupplier = Databases.table(attribute);
         final var testSubject = then(minimalDistance(attribute, 2));
         {
             assertThat(testSubject.defying()).isEmpty();
@@ -149,7 +149,7 @@ public class MinimalDistanceTest {
     @Test
     public void test_simple_neighbour_defiance() {
         final var attribute = attribute(Double.class);
-        final var lineProducer = Databases.database(attribute);
+        final var lineProducer = Databases.table(attribute);
         final var testSubject = then(minimalDistance(attribute, 2));
         {
             assertThat(testSubject.defying()).isEmpty();

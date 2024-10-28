@@ -32,7 +32,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.gel.common.Language.*;
-import static net.splitcells.gel.data.table.Databases.database2;
+import static net.splitcells.gel.data.table.Databases.table2;
 
 import java.util.stream.Stream;
 
@@ -42,6 +42,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.gel.data.table.Databases;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.LinePointer;
@@ -96,12 +97,12 @@ public class AssignmentsI implements Assignments {
 
     private AssignmentsI(String name, Table demand, Table supply) {
         this.names = name;
-        assignments = database2(name, () -> demand.path().withAppended(ALLOCATIONS.value()), concat(demand.headerView(), supply.headerView()));
+        assignments = Databases.table2(name, () -> demand.path().withAppended(ALLOCATIONS.value()), concat(demand.headerView(), supply.headerView()));
         // TODO Remove code and comment duplications.
         {
             this.demands = demand;
-            demands_free = database2("demands-free", this, demand.headerView());
-            demands_used = database2("demands-used", this, demand.headerView());
+            demands_free = Databases.table2("demands-free", this, demand.headerView());
+            demands_used = Databases.table2("demands-used", this, demand.headerView());
             demand.rawLinesView().forEach(demands_free::add);
             demand.subscribeToAfterAdditions(demands_free::add);
             demand.subscribeToBeforeRemoval(removalOf -> {
@@ -121,8 +122,8 @@ public class AssignmentsI implements Assignments {
         }
         {
             this.supplies = requireNotNull(supply);
-            supplies_free = database2("supply-free", this, supply.headerView());
-            supplies_used = database2("supply-used", this, supply.headerView());
+            supplies_free = Databases.table2("supply-free", this, supply.headerView());
+            supplies_used = Databases.table2("supply-used", this, supply.headerView());
             supply.rawLinesView().forEach(supplies_free::add);
             supply.subscribeToAfterAdditions(i -> {
                 supplies_free.add(i);

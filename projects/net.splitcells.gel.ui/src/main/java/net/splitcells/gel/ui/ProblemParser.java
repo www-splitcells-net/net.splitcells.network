@@ -34,7 +34,7 @@ import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.gel.ui.QueryParser.parseQuery;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
-import static net.splitcells.gel.data.table.Databases.database;
+import static net.splitcells.gel.data.table.Databases.table;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.problem.ProblemI.problem;
 
@@ -154,7 +154,7 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
                         result.errorMessages().withAppended(parsedAttribute.errorMessages());
                     }
             );
-            demands = Optional.of(database(demandAttributes));
+            demands = Optional.of(table(demandAttributes));
         } else if (ctxName.equals("supplies")) {
             if (supplies.isPresent()) {
                 result.withErrorMessage(tree("Supplies are not allowed to be defined multiple times."));
@@ -180,7 +180,7 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
                 }
                 result.errorMessages().withAppended(parsedAttribute.errorMessages());
             });
-            supplies = Optional.of(database(supplyAttributes));
+            supplies = Optional.of(table(supplyAttributes));
         }
         return null;
     }
