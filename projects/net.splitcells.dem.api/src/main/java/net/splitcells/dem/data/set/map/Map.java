@@ -173,6 +173,15 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
         }
     }
 
+    default Map<Key, Value> requireKeyAbsence(Key key) {
+        if (containsKey(key)) {
+            throw executionException(tree("Map should not contain given key, but has it.")
+                    .withProperty("map", toString())
+                    .withProperty("key", key.toString()));
+        }
+        return this;
+    }
+
     default void requireEqualityTo(Map<Key, Value> requiredContent) {
         requiredContent.keySet2().forEach(requiredKey -> {
             if (!containsKey(requiredKey)) {
