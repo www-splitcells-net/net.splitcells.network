@@ -15,6 +15,12 @@
  */
 package net.splitcells.website.server.security.authorization;
 
+import java.util.regex.Pattern;
+
+import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.website.server.security.authentication.Authenticator.VALID_USERNAME_SYMBOLS;
+
 public class Role {
     public static final String ANONYMOUS_ROLE_NAME = "anonymous";
     public static final Role ANONYMOUS_ROLE = role(ANONYMOUS_ROLE_NAME);
@@ -25,9 +31,20 @@ public class Role {
         return new Role(name);
     }
 
+    public static void requireValid(Role role) {
+        if (!VALID_USERNAME_SYMBOLS.matcher(role.name()).matches()) {
+            throw executionException(tree("The given role name is invalid.")
+                    .withProperty("role name", role.name()));
+        }
+    }
+
     private final String name;
 
     private Role(String argName) {
+        if (!VALID_USERNAME_SYMBOLS.matcher(argName).matches()) {
+            throw executionException(tree("The given role name is invalid.")
+                    .withProperty("role name", argName));
+        }
         name = argName;
     }
 
