@@ -15,6 +15,12 @@
  */
 package net.splitcells.website.server.security.authentication;
 
+/**
+ * <p>TODO Create a base {@link Authenticator} class, that takes some authentication functions and
+ * uses them in the recommended way.
+ * Thereby, duplicated security sensitive code is omitted,
+ * which can be important for things like caching.</p>
+ */
 public interface Authenticator {
     UserSession userSession(Login login);
 
