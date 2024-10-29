@@ -15,6 +15,7 @@
  */
 package net.splitcells.website.server.security.authentication;
 
+import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.resource.ConfigFileSystem;
@@ -125,6 +126,7 @@ public class AuthenticatorBasedOnFiles implements Authenticator {
 
     @Override
     public void endSession(UserSession userSession) {
+        requireValid(userSession);
         if (isValidNoLoginStandard(userSession)) {
             validUserSessions.requireAbsenceOf(userSession);
             usernames.requireKeyAbsence(userSession);
@@ -136,10 +138,18 @@ public class AuthenticatorBasedOnFiles implements Authenticator {
 
     @Override
     public String name(UserSession userSession) {
+        requireValid(userSession);
         if (isValidNoLoginStandard(userSession)) {
             usernames.requireKeyAbsence(userSession);
             return noLoginUserId(userSession);
         }
         return usernames.get(userSession);
+    }
+
+    public void requireValid(UserSession userSession) {
+        if (!isValid(userSession)) {
+            throw executionException(tree("The given user session is invalid")
+                    .withProperty("user session", userSession.toString()));
+        }
     }
 }
