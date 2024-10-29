@@ -16,13 +16,13 @@
 package net.splitcells.website.server.security.authentication;
 
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.resource.ConfigFileSystem;
 import net.splitcells.dem.resource.FileSystemView;
 
-import java.util.regex.Pattern;
-
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.website.server.security.authentication.UserSession.*;
@@ -37,7 +37,7 @@ import static net.splitcells.website.server.security.authentication.UserSession.
  * via a text editor without the line ending being visible in the editor (source Mārtiņš Avots).
  * Furthermore, the line ending symbol can be hard to enter for a user,
  * because of the UI of the user's computer.</p>
- * <p>Only usernames matching to {@link #VALID_USERNAME_SYMBOLS} are allowed.</p>
+ * <p>Only usernames matching to {@link Authenticator#VALID_USERNAME_SYMBOLS} are allowed.</p>
  * <p>TODO Speed up logins by caching these.
  * This requires one to know, when the user data changes inside {@link #userData}.
  * This is best solved by having a subscription on {@link #userData}.
@@ -52,7 +52,6 @@ import static net.splitcells.website.server.security.authentication.UserSession.
 public class AuthenticatorBasedOnFiles implements Authenticator {
     private static final String USER_FOLDER = "net/splitcells/website/server/security/users/";
     public static final String PASSWORD_FILE = "/password";
-    private static final Pattern VALID_USERNAME_SYMBOLS = Pattern.compile("[a-zA-Z0-9 \\-]+");
 
     public static Authenticator authenticatorBasedOnFiles() {
         return new AuthenticatorBasedOnFiles(configValue(ConfigFileSystem.class)
@@ -76,6 +75,7 @@ public class AuthenticatorBasedOnFiles implements Authenticator {
      * On the other hand, it would be a lot easier, to just cache a limited number of valid users.
      */
     private final Set<UserSession> validUserSessions = setOfUniques();
+    private final Map<UserSession, String> usernames = map();
 
     private AuthenticatorBasedOnFiles(FileSystemView argUserData) {
         userData = argUserData;
@@ -99,6 +99,7 @@ public class AuthenticatorBasedOnFiles implements Authenticator {
         }
         final var userSession = UserSession.user(this);
         validUserSessions.add(userSession);
+        usernames.put(userSession, login.username());
         if (!isValid(userSession)) {
             throw executionException(tree("Could not create a valid user session, given the login.")
                     .withProperty("login data", login.toString()));
@@ -109,6 +110,8 @@ public class AuthenticatorBasedOnFiles implements Authenticator {
     @Override
     public synchronized boolean isValid(UserSession userSession) {
         if (isValidNoLoginStandard(userSession)) {
+            validUserSessions.requireAbsenceOf(userSession);
+            usernames.requireKeyAbsence(userSession);
             return true;
         }
         if (userSession.authenticatedBy().isEmpty()) {
@@ -123,8 +126,20 @@ public class AuthenticatorBasedOnFiles implements Authenticator {
     @Override
     public void endSession(UserSession userSession) {
         if (isValidNoLoginStandard(userSession)) {
+            validUserSessions.requireAbsenceOf(userSession);
+            usernames.requireKeyAbsence(userSession);
             return;
         }
         validUserSessions.remove(userSession);
+        usernames.remove(userSession);
+    }
+
+    @Override
+    public String name(UserSession userSession) {
+        if (isValidNoLoginStandard(userSession)) {
+            usernames.requireKeyAbsence(userSession);
+            return noLoginUserId(userSession);
+        }
+        return usernames.get(userSession);
     }
 }

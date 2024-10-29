@@ -21,7 +21,9 @@ import net.splitcells.dem.data.set.map.Map;
 import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.website.server.security.authentication.UserSession.isValidNoLoginStandard;
+import static net.splitcells.website.server.security.authentication.UserSession.noLoginUserId;
 
 public class AuthenticatorInMemory implements Authenticator {
     public static Authenticator authenticatorInMemory(Function<Login, UserSession> userLogin) {
@@ -34,6 +36,7 @@ public class AuthenticatorInMemory implements Authenticator {
 
     private final Function<Login, UserSession> userQuery;
     private final Set<UserSession> validUserSessions = setOfUniques();
+    private final Map<UserSession, String> usernames = map();
 
     private AuthenticatorInMemory(Function<Login, UserSession> argUserQuery) {
         userQuery = argUserQuery;
@@ -41,9 +44,10 @@ public class AuthenticatorInMemory implements Authenticator {
 
     @Override
     public UserSession userSession(Login login) {
-        final var user = userQuery.apply(login);
-        validUserSessions.add(user);
-        return user;
+        final var userSession = userQuery.apply(login);
+        validUserSessions.add(userSession);
+        usernames.put(userSession, login.username());
+        return userSession;
     }
 
     @Override
@@ -66,5 +70,15 @@ public class AuthenticatorInMemory implements Authenticator {
             return;
         }
         validUserSessions.remove(userSession);
+        usernames.remove(userSession);
+    }
+
+    @Override
+    public String name(UserSession userSession) {
+        if (isValidNoLoginStandard(userSession)) {
+            usernames.requireKeyAbsence(userSession);
+            return noLoginUserId(userSession);
+        }
+        return usernames.get(userSession);
     }
 }

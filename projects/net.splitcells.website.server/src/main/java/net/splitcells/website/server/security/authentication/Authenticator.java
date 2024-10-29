@@ -15,6 +15,8 @@
  */
 package net.splitcells.website.server.security.authentication;
 
+import java.util.regex.Pattern;
+
 /**
  * <p>TODO Create a base {@link Authenticator} class, that takes some authentication functions and
  * uses them in the recommended way.
@@ -22,6 +24,8 @@ package net.splitcells.website.server.security.authentication;
  * which can be important for things like caching.</p>
  */
 public interface Authenticator {
+    Pattern VALID_USERNAME_SYMBOLS = Pattern.compile("[a-zA-Z0-9 \\-]+");
+
     UserSession userSession(Login login);
 
     /**
@@ -44,4 +48,15 @@ public interface Authenticator {
     boolean isValid(UserSession userSession);
 
     void endSession(UserSession userSession);
+
+    /**
+     * This is called username and not id,
+     * as it is only intended to be valid for one {@link Authenticator}.
+     *
+     * @param userSession The session, for which the user's name is to be determined.
+     * @return Returns the name of the user, that is backed by the {@link UserSession}.
+     * Valid ids have to comply with {@link #VALID_USERNAME_SYMBOLS},
+     * in order to avoid unexpected things based on usernames.
+     */
+    String name(UserSession userSession);
 }

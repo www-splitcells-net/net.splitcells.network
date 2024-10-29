@@ -20,6 +20,9 @@ import net.splitcells.website.server.security.authorization.Authorization;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
+
 /**
  * <p>An instance of this class, is the claim,
  * that a {@link UserSession} exists at {@link Authentication},
@@ -50,6 +53,27 @@ public class UserSession {
     public static boolean isValidNoLoginStandard(UserSession userSession) {
         return userSession == ANONYMOUS_USER_SESSION || userSession == INSECURE_USER_SESSION;
     }
+
+    public static String noLoginUserId(UserSession userSession) {
+        if (userSession == ANONYMOUS_USER_SESSION) {
+            return ANONYMOUS_USER_NAME;
+        }
+        if (userSession == INSECURE_USER_SESSION) {
+            return INSECURE_USER_NAME;
+        }
+        throw executionException(tree("Not a valid no login user was given")
+                .withProperty("user session", userSession.toString()));
+    }
+
+    /**
+     * This is the id of the user of {@link #ANONYMOUS_USER_SESSION}.
+     */
+    public static final String ANONYMOUS_USER_NAME = "anonymous";
+
+    /**
+     * This is the id of the user of {@link #INSECURE_USER_SESSION}.
+     */
+    public static final String INSECURE_USER_NAME = "insecure-user";
     /**
      * This {@link UserSession} is created without any {@link Login},
      * or a login with an invalid name.
