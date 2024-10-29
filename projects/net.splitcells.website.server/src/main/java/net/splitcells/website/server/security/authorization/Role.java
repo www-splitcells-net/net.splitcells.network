@@ -16,13 +16,22 @@
 package net.splitcells.website.server.security.authorization;
 
 public class Role {
-    public static Role ANONYMOUS_ROLE = role();
-    public static Role ADMIN_ROLE = role();
-    public static Role role() {
-        return new Role();
+    public static final String ANONYMOUS_ROLE_NAME = "anonymous";
+    public static final Role ANONYMOUS_ROLE = role(ANONYMOUS_ROLE_NAME);
+    public static final String ADMIN_ROLE_NAME = "admin-role";
+    public static final Role ADMIN_ROLE = role(ADMIN_ROLE_NAME);
+
+    public static Role role(String name) {
+        return new Role(name);
     }
 
-    private Role() {
+    private final String name;
 
+    private Role(String argName) {
+        name = argName;
+    }
+
+    public String name() {
+        return name;
     }
 }
