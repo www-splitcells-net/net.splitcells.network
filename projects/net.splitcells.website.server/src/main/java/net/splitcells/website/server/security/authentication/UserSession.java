@@ -30,6 +30,11 @@ import java.util.Optional;
  * is untrustworthy for the actual real world process of authentication and/or authorization.
  * This way, the only way to create a valid {@link UserSession} is by using {@link Authentication}.
  * No other code can therefore fake a valid {@link UserSession}.</p>
+ * <p>The goal behind this is to force any user of {@link UserSession} to get any info about it
+ * only through trusted authorities.
+ * This discourages usage of {@link UserSession} directly without checking its validity,
+ * as the main job of {@link UserSession} is to provide a key/id for authorities,
+ * that cannot be copied, faked and misused for other than intended operations.</p>
  */
 public class UserSession {
     /**
