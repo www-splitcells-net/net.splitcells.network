@@ -21,12 +21,12 @@ import net.splitcells.dem.utils.StringUtils;
 import static net.splitcells.dem.resource.FileSystemViaMemory.fileSystemViaMemory;
 import static net.splitcells.dem.testing.Assertions.requireDistinct;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
-import static net.splitcells.website.server.security.authentication.AuthenticatorBasedOnFiles.PASSWORD_FILE;
-import static net.splitcells.website.server.security.authentication.AuthenticatorBasedOnFiles.authenticatorBasedOnFiles;
+import static net.splitcells.website.server.security.authentication.AuthenticatorImpl.PASSWORD_FILE;
+import static net.splitcells.website.server.security.authentication.AuthenticatorImpl.authenticatorBasedOnFiles;
 import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
 import static net.splitcells.website.server.security.authentication.UserSession.INSECURE_USER_SESSION;
 
-public class AuthenticatorBasedOnFilesTest {
+public class AuthenticatorImplTest {
     @UnitTest
     public void test() {
         final var username = "username-123";
@@ -41,6 +41,6 @@ public class AuthenticatorBasedOnFilesTest {
         requireEquals(testSubject.userSession(Login.login(username, "not-password"))
                 , INSECURE_USER_SESSION);
         requireEquals(testSubject.userSession(Login.login("not-user", "not-password"))
-                , ANONYMOUS_USER_SESSION);
+                , INSECURE_USER_SESSION);
     }
 }

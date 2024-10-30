@@ -21,7 +21,7 @@ import net.splitcells.dem.environment.config.framework.Option;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
-import static net.splitcells.website.server.security.authentication.AuthenticatorInMemory.authenticatorInMemory;
+import static net.splitcells.website.server.security.authentication.AuthenticatorImpl.authenticator;
 import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
 
 /**
@@ -36,7 +36,7 @@ public class Authentication implements Option<Authenticator> {
 
     @Override
     public Authenticator defaultValue() {
-        return authenticatorInMemory(login -> ANONYMOUS_USER_SESSION);
+        return authenticator((login, authenticator) -> ANONYMOUS_USER_SESSION);
     }
 
     public static UserSession requireValid(UserSession userSession) {

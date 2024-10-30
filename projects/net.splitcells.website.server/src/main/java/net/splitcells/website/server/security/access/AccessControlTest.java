@@ -25,8 +25,8 @@ import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.FileSystemViaMemory.fileSystemViaMemory;
 import static net.splitcells.website.server.security.access.AccessControlImpl.accessControl;
-import static net.splitcells.website.server.security.authentication.AuthenticatorBasedOnFiles.PASSWORD_FILE;
-import static net.splitcells.website.server.security.authentication.AuthenticatorBasedOnFiles.authenticatorBasedOnFiles;
+import static net.splitcells.website.server.security.authentication.AuthenticatorImpl.PASSWORD_FILE;
+import static net.splitcells.website.server.security.authentication.AuthenticatorImpl.authenticatorBasedOnFiles;
 import static net.splitcells.website.server.security.authentication.Login.login;
 import static net.splitcells.website.server.security.authentication.UserSession.*;
 
