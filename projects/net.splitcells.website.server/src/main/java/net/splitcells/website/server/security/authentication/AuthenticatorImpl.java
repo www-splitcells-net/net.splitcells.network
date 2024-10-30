@@ -32,7 +32,7 @@ import static net.splitcells.website.server.security.authentication.UserSession.
 
 
 public class AuthenticatorImpl implements Authenticator {
-    private static final String USER_FOLDER = "net/splitcells/website/server/security/users/";
+    public static final String USER_FOLDER = "net/splitcells/website/server/security/users/";
 
     public static final String PASSWORD_FILE = "/password";
 

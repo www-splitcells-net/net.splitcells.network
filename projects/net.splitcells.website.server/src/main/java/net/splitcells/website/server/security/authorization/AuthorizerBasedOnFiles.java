@@ -21,6 +21,7 @@ import net.splitcells.website.server.security.authentication.Authentication;
 import net.splitcells.website.server.security.authentication.UserSession;
 
 import static net.splitcells.dem.Dem.configValue;
+import static net.splitcells.website.server.security.authentication.AuthenticatorImpl.USER_FOLDER;
 import static net.splitcells.website.server.security.authorization.Role.requireValid;
 
 /**
@@ -31,14 +32,14 @@ import static net.splitcells.website.server.security.authorization.Role.requireV
 public class AuthorizerBasedOnFiles implements Authorizer {
     public static Authorizer authorizerBasedOnFiles() {
         return new AuthorizerBasedOnFiles(configValue(ConfigFileSystem.class)
-                .subFileSystem(ROLE_FOLDER));
+                .subFileSystem(USER_FOLDER));
     }
 
     public static Authorizer authorizerBasedOnFiles(FileSystemView fileSystemView) {
         return new AuthorizerBasedOnFiles(fileSystemView);
     }
 
-    private static final String ROLE_FOLDER = "net/splitcells/website/server/security/user-roles/";
+    public static final String ROLE_FOLDER = "/roles/";
 
     private final FileSystemView userRoles;
 
@@ -49,6 +50,6 @@ public class AuthorizerBasedOnFiles implements Authorizer {
     @Override
     public boolean hasRole(UserSession userSession, Role role) {
         requireValid(role);
-        return userRoles.isFile(configValue(Authentication.class).name(userSession) + "/" + role.name());
+        return userRoles.isFile(configValue(Authentication.class).name(userSession) + ROLE_FOLDER + role.name());
     }
 }
