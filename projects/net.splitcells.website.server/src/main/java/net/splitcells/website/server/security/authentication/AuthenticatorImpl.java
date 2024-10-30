@@ -95,7 +95,7 @@ public class AuthenticatorImpl implements Authenticator {
     }
 
     @Override
-    public UserSession userSession(Login login) {
+    public synchronized UserSession userSession(Login login) {
         final var userSession = authenticator.apply(login, this);
         if (UserSession.isValidNoLoginStandard(userSession)) {
             return userSession;
@@ -110,7 +110,7 @@ public class AuthenticatorImpl implements Authenticator {
     }
 
     @Override
-    public boolean isValid(UserSession userSession) {
+    public synchronized boolean isValid(UserSession userSession) {
         if (isValidNoLoginStandard(userSession)) {
             validUserSessions.requireAbsenceOf(userSession);
             usernames.requireKeyAbsence(userSession);
@@ -126,7 +126,7 @@ public class AuthenticatorImpl implements Authenticator {
     }
 
     @Override
-    public void endSession(UserSession userSession) {
+    public synchronized void endSession(UserSession userSession) {
         requireValid(userSession);
         if (isValidNoLoginStandard(userSession)) {
             validUserSessions.requireAbsenceOf(userSession);
@@ -138,7 +138,7 @@ public class AuthenticatorImpl implements Authenticator {
     }
 
     @Override
-    public String name(UserSession userSession) {
+    public synchronized String name(UserSession userSession) {
         requireValid(userSession);
         if (isValidNoLoginStandard(userSession)) {
             usernames.requireKeyAbsence(userSession);
@@ -147,7 +147,7 @@ public class AuthenticatorImpl implements Authenticator {
         return usernames.get(userSession);
     }
 
-    public void requireValid(UserSession userSession) {
+    private synchronized void requireValid(UserSession userSession) {
         if (!isValid(userSession)) {
             throw executionException(tree("The given user session is invalid")
                     .withProperty("user session", userSession.toString()));

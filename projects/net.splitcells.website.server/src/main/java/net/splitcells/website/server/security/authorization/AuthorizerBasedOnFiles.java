@@ -48,7 +48,7 @@ public class AuthorizerBasedOnFiles implements Authorizer {
     }
 
     @Override
-    public boolean hasRole(UserSession userSession, Role role) {
+    public synchronized boolean hasRole(UserSession userSession, Role role) {
         requireValid(role);
         return userRoles.isFile(configValue(Authentication.class).name(userSession) + ROLE_FOLDER + role.name());
     }

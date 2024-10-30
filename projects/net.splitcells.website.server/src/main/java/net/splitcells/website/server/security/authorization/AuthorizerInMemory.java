@@ -39,7 +39,7 @@ public class AuthorizerInMemory implements Authorizer {
     }
 
     @Override
-    public boolean hasRole(UserSession userSession, Role role) {
+    public synchronized boolean hasRole(UserSession userSession, Role role) {
         return userRoleMapping.apply(userSession, role);
     }
 }

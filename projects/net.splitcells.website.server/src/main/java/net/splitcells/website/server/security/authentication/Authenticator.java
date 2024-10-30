@@ -22,6 +22,9 @@ import java.util.regex.Pattern;
  * uses them in the recommended way.
  * Thereby, duplicated security sensitive code is omitted,
  * which can be important for things like caching.</p>
+ * <p>Implementations should be thread safe, in order to minimize the number of {@link Authenticator} used at once.
+ * This also avoid race conditions,
+ * if a none thread safe implementation is accidentally used in multithreaded environments by accident.</p>
  */
 public interface Authenticator {
     Pattern VALID_USERNAME_SYMBOLS = Pattern.compile("[a-zA-Z0-9 \\-]+");
