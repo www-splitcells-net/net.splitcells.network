@@ -141,7 +141,7 @@ if __name__ == '__main__':
     if parsedArgs.autoConfigureCpuArchExplicitly:
         executionScript = executionScript.replace('\n    --arch string \\\n', '\n    --arch ' + platform.uname().machine + ' \\\n')
     elif parsedArgs.cpuArchitecture is None:
-        executionScript = executionScript.replace('\n    --arch string \\\n', '\\\n')
+        executionScript = executionScript.replace('\n    --arch string \\\n', '\n')
     else:
         executionScript = executionScript.replace('\n    --arch string \\\n', '\n    --arch ' + parsedArgs.cpuArchitecture + ' \\\n')
     if parsedArgs.useHostDocuments:
