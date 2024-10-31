@@ -143,7 +143,7 @@ if __name__ == '__main__':
     elif parsedArgs.cpuArchitecture is None:
         executionScript = executionScript.replace('\n    --arch string \\\n', '')
     else:
-        executionScript = executionScript.replace('\n    --arch string \\', '\n    --arch ' + parsedArgs.cpuArchitecture + ' \\\n')
+        executionScript = executionScript.replace('\n    --arch string \\\n', '\n    --arch ' + parsedArgs.cpuArchitecture + ' \\\n')
     if parsedArgs.useHostDocuments:
         # TODO This replacement is done in a dirty way. Use a template variable instead.
         print(executionScript)
