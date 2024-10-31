@@ -62,7 +62,7 @@ podman run --name "$executionName" \\
   -v $HOME/.local/state/$executionName/Documents:/root/Documents \\
   -v $HOME/.local/state/$executionName/.ssh:/root/.ssh \\
   -v $HOME/.local/state/$executionName/.m2:/root/.m2 \\
-  -v $HOME/.local/state/$executionName/.local:/root/.local/state \\
+  -v $HOME/.local/state/$executionName/.local:/root/.local \\
   "$podmanParameters" \\
   "localhost/$executionName"
   #
