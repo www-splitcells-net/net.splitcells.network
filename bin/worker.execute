@@ -52,10 +52,11 @@ test -f target/program-$executionName && chmod +x target/program-$executionName 
 podman build -f "target/Dockerfile-$executionName" \\
     --tag "localhost/$executionName"  \\
     --arch string \\
-    --log-level=debug
+    --log-level=warn # `--log-level=warn` is podman's default.
     # Logging is used, in order to better understand build runtime performance.
 """
 executeViaPodman = """
+set -x
 podman run --name "$executionName" \\
   --network slirp4netns:allow_host_loopback=true \\
   --rm \\
@@ -142,12 +143,15 @@ if __name__ == '__main__':
         executionScript = executionScript.replace('\n    --arch string \\\n', '\n')
     else:
         executionScript = executionScript.replace('\n    --arch string \\\n', '\n    --arch ' + parsedArgs.cpuArchitecture + ' \\\n')
+    if parsedArgs.verbose:
+        executionScript = executionScript.replace('--log-level=info', '--log-level=debug')
+    else:
+        executionScript = executionScript.replace("\nset -x\n", "\n\n")
     if parsedArgs.useHostDocuments:
         # TODO This replacement is done in a dirty way. Use a template variable instead.
-        print(executionScript)
-        print("-v $HOME/.local/state/$executionName/Documents:/root/Documents \\")
         executionScript = executionScript.replace("-v $HOME/.local/state/$executionName/Documents:/root/Documents \\", "-v $HOME/Documents:/root/Documents \\")
-    print(executionScript)
+    if parsedArgs.verbose:
+        print(executionScript)
     # Execute program.
     returnCode = subprocess.call(executionScript, shell='True')
     if returnCode != 0:
