@@ -118,7 +118,7 @@ if __name__ == '__main__':
         raise Exception('Either `--command` or `--class-for-execution` needs to be set.')
     file='target/Dockerfile-' + parsedArgs.name
     if os.path.exists(file):
-        Path.unlink(file)
+        os.remove(file)
     with open(file, 'w') as filetowrite:
         filetowrite.write(dockerfile)
     # Create and execute script.
