@@ -35,8 +35,8 @@ VOLUME /root/.ssh/
 VOLUME /root/.m2/
 """
 
-javaClassExecutionTemplate = """COPY deployable-jars/* /root/.local/lib/$NAME_FOR_EXECUTION/jars/
-WORKDIR /root/.local/lib/$NAME_FOR_EXECUTION/
+javaClassExecutionTemplate = """COPY deployable-jars/* /root/opt/$NAME_FOR_EXECUTION/jars/
+WORKDIR /root/opt/$NAME_FOR_EXECUTION/
 ENTRYPOINT ["/opt/java/openjdk/bin/java"]
 CMD ["-cp", "./jars/*", "$CLASS_FOR_EXECUTION"]
 """
