@@ -5,5 +5,4 @@ set -e
 bin/worker.execute \
     --name=net.splitcells.network.worker \
     --executable-path='bin/worker.bootstrap' \
-    --auto-configure-cpu-architecture-explicitly=true \
-    --only-build-image=true
+    --auto-configure-cpu-architecture-explicitly=true
