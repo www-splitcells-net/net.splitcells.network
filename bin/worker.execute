@@ -37,7 +37,6 @@ WORKDIR /root/.local/lib/$NAME_FOR_EXECUTION/
 ENTRYPOINT ["/opt/java/openjdk/bin/java"]
 CMD ["-cp", "./jars/*", "$CLASS_FOR_EXECUTION"]
 """
-# TODO executeViaPodman
 prepareExecution = """set -e
 set -x
 executionName="$executionName"
