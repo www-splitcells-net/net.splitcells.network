@@ -72,9 +72,6 @@ publishViaPodman = """
 podman tag $executionName:latest codeberg.org/splitcells-net/$executionName:latest
 podman push codeberg.org/splitcells-net/$executionName:latest
 """
-cleanUpExecution = """
-rm -f "target/Dockerfile-$executionName" # `-f` is used, in case the target folder is deleted via `mvn clean install` in `--command`.
-"""
 def str2bool(arg):
     return arg == 'true'
 if __name__ == '__main__':
@@ -119,6 +116,8 @@ if __name__ == '__main__':
     else:
         raise Exception('Either `--command` or `--class-for-execution` needs to be set.')
     file='target/Dockerfile-' + parsedArgs.name
+    if os.path.exists(file):
+        Path.unlink(file)
     with open(file, 'w') as filetowrite:
         filetowrite.write(dockerfile)
     # Create and execute script.
@@ -129,7 +128,6 @@ if __name__ == '__main__':
         pass
     else:
         executionScript += executeViaPodman
-    executionScript += cleanUpExecution
     executionScript = executionScript.replace('"$executionName"', parsedArgs.name)
     if parsedArgs.command is not None:
         executionScript = executionScript.replace('"$executionCommand"', "'" + parsedArgs.command + "'")
