@@ -6,6 +6,9 @@ SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 TODO Use string's substitute method, instead of string's replace.
 TODO Support deployment to Docker and Kubernetes.
 TODO Support executing as systemd service. Create a user service for that.
+TODO Currently, there is not distinction between the name of the thing being executed and its namespace.
+     This will probably create problems in the future, where you have multiple containers with the same namespace,
+     but with different commands.
 """
 
 __author__ = "Mārtiņš Avots"
@@ -54,6 +57,18 @@ podman build -f "target/Dockerfile-$executionName" \\
     --log-level=warn # `--log-level=warn` is podman's default.
     # Logging is used, in order to better understand build runtime performance.
 """
+prepareExecutionWithoutBuild = """set -e
+set -x
+executionName="$executionName"
+executionCommand="$executionCommand"
+# Prepare file system.
+mkdir -p $HOME/.local/state/$executionName/.m2/
+mkdir -p $HOME/.local/state/$executionName/.ssh/
+mkdir -p $HOME/.local/state/$executionName/.local/
+mkdir -p $HOME/.local/state/$executionName/Documents/
+mkdir -p ./target/
+test -f target/program-$executionName && chmod +x target/program-$executionName # This file does not exist, when '--executable-path' is not set.
+"""
 executeViaPodman = """
 set -x
 podman run --name "$executionName" \\
@@ -91,6 +106,7 @@ if __name__ == '__main__':
     parser.add_argument('--publish-execution-image', dest='publishExecutionImage', required=False, type=str2bool, default=False, help="If set to true, the given command is not executed, but a container image is published instead.")
     parser.add_argument('--verbose', dest='verbose', required=False, type=str2bool, default=False, help="If set to true, the output is verbose.")
     parser.add_argument('--only-build-image', dest='onlyBuildImage', required=False, type=str2bool, default=False, help="If set to true, the created image is not executed.")
+    parser.add_argument('--only-execute-image', dest='onlyExecuteImage', required=False, type=str2bool, default=False, help="If set to true, the previously created image is executed without building it.")
     parser.add_argument('--cpu-architecture', dest='cpuArchitecture', help="Set the cpu architecture for the execution.")
     parser.add_argument('--auto-configure-cpu-architecture-explicitly', dest='autoConfigureCpuArchExplicitly', required=False, type=str2bool, default=False
             , help="If set to false, the command's backend automatically determines the CPU architecture." \
@@ -121,7 +137,11 @@ if __name__ == '__main__':
     with open(file, 'w') as filetowrite:
         filetowrite.write(dockerfile)
     # Create and execute script.
-    executionScript = prepareExecution
+    executionScript = ""
+    if parsedArgs.onlyExecuteImage:
+        executionScript = prepareExecutionWithoutBuild
+    else:
+        executionScript = prepareExecution
     if parsedArgs.publishExecutionImage:
         executionScript += publishViaPodman
     elif parsedArgs.onlyBuildImage:
