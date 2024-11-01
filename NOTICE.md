@@ -395,3 +395,8 @@ jQuery
 * Reason: jQuery is used in order to simplify HTML manipulation in JavaScript for the UI
 * Source Code: https://github.com/jquery/jquery
 * Website: https://jquery.com/
+
+Podman
+* License: Apache-2.0
+* Source Code: https://github.com/containers/podman
+* Website: https://podman.io/
