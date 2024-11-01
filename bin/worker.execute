@@ -90,7 +90,7 @@ if __name__ == '__main__':
     parser.add_argument('--class-for-execution', dest='classForExecution', help="This Java class is executed.")
     parser.add_argument('--use-host-documents', dest='useHostDocuments', required=False, type=str2bool, default=False, help="Determines whether to mount `~/Documents` or not. This should be avoided, in order to avoid file dependencies to the host system, which makes the execution more portable.")
     parser.add_argument('--publish-execution-image', dest='publishExecutionImage', required=False, type=str2bool, default=False, help="If set to true, the given command is not executed, but a container image is published instead.")
-    parser.add_argument('--verbose', dest='publishExecutionImage', required=False, type=str2bool, default=False, help="If set to true, the output is verbose.")
+    parser.add_argument('--verbose', dest='verbose', required=False, type=str2bool, default=False, help="If set to true, the output is verbose.")
     parser.add_argument('--only-build-image', dest='onlyBuildImage', required=False, type=str2bool, default=False, help="If set to true, the created image is not executed.")
     parser.add_argument('--cpu-architecture', dest='cpuArchitecture', help="Set the cpu architecture for the execution.")
     parser.add_argument('--auto-configure-cpu-architecture-explicitly', dest='autoConfigureCpuArchExplicitly', required=False, type=str2bool, default=False
