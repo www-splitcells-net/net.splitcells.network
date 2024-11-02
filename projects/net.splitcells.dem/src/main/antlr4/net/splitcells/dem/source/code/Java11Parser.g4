@@ -73,9 +73,10 @@ access
 annotation
     /* TODO call_arguments is a hack. */
 	: Keysymbol_at name call_arguments?;
+/* TODO Using interface_definition_member is a hack. */
 annotation_definition
     : javadoc? annotation* Keyword_public Keyword_annotation* name
-        Brace_curly_open Brace_curly_closed
+        Brace_curly_open interface_definition_member* Brace_curly_closed
     ;
 call_arguments
     : Brace_round_open Brace_round_closed
