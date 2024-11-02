@@ -204,7 +204,7 @@ public class Server {
 
             @Override
             public void flush() {
-
+                // Nothing needs to be done.
             }
 
             @Override
@@ -515,7 +515,7 @@ public class Server {
 
             @Override
             public void flush() {
-
+                // Nothing needs to be done.
             }
         };
     }
