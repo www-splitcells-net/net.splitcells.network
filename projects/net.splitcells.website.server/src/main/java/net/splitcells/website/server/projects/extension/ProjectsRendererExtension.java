@@ -36,8 +36,9 @@ public interface ProjectsRendererExtension {
     }
 
     default RenderResponse render(RenderRequest request, ProjectsRenderer projectsRenderer) {
+        // TODO The casting is a hack.
         return RenderResponse.renderResponse(renderFile(request.trail().unixPathString()
-                , (ProjectsRendererI) projectsRenderer // TODO HACK
+                , (ProjectsRendererI) projectsRenderer
                 , projectsRenderer.config()));
     }
 
