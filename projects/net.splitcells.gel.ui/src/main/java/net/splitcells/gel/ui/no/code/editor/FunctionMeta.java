@@ -16,6 +16,7 @@
 package net.splitcells.gel.ui.no.code.editor;
 
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.constraint.Query;
@@ -41,23 +42,39 @@ public class FunctionMeta implements ProjectsRendererExtension {
     }
 
     private static final String PATH = "/net/splitcells/gel/ui/no/code/editor/function-meta.json";
-    private static final Map<String, Integer> argumentsPerFunctions = map();
-    private static final Set<String> varArgumentsPerFunctions = setOfUniques();
-    private static final Set<String> functionNames = setOfUniques();
+    /**
+     * TODO Use read only version.
+     */
+    private static final Map<String, Integer> argumentsPerFunctions = createArgumentsPerFunctions();
+    /**
+     * TODO Use read only version.
+     */
+    private static final Set<String> varArgumentsPerFunctions = varArgumentsPerFunctions();
+    /**
+     * TODO Use read only version.
+     */
+    private static final Set<String> functionNames = Sets.<String>setOfUniques()
+            .with(argumentsPerFunctions.keySet())
+            .with(varArgumentsPerFunctions);
 
-    static {
-        argumentsPerFunctions.put("attribute", 2);
-        argumentsPerFunctions.put("database", 1);
-        argumentsPerFunctions.put("forEach", 1);
-        argumentsPerFunctions.put("hasSize", 1);
-        argumentsPerFunctions.put("minimalDistance", 2);
-        argumentsPerFunctions.put("solution", 3);
-        argumentsPerFunctions.put("then", 1);
-        varArgumentsPerFunctions.add("database");
-        varArgumentsPerFunctions.add("forAllCombinationsOf");
-        varArgumentsPerFunctions.add("solution");
-        functionNames.addAll(argumentsPerFunctions.keySet());
-        functionNames.addAll(varArgumentsPerFunctions);
+    private static Map<String, Integer> createArgumentsPerFunctions() {
+        final Map<String, Integer> rVal = map();
+        rVal.put("attribute", 2);
+        rVal.put("database", 1);
+        rVal.put("forEach", 1);
+        rVal.put("hasSize", 1);
+        rVal.put("minimalDistance", 2);
+        rVal.put("solution", 3);
+        rVal.put("then", 1);
+        return rVal;
+    }
+
+    private static Set<String> varArgumentsPerFunctions() {
+        final Set<String> rVal = setOfUniques();
+        rVal.add("database");
+        rVal.add("forAllCombinationsOf");
+        rVal.add("solution");
+        return rVal;
     }
 
     private FunctionMeta() {
