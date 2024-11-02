@@ -599,7 +599,7 @@ public interface Tree extends TreeView {
                 ;
     }
 
-    private boolean hasAnyPrimitiveValues() {
+    default boolean hasAnyPrimitiveValues() {
         return children().stream().anyMatch(c -> c.children().isEmpty());
     }
 
