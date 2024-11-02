@@ -19,12 +19,14 @@ import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.resource.ResourceOption;
 import net.splitcells.dem.environment.resource.Service;
+import net.splitcells.dem.execution.ThreadLoop;
 import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 import net.splitcells.website.server.project.renderer.ObjectsRenderer;
 
 import java.util.Optional;
 
 import static net.splitcells.cin.EntityManager.*;
+import static net.splitcells.dem.execution.ThreadLoop.threadLoop;
 import static net.splitcells.website.server.project.renderer.ObjectsRenderer.registerObject;
 
 /**
@@ -35,35 +37,34 @@ public class CinService implements ResourceOption<Service> {
     @Override
     public Service defaultValue() {
         return new Service() {
-            private volatile boolean isRunning = false;
+            private ThreadLoop threadLoop;
 
             @Override
-            public void start() {
-                isRunning = true;
-                Dem.executeThread("Cin", () -> {
-                    final var entityManager = entityManager();
-                    registerObject(entityManager.entities().discoverableRenderer());
-                    registerObject(entityManager.entities().demands().discoverableRenderer());
-                    registerObject(entityManager.entities().supplies().discoverableRenderer());
-                    entityManager.withInitedPlayers();
-                    while (isRunning) {
-                        entityManager
-                                .withIncrementedNextTime()
-                                .withSuppliedNextTime()
-                                .withDeletedOldTime()
-                                .withOptimized()
-                                .withUpdatedCurrentTime();
-                    }
+            public synchronized void start() {
+                final var entityManager = entityManager();
+                registerObject(entityManager.entities().discoverableRenderer());
+                registerObject(entityManager.entities().demands().discoverableRenderer());
+                registerObject(entityManager.entities().supplies().discoverableRenderer());
+                entityManager.withInitedPlayers();
+                threadLoop = threadLoop("Cin", () -> {
+                    entityManager
+                            .withIncrementedNextTime()
+                            .withSuppliedNextTime()
+                            .withDeletedOldTime()
+                            .withOptimized()
+                            .withUpdatedCurrentTime();
                 });
             }
 
             @Override
-            public void close() {
-                isRunning = false;
+            public synchronized void close() {
+                if (threadLoop != null) {
+                    threadLoop.stop();
+                }
             }
 
             @Override
-            public void flush() {
+            public synchronized void flush() {
                 // No resources are present to be flushed.
             }
         };
