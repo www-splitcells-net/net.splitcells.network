@@ -59,10 +59,12 @@ public class HtmlLiveTester implements ResourceOption<Service> {
 
             @Override
             public void close() {
+                // Nothing needs to be done.
             }
 
             @Override
             public void flush() {
+                // Nothing needs to be done.
             }
         };
     }
