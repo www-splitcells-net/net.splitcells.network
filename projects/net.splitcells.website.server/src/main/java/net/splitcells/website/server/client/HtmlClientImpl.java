@@ -136,5 +136,6 @@ public class HtmlClientImpl implements HtmlClient {
 
     @Override
     public void flush() {
+        // Nothing needs to be done.
     }
 }
