@@ -284,6 +284,6 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
     }
 
     public FileSystemView subFileSystemView(String path) {
-        return new FileSystemViaClassResourcesAndSpring(clazz, (basePath + path + "/").replaceAll("//", "/"));
+        return new FileSystemViaClassResourcesAndSpring(clazz, (basePath + path + "/").replace("//", "/"));
     }
 }
