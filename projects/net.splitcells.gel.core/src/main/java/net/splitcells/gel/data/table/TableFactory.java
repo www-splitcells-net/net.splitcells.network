@@ -51,30 +51,4 @@ public interface TableFactory extends AspectOrientedResource<Table>, ConnectingC
     Table table(String name, Discoverable parent, Attribute<? extends Object>... attributes);
 
     Table table(String name, Discoverable parent, List<Attribute<? extends Object>> attributes);
-
-    /* TODO Restore this unused method and create feature with it.
-    default Database databaseOfFods(List<Attribute<?>> attributes, Element fods) {
-        final var databaseOfFods = database(attributes);
-        final var body = directChildElementByName(fods, "body", FODS_OFFICE);
-        final var speardsheet = directChildElementByName(body, "spreadsheet", FODS_OFFICE);
-        final var table = directChildElementByName(speardsheet, "table", FODS_TABLE);
-        directChildElementsByName(table, "table-row", FODS_TABLE)
-                .skip(1)
-                .map(row -> lineOfFodsRow(attributes, row))
-                .forEach(lineValue -> databaseOfFods.addTranslated(lineValue));
-        return databaseOfFods;
-    }
-
-    private static List<Object> lineOfFodsRow(List<Attribute<?>> attributes, Element row) {
-        final var tableCells = directChildElementsByName(row, "table-cell", FODS_TABLE)
-                .collect(toList());
-        return range(0, attributes.size())
-                .mapToObj(i -> attributes.get(i).deserializeValue(
-                        Xml.directChildElements(tableCells.get(i))
-                                .filter(e -> FODS_TEXT.uri().equals(e.getNamespaceURI()))
-                                .findFirst()
-                                .get()
-                                .getTextContent()))
-                .collect(toList());
-    }*/
 }
