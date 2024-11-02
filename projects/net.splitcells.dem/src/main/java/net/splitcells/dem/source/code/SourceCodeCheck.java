@@ -27,11 +27,17 @@ import javax.swing.*;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 @JavaLegacyArtifact
 public class SourceCodeCheck {
+    /**
+     * Matches a line, that only contains `@JavaLegacyArtifact`.
+     */
+    private static final Pattern CONTAINS_JAVA_LEGACY_ARTIFACT = Pattern.compile(".*[\\r\\n]@JavaLegacyArtifact[\\r\\n].*", Pattern.DOTALL);
+
     public static void main(String... arg) {
         checkJavaSourceCodeFile(Path.of(
                 "../net.splitcells.dem.api/src/main/java/net/splitcells/dem/lang/tree/TreeTest.java"));
@@ -58,10 +64,15 @@ public class SourceCodeCheck {
         }
     }
 
+    /**
+     * `@JavaLegacyArtifact` is only allowed to mark code as code for external dependencies.
+     * Such code has no checks and has to be isolated from the rest of the code.
+     *
+     * @param file
+     */
     private static void checkJavaSourceCodeFile(Path file) {
         try {
-            if (java.nio.file.Files.readString(file).contains("\n@JavaLegacyArtifact\n")) {
-                // `@JavaLegacyArtifact` is only allowed to marked
+            if (CONTAINS_JAVA_LEGACY_ARTIFACT.matcher(java.nio.file.Files.readString(file)).matches()) {
                 return;
             }
             System.out.println("Checking file: " + file);
