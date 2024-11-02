@@ -46,12 +46,17 @@ parser grammar Java11Parser;
 options {
     tokenVocab=Java11Lexer;
 }
-source_unit /* This is the root node. Root nodes should be placed on the start of the document. */
-    : /* This rule breaks all error messages of the parser.
-       * In order to get a normal error message, one has to disable this rule manually.
-       */
-        (.)*? Keysymbol_at Keyword_JavaLegacyArtifact (.)*? EOF
-    | license_declaration package_declaration import_declaration* class_definition
+/* This is the root node. Root nodes should be placed on the start of the document.
+ *
+ * Normally, one would have to add the rule `(.)*? Keysymbol_at Keyword_JavaLegacyArtifact (.)*? EOF` to this rule,
+ * but this is avoided by the calling Java code, that checks for this property manually instead.
+ * This is done, because such a rule breaks all error messages of the ANTLR4 parser.
+ * As this rule basically says,
+ * that no grammar applies to a source code file containing `@JavaLegacyArtifact`,
+ * this is also a rule, we can ignore.
+ */
+source_unit
+    : license_declaration package_declaration import_declaration* class_definition
     	EOF
     | license_declaration package_declaration import_declaration* interface_definition
         EOF
