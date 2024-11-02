@@ -39,8 +39,6 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
  * that are created via {@link Path#resolve(Path)} by accidentally mixing relative and absolute paths.</p>
  */
 public class Trail implements Thing, Equality_<Trail> {
-    private static final String REMOVAL = "elementsToRemove";
-    private static final String PATH = "path";
     public static Trail trail(String... content) {
         return new Trail(listWithValuesOf(content).stream().filter(e -> !e.isEmpty()).collect(toList()));
     }
@@ -117,18 +115,18 @@ public class Trail implements Thing, Equality_<Trail> {
         String result = "";
         if (path.startsWith("/")) {
             throw executionException(tree("Only relative paths are supported.")
-                    .withProperty(PATH, path)
-                    .withProperty(REMOVAL, elementsToRemove + ""));
+                    .withProperty("path", path)
+                    .withProperty("elementsToRemove", elementsToRemove + ""));
         }
         if (split.length < elementsToRemove) {
             throw executionException(tree("Trying to remove more prefix elements from path than present.")
-                    .withProperty(PATH, path)
-                    .withProperty(REMOVAL, elementsToRemove + ""));
+                    .withProperty("path", path)
+                    .withProperty("elementsToRemove", elementsToRemove + ""));
         }
         if (0 > elementsToRemove) {
             throw executionException(tree("Cannot remove negative amount of prefix elements.")
-                    .withProperty(PATH, path)
-                    .withProperty(REMOVAL, elementsToRemove + ""));
+                    .withProperty("path", path)
+                    .withProperty("elementsToRemove", elementsToRemove + ""));
         }
         var first = true;
         for (int i = 0; i + elementsToRemove < split.length; i++) {
@@ -153,18 +151,18 @@ public class Trail implements Thing, Equality_<Trail> {
         String result = "";
         if (path.startsWith("/")) {
             throw executionException(tree("Only relative paths are supported.")
-                    .withProperty(PATH, path)
-                    .withProperty(REMOVAL, elementsToRemove + ""));
+                    .withProperty("path", path)
+                    .withProperty("elementsToRemove", elementsToRemove + ""));
         }
         if (split.length < elementsToRemove) {
             throw executionException(tree("Trying to remove more suffix elements from path than present.")
-                    .withProperty(PATH, path)
-                    .withProperty(REMOVAL, elementsToRemove + ""));
+                    .withProperty("path", path)
+                    .withProperty("elementsToRemove", elementsToRemove + ""));
         }
         if (0 > elementsToRemove) {
             throw executionException(tree("Cannot remove negative amount of suffix elements.")
-                    .withProperty(PATH, path)
-                    .withProperty(REMOVAL, elementsToRemove + ""));
+                    .withProperty("path", path)
+                    .withProperty("elementsToRemove", elementsToRemove + ""));
         }
         var first = true;
         for (int i = 0; i < split.length - elementsToRemove; i++) {
