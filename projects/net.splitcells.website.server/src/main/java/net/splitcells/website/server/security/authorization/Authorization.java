@@ -20,8 +20,8 @@ import net.splitcells.website.server.security.authentication.UserSession;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.website.server.security.authentication.Authentication.requireValid;
+import static net.splitcells.website.server.security.authorization.AnonymousRole.ANONYMOUS_ROLE;
 import static net.splitcells.website.server.security.authorization.AuthorizerInMemory.authorizerInMemory;
-import static net.splitcells.website.server.security.authorization.Role.ANONYMOUS_ROLE;
 
 public class Authorization implements Option<Authorizer> {
     @Override

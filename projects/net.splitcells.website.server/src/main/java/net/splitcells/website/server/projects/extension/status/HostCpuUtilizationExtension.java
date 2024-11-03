@@ -43,8 +43,8 @@ import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.projects.RenderResponse.renderResponse;
+import static net.splitcells.website.server.security.authorization.AdminRole.ADMIN_ROLE;
 import static net.splitcells.website.server.security.authorization.Authorization.missesRole;
-import static net.splitcells.website.server.security.authorization.Role.ADMIN_ROLE;
 
 public class HostCpuUtilizationExtension implements ProjectsRendererExtension {
 

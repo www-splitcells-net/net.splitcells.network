@@ -15,22 +15,13 @@
  */
 package net.splitcells.website.server.security.authorization;
 
-import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
-import static net.splitcells.website.server.security.authentication.Authenticator.VALID_USERNAME_SYMBOLS;
-
 /**
- * Prefer defining new instances via {@link StaticRole},
- * in order to avoid ambiguous {@link Role}.
+ * This interface is used in order to compactly create a new class of {@link Role},
+ * that reserves its name in Java's package classpath.
+ * Thereby, it is easier to ensure the uniqueness of {@link Role#name()}.
  */
-public interface Role {
-
-    static void requireValid(Role role) {
-        if (!VALID_USERNAME_SYMBOLS.matcher(role.name()).matches()) {
-            throw executionException(tree("The given role name is invalid.")
-                    .withProperty("role name", role.name()));
-        }
+public interface StaticRole extends Role {
+    default String name() {
+        return StaticRole.class.getName();
     }
-
-    String name();
 }
