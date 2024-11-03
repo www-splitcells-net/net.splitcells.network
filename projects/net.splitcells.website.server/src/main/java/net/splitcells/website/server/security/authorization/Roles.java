@@ -19,19 +19,24 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.website.server.security.authentication.Authenticator.VALID_USERNAME_SYMBOLS;
 
-public class Role {
-    public static final String ANONYMOUS_ROLE_NAME = "anonymous";
-    public static final Role ANONYMOUS_ROLE = role(ANONYMOUS_ROLE_NAME);
-    public static final String ADMIN_ROLE_NAME = "admin-role";
-    public static final Role ADMIN_ROLE = role(ADMIN_ROLE_NAME);
-public interface Role {
+public class Roles implements Role {
 
-    static void requireValid(Role role) {
-        if (!VALID_USERNAME_SYMBOLS.matcher(role.name()).matches()) {
-            throw executionException(tree("The given role name is invalid.")
-                    .withProperty("role name", role.name()));
-        }
+    public static Role role(String name) {
+        return new Roles(name);
     }
 
-    String name();
+    private final String name;
+
+    private Roles(String argName) {
+        if (!VALID_USERNAME_SYMBOLS.matcher(argName).matches()) {
+            throw executionException(tree("The given role name is invalid.")
+                    .withProperty("role name", argName));
+        }
+        name = argName;
+    }
+
+    @Override
+    public String name() {
+        return name;
+    }
 }

@@ -15,18 +15,16 @@
  */
 package net.splitcells.website.server.security.authorization;
 
-import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.dem.utils.StringUtils;
 
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.resource.FileSystemViaMemory.fileSystemViaMemory;
-import static net.splitcells.website.server.security.authentication.AuthenticatorImpl.PASSWORD_FILE;
 import static net.splitcells.website.server.security.authentication.UserSession.*;
 import static net.splitcells.website.server.security.authorization.AuthorizerBasedOnFiles.ROLE_FOLDER;
 import static net.splitcells.website.server.security.authorization.AuthorizerBasedOnFiles.authorizerBasedOnFiles;
-import static net.splitcells.website.server.security.authorization.Role.role;
+import static net.splitcells.website.server.security.authorization.Roles.role;
 
 public class AuthorizerBasedOnFilesTest {
     @UnitTest
