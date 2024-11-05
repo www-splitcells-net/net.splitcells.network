@@ -60,6 +60,10 @@
                 </xsl:attribute>
                 Main Menu
             </a>
+            <s:option>
+                <s:name>User Profile Page</s:name>
+                <s:page>/net/splitcells/website/server/projects/extension/user-profile-page-extension</s:page>
+            </s:option>
         </s:chapter>
     </xsl:variable>
 </xsl:stylesheet>
