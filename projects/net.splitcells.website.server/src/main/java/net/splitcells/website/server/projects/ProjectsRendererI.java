@@ -65,6 +65,7 @@ import static net.splitcells.website.server.projects.extension.GlobalChangelogEx
 import static net.splitcells.website.server.projects.extension.LayoutExtension.layoutExtension;
 import static net.splitcells.website.server.projects.extension.LayoutTreeExtension.layoutTreeExtension;
 import static net.splitcells.website.server.projects.extension.TestExtension.testExtension;
+import static net.splitcells.website.server.projects.extension.UserProfilePageExtension.userProfilePageExtension;
 import static net.splitcells.website.server.projects.extension.status.HostCpuUtilizationExtension.hostCpuUtilizationExtension;
 import static net.splitcells.website.server.projects.extension.status.HostMemoryUtilizationExtension.hostMemoryUtilizationExtension;
 import static net.splitcells.website.server.projects.extension.status.NetworkStatusRenderExtension.networkStatusRenderExtension;
@@ -191,9 +192,11 @@ public class ProjectsRendererI implements ProjectsRenderer {
             .withRegisteredExtension(colloquiumPlanningDemandTestData())
             .withRegisteredExtension(colloquiumPlanningSuppliesTestData());
 
-    private final List<ProjectsRendererExtension> extensions = Lists.<ProjectsRendererExtension>list()
-            .withAppended(hostCpuUtilizationExtension())
-            .withAppended(hostMemoryUtilizationExtension());
+    private final List<ProjectsRendererExtension> extensions = listWithValuesOf(
+            hostCpuUtilizationExtension()
+            , hostMemoryUtilizationExtension()
+            , userProfilePageExtension()
+    );
 
     private ProjectsRendererI(String name
             , ProjectRenderer fallbackRenderer
