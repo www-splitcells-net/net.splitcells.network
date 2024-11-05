@@ -22,6 +22,6 @@ package net.splitcells.website.server.security.authorization;
  */
 public interface StaticRole extends Role {
     default String name() {
-        return StaticRole.class.getName();
+        return getClass().getName();
     }
 }
