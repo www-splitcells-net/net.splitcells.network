@@ -62,11 +62,11 @@ public class UserProfilePageExtension implements ProjectsRendererExtension {
             content.append("<ol>");
             projectsRenderer.projectPaths(projectPathsRequest(projectsRenderer).withUser(request.user()))
                     .forEach(p -> {
-                        content.append("<li><a href=\"");
-                        content.append("/" + p);
-                        content.append("\">");
-                        content.append("/" + p);
-                        content.append("</a></li>");
+                        content.append("<li><a href=\"/")
+                                .append(p)
+                                .append("\">/")
+                                .append(p)
+                                .append("</a></li>");
                     });
             content.append("</ol>");
             return renderResponse(Optional.of(binaryMessage(projectsRenderer.renderHtmlBodyContent(content.toString()
