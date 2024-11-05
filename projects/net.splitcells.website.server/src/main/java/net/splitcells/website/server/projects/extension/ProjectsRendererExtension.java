@@ -53,8 +53,10 @@ public interface ProjectsRendererExtension {
      * The paths are relative to the website's {@link Config#rootPath()}.
      *
      * @param projectsRenderer
+     * @deprecated Use {@link #projectPaths(ProjectPathsRequest)} instead, but this method is not ready for that yet.
      * @return Set of paths relative to {@link Config#rootPath()}.
      */
+    @Deprecated
     Set<Path> projectPaths(@Deprecated ProjectsRendererI projectsRenderer);
 
     default Set<Path> projectPaths(ProjectPathsRequest request) {
