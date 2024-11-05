@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
  * if a none thread safe implementation is accidentally used in multithreaded environments by accident.</p>
  */
 public interface Authenticator {
-    Pattern VALID_USERNAME_SYMBOLS = Pattern.compile("[a-zA-Z0-9 \\-]+");
+    Pattern VALID_USERNAME_SYMBOLS = Pattern.compile("[a-zA-Z0-9 \\-\\.]+");
 
     UserSession userSession(Login login);
 
