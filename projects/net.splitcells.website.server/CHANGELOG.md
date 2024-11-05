@@ -7,6 +7,11 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
 
 ## [Unreleased]
 ### Major Changes
+* **2024-11-05: \#37** Add basic security system:
+    1. Define and implement authorization.
+    2. Define and implement authentication.
+    3. Define and implement access control, in order to force a certain style of authorization and authentication API usage.
+    4. Require admin role for RAM and CPU utilization pages.
 * **2024-09-27: \#45** Support relative links in CommonMark documents.
   This makes the community repo easier to handle.
 * **2024-09-24: \#38** Make web server thread safe, by providing a dedicated renderer for each thread.
