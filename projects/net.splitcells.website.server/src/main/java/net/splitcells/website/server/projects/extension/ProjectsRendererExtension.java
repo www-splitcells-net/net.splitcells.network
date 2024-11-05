@@ -57,6 +57,10 @@ public interface ProjectsRendererExtension {
      */
     Set<Path> projectPaths(@Deprecated ProjectsRendererI projectsRenderer);
 
+    default Set<Path> projectPaths(ProjectPathsRequest request) {
+        return setOfUniques();
+    }
+
     /**
      * The paths are relative to the website's {@link Config#rootPath()}.
      *

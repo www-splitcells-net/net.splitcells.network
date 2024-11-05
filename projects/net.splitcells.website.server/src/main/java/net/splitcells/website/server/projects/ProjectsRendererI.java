@@ -16,6 +16,7 @@
 package net.splitcells.website.server.projects;
 
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.config.framework.Option;
@@ -32,6 +33,7 @@ import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.project.validator.RenderingValidator;
 import net.splitcells.website.server.Server;
 import net.splitcells.website.server.Config;
+import net.splitcells.website.server.projects.extension.ProjectPathsRequest;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtensionMerger;
 
@@ -42,8 +44,7 @@ import java.util.function.Function;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
-import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
@@ -430,5 +431,13 @@ public class ProjectsRendererI implements ProjectsRenderer {
             }
         }
         return false;
+    }
+
+    @Override
+    public Set<Path> projectPaths(ProjectPathsRequest request) {
+        return extensions.stream()
+                .map(e -> e.projectPaths(request))
+                .reduce(Set::with)
+                .orElseGet(Sets::setOfUniques);
     }
 }

@@ -25,6 +25,7 @@ import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.PageMetaData;
+import net.splitcells.website.server.projects.extension.ProjectPathsRequest;
 import net.splitcells.website.server.security.access.Firewall;
 
 import java.nio.file.Path;
@@ -272,4 +273,6 @@ public interface ProjectsRenderer extends Firewall {
         }
         return Optional.empty();
     }
+
+    Set<Path> projectPaths(ProjectPathsRequest request);
 }
