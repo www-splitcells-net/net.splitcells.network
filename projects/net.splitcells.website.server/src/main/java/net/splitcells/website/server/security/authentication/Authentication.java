@@ -46,4 +46,8 @@ public class Authentication implements Option<Authenticator> {
         }
         return userSession;
     }
+
+    public static String name(UserSession userSession) {
+        return configValue(Authentication.class).name(userSession);
+    }
 }
