@@ -188,7 +188,6 @@ public class ProjectsRendererI implements ProjectsRenderer {
             .withRegisteredExtension(networkStatusRenderExtension())
             .withRegisteredExtension(layoutExtension())
             .withRegisteredExtension(layoutTreeExtension())
-            .withRegisteredExtension(testExtension())
             .withRegisteredExtension(frontMenuExtension())
             .withRegisteredExtension(colloquiumPlanningDemandTestData())
             .withRegisteredExtension(colloquiumPlanningSuppliesTestData());
@@ -198,6 +197,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
             , hostMemoryUtilizationExtension()
             , userProfilePageExtension()
             , demConfigExtension()
+            , testExtension()
     );
 
     private ProjectsRendererI(String name
