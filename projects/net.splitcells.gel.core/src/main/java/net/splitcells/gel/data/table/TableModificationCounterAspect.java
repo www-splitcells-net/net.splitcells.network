@@ -167,4 +167,18 @@ public class TableModificationCounterAspect implements Table {
     public List<String> path() {
         return table.path();
     }
+
+    @Override
+    public boolean equals(Object arg) {
+        if (arg instanceof Table) {
+            final var castedArg = (Table) arg;
+            return identity() == table.identity();
+        }
+        throw executionException("Invalid argument type: " + arg);
+    }
+
+    @Override
+    public int hashCode() {
+        return table.hashCode();
+    }
 }
