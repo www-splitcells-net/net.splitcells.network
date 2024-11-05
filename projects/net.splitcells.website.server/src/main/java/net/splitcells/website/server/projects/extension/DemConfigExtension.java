@@ -18,51 +18,58 @@ package net.splitcells.website.server.projects.extension;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.environment.config.framework.Configuration;
+import net.splitcells.dem.resource.Trail;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.LayoutConfig;
+import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.RenderRequest;
+import net.splitcells.website.server.projects.RenderResponse;
 
 import java.nio.file.Path;
 import java.util.Optional;
 
+import static java.util.Optional.empty;
 import static net.splitcells.dem.Dem.config;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.resource.Trail.trail;
+import static net.splitcells.website.server.project.LayoutConfig.layoutConfig;
+import static net.splitcells.website.server.projects.RenderResponse.renderResponse;
+import static net.splitcells.website.server.security.authorization.AdminRole.ADMIN_ROLE;
+import static net.splitcells.website.server.security.authorization.Authorization.hasRole;
+import static net.splitcells.website.server.security.authorization.Authorization.missesRole;
 
 /**
  * Renders the {@link Configuration} of the current {@link Dem#config()}.
- *
- * @deprecated This is deprecated for now, as the config can contain security sensitive info and
- * no authorization system exists for this project yet.
- * When an authorization is present, this may enabled in the future.
  */
-@Deprecated
+
 public class DemConfigExtension implements ProjectsRendererExtension {
-    @Deprecated
-    private static DemConfigExtension demConfigExtension() {
+    public static ProjectsRendererExtension demConfigExtension() {
         return new DemConfigExtension();
     }
 
-    private static final String PATH = "/net/splitcells/dem/config.html";
+    private static final Trail PATH = trail("net/splitcells/dem/config.html");
 
     private DemConfigExtension() {
 
     }
 
     @Override
-    public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
-        if (PATH.equals(path) && config.layout().isPresent()) {
-            return projectsRendererI.renderContent(htmlTableOfConfig(), LayoutConfig.layoutConfig(PATH));
+    public RenderResponse render(RenderRequest request, ProjectsRenderer projectsRenderer) {
+        if (!request.trail().equalContents(PATH)) {
+            return renderResponse(empty());
         }
-        return Optional.empty();
-    }
-
-    @Override
-    public boolean requiresAuthentication(RenderRequest request) {
-        return false;
+        if (missesRole(request.user(), ADMIN_ROLE)) {
+            return projectsRenderer.renderMissingAccessRights(request);
+        }
+        if (projectsRenderer.config().layout().isPresent()) {
+            return renderResponse(projectsRenderer.renderContent(htmlTableOfConfig()
+                    , layoutConfig(PATH.unixPathString())));
+        }
+        return renderResponse(empty());
     }
 
     private String htmlTableOfConfig() {
@@ -82,7 +89,20 @@ public class DemConfigExtension implements ProjectsRendererExtension {
     @Override
     public Set<Path> projectPaths(ProjectsRendererI projectsRendererI) {
         if (projectsRendererI.config().layout().isPresent()) {
-            return setOfUniques(Path.of(PATH.substring(1)));
+            return setOfUniques(Path.of(PATH.unixPathString()));
+        }
+        return setOfUniques();
+    }
+
+    @Override
+    public boolean requiresAuthentication(RenderRequest request) {
+        return request.trail().equalContents(PATH);
+    }
+
+    @Override
+    public Set<Path> projectPaths(ProjectPathsRequest request) {
+        if (hasRole(request.user(), ADMIN_ROLE)) {
+            return setOfUniques(Path.of(PATH.unixPathString()));
         }
         return setOfUniques();
     }

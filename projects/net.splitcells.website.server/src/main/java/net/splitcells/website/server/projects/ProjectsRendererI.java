@@ -60,6 +60,7 @@ import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiv
 import static net.splitcells.website.server.projects.RenderResponse.renderResponse;
 import static net.splitcells.website.server.projects.extension.ColloquiumPlanningDemandsTestData.colloquiumPlanningDemandTestData;
 import static net.splitcells.website.server.projects.extension.ColloquiumPlanningSuppliesTestData.colloquiumPlanningSuppliesTestData;
+import static net.splitcells.website.server.projects.extension.DemConfigExtension.demConfigExtension;
 import static net.splitcells.website.server.projects.extension.FrontMenuExtension.frontMenuExtension;
 import static net.splitcells.website.server.projects.extension.GlobalChangelogExtension.globalChangelogExtension;
 import static net.splitcells.website.server.projects.extension.LayoutExtension.layoutExtension;
@@ -196,6 +197,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
             hostCpuUtilizationExtension()
             , hostMemoryUtilizationExtension()
             , userProfilePageExtension()
+            , demConfigExtension()
     );
 
     private ProjectsRendererI(String name
