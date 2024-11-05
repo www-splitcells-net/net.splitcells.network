@@ -174,6 +174,11 @@ public interface ProjectsRenderer extends Firewall {
                 , layoutConfig(request.trail().unixPathString())));
     }
 
+    default RenderResponse renderMissingLogin(RenderRequest request) {
+        return renderResponse(renderContent("<p xmlns=\"http://www.w3.org/1999/xhtml\">Please login, in order to see this page.</p>"
+                , layoutConfig(request.trail().unixPathString())));
+    }
+
     default BinaryMessage renderCsvGraph(String path, String dataPath, String title) {
         final var page = tree("article", SEW)
                 .withChild(tree("meta", SEW)
