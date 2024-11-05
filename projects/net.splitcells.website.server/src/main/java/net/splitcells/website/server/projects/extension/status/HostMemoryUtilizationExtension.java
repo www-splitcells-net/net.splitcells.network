@@ -58,6 +58,9 @@ public class HostMemoryUtilizationExtension implements ProjectsRendererExtension
         if (!request.trail().equalContents(REPORT_PATH) && !request.trail().equalContents(CSV_PATH)) {
             return renderResponse(Optional.empty());
         }
+        if (missesRole(request.user(), ADMIN_ROLE)) {
+            return projectsRenderer.renderMissingAccessRights(request);
+        }
         if (request.trail().equalContents(REPORT_PATH)) {
             final var page = TreeI.tree("article", SEW);
             final var meta = TreeI.tree("meta", SEW);
