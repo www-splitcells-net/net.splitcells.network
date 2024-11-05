@@ -19,10 +19,13 @@ import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.environment.resource.HostUtilizationRecordService;
 import net.splitcells.dem.lang.tree.TreeI;
+import net.splitcells.dem.resource.Trail;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.processor.BinaryMessage;
+import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.RenderRequest;
+import net.splitcells.website.server.projects.RenderResponse;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
 
 import java.nio.file.Path;
@@ -32,13 +35,15 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
+import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
+import static net.splitcells.website.server.projects.RenderResponse.renderResponse;
 
 public class HostMemoryUtilizationExtension implements ProjectsRendererExtension {
 
-    private static final String REPORT_PATH = "net/splitcells/host/resource/memory/utilization.csv.html";
-    private static final String CSV_PATH = "net/splitcells/host/resource/memory/utilization.csv";
+    private static final Trail REPORT_PATH = trail("net/splitcells/host/resource/memory/utilization.csv.html");
+    private static final Trail CSV_PATH = trail("net/splitcells/host/resource/memory/utilization.csv");
 
     public static HostMemoryUtilizationExtension hostMemoryUtilizationExtension() {
         return new HostMemoryUtilizationExtension();
@@ -49,35 +54,38 @@ public class HostMemoryUtilizationExtension implements ProjectsRendererExtension
     }
 
     @Override
-    public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRenderer, Config config) {
-        if (path.equals("/" + REPORT_PATH)) {
+    public RenderResponse render(RenderRequest request, ProjectsRenderer projectsRenderer) {
+        if (!request.trail().equalContents(REPORT_PATH) && !request.trail().equalContents(CSV_PATH)) {
+            return renderResponse(Optional.empty());
+        }
+        if (request.trail().equalContents(REPORT_PATH)) {
             final var page = TreeI.tree("article", SEW);
             final var meta = TreeI.tree("meta", SEW);
-            meta.withChild(TreeI.tree("path", SEW).withText(path));
+            meta.withChild(TreeI.tree("path", SEW).withText(request.trail().unixPathString()));
             meta.withChild(TreeI.tree("title", SEW).withText("Host RAM Utilization"));
             meta.withChild(TreeI.tree("full-screen-by-default", SEW).withText("true"));
             page.withChild(meta);
             page.withProperty("content", SEW, TreeI.tree("csv-chart-lines", SEW)
                     .withProperty("path", SEW, "/" + CSV_PATH));
-            return Optional.of(binaryMessage(projectsRenderer.projectRenderers().get(0)
-                            .renderRawXml(page.toXmlStringWithAllNameSpaceDeclarationsAtTop(), config)
+            return renderResponse(Optional.of(binaryMessage(projectsRenderer.projectRenderers().get(0)
+                            .renderRawXml(page.toXmlStringWithAllNameSpaceDeclarationsAtTop(), projectsRenderer.config())
                             .orElseThrow()
-                    , HTML_TEXT.codeName()));
-        } else if (path.equals("/" + CSV_PATH)) {
-            return Optional.of(binaryMessage(
+                    , HTML_TEXT.codeName())));
+        } else if (request.trail().equalContents(CSV_PATH)) {
+            return renderResponse(Optional.of(binaryMessage(
                     toBytes(Dem.configValue(HostUtilizationRecordService.class).memoryUtilizationReportAsCsv())
-                    , HTML_TEXT.codeName()));
+                    , HTML_TEXT.codeName())));
         }
-        return Optional.empty();
+        return renderResponse(Optional.empty());
     }
 
     @Override
     public boolean requiresAuthentication(RenderRequest request) {
-        return false;
+        return request.trail().equalContents(REPORT_PATH) || request.trail().equalContents(CSV_PATH);
     }
 
     @Override
     public Set<Path> projectPaths(ProjectsRendererI projectsRendererI) {
-        return setOfUniques(Path.of(REPORT_PATH));
+        return setOfUniques(Path.of(REPORT_PATH.unixPathString()));
     }
 }

@@ -188,14 +188,11 @@ public class ProjectsRendererI implements ProjectsRenderer {
             .withRegisteredExtension(testExtension())
             .withRegisteredExtension(frontMenuExtension())
             .withRegisteredExtension(colloquiumPlanningDemandTestData())
-            .withRegisteredExtension(colloquiumPlanningSuppliesTestData())
-            .withRegisteredExtension(hostMemoryUtilizationExtension());
+            .withRegisteredExtension(colloquiumPlanningSuppliesTestData());
 
-    private final List<ProjectsRendererExtension> extensions = list();
-
-    {
-        extensions.withAppended(hostCpuUtilizationExtension());
-    }
+    private final List<ProjectsRendererExtension> extensions = Lists.<ProjectsRendererExtension>list()
+            .withAppended(hostCpuUtilizationExtension())
+            .withAppended(hostMemoryUtilizationExtension());
 
     private ProjectsRendererI(String name
             , ProjectRenderer fallbackRenderer
