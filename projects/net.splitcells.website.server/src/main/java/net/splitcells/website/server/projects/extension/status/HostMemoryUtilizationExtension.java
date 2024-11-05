@@ -89,6 +89,6 @@ public class HostMemoryUtilizationExtension implements ProjectsRendererExtension
 
     @Override
     public Set<Path> projectPaths(ProjectsRendererI projectsRendererI) {
-        return setOfUniques(Path.of(REPORT_PATH.unixPathString()));
+        return setOfUniques();
     }
 }
