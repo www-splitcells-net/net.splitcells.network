@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.resource;
 
+import net.splitcells.dem.data.Identifiable;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 
 import java.util.function.Function;
@@ -37,6 +38,16 @@ public interface AspectOrientedConstructor<T> {
     /**
      * <p>Registers an {@code aspect} to the this.
      * An {@code aspect} takes a given argument and returns a wrapper of it.</p>
+     * <p>Keep in mind, that {@link Object#equals(Object)} only works,
+     * if the base implementations and all aspects override
+     * {@link Object#equals(Object)} and {@link Object#hashCode()} in such a way,
+     * that contents are only compared via {@link Identifiable#identity()}.
+     * The reason for this, is the fact that the base implementations and aspects,
+     * may use this and give it to other objects or function calls.
+     * When an object collection contains both versions of the same object, this leads to issues,
+     * as equals will not return true for both.
+     * Also keep in mind, that implementing {@link Object#equals(Object)} and {@link Object#hashCode()} in such a way,
+     * is basically a hack and a leaky abstraction.</p>
      * <p>Sometimes the question arises, if one or multiple aspects should be created for multiple functionalities.
      * Writing wrappers can sometimes take a bit much time, if the corresponding interface is large.
      * In this case it is often easier to use one aspect for multiple features,
