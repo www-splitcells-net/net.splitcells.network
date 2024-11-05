@@ -22,6 +22,7 @@ import net.splitcells.gel.data.table.TableModificationCounter;
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.Dem.process;
+import static net.splitcells.dem.data.atom.DescribedBool.describedBool;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.data.assignment.AssignmentsI.assignments;
 import static net.splitcells.gel.data.table.Tables.table;
@@ -36,6 +37,7 @@ public class DataTest {
             testTablePerformance(tableTestCounts);
             testAssignmentsPerformance(assignmentsTestCounts);
         });
+        describedBool(tableTestCounts.get(0) * 6 < assignmentsTestCounts.get(0), "").required();
     }
 
     private static void testTablePerformance(List<Long> tableTestCounts) {
