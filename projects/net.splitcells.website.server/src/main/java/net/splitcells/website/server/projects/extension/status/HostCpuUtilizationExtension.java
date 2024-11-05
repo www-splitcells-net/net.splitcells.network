@@ -18,19 +18,13 @@ package net.splitcells.website.server.projects.extension.status;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.environment.resource.HostUtilizationRecordService;
-import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.resource.Trail;
-import net.splitcells.website.server.Config;
-import net.splitcells.website.server.processor.BinaryMessage;
-import net.splitcells.website.server.processor.Request;
-import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.RenderRequest;
 import net.splitcells.website.server.projects.RenderResponse;
+import net.splitcells.website.server.projects.extension.ProjectPathsRequest;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
-import net.splitcells.website.server.security.authorization.Authorization;
-import net.splitcells.website.server.security.authorization.Role;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -44,6 +38,7 @@ import static net.splitcells.dem.utils.StringUtils.toBytes;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.projects.RenderResponse.renderResponse;
 import static net.splitcells.website.server.security.authorization.AdminRole.ADMIN_ROLE;
+import static net.splitcells.website.server.security.authorization.Authorization.hasRole;
 import static net.splitcells.website.server.security.authorization.Authorization.missesRole;
 
 public class HostCpuUtilizationExtension implements ProjectsRendererExtension {
@@ -95,6 +90,14 @@ public class HostCpuUtilizationExtension implements ProjectsRendererExtension {
 
     @Override
     public Set<Path> projectPaths(ProjectsRendererI projectsRendererI) {
+        return setOfUniques();
+    }
+
+    @Override
+    public Set<Path> projectPaths(ProjectPathsRequest request) {
+        if (hasRole(request.user(), ADMIN_ROLE)) {
+            return setOfUniques(Path.of(REPORT_PATH.unixPathString()));
+        }
         return setOfUniques();
     }
 }
