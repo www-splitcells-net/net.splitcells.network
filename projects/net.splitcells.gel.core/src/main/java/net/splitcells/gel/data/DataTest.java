@@ -35,7 +35,7 @@ public class DataTest {
     public void test_runtime_performance_difference_of_assignments_and_tables() {
         final var tableTestTime = measureTimeInNanoSeconds(DataTest::testTableRuntimePerformance);
         final var assignmentsTestTime = measureTimeInNanoSeconds(DataTest::testAssignmentsRuntimePerformance);
-        describedBool(tableTestTime < assignmentsTestTime, tableTestTime + " < " + assignmentsTestTime)
+        describedBool(tableTestTime * 3 < assignmentsTestTime, tableTestTime + " * 3 < " + assignmentsTestTime)
                 .required();
     }
 
@@ -48,6 +48,7 @@ public class DataTest {
                 range(0, 10_000).forEach(j -> {
                     table.addTranslated(list(j, j));
                 });
+                range(0, 10_000).forEach(table::remove);
             });
         });
     }
@@ -61,8 +62,13 @@ public class DataTest {
                 final var supplies = table(s);
                 final var assignments = assignments("test", demands, supplies);
                 range(0, 10_000).forEach(j -> {
-                    assignments.assign(demands.addTranslated(list(i)), supplies.addTranslated(list(j)));
+                    demands.addTranslated(list(j));
+                    supplies.addTranslated(list(j));
                 });
+                range(0, 10_000).forEach(j -> {
+                    assignments.assign(demands.rawLine(j), supplies.rawLine(j));
+                });
+                range(0, 10_000).forEach(assignments::remove);
             });
         });
     }
