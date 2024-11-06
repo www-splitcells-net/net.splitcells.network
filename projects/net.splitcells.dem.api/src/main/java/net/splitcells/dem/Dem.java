@@ -132,9 +132,9 @@ public class Dem {
     /**
      * Defines and executes a program.
      * <p>
-     * TODO Support stacking.
+     * TODO Support stacking instead of {@link #CURRENT}.
      * <p>
-     * TODO Support cactus stacking.
+     * TODO Support cactus stacking instead of {@link #CURRENT}.
      */
     public static ProcessResult process(Runnable program, Consumer<Environment> configurator) {
         ProcessResult processResult = processResult();
