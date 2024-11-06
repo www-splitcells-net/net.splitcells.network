@@ -29,4 +29,10 @@ public class Time {
     public static long elapsedTimeInNanoSeconds() {
         return System.nanoTime();
     }
+
+    public static long measureTimeInNanoSeconds(Runnable run) {
+        final var startTime = elapsedTimeInNanoSeconds();
+        run.run();
+        return elapsedTimeInNanoSeconds() - startTime;
+    }
 }
