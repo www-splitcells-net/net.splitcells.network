@@ -34,8 +34,11 @@ public class DataTest {
     @BenchmarkTest
     public void test_runtime_performance_difference_of_assignments_and_tables() {
         final var tableTestTime = measureTimeInNanoSeconds(DataTest::testTableRuntimePerformance);
-        final var assignmentsTestTime = measureTimeInNanoSeconds(DataTest::testAssignmentsRuntimePerformance);
-        describedBool(tableTestTime * 3 < assignmentsTestTime, tableTestTime + " * 3 < " + assignmentsTestTime)
+        final var assignmentsTestTime = measureTimeInNanoSeconds(() -> testAssignmentsRuntimePerformance(false));
+        final var assignmentsTestWorstCaseTime = measureTimeInNanoSeconds(() -> testAssignmentsRuntimePerformance(true));
+        describedBool(tableTestTime * 3 < assignmentsTestWorstCaseTime, tableTestTime + " * 3 < " + assignmentsTestTime)
+                .required();
+        describedBool(tableTestTime < assignmentsTestTime, tableTestTime + " < " + assignmentsTestTime)
                 .required();
     }
 
@@ -53,7 +56,7 @@ public class DataTest {
         });
     }
 
-    private static void testAssignmentsRuntimePerformance() {
+    private static void testAssignmentsRuntimePerformance(boolean worstCase) {
         range(0, 10).forEach(i -> {
             process(() -> {
                 final var d = attribute(Integer.class, "d");
@@ -61,13 +64,19 @@ public class DataTest {
                 final var demands = table(d);
                 final var supplies = table(s);
                 final var assignments = assignments("test", demands, supplies);
-                range(0, 10_000).forEach(j -> {
-                    demands.addTranslated(list(j));
-                    supplies.addTranslated(list(j));
-                });
-                range(0, 10_000).forEach(j -> {
-                    assignments.assign(demands.rawLine(j), supplies.rawLine(j));
-                });
+                if (worstCase) {
+                    range(0, 10_000).forEach(j -> {
+                        demands.addTranslated(list(j));
+                        supplies.addTranslated(list(j));
+                    });
+                    range(0, 10_000).forEach(j -> {
+                        assignments.assign(demands.rawLine(j), supplies.rawLine(j));
+                    });
+                } else {
+                    range(0, 10_000).forEach(j -> {
+                        assignments.assign(demands.addTranslated(list(j)), supplies.addTranslated(list(j)));
+                    });
+                }
                 range(0, 10_000).forEach(assignments::remove);
             });
         });
