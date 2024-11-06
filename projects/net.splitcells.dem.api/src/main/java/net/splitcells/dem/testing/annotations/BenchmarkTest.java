@@ -26,7 +26,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * TODO Create guidelines and goals of benchmarks.
+ * <p>TODO Create guidelines and goals of benchmarks.</p>
+ * <p>TODO Create measurement tests in the future,
+ * that only measure things and where the data is tested by a dedicated analyzer.
+ * Such measurement tests could register such analyzer routines to the dedicated analyzer.</p>
  */
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
