@@ -24,11 +24,49 @@ import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.Dem.process;
 import static net.splitcells.dem.data.atom.DescribedBool.describedBool;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.resource.Time.measureTimeInNanoSeconds;
 import static net.splitcells.gel.data.assignment.AssignmentsI.assignments;
 import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 
 public class DataTest {
+
+    @BenchmarkTest
+    public void test_runtime_performance_difference_of_assignments_and_tables() {
+        final var tableTestTime = measureTimeInNanoSeconds(DataTest::testTableRuntimePerformance);
+        final var assignmentsTestTime = measureTimeInNanoSeconds(DataTest::testAssignmentsRuntimePerformance);
+        describedBool(tableTestTime < assignmentsTestTime, tableTestTime + " < " + assignmentsTestTime)
+                .required();
+    }
+
+    private static void testTableRuntimePerformance() {
+        range(0, 10).forEach(i -> {
+            process(() -> {
+                final var d = attribute(Integer.class, "d");
+                final var s = attribute(Integer.class, "s");
+                final var table = table(d, s);
+                range(0, 10_000).forEach(j -> {
+                    table.addTranslated(list(j, j));
+                });
+            });
+        });
+    }
+
+    private static void testAssignmentsRuntimePerformance() {
+        range(0, 10).forEach(i -> {
+            process(() -> {
+                final var d = attribute(Integer.class, "d");
+                final var s = attribute(Integer.class, "s");
+                final var demands = table(d);
+                final var supplies = table(s);
+                final var assignments = assignments("test", demands, supplies);
+                range(0, 10_000).forEach(j -> {
+                    assignments.assign(demands.addTranslated(list(i)), supplies.addTranslated(list(j)));
+                });
+            });
+        });
+    }
+
     @BenchmarkTest
     public void test_performance_difference_of_assignments_and_tables() {
         final List<Long> tableTestCounts = list();
@@ -37,7 +75,9 @@ public class DataTest {
             testTablePerformance(tableTestCounts);
             testAssignmentsPerformance(assignmentsTestCounts);
         });
-        describedBool(tableTestCounts.get(0) * 6 < assignmentsTestCounts.get(0), "").required();
+        describedBool(tableTestCounts.get(0) * 6 < assignmentsTestCounts.get(0)
+                , tableTestCounts.get(0) + " * 6 < " + assignmentsTestCounts.get(0))
+                .required();
     }
 
     private static void testTablePerformance(List<Long> tableTestCounts) {
