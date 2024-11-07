@@ -35,6 +35,9 @@ import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
  * which will than be represented by a meta {@link Solution}.</p>
  */
 public class EntityManager {
+    /**
+     * TODO Make this a float for best portability and adaptability.
+     */
     public static final Attribute<Integer> TIME = attribute(Integer.class, "time");
     public static final Attribute<Float> PLAYER = attribute(Float.class, "player");
     public static final Attribute<Float> PLAYER_ATTRIBUTE = attribute(Float.class, "player-attribute");
@@ -78,7 +81,7 @@ public class EntityManager {
 
     public EntityManager withOptimized() {
         entities.demandsFree().unorderedLines()
-                .forEach(fd -> entities.assign(fd, entitySupplies.addTranslated(list(PLAYER_ENERGY, random.integer(1, 100)))));
+                .forEach(fd -> entities.assign(fd, entitySupplies.addTranslated(list(PLAYER_ENERGY, (float) random.integer(1, 100)))));
         return this;
     }
 
@@ -93,7 +96,7 @@ public class EntityManager {
     }
 
     public EntityManager withInitedPlayers() {
-        range(0, numberOfPlayers).forEach(i -> entityDemands.addTranslated(list(initTime, i)));
+        range(0, numberOfPlayers).forEach(i -> entityDemands.addTranslated(list(initTime, (float) i)));
         return this;
     }
 
