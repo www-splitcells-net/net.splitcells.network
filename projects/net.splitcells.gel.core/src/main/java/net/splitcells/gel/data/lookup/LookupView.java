@@ -28,4 +28,5 @@ public interface LookupView extends View {
 
     void removeRegistration(Line line);
 
+    View base();
 }

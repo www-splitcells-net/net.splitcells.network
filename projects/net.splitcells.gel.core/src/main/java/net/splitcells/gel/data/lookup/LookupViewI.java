@@ -323,6 +323,7 @@ public class LookupViewI implements LookupView {
         return columnsView;
     }
 
+    @Override
     public View base() {
         return viewView;
     }

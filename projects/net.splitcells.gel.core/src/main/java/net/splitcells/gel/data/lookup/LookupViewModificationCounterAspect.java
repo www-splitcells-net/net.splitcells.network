@@ -19,6 +19,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.column.ColumnView;
 
@@ -40,6 +41,11 @@ public class LookupViewModificationCounterAspect implements LookupView {
     @Override
     public void removeRegistration(Line line) {
         lookupView.removeRegistration(line);
+    }
+
+    @Override
+    public View base() {
+        return lookupView.base();
     }
 
     @Override
