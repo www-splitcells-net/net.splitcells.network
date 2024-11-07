@@ -21,7 +21,10 @@ import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.resource.AspectOrientedConstructor;
+import net.splitcells.dem.resource.AspectOrientedConstructorBase;
 import net.splitcells.dem.resource.ConnectingConstructor;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -29,6 +32,7 @@ import net.splitcells.gel.data.view.column.Column;
 import net.splitcells.gel.data.view.column.ColumnView;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static java.util.stream.IntStream.range;
@@ -41,6 +45,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.resource.AspectOrientedConstructorBase.aspectOrientedConstructor;
 import static net.splitcells.dem.resource.ConnectingConstructorI.connectingConstructor;
 import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
@@ -70,6 +75,17 @@ public class LookupViewI implements LookupView {
 
     public static LookupTableFactory lookupTableFactory() {
         return new LookupTableFactory() {
+            @Override
+            public AspectOrientedConstructor<LookupView> withAspect(Function<LookupView, LookupView> aspect) {
+                return aspects.withAspect(aspect);
+            }
+
+            @Override
+            public LookupView joinAspects(LookupView arg) {
+                return aspects.joinAspects(arg);
+            }
+
+            private final AspectOrientedConstructorBase<LookupView> aspects = aspectOrientedConstructor();
             private final ConnectingConstructor<LookupView> connector = connectingConstructor();
 
             @Override
@@ -80,22 +96,22 @@ public class LookupViewI implements LookupView {
 
             @Override
             public LookupView connect(LookupView subject) {
-                return connector.connect(subject);
+                return connector.connect(joinAspects(subject));
             }
 
             @Override
             public LookupView lookupTable(View view, String name) {
-                return connector.connect(LookupViewI.lookupTable(view, name));
+                return connector.connect(joinAspects(LookupViewI.lookupTable(view, name)));
             }
 
             @Override
             public LookupView lookupTable(View view, Attribute<?> attribute) {
-                return LookupViewI.lookupTable(view, attribute);
+                return connector.connect(joinAspects(LookupViewI.lookupTable(view, attribute)));
             }
 
             @Override
             public LookupView lookupTable(View view, Attribute<?> attribute, boolean cacheRawLines) {
-                return LookupViewI.lookupTable(view, attribute, cacheRawLines);
+                return connector.connect(joinAspects(LookupViewI.lookupTable(view, attribute, cacheRawLines)));
             }
         };
     }

@@ -15,12 +15,13 @@
  */
 package net.splitcells.gel.data.lookup;
 
+import net.splitcells.dem.resource.AspectOrientedConstructor;
 import net.splitcells.dem.resource.ConnectingConstructor;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 
-public interface LookupTableFactory extends ConnectingConstructor<LookupView> {
+public interface LookupTableFactory extends ConnectingConstructor<LookupView>, AspectOrientedConstructor<LookupView> {
 
     /**
      * @param view The {@link View} on which the lookup will be performed.
