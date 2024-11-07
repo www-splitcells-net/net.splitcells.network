@@ -52,9 +52,6 @@ import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**
- * <p>Provides a view to a subset of a {@link View} as a {@link View}.
- * By default the {@link LookupView} is empty.
- * {@link Line} has to be removed via {@link #register(Line)} and {@link #removeRegistration(Line)}.</p>
  * <p>TODO Test runtime improvements by {@link #USE_EXPERIMENTAL_RUNTIME_IMPROVEMENTS},
  * {@link #USE_EXPERIMENTAL_RAW_LINE_CACHE} and {@link #USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE}.</p>
  */
