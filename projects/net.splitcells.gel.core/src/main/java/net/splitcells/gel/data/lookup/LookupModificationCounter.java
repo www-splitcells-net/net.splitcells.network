@@ -24,6 +24,7 @@ import net.splitcells.website.server.project.renderer.ObjectsRenderer;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.object.Discoverable.discoverable;
 import static net.splitcells.dem.testing.MetaCounter.metaCounter;
 
@@ -31,6 +32,7 @@ public class LookupModificationCounter implements Option<MetaCounter> {
     @Override
     public MetaCounter defaultValue() {
         final var metaCounter = metaCounter(discoverable(TableModificationCounter.class));
+        configValue(LookupTables.class).withAspect(LookupViewModificationCounterAspect::lookupViewModificationCounterAspect);
         ObjectsRenderer.registerObject(new CsvRenderer() {
             @Override
             public String renderCsv() {
