@@ -36,7 +36,7 @@ public class DataTest {
         final var tableTestTime = measureTimeInNanoSeconds(DataTest::testTableRuntimePerformance);
         final var assignmentsTestTime = measureTimeInNanoSeconds(() -> testAssignmentsRuntimePerformance(false));
         final var assignmentsTestWorstCaseTime = measureTimeInNanoSeconds(() -> testAssignmentsRuntimePerformance(true));
-        describedBool(tableTestTime * 3 < assignmentsTestWorstCaseTime, tableTestTime + " * 3 < " + assignmentsTestTime)
+        describedBool(tableTestTime * 3 < assignmentsTestWorstCaseTime, tableTestTime + " * 3 < " + assignmentsTestWorstCaseTime)
                 .required();
         describedBool(tableTestTime < assignmentsTestTime, tableTestTime + " < " + assignmentsTestTime)
                 .required();
