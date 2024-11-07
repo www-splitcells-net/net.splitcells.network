@@ -17,6 +17,7 @@ package net.splitcells.dem.resource;
 
 public class Time {
     public static final long ONE_SECOND_IN_NANOSECONDS = 1_000_000_000L;
+
     private Time() {
 
     }
@@ -28,6 +29,10 @@ public class Time {
      */
     public static long elapsedTimeInNanoSeconds() {
         return System.nanoTime();
+    }
+
+    public static double nanoToSeconds(long nanoSeconds) {
+        return (double) nanoSeconds / ONE_SECOND_IN_NANOSECONDS;
     }
 
     public static long measureTimeInNanoSeconds(Runnable run) {
