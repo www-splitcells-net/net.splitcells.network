@@ -104,7 +104,7 @@ public class DataTest {
                 table.addTranslated(list(i, i));
             });
             tableTestCounts.add(configValue(TableModificationCounter.class).sumCounter().currentCount());
-        }, env -> env.config().configValue(TableModificationCounter.class).withInit(env));
+        }, env -> env.config().withInitedOption(TableModificationCounter.class));
     }
 
     private static void testAssignmentsPerformance(List<Long> tableTestCounts) {
@@ -118,6 +118,6 @@ public class DataTest {
                 assignments.assign(demands.addTranslated(list(i)), supplies.addTranslated(list(i)));
             });
             tableTestCounts.add(configValue(TableModificationCounter.class).sumCounter().currentCount());
-        }, env -> env.config().configValue(TableModificationCounter.class).withInit(env));
+        }, env -> env.config().withInitedOption(TableModificationCounter.class));
     }
 }

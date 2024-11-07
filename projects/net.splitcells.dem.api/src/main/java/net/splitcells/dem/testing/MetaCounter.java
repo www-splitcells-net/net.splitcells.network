@@ -43,7 +43,6 @@ public class MetaCounter implements Discoverable, ImplicitEffect {
      * Maps {@link Discoverable} to {@link Counter}.
      */
     private Map<List<String>, Counter> counters = synchronizedMap();
-    private List<Consumer<Environment>> configs = list();
     private Counter sumCounter = counter();
     private final Discoverable path;
 
@@ -70,28 +69,6 @@ public class MetaCounter implements Discoverable, ImplicitEffect {
 
     public Counter sumCounter() {
         return sumCounter;
-    }
-
-    public MetaCounter withConfig(Consumer<Environment> config) {
-        configs.add(config);
-        return this;
-    }
-
-    /**
-     *
-     * @deprecated TODO This init method seems to be a bad idea,
-     * because this init method could also be placed in the {@link Option#defaultValue()} instead,
-     * which would simplify the code and would have the same effect.
-     * On the other hand, replacing such an {@link Option} value becomes harder,
-     * as one would somehow have to revert these config functions in case of a replacement,
-     * but this is not solved with this construct as well (see {@link net.splitcells.dem.resource.AspectOrientedConstructor}).
-     * @param env
-     * @return
-     */
-    @Deprecated
-    public MetaCounter withInit(Environment env) {
-        configs.forEach(c -> c.accept(env));
-        return this;
     }
 
     @Override
