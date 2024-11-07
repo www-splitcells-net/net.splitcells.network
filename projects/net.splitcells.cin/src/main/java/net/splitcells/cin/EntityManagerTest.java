@@ -18,10 +18,15 @@ package net.splitcells.cin;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.testing.annotations.BenchmarkTest;
+import net.splitcells.gel.data.lookup.LookupModificationCounter;
+import net.splitcells.gel.data.table.TableModificationCounter;
 
 import java.util.stream.IntStream;
 
 import static net.splitcells.cin.EntityManager.entityManager;
+import static net.splitcells.dem.Dem.configValue;
+import static net.splitcells.dem.data.atom.DescribedBool.describedBool;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.Time.measureTimeInNanoSeconds;
 import static net.splitcells.dem.resource.Time.nanoToSeconds;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
@@ -53,5 +58,26 @@ public class EntityManagerTest {
                 });
             })) / loopCount, LogLevel.INFO);
         });
+    }
+
+    @BenchmarkTest
+    public void test_modification_count_of_multiple_time_step() {
+        final int loopCount = 100;
+        Dem.process(() -> {
+                    final var entityManager = entityManager();
+                    entityManager.withInitedPlayers();
+                    IntStream.range(0, loopCount).forEach(i -> {
+                        entityManager.withOneStepForward();
+                    });
+                    final var tableModificationCount = configValue(TableModificationCounter.class).sumCounter().currentCount();
+                    final var lookupModificationCounter = configValue(LookupModificationCounter.class).sumCounter().currentCount();
+                    logs().append(tree("Modification counters:")
+                                    .withProperty("tableModificationCount", "" + tableModificationCount)
+                                    .withProperty("lookupModificationCounter", "" + lookupModificationCounter)
+                            , LogLevel.INFO);
+                }, env -> env.config()
+                        .withInitedOption(TableModificationCounter.class)
+                        .withInitedOption(LookupModificationCounter.class)
+        );
     }
 }
