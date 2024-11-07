@@ -24,7 +24,6 @@ import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.AspectOrientedConstructor;
 import net.splitcells.dem.resource.AspectOrientedConstructorBase;
 import net.splitcells.dem.resource.ConnectingConstructor;
-import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -66,7 +65,7 @@ public class LookupViewI implements LookupView {
     private final View viewView;
     private final String name;
     private final Set<Integer> content = setOfUniques();
-    private final List<Column<Object>> columns;
+    private final List<Column<Object>> lookupColumns;
     private final List<ColumnView<Object>> columnsView;
     private final List<Line> rawLinesCache = list();
     private final Map<Integer, Line> rawLinesHashedCache = map();
@@ -135,11 +134,11 @@ public class LookupViewI implements LookupView {
     private LookupViewI(View view, String name, boolean useExperimentalRawLineCache) {
         this.viewView = view;
         this.name = name;
-        columns = view.headerView().stream()
+        lookupColumns = view.headerView().stream()
                 .map(attribute -> LookupColumn.lookupColumn(this, attribute))
                 .collect(toList());
         columnsView = Lists.<ColumnView<Object>>list();
-        columnsView.addAll(columns);
+        columnsView.addAll(lookupColumns);
         this.useExperimentalRawLineCache = useExperimentalRawLineCache;
     }
 
@@ -164,7 +163,7 @@ public class LookupViewI implements LookupView {
         int index = 0;
         for (final var headerAttribute : viewView.headerView()) {
             if (headerAttribute.equals(attribute)) {
-                return (Column<T>) columns.get(index);
+                return (Column<T>) lookupColumns.get(index);
             }
             ++index;
         }
@@ -287,12 +286,12 @@ public class LookupViewI implements LookupView {
         // TODO PERFORMANCE
         // TODO FIX
         final var header = viewView.headerView();
-        range(0, columns.size()).forEach(i -> {
+        range(0, lookupColumns.size()).forEach(i -> {
             // HACK
-            final var column = columns.get(i);
+            final var column = lookupColumns.get(i);
             column.set(line.index(), line.value(header.get(i)));
         });
-        columns.forEach(column -> column.registerAddition(line));
+        lookupColumns.forEach(column -> column.registerAddition(line));
     }
 
     @Override
@@ -307,11 +306,11 @@ public class LookupViewI implements LookupView {
         if (ENFORCING_UNIT_CONSISTENCY) {
             content.requirePresenceOf(line.index());
         }
-        columns.forEach(column -> column.registerBeforeRemoval(line));
+        lookupColumns.forEach(column -> column.registerBeforeRemoval(line));
         content.remove(line.index());
-        range(0, columns.size()).forEach(i -> {
+        range(0, lookupColumns.size()).forEach(i -> {
             // HACK
-            final var column = columns.get(i);
+            final var column = lookupColumns.get(i);
             column.set(line.index(), null);
         });
         if (useExperimentalRawLineCache) {
