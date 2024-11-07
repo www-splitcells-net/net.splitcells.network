@@ -95,6 +95,15 @@ public class EntityManager {
         return this;
     }
 
+    public EntityManager withOneStepForward() {
+        withIncrementedNextTime();
+        withSuppliedNextTime();
+        withDeletedOldTime();
+        withOptimized();
+        withUpdatedCurrentTime();
+        return this;
+    }
+
     public EntityManager withInitedPlayers() {
         range(0, numberOfPlayers).forEach(i -> entityDemands.addTranslated(list(initTime, (float) i)));
         return this;

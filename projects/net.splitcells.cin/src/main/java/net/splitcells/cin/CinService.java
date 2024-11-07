@@ -47,12 +47,7 @@ public class CinService implements ResourceOption<Service> {
                 registerObject(entityManager.entities().supplies().discoverableRenderer());
                 entityManager.withInitedPlayers();
                 threadLoop = threadLoop("Cin", () -> {
-                    entityManager
-                            .withIncrementedNextTime()
-                            .withSuppliedNextTime()
-                            .withDeletedOldTime()
-                            .withOptimized()
-                            .withUpdatedCurrentTime();
+                    entityManager.withOneStepForward();
                 });
             }
 
