@@ -40,4 +40,18 @@ public class EntityManagerTest {
             })) / loopCount, LogLevel.INFO);
         });
     }
+
+    @BenchmarkTest
+    public void test_runtime_of_multiple_time_step() {
+        final int loopCount = 100;
+        Dem.process(() -> {
+            logs().append("" + nanoToSeconds(measureTimeInNanoSeconds(() -> {
+                final var entityManager = entityManager();
+                entityManager.withInitedPlayers();
+                IntStream.range(0, loopCount).forEach(i -> {
+                    entityManager.withOneStepForward();
+                });
+            })) / loopCount, LogLevel.INFO);
+        });
+    }
 }
