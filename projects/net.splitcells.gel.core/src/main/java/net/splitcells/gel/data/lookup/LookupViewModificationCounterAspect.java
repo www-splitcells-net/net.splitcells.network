@@ -18,11 +18,13 @@ package net.splitcells.gel.data.lookup;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.gel.data.table.TableModificationCounter;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.column.ColumnView;
 
+import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 public class LookupViewModificationCounterAspect implements LookupView {
@@ -35,11 +37,13 @@ public class LookupViewModificationCounterAspect implements LookupView {
     }
     @Override
     public void register(Line line) {
+        configValue(LookupModificationCounter.class).count(this, 1 + (long) line.values().size());
         lookupView.register(line);
     }
 
     @Override
     public void removeRegistration(Line line) {
+        configValue(LookupModificationCounter.class).count(this, 1 + (long) line.values().size());
         lookupView.removeRegistration(line);
     }
 
