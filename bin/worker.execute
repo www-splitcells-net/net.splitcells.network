@@ -22,6 +22,7 @@ import os
 import platform
 import shutil
 import subprocess
+import sys
 
 dockerFileServiceTemplate = """FROM docker.io/eclipse-temurin:21-jdk-noble
 RUN apt clean
@@ -100,20 +101,30 @@ if __name__ == '__main__':
                                + " If scripts need to be executed one can use `sh -c \"[script]\"`."
                                + " Use this only, in order to integrate the environment with the software."
                                + " Prefer `--class-for-execution` instead.")
-    parser.add_argument('--executable-path', dest='executablePath', help="Executes the given executable file. Only set this option or --command.")
-    parser.add_argument('--class-for-execution', dest='classForExecution', help="This Java class is executed.")
-    parser.add_argument('--use-host-documents', dest='useHostDocuments', required=False, type=str2bool, default=False, help="Determines whether to mount `~/Documents` or not. This should be avoided, in order to avoid file dependencies to the host system, which makes the execution more portable.")
-    parser.add_argument('--publish-execution-image', dest='publishExecutionImage', required=False, type=str2bool, default=False, help="If set to true, the given command is not executed, but a container image is published instead.")
+    # For each flag, there is an alternative name without hyphens ('-'), so these can easily be printed out and reused for this program. See `executeViaSshAt`.
+    parser.add_argument('--executable-path', '--executablePath', dest='executablePath', help="Executes the given executable file. Only set this option or --command.")
+    parser.add_argument('--class-for-execution', '--classForExecution', dest='classForExecution', help="This Java class is executed.")
+    parser.add_argument('--use-host-documents', '--useHostDocuments', dest='useHostDocuments', required=False, type=str2bool, default=False, help="Determines whether to mount `~/Documents` or not. This should be avoided, in order to avoid file dependencies to the host system, which makes the execution more portable.")
+    parser.add_argument('--publish-execution-image', '--publishExecutionImage', dest='publishExecutionImage', required=False, type=str2bool, default=False, help="If set to true, the given command is not executed, but a container image is published instead.")
     parser.add_argument('--verbose', dest='verbose', required=False, type=str2bool, default=False, help="If set to true, the output is verbose.")
-    parser.add_argument('--only-build-image', dest='onlyBuildImage', required=False, type=str2bool, default=False, help="If set to true, the created image is not executed.")
-    parser.add_argument('--only-execute-image', dest='onlyExecuteImage', required=False, type=str2bool, default=False, help="If set to true, the previously created image is executed without building it.")
-    parser.add_argument('--cpu-architecture', dest='cpuArchitecture', help="Set the cpu architecture for the execution.")
-    parser.add_argument('--auto-configure-cpu-architecture-explicitly', dest='autoConfigureCpuArchExplicitly', required=False, type=str2bool, default=False
+    parser.add_argument('--only-build-image', '--onlyBuildImage', dest='onlyBuildImage', required=False, type=str2bool, default=False, help="If set to true, the created image is not executed.")
+    parser.add_argument('--only-execute-image', '--onlyExecuteImage', dest='onlyExecuteImage', required=False, type=str2bool, default=False, help="If set to true, the previously created image is executed without building it.")
+    parser.add_argument('--cpu-architecture', '--cpuArchitecture', dest='cpuArchitecture', help="Set the cpu architecture for the execution.")
+    parser.add_argument('--auto-configure-cpu-architecture-explicitly', '--autoConfigureCpuArchExplicitly', dest='autoConfigureCpuArchExplicitly', required=False, type=str2bool, default=False
             , help="If set to false, the command's backend automatically determines the CPU architecture." \
                 + " If set to true, the CPU architecture will be determined by this command and the determined architecture is propagated to the commands backend explicitly." \
                 + " This is useful, because some tools have not a good CPU auto detection (i.e. Podman on RISC-V cannot find the fitting images based on the CPU arch automatically).")
-    parser.add_argument('--port-publishing', dest='portPublishing', help="This is a comma separated list of `host-port:container-port`, that describes the port forwarding on the host.")
+    parser.add_argument('--port-publishing', '--portPublishing', dest='portPublishing', help="This is a comma separated list of `host-port:container-port`, that describes the port forwarding on the host.")
+    parser.add_argument('--execute-via-ssh-at', '--executeViaSshAt', dest='executeViaSshAt', help="Execute the given command at an remote server via SSH. The format is `[user]@[address/network name]`.")
     parsedArgs = parser.parse_args()
+    if parsedArgs.executeViaSshAt is not None:
+        remoteScript = ""
+        parsedVars = vars(parsedArgs)
+        for key in parsedVars:
+            if key != 'executeViaSshAt' and parsedVars[key] is not None:
+                remoteScript += " --" + key + "=" + str(parsedVars[key]).replace("\'", "\\\'").replace("\"", "\\\"")
+        print("ssh " + parsedArgs.executeViaSshAt +  " -t \"cd ~/.local/state/net.splitcells.repos/public/net.splitcells.network && bin/worker.execute " + remoteScript + "\"")
+        exit()
     if not os.path.exists('./target'):
         os.mkdir('./target')
     # Create Dockerfile.
