@@ -124,7 +124,10 @@ if __name__ == '__main__':
             if key != 'executeViaSshAt' and parsedVars[key] is not None:
                 remoteScript += " --" + key + "=" + str(parsedVars[key]).replace("\'", "\\\'").replace("\"", "\\\"")
         print("ssh " + parsedArgs.executeViaSshAt +  " -t \"cd ~/.local/state/net.splitcells.repos/public/net.splitcells.network && bin/worker.execute " + remoteScript + "\"")
-        exit()
+        returnCode = subprocess.call(executionScript, shell='True')
+        if returnCode != 0:
+            logging.error("Could not execute given command.");
+        exit(returnCode)
     if not os.path.exists('./target'):
         os.mkdir('./target')
     # Create Dockerfile.
