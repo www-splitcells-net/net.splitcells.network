@@ -124,8 +124,9 @@ if __name__ == '__main__':
         for key in parsedVars:
             if key != 'executeViaSshAt' and parsedVars[key] is not None:
                 remoteScript += " --" + key + "=" + str(parsedVars[key]).replace("\'", "\\\'").replace("\"", "\\\"").replace("\n", "")
-        print("ssh " + parsedArgs.executeViaSshAt +  " -t \"cd ~/.local/state/net.splitcells.repos/public/net.splitcells.network && bin/worker.execute " + remoteScript + "\"")
-        returnCode = subprocess.call(executionScript, shell='True')
+        remoteScript = "ssh " + parsedArgs.executeViaSshAt +  " -t \"  cd ~/.local/state/net.splitcells.repos/public/net.splitcells.network && bin/worker.execute" + remoteScript + "\""
+        print(remoteScript)
+        returnCode = subprocess.call(remoteScript, shell='False')
         if returnCode != 0:
             logging.error("Could not execute given command.");
         exit(returnCode)
