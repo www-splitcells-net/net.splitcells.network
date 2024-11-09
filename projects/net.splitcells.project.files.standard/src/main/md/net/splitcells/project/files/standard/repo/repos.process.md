@@ -4,8 +4,8 @@
 ----
 # The Repo Process
 
-* [There is an help page describing all flags](repo.process.help.md).
-* [Use cases](repo.process.examples.md).
+* [There is an help page describing all flags](repos.process.help.md).
+* [Use cases](repos.process.examples.md).
 
 # Introduction
 > What is this?
@@ -22,7 +22,7 @@ Meta repo root
 │   ├── Project Eta
 │   └── ...
 ```
-The command repo process (`repo.process` is the name in the shell)
+The command repo process (`repos.process` is the name in the shell)
 provides a highly portable and simple way to process a set of repos as one repo.
 Its config files are simple,
 so that either complex programs can process such repos
@@ -33,7 +33,7 @@ The simplicity is also helpful for describing the setup procedure of complex dev
 consisting of multiple git repos and without requiring additional tools to be installed during the setup.
 
 Initially this tool was created to synchronize repos across multiple servers and computers.
-This is mainly done, by providing the `repo.process` program,
+This is mainly done, by providing the `repos.process` program,
 that takes a root repo and a command pattern as an argument.
 Repo process iterates over all sub repositories,
 generates commands via the given pattern for each repo and
@@ -53,7 +53,7 @@ By default, every meta repo has a list of all sub repos stored in a file under v
 
 In order to make this VCS independent, additional `repo.*` commands are provided,
 that are built on top of repo process.
-For instance, `repo.commit.all` is defined to commit all file changes of the current repo and its subs,
+For instance, `repos.commit.all` is defined to commit all file changes of the current repo and its subs,
 but it relies on other additional backend implementations,
 that actually do this job.
 
@@ -205,7 +205,7 @@ One has to keep in mind, that in the output every instance of `trees:`,
 except the very first one, has to be removed,
 because the output of the command is the concatenation of the config files for each git repo.
 ```
-repo.process --command='grm repos find local $(pwd) --format yaml' > ../config.yml
+repos.process --command='grm repos find local $(pwd) --format yaml' > ../config.yml
 ```
 ## Javascript Project Meta
 The [Javascript project meta](https://github.com/mateodelnorte/meta)

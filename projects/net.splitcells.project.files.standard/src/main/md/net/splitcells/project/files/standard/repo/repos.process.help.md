@@ -4,7 +4,7 @@
 ----
 # The Repo Process Help
 ## Flags
-usage: repo.process
+usage: repos.process
 * --command COMMAND
 * [-h]
 * [--relative-path RELATIVEPATH]

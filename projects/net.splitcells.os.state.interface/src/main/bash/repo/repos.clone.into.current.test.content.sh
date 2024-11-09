@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 # Copyright (c) 2021 Contributors To The `net.splitcells.*` Projects
 #
 # This program and the accompanying materials are made available under the
@@ -13,5 +13,25 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 set -e
-repos.clone.into.current.test.nesting
-repos.clone.into.current.test.content
+# Define test.routine configuration.
+	baseFolder=$(pwd)
+	testContent='h8u9w4f'
+# Create repository for testing.
+	mkdir a
+	cd a
+	repo.create
+	echo $testContent >> ./text
+	repo.commit.all
+# Create and test.routine clone.
+	cd $baseFolder
+	mkdir b
+	cd b
+	repos.clone.into.current ../a
+	if [ "$testContent" != "$(cat ./text)" ]; then
+		echo.error '"repo.clone.into.current" does not work.'
+		exit 1
+	fi
+# Clean up all files.
+	cd $baseFolder
+	rm -rf ./a
+	rm -rf ./b

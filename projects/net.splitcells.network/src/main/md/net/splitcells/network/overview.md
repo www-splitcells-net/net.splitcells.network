@@ -11,8 +11,8 @@ that either A provides something to B or that A interacts with B.
 Keep in mind, that project A providing project B with things,
 does not necessarily mean,
 that A is a dependency of B.
-For instance, `repo.process` manages git repos,
-but the git repos themselves do not require `repo.process`.
+For instance, `repos.process` manages git repos,
+but the git repos themselves do not require `repos.process`.
 
 The general idea behind this overview is,
 that the more downward the viewer looks,
@@ -23,8 +23,8 @@ instead of foundational modules.
     <code class="mermaid">
 graph TD
     developer --> Network
-    Osi --> repo.process
-    repo.process --> git
+    Osi --> repos.process
+    repos.process --> git
     Network --> Osi
     Network --> Blog
     Dem --> Worker

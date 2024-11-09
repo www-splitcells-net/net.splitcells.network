@@ -16,6 +16,6 @@
 # Clones a repository into the current folder.
 
 if ssh $1 "test -d ..net.splitcells.os.state.interface.repo"; then
-	repo.clone.into.current $@
+	repos.clone.into.current $@
 	fi
-repo.process --command 'command.managed.execute disjunction repo.mirror.into.current '$@'/$subRepo'
+repos.process --command 'command.managed.execute disjunction repo.mirror.into.current '$@'/$subRepo'

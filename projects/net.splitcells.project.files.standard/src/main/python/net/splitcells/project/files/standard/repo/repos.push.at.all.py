@@ -30,7 +30,7 @@ The command `./bin/net.splitcells.osi.repos.hosts` contains the list of all repo
 		for i in range(0, int(len(hostFile)/2)):
 			hostName = hostFile[i*2]
 			hostUrl = hostFile[i*2 + 1]
-			commandToExecute = 'repo.push.at --remote-repo-name=' + hostName + " --remote-repo-URL='" + hostUrl.replace('$1', currentDirectoryName + "$peerRepo'")
+			commandToExecute = 'repos.push.at --remote-repo-name=' + hostName + " --remote-repo-URL='" + hostUrl.replace('$1', currentDirectoryName + "$peerRepo'")
 			logging.debug('Executing: ' + commandToExecute)
 			returnCode = subprocess.call(commandToExecute, shell='True')
 			if returnCode != 0:

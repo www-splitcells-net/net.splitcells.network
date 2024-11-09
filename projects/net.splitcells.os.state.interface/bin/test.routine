@@ -23,7 +23,7 @@ user.ssh.key.generate.test
 command.repository.register "$projectFolder"
 command.repository.register "$projectFolder/../net.splitcells.project.files.standard"
 user.bin.configure
-cd $projectFolder/../net.splitcells.project.files.standard/src/test/repo.process.test
-  repo.process.test
+cd $projectFolder/../net.splitcells.project.files.standard/src/test/repos.process.test
+  repos.process.test
 cd $projectFolder # Leave current folder before it is deleted.
 	rm -rf $projectFolder/target/test

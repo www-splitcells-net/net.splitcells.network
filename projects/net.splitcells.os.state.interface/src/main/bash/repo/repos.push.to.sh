@@ -12,4 +12,6 @@
 #
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
-git remote add github git@github.com:www-splitcells-net/net.splitcells.gel.core.git
+
+log.error THis command is deprecated, because it uses positional arguments.
+repos.process --command-for-current 'command.managed.execute disjunction repo.push.to '$@'/$subRepo'

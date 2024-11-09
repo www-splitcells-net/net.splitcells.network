@@ -28,7 +28,7 @@ if __name__ == '__main__':
 						, required = True
 						, help = 'This is the URL of the remote repository,to which data is pushed.')
 	parsedArgs = parser.parse_args()
-	commandToExecute = "repo.process --command 'command.managed.execute disjunction repo.push.at" \
+	commandToExecute = "repos.process --command 'command.managed.execute disjunction repos.push.at" \
 					   + " --remote-repo-name=''" + parsedArgs.remoteRepoName + "''" \
 					   + " --remote-repo-URL=''" + parsedArgs.remoteRepoUrl + "'"
 	logging.debug("Executing: " + commandToExecute)

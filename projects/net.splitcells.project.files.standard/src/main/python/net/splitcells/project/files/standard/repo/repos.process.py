@@ -16,7 +16,7 @@ TODO Make it possible, to store the default branch in a file in the repo.
      Check this file, if present, and throw an error if the current branch does not match default branch.
 TODO Repo process should have an optional flag in order to only process the current repo.
      This would than be used in order to execute complex commands on the current repo first and than on its sub repos.
-     For example the command "repo.process 'repo.repair [...] && repo.remote.set [...] && repo.pull [...]'",
+     For example the command "repos.process 'repo.repair [...] && repo.remote.set [...] && repo.pull [...]'",
      would than work more reliable, when the remote server deletes sub repos at arbitrary times.
 TODO Instead of "./.net.splitcells.os.state.interface.repo/subs.json" use the
      more simple "./.net.splitcells.os.state.interface.repo/subs.txt",
@@ -110,7 +110,7 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown, c
 			if currentSubDir.is_dir() and not currentSubDir.name.startswith('.') and not currentSubDir.name.startswith('bin'):
 				subName = currentSubDir.name
 				if not subName in subRepos:
-					unknownSubRepoScript = 'set -e; cd ' + subName + ' ; repo.process' + " --command='" + commandForUnknown + "' --host=" + host + ' --relative-path=' + relativePath + '/' + subName
+					unknownSubRepoScript = 'set -e; cd ' + subName + ' ; repos.process' + " --command='" + commandForUnknown + "' --host=" + host + ' --relative-path=' + relativePath + '/' + subName
 					unknownSubRepoScript = unknownSubRepoScript.replace('$subRepo', relativePath + '/' + subName + '/$subRepo')
 					logging.debug('unknownSubRepoScript: ' + unknownSubRepoScript)
 					returnCode = subprocess.call(unknownSubRepoScript, shell='True')
@@ -136,7 +136,7 @@ def processSub(relativePath, host, command, commandForMissing, commandForUnknown
 		if commandForMissing is None:
 			logging.error('Folder of sub repository "' + str(subRepoPath) + '" is missing.')
 			return False
-		missingSubRepoScript = 'set -e; mkdir -p ' + str(subRepoPath) + '; ' + 'cd ' + str(subRepoPath) + ' ; repo.process' + " --command='" + commandForMissing + "' --host=" + host + ' --relative-path=' + relativePath
+		missingSubRepoScript = 'set -e; mkdir -p ' + str(subRepoPath) + '; ' + 'cd ' + str(subRepoPath) + ' ; repos.process' + " --command='" + commandForMissing + "' --host=" + host + ' --relative-path=' + relativePath
 		missingSubRepoScript += " --command-for-missing='" + commandForMissing + "'"
 		missingSubRepoScript += " --command-for-unknown='" + commandForUnknown + "'"
 		missingSubRepoScript = missingSubRepoScript.replace('$subRepo', str(subRepoPath) + '/$subRepo')
@@ -146,7 +146,7 @@ def processSub(relativePath, host, command, commandForMissing, commandForUnknown
 			logging.error('Error processing missing sub repository with return code ' + str(returnCode) + " at '" + str(getcwd()) + '/' + subName + "'.")
 			return False
 		return True
-	r='repo.process'
+	r='repos.process'
 	# TODO Do not rely on Bash specific command syntax.
 	currentCommand = ''
 	if command is not None:

@@ -12,5 +12,8 @@
 #
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
-git remote add github git@github.com:www-splitcells-net/net.splitcells.os.state.interface.lib.git
-git remote add gitlab git@gitlab.com:splitcells/net.splitcells.os.state.interface.lib.git
+
+# Clones a repository into the current folder.
+# TODO FIX Recursive cloning does not work.
+
+repos.process --command 'command.managed.execute disjunction repo.clone '$@'/$subRepo'

@@ -13,6 +13,6 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
-# Synchronize repository against all remotes.
-# TODO Clone missing sub repositories via "repo.clone.into.current".
-repo.commit.all && repo.pull && repo.commit.all && repo.push
+# Commit only changed files. Untracked files are ignored.
+
+repos.process --command 'command.managed.execute disjunction repo.commit.changed'

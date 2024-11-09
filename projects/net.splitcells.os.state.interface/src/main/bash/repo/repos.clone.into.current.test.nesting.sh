@@ -34,7 +34,7 @@ cd $host/root/sub-2/sub-sub-1
 	repo.commit.all
 mkdir $host/clone
 	cd $host/clone
-	repo.clone.into.current $host/root
+	repos.clone.into.current $host/root
 path.is.folder $host/clone/sub-1
 path.is.folder $host/clone/sub-2
 path.is.folder $host/clone/sub-2/sub-sub-1

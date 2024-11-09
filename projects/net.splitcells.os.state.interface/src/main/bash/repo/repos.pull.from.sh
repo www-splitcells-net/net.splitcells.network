@@ -12,5 +12,5 @@
 #
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
-git remote add github git@github.com:www-splitcells-net/net.splitcells.os.state.interface.git
-git remote add gitlab git@gitlab.com:splitcells/net.splitcells.os.state.interface.git
+
+repos.process --command 'command.managed.execute disjunction repo.pull '$@'/$subRepo'
