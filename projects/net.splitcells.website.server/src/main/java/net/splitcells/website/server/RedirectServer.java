@@ -54,7 +54,7 @@ public class RedirectServer implements Option<Service> {
 
             @Override
             public void flush() {
-
+                // Nothing needs to be done.
             }
         };
     }
