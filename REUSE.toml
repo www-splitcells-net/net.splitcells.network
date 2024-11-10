@@ -1,0 +1,130 @@
+version = 1
+SPDX-PackageName = "net.splitcells.network"
+SPDX-PackageSupplier = "Mārtiņš Avots <martins.avots@splitcells.net>"
+SPDX-PackageDownloadLocation = "https://splitcells.net"
+
+[[annotations]]
+path = "projects/net.splitcells.network/src/main/txt/net/splitcells/network/legal/licenses/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "See the files' content."
+SPDX-License-Identifier = "LicenseRef-NSID"
+
+[[annotations]]
+path = "projects/net.splitcells.network/src/main/txt/net/splitcells/network/legal/Developer_Certificate_of_Origin.v1.1.txt"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "See the files' content."
+SPDX-License-Identifier = "LicenseRef-NSID"
+
+[[annotations]]
+path = "projects/net.splitcells.os.state.interface/src/main/txt/net/splitcells/os/state/interface/process/Developer_Certificate_of_Origin.v1.1.txt"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "See the files' content."
+SPDX-License-Identifier = "LicenseRef-NSID"
+
+[[annotations]]
+path = "projects/net.splitcells.website.content.default/src/main/resources/html/net/splitcells/website/license-AGPL-3-0.txt"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "See the files' content."
+SPDX-License-Identifier = "LicenseRef-NSID"
+
+[[annotations]]
+path = "projects/net.splitcells.website.content.default/src/main/resources/html/net/splitcells/website/license-Apache-2-0.txt"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "See the files' content."
+SPDX-License-Identifier = "LicenseRef-NSID"
+
+[[annotations]]
+path = "projects/net.splitcells.website.content.default/src/main/resources/html/net/splitcells/website/license-CC-BY-SA-4.txt"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "See the files' content."
+SPDX-License-Identifier = "LicenseRef-NSID"
+
+[[annotations]]
+path = "projects/net.splitcells.website.content.default/src/main/resources/html/net/splitcells/website/license-CC0-1-0.txt"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "See the files' content."
+SPDX-License-Identifier = "LicenseRef-NSID"
+
+[[annotations]]
+path = "projects/net.splitcells.website.content.default/src/main/resources/html/net/splitcells/website/license-MIT.txt"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "See the files' content."
+SPDX-License-Identifier = "LicenseRef-NSID"
+
+[[annotations]]
+path = "projects/net.splitcells.website.content.default/src/main/resources/html/net/splitcells/website/js/math-jax/tex-mml-chtml.js"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "MathJax Project"
+SPDX-License-Identifier = "Apache-2.0"
+
+[[annotations]]
+path = "projects/net.splitcells.dem.api/src/main/resources/net/splitcells/dem/api/test-file.txt"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Contributors To The `net.splitcells.*` Projects"
+SPDX-License-Identifier = "EPL-2.0 OR GPL-2.0-or-later"
+
+[[annotations]]
+path = "projects/net.splitcells.gel.ui/src/main/resources/html/net/splitcells/gel/ui/examples/school-course-scheduling-problem.txt"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Contributors To The `net.splitcells.*` Projects"
+SPDX-License-Identifier = "EPL-2.0 OR GPL-2.0-or-later"
+
+[[annotations]]
+path = "README.md"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Contributors To The `net.splitcells.*` Projects"
+SPDX-License-Identifier = "EPL-2.0 OR GPL-2.0-or-later"
+
+[[annotations]]
+path = ".builds/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Contributors To The `net.splitcells.*` Projects"
+SPDX-License-Identifier = "EPL-2.0 OR GPL-2.0-or-later"
+
+[[annotations]]
+path = ".config/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Contributors To The `net.splitcells.*` Projects"
+SPDX-License-Identifier = "EPL-2.0 OR GPL-2.0-or-later"
+
+[[annotations]]
+path = ".github/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Contributors To The `net.splitcells.*` Projects"
+SPDX-License-Identifier = "EPL-2.0 OR GPL-2.0-or-later"
+
+[[annotations]]
+path = ".lgtm.yml"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Contributors To The `net.splitcells.*` Projects"
+SPDX-License-Identifier = "EPL-2.0 OR GPL-2.0-or-later"
+
+[[annotations]]
+path = ".gitlab-ci.yml"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Contributors To The `net.splitcells.*` Projects"
+SPDX-License-Identifier = "EPL-2.0 OR GPL-2.0-or-later"
+
+[[annotations]]
+path = "LICENSES-other/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "See the files' content."
+SPDX-License-Identifier = "LicenseRef-NSID"
+
+[[annotations]]
+path = "projects/net.splitcells.dem.api/src/main/resources/net/splitcells/dem/resource/FileSystemViaClassResourcesTest/testWalkRecursively/1/2/3/test.txt"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Contributors To The `net.splitcells.*` Projects"
+SPDX-License-Identifier = "EPL-2.0 OR GPL-2.0-or-later"
+
+[[annotations]]
+path = "projects/net.splitcells.dem.api/src/main/resources/net/splitcells/dem/resource/FileSystemViaClassResourcesTest/testWalkRecursively/another-test.txt"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Contributors To The `net.splitcells.*` Projects"
+SPDX-License-Identifier = "EPL-2.0 OR GPL-2.0-or-later"
+
+[[annotations]]
+path = "projects/net.splitcells.gel.ui/src/main/resources/html/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Contributors To The `net.splitcells.*` Projects"
+SPDX-License-Identifier = "EPL-2.0 OR GPL-2.0-or-later"
