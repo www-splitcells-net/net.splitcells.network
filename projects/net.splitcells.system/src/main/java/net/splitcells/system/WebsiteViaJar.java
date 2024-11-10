@@ -29,7 +29,7 @@ import net.splitcells.network.NetworkFileSystem;
 import net.splitcells.network.worker.via.java.NetworkWorkerFileSystem;
 import net.splitcells.os.state.interfaces.OsiFileSystem;
 import net.splitcells.os.state.interfaces.lib.OsiLibFileSystem;
-import net.splitcells.project.files.standard.ProjectStandardFileSystem;
+import net.splitcells.project.ProjectFileSystem;
 import net.splitcells.website.WebsiteServerFileSystem;
 import net.splitcells.website.content.defaults.WebsiteContentDefaultsFileSystem;
 import net.splitcells.website.server.Config;
@@ -100,8 +100,8 @@ public class WebsiteViaJar {
                         , configValue(OsiLibFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/system/"
                         , configValue(SystemsFileSystem.class)))
-                .withAdditionalProject(projectConfig("/net/splitcells/project/files/standard"
-                        , configValue(ProjectStandardFileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/project"
+                        , configValue(ProjectFileSystem.class)))
                 .withAdditionalProject(projectConfig("/"
                         , configValue(WebsiteServerFileSystem.class)))
                 .withAdditionalProject(projectConfig("/"

@@ -31,7 +31,7 @@
         <module>projects/net.splitcells.gel.quickstart</module>
         <module>projects/net.splitcells.os.state.interface</module>
         <module>projects/net.splitcells.os.state.interface.lib</module>
-        <module>projects/net.splitcells.project.files.standard</module>
+        <module>projects/net.splitcells.project</module>
         <module>projects/net.splitcells.website.server</module>
         <module>projects/net.splitcells.website.content.default</module>
         <module>projects/net.splitcells.website.content.minimal</module>
