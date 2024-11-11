@@ -22,6 +22,7 @@ import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.OnlineOptimization;
 
 import static java.util.stream.IntStream.range;
+import static net.splitcells.cin.raters.ExistenceCost.existenceCost;
 import static net.splitcells.cin.raters.TimeSteps.overlappingTimeSteps;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
@@ -54,6 +55,7 @@ public class EntityManager {
      * TODO A dictionary of all reserved values is required.
      */
     public static final Attribute<Float> EVENT_SOURCE = attribute(Float.class, "event-source");
+    public static final float EXISTENCE_COST_EVENT_SOURCE = 1f;
     /**
      * Such an {@link #EVENT_TYPE}, determines the value, of a {@link #PLAYER_ATTRIBUTE} at a specific {@link #TIME}.
      * In other words, this is the result of the {@link OnlineOptimization} for {@link #entities}.
@@ -90,7 +92,7 @@ public class EntityManager {
                 .withSupplyAttributes(PLAYER_ATTRIBUTE, PLAYER_VALUE, EVENT_TYPE, EVENT_SOURCE)
                 .withSupplies()
                 .withConstraint(query -> {
-                    query.forAll(overlappingTimeSteps(TIME));
+                    query.forAll(overlappingTimeSteps(TIME)).then(existenceCost());
                     return query;
                 })
                 .toProblem()
