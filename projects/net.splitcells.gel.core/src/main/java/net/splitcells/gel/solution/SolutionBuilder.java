@@ -114,14 +114,7 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
     @Override
     public ProblemGenerator withConstraint(Function<Query, Query> builder) {
         initAllocations();
-        final var path = Lists.<String>list();
-        if (demandsDatabase.isPresent()) {
-            path.withAppended(demandsDatabase.get().path());
-        }
-        if (name.isPresent()) {
-            path.withAppended(name.get());
-        }
-        this.constraint = builder.apply(query(forAll(Optional.of(discoverable(path))), assignments)).currentConstraint();
+        this.constraint = builder.apply(query(forAll(Optional.of(() -> assignments.path().withAppended("constraints"))), assignments)).currentConstraint();
         return this;
     }
 
