@@ -431,6 +431,6 @@ public class TableI implements Table {
 
     @Override
     public int hashCode() {
-        return identity().hashCode();
+        return super.hashCode();
     }
 }
