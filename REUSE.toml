@@ -3,6 +3,13 @@ SPDX-PackageName = "net.splitcells.network"
 SPDX-PackageSupplier = "Mārtiņš Avots <martins.avots@splitcells.net>"
 SPDX-PackageDownloadLocation = "https://splitcells.net"
 
+# The REUSE.toml needs a rule, as otherwise https://api.reuse.software seems to have a problem with this file.
+[[annotations]]
+path = "REUSE.toml"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Contributors To The `net.splitcells.*` Projects"
+SPDX-License-Identifier = "EPL-2.0 OR GPL-2.0-or-later"
+
 [[annotations]]
 path = "projects/net.splitcells.network/src/main/txt/net/splitcells/network/legal/licenses/**"
 precedence = "aggregate"
