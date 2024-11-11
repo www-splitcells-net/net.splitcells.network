@@ -52,6 +52,11 @@ public interface AspectOrientedConstructor<T> {
      * Writing wrappers can sometimes take a bit much time, if the corresponding interface is large.
      * In this case it is often easier to use one aspect for multiple features,
      * where each feature is controlled via a boolean flag.</p>
+     * <p>When backwards compatibility is important:
+     * When a new method with a default implementation is added to the interface of the aspect's subject,
+     * the default implementation needs to be thread safe,
+     * as some aspects make a subject thread safe.
+     * A not thread safe default implementation would make the thread safe aspect not thread safe as well.</p>
      *
      * @param aspect Aspect To Be Registered
      * @return This
