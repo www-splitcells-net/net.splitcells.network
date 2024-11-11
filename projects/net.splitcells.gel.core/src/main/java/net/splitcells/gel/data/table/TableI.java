@@ -35,6 +35,7 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
+import static net.splitcells.gel.data.table.TableSynchronizationAspect.tableSynchronizationAspect;
 import static net.splitcells.gel.data.table.Tables.table2;
 
 import java.util.Collection;
@@ -441,7 +442,7 @@ public class TableI implements Table {
     @Override
     public DiscoverableRenderer discoverableRenderer() {
         if (threadSafeMirror.isEmpty()) {
-            final var mirror = table2("mirror", this, this.headerView());
+            final var mirror = tableSynchronizationAspect(table2("mirror", this, this.headerView()));
             orderedLinesStream().forEach(mirror::add);
             subscribeToAfterAdditions(mirror::add);
             subscribeToBeforeRemoval(mirror::remove);

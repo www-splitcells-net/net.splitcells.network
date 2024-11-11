@@ -38,7 +38,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
  * Makes a given {@link Table} thread safe.
  */
 public class TableSynchronizationAspect implements Table {
-    private Table tableSynchronizationAspect(Table content) {
+    public static Table tableSynchronizationAspect(Table content) {
         return new TableSynchronizationAspect(content);
     }
 
@@ -285,7 +285,7 @@ public class TableSynchronizationAspect implements Table {
     }
 
     @Override
-    public boolean equals(Object arg) {
+    public synchronized boolean equals(Object arg) {
         if (arg instanceof Table) {
             final var castedArg = (Table) arg;
             return castedArg.identity() == content.identity();
@@ -294,7 +294,7 @@ public class TableSynchronizationAspect implements Table {
     }
 
     @Override
-    public int hashCode() {
+    public synchronized int hashCode() {
         return content.hashCode();
     }
 }
