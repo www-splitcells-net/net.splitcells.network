@@ -179,6 +179,22 @@ public interface View extends Discoverable, Domable, Identifiable {
                 return orderedLinesStream().skip(n).findFirst().orElseThrow();
             }
         } else {
+            return orderedLines().get(n);
+        }
+    }
+
+    default Line anyLine() {
+        return unorderedLine(0);
+    }
+
+    default Line unorderedLine(int n) {
+        if (GET_LINE_VIA_STREAM) {
+            if (n == 0) {
+                return unorderedLinesStream().findFirst().orElseThrow();
+            } else {
+                return unorderedLinesStream().skip(n).findFirst().orElseThrow();
+            }
+        } else {
             return unorderedLines().get(n);
         }
     }
