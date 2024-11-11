@@ -19,6 +19,7 @@ import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.solution.Solution;
+import net.splitcells.gel.solution.optimization.OnlineOptimization;
 
 import static java.util.stream.IntStream.range;
 import static net.splitcells.cin.raters.TimeSteps.overlappingTimeSteps;
@@ -42,6 +43,12 @@ public class EntityManager {
     public static final Attribute<Float> PLAYER = attribute(Float.class, "player");
     public static final Attribute<Float> PLAYER_ATTRIBUTE = attribute(Float.class, "player-attribute");
     public static final Attribute<Float> PLAYER_VALUE = attribute(Float.class, "player-value");
+    public static final Attribute<Float> EVENT_TYPE = attribute(Float.class, "event-type");
+    /**
+     * Such an event, determines the value, of a player's attribute a specific time.
+     * In other words, this is the result of the {@link OnlineOptimization} for {@link #entities}.
+     */
+    public static final float SET_VALUE = 0f;
 
     public static final float PLAYER_ENERGY = 1f;
 
@@ -62,7 +69,7 @@ public class EntityManager {
         entities = defineProblem("entity-manager")
                 .withDemandAttributes(TIME, PLAYER)
                 .withNoDemands()
-                .withSupplyAttributes(PLAYER_ATTRIBUTE, PLAYER_VALUE)
+                .withSupplyAttributes(PLAYER_ATTRIBUTE, PLAYER_VALUE, EVENT_TYPE)
                 .withSupplies()
                 .withConstraint(query -> {
                     query.forAll(overlappingTimeSteps(TIME));
@@ -81,7 +88,7 @@ public class EntityManager {
 
     public EntityManager withOptimized() {
         entities.demandsFree().unorderedLines()
-                .forEach(fd -> entities.assign(fd, entitySupplies.addTranslated(list(PLAYER_ENERGY, (float) random.integer(1, 100)))));
+                .forEach(fd -> entities.assign(fd, entitySupplies.addTranslated(list(PLAYER_ENERGY, (float) random.integer(1, 100), SET_VALUE))));
         return this;
     }
 
