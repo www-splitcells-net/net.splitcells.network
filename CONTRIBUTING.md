@@ -34,15 +34,7 @@ compatibility.
 * Provide migrations guidelines or even automation via things like OpenRewrite for breaking changes.
 * No Forward compatibility
 * Versioning system and releases are needed in this case.
-## Helpful Notes
-### Browsing Repository in Browser
-When browsing the repo in the web some browser addons/extension might help
-to visualize its content:
-* PlantUML Visualizer for [Firefox](https://addons.mozilla.org/en-US/firefox/addon/plantuml-visualizer/)
-  or [Chrome](https://chrome.google.com/webstore/detail/plantuml-visualizer/ffaloebcmkogfdkemcekamlmfkkmgkcf).
-  renders PlantUML images.
-* [TeX All the Things](https://chrome.google.com/webstore/detail/tex-all-the-things/cbimabofgmfdkicghcadidpemeenbffn/)
-  for Chrome can be used for rendering math formulas in a neat way.
+
 ### Inspirational External Guidelines
 * [Submitting patches: the essential guide to getting your code into the kernel](https://www.kernel.org/doc/html/latest/process/submitting-patches.html)
 * [Creating Pull Requests](https://www.kernel.org/doc/html/latest/maintainer/pull-requests.html)
