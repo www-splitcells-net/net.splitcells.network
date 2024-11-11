@@ -45,15 +45,20 @@ public class EntityManager {
     public static final Attribute<Float> PLAYER_ATTRIBUTE = attribute(Float.class, "player-attribute");
     public static final Attribute<Float> PLAYER_VALUE = attribute(Float.class, "player-value");
     public static final Attribute<Float> EVENT_TYPE = attribute(Float.class, "event-type");
+    public static final Attribute<Float> EVENT_SOURCE = attribute(Float.class, "event-source");
     /**
-     * Such an event, determines the value, of a {@link #PLAYER_ATTRIBUTE} at a specific {@link #TIME}.
+     * Such an {@link #EVENT_TYPE}, determines the value, of a {@link #PLAYER_ATTRIBUTE} at a specific {@link #TIME}.
      * In other words, this is the result of the {@link OnlineOptimization} for {@link #entities}.
      */
     public static final float SET_VALUE = 0f;
     /**
-     * Adds a value to a {@link #PLAYER_ATTRIBUTE} at a specific {@link #TIME}.
+     * This {@link #EVENT_TYPE} adds a value to a {@link #PLAYER_ATTRIBUTE} at a specific {@link #TIME}.
      */
     public static final float ADD_VALUE = 1f;
+    /**
+     * This is the default value of {@link #EVENT_SOURCE}.
+     */
+    public static final float NO_SOURCE = 0f;
 
     public static final float PLAYER_ENERGY = 1f;
 
@@ -74,7 +79,7 @@ public class EntityManager {
         entities = defineProblem("entity-manager")
                 .withDemandAttributes(TIME, PLAYER)
                 .withNoDemands()
-                .withSupplyAttributes(PLAYER_ATTRIBUTE, PLAYER_VALUE, EVENT_TYPE)
+                .withSupplyAttributes(PLAYER_ATTRIBUTE, PLAYER_VALUE, EVENT_TYPE, EVENT_SOURCE)
                 .withSupplies()
                 .withConstraint(query -> {
                     query.forAll(overlappingTimeSteps(TIME));
@@ -93,7 +98,7 @@ public class EntityManager {
 
     public EntityManager withOptimized() {
         entities.demandsFree().unorderedLines()
-                .forEach(fd -> entities.assign(fd, entitySupplies.addTranslated(list(PLAYER_ENERGY, (float) random.integer(1, 100), SET_VALUE))));
+                .forEach(fd -> entities.assign(fd, entitySupplies.addTranslated(list(PLAYER_ENERGY, (float) random.integer(1, 100), SET_VALUE, NO_SOURCE))));
         return this;
     }
 
