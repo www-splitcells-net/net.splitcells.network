@@ -33,6 +33,7 @@ import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.BeforeRemovalSubscriber;
+import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
 import java.util.function.Function;
 
@@ -251,6 +252,11 @@ public class DerivedSolution implements Solution {
     @Override
     public Line lookupEquals(Attribute<Line> attribute, Line other) {
         return assignments.lookupEquals(attribute, other);
+    }
+
+    @Override
+    public DiscoverableRenderer discoverableRenderer() {
+        return assignments.discoverableRenderer();
     }
 
     @Override

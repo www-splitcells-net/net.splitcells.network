@@ -26,6 +26,7 @@ import net.splitcells.gel.data.view.LinePointer;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.gel.solution.Solution;
+import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
 import java.util.function.Supplier;
 
@@ -269,5 +270,10 @@ public class HistoryRef implements History {
     @Override
     public Line lookupEquals(Attribute<Line> attribute, Line values) {
         return history.lookupEquals(attribute, values);
+    }
+
+    @Override
+    public DiscoverableRenderer discoverableRenderer() {
+        return history.discoverableRenderer();
     }
 }

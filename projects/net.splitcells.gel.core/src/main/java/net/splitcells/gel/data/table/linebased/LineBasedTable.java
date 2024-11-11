@@ -28,6 +28,7 @@ import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.column.ColumnView;
+import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -214,6 +215,11 @@ public class LineBasedTable implements Table {
                 .filter(otherLine -> otherLine.value(attribute).index() == line.index())
                 .reduce(ensureSingle())
                 .orElseThrow();
+    }
+
+    @Override
+    public DiscoverableRenderer discoverableRenderer() {
+        throw notImplementedYet();
     }
 
     @Override

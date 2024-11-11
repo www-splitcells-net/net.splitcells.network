@@ -32,6 +32,7 @@ import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.rating.type.Optimality;
 import net.splitcells.gel.solution.history.History;
+import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
 import java.util.function.Function;
 
@@ -235,6 +236,11 @@ public class SimplifiedAnnealingProblem implements Solution {
     @Override
     public Line lookupEquals(Attribute<Line> attribute, Line values) {
         return originalSolution.lookupEquals(attribute, values);
+    }
+
+    @Override
+    public DiscoverableRenderer discoverableRenderer() {
+        return originalSolution.discoverableRenderer();
     }
 
     @Override

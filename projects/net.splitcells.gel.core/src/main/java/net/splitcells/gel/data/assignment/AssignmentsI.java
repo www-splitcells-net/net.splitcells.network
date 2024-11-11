@@ -50,6 +50,7 @@ import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.gel.data.table.AfterAdditionSubscriber;
 import net.splitcells.gel.data.table.BeforeRemovalSubscriber;
+import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
 /**
  * <p>{@link #demandsUsed()} ()} and {@link #demandsFree()} contain all {@link Line} of {@link #demands()}.</p>
@@ -524,6 +525,11 @@ public class AssignmentsI implements Assignments {
     @Override
     public Line lookupEquals(Attribute<Line> attribute, Line other) {
         return assignments.lookupEquals(attribute, other);
+    }
+
+    @Override
+    public DiscoverableRenderer discoverableRenderer() {
+        return assignments.discoverableRenderer();
     }
 
     @Override

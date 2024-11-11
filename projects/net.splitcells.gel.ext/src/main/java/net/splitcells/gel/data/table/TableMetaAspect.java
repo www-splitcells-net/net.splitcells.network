@@ -24,6 +24,7 @@ import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.column.ColumnView;
+import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
 import java.util.stream.Stream;
 
@@ -305,5 +306,10 @@ public class TableMetaAspect implements Table {
     @Override
     public Tree toFods() {
         return table.toFods();
+    }
+
+    @Override
+    public DiscoverableRenderer discoverableRenderer() {
+        return table.discoverableRenderer();
     }
 }

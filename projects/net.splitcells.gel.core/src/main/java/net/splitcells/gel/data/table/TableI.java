@@ -35,6 +35,7 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
+import static net.splitcells.gel.data.table.Tables.table2;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -57,6 +58,8 @@ import net.splitcells.gel.data.view.column.ColumnI;
 import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.dem.object.Discoverable;
+import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
+import org.checkerframework.checker.nullness.Opt;
 
 /**
  * <p>TODO Make all constructors private. One can use configurators for {@link TableFactory} instead.</p>
@@ -80,6 +83,7 @@ public class TableI implements Table {
     private final List<BeforeRemovalSubscriber> afterRemovalSubscriber = list();
     private final net.splitcells.dem.data.set.Set<Integer> indexesOfFree = setOfUniques();
     private Optional<Constraint> constraint = Optional.empty();
+    private Optional<Table> threadSafeMirror = Optional.empty();
 
     @Deprecated
     public static Table tableI(List<Attribute<? extends Object>> attributes) {
@@ -432,5 +436,33 @@ public class TableI implements Table {
     @Override
     public int hashCode() {
         return super.hashCode();
+    }
+
+    @Override
+    public DiscoverableRenderer discoverableRenderer() {
+        if (threadSafeMirror.isEmpty()) {
+            final var mirror = table2("mirror", this, this.headerView());
+            orderedLinesStream().forEach(mirror::add);
+            subscribeToAfterAdditions(mirror::add);
+            subscribeToBeforeRemoval(mirror::remove);
+            threadSafeMirror = Optional.of(mirror);
+        }
+        return new DiscoverableRenderer() {
+
+            @Override
+            public String render() {
+                return threadSafeMirror.get().toHtmlTable().toHtmlString();
+            }
+
+            @Override
+            public Optional<String> title() {
+                return Optional.of(threadSafeMirror.get().path().toString());
+            }
+
+            @Override
+            public List<String> path() {
+                return threadSafeMirror.get().path();
+            }
+        };
     }
 }

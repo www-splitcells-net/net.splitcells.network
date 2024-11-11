@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.data.table;
 
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.constraint.Constraint;
@@ -22,6 +23,9 @@ import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
+import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
+
+import java.util.Optional;
 
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;

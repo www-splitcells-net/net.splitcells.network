@@ -21,6 +21,7 @@ import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.website.server.project.renderer.CsvRenderer;
+import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 import net.splitcells.website.server.project.renderer.ObjectsRenderer;
 
 import java.util.Optional;
@@ -156,6 +157,11 @@ public class TableModificationCounterAspect implements Table {
     @Override
     public Line lookupEquals(Attribute<Line> attribute, Line values) {
         return table.lookupEquals(attribute, values);
+    }
+
+    @Override
+    public DiscoverableRenderer discoverableRenderer() {
+        return table.discoverableRenderer();
     }
 
     @Override

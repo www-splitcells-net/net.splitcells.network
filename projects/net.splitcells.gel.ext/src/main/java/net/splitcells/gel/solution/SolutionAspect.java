@@ -37,6 +37,7 @@ import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.history.History;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
+import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
 import java.util.function.Function;
 
@@ -286,6 +287,11 @@ public class SolutionAspect implements Solution {
     @Override
     public Line lookupEquals(Attribute<Line> attribute, Line value) {
         return solution.lookupEquals(attribute, value);
+    }
+
+    @Override
+    public DiscoverableRenderer discoverableRenderer() {
+        return solution.discoverableRenderer();
     }
 
     @Override

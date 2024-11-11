@@ -24,6 +24,7 @@ import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.column.ColumnView;
+import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
 import java.util.function.Predicate;
 
@@ -135,6 +136,11 @@ public class AllocationStateLookup implements Table {
 
     @Override
     public Line lookupEquals(Attribute<Line> attribute, Line values) {
+        throw notImplementedYet();
+    }
+
+    @Override
+    public DiscoverableRenderer discoverableRenderer() {
         throw notImplementedYet();
     }
 }

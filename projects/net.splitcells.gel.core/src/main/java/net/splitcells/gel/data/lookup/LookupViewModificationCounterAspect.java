@@ -23,6 +23,7 @@ import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.column.ColumnView;
+import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
@@ -95,6 +96,11 @@ public class LookupViewModificationCounterAspect implements LookupView {
     @Override
     public Line lookupEquals(Attribute<Line> attribute, Line values) {
         return lookupView.lookupEquals(attribute, values);
+    }
+
+    @Override
+    public DiscoverableRenderer discoverableRenderer() {
+        return lookupView.discoverableRenderer();
     }
 
     @Override

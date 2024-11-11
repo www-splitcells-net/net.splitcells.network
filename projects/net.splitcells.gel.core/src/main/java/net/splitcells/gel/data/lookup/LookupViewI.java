@@ -29,6 +29,7 @@ import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.column.Column;
 import net.splitcells.gel.data.view.column.ColumnView;
+import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -50,6 +51,7 @@ import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
  * <p>TODO Test runtime improvements by {@link #USE_EXPERIMENTAL_RUNTIME_IMPROVEMENTS},
@@ -390,6 +392,11 @@ public class LookupViewI implements LookupView {
         }
         // TODO Fix interface. Instead of return null, an error should be thrown.
         return null;
+    }
+
+    @Override
+    public DiscoverableRenderer discoverableRenderer() {
+        throw notImplementedYet();
     }
 
     @Override

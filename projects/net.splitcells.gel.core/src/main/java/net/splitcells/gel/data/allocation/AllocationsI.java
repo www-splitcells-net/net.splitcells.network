@@ -27,6 +27,7 @@ import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.LinePointer;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.column.ColumnView;
+import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
@@ -243,5 +244,10 @@ public class AllocationsI implements Allocations {
     @Override
     public Line lookupEquals(Attribute<Line> attribute, Line values) {
         return allocations.lookupEquals(attribute, values);
+    }
+
+    @Override
+    public DiscoverableRenderer discoverableRenderer() {
+        return allocations.discoverableRenderer();
     }
 }

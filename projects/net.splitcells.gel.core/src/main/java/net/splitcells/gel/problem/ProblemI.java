@@ -35,6 +35,7 @@ import net.splitcells.gel.data.table.AfterAdditionSubscriber;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.solution.Solution;
+import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
 import java.util.function.Function;
 
@@ -295,6 +296,11 @@ public class ProblemI implements Problem {
     @Override
     public Tree toFods() {
         return this.assignments.toFods();
+    }
+
+    @Override
+    public DiscoverableRenderer discoverableRenderer() {
+        return assignments.discoverableRenderer();
     }
 
     @Override

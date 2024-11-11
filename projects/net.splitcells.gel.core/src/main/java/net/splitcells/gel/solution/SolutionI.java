@@ -34,6 +34,7 @@ import net.splitcells.gel.data.table.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.problem.derived.DerivedSolution;
+import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
 import java.util.function.Function;
 
@@ -291,6 +292,11 @@ public class SolutionI implements Solution {
     @SuppressWarnings("all")
     public Tree toFods() {
         return this.problem.toFods();
+    }
+
+    @Override
+    public DiscoverableRenderer discoverableRenderer() {
+        return problem.discoverableRenderer();
     }
 
     @SuppressWarnings("all")

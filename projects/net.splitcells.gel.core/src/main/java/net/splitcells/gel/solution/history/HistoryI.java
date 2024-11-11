@@ -52,6 +52,7 @@ import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.solution.history.meta.type.AllocationNaturalArgumentation;
 import net.splitcells.gel.solution.history.meta.type.AllocationRating;
 import net.splitcells.gel.solution.history.meta.type.CompleteRating;
+import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
 import java.util.function.Supplier;
 
@@ -587,6 +588,11 @@ public class HistoryI implements History {
             throw executionException(ERROR_HISTORY_INCONSISTENT);
         }
         return assignments.lookupEquals(attribute, other);
+    }
+
+    @Override
+    public DiscoverableRenderer discoverableRenderer() {
+        return assignments.discoverableRenderer();
     }
 
     @Override

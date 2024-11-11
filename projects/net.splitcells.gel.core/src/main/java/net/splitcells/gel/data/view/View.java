@@ -30,6 +30,7 @@ import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.MathUtils.floorToInt;
 import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.gel.data.table.Tables.table2;
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -45,6 +46,7 @@ import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
@@ -496,22 +498,5 @@ public interface View extends Discoverable, Domable, Identifiable {
                 && name().equals(otherTable.name());
     }
 
-    default DiscoverableRenderer discoverableRenderer() {
-        return new DiscoverableRenderer() {
-            @Override
-            public String render() {
-                return View.this.toHtmlTable().toHtmlString();
-            }
-
-            @Override
-            public Optional<String> title() {
-                return Optional.of(View.this.path().toString());
-            }
-
-            @Override
-            public List<String> path() {
-                return View.this.path();
-            }
-        };
-    }
+    DiscoverableRenderer discoverableRenderer();
 }
