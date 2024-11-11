@@ -362,6 +362,7 @@ Eclipse Platform
 Tabulator
 * License: MIT
 * Source Code: https://github.com/olifolkerd/tabulator
+* Website: https://tabulator.info/
 
 CodeMirror
 * License: MIT: https://github.com/codemirror/dev/blob/main/LICENSE
