@@ -46,10 +46,14 @@ public class EntityManager {
     public static final Attribute<Float> PLAYER_VALUE = attribute(Float.class, "player-value");
     public static final Attribute<Float> EVENT_TYPE = attribute(Float.class, "event-type");
     /**
-     * Such an event, determines the value, of a player's attribute a specific time.
+     * Such an event, determines the value, of a {@link #PLAYER_ATTRIBUTE} at a specific {@link #TIME}.
      * In other words, this is the result of the {@link OnlineOptimization} for {@link #entities}.
      */
     public static final float SET_VALUE = 0f;
+    /**
+     * Adds a value to a {@link #PLAYER_ATTRIBUTE} at a specific {@link #TIME}.
+     */
+    public static final float ADD_VALUE = 1f;
 
     public static final float PLAYER_ENERGY = 1f;
 
