@@ -29,6 +29,7 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 
 /**
+ * <p>This is the accounting of the game's objects.</p>
  * <p>Floats instead of doubles are used, as these are used in game development and
  * seem to be better supported on GPUs.</p>
  * <p>TODO Optional {@link Attribute} are used for now and that is OK,
