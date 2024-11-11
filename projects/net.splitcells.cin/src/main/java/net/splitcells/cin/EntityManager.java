@@ -44,7 +44,15 @@ public class EntityManager {
     public static final Attribute<Float> PLAYER = attribute(Float.class, "player");
     public static final Attribute<Float> PLAYER_ATTRIBUTE = attribute(Float.class, "player-attribute");
     public static final Attribute<Float> PLAYER_VALUE = attribute(Float.class, "player-value");
+    /**
+     * States how the {@link #PLAYER_ATTRIBUTE} should be updated for a given {@link #TIME}.
+     * TODO A dictionary of all reserved values is required.
+     */
     public static final Attribute<Float> EVENT_TYPE = attribute(Float.class, "event-type");
+    /**
+     * States the thing, that updates the {@link #PLAYER_ATTRIBUTE} for a given {@link #TIME}.
+     * TODO A dictionary of all reserved values is required.
+     */
     public static final Attribute<Float> EVENT_SOURCE = attribute(Float.class, "event-source");
     /**
      * Such an {@link #EVENT_TYPE}, determines the value, of a {@link #PLAYER_ATTRIBUTE} at a specific {@link #TIME}.
