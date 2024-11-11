@@ -16,9 +16,11 @@
 package net.splitcells.dem.execution;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.Logs;
 
 import static net.splitcells.dem.Dem.executeThread;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 
 @JavaLegacyArtifact
@@ -27,13 +29,14 @@ public class ThreadLoop {
         return new ThreadLoop(name, loopStep);
     }
 
-    private volatile boolean isRunning = false;
+    private volatile boolean isRunning = true;
 
     private ThreadLoop(String name, Runnable loopStep) {
         executeThread(name, () -> {
             while (isRunning) {
                 loopStep.run();
             }
+            logs().append(tree("Stopping thread loop").withProperty("name", name), LogLevel.INFO);
         });
     }
 
