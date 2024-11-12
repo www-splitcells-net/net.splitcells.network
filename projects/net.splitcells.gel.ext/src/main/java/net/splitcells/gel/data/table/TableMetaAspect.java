@@ -115,6 +115,11 @@ public class TableMetaAspect implements Table {
         table.remove(lineIndex);
     }
 
+    @Override
+    public Line addTranslated(ListView<Object> lineValues, int index) {
+        return table.addTranslated(lineValues, index);
+    }
+
     /**
      * TODO REMOVE Code duplication of {@link TableMetaAspect#addTranslated} methods.
      */

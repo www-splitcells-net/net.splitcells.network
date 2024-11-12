@@ -155,7 +155,7 @@ public class SimplifiedAnnealingProblem implements Solution {
     }
 
     @Override
-    public Line addTranslated(List<Object> lineValues, int index) {
+    public Line addTranslated(ListView<Object> lineValues, int index) {
         throw notImplementedYet();
     }
 

@@ -49,7 +49,7 @@ public class TableSynchronizationAspect implements Table {
     }
 
     @Override
-    public Line addTranslated(List<Object> lineValues, int index) {
+    public Line addTranslated(ListView<Object> lineValues, int index) {
         return content.addTranslated(lineValues, index);
     }
 

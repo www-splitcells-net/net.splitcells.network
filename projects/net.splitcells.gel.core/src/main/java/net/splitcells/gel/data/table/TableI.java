@@ -234,7 +234,7 @@ public class TableI implements Table {
     }
 
     @Override
-    public Line addTranslated(List<Object> lineValues, int index) {
+    public Line addTranslated(ListView<Object> lineValues, int index) {
         if (TRACING) {
             logs().append(tree("addTranslatingAt." + Table.class.getSimpleName())
                             .withProperty("path", path().toString())

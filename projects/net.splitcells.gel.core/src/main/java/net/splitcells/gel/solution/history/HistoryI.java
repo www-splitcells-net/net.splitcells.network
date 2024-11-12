@@ -303,7 +303,7 @@ public class HistoryI implements History {
     }
 
     @Override
-    public Line addTranslated(List<Object> lineValues, int index) {
+    public Line addTranslated(ListView<Object> lineValues, int index) {
         return assignments.addTranslated(lineValues, index);
     }
 

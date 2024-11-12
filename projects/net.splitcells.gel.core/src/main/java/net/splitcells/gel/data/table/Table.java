@@ -72,7 +72,7 @@ public interface Table extends View {
      * @param index The location of the new {@link Line}.
      * @return Returns the newly added {@link Line}.
      */
-    Line addTranslated(List<Object> lineValues, int index);
+    Line addTranslated(ListView<Object> lineValues, int index);
 
     Line addTranslated(ListView<? extends Object> values);
 

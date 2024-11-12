@@ -114,7 +114,8 @@ public class LineBasedTable implements Table {
         return addTranslated(values, argLine.index());
     }
 
-    private Line addTranslated(ListView<?> values, int index) {
+    @Override
+    public Line addTranslated(ListView<Object> values, int index) {
         final var newLine = lineWithValues(this, values, index);
         final var rawLinesSize = rawLines.size();
         if (rawLinesSize > index) {

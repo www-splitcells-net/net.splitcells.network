@@ -140,6 +140,11 @@ public class SolutionAspect implements Solution {
     }
 
     @Override
+    public Line addTranslated(ListView<Object> lineValues, int index) {
+        return solution.addTranslated(lineValues, index);
+    }
+
+    @Override
     public Line addTranslated(ListView<?> values) {
         return solution.addTranslated(values);
     }

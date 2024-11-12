@@ -31,6 +31,7 @@ import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 import java.util.function.Supplier;
 
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.solution.history.HistoryI.historyI;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -185,6 +186,11 @@ public class HistoryRef implements History {
     @Override
     public void registerBeforeRemoval(Line line) {
         history.registerBeforeRemoval(line);
+    }
+
+    @Override
+    public Line addTranslated(ListView<Object> lineValues, int index) {
+        throw notImplementedYet();
     }
 
     @Override
