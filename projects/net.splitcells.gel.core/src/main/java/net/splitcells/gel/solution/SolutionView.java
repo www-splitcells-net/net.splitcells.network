@@ -296,6 +296,37 @@ public interface SolutionView extends ProblemView {
         return tableLine;
     }
 
+    /**
+     * TODO Use generic method to determine the table data to rendered and
+     * use this in {@link #toHtmlTable()} and {@link #toFodsTableAnalysis()} as well,
+     * in order to standardize table rendering content.
+     *
+     * @return
+     */
+    @Override
+    default Tree toHtmlTable() {
+        final var htmlTable = tree("table", HTML);
+        htmlTable.withProperty("class", HTML_ATTRIBUTE, "net-splitcells-website-visually-replaceable");
+        final var header = tree("tr", HTML);
+        header.withChild(tree("th", HTML).withText("index"));
+        headerView().forEach(attribute -> header.withChild(tree("th", HTML).withText(attribute.name())));
+        header.withChild(header.withChild(tree("th", HTML).withText("Reasoning")));
+        htmlTable.withChild(header);
+        unorderedLines().forEach(line -> {
+            final var row = tree("tr", HTML);
+            row.withChild(tree("td", HTML).withText(line.index() + ""));
+            headerView().forEach(attribute -> row.withChild(tree("td", HTML)
+                    .withText(line.value(attribute).toString())));
+            final var argumentation = constraint().naturalArgumentation(line, constraint().injectionGroup());
+            row.withChild(tree("td", HTML).withText(
+                    argumentation.map(arg ->
+                            Tree.toStringPathsDescription(arg.toStringPaths())
+                    ).orElse("")));
+            htmlTable.withChild(row);
+        });
+        return htmlTable;
+    }
+
     Rating rating(List<OptimizationEvent> events);
 }
 
