@@ -70,6 +70,12 @@ public class TableModificationCounterAspect implements Table {
     }
 
     @Override
+    public Line addTranslated(List<Object> lineValues, int index) {
+        configValue(TableModificationCounter.class).count(this, 1 + (long) lineValues.size());
+        return table.addTranslated(lineValues, index);
+    }
+
+    @Override
     public Line addTranslated(ListView<?> values) {
         configValue(TableModificationCounter.class).count(this, 1 + (long) values.size());
         return table.addTranslated(values);

@@ -294,6 +294,11 @@ public class AssignmentsI implements Assignments {
     }
 
     @Override
+    public Line addTranslated(List<Object> lineValues, int index) {
+        throw notImplementedYet();
+    }
+
+    @Override
     public Line addTranslated(ListView<?> values) {
         throw notImplementedYet();
     }

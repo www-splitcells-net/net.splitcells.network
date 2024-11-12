@@ -303,6 +303,11 @@ public class HistoryI implements History {
     }
 
     @Override
+    public Line addTranslated(List<Object> lineValues, int index) {
+        return assignments.addTranslated(lineValues, index);
+    }
+
+    @Override
     public Line addTranslated(ListView<?> values) {
         if (!isRegisterEventIsEnabled) {
             throw executionException(ERROR_HISTORY_DISABLED);

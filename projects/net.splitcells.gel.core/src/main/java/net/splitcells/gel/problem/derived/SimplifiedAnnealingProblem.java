@@ -37,6 +37,7 @@ import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.constraint.type.Derivation.derivation;
 import static net.splitcells.gel.problem.derived.DerivedSolution.derivedSolution;
@@ -151,6 +152,11 @@ public class SimplifiedAnnealingProblem implements Solution {
     @Override
     public Set<Line> assignmentsOfDemand(Line demand) {
         return originalSolution.assignmentsOfDemand(demand);
+    }
+
+    @Override
+    public Line addTranslated(List<Object> lineValues, int index) {
+        throw notImplementedYet();
     }
 
     @Override

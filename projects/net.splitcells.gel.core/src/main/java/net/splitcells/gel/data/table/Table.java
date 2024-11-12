@@ -65,6 +65,15 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
  */
 public interface Table extends View {
 
+    /**
+     * Create a new {@link Line} with the given values and places it at the given location.
+     *
+     * @param lineValues The value of the new {@link Line}.
+     * @param index The location of the new {@link Line}.
+     * @return Returns the newly added {@link Line}.
+     */
+    Line addTranslated(List<Object> lineValues, int index);
+
     Line addTranslated(ListView<? extends Object> values);
 
     /**

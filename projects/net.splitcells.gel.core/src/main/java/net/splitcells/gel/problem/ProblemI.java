@@ -169,6 +169,11 @@ public class ProblemI implements Problem {
     }
 
     @Override
+    public Line addTranslated(List<Object> lineValues, int index) {
+        throw notImplementedYet();
+    }
+
+    @Override
     public Line addTranslated(ListView<?> values) {
         return this.assignments.addTranslated(values);
     }

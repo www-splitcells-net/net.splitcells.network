@@ -163,6 +163,11 @@ public class SolutionI implements Solution {
         return this.problem.suppliesOfDemand(demand);
     }
 
+    @Override
+    public Line addTranslated(List<Object> lineValues, int index) {
+        throw notImplementedYet();
+    }
+
     @SuppressWarnings("all")
     public Line addTranslated(final ListView<?> values) {
         return this.problem.addTranslated(values);
