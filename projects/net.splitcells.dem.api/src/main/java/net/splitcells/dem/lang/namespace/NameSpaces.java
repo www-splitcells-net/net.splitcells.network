@@ -49,6 +49,7 @@ public class NameSpaces {
     public static final NameSpace SEW = nameSpace("s", "http://splitcells.net/sew.xsd");
 
     public static final NameSpace HTML = nameSpace("html", "http://www.w3.org/1999/xhtml");
+    public static final NameSpace HTML_ATTRIBUTE = nameSpace("html", "http://www.w3.org/1999/xhtml", Optional.of(true));
     public static final String LINK = "link";
     public static final String URL = "url";
     /**

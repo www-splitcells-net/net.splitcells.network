@@ -17,7 +17,7 @@ package net.splitcells.dem.lang.tree;
 
 import net.splitcells.dem.testing.annotations.UnitTest;
 
-import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
+import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
@@ -159,5 +159,13 @@ public class TreeTest {
         final var resultData = TreeI.tree("test", SEW).withChild(TreeI.tree("case", SEW))
                 .toXmlStringWithAllNameSpaceDeclarationsAtTop();
         requireEquals(resultData, "<s:test xmlns:s=\"http://splitcells.net/sew.xsd\" ><s:case/></s:test>");
+    }
+
+    @UnitTest
+    public void testToHtmlString() {
+        final var testSubject = tree("html", HTML);
+        testSubject.withProperty("xmlns", HTML_ATTRIBUTE, "http://www.w3.org/1999/xhtml");
+        testSubject.withChild(tree("body", HTML));
+        requireEquals(testSubject.toHtmlString(), "<html xmlns=\"http://www.w3.org/1999/xhtml\"><body/></html>");
     }
 }

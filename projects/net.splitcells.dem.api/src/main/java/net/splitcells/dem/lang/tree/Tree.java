@@ -22,6 +22,7 @@ import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.namespace.NameSpace;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.resource.communication.Sender;
+import net.splitcells.dem.utils.StringUtils;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -65,6 +66,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * A perspective has a value, if it only contains exactly one value.
  * A perspective has children, if it contains multiple values.</p>
  */
+@SuppressWarnings("ALL")
 public interface Tree extends TreeView {
 
     Pattern _VALID_XML_NAME = Pattern.compile("[a-zA-Z][a-zA-Z0-9-_\\.]*");
@@ -258,30 +260,43 @@ public interface Tree extends TreeView {
     }
 
     default String toHtmlString() {
-        String htmlString = "";
+        final var htmlString = StringUtils.stringBuilder();
         if (nameSpace().equals(HTML)) {
             if (children().isEmpty()) {
-                htmlString += "<" + name() + "/>";
+                htmlString.append("<" + name() + "/>");
             } else {
-                htmlString += "<" + name() + ">";
-                htmlString += children().stream().map(Tree::toHtmlString).reduce((a, b) -> a + b).orElse("");
-                htmlString += "</" + name() + ">";
+                htmlString.append("<" + name());
+                if (children().stream().anyMatch(c -> c.nameSpace().isXmlAttribute().orElse(false))) {
+                    htmlString.append(" ");
+                    children().stream().filter(c -> c.nameSpace().isXmlAttribute().orElse(false)).forEach(c -> {
+                        c.children().requireSizeOf(1);
+                        htmlString.append(c.name());
+                        htmlString.append("=\"");
+                        htmlString.append(c.children().get(0).name());
+                        htmlString.append("\"");
+                    });
+                }
+                htmlString.append(">");
+                htmlString.append(children().stream().map(Tree::toHtmlString).reduce((a, b) -> a + b).orElse(""));
+                htmlString.append("</" + name() + ">");
             }
         } else if (nameSpace().equals(STRING)) {
-            htmlString += name();
-            htmlString += children().stream().map(Tree::toHtmlString).reduce((a, b) -> a + b).orElse("");
+            htmlString.append(name());
+            htmlString.append(children().stream().map(Tree::toHtmlString).reduce((a, b) -> a + b).orElse(""));
         } else if (nameSpace().equals(NATURAL) || nameSpace().equals(DEN)) {
             if (children().isEmpty()) {
-                htmlString += "<" + name() + "/>";
+                htmlString.append("<" + name() + "/>");
             } else {
-                htmlString += "<" + name() + ">";
-                htmlString += children().stream().map(Tree::toHtmlString).reduce((a, b) -> a + b).orElse("");
-                htmlString += "</" + name() + ">";
+                htmlString.append("<" + name() + ">");
+                htmlString.append(children().stream().map(Tree::toHtmlString).reduce((a, b) -> a + b).orElse(""));
+                htmlString.append("</" + name() + ">");
             }
+        } else if (nameSpace().isXmlAttribute().orElse(false)) {
+            // Nothing needs to be done, as XML attributes are only rendered for HTML elements.
         } else {
             throw executionException("Unsupported namespace `" + nameSpace().uri() + "` for value `" + name() + "`.");
         }
-        return htmlString;
+        return htmlString.toString();
     }
 
     default String toXmlString() {
