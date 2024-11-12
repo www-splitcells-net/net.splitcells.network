@@ -21,10 +21,7 @@ import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.CsvDocument.csvDocument;
-import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_OFFICE;
-import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_TABLE;
-import static net.splitcells.dem.lang.namespace.NameSpaces.FODS_TEXT;
-import static net.splitcells.dem.lang.namespace.NameSpaces.HTML;
+import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.MathUtils.floorToInt;
@@ -272,17 +269,16 @@ public interface View extends Discoverable, Domable, Identifiable {
     }
 
     default Tree toHtmlTable() {
-        final var header = TreeI.tree("tr", HTML);
-        header.withChild(TreeI.tree("th", HTML).withText("index"));
         final var htmlTable = tree("table", HTML);
         htmlTable.withProperty("class", HTML_ATTRIBUTE, "net-splitcells-website-visually-replaceable");
         final var header = tree("tr", HTML);
         header.withChild(tree("th", HTML).withText("index"));
+        headerView().forEach(attribute -> header.withChild(tree("th", HTML).withText(attribute.name())));
         htmlTable.withChild(header);
         unorderedLines().forEach(line -> {
-            final var row = TreeI.tree("tr", HTML);
-            row.withChild(TreeI.tree("td", HTML).withText(line.index() + ""));
-            headerView().forEach(attribute -> row.withChild(TreeI.tree("td", HTML)
+            final var row = tree("tr", HTML);
+            row.withChild(tree("td", HTML).withText(line.index() + ""));
+            headerView().forEach(attribute -> row.withChild(tree("td", HTML)
                     .withText(line.value(attribute).toString())));
             htmlTable.withChild(row);
         });
@@ -290,33 +286,33 @@ public interface View extends Discoverable, Domable, Identifiable {
     }
 
     default Tree toFods() {
-        final var fods = TreeI.tree("document", FODS_OFFICE)
+        final var fods = tree("document", FODS_OFFICE)
                 .withXmlAttribute("mimetype", "application/vnd.oasis.opendocument.spreadsheet", FODS_OFFICE);
-        final var body = TreeI.tree("body", FODS_OFFICE);
+        final var body = tree("body", FODS_OFFICE);
         fods.withChild(body);
-        final var spreadSheet = TreeI.tree("spreadsheet", FODS_OFFICE);
+        final var spreadSheet = tree("spreadsheet", FODS_OFFICE);
         body.withChild(spreadSheet);
-        final var table = TreeI.tree("table", FODS_TABLE);
+        final var table = tree("table", FODS_TABLE);
         spreadSheet.withChild(table);
         table.withProperty("name", FODS_TABLE, "values");
-        final var header = TreeI.tree("table-row", FODS_TABLE);
+        final var header = tree("table-row", FODS_TABLE);
         table.withChild(header);
         headerView().stream()
                 .map(att -> att.name())
                 .map(attName -> {
-                    final var cell = TreeI.tree("table-cell", FODS_TABLE);
-                    cell.withChild(TreeI.tree("p", FODS_TEXT).withChild(tree(attName)));
+                    final var cell = tree("table-cell", FODS_TABLE);
+                    cell.withChild(tree("p", FODS_TEXT).withChild(tree(attName)));
                     return cell;
                 }).forEach(attDesc -> header.withChild(attDesc));
         unorderedLines().forEach(line -> {
-            final var tableLine = TreeI.tree("table-row", FODS_TABLE);
+            final var tableLine = tree("table-row", FODS_TABLE);
             table.withChild(tableLine);
             headerView().stream()
                     .map(attribute -> line.value(attribute))
                     .map(value -> {
-                        final var cell = TreeI.tree("table-cell", FODS_TABLE);
+                        final var cell = tree("table-cell", FODS_TABLE);
                         cell
-                                .withChild(TreeI.tree("p", FODS_TEXT).withChild(tree(value.toString())));
+                                .withChild(tree("p", FODS_TEXT).withChild(tree(value.toString())));
                         return cell;
                     }).forEach(tableElement -> tableLine.withChild(tableElement));
         });
