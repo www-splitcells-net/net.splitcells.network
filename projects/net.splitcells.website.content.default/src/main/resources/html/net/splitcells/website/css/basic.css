@@ -6,6 +6,12 @@
 - Use 100% of width by default and no specific height values by default.
   In other words grow in one direction and fille the other one.
 - Use names with namespaces.
+- `net-splitcells-website-visually-replaceable` is used in order to mark a component as visually replaceable.
+  This basically means, that i.e. a JavaScript framework is allowed to hide such an element and
+  place an alternative element in its place.
+  This can be used in order to add new functionality to such elements.
+  If such an element is interactable or changeable, the replacer is responsible to track the element's content and
+  to update the alternative representation accordingly.
 */
 /* TODO Split CSS in CSS without classes and CSS with specifics for this website.
 */

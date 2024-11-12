@@ -272,10 +272,12 @@ public interface View extends Discoverable, Domable, Identifiable {
     }
 
     default Tree toHtmlTable() {
-        final var htmlTable = TreeI.tree("table", HTML);
         final var header = TreeI.tree("tr", HTML);
         header.withChild(TreeI.tree("th", HTML).withText("index"));
-        headerView().forEach(attribute -> header.withChild(TreeI.tree("th", HTML).withText(attribute.name())));
+        final var htmlTable = tree("table", HTML);
+        htmlTable.withProperty("class", HTML_ATTRIBUTE, "net-splitcells-website-visually-replaceable");
+        final var header = tree("tr", HTML);
+        header.withChild(tree("th", HTML).withText("index"));
         htmlTable.withChild(header);
         unorderedLines().forEach(line -> {
             final var row = TreeI.tree("tr", HTML);
