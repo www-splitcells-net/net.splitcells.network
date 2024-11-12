@@ -12,10 +12,6 @@
   You thereby confirm compliance with the DCO.
   Help regarding the version control Git can be found
   [here](src/main/md/net/splitcells/network/guidelines/gist/git.md).
-* At least the main author has to sign the last commit with a PGP or SSH key.
-  Signing helps to audit commit authorship.
-  A quickstart and further guidelines for PGP can be found
-  [here](src/main/md/net/splitcells/network/guidelines/gist/pgp.md).
 ## API Compatibility
 There is currently no guarantee of backwards compatibility.
 Absolute backward compatibility creates a maintenance burden,
@@ -35,6 +31,18 @@ compatibility.
 * No Forward compatibility
 * Versioning system and releases are needed in this case.
 
-### Inspirational External Guidelines
+## Inspirational External Guidelines
 * [Submitting patches: the essential guide to getting your code into the kernel](https://www.kernel.org/doc/html/latest/process/submitting-patches.html)
 * [Creating Pull Requests](https://www.kernel.org/doc/html/latest/maintainer/pull-requests.html)
+
+## Notes
+
+Signing by PGP or SSH key is not required.
+Also, most open source projects do not do this and this does not seem to cause legal problem.
+The [Linux Kernel](https://docs.kernel.org/process/maintainer-pgp-guide.html) does not sign commits and
+instead focuses on verifying the developer communication instead.
+Furthermore, all signature will be temporarily valid as well,
+which reduces it usefulness,
+also it does not mean, that check a repo regarding an expired key has not its use cases.
+In the hand, commit signing creates a huge burden and has no benefits if it is not used properly.
+Therefore, it is disregarded as a requirement.
