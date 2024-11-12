@@ -18,6 +18,7 @@ package net.splitcells.gel.problem;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.execution.EffectSynchronization;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.constraint.type.framework.ConstraintAspect;
@@ -26,6 +27,7 @@ import net.splitcells.gel.data.table.TableSynchronization;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.LinePointer;
+import net.splitcells.gel.data.view.attribute.AttributeI;
 import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.gel.problem.derived.DerivedSolution;
 import net.splitcells.gel.rating.framework.Rating;
@@ -37,17 +39,29 @@ import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
+import java.util.Collection;
+import java.util.Optional;
 import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.namespace.NameSpaces.HTML;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.gel.data.table.TableSynchronizationAspect.tableSynchronizationAspect;
+import static net.splitcells.gel.data.table.Tables.table2;
 import static net.splitcells.gel.problem.derived.DerivedSolution.derivedSolution;
 
 public class ProblemI implements Problem {
 
+    /**
+     * TODO Should be of type string, but creates a problem at {@link #discoverableRenderer()}.
+     */
+    public static final Attribute<Object> REASONING = AttributeI.attribute(Object.class, "reasoning");
+
     private final Constraint constraint;
     private final Assignments assignments;
     private Solution asSolution;
+    private Optional<Table> threadSafeMirror = Optional.empty();
 
     public static Problem problem(Assignments assignments, Constraint constraint) {
         final var problem = new ProblemI(assignments, constraint);
@@ -305,7 +319,36 @@ public class ProblemI implements Problem {
 
     @Override
     public DiscoverableRenderer discoverableRenderer() {
-        return assignments.discoverableRenderer();
+        if (threadSafeMirror.isEmpty()) {
+            final var mirror = tableSynchronizationAspect(table2("mirror", this, headerView().shallowCopy().withAppended(REASONING)));
+            orderedLinesStream().forEach(mirror::add);
+            subscribeToAfterAdditions(addition -> {
+                final var argumentation = constraint().naturalArgumentation(addition, constraint().injectionGroup())
+                        .map(arg ->
+                                Tree.toStringPathsDescription(arg.toStringPaths())
+                        ).orElse("");
+                mirror.addTranslated(Lists.listWithValuesOf(addition.values()).withAppended(argumentation), addition.index());
+            });
+            subscribeToBeforeRemoval(mirror::remove);
+            threadSafeMirror = Optional.of(mirror);
+        }
+        return new DiscoverableRenderer() {
+
+            @Override
+            public String render() {
+                return threadSafeMirror.get().toHtmlTable().toHtmlString();
+            }
+
+            @Override
+            public Optional<String> title() {
+                return Optional.of(threadSafeMirror.get().path().toString());
+            }
+
+            @Override
+            public List<String> path() {
+                return threadSafeMirror.get().path();
+            }
+        };
     }
 
     @Override
