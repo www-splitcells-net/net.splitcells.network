@@ -39,4 +39,8 @@ public interface Rating extends PartiallyOrdered<Rating>, Domable, Base {
     default boolean betterThanOrEquals(Rating rating) {
         return this.betterThan(rating) || this.equalz(rating);
     }
+
+    default String descriptionForUser() {
+        return "The description is not implemented yet.";
+    }
 }

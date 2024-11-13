@@ -82,6 +82,7 @@
   2. Rename `SupplySelector` to `SupplyOfflineSelector`.
   3. Rename `SupplySelectors` to `SupplyOfflineSelectors`.
 ### Minor Changes
+* **2024-11-13 \#51** Define description string API of ratings for users. 
 * **2024-07-24 \#24** Constraint queries can now be used to check for the existence of constraint nodes without creating new constraints.
 * **2023-12-22 ##252**: `DefaultOptimization` now provides the recommended optimizer for problems in general.
 * **2023-06-14 ##170**: Add `DatabaseI#addWithSameHeaderPrefix` as a faster alternative to `DatabaseI#add`,

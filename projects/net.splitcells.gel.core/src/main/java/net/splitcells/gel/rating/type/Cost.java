@@ -158,4 +158,9 @@ public class Cost implements Rating {
     public String toString() {
         return toTree().toXmlString();
     }
+
+    @Override
+    public String descriptionForUser() {
+        return "cost of " + value;
+    }
 }
