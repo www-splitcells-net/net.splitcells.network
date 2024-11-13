@@ -323,13 +323,25 @@ public class ProblemI implements Problem {
             final var mirror = tableSynchronizationAspect(table2("mirror", this, headerView().shallowCopy().withAppended(REASONING)));
             orderedLinesStream().forEach(mirror::add);
             subscribeToAfterAdditions(addition -> {
-                final var argumentation = constraint().naturalArgumentation(addition, constraint().injectionGroup())
-                        .map(arg ->
-                                Tree.toStringPathsDescription(arg.toStringPaths())
-                        ).orElse("");
-                mirror.addTranslated(Lists.listWithValuesOf(addition.values()).withAppended(argumentation), addition.index());
+                mirror.withAllLinesRemoved();
+                unorderedLines().forEach(line -> {
+                    final var argumentation = constraint().naturalArgumentation(line, constraint().injectionGroup())
+                            .map(arg ->
+                                    Tree.toStringPathsDescription(arg.toStringPaths())
+                            ).orElse("");
+                    mirror.addTranslated(Lists.listWithValuesOf(line.values()).withAppended(argumentation), line.index());
+                });
             });
-            subscribeToBeforeRemoval(mirror::remove);
+            subscribeToBeforeRemoval(removal -> {
+                mirror.withAllLinesRemoved();
+                unorderedLines().forEach(line -> {
+                    final var argumentation = constraint().naturalArgumentation(line, constraint().injectionGroup())
+                            .map(arg ->
+                                    Tree.toStringPathsDescription(arg.toStringPaths())
+                            ).orElse("");
+                    mirror.addTranslated(Lists.listWithValuesOf(line.values()).withAppended(argumentation), line.index());
+                });
+            });
             threadSafeMirror = Optional.of(mirror);
         }
         return new DiscoverableRenderer() {
