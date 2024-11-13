@@ -18,6 +18,7 @@ package net.splitcells.cin.raters;
 import net.splitcells.cin.EntityManager;
 import net.splitcells.cin.deprecated.raters.deprecated.PositionClustersCenterX;
 import net.splitcells.cin.deprecated.raters.deprecated.PositionClustersCenterY;
+import net.splitcells.dem.data.order.Comparators;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.dom.Domable;
@@ -60,27 +61,36 @@ public class ExistenceCost {
             final var ratingEvent = ratingEvent();
             final var incomingConstraintGroup = lines.unorderedLinesStream().findFirst().orElseThrow()
                     .value(INCOMING_CONSTRAINT_GROUP);
-            final var times = lines.columnView(TIME).stream().distinct().collect(toList());
-            final var endTime = times.get(1);
-            lines.columnView(PLAYER).stream().distinct().forEach(player -> {
-                final var playerValues = lines.lookup(PLAYER, player);
-                final var energyUpdate = playerValues
-                        .lookup(PLAYER_ATTRIBUTE, PLAYER_ENERGY)
-                        .lookup(EVENT_TYPE, ADD_VALUE)
-                        .lookup(TIME, endTime)
-                        .lookup(EVENT_SOURCE, EXISTENCE_COST_EVENT_SOURCE)
-                        .lookup(PLAYER_VALUE, -1f);
-                if (energyUpdate.isPresent()) {
+            final var times = lines.columnView(LINE).values().stream().map(l -> l.value(TIME))
+                    .distinct()
+                    .sorted(ASCENDING_INTEGERS)
+                    .collect(toList());
+            if (times.size() < 2) {
+                return ratingEvent;
+            }
+            final float endTime = times.get(1);
+            lines.columnView(LINE).stream().map(l -> l.value(PLAYER)).distinct().forEach(player -> {
+                final var playerValues = lines.unorderedLinesStream()
+                        .filter(l -> player.equals(l.value(LINE).value(PLAYER)))
+                        .collect(toList());
+                final var energyUpdate = playerValues.stream()
+                        .filter(l -> l.value(LINE).value(PLAYER_ATTRIBUTE) == PLAYER_ENERGY)
+                        .filter(l -> l.value(LINE).value(EVENT_TYPE) == ADD_VALUE)
+                        .filter(l -> l.value(LINE).value(TIME) == endTime)
+                        .filter(l -> l.value(LINE).value(EVENT_SOURCE) == EXISTENCE_COST_EVENT_SOURCE)
+                        .filter(l -> l.value(LINE).value(PLAYER_VALUE) == -1f)
+                        .collect(toList());
+                if (energyUpdate.hasElements()) {
                     if (energyUpdate.size() > 1) {
                         throw executionException("Only one player energy result is valid.");
                     }
-                    ratingEvent.updateRating_withReplacement(energyUpdate.anyLine()
+                    ratingEvent.additions().put(energyUpdate.get(0)
                             , localRating()
                                     .withPropagationTo(children)
                                     .withResultingGroupId(incomingConstraintGroup)
                                     .withRating(noCost()));
                 } else {
-                    ratingEvent.updateRating_withReplacement(playerValues.anyLine()
+                    ratingEvent.additions().put(playerValues.get(0)
                             , localRating()
                                     .withPropagationTo(children)
                                     .withResultingGroupId(incomingConstraintGroup)
