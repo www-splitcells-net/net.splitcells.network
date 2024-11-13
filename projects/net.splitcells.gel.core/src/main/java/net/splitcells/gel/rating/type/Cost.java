@@ -161,6 +161,6 @@ public class Cost implements Rating {
 
     @Override
     public String descriptionForUser() {
-        return "cost of " + value;
+        return "Cost of " + value;
     }
 }
