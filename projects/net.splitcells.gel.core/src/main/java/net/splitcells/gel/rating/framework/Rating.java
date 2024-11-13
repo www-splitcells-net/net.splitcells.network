@@ -20,6 +20,8 @@ import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.order.PartiallyOrdered;
 import net.splitcells.dem.object.Base;
 
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+
 /**
  * TODO Make Rating immutable.
  */
@@ -41,6 +43,6 @@ public interface Rating extends PartiallyOrdered<Rating>, Domable, Base {
     }
 
     default String descriptionForUser() {
-        return "The description is not implemented yet.";
+        throw notImplementedYet();
     }
 }
