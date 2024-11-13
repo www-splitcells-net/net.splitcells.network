@@ -44,6 +44,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.namespace.NameSpaces.HTML;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -57,6 +58,7 @@ public class ProblemI implements Problem {
      * TODO Should be of type string, but creates a problem at {@link #discoverableRenderer()}.
      */
     public static final Attribute<Object> REASONING = AttributeI.attribute(Object.class, "reasoning");
+    public static final Attribute<Object> RATING = AttributeI.attribute(Object.class, "rating");
 
     private final Constraint constraint;
     private final Assignments assignments;
@@ -317,10 +319,17 @@ public class ProblemI implements Problem {
         return this.assignments.toFods();
     }
 
+    /**
+     * TODO The content of {@link #threadSafeMirror} should be created via a general method.
+     *
+     * @return Returns a thread safe renderer of {@link #assignments} with some data for the user.
+     */
     @Override
     public DiscoverableRenderer discoverableRenderer() {
         if (threadSafeMirror.isEmpty()) {
-            final var mirror = tableSynchronizationAspect(table2("mirror", this, headerView().shallowCopy().withAppended(REASONING)));
+            final var mirror = tableSynchronizationAspect(table2("mirror"
+                    , this
+                    , headerView().shallowCopy().withAppended(REASONING, RATING)));
             orderedLinesStream().forEach(mirror::add);
             subscribeToAfterAdditions(addition -> {
                 mirror.withAllLinesRemoved();
@@ -329,7 +338,10 @@ public class ProblemI implements Problem {
                             .map(arg ->
                                     Tree.toStringPathsDescription(arg.toStringPaths())
                             ).orElse("");
-                    mirror.addTranslated(Lists.listWithValuesOf(line.values()).withAppended(argumentation), line.index());
+                    mirror.addTranslated(listWithValuesOf(line.values())
+                                    .withAppended(argumentation, constraint().rating(line).descriptionForUser())
+                            , line.index());
+
                 });
             });
             subscribeToBeforeRemoval(removal -> {
@@ -339,7 +351,9 @@ public class ProblemI implements Problem {
                             .map(arg ->
                                     Tree.toStringPathsDescription(arg.toStringPaths())
                             ).orElse("");
-                    mirror.addTranslated(Lists.listWithValuesOf(line.values()).withAppended(argumentation), line.index());
+                    mirror.addTranslated(listWithValuesOf(line.values())
+                                    .withAppended(argumentation, constraint().rating(line).descriptionForUser())
+                            , line.index());
                 });
             });
             threadSafeMirror = Optional.of(mirror);
