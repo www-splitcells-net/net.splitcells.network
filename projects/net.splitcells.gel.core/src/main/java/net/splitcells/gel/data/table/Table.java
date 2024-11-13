@@ -171,4 +171,9 @@ public interface Table extends View {
         });
         return this;
     }
+
+    default Table withAllLinesRemoved() {
+        unorderedLines().forEach(this::remove);
+        return this;
+    }
 }
