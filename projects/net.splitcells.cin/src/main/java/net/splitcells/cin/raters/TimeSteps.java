@@ -69,8 +69,8 @@ public class TimeSteps implements Rater {
                 new TimeSteps(timeAttribute, false));
     }
 
-    public static Rater timeSteps(Attribute<Integer> timeAttribute, boolean isEven) {
-        return new TimeSteps(timeAttribute, isEven);
+    public static Rater timeSteps(Attribute<Integer> timeAttribute, boolean isStartTimeEven) {
+        return new TimeSteps(timeAttribute, isStartTimeEven);
     }
 
     private final Attribute<Integer> timeAttribute;
@@ -267,9 +267,12 @@ public class TimeSteps implements Rater {
 
     @Override
     public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
+        final var timeValue = line.value(timeAttribute);
         if (isStartTimeEven) {
+            if (MathUtils.is) {
 
-            return "even step of " + timeAttribute.name() + " " + line.value(timeAttribute);
+            }
+            return "step of " + timeAttribute.name() + " " + ;
         } else {
             return "uneven step of " + timeAttribute.name() + " " + line.value(timeAttribute);
         }

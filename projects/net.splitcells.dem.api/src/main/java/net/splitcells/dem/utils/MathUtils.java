@@ -220,4 +220,8 @@ public final class MathUtils {
     private MathUtils() {
         throw constructorIllegal();
     }
+
+    public static boolean isEven(int arg) {
+        return modulus(absolute(arg), 2) == 0;
+    }
 }

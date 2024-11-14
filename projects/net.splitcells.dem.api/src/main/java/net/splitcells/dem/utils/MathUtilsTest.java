@@ -15,9 +15,13 @@
  */
 package net.splitcells.dem.utils;
 
+import net.splitcells.dem.testing.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static net.splitcells.dem.data.atom.Bools.require;
+import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.utils.MathUtils.isEven;
 import static net.splitcells.dem.utils.MathUtils.sumsForTarget;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -49,5 +53,18 @@ public class MathUtilsTest {
         assertThat(sumsForTarget(3, list(1, 2, 3), 2)).isEqualTo(list(list(1, 2), list(2, 1)));
         assertThat(sumsForTarget(3, list(0, 1, 2, 3, 4), 2)).isEqualTo(list(list(0, 3), list(1, 2), list(2, 1), list(3, 0)));
         assertThat(sumsForTarget(3, list(1, 2, 3, 4), 2)).isEqualTo(list(list(1, 2), list(2, 1)));
+    }
+
+    @Test
+    public void testIsEven() {
+        require(isEven(0));
+        require(isEven(2));
+        require(isEven(4));
+        require(isEven(-2));
+        require(isEven(-4));
+        requireNot(isEven(1));
+        requireNot(isEven(-1));
+        requireNot(isEven(-3));
+        requireNot(isEven(-3));
     }
 }
