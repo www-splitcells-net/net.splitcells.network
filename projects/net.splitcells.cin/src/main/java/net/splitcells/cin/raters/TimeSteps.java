@@ -269,9 +269,9 @@ public class TimeSteps implements Rater {
     public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
         if (isStartTimeEven) {
 
-            return "even time step of " + timeAttribute.name() + " " + line.value(timeAttribute);
+            return "even step of " + timeAttribute.name() + " " + line.value(timeAttribute);
         } else {
-            return "uneven time step of " + timeAttribute.name() + " " + line.value(timeAttribute);
+            return "uneven step of " + timeAttribute.name() + " " + line.value(timeAttribute);
         }
     }
 }
