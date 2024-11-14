@@ -18,6 +18,7 @@ package net.splitcells.cin.raters;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.dom.Domable;
+import net.splitcells.dem.utils.MathUtils;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
@@ -268,13 +269,21 @@ public class TimeSteps implements Rater {
     @Override
     public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
         final var timeValue = line.value(timeAttribute);
+        final var isEven = MathUtils.isEven(timeValue);
+        final int startTime;
         if (isStartTimeEven) {
-            if (MathUtils.is) {
-
+            if (isEven) {
+                startTime = timeValue;
+            } else {
+                startTime = timeValue - 1;
             }
-            return "step of " + timeAttribute.name() + " " + ;
         } else {
-            return "uneven step of " + timeAttribute.name() + " " + line.value(timeAttribute);
+            if (isEven) {
+                startTime = timeValue - 1;
+            } else {
+                startTime = timeValue;
+            }
         }
+        return "step of " + timeAttribute.name() + " at " + startTime;
     }
 }
