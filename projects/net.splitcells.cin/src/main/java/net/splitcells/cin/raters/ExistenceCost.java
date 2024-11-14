@@ -68,7 +68,7 @@ public class ExistenceCost {
             if (times.size() < 2) {
                 return ratingEvent;
             }
-            final float endTime = times.get(1);
+            final int endTime = times.get(1);
             lines.columnView(LINE).stream().map(l -> l.value(PLAYER)).distinct().forEach(player -> {
                 final var playerValues = lines.unorderedLinesStream()
                         .filter(l -> player.equals(l.value(LINE).value(PLAYER)))

@@ -31,46 +31,43 @@ import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 
 /**
  * <p>This is the accounting of the game's objects.</p>
- * <p>Floats instead of doubles are used, as these are used in game development and
- * seem to be better supported on GPUs.</p>
+ * <p>Integers instead of floats are used in order to simplify computation, when precision is important.
+ * Keep in mind, that this way floating points can still be simulated by i.e. multiplying a number by 10^n.</p>
  * <p>TODO Optional {@link Attribute} are used for now and that is OK,
  * as later the {@link #entities} {@link Table} will be split up into multiple,
  * which will than be represented by a meta {@link Solution}.</p>
  */
 public class EntityManager {
-    /**
-     * TODO Make this a float for best portability and adaptability.
-     */
     public static final Attribute<Integer> TIME = attribute(Integer.class, "time");
-    public static final Attribute<Float> PLAYER = attribute(Float.class, "player");
-    public static final Attribute<Float> PLAYER_ATTRIBUTE = attribute(Float.class, "player-attribute");
-    public static final Attribute<Float> PLAYER_VALUE = attribute(Float.class, "player-value");
+    public static final Attribute<Integer> PLAYER = attribute(Integer.class, "player");
+    public static final Attribute<Integer> PLAYER_ATTRIBUTE = attribute(Integer.class, "player-attribute");
+    public static final Attribute<Integer> PLAYER_VALUE = attribute(Integer.class, "player-value");
     /**
      * States how the {@link #PLAYER_ATTRIBUTE} should be updated for a given {@link #TIME}.
      * TODO A dictionary of all reserved values is required.
      */
-    public static final Attribute<Float> EVENT_TYPE = attribute(Float.class, "event-type");
+    public static final Attribute<Integer> EVENT_TYPE = attribute(Integer.class, "event-type");
     /**
      * States the thing, that updates the {@link #PLAYER_ATTRIBUTE} for a given {@link #TIME}.
      * TODO A dictionary of all reserved values is required.
      */
-    public static final Attribute<Float> EVENT_SOURCE = attribute(Float.class, "event-source");
-    public static final float EXISTENCE_COST_EVENT_SOURCE = 1f;
+    public static final Attribute<Integer> EVENT_SOURCE = attribute(Integer.class, "event-source");
+    public static final int EXISTENCE_COST_EVENT_SOURCE = 1;
     /**
      * Such an {@link #EVENT_TYPE}, determines the value, of a {@link #PLAYER_ATTRIBUTE} at a specific {@link #TIME}.
      * In other words, this is the result of the {@link OnlineOptimization} for {@link #entities}.
      */
-    public static final float SET_VALUE = 0f;
+    public static final int SET_VALUE = 0;
     /**
      * This {@link #EVENT_TYPE} adds a value to a {@link #PLAYER_ATTRIBUTE} at a specific {@link #TIME}.
      */
-    public static final float ADD_VALUE = 1f;
+    public static final int ADD_VALUE = 1;
     /**
      * This is the default value of {@link #EVENT_SOURCE}.
      */
-    public static final float NO_SOURCE = 0f;
+    public static final int NO_SOURCE = 0;
 
-    public static final float PLAYER_ENERGY = 1f;
+    public static final int PLAYER_ENERGY = 1;
 
     public static EntityManager entityManager() {
         return new EntityManager();
@@ -108,7 +105,7 @@ public class EntityManager {
 
     public EntityManager withOptimized() {
         entities.demandsFree().unorderedLines()
-                .forEach(fd -> entities.assign(fd, entitySupplies.addTranslated(list(PLAYER_ENERGY, (float) random.integer(1, 100), SET_VALUE, NO_SOURCE))));
+                .forEach(fd -> entities.assign(fd, entitySupplies.addTranslated(list(PLAYER_ENERGY, random.integer(1, 100), SET_VALUE, NO_SOURCE))));
         return this;
     }
 
@@ -132,7 +129,7 @@ public class EntityManager {
     }
 
     public EntityManager withInitedPlayers() {
-        range(0, numberOfPlayers).forEach(i -> entityDemands.addTranslated(list(initTime, (float) i)));
+        range(0, numberOfPlayers).forEach(i -> entityDemands.addTranslated(list(initTime, i)));
         return this;
     }
 
