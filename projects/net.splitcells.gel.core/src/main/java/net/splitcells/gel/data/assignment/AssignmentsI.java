@@ -457,11 +457,7 @@ public class AssignmentsI implements Assignments {
     @Override
     public Set<Line> assignmentsOfDemand(Line demand) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            try {
-                setOfUniques(usedDemandIndexes_to_allocationIndexes.keySet()).requirePresenceOf(demand.index());
-            } catch (Throwable e) {
-                throw new RuntimeException(e);
-            }
+            setOfUniques(usedDemandIndexes_to_allocationIndexes.keySet()).requirePresenceOf(demand.index());
         }
         final Set<Line> allocationsOfDemand = setOfUniques();
         usedDemandIndexes_to_allocationIndexes
