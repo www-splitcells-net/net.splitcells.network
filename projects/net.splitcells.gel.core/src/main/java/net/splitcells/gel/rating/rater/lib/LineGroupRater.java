@@ -1,0 +1,76 @@
+/*
+ * Copyright (c) 2021 Contributors To The `net.splitcells.*` Projects
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License, v. 2.0 are satisfied: GNU General Public License v2.0 or later
+ * which is available at https://www.gnu.org/licenses/old-licenses/gpl-2.0-standalone.html
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+ * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+ */
+package net.splitcells.gel.rating.rater.lib;
+
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.dom.Domable;
+import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.constraint.GroupId;
+import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.data.view.View;
+import net.splitcells.gel.proposal.Proposal;
+import net.splitcells.gel.rating.framework.Rating;
+import net.splitcells.gel.rating.rater.framework.Rater;
+import net.splitcells.gel.rating.rater.framework.RatingEvent;
+
+/**
+ * This {@link Rater} makes it easy to rate groups with interdependent {@link Line}s.
+ * Every {@link Line} has the same {@link Rating} in the group.
+ * Keep in mind, that during a change in the group, every {@link Line}s' {@link Rating} in the group is updated,
+ * which makes the performance worse.
+ */
+public class LineGroupRater implements Rater {
+
+    public static Rater lineGroupRater(GroupingRater baseRater) {
+        return new LineGroupRater(baseRater);
+    }
+
+    private final GroupingRater baseRater;
+
+    private LineGroupRater(GroupingRater argBaseRater) {
+        baseRater = argBaseRater;
+    }
+
+    @Override
+    public RatingEvent ratingAfterAddition(View lines, Line addition, List<Constraint> children, View lineProcessing) {
+        return translateReratingToUpdate(lines, baseRater.rating(lines, children));
+    }
+
+    @Override
+    public RatingEvent ratingAfterRemoval(View lines, List<Constraint> children, View lineProcessing) {
+        return translateReratingToUpdate(lines, baseRater.rating(lines, children));
+    }
+
+    private RatingEvent translateReratingToUpdate(View lines, RatingEvent ratingEvent) {
+        lines.unorderedLinesStream().forEach(i -> ratingEvent.removal().add(i));
+        return ratingEvent;
+    }
+
+    @Override
+    public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
+        return baseRater.toSimpleDescription(line, groupsLineProcessing, incomingGroup);
+    }
+
+    @Override
+    public List<Domable> arguments() {
+        return baseRater.arguments();
+    }
+
+    @Override
+    public Proposal propose(Proposal proposal) {
+        return baseRater.propose(proposal);
+    }
+}
