@@ -180,6 +180,9 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
                         , lineProcessing
                                 .columnView(INCOMING_CONSTRAINT_GROUP)
                                 .lookup(incomingGroup)));
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            require(lineProcessing.demandsUsed().contains(addition));
+        }
     }
 
     private void processRatingEvent(RatingEvent ratingEvent) {
