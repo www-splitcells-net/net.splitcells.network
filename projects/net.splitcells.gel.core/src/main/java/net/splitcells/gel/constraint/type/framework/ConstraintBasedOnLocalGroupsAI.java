@@ -107,6 +107,9 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
     private final net.splitcells.dem.data.set.list.List<Constraint> children = list();
     private Optional<Discoverable> mainContext = Optional.empty();
     private final List<Discoverable> contexts = list();
+    /**
+     * TODO Rename this to incomingLines, in order clarify its meaning.
+     */
     private final Table lines;
     private final Table results;
     private final Assignments lineProcessing;
