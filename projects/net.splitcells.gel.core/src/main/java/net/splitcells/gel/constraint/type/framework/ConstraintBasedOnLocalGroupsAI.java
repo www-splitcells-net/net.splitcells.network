@@ -214,6 +214,15 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         suppliesToRemove.forEach(freeSupply -> results.remove(freeSupply));
     }
 
+    public void processLinesAfterRemoval(GroupId incomingGroup) {
+        processRatingEvent(rater.ratingAfterRemoval(
+                lines.columnView(INCOMING_CONSTRAINT_GROUP).lookup(incomingGroup)
+                , childrenView()
+                , lineProcessing.columnView(INCOMING_CONSTRAINT_GROUP).lookup(incomingGroup)));
+        final var suppliesToRemove = lineProcessing.suppliesFree().unorderedLinesStream().collect(toList());
+        suppliesToRemove.forEach(freeSupply -> results.remove(freeSupply));
+    }
+
     public String localNaturalArgumentation(Report report) {
         return localNaturalArgumentation.apply(this, report);
     }
@@ -287,6 +296,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
                 .lookup(INCOMING_CONSTRAINT_GROUP, injectionGroup)
                 .unorderedLinesStream()
                 .forEach(lines::remove);
+        processLinesAfterRemoval(injectionGroup);
     }
 
     private void propagateAddition(Line addition) {

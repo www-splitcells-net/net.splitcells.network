@@ -82,6 +82,8 @@
   2. Rename `SupplySelector` to `SupplyOfflineSelector`.
   3. Rename `SupplySelectors` to `SupplyOfflineSelectors`.
 ### Minor Changes
+* **2024-11-15 \#51** Define rating method after line removal instead of before for raters.
+  This makes it possible to create simplified rater implementation.
 * **2024-11-13 \#51** Define description string API of ratings for users. 
 * **2024-07-24 \#24** Constraint queries can now be used to check for the existence of constraint nodes without creating new constraints.
 * **2023-12-22 ##252**: `DefaultOptimization` now provides the recommended optimizer for problems in general.

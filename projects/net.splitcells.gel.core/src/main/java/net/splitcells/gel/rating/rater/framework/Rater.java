@@ -80,8 +80,12 @@ public interface Rater extends PubliclyTyped<Rater>
     RatingEvent ratingAfterAddition(View lines, Line addition, List<Constraint> children, View lineProcessing);
 
     /**
-     * Nothing needs to be done here, if the {@link Rating} of one {@link Line} is not dependent on the rating of another line.
-     * {@link RaterBasedOnLineValue} can be used for constructing such {@link Rater}s.
+     * <p>Calculate the required {@link Rating} update caused
+     * by the removal of a {@link Line} from {@link Constraint#lineProcessing()}.
+     * The {@link RatingEvent} is only complete,
+     * if {@link #ratingAfterRemoval(View, List, View)} is considered as well.</p>
+     * <p>Nothing needs to be done here, if the {@link Rating} of one {@link Line} is not dependent on the rating of another line.
+     * {@link RaterBasedOnLineValue} can be used for constructing such {@link Rater}s.</p>
      *
      * @param lines          These are all {@link Constraint#lines()} of the incoming group present before the removal.
      * @param removal        This is the line of {@link Constraint#lines()} and {@code linesOfGroup} that will be removed.
@@ -90,8 +94,26 @@ public interface Rater extends PubliclyTyped<Rater>
      * @return The events needed to update the {@link Rating} of all lines.
      * A {@link Rating} update for the {@code removal} argument is not required,
      * because its {@link Rating} will be automatically removed from the {@link Constraint} during the actual removal.
+     * The result should never contradict {@link #ratingAfterRemoval(View, List, View)}.
      */
     default RatingEvent rating_before_removal(View lines, Line removal, List<Constraint> children, View lineProcessing) {
+        return ratingEvent();
+    }
+
+    /**
+     * <p>This method combined with {@link #rating_before_removal(View, Line, List, View)} updates the {@link Rating} of all lines.
+     * This is a helper method, that enables one to created simplified {@link Rater} implementations.</p>
+     * <p>Nothing needs to be done here, if the {@link Rating} of one {@link Line} is not dependent on the rating of another line.
+     * {@link RaterBasedOnLineValue} can be used for constructing such {@link Rater}s.</p>
+     *
+     * @param lines          These are all {@link Constraint#lines()} of the incoming group present after the removal.
+     * @param children       These are the children {@link Constraint}s of the current {@link Constraint} node.
+     * @param lineProcessing This is the {@link Constraint#lineProcessing()} of the incoming group after the removal.
+     * @return The events needed to update the {@link Rating} of the remaining lines,
+     * that were not updated by {@link #rating_before_removal(View, Line, List, View)}.
+     * The result should never contradict {@link #rating_before_removal(View, Line, List, View)}.
+     */
+    default RatingEvent ratingAfterRemoval(View lines, List<Constraint> children, View lineProcessing) {
         return ratingEvent();
     }
 
