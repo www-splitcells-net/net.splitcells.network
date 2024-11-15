@@ -184,13 +184,11 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
                 lineProcessing.assignmentsOfDemand(removal).forEach(lineProcessing::remove));
         ratingEvent.additions().forEach((line, resultUpdate) -> {
             final var r = addResult(resultUpdate);
-            int i = r.index();
             lineProcessing.assign(line, r);
         });
         ratingEvent.complexAdditions().forEach((line, updates) -> {
             updates.stream().forEach(update -> {
                 final var r = addResult(update);
-                int i = r.index();
                 lineProcessing.assign(line, r);
             });
         });
