@@ -41,13 +41,18 @@ import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
  * This {@link Rater} makes it easy to rate groups with interdependent {@link Line}s.
  * Every {@link Line} has the same {@link Rating} in the group.
  * Keep in mind, that during a change in the group, every {@link Line}s' {@link Rating} in the group is updated.
+ *
+ * @deprecated This is too complicated. {@link LineGroupRater} replaces this.
  */
+@Deprecated
 public class RaterBasedOnLineGroup implements Rater {
 
+    @Deprecated
     public static RaterBasedOnLineGroup groupRater(GroupRater rater) {
         return groupRater(rater, (a, b, c) -> rater.toString());
     }
 
+    @Deprecated
     public static RaterBasedOnLineGroup groupRater(GroupRater rater, SimpleDescriptor simpleDescriptor) {
         return raterBasedOnLineGroup(new RaterBasedOnLineGroupLambda() {
 
@@ -86,14 +91,17 @@ public class RaterBasedOnLineGroup implements Rater {
         }, simpleDescriptor);
     }
 
+    @Deprecated
     public static RaterBasedOnLineGroup groupRouter(GroupRouter rater) {
         return groupRouter(rater, (a, b, c) -> rater.toString(), RaterBasedOnLineGroup.class.getSimpleName());
     }
 
+    @Deprecated
     public static RaterBasedOnLineGroup groupRouter(GroupRouter rater, String name) {
         return groupRouter(rater, (a, b, c) -> name, name);
     }
 
+    @Deprecated
     public static RaterBasedOnLineGroup groupRouter(GroupRouter rater, SimpleDescriptor simpleDescriptor, String name) {
         return new RaterBasedOnLineGroup(new RaterBasedOnLineGroupLambda() {
 
@@ -130,10 +138,12 @@ public class RaterBasedOnLineGroup implements Rater {
                 , name);
     }
 
+    @Deprecated
     public static RaterBasedOnLineGroup raterBasedOnLineGroup(RaterBasedOnLineGroupLambda rater, SimpleDescriptor simpleDescriptor) {
         return new RaterBasedOnLineGroup(rater, simpleDescriptor, rater.getClass().getSimpleName());
     }
 
+    @Deprecated
     public static RaterBasedOnLineGroup raterBasedOnLineGroup(RaterBasedOnLineGroupLambda rater) {
         return new RaterBasedOnLineGroup(rater, (a, b, c) -> rater.toString(), rater.getClass().getSimpleName());
     }
