@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.function.Predicate;
 
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -56,7 +57,7 @@ public interface ListView<T> extends Collection<T>, java.util.List<T>, Thing {
             throw executionException("Expecting `"
                     + this
                     + "` to contain any element of `"
-                    + arg
+                    + listWithValuesOf(arg)
                     + "`, but does not contain any of them.");
         }
     }
@@ -85,7 +86,7 @@ public interface ListView<T> extends Collection<T>, java.util.List<T>, Thing {
         if (size() == excludedIndex) {
             return this;
         }
-        final var list = Lists.listWithValuesOf(this);
+        final var list = listWithValuesOf(this);
         while (list.size() >= excludedIndex) {
             list.withRemovedFromBehind(0);
         }
