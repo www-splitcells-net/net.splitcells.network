@@ -26,6 +26,8 @@ import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 
+import static net.splitcells.gel.constraint.Constraint.LINE;
+
 /**
  * This {@link Rater} makes it easy to rate groups with interdependent {@link Line}s.
  * Every {@link Line} has the same {@link Rating} in the group.
@@ -46,16 +48,21 @@ public class LineGroupRater implements Rater {
 
     @Override
     public RatingEvent ratingAfterAddition(View lines, Line addition, List<Constraint> children, View lineProcessing) {
-        return translateReratingToUpdate(lines, baseRater.rating(lines, children));
+        final var ratingEvent = baseRater.rating(lines, children);
+        lines.unorderedLinesStream().filter(l -> !l.equalsTo(addition))
+                .forEach(i -> ratingEvent.removal().add(i));
+        return ratingEvent;
     }
 
     @Override
     public RatingEvent ratingAfterRemoval(View lines, List<Constraint> children, View lineProcessing) {
-        return translateReratingToUpdate(lines, baseRater.rating(lines, children));
+        final var ratingEvent = baseRater.rating(lines, children);
+        lines.unorderedLinesStream().forEach(i -> ratingEvent.removal().add(i));
+        return ratingEvent;
     }
 
-    private RatingEvent translateReratingToUpdate(View lines, RatingEvent ratingEvent) {
-        lines.unorderedLinesStream().forEach(i -> ratingEvent.removal().add(i));
+    private RatingEvent translateReratingToUpdate(View lines, RatingEvent ratingEvent, View lineProcessing) {
+        lineProcessing.unorderedLinesStream().forEach(i -> ratingEvent.removal().add(i));
         return ratingEvent;
     }
 
