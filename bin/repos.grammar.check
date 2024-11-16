@@ -1,6 +1,0 @@
-#!/usr/bin/env sh
-# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
-# SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
-set -e
-cd projects/net.splitcells.dem
-mvn compile exec:java -Dexec.mainClass="net.splitcells.dem.source.code.SourceCodeCheck" -f pom.xml
