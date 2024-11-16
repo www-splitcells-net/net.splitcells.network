@@ -33,7 +33,7 @@ import static net.splitcells.dem.resource.communication.log.Logs.logs;
 
 public class EntityManagerTest {
     @BenchmarkTest
-    public void test_runtime_of_one_time_step() {
+    public void testRuntimeOfOneTimeStep() {
         final int loopCount = 100;
         Dem.process(() -> {
             logs().append("" + nanoToSeconds(measureTimeInNanoSeconds(() -> {
@@ -47,7 +47,7 @@ public class EntityManagerTest {
     }
 
     @BenchmarkTest
-    public void test_runtime_of_multiple_time_step() {
+    public void testRuntimeOfMultipleTimeStep() {
         final int loopCount = 100;
         Dem.process(() -> {
             logs().append("" + nanoToSeconds(measureTimeInNanoSeconds(() -> {
@@ -61,7 +61,7 @@ public class EntityManagerTest {
     }
 
     @BenchmarkTest
-    public void test_modification_count_of_multiple_time_step() {
+    public void testModificationCountOfMultipleTimeStep() {
         final int loopCount = 100;
         Dem.process(() -> {
                     final var entityManager = entityManager();
