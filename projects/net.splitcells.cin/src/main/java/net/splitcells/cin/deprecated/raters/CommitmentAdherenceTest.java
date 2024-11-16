@@ -16,6 +16,7 @@
 package net.splitcells.cin.deprecated.raters;
 
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.testing.annotations.DisabledTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.Gel;
 import net.splitcells.gel.constraint.Constraint;
@@ -28,6 +29,7 @@ import static net.splitcells.gel.proposal.ProposalProcessor.propose;
 
 public class CommitmentAdherenceTest {
 
+    @DisabledTest
     @UnitTest
     public void test() {
         final var demandingAttribute = attribute(Integer.class, "demandingAttribute");

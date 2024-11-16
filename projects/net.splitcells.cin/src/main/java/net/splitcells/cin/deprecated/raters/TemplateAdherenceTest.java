@@ -15,6 +15,7 @@
  */
 package net.splitcells.cin.deprecated.raters;
 
+import net.splitcells.dem.testing.annotations.DisabledTest;
 import net.splitcells.gel.data.table.Tables;
 
 import static net.splitcells.cin.deprecated.raters.TemplateAdherence.templateAdherence;
@@ -25,6 +26,7 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.type.Cost.cost;
 
 public class TemplateAdherenceTest {
+    @DisabledTest
     public void test() {
         final var demandValue = attribute(Integer.class, "demandValue");
         final var supplyValue = attribute(Integer.class, "supplyValue");

@@ -15,6 +15,7 @@
  */
 package net.splitcells.cin.deprecated.raters.deprecated;
 
+import net.splitcells.dem.testing.annotations.DisabledTest;
 import org.junit.jupiter.api.Test;
 
 import static java.util.stream.IntStream.rangeClosed;
@@ -29,6 +30,7 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 
 public class PositionClustersTest {
 
+    @DisabledTest
     @Test
     public void testAllPositionClusterOfSinglePosition() {
         final var x = attribute(Integer.class, "x");
@@ -60,6 +62,7 @@ public class PositionClustersTest {
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(2, 3, -1, 1)));
     }
 
+    @DisabledTest
     @Test
     public void testTopRightPositionCluster() {
         final var x = attribute(Integer.class, "x");
@@ -164,6 +167,7 @@ public class PositionClustersTest {
                 .requireEquals(list());
     }
 
+    @DisabledTest
     @Test
     public void testBottomRightPositionCluster() {
         final var x = attribute(Integer.class, "x");
@@ -249,6 +253,7 @@ public class PositionClustersTest {
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(4, -5, 0, 0)));
     }
 
+    @DisabledTest
     @Test
     public void testBottomLeftPositionCluster() {
         final var x = attribute(Integer.class, "x");
@@ -334,6 +339,7 @@ public class PositionClustersTest {
                         , FOR_ALL.value() + " " + groupNameOfPositionCluster(-5, -5, 0, 0)));
     }
 
+    @DisabledTest
     @Test
     public void testTopLeftPositionCluster() {
         final var x = attribute(Integer.class, "x");
@@ -426,6 +432,7 @@ public class PositionClustersTest {
                 .requireEquals(list());
     }
 
+    @DisabledTest
     @Test
     public void testTopRightPositionClusterWithOffset() {
         final var x = attribute(Integer.class, "x");

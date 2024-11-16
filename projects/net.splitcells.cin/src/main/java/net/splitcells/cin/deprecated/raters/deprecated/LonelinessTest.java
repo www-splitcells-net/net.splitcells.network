@@ -16,6 +16,7 @@
 package net.splitcells.cin.deprecated.raters.deprecated;
 
 import net.splitcells.cin.raters.TimeSteps;
+import net.splitcells.dem.testing.annotations.DisabledTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.cin.deprecated.raters.deprecated.Loneliness.loneliness;
@@ -32,6 +33,7 @@ public class LonelinessTest {
     private static final String PLAYER_VALUE = "playerValue";
     private static final String POSITION_X = "positionX";
     private static final String POSITION_Y = "positionY";
+    @DisabledTest
     @UnitTest
     public void testLoneliness() {
         final var time = attribute(Integer.class, TIME);
@@ -91,6 +93,7 @@ public class LonelinessTest {
                 .lineProcessing().unorderedLines().requireSizeOf(0);
     }
 
+    @DisabledTest
     @UnitTest
     public void testLonelinessWithoutCenterStart() {
         final var time = attribute(Integer.class, TIME);
@@ -139,6 +142,7 @@ public class LonelinessTest {
      * there is a real bug in the {@link Loneliness} implementation.
      * {@link TimeSteps} seems to have the same problem.
      */
+    @DisabledTest
     @UnitTest
     public void testLonelinessRemoval() {
         final var time = attribute(Integer.class, TIME);

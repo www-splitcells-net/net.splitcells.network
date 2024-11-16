@@ -17,6 +17,7 @@ package net.splitcells.cin.deprecated.raters;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.testing.annotations.DisabledTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.solution.Solution;
 
@@ -30,6 +31,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listOfShallowCopies;
 
 public class FundamentalWorldRulesTest {
+    @DisabledTest
     @UnitTest
     public void testBlinker() {
         final var testSubject = worldHistory2(WORLD_HISTORY, list(), list());

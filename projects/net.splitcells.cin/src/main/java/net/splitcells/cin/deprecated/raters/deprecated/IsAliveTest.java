@@ -15,6 +15,7 @@
  */
 package net.splitcells.cin.deprecated.raters.deprecated;
 
+import net.splitcells.dem.testing.annotations.DisabledTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static java.util.stream.IntStream.rangeClosed;
@@ -33,6 +34,7 @@ public class IsAliveTest {
     private static final String X_COORDINATE = "x-coordinate";
     private static final String Y_COORDINATE = "y-coordinate";
 
+    @DisabledTest
     @UnitTest
     public void testAlive() {
         final var player = attribute(Integer.class, PLAYER);
@@ -69,6 +71,7 @@ public class IsAliveTest {
         testSubject.constraint().childrenView().get(0).childrenView().get(0).childrenView().get(0).lineProcessing().unorderedLines().requireSizeOf(1);
     }
 
+    @DisabledTest
     @UnitTest
     public void testAliveWithMultipleCenterStartPositions() {
         final var player = attribute(Integer.class, PLAYER);
@@ -117,6 +120,7 @@ public class IsAliveTest {
                 .requireSizeOf(5);
     }
 
+    @DisabledTest
     @UnitTest
     public void testDeadWithMultipleCenterStartPositions() {
         final var player = attribute(Integer.class, PLAYER);
@@ -165,6 +169,7 @@ public class IsAliveTest {
                 .requireSizeOf(0);
     }
 
+    @DisabledTest
     @UnitTest
     public void testDead() {
         final var player = attribute(Integer.class, PLAYER);

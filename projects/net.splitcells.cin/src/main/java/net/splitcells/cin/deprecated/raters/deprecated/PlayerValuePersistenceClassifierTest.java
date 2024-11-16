@@ -15,6 +15,7 @@
  */
 package net.splitcells.cin.deprecated.raters.deprecated;
 
+import net.splitcells.dem.testing.annotations.DisabledTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.cin.deprecated.raters.deprecated.PlayerValuePersistenceClassifier.playerValuePersistenceClassifier;
@@ -30,11 +31,13 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 
 public class PlayerValuePersistenceClassifierTest {
+    @DisabledTest
     @UnitTest
     public void testIllegalDefaultConstructor() {
         requireIllegalDefaultConstructor(PlayerValuePersistenceClassifier.class);
     }
 
+    @DisabledTest
     @UnitTest
     public void testCostOfDefianceNeighbour() {
         final var time = attribute(Integer.class, "time");

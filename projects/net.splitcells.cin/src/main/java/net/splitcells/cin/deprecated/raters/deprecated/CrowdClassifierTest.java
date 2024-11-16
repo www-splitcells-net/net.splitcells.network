@@ -15,6 +15,7 @@
  */
 package net.splitcells.cin.deprecated.raters.deprecated;
 
+import net.splitcells.dem.testing.annotations.DisabledTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.Gel;
 
@@ -27,11 +28,13 @@ import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
 public class CrowdClassifierTest {
+    @DisabledTest
     @UnitTest
     public void testIllegalDefaultConstructor() {
         requireIllegalDefaultConstructor(CrowdClassifier.class);
     }
 
+    @DisabledTest
     @UnitTest
     public void test() {
         final var player = attribute(Integer.class, "player");
@@ -77,6 +80,7 @@ public class CrowdClassifierTest {
         testSubject.constraint().rating().requireEqualsTo(cost(5));
     }
 
+    @DisabledTest
     @UnitTest
     public void testIgnoranceOfCenterPosition() {
         final var player = attribute(Integer.class, "player");

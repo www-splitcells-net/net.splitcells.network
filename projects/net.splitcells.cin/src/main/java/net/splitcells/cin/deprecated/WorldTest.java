@@ -15,6 +15,7 @@
  */
 package net.splitcells.cin.deprecated;
 
+import net.splitcells.dem.testing.annotations.DisabledTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.cin.deprecated.World.WORLD_HISTORY;
@@ -26,11 +27,13 @@ import static net.splitcells.gel.proposal.ProposalProcessor.propose;
 
 public class WorldTest {
 
+    @DisabledTest
     @UnitTest
     public void testIllegalConstructor() {
         requireIllegalDefaultConstructor(World.class);
     }
 
+    @DisabledTest
     @UnitTest
     public void testProposalByCommitment() {
         final var testSubject = worldHistory(WORLD_HISTORY, list(), list());

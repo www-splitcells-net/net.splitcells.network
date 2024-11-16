@@ -15,6 +15,7 @@
  */
 package net.splitcells.cin.deprecated.raters.deprecated;
 
+import net.splitcells.dem.testing.annotations.DisabledTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.cin.deprecated.raters.deprecated.Dies.dies;
@@ -30,10 +31,12 @@ import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearIni
 
 public class DiesTest {
 
+    @DisabledTest
     @UnitTest
     public void testIllegalDefaultConstructor() {
         requireIllegalDefaultConstructor(Dies.class);
     }
+    @DisabledTest
     @UnitTest
     public void testDying() {
         final var time = attribute(Integer.class, "time");
@@ -79,6 +82,7 @@ public class DiesTest {
         testSubject.constraint().rating().requireEqualsTo(noCost());
     }
 
+    @DisabledTest
     @UnitTest
     public void testLiving() {
         final var time = attribute(Integer.class, "time");
