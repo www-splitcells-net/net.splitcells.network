@@ -51,6 +51,20 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>net.splitcells</groupId>
+                <artifactId>check-maven-plugin</artifactId>
+                <version>${revision}</version>
+                <executions>
+                    <execution>
+                        <id>check</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>source-code-check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <!-- This makes it easier to execute a Java program from command line via `mvn exec:java -Dexec.mainClass=[...]`. -->
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
