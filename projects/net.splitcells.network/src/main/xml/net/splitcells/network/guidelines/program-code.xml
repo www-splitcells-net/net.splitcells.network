@@ -8,6 +8,7 @@
             SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
         -->
         <title>General Code Guidelines</title>
+        <d:toDo>Mark Java specifics as such or move them to a dedicated chapter.</d:toDo>
     </meta>
     <chapter>
         <title>Main Focus</title>
@@ -43,8 +44,10 @@
         </paragraph>
         <paragraph>For method names prefer using a noun, if the of the method is to retrieve something.
             Use verbs instead, if the goal of the function is to do something or to change something.
-            Use camelcase by default and use a name where every word is separated by an underscore,
+            Use camelcase for identifiers by default and capital case with underscores for constants.
+            For long names like testing methods do not use a name where every word is separated by an underscore,
             if the name is a sentence like <quote>test_performance_difference_of_assignments_and_tables</quote>.
+            This simplifies the guidelines and is more compliant with existing code scanning tools for Java.
         </paragraph>
     </chapter>
     <chapter>
