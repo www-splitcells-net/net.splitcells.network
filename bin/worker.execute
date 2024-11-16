@@ -169,9 +169,9 @@ if __name__ == '__main__':
         dockerfile += javaClassExecutionTemplate
     else:
         raise Exception('Either `--command` or `--class-for-execution` needs to be set.')
-    dockerfile += dockerfile \
-                .replace('$NAME_FOR_EXECUTION', parsedArgs.name) \
-                .replace('$CLASS_FOR_EXECUTION', parsedArgs.classForExecution)
+    dockerfile += (dockerfile
+                .replace('$NAME_FOR_EXECUTION', parsedArgs.name)
+                .replace('$CLASS_FOR_EXECUTION', parsedArgs.classForExecution))
     file='target/Dockerfile-' + parsedArgs.name
     if os.path.exists(file):
         os.remove(file)
