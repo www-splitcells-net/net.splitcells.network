@@ -282,8 +282,7 @@ public class Dem {
     }
 
     /**
-     * <p>TODO Remove calls to {@link System#exit(int)}, because it creates problems.
-     * See {@link #disallowSystemExit}.</p>
+     * <p>TODO Remove calls to {@link System#exit(int)}, because it creates problems.</p>
      * <p>{@link System#exit(int)} should not be used directly.
      * Use this method instead, which notice such calls via appropriate logging.</p>
      *
