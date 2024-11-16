@@ -69,7 +69,7 @@ public class Dem {
      * Thread locals are required in order to implement a tree of programs as a cactus stack (https://wiki.c2.com/?CactusStack).
      * It generally allows to execute multiple instances of a Dem program, without having interference between them.
      */
-    private static final InheritableThreadLocal<Environment> CURRENT = new InheritableThreadLocal<Environment>();
+    private static final InheritableThreadLocal<Environment> CURRENT = new InheritableThreadLocal<>();
 
     /**
      * <p>Pauses/freezes the current thread.</p>
