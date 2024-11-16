@@ -32,10 +32,10 @@ import static net.splitcells.dem.data.atom.Bools.require;
 public class DemTest {
     public static void main(String... args) {
         Dem.process(() -> {
-            
-        }, (env) -> {
+
+        }, env -> {
             env.config()
-                    .withConfigValue(MessageFilter.class, (message) -> true);
+                    .withConfigValue(MessageFilter.class, message -> true);
         });
     }
 
