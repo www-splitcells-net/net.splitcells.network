@@ -32,10 +32,11 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
 /**
- * This Maven Plugin create a file, that list all resources of the jar to be built,
+ * <p>This Maven Plugin create a file, that list all resources of the jar to be built,
  * and add this file to the jars resources,
  * so that other Java code can list all jar resources in a portable way.
- * This file is located at "${project.build.directory}/classes/${project.groupId}.${project.artifactId}.resources.list.txt".
+ * This file is located at "${project.build.directory}/classes/${project.groupId}.${project.artifactId}.resources.list.txt".</p>
+ * <p>This goal should be executed in the compile phase.</p>
  */
 @Mojo(name = "generate-resource-list")
 public class ResourceListMojo extends AbstractMojo {
