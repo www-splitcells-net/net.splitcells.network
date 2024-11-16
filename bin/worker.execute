@@ -28,12 +28,31 @@ dockerFileServiceTemplate = """FROM docker.io/eclipse-temurin:21-jdk-noble
 RUN apt clean
 RUN apt update # This fixes install errors. It is unknown why this is the case.
 RUN apt install --yes maven git python3 pip
-RUN pip install --break-system-packages playwright
-RUN playwright install --with-deps firefox # Install all OS dependencies, that are required for Playwright. Otherwise, Playwright cannot be used in Java.
+ADD net.splitcells.network.worker.pom.xml /root/opt/$NAME_FOR_EXECUTION/pom.xml
+# RUN pip install --break-system-packages playwright
+# RUN playwright install --with-deps firefox # Install all OS dependencies, that are required for Playwright. Otherwise, Playwright cannot be used in Java.
+RUN cd /root/opt/$NAME_FOR_EXECUTION/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"
 VOLUME /root/.local/
 VOLUME /root/Documents/
 VOLUME /root/.ssh/
 VOLUME /root/.m2/
+"""
+
+pom = """<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.splitcells</groupId>
+    <artifactId>network.worker.container.pom</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>com.microsoft.playwright</groupId>
+            <artifactId>playwright</artifactId>
+            <version>1.45.0</version>
+        </dependency>
+    </dependencies>
+</project>
 """
 
 javaClassExecutionTemplate = """COPY deployable-jars/* /root/opt/$NAME_FOR_EXECUTION/jars/
@@ -41,6 +60,7 @@ WORKDIR /root/opt/$NAME_FOR_EXECUTION/
 ENTRYPOINT ["/opt/java/openjdk/bin/java"]
 CMD ["-cp", "./jars/*", "$CLASS_FOR_EXECUTION"]
 """
+
 prepareExecution = """set -e
 set -x
 executionName="$executionName"
@@ -58,6 +78,7 @@ podman build -f "target/Dockerfile-$executionName" \\
     --log-level=warn # `--log-level=warn` is podman's default.
     # Logging is used, in order to better understand build runtime performance.
 """
+
 prepareExecutionWithoutBuild = """set -e
 set -x
 executionName="$executionName"
@@ -70,6 +91,7 @@ mkdir -p $HOME/.local/state/$executionName/Documents/
 mkdir -p ./target/
 test -f target/program-$executionName && chmod +x target/program-$executionName # This file does not exist, when '--executable-path' is not set.
 """
+
 executeViaPodman = """
 set -x
 podman run --name "$executionName" \\
@@ -84,10 +106,12 @@ podman run --name "$executionName" \\
   #
   # allow_host_loopback is required, so that the software in the container can connect to the host.
 """
+
 publishViaPodman = """
 podman tag $executionName:latest codeberg.org/splitcells-net/$executionName:latest
 podman push codeberg.org/splitcells-net/$executionName:latest
 """
+
 def str2bool(arg):
     return arg == 'true'
 if __name__ == '__main__':
@@ -142,16 +166,19 @@ if __name__ == '__main__':
         dockerfile += "ADD ./" + programName + " /root/program\n"
         dockerfile += 'ENTRYPOINT /root/program'
     elif parsedArgs.classForExecution is not None:
-        dockerfile += (javaClassExecutionTemplate
-            .replace('$NAME_FOR_EXECUTION', parsedArgs.name)
-            .replace('$CLASS_FOR_EXECUTION', parsedArgs.classForExecution))
+        dockerfile += javaClassExecutionTemplate
     else:
         raise Exception('Either `--command` or `--class-for-execution` needs to be set.')
+    dockerfile += dockerfile \
+                .replace('$NAME_FOR_EXECUTION', parsedArgs.name) \
+                .replace('$CLASS_FOR_EXECUTION', parsedArgs.classForExecution)
     file='target/Dockerfile-' + parsedArgs.name
     if os.path.exists(file):
         os.remove(file)
-    with open(file, 'w') as filetowrite:
-        filetowrite.write(dockerfile)
+    with open(file, 'w') as fileToWrite:
+        fileToWrite.write(dockerfile)
+    with open('target/net.splitcells.network.worker.pom.xml', 'w') as pomFileToWrite:
+            pomFileToWrite.write(pom)
     # Create and execute script.
     executionScript = ""
     if parsedArgs.onlyExecuteImage:
