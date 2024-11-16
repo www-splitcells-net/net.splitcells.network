@@ -230,3 +230,16 @@ Microsoft seems to use a large monorepo and has a special tool for that.
 and seems to be deprecated.
 It is replaced by [Scalar](https://github.com/microsoft/scalar),
 which offers a similar functionality with a different technical approach.
+
+## grm - git repo manager
+
+This project was found at 2024-11-16.
+The [git repo manager](https://github.com/Krasjet/grm) does not support repo nesting,
+which makes rights management a bit more fragile.
+It's configured via a environment variable, that points to the root of the meta repo.
+The sub repos are found by listing all direct child directories,
+that end with `.git` in its name.
+GitHub had as of 2024-11-16 problems with such repos.
+
+grm does not seem to really support doing git or any version control commands on all sub repos via one command.
+Therefore, grm is not a viable option to manage meta repos.
