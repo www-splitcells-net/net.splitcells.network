@@ -60,6 +60,13 @@ import static net.splitcells.dem.utils.reflection.ClassesRelated.callerClass;
  * in order to close the process by another process.</p>
  * <p>TODO New threads should have process thread, should have appropriate names,
  * so that debuggers and profiles are easier to use.</p>
+ * <p>Maven's Surefire plugin for JUnit tests does not support {@link System#exit(int)}.
+ * {@link System#exit(int)} may also cause resource issues.
+ * Therefore, it can make sense to disallow such calls.
+ * Unfortunately, {@link System#setSecurityManager(SecurityManager)} is deprecated and
+ * there are no other means to prevent calls to {@link System#exit(int)} except for code scanning.
+ * End processes via exceptions or main method returns instead,
+ * in order to ensure to cleanly end the program.</p>
  */
 @JavaLegacyArtifact
 public class Dem {
@@ -293,33 +300,6 @@ public class Dem {
         exception.printStackTrace();
         logs().appendError(exception);
         System.exit(exitCode);
-    }
-
-    /**
-     * <p>Maven's Surefire plugin for JUnit tests does not support {@link System#exit(int)}.
-     * {@link System#exit(int)} may also cause resource issues.
-     * Therefore, it can make sense to disallow such calls.</p>
-     * <p>End processes via exceptions or main method returns instead,
-     * in order to ensure to cleanly end the program.</p>
-     */
-    private static void disallowSystemExit() {
-        System.setSecurityManager(new SecurityManager() {
-            @Override
-            public void checkPermission(Permission perm) {
-                // Allow everything, as Surefire will have otherwise a problem.
-            }
-
-            @Override
-            public void checkPermission(Permission perm, Object context) {
-                // Allow everything, as Surefire will have otherwise a problem.
-            }
-
-            @Override
-            public void checkExit(int status) {
-                super.checkExit(status);
-                throw executionException("System exit is disallowed and not supported: " + status);
-            }
-        });
     }
 
     /**
