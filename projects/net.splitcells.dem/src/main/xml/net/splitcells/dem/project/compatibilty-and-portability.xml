@@ -83,7 +83,7 @@
                     <idea>Support different type of data processing (i.e. typed
                         versus not typed, boxed versus primitive or objects
                         versus values.
-                        See <quote>net.splitcells.gel.data.table.Tableuote>
+                        See <quote>net.splitcells.gel.data.table.Table</quote>
                     for inspiration.</idea>
                 </idea>
                 <objective>Always translate code to other language automatically and test it, in order to be sure
