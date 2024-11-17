@@ -170,7 +170,7 @@ if __name__ == '__main__':
         dockerfile += dockerfile.replace('$CLASS_FOR_EXECUTION', parsedArgs.classForExecution)
     else:
         raise Exception('Either `--command` or `--class-for-execution` needs to be set.')
-    dockerfile += dockerfile.replace('$NAME_FOR_EXECUTION', parsedArgs.name)
+    dockerfile = dockerfile.replace('$NAME_FOR_EXECUTION', parsedArgs.name)
     file='target/Dockerfile-' + parsedArgs.name
     if os.path.exists(file):
         os.remove(file)
