@@ -37,12 +37,22 @@ public interface GroupingRater {
     /**
      * The {@link Rating} of an Event, has to be applied to all {@link Line}s of a group.
      *
-     * @param lines    lines
-     * @param children children
+     * @param lines    The {@link Line} from {@link Constraint#lines()} of an incoming {@link GroupId}, that need to be rated.
+     * @param children This list contains every child {@link Constraint}, to which the incoming {@link Line} can be forwarded to.
      * @return return All lines need a {@link Rating}.
      */
     RatingEvent rating(View lines, List<Constraint> children);
 
+    /**
+     * Describes to the user in a natural way, how this is rating given {@link Line}.
+     *
+     * @param line                 This is the {@link Line}, that needs to be described.
+     * @param groupsLineProcessing This is part of the {@link Constraint#lineProcessing()}
+     *                             for the incoming {@link GroupId} if the line.
+     * @param incomingGroup        This is the incoming {@link GroupId} if the line.
+     * @return Prefer using one complete sentence for the description,
+     * that starts with lower case and does not end with a dot.
+     */
     String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup);
 
     List<Domable> arguments();
