@@ -16,6 +16,7 @@
 package net.splitcells.gel.constraint.type.framework;
 
 import static net.splitcells.dem.data.atom.Bools.require;
+import static net.splitcells.dem.data.atom.DescribedBool.describedBool;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -181,7 +182,9 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
                                 .columnView(INCOMING_CONSTRAINT_GROUP)
                                 .lookup(incomingGroup)));
         if (ENFORCING_UNIT_CONSISTENCY) {
-            require(lineProcessing.demandsUsed().contains(addition));
+            describedBool(lineProcessing.demandsUsed().contains(addition)
+                    , "The rater did not provide a rating to the added line.")
+                    .required();
         }
     }
 
