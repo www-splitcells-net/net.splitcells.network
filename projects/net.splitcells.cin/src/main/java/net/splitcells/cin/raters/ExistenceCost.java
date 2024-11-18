@@ -35,6 +35,7 @@ import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.constraint.Constraint.LINE;
+import static net.splitcells.gel.constraint.Constraint.RATING;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.rater.lib.LineGroupRater.lineGroupRater;
@@ -96,7 +97,12 @@ public class ExistenceCost implements GroupingRater {
 
     @Override
     public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
-        return "all players loose one unit of energy every time step";
+        if (groupsLineProcessing.lookup(LINE, line).unorderedLine(0).value(RATING).equalz(noCost())) {
+            return "loose one unit of energy every time step";
+        } else {
+            return "should loose one unit of energy every time step, but does not";
+        }
+
     }
 
     @Override
