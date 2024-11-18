@@ -89,7 +89,7 @@ public class EntityManager {
                 .withSupplyAttributes(PLAYER_ATTRIBUTE, PLAYER_VALUE, EVENT_TYPE, EVENT_SOURCE)
                 .withSupplies()
                 .withConstraint(query -> {
-                    query.forAll(overlappingTimeSteps(TIME)).then(existenceCost());
+                    query.forAll(overlappingTimeSteps(TIME)).forAll(PLAYER).then(existenceCost());
                     return query;
                 })
                 .toProblem()

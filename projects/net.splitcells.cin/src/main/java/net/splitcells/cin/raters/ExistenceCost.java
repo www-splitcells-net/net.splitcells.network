@@ -23,6 +23,7 @@ import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.proposal.Proposal;
+import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import net.splitcells.gel.rating.rater.lib.GroupingRater;
@@ -42,6 +43,7 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 
 /**
  * Decrements a {@link EntityManager#PLAYER_ENERGY} at every {@link EntityManager#TIME} by one.
+ * Assumes, that the {@link Line} of any incoming {@link GroupId} relate to only one {@link EntityManager#PLAYER}.
  */
 public class ExistenceCost implements GroupingRater {
     public static Rater existenceCost() {
@@ -61,38 +63,32 @@ public class ExistenceCost implements GroupingRater {
                 .distinct()
                 .sorted(ASCENDING_INTEGERS)
                 .collect(toList());
+        final Rating rating;
         if (times.size() < 2) {
-            return ratingEvent;
-        }
-        final int endTime = times.get(1);
-        lines.columnView(LINE).stream().map(l -> l.value(PLAYER)).distinct().forEach(player -> {
-            final var playerValues = lines.unorderedLinesStream()
-                    .filter(l -> player.equals(l.value(LINE).value(PLAYER)))
-                    .collect(toList());
-            final var energyUpdate = playerValues.stream()
-                    .filter(l -> l.value(LINE).value(PLAYER_ATTRIBUTE) == PLAYER_ENERGY)
-                    .filter(l -> l.value(LINE).value(EVENT_TYPE) == ADD_VALUE)
-                    .filter(l -> l.value(LINE).value(TIME) == endTime)
-                    .filter(l -> l.value(LINE).value(EVENT_SOURCE) == EXISTENCE_COST_EVENT_SOURCE)
-                    .filter(l -> l.value(LINE).value(PLAYER_VALUE) == -1f)
-                    .collect(toList());
-            if (energyUpdate.hasElements()) {
-                if (energyUpdate.size() > 1) {
-                    throw executionException("Only one player energy result is valid.");
-                }
-                ratingEvent.additions().put(energyUpdate.get(0)
-                        , localRating()
-                                .withPropagationTo(children)
-                                .withResultingGroupId(incomingConstraintGroup)
-                                .withRating(noCost()));
+            rating = noCost();
+        } else {
+            final int endTime = times.get(1);
+            final boolean hasEvent = lines.columnView(LINE).stream()
+                    .anyMatch(line -> {
+                        return line.value(PLAYER_ATTRIBUTE) == PLAYER_ENERGY
+                                && line.value(EVENT_TYPE) == ADD_VALUE
+                                && line.value(TIME) == endTime
+                                && line.value(EVENT_SOURCE) == EXISTENCE_COST_EVENT_SOURCE
+                                && line.value(PLAYER_VALUE) == -1f;
+                    });
+
+            if (hasEvent) {
+                rating = noCost();
             } else {
-                ratingEvent.additions().put(playerValues.get(0)
+                rating = cost(1);
+            }
+        }
+        lines.unorderedLinesStream().forEach(line ->
+                ratingEvent.additions().put(line
                         , localRating()
                                 .withPropagationTo(children)
                                 .withResultingGroupId(incomingConstraintGroup)
-                                .withRating(cost(1)));
-            }
-        });
+                                .withRating(noCost())));
         return ratingEvent;
     }
 
