@@ -43,6 +43,7 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 
 /**
  * Decrements a {@link EntityManager#PLAYER_ENERGY} at every {@link EntityManager#TIME} by one.
+ * This is done, by check if an appropriate {@link EntityManager#EVENT_TYPE} is present.
  * Assumes, that the {@link Line} of any incoming {@link GroupId} relate to only one {@link EntityManager#PLAYER}.
  */
 public class ExistenceCost implements GroupingRater {
