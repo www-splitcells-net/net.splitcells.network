@@ -67,6 +67,9 @@ public class EntityManager {
      */
     public static final int NO_SOURCE = 0;
 
+    /**
+     * This is an {@link #PLAYER_ATTRIBUTE}.
+     */
     public static final int PLAYER_ENERGY = 1;
 
     public static EntityManager entityManager() {
