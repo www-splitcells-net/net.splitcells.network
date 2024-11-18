@@ -74,14 +74,11 @@ public class ExistenceCost implements GroupingRater {
         } else {
             final int endTime = times.get(1);
             final boolean hasEvent = lines.columnView(LINE).stream()
-                    .anyMatch(line -> {
-                        return line.value(PLAYER_ATTRIBUTE) == PLAYER_ENERGY
-                                && line.value(EVENT_TYPE) == ADD_VALUE
-                                && line.value(TIME) == endTime
-                                && line.value(EVENT_SOURCE) == EXISTENCE_COST_EVENT_SOURCE
-                                && line.value(PLAYER_VALUE) == -1f;
-                    });
-
+                    .anyMatch(line -> line.value(PLAYER_ATTRIBUTE) == PLAYER_ENERGY
+                            && line.value(EVENT_TYPE) == ADD_VALUE
+                            && line.value(TIME) == endTime
+                            && line.value(EVENT_SOURCE) == EXISTENCE_COST_EVENT_SOURCE
+                            && line.value(PLAYER_VALUE) == -1f);
             if (hasEvent) {
                 rating = noCost();
             } else {
