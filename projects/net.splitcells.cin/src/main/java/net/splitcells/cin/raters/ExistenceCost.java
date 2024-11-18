@@ -57,6 +57,10 @@ public class ExistenceCost implements GroupingRater {
     @Override
     public RatingEvent rating(View lines, List<Constraint> children) {
         final var ratingEvent = ratingEvent();
+        if (lines.isEmpty()) {
+            return ratingEvent;
+
+        }
         final var incomingConstraintGroup = lines.unorderedLinesStream().findFirst().orElseThrow()
                 .value(INCOMING_CONSTRAINT_GROUP);
         final var times = lines.columnView(LINE).values().stream().map(l -> l.value(TIME))
