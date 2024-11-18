@@ -57,5 +57,14 @@ public interface GroupingRater {
 
     List<Domable> arguments();
 
-    Proposal propose(Proposal proposal);
+    /**
+     * It is not required to implement this,
+     * as this is only needed for advanced optimizers.
+     *
+     * @param proposal
+     * @return
+     */
+    default Proposal propose(Proposal proposal) {
+        return proposal;
+    }
 }
