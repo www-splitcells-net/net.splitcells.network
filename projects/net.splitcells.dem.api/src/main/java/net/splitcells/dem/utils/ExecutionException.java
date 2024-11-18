@@ -39,6 +39,10 @@ public class ExecutionException extends RuntimeException {
         return new ExecutionException(message.toXmlString());
     }
 
+    public static ExecutionException executionException() {
+        return new ExecutionException();
+    }
+
     public static ExecutionException executionException(Tree message, Throwable t) {
         return new ExecutionException(message.toXmlString(), t);
     }
@@ -49,6 +53,10 @@ public class ExecutionException extends RuntimeException {
 
     private ExecutionException(String message, Throwable t) {
         super(message, t);
+    }
+
+    private ExecutionException() {
+        super();
     }
 
     public static ExecutionException executionException(Throwable t) {
