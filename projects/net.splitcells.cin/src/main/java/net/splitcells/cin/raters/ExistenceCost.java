@@ -90,7 +90,7 @@ public class ExistenceCost implements GroupingRater {
                         , localRating()
                                 .withPropagationTo(children)
                                 .withResultingGroupId(incomingConstraintGroup)
-                                .withRating(noCost())));
+                                .withRating(rating)));
         return ratingEvent;
     }
 
