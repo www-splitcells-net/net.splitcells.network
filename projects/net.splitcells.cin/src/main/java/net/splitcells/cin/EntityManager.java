@@ -62,6 +62,12 @@ public class EntityManager {
      * This {@link #EVENT_TYPE} adds a value to a {@link #PLAYER_ATTRIBUTE} at a specific {@link #TIME}.
      */
     public static final int ADD_VALUE = 1;
+
+    /**
+     * This {@link #EVENT_TYPE} determines the resulting value of a {@link #PLAYER_ATTRIBUTE}
+     * at a specific {@link #TIME}, after applying other events.
+     */
+    public static final int RESULT_VALUE = 1;
     /**
      * This is the default value of {@link #EVENT_SOURCE}.
      */
