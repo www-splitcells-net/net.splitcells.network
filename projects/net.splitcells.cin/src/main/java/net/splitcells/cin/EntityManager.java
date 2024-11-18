@@ -79,7 +79,7 @@ public class EntityManager {
     private int initTime = 1;
     private int currentTime = initTime;
     private int nextTime = currentTime + 1;
-    private int numberOfPlayers = 100;
+    private int numberOfPlayers = 3;
     private final Randomness random = randomness();
 
     private EntityManager() {
