@@ -66,6 +66,9 @@ public class EntityManager {
     /**
      * This {@link #EVENT_TYPE} determines the resulting value of a {@link #PLAYER_ATTRIBUTE}
      * at a specific {@link #TIME}, after applying other events.
+     * In other words, this event sets the final value of an {@link #PLAYER_ATTRIBUTE} at a certain {@link #TIME}.
+     * Therefore, this also needs to be used, when initial values are set during the first {@link #TIME}
+     * aka. the creation of the initial state.
      */
     public static final int RESULT_VALUE = 1;
     /**
