@@ -51,7 +51,7 @@ public class ExistenceCostTest {
                 .asSolution();
         final var demands = testSubject.demands();
         final var supplies = testSubject.supplies();
-        require(testSubject.constraint().rating().equalz(noCost()));
+        testSubject.constraint().rating().requireEqualsTo(noCost());
         testSubject.assign(demands.addTranslated(listWithValuesOf(0)), supplies.addTranslated(listWithValuesOf(0, 0, 0, 0)));
         testSubject.constraint().rating().requireEqualsTo(noCost());
         testSubject.assign(demands.addTranslated(listWithValuesOf(1)), supplies.addTranslated(listWithValuesOf(0, 0, 0, 0)));
