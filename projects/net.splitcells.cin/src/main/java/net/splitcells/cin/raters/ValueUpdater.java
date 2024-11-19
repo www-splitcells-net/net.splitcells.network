@@ -18,20 +18,19 @@ package net.splitcells.cin.raters;
 import net.splitcells.cin.EntityManager;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;
+import net.splitcells.dem.utils.MathUtils;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
-import net.splitcells.gel.data.view.attribute.Attribute;
-import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.gel.proposal.Proposal;
+import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import net.splitcells.gel.rating.rater.lib.GroupingRater;
 
 import static net.splitcells.cin.EntityManager.ADD_VALUE;
 import static net.splitcells.cin.EntityManager.EVENT_TYPE;
-import static net.splitcells.cin.EntityManager.PLAYER;
 import static net.splitcells.cin.EntityManager.PLAYER_ATTRIBUTE;
 import static net.splitcells.cin.EntityManager.PLAYER_VALUE;
 import static net.splitcells.cin.EntityManager.SET_VALUE;
@@ -40,17 +39,21 @@ import static net.splitcells.dem.data.order.Comparators.ASCENDING_INTEGERS;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.MathUtils.distance;
 import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.constraint.Constraint.LINE;
+import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.rater.lib.LineGroupRater.lineGroupRater;
+import static net.splitcells.gel.rating.type.Cost.cost;
+import static net.splitcells.gel.rating.type.Cost.noCost;
 
 public class ValueUpdater implements GroupingRater {
     public static Rater valueAdder(int playerAttribute) {
         return lineGroupRater(new ValueUpdater(playerAttribute));
     }
 
-    private record ValueCalc(int actual, int target, boolean isDeleted, boolean shouldBeDeleted) {
+    private record ValueCalc(int actualValue, int targetValue, boolean isDeleted, boolean shouldBeDeleted) {
     }
 
     private final int playerAttribute;
@@ -65,6 +68,30 @@ public class ValueUpdater implements GroupingRater {
         if (lines.isEmpty()) {
             return ratingEvent;
         }
+        final var incomingConstraintGroup = lines.unorderedLinesStream().findFirst().orElseThrow()
+                .value(INCOMING_CONSTRAINT_GROUP);
+        final var valueCalc = calculateValue(lines);
+        final Rating rating;
+        final List<Constraint> propagationTo;
+        if (valueCalc.isDeleted != valueCalc.shouldBeDeleted) {
+            rating = cost(1);
+            propagationTo = listWithValuesOf();
+        } else if (valueCalc.isDeleted && valueCalc.shouldBeDeleted) {
+            rating = noCost();
+            propagationTo = children;
+        } else if (valueCalc.actualValue != valueCalc.targetValue) {
+            rating = cost(distance(valueCalc.actualValue, valueCalc.targetValue));
+            propagationTo = listWithValuesOf();
+        } else {
+            rating = noCost();
+            propagationTo = children;
+        }
+        lines.unorderedLinesStream().forEach(line ->
+                ratingEvent.additions().put(line
+                        , localRating()
+                                .withPropagationTo(propagationTo)
+                                .withResultingGroupId(incomingConstraintGroup)
+                                .withRating(rating)));
         return ratingEvent;
     }
 
