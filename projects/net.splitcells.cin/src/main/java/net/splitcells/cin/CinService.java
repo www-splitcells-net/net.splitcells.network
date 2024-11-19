@@ -24,8 +24,12 @@ import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 import net.splitcells.website.server.project.renderer.ObjectsRenderer;
 
 import java.util.Optional;
+import java.util.stream.IntStream;
 
+import static java.util.stream.IntStream.range;
 import static net.splitcells.cin.EntityManager.*;
+import static net.splitcells.dem.Dem.configValue;
+import static net.splitcells.dem.Dem.executeThread;
 import static net.splitcells.dem.execution.ThreadLoop.threadLoop;
 import static net.splitcells.website.server.project.renderer.ObjectsRenderer.registerObject;
 
@@ -46,9 +50,14 @@ public class CinService implements ResourceOption<Service> {
                 registerObject(entityManager.entities().demands().discoverableRenderer());
                 registerObject(entityManager.entities().supplies().discoverableRenderer());
                 entityManager.withInitedPlayers();
-                threadLoop = threadLoop("Cin", () -> {
-                    entityManager.withOneStepForward();
-                });
+                if (configValue(CinServiceInitTest.class)) {
+                    executeThread(CinService.class, () ->
+                            range(0, 10).forEach(i -> entityManager.withOneStepForward()));
+                } else {
+                    threadLoop = threadLoop(CinService.class, () -> {
+                        entityManager.withOneStepForward();
+                    });
+                }
             }
 
             @Override
