@@ -97,6 +97,10 @@ public class Dem {
         });
     }
 
+    public static void executeThread(Class<?> representer, Runnable program) {
+        executeThread(representer.getName(), program);
+    }
+
     /**
      * It is assumed, that {@link #initializeProcess(Class, Consumer)} or
      * similar is already called before on the current thread.

@@ -25,6 +25,10 @@ import static net.splitcells.dem.resource.communication.log.Logs.logs;
 
 @JavaLegacyArtifact
 public class ThreadLoop {
+
+    public static ThreadLoop threadLoop(Class<?> representer, Runnable loopStep) {
+        return new ThreadLoop(representer.getName(), loopStep);
+    }
     public static ThreadLoop threadLoop(String name, Runnable loopStep) {
         return new ThreadLoop(name, loopStep);
     }
