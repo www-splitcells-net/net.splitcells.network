@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.data.set.list;
 
+import net.splitcells.dem.data.Streams;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import java.util.ArrayList;
@@ -31,5 +32,10 @@ public class ListI<T> extends ArrayList<T> implements List<T> {
     @Override
     public void prepareForSizeOf(int targetSize) {
         this.ensureCapacity(targetSize * 2);
+    }
+
+    @Override
+    public net.splitcells.dem.data.Stream<T> stream() {
+        return Streams.stream(super.stream());
     }
 }

@@ -25,6 +25,8 @@ import java.util.ListIterator;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+import net.splitcells.dem.data.Stream;
+import net.splitcells.dem.data.Streams;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.lookup.Lookup;
 import net.splitcells.gel.data.lookup.Lookups;
@@ -194,5 +196,10 @@ public class ColumnI<T> implements Column<T> {
 	@Override
 	public void registerBeforeRemoval(Line removal) {
 		lookup.ifPresent(i -> i.register_removal(removal.value(attribute), removal.index()));
+	}
+
+	@Override
+	public Stream<T> stream() {
+		return content.stream();
 	}
 }

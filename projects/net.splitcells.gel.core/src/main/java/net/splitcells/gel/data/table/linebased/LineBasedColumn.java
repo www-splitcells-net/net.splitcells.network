@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.data.table.linebased;
 
+import net.splitcells.dem.data.Stream;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.lookup.Lookup;
 import net.splitcells.gel.data.lookup.Lookups;
@@ -194,5 +195,10 @@ public class LineBasedColumn<T> implements Column<T> {
             lookup = Optional.of(Lookups.lookup(view, attribute.attribute()));
         }
         return lookup.get();
+    }
+
+    @Override
+    public Stream<T> stream() {
+        throw notImplementedYet();
     }
 }

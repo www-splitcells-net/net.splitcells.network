@@ -15,6 +15,8 @@
  */
 package net.splitcells.dem.data.set;
 
+import net.splitcells.dem.data.Stream;
+import net.splitcells.dem.data.Streams;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import java.util.Collection;
@@ -104,5 +106,10 @@ public class SetI<T> implements Set<T> {
     @Override
     public void clear() {
         values.clear();
+    }
+
+    @Override
+    public Stream<T> stream() {
+        return Streams.stream(values.stream());
     }
 }
