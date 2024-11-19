@@ -51,9 +51,12 @@ import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
 /**
- * This is a view of a table like thing.
+ * <p>This is a view of a table like thing.
  * It is named like this in order to adhere to the SQL naming and
- * thereby makes the naming more relatable by extern people.
+ * thereby makes the naming more relatable by extern people.</p>
+ * <p>This was designed with a focus on columns instead of rows,
+ * as iterating over a column's values was considered more important,
+ * than iterating over a row's values.</p>
  */
 public interface View extends Discoverable, Domable, Identifiable {
     boolean GET_LINE_VIA_STREAM = true;
