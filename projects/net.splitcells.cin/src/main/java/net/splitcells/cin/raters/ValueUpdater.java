@@ -31,6 +31,7 @@ import net.splitcells.gel.rating.rater.lib.GroupingRater;
 
 import static net.splitcells.cin.EntityManager.ADD_VALUE;
 import static net.splitcells.cin.EntityManager.EVENT_TYPE;
+import static net.splitcells.cin.EntityManager.PLAYER;
 import static net.splitcells.cin.EntityManager.PLAYER_ATTRIBUTE;
 import static net.splitcells.cin.EntityManager.PLAYER_VALUE;
 import static net.splitcells.cin.EntityManager.SET_VALUE;
@@ -49,7 +50,7 @@ public class ValueUpdater implements GroupingRater {
         return lineGroupRater(new ValueUpdater(playerAttribute));
     }
 
-    private record ValueCalc(int actual, int target) {
+    private record ValueCalc(int actual, int target, boolean isDeleted, boolean shouldBeDeleted) {
     }
 
     private final int playerAttribute;
@@ -79,6 +80,8 @@ public class ValueUpdater implements GroupingRater {
         final int valueAdd;
         final List<Line> valueSets;
         final int valueSet;
+        final boolean shouldBeDeleted;
+        final boolean isDeleted;
         times = lines.columnView(LINE).values().stream()
                 .map(l -> l.value(TIME))
                 .distinct()
@@ -88,7 +91,7 @@ public class ValueUpdater implements GroupingRater {
             throw executionException();
         }
         if (times.isEmpty()) {
-            return new ValueCalc(0, 0);
+            return new ValueCalc(0, 0, true, false);
         }
         if (times.size() == 1) {
             final var actual = lines.columnView(LINE).stream()
@@ -97,11 +100,15 @@ public class ValueUpdater implements GroupingRater {
                     .map(l -> l.value(PLAYER_VALUE))
                     .reduce(Integer::sum)
                     .orElse(0);
-            return new ValueCalc(actual, actual);
+            return new ValueCalc(actual, actual, true, false);
         }
         times.requireSizeOf(2);
         startTime = times.get(0);
         endTime = times.get(1);
+        shouldBeDeleted = lines.columnView(LINE).stream()
+                .anyMatch(line -> line.value(PLAYER_ATTRIBUTE) == playerAttribute
+                        && line.value(EVENT_TYPE) == EntityManager.DELETE_VALUE
+                        && line.value(PLAYER_VALUE) == 1);
         endResults = lines.columnView(LINE).stream()
                 .filter(line -> line.value(PLAYER_ATTRIBUTE) == playerAttribute
                         && line.value(EVENT_TYPE) == EntityManager.RESULT_VALUE
@@ -126,7 +133,9 @@ public class ValueUpdater implements GroupingRater {
         }
         if (endResults.isEmpty()) {
             endResult = 0;
+            isDeleted = true;
         } else {
+            isDeleted = false;
             endResult = endResults.stream()
                     .map(line -> line.value(PLAYER_VALUE))
                     .reduce(Integer::sum)
@@ -144,7 +153,7 @@ public class ValueUpdater implements GroupingRater {
                 .collect(toList());
         valueAdd = valueAdds.stream().map(line -> line.value(PLAYER_VALUE)).reduce(Integer::sum).orElse(0);
         if (valueSets.isEmpty()) {
-            return new ValueCalc(endResult, startResult + valueAdd);
+            return new ValueCalc(endResult, startResult + valueAdd, isDeleted, shouldBeDeleted);
         } else {
             valueSet = valueSets.stream()
                     .map(line -> line.value(PLAYER_VALUE))
@@ -152,9 +161,9 @@ public class ValueUpdater implements GroupingRater {
                     .orElse(0)
                     / valueSets.size();
             if (valueAdds.isEmpty()) {
-                return new ValueCalc(endResult, valueSet);
+                return new ValueCalc(endResult, valueSet, isDeleted, shouldBeDeleted);
             } else {
-                return new ValueCalc(endResult, (valueSet + valueAdd) / 2);
+                return new ValueCalc(endResult, (valueSet + valueAdd) / 2, isDeleted, shouldBeDeleted);
             }
         }
     }

@@ -70,7 +70,15 @@ public class EntityManager {
      * Therefore, this also needs to be used, when initial values are set during the first {@link #TIME}
      * aka. the creation of the initial state.
      */
-    public static final int RESULT_VALUE = 1;
+    public static final int RESULT_VALUE = 2;
+
+    /**
+     * This {@link #EVENT_TYPE} determines,
+     * whether the previously existing value is deleted at the current {@link #TIME}.
+     * A {@link #PLAYER_ATTRIBUTE} of 0 indicates no such deletion is taking place,
+     * whereas 1 states its deletion.
+     */
+    public static final int DELETE_VALUE = 3;
     /**
      * This is the default value of {@link #EVENT_SOURCE}.
      */
