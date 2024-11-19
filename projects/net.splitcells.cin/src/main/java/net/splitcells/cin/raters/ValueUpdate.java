@@ -69,17 +69,17 @@ public class ValueUpdate implements GroupingRater {
         }
         final var incomingConstraintGroup = lines.unorderedLinesStream().findFirst().orElseThrow()
                 .value(INCOMING_CONSTRAINT_GROUP);
-        final var valueCalc = calculateValue(lines);
+        final var analysis = analyse(lines);
         final Rating rating;
         final List<Constraint> propagationTo;
-        if (valueCalc.isDeleted != valueCalc.shouldBeDeleted) {
+        if (analysis.isDeleted != analysis.shouldBeDeleted) {
             rating = cost(1);
             propagationTo = listWithValuesOf();
-        } else if (valueCalc.isDeleted && valueCalc.shouldBeDeleted) {
+        } else if (analysis.isDeleted && analysis.shouldBeDeleted) {
             rating = noCost();
             propagationTo = children;
-        } else if (valueCalc.actualValue != valueCalc.targetValue) {
-            rating = cost(distance(valueCalc.actualValue, valueCalc.targetValue));
+        } else if (analysis.actualValue != analysis.targetValue) {
+            rating = cost(distance(analysis.actualValue, analysis.targetValue));
             propagationTo = listWithValuesOf();
         } else {
             rating = noCost();
@@ -94,7 +94,7 @@ public class ValueUpdate implements GroupingRater {
         return ratingEvent;
     }
 
-    private ValueCalc calculateValue(View lines) {
+    private ValueCalc analyse(View lines) {
         final List<Integer> times;
         final int startTime;
         final int endTime;
@@ -196,7 +196,17 @@ public class ValueUpdate implements GroupingRater {
 
     @Override
     public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
-        return "";
+        final var analysis = analyse(groupsLineProcessing);
+        if (analysis.isDeleted && !analysis.shouldBeDeleted) {
+            return "value " + playerAttribute + " is deleted but should not be";
+        } else if (!analysis.isDeleted && analysis.shouldBeDeleted) {
+            return "value " + playerAttribute + " is not deleted but should be";
+        } else if (analysis.isDeleted && analysis.shouldBeDeleted) {
+            return "value " + playerAttribute + " is deleted";
+        } else if (analysis.actualValue != analysis.targetValue) {
+            return "value " + playerAttribute + " should be updated to " + analysis.targetValue + ", but was updated to " + analysis.actualValue;
+        }
+        return "value " + playerAttribute + " was updated to " + analysis.actualValue;
     }
 
     @Override
