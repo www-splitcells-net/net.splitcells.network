@@ -117,7 +117,7 @@ public class EntityManager {
 
     public EntityManager withOptimized() {
         entities.demandsFree().unorderedLines()
-                .forEach(fd -> entities.assign(fd, entitySupplies.addTranslated(list(PLAYER_ENERGY, random.integer(1, 100), SET_VALUE, NO_SOURCE))));
+                .forEach(fd -> entities.assign(fd, entitySupplies.addTranslated(list(PLAYER_ENERGY, random.integer(1, 100), RESULT_VALUE, NO_SOURCE))));
         return this;
     }
 
