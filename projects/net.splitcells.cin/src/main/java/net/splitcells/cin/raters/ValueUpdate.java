@@ -18,7 +18,6 @@ package net.splitcells.cin.raters;
 import net.splitcells.cin.EntityManager;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;
-import net.splitcells.dem.utils.MathUtils;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
@@ -48,9 +47,9 @@ import static net.splitcells.gel.rating.rater.lib.LineGroupRater.lineGroupRater;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
-public class ValueUpdater implements GroupingRater {
-    public static Rater valueAdder(int playerAttribute) {
-        return lineGroupRater(new ValueUpdater(playerAttribute));
+public class ValueUpdate implements GroupingRater {
+    public static Rater valueUpdate(int playerAttribute) {
+        return lineGroupRater(new ValueUpdate(playerAttribute));
     }
 
     private record ValueCalc(int actualValue, int targetValue, boolean isDeleted, boolean shouldBeDeleted) {
@@ -58,7 +57,7 @@ public class ValueUpdater implements GroupingRater {
 
     private final int playerAttribute;
 
-    private ValueUpdater(int argPlayerAttribute) {
+    private ValueUpdate(int argPlayerAttribute) {
         playerAttribute = argPlayerAttribute;
     }
 
