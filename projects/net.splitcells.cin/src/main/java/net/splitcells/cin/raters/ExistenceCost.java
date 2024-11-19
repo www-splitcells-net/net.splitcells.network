@@ -74,6 +74,7 @@ public class ExistenceCost implements GroupingRater {
         final List<Constraint> propagationTo;
         if (times.size() < 2) {
             rating = noCost();
+            propagationTo = listWithValuesOf();
         } else {
             final int endTime = times.get(1);
             final boolean hasEvent = lines.columnView(LINE).stream()
