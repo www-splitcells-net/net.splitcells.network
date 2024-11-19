@@ -24,6 +24,7 @@ import net.splitcells.gel.solution.optimization.OnlineOptimization;
 import static java.util.stream.IntStream.range;
 import static net.splitcells.cin.raters.ExistenceCost.existenceCost;
 import static net.splitcells.cin.raters.TimeSteps.overlappingTimeSteps;
+import static net.splitcells.cin.raters.ValueUpdate.valueUpdate;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
@@ -109,7 +110,9 @@ public class EntityManager {
                 .withSupplyAttributes(PLAYER_ATTRIBUTE, PLAYER_VALUE, EVENT_TYPE, EVENT_SOURCE)
                 .withSupplies()
                 .withConstraint(query -> {
-                    query.forAll(overlappingTimeSteps(TIME)).forAll(PLAYER).then(existenceCost());
+                    final var playerTimeSteps = query.forAll(overlappingTimeSteps(TIME)).forAll(PLAYER);
+                    playerTimeSteps.then(existenceCost());
+                    playerTimeSteps.then(valueUpdate(PLAYER_ENERGY));
                     return query;
                 })
                 .toProblem()
