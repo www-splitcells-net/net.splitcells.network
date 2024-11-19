@@ -140,9 +140,6 @@ public class ValueUpdate implements GroupingRater {
                         && line.value(EVENT_TYPE) == EntityManager.RESULT_VALUE
                         && line.value(TIME) == endTime)
                 .collect(toList());
-        if (endResults.size() > 1) {
-            throw executionException();
-        }
         startResults = lines.columnView(LINE).stream()
                 .filter(line -> line.value(PLAYER_ATTRIBUTE) == playerAttribute
                         && line.value(EVENT_TYPE) == EntityManager.RESULT_VALUE
