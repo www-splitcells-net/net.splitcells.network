@@ -31,6 +31,7 @@ import net.splitcells.gel.rating.rater.lib.GroupingRater;
 import static net.splitcells.cin.EntityManager.*;
 import static net.splitcells.dem.data.order.Comparators.ASCENDING_INTEGERS;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
@@ -70,6 +71,7 @@ public class ExistenceCost implements GroupingRater {
                 .sorted(ASCENDING_INTEGERS)
                 .collect(toList());
         final Rating rating;
+        final List<Constraint> propagationTo;
         if (times.size() < 2) {
             rating = noCost();
         } else {
@@ -82,14 +84,16 @@ public class ExistenceCost implements GroupingRater {
                             && line.value(PLAYER_VALUE) == -1f);
             if (hasEvent) {
                 rating = noCost();
+                propagationTo = children;
             } else {
                 rating = cost(1);
+                propagationTo = listWithValuesOf();
             }
         }
         lines.unorderedLinesStream().forEach(line ->
                 ratingEvent.additions().put(line
                         , localRating()
-                                .withPropagationTo(children)
+                                .withPropagationTo(propagationTo)
                                 .withResultingGroupId(incomingConstraintGroup)
                                 .withRating(rating)));
         return ratingEvent;
