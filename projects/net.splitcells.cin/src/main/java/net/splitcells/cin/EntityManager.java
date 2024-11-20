@@ -133,7 +133,7 @@ public class EntityManager {
     }
 
     public EntityManager withOneStepForward() {
-        withSuppliedNextTime();
+        withDemandedNextTime();
         withDeletedOldTime();
         withOptimized();
         currentTime = nextTime;
@@ -147,7 +147,7 @@ public class EntityManager {
     }
 
 
-    public EntityManager withSuppliedNextTime() {
+    public EntityManager withDemandedNextTime() {
         entityDemands.lookup(TIME, currentTime).unorderedLinesStream()
                 .forEach(demand -> entityDemands.addTranslated(list(nextTime, demand.value(PLAYER))));
         entities.suppliesFree().unorderedLines().forEach(entitySupplies::remove);
