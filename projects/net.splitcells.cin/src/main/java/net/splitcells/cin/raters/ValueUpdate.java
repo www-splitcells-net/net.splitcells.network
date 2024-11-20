@@ -195,15 +195,15 @@ public class ValueUpdate implements GroupingRater {
     public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
         final var analysis = analyse(groupsLineProcessing);
         if (analysis.isDeleted && !analysis.shouldBeDeleted) {
-            return "value " + playerAttribute + " is deleted but should not be";
+            return "attribute " + playerAttribute + " is deleted but should not be";
         } else if (!analysis.isDeleted && analysis.shouldBeDeleted) {
-            return "value " + playerAttribute + " is not deleted but should be";
+            return "attribute " + playerAttribute + " is not deleted but should be";
         } else if (analysis.isDeleted && analysis.shouldBeDeleted) {
-            return "value " + playerAttribute + " is deleted";
+            return "attribute " + playerAttribute + " is deleted";
         } else if (analysis.actualValue != analysis.targetValue) {
-            return "value " + playerAttribute + " should be updated to " + analysis.targetValue + ", but was updated to " + analysis.actualValue;
+            return "attribute " + playerAttribute + " should be updated to " + analysis.targetValue + ", but was updated to " + analysis.actualValue;
         }
-        return "value " + playerAttribute + " was updated to " + analysis.actualValue;
+        return "attribute " + playerAttribute + " was updated to " + analysis.actualValue;
     }
 
     @Override
