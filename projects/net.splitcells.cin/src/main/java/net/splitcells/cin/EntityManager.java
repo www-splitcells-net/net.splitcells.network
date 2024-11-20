@@ -132,22 +132,12 @@ public class EntityManager {
         return this;
     }
 
-    public EntityManager withIncrementedNextTime() {
-        nextTime += 1;
-        return this;
-    }
-
-    public EntityManager withUpdatedCurrentTime() {
-        currentTime = nextTime;
-        return this;
-    }
-
     public EntityManager withOneStepForward() {
-        withIncrementedNextTime();
         withSuppliedNextTime();
         withDeletedOldTime();
         withOptimized();
-        withUpdatedCurrentTime();
+        currentTime = nextTime;
+        nextTime = currentTime + 1;
         return this;
     }
 
