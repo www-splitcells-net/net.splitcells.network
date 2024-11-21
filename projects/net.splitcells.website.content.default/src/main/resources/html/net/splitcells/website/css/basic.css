@@ -13,7 +13,12 @@
   If such an element is interactable or changeable, the replacer is responsible to track the element's content and
   to update the alternative representation accordingly.
 */
-/* TODO Split CSS in CSS without classes and CSS with specifics for this website.
+/* - TODO Split CSS in CSS without classes and CSS with specifics for this website.
+ * - TODO Consider allowing only one line per item in a tree and enforce it via clipping.
+ *   This improves the visual navigation of the tree by the user,
+ *   but makes it impossible to see big items fully without actions.
+ *   This could be avoided, by showing the full content, when the user hovers over the tree item,
+ *   but this may work badly on link items
 */
 .net-splitcells-website-form-editor-tab-bar {
     display: flex;
