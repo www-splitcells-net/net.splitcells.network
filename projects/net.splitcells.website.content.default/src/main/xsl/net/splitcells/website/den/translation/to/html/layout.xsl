@@ -907,12 +907,6 @@ request.send();]]>
                                         select="s:default-root-relative-url('net/splitcells/website/js/status-render.js')"/>
                             </xsl:attribute>
                         </script>
-                        <script type="text/javascript" charset="utf-8">
-                            <xsl:attribute name="src">
-                                <xsl:value-of
-                                        select="s:default-root-relative-url('net/splitcells/website/js/tabulator.min.js')"/>
-                            </xsl:attribute>
-                        </script>
                     </body>
                 </html>
             </xsl:otherwise>
