@@ -443,7 +443,7 @@ public class TableI implements Table {
     @Override
     public DiscoverableRenderer discoverableRenderer() {
         if (threadSafeMirror.isEmpty()) {
-            final var mirror = tableSynchronizationAspect(table2("mirror", this, this.headerView()));
+            final var mirror = tableSynchronizationAspect(table2(MIRROR_NAME, this, this.headerView()));
             orderedLinesStream().forEach(mirror::add);
             subscribeToAfterAdditions(mirror::add);
             subscribeToBeforeRemoval(mirror::remove);

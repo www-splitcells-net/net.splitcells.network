@@ -41,6 +41,7 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.TreeI;
+import net.splitcells.dem.resource.ConnectingConstructor;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.Tables;
@@ -59,6 +60,12 @@ import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
  * than iterating over a row's values.</p>
  */
 public interface View extends Discoverable, Domable, Identifiable {
+    /**
+     * This name is used in order to mark mirrors of {@link View},
+     * so that a recursion error can be avoided,
+     * when {@link #discoverableRenderer()} creates a thread safe mirror for rendering via an {@link ConnectingConstructor}.
+     */
+    String MIRROR_NAME = "mirror";
     boolean GET_LINE_VIA_STREAM = true;
 
     String name();
