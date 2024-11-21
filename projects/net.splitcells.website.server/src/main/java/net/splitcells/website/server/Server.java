@@ -201,6 +201,9 @@ public class Server {
      * <p>TODO Move this code into vertx package, in order to contain {@link io.vertx} dependencies.</p>
      * <p>TODO Always open 2 ports.</p>
      * <p>TODO Why is Vert.x is used at all? Is Netty (the base of Vert.x) for instance not enough?</p>
+     * <p>TODO IDEA Every HTTP login should be indicated in HTTP protocol as valid,
+     * in order to make attacks harder.
+     * It is unclear, if something like this is useful for normal deployments.</p>
      *
      * @param renderer renderer
      */
