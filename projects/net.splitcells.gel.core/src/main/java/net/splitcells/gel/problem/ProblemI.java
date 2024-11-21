@@ -320,7 +320,10 @@ public class ProblemI implements Problem {
     }
 
     /**
-     * TODO The content of {@link #threadSafeMirror} should be created via a general method.
+     * <p>The {@link #RATING} is placed before the {@link #REASONING},
+     * as the {@link #RATING} is often much shorter than the {@link #REASONING},
+     * when the {@link #REASONING} is not empty.</p>
+     * <p></p>TODO The content of {@link #threadSafeMirror} should be created via a general method.
      *
      * @return Returns a thread safe renderer of {@link #assignments} with some data for the user.
      */
@@ -329,7 +332,7 @@ public class ProblemI implements Problem {
         if (threadSafeMirror.isEmpty()) {
             final var mirror = tableSynchronizationAspect(table2("mirror"
                     , this
-                    , headerView().shallowCopy().withAppended(REASONING, RATING)));
+                    , headerView().shallowCopy().withAppended(RATING, REASONING)));
             orderedLinesStream().forEach(mirror::add);
             subscribeToAfterAdditions(addition -> {
                 mirror.withAllLinesRemoved();
@@ -339,7 +342,7 @@ public class ProblemI implements Problem {
                                     Tree.toStringPathsDescription(arg.toStringPaths())
                             ).orElse("");
                     mirror.addTranslated(listWithValuesOf(line.values())
-                                    .withAppended(argumentation, constraint().rating(line).descriptionForUser())
+                                    .withAppended(constraint().rating(line).descriptionForUser(), argumentation)
                             , line.index());
 
                 });
@@ -352,7 +355,7 @@ public class ProblemI implements Problem {
                                     Tree.toStringPathsDescription(arg.toStringPaths())
                             ).orElse("");
                     mirror.addTranslated(listWithValuesOf(line.values())
-                                    .withAppended(argumentation, constraint().rating(line).descriptionForUser())
+                                    .withAppended(constraint().rating(line).descriptionForUser(), argumentation)
                             , line.index());
                 });
             });
