@@ -60,6 +60,10 @@ These have their own copyright and licensing.
     * License: MIT 
     * [Website](https://bevacqua.github.io/dragula/)
     * [Source Code](https://github.com/bevacqua/dragula)
+* Fancytree:
+    * License: MIT
+    * [Website](http://wwwendt.de/tech/fancytree/demo/)
+    * [Source Code](https://github.com/mar10/fancytree)
 
 * [License files/text](./src/main/txt/net/splitcells/network/legal/licenses)
 
