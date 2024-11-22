@@ -57,7 +57,9 @@ public interface ProjectsRendererExtension {
      * @return Set of paths relative to {@link Config#rootPath()}.
      */
     @Deprecated
-    Set<Path> projectPaths(@Deprecated ProjectsRendererI projectsRenderer);
+    default Set<Path> projectPaths(@Deprecated ProjectsRendererI projectsRenderer) {
+        return setOfUniques();
+    }
 
     default Set<Path> projectPaths(ProjectPathsRequest request) {
         return setOfUniques();
