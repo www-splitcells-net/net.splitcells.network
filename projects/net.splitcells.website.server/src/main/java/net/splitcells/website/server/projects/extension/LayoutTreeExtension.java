@@ -31,7 +31,7 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 
 /**
  * TODO The rendering is currently not useful,
- * because {@link LayoutExtension} currently create a lot better results.
+ * because {@link LayoutExtension} currently create a lot better results from a design perspective.
  */
 public class LayoutTreeExtension implements ProjectsRendererExtension {
     public static LayoutTreeExtension layoutTreeExtension() {
@@ -44,15 +44,25 @@ public class LayoutTreeExtension implements ProjectsRendererExtension {
 
     }
 
+    /**
+     *
+     * @param path
+     * @param projectsRendererI
+     * @param config
+     * @return The rendered Tree contains meta data, so that Javascript can rerender the {@link Config#layout()}
+     * with an interactive tree representation.
+     */
     @Override
     public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         if (PATH.equals(path) && config.layout().isPresent()) {
             final var layout = tree("layout");
             projectsRendererI.projectsPaths().forEach(p -> layout.extendWith(list(p.toString().split("/"))));
             return projectsRendererI.renderContent
-                    ("<ol xmlns=\"http://www.w3.org/1999/xhtml\">"
+                    ("<div class=\"net-splitcells-website-tree-interactive\" source-path=\""
+                                    + LayoutFancyTreeExtension.PATH.unixPathString()
+                                    + "\" xmlns=\"http://www.w3.org/1999/xhtml\"><ol>"
                                     + layout.asXhtmlList(false)
-                                    + "</ol>"
+                                    + "</ol></div>"
                             , LayoutConfig.layoutConfig(PATH));
         }
         return Optional.empty();
