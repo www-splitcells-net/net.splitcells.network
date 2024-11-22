@@ -601,6 +601,11 @@ public interface Tree extends TreeView {
         return tree("").withChild(this);
     }
 
+    /**
+     * TODO IDEA Consider speeding this up, by caching the {@link JsonConfig}.
+     *
+     * @return
+     */
     default String toJsonString() {
         return toJsonString(jsonConfig());
     }
@@ -629,9 +634,10 @@ public interface Tree extends TreeView {
             jsonString.append("{\"" + encodeJsonString(name()) + "\":\"\"}");
         } else {
             boolean isNotFirstChild = false;
+            final var isJsonArray = nameSpace().equals(JSON) && "array".equals(name());
             final var hasAnyPrimitiveValues = children().stream().anyMatch(c -> c.children().isEmpty());
             final var isThisANamedDictionary = !hasAnyPrimitiveValues && !name().isEmpty();
-            if (hasAnyPrimitiveValues) {
+            if (hasAnyPrimitiveValues || isJsonArray) {
                 if (config.isTopElement()) {
                     jsonString.append("[");
                 } else {
@@ -680,7 +686,7 @@ public interface Tree extends TreeView {
                 }
                 isNotFirstChild = true;
             }
-            if (hasAnyPrimitiveValues) {
+            if (hasAnyPrimitiveValues || isJsonArray) {
                 jsonString.append("]");
             } else {
                 if (isThisANamedDictionary) {
