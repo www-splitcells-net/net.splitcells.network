@@ -64,6 +64,7 @@ import static net.splitcells.website.server.projects.extension.DemConfigExtensio
 import static net.splitcells.website.server.projects.extension.FrontMenuExtension.frontMenuExtension;
 import static net.splitcells.website.server.projects.extension.GlobalChangelogExtension.globalChangelogExtension;
 import static net.splitcells.website.server.projects.extension.LayoutExtension.layoutExtension;
+import static net.splitcells.website.server.projects.extension.LayoutFancyTreeExtension.layoutFancyTreeExtension;
 import static net.splitcells.website.server.projects.extension.LayoutTreeExtension.layoutTreeExtension;
 import static net.splitcells.website.server.projects.extension.TestExtension.testExtension;
 import static net.splitcells.website.server.projects.extension.UserProfilePageExtension.userProfilePageExtension;
@@ -198,6 +199,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
             , userProfilePageExtension()
             , demConfigExtension()
             , testExtension()
+            , layoutFancyTreeExtension()
     );
 
     private ProjectsRendererI(String name
