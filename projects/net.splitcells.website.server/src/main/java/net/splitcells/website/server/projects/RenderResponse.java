@@ -28,6 +28,11 @@ import java.util.Optional;
  * as unifying the {@link Processor} and {@link ProjectsRenderer} interface is a goal of the future.
  */
 public class RenderResponse implements Response<Optional<BinaryMessage>> {
+
+    public static RenderResponse renderResponse(BinaryMessage data) {
+        return new RenderResponse(Optional.of(data));
+    }
+
     public static RenderResponse renderResponse(Optional<BinaryMessage> data) {
         return new RenderResponse(data);
     }
