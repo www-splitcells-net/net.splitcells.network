@@ -20,11 +20,12 @@
     <modules>
         <module>projects/net.splitcells.pom.java.minimal</module>
         <module>projects/net.splitcells.maven.plugin.resource.list</module>
-        <module>projects/net.splitcells.maven.plugin.check</module>
         <module>projects/net.splitcells.pom.java.defaults</module>
         <module>projects/net.splitcells.dem.api</module>
         <module>projects/net.splitcells.dem.ext</module>
+        <module>projects/net.splitcells.dem.source</module>
         <module>projects/net.splitcells.dem</module>
+        <module>projects/net.splitcells.maven.plugin.check</module>
         <module>projects/net.splitcells.gel.core</module>
         <module>projects/net.splitcells.gel.ext</module>
         <module>projects/net.splitcells.gel.ui</module>
