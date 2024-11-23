@@ -8,7 +8,10 @@
     <artifactId>dem.source</artifactId>
     <name>Dependency Manager API</name>
     <!-- If a dependency to `net.splitcells.dem` is required,
-    this project should be split into a external dependency free part and an dependency integration part. -->
+    this project should be split into a external dependency free API focused project and a dependency integration project.
+    The dependency integration project should be used by the custom Maven build check plugin and
+    the rest should use the API focused project,
+    in order to avoid cyclical dependencies in the root multi project Maven module. -->
     <parent>
         <groupId>net.splitcells</groupId>
         <artifactId>pom-java-minimal</artifactId>
