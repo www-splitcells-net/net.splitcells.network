@@ -15,7 +15,7 @@
  */
 package net.splitcells.dem.data.set;
 
-import net.splitcells.dem.data.Streams;
+import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
@@ -184,5 +184,5 @@ public interface SetT<T> extends Collection<T> {
     }
 
     @Override
-    net.splitcells.dem.data.Stream<T> stream();
+    Flow<T> stream();
 }

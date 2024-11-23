@@ -15,7 +15,7 @@
  */
 package net.splitcells.gel.data.table.linebased;
 
-import net.splitcells.dem.data.Stream;
+import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.lookup.Lookup;
 import net.splitcells.gel.data.lookup.Lookups;
@@ -198,7 +198,7 @@ public class LineBasedColumn<T> implements Column<T> {
     }
 
     @Override
-    public Stream<T> stream() {
+    public Flow<T> stream() {
         throw notImplementedYet();
     }
 }

@@ -15,8 +15,8 @@
  */
 package net.splitcells.dem.data.set;
 
-import net.splitcells.dem.data.Stream;
-import net.splitcells.dem.data.Streams;
+import net.splitcells.dem.data.Flow;
+import net.splitcells.dem.data.Flows;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import java.util.HashSet;
@@ -129,7 +129,7 @@ public class SetLegacyWrapper<T> implements Set<T> {
     }
 
     @Override
-    public Stream<T> stream() {
-        return Streams.stream(content.stream());
+    public Flow<T> stream() {
+        return Flows.flow(content.stream());
     }
 }

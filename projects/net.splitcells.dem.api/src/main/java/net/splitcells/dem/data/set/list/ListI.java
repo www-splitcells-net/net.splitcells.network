@@ -15,7 +15,8 @@
  */
 package net.splitcells.dem.data.set.list;
 
-import net.splitcells.dem.data.Streams;
+import net.splitcells.dem.data.Flow;
+import net.splitcells.dem.data.Flows;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class ListI<T> extends ArrayList<T> implements List<T> {
     }
 
     @Override
-    public net.splitcells.dem.data.Stream<T> stream() {
-        return Streams.stream(super.stream());
+    public Flow<T> stream() {
+        return Flows.flow(super.stream());
     }
 }

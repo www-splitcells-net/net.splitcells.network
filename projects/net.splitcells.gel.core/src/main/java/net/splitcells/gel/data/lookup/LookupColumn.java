@@ -24,8 +24,8 @@ import java.util.ListIterator;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import net.splitcells.dem.data.Stream;
-import net.splitcells.dem.data.Streams;
+import net.splitcells.dem.data.Flow;
+import net.splitcells.dem.data.Flows;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.data.view.Line;
@@ -201,7 +201,7 @@ public class LookupColumn<T> implements Column<T> {
     }
 
     @Override
-    public Stream<T> stream() {
-        return Streams.stream(table.base().columnView(attribute).stream().filter(l -> l != null));
+    public Flow<T> stream() {
+        return Flows.flow(table.base().columnView(attribute).stream().filter(l -> l != null));
     }
 }

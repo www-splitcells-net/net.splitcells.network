@@ -38,26 +38,26 @@ import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
 @JavaLegacy
-public class Streams<T> implements Stream<T> {
+public class Flows<T> implements Flow<T> {
 
-    public static <R> Stream<R> stream(java.util.stream.Stream<R> arg) {
-        return new Streams<>(arg);
+    public static <R> Flow<R> flow(java.util.stream.Stream<R> arg) {
+        return new Flows<>(arg);
     }
 
     private final java.util.stream.Stream<T> content;
 
-    private Streams(java.util.stream.Stream<T> argContent) {
+    private Flows(java.util.stream.Stream<T> argContent) {
         content = argContent;
     }
 
     @Override
-    public Stream<T> filter(Predicate<? super T> predicate) {
-        return stream(content.filter(predicate));
+    public Flow<T> filter(Predicate<? super T> predicate) {
+        return flow(content.filter(predicate));
     }
 
     @Override
-    public <R> Stream<R> map(Function<? super T, ? extends R> mapper) {
-        return stream(content.map(mapper));
+    public <R> Flow<R> map(Function<? super T, ? extends R> mapper) {
+        return flow(content.map(mapper));
     }
 
     @Override
@@ -76,8 +76,8 @@ public class Streams<T> implements Stream<T> {
     }
 
     @Override
-    public <R> Stream<R> flatMap(Function<? super T, ? extends java.util.stream.Stream<? extends R>> mapper) {
-        return stream(content.flatMap(mapper));
+    public <R> Flow<R> flatMap(Function<? super T, ? extends java.util.stream.Stream<? extends R>> mapper) {
+        return flow(content.flatMap(mapper));
     }
 
     @Override
@@ -96,33 +96,33 @@ public class Streams<T> implements Stream<T> {
     }
 
     @Override
-    public Stream<T> distinct() {
-        return stream(content.distinct());
+    public Flow<T> distinct() {
+        return flow(content.distinct());
     }
 
     @Override
-    public Stream<T> sorted() {
-        return stream(content.sorted());
+    public Flow<T> sorted() {
+        return flow(content.sorted());
     }
 
     @Override
-    public Stream<T> sorted(Comparator<? super T> comparator) {
-        return stream(content.sorted(comparator));
+    public Flow<T> sorted(Comparator<? super T> comparator) {
+        return flow(content.sorted(comparator));
     }
 
     @Override
-    public Stream<T> peek(Consumer<? super T> action) {
-        return stream(content.peek(action));
+    public Flow<T> peek(Consumer<? super T> action) {
+        return flow(content.peek(action));
     }
 
     @Override
-    public Stream<T> limit(long maxSize) {
-        return stream(content.limit(maxSize));
+    public Flow<T> limit(long maxSize) {
+        return flow(content.limit(maxSize));
     }
 
     @Override
-    public Stream<T> skip(long n) {
-        return stream(content.skip(n));
+    public Flow<T> skip(long n) {
+        return flow(content.skip(n));
     }
 
     @Override
@@ -226,23 +226,23 @@ public class Streams<T> implements Stream<T> {
     }
 
     @Override
-    public Stream<T> sequential() {
-        return stream(content.sequential());
+    public Flow<T> sequential() {
+        return flow(content.sequential());
     }
 
     @Override
-    public Stream<T> parallel() {
-        return stream(content.parallel());
+    public Flow<T> parallel() {
+        return flow(content.parallel());
     }
 
     @Override
-    public Stream<T> unordered() {
-        return stream(content.unordered());
+    public Flow<T> unordered() {
+        return flow(content.unordered());
     }
 
     @Override
-    public Stream<T> onClose(Runnable closeHandler) {
-        return stream(content.onClose(closeHandler));
+    public Flow<T> onClose(Runnable closeHandler) {
+        return flow(content.onClose(closeHandler));
     }
 
     @Override

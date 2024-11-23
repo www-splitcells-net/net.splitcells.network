@@ -15,7 +15,7 @@
  */
 package net.splitcells.dem.data.set.list;
 
-import net.splitcells.dem.data.Stream;
+import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.execution.ImplicitEffect;
 
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -31,7 +31,7 @@ public class SynchronizedList<T> extends CopyOnWriteArrayList<T> implements List
     }
 
     @Override
-    public Stream<T> stream() {
+    public Flow<T> stream() {
         throw notImplementedYet();
     }
 }

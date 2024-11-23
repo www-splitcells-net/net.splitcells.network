@@ -21,26 +21,11 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 
 import java.util.Comparator;
-import java.util.Iterator;
-import java.util.Optional;
-import java.util.Spliterator;
-import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
-import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.IntFunction;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
-import java.util.function.ToDoubleFunction;
-import java.util.function.ToIntFunction;
-import java.util.function.ToLongFunction;
-import java.util.stream.Collector;
-import java.util.stream.DoubleStream;
-import java.util.stream.IntStream;
-import java.util.stream.LongStream;
 
-public interface Stream<T> extends java.util.stream.Stream<T> {
+public interface Flow<T> extends java.util.stream.Stream<T> {
     default List<T> toList() {
         return collect(Lists.toList());
     }
@@ -50,41 +35,41 @@ public interface Stream<T> extends java.util.stream.Stream<T> {
     }
 
     @Override
-    Stream<T> filter(Predicate<? super T> predicate);
+    Flow<T> filter(Predicate<? super T> predicate);
 
     @Override
-    <R> Stream<R> map(Function<? super T, ? extends R> mapper);
+    <R> Flow<R> map(Function<? super T, ? extends R> mapper);
 
     @Override
-    <R> Stream<R> flatMap(Function<? super T, ? extends java.util.stream.Stream<? extends R>> mapper);
+    <R> Flow<R> flatMap(Function<? super T, ? extends java.util.stream.Stream<? extends R>> mapper);
 
     @Override
-    Stream<T> distinct();
+    Flow<T> distinct();
 
     @Override
-    Stream<T> sorted();
+    Flow<T> sorted();
 
     @Override
-    Stream<T> sorted(Comparator<? super T> comparator);
+    Flow<T> sorted(Comparator<? super T> comparator);
 
     @Override
-    Stream<T> peek(Consumer<? super T> action);
+    Flow<T> peek(Consumer<? super T> action);
 
     @Override
-    Stream<T> limit(long maxSize);
+    Flow<T> limit(long maxSize);
 
     @Override
-    Stream<T> skip(long n);
+    Flow<T> skip(long n);
 
     @Override
-    Stream<T> sequential();
+    Flow<T> sequential();
 
     @Override
-    Stream<T> parallel();
+    Flow<T> parallel();
 
     @Override
-    Stream<T> unordered();
+    Flow<T> unordered();
 
     @Override
-    Stream<T> onClose(Runnable closeHandler);
+    Flow<T> onClose(Runnable closeHandler);
 }
