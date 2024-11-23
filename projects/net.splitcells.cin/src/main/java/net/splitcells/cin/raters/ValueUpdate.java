@@ -75,15 +75,15 @@ public class ValueUpdate implements GroupingRater {
         if (analysis.isDeleted != analysis.shouldBeDeleted) {
             rating = cost(1);
             propagationTo = listWithValuesOf();
-        } else if (analysis.isDeleted && analysis.shouldBeDeleted) {
+        } else if ((analysis.isDeleted && analysis.shouldBeDeleted)
+                || analysis.actualValue == analysis.targetValue) {
             rating = noCost();
             propagationTo = children;
         } else if (analysis.actualValue != analysis.targetValue) {
             rating = cost(distance(analysis.actualValue, analysis.targetValue));
             propagationTo = listWithValuesOf();
         } else {
-            rating = noCost();
-            propagationTo = children;
+            throw executionException();
         }
         lines.unorderedLinesStream().forEach(line ->
                 ratingEvent.additions().put(line
