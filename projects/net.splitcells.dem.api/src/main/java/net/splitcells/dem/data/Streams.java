@@ -242,8 +242,7 @@ public class Streams<T> implements Stream<T> {
 
     @Override
     public Stream<T> onClose(Runnable closeHandler) {
-        content.onClose(closeHandler);
-        return this;
+        return stream(content.onClose(closeHandler));
     }
 
     @Override
