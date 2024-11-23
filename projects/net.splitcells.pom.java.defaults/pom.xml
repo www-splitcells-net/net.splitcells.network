@@ -38,6 +38,20 @@
         <plugins>
             <plugin>
                 <groupId>net.splitcells</groupId>
+                <artifactId>check-maven-plugin</artifactId>
+                <version>${revision}</version>
+                <executions>
+                    <execution>
+                        <id>check</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>source-code-check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>net.splitcells</groupId>
                 <artifactId>resource-list-maven-plugin</artifactId>
                 <version>${revision}</version>
                 <executions>
@@ -180,32 +194,6 @@
         </dependency>
     </dependencies>
     <profiles>
-        <profile>
-            <id>source-code-check</id>
-            <activation>
-                <property>
-                    <name>source-code-check</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>net.splitcells</groupId>
-                        <artifactId>check-maven-plugin</artifactId>
-                        <version>${revision}</version>
-                        <executions>
-                            <execution>
-                                <id>check</id>
-                                <phase>validate</phase>
-                                <goals>
-                                    <goal>source-code-check</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
         <profile>
             <id>deployable-jar-folder</id>
             <activation>

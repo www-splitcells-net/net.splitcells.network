@@ -7,17 +7,12 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>dem.source</artifactId>
     <name>Dependency Manager API</name>
+    <!-- If a dependency to `net.splitcells.dem` is required,
+    this project should be split into a external dependency free part and an dependency integration part. -->
     <parent>
         <groupId>net.splitcells</groupId>
         <artifactId>pom-java-minimal</artifactId>
         <version>${revision}</version>
         <relativePath>../net.splitcells.pom.java.minimal/pom.xml</relativePath>
     </parent>
-    <dependencies>
-        <dependency>
-            <groupId>net.splitcells</groupId>
-            <artifactId>dem.api</artifactId>
-            <version>${revision}</version>
-        </dependency>
-    </dependencies>
 </project>
