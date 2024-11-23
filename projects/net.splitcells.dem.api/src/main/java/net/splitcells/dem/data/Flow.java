@@ -26,6 +26,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public interface Flow<T> extends java.util.stream.Stream<T> {
+    @Override
     default List<T> toList() {
         return collect(Lists.toList());
     }
