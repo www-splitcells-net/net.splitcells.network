@@ -15,5 +15,6 @@ cd ~/.local/state/net.splitcells.repos/public/net.splitcells.network
   # TODO Install OSI not to a user folder, but to a folder inside the repo.
   # In other words, make an OSI installation independent from the user's home and default path settings.
   # TODO Register all projects via hub generically.
+  . ~/bin/net.splitcells.shell.commands.managed/command.managed.export.bin
   command.repository.register $(realpath ../net.splitcells.shell.lib.gpl.v2)
   user.bin.configure
