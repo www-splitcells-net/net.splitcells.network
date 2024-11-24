@@ -31,8 +31,8 @@
         <module>projects/net.splitcells.gel.ui</module>
         <module>projects/net.splitcells.gel.doc</module>
         <module>projects/net.splitcells.gel.quickstart</module>
-        <module>projects/net.splitcells.os.state.interface</module>
-        <module>projects/net.splitcells.os.state.interface.lib</module>
+        <module>projects/net.splitcells.shell</module>
+        <module>projects/net.splitcells.shell.lib</module>
         <module>projects/net.splitcells.project</module>
         <module>projects/net.splitcells.website.server</module>
         <module>projects/net.splitcells.website.content.default</module>
