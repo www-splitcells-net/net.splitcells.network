@@ -39,6 +39,9 @@ public class HtmlClientImpl implements HtmlClient {
      * @return Provides an HTTP based HTML client for {@link net.splitcells.website.server.ServerService}.
      */
     public static HtmlClient htmlClientImpl() {
+        if (configValue(PublicDomain.class).isPresent()) {
+            return publicHtmlClient();
+        }
         return new HtmlClientImpl("http://localhost:" + configValue(ServerConfig.class).openPort());
     }
 
