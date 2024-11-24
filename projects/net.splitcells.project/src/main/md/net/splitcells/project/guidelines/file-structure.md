@@ -58,7 +58,7 @@ this can be used to import many of such projects into an IDE
 (i.e. Eclipse and Intellij) with one import command.
 
 If the project is a repository with version control,
-it should be compatible to [repo process](../../../../../../../projects/net.splitcells.os.state.interface/src/main/md/net/splitcells/os/state/interface/command/repos.process.md).
+it should be compatible to [repo process](../../../../../../../projects/net.splitcells.os.state.interface/src/main/md/net/splitcells/shell/command/repos.process.md).
 ## Files and Folders at `./*`
 Files and folders at the top level should represent an entry point to the
 project.

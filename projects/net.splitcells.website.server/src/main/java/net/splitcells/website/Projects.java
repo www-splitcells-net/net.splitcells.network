@@ -188,7 +188,7 @@ public class Projects {
                                 , integratedProjectRepo.subFileSystem("net.splitcells.shell/")
                                 , xslLib
                                 , integratedProjectRepo.subFileSystem("net.splitcells.martins.avots.website/src/main/resources/html")
-                                , "/net/splitcells/os/state/interface"
+                                , "/net/splitcells/shell"
                                 , sourceValidator
                                 , config
                                 , projectsRenderer)

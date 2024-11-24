@@ -39,14 +39,14 @@ import static net.splitcells.website.server.processor.BinaryMessage.binaryMessag
 
 /**
  * Renders all commands, that are installed via 'net.splitcells.shell' for the current user
- * at '/net/splitcells/os/state/interface/installed/index.html'.
+ * at '/net/splitcells/shell/installed/index.html'.
  */
 public class UserCommandProjectRendererExtension implements ProjectRendererExtension {
     public static UserCommandProjectRendererExtension userCommandRenderer() {
         return new UserCommandProjectRendererExtension();
     }
 
-    private static final String RENDERING_PATH = "net/splitcells/os/state/interface/installed/index.html";
+    private static final String RENDERING_PATH = "net/splitcells/shell/installed/index.html";
     private static final Path BIN_FOLDER_PATH = Path.of("bin/net.splitcells.shell.commands.managed/");
     private static final FileSystem BIN_FOLDER = FileSystems.userHome();
 

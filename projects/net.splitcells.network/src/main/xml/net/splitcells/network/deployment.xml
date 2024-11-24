@@ -28,7 +28,7 @@
         <paragraph>OS state interface can be installed via the project's
             <link>
                 <text>setup instructions</text>
-                <post>/net/splitcells/os/state/interface/manual/setup</post>
+                <post>/net/splitcells/shell/manual/setup</post>
             </link>.
         </paragraph>
     </chapter>

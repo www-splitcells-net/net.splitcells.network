@@ -94,9 +94,9 @@ public class WebsiteViaJar {
                         , configValue(NetworkFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/network/worker/via/java/"
                         , configValue(NetworkWorkerFileSystem.class)))
-                .withAdditionalProject(projectConfig("/net/splitcells/os/state/interface/"
+                .withAdditionalProject(projectConfig("/net/splitcells/shell/"
                         , configValue(OsiFileSystem.class)))
-                .withAdditionalProject(projectConfig("/net/splitcells/os/state/interface/lib/"
+                .withAdditionalProject(projectConfig("/net/splitcells/shell/lib/"
                         , configValue(OsiLibFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/system/"
                         , configValue(SystemsFileSystem.class)))

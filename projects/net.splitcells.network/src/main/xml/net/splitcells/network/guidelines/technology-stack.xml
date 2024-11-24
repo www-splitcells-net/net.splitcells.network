@@ -38,7 +38,7 @@
             <item>Ansible for remote computer configuration</item>
             <item>
                 <link>
-                    <post>net/splitcells/os/state/interface/shell.software</post>
+                    <post>net/splitcells/shell/shell.software</post>
                     <text>Shell Software</text> for simple software integration
                 </link>
             </item>

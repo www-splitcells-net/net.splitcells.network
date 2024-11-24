@@ -17,7 +17,7 @@ the to-project:
   provided by `command.managed.execute`.
 
 Let's illustrate this with an example, the deployment of [splitcells.net](http://splitcells.net):
-![Example Illustration](../../../../../../../../../src/main/svg/net/splitcells/os/state/interface/project/render/example.illustration.svg)
+![Example Illustration](../../../../../../../../../src/main/svg/net/splitcells/shell/project/render/example.illustration.svg)
 Here each arrow represent a call of `project.render` from a project to a
 project. Note that a project can be just a folder and does not have to be
 anything special.
