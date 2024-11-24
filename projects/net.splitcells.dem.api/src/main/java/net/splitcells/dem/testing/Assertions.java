@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.testing;
 
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.utils.ConstructorIllegal;
 
@@ -23,6 +24,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
+import static net.splitcells.dem.Dem.sleepABit;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
@@ -128,6 +130,7 @@ public class Assertions {
             if (compliance) {
                 return;
             }
+            sleepABit();
             compliance = condition.get();
             if (Instant.now().isAfter(plannedEnd)) {
                 throw executionException(tree("Condition is not met during wait time.")

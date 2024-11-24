@@ -305,6 +305,10 @@ public class Dem {
         System.exit(exitCode);
     }
 
+    public static void sleepABit() {
+        sleepAtLeast(500);
+    }
+
     /**
      * TODO This method should probably be placed somewhere else.
      *
