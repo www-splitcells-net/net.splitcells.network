@@ -56,8 +56,8 @@ Project Cluster
 │       ├── net.splitcells.system
 │       └── ...
 ├── net.splitcells.network.log
-├── net.splitcells.os.state.interface.lib.gpl.2
-├── net.splitcells.os.state.interface.lib.gpl.3
+├── net.splitcells.os.state.interface.lib.gpl.v2
+├── net.splitcells.os.state.interface.lib.gpl.v2
 └── ...
 ```
 > This image illustrates the networks structure by showing relevant parts of the filesystem.

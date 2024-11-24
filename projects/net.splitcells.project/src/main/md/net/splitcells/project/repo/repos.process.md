@@ -76,7 +76,7 @@ in order to simplify things for now.
 Repo process and its additional commands are intended to be installed via `command.managed.install`.
 (see [install instructions](/net/splitcells/os/state/interface/manual/setup.md) for details).
 In order to have default Git implementations for the abstract commands (`repo.*`),
-[Os State Interface lib GPL 2](https://github.com/www-splitcells-net/net.splitcells.os.state.interface.lib.gpl.2)
+[Os State Interface lib GPL 2](https://github.com/www-splitcells-net/net.splitcells.os.state.interface.lib.gpl.v2)
 has to be installed as well via `command.repository.register` and `user.bin.configure.sh`.
 
 Alternatively, repo process commands can be used directly, as these are made without additional dependencies.
