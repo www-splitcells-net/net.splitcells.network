@@ -50,12 +50,12 @@
         </dependency>
         <dependency>
             <groupId>net.splitcells</groupId>
-            <artifactId>os.state.interface</artifactId>
+            <artifactId>shell</artifactId>
             <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>net.splitcells</groupId>
-            <artifactId>os.state.interface.lib</artifactId>
+            <artifactId>shell.lib</artifactId>
             <version>${revision}</version>
         </dependency>
         <dependency>

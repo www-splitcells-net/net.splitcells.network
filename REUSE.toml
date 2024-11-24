@@ -23,7 +23,7 @@ SPDX-FileCopyrightText = "See the files' content."
 SPDX-License-Identifier = "LicenseRef-NSID"
 
 [[annotations]]
-path = "projects/net.splitcells.os.state.interface/src/main/txt/net/splitcells/os/state/interface/process/Developer_Certificate_of_Origin.v1.1.txt"
+path = "projects/net.splitcells.shell/src/main/txt/net/splitcells/shell/process/Developer_Certificate_of_Origin.v1.1.txt"
 precedence = "aggregate"
 SPDX-FileCopyrightText = "See the files' content."
 SPDX-License-Identifier = "LicenseRef-NSID"

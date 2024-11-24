@@ -3,5 +3,5 @@
 * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 ----
 # Known Compatible OS State Interface Projects
-* [net.splitcells.os.state.interface.lib.gpl.2](https://github.com/splitcells/os.state.interface.lib.gpl.2)
-* [net.splitcells.os.state.interface.lib.gpl.3](https://github.com/splitcells/os.state.interface.lib.gpl.3)
+* [net.splitcells.shell.lib.gpl.v2](https://github.com/splitcells/shell.lib.gpl.v2)
+* [net.splitcells.shell.lib.gpl.v3](https://github.com/splitcells/shell.lib.gpl.v3)

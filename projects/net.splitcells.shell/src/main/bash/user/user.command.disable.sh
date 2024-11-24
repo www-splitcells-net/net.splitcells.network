@@ -13,8 +13,8 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
-mkdir -p ~/bin/net.splitcells.os.state.interface.commands.disabled
-echo "#!/usr/bin/env sh" >> ~/bin/net.splitcells.os.state.interface.commands.disabled/$1
-	echo "echo $1 is disabled." >> ~/bin/net.splitcells.os.state.interface.commands.disabled/$1
-	echo "exit 1" >> ~/bin/net.splitcells.os.state.interface.commands.disabled/$1
-chmod +x ~/bin/net.splitcells.os.state.interface.commands.disabled/$1
+mkdir -p ~/bin/net.splitcells.shell.commands.disabled
+echo "#!/usr/bin/env sh" >> ~/bin/net.splitcells.shell.commands.disabled/$1
+	echo "echo $1 is disabled." >> ~/bin/net.splitcells.shell.commands.disabled/$1
+	echo "exit 1" >> ~/bin/net.splitcells.shell.commands.disabled/$1
+chmod +x ~/bin/net.splitcells.shell.commands.disabled/$1

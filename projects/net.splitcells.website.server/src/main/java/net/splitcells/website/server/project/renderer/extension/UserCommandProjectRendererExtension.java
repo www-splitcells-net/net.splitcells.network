@@ -38,7 +38,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 /**
- * Renders all commands, that are installed via 'net.splitcells.os.state.interface' for the current user
+ * Renders all commands, that are installed via 'net.splitcells.shell' for the current user
  * at '/net/splitcells/os/state/interface/installed/index.html'.
  */
 public class UserCommandProjectRendererExtension implements ProjectRendererExtension {
@@ -47,7 +47,7 @@ public class UserCommandProjectRendererExtension implements ProjectRendererExten
     }
 
     private static final String RENDERING_PATH = "net/splitcells/os/state/interface/installed/index.html";
-    private static final Path BIN_FOLDER_PATH = Path.of("bin/net.splitcells.os.state.interface.commands.managed/");
+    private static final Path BIN_FOLDER_PATH = Path.of("bin/net.splitcells.shell.commands.managed/");
     private static final FileSystem BIN_FOLDER = FileSystems.userHome();
 
     private UserCommandProjectRendererExtension() {

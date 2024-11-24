@@ -152,14 +152,14 @@ to a different server with one simple interaction.
 > can be used in order to work on multiple repos as if these were one.
 
 The repo process is a command called `repo.process`, is part of
-[OS state interface](https://github.com/www-splitcells-net/net.splitcells.network/tree/master/projects/net.splitcells.os.state.interface)
+[OS state interface](https://github.com/www-splitcells-net/net.splitcells.network/tree/master/projects/net.splitcells.shell)
 and is a Python 3 script.
 When this project is installed,
-the Python script is copied to `~/bin/net.splitcells.os.state.interface.commands.managed`.
+the Python script is copied to `~/bin/net.splitcells.shell.commands.managed`.
 This folder is added to the PATH variable for the user's shell,
 and thereby the command can be used in the shell.
 
-The repo process checks the file  `./.net.splitcells.os.state.interface.repo/subs.json`.
+The repo process checks the file  `./.net.splitcells.shell.repo/subs.json`.
 If no such file is present,
 the command assumes that the current folder is a normal repository.
 If such a file is present,
@@ -210,7 +210,7 @@ It would work, but has the problem of taking a long time to write it down,
 and it also only works if all sub repos are git repos.
 So, you could not have git and mercurial repos in one meta repo.
 
-Fortunately, here is where managed commands of the [OS state interface project](https://github.com/www-splitcells-net/net.splitcells.network/blob/master/projects/net.splitcells.os.state.interface/README.md)
+Fortunately, here is where managed commands of the [OS state interface project](https://github.com/www-splitcells-net/net.splitcells.network/blob/master/projects/net.splitcells.shell/README.md)
 come to action.
 A managed command is basically a command,
 that delegates its task to the command `command.managed.execute`.

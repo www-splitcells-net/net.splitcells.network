@@ -185,7 +185,7 @@ public class Projects {
                                 , projectsRenderer)
                 , projectRenderer
                         (profile
-                                , integratedProjectRepo.subFileSystem("net.splitcells.os.state.interface/")
+                                , integratedProjectRepo.subFileSystem("net.splitcells.shell/")
                                 , xslLib
                                 , integratedProjectRepo.subFileSystem("net.splitcells.martins.avots.website/src/main/resources/html")
                                 , "/net/splitcells/os/state/interface"

@@ -14,7 +14,7 @@
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 set -e
 ./bin/install.for.testing
-  . ~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin
+  . ~/bin/net.splitcells.shell.commands.managed/command.managed.export.bin
 projectFolder=$(pwd)
 	mkdir -p target/test
 	cd target/test

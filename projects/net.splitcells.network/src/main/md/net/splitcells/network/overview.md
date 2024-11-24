@@ -52,7 +52,7 @@ Project Cluster
 │   └── projects
 │       ├── net.splitcells.dem
 │       ├── net.splitcells.gel
-│       ├── net.splitcells.os.state.interface
+│       ├── net.splitcells.shell
 │       ├── net.splitcells.system
 │       └── ...
 ├── net.splitcells.network.log

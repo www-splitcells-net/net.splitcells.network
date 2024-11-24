@@ -3,7 +3,7 @@
 SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
-TODO Avoid listing sub projects at `~/.config/net.splitcells.os.state.interface/project.repositories.`
+TODO Avoid listing sub projects at `~/.config/net.splitcells.shell/project.repositories.`
      Use a special file in the root project instead.
      This would ease migrating the names of such sub projects.
 """
@@ -23,7 +23,7 @@ def currentFolder():
 class Command:
     def __init__(self
             , projectPath
-            , targetFolder = Path.home().joinpath('bin', 'net.splitcells.os.state.interface.commands.managed')
+            , targetFolder = Path.home().joinpath('bin', 'net.splitcells.shell.commands.managed')
             ):
         self.projectPath = PosixPath(projectPath)
         self.projectName = self.projectPath.name
@@ -66,7 +66,7 @@ if __name__ == '__main__':
         logging.basicConfig(format='%(message)s', level=logging.DEBUG)
     else:
         logging.basicConfig(format='%(message)s', level=logging.INFO)
-    parser = argparse.ArgumentParser(description='Installs projects command to ~/bin/net.splitcells.os.state.interface.commands.managed.')
+    parser = argparse.ArgumentParser(description='Installs projects command to ~/bin/net.splitcells.shell.commands.managed.')
     parser.add_argument('--project', nargs='?', type=str, help='Path to the project to be installed.')
     parsedArgs = parser.parse_args()
     if parsedArgs.project is None:
@@ -74,7 +74,7 @@ if __name__ == '__main__':
         # 'command.repositories.install'. The reason for this is, that a project repo cannot be installed
         # like and command repo in OSSI, because not every file in the src folder of project repo can be used
         # as an independent command.
-        repoConfig = PosixPath('~/.config/net.splitcells.os.state.interface/project.repositories').expanduser()
+        repoConfig = PosixPath('~/.config/net.splitcells.shell/project.repositories').expanduser()
         if repoConfig.exists():
             with open(repoConfig,'r') as projectRepositories:
                 for projectRepository in projectRepositories.read().splitlines():

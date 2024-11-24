@@ -17,10 +17,10 @@
 # TODO Document supported repository file structure.
 # Installs user commands.
 
-mkdir -p ~/bin/net.splitcells.os.state.interface.commands.managed
-find ~/bin/net.splitcells.os.state.interface.commands.managed -maxdepth 1 -type f -delete
+mkdir -p ~/bin/net.splitcells.shell.commands.managed
+find ~/bin/net.splitcells.shell.commands.managed -maxdepth 1 -type f -delete
 
-repoList=~/.config/net.splitcells.os.state.interface/command.repositories
+repoList=~/.config/net.splitcells.shell/command.repositories
 hasPrefix() { case $2 in "$1"*) true;; *) false;; esac; }
 bootstrapRepoProperty=$(head -n 1 $repoList)
 if hasPrefix 'repo=' "$bootstrapRepoProperty"; then
@@ -36,7 +36,7 @@ if hasPrefix 'repo=' "$bootstrapRepoProperty"; then
 	installer=$bootstrapRepo/src/main/python/command/managed/command.managed.install.py
 		chmod +x $installer
 		$installer $installer
-	chmod +x ~/bin/net.splitcells.os.state.interface.commands.managed/*
+	chmod +x ~/bin/net.splitcells.shell.commands.managed/*
 fi
 while IFS= read -r property
 do
@@ -61,7 +61,7 @@ do
 			find . -type f | sort -n | xargs -r -n 1 $installer
 			cd ..
 		fi
-		chmod +x ~/bin/net.splitcells.os.state.interface.commands.managed/*
+		chmod +x ~/bin/net.splitcells.shell.commands.managed/*
 		if [ -d ../doc/man1 ]; then
 			cd ../doc/man1
 			mkdir -p ~/bin/man/man1
@@ -69,16 +69,16 @@ do
 		fi
 	fi
 done < "$repoList"
-if test -d "$HOME/.config/net.splitcells.os.state.interface/src"; then
-	cd "$HOME/.config/net.splitcells.os.state.interface/src"
+if test -d "$HOME/.config/net.splitcells.shell/src"; then
+	cd "$HOME/.config/net.splitcells.shell/src"
 	find . -mindepth 1 -type f -exec command.managed.install {} \;
 fi
-if [[ ":$PATH:" == *":$HOME/bin/net.splitcells.os.state.interface.commands.managed:"* ]]; then
+if [[ ":$PATH:" == *":$HOME/bin/net.splitcells.shell.commands.managed:"* ]]; then
   exit
 else
-  echo "The commands were installed at '~/bin/net.splitcells.os.state.interface.commands.managed'."
+  echo "The commands were installed at '~/bin/net.splitcells.shell.commands.managed'."
   echo In order to use these, the folder needs to be added to the PATH variable.
   echo "One can edit the '~/.bashrc' automatically via the command"
-  echo "'~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.environment.configure.sh',"
+  echo "'~/bin/net.splitcells.shell.commands.managed/command.managed.environment.configure.sh',"
   echo in order to add the new folder to the PATH variable in new shells by default.
 fi

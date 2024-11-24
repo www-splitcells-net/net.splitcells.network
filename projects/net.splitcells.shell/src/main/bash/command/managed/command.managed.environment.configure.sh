@@ -21,8 +21,8 @@ else
 fi
 
 
-mkdir -p $userFolder/bin/net.splitcells.os.state.interface.commands.managed
-mkdir -p $userFolder/.config/net.splitcells.os.state.interface
+mkdir -p $userFolder/bin/net.splitcells.shell.commands.managed
+mkdir -p $userFolder/.config/net.splitcells.shell
 
 # Adds this framework's PATHs only to interactive shells.
 # Therefore only ".bashrc" is currently configured.
@@ -37,9 +37,9 @@ mkdir -p $userFolder/.config/net.splitcells.os.state.interface
 # but make it so, that dependency injection is optional and therefore this script also works without `command.managed.export`.
 
 touch $userFolder/.bashrc
-grep -q -F '. ~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin' $userFolder/.bashrc
+grep -q -F '. ~/bin/net.splitcells.shell.commands.managed/command.managed.export.bin' $userFolder/.bashrc
 if [ "$?" -ne "0" ]; then
-	echo '. ~/bin/net.splitcells.os.state.interface.commands.managed/command.managed.export.bin' >> $userFolder/.bashrc
+	echo '. ~/bin/net.splitcells.shell.commands.managed/command.managed.export.bin' >> $userFolder/.bashrc
 	echo '' >> $userFolder/.bashrc
 	echo You may need to restart the computer in order to access the installed programs.
 	echo At the very least you need to execute "'". ~/.bashrc"'" or open a new terminal in order to access these programs.

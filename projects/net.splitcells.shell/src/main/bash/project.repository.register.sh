@@ -15,7 +15,7 @@
 
 # Register repository for "command.managed.install.project.commands".
 
-configFolder=~/.config/net.splitcells.os.state.interface
+configFolder=~/.config/net.splitcells.shell
 mkdir -p $configFolder
 repoList=$configFolder/project.repositories
 touch $repoList

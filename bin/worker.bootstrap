@@ -9,11 +9,11 @@ test -d net.splitcells.network.hub || git clone --depth 1 https://codeberg.org/s
 
 cd ~/.local/state/net.splitcells.repos/public/net.splitcells.network
   bin/worker.repos.pull
-cd ~/.local/state/net.splitcells.repos/public/net.splitcells.network/projects/net.splitcells.os.state.interface
+cd ~/.local/state/net.splitcells.repos/public/net.splitcells.network/projects/net.splitcells.shell
   ./bin/install
 cd ~/.local/state/net.splitcells.repos/public/net.splitcells.network
   # TODO Install OSI not to a user folder, but to a folder inside the repo.
   # In other words, make an OSI installation independent from the user's home and default path settings.
   # TODO Register all projects via hub generically.
-  command.repository.register $(realpath ../net.splitcells.os.state.interface.lib.gpl.3)
+  command.repository.register $(realpath ../net.splitcells.shell.lib.gpl.3)
   user.bin.configure

@@ -14,12 +14,12 @@
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 set -e
 # Currently there is only one dependency test and therefore this test type only consists of one file.
-mkdir -p ~/.cache/net.splitcells.os.state.interface/testing
-    rm -rf ~/.cache/net.splitcells.os.state.interface/testing/*
-    cd ~/.cache/net.splitcells.os.state.interface/testing
+mkdir -p ~/.cache/net.splitcells.shell/testing
+    rm -rf ~/.cache/net.splitcells.shell/testing/*
+    cd ~/.cache/net.splitcells.shell/testing
 repo.clone.into.current.test > /dev/null 2>&1 || echo.error '"'repo.clone.into.current'"' has no valid implementation.
 command.managed.execute.test
 user.ssh.key.generate.test
 repos.process.test
 this.requires test.dependencies.0 && command.managed.execute conjunction test.dependencies
-rm -rf ~/.cache/net.splitcells.os.state.interface/testing
+rm -rf ~/.cache/net.splitcells.shell/testing

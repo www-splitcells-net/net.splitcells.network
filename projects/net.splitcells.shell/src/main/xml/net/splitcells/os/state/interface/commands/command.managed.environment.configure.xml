@@ -14,7 +14,7 @@
         Nothing is done, if this is already present.</paragraph>
     <list>
         <item>Creates a command folder, where commands will be installed by os state interface.
-            It is located at "~/bin/net.splitcells.os.state.interface.commands.managed"
+            It is located at "~/bin/net.splitcells.shell.commands.managed"
             by default or at &lt;arg&gt; if specified.</item>
         <item>Adds the new path via .bashrc to $PATH.</item>
     </list>

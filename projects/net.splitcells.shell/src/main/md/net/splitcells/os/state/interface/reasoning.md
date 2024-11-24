@@ -15,7 +15,7 @@ to implement dependency injection as it is implemented in this framework.
 
 Also I find it quite hard to change the state of the system fast and easy in Ansible:
 * Ansible: sudo ansible localhost -m package -a "name=xonotic state=present"
-* os.state.interface: package.install xonotic
+* shell: package.install xonotic
 
 Note that for most sh consoles autocomplete support for the command 'package.install' could be implemented as well with a reasonable amount of resources.
 In contrast this seems to be a complex task for the Ansible command.

@@ -21,7 +21,7 @@ def currentFolder():
 class Command:
 	def __init__(self
 			, commandPath
-			, targetFolder = Path.home().joinpath('bin', 'net.splitcells.os.state.interface.commands.managed')
+			, targetFolder = Path.home().joinpath('bin', 'net.splitcells.shell.commands.managed')
 			):
 		commandPosixPath = PosixPath(commandPath)
 		self.name = commandPosixPath.name

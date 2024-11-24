@@ -17,6 +17,6 @@
         This ensures the portability of user configurations.
         It also makes it possible to install the same set of commands on multiple computers,
         even if the computers require different configurations.
-        In this case the administrator has only to create the "~/.config/net.splitcells.os.state.interface/user.configure" command on each computer,
+        In this case the administrator has only to create the "~/.config/net.splitcells.shell/user.configure" command on each computer,
         that defines which configurations are required for each computer.</paragraph>
 </article>

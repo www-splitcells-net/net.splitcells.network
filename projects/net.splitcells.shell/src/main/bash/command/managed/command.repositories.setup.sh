@@ -16,10 +16,10 @@
 # TODO Document supported repository file structure.
 # Installs user commands and registers the installed commands to the PATH variable for new shells.
 
-mkdir -p ~/bin/net.splitcells.os.state.interface.commands.managed
-find ~/bin/net.splitcells.os.state.interface.commands.managed -maxdepth 1 -type f -delete
+mkdir -p ~/bin/net.splitcells.shell.commands.managed
+find ~/bin/net.splitcells.shell.commands.managed -maxdepth 1 -type f -delete
 
-repoList=~/.config/net.splitcells.os.state.interface/command.repositories
+repoList=~/.config/net.splitcells.shell/command.repositories
 hasPrefix() { case $2 in "$1"*) true;; *) false;; esac; }
 bootstrapRepoProperty=$(head -n 1 $repoList)
 if hasPrefix 'repo=' "$bootstrapRepoProperty"; then
@@ -38,7 +38,7 @@ if hasPrefix 'repo=' "$bootstrapRepoProperty"; then
 	installer=$bootstrapRepo/src/main/python/command/managed/command.managed.install.py
 		chmod +x $installer
 		$installer $installer
-	chmod +x ~/bin/net.splitcells.os.state.interface.commands.managed/*
+	chmod +x ~/bin/net.splitcells.shell.commands.managed/*
 fi
 while IFS= read -r property
 do
@@ -62,7 +62,7 @@ do
 			find . -type f | sort -n | xargs -r -n 1 $installer
 			cd ..
 		fi
-		chmod +x ~/bin/net.splitcells.os.state.interface.commands.managed/*
+		chmod +x ~/bin/net.splitcells.shell.commands.managed/*
 		if [ -d ../doc/man1 ]; then
 			cd ../doc/man1
 			mkdir -p ~/bin/man/man1
@@ -70,7 +70,7 @@ do
 		fi
 	fi
 done < "$repoList"
-if test -d "$HOME/.config/net.splitcells.os.state.interface/src"; then
-	cd "$HOME/.config/net.splitcells.os.state.interface/src"
+if test -d "$HOME/.config/net.splitcells.shell/src"; then
+	cd "$HOME/.config/net.splitcells.shell/src"
 	find . -mindepth 1 -type f -exec command.managed.install {} \;
 fi

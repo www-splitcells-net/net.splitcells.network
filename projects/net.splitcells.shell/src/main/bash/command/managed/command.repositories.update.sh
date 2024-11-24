@@ -15,7 +15,7 @@
 
 # Updates user command repositories.
 
-repoList=~/.config/net.splitcells.os.state.interface/command.repositories
+repoList=~/.config/net.splitcells.shell/command.repositories
 hasPrefix() { case $2 in "$1"*) true;; *) false;; esac; }
 while IFS= read -r property
 do

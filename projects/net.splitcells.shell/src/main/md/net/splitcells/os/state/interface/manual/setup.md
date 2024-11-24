@@ -16,7 +16,7 @@ Currently a bash compatible terminal and Python >= 3.7 is required.
 ## Most Compatible Setup Instructions
 ```sh
 git clone https://gitlab.com/splitcells/net.splitcells.network.git
-cd net.splitcells.network/projects/net.splitcells.os.state.interface
+cd net.splitcells.network/projects/net.splitcells.shell
 chmod +x ./bin/install
 ./bin/install
 ```
@@ -24,7 +24,7 @@ chmod +x ./bin/install
 ## Make based Installation
 ```sh
 git clone https://gitlab.com/splitcells/net.splitcells.network.git
-cd net.splitcells.network/projects/net.splitcells.os.state.interface
+cd net.splitcells.network/projects/net.splitcells.shell
 chmod +x ./configure
 ./configure
 make
@@ -55,11 +55,11 @@ command.repository.register $(pwd)
 user.bin.configure.sh
 ```
 
-The repo of OS state interface also contains such a project and is named `net.splitcells.os.state.interface.lib`.
+The repo of OS state interface also contains such a project and is named `net.splitcells.shell.lib`.
 It contains implementations, which depend on software, that can be linked without license issues (permissive licenses and weak copy left licenses).
 The project can be installed with the following commands:
 ```sh
-cd <main repo folder>/projects/net.splitcells.os.state.interface.lib
+cd <main repo folder>/projects/net.splitcells.shell.lib
 command.repository.register $(pwd)
 user.bin.configure.sh
 ```

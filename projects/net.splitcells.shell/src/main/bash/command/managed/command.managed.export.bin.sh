@@ -13,5 +13,5 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 export PATH="$HOME/bin:$PATH"
-export PATH="$HOME/bin/net.splitcells.os.state.interface.commands.managed:$PATH"
-export PATH="$HOME/bin/net.splitcells.os.state.interface.commands.disabled:$PATH"
+export PATH="$HOME/bin/net.splitcells.shell.commands.managed:$PATH"
+export PATH="$HOME/bin/net.splitcells.shell.commands.disabled:$PATH"
