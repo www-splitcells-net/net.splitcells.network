@@ -17,4 +17,5 @@ cd ~/.local/state/net.splitcells.repos/public/net.splitcells.network
   # TODO Register all projects via hub generically.
   . ~/bin/net.splitcells.shell.commands.managed/command.managed.export.bin
   command.repository.register $(realpath ../net.splitcells.shell.lib.gpl.v2)
+  command.repository.register $(realpath ../net.splitcells.shell.lib.gpl.v3)
   user.bin.configure
