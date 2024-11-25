@@ -19,7 +19,14 @@ public class JsonConfig {
     public static JsonConfig jsonConfig() {
         return new JsonConfig();
     }
+
     private boolean isTopElement = true;
+    /**
+     * This is true, if the current {@link Tree} is a direct child of an {@link Tree},
+     * that represents an array.
+     */
+    private boolean isArrayElement = false;
+
     private JsonConfig() {
 
     }
@@ -27,8 +34,18 @@ public class JsonConfig {
     public boolean isTopElement() {
         return isTopElement;
     }
+
     public JsonConfig withIsTopElement(boolean isTopElementArg) {
         isTopElement = isTopElementArg;
+        return this;
+    }
+
+    public boolean isArrayElement() {
+        return isArrayElement;
+    }
+
+    public JsonConfig withIsArrayElement(boolean arg) {
+        isArrayElement = arg;
         return this;
     }
 }

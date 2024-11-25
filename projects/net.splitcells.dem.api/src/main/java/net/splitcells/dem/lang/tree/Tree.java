@@ -29,8 +29,6 @@ import java.util.function.Consumer;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import static net.splitcells.dem.data.atom.Bools.require;
-import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
@@ -594,11 +592,13 @@ public interface Tree extends TreeView {
         return htmlList;
     }
 
+    /**
+     * TODO I think, this method is not required anymore.
+     *
+     * @return Returns a {@link Tree}, that is guaranteed to be printable like a JSON.
+     */
     default Tree createToJsonPrintable() {
-        if (name().isEmpty()) {
-            return this;
-        }
-        return tree("").withChild(this);
+        return this;
     }
 
     /**
@@ -624,84 +624,98 @@ public interface Tree extends TreeView {
     }
 
     /**
-     * Creates a JSON, where all primitive values are Strings.
+     * <p>Creates a JSON, where all primitive values are Strings.</p>
+     * <p>TODO Mabye the {@link NameSpaces#JSON} is incorrect.
+     * Maybe using dedicated JSON class for such would be better.</p>
+     * <p>The implementation is split into prefix, body and suffix parts.
+     * In this implementation only prefix and suffix parts xor the body part is allowed to determine,
+     * whether something is a array, dictionary or primitive in order to avoid duplicate code and thereby errors.
+     * Here the determination is done in the prefix and suffix parts,
+     * because for the very top level node, this determination needs to be done at the prefix level.</p>
      *
      * @return This is a JSON, representing the contents of this, whereby the {@link #nameSpace()} is ignored.
      */
     default String toJsonString(JsonConfig config) {
         final StringBuilder jsonString = new StringBuilder();
+        if (!config.isTopElement() && children().isEmpty()) {
+            return "\"" + encodeJsonString(name()) + "\"";
+        }
+        if (config.isTopElement() && children().isEmpty()) {
+            if (config.isArrayElement()) {
+                return "\"" + encodeJsonString(name()) + "\"";
+            }
+            return "[\"" + encodeJsonString(name()) + "\"]";
+        }
         if (children().isEmpty()) {
             jsonString.append("{\"" + encodeJsonString(name()) + "\":\"\"}");
         } else {
             boolean isNotFirstChild = false;
+            final var hasAnyPrimitiveValues = children().stream()
+                    .anyMatch(c -> c.children().isEmpty() || (c.nameSpace().equals(JSON) && c.name().equals("array") && name().isEmpty()));
             final var isJsonArray = nameSpace().equals(JSON) && "array".equals(name());
-            final var hasAnyPrimitiveValues = children().stream().anyMatch(c -> c.children().isEmpty());
-            final var isThisANamedDictionary = !hasAnyPrimitiveValues && !name().isEmpty();
-            if (hasAnyPrimitiveValues || isJsonArray) {
-                if (config.isTopElement()) {
-                    jsonString.append("[");
+            if (isJsonArray) {
+                jsonString.append("[");
+            } else if (hasAnyPrimitiveValues) {
+                if (config.isTopElement() || config.isArrayElement()) {
+                    jsonString.append("{\"");
                 } else {
-                    jsonString.append("\"" + encodeJsonString(name()) + "\": [");
+                    jsonString.append("\"");
+                }
+                if (containsOneJsonMember()) {
+                    jsonString.append(encodeJsonString(name()) + "\":");
+                } else {
+                    jsonString.append(encodeJsonString(name()) + "\":[");
                 }
             } else {
-                if (name().isEmpty()) {
-                    requireNot(isThisANamedDictionary);
-                    jsonString.append("{");
+                if (config.isTopElement() || config.isArrayElement()) {
+                    jsonString.append("{\"");
                 } else {
-                    require(isThisANamedDictionary);
-                    if (config.isTopElement()) {
-                        throw executionException("Top " + Tree.class.getSimpleName() + " is not allowed to have a name, as JSON does not support a name for the top element.");
-                    } else {
-                        jsonString.append("\"" + encodeJsonString(name()) + "\":{");
-                    }
+                    jsonString.append("\"");
+                }
+                if (containsOneJsonMember()) {
+                    jsonString.append(encodeJsonString(name()) + "\":");
+                } else {
+                    jsonString.append(encodeJsonString(name()) + "\":{");
                 }
             }
             for (final var child : children()) {
                 if (isNotFirstChild) {
                     jsonString.append(",");
                 }
-                if (child.children().size() == 1) {
-                    if (child.children().get(0).children().isEmpty()) {
-                        jsonString.append("\"" + encodeJsonString(child.name()) + "\":\"" + encodeJsonString(child.children().get(0).name()) + "\"");
-                    } else {
-                        if (child.hasAnyPrimitiveValues()) {
-                            jsonString.append("\"" + encodeJsonString(child.name()) + "\": ["
-                                    + child.children().stream()
-                                    .map(c -> c.toJsonString(jsonConfig().withIsTopElement(false)))
-                                    .reduce("", (a, b) -> a + b)
-                                    + "]");
-                        } else {
-                            jsonString.append("\"" + encodeJsonString(child.name()) + "\": {"
-                                    + child.children().stream()
-                                    .map(c -> c.toJsonString(jsonConfig().withIsTopElement(false)))
-                                    .reduce("", (a, b) -> a + b)
-                                    + "}");
-                        }
-                    }
-                } else if (child.children().isEmpty()) {
-                    require(hasAnyPrimitiveValues);
-                    jsonString.append("\"" + encodeJsonString(child.name()) + "\"");
-                } else {
-                    jsonString.append(child.toJsonString(jsonConfig().withIsTopElement(false)));
-                }
                 isNotFirstChild = true;
+                jsonString.append(child.toJsonString(jsonConfig()
+                        .withIsTopElement(false)
+                        .withIsArrayElement(isJsonArray)));
             }
-            if (hasAnyPrimitiveValues || isJsonArray) {
+            if (isJsonArray) {
                 jsonString.append("]");
+            } else if (hasAnyPrimitiveValues) {
+                if (!containsOneJsonMember()) {
+                    jsonString.append("]");
+                }
+                if (config.isTopElement() || config.isArrayElement()) {
+                    jsonString.append("}");
+                }
             } else {
-                if (isThisANamedDictionary) {
-                    if (config.isTopElement()) {
-                        jsonString.append("}}");
-                    } else {
-                        jsonString.append("}");
-                    }
-                } else {
+                if (!containsOneJsonMember()) {
+                    jsonString.append("}");
+                }
+                if (config.isTopElement() || config.isArrayElement()) {
                     jsonString.append("}");
                 }
             }
         }
-
         return jsonString.toString();
+    }
+
+    private boolean isJsonPrimitive() {
+        return children().isEmpty();
+    }
+
+    private boolean containsOneJsonMember() {
+        return children().size() == 1
+                && (children().get(0).children().isEmpty()
+                || (children().get(0).nameSpace().equals(JSON) && children().get(0).name().equals("array")));
     }
 
     default String toCommonMarkString() {

@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.lang.tree;
 
+import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
@@ -56,7 +57,17 @@ public class TreeTest {
                         .withChild(tree("path end")
                                 .withProperty("a", "b")
                                 .withProperty("b", "c")));
-        requireEquals(testSubject.toJsonString(), "{\"path start\": {\"path end\":{\"a\":\"b\",\"b\":\"c\"}}}");
+        requireEquals(testSubject.toJsonString(), "{\"\":{\"path start\":{\"path end\":{\"a\":\"b\",\"b\":\"c\"}}}}");
+    }
+
+    @UnitTest
+    public void testToJsonWithExplicitArray() {
+        final var testSubject = tree("").withChildren(
+                tree("array", JSON).withChildren(tree("1"))
+                , tree("children").withChild(tree("array", JSON).withChildren(tree("2")))
+                , tree("array", JSON).withChildren(tree("3"), tree("5"))
+        );
+        requireEquals(testSubject.toJsonString(), "{\"\":[[\"1\"],\"children\":[\"2\"],[\"3\",\"5\"]]}");
     }
 
     @UnitTest
@@ -65,7 +76,7 @@ public class TreeTest {
                 .withChild(tree("path start")
                         .withChild(tree("path end")
                                 .withChildren(tree("1"), tree("2"))));
-        requireEquals(testSubject.toJsonString(), "{\"path start\": {\"path end\": [\"1\",\"2\"]}}");
+        requireEquals(testSubject.toJsonString(), "{\"\":{\"path start\":{\"path end\":[\"1\",\"2\"]}}}");
     }
 
     @UnitTest
@@ -73,13 +84,13 @@ public class TreeTest {
         final var testSubject = tree("")
                 .withChild(tree("name")
                         .withChildren(tree("3"), tree("4")));
-        requireEquals(testSubject.toJsonString(), "{\"name\": [\"3\",\"4\"]}");
+        requireEquals(testSubject.toJsonString(), "{\"\":{\"name\":[\"3\",\"4\"]}}");
     }
 
     @UnitTest
     public void testEncodeJsonString() {
         final var testSubject = tree("").withChild(tree("\\\n\r\t\""));
-        requireEquals(testSubject.toJsonString(), "[\"\\\\\\n\\r\\t\\\"\"]");
+        requireEquals(testSubject.toJsonString(), "{\"\":\"\\\\\\n\\r\\t\\\"\"}");
     }
 
     @UnitTest
@@ -88,7 +99,7 @@ public class TreeTest {
                 .withChild(tree("1\n"))
                 .withChild(tree("2\r"))
                 .withChild(tree("3"));
-        requireEquals(testSubject.toJsonString(), "[\"1\\n\",\"2\\r\",\"3\"]");
+        requireEquals(testSubject.toJsonString(), "{\"\":[\"1\\n\",\"2\\r\",\"3\"]}");
     }
 
     @UnitTest
@@ -97,7 +108,7 @@ public class TreeTest {
                 .withProperty("1", "2\n")
                 .withProperty("3", "4")
                 .withProperty("4", "5\r");
-        requireEquals(testSubject.toJsonString(), "{\"1\":\"2\\n\",\"3\":\"4\",\"4\":\"5\\r\"}");
+        requireEquals(testSubject.toJsonString(), "{\"\":{\"1\":\"2\\n\",\"3\":\"4\",\"4\":\"5\\r\"}}");
     }
 
     @UnitTest
@@ -107,7 +118,7 @@ public class TreeTest {
                         .withProperty("1", "2")
                         .withProperty("3", "4")
                         .withProperty("4", "5"));
-        requireEquals(testSubject.toJsonString(), "{\"name\\r\\n\":{\"1\":\"2\",\"3\":\"4\",\"4\":\"5\"}}");
+        requireEquals(testSubject.toJsonString(), "{\"\":{\"name\\r\\n\":{\"1\":\"2\",\"3\":\"4\",\"4\":\"5\"}}}");
     }
 
     @UnitTest
@@ -119,7 +130,7 @@ public class TreeTest {
                         .withProperty("c", "d\n")
                 )
                 .withProperty("3", "4");
-        requireEquals(testSubject.toJsonString(), "{\"1\":\"2\",\"test\":{\"a\":\"b\\r\",\"c\":\"d\\n\"},\"3\":\"4\"}");
+        requireEquals(testSubject.toJsonString(), "{\"\":{\"1\":\"2\",\"test\":{\"a\":\"b\\r\",\"c\":\"d\\n\"},\"3\":\"4\"}}");
     }
 
     @UnitTest

@@ -32,6 +32,6 @@ public class ServerLoggerTest {
             results.storage().requireEqualityTo(list("[\"2\"]"));
             testSubject.append(tree("object").withProperty("attribute", "value"), LogLevel.WARNING);
         }
-        results.storage().requireEqualityTo(list("[\"2\"]", "{\"object\": {\"attribute\": [\"value\"]}}"));
+        results.storage().requireEqualityTo(list("[\"2\"]", "{\"object\":{\"attribute\":\"value\"}}"));
     }
 }
