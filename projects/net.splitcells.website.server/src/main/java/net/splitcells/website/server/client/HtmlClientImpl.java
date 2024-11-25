@@ -134,6 +134,7 @@ public class HtmlClientImpl implements HtmlClient {
     @Override
     public void close() {
         openTabs.forEach(Page::close);
+        browser.close();
         playwright.close();
     }
 
