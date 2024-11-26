@@ -628,7 +628,11 @@ public interface Tree extends TreeView {
     /**
      * <p>Creates a JSON, where all primitive values are Strings.</p>
      * <p>TODO Mabye the {@link NameSpaces#JSON} is incorrect.
-     * Maybe using dedicated JSON class for such would be better.</p>
+     * Maybe using dedicated JSON class for such would be better.
+     * On the other hand, this provides a way to process and transform all kind of AST like things
+     * via one data structure like XSLT does.
+     * This is needed for the web server, in order to migrate from XSLT to Java code,
+     * as XSLT is not portable legacy software, because related software gets slowly out of date.</p>
      * <p>The implementation is split into prefix, body and suffix parts.
      * In this implementation only prefix and suffix parts xor the body part is allowed to determine,
      * whether something is a array, dictionary or primitive in order to avoid duplicate code and thereby errors.
