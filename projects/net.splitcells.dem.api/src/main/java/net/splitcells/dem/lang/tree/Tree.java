@@ -68,6 +68,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public interface Tree extends TreeView {
 
     Pattern _VALID_XML_NAME = Pattern.compile("[a-zA-Z][a-zA-Z0-9-_\\.]*");
+    static String JSON_ARRAY = "array";
     static String JSON_OBJECT = "object";
 
     List<Tree> children();
@@ -652,9 +653,8 @@ public interface Tree extends TreeView {
         } else {
             boolean isNotFirstChild = false;
             final var hasAnyPrimitiveValues = children().stream()
-                    .anyMatch(c -> c.children().isEmpty() || (c.nameSpace().equals(JSON) && c.name().equals("array") && name().isEmpty()));
-            final var isJsonArray = nameSpace().equals(JSON) && "array".equals(name());
-            if (isJsonArray) {
+                    .anyMatch(c -> c.children().isEmpty() || (c.nameSpace().equals(JSON) && c.name().equals(JSON_ARRAY)));
+            final var isJsonArray = nameSpace().equals(JSON) && name().equals(JSON_ARRAY);
             final var isJsonDictionary = nameSpace().equals(JSON) && name().equals(JSON_OBJECT);
             if (isJsonDictionary) {
                 if (hasAnyPrimitiveValues) {
