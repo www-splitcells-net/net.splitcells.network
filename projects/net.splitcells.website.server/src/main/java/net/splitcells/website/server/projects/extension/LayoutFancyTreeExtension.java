@@ -84,10 +84,14 @@ public class LayoutFancyTreeExtension implements ProjectsRendererExtension {
     }
 
     private Tree asFancyTreeJsonRecursion(Tree layout) {
-        return tree(JSON_OBJECT, JSON).withProperty("title", layout.name())
-                .withProperty("children"
-                        , tree(JSON_ARRAY, JSON).withChildren
-                                (layout.children().stream().map(c -> asFancyTreeJsonRecursion(c)).toList()));
+        final var result = tree(JSON_OBJECT, JSON).withProperty("title", layout.name());
+        if (layout.children().hasElements()) {
+            result.withProperty("folder", "true")
+                    .withProperty("children"
+                            , tree(JSON_ARRAY, JSON).withChildren
+                                    (layout.children().stream().map(c -> asFancyTreeJsonRecursion(c)).toList()));
+        }
+        return result;
     }
 
     /**
