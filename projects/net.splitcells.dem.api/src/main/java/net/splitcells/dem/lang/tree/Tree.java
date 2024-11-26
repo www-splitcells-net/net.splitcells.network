@@ -68,6 +68,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public interface Tree extends TreeView {
 
     Pattern _VALID_XML_NAME = Pattern.compile("[a-zA-Z][a-zA-Z0-9-_\\.]*");
+    static String JSON_OBJECT = "object";
 
     List<Tree> children();
 
@@ -654,6 +655,13 @@ public interface Tree extends TreeView {
                     .anyMatch(c -> c.children().isEmpty() || (c.nameSpace().equals(JSON) && c.name().equals("array") && name().isEmpty()));
             final var isJsonArray = nameSpace().equals(JSON) && "array".equals(name());
             if (isJsonArray) {
+            final var isJsonDictionary = nameSpace().equals(JSON) && name().equals(JSON_OBJECT);
+            if (isJsonDictionary) {
+                if (hasAnyPrimitiveValues) {
+                    throw executionException("JSON objects are not allowed to contain primitive values like arrays have. JSON objects are only allowed to have name/value pairs.");
+                }
+                jsonString.append("{");
+            } else if (isJsonArray) {
                 jsonString.append("[");
             } else if (hasAnyPrimitiveValues) {
                 if (config.isTopElement() || config.isArrayElement()) {
@@ -687,7 +695,9 @@ public interface Tree extends TreeView {
                         .withIsTopElement(false)
                         .withIsArrayElement(isJsonArray)));
             }
-            if (isJsonArray) {
+            if (isJsonDictionary) {
+                jsonString.append("}");
+            } else if (isJsonArray) {
                 jsonString.append("]");
             } else if (hasAnyPrimitiveValues) {
                 if (!containsOneJsonMember()) {

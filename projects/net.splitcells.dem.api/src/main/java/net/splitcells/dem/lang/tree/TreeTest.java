@@ -19,6 +19,8 @@ import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
+import static net.splitcells.dem.lang.tree.Tree.JSON_ARRAY;
+import static net.splitcells.dem.lang.tree.Tree.JSON_OBJECT;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
@@ -63,11 +65,20 @@ public class TreeTest {
     @UnitTest
     public void testToJsonWithExplicitArray() {
         final var testSubject = tree("").withChildren(
-                tree("array", JSON).withChildren(tree("1"))
-                , tree("children").withChild(tree("array", JSON).withChildren(tree("2")))
-                , tree("array", JSON).withChildren(tree("3"), tree("5"))
+                tree(JSON_ARRAY, JSON).withChildren(tree("1"))
+                , tree("children").withChild(tree(JSON_ARRAY, JSON).withChildren(tree("2")))
+                , tree(JSON_ARRAY, JSON).withChildren(tree("3"), tree("5"))
         );
         requireEquals(testSubject.toJsonString(), "{\"\":[[\"1\"],\"children\":[\"2\"],[\"3\",\"5\"]]}");
+    }
+
+    @UnitTest
+    public void testToJsonWithExplicitObject() {
+        final var testSubject = tree(JSON_OBJECT, JSON).withChildren(
+                tree(JSON_OBJECT, JSON).withChildren(tree("1").withChild(tree("2")))
+                , tree("4").withChild(tree("5"))
+        );
+        requireEquals(testSubject.toJsonString(), "{{\"1\":\"2\"},\"4\":\"5\"}");
     }
 
     @UnitTest
