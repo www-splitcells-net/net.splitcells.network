@@ -70,6 +70,7 @@ public interface Tree extends TreeView {
     Pattern _VALID_XML_NAME = Pattern.compile("[a-zA-Z][a-zA-Z0-9-_\\.]*");
     static String JSON_ARRAY = "array";
     static String JSON_OBJECT = "object";
+    static String JSON_TRUE = "true";
 
     List<Tree> children();
 
@@ -599,12 +600,15 @@ public interface Tree extends TreeView {
      *
      * @return Returns a {@link Tree}, that is guaranteed to be printable like a JSON.
      */
+    @Deprecated
     default Tree createToJsonPrintable() {
         return this;
     }
 
     /**
-     * TODO IDEA Consider speeding this up, by caching the {@link JsonConfig}.
+     * <p>This method should be able to create a JSON string for any {@link Tree},
+     * as long as any usage of {@link NameSpaces#JSON} is correct.</p>
+     * <p>TODO IDEA Consider speeding this up, by caching the {@link JsonConfig}.</p>
      *
      * @return
      */
