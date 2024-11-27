@@ -32,7 +32,7 @@
         <jacoco.overall.exec>${maven.multiModuleProjectDirectory}/target/jacoco-aggregate/jacoco.exec</jacoco.overall.exec>
     </properties>
     <build>
-        <finalName>${groupId}.${artifactId}-${project.version}</finalName>
+        <finalName>${project.groupId}.${project.artifactId}-${project.version}</finalName>
         <sourceDirectory>src/main/java</sourceDirectory>
         <testSourceDirectory>src/main/java</testSourceDirectory>
         <plugins>
