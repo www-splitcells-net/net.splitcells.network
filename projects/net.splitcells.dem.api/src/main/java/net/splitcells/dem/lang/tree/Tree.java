@@ -71,6 +71,7 @@ public interface Tree extends TreeView {
     static String JSON_ARRAY = "array";
     static String JSON_OBJECT = "object";
     static String JSON_TRUE = "true";
+    static String JSON_FALSE = "false";
 
     List<Tree> children();
 
@@ -630,6 +631,28 @@ public interface Tree extends TreeView {
     }
 
     /**
+     *
+     * @param config
+     * @return A JSON String that represents part or a complete JSON document.
+     * If this is classified as a JSON primitive value, the returned String is a partial JSON document.
+     * Otherwise, it is a complete JSON document.
+     */
+    default String toJsonValue(JsonConfig config) {
+        if (children().hasElements()) {
+            return toJsonString(config);
+        }
+        if (nameSpace().equals(JSON)) {
+            if (name().equals(JSON_TRUE)) {
+                return "true";
+            }
+            if (name().equals(JSON_FALSE)) {
+                return "false";
+            }
+        }
+        return "\"" + encodeJsonString(name()) + "\"";
+    }
+
+    /**
      * <p>Creates a JSON, where all primitive values are Strings.</p>
      * <p>TODO Mabye the {@link NameSpaces#JSON} is incorrect.
      * Maybe using dedicated JSON class for such would be better.
@@ -699,7 +722,7 @@ public interface Tree extends TreeView {
                     jsonString.append(",");
                 }
                 isNotFirstChild = true;
-                jsonString.append(child.toJsonString(jsonConfig()
+                jsonString.append(child.toJsonValue(jsonConfig()
                         .withIsTopElement(false)
                         .withIsArrayElement(isJsonArray)));
             }
