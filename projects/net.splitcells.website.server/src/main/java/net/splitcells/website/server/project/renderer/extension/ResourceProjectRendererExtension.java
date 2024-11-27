@@ -57,6 +57,8 @@ public class ResourceProjectRendererExtension implements ProjectRendererExtensio
                 format = ContentType.JS.codeName();
             } else if (path.endsWith(".txt")) {
                 format = ContentType.TEXT.codeName();
+            } else if (path.endsWith(".json")) {
+                format = ContentType.JSON.codeName();
             } else {
                 format = HTML_TEXT.codeName();
             }
