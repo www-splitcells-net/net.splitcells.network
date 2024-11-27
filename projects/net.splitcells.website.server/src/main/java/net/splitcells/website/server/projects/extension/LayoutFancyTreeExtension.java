@@ -36,8 +36,7 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.JSON;
-import static net.splitcells.dem.lang.tree.Tree.JSON_ARRAY;
-import static net.splitcells.dem.lang.tree.Tree.JSON_OBJECT;
+import static net.splitcells.dem.lang.tree.Tree.*;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.utils.StringUtils.stringBuilder;
@@ -86,7 +85,7 @@ public class LayoutFancyTreeExtension implements ProjectsRendererExtension {
     private Tree asFancyTreeJsonRecursion(Tree layout) {
         final var result = tree(JSON_OBJECT, JSON).withProperty("title", layout.name());
         if (layout.children().hasElements()) {
-            result.withProperty("folder", "true")
+            result.withProperty("folder", tree(JSON_TRUE, JSON))
                     .withProperty("children"
                             , tree(JSON_ARRAY, JSON).withChildren
                                     (layout.children().stream().map(c -> asFancyTreeJsonRecursion(c)).toList()));
