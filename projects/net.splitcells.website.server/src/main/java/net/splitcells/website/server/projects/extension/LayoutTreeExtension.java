@@ -58,7 +58,7 @@ public class LayoutTreeExtension implements ProjectsRendererExtension {
             final var layout = tree("layout");
             projectsRendererI.projectsPaths().forEach(p -> layout.extendWith(list(p.toString().split("/"))));
             return projectsRendererI.renderContent
-                    ("<div class=\"net-splitcells-website-tree-interactive\" source-path=\""
+                    ("<div class=\"net-splitcells-website-tree-interactive\" source-path=\"/"
                                     + LayoutFancyTreeExtension.PATH.unixPathString()
                                     + "\" xmlns=\"http://www.w3.org/1999/xhtml\"><ol>"
                                     + layout.asXhtmlList(false)
