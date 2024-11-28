@@ -24,7 +24,9 @@ public enum ContentType {
     , TEXT("text/plain")
     , XML("application/xml")
     , ZIP("application/zip")
-    , JSON("application/json");
+    , JSON("application/json")
+    , GIF("image/gif")
+    ;
     private final String codeName;
 
     ContentType(String codeName) {
