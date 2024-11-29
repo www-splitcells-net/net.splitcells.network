@@ -16,6 +16,7 @@
 package net.splitcells.website.server.projects.extension;
 
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.namespace.NameSpace;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.tree.Tree;
@@ -79,16 +80,34 @@ public class LayoutFancyTreeExtension implements ProjectsRendererExtension {
      * that represents a tree formatted for the framework Javascript based HTML framework Fancytree.
      */
     private String asFancyTreeJson(Tree layout) {
-        return "[" + asFancyTreeJsonRecursion(layout).toJsonString() + "]";
+        return "["
+                + layout.children().stream()
+                .map(c -> asFancyTreeJsonRecursion(c, list()).toJsonString())
+                .reduce((a, b) -> a + "," + b)
+                .orElse("")
+                + "]";
     }
 
-    private Tree asFancyTreeJsonRecursion(Tree layout) {
-        final var result = tree(JSON_OBJECT, JSON).withProperty("title", layout.name());
+    private Tree asFancyTreeJsonRecursion(Tree layout, List<String> parentPath) {
+        final String title;
+        if (layout.name().contains(".")) {
+            title = layout.name()
+                    + " <a href=\""
+                    + parentPath.stream().reduce("", (a, b) -> a + "/" + b)
+                    + "/" + layout.name()
+                    + "\"> (link)</a>";
+        } else {
+            title = layout.name();
+        }
+        final var result = tree(JSON_OBJECT, JSON).withProperty("title", title);
         if (layout.children().hasElements()) {
             result.withProperty("folder", tree(JSON_TRUE, JSON))
                     .withProperty("children"
                             , tree(JSON_ARRAY, JSON).withChildren
-                                    (layout.children().stream().map(c -> asFancyTreeJsonRecursion(c)).toList()));
+                                    (layout.children().stream().map(c ->
+                                                    asFancyTreeJsonRecursion(c
+                                                            , parentPath.shallowCopy().withAppended(layout.name())))
+                                            .toList()));
         }
         return result;
     }
