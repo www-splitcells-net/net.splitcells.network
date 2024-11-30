@@ -2,14 +2,18 @@
 """
 SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+
+TODO IDEA Provide option to install commands to a custom folder,
+     so that the installation does not have to change the users dotfiles.
+     This way the installation is compatible to more environments and therefore more portable.
+TODO Create tests.
+TODO PERFORMANCE compile to C via https://cython.org/.
 """
 
 __author__ = "Mārtiņš Avots"
 __authors__ = ["and other"]
 __copyright__ = "Copyright 2021"
 __license__ = "EPL-2.0 OR GPL-2.0-or-later"
-# TODO Create tests.
-# TODO PERFORMANCE compile to C via https://cython.org/.
 import argparse
 from pathlib import Path
 from pathlib import PosixPath
