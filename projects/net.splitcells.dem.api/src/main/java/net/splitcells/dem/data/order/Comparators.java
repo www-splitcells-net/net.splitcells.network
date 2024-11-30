@@ -70,7 +70,7 @@ public class Comparators<T> implements Comparison<T> {
     }
 
     public static <T> Comparison<T> comparator(BiFunction<T, T, Ordering> comparator) {
-        return new Comparison<T>() {
+        return new Comparison<>() {
             @Override
             public Ordering compareTo(T a, T b) {
                 return comparator.apply(a, b);
