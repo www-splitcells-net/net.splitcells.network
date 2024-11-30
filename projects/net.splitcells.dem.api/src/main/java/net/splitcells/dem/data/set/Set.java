@@ -100,10 +100,8 @@ public interface Set<T> extends java.util.Set<T>, SetT<T> {
 
     @Override
     default boolean remove(Object arg) {
-        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
-            if (!contains(arg)) {
-                throw executionException("" + arg);
-            }
+        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY && !contains(arg)) {
+            throw executionException("" + arg);
         }
         ensureRemoved((T) arg);
         return true;
