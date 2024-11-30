@@ -25,11 +25,11 @@ import java.util.Optional;
 @JavaLegacyArtifact
 public class SetLegacyWrapper<T> implements Set<T> {
     public static <R> Set<R> setLegacyWrapper(java.util.Set<R> arg) {
-        return new SetLegacyWrapper<R>(arg, Optional.empty());
+        return new SetLegacyWrapper<>(arg, Optional.empty());
     }
 
     public static <R> Set<R> setLegacyWrapper(java.util.Set<R> arg, boolean isDeterministic) {
-        return new SetLegacyWrapper<R>(arg, Optional.of(isDeterministic));
+        return new SetLegacyWrapper<>(arg, Optional.of(isDeterministic));
     }
 
     public static <R> Set<R> setLegacyWrapper() {
