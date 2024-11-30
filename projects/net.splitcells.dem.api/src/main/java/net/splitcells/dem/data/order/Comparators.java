@@ -98,8 +98,8 @@ public class Comparators<T> implements Comparison<T> {
 
     @Override
     public boolean equals(Object arg) {
-        if (arg != null && arg instanceof Comparators) {
-            return this.comparator.equals(((Comparators) arg).comparator);
+        if (arg instanceof Comparators<?> comparators) {
+            return this.comparator.equals(comparators.comparator);
         }
         return false;
     }
