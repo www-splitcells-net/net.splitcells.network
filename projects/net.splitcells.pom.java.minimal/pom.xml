@@ -50,6 +50,36 @@
             <timezone>Europe/Berlin</timezone>
         </developer>
     </developers>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>1.5.0</version>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <!-- This is used, in order to write the value of $revision inside the version tag.
+                                Otherwise, the string `${revision}` will be literally written into the created POM,
+                                which would also be present in the local and remote m2-Repos.
+                                This in turn would make it impossible to build a module
+                                without building the whole project. -->
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
     <profiles>
         <profile>
             <activation>

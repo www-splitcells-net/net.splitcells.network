@@ -108,32 +108,6 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>flatten-maven-plugin</artifactId>
-                <version>1.5.0</version>
-                <executions>
-                    <execution>
-                        <id>flatten</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <!-- This is used, in order to write the value of $revision inside the version tag.
-                                Otherwise, the string `${revision}` will be literally written into the created POM,
-                                which would also be present in the local and remote m2-Repos.
-                                This in turn would make it impossible to build a module
-                                without building the whole project. -->
-                            <goal>flatten</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>flatten.clean</id>
-                        <phase>clean</phase>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <!-- CreateS Javadoc and ensures, that JavaDoc is always correct.
                 This is specially important for links to other classes, methods, etc. inside JavaDocs. -->
                 <groupId>org.apache.maven.plugins</groupId>
@@ -195,10 +169,10 @@
     </dependencies>
     <profiles>
         <profile>
-            <id>deployable-jar-folder</id>
+            <id>net-splitcells-pom-java-defaults-deployable-jar-folder</id>
             <activation>
                 <property>
-                    <name>!deployable-jar-folder</name>
+                    <name>net-splitcells-pom-java-defaults-deployable-jar-folder</name>
                 </property>
             </activation>
             <build>
@@ -244,30 +218,6 @@
                         </executions>
                     </plugin>
 
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>deployable-jar</id>
-            <activation>
-                <property>
-                    <name>deployable_jar</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-dependency-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>copy-dependencies</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
                 </plugins>
             </build>
         </profile>
