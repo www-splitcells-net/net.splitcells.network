@@ -39,7 +39,7 @@ public interface SetWA<T> {
 	@SuppressWarnings("unchecked")
 	@ReturnsThis
 	default <R extends SetWA<T>> R addAll(java.util.Collection<T> values) {
-		values.forEach((value) -> add(value));
+		values.forEach(value -> add(value));
 		return (R) this;
 	}
 
