@@ -35,6 +35,7 @@ class Command:
             self._installProjectCommand(projectCommand.name, self._projectCommandContent('./bin/' + projectCommand.name + ' $@'))
         self._installDefaultCommand('repo.gui')
         self._installDefaultCustomCommand('build', 'mvn clean install')
+        self._installDefaultCustomCommand('shell', '$SHELL')
     def _installDefaultCustomCommand(self, name, command):
         binFile = self.binFolder.joinpath(name)
         if not binFile.exists():
