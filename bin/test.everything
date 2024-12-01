@@ -3,4 +3,3 @@
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 bin/test.minimal
 bin/test.extensive
-bin/test.side.effects
