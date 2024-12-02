@@ -169,59 +169,6 @@
     </dependencies>
     <profiles>
         <profile>
-            <id>net-splitcells-pom-java-defaults-deployable-jar-folder</id>
-            <activation>
-                <property>
-                    <name>net-splitcells-pom-java-defaults-deployable-jar-folder</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-dependency-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>deployable-jar-folder-dependency-copy</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>copy-dependencies</goal>
-                                </goals>
-                                <configuration>
-                                    <outputDirectory>${project.build.directory}/deployable-jars</outputDirectory>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-resources-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>copy-files-on-build</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>copy-resources</goal>
-                                </goals>
-                                <configuration>
-                                    <outputDirectory>${project.build.directory}/deployable-jars</outputDirectory>
-                                    <resources>
-                                        <resource>
-                                            <directory>${project.build.directory}</directory>
-                                            <includes>
-                                                <include>${project.build.finalName}.jar</include>
-                                            </includes>
-                                        </resource>
-                                    </resources>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                </plugins>
-            </build>
-        </profile>
-        <profile>
             <id>uber-jar</id>
             <activation>
                 <property>

@@ -21,6 +21,7 @@
         <module>projects/net.splitcells.pom.java.minimal</module>
         <module>projects/net.splitcells.maven.plugin.resource.list</module>
         <module>projects/net.splitcells.pom.java.defaults</module>
+        <module>projects/net.splitcells.pom.java.deployable</module>
         <module>projects/net.splitcells.dem.api</module>
         <module>projects/net.splitcells.dem.ext</module>
         <module>projects/net.splitcells.dem.source</module>
