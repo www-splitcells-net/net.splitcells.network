@@ -18,6 +18,7 @@ package net.splitcells.gel.data.view.column;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.gel.data.lookup.LookupTables.lookupTable;
 import static net.splitcells.gel.data.table.Tables.table;
 
 import java.util.Collection;
@@ -210,10 +211,14 @@ public class ColumnI<T> implements Column<T> {
 
     @Override
     public View lookup(Predicate<T> predicate) {
-        final var lookup = table(view.headerView2());
+        final var lookupBasePath = view.path();
+        if (lookupBasePath.hasElements()) {
+            lookupBasePath.removeAt(lookupBasePath.size() - 1);
+        }
+        final var lookup = lookupTable(view, attribute);
         view.unorderedLinesStream()
                 .filter(l -> predicate.test(l.value(attribute)))
-                .forEach(lookup::add);
+                .forEach(lookup::register);
         return lookup;
     }
 }
