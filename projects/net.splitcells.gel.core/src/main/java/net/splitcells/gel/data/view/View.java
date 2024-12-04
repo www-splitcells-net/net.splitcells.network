@@ -264,6 +264,10 @@ public interface View extends Discoverable, Domable, Identifiable {
         return columnView(attribute).persistedLookup(value);
     }
 
+    default <T> View lookup(Attribute<T> attribute, T value) {
+        return columnView(attribute).lookup(value);
+    }
+
     /**
      * TODO RENAME
      */
