@@ -21,7 +21,9 @@ import net.splitcells.gel.data.view.View;
 /**
  * <p>Provides a view to a subset of a {@link View} as a {@link View}.
  * By default, the {@link PersistedLookupView} is empty.
- * {@link Line} has to be removed via {@link #register(Line)} and {@link #removeRegistration(Line)}.</p>
+ * Every {@link Line} has to be manually added via {@link #register(Line)}
+ * or manually removed  via {@link #removeRegistration(Line)}.
+ * See {@link Lookup} for automated synchronization.</p>
  */
 public interface PersistedLookupView extends View {
 
