@@ -20,7 +20,7 @@ import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 
 import static net.splitcells.dem.Dem.configValue;
-import static net.splitcells.gel.data.lookup.LookupView.lookupTableFactory;
+import static net.splitcells.gel.data.lookup.PersistedLookupView.lookupTableFactory;
 
 public class LookupTables implements Option<LookupTableFactory> {
     @Override
@@ -28,15 +28,15 @@ public class LookupTables implements Option<LookupTableFactory> {
         return lookupTableFactory();
     }
 
-    public static LookupView lookupTable(View view, String name) {
+    public static PersistedLookupView lookupTable(View view, String name) {
         return configValue(LookupTables.class).lookupTable(view, name);
     }
 
-    public static LookupView lookupTable(View view, Attribute<?> attribute) {
+    public static PersistedLookupView lookupTable(View view, Attribute<?> attribute) {
         return configValue(LookupTables.class).lookupTable(view, attribute);
     }
 
-    public static LookupView lookupTable(View view, Attribute<?> attribute, boolean cacheRawLines) {
+    public static PersistedLookupView lookupTable(View view, Attribute<?> attribute, boolean cacheRawLines) {
         return configValue(LookupTables.class).lookupTable(view, attribute, cacheRawLines);
     }
 }

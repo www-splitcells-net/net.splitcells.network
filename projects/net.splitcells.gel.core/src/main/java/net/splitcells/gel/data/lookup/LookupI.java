@@ -44,16 +44,16 @@ public class LookupI<T> implements Lookup<T> {
      */
     private static final boolean EXPERIMENTAL_SPEED_UP = false;
 
-    public static <T> Lookup<T> lookupI(View view, Attribute<T> attribute) {
+    public static <T> Lookup<T> persistedLookupI(View view, Attribute<T> attribute) {
         return new LookupI<>(view, attribute);
     }
 
-    private final LookupView lookupTable;
+    private final PersistedLookupView lookupTable;
 
     private final View view;
-    private final Map<T, LookupView> content = map();
+    private final Map<T, PersistedLookupView> content = map();
     private final Attribute<T> attribute;
-    private final Map<Predicate<T>, LookupView> complexContent = map();
+    private final Map<Predicate<T>, PersistedLookupView> complexContent = map();
 
     private LookupI(View view, Attribute<T> attribute) {
         this.view = view;
@@ -68,7 +68,7 @@ public class LookupI<T> implements Lookup<T> {
             require(view.rawLinesView().size() > index);
         }
         {
-            final LookupView lookupTable;
+            final PersistedLookupView lookupTable;
             if (content.containsKey(addition)) {
                 lookupTable = content.get(addition);
             } else {

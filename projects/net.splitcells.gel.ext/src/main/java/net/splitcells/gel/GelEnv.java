@@ -20,7 +20,6 @@ import net.splitcells.dem.ProcessResult;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.gel.data.table.TableMetaAspect;
 import net.splitcells.gel.data.table.Tables;
-import net.splitcells.gel.data.lookup.LookupIFactory;
 import net.splitcells.gel.data.lookup.Lookups;
 import net.splitcells.gel.solution.SolutionAspect;
 import net.splitcells.gel.solution.Solutions;
@@ -62,8 +61,7 @@ public final class GelEnv {
     public static Consumer<Environment> standardDeveloperConfigurator() {
         return env -> {
             env.config()
-                    .withConfigValue(Histories.class, new HistoryRefFactory())
-                    .withConfigValue(Lookups.class, new LookupIFactory());
+                    .withConfigValue(Histories.class, new HistoryRefFactory());
             env.config().configValue(Tables.class).withAspect(TableMetaAspect::databaseIRef);
             env.config().configValue(Solutions.class).withAspect(SolutionAspect::solutionAspect);
         };

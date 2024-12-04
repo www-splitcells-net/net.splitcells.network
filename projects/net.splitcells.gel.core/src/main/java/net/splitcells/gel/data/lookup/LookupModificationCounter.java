@@ -32,7 +32,7 @@ public class LookupModificationCounter implements Option<MetaCounter> {
     @Override
     public MetaCounter defaultValue() {
         final var metaCounter = metaCounter(discoverable(TableModificationCounter.class));
-        configValue(LookupTables.class).withAspect(LookupViewModificationCounterAspect::lookupViewModificationCounterAspect);
+        configValue(LookupTables.class).withAspect(PersistedLookupViewModificationCounterAspect::lookupViewModificationCounterAspect);
         ObjectsRenderer.registerObject(new CsvRenderer() {
             @Override
             public String renderCsv() {

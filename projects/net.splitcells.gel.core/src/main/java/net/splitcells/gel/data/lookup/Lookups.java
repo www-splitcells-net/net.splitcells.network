@@ -15,18 +15,18 @@
  */
 package net.splitcells.gel.data.lookup;
 
-import net.splitcells.dem.environment.resource.ResourceOptionI;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 
-import static net.splitcells.gel.data.lookup.LookupI.lookupI;
+import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
+import static net.splitcells.gel.data.lookup.LookupI.persistedLookupI;
 
-public class Lookups extends ResourceOptionI<LookupFactory> {
-    public Lookups() {
-        super(() -> new LookupIFactory());
+public class Lookups {
+    private Lookups() {
+        throw constructorIllegal();
     }
 
-    public static <R> Lookup<R> lookup(View view, Attribute<R> attribute) {
-        return lookupI(view, attribute);
+    public static <R> Lookup<R> persistedLookup(View view, Attribute<R> attribute) {
+        return persistedLookupI(view, attribute);
     }
 }

@@ -20,13 +20,13 @@ import net.splitcells.gel.data.view.View;
 
 /**
  * <p>Provides a view to a subset of a {@link View} as a {@link View}.
- * By default, the {@link LookupView} is empty.
+ * By default, the {@link PersistedLookupView} is empty.
  * {@link Line} has to be removed via {@link #register(Line)} and {@link #removeRegistration(Line)}.</p>
  */
-public interface LookupView extends View {
+public interface PersistedLookupView extends View {
 
     static LookupTableFactory lookupTableFactory() {
-        return LookupViewI.lookupTableFactory();
+        return PersistedLookupViewI.lookupTableFactory();
     }
 
     void register(Line line);

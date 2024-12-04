@@ -57,7 +57,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
  * <p>TODO Test runtime improvements by {@link #USE_EXPERIMENTAL_RUNTIME_IMPROVEMENTS},
  * {@link #USE_EXPERIMENTAL_RAW_LINE_CACHE} and {@link #USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE}.</p>
  */
-public class LookupViewI implements LookupView {
+public class PersistedLookupViewI implements PersistedLookupView {
     private static final boolean USE_EXPERIMENTAL_RUNTIME_IMPROVEMENTS = true;
     private static final boolean USE_EXPERIMENTAL_RAW_LINE_CACHE = true;
     private static final boolean USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE = true;
@@ -74,63 +74,63 @@ public class LookupViewI implements LookupView {
     public static LookupTableFactory lookupTableFactory() {
         return new LookupTableFactory() {
             @Override
-            public AspectOrientedConstructor<LookupView> withAspect(Function<LookupView, LookupView> aspect) {
+            public AspectOrientedConstructor<PersistedLookupView> withAspect(Function<PersistedLookupView, PersistedLookupView> aspect) {
                 return aspects.withAspect(aspect);
             }
 
             @Override
-            public LookupView joinAspects(LookupView arg) {
+            public PersistedLookupView joinAspects(PersistedLookupView arg) {
                 return aspects.joinAspects(arg);
             }
 
-            private final AspectOrientedConstructorBase<LookupView> aspects = aspectOrientedConstructor();
-            private final ConnectingConstructor<LookupView> connector = connectingConstructor();
+            private final AspectOrientedConstructorBase<PersistedLookupView> aspects = aspectOrientedConstructor();
+            private final ConnectingConstructor<PersistedLookupView> connector = connectingConstructor();
 
             @Override
-            public ConnectingConstructor<LookupView> withConnector(Consumer<LookupView> connector) {
+            public ConnectingConstructor<PersistedLookupView> withConnector(Consumer<PersistedLookupView> connector) {
                 this.connector.withConnector(connector);
                 return this;
             }
 
             @Override
-            public LookupView connect(LookupView subject) {
+            public PersistedLookupView connect(PersistedLookupView subject) {
                 return connector.connect(joinAspects(subject));
             }
 
             @Override
-            public LookupView lookupTable(View view, String name) {
-                return connector.connect(joinAspects(LookupViewI.lookupTable(view, name)));
+            public PersistedLookupView lookupTable(View view, String name) {
+                return connector.connect(joinAspects(PersistedLookupViewI.lookupTable(view, name)));
             }
 
             @Override
-            public LookupView lookupTable(View view, Attribute<?> attribute) {
-                return connector.connect(joinAspects(LookupViewI.lookupTable(view, attribute)));
+            public PersistedLookupView lookupTable(View view, Attribute<?> attribute) {
+                return connector.connect(joinAspects(PersistedLookupViewI.lookupTable(view, attribute)));
             }
 
             @Override
-            public LookupView lookupTable(View view, Attribute<?> attribute, boolean cacheRawLines) {
-                return connector.connect(joinAspects(LookupViewI.lookupTable(view, attribute, cacheRawLines)));
+            public PersistedLookupView lookupTable(View view, Attribute<?> attribute, boolean cacheRawLines) {
+                return connector.connect(joinAspects(PersistedLookupViewI.lookupTable(view, attribute, cacheRawLines)));
             }
         };
     }
 
-    private static LookupView lookupTable(View view, String name) {
-        return new LookupViewI(view, name, USE_EXPERIMENTAL_RAW_LINE_CACHE);
+    private static PersistedLookupView lookupTable(View view, String name) {
+        return new PersistedLookupViewI(view, name, USE_EXPERIMENTAL_RAW_LINE_CACHE);
     }
 
-    private static LookupView lookupTable(View view, Attribute<?> attribute) {
-        return new LookupViewI(view, attribute.name(), USE_EXPERIMENTAL_RAW_LINE_CACHE);
+    private static PersistedLookupView lookupTable(View view, Attribute<?> attribute) {
+        return new PersistedLookupViewI(view, attribute.name(), USE_EXPERIMENTAL_RAW_LINE_CACHE);
     }
 
-    private static LookupView lookupTable(View view, Attribute<?> attribute, boolean cacheRawLines) {
-        return new LookupViewI(view, attribute.name(), cacheRawLines);
+    private static PersistedLookupView lookupTable(View view, Attribute<?> attribute, boolean cacheRawLines) {
+        return new PersistedLookupViewI(view, attribute.name(), cacheRawLines);
     }
 
-    private LookupViewI(View view, String name) {
+    private PersistedLookupViewI(View view, String name) {
         this(view, name, USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE);
     }
 
-    private LookupViewI(View view, String name, boolean useExperimentalRawLineCache) {
+    private PersistedLookupViewI(View view, String name, boolean useExperimentalRawLineCache) {
         this.viewView = view;
         this.name = name;
         lookupColumns = view.headerView().stream()
@@ -345,13 +345,13 @@ public class LookupViewI implements LookupView {
     @Override
     public List<String> path() {
         final var path = viewView.path();
-        path.add(LookupView.class.getSimpleName() + "(" + name + ")");
+        path.add(PersistedLookupView.class.getSimpleName() + "(" + name + ")");
         return path;
     }
 
     @Override
     public Tree toTree() {
-        final var rVal = tree(LookupView.class.getSimpleName());
+        final var rVal = tree(PersistedLookupView.class.getSimpleName());
         // REMOVE
         rVal.withProperty("hashCode", "" + hashCode());
         rVal.withProperty("subject", path().toString());
@@ -365,7 +365,7 @@ public class LookupViewI implements LookupView {
 
     @Override
     public String toString() {
-        return LookupView.class.getSimpleName() + path().toString();
+        return PersistedLookupView.class.getSimpleName() + path().toString();
     }
 
     @Override

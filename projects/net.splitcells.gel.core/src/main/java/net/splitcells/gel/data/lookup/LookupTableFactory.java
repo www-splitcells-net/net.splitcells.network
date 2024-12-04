@@ -21,21 +21,21 @@ import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 
-public interface LookupTableFactory extends ConnectingConstructor<LookupView>, AspectOrientedConstructor<LookupView> {
+public interface LookupTableFactory extends ConnectingConstructor<PersistedLookupView>, AspectOrientedConstructor<PersistedLookupView> {
 
     /**
      * @param view The {@link View} on which the lookup will be performed.
-     * @param name  This is the name of the {@link LookupView} being constructed.
-     * @return An instance, where no {@link Line} of {@link View} is {@link LookupView#register(Line)}.
+     * @param name  This is the name of the {@link PersistedLookupView} being constructed.
+     * @return An instance, where no {@link Line} of {@link View} is {@link PersistedLookupView#register(Line)}.
      */
-    LookupView lookupTable(View view, String name);
+    PersistedLookupView lookupTable(View view, String name);
 
     /**
      * @param view     The {@link View} on which the lookup will be performed.
      * @param attribute The {@link Attribute}, that will be looked up.
-     * @return An instance, where no {@link Line} of {@link View} is {@link LookupView#register(Line)}.
+     * @return An instance, where no {@link Line} of {@link View} is {@link PersistedLookupView#register(Line)}.
      */
-    LookupView lookupTable(View view, Attribute<?> attribute);
+    PersistedLookupView lookupTable(View view, Attribute<?> attribute);
 
-    LookupView lookupTable(View view, Attribute<?> attribute, boolean cacheRawLines);
+    PersistedLookupView lookupTable(View view, Attribute<?> attribute, boolean cacheRawLines);
 }

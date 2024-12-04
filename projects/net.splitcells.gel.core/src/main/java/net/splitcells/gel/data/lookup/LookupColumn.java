@@ -35,15 +35,15 @@ import net.splitcells.gel.data.view.column.Column;
 
 public class LookupColumn<T> implements Column<T> {
 
-    private final LookupView table;
+    private final PersistedLookupView table;
     private Optional<Lookup<T>> lookup = Optional.empty();
     private final Attribute<T> attribute;
 
-    public static <T> LookupColumn<T> lookupColumn(LookupView table, Attribute<T> attribute) {
+    public static <T> LookupColumn<T> lookupColumn(PersistedLookupView table, Attribute<T> attribute) {
         return new LookupColumn<>(table, attribute);
     }
 
-    private LookupColumn(LookupView table, Attribute<T> attribute) {
+    private LookupColumn(PersistedLookupView table, Attribute<T> attribute) {
         this.table = table;
         this.attribute = attribute;
     }
@@ -167,7 +167,7 @@ public class LookupColumn<T> implements Column<T> {
 
     private void ensureInitializedLookup() {
         if (!lookup.isPresent()) {
-            lookup = Optional.of(Lookups.lookup(table, attribute));
+            lookup = Optional.of(Lookups.persistedLookup(table, attribute));
         }
     }
 

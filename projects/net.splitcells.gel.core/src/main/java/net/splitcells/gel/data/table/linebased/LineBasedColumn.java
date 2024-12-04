@@ -192,7 +192,7 @@ public class LineBasedColumn<T> implements Column<T> {
 
     private Lookup<T> ensureInitializedLookup() {
         if (lookup.isEmpty()) {
-            lookup = Optional.of(Lookups.lookup(view, attribute.attribute()));
+            lookup = Optional.of(Lookups.persistedLookup(view, attribute.attribute()));
         }
         return lookup.get();
     }

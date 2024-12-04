@@ -9,6 +9,8 @@
   1. Rename `LookupComponents#lookup` to `LookupComponents#persistedLookup`.
   2. Define new `LookupComponents#lookup` methods, that returns a lookup,
     that may be persisted or not.
+  3. Delete LookupFactory and LookupIFactory, as it was not needed.
+  4. Rename Lookup related implementations to PersistedLookup implementations.
 * **2024-10-28 \#51** Make Table naming more logical and consistent with public communities like SQL.
   1. Rename Table to View in order to avoid confusion.
   2. Rename Database to Table in order to avoid confusion.
