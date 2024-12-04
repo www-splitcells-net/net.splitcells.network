@@ -167,7 +167,7 @@ public class LookupColumn<T> implements Column<T> {
 
     private void ensureInitializedLookup() {
         if (!lookup.isPresent()) {
-            lookup = Optional.of(Lookups.persistedLookup(table, attribute));
+            lookup = Optional.of(Lookups.lookup(table, attribute));
         }
     }
 
@@ -181,6 +181,18 @@ public class LookupColumn<T> implements Column<T> {
     public View persistedLookup(Predicate<T> predicate) {
         ensureInitializedLookup();
         return lookup.get().persistedLookup(predicate);
+    }
+
+    @Override
+    public View lookup(T value) {
+        ensureInitializedLookup();
+        return lookup.get().lookup(value);
+    }
+
+    @Override
+    public View lookup(Predicate<T> predicate) {
+        ensureInitializedLookup();
+        return lookup.get().lookup(predicate);
     }
 
     @Override
