@@ -150,12 +150,12 @@ public class ColumnViewI<T> implements ColumnView<T> {
     }
 
     @Override
-    public View lookup(T value) {
-        return column.lookup(value);
+    public View persistedLookup(T value) {
+        return column.persistedLookup(value);
     }
 
     @Override
-    public View lookup(Predicate<T> selector) {
-        return column.lookup(selector);
+    public View persistedLookup(Predicate<T> selector) {
+        return column.persistedLookup(selector);
     }
 }

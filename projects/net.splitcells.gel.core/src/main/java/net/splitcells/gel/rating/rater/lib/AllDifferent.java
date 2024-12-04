@@ -70,7 +70,7 @@ public class AllDifferent<T> implements Rater {
     public RatingEvent ratingAfterAddition(View lines, Line addition, List<Constraint> children
             , View ratingsBeforeAddition) {
         final T value = addition.value(Constraint.LINE).value(attribute);
-        final var group = lines.columnView(Constraint.LINE).lookup(predicate(value));
+        final var group = lines.columnView(Constraint.LINE).persistedLookup(predicate(value));
         final var ratingEvent = ratingEvent();
         if (1 == group.size()) {
             ratingEvent.additions().put(
@@ -114,7 +114,7 @@ public class AllDifferent<T> implements Rater {
     public RatingEvent rating_before_removal(View lines, Line removal, List<Constraint> children
             , View ratingsBeforeRemoval) {
         final T value = removal.value(Constraint.LINE).value(attribute);
-        final var group = lines.columnView(Constraint.LINE).lookup(predicate(value));
+        final var group = lines.columnView(Constraint.LINE).persistedLookup(predicate(value));
         final var ratingEvent = ratingEvent();
         if (1 == group.size()) {
             // Before removal there was 1 duplication and now there is now duplicate lines

@@ -383,7 +383,7 @@ public class SchoolCourseSchedulingTest {
                     solution.columnView(COURSE_ID).values().stream().distinct()
                             .forEach(e -> allocatedCourses.put(e, setOfUniques()));
                     allocatedCourses.keySet().forEach(course -> allocatedCourses.get(course)
-                            .addAll(solution.columnView(COURSE_ID).lookup(course).unorderedLines()));
+                            .addAll(solution.columnView(COURSE_ID).persistedLookup(course).unorderedLines()));
                     final var allocatedCourseHours = Maps.<Integer, Integer>map();
                     allocatedCourses.keySet().forEach(course -> {
                         allocatedCourseHours.put(course
@@ -396,7 +396,7 @@ public class SchoolCourseSchedulingTest {
                     solution.demands().columnView(COURSE_ID).values().stream().distinct()
                             .forEach(e -> allCourses.put(e, setOfUniques()));
                     allCourses.keySet().forEach(course -> allCourses.get(course)
-                            .addAll(solution.demands().columnView(COURSE_ID).lookup(course).unorderedLines()));
+                            .addAll(solution.demands().columnView(COURSE_ID).persistedLookup(course).unorderedLines()));
                     final var targetedCourseHours = Maps.<Integer, Integer>map();
                     allCourses.keySet().forEach(course
                             -> targetedCourseHours.put(course
@@ -406,7 +406,7 @@ public class SchoolCourseSchedulingTest {
                                     .value(COURSE_LENGTH)));
                     final var freeNulls = solution.suppliesFree()
                             .columnView(ALLOCATED_HOURS)
-                            .lookup(0)
+                            .persistedLookup(0)
                             .unorderedLines();
                     final Map<Integer, List<Line>> freeSuppliesByAllocatedHours = map();
                     solution.suppliesFree()
@@ -823,7 +823,7 @@ public class SchoolCourseSchedulingTest {
             @Override
             public void registerBeforeRemoval(Line line) {
                 supplies.columnView(COURSE_ID)
-                        .lookup(line.value(COURSE_ID))
+                        .persistedLookup(line.value(COURSE_ID))
                         .unorderedLines()
                         .forEach(supplies::remove);
             }

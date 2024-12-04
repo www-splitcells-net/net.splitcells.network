@@ -51,7 +51,7 @@ public class Then implements Constraint {
 
     private static final BiFunction<ConstraintBasedOnLocalGroupsAI, Report, String> LOCAL_NATURAL_ARGUMENTATION = (constraint, report) -> {
         return "Then " + constraint.rater().toSimpleDescription(report.line()
-                , constraint.lineProcessing().columnView(Constraint.INCOMING_CONSTRAINT_GROUP).lookup(report.group())
+                , constraint.lineProcessing().columnView(Constraint.INCOMING_CONSTRAINT_GROUP).persistedLookup(report.group())
                 , report.group());
     };
 

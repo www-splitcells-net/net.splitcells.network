@@ -175,12 +175,12 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         processRatingEvent(
                 rater.ratingAfterAddition(
                         lines.columnView(INCOMING_CONSTRAINT_GROUP)
-                                .lookup(incomingGroup)
+                                .persistedLookup(incomingGroup)
                         , addition
                         , childrenView()
                         , lineProcessing
                                 .columnView(INCOMING_CONSTRAINT_GROUP)
-                                .lookup(incomingGroup)));
+                                .persistedLookup(incomingGroup)));
         if (ENFORCING_UNIT_CONSISTENCY) {
             describedBool(lineProcessing.demandsUsed().contains(addition)
                     , "The rater did not provide a rating to the added line.")
@@ -206,25 +206,25 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
     public void processLinesBeforeRemoval(GroupId incomingGroup, Line removal) {
         processRatingEvent(
                 rater.rating_before_removal(
-                        lines.columnView(INCOMING_CONSTRAINT_GROUP).lookup(incomingGroup)
+                        lines.columnView(INCOMING_CONSTRAINT_GROUP).persistedLookup(incomingGroup)
                         , lines.columnView(INCOMING_CONSTRAINT_GROUP)
-                                .lookup(incomingGroup)
+                                .persistedLookup(incomingGroup)
                                 .columnView(LINE)
-                                .lookup(removal)
+                                .persistedLookup(removal)
                                 .unorderedLinesStream()
                                 .findFirst()
                                 .orElseThrow()
                         , childrenView()
-                        , lineProcessing.columnView(INCOMING_CONSTRAINT_GROUP).lookup(incomingGroup)));
+                        , lineProcessing.columnView(INCOMING_CONSTRAINT_GROUP).persistedLookup(incomingGroup)));
         final var suppliesToRemove = lineProcessing.suppliesFree().unorderedLinesStream().collect(toList());
         suppliesToRemove.forEach(freeSupply -> results.remove(freeSupply));
     }
 
     public void processLinesAfterRemoval(GroupId incomingGroup) {
         processRatingEvent(rater.ratingAfterRemoval(
-                lines.columnView(INCOMING_CONSTRAINT_GROUP).lookup(incomingGroup)
+                lines.columnView(INCOMING_CONSTRAINT_GROUP).persistedLookup(incomingGroup)
                 , childrenView()
-                , lineProcessing.columnView(INCOMING_CONSTRAINT_GROUP).lookup(incomingGroup)));
+                , lineProcessing.columnView(INCOMING_CONSTRAINT_GROUP).persistedLookup(incomingGroup)));
         final var suppliesToRemove = lineProcessing.suppliesFree().unorderedLinesStream().collect(toList());
         suppliesToRemove.forEach(freeSupply -> results.remove(freeSupply));
     }
@@ -276,9 +276,9 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         if (ENFORCING_UNIT_CONSISTENCY) {
             // TODO The runtime performance of this check is bad, when many lines are present (i.e. > 10_000).
             lines.columnView(INCOMING_CONSTRAINT_GROUP)
-                    .lookup(injectionGroup)
+                    .persistedLookup(injectionGroup)
                     .columnView(LINE)
-                    .lookup(addition)
+                    .persistedLookup(addition)
                     .unorderedLines()
                     .requireEmpty();
         }
@@ -293,9 +293,9 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         }
         processLinesBeforeRemoval(injectionGroup, removal);
         lineProcessing.columnView(INCOMING_CONSTRAINT_GROUP)
-                .lookup(injectionGroup)
+                .persistedLookup(injectionGroup)
                 .columnView(LINE)
-                .lookup(removal)
+                .persistedLookup(removal)
                 .unorderedLinesStream()
                 .forEach(lineProcessing::remove);
         lines.lookup(LINE, removal)
@@ -503,7 +503,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
             final var ratings = tree("ratings");
             dom.withChild(ratings);
             lineProcessing.columnView(INCOMING_CONSTRAINT_GROUP)
-                    .lookup(injectionGroup())
+                    .persistedLookup(injectionGroup())
                     .unorderedLines()
                     .forEach(line -> ratings.withChild(line.toTree()));
         }
@@ -529,7 +529,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
             groups.forEach(group ->
                     lineProcessing
                             .columnView(INCOMING_CONSTRAINT_GROUP)
-                            .lookup(group)
+                            .persistedLookup(group)
                             .unorderedLines().
                             forEach(line -> ratings.withChild(line.toTree())));
         }
@@ -539,7 +539,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
                                 groups.stream().
                                         map(group -> lineProcessing
                                                 .columnView(INCOMING_CONSTRAINT_GROUP)
-                                                .lookup(group)
+                                                .persistedLookup(group)
                                                 .unorderedLines()
                                                 .stream()
                                                 .map(groupLines -> groupLines.value(RESULTING_CONSTRAINT_GROUP))
@@ -554,9 +554,9 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         final var localNaturalArgumentation
                 = lineProcessing
                 .columnView(LINE)
-                .lookup(line)
+                .persistedLookup(line)
                 .columnView(INCOMING_CONSTRAINT_GROUP)
-                .lookup(group)
+                .persistedLookup(group)
                 .unorderedLines()
                 .stream()
                 .filter(allocation -> allocationSelector
@@ -576,7 +576,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
     public Optional<Tree> naturalArgumentation(GroupId group) {
         final var naturalArgumentation = lineProcessing
                 .columnView(INCOMING_CONSTRAINT_GROUP)
-                .lookup(group)
+                .persistedLookup(group)
                 .unorderedLines()
                 .stream()
                 .map(allocation -> allocation.value(LINE))
@@ -612,9 +612,9 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
             (Line line, GroupId group, Predicate<AllocationRating> allocationSelector) {
         return lineProcessing
                 .columnView(LINE)
-                .lookup(line)
+                .persistedLookup(line)
                 .columnView(INCOMING_CONSTRAINT_GROUP)
-                .lookup(group)
+                .persistedLookup(group)
                 .unorderedLines()
                 .stream()
                 .filter(allocation

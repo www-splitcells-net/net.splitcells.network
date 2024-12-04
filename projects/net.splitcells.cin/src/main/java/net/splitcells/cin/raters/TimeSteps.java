@@ -158,14 +158,14 @@ public class TimeSteps implements Rater {
                                     , localRating));
                 } else {
                     linesOfGroup.columnView(LINE)
-                            .lookup(l -> l.value(timeAttribute).equals(startTime))
+                            .persistedLookup(l -> l.value(timeAttribute).equals(startTime))
                             .unorderedLinesStream()
                             .filter(l -> l.index() != addition.index())
                             .forEach(l -> {
                                 rating.updateRating_withReplacement(l, localRating);
                             });
                     linesOfGroup.columnView(LINE)
-                            .lookup(l -> l.value(timeAttribute).equals(endTime))
+                            .persistedLookup(l -> l.value(timeAttribute).equals(endTime))
                             .unorderedLinesStream()
                             .filter(l -> l.index() != addition.index())
                             .forEach(l -> {
@@ -244,7 +244,7 @@ public class TimeSteps implements Rater {
             } else {
                 linesOfGroup
                         .columnView(LINE)
-                        .lookup(l -> l.value(timeAttribute).equals(startTime))
+                        .persistedLookup(l -> l.value(timeAttribute).equals(startTime))
                         .unorderedLinesStream()
                         .forEach(l -> rating.updateRating_withReplacement(l, localRating()
                                 .withPropagationTo(children)
@@ -252,7 +252,7 @@ public class TimeSteps implements Rater {
                                 .withResultingGroupId(noTimeStepGroups.get(incomingGroup))));
                 linesOfGroup
                         .columnView(LINE)
-                        .lookup(l -> l.value(timeAttribute).equals(startTime + 1))
+                        .persistedLookup(l -> l.value(timeAttribute).equals(startTime + 1))
                         .unorderedLinesStream()
                         .forEach(l -> rating.updateRating_withReplacement(l, localRating()
                                 .withPropagationTo(children)

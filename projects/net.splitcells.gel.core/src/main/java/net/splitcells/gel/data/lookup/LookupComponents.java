@@ -17,10 +17,27 @@ package net.splitcells.gel.data.lookup;
 
 import java.util.function.Predicate;
 
+import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
+import net.splitcells.gel.data.view.column.Column;
 
 public interface LookupComponents<T> {
-	View lookup(T value);
+	/**
+	 *
+	 * @param value The value, that each selected line should contain.
+	 * @return Returns a {@link View}, where one or more {@link Column} contain only the provided value.
+	 * The choice of {@link Column} for this is determined by the implementor.
+	 * The returned {@link View} is automatically updated,
+	 * when the underlying {@link View} is updated.
+	 */
+	View persistedLookup(T value);
 
-	View lookup(Predicate<T> predicate);
+	/**
+	 *
+	 * @param predicate States which lines to select by returning true for such.
+	 * @return Returns a {@link View}, where all {@link Line} comply with the predicate.
+	 * The returned {@link View} is automatically updated,
+	 * when the underlying {@link View} is updated.
+	 */
+	View persistedLookup(Predicate<T> predicate);
 }

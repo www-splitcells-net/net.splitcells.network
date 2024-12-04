@@ -20,7 +20,7 @@ import java.util.function.Predicate;
 import net.splitcells.gel.data.assignment.Assignments;
 
 public interface AllocationLookupComponents<T> extends LookupComponents<T> {
-	Assignments lookup(T value);
+	Assignments persistedLookup(T value);
 
-	Assignments lookup(Predicate<T> predicate);
+	Assignments persistedLookup(Predicate<T> predicate);
 }

@@ -5,6 +5,7 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2024-12-02 \#55** Rename `LookupComponents#lookup` to `LookupComponents#persistedLookup`.
 * **2024-10-28 \#51** Make Table naming more logical and consistent with public communities like SQL.
   1. Rename Table to View in order to avoid confusion.
   2. Rename Database to Table in order to avoid confusion.

@@ -122,7 +122,7 @@ public class LookupI<T> implements Lookup<T> {
     }
 
     @Override
-    public View lookup(T value) {
+    public View persistedLookup(T value) {
         if (content.containsKey(value)) {
             return content.get(value);
         }
@@ -130,7 +130,7 @@ public class LookupI<T> implements Lookup<T> {
     }
 
     @Override
-    public View lookup(Predicate<T> predicate) {
+    public View persistedLookup(Predicate<T> predicate) {
         if (!complexContent.containsKey(predicate)) {
             final var lookup = LookupTables.lookupTable(view, predicate.toString());
             complexContent.put(predicate, lookup);

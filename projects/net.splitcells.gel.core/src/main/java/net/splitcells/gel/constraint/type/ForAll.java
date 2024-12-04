@@ -58,17 +58,17 @@ public class ForAll implements Constraint {
                 return raterBasedOnGrouping.get().classifier().toSimpleDescription(report.line()
                         , constraint.lineProcessing()
                                 .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
-                                .lookup(report.group())
+                                .persistedLookup(report.group())
                         , report.group());
             }
         }
         if (constraint.rater().type().equals(ForAllAttributeValues.class)) {
             return constraint.rater().toSimpleDescription(report.line()
-                    , constraint.lineProcessing().columnView(Constraint.INCOMING_CONSTRAINT_GROUP).lookup(report.group())
+                    , constraint.lineProcessing().columnView(Constraint.INCOMING_CONSTRAINT_GROUP).persistedLookup(report.group())
                     , report.group());
         } else {
             return "For all " + constraint.rater().toSimpleDescription(report.line()
-                    , constraint.lineProcessing().columnView(Constraint.INCOMING_CONSTRAINT_GROUP).lookup(report.group())
+                    , constraint.lineProcessing().columnView(Constraint.INCOMING_CONSTRAINT_GROUP).persistedLookup(report.group())
                     , report.group());
         }
     };

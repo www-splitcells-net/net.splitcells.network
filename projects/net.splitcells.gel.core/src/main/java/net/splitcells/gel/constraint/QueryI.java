@@ -180,7 +180,7 @@ public class QueryI implements Query, QueryEditor {
                         (currentConstraint
                                 .lineProcessing()
                                 .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
-                                .lookup(group)
+                                .persistedLookup(group)
                                 .columnView(Constraint.RESULTING_CONSTRAINT_GROUP)
                                 .values());
             }
@@ -222,7 +222,7 @@ public class QueryI implements Query, QueryEditor {
                 resultingGroup.addAll(
                         currentConstraint.lineProcessing()
                                 .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
-                                .lookup(group)
+                                .persistedLookup(group)
                                 .columnView(Constraint.RESULTING_CONSTRAINT_GROUP)
                                 .values());
             }
@@ -281,7 +281,7 @@ public class QueryI implements Query, QueryEditor {
                 resultingGroups.addAll(
                         currentConstraint.lineProcessing()
                                 .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
-                                .lookup(group)
+                                .persistedLookup(group)
                                 .columnView(Constraint.RESULTING_CONSTRAINT_GROUP)
                                 .values());
             }
@@ -328,7 +328,7 @@ public class QueryI implements Query, QueryEditor {
                 resultingGroups.addAll(
                         currentConstraint.lineProcessing()
                                 .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
-                                .lookup(groups)
+                                .persistedLookup(groups)
                                 .columnView(Constraint.RESULTING_CONSTRAINT_GROUP)
                                 .values());
             }

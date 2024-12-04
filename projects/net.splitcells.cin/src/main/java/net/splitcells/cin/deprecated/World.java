@@ -236,9 +236,9 @@ public class World {
 
     private static Optional<Line> retrievePosition(View lines, int positionX, int positionY) {
         return lines.columnView(POSITION_X)
-                .lookup(positionX)
+                .persistedLookup(positionX)
                 .columnView(POSITION_Y)
-                .lookup(positionY)
+                .persistedLookup(positionY)
                 .unorderedLines()
                 .lastValue();
     }

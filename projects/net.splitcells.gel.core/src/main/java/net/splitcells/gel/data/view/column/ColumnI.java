@@ -176,15 +176,15 @@ public class ColumnI<T> implements Column<T> {
 	}
 
 	@Override
-	public View lookup(T value) {
+	public View persistedLookup(T value) {
 		ensureInitializedLookup();
-		return lookup.get().lookup(value);
+		return lookup.get().persistedLookup(value);
 	}
 
 	@Override
-	public View lookup(Predicate<T> predicate) {
+	public View persistedLookup(Predicate<T> predicate) {
 		ensureInitializedLookup();
-		return lookup.get().lookup(predicate);
+		return lookup.get().persistedLookup(predicate);
 	}
 
 	@Override

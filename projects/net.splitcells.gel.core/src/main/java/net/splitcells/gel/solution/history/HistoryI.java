@@ -224,13 +224,13 @@ public class HistoryI implements History {
         synchronizes = true;
         if (ENFORCING_UNIT_CONSISTENCY) {
             assignments.columnView(ALLOCATION_ID)
-                    .lookup(assignments.size() - 1)
+                    .persistedLookup(assignments.size() - 1)
                     .unorderedLines()
                     .requireSizeOf(1);
         }
         final var index = assignments.size() - 1;
         final var eventToRemove = assignments.columnView(ALLOCATION_ID)
-                .lookup(index)
+                .persistedLookup(index)
                 .unorderedLinesStream()
                 .findFirst()
                 .orElseThrow()
@@ -255,13 +255,13 @@ public class HistoryI implements History {
         if (ENFORCING_UNIT_CONSISTENCY) {
             assignments.unorderedLines().requireSizeOf(index + 1);
             try {
-                assignments.columnView(ALLOCATION_ID).lookup(index + 1).unorderedLines().requireEmptySet();
-                assignments.columnView(ALLOCATION_ID).lookup(index).unorderedLines().requireSizeOf(1);
+                assignments.columnView(ALLOCATION_ID).persistedLookup(index + 1).unorderedLines().requireEmptySet();
+                assignments.columnView(ALLOCATION_ID).persistedLookup(index).unorderedLines().requireSizeOf(1);
             } catch (Throwable t) {
                 throw new RuntimeException(t);
             }
         }
-        removal_(assignments.columnView(ALLOCATION_ID).lookup(index).unorderedLinesStream().findFirst().orElseThrow());
+        removal_(assignments.columnView(ALLOCATION_ID).persistedLookup(index).unorderedLinesStream().findFirst().orElseThrow());
     }
 
     /**

@@ -357,12 +357,12 @@ public class TimeStepsTest {
                             .orElseThrow();
                     testSubject.constraint().childrenView().get(0).lineProcessing()
                             .columnView(RESULTING_CONSTRAINT_GROUP)
-                            .lookup(noTimeStepGroup)
+                            .persistedLookup(noTimeStepGroup)
                             .unorderedLines()
                             .requireSizeOf(0);
                     testSubject.constraint().childrenView().get(0).lineProcessing()
                             .columnView(RESULTING_CONSTRAINT_GROUP)
-                            .lookup(oneToTwo)
+                            .persistedLookup(oneToTwo)
                             .unorderedLines()
                             .requireSizeOf(34);
                     onlineLinearDeinitializer().optimize(testSubject);

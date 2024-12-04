@@ -40,11 +40,9 @@ import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
-import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.resource.ConnectingConstructor;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.data.table.Table;
-import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
@@ -263,7 +261,7 @@ public interface View extends Discoverable, Domable, Identifiable {
     }
 
     default <T> View lookup(Attribute<T> attribute, T value) {
-        return columnView(attribute).lookup(value);
+        return columnView(attribute).persistedLookup(value);
     }
 
     /**
