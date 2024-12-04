@@ -40,4 +40,27 @@ public interface LookupComponents<T> {
 	 * when the underlying {@link View} is updated.
 	 */
 	View persistedLookup(Predicate<T> predicate);
+
+	/**
+	 *
+	 * @param value The value, that each selected line should contain.
+	 * @return Returns a {@link View}, where one or more {@link Column} contain only the provided value.
+	 * The choice of {@link Column} for this is determined by the implementor.
+	 * The returned {@link View} is automatically updated **or not**,
+	 * when the underlying {@link View} is updated.
+	 */
+	default View lookup(T value) {
+		return persistedLookup(value);
+	}
+
+	/**
+	 *
+	 * @param predicate States which lines to select by returning true for such.
+	 * @return Returns a {@link View}, where all {@link Line} comply with the predicate.
+	 * The returned {@link View} is automatically updated **or not**,
+	 * when the underlying {@link View} is updated.
+	 */
+	default View lookup(Predicate<T> predicate) {
+		return persistedLookup(predicate);
+	}
 }
