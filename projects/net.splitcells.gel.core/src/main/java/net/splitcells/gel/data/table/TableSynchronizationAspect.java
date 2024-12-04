@@ -18,7 +18,6 @@ package net.splitcells.gel.data.table;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Query;
@@ -230,8 +229,8 @@ public class TableSynchronizationAspect implements Table {
     }
 
     @Override
-    public synchronized <T> View lookup(Attribute<T> attribute, T value) {
-        return content.lookup(attribute, value);
+    public synchronized <T> View persistedLookup(Attribute<T> attribute, T value) {
+        return content.persistedLookup(attribute, value);
     }
 
     @Override

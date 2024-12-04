@@ -15,7 +15,6 @@
  */
 package net.splitcells.gel.data.table;
 
-import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.constraint.Constraint;
@@ -23,9 +22,6 @@ import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
-import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
-
-import java.util.Optional;
 
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
@@ -99,7 +95,7 @@ public interface Table extends View {
 
     /**
      * This is done to make queries on {@link Table},
-     * that are more complex, than {@link #lookup(Attribute, Object)} and similar methods.
+     * that are more complex, than {@link #persistedLookup(Attribute, Object)} and similar methods.
      * Keep in mind, that this is the recommended way, to do performant and complex queries.
      *
      * @return {@link Constraint} that is subscribed to this {@link Table}.

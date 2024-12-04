@@ -298,8 +298,8 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
                 .persistedLookup(removal)
                 .unorderedLinesStream()
                 .forEach(lineProcessing::remove);
-        lines.lookup(LINE, removal)
-                .lookup(INCOMING_CONSTRAINT_GROUP, injectionGroup)
+        lines.persistedLookup(LINE, removal)
+                .persistedLookup(INCOMING_CONSTRAINT_GROUP, injectionGroup)
                 .unorderedLinesStream()
                 .forEach(lines::remove);
         processLinesAfterRemoval(injectionGroup);
@@ -351,8 +351,8 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
     @Override
     public Rating rating(GroupId group, Line line) {
         final var routingRating = routingRating(lineProcessing
-                .lookup(LINE, line)
-                .lookup(INCOMING_CONSTRAINT_GROUP, group)
+                .persistedLookup(LINE, line)
+                .persistedLookup(INCOMING_CONSTRAINT_GROUP, group)
                 .unorderedLinesStream());
         routingRating.children_to_groups().forEach((child, groups) ->
                 groups.forEach(group2 -> routingRating.ratingComponents().add(child.rating(group2, line)))

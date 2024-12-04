@@ -101,7 +101,7 @@ public class AllSame {
                                       proposal.proposedAllocations().demandsFree().unorderedLines().forEach(df -> {
                                           final var fittingSupplies = proposal.subject()
                                                   .suppliesFree()
-                                                  .lookup(attribute, value);
+                                                  .persistedLookup(attribute, value);
                                           if (fittingSupplies.hasContent()) {
                                               final var fittingSupply = fittingSupplies.unorderedLinesStream()
                                                       .findFirst()

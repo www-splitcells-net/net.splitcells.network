@@ -148,7 +148,7 @@ public class EntityManager {
 
 
     public EntityManager withDemandedNextTime() {
-        entityDemands.lookup(TIME, currentTime).unorderedLinesStream()
+        entityDemands.persistedLookup(TIME, currentTime).unorderedLinesStream()
                 .forEach(demand -> entityDemands.addTranslated(list(nextTime, demand.value(PLAYER))));
         entities.suppliesFree().unorderedLines().forEach(entitySupplies::remove);
         return this;

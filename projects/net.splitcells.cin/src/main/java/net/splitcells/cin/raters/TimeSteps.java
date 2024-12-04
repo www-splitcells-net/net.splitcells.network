@@ -145,7 +145,7 @@ public class TimeSteps implements Rater {
                                     || !l.value(PROPAGATION_TO).equals(children)
                                     || !l.value(RESULTING_CONSTRAINT_GROUP).equals(timeStep))
                             .forEach(l -> rating.updateRating_withReplacement(
-                                    linesOfGroup.lookup(LINE, l.value(LINE)).orderedLine(0)
+                                    linesOfGroup.persistedLookup(LINE, l.value(LINE)).orderedLine(0)
                                     , localRating));
                     ratingsBeforeAddition.unorderedLinesStream()
                             .filter(l -> l.value(LINE).value(timeAttribute).equals(endTime))
@@ -154,7 +154,7 @@ public class TimeSteps implements Rater {
                                     || !l.value(PROPAGATION_TO).equals(children)
                                     || !l.value(RESULTING_CONSTRAINT_GROUP).equals(timeStep))
                             .forEach(l -> rating.updateRating_withReplacement(
-                                    linesOfGroup.lookup(LINE, l.value(LINE)).orderedLine(0)
+                                    linesOfGroup.persistedLookup(LINE, l.value(LINE)).orderedLine(0)
                                     , localRating));
                 } else {
                     linesOfGroup.columnView(LINE)
@@ -222,7 +222,7 @@ public class TimeSteps implements Rater {
                                 || !l.value(PROPAGATION_TO).equals(children)
                                 || !l.value(RESULTING_CONSTRAINT_GROUP).equals(noTimeStepGroups.get(incomingGroup)))
                         .forEach(l -> rating.updateRating_withReplacement(linesOfGroup
-                                        .lookup(LINE, l.value(LINE))
+                                        .persistedLookup(LINE, l.value(LINE))
                                         .orderedLine(0)
                                 , localRating()
                                         .withPropagationTo(children)
@@ -235,7 +235,7 @@ public class TimeSteps implements Rater {
                                 || !l.value(PROPAGATION_TO).equals(children)
                                 || !l.value(RESULTING_CONSTRAINT_GROUP).equals(noTimeStepGroups.get(incomingGroup)))
                         .forEach(l -> rating.updateRating_withReplacement(linesOfGroup
-                                        .lookup(LINE, l.value(LINE))
+                                        .persistedLookup(LINE, l.value(LINE))
                                         .orderedLine(0)
                                 , localRating()
                                         .withPropagationTo(children)

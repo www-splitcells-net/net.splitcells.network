@@ -256,7 +256,7 @@ public class SchoolCourseSchedulingTest {
                             final var student = demandOfStudentSubject.value(STUDENT);
                             final var requiredSubject = demandOfStudentSubject.value(REQUIRED_SUBJECT);
                             final var studentsVintage = demandOfStudentSubject.value(STUDENT_S_VINTAGE);
-                            final var usedRails = solution.lookup(STUDENT, student)
+                            final var usedRails = solution.persistedLookup(STUDENT, student)
                                     .columnView(RAIL)
                                     .values()
                                     .stream()
@@ -276,9 +276,9 @@ public class SchoolCourseSchedulingTest {
                             fittingRails.shuffle(randomness)
                                     .stream()
                                     .map(rail -> solution.suppliesFree()
-                                            .lookup(SUBJECT, requiredSubject)
-                                            .lookup(COURSE_S_VINTAGE, studentsVintage)
-                                            .lookup(RAIL, rail)
+                                            .persistedLookup(SUBJECT, requiredSubject)
+                                            .persistedLookup(COURSE_S_VINTAGE, studentsVintage)
+                                            .persistedLookup(RAIL, rail)
                                             .unorderedLinesStream()
                                             .findFirst())
                                     .filter(Optional::isPresent)
@@ -305,7 +305,7 @@ public class SchoolCourseSchedulingTest {
                                 .distinct()
                                 .collect(toList());
                         for (final var freeCourseId : freeCourseIds) {
-                            final var freeCourseInstances = solution.demandsFree().lookup(COURSE_ID, freeCourseId).unorderedLines();
+                            final var freeCourseInstances = solution.demandsFree().persistedLookup(COURSE_ID, freeCourseId).unorderedLines();
                             allFreeCoursesById.put(freeCourseId, setOfUniques(freeCourseInstances));
                         }
                     }
@@ -313,7 +313,7 @@ public class SchoolCourseSchedulingTest {
                         final var freeCourseRepresentant = freeCoursesByGroupId.get(freeCourseGroupId).iterator().next();
                         final var freeCourseId = freeCourseRepresentant.value(COURSE_ID);
                         final var sameCourseInstances = solution.allocations()
-                                .lookup(COURSE_ID, freeCourseId)
+                                .persistedLookup(COURSE_ID, freeCourseId)
                                 .unorderedLines();
                         final Set<Line> newFreeCoursesOfId;
                         if (allFreeCoursesById.containsKey(freeCourseId)) {
@@ -332,18 +332,18 @@ public class SchoolCourseSchedulingTest {
                     }
                     for (final var freeCourseId : listWithValuesOf(allFreeCoursesById.keySet()).shuffle(randomness)) {
                         final var freeCourseRails = solution.demandsFree()
-                                .lookup(COURSE_ID, freeCourseId)
+                                .persistedLookup(COURSE_ID, freeCourseId)
                                 .unorderedLines().stream()
                                 .map(l -> l.value(RAIL))
                                 .collect(toSetOfUniques());
                         final var freeCourseRepresentant = allFreeCoursesById.get(freeCourseId).iterator().next();
                         final var freeCourseSubject = freeCourseRepresentant.value(SUBJECT);
                         final var suitableTeachers = solution.suppliesFree()
-                                .lookup(TEACH_SUBJECT_SUITABILITY, freeCourseSubject)
+                                .persistedLookup(TEACH_SUBJECT_SUITABILITY, freeCourseSubject)
                                 .unorderedLines()
                                 .stream()
                                 .filter(teacher -> {
-                                    final var teachersRails = solution.lookup(TEACHER, teacher.value(TEACHER)).unorderedLines().stream()
+                                    final var teachersRails = solution.persistedLookup(TEACHER, teacher.value(TEACHER)).unorderedLines().stream()
                                             .map(teacherAllocation -> teacherAllocation.value(RAIL))
                                             .collect(toSetOfUniques());
                                     return !freeCourseRails.containsAny(teachersRails);
@@ -354,14 +354,14 @@ public class SchoolCourseSchedulingTest {
                         }
                         final var suitableTeacher = randomness.chooseOneOf(suitableTeachers).value(TEACHER);
                         final var freeCourseSlots = solution.demandsFree()
-                                .lookup(COURSE_ID, freeCourseId)
+                                .persistedLookup(COURSE_ID, freeCourseId)
                                 .unorderedLines()
                                 .shuffle(randomness);
                         for (final var freeCourseSlot : freeCourseSlots) {
                             final var teacherCapacity = solution
                                     .suppliesFree()
-                                    .lookup(TEACHER, suitableTeacher)
-                                    .lookup(TEACH_SUBJECT_SUITABILITY, freeCourseSubject)
+                                    .persistedLookup(TEACHER, suitableTeacher)
+                                    .persistedLookup(TEACH_SUBJECT_SUITABILITY, freeCourseSubject)
                                     .unorderedLines();
                             if (!teacherCapacity.isEmpty()) {
                                 solution.assign(freeCourseSlot, teacherCapacity.shuffle(randomness).get(0));
@@ -431,12 +431,12 @@ public class SchoolCourseSchedulingTest {
                                 final List<Line> freeSlots = mergedFreeDemandGroups.stream()
                                         .filter(demand -> demand.value(COURSE_ID).equals(course))
                                         .collect(toList());
-                                solution.demandsFree().lookup(COURSE_ID, course).unorderedLines().forEach(l -> {
+                                solution.demandsFree().persistedLookup(COURSE_ID, course).unorderedLines().forEach(l -> {
                                     if (!freeSlots.contains(l)) {
                                         freeSlots.add(l);
                                     }
                                 });
-                                final var retainedAllocatedHours = solution.lookup(COURSE_ID, course).unorderedLines().stream()
+                                final var retainedAllocatedHours = solution.persistedLookup(COURSE_ID, course).unorderedLines().stream()
                                         .filter(l -> !freeSlots.contains(solution.demandOfAssignment(l)))
                                         .map(l -> l.value(ALLOCATED_HOURS))
                                         .reduce((a, b) -> a + b)

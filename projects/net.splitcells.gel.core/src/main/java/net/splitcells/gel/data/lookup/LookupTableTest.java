@@ -37,14 +37,14 @@ public class LookupTableTest {
                 .withConstraint(forAll())
                 .toProblem()
                 .asSolution();
-        testSubject.lookup(a, 1).lookup(b, 2).unorderedLines();
+        testSubject.persistedLookup(a, 1).persistedLookup(b, 2).unorderedLines();
         testSubject.optimize(offlineLinearInitialization());
-        testSubject.lookup(a, 1).lookup(b, 2).unorderedLines();
+        testSubject.persistedLookup(a, 1).persistedLookup(b, 2).unorderedLines();
         testSubject.optimize(linearDeinitializer());
-        testSubject.lookup(a, 1).lookup(b, 2).unorderedLines();
+        testSubject.persistedLookup(a, 1).persistedLookup(b, 2).unorderedLines();
         testSubject.optimize(offlineLinearInitialization());
-        testSubject.lookup(a, 1).lookup(b, 2).unorderedLines();
+        testSubject.persistedLookup(a, 1).persistedLookup(b, 2).unorderedLines();
         testSubject.optimize(linearDeinitializer());
-        testSubject.lookup(a, 1).lookup(b, 2).unorderedLines();
+        testSubject.persistedLookup(a, 1).persistedLookup(b, 2).unorderedLines();
     }
 }

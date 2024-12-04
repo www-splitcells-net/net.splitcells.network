@@ -107,34 +107,34 @@ public class World {
 
     public static void allocateRestAsDead(Solution worldHistory) {
         final var freeDemands = worldHistory.demandsFree().unorderedLinesStream().collect(toList());
-        final var playerSupply = worldHistory.suppliesFree().lookup(VALUE, 0).unorderedLinesStream().collect(toList());
+        final var playerSupply = worldHistory.suppliesFree().persistedLookup(VALUE, 0).unorderedLinesStream().collect(toList());
         freeDemands.forEach(d -> worldHistory.assign(d, playerSupply.removeAt(0)));
     }
 
     public static void allocateBlinker(Solution worldHistory) {
         worldHistory.assign(worldHistory.demandsFree()
-                        .lookup(WORLD_TIME, 0)
-                        .lookup(POSITION_X, 1)
-                        .lookup(POSITION_Y, 2)
+                        .persistedLookup(WORLD_TIME, 0)
+                        .persistedLookup(POSITION_X, 1)
+                        .persistedLookup(POSITION_Y, 2)
                         .orderedLine(0)
                 , worldHistory.suppliesFree()
-                        .lookup(VALUE, 1)
+                        .persistedLookup(VALUE, 1)
                         .orderedLine(0));
         worldHistory.assign(worldHistory.demandsFree()
-                        .lookup(WORLD_TIME, 0)
-                        .lookup(POSITION_X, 2)
-                        .lookup(POSITION_Y, 2)
+                        .persistedLookup(WORLD_TIME, 0)
+                        .persistedLookup(POSITION_X, 2)
+                        .persistedLookup(POSITION_Y, 2)
                         .orderedLine(0)
                 , worldHistory.suppliesFree()
-                        .lookup(VALUE, 1)
+                        .persistedLookup(VALUE, 1)
                         .orderedLine(0));
         worldHistory.assign(worldHistory.demandsFree()
-                        .lookup(WORLD_TIME, 0)
-                        .lookup(POSITION_X, 3)
-                        .lookup(POSITION_Y, 2)
+                        .persistedLookup(WORLD_TIME, 0)
+                        .persistedLookup(POSITION_X, 3)
+                        .persistedLookup(POSITION_Y, 2)
                         .orderedLine(0)
                 , worldHistory.suppliesFree()
-                        .lookup(VALUE, 1)
+                        .persistedLookup(VALUE, 1)
                         .orderedLine(0));
     }
 

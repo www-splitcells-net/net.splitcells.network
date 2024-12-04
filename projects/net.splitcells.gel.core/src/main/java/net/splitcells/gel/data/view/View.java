@@ -260,7 +260,7 @@ public interface View extends Discoverable, Domable, Identifiable {
         return simplifiedCsv.toString();
     }
 
-    default <T> View lookup(Attribute<T> attribute, T value) {
+    default <T> View persistedLookup(Attribute<T> attribute, T value) {
         return columnView(attribute).persistedLookup(value);
     }
 

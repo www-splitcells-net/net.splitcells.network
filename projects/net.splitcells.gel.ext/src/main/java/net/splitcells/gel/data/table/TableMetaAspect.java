@@ -294,8 +294,8 @@ public class TableMetaAspect implements Table {
     }
 
     @Override
-    public <T> View lookup(Attribute<T> attribute, T value) {
-        return table.lookup(attribute, value);
+    public <T> View persistedLookup(Attribute<T> attribute, T value) {
+        return table.persistedLookup(attribute, value);
     }
 
     @Override

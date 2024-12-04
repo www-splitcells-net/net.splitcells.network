@@ -63,28 +63,28 @@ public class FundamentalWorldRulesTest {
 
     private void allocateBlinker(Solution worldHistory) {
         worldHistory.assign(worldHistory.demandsFree()
-                        .lookup(WORLD_TIME, 0)
-                        .lookup(POSITION_X, 0)
-                        .lookup(POSITION_Y, 1)
+                        .persistedLookup(WORLD_TIME, 0)
+                        .persistedLookup(POSITION_X, 0)
+                        .persistedLookup(POSITION_Y, 1)
                         .orderedLine(0)
                 , worldHistory.suppliesFree()
-                        .lookup(VALUE, 1)
+                        .persistedLookup(VALUE, 1)
                         .orderedLine(0));
         worldHistory.assign(worldHistory.demandsFree()
-                        .lookup(WORLD_TIME, 0)
-                        .lookup(POSITION_X, 1)
-                        .lookup(POSITION_Y, 1)
+                        .persistedLookup(WORLD_TIME, 0)
+                        .persistedLookup(POSITION_X, 1)
+                        .persistedLookup(POSITION_Y, 1)
                         .orderedLine(0)
                 , worldHistory.suppliesFree()
-                        .lookup(VALUE, 1)
+                        .persistedLookup(VALUE, 1)
                         .orderedLine(0));
         worldHistory.assign(worldHistory.demandsFree()
-                        .lookup(WORLD_TIME, 0)
-                        .lookup(POSITION_X, 2)
-                        .lookup(POSITION_Y, 1)
+                        .persistedLookup(WORLD_TIME, 0)
+                        .persistedLookup(POSITION_X, 2)
+                        .persistedLookup(POSITION_Y, 1)
                         .orderedLine(0)
                 , worldHistory.suppliesFree()
-                        .lookup(VALUE, 1)
+                        .persistedLookup(VALUE, 1)
                         .orderedLine(0));
     }
 }

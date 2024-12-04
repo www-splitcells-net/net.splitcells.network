@@ -102,7 +102,7 @@ public class ExistenceCost implements GroupingRater {
 
     @Override
     public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
-        if (groupsLineProcessing.lookup(LINE, line).unorderedLine(0).value(RATING).equalz(noCost())) {
+        if (groupsLineProcessing.persistedLookup(LINE, line).unorderedLine(0).value(RATING).equalz(noCost())) {
             return "loose one unit of energy every time step";
         } else {
             return "should loose one unit of energy every time step, but does not";

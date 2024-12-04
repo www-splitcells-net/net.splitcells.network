@@ -15,7 +15,6 @@
  */
 package net.splitcells.gel.data.lookup;
 
-import net.splitcells.gel.data.table.Tables;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -36,12 +35,28 @@ public class LookupsTest {
     public void testPerformance() {
         final var a = attribute(Integer.class, "a");
         final var b = attribute(Integer.class, "b");
-        final var testSubject = Tables.table("testPerformance", a, b);
-        final var s = attribute(Integer.class, "s");
+        final var testSubject = table("testPerformance", a, b);
         rangeClosed(1, 100000).forEach(i ->
                 testSubject.addTranslated(list(i, (Object) modulus(i, 10))));
-        testSubject.lookup(b, 1);
-        testSubject.lookup(a, 1);
-        testSubject.lookup(b, 1).lookup(a, 1);
+        testSubject.persistedLookup(b, 1);
+        testSubject.persistedLookup(a, 1);
+        testSubject.persistedLookup(b, 1).persistedLookup(a, 1);
     }
+
+    @Test
+    public void testPersistedCorrectness() {
+        final var a = attribute(Integer.class, "a");
+        final var b = attribute(Integer.class, "b");
+        final var testSubject = table("test-subject", a, b);
+        testSubject.persistedLookup(a, 0).unorderedLines().requireEmpty();
+        testSubject.persistedLookup(b, 0).unorderedLines().requireEmpty();
+        testSubject.addTranslated(list(1, 2));
+        testSubject.persistedLookup(a, 0).unorderedLines().requireEmpty();
+        testSubject.persistedLookup(b, 0).unorderedLines().requireEmpty();
+        testSubject.persistedLookup(a, 2).unorderedLines().requireEmpty();
+        testSubject.persistedLookup(b, 1).unorderedLines().requireEmpty();
+        testSubject.persistedLookup(a, 1).unorderedLines().requireSizeOf(1);
+        testSubject.persistedLookup(b, 2).unorderedLines().requireSizeOf(1);
+    }
+
 }
