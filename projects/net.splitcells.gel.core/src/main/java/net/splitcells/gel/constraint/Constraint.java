@@ -237,7 +237,7 @@ public interface Constraint extends TableSynchronization, ConstraintWriter, Disc
 
     default Set<GroupId> childGroups(GroupId incomingGroup) {
         return lineProcessing().columnView(INCOMING_CONSTRAINT_GROUP)
-                .persistedLookup(incomingGroup)
+                .lookup(incomingGroup)
                 .unorderedLines()
                 .stream()
                 .map(lineResult -> lineResult.value(RESULTING_CONSTRAINT_GROUP))

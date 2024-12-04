@@ -211,7 +211,7 @@ public class ConstraintGroupBasedOfflineRepair implements OfflineOptimization {
                 .map(group -> constraint
                         .lineProcessing()
                         .columnView(INCOMING_CONSTRAINT_GROUP)
-                        .persistedLookup(group)
+                        .lookup(group)
                         .columnView(LINE)
                         .values())
                 .flatMap(streamOfLineList -> streamOfLineList.stream())
@@ -221,7 +221,7 @@ public class ConstraintGroupBasedOfflineRepair implements OfflineOptimization {
                         return !constraint
                                 .lineProcessing()
                                 .columnView(LINE)
-                                .persistedLookup(allocation)
+                                .lookup(allocation)
                                 .unorderedLines()
                                 .get(0)
                                 .value(RATING)
