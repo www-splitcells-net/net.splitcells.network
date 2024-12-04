@@ -50,13 +50,16 @@ public class LookupsTest {
         final var testSubject = table("test-subject", a, b);
         testSubject.persistedLookup(a, 0).unorderedLines().requireEmpty();
         testSubject.persistedLookup(b, 0).unorderedLines().requireEmpty();
-        testSubject.addTranslated(list(1, 2));
+        final var line = testSubject.addTranslated(list(1, 2));
         testSubject.persistedLookup(a, 0).unorderedLines().requireEmpty();
         testSubject.persistedLookup(b, 0).unorderedLines().requireEmpty();
         testSubject.persistedLookup(a, 2).unorderedLines().requireEmpty();
         testSubject.persistedLookup(b, 1).unorderedLines().requireEmpty();
         testSubject.persistedLookup(a, 1).unorderedLines().requireSizeOf(1);
         testSubject.persistedLookup(b, 2).unorderedLines().requireSizeOf(1);
+        testSubject.remove(line);
+        testSubject.persistedLookup(a, 1).unorderedLines().requireEmpty();
+        testSubject.persistedLookup(b, 2).unorderedLines().requireEmpty();
     }
 
     @Test
@@ -66,13 +69,16 @@ public class LookupsTest {
         final var testSubject = table("test-subject", a, b);
         testSubject.lookup(a, 0).unorderedLines().requireEmpty();
         testSubject.lookup(b, 0).unorderedLines().requireEmpty();
-        testSubject.addTranslated(list(1, 2));
+        final var line = testSubject.addTranslated(list(1, 2));
         testSubject.lookup(a, 0).unorderedLines().requireEmpty();
         testSubject.lookup(b, 0).unorderedLines().requireEmpty();
         testSubject.lookup(a, 2).unorderedLines().requireEmpty();
         testSubject.lookup(b, 1).unorderedLines().requireEmpty();
         testSubject.lookup(a, 1).unorderedLines().requireSizeOf(1);
         testSubject.lookup(b, 2).unorderedLines().requireSizeOf(1);
+        testSubject.remove(line);
+        testSubject.lookup(a, 1).unorderedLines().requireEmpty();
+        testSubject.lookup(b, 2).unorderedLines().requireEmpty();
     }
 
 }
