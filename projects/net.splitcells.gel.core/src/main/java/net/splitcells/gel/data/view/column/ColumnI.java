@@ -52,7 +52,7 @@ public class ColumnI<T> implements Column<T> {
 
     private Lookup<T> ensureInitializedLookup() {
         if (lookup.isEmpty()) {
-            lookup = Optional.of(Lookups.persistedLookup(view, attribute));
+            lookup = Optional.of(Lookups.lookup(view, attribute));
         }
         return lookup.get();
     }

@@ -45,7 +45,11 @@ public class LookupI<T> implements Lookup<T> {
     private static final boolean EXPERIMENTAL_SPEED_UP = false;
 
     public static <T> Lookup<T> persistedLookupI(View view, Attribute<T> attribute) {
-        return new LookupI<>(view, attribute);
+        return new LookupI<>(view, attribute, true);
+    }
+
+    public static <T> Lookup<T> persistedLookupI(View view, Attribute<T> attribute, boolean isPersisted) {
+        return new LookupI<>(view, attribute, isPersisted);
     }
 
     private final PersistedLookupView lookupTable;
@@ -55,11 +59,13 @@ public class LookupI<T> implements Lookup<T> {
     private final Attribute<T> attribute;
     private final Map<Predicate<T>, PersistedLookupView> complexContent = map();
 
-    private LookupI(View view, Attribute<T> attribute) {
+    private LookupI(View view, Attribute<T> attribute, boolean isPersisted) {
         this.view = view;
         this.lookupTable = lookupTable(view, attribute);
         this.attribute = attribute;
-        view.unorderedLinesStream().forEach(e -> register_addition(e.value(attribute), e.index()));
+        if (isPersisted) {
+            view.unorderedLinesStream().forEach(e -> register_addition(e.value(attribute), e.index()));
+        }
     }
 
     @Override
