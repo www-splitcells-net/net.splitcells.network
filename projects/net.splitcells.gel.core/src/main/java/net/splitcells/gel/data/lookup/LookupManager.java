@@ -26,6 +26,7 @@ import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.data.lookup.LookupI.persistedLookupI;
 import static net.splitcells.gel.data.lookup.LookupTables.lookupTable;
+import static net.splitcells.gel.data.view.View.INVALID_INDEX;
 
 /**
  * This {@link Lookup} decides, which {@link Lookup} implementation is used, at a given time.
@@ -56,13 +57,22 @@ public class LookupManager<T> implements Lookup<T> {
     }
 
     private void enablePersistedLookup() {
+        enablePersistedLookup(INVALID_INDEX, INVALID_INDEX);
+    }
+
+    private void enablePersistedLookup(int additionIndex, int removalIndex) {
         isPersistedLookupActive = true;
         lastStrategyTime = 0;
         view.unorderedLinesStream()
+                .filter(l -> l.index() != additionIndex)
                 .forEach(l -> persistedLookup.register_addition(l.value(attribute), l.index()));
     }
 
     private void updateStatistics() {
+        updateStatistics(INVALID_INDEX, INVALID_INDEX);
+    }
+
+    private void updateStatistics(int additionIndex, int removalIndex) {
         if (lastStrategyTime < MIN_STRATEGY_TIME) {
             return;
         }
@@ -71,12 +81,11 @@ public class LookupManager<T> implements Lookup<T> {
                 isPersistedLookupActive = false;
                 lastStrategyTime = 0;
                 view.unorderedLinesStream()
+                        .filter(l -> l.index() != additionIndex && l.index() != removalIndex)
                         .forEach(l -> persistedLookup.register_removal(l.value(attribute), l.index()));
             }
         } else if (lookupReadCount > lookupWriteCount) {
-            isPersistedLookupActive = true;
-            lastStrategyTime = 0;
-            enablePersistedLookup();
+            enablePersistedLookup(additionIndex, removalIndex);
         }
     }
 
@@ -145,7 +154,7 @@ public class LookupManager<T> implements Lookup<T> {
     public void register_addition(T addition, int index) {
         ++lookupWriteCount;
         ++lastStrategyTime;
-        updateStatistics();
+        updateStatistics(index, INVALID_INDEX);
         if (isPersistedLookupActive) {
             persistedLookup.register_addition(addition, index);
         }
@@ -155,8 +164,9 @@ public class LookupManager<T> implements Lookup<T> {
     public void register_removal(T removal, int index) {
         ++lookupWriteCount;
         ++lastStrategyTime;
-        updateStatistics();
-        if (isPersistedLookupActive) {
+        final var wasPersistedLookupActive = isPersistedLookupActive;
+        updateStatistics(INVALID_INDEX, index);
+        if (wasPersistedLookupActive) {
             persistedLookup.register_removal(removal, index);
         }
     }
