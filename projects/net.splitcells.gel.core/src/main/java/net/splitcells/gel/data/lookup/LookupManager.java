@@ -128,7 +128,7 @@ public class LookupManager<T> implements Lookup<T> {
         if (isPersistedLookupActive) {
             return persistedLookup.persistedLookup(value);
         }
-        return lookup(a -> a.equals(value));
+        return lookupIntern(a -> a.equals(value));
     }
 
     @Override
@@ -136,6 +136,10 @@ public class LookupManager<T> implements Lookup<T> {
         ++lookupReadCount;
         ++lastStrategyTime;
         updateStatistics();
+        return lookupIntern(predicate);
+    }
+
+    private View lookupIntern(Predicate<T> predicate) {
         if (isPersistedLookupActive) {
             return persistedLookup.persistedLookup(predicate);
         }
