@@ -296,11 +296,11 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
                 .lookup(injectionGroup)
                 .columnView(LINE)
                 .lookup(removal)
-                .unorderedLinesStream()
+                .unorderedLines() // This avoids `java.util.ConcurrentModificationException`.
                 .forEach(lineProcessing::remove);
         lines.lookup(LINE, removal)
                 .lookup(INCOMING_CONSTRAINT_GROUP, injectionGroup)
-                .unorderedLinesStream()
+                .unorderedLines() // This avoids `java.util.ConcurrentModificationException`.
                 .forEach(lines::remove);
         processLinesAfterRemoval(injectionGroup);
     }
