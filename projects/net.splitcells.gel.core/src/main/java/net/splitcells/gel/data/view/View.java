@@ -168,6 +168,10 @@ public interface View extends Discoverable, Domable, Identifiable {
         return rawLinesView().get(index);
     }
 
+    default boolean isRawLine(int index) {
+        return rawLine(index) != null;
+    }
+
     /**
      * <p>Retrieves the N-th {@link Line} of this {@link View},
      * where null {@link Line}s are ignored.
