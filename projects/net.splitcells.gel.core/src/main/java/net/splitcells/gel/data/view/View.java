@@ -59,6 +59,11 @@ import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
  */
 public interface View extends Discoverable, Domable, Identifiable {
     /**
+     * This is the {@link Line#index()}, that never exists.
+     * This constant is helpful, in order to state the semantic intent of an index.
+     */
+    int INVALID_INDEX = -1;
+    /**
      * This name is used in order to mark mirrors of {@link View},
      * so that a recursion error can be avoided,
      * when {@link #discoverableRenderer()} creates a thread safe mirror for rendering via an {@link ConnectingConstructor}.
