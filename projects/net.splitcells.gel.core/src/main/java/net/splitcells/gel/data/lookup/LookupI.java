@@ -81,6 +81,10 @@ public class LookupI<T> implements Lookup<T> {
                 lookupTable = lookupTable(view, attribute, false);
                 content.put(addition, lookupTable);
             }
+            if (lookupTable.isRawLine(index)) {
+                // The given line was already added.
+                return;
+            }
             lookupTable.register(view.rawLine(index));
         }
         register_beforeAddition_atComplexContent(addition, index);
