@@ -38,7 +38,7 @@ public class LookupManager<T> implements Lookup<T> {
         return new LookupManager<>(view, attribute);
     }
 
-    private static final int MIN_STRATEGY_TIME = 1000;
+    private static final int MIN_STRATEGY_TIME = 100;
 
     private final View view;
     private final Attribute<T> attribute;
