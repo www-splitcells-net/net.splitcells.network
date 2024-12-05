@@ -206,19 +206,11 @@ public class ColumnI<T> implements Column<T> {
 
     @Override
     public View lookup(T value) {
-        return lookup(a -> a.equals(value));
+        return ensureInitializedLookup().lookup(value);
     }
 
     @Override
     public View lookup(Predicate<T> predicate) {
-        final var lookupBasePath = view.path();
-        if (lookupBasePath.hasElements()) {
-            lookupBasePath.removeAt(lookupBasePath.size() - 1);
-        }
-        final var lookup = lookupTable(view, attribute);
-        view.unorderedLinesStream()
-                .filter(l -> predicate.test(l.value(attribute)))
-                .forEach(lookup::register);
-        return lookup;
+        return ensureInitializedLookup().lookup(predicate);
     }
 }
