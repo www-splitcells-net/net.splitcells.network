@@ -19,8 +19,8 @@ import net.splitcells.dem.Dem;
 import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.dem.testing.annotations.CapabilityTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
-import net.splitcells.website.server.projects.extension.ColloquiumPlanningDemandsTestData;
-import net.splitcells.website.server.projects.extension.ColloquiumPlanningSuppliesTestData;
+import net.splitcells.website.server.projects.extension.impls.ColloquiumPlanningDemandsTestData;
+import net.splitcells.website.server.projects.extension.impls.ColloquiumPlanningSuppliesTestData;
 
 import java.util.Optional;
 

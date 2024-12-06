@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.website.server.projects.extension;
+package net.splitcells.website.server.projects.extension.impls;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
@@ -24,6 +24,7 @@ import net.splitcells.website.server.Config;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.RenderRequest;
+import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -31,26 +32,25 @@ import java.util.Optional;
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.dem.utils.StringUtils.stringBuilder;
+import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
-public class ColloquiumPlanningSuppliesTestData implements ProjectsRendererExtension {
+public class ColloquiumPlanningDemandsTestData implements ProjectsRendererExtension {
 
-    private static final String PATH = "/net/splitcells/gel/ui/colloquium-planning-supplies-test-data.csv";
+    private static final String PATH = "/net/splitcells/gel/ui/colloquium-planning-demands-test-data.csv";
 
-    public static ColloquiumPlanningSuppliesTestData colloquiumPlanningSuppliesTestData() {
-        return new ColloquiumPlanningSuppliesTestData();
+    public static ColloquiumPlanningDemandsTestData colloquiumPlanningDemandTestData() {
+        return new ColloquiumPlanningDemandsTestData();
     }
 
-    private ColloquiumPlanningSuppliesTestData() {
+    private ColloquiumPlanningDemandsTestData() {
 
     }
 
     @Override
     public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         if (PATH.equals(path)) {
-
             return Optional.of(binaryMessage(StringUtils.toBytes(testData()), Formats.TEXT_PLAIN));
         }
         return Optional.empty();
@@ -63,16 +63,21 @@ public class ColloquiumPlanningSuppliesTestData implements ProjectsRendererExten
 
     public static String testData() {
         final var testData = stringBuilder();
-        testData.append("date,shift,roomNumber\n");
-        final int examDayCountPerWeek = 5;
-        for (int roomNumber = 1; roomNumber <= 6; ++roomNumber) {
-            for (int week = 1; week <= 2; ++week) {
-                for (int examDay = 1; examDay <= 5; ++examDay) {
-                    for (int shift = 1; shift <= 5; ++shift) {
-                        testData.append(modulus(examDay, examDayCountPerWeek) + 1
-                                + (week - 1) * 7 + "," + shift + "," + roomNumber + "\n");
-                    }
-                }
+        testData.append("student,examiner,observer\n");
+        final var randomness = randomness();
+        final var nameGenerator = IdentifiedNameGenerator.identifiedNameGenerator();
+        final Set<String> examinerNames = setOfUniques();
+        range(0, 40).forEach(i -> examinerNames.add(nameGenerator.nextName()));
+        final List<String> examinerNameList = list();
+        examinerNameList.addAll(examinerNames);
+        final Set<String> checkerNames = setOfUniques();
+        range(0, 41).forEach(i -> checkerNames.add(nameGenerator.nextName()));
+        final List<String> checkerNamesList = list();
+        checkerNamesList.addAll(checkerNames);
+        for (int student = 1; student <= 88; ++student) {
+            var studentName = nameGenerator.nextName();
+            for (int exam = 1; exam <= 177 / 88; ++exam) {
+                testData.append(studentName + "," + randomness.chooseOneOf(examinerNameList) + "," + randomness.chooseOneOf(checkerNamesList) + "\n");
             }
         }
         return testData.toString();

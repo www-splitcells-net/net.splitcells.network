@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.website.server.projects.extension;
+package net.splitcells.website.server.projects.extension.impls;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
@@ -23,6 +23,7 @@ import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkChangelogEventProjectRendererExtension;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.RenderRequest;
+import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
 
 import java.nio.file.Path;
 import java.util.Optional;

@@ -19,13 +19,11 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.website.server.Config;
-import net.splitcells.website.server.processor.Request;
-import net.splitcells.website.server.processor.Response;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.PageMetaData;
-import net.splitcells.website.server.projects.extension.ProjectPathsRequest;
+import net.splitcells.website.server.projects.extension.impls.ProjectPathsRequest;
 import net.splitcells.website.server.security.access.Firewall;
 
 import java.nio.file.Path;

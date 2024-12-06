@@ -23,6 +23,7 @@ import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.RenderRequest;
 import net.splitcells.website.server.projects.RenderResponse;
+import net.splitcells.website.server.projects.extension.impls.ProjectPathsRequest;
 
 import java.nio.file.Path;
 import java.util.Optional;

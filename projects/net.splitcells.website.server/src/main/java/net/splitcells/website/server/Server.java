@@ -52,7 +52,7 @@ import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.RenderRequest;
 import net.splitcells.website.server.projects.RenderResponse;
-import net.splitcells.website.server.projects.extension.ProjectPathsRequest;
+import net.splitcells.website.server.projects.extension.impls.ProjectPathsRequest;
 import net.splitcells.website.server.security.access.AccessControl;
 import net.splitcells.website.server.security.authentication.UserSession;
 import net.splitcells.website.server.security.encryption.PrivateIdentityPemStore;

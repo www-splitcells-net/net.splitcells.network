@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.website.server.projects.extension;
+package net.splitcells.website.server.projects.extension.impls;
 
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.security.authentication.UserSession;

@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.website.server.projects.extension;
+package net.splitcells.website.server.projects.extension.impls;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.resource.ContentType;
@@ -22,8 +22,9 @@ import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.RenderRequest;
 import net.splitcells.website.server.projects.RenderResponse;
+import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
+import net.splitcells.website.server.projects.extension.impls.ProjectPathsRequest;
 import net.splitcells.website.server.security.authentication.Authentication;
-import net.splitcells.website.server.security.authentication.Authenticator;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -33,10 +34,8 @@ import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.utils.StringUtils.stringBuilder;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.projects.RenderResponse.renderResponse;
-import static net.splitcells.website.server.projects.extension.ProjectPathsRequest.projectPathsRequest;
+import static net.splitcells.website.server.projects.extension.impls.ProjectPathsRequest.projectPathsRequest;
 import static net.splitcells.website.server.security.authentication.UserSession.isValidNoLoginStandard;
-import static net.splitcells.website.server.security.authorization.AdminRole.ADMIN_ROLE;
-import static net.splitcells.website.server.security.authorization.Authorization.hasRole;
 
 public class UserProfilePageExtension implements ProjectsRendererExtension {
     private static final Trail PROFILE_PATH = trail("net/splitcells/website/server/projects/extension/user-profile-page-extension.html");
