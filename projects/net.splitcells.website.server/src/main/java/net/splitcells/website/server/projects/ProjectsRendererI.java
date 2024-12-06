@@ -443,7 +443,16 @@ public class ProjectsRendererI implements ProjectsRenderer {
     @Override
     public Set<Path> projectPaths(ProjectPathsRequest request) {
         return extensions.stream()
-                .map(e -> e.projectPaths(request))
+                .map(e -> {
+                    final var projectPaths = e.projectPaths(request);
+                    projectPaths.forEach(p -> {
+                        if (p.isAbsolute()) {
+                            throw executionException(tree("All project paths have to be relative, but one is not.")
+                                    .withProperty("path", p.toString()));
+                        }
+                    });
+                    return projectPaths;
+                })
                 .reduce(Set::with)
                 .orElseGet(Sets::setOfUniques);
     }
