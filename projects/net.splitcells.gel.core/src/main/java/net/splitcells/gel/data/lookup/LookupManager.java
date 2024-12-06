@@ -16,13 +16,11 @@
 package net.splitcells.gel.data.lookup;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 
 import java.util.function.Predicate;
 
-import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.data.lookup.LookupI.persistedLookupI;
 import static net.splitcells.gel.data.lookup.LookupTables.lookupTable;
@@ -32,14 +30,18 @@ import static net.splitcells.gel.data.view.View.INVALID_INDEX;
  * This {@link Lookup} decides, which {@link Lookup} implementation is used, at a given time.
  * This is done, in order to improve the performance.
  *
- * @param <T>
+ * @param <T> The type of value, that is looked up.
  */
 public class LookupManager<T> implements Lookup<T> {
-    public static <T> Lookup<T> lookupManager(View view, Attribute<T> attribute) {
-        return new LookupManager<>(view, attribute);
+    public static final int DEFAULT_MIN_STRATEGY_TIME = 100;
+
+    public static <T> LookupManager<T> lookupManager(View view, Attribute<T> attribute) {
+        return new LookupManager<>(view, attribute, DEFAULT_MIN_STRATEGY_TIME);
     }
 
-    private static final int MIN_STRATEGY_TIME = 100;
+    public static <T> LookupManager<T> lookupManager(View view, Attribute<T> attribute, int minStrategyTime) {
+        return new LookupManager<>(view, attribute, minStrategyTime);
+    }
 
     private final View view;
     private final Attribute<T> attribute;
@@ -49,11 +51,13 @@ public class LookupManager<T> implements Lookup<T> {
     private long lookupReadCount = 0;
     private long lookupWriteCount = 0;
     private long lastStrategyTime = 0;
+    private final int minStrategyTime;
 
-    private LookupManager(View argView, Attribute<T> argAttribute) {
+    private LookupManager(View argView, Attribute<T> argAttribute, int argMinStrategyTime) {
         view = argView;
         attribute = argAttribute;
         persistedLookup = persistedLookupI(view, attribute, false);
+        minStrategyTime = argMinStrategyTime;
     }
 
     private void enablePersistedLookup() {
@@ -73,7 +77,7 @@ public class LookupManager<T> implements Lookup<T> {
     }
 
     private void updateStatistics(int additionIndex, int removalIndex) {
-        if (lastStrategyTime < MIN_STRATEGY_TIME) {
+        if (lastStrategyTime < minStrategyTime) {
             return;
         }
         if (isPersistedLookupActive) {
@@ -173,5 +177,9 @@ public class LookupManager<T> implements Lookup<T> {
         if (wasPersistedLookupActive) {
             persistedLookup.register_removal(removal, index);
         }
+    }
+
+    public boolean isPersistedLookupActive() {
+        return isPersistedLookupActive;
     }
 }
