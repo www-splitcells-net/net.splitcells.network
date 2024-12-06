@@ -49,6 +49,7 @@ import static net.splitcells.gel.ui.no.code.editor.FunctionMeta.functionMeta;
 import static net.splitcells.gel.ui.no.code.editor.Functions.functions;
 import static net.splitcells.gel.ui.no.code.editor.NoCodeSolutionCalculator.noCodeSolutionCalculator;
 import static net.splitcells.gel.ui.SolutionCalculator.solutionCalculator;
+import static net.splitcells.system.PerformanceReport.performanceReport;
 import static net.splitcells.website.server.ProgramConfig.programConfig;
 import static net.splitcells.website.server.ProjectConfig.projectConfig;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
@@ -140,6 +141,7 @@ public class WebsiteViaJar {
                 .withAdditionalProcessor(NoCodeSolutionCalculator.PATH, noCodeSolutionCalculator())
                 .withAdditionalProjectsRendererExtension(functions())
                 .withAdditionalProjectsRendererExtension(functionMeta())
+                .withAdditionalProjectsRendererExtension(performanceReport())
                 ;
     }
 
