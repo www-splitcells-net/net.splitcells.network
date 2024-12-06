@@ -209,6 +209,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
         this.renderers = renderers;
         this.config = config;
         config.projectsRendererExtensions().forEach(extension::withRegisteredExtension);
+        extensions.addAll(config.projectsRendererExtensions());
     }
 
     private ProjectsRendererI(String name
@@ -218,6 +219,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
         this.profile = name;
         this.config = config;
         config.projectsRendererExtensions().forEach(extension::withRegisteredExtension);
+        extensions.addAll(config.projectsRendererExtensions());
         this.fallbackRenderer = fallbackRenderer.apply(this);
         this.renderers = renderers.apply(this);
     }
