@@ -31,7 +31,14 @@ public class SynchronizedList<T> extends CopyOnWriteArrayList<T> implements List
     }
 
     @Override
-    public Flow<T> stream() {
-        throw notImplementedYet();
+    public synchronized Flow<T> stream() {
+        return shallowCopy().stream();
+    }
+
+    @Override
+    public synchronized List<T> shallowCopy() {
+        final List<T> shallowCopy = Lists.list();
+        shallowCopy.addAll(this);
+        return shallowCopy;
     }
 }
