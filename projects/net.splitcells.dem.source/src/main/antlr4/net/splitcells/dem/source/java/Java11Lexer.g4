@@ -45,7 +45,7 @@ lexer grammar Java11Lexer;
  * Only create another type, if something like performances becomes important.
  */
 @header {
-    package net.splitcells.dem.source.code.antlr;
+    package net.splitcells.dem.source.java;
 }
 /* Keywords and Keysymbols */
     Legacy_Imports: Legacy_Import_Instances;

@@ -18,7 +18,7 @@ package net.splitcells.dem.source.code;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.resource.Files;
-import net.splitcells.dem.source.code.antlr.Java11Lexer;
+import net.splitcells.dem.source.java.Java11Lexer;
 import org.antlr.v4.gui.TreeViewer;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
@@ -76,9 +76,9 @@ public class SourceCodeCheck {
                 return;
             }
             System.out.println("Checking file: " + file);
-            final var lexer = new net.splitcells.dem.source.code.antlr.Java11Lexer
+            final var lexer = new net.splitcells.dem.source.java.Java11Lexer
                     (CharStreams.fromFileName(file.toString()));
-            final var parser = new net.splitcells.dem.source.code.antlr.Java11Parser
+            final var parser = new net.splitcells.dem.source.java.Java11Parser
                     (new CommonTokenStream(lexer));
             // TODO REMOVE this, when this feature is implemented.
             //parser.addErrorListener(new DiagnosticErrorListener());

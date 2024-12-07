@@ -41,7 +41,7 @@ parser grammar Java11Parser;
  *
  */
 @header {
-    package net.splitcells.dem.source.code.antlr;
+    package net.splitcells.dem.source.java;
 }
 options {
     tokenVocab=Java11Lexer;

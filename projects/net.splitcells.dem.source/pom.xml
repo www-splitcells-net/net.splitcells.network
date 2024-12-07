@@ -6,7 +6,7 @@
     -->
     <modelVersion>4.0.0</modelVersion>
     <artifactId>dem.source</artifactId>
-    <name>Dependency Manager API</name>
+    <name>Dependency Manager Source</name>
     <!-- If a dependency to `net.splitcells.dem` is required,
     this project should be split into an external dependency free API focused project and a dependency integration project.
     The dependency integration project should be used by the custom Maven build check plugin and
@@ -56,14 +56,14 @@
                                     <goal>antlr4</goal>
                                 </goals>
                                 <configuration>
-                                    <sourceDirectory>src/main/antlr4/net/splitcells/dem/source/code</sourceDirectory>
+                                    <sourceDirectory>src/main/antlr4/net/splitcells/dem/source/java</sourceDirectory>
                                     <includes>
                                         <include>Java11Lexer.g4</include>
                                         <include>Java11Parser.g4</include>
                                     </includes>
                                     <visitor>true</visitor>
                                     <listener>true</listener>
-                                    <outputDirectory>target/antlr4/net/splitcells/dem/source/code/anltr4</outputDirectory>
+                                    <outputDirectory>target/antlr4/net/splitcells/dem/source/java</outputDirectory>
                                 </configuration>
                             </execution>
                             <execution>
