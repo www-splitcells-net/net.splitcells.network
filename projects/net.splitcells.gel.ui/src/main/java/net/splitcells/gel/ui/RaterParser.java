@@ -17,8 +17,8 @@ package net.splitcells.gel.ui;
 
 import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.lang.tree.Tree;
-import net.splitcells.dem.lang.tree.antlr4.DenParser;
-import net.splitcells.dem.lang.tree.antlr4.DenParserBaseVisitor;
+import net.splitcells.dem.source.den.DenParser;
+import net.splitcells.dem.source.den.DenParserBaseVisitor;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.view.attribute.Attribute;

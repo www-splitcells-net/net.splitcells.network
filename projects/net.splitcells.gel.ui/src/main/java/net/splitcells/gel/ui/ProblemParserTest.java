@@ -32,8 +32,8 @@ public class ProblemParserTest {
     @UnitTest
     public void test() {
         final var testData = "demands=forAll().then();";
-        final var lexer = new net.splitcells.dem.lang.tree.antlr4.DenLexer(CharStreams.fromString(testData));
-        final var parser = new net.splitcells.dem.lang.tree.antlr4.DenParser(new CommonTokenStream(lexer));
+        final var lexer = new net.splitcells.dem.source.den.DenLexer(CharStreams.fromString(testData));
+        final var parser = new net.splitcells.dem.source.den.DenParser(new CommonTokenStream(lexer));
         final var testResult = parser.source_unit();
         requireEquals(testResult.statement().get(0).variable_definition().Name().getText()
                 , "demands");

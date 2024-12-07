@@ -17,11 +17,11 @@ package net.splitcells.gel.ui;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.tree.Tree;
-import net.splitcells.dem.lang.tree.antlr4.DenParser;
+import net.splitcells.dem.source.den.DenParser;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
-import net.splitcells.dem.lang.tree.antlr4.DenParserBaseVisitor;
+import net.splitcells.dem.source.den.DenParserBaseVisitor;
 import net.splitcells.gel.data.view.attribute.Attributes;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
@@ -59,8 +59,8 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
     private Result<SolutionParameters, Tree> result = result();
 
     public static Result<SolutionParameters, Tree> parseProblem(String arg) {
-        final var lexer = new net.splitcells.dem.lang.tree.antlr4.DenLexer(CharStreams.fromString(arg));
-        final var parser = new net.splitcells.dem.lang.tree.antlr4.DenParser(new CommonTokenStream(lexer));
+        final var lexer = new net.splitcells.dem.source.den.DenLexer(CharStreams.fromString(arg));
+        final var parser = new net.splitcells.dem.source.den.DenParser(new CommonTokenStream(lexer));
         final List<Tree> parsingErrors = list();
         parser.addErrorListener(new BaseErrorListener() {
             // Ensures, that error messages are not hidden.
@@ -94,7 +94,7 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
     }
 
     @Override
-    public Result<SolutionParameters, Tree> visitSource_unit(net.splitcells.dem.lang.tree.antlr4.DenParser.Source_unitContext sourceUnit) {
+    public Result<SolutionParameters, Tree> visitSource_unit(net.splitcells.dem.source.den.DenParser.Source_unitContext sourceUnit) {
         visitChildren(sourceUnit);
         if (name.isPresent() && demands.isPresent() && supplies.isPresent() && result.errorMessages().isEmpty()) {
             final var assignments = assignments(name.orElseThrow(), demands.orElseThrow(), supplies.orElseThrow());
@@ -120,7 +120,7 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
     }
 
     @Override
-    public Result<SolutionParameters, Tree> visitVariable_definition(net.splitcells.dem.lang.tree.antlr4.DenParser.Variable_definitionContext ctx) {
+    public Result<SolutionParameters, Tree> visitVariable_definition(net.splitcells.dem.source.den.DenParser.Variable_definitionContext ctx) {
         final var ctxName = ctx.Name().getText();
         if (ctxName.equals("name")) {
             if (name.isPresent()) {

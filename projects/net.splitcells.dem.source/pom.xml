@@ -72,14 +72,14 @@
                                     <goal>antlr4</goal>
                                 </goals>
                                 <configuration>
-                                    <sourceDirectory>src/main/antlr4/net/splitcells/dem/lang/perspective/antlr4</sourceDirectory>
+                                    <sourceDirectory>src/main/antlr4/net/splitcells/dem/source/den</sourceDirectory>
                                     <includes>
                                         <include>DenLexer.g4</include>
                                         <include>DenParser.g4</include>
                                     </includes>
                                     <visitor>true</visitor>
                                     <listener>true</listener>
-                                    <outputDirectory>target/antlr4/net/splitcells/dem/lang/tree/antlr4</outputDirectory>
+                                    <outputDirectory>target/antlr4/net/splitcells/dem/source/den</outputDirectory>
                                 </configuration>
                             </execution>
                             <execution>
@@ -88,14 +88,14 @@
                                     <goal>antlr4</goal>
                                 </goals>
                                 <configuration>
-                                    <sourceDirectory>src/main/antlr4/net/splitcells/dem/lang/perspective/no/code/antlr4</sourceDirectory>
+                                    <sourceDirectory>src/main/antlr4/net/splitcells/dem/source/den/no/code</sourceDirectory>
                                     <includes>
                                         <include>NoCodeDenLexer.g4</include>
                                         <include>NoCodeDenParser.g4</include>
                                     </includes>
                                     <visitor>true</visitor>
                                     <listener>true</listener>
-                                    <outputDirectory>target/antlr4/net/splitcells/dem/lang/tree/no/code/antlr4</outputDirectory>
+                                    <outputDirectory>target/antlr4/net/splitcells/dem/source/den/no/code</outputDirectory>
                                 </configuration>
                             </execution>
                         </executions>
