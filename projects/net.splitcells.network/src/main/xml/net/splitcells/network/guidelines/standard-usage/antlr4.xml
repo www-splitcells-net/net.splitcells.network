@@ -33,4 +33,8 @@
         Therefore, do not define tokens with one element and <quote>*</quote> as qualifier.
         See <quote>String_value: [a-zA-Z0-9_]*;</quote> as a negative example.
     </paragraph>
+    <paragraph>
+        There seem to be no naming conventions for the capitalization of rules' and tokens' names.
+        Camel case is preferred, as it is the preferred capitalization style for Java as well.
+    </paragraph>
 </article>
