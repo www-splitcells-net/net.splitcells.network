@@ -161,7 +161,7 @@ expression
     	Brace_round_closed expression_child?
     | String access?
     | Char access?
-    | expression Keyword_instanceof type_declaration
+    | expression Keyword_instanceof type_declaration name?
     | expression operator expression
     | prefix_operator expression
     | Keyword_new type_declaration call_arguments
