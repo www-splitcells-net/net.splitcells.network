@@ -55,6 +55,8 @@ public class SourceCodeCheckMojo extends AbstractMojo {
                 }
             }
         } catch (IOException e) {
+            // This is logged, as otherwise the stack trace is not visible.
+            getLog().error("File error during check.", e);
             throw new RuntimeException(e);
         }
     }
@@ -93,7 +95,9 @@ public class SourceCodeCheckMojo extends AbstractMojo {
             });
             parser.source_unit();
         } catch (Throwable e) {
-            throw new RuntimeException("The source code file is invalid: " + file);
+            // This is logged, as otherwise the stack trace is not visible.
+            getLog().error("The source code file is invalid: " + file, e);
+            throw new RuntimeException("The source code file is invalid: " + file, e);
         }
     }
 }
