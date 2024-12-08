@@ -50,7 +50,9 @@ public class SourceCodeCheckMojo extends AbstractMojo {
         try {
             for (final var sourceRoot : project.getCompileSourceRoots()) {
                 // TODO The if is an hack.
-                if (!sourceRoot.toString().contains("generated-sources")) {
+                if (sourceRoot.toString().contains("generated-sources")) {
+                    getLog().info("Ignoring the the source folder, as it is generated: " + sourceRoot);
+                } else {
                     final var rootPath = Path.of(sourceRoot.toString());
                     if (isDirectory(rootPath)) {
                         try (final var walk = Files.walk(rootPath)) {
