@@ -229,7 +229,7 @@ interface_definition_member_method
 		type_argument? type_declaration
 		name call_arguments
 		Brace_curly_open statement* Brace_curly_closed
-	| javadoc? annotation* Keyword_default
+	| javadoc? annotation* (Keyword_default | Keyword_private)
 		type_argument? type_declaration
 		name call_arguments
 		Brace_curly_open statement* Brace_curly_closed
