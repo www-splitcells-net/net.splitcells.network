@@ -30,6 +30,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.regex.Pattern;
 
+import static java.nio.file.Files.isDirectory;
+
 /**
  * <p>This goal should be executed in the validate phase.</p>
  */
@@ -49,8 +51,13 @@ public class SourceCodeCheckMojo extends AbstractMojo {
             for (final var sourceRoot : project.getCompileSourceRoots()) {
                 // TODO The if is an hack.
                 if (!sourceRoot.toString().contains("generated-sources")) {
-                    try (final var walk = Files.walk(Path.of(sourceRoot.toString()))) {
-                        walk.filter(Files::isRegularFile).forEach(this::checkJavaSourceCodeFile);
+                    final var rootPath = Path.of(sourceRoot.toString());
+                    if (isDirectory(rootPath)) {
+                        try (final var walk = Files.walk(rootPath)) {
+                            walk.filter(Files::isRegularFile).forEach(this::checkJavaSourceCodeFile);
+                        }
+                    } else {
+                        getLog().warn("Given source folder path is not an actual folder: " + rootPath);
                     }
                 }
             }
