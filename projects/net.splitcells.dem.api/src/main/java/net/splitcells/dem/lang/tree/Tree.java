@@ -68,10 +68,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 public interface Tree extends TreeView {
 
     Pattern _VALID_XML_NAME = Pattern.compile("[a-zA-Z][a-zA-Z0-9-_\\.]*");
-    static String JSON_ARRAY = "array";
-    static String JSON_OBJECT = "object";
-    static String JSON_TRUE = "true";
-    static String JSON_FALSE = "false";
+    String JSON_ARRAY = "array";
+    String JSON_OBJECT = "object";
+    String JSON_TRUE = "true";
+    String JSON_FALSE = "false";
 
     List<Tree> children();
 
