@@ -14,14 +14,8 @@ parser grammar Java11Parser;
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
- /* TODO Use camel case for naming.
-  * TODO Look up how to do grammar with inline strings, via a minimal grammar.
-  * TODO Consider using BND grammar like JavaCC, because ANTLR4 is too complicated:
-  * * https://javacc.github.io/javacc/documentation/bnf.html
-  * * https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form
+ /*
   * TODO Create JavaDoc grammar.
-  *
-  * New Grammars should be written in BNF.
   */
 /* source_unit is the root rule. */
 /* Grammar guidelines:
