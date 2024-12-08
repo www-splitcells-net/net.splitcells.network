@@ -151,7 +151,6 @@ lexer grammar Java11Lexer;
 /* Generic Content */
 	Name: [a-zA-Z_][a-zA-Z0-9_]*;
 	String
-		/* TODO This is too simplistic. */
 		:'"' String_character* '"';
 	Char: '\'' String_character '\'';
 	fragment String_character
