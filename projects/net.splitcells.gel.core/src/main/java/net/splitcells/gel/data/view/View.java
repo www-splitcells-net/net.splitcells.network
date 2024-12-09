@@ -28,6 +28,7 @@ import static net.splitcells.dem.utils.MathUtils.floorToInt;
 import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.data.table.Tables.table2;
+import static net.splitcells.gel.data.view.ViewHtmlTableConfig.viewHtmlTableConfig;
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -290,11 +291,22 @@ public interface View extends Discoverable, Domable, Identifiable {
     }
 
     default Tree toHtmlTable() {
+        return toHtmlTable(viewHtmlTableConfig());
+    }
+
+    default Tree toHtmlTable(ViewHtmlTableConfig config) {
         final var htmlTable = tree("table", HTML);
         htmlTable.withProperty("class", HTML_ATTRIBUTE, "net-splitcells-website-visually-replaceable");
         final var header = tree("tr", HTML);
         header.withChild(tree("th", HTML).withText("index"));
-        headerView().forEach(attribute -> header.withChild(tree("th", HTML).withText(attribute.name())));
+        headerView().forEach(attribute -> {
+            final var headAttribute = tree("th", HTML).withText(attribute.name());
+            if (config.tablePopupViaColumnContent().isPresent()
+                    && config.tablePopupViaColumnContent().get().equals(attribute.name())) {
+                headAttribute.withProperty("class", HTML_ATTRIBUTE, "net-splitcells-website-table-popup-via-column-content");
+            }
+            header.withChild(headAttribute);
+        });
         htmlTable.withChild(header);
         unorderedLines().forEach(line -> {
             final var row = tree("tr", HTML);

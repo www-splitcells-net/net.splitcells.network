@@ -27,6 +27,7 @@ import net.splitcells.gel.data.table.TableSynchronization;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.LinePointer;
+import net.splitcells.gel.data.view.ViewHtmlTableConfig;
 import net.splitcells.gel.data.view.attribute.AttributeI;
 import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.gel.problem.derived.DerivedSolution;
@@ -50,6 +51,7 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.data.table.TableSynchronizationAspect.tableSynchronizationAspect;
 import static net.splitcells.gel.data.table.Tables.table2;
+import static net.splitcells.gel.data.view.ViewHtmlTableConfig.viewHtmlTableConfig;
 import static net.splitcells.gel.problem.derived.DerivedSolution.derivedSolution;
 
 public class ProblemI implements Problem {
@@ -365,7 +367,9 @@ public class ProblemI implements Problem {
 
             @Override
             public String render() {
-                return threadSafeMirror.get().toHtmlTable().toHtmlString();
+                return threadSafeMirror.get().toHtmlTable(viewHtmlTableConfig()
+                                .withTablePopupViaColumnContent(Optional.of(REASONING.name())))
+                        .toHtmlString();
             }
 
             @Override
