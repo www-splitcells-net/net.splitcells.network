@@ -323,7 +323,7 @@ public class ProblemI implements Problem {
      * <p>The {@link #RATING} is placed before the {@link #REASONING},
      * as the {@link #RATING} is often much shorter than the {@link #REASONING},
      * when the {@link #REASONING} is not empty.</p>
-     * <p></p>TODO The content of {@link #threadSafeMirror} should be created via a general method.
+     * <p>TODO The content of {@link #threadSafeMirror} should be created via a general method.</p>
      *
      * @return Returns a thread safe renderer of {@link #assignments} with some data for the user.
      */
@@ -339,7 +339,7 @@ public class ProblemI implements Problem {
                 unorderedLines().forEach(line -> {
                     final var argumentation = constraint().naturalArgumentation(line, constraint().injectionGroup())
                             .map(arg ->
-                                    Tree.toStringPathsDescription(arg.toStringPaths())
+                                    Tree.toMultilineStringPathsDescription(arg.toStringPaths())
                             ).orElse("");
                     mirror.addTranslated(listWithValuesOf(line.values())
                                     .withAppended(constraint().rating(line).descriptionForUser(), argumentation)
@@ -352,7 +352,7 @@ public class ProblemI implements Problem {
                 unorderedLines().forEach(line -> {
                     final var argumentation = constraint().naturalArgumentation(line, constraint().injectionGroup())
                             .map(arg ->
-                                    Tree.toStringPathsDescription(arg.toStringPaths())
+                                    Tree.toMultilineStringPathsDescription(arg.toStringPaths())
                             ).orElse("");
                     mirror.addTranslated(listWithValuesOf(line.values())
                                     .withAppended(constraint().rating(line).descriptionForUser(), argumentation)

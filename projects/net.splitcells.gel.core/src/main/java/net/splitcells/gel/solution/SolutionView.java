@@ -20,6 +20,7 @@ import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.lang.tree.XmlConfig;
 import net.splitcells.dem.resource.host.ProcessPath;
+import net.splitcells.gel.problem.ProblemI;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.history.History;
 import net.splitcells.gel.data.view.Line;
@@ -297,9 +298,10 @@ public interface SolutionView extends ProblemView {
     }
 
     /**
-     * TODO Use generic method to determine the table data to rendered and
+     * <p>TODO Use generic method to determine the table data to rendered and
      * use this in {@link #toHtmlTable()} and {@link #toFodsTableAnalysis()} as well,
-     * in order to standardize table rendering content.
+     * in order to standardize table rendering content.</p>
+     * <p>TODO This code is a duplication of {@link ProblemI#discoverableRenderer()}</p>
      *
      * @return
      */
@@ -320,7 +322,7 @@ public interface SolutionView extends ProblemView {
             final var argumentation = constraint().naturalArgumentation(line, constraint().injectionGroup());
             row.withChild(tree("td", HTML).withText(
                     argumentation.map(arg ->
-                            Tree.toStringPathsDescription(arg.toStringPaths())
+                            Tree.toMultilineStringPathsDescription(arg.toStringPaths())
                     ).orElse("")));
             htmlTable.withChild(row);
         });

@@ -119,6 +119,13 @@ public interface Tree extends TreeView {
                 .orElse("");
     }
 
+    static String toMultilineStringPathsDescription(List<String> paths) {
+        return paths
+                .stream()
+                .reduce((a, b) -> a + "\\n" + b)
+                .orElse("");
+    }
+
     default List<String> toStringPaths() {
         if (children().isEmpty()) {
             return list(name());
