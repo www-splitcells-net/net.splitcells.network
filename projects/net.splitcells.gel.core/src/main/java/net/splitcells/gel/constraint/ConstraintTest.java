@@ -67,7 +67,7 @@ public class ConstraintTest {
                 .toProblem()
                 .asSolution();
         solution.optimize(offlineLinearInitialization());
-        System.out.println(solution.constraint().naturalArgumentation().get().asXhtmlList());
+        System.out.println(solution.constraint().naturalArgumentation().orElseThrow().asXhtmlList());
     }
 
     @Test
