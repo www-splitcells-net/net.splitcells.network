@@ -60,6 +60,7 @@ public class ProblemI implements Problem {
      * TODO Should be of type string, but creates a problem at {@link #discoverableRenderer()}.
      */
     public static final Attribute<Object> REASONING = AttributeI.attribute(Object.class, "reasoning");
+    public static final Attribute<Object> REASONING_STRING = AttributeI.attribute(Object.class, "reasoning string");
     public static final Attribute<Object> RATING = AttributeI.attribute(Object.class, "rating");
 
     private final Constraint constraint;
@@ -334,17 +335,19 @@ public class ProblemI implements Problem {
         if (threadSafeMirror.isEmpty()) {
             final var mirror = tableSynchronizationAspect(table2("mirror"
                     , this
-                    , headerView().shallowCopy().withAppended(RATING, REASONING)));
+                    , headerView().shallowCopy().withAppended(RATING, REASONING_STRING, REASONING)));
             orderedLinesStream().forEach(mirror::add);
             subscribeToAfterAdditions(addition -> {
                 mirror.withAllLinesRemoved();
                 unorderedLines().forEach(line -> {
+                    final var argumentationString = constraint().naturalArgumentation(line, constraint().injectionGroup())
+                            .map(arg -> Tree.toMultilineStringPathsDescription(arg.toStringPaths()))
+                            .orElse("");
                     final var argumentation = constraint().naturalArgumentation(line, constraint().injectionGroup())
-                            .map(arg ->
-                                    Tree.toMultilineStringPathsDescription(arg.toStringPaths())
-                            ).orElse("");
+                            .map(Tree::asXhtmlList)
+                            .orElse("");
                     mirror.addTranslated(listWithValuesOf(line.values())
-                                    .withAppended(constraint().rating(line).descriptionForUser(), argumentation)
+                                    .withAppended(constraint().rating(line).descriptionForUser(), argumentationString, argumentation)
                             , line.index());
 
                 });
@@ -352,12 +355,14 @@ public class ProblemI implements Problem {
             subscribeToBeforeRemoval(removal -> {
                 mirror.withAllLinesRemoved();
                 unorderedLines().forEach(line -> {
+                    final var argumentationString = constraint().naturalArgumentation(line, constraint().injectionGroup())
+                            .map(arg -> Tree.toMultilineStringPathsDescription(arg.toStringPaths()))
+                            .orElse("");
                     final var argumentation = constraint().naturalArgumentation(line, constraint().injectionGroup())
-                            .map(arg ->
-                                    Tree.toMultilineStringPathsDescription(arg.toStringPaths())
-                            ).orElse("");
+                            .map(Tree::asXhtmlList)
+                            .orElse("");
                     mirror.addTranslated(listWithValuesOf(line.values())
-                                    .withAppended(constraint().rating(line).descriptionForUser(), argumentation)
+                                    .withAppended(constraint().rating(line).descriptionForUser(), argumentationString, argumentation)
                             , line.index());
                 });
             });
