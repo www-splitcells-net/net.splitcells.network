@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.gel.constraint.Constraint.allocationGroups;
 import static net.splitcells.gel.constraint.Constraint.incomingGroupsOfConstraintPath;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
@@ -36,28 +37,23 @@ public class ConstraintTest {
         final int valueB = 3;
         final var solution = defineProblem("test_incomingGroupsOfConstraintPath")
                 .withDemandAttributes(attribute)
-                .withDemands
-                        (list
-                                (list(valueA)
-                                        , list(valueB)
-                                        , list(valueA)
-                                        , list(valueB)))
+                .withDemands(list(list(valueA)
+                        , list(valueB)
+                        , list(valueA)
+                        , list(valueB)))
                 .withSupplyAttributes()
                 .withEmptySupplies(4)
-                .withConstraint
-                        (ForAlls.forEach(attribute)
-                                .withChildren(ForAlls.forEach(attribute)
-                                        , ForAlls.forEach(attribute)
-                                                .withChildren(ForAlls.forEach(attribute))))
+                .withConstraint(ForAlls.forEach(attribute)
+                        .withChildren(ForAlls.forEach(attribute)
+                                , ForAlls.forEach(attribute)
+                                        .withChildren(ForAlls.forEach(attribute))))
                 .toProblem()
                 .asSolution();
         solution.optimize(offlineLinearInitialization());
         final var testVerifier = solution.constraint().childrenView().get(1).childrenView().get(0);
-        final var allocations = incomingGroupsOfConstraintPath
-                (list
-                        (solution.constraint()
-                                , solution.constraint().childrenView().get(1)
-                                , testVerifier))
+        final var allocations = incomingGroupsOfConstraintPath(list(solution.constraint()
+                , solution.constraint().childrenView().get(1)
+                , testVerifier))
                 .stream()
                 .map(e -> testVerifier.complying(e))
                 .flatMap(e -> e.stream())
@@ -86,7 +82,7 @@ public class ConstraintTest {
                                 .withChildren(constraint_5)))
                 .toProblem()
                 .asSolution();
-        final var testProduct = Constraint.allocationGroups(solution.constraint());
+        final var testProduct = allocationGroups(solution.constraint());
         assertThat(testProduct.get(0)).containsExactly(constraint_1);
         assertThat(testProduct.get(1)).containsExactly(constraint_1, constraint_2);
         assertThat(testProduct.get(2)).containsExactly(constraint_1, constraint_3);
@@ -106,29 +102,22 @@ public class ConstraintTest {
                 .withNoDemands()
                 .withSupplyAttributes(C, D)
                 .withNoSupplies()
-                .withConstraint(
-                        ForAlls.forEach(A)
-                                .withChildren(ForAlls.forEach(B)
-                                        , ForAlls.forEach(C)
-                                                .withChildren(ForAlls.forEach(D))))
+                .withConstraint(ForAlls.forEach(A)
+                        .withChildren(ForAlls.forEach(B)
+                                , ForAlls.forEach(C)
+                                        .withChildren(ForAlls.forEach(D))))
                 .toProblem()
                 .asSolution();
-        final var testData = Constraint.allocationGroups(solution.constraint());
+        final var testData = allocationGroups(solution.constraint());
         assertThat(testData).hasSize(4);
         assertThat(testData.get(0)).isEqualTo(list(solution.constraint()));
-        assertThat(testData.get(1))
-                .isEqualTo(list
-                        (solution.constraint()
-                                , solution.constraint().childrenView().get(0)));
-        assertThat(testData.get(2))
-                .isEqualTo(list
-                        (solution.constraint()
-                                , solution.constraint().childrenView().get(1)));
-        assertThat(testData.get(3))
-                .isEqualTo(list
-                        (solution.constraint()
-                                , solution.constraint().childrenView().get(1)
-                                , solution.constraint().childrenView().get(1)
-                                        .childrenView().get(0)));
+        assertThat(testData.get(1)).isEqualTo(list(solution.constraint()
+                , solution.constraint().childrenView().get(0)));
+        assertThat(testData.get(2)).isEqualTo(list(solution.constraint()
+                , solution.constraint().childrenView().get(1)));
+        assertThat(testData.get(3)).isEqualTo(list(solution.constraint()
+                , solution.constraint().childrenView().get(1)
+                , solution.constraint().childrenView().get(1)
+                        .childrenView().get(0)));
     }
 }
