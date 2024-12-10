@@ -341,6 +341,13 @@ public interface Solution extends Problem, SolutionView {
         return simplifiedCsv.toString();
     }
 
+    /**
+     * TODO Move this to {@link #constraint()}.
+     *
+     * @param allocation
+     * @return
+     */
+    @Deprecated
     default Optional<String> singleLineArgumentation(Line allocation) {
         // TODO The comma replacement is an hack.
         return constraint().naturalArgumentation(allocation, constraint().injectionGroup())
