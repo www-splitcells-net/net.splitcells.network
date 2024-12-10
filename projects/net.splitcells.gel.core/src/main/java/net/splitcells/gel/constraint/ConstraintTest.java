@@ -28,18 +28,48 @@ import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.gel.constraint.GroupId.group;
 import static net.splitcells.gel.constraint.GroupId.rootGroup;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.constraint.type.ForAlls.forEach;
+import static net.splitcells.gel.constraint.type.Then.then;
 import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
+import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.gel.rating.type.Cost.noCost;
+import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
+import static net.splitcells.gel.solution.optimization.primitive.OfflineLinearInitialization.offlineLinearInitialization;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ConstraintTest {
+
+    @Test
+    public void testArgumentation() {
+        final var attribute = attribute(Integer.class, "a");
+        final int valueA = 1;
+        final int valueB = 3;
+        final var solution = defineProblem("testArgumentation")
+                .withDemandAttributes(attribute)
+                .withDemands(list(list(valueA)
+                        , list(valueB)
+                        , list(valueA)
+                        , list(valueB)))
+                .withSupplyAttributes()
+                .withEmptySupplies(4)
+                .withConstraint(query -> {
+                    query.forAll(attribute).then(hasSize(4));
+                    query.then(hasSize(2));
+                    return query;
+                })
+                .toProblem()
+                .asSolution();
+        solution.optimize(offlineLinearInitialization());
+        System.out.println(solution.constraint().naturalArgumentation().get().asXhtmlList());
+    }
+
     @Test
     public void testMultipleGroupAssignment() {
         final var attribute = attribute(Integer.class);
