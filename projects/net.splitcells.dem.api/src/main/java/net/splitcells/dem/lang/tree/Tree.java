@@ -620,7 +620,7 @@ public interface Tree extends TreeView {
     }
 
     default String asCompactXhtmlList(boolean isRoot) {
-        final String htmlList;
+        String htmlList;
         final var nonEmptyElementsChildrens = nonEmptyElementsChildrens();
         if (isRoot && name().isEmpty()) {
             return "<ol>"
@@ -634,14 +634,20 @@ public interface Tree extends TreeView {
                     .reduce((a, b) -> a + b)
                     .orElse("");
         }
-        if (nonEmptyElementsChildrens.isEmpty()) {
+        if (nonEmptyElementsChildrens.isEmpty() && name().isEmpty()) {
+            htmlList = "";
+        } else if (nonEmptyElementsChildrens.isEmpty()) {
             htmlList = "<li>" + xmlName() + "</li>";
         } else {
             final String childrenHtmlList = nonEmptyElementsChildrens.stream()
                     .map(c -> c.asCompactXhtmlList(false))
                     .reduce("", (a, b) -> a + b);
-            htmlList = "<li>" + xmlName() + "</li>"
-                    + "<ol>" + childrenHtmlList + "</ol>";
+            if (name().isEmpty()) {
+                htmlList = "";
+            } else {
+                htmlList = "<li>" + xmlName() + "</li>";
+            }
+            htmlList += "<ol>" + childrenHtmlList + "</ol>";
         }
         if (isRoot) {
             return "<ol>" + htmlList + "</ol>";
