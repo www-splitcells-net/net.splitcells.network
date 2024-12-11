@@ -615,24 +615,29 @@ public interface Tree extends TreeView {
         return asCompactXhtmlList(true);
     }
 
+    private List<Tree> nonEmptyElementsChildrens() {
+        return children().stream().filter(child -> !child.name().isEmpty() || !child.children().isEmpty()).toList();
+    }
+
     default String asCompactXhtmlList(boolean isRoot) {
         final String htmlList;
+        final var nonEmptyElementsChildrens = nonEmptyElementsChildrens();
         if (isRoot && name().isEmpty()) {
             return "<ol>"
-                    + children().stream().map(c -> c.asCompactXhtmlList(false))
+                    + nonEmptyElementsChildrens.stream().map(c -> c.asCompactXhtmlList(false))
                     .reduce((a, b) -> a + b)
                     .orElse("")
                     + "</ol>";
         }
-        if (!isRoot && name().isEmpty() && children().size() == 1) {
-            return children().stream().map(c -> c.asCompactXhtmlList(false))
+        if (!isRoot && name().isEmpty() && nonEmptyElementsChildrens.size() == 1) {
+            return nonEmptyElementsChildrens.stream().map(c -> c.asCompactXhtmlList(false))
                     .reduce((a, b) -> a + b)
                     .orElse("");
         }
-        if (children().isEmpty()) {
+        if (nonEmptyElementsChildrens.isEmpty()) {
             htmlList = "<li>" + xmlName() + "</li>";
         } else {
-            final String childrenHtmlList = children().stream()
+            final String childrenHtmlList = nonEmptyElementsChildrens.stream()
                     .map(c -> c.asCompactXhtmlList(false))
                     .reduce("", (a, b) -> a + b);
             htmlList = "<li>" + xmlName() + "</li>"
