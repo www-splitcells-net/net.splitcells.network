@@ -611,21 +611,21 @@ public interface Tree extends TreeView {
      * while avoiding nested lists with no content,
      * in order have a more compact and readable rendering.
      */
-    default String asComprehensiveXhtmlList() {
-        return asComprehensiveXhtmlList(true);
+    default String asCompactXhtmlList() {
+        return asCompactXhtmlList(true);
     }
 
-    default String asComprehensiveXhtmlList(boolean isRoot) {
+    default String asCompactXhtmlList(boolean isRoot) {
         final String htmlList;
         if (isRoot && name().isEmpty()) {
             return "<ol>"
-                    + children().stream().map(c -> c.asComprehensiveXhtmlList(false))
+                    + children().stream().map(c -> c.asCompactXhtmlList(false))
                     .reduce((a, b) -> a + b)
                     .orElse("")
                     + "</ol>";
         }
         if (!isRoot && name().isEmpty() && children().size() == 1) {
-            return children().stream().map(c -> c.asComprehensiveXhtmlList(false))
+            return children().stream().map(c -> c.asCompactXhtmlList(false))
                     .reduce((a, b) -> a + b)
                     .orElse("");
         }
@@ -633,7 +633,7 @@ public interface Tree extends TreeView {
             htmlList = "<li>" + xmlName() + "</li>";
         } else {
             final String childrenHtmlList = children().stream()
-                    .map(c -> c.asComprehensiveXhtmlList(false))
+                    .map(c -> c.asCompactXhtmlList(false))
                     .reduce("", (a, b) -> a + b);
             htmlList = "<li>" + xmlName() + "</li>"
                     + "<ol>" + childrenHtmlList + "</ol>";

@@ -18,7 +18,6 @@ package net.splitcells.gel.problem;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.execution.EffectSynchronization;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.constraint.type.framework.ConstraintAspect;
@@ -27,7 +26,6 @@ import net.splitcells.gel.data.table.TableSynchronization;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.LinePointer;
-import net.splitcells.gel.data.view.ViewHtmlTableConfig;
 import net.splitcells.gel.data.view.attribute.AttributeI;
 import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.gel.problem.derived.DerivedSolution;
@@ -40,13 +38,11 @@ import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
-import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.dem.lang.namespace.NameSpaces.HTML;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.data.table.TableSynchronizationAspect.tableSynchronizationAspect;
@@ -344,7 +340,7 @@ public class ProblemI implements Problem {
                             .map(arg -> Tree.toMultilineStringPathsDescription(arg.toStringPaths()))
                             .orElse("");
                     final var argumentation = constraint().naturalArgumentation(line, constraint().injectionGroup())
-                            .map(Tree::asXhtmlList)
+                            .map(Tree::asCompactXhtmlList)
                             .orElse("");
                     mirror.addTranslated(listWithValuesOf(line.values())
                                     .withAppended(constraint().rating(line).descriptionForUser(), argumentationString, argumentation)
@@ -359,7 +355,7 @@ public class ProblemI implements Problem {
                             .map(arg -> Tree.toMultilineStringPathsDescription(arg.toStringPaths()))
                             .orElse("");
                     final var argumentation = constraint().naturalArgumentation(line, constraint().injectionGroup())
-                            .map(Tree::asXhtmlList)
+                            .map(Tree::asCompactXhtmlList)
                             .orElse("");
                     mirror.addTranslated(listWithValuesOf(line.values())
                                     .withAppended(constraint().rating(line).descriptionForUser(), argumentationString, argumentation)

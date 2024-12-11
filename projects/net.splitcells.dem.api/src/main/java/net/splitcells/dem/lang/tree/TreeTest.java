@@ -15,7 +15,6 @@
  */
 package net.splitcells.dem.lang.tree;
 
-import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
@@ -192,26 +191,26 @@ public class TreeTest {
     }
 
     @UnitTest
-    public void testAsComprehensiveXhtmlList() {
+    public void testAsCompactXhtmlList() {
         final var testSubject = tree("root");
         testSubject.withProperty("attribute", "value");
         testSubject.withChild(tree("child"));
-        requireEquals(testSubject.asComprehensiveXhtmlList(), "<ol><li>root</li><ol><li>attribute</li><ol><li>value</li></ol><li>child</li></ol></ol>");
+        requireEquals(testSubject.asCompactXhtmlList(), "<ol><li>root</li><ol><li>attribute</li><ol><li>value</li></ol><li>child</li></ol></ol>");
     }
 
     @UnitTest
-    public void testAsComprehensiveXhtmlListWithEmptyNodes() {
+    public void testAsCompactXhtmlListWithEmptyNodes() {
         final var testSubject = tree("");
         testSubject.withProperty("attribute", "value");
         testSubject.withChild(tree("child"));
-        requireEquals(testSubject.asComprehensiveXhtmlList(), "<ol><li>attribute</li><ol><li>value</li></ol><li>child</li></ol>");
+        requireEquals(testSubject.asCompactXhtmlList(), "<ol><li>attribute</li><ol><li>value</li></ol><li>child</li></ol>");
     }
 
     @UnitTest
-    public void testAsComprehensiveXhtmlListWithNestedEmptyNodes() {
+    public void testAsCompactXhtmlListWithNestedEmptyNodes() {
         final var testSubject = tree("");
         testSubject.withProperty("attribute", "value");
         testSubject.withProperty("", tree("").withProperty("", "child"));
-        requireEquals(testSubject.asComprehensiveXhtmlList(), "<ol><li>attribute</li><ol><li>value</li></ol><li>child</li></ol>");
+        requireEquals(testSubject.asCompactXhtmlList(), "<ol><li>attribute</li><ol><li>value</li></ol><li>child</li></ol>");
     }
 }
