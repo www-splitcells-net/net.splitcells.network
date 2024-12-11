@@ -603,6 +603,34 @@ public interface Tree extends TreeView {
         return htmlList;
     }
 
+    default String asComprehensiveXhtmlList() {
+        return asComprehensiveXhtmlList(true);
+    }
+
+    default String asComprehensiveXhtmlList(boolean isRoot) {
+        final String htmlList;
+        if (isRoot && name().isEmpty()) {
+            return "<ol>"
+                    + children().stream().map(c -> c.asXhtmlList(false))
+                    .reduce((a, b) -> a + b)
+                    .orElse("")
+                    + "</ol>";
+        }
+        if (children().isEmpty()) {
+            htmlList = "<li>" + xmlName() + "</li>";
+        } else {
+            final String childrenHtmlList = children().stream()
+                    .map(c -> c.asXhtmlList(false))
+                    .reduce("", (a, b) -> a + b);
+            htmlList = "<li>" + xmlName() + "</li>"
+                    + "<ol>" + childrenHtmlList + "</ol>";
+        }
+        if (isRoot) {
+            return "<ol>" + htmlList + "</ol>";
+        }
+        return htmlList;
+    }
+
     /**
      * TODO I think, this method is not required anymore.
      *
@@ -638,7 +666,6 @@ public interface Tree extends TreeView {
     }
 
     /**
-     *
      * @param config
      * @return A JSON String that represents part or a complete JSON document.
      * If this is classified as a JSON primitive value, the returned String is a partial JSON document.

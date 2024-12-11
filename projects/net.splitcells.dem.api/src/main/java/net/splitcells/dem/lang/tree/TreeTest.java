@@ -190,4 +190,12 @@ public class TreeTest {
         testSubject.withChild(tree("body", HTML));
         requireEquals(testSubject.toHtmlString(), "<html xmlns=\"http://www.w3.org/1999/xhtml\"><body/></html>");
     }
+
+    @UnitTest
+    public void testAsComprehensiveXhtmlList() {
+        final var testSubject = tree("root");
+        testSubject.withProperty("attribute", "value");
+        testSubject.withChild(tree("child"));
+        requireEquals(testSubject.asComprehensiveXhtmlList(), "<ol><li>root</li><ol><li>attribute</li><ol><li>value</li></ol><li>child</li></ol></ol>");
+    }
 }
