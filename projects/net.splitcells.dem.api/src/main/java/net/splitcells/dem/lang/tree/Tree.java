@@ -582,6 +582,9 @@ public interface Tree extends TreeView {
         return this;
     }
 
+    /**
+     * @return Renders the {@link Tree} as a nested XHTML list without a namespace decleration.
+     */
     default String asXhtmlList() {
         return asXhtmlList(true);
     }
@@ -603,6 +606,11 @@ public interface Tree extends TreeView {
         return htmlList;
     }
 
+    /**
+     * @return Renders the {@link Tree} as a nested XHTML list without a namespace decleration,
+     * while avoiding nested lists with no content,
+     * in order have a more compact and readable rendering.
+     */
     default String asComprehensiveXhtmlList() {
         return asComprehensiveXhtmlList(true);
     }
