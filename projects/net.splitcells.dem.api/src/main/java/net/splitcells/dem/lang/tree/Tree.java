@@ -619,16 +619,21 @@ public interface Tree extends TreeView {
         final String htmlList;
         if (isRoot && name().isEmpty()) {
             return "<ol>"
-                    + children().stream().map(c -> c.asXhtmlList(false))
+                    + children().stream().map(c -> c.asComprehensiveXhtmlList(false))
                     .reduce((a, b) -> a + b)
                     .orElse("")
                     + "</ol>";
+        }
+        if (!isRoot && name().isEmpty() && children().size() == 1) {
+            return children().stream().map(c -> c.asComprehensiveXhtmlList(false))
+                    .reduce((a, b) -> a + b)
+                    .orElse("");
         }
         if (children().isEmpty()) {
             htmlList = "<li>" + xmlName() + "</li>";
         } else {
             final String childrenHtmlList = children().stream()
-                    .map(c -> c.asXhtmlList(false))
+                    .map(c -> c.asComprehensiveXhtmlList(false))
                     .reduce("", (a, b) -> a + b);
             htmlList = "<li>" + xmlName() + "</li>"
                     + "<ol>" + childrenHtmlList + "</ol>";
