@@ -198,4 +198,12 @@ public class TreeTest {
         testSubject.withChild(tree("child"));
         requireEquals(testSubject.asComprehensiveXhtmlList(), "<ol><li>root</li><ol><li>attribute</li><ol><li>value</li></ol><li>child</li></ol></ol>");
     }
+
+    @UnitTest
+    public void testAsComprehensiveXhtmlListWithEmptyNodes() {
+        final var testSubject = tree("");
+        testSubject.withProperty("attribute", "value");
+        testSubject.withChild(tree("child"));
+        requireEquals(testSubject.asComprehensiveXhtmlList(), "<ol><li>attribute</li><ol><li>value</li></ol><li>child</li></ol>");
+    }
 }
