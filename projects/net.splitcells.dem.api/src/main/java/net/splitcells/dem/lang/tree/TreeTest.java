@@ -195,7 +195,7 @@ public class TreeTest {
         final var testSubject = tree("root");
         testSubject.withProperty("attribute", "value");
         testSubject.withChild(tree("child"));
-        requireEquals(testSubject.asCompactXhtmlList(), "<ol><li>root</li><ol><li>attribute</li><ol><li>value</li></ol><li>child</li></ol></ol>");
+        requireEquals(testSubject.asCompactXhtmlList(), "<ol><li>root<ol><li>attribute<ol><li>value</li></ol></li><li>child</li></ol></li></ol>");
     }
 
     @UnitTest
@@ -203,7 +203,7 @@ public class TreeTest {
         final var testSubject = tree("");
         testSubject.withProperty("attribute", "value");
         testSubject.withChild(tree("child"));
-        requireEquals(testSubject.asCompactXhtmlList(), "<ol><li>attribute</li><ol><li>value</li></ol><li>child</li></ol>");
+        requireEquals(testSubject.asCompactXhtmlList(), "<ol><li>attribute<ol><li>value</li></ol></li><li>child</li></ol>");
     }
 
     @UnitTest
@@ -211,7 +211,7 @@ public class TreeTest {
         final var testSubject = tree("");
         testSubject.withProperty("attribute", "value");
         testSubject.withProperty("", tree("").withProperty("", "child"));
-        requireEquals(testSubject.asCompactXhtmlList(), "<ol><li>attribute</li><ol><li>value</li></ol><li>child</li></ol>");
+        requireEquals(testSubject.asCompactXhtmlList(), "<ol><li>attribute<ol><li>value</li></ol></li><li>child</li></ol>");
     }
 
     @UnitTest
@@ -222,6 +222,6 @@ public class TreeTest {
         testSubject.withChild(tree(""));
         testSubject.withProperty("", tree("").withChild(tree(""))
                 .withProperty("", "child"));
-        requireEquals(testSubject.asCompactXhtmlList(), "<ol><li>attribute</li><ol><li>value</li></ol><li>child</li></ol>");
+        requireEquals(testSubject.asCompactXhtmlList(), "<ol><li>attribute<ol><li>value</li></ol></li><li>child</li></ol>");
     }
 }

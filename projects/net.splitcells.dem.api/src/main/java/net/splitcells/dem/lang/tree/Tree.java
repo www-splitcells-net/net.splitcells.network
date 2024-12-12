@@ -616,7 +616,16 @@ public interface Tree extends TreeView {
     }
 
     private List<Tree> nonEmptyElementsChildrens() {
-        return children().stream().filter(child -> !child.name().isEmpty() || !child.children().isEmpty()).toList();
+        return children().stream().filter(child -> !isEmptyBranch()).toList();
+    }
+
+    private boolean isEmptyBranch() {
+        if (!name().isEmpty()) {
+            return false;
+        }
+        return children().stream().map(c -> c.isEmptyBranch())
+                .reduce((a, b) -> a && b)
+                .orElse(true);
     }
 
     default String asCompactXhtmlList(boolean isRoot) {
@@ -629,7 +638,10 @@ public interface Tree extends TreeView {
                     .orElse("")
                     + "</ol>";
         }
-        if (!isRoot && name().isEmpty() && nonEmptyElementsChildrens.size() == 1) {
+        if (!isRoot && name().isEmpty()) {
+            if (nonEmptyElementsChildrens.isEmpty()) {
+                return "";
+            }
             return nonEmptyElementsChildrens.stream().map(c -> c.asCompactXhtmlList(false))
                     .reduce((a, b) -> a + b)
                     .orElse("");
@@ -639,15 +651,16 @@ public interface Tree extends TreeView {
         } else if (nonEmptyElementsChildrens.isEmpty()) {
             htmlList = "<li>" + xmlName() + "</li>";
         } else {
-            final String childrenHtmlList = nonEmptyElementsChildrens.stream()
-                    .map(c -> c.asCompactXhtmlList(false))
-                    .reduce("", (a, b) -> a + b);
+            final var tree = tree("");
+            tree.children().addAll(nonEmptyElementsChildrens);
+            final String childrenHtmlList = tree.asCompactXhtmlList();
             if (name().isEmpty()) {
                 htmlList = "";
             } else {
-                htmlList = "<li>" + xmlName() + "</li>";
+                htmlList = "<li>" + xmlName()
+                        + childrenHtmlList
+                        + "</li>";
             }
-            htmlList += "<ol>" + childrenHtmlList + "</ol>";
         }
         if (isRoot) {
             return "<ol>" + htmlList + "</ol>";
