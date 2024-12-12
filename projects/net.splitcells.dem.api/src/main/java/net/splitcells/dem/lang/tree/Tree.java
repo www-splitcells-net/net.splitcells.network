@@ -583,6 +583,9 @@ public interface Tree extends TreeView {
     }
 
     /**
+     * TODO This rendering is not good,
+     * as nested ol elements are not placed inside li elements of the parent {@link Tree}.
+     *
      * @return Renders the {@link Tree} as a nested XHTML list without a namespace decleration.
      */
     default String asXhtmlList() {
