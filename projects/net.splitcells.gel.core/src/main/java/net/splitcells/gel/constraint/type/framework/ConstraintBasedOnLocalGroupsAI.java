@@ -586,7 +586,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         if (naturalArgumentation.isEmpty()) {
             return Optional.empty();
         }
-        final var localArgumentation = TreeI.tree(EMPTY_STRING.value(), GEL);
+        final var localArgumentation = tree(EMPTY_STRING.value(), GEL);
         naturalArgumentation
                 .forEach(naturalReasoning -> naturalReasoning.ifPresent(localArgumentation::withMerged));
         return Optional.of(localArgumentation);
@@ -599,11 +599,11 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         if (localArgumentation.isEmpty() && childrenArgumentation.isEmpty()) {
             return Optional.empty();
         } else if (!localArgumentation.isEmpty()) {
-            return Optional.of(TreeI.tree(EMPTY_STRING.value(), GEL)
-                    .withChild(TreeI.tree(localArgumentation.get(), NameSpaces.STRING)
+            return Optional.of(tree(EMPTY_STRING.value(), GEL)
+                    .withChild(tree(localArgumentation.get(), NameSpaces.STRING)
                             .withMerged(childrenArgumentation)));
         } else {
-            return Optional.of(TreeI.tree(EMPTY_STRING.value(), GEL)
+            return Optional.of(tree(EMPTY_STRING.value(), GEL)
                     .withMerged(childrenArgumentation));
         }
     }
