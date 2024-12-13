@@ -588,7 +588,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         }
         final var localArgumentation = TreeI.tree(EMPTY_STRING.value(), GEL);
         naturalArgumentation
-                .forEach(naturalReasoning -> naturalReasoning.ifPresent(localArgumentation::withChild));
+                .forEach(naturalReasoning -> naturalReasoning.ifPresent(localArgumentation::withMerged));
         return Optional.of(localArgumentation);
     }
 
