@@ -75,6 +75,32 @@ public interface Tree extends TreeView {
 
     List<Tree> children();
 
+    /**
+     *
+     * @param indexes
+     * @return This helper method selects the last {@link Tree} of a path created by recursively visiting
+     * {@link #children()}, where a {@link #child(int)} is selected via the given indexes.
+     */
+    default Tree childrenPath(int... indexes) {
+        return childrenPathTravel(0, indexes);
+    }
+
+    /**
+     *
+     * @param current
+     * @param indexes
+     * @return This helper method selects the last {@link Tree} of a path created by recursively visiting
+     * {@link #children()}, where a {@link #child(int)} is selected via the given indexes.
+     * The path starts at the current index.
+     */
+    default Tree childrenPathTravel(int current, int... indexes) {
+        final var next = child(indexes[current]);
+        if (current >= indexes.length - 1) {
+            return next;
+        }
+        return next.childrenPathTravel(++current, indexes);
+    }
+
     default Tree withText(String text) {
         return withValues(TreeI.tree(text, STRING));
     }

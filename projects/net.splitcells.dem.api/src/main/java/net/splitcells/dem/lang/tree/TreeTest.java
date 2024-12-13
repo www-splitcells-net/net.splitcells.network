@@ -224,4 +224,14 @@ public class TreeTest {
                 .withProperty("", "child"));
         requireEquals(testSubject.asCompactXhtmlList(), "<ol><li>attribute<ol><li>value</li></ol></li><li>child</li></ol>");
     }
+
+    @UnitTest
+    public void testChildrenPath() {
+        final var testSubject = tree("a");
+        testSubject.withProperty("b", tree("c").withChildren(tree("e"), tree("f")));
+        requireEquals(testSubject.childrenPath(0, 0, 0).name(), "e");
+        requireEquals(testSubject.childrenPath(0, 0, 1).name(), "f");
+        requireEquals(testSubject.childrenPathTravel(0, 0, 0, 0).name(), "e");
+        requireEquals(testSubject.childrenPathTravel(1, 0, 0, 0).name(), "c");
+    }
 }
