@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.lang.tree;
 
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
@@ -223,6 +224,28 @@ public class TreeTest {
         testSubject.withProperty("", tree("").withChild(tree(""))
                 .withProperty("", "child"));
         requireEquals(testSubject.asCompactXhtmlList(), "<ol><li>attribute<ol><li>value</li></ol></li><li>child</li></ol>");
+    }
+
+    @UnitTest
+    public void testWithMerged() {
+        final var testSubject = tree("a");
+        testSubject.withProperty("b", tree("c").withProperty("d", "e"));
+        final var argument = tree("b").withProperty("c", tree("d").withProperty("f", "g"));
+        //System.out.println(testSubject.withMerged(argument).asCompactXhtmlList());
+        final var testResult = testSubject.withMerged(argument);
+        requireEquals(testResult.name(), "a");
+        requireEquals(testResult.childrenPath(0).name(), "b");
+        testResult.children().requireSizeOf(1);
+        requireEquals(testResult.childrenPath(0, 0).name(), "c");
+        testResult.childrenPath(0, 0).children().requireSizeOf(1);
+        requireEquals(testResult.childrenPath(0, 0, 0).name(), "d");
+        testResult.childrenPath(0, 0, 0).children().requireSizeOf(2);
+        requireEquals(testResult.childrenPath(0, 0, 0, 0).name(), "e");
+        testResult.childrenPath(0, 0, 0, 0).children().requireEmpty();
+        requireEquals(testResult.childrenPath(0, 0, 0, 1).name(), "f");
+        testResult.childrenPath(0, 0, 0, 1).children().requireSizeOf(1);
+        requireEquals(testResult.childrenPath(0, 0, 0, 1, 0).name(), "g");
+        testResult.childrenPath(0, 0, 0, 1, 0).children().requireEmpty();
     }
 
     @UnitTest

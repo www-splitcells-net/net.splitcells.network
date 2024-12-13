@@ -253,6 +253,27 @@ public interface Tree extends TreeView {
         return withPath(this, path, propertyName, nameSpace);
     }
 
+    /**
+     * Inserts the nodes of the argument into the {@link #children()} of this,
+     * while keeping the structure of the argument.
+     * The nodes are only inserted as a copy into this,
+     * if there is no child with the same {@link #name()} and  {@link #nameSpace()} already present.
+     *
+     * @param arg This is the {@link Tree}, to be merged into this.
+     * @return Returns this.
+     */
+    default Tree withMerged(Tree arg) {
+        final var match = children().stream().filter(c -> c.name().equals(arg.name())
+                && c.nameSpace().equals(arg.nameSpace())).findFirst();
+        if (match.isPresent()) {
+            arg.children().forEach(match.get()::withMerged);
+            return this;
+        }
+        final var argCopy = tree(arg.name(), arg.nameSpace());
+        arg.children().forEach(c -> argCopy.withMerged(c));
+        return withChild(argCopy);
+    }
+
     default Tree withPath(Tree... path) {
         var current = this;
         for (int i = 0; i < path.length; ++i) {
