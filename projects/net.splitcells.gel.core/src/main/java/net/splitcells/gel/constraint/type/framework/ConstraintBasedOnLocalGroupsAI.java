@@ -600,11 +600,11 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
             return Optional.empty();
         } else if (!localArgumentation.isEmpty()) {
             return Optional.of(TreeI.tree(EMPTY_STRING.value(), GEL)
-                    .withChild(TreeI.tree(localArgumentation.get(), NameSpaces.STRING))
-                    .withChildren(childrenArgumentation));
+                    .withChild(TreeI.tree(localArgumentation.get(), NameSpaces.STRING)
+                            .withMerged(childrenArgumentation)));
         } else {
             return Optional.of(TreeI.tree(EMPTY_STRING.value(), GEL)
-                    .withChildren(childrenArgumentation));
+                    .withMerged(childrenArgumentation));
         }
     }
 
