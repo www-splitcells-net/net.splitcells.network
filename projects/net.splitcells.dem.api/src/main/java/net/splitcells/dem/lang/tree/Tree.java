@@ -76,7 +76,6 @@ public interface Tree extends TreeView {
     List<Tree> children();
 
     /**
-     *
      * @param indexes
      * @return This helper method selects the last {@link Tree} of a path created by recursively visiting
      * {@link #children()}, where a {@link #child(int)} is selected via the given indexes.
@@ -86,7 +85,6 @@ public interface Tree extends TreeView {
     }
 
     /**
-     *
      * @param current
      * @param indexes
      * @return This helper method selects the last {@link Tree} of a path created by recursively visiting
@@ -251,6 +249,11 @@ public interface Tree extends TreeView {
     @ReturnsThis
     default Tree withPath(Tree path, String propertyName, NameSpace nameSpace) {
         return withPath(this, path, propertyName, nameSpace);
+    }
+
+    default Tree withMerged(List<Tree> arg) {
+        arg.forEach(a -> this.withMerged(a));
+        return this;
     }
 
     /**
