@@ -254,10 +254,12 @@ public interface Tree extends TreeView {
     }
 
     /**
-     * Inserts the nodes of the argument into the {@link #children()} of this,
+     * <p>Inserts the nodes of the argument into the {@link #children()} of this,
      * while keeping the structure of the argument.
      * The nodes are only inserted as a copy into this,
-     * if there is no child with the same {@link #name()} and  {@link #nameSpace()} already present.
+     * if there is no child with the same {@link #name()} and  {@link #nameSpace()} already present.</p>
+     * <p>It was decided for now, to not create a merge method, that merges both {@link Tree} by the root.
+     * Such a method might be required for the future, but should be avoided as such seem to be more error prone.</p>
      *
      * @param arg This is the {@link Tree}, to be merged into this.
      * @return Returns this.
