@@ -63,7 +63,6 @@ public class ConfigurationI implements Configuration {
                 if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
                     Bools.require(!subscribers.containsKey(key));
                 }
-                final Option<T> option = key.getDeclaredConstructor().newInstance();
                 key_subscribers = new HashSet<>();
                 subscribers.put(key, key_subscribers);
             } else {
@@ -71,7 +70,7 @@ public class ConfigurationI implements Configuration {
             }
             final Object old_value = config_store.get(key);
             config_store.put(key, new_value);
-            subscribers.get(key).stream().forEach(subscriber -> {
+            key_subscribers.stream().forEach(subscriber -> {
                 subscriber.accept(old_value, new_value);
             });
         } catch (Exception e) {

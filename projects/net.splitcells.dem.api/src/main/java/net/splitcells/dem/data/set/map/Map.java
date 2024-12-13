@@ -61,6 +61,7 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
     Value ensurePresenceAndValue(Key key, Value value);
 
 
+    @Override
     default Value computeIfPresent(Key key, BiFunction<? super Key, ? super Value, ? extends Value> updateFunction) {
         final Value oldValue = get(key);
         if (oldValue != null) {

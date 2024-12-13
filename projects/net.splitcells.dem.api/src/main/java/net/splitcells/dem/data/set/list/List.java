@@ -41,6 +41,7 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
      *
      * @return Whether this list has a size bigger than zero.
      */
+    @Override
     default boolean hasElements() {
         return !isEmpty();
     }
