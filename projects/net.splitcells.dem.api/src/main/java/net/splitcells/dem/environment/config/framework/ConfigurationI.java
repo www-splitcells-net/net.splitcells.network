@@ -59,14 +59,14 @@ public class ConfigurationI implements Configuration {
     public <T extends Object> Configuration withConfigValue(Class<? extends Option<T>> key, T new_value) {
         try {
             final Set<OptionSubscriber<Object>> key_subscribers;
-            if (!config_store.containsKey(key)) {
+            if (config_store.containsKey(key)) {
+                key_subscribers = subscribers.get(key);
+            } else {
                 if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
                     Bools.require(!subscribers.containsKey(key));
                 }
                 key_subscribers = new HashSet<>();
                 subscribers.put(key, key_subscribers);
-            } else {
-                key_subscribers = subscribers.get(key);
             }
             final Object old_value = config_store.get(key);
             config_store.put(key, new_value);
