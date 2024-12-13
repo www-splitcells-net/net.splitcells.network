@@ -148,7 +148,7 @@ if __name__ == '__main__':
         # TODO The method for generating the remote script is an hack.
         for key in parsedVars:
             if key != 'executeViaSshAt' and parsedVars[key] is not None:
-                remoteScript += " --" + key + "=" + str(parsedVars[key]).replace("\'", "\\\'").replace("\"", "\\\"").replace("\n", "")
+                remoteScript += " --" + key + "='" + str(parsedVars[key]).replace("\'", "\\\'").replace("\"", "\\\"").replace("\n", "") + "'"
         remoteScript = "ssh " + parsedArgs.executeViaSshAt +  " -t \"  cd ~/.local/state/net.splitcells.repos/public/net.splitcells.network && bin/worker.execute" + remoteScript + "\""
         print(remoteScript)
         returnCode = subprocess.call(remoteScript, shell='False')
