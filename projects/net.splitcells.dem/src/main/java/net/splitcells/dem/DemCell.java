@@ -17,7 +17,6 @@ package net.splitcells.dem;
 
 import net.splitcells.dem.environment.Cell;
 import net.splitcells.dem.environment.Environment;
-import net.splitcells.dem.resource.CellFileSystemViews;
 
 public class DemCell implements Cell {
     @Override
@@ -32,6 +31,6 @@ public class DemCell implements Cell {
 
     @Override
     public void accept(Environment env) {
-        env.config().withInitedOption(CellFileSystemViews.class);
+        env.config().withInitedOption(DemFileSystem.class);
     }
 }
