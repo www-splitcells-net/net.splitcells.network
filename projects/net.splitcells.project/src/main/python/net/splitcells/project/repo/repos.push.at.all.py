@@ -21,7 +21,7 @@ The command `./bin/net.splitcells.osi.repos.hosts` contains the list of all repo
 	parsedArgs = parser.parse_args()
 	if environ.get('log_level') == 'debug':
 		logging.basicConfig(level = logging.DEBUG)
-	hostListPath = Path('./bin/net.splitcells.osi.repos.hosts')
+	hostListPath = Path('./bin/net.splitcells.osi.repos.hosts') # TODO `net.splitcells.osi.repos.hosts` should be renamed to `net.splitcells.shell.repos.hosts`.
 	if hostListPath.is_file():
 		hosts = subprocess.run([hostListPath], stdout=subprocess.PIPE)
 		hostFile = hosts.stdout.decode('utf-8').split("\n")
