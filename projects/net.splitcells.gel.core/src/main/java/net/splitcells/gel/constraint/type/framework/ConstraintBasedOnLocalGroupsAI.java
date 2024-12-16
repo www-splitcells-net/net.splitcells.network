@@ -150,7 +150,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
             parentPath = this;
         }
         results = Tables.table("results", parentPath, list(RESULTING_CONSTRAINT_GROUP, RATING, PROPAGATION_TO));
-        lines = Tables.table(name + ".lines", parentPath, list(LINE, INCOMING_CONSTRAINT_GROUP));
+        lines = Tables.table("lines", parentPath, list(LINE, INCOMING_CONSTRAINT_GROUP));
         lineProcessing = assignments("linesProcessing", lines, results);
         lineProcessing.subscribeToAfterAdditions(this::propagateAddition);
         lineProcessing.subscribeToBeforeRemoval(this::propagateRemoval);
