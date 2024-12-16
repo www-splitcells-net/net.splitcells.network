@@ -16,7 +16,9 @@
 package net.splitcells.cin;
 
 import net.splitcells.dem.utils.random.Randomness;
+import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.OnlineOptimization;
@@ -103,6 +105,10 @@ public class EntityManager {
     private int numberOfPlayers = 3;
     private final Randomness random = randomness();
 
+    /**
+     * The {@link Line} are grouped by {@link #PLAYER} first and {@link #TIME} second,
+     * in order to improve the performance and overview of the {@link Constraint}.
+     */
     private EntityManager() {
         entities = defineProblem("entity-manager")
                 .withDemandAttributes(TIME, PLAYER)
@@ -110,7 +116,7 @@ public class EntityManager {
                 .withSupplyAttributes(PLAYER_ATTRIBUTE, PLAYER_VALUE, EVENT_TYPE, EVENT_SOURCE)
                 .withSupplies()
                 .withConstraint(query -> {
-                    final var playerTimeSteps = query.forAll(overlappingTimeSteps(TIME)).forAll(PLAYER);
+                    final var playerTimeSteps = query.forAll(PLAYER).forAll(overlappingTimeSteps(TIME));
                     playerTimeSteps.then(existenceCost());
                     playerTimeSteps.then(valueUpdate(PLAYER_ENERGY));
                     return query;
