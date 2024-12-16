@@ -284,6 +284,6 @@ public class TimeSteps implements Rater {
                 startTime = timeValue;
             }
         }
-        return "step of " + timeAttribute.name() + " at " + startTime;
+        return "step of " + timeAttribute.name() + " starting at " + startTime;
     }
 }
