@@ -98,7 +98,7 @@ public class AssignmentsI implements Assignments {
 
     private AssignmentsI(String name, Table demand, Table supply) {
         this.names = name;
-        assignments = Tables.table2(name, () -> demand.path().withAppended(ALLOCATIONS.value()), concat(demand.headerView(), supply.headerView()));
+        assignments = Tables.table2(name, demand, concat(demand.headerView(), supply.headerView()));
         // TODO Remove code and comment duplications.
         {
             this.demands = demand;
