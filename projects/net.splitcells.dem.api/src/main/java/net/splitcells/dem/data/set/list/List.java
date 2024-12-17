@@ -26,6 +26,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.function.BiConsumer;
+import java.util.stream.IntStream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
@@ -35,6 +37,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @JavaLegacyArtifact
 public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
+
+    default void forEachIndex(BiConsumer<T, Integer> consumer) {
+        IntStream.range(0, size()).forEach(i -> {
+            consumer.accept(get(i), i);
+        });
+    }
 
     /**
      * This helper method makes it easier to distinguish {@code isEmpty} and {@code !isEmpty}.
@@ -90,7 +98,6 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
     }
 
     /**
-     *
      * @param offset An offset of 0 removes the last element in the list.
      *               An offset of 1 removes the second last element in the list.
      * @return
