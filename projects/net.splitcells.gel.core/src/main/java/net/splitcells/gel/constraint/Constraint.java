@@ -126,7 +126,8 @@ public interface Constraint extends TableSynchronization, ConstraintWriter, Disc
     Rating rating(GroupId group);
 
     /**
-     * TODO Make the resulting text more natural.
+     * <p>TODO Simplify resulting {@link Tree} by avoiding empty {@link Tree} nodes.</p>
+     * <p>TODO Make the resulting text more natural.</p>
      *
      * @return
      */
