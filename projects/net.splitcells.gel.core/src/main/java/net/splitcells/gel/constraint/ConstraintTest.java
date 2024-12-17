@@ -18,6 +18,7 @@ package net.splitcells.gel.constraint;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;
+import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.view.Line;
@@ -28,6 +29,8 @@ import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.namespace.NameSpaces.*;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.gel.constraint.GroupId.group;
 import static net.splitcells.gel.constraint.GroupId.rootGroup;
@@ -67,7 +70,13 @@ public class ConstraintTest {
                 .toProblem()
                 .asSolution();
         solution.optimize(offlineLinearInitialization());
-        System.out.println(solution.constraint().naturalArgumentation().orElseThrow().asXhtmlList());
+        solution.constraint().naturalArgumentation().orElseThrow().requireEqualsTo(
+                tree("", GEL).withPath(tree("", GEL)
+                        , tree("", STRING)
+                        , tree("", GEL)
+                                .withChildren(tree("For all a", STRING).withPath(tree("", GEL)
+                                                , tree("Then size should be 4, but is 2", STRING))
+                                        , tree("Then size should be 2, but is 4", STRING))));
     }
 
     @Test
