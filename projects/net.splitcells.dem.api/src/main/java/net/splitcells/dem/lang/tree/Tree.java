@@ -279,6 +279,31 @@ public interface Tree extends TreeView {
         return withChild(argCopy);
     }
 
+    default void requireEqualsTo(Tree other) {
+        if (!name().equals(other.name())) {
+            throw executionException(tree("Both trees should have the same name, but have not.")
+                    .withProperty("this name", name().toString())
+                    .withProperty("other name", other.name().toString())
+                    .withProperty("this", toXmlString())
+                    .withProperty("other", other.toXmlString()));
+        }
+        if (!nameSpace().equals(other.nameSpace())) {
+            throw executionException(tree("Both trees should have the same name spaces, but have not.")
+                    .withProperty("this name space", nameSpace().toString())
+                    .withProperty("other name space", other.nameSpace().toString())
+                    .withProperty("this", toXmlString())
+                    .withProperty("other", other.toXmlString()));
+        }
+        if (children().size() != other.children().size()) {
+            throw executionException(tree("The number of children should be equals, but is not.")
+                    .withProperty("this children size", children().size() + "")
+                    .withProperty("other children size", children().size() + "")
+                    .withProperty("this", toXmlString())
+                    .withProperty("other", other.toXmlString()));
+        }
+        children().forEachIndex((c, i) -> child(i).requireEqualsTo(other.child(i)));
+    }
+
     default Tree withPath(Tree... path) {
         var current = this;
         for (int i = 0; i < path.length; ++i) {
