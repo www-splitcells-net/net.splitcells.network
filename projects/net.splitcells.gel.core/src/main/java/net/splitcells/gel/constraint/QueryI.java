@@ -380,7 +380,7 @@ public class QueryI implements Query, QueryEditor {
     public Query forAll(List<Rater> classifiers) {
         if (WARNING) logs().append("Groups are not supported yet: " + groups.toString(), LogLevel.WARNING);
         final var forAllCatcher = ForAlls.forAll(Optional.of(discoverable(currentConstraint.path()
-                .withAppended("" + currentConstraint.childrenView().size()))));
+                .withAppended("for-all-catcher-" + currentConstraint.childrenView().size()))));
         classifiers.forEach(c -> {
             final var f = ForAlls.forEach(c, Optional.of(discoverable(currentConstraint.path()
                     .withAppended("" + currentConstraint.childrenView().size()))));
