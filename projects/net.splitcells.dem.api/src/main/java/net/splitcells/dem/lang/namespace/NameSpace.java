@@ -57,4 +57,9 @@ public class NameSpace {
     public Optional<Boolean> isXmlAttribute() {
         return isXmlAttribute;
     }
+
+    @Override
+    public String toString() {
+        return uri;
+    }
 }
