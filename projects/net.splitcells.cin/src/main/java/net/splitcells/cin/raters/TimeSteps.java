@@ -79,7 +79,7 @@ public class TimeSteps implements Rater {
     private record StartTimeGroup(int startTime, GroupId incomingGroup) {
     }
 
-    private final Map<StartTimeGroup, GroupId> startTimeToTimeStepGroup = map();
+    private final Map<Integer, Map<GroupId, GroupId>> startTimeToTimeStepGroup = map();
 
     /**
      * Maps incoming constraint groups to its corresponding outgoing constraint groups.
@@ -120,12 +120,13 @@ public class TimeSteps implements Rater {
         final var endTime = startTime + 1;
         final var incomingGroup = addition.value(INCOMING_CONSTRAINT_GROUP);
         final var startTimeGroup = new StartTimeGroup(startTime, incomingGroup);
-        final var afterFirstTimeAddition = startTimeToTimeStepGroup.containsKey(startTimeGroup);
+        final var afterFirstTimeAddition = startTimeToTimeStepGroup.containsKey(startTime)
+                && startTimeToTimeStepGroup.get(startTime).containsKey(incomingGroup);
         if (afterFirstTimeAddition) {
             final var localRating = localRating()
                     .withPropagationTo(children)
                     .withRating(noCost())
-                    .withResultingGroupId(startTimeToTimeStepGroup.get(startTimeGroup));
+                    .withResultingGroupId(startTimeToTimeStepGroup.get(startTime).get(incomingGroup));
             rating.additions().put(addition, localRating);
         } else {
             final var startTimePresent = linesOfGroup.columnView(LINE)
@@ -134,10 +135,15 @@ public class TimeSteps implements Rater {
             final var endTimePresent = linesOfGroup.columnView(LINE)
                     .stream()
                     .anyMatch(l -> l.value(timeAttribute).equals(endTime));
-
             if (startTimePresent && endTimePresent) {
-                final var timeStep = startTimeToTimeStepGroup.computeIfAbsent(startTimeGroup
-                        , x -> group(incomingGroup, timeStepId(x.startTime, x.startTime + 1)));
+                if (!startTimeToTimeStepGroup.containsKey(startTime)) {
+                    final Map<GroupId, GroupId> map = map();
+                    map.put(incomingGroup, group(incomingGroup, timeStepId(startTime, startTime + 1)));
+                    startTimeToTimeStepGroup.put(startTime, map);
+                } else if (!startTimeToTimeStepGroup.get(startTime).containsKey(incomingGroup)) {
+                    startTimeToTimeStepGroup.get(startTime).put(incomingGroup, group(incomingGroup, timeStepId(startTime, startTime + 1)));
+                }
+                final var timeStep = startTimeToTimeStepGroup.get(startTime).get(incomingGroup);
                 final var localRating = localRating()
                         .withPropagationTo(children)
                         .withRating(noCost())
@@ -220,7 +226,13 @@ public class TimeSteps implements Rater {
         final var incomingGroup = removal.value(INCOMING_CONSTRAINT_GROUP);
         final var startTimeGroup = new StartTimeGroup(startTime, incomingGroup);
         if (removalOfLastTimeElement) {
-            startTimeToTimeStepGroup.remove(startTimeGroup);
+            if (startTimeToTimeStepGroup.containsKey(startTime)) {
+                final var startTimeGroups = startTimeToTimeStepGroup.get(startTime);
+                startTimeGroups.remove(incomingGroup);
+                if (startTimeGroups.isEmpty()) {
+                    startTimeToTimeStepGroup.remove(startTime);
+                }
+            }
             if (AVOID_LOOKUPS) {
                 ratingsBeforeRemoval.unorderedLinesStream()
                         .filter(l -> l.value(LINE).value(timeAttribute).equals(startTime))
