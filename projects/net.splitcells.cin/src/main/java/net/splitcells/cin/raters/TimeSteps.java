@@ -76,9 +76,6 @@ public class TimeSteps implements Rater {
 
     private final Attribute<Integer> timeAttribute;
 
-    private record StartTimeGroup(int startTime, GroupId incomingGroup) {
-    }
-
     private final Map<Integer, Map<GroupId, GroupId>> startTimeToTimeStepGroup = map();
 
     /**
@@ -119,7 +116,6 @@ public class TimeSteps implements Rater {
         }
         final var endTime = startTime + 1;
         final var incomingGroup = addition.value(INCOMING_CONSTRAINT_GROUP);
-        final var startTimeGroup = new StartTimeGroup(startTime, incomingGroup);
         final var afterFirstTimeAddition = startTimeToTimeStepGroup.containsKey(startTime)
                 && startTimeToTimeStepGroup.get(startTime).containsKey(incomingGroup);
         if (afterFirstTimeAddition) {
@@ -224,7 +220,6 @@ public class TimeSteps implements Rater {
                 .filter(l -> l.value(timeAttribute).equals(timeValue))
                 .count() == 1;
         final var incomingGroup = removal.value(INCOMING_CONSTRAINT_GROUP);
-        final var startTimeGroup = new StartTimeGroup(startTime, incomingGroup);
         if (removalOfLastTimeElement) {
             if (startTimeToTimeStepGroup.containsKey(startTime)) {
                 final var startTimeGroups = startTimeToTimeStepGroup.get(startTime);
