@@ -43,7 +43,7 @@
                 <executions>
                     <execution>
                         <id>check</id>
-                        <phase>validate</phase>
+                        <phase>verify</phase>
                         <goals>
                             <goal>source-code-check</goal>
                         </goals>
