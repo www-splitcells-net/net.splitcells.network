@@ -15,6 +15,8 @@
  */
 package net.splitcells.dem.data.set.list;
 
+import net.splitcells.dem.data.Flow;
+import net.splitcells.dem.data.Flows;
 import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
@@ -91,5 +93,9 @@ public interface ListView<T> extends Collection<T>, java.util.List<T>, Thing {
             list.withRemovedFromBehind(0);
         }
         return this;
+    }
+
+    default Flow<T> flow() {
+        return Flows.flow(stream());
     }
 }
