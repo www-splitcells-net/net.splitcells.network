@@ -178,7 +178,7 @@ public class TimeSteps implements Rater {
                             });
                 }
             } else {
-                final var noTimeStepGroup = noStepTimeGroup(ratingsBeforeAddition)
+                final var noTimeStepGroup = noStepTimeGroup(ratingsBeforeAddition, startTime)
                         .orElseGet(() -> group(incomingGroup, noTimeStepGroupName()));
                 rating.additions().put(addition, localRating()
                         .withPropagationTo(list())
@@ -197,8 +197,9 @@ public class TimeSteps implements Rater {
         }
     }
 
-    private Optional<GroupId> noStepTimeGroup(View ratings) {
+    private Optional<GroupId> noStepTimeGroup(View ratings, int startTime) {
         return ratings.unorderedLinesStream()
+                .filter(l -> l.value(LINE).value(timeAttribute) == startTime)
                 .map(l -> l.value(RESULTING_CONSTRAINT_GROUP))
                 .findFirst();
     }
