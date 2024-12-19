@@ -57,6 +57,8 @@ import net.splitcells.dem.utils.reflection.PubliclyTyped;
  * Avoiding such a cache also avoids such mismatches as {@link #ratingAfterAddition(View, Line, List, View)}
  * provides info only for one {@link Constraint#INCOMING_CONSTRAINT_GROUP} at a time.</p>
  * <p>TODO RENAME Rater seems to be an incorrect name, because it produces more than a rating.</p>
+ * <p>TODO For methods like {@link #ratingAfterAddition(View, Line, List, View)} use one dedicated type,
+ * in order to make the method easy to extend.</p>
  */
 public interface Rater extends PubliclyTyped<Rater>
         , PubliclyConstructed<Domable>
