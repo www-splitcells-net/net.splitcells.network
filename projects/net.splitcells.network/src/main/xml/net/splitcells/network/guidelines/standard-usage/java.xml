@@ -27,7 +27,7 @@
             performant and adaptable way,
             like C header files.
             The most portable way seems to be the usage of the service locator pattern and similar patterns,
-            but the resulting code requires some non trivial boiler code.
+            but the resulting code requires some non-trivial boiler code.
         </paragraph>
     </chapter>
     <chapter>
