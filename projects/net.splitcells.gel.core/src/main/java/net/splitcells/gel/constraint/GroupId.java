@@ -95,9 +95,18 @@ public class GroupId implements Domable {
         return new GroupId(a.toString() + " and " + b.toString());
     }
 
+    /**
+     * For debugging purposes, the {@link Object#hashCode()} is used,
+     * in order to notice 2 different {@link GroupId} with the same {@link #name()} as distinct.
+     *
+     * @return Return a String representation.
+     */
     @Override
     public String toString() {
-        return name.orElse(super.toString());
+        if (name.isPresent()) {
+            return name.orElseThrow() + " " + hashCode();
+        }
+        return "" + hashCode();
     }
 
     @Override
