@@ -27,6 +27,8 @@ import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 
+import java.util.Optional;
+
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
@@ -78,10 +80,6 @@ public class TimeSteps implements Rater {
 
     private final Map<Integer, Map<GroupId, GroupId>> startTimeToTimeStepGroup = map();
 
-    /**
-     * Maps incoming constraint groups to its corresponding outgoing constraint groups.
-     */
-    private final Map<GroupId, GroupId> noTimeStepGroups = map();
     /**
      * Determines whether the start time of each time step {@link GroupId} is even or odd.
      */
@@ -181,20 +179,29 @@ public class TimeSteps implements Rater {
                             });
                 }
             } else {
-                final String groupName;
-                if (this.isStartTimeEven) {
-                    groupName = NO_TIME_STEP_GROUP + " with even start time";
-                } else {
-                    groupName = NO_TIME_STEP_GROUP + WITH_UNEVEN_START_TIME;
-                }
+                final var noTimeStepGroup = noStepTimeGroup(ratingsBeforeAddition)
+                        .orElseGet(() -> group(incomingGroup, noTimeStepGroupName()));
                 rating.additions().put(addition, localRating()
                         .withPropagationTo(list())
                         .withRating(noCost())
-                        .withResultingGroupId(
-                                noTimeStepGroups.computeIfAbsent(incomingGroup, ig -> group(ig, groupName))));
+                        .withResultingGroupId(noTimeStepGroup));
             }
         }
         return rating;
+    }
+
+    private String noTimeStepGroupName() {
+        if (isStartTimeEven) {
+            return NO_TIME_STEP_GROUP + " with even start time";
+        } else {
+            return NO_TIME_STEP_GROUP + WITH_UNEVEN_START_TIME;
+        }
+    }
+
+    private Optional<GroupId> noStepTimeGroup(View ratings) {
+        return ratings.unorderedLinesStream()
+                .map(l -> l.value(RESULTING_CONSTRAINT_GROUP))
+                .findFirst();
     }
 
     @Override
@@ -221,6 +228,7 @@ public class TimeSteps implements Rater {
                 .count() == 1;
         final var incomingGroup = removal.value(INCOMING_CONSTRAINT_GROUP);
         if (removalOfLastTimeElement) {
+            final var resultingGroup = group(incomingGroup, noTimeStepGroupName());
             if (startTimeToTimeStepGroup.containsKey(startTime)) {
                 final var startTimeGroups = startTimeToTimeStepGroup.get(startTime);
                 startTimeGroups.remove(incomingGroup);
@@ -234,27 +242,27 @@ public class TimeSteps implements Rater {
                         //.filter(l -> l.value(LINE).index() != removal.value(LINE).index())
                         .filter(l -> !l.value(RATING).equalz(noCost())
                                 || !l.value(PROPAGATION_TO).equals(children)
-                                || !l.value(RESULTING_CONSTRAINT_GROUP).equals(noTimeStepGroups.get(incomingGroup)))
+                                || !l.value(RESULTING_CONSTRAINT_GROUP).equals(resultingGroup))
                         .forEach(l -> rating.updateRating_withReplacement(linesOfGroup
                                         .persistedLookup(LINE, l.value(LINE))
                                         .orderedLine(0)
                                 , localRating()
                                         .withPropagationTo(children)
                                         .withRating(noCost())
-                                        .withResultingGroupId(noTimeStepGroups.get(incomingGroup))));
+                                        .withResultingGroupId(resultingGroup)));
                 ratingsBeforeRemoval.unorderedLinesStream()
                         .filter(l -> l.value(LINE).value(timeAttribute).equals(startTime + 1))
                         //.filter(l -> l.value(LINE).index() != removal.value(LINE).index())
                         .filter(l -> !l.value(RATING).equalz(noCost())
                                 || !l.value(PROPAGATION_TO).equals(children)
-                                || !l.value(RESULTING_CONSTRAINT_GROUP).equals(noTimeStepGroups.get(incomingGroup)))
+                                || !l.value(RESULTING_CONSTRAINT_GROUP).equals(resultingGroup))
                         .forEach(l -> rating.updateRating_withReplacement(linesOfGroup
                                         .persistedLookup(LINE, l.value(LINE))
                                         .orderedLine(0)
                                 , localRating()
                                         .withPropagationTo(children)
                                         .withRating(noCost())
-                                        .withResultingGroupId(noTimeStepGroups.get(incomingGroup))));
+                                        .withResultingGroupId(resultingGroup)));
             } else {
                 linesOfGroup
                         .columnView(LINE)
@@ -263,7 +271,7 @@ public class TimeSteps implements Rater {
                         .forEach(l -> rating.updateRating_withReplacement(l, localRating()
                                 .withPropagationTo(children)
                                 .withRating(noCost())
-                                .withResultingGroupId(noTimeStepGroups.get(incomingGroup))));
+                                .withResultingGroupId(resultingGroup)));
                 linesOfGroup
                         .columnView(LINE)
                         .persistedLookup(l -> l.value(timeAttribute).equals(startTime + 1))
@@ -271,7 +279,7 @@ public class TimeSteps implements Rater {
                         .forEach(l -> rating.updateRating_withReplacement(l, localRating()
                                 .withPropagationTo(children)
                                 .withRating(noCost())
-                                .withResultingGroupId(noTimeStepGroups.get(incomingGroup))));
+                                .withResultingGroupId(resultingGroup)));
             }
         }
         if (ENFORCING_UNIT_CONSISTENCY && linesOfGroup.size() == 1) {
