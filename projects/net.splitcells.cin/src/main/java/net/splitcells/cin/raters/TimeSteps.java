@@ -78,8 +78,6 @@ public class TimeSteps implements Rater {
 
     private final Attribute<Integer> timeAttribute;
 
-    private final Map<Integer, Map<GroupId, GroupId>> startTimeToTimeStepGroup = map();
-
     /**
      * Determines whether the start time of each time step {@link GroupId} is even or odd.
      */
@@ -114,13 +112,21 @@ public class TimeSteps implements Rater {
         }
         final var endTime = startTime + 1;
         final var incomingGroup = addition.value(INCOMING_CONSTRAINT_GROUP);
-        final var afterFirstTimeAddition = startTimeToTimeStepGroup.containsKey(startTime)
-                && startTimeToTimeStepGroup.get(startTime).containsKey(incomingGroup);
+        final var startTimeLine = ratingsBeforeAddition
+                .unorderedLinesStream()
+                .filter(l -> l.value(LINE).value(timeAttribute).equals(startTime))
+                .findFirst();
+        final var endTimeLine = ratingsBeforeAddition
+                .unorderedLinesStream()
+                .filter(l -> l.value(LINE).value(timeAttribute).equals(endTime))
+                .findFirst();
+        final var afterFirstTimeAddition = startTimeLine.isPresent()
+                && endTimeLine.isPresent();
         if (afterFirstTimeAddition) {
             final var localRating = localRating()
                     .withPropagationTo(children)
                     .withRating(noCost())
-                    .withResultingGroupId(startTimeToTimeStepGroup.get(startTime).get(incomingGroup));
+                    .withResultingGroupId(startTimeLine.orElseThrow().value(RESULTING_CONSTRAINT_GROUP));
             rating.additions().put(addition, localRating);
         } else {
             final var startTimePresent = linesOfGroup.columnView(LINE)
@@ -130,14 +136,7 @@ public class TimeSteps implements Rater {
                     .stream()
                     .anyMatch(l -> l.value(timeAttribute).equals(endTime));
             if (startTimePresent && endTimePresent) {
-                if (!startTimeToTimeStepGroup.containsKey(startTime)) {
-                    final Map<GroupId, GroupId> map = map();
-                    map.put(incomingGroup, group(incomingGroup, timeStepId(startTime, startTime + 1)));
-                    startTimeToTimeStepGroup.put(startTime, map);
-                } else if (!startTimeToTimeStepGroup.get(startTime).containsKey(incomingGroup)) {
-                    startTimeToTimeStepGroup.get(startTime).put(incomingGroup, group(incomingGroup, timeStepId(startTime, startTime + 1)));
-                }
-                final var timeStep = startTimeToTimeStepGroup.get(startTime).get(incomingGroup);
+                final var timeStep = group(incomingGroup, timeStepId(startTime, endTime));
                 final var localRating = localRating()
                         .withPropagationTo(children)
                         .withRating(noCost())
@@ -229,13 +228,6 @@ public class TimeSteps implements Rater {
         final var incomingGroup = removal.value(INCOMING_CONSTRAINT_GROUP);
         if (removalOfLastTimeElement) {
             final var resultingGroup = group(incomingGroup, noTimeStepGroupName());
-            if (startTimeToTimeStepGroup.containsKey(startTime)) {
-                final var startTimeGroups = startTimeToTimeStepGroup.get(startTime);
-                startTimeGroups.remove(incomingGroup);
-                if (startTimeGroups.isEmpty()) {
-                    startTimeToTimeStepGroup.remove(startTime);
-                }
-            }
             if (AVOID_LOOKUPS) {
                 ratingsBeforeRemoval.unorderedLinesStream()
                         .filter(l -> l.value(LINE).value(timeAttribute).equals(startTime))
@@ -281,9 +273,6 @@ public class TimeSteps implements Rater {
                                 .withRating(noCost())
                                 .withResultingGroupId(resultingGroup)));
             }
-        }
-        if (ENFORCING_UNIT_CONSISTENCY && linesOfGroup.size() == 1) {
-            startTimeToTimeStepGroup.requireEmpty();
         }
         return rating;
     }
