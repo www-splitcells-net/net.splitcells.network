@@ -49,8 +49,14 @@ import net.splitcells.dem.utils.reflection.PubliclyTyped;
  * The performant one, will only calculate the changes in {@link Rating} of a given group and
  * the added or removed {@link Line}.</p>
  * <p>{@link Rater} implementations should always calculate the {@link Constraint#RESULTING_CONSTRAINT_GROUP}
- * based on the {@link Constraint#INCOMING_CONSTRAINT_GROUP}.</p>
- * TODO RENAME Rater seems to be an incorrect name, because it produces more than a rating.
+ * based on the {@link Constraint#INCOMING_CONSTRAINT_GROUP}.
+ * Avoid using caches or to store state in the {@link Rater} implementation if possible,
+ * as this prone to errors.
+ * For instance, caching {@link Constraint#INCOMING_CONSTRAINT_GROUP} and {@link Constraint#RESULTING_CONSTRAINT_GROUP}
+ * can lead to accidental incorrect mappings between the 2.
+ * Avoiding such a cache also avoids such mismatches as {@link #ratingAfterAddition(View, Line, List, View)}
+ * provides info only for one {@link Constraint#INCOMING_CONSTRAINT_GROUP} at a time.</p>
+ * <p>TODO RENAME Rater seems to be an incorrect name, because it produces more than a rating.</p>
  */
 public interface Rater extends PubliclyTyped<Rater>
         , PubliclyConstructed<Domable>
