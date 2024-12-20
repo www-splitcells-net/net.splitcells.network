@@ -67,6 +67,7 @@ public interface Sender<T> extends ListWA<T>, Resource {
 
             @Override
             public void close() {
+                printer.close();
             }
 
             private java.io.PrintWriter printer = new java.io.PrintWriter(output);
