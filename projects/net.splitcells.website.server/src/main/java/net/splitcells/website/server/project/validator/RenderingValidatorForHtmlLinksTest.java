@@ -25,9 +25,12 @@ public class RenderingValidatorForHtmlLinksTest {
     @UnitTest
     public void testPathRegex() {
         require(PATH.matcher("./abc/abc").matches());
-        require(PATH.matcher("/abc/abc").matches());
-        require(PATH.matcher("abc/abc").matches());
-        require(PATH.matcher("abc").matches());
+        require(PATH.matcher("./Abc/aBc").matches());
+        require(PATH.matcher("/abC/Abc").matches());
+        require(PATH.matcher("aBc/abC").matches());
+        require(PATH.matcher("Abc").matches());
+        require(PATH.matcher("Abc-abC").matches());
+        requireNot(PATH.matcher("abc,abc").matches());
         requireNot(PATH.matcher("./abc/").matches());
     }
 }
