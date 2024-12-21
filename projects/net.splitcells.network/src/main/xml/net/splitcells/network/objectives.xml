@@ -18,7 +18,7 @@
             <item>Provide software and documentation to create and optimize problems based on a simple but powerful assignment model.</item>
             <item>
                 Empower people to model and reason about complex systems,
-                built out of inter connected optimization problems.
+                built out of interconnected optimization problems.
             </item>
             <item>Enable the user to understand the results given a solver and an optimization system.</item>
             <item>Develop new optimization algorithms.</item>
@@ -28,7 +28,7 @@
     <chapter>
         <title>Sub Projects to achieve the abstract goals</title>
         <paragraph>
-            In the following is a list of sub projects,
+            In the following is a list of subprojects,
             that demonstrate how the general goals of the project are fulfilled.
         </paragraph>
         <list>
