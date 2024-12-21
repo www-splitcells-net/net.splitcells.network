@@ -24,8 +24,13 @@ import static net.splitcells.dem.utils.reflection.ClassesRelated.simplifiedName;
 
 /**
  * <p>Provides a path for the object, that implements the interface.
- * This makes the object identifiable in a {@link net.splitcells.dem.resource.FileSystem}
- * or the webserver.</p>
+ * The overarching idea behind this interface is to provide discovery paths for everything and not just Java objects.
+ * Thereby everything has a path based identifier,
+ * in order to support their discoverability and to enable a basic organisational structure for semantics.
+ * This leads to a global semantic path system, that is an inventory of everything.</p>
+ * <p>This makes the object identifiable in a {@link net.splitcells.dem.resource.FileSystem}
+ * or the webserver.
+ * It also can be used, in order to organize shell command names etc.</p>
  * <p>IDEA Provide a tree structure, that ensures, that every {@link Discoverable} has a unique path and
  * in order to get better performance,
  * when an object is searched by a path prefix.</p>
