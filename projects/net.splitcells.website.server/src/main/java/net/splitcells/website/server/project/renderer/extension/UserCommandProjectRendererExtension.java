@@ -38,8 +38,9 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 /**
- * Renders all commands, that are installed via 'net.splitcells.shell' for the current user
- * at '/net/splitcells/shell/installed/index.html'.
+ * <p>Renders all commands, that are installed via 'net.splitcells.shell' for the current user
+ * at '/net/splitcells/shell/installed/index.html'.</p>
+ * <p>TODO This is not working.</p>
  */
 public class UserCommandProjectRendererExtension implements ProjectRendererExtension {
     public static UserCommandProjectRendererExtension userCommandRenderer() {
