@@ -37,7 +37,8 @@
             <item>
                 Discovery based Networks of Perspectives and Changes as an overarching semantic inventory system (
                 This has no dedicated project yet and is part of the Symbiosis project.
-                This should probably be a subproject of the Network project.)
+                This should probably be a subproject of the Network project.
+                Also, see `src/main/java/net/splitcells/dem/object/Discoverable.java` and `net.splitcells.shell` for info regarding existing implementations.)
             </item>
         </list>
     </chapter>
