@@ -16,6 +16,7 @@
 package net.splitcells.dem.data.set.list;
 
 import net.splitcells.dem.data.set.SetT;
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
@@ -54,9 +55,29 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
         return !isEmpty();
     }
 
+    /**
+     * @deprecated Use {@link #delete(Object)} instead,
+     * @param arg element to be removed from this list, if present
+     * @return
+     */
+    @Deprecated
+    @Override
+    boolean remove(Object arg);
+
+    /**
+     *
+     * @param arg Deletes this given argument. The argument has to be present in this {@link List}.
+     */
+    default void delete(T arg) {
+        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY && !contains(arg)) {
+            throw executionException("" + arg);
+        }
+        remove(arg);
+    }
+
     @JavaLegacyBody
     /**
-     * This method avoids problems caused by {@link java.util.List#remove(Object)}.
+     * This method avoids confusion with {@link java.util.List#remove(Object)}.
      *
      * @param index
      */

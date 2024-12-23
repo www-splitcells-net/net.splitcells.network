@@ -17,6 +17,7 @@ package net.splitcells.dem.data.set;
 
 import net.splitcells.dem.data.atom.Bool;
 import net.splitcells.dem.data.atom.Bools;
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
@@ -98,6 +99,12 @@ public interface Set<T> extends java.util.Set<T>, SetT<T> {
         return this;
     }
 
+    /**
+     * @param arg object to be removed from this set, if present
+     * @return
+     * @deprecated Use {@link #delete(Object)} instead.
+     */
+    @Deprecated
     @Override
     default boolean remove(Object arg) {
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY && !contains(arg)) {
@@ -109,6 +116,9 @@ public interface Set<T> extends java.util.Set<T>, SetT<T> {
 
     void ensureRemoved(T arg);
 
+    /**
+     * @param arg Deletes this given argument. The argument has to be present in this {@link Set}.
+     */
     default void delete(T arg) {
         if (!remove(arg)) {
             throw new IllegalArgumentException("" + arg);
