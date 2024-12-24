@@ -5,6 +5,8 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2024-12-24\#51** Rename `Assertions#assertThrows` to `Assertions#requireThrow`,
+  in order to unify naming.
 * **2024-10-01\#37**
     1. `Dem#executeThread(Runnable)` now also requires a name for the thread.
     2. The main Thread of `Dem#process(Runnable, Consumer)` now has a name.

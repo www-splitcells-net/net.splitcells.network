@@ -23,11 +23,10 @@ import net.splitcells.dem.utils.ExecutionException;
 
 import java.util.Optional;
 
-import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.Dem.process;
 import static net.splitcells.dem.data.set.map.MapFI_configured.mapFI_configured;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.testing.Assertions.assertThrows;
+import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MapsTest {
@@ -75,7 +74,7 @@ public class MapsTest {
 
     @UnitTest
     public void testRequireEqualityToWithUnequalValues() {
-        assertThrows(ExecutionException.class, () -> {
+        Assertions.requireThrow(ExecutionException.class, () -> {
             final Map<Integer, Integer> thiz = map();
             thiz.put(1, 2);
             final Map<Integer, Integer> requiredContent = map();
@@ -86,7 +85,7 @@ public class MapsTest {
 
     @UnitTest
     public void testRequireEqualityToWithMoreKeysInThis() {
-        assertThrows(ExecutionException.class, () -> {
+        Assertions.requireThrow(ExecutionException.class, () -> {
             final Map<Integer, Integer> thiz = map();
             thiz.put(1, 2);
             thiz.put(2, 3);
@@ -98,7 +97,7 @@ public class MapsTest {
 
     @UnitTest
     public void testRequireEqualityToWithMoreKeysInRequiredContent() {
-        assertThrows(ExecutionException.class, () -> {
+        Assertions.requireThrow(ExecutionException.class, () -> {
             final Map<Integer, Integer> thiz = map();
             thiz.put(1, 2);
             final Map<Integer, Integer> requiredContent = map();

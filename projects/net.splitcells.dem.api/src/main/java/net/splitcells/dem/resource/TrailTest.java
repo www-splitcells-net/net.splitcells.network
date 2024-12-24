@@ -24,7 +24,7 @@ import static net.splitcells.dem.resource.Trail.parentCount;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.Trail.withoutPrefixElements;
 import static net.splitcells.dem.resource.Trail.withoutSuffixElements;
-import static net.splitcells.dem.testing.Assertions.assertThrows;
+import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 
 public class TrailTest {
@@ -72,16 +72,16 @@ public class TrailTest {
 
     @UnitTest
     public void testWithoutPrefixElementsIllegalRemoval() {
-        assertThrows(ExecutionException.class, () -> withoutPrefixElements("/../../..", 1));
-        assertThrows(ExecutionException.class, () -> withoutPrefixElements("../../..", 4));
-        assertThrows(ExecutionException.class, () -> withoutPrefixElements("../../..", -1));
+        Assertions.requireThrow(ExecutionException.class, () -> withoutPrefixElements("/../../..", 1));
+        Assertions.requireThrow(ExecutionException.class, () -> withoutPrefixElements("../../..", 4));
+        Assertions.requireThrow(ExecutionException.class, () -> withoutPrefixElements("../../..", -1));
     }
 
     @UnitTest
     public void testWithoutSuffixElementsIllegalRemoval() {
-        assertThrows(ExecutionException.class, () -> withoutPrefixElements("/../../..", 1));
-        assertThrows(ExecutionException.class, () -> withoutPrefixElements("../../..", 4));
-        assertThrows(ExecutionException.class, () -> withoutPrefixElements("../../..", -1));
+        Assertions.requireThrow(ExecutionException.class, () -> withoutPrefixElements("/../../..", 1));
+        Assertions.requireThrow(ExecutionException.class, () -> withoutPrefixElements("../../..", 4));
+        Assertions.requireThrow(ExecutionException.class, () -> withoutPrefixElements("../../..", -1));
     }
 
     @UnitTest

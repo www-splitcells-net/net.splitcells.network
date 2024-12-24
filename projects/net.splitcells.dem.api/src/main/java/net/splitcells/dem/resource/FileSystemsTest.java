@@ -15,12 +15,9 @@
  */
 package net.splitcells.dem.resource;
 
-import net.splitcells.dem.data.set.Sets;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.dem.utils.ExecutionException;
-import net.splitcells.dem.utils.StringUtils;
 
 import java.nio.file.Path;
 
@@ -28,11 +25,10 @@ import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.resource.FileSystems.temporaryFileSystem;
 import static net.splitcells.dem.resource.Files.processInTemporaryFolder;
-import static net.splitcells.dem.testing.Assertions.assertThrows;
+import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
@@ -80,7 +76,7 @@ public class FileSystemsTest {
     @IntegrationTest
     public void testInvalidJavaLegacyPath() {
         processInTemporaryFolder
-                (path -> assertThrows(ExecutionException.class
+                (path -> Assertions.requireThrow(ExecutionException.class
                         , () -> fileSystemOnLocalHost(path).javaLegacyPath(Path.of("/invalid/path.txt"))));
     }
 

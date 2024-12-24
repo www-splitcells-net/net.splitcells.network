@@ -15,7 +15,6 @@
  */
 package net.splitcells.dem.testing;
 
-import net.splitcells.dem.Dem;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.utils.ConstructorIllegal;
 
@@ -111,7 +110,7 @@ public class Assertions {
         }
     }
 
-    public static void assertThrows(Class<? extends Throwable> expectedExceptionType, Runnable run) {
+    public static void requireThrow(Class<? extends Throwable> expectedExceptionType, Runnable run) {
         try {
             run.run();
         } catch (Throwable th) {
@@ -123,7 +122,7 @@ public class Assertions {
         throw executionException("Runnable should throw `" + expectedExceptionType + "` but did not.");
     }
 
-    public static void requireThrows(Runnable run) {
+    public static void requireThrow(Runnable run) {
         try {
             run.run();
         } catch (Throwable th) {
