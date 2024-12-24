@@ -26,7 +26,7 @@ import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Optimality.optimality;
 import static net.splitcells.gel.rating.type.Profit.profit;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static net.splitcells.dem.testing.Assertions.requireThrow;
 
 public class RatingTranslatorTest {
     @Test
@@ -46,6 +46,6 @@ public class RatingTranslatorTest {
         testSubject.registerTranslator(Profit.class, a -> true, a -> expectedRating);
         testSubject.registerTranslator(Optimality.class, a -> false, a -> unexpectedRating);
         assertThat(testSubject.translate(expectedRatingClass)).isEqualTo(expectedRating);
-        assertThrows(Throwable.class, () -> testSubject.translate(unexpectedRatingClass));
+        requireThrow(Throwable.class, () -> testSubject.translate(unexpectedRatingClass));
     }
 }

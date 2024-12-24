@@ -21,13 +21,13 @@ import static net.splitcells.dem.data.order.Ordering.*;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static net.splitcells.dem.testing.Assertions.requireThrow;
 
 public class CostTest {
 
     @Test
     public void t() {
-        assertThrows(IllegalArgumentException.class, () -> cost(-1));
+        requireThrow(IllegalArgumentException.class, () -> cost(-1));
     }
 
     @Test

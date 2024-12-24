@@ -25,7 +25,7 @@ import java.util.stream.IntStream;
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
-import static net.splitcells.dem.testing.Assertions.requireThrows;
+import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.gel.data.lookup.LookupTables.lookupTable;
 import static net.splitcells.gel.data.table.Tables.table;
 
@@ -59,6 +59,6 @@ public class LookupColumnTest {
         final var testSubject = lookupTable.columnsView().get(0);
         lookupTable.register(testData.orderedLine(0));
         requireEquals(testSubject.get(0), 0);
-        requireThrows(() -> testSubject.get(1));
+        requireThrow(() -> testSubject.get(1));
     }
 }

@@ -24,7 +24,7 @@ import static net.splitcells.dem.data.order.Ordering.EQUAL;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Profit.profit;
-import static net.splitcells.dem.testing.Assertions.assertThrows;
+import static net.splitcells.dem.testing.Assertions.requireThrow;
 
 public class MetaRatingMergerTest {
 
@@ -76,7 +76,7 @@ public class MetaRatingMergerTest {
         final Map<Class<? extends Rating>, Rating> testContent = map();
         testContent.put(Profit.class, profit(7));
         final var testSubject = MetaRatingMergerI.metaRatingMerger(testContent);
-        assertThrows(RuntimeException.class, () -> {
+        requireThrow(RuntimeException.class, () -> {
             testSubject.registerMerger((base, addition) -> false, (base, addition) -> {
                 throw new RuntimeException();
             });

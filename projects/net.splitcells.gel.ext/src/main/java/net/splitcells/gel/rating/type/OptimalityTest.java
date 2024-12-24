@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 import static net.splitcells.dem.data.order.Ordering.EQUAL;
 import static net.splitcells.dem.data.order.Ordering.GREATER_THAN;
 import static net.splitcells.dem.data.order.Ordering.LESSER_THAN;
-import static net.splitcells.dem.testing.Assertions.assertThrows;
+import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.gel.rating.type.Optimality.optimality;
 
 public class OptimalityTest {
@@ -33,11 +33,11 @@ public class OptimalityTest {
 
     @Test
     public void testMaximalValue() {
-        assertThrows(AssertionError.class, () -> optimality(1.000_1));
+        requireThrow(AssertionError.class, () -> optimality(1.000_1));
     }
 
     @Test
     public void testMinimalValue() {
-        assertThrows(AssertionError.class, () -> optimality(-.000_1));
+        requireThrow(AssertionError.class, () -> optimality(-.000_1));
     }
 }

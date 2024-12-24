@@ -23,7 +23,7 @@ import net.splitcells.gel.data.view.Line;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.testing.Assertions.assertThrows;
+import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
@@ -124,7 +124,7 @@ public class AssignmentsTest extends TestSuiteI {
 
     @UnitTest
     public void test_subscriber_to_afterRemoval() {
-        assertThrows(Exception.class, () -> {
+        requireThrow(Exception.class, () -> {
             final var demands = Tables.table();
             final var supplies = Tables.table();
             final var allocations = assignments("test", demands, supplies);

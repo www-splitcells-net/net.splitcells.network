@@ -33,7 +33,7 @@ import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
-import static net.splitcells.dem.testing.Assertions.assertThrows;
+import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireNull;
 import static net.splitcells.dem.testing.Mocking.anyObject;
@@ -165,7 +165,7 @@ public class TableTest extends TestSuiteI {
     public void test_incorrectly_typed_values_addition_test(TableFactory tableFactory) {
         final Attribute<Integer> testAttribute = attribute(Integer.class);
         final Table testSubject = tableFactory.table(list(testAttribute));
-        assertThrows(Throwable.class, () -> testSubject.addTranslated(list("")));
+        requireThrow(Throwable.class, () -> testSubject.addTranslated(list("")));
     }
 
     @Tag(UNIT_TEST)
@@ -175,7 +175,7 @@ public class TableTest extends TestSuiteI {
     }
 
     public void test_incorrectly_sized_values_addition_test(TableFactory tableFactory) {
-        assertThrows(Throwable.class, () -> tableFactory.table().addTranslated(listWithValuesOf(anyObject())));
+        requireThrow(Throwable.class, () -> tableFactory.table().addTranslated(listWithValuesOf(anyObject())));
     }
 
     @Tag(UNIT_TEST)
@@ -243,7 +243,7 @@ public class TableTest extends TestSuiteI {
     }
 
     public void test_addTranslated_with_too_many_values(TableFactory tableFactory) {
-        assertThrows(Throwable.class, () -> {
+        requireThrow(Throwable.class, () -> {
             tableFactory.table().addTranslated(list(1));
         });
     }

@@ -19,7 +19,7 @@ import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.dem.utils.ExecutionException;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.testing.Assertions.assertThrows;
+import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.constraint.type.ForAll.FOR_ALL_NAME;
 import static net.splitcells.gel.constraint.type.Then.THEN_NAME;
@@ -74,7 +74,7 @@ public class QueryTest {
 
     @UnitTest
     public void testParseConstraintErrorForAllWithAttributes() {
-        assertThrows(ExecutionException.class
+        requireThrow(ExecutionException.class
                 , () -> {
                     final var d = attribute(Integer.class, "d");
                     final var s = attribute(Integer.class, "s");
@@ -92,7 +92,7 @@ public class QueryTest {
 
     @UnitTest
     public void testParseConstraintThenWithTooManyRaters() {
-        assertThrows(ExecutionException.class
+        requireThrow(ExecutionException.class
                 , () -> {
                     final var d = attribute(Integer.class, "d");
                     final var s = attribute(Integer.class, "s");
@@ -110,7 +110,7 @@ public class QueryTest {
 
     @UnitTest
     public void testParseConstraintThenWithAttributes() {
-        assertThrows(ExecutionException.class
+        requireThrow(ExecutionException.class
                 , () -> {
                     final var d = attribute(Integer.class, "d");
                     final var s = attribute(Integer.class, "s");
@@ -128,7 +128,7 @@ public class QueryTest {
 
     @UnitTest
     public void testParseConstraintForAllCombinationsWithRaters() {
-        assertThrows(ExecutionException.class
+        requireThrow(ExecutionException.class
                 , () -> {
                     final var d = attribute(Integer.class, "d");
                     final var s = attribute(Integer.class, "s");

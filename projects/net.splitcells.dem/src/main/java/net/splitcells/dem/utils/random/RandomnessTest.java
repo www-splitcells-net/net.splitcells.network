@@ -26,7 +26,7 @@ import static net.splitcells.dem.utils.MathUtils.acceptable;
 import static net.splitcells.dem.utils.random.Randomness.assertPlausibility;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static net.splitcells.dem.testing.Assertions.requireThrow;
 
 public class RandomnessTest {
     @Test
@@ -63,17 +63,17 @@ public class RandomnessTest {
 
     @Test
     public void testAssertPlausibilityWithImplausible() {
-        assertThrows(Error.class, () -> assertPlausibility(.1f, 100, 30));
+        requireThrow(Error.class, () -> assertPlausibility(.1f, 100, 30));
     }
 
     @Test
     public void testChooseOneOfOnEmptyList() {
-        assertThrows(IllegalArgumentException.class, () -> randomness().chooseOneOf(list()));
+        requireThrow(IllegalArgumentException.class, () -> randomness().chooseOneOf(list()));
     }
 
     @Test
     public void testRemoveOneOfOnEmptyList() {
-        assertThrows(IllegalArgumentException.class, () -> randomness().removeOneOf(list()));
+        requireThrow(IllegalArgumentException.class, () -> randomness().removeOneOf(list()));
     }
 
     @Test
