@@ -214,6 +214,9 @@ public class LookupColumn<T> implements Column<T> {
 
     @Override
     public Flow<T> stream() {
-        return Flows.flow(table.base().columnView(attribute).stream().filter(l -> l != null));
+        final var content = table.contentIndexes();
+        return Flows.flow(table.base().unorderedLinesStream()
+                .filter(l -> l != null && content.has(l.index()))
+                .map(l -> l.value(attribute)));
     }
 }
