@@ -100,9 +100,11 @@ public interface Set<T> extends java.util.Set<T>, SetT<T> {
     }
 
     /**
-     * @param arg object to be removed from this set, if present
+     * @param arg This is the object to be removed from this set, if present.
      * @return
-     * @deprecated Use {@link #delete(Object)} instead.
+     * @deprecated Use {@link #delete(Object)} instead, as this method is error-prone.
+     * When the caller executes the default remove method,
+     * it is highly likely, that there is a programming error, if the element is already not present.
      */
     @Deprecated
     @Override

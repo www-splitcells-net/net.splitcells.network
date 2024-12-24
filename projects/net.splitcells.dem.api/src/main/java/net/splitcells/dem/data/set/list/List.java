@@ -56,7 +56,9 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
     }
 
     /**
-     * @deprecated Use {@link #delete(Object)} instead,
+     * @deprecated Use {@link #delete(Object)} instead.
+     * When the caller executes the default remove method,
+     * it is highly likely, that there is a programming error, if the element is already not present.
      * @param arg element to be removed from this list, if present
      * @return
      */
