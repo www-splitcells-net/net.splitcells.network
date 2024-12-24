@@ -123,6 +123,15 @@ public class Assertions {
         throw executionException("Runnable should throw `" + expectedExceptionType + "` but did not.");
     }
 
+    public static void requireThrows(Runnable run) {
+        try {
+            run.run();
+        } catch (Throwable th) {
+            return;
+        }
+        throw executionException("Runnable should throw, but did not.");
+    }
+
     public static void waitUntilRequirementIsTrue(long milliSecondsToWait, Supplier<Boolean> condition) {
         final var plannedEnd = Instant.now().plusMillis(milliSecondsToWait);
         var compliance = condition.get();
