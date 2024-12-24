@@ -16,6 +16,8 @@
 package net.splitcells.gel.data.lookup;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 import java.util.Collection;
@@ -28,6 +30,7 @@ import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.Flows;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -120,7 +123,11 @@ public class LookupColumn<T> implements Column<T> {
 
     @Override
     public T get(int index) {
-        // TODO FIX Filter elements, that are not part of lookup.
+        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY &&  !table.contentIndexes().contains(index)) {
+            throw executionException(tree("Given index is not present in lookup table.")
+                    .withProperty("index", index + "")
+                    .withProperty("lookup table", table.path().toString()));
+        }
         return table.base().columnView(attribute).get(index);
     }
 
