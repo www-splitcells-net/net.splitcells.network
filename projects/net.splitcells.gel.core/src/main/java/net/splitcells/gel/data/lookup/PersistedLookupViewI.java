@@ -15,7 +15,9 @@
  */
 package net.splitcells.gel.data.lookup;
 
+import com.google.common.collect.Sets;
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.SetT;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
@@ -340,6 +342,11 @@ public class PersistedLookupViewI implements PersistedLookupView {
     @Override
     public View base() {
         return viewView;
+    }
+
+    @Override
+    public SetT<Integer> contentIndexes() {
+        return content;
     }
 
     @Override

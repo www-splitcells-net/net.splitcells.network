@@ -15,6 +15,8 @@
  */
 package net.splitcells.gel.data.lookup;
 
+import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.SetT;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 
@@ -36,4 +38,6 @@ public interface PersistedLookupView extends View {
     void removeRegistration(Line line);
 
     View base();
+
+    SetT<Integer> contentIndexes();
 }

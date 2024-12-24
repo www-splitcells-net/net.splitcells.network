@@ -15,6 +15,8 @@
  */
 package net.splitcells.gel.data.lookup;
 
+import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.SetT;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.tree.Tree;
@@ -50,6 +52,11 @@ public class PersistedLookupViewModificationCounterAspect implements PersistedLo
     @Override
     public View base() {
         return persistedLookupView.base();
+    }
+
+    @Override
+    public SetT<Integer> contentIndexes() {
+        return persistedLookupView.contentIndexes();
     }
 
     @Override
