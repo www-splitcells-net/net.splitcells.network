@@ -49,6 +49,7 @@ public class AllocationsI implements Allocations {
     private final String name;
     private final Discoverable parent;
     private final Table allocations;
+    private final boolean allowsSuppliesOnDemand = false;
     /**
      * Maps {@link Line#index()} of {@link #allocations} to {@link AllocationState},
      * in order to determine, which data is present.
@@ -254,5 +255,10 @@ public class AllocationsI implements Allocations {
     @Override
     public DiscoverableRenderer discoverableRenderer() {
         return allocations.discoverableRenderer();
+    }
+
+    @Override
+    public boolean allowsSuppliesOnDemand() {
+        return allowsSuppliesOnDemand;
     }
 }

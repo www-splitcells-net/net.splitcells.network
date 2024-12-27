@@ -149,6 +149,11 @@ public class SolutionI implements Solution {
     }
 
     @Override
+    public boolean allowsSuppliesOnDemand() {
+        return problem.allowsSuppliesOnDemand();
+    }
+
+    @Override
     public Line anyAssignmentOf(LinePointer demand, LinePointer supply) {
         return this.problem.anyAssignmentOf(demand, supply);
     }

@@ -371,6 +371,11 @@ public class HistoryI implements History {
     }
 
     @Override
+    public boolean allowsSuppliesOnDemand() {
+        return assignments.allowsSuppliesOnDemand();
+    }
+
+    @Override
     public Line anyAssignmentOf(LinePointer demand, LinePointer supply) {
         if (!isRegisterEventIsEnabled) {
             throw executionException(ERROR_HISTORY_DISABLED);

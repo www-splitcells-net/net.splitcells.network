@@ -124,6 +124,11 @@ public class HistoryRef implements History {
     }
 
     @Override
+    public boolean allowsSuppliesOnDemand() {
+        return history.allowsSuppliesOnDemand();
+    }
+
+    @Override
     public Line anyAssignmentOf(LinePointer demand, LinePointer supply) {
         return history.anyAssignmentOf(demand, supply);
     }

@@ -135,6 +135,11 @@ public class SolutionAspect implements Solution {
     }
 
     @Override
+    public boolean allowsSuppliesOnDemand() {
+        return solution.allowsSuppliesOnDemand();
+    }
+
+    @Override
     public Line anyAssignmentOf(LinePointer demand, LinePointer supply) {
         return solution.anyAssignmentOf(demand, supply);
     }

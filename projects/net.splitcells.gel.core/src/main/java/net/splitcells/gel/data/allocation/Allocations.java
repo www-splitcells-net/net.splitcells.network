@@ -53,4 +53,10 @@ public interface Allocations extends Table, AssignmentsLiveView {
     default void deallocate(Line demand, Line supply) {
         throw notImplementedYet();
     }
+
+    /**
+     * @return Returns true, if new {@link #supplies()} can be created via {@link },
+     * after this was initialized.
+     */
+    boolean allowsSuppliesOnDemand();
 }

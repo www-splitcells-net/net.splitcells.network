@@ -100,6 +100,11 @@ public class SimplifiedAnnealingProblem implements Solution {
     }
 
     @Override
+    public boolean allowsSuppliesOnDemand() {
+        return originalSolution.allowsSuppliesOnDemand();
+    }
+
+    @Override
     public Line anyAssignmentOf(LinePointer demand, LinePointer supply) {
         return originalSolution.anyAssignmentOf(demand, supply);
     }

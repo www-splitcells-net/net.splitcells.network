@@ -161,6 +161,11 @@ public class HistoryForTable implements History {
     }
 
     @Override
+    public boolean allowsSuppliesOnDemand() {
+        return history.allowsSuppliesOnDemand();
+    }
+
+    @Override
     public Line anyAssignmentOf(LinePointer demand, LinePointer supply) {
         throw notImplementedYet();
     }

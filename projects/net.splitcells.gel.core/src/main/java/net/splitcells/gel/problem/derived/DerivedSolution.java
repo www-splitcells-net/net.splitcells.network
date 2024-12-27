@@ -140,6 +140,11 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
+    public boolean allowsSuppliesOnDemand() {
+        return assignments.allowsSuppliesOnDemand();
+    }
+
+    @Override
     public Line anyAssignmentOf(LinePointer demand, LinePointer supply) {
         return assignments.anyAssignmentOf(demand, supply);
     }

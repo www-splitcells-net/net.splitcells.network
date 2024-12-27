@@ -82,6 +82,7 @@ public class AssignmentsI implements Assignments {
     private final Table supplies;
     private final Table supplies_used;
     private final Table supplies_free;
+    private final boolean allowsSuppliesOnDemand = false;
 
     private final Table demands;
     private final Table demands_used;
@@ -279,6 +280,11 @@ public class AssignmentsI implements Assignments {
         }
         additionSubscriptions.forEach(listener -> listener.registerAddition(allocation));
         return allocation;
+    }
+
+    @Override
+    public boolean allowsSuppliesOnDemand() {
+        return allowsSuppliesOnDemand;
     }
 
     @Override
