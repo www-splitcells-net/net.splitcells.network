@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.data.set.list;
 
+import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -156,5 +157,10 @@ public class ListViewI<T> implements ListView<T> {
     @Override
     public String toString() {
         return content.toString();
+    }
+
+    @Override
+    public Flow<T> stream() {
+        return content.stream();
     }
 }

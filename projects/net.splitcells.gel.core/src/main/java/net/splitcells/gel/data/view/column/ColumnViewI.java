@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.data.view.column;
 
+import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.view.View;
 
@@ -157,5 +158,10 @@ public class ColumnViewI<T> implements ColumnView<T> {
     @Override
     public View persistedLookup(Predicate<T> selector) {
         return column.persistedLookup(selector);
+    }
+
+    @Override
+    public Flow<T> stream() {
+        return column.stream();
     }
 }
