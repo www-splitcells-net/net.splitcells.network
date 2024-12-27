@@ -15,6 +15,8 @@
  */
 package net.splitcells.gel.data.allocation;
 
+import net.splitcells.dem.utils.ExecutionException;
+import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.assignment.AssignmentsLiveView;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
@@ -41,6 +43,8 @@ public interface Allocations extends Table, AssignmentsLiveView {
      * @param demand This is the demand of the assignment.
      * @param supply This is the supply of the assignment.
      * @return This is the {@link Line} representing the allocation.
+     * @throws ExecutionException Throws an exception,
+     * if there is an allocation already present for the given demand or supply.
      */
     default Line allocate(Line demand, Line supply) {
         throw notImplementedYet();
