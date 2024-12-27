@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.system;
+package net.splitcells.network.system;
 
 import net.splitcells.cin.CinFileSystem;
 import net.splitcells.dem.Dem;
@@ -49,7 +49,7 @@ import static net.splitcells.gel.ui.no.code.editor.FunctionMeta.functionMeta;
 import static net.splitcells.gel.ui.no.code.editor.Functions.functions;
 import static net.splitcells.gel.ui.no.code.editor.NoCodeSolutionCalculator.noCodeSolutionCalculator;
 import static net.splitcells.gel.ui.SolutionCalculator.solutionCalculator;
-import static net.splitcells.system.PerformanceReport.performanceReport;
+import static net.splitcells.network.system.PerformanceReport.performanceReport;
 import static net.splitcells.website.server.ProgramConfig.programConfig;
 import static net.splitcells.website.server.ProjectConfig.projectConfig;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
@@ -99,7 +99,7 @@ public class WebsiteViaJar {
                         , configValue(OsiFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/shell/lib/"
                         , configValue(OsiLibFileSystem.class)))
-                .withAdditionalProject(projectConfig("/net/splitcells/system/"
+                .withAdditionalProject(projectConfig("/net/splitcells/network/system/"
                         , configValue(SystemsFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/project"
                         , configValue(ProjectFileSystem.class)))
