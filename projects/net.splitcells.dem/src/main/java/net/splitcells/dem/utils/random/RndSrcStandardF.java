@@ -25,9 +25,6 @@ public class RndSrcStandardF implements RndSrcF {
 
     public final Random seedSrc = new Random();
 
-    public RndSrcStandardF() {
-    }
-
     @Override
     public Randomness rnd(Long seed) {
         return new JavaRandomWrapper(new Random(seed));

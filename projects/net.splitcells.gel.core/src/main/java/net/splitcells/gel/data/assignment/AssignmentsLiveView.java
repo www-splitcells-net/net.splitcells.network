@@ -16,6 +16,7 @@
 package net.splitcells.gel.data.assignment;
 
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
@@ -24,7 +25,11 @@ import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.solution.optimization.OnlineOptimization;
 
 
+import java.util.stream.IntStream;
+
+import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
@@ -123,6 +128,34 @@ public interface AssignmentsLiveView extends View {
         }
         throw executionException(tree("Trying to add a new supply on demand in an allocations table, that does not allow such.")
                 .withProperty("values", values.toString())
+                .withProperty("allocations", path().toString()));
+    }
+
+    /**
+     * Adds a new {@link Line} to the {@link #supplies()}, if it is allowed by {@link #allowsSuppliesOnDemand()}.
+     *
+     * @param supply Uses its {@link Line#values()} as default values for the new {@link #supplies()} element.
+     * @param alternativeValues Overrides the values of the given supply.
+     *                          The {@link Line#values()} of the supply has the same {@link View#headerView()} of {@link Line#context()}
+     *                          as the alternativeValues.
+     * @return Returns the newly created {@link #supplies()} {@link Line}.
+     * @see Table#addTranslated(ListView)
+     */
+    default Line addTranslatedSupply(Line supply, List<? extends Object> alternativeValues) {
+        if (allowsSuppliesOnDemand()) {
+            final var supplyValues = supply.values();
+            final List<Object> newSupplyValues = list();
+            range(0, supplyValues.size()).forEach(i -> {
+                final var altVal = alternativeValues.get(i);
+                if (altVal != null) {
+                    newSupplyValues.withAppended(altVal);
+                }
+            });
+            return supplies().addTranslated(newSupplyValues);
+        }
+        throw executionException(tree("Trying to add a new supply on demand in an allocations table, that does not allow such.")
+                .withProperty("supply", supply.toString())
+                .withProperty("alternative values", alternativeValues.toString())
                 .withProperty("allocations", path().toString()));
     }
 }

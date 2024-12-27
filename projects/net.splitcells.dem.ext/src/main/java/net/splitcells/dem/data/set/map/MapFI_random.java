@@ -46,5 +46,6 @@ public class MapFI_random implements MapF {
 
     @Override
     public void close() {
+        // Nothing needs to be done.
     }
 }

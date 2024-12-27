@@ -106,16 +106,6 @@ public class ConstraintTest {
             public List<Domable> arguments() {
                 return list();
             }
-
-            @Override
-            public void addContext(Discoverable context) {
-
-            }
-
-            @Override
-            public Set<List<String>> paths() {
-                return setOfUniques();
-            }
         });
         final var validator = forAll();
         testSubject.withChildren(validator);

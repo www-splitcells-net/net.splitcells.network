@@ -78,6 +78,10 @@ public class LineGroupRater implements Rater {
 
     @Override
     public Proposal propose(Proposal proposal) {
+        proposal.subject().demandsFree().unorderedLinesStream()
+                .forEach(df -> {
+
+                });
         return baseRater.propose(proposal);
     }
 }

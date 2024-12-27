@@ -66,6 +66,7 @@ public class MapFI_configured implements MapF {
 
     @Override
     public void close() {
+        // Nothing needs to be done.
     }
 
 }
