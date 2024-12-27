@@ -29,7 +29,7 @@ import java.util.function.Function;
 
 public final class AttributeI<T> implements Attribute<T> {
 
-    private final Class<T> type;
+    private final Class<?> type;
     private final String name;
     private final Function<String, T> deserializer;
 
@@ -53,13 +53,17 @@ public final class AttributeI<T> implements Attribute<T> {
         return new AttributeI<>(type, name);
     }
 
-    private AttributeI(Class<T> type, String name) {
+    public static Attribute<Object> attributeObject(Class<?> type, String name) {
+        return new AttributeI<>(type, name);
+    }
+
+    private AttributeI(Class<?> type, String name) {
         this(type, name, arg -> {
             throw new UnsupportedOperationException();
         });
     }
 
-    private AttributeI(Class<T> type, String name, Function<String, T> deserializer) {
+    private AttributeI(Class<?> type, String name, Function<String, T> deserializer) {
         this.type = type;
         this.name = name;
         this.deserializer = deserializer;
