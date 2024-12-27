@@ -37,17 +37,17 @@ public class LookupColumnTest {
         range(0, 10).forEach(i -> testData.addTranslated(list(i)));
         final var lookupTable = lookupTable(testData, "test-subject");
         final var testSubject = lookupTable.columnsView().get(0);
-        testSubject.flow().toList().requireEmpty();
+        testSubject.flow().toList().requireEmpty().requireContentsOf(testSubject.values());
         lookupTable.register(testData.orderedLine(0));
-        testSubject.flow().toList().requireContentsOf(0);
+        testSubject.flow().toList().requireContentsOf(0).requireContentsOf(testSubject.values());
         lookupTable.register(testData.orderedLine(1));
         lookupTable.register(testData.orderedLine(2));
-        testSubject.flow().toList().requireContentsOf(0, 1, 2);
+        testSubject.flow().toList().requireContentsOf(0, 1, 2).requireContentsOf(testSubject.values());
         lookupTable.removeRegistration(lookupTable.orderedLine(1));
-        testSubject.flow().toList().requireContentsOf(0, 2);
+        testSubject.flow().toList().requireContentsOf(0, 2).requireContentsOf(testSubject.values());
         lookupTable.removeRegistration(lookupTable.orderedLine(0));
         lookupTable.removeRegistration(lookupTable.orderedLine(0));
-        testSubject.flow().toList().requireEmpty();
+        testSubject.flow().toList().requireEmpty().requireContentsOf(testSubject.values());
     }
 
     @UnitTest
