@@ -22,7 +22,16 @@ import net.splitcells.gel.data.view.Line;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
- * <p>Allows at most one assignment for each one of {@link #demands()} and for each one of {@link #supplies()}.</p>
+ * <p>Allows at most one assignment for each one of {@link #demands()} and for each one of {@link #supplies()}.
+ * The assignment API is split into {@link Allocations} and {@link Assignments},
+ * also both support the same basic concept.
+ * {@link Allocations} is just a stricter version of {@link Assignments},
+ * which is not only important for some consumers of such.
+ * Dedicated implementations of {@link Allocations} are generally faster and
+ * use less memory than {@link Assignments}.
+ * Consumers of assignments that do not differentiate between {@link Allocations} and {@link Assignments}
+ * can declare the class {@link Allocations} as an argument,
+ * to recommend the caller to provide the more efficient {@link Allocations}, if possible.</p>
  */
 public interface Allocations extends Table, AssignmentsLiveView {
 
