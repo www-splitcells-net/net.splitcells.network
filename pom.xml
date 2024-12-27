@@ -42,7 +42,7 @@
         <module>projects/net.splitcells.network</module>
         <module>projects/net.splitcells.network.worker.via.java</module>
         <module>projects/net.splitcells.cin</module>
-        <module>projects/net.splitcells.system</module>
+        <module>projects/net.splitcells.network.system</module>
     </modules>
     <profiles>
         <profile>
