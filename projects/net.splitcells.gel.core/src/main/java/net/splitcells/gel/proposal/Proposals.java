@@ -52,7 +52,7 @@ public class Proposals implements Proposal {
     }
 
     @Override
-    public Assignments conextAllocations() {
+    public Assignments contextAllocations() {
         return contextAssignments;
     }
 

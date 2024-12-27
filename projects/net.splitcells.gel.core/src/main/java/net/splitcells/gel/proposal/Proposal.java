@@ -43,10 +43,10 @@ public interface Proposal {
      * but which provide context for the demands,
      * that need supplies proposed in {@link #proposedAllocations()}.
      * Often the {@link Line}s of {@link #proposedAllocations()} are in the same {@link GroupId}
-     * as the lines of {@link #conextAllocations()},
+     * as the lines of {@link #contextAllocations()},
      * This makes it easier to implement {@link Proposal}s for {@link net.splitcells.gel.rating.rater.framework.Rater}s.
      */
-    Assignments conextAllocations();
+    Assignments contextAllocations();
 
     Solution subject();
 }
