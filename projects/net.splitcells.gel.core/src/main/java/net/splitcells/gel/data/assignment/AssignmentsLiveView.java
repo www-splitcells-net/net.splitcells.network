@@ -99,4 +99,10 @@ public interface AssignmentsLiveView extends View {
                 .forEach(allocation -> suppliesOfDemands.add(supplyOfAssignment(allocation)));
         return suppliesOfDemands;
     }
+
+    /**
+     * @return Returns true, if new {@link #supplies()} can be created via {@link },
+     * after this was initialized.
+     */
+    boolean allowsSuppliesOnDemand();
 }
