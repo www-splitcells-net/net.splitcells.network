@@ -284,14 +284,6 @@ public class PersistedLookupViewI implements PersistedLookupView {
             rawLinesHashedCache.put(line.index(), line);
         }
         content.add(line.index());
-        // TODO PERFORMANCE
-        // TODO FIX
-        final var header = viewView.headerView();
-        range(0, lookupColumns.size()).forEach(i -> {
-            // HACK
-            final var column = lookupColumns.get(i);
-            column.set(line.index(), line.value(header.get(i)));
-        });
         lookupColumns.forEach(column -> column.registerAddition(line));
     }
 
@@ -309,11 +301,6 @@ public class PersistedLookupViewI implements PersistedLookupView {
         }
         lookupColumns.forEach(column -> column.registerBeforeRemoval(line));
         content.remove(line.index());
-        range(0, lookupColumns.size()).forEach(i -> {
-            // HACK
-            final var column = lookupColumns.get(i);
-            column.set(line.index(), null);
-        });
         if (useExperimentalRawLineCache) {
             if (rawLinesCache.size() == line.index() + 1) {
                 rawLinesCache.remove(line.index());

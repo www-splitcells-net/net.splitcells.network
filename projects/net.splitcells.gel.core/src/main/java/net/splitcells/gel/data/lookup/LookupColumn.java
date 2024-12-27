@@ -16,6 +16,7 @@
 package net.splitcells.gel.data.lookup;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -123,7 +124,7 @@ public class LookupColumn<T> implements Column<T> {
 
     @Override
     public T get(int index) {
-        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY &&  !table.contentIndexes().contains(index)) {
+        if (ENFORCING_UNIT_CONSISTENCY &&  !table.contentIndexes().contains(index)) {
             throw executionException(tree("Given index is not present in lookup table.")
                     .withProperty("index", index + "")
                     .withProperty("lookup table", table.path().toString()));
@@ -133,8 +134,7 @@ public class LookupColumn<T> implements Column<T> {
 
     @Override
     public T set(int indekss, T elements) {
-        // TODO FIX Has something else to be doen here?
-        return elements;
+        throw notImplementedYet();
     }
 
     @Override
