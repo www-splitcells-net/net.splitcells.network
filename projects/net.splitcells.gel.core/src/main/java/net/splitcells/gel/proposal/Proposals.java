@@ -16,13 +16,21 @@
 package net.splitcells.gel.proposal;
 
 import net.splitcells.gel.data.assignment.Assignments;
-import net.splitcells.gel.data.table.Tables;
+import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.solution.Solution;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
 import static net.splitcells.gel.data.table.Tables.table;
+import static net.splitcells.gel.data.table.Tables.table2;
+import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.attributeObject;
 
 public class Proposals implements Proposal {
+
+    public static Attribute<Object> NEW_SUPPLY = attributeObject(Line.class, "proposal-for-new-supply");
 
     public static Proposal proposal(Solution subject) {
         return new Proposals(subject);
@@ -31,24 +39,33 @@ public class Proposals implements Proposal {
     private final Solution subject;
     private final Assignments proposedAssignments;
     private final Assignments contextAssignments;
+    private final Table proposedAllocationsWithNewSupplies;
 
     private Proposals(Solution subject) {
         this.subject = subject;
         this.proposedAssignments = assignments("proposed-allocations"
-                , Tables.table("proposed-demands", subject.demands(), subject.demands().headerView2())
-                , Tables.table("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
+                , table("proposed-demands", subject.demands(), subject.demands().headerView2())
+                , table("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
         this.contextAssignments = assignments("context-allocations"
-                , Tables.table("proposed-demands", subject.demands(), subject.demands().headerView2())
-                , Tables.table("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
+                , table("proposed-demands", subject.demands(), subject.demands().headerView2())
+                , table("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
+        proposedAllocationsWithNewSupplies = table2("proposed-allocations-with-new-supplies"
+                , subject.demands()
+                , list(NEW_SUPPLY).withAppended(subject.supplies().headerView())
+        );
     }
 
     /**
-     *
      * @return These {@link Assignments} are proposed in order to get a better {@link Solution}.
      */
     @Override
     public Assignments proposedAllocations() {
         return proposedAssignments;
+    }
+
+    @Override
+    public Table proposedAllocationsWithNewSupplies() {
+        return proposedAllocationsWithNewSupplies;
     }
 
     @Override

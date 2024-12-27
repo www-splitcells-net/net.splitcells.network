@@ -15,8 +15,11 @@
  */
 package net.splitcells.gel.proposal;
 
+import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.assignment.Assignments;
+import net.splitcells.gel.data.assignment.AssignmentsLiveView;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.solution.Solution;
 
@@ -35,8 +38,22 @@ public interface Proposal {
      * in order to get a better {@link Solution}.
      * With this often the domain of the demands is represented,
      * when one compares this concept to the constraint satisfaction problem.
+     * The {@link Assignments#headerView()} consists of {@link Solution#demands()} and {@link Solution#supplies()}.
      */
     Assignments proposedAllocations();
+
+    /**
+     * @return <p>Set of {@link Assignments} proposed for the given {@link #subject()},
+     * in order to get a better {@link Solution}.
+     * With this often the domain of the demands is represented,
+     * when one compares this concept to the constraint satisfaction problem.</p>
+     * <p>The {@link Assignments#headerView()} consists of {@link Solution#demands()} and
+     * {@link Solution#headerView()} of {@link Solution#supplies()}.
+     * Such {@link Solution#supplies()} do not exist and have to be created with methods like
+     * {@link AssignmentsLiveView#addTranslatedSupply(ListView)}.</p>
+     *
+     */
+    Table proposedAllocationsWithNewSupplies();
 
     /**
      * @return Set of {@link Assignments}, for which not the proposals are generated,
