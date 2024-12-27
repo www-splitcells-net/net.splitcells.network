@@ -102,6 +102,11 @@ public interface AssignmentsLiveView extends View {
     /**
      * @return Returns true, if new {@link #supplies()} can be created via {@link #addTranslatedSupply(ListView)},
      * after this was initialized.
+     * Such created {@link #supplies()} {@link Line} are important for consumers like {@link OnlineOptimization},
+     * in order to have access to the full supply domain space
+     * (= valid combinations of {@link Line#values()} in a {@link #supplies()}).
+     * The complete supply domain space is in such case often too big,
+     * to be stored fully in a {@link #supplies()} at any time.
      */
     boolean allowsSuppliesOnDemand();
 
