@@ -94,10 +94,11 @@ public interface SetT<T> extends Collection<T> {
         }
     }
 
-    default void requireEmptySet() {
+    default SetT<T> requireEmptySet() {
         if (!isEmpty()) {
             throw executionException("Set should be empty, but has " + size() + " elements instead: " + this);
         }
+        return this;
     }
 
     default void requireAnyContent() {
@@ -112,7 +113,7 @@ public interface SetT<T> extends Collection<T> {
      *
      * @param content
      */
-    default void requireContentsOf(T... content) {
+    default SetT<T> requireContentsOf(T... content) {
         StreamUtils.stream(content).forEach(c -> {
             if (!contains(c)) {
                 throw executionException("Set should contain following contents in any order, but does not: set="
@@ -121,6 +122,7 @@ public interface SetT<T> extends Collection<T> {
                         + listWithValuesOf(content));
             }
         });
+        return this;
     }
 
     /**

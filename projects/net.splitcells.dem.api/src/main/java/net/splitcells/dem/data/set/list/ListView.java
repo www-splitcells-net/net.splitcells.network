@@ -64,10 +64,11 @@ public interface ListView<T> extends Collection<T>, java.util.List<T>, Thing {
         }
     }
 
-    default void requireEmpty() {
+    default ListView<T> requireEmpty() {
         if (!isEmpty()) {
             throw executionException("Expecting list to be empty, but is not: " + this);
         }
+        return this;
     }
 
     default void requireSizeOf(int arg) {
