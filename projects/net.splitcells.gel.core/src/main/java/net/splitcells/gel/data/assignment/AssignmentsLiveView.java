@@ -20,10 +20,16 @@ import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.LinePointer;
 import net.splitcells.gel.data.view.View;
+import net.splitcells.gel.solution.optimization.OnlineOptimization;
 
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 
+/**
+ * TODO Access to things like {@link #supplies()} should be read only via {@link View} by default.
+ * Only the creator of an {@link AssignmentsLiveView} should typically be able to set or change such.
+ * Things like {@link OnlineOptimization} should not have write access to such by default.
+ */
 public interface AssignmentsLiveView extends View {
     /**
      * Returns a {@link Table} of all supplies.
