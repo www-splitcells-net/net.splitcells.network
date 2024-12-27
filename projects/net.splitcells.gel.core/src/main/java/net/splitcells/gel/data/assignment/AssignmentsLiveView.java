@@ -16,6 +16,7 @@
 package net.splitcells.gel.data.assignment;
 
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.LinePointer;
@@ -24,6 +25,8 @@ import net.splitcells.gel.solution.optimization.OnlineOptimization;
 
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**
  * TODO Access to things like {@link #supplies()} should be read only via {@link View} by default.
@@ -34,19 +37,17 @@ public interface AssignmentsLiveView extends View {
     /**
      * Returns a {@link Table} of all supplies.
      * The {@link Line#index()} of one supply is the same across this database, {@link #suppliesFree()} and {@link #suppliesUsed()}
-     * 
+     *
      * @return Database Of All Supplies
      */
     Table supplies();
 
     /**
-     * 
      * @return This database contains all {@link #supplies()}, that are allocated to at least one of {@link #demands()}.
      */
     Table suppliesUsed();
 
     /**
-     * 
      * @return This database contains all {@link #supplies()} that are not allocated to any {@link #demands()}
      */
     Table suppliesFree();
@@ -60,20 +61,18 @@ public interface AssignmentsLiveView extends View {
     Table demands();
 
     /**
-     *
      * @return This database contains all {@link #demands()}, that are allocated to at least one of {@link #supplies()}.
      */
     Table demandsUsed();
 
     /**
-     *
      * @return This database contains all {@link #demands()}, that are not allocated to any {@link #supplies()}.
      */
     Table demandsFree();
 
     /**
      * Determines the demand of the given allocation.
-     * 
+     *
      * @param assignment Element of {@link #demands()}.
      * @return
      */
@@ -81,7 +80,7 @@ public interface AssignmentsLiveView extends View {
 
     /**
      * <p>Determines the supply of a given allocation.</p>
-     * 
+     *
      * @param assignment Element of {@link #supplies()}.
      * @return
      */
@@ -101,8 +100,24 @@ public interface AssignmentsLiveView extends View {
     }
 
     /**
-     * @return Returns true, if new {@link #supplies()} can be created via {@link },
+     * @return Returns true, if new {@link #supplies()} can be created via {@link #addTranslatedSupply(ListView)},
      * after this was initialized.
      */
     boolean allowsSuppliesOnDemand();
+
+    /**
+     * Adds a new {@link Line} to the {@link #supplies()}, if it is allowed by {@link #allowsSuppliesOnDemand()}.
+     *
+     * @param values These are the values of the new {@link #supplies()} {@link Line} to be created.
+     * @return Returns the newly created {@link #supplies()} {@link Line}.
+     * @see Table#addTranslated(ListView)
+     */
+    default Line addTranslatedSupply(ListView<? extends Object> values) {
+        if (allowsSuppliesOnDemand()) {
+            return supplies().addTranslated(values);
+        }
+        throw executionException(tree("Trying to add a new supply on demand in an allocations table, that does not allow such.")
+                .withProperty("values", values.toString())
+                .withProperty("allocations", path().toString()));
+    }
 }
