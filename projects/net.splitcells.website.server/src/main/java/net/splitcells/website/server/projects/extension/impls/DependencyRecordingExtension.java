@@ -57,7 +57,7 @@ public class DependencyRecordingExtension implements ProjectsRendererExtension {
         } else {
             final var content = stringBuilder();
             content.append("<div align=\"center\"><code class=\"mermaid\">\ngraph TD\n");
-            content.append("</code></div><script src=\"https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js\"></script>");
+            content.append("</code></div><script src=\"/net/splitcells/website/js/mermaid.min.js\"></script>");
             return renderResponse(Optional.of(binaryMessage(projectsRenderer.renderHtmlBodyContent(content.toString()
                                     , Optional.of("Dependency Recording")
                                     , Optional.of(DEPENDENCY_RECORDING_PATH.unixPathString())
