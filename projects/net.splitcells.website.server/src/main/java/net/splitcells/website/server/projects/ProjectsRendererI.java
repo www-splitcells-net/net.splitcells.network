@@ -59,6 +59,7 @@ import static net.splitcells.website.server.projects.RenderResponse.renderRespon
 import static net.splitcells.website.server.projects.extension.impls.ColloquiumPlanningDemandsTestData.colloquiumPlanningDemandTestData;
 import static net.splitcells.website.server.projects.extension.impls.ColloquiumPlanningSuppliesTestData.colloquiumPlanningSuppliesTestData;
 import static net.splitcells.website.server.projects.extension.impls.DemConfigExtension.demConfigExtension;
+import static net.splitcells.website.server.projects.extension.impls.DependencyRecordingExtension.dependencyRecordingExtension;
 import static net.splitcells.website.server.projects.extension.impls.FrontMenuExtension.frontMenuExtension;
 import static net.splitcells.website.server.projects.extension.impls.GlobalChangelogExtension.globalChangelogExtension;
 import static net.splitcells.website.server.projects.extension.impls.LayoutExtension.layoutExtension;
@@ -198,6 +199,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
             , demConfigExtension()
             , testExtension()
             , layoutFancyTreeExtension()
+            , dependencyRecordingExtension()
     );
 
     private ProjectsRendererI(String name
