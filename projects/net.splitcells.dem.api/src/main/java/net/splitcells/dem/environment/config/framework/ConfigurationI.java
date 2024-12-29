@@ -38,10 +38,12 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**
- * This class is synchronized, as multiple {@link Dem#process(Runnable)} can be started at once,
+ * <p>This class is synchronized, as multiple {@link Dem#process(Runnable)} can be started at once,
  * that use a parent {@link Dem#process(Runnable)} for its config.
- * See the web server, where one {@link Dem#process(Runnable)} is done per worker.
- *
+ * See the web server, where one {@link Dem#process(Runnable)} is done per worker.</p>
+ * <p>TODO There should be a general way to add aspects to this,
+ * that work during {@link Dem#process(Runnable)} etc. initialization.
+ * See {@link #dependencyRecorder} for such a feature.</p>
  * <p>TODO {@link Configuration} consistency check could be implemented via {@link #subscribers}.
  * Automatic {@link Option} update based on other {@link Option} updates should not be done via these {@link #subscribers}.</p>
  * <p>TODO Use {@link TypedMap}, instead of {@link Map}, in order to reduce the amount of reflection usage.</p>
