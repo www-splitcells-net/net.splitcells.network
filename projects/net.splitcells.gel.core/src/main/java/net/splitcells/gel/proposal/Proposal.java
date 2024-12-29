@@ -16,6 +16,7 @@
 package net.splitcells.gel.proposal;
 
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.assignment.AssignmentsLiveView;
@@ -24,12 +25,18 @@ import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.solution.Solution;
 
 /**
- * {@link #proposedAllocations} proposes {@link net.splitcells.gel.data.view.Line}s for {@link Assignments}.
- * Any one of {@link Assignments#demands()} can have a number of {@link Assignments#supplies()} elements and
+ * <p>{@link #proposedAllocations} proposes new {@link Line}s for {@link Assignments},
+ * in order to improve a given {@link #subject()}.
+ * There is no guarantee, if the {@link Proposal} actually improves the given {@link #subject()},
+ * as the quality depends on the producers.
+ * For instance, when a {@link Proposal} is created based on an element of {@link Constraint#childrenView()},
+ * the resulting {@link Proposal} may not fit to the parent {@link Constraint}.</p>
+ * <p>This concept basically attempts to implement domain pruning in constraint satisfaction problems (CSP).</p>
+ * <p>Any one of {@link Assignments#demands()} can have a number of {@link Assignments#supplies()} elements and
  * therefore one of {@link Assignments#demands()} can have multiple elements of {@link Assignments#supplies()},
  * that are part of a plausible {@link Solution} according to this {@link Proposal}.
  * {@link Assignments#demands()} and {@link Assignments#supplies()} of {@link #proposedAllocations} are corresponding
- * subsets of the {@link #subject()}'s {@link Assignments#demands()} and {@link Assignments#supplies()}.
+ * subsets of the {@link #subject()}'s {@link Assignments#demands()} and {@link Assignments#supplies()}.</p>
  */
 public interface Proposal {
 
