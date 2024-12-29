@@ -17,6 +17,7 @@ package net.splitcells.website.server.projects.extension.impls;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.environment.config.framework.DependencyRecording;
+import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.website.server.projects.ProjectsRenderer;
@@ -47,6 +48,20 @@ public class DependencyRecordingExtension implements ProjectsRendererExtension {
     private DependencyRecordingExtension() {
     }
 
+    /**
+     * On the website the horizontal space is limited, whereas the vertical space is practically unlimited.
+     * Drawing the Mermaid flow chart from top to bottom makes the flowchart unreadable,
+     * as there are a lot of dependencies between {@link Option}, that are thereby rendered in a long row,
+     * making the chart's elements small and thereby unreadable.
+     * On the other hand, the maximal length of transient dependencies is assumed to be very limited in practice.
+     * Therefore, the Mermaid flow chart is drawn from left to right (graph LR),
+     * so that the horizontal space is used for transient dependencies and
+     * the vertical space is used to list the different dependencies.
+     *
+     * @param request
+     * @param projectsRenderer
+     * @return
+     */
     @Override
     public RenderResponse render(RenderRequest request, ProjectsRenderer projectsRenderer) {
         if (!request.trail().equalContents(DEPENDENCY_RECORDING_PATH)) {
@@ -58,7 +73,7 @@ public class DependencyRecordingExtension implements ProjectsRendererExtension {
             return projectsRenderer.renderMissingAccessRights(request);
         } else {
             final var content = stringBuilder();
-            content.append("<div align=\"center\"><code class=\"mermaid\">\ngraph TD\n");
+            content.append("<div align=\"center\"><code class=\"mermaid\">\ngraph LR\n");
             configValue(DependencyRecording.class).dependencies().forEach((from, to) ->
                     to.forEach(target -> {
                         content.append(from.getName());
