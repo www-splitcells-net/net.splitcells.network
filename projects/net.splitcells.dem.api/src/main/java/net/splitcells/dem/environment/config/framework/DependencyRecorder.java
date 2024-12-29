@@ -30,17 +30,18 @@ public class DependencyRecorder {
         return new DependencyRecorder();
     }
 
-    private final Map<Option<?>, Set<Option<?>>> dependencies = map();
+    private final Map<Class<? extends Option<? extends Object>>, Set<Class<? extends Option<? extends Object>>>>
 
     private DependencyRecorder() {
 
     }
 
-    public void recordDependency(Option<?> from, Option<?> to) {
         dependencies.computeIfAbsent(from, f -> setOfUniques()).add(to);
+    public void recordDependency(Class<? extends Option<? extends Object>> from
+            , Class<? extends Option<? extends Object>> to) {
     }
 
-    public Map<Option<?>, Set<Option<?>>> dependencies() {
+    public Map<Class<? extends Option<? extends Object>>, Set<Class<? extends Option<? extends Object>>>> dependencies() {
         return dependencies;
     }
 }
