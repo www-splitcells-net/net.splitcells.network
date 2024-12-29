@@ -32,6 +32,10 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 
 /**
+ * This class is synchronized, as multiple {@link Dem#process(Runnable)} can be started at once,
+ * that use a parent {@link Dem#process(Runnable)} for its config.
+ * See the web server, where one {@link Dem#process(Runnable)} is done per worker.
+ *
  * <p>TODO {@link Configuration} consistency check could be implemented via {@link #subscribers}.
  * Automatic {@link Option} update based on other {@link Option} updates should not be done via these {@link #subscribers}.</p>
  * <p>TODO Use {@link TypedMap}, instead of {@link Map}, in order to reduce the amount of reflection usage.</p>
@@ -56,7 +60,7 @@ public class ConfigurationI implements Configuration {
     }
 
     @Override
-    public <T extends Object> Configuration withConfigValue(Class<? extends Option<T>> key, T new_value) {
+    public synchronized <T extends Object> Configuration withConfigValue(Class<? extends Option<T>> key, T new_value) {
         try {
             final Set<OptionSubscriber<Object>> key_subscribers;
             if (config_store.containsKey(key)) {
@@ -81,7 +85,7 @@ public class ConfigurationI implements Configuration {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T configValue(Class<? extends Option<T>> key) {
+    public synchronized <T> T configValue(Class<? extends Option<T>> key) {
         if (!this.config_store.containsKey(key)) {
             withInitedOption(key);
         }
@@ -89,7 +93,7 @@ public class ConfigurationI implements Configuration {
     }
 
     @Override
-    public Object configValueUntyped(Object key) {
+    public synchronized Object configValueUntyped(Object key) {
         return config_store.get(key);
     }
 
