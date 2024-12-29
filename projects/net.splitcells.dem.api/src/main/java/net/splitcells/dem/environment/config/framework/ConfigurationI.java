@@ -18,9 +18,12 @@ package net.splitcells.dem.environment.config.framework;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.Sets;
+import net.splitcells.dem.data.set.map.Maps;
 import net.splitcells.dem.data.set.map.typed.TypedMap;
+import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.ReturnsThis;
 
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -30,6 +33,9 @@ import java.util.function.Function;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.environment.config.framework.DependencyRecorder.dependencyRecorder;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 
 /**
  * This class is synchronized, as multiple {@link Dem#process(Runnable)} can be started at once,
@@ -49,6 +55,8 @@ public class ConfigurationI implements Configuration {
     private final Map<Object, Object> config_store;
     @Deprecated
     private final Map<Class<?>, Set<OptionSubscriber<Object>>> subscribers;
+    private final DependencyRecorder dependencyRecorder;
+    private final List<Class<? extends Option<?>>> dependencyStack = new ArrayList<>();
 
     public static Configuration configuration() {
         return new ConfigurationI();
@@ -57,11 +65,26 @@ public class ConfigurationI implements Configuration {
     private ConfigurationI() {
         config_store = new HashMap<>();
         subscribers = new HashMap<>();
+        dependencyRecorder = dependencyRecorder();
+        config_store.put(DependencyRecording.class, dependencyRecorder);
+    }
+
+    private void recordConfigAccess(Class<? extends Option<? extends Object>> key) {
+        if (!dependencyStack.isEmpty()) {
+            if (dependencyStack.get(dependencyStack.size() - 1).equals(key)) {
+                if (dependencyStack.size() > 1) {
+                    dependencyRecorder.recordDependency(dependencyStack.get(dependencyStack.size() - 2), key);
+                }
+            } else {
+                dependencyRecorder.recordDependency(dependencyStack.get(dependencyStack.size() - 1), key);
+            }
+        }
     }
 
     @Override
     public synchronized <T extends Object> Configuration withConfigValue(Class<? extends Option<T>> key, T new_value) {
         try {
+            recordConfigAccess(key);
             final Set<OptionSubscriber<Object>> key_subscribers;
             if (config_store.containsKey(key)) {
                 key_subscribers = subscribers.get(key);
@@ -83,17 +106,33 @@ public class ConfigurationI implements Configuration {
         return this;
     }
 
+    @Override
+    public synchronized <T> Configuration withInitedOption(Class<? extends Option<T>> key) {
+        try {
+            dependencyStack.add(key);
+            return withConfigValue(key, key.getDeclaredConstructor().newInstance().defaultValue());
+        } catch (Throwable e) {
+            throw executionException(tree("Could not initialize config with default value.")
+                            .withProperty("key", key.getName())
+                    , e);
+        } finally {
+            dependencyStack.removeLast();
+        }
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public synchronized <T> T configValue(Class<? extends Option<T>> key) {
         if (!this.config_store.containsKey(key)) {
             withInitedOption(key);
         }
+        recordConfigAccess(key);
         return (T) this.config_store.get(key);
     }
 
     @Override
     public synchronized Object configValueUntyped(Object key) {
+        recordConfigAccess((Class<? extends Option<? extends Object>>) key);
         return config_store.get(key);
     }
 

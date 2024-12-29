@@ -28,15 +28,7 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
 public interface Configuration extends ConfigurationV {
 
     @ReturnsThis
-    default <T> Configuration withInitedOption(Class<? extends Option<T>> key) {
-        try {
-            return withConfigValue(key, key.getDeclaredConstructor().newInstance().defaultValue());
-        } catch (Throwable e) {
-            throw executionException(tree("Could not initialize config with default value.")
-                            .withProperty("key", key.getName())
-                    , e);
-        }
-    }
+    <T> Configuration withInitedOption(Class<? extends Option<T>> key);
 
     @ReturnsThis
     <T> Configuration withConfigValue(Class<? extends Option<T>> key, T value);
