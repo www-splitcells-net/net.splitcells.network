@@ -15,30 +15,51 @@
  */
 package net.splitcells.dem.environment.config.framework;
 
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.data.set.map.MapFI_deterministic;
+import net.splitcells.dem.data.set.map.Maps;
 
+import static net.splitcells.dem.data.set.SetLegacyWrapper.setLegacyWrapper;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.data.set.map.MapFI_deterministic.mapFI_deterministic;
 import static net.splitcells.dem.data.set.map.Maps.map;
 
 /**
  * Records all {@link Option} dependencies for every given {@link Option},
  * so that the initialization order can be understood.
+ * This class is used at the initialization of {@link Dem#process(Runnable)}.
+ * Therefore, any reliance on {@link Dem#configValue(Class)} etc. has to be avoided.
  */
 public class DependencyRecorder {
     public static DependencyRecorder dependencyRecorder() {
         return new DependencyRecorder();
     }
 
+    /**
+     * Maps for every {@link Option}, which are set via {@link Configuration#withConfigValue(Class, Object)} etc.,
+     * to a set of {@link Option}, that are required for its initialization.
+     * <p>
+     * {@link MapFI_deterministic#mapFI_deterministic} is used,
+     * in order to avoid duplicate {@link Dem#process} initialization.
+     */
     private final Map<Class<? extends Option<? extends Object>>, Set<Class<? extends Option<? extends Object>>>>
+            dependencies = mapFI_deterministic().map();
 
     private DependencyRecorder() {
 
     }
 
-        dependencies.computeIfAbsent(from, f -> setOfUniques()).add(to);
     public void recordDependency(Class<? extends Option<? extends Object>> from
             , Class<? extends Option<? extends Object>> to) {
+        Set<Class<? extends Option<? extends Object>>> targets;
+        targets = dependencies.get(from);
+        if (targets == null) {
+            targets = setLegacyWrapper(new java.util.LinkedHashSet<>());
+            dependencies.put(from, targets);
+        }
+        targets.add(to);
     }
 
     public Map<Class<? extends Option<? extends Object>>, Set<Class<? extends Option<? extends Object>>>> dependencies() {
