@@ -16,6 +16,7 @@
 package net.splitcells.website.server.projects.extension.impls;
 
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.environment.config.framework.DependencyRecording;
 import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.website.server.projects.ProjectsRenderer;
@@ -26,6 +27,7 @@ import net.splitcells.website.server.projects.extension.ProjectsRendererExtensio
 import java.nio.file.Path;
 import java.util.Optional;
 
+import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.utils.StringUtils.stringBuilder;
@@ -57,6 +59,13 @@ public class DependencyRecordingExtension implements ProjectsRendererExtension {
         } else {
             final var content = stringBuilder();
             content.append("<div align=\"center\"><code class=\"mermaid\">\ngraph TD\n");
+            configValue(DependencyRecording.class).dependencies().forEach((from, to) ->
+                    to.forEach(target -> {
+                        content.append(from.getName());
+                        content.append(" --> ");
+                        content.append(target.getName());
+                        content.append("\n");
+                    }));
             content.append("</code></div><script src=\"/net/splitcells/website/js/mermaid.min.js\"></script>");
             return renderResponse(Optional.of(binaryMessage(projectsRenderer.renderHtmlBodyContent(content.toString()
                                     , Optional.of("Dependency Recording")
