@@ -18,7 +18,7 @@ package net.splitcells.website.server.test;
 import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.website.server.client.HtmlClientImpl;
 
-import static net.splitcells.website.server.client.HtmlClientImpl.htmlClientImpl;
+import static net.splitcells.website.server.client.HtmlClients.htmlClient;
 
 /**
  * <p>This {@link Option} provides a {@link Runnable},
@@ -36,7 +36,7 @@ public class HtmlLiveTest implements Option<Runnable> {
     @Override
     public Runnable defaultValue() {
         return () -> {
-            try (final var browser = htmlClientImpl()) {
+            try (final var browser = htmlClient()) {
                 browser.openTab("/");
             }
         };

@@ -22,11 +22,11 @@ import static net.splitcells.dem.Dem.process;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.waitUntilRequirementIsTrue;
 import static net.splitcells.dem.utils.StringUtils.requireNonEmptyString;
-import static net.splitcells.website.server.client.HtmlClientImpl.htmlClientImpl;
+import static net.splitcells.website.server.client.HtmlClients.htmlClient;
 
 public class NoCodeSolutionCalculatorTest {
     public static Runnable TEST_OPTIMIZATION_GUI = () -> {
-        try (final var browser = htmlClientImpl()) {
+        try (final var browser = htmlClient()) {
             final var tab = browser.openTab("/net/splitcells/gel/ui/no/code/editor/index.html");
             requireEquals("", tab.elementById("net-splitcells-gel-ui-no-code-editor-form-errors").textContent());
             requireEquals("", tab.elementById("net-splitcells-gel-ui-no-code-editor-form-solution").textContent());
