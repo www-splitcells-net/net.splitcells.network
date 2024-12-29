@@ -37,7 +37,7 @@ public class HtmlLiveTest implements Option<Runnable> {
     public Runnable defaultValue() {
         return () -> {
             try (final var browser = htmlClient()) {
-                browser.openTab("/");
+                browser.openTab("/").close();
             }
         };
     }
