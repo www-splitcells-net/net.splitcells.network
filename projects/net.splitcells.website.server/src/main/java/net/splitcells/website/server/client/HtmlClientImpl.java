@@ -72,7 +72,7 @@ public class HtmlClientImpl implements HtmlClient {
     }
 
     @Override
-    public Tab openTab(String path) {
+    public synchronized Tab openTab(String path) {
         final var page = browser.newPage();
         openTabs.add(page);
         page.navigate(address + path);
@@ -132,14 +132,14 @@ public class HtmlClientImpl implements HtmlClient {
     }
 
     @Override
-    public void close() {
+    public synchronized void close() {
         openTabs.forEach(Page::close);
         browser.close();
         playwright.close();
     }
 
     @Override
-    public void flush() {
+    public synchronized void flush() {
         // Nothing needs to be done.
     }
 }
