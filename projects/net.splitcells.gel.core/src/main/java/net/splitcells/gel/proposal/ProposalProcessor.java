@@ -17,6 +17,7 @@ package net.splitcells.gel.proposal;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.solution.Solution;
 
@@ -31,6 +32,7 @@ public class ProposalProcessor {
 
     /**
      * TODO This is a simplified implementation, that does not working on many corner cases.
+     * For instance, {@link GroupId} are not considered at all.
      *
      * @param subject
      * @param constraintPath
