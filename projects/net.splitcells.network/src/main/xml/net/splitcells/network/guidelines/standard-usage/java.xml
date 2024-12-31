@@ -30,7 +30,7 @@
             but the resulting code requires some non-trivial boiler code.
         </paragraph>
         <paragraph>Use Java records only for primitive attributes, function arguments or return values,
-            <link ulr="https://softwaregarden.dev/en/posts/new-java/records/should-write-equals-and-hashcode/">
+            <link url="https://softwaregarden.dev/en/posts/new-java/records/should-write-equals-and-hashcode/">
                 as complex attributes cause problems via their identity, equals and hashcode.
             </link>
         </paragraph>
