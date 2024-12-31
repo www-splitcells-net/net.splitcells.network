@@ -19,6 +19,10 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.website.server.test.HtmlLiveTester;
 
+import java.util.Optional;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+
 import static net.splitcells.dem.data.set.list.Lists.list;
 
 /**
@@ -41,15 +45,17 @@ import static net.splitcells.dem.data.set.list.Lists.list;
  */
 public class HtmlClientSharer implements HtmlClient {
 
-    public static HtmlClient htmlClientSharer(HtmlClient client) {
-        return new HtmlClientSharer(client);
+    public static HtmlClient htmlClientSharer(HtmlClient client, Consumer<HtmlClient> onClosing) {
+        return new HtmlClientSharer(client, onClosing);
     }
 
     private final HtmlClient subject;
     private final List<Closeable> tabs = list();
+    private final Consumer<HtmlClient> onClosing;
 
-    private HtmlClientSharer(HtmlClient client) {
+    private HtmlClientSharer(HtmlClient client, Consumer<HtmlClient> argOnClosing) {
         subject = client;
+        onClosing = argOnClosing;
     }
 
     @Override
@@ -63,6 +69,7 @@ public class HtmlClientSharer implements HtmlClient {
     public void close() {
         tabs.forEach(Closeable::close);
         tabs.removeAll();
+        onClosing.accept(this);
     }
 
     @Override

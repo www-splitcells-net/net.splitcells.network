@@ -15,17 +15,54 @@
  */
 package net.splitcells.website.server.client;
 
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.environment.resource.HostHardware;
+
+import java.util.concurrent.Semaphore;
+
+import static net.splitcells.dem.data.set.list.Lists.synchronizedList;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.website.server.client.HtmlClientImpl.htmlClientImpl;
 import static net.splitcells.website.server.client.HtmlClientSharer.htmlClientSharer;
 
 public class HtmlClients {
-    private static final HtmlClient HTML_CLIENT = htmlClientImpl();
+    private static final List<HtmlClient> FREE_HTML_CLIENT = synchronizedList();
+    private static final List<HtmlClient> USED_HTML_CLIENT = synchronizedList();
+    private static final Semaphore HTML_CLIENT_LOCK = new Semaphore(1);
+    private static final int MAX_HTML_CLIENT_COUNT = HostHardware.cpuCoreCount();
 
     private HtmlClients() {
 
     }
 
     public static HtmlClient htmlClient() {
-        return htmlClientSharer(HTML_CLIENT);
+        try {
+            HTML_CLIENT_LOCK.acquireUninterruptibly();
+            if (FREE_HTML_CLIENT.hasElements()) {
+                return FREE_HTML_CLIENT.remove(0);
+            }
+            if (MAX_HTML_CLIENT_COUNT > USED_HTML_CLIENT.size()) {
+                final var htmlClient = htmlClientSharer(htmlClientImpl(), (sharer) -> {
+                    FREE_HTML_CLIENT.add(sharer);
+                    USED_HTML_CLIENT.delete(sharer);
+                    HTML_CLIENT_LOCK.release();
+                });
+                USED_HTML_CLIENT.add(htmlClient);
+                return htmlClient;
+            }
+            while (FREE_HTML_CLIENT.isEmpty()) {
+                try {
+                    HTML_CLIENT_LOCK.acquireUninterruptibly();
+                    if (FREE_HTML_CLIENT.hasElements()) {
+                        return FREE_HTML_CLIENT.remove(0);
+                    }
+                } finally {
+                    HTML_CLIENT_LOCK.release();
+                }
+            }
+            throw executionException();
+        } finally {
+            HTML_CLIENT_LOCK.release();
+        }
     }
 }
