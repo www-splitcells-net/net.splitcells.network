@@ -63,7 +63,7 @@ public class HtmlClients {
                 USED_HTML_CLIENT.add(htmlClient);
                 return htmlClient;
             }
-            while (FREE_HTML_CLIENT.isEmpty()) {
+            while (true) {
                 try {
                     HTML_CLIENT_LOCK.acquireUninterruptibly();
                     if (FREE_HTML_CLIENT.hasElements()) {
@@ -73,7 +73,6 @@ public class HtmlClients {
                     HTML_CLIENT_LOCK.release();
                 }
             }
-            throw executionException();
         } finally {
             HTML_CLIENT_LOCK.release();
         }
