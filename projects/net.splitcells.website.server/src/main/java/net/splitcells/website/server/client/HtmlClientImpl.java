@@ -31,7 +31,9 @@ import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
 
 /**
- * TODO Test Firefox and Chromium automatically in tests using a {@link HtmlClient}.
+ * <p>The<i href="https://playwright.dev/python/docs/library#threading">Playwright library</i> is not thread safe.
+ * Therefore, use 1 instance per thread.</p>
+ * <p>TODO Test Firefox and Chromium automatically in tests using a {@link HtmlClient}.</p>
  */
 @JavaLegacyArtifact
 public class HtmlClientImpl implements HtmlClient {
@@ -72,7 +74,7 @@ public class HtmlClientImpl implements HtmlClient {
     }
 
     @Override
-    public synchronized Tab openTab(String path) {
+    public Tab openTab(String path) {
         final var page = browser.newPage();
         openTabs.add(page);
         page.navigate(address + path);
@@ -132,14 +134,14 @@ public class HtmlClientImpl implements HtmlClient {
     }
 
     @Override
-    public synchronized void close() {
+    public void close() {
         openTabs.forEach(Page::close);
         browser.close();
         playwright.close();
     }
 
     @Override
-    public synchronized void flush() {
+    public void flush() {
         // Nothing needs to be done.
     }
 }

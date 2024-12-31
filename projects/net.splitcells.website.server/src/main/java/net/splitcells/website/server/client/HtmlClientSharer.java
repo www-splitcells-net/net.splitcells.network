@@ -51,20 +51,20 @@ public class HtmlClientSharer implements HtmlClient {
     }
 
     @Override
-    public synchronized Tab openTab(String path) {
+    public Tab openTab(String path) {
         final var tab = subject.openTab(path);
         tabs.add(tab);
         return tab;
     }
 
     @Override
-    public synchronized void close() {
+    public void close() {
         tabs.forEach(Closeable::close);
         tabs.removeAll();
     }
 
     @Override
-    public synchronized void flush() {
+    public void flush() {
         subject.flush();
     }
 }
