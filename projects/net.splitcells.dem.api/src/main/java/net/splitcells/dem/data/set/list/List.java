@@ -31,6 +31,7 @@ import java.util.function.BiConsumer;
 import java.util.stream.IntStream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -56,23 +57,24 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
     }
 
     /**
+     * @param arg element to be removed from this list, if present
+     * @return
      * @deprecated Use {@link #delete(Object)} instead.
      * When the caller executes the default remove method,
      * it is highly likely, that there is a programming error, if the element is already not present.
-     * @param arg element to be removed from this list, if present
-     * @return
      */
     @Deprecated
     @Override
     boolean remove(Object arg);
 
     /**
-     *
      * @param arg Deletes this given argument. The argument has to be present in this {@link List}.
      */
     default void delete(T arg) {
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY && !contains(arg)) {
-            throw executionException("" + arg);
+            throw executionException(tree("A list should contain an element, but does not.")
+                    .withProperty("element", "" + arg)
+                    .withProperty("list", toString()));
         }
         remove(arg);
     }
