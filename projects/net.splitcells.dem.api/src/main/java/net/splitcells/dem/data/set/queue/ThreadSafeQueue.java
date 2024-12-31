@@ -124,4 +124,13 @@ public class ThreadSafeQueue<T> implements Queue<T> {
     public T peek() {
         return content.peek();
     }
+
+    @Override
+    public Optional<T> pollNext() {
+        try {
+            return Optional.ofNullable(content.poll(1L, TimeUnit.SECONDS));
+        } catch (InterruptedException e) {
+            return Optional.empty();
+        }
+    }
 }
