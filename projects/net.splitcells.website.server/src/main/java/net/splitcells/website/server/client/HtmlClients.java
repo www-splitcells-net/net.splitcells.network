@@ -16,21 +16,19 @@
 package net.splitcells.website.server.client;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.queue.ThreadSafeQueue;
 import net.splitcells.dem.environment.resource.HostHardware;
 
 import java.util.concurrent.Semaphore;
 
 import static net.splitcells.dem.data.set.list.Lists.synchronizedList;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.data.set.queue.ThreadSafeQueue.threadSafeQueue;
 import static net.splitcells.website.server.client.HtmlClientImpl.htmlClientImpl;
 import static net.splitcells.website.server.client.HtmlClientSharer.htmlClientSharer;
 
 public class HtmlClients {
-    private static final List<HtmlClient> FREE_HTML_CLIENT = synchronizedList();
+    private static final ThreadSafeQueue<HtmlClient> FREE_HTML_CLIENT = threadSafeQueue();
     private static final List<HtmlClient> USED_HTML_CLIENT = synchronizedList();
-    /**
-     * TODO Using a Java monitor via an {@link Object} would probably lead to less complex code.
-     */
     private static final Semaphore HTML_CLIENT_LOCK = new Semaphore(1);
     private static final int MAX_HTML_CLIENT_COUNT = HostHardware.cpuCoreCount();
 
@@ -52,32 +50,24 @@ public class HtmlClients {
         try {
             HtmlClient htmlClient;
             HTML_CLIENT_LOCK.acquireUninterruptibly();
-            if (FREE_HTML_CLIENT.hasElements()) {
-                htmlClient = FREE_HTML_CLIENT.remove(0);
-                USED_HTML_CLIENT.add(htmlClient);
-                return htmlClient;
+            final var next = FREE_HTML_CLIENT.pollNext();
+            if (next.isPresent()) {
+                return next.orElseThrow();
             }
             if (MAX_HTML_CLIENT_COUNT > USED_HTML_CLIENT.size()) {
                 htmlClient = htmlClientSharer(htmlClientImpl(), (sharer) -> {
-                    FREE_HTML_CLIENT.add(sharer);
-                    USED_HTML_CLIENT.delete(sharer);
-                    HTML_CLIENT_LOCK.release();
+                    try {
+                        HTML_CLIENT_LOCK.acquireUninterruptibly();
+                        FREE_HTML_CLIENT.add(sharer);
+                        USED_HTML_CLIENT.delete(sharer);
+                    } finally {
+                        HTML_CLIENT_LOCK.release();
+                    }
                 });
                 USED_HTML_CLIENT.add(htmlClient);
                 return htmlClient;
             }
-            while (true) {
-                try {
-                    HTML_CLIENT_LOCK.acquireUninterruptibly();
-                    if (FREE_HTML_CLIENT.hasElements()) {
-                        htmlClient = FREE_HTML_CLIENT.remove(0);
-                        USED_HTML_CLIENT.add(htmlClient);
-                        return htmlClient;
-                    }
-                } finally {
-                    HTML_CLIENT_LOCK.release();
-                }
-            }
+            return FREE_HTML_CLIENT.poll();
         } finally {
             HTML_CLIENT_LOCK.release();
         }
