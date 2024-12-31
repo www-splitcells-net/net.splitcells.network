@@ -35,6 +35,16 @@ public class HtmlClients {
 
     }
 
+    /**
+     * This method is thread safe.
+     *
+     * @return Provides an instance of {@link HtmlClient} from a limited pool.
+     * When the returned {@link HtmlClient#close()} is called,
+     * the {@link HtmlClient} is given back to the pool automatically.
+     * Use the returned {@link HtmlClient} only for a limited time,
+     * as this may otherwise block other callers indefinitely.
+     * Also, only use one {@link HtmlClient} per thread.
+     */
     public static HtmlClient htmlClient() {
         try {
             HTML_CLIENT_LOCK.acquireUninterruptibly();
