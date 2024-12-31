@@ -17,9 +17,11 @@ package net.splitcells.dem.data.set.queue;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
-import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Optional;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 @JavaLegacyArtifact
 public class ThreadSafeQueue<T> implements Queue<T> {
@@ -27,10 +29,10 @@ public class ThreadSafeQueue<T> implements Queue<T> {
         return new ThreadSafeQueue<>();
     }
 
-    private final ArrayDeque<T> content;
+    private final LinkedBlockingQueue<T> content;
 
     private ThreadSafeQueue() {
-        content = new ArrayDeque<>();
+        content = new LinkedBlockingQueue<>();
     }
 
     @Override
