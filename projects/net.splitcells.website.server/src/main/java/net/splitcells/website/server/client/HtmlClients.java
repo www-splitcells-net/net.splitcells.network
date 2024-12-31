@@ -52,6 +52,7 @@ public class HtmlClients {
             HTML_CLIENT_LOCK.acquireUninterruptibly();
             final var next = FREE_HTML_CLIENT.pollNext();
             if (next.isPresent()) {
+                USED_HTML_CLIENT.add(next.orElseThrow());
                 return next.orElseThrow();
             }
             if (MAX_HTML_CLIENT_COUNT > USED_HTML_CLIENT.size()) {
