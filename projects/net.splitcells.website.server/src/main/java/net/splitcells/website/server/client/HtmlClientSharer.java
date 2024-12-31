@@ -36,6 +36,8 @@ import static net.splitcells.dem.data.set.list.Lists.list;
  * Playwright, for instance, does not seem to kill all processes created by a Firefox instance on close.
  * Using one browser also speeds up the program,
  * as the browser instance does not have to be created and killed all the time.</p>
+ * <p>TODO There should be a way, to close the {@link #subject} of the sharer,
+ * so that a complete orderly shutdown is possible.</p>
  */
 public class HtmlClientSharer implements HtmlClient {
 
