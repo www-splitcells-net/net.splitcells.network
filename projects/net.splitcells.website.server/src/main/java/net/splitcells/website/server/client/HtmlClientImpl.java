@@ -31,7 +31,7 @@ import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
 
 /**
- * <p>The<i href="https://playwright.dev/python/docs/library#threading">Playwright library</i> is not thread safe.
+ * <p>The<a href="https://playwright.dev/python/docs/library#threading">Playwright library</a> is not thread safe.
  * Therefore, use 1 instance per thread.</p>
  * <p>TODO Test Firefox and Chromium automatically in tests using a {@link HtmlClient}.</p>
  */
