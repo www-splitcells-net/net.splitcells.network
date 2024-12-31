@@ -28,6 +28,9 @@ import static net.splitcells.website.server.client.HtmlClientSharer.htmlClientSh
 public class HtmlClients {
     private static final List<HtmlClient> FREE_HTML_CLIENT = synchronizedList();
     private static final List<HtmlClient> USED_HTML_CLIENT = synchronizedList();
+    /**
+     * TODO Using a Java monitor via an {@link Object} would probably lead to less complex code.
+     */
     private static final Semaphore HTML_CLIENT_LOCK = new Semaphore(1);
     private static final int MAX_HTML_CLIENT_COUNT = HostHardware.cpuCoreCount();
 
