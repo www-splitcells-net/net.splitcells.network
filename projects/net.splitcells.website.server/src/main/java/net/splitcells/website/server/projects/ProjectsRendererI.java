@@ -22,6 +22,7 @@ import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.resource.Files;
+import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
@@ -34,6 +35,7 @@ import net.splitcells.website.server.Config;
 import net.splitcells.website.server.projects.extension.impls.ProjectPathsRequest;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtensionMerger;
+import net.splitcells.website.server.security.authentication.UserSession;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -49,12 +51,14 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
 import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.resource.Paths.path;
+import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithSimplePath;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.project.validator.RenderingValidatorForHtmlLinks.renderingValidatorForHtmlLinks;
 import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithPath;
+import static net.splitcells.website.server.projects.RenderRequest.renderRequest;
 import static net.splitcells.website.server.projects.RenderResponse.renderResponse;
 import static net.splitcells.website.server.projects.extension.impls.ColloquiumPlanningDemandsTestData.colloquiumPlanningDemandTestData;
 import static net.splitcells.website.server.projects.extension.impls.ColloquiumPlanningSuppliesTestData.colloquiumPlanningSuppliesTestData;
@@ -148,7 +152,9 @@ public class ProjectsRendererI implements ProjectsRenderer {
                     try {
                         final var targetPath = path(target, path.substring(1));
                         Files.createDirectory(targetPath.getParent());
-                        Files.writeToFile(targetPath, render(path).orElseThrow().getContent());
+                        Files.writeToFile(targetPath, render(renderRequest(trail(path.substring(1))
+                                , Optional.empty()
+                                , UserSession.ANONYMOUS_USER_SESSION)).data().orElseThrow().getContent());
                     } catch (Exception e) {
                         throw executionException(tree("Could not serve path to file system.")
                                         .withProperty("target", target.toString())
