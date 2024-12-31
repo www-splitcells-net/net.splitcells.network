@@ -76,4 +76,4 @@ One can enable extended logging by setting the environment variable 'log_level' 
 
 So you decided that enough is enough?
 You want to get rid of the program?
-[Go on.](./uninstall.md)
+[Go on.](uninstall.md)
