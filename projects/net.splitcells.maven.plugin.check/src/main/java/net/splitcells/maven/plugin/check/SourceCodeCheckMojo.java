@@ -79,8 +79,10 @@ public class SourceCodeCheckMojo extends AbstractMojo {
     private void checkJavaSourceCodeFile(Path file) {
         try {
             if (CONTAINS_JAVA_LEGACY_ARTIFACT.matcher(java.nio.file.Files.readString(file)).matches()) {
+                getLog().debug("Ignoring Java legacy file: " + file);
                 return;
             }
+            getLog().debug("Checking file: " + file);
             final var lexer = new net.splitcells.dem.source.java.Java11Lexer
                     (CharStreams.fromFileName(file.toString()));
             final var parser = new net.splitcells.dem.source.java.Java11Parser
