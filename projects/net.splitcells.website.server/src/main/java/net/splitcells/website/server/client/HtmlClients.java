@@ -50,12 +50,15 @@ public class HtmlClients {
      */
     public static HtmlClient htmlClient() {
         try {
+            HtmlClient htmlClient;
             HTML_CLIENT_LOCK.acquireUninterruptibly();
             if (FREE_HTML_CLIENT.hasElements()) {
-                return FREE_HTML_CLIENT.remove(0);
+                htmlClient = FREE_HTML_CLIENT.remove(0);
+                USED_HTML_CLIENT.add(htmlClient);
+                return htmlClient;
             }
             if (MAX_HTML_CLIENT_COUNT > USED_HTML_CLIENT.size()) {
-                final var htmlClient = htmlClientSharer(htmlClientImpl(), (sharer) -> {
+                htmlClient = htmlClientSharer(htmlClientImpl(), (sharer) -> {
                     FREE_HTML_CLIENT.add(sharer);
                     USED_HTML_CLIENT.delete(sharer);
                     HTML_CLIENT_LOCK.release();
@@ -67,7 +70,9 @@ public class HtmlClients {
                 try {
                     HTML_CLIENT_LOCK.acquireUninterruptibly();
                     if (FREE_HTML_CLIENT.hasElements()) {
-                        return FREE_HTML_CLIENT.remove(0);
+                        htmlClient = FREE_HTML_CLIENT.remove(0);
+                        USED_HTML_CLIENT.add(htmlClient);
+                        return htmlClient;
                     }
                 } finally {
                     HTML_CLIENT_LOCK.release();
