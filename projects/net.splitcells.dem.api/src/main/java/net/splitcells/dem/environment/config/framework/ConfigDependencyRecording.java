@@ -17,14 +17,14 @@ package net.splitcells.dem.environment.config.framework;
 
 import net.splitcells.dem.Dem;
 
-import static net.splitcells.dem.environment.config.framework.DependencyRecorder.dependencyRecorder;
+import static net.splitcells.dem.environment.config.framework.ConfigDependencyRecorder.dependencyRecorder;
 
 /**
  * Records all {@link Option} dependencies for one given {@link Dem#process(Runnable)}.
  */
-public class DependencyRecording implements Option<DependencyRecorder> {
+public class ConfigDependencyRecording implements Option<ConfigDependencyRecorder> {
     @Override
-    public DependencyRecorder defaultValue() {
+    public ConfigDependencyRecorder defaultValue() {
         return dependencyRecorder();
     }
 }

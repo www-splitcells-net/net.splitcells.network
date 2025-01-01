@@ -22,7 +22,6 @@ import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.resource.Files;
-import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
@@ -63,7 +62,7 @@ import static net.splitcells.website.server.projects.RenderResponse.renderRespon
 import static net.splitcells.website.server.projects.extension.impls.ColloquiumPlanningDemandsTestData.colloquiumPlanningDemandTestData;
 import static net.splitcells.website.server.projects.extension.impls.ColloquiumPlanningSuppliesTestData.colloquiumPlanningSuppliesTestData;
 import static net.splitcells.website.server.projects.extension.impls.DemConfigExtension.demConfigExtension;
-import static net.splitcells.website.server.projects.extension.impls.DependencyRecordingExtension.dependencyRecordingExtension;
+import static net.splitcells.website.server.projects.extension.impls.ConfigDependencyRecordingExtension.configDependencyRecordingExtension;
 import static net.splitcells.website.server.projects.extension.impls.FrontMenuExtension.frontMenuExtension;
 import static net.splitcells.website.server.projects.extension.impls.GlobalChangelogExtension.globalChangelogExtension;
 import static net.splitcells.website.server.projects.extension.impls.LayoutExtension.layoutExtension;
@@ -205,7 +204,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
             , demConfigExtension()
             , testExtension()
             , layoutFancyTreeExtension()
-            , dependencyRecordingExtension()
+            , configDependencyRecordingExtension()
     );
 
     private ProjectsRendererI(String name

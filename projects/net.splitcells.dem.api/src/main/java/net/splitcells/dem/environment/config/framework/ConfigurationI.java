@@ -18,12 +18,9 @@ package net.splitcells.dem.environment.config.framework;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.Sets;
-import net.splitcells.dem.data.set.map.Maps;
 import net.splitcells.dem.data.set.map.typed.TypedMap;
-import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.lang.annotations.ReturnsThis;
 
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -33,7 +30,7 @@ import java.util.function.Function;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.environment.config.framework.DependencyRecorder.dependencyRecorder;
+import static net.splitcells.dem.environment.config.framework.ConfigDependencyRecorder.dependencyRecorder;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
@@ -57,7 +54,7 @@ public class ConfigurationI implements Configuration {
     private final Map<Object, Object> config_store;
     @Deprecated
     private final Map<Class<?>, Set<OptionSubscriber<Object>>> subscribers;
-    private final DependencyRecorder dependencyRecorder;
+    private final ConfigDependencyRecorder dependencyRecorder;
     private final List<Class<? extends Option<?>>> dependencyStack = new ArrayList<>();
 
     public static Configuration configuration() {
@@ -68,7 +65,7 @@ public class ConfigurationI implements Configuration {
         config_store = new HashMap<>();
         subscribers = new HashMap<>();
         dependencyRecorder = dependencyRecorder();
-        config_store.put(DependencyRecording.class, dependencyRecorder);
+        config_store.put(ConfigDependencyRecording.class, dependencyRecorder);
     }
 
     private void recordConfigAccess(Class<? extends Option<? extends Object>> key) {

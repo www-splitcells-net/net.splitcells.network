@@ -19,7 +19,6 @@ import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.data.set.map.MapFI_deterministic;
-import net.splitcells.dem.data.set.map.Maps;
 
 import static net.splitcells.dem.data.set.SetLegacyWrapper.setLegacyWrapper;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
@@ -32,9 +31,9 @@ import static net.splitcells.dem.data.set.map.Maps.map;
  * This class is used at the initialization of {@link Dem#process(Runnable)}.
  * Therefore, any reliance on {@link Dem#configValue(Class)} etc. has to be avoided.
  */
-public class DependencyRecorder {
-    public static DependencyRecorder dependencyRecorder() {
-        return new DependencyRecorder();
+public class ConfigDependencyRecorder {
+    public static ConfigDependencyRecorder dependencyRecorder() {
+        return new ConfigDependencyRecorder();
     }
 
     /**
@@ -47,7 +46,7 @@ public class DependencyRecorder {
     private final Map<Class<? extends Option<? extends Object>>, Set<Class<? extends Option<? extends Object>>>>
             dependencies = mapFI_deterministic().map();
 
-    private DependencyRecorder() {
+    private ConfigDependencyRecorder() {
 
     }
 

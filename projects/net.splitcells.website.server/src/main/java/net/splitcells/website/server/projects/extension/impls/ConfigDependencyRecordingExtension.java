@@ -16,7 +16,7 @@
 package net.splitcells.website.server.projects.extension.impls;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.environment.config.framework.DependencyRecording;
+import net.splitcells.dem.environment.config.framework.ConfigDependencyRecording;
 import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.Trail;
@@ -38,14 +38,14 @@ import static net.splitcells.website.server.security.authentication.UserSession.
 import static net.splitcells.website.server.security.authorization.AdminRole.ADMIN_ROLE;
 import static net.splitcells.website.server.security.authorization.Authorization.missesRole;
 
-public class DependencyRecordingExtension implements ProjectsRendererExtension {
-    public static ProjectsRendererExtension dependencyRecordingExtension() {
-        return new DependencyRecordingExtension();
+public class ConfigDependencyRecordingExtension implements ProjectsRendererExtension {
+    public static ProjectsRendererExtension configDependencyRecordingExtension() {
+        return new ConfigDependencyRecordingExtension();
     }
 
-    private static final Trail DEPENDENCY_RECORDING_PATH = trail("net/splitcells/website/server/projects/extension/dependency-recording.html");
+    private static final Trail DEPENDENCY_RECORDING_PATH = trail("net/splitcells/website/server/projects/extension/config-dependency-recording.html");
 
-    private DependencyRecordingExtension() {
+    private ConfigDependencyRecordingExtension() {
     }
 
     /**
@@ -74,7 +74,7 @@ public class DependencyRecordingExtension implements ProjectsRendererExtension {
         } else {
             final var content = stringBuilder();
             content.append("<div align=\"center\"><code class=\"mermaid\">\ngraph LR\n");
-            configValue(DependencyRecording.class).dependencies().forEach((from, to) ->
+            configValue(ConfigDependencyRecording.class).dependencies().forEach((from, to) ->
                     to.forEach(target -> {
                         content.append(from.getName());
                         content.append(" --> ");
@@ -83,7 +83,7 @@ public class DependencyRecordingExtension implements ProjectsRendererExtension {
                     }));
             content.append("</code></div><script src=\"/net/splitcells/website/js/mermaid.min.js\"></script>");
             return renderResponse(Optional.of(binaryMessage(projectsRenderer.renderHtmlBodyContent(content.toString()
-                                    , Optional.of("Dependency Recording")
+                                    , Optional.of("Config Dependency Recording")
                                     , Optional.of(DEPENDENCY_RECORDING_PATH.unixPathString())
                                     , projectsRenderer.config())
                             .orElseThrow()
