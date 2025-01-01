@@ -16,6 +16,9 @@
 package net.splitcells.cin.raters;
 
 import net.splitcells.dem.testing.annotations.UnitTest;
+import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.solution.Solution;
 
 import static net.splitcells.cin.EntityManager.ADD_VALUE;
 import static net.splitcells.cin.EntityManager.EVENT_SOURCE;
@@ -31,7 +34,9 @@ import static net.splitcells.cin.raters.ExistenceCost.existenceCost;
 import static net.splitcells.cin.raters.TimeSteps.overlappingTimeSteps;
 import static net.splitcells.cin.raters.ValueUpdate.valueUpdate;
 import static net.splitcells.dem.data.atom.Bools.require;
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.gel.proposal.ProposalProcessor.propose;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
@@ -55,9 +60,17 @@ public class ValueUpdateTest {
         final int startTime = 1;
         final int endTime = 2;
         testSubject.constraint().rating().requireEqualsTo(noCost());
-        testSubject.assign(demands.addTranslated(listWithValuesOf(startTime))
-                , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 0, RESULT_VALUE)));
-        testSubject.constraint().rating().requireEqualsTo(noCost());
+        {
+            testSubject.assign(demands.addTranslated(listWithValuesOf(startTime))
+                    , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 0, RESULT_VALUE)));
+            testSubject.constraint().rating().requireEqualsTo(noCost());
+            propose(testSubject
+                    , list(testSubject.constraint()
+                            , testSubject.constraint().child(0)
+                            , testSubject.constraint().child(0).child(0)
+                            , testSubject.constraint().child(0).child(0).child(0))
+                    , testSubject.demandsFree().orderedLines());
+        }
         {
             final var tmp = testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
                     , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 0, RESULT_VALUE)));
@@ -67,19 +80,22 @@ public class ValueUpdateTest {
         testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
                 , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 1, RESULT_VALUE)));
         testSubject.constraint().rating().requireEqualsTo(cost(2));
+
         testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
                 , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 1, SET_VALUE)));
         testSubject.constraint().rating().requireEqualsTo(noCost());
+
         testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
                 , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 1, ADD_VALUE)));
         testSubject.constraint().rating().requireEqualsTo(noCost());
+
         testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
                 , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 1, ADD_VALUE)));
         // There is no cost, because of 3/2 is rounded to 1.
         testSubject.constraint().rating().requireEqualsTo(noCost());
+
         testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
                 , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 1, ADD_VALUE)));
         testSubject.constraint().rating().requireEqualsTo(cost(6));
-
     }
 }
