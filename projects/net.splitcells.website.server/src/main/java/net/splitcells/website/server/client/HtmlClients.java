@@ -21,15 +21,17 @@ import net.splitcells.dem.environment.resource.HostHardware;
 
 import java.util.concurrent.Semaphore;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.synchronizedList;
 import static net.splitcells.dem.data.set.queue.ThreadSafeQueue.threadSafeQueue;
 import static net.splitcells.website.server.client.HtmlClientImpl.htmlClientImpl;
 import static net.splitcells.website.server.client.HtmlClientSharer.htmlClientSharer;
 
 public class HtmlClients {
-    private static final ThreadSafeQueue<HtmlClient> FREE_HTML_CLIENT = threadSafeQueue();
-    private static final List<HtmlClient> USED_HTML_CLIENT = synchronizedList();
+    private static final List<HtmlClient> FREE_HTML_CLIENT = list();
+    private static final List<HtmlClient> USED_HTML_CLIENT = list();
     private static final Semaphore HTML_CLIENT_LOCK = new Semaphore(1);
+    private static final Semaphore HTML_CLIENT_WAIT_LOCK = new Semaphore(0);
     private static final int MAX_HTML_CLIENT_COUNT = HostHardware.cpuCoreCount();
 
     private HtmlClients() {
@@ -48,12 +50,12 @@ public class HtmlClients {
      */
     public static HtmlClient htmlClient() {
         try {
-            HtmlClient htmlClient;
+            final HtmlClient htmlClient;
             HTML_CLIENT_LOCK.acquireUninterruptibly();
-            final var next = FREE_HTML_CLIENT.pollNext();
-            if (next.isPresent()) {
-                USED_HTML_CLIENT.add(next.orElseThrow());
-                return next.orElseThrow();
+            if (FREE_HTML_CLIENT.hasElements()) {
+                htmlClient = FREE_HTML_CLIENT.remove(0);
+                USED_HTML_CLIENT.add(htmlClient);
+                return htmlClient;
             }
             if (MAX_HTML_CLIENT_COUNT > USED_HTML_CLIENT.size()) {
                 htmlClient = htmlClientSharer(htmlClientImpl(), (sharer) -> {
@@ -68,9 +70,23 @@ public class HtmlClients {
                 USED_HTML_CLIENT.add(htmlClient);
                 return htmlClient;
             }
-            return FREE_HTML_CLIENT.poll();
         } finally {
             HTML_CLIENT_LOCK.release();
+        }
+        while (true) {
+            try {
+                HTML_CLIENT_WAIT_LOCK.acquireUninterruptibly();
+                try {
+                    HTML_CLIENT_LOCK.acquireUninterruptibly();
+                    if (FREE_HTML_CLIENT.hasElements()) {
+                        return FREE_HTML_CLIENT.remove(0);
+                    }
+                } finally {
+                    HTML_CLIENT_LOCK.release();
+                }
+            } finally {
+                HTML_CLIENT_WAIT_LOCK.release();
+            }
         }
     }
 }
