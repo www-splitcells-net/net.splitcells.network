@@ -60,42 +60,49 @@ public class ValueUpdateTest {
         final int startTime = 1;
         final int endTime = 2;
         testSubject.constraint().rating().requireEqualsTo(noCost());
-        {
-            testSubject.assign(demands.addTranslated(listWithValuesOf(startTime))
-                    , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 0, RESULT_VALUE)));
-            testSubject.constraint().rating().requireEqualsTo(noCost());
-            propose(testSubject
-                    , list(testSubject.constraint()
-                            , testSubject.constraint().child(0)
-                            , testSubject.constraint().child(0).child(0)
-                            , testSubject.constraint().child(0).child(0).child(0))
-                    , testSubject.demandsFree().orderedLines());
-        }
-        {
-            final var tmp = testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
-                    , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 0, RESULT_VALUE)));
-            testSubject.constraint().rating().requireEqualsTo(noCost());
-            testSubject.remove(tmp);
-        }
-        testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
+
+        final var assign0 = testSubject.assign(demands.addTranslated(listWithValuesOf(startTime))
+                , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 0, RESULT_VALUE)));
+        testSubject.constraint().rating().requireEqualsTo(noCost());
+        propose(testSubject
+                , list(testSubject.constraint()
+                        , testSubject.constraint().child(0)
+                        , testSubject.constraint().child(0).child(0)
+                        , testSubject.constraint().child(0).child(0).child(0))
+                , testSubject.demandsFree().orderedLines());
+
+        final var assign1 = testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
                 , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 1, RESULT_VALUE)));
         testSubject.constraint().rating().requireEqualsTo(cost(2));
 
-        testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
+        final var assign2 = testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
                 , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 1, SET_VALUE)));
         testSubject.constraint().rating().requireEqualsTo(noCost());
 
-        testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
+        final var assign3 = testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
                 , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 1, ADD_VALUE)));
         testSubject.constraint().rating().requireEqualsTo(noCost());
 
-        testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
+        final var assign4 = testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
                 , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 1, ADD_VALUE)));
         // There is no cost, because of 3/2 is rounded to 1.
         testSubject.constraint().rating().requireEqualsTo(noCost());
 
-        testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
+        final var assign5 = testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
                 , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 1, ADD_VALUE)));
         testSubject.constraint().rating().requireEqualsTo(cost(6));
+
+        testSubject.remove(assign5);
+        testSubject.constraint().rating().requireEqualsTo(noCost());
+        testSubject.remove(assign4);
+        testSubject.constraint().rating().requireEqualsTo(noCost());
+        testSubject.remove(assign3);
+        testSubject.constraint().rating().requireEqualsTo(noCost());
+        testSubject.remove(assign2);
+        testSubject.constraint().rating().requireEqualsTo(cost(2));
+        testSubject.remove(assign1);
+        testSubject.constraint().rating().requireEqualsTo(noCost());
+        testSubject.remove(assign0);
+        testSubject.constraint().rating().requireEqualsTo(noCost());
     }
 }
