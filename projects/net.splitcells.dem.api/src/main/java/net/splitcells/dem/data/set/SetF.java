@@ -45,7 +45,7 @@ public interface SetF extends Resource {
      */
     @Override
     default void close() {
-        return;
+        // Nothing needs to be done, by default.
     }
 
     /**
@@ -53,6 +53,6 @@ public interface SetF extends Resource {
      */
     @Override
     default void flush() {
-        return;
+        // Nothing needs to be done, by default.
     }
 }
