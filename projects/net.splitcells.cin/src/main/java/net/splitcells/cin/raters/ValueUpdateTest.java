@@ -50,7 +50,7 @@ public class ValueUpdateTest {
                 .withSupplyAttributes(PLAYER_ATTRIBUTE, PLAYER_VALUE, EVENT_TYPE)
                 .withSupplies()
                 .withConstraint(query -> {
-                    query.forAll(overlappingTimeSteps(TIME)).then(valueUpdate(PLAYER_ENERGY));
+                    query.then(valueUpdate(PLAYER_ENERGY));
                     return query;
                 })
                 .toProblem()
@@ -63,12 +63,9 @@ public class ValueUpdateTest {
 
         final var assign0 = testSubject.assign(demands.addTranslated(listWithValuesOf(startTime))
                 , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 0, RESULT_VALUE)));
-        testSubject.constraint().rating().requireEqualsTo(noCost());
+        testSubject.constraint().rating().requireEqualsTo(cost(1));
         propose(testSubject
-                , list(testSubject.constraint()
-                        , testSubject.constraint().child(0)
-                        , testSubject.constraint().child(0).child(0)
-                        , testSubject.constraint().child(0).child(0).child(0))
+                , list(testSubject.constraint(), testSubject.constraint().child(0))
                 , testSubject.demandsFree().orderedLines());
 
         final var assign1 = testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
@@ -101,7 +98,7 @@ public class ValueUpdateTest {
         testSubject.remove(assign2);
         testSubject.constraint().rating().requireEqualsTo(cost(2));
         testSubject.remove(assign1);
-        testSubject.constraint().rating().requireEqualsTo(noCost());
+        testSubject.constraint().rating().requireEqualsTo(cost(1));
         testSubject.remove(assign0);
         testSubject.constraint().rating().requireEqualsTo(noCost());
     }
