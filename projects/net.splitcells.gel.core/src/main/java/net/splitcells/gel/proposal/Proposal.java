@@ -73,5 +73,9 @@ public interface Proposal {
      */
     Assignments contextAllocations();
 
+    /**
+     *
+     * @return This is the {@link Solution}, for which the proposals are done.
+     */
     Solution subject();
 }
