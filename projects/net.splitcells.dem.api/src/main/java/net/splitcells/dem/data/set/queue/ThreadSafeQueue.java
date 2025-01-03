@@ -23,6 +23,8 @@ import java.util.Optional;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import static net.splitcells.dem.utils.ExecutionException.executionException;
+
 @JavaLegacyArtifact
 public class ThreadSafeQueue<T> implements Queue<T> {
     public static <T> ThreadSafeQueue<T> threadSafeQueue() {
@@ -130,7 +132,8 @@ public class ThreadSafeQueue<T> implements Queue<T> {
         try {
             return Optional.ofNullable(content.poll(1L, TimeUnit.SECONDS));
         } catch (InterruptedException e) {
-            return Optional.empty();
+            Thread.currentThread().interrupt();
+            throw executionException(e);
         }
     }
 }
