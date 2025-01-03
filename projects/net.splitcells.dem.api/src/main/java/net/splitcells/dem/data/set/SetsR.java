@@ -17,7 +17,7 @@ package net.splitcells.dem.data.set;
 
 import net.splitcells.dem.environment.resource.ResourceOptionI;
 
-import static net.splitcells.dem.data.set.SetFI_configured.setFiConfigured;
+import static net.splitcells.dem.data.set.SetFactoryImplConfigured.setFiConfigured;
 
 public class SetsR extends ResourceOptionI<SetF> {
     public SetsR() {

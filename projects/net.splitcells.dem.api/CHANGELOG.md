@@ -5,6 +5,11 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2025-01-04\#32** Standardize class names:
+    1. SetFI -> SetFactoryImpl
+    2. SetFI_configured -> SetFactoryImplConfigured
+    3. SetFI_deterministic -> SetFactoryImplDeterministic
+    4. SetFI_random -> SetFactoryImplRandom
 * **2024-12-24\#51** Rename `Assertions#assertThrows` to `Assertions#requireThrow`,
   in order to unify naming.
 * **2024-10-01\#37**

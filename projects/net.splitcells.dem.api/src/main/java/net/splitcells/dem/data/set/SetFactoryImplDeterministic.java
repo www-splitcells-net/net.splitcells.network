@@ -17,30 +17,40 @@ package net.splitcells.dem.data.set;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
-import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.dem.data.set.SetLegacyWrapper.setLegacyWrapper;
 
-public final class SetFI implements SetF {
+public class SetFactoryImplDeterministic implements SetF {
+
+    public static SetF setFactoryImplDeterministic() {
+        return new SetFactoryImplDeterministic();
+    }
+
+    private SetFactoryImplDeterministic() {
+
+    }
+
     @JavaLegacyBody
     @Override
     public <T> java.util.Set<T> lagacySet() {
-        return new java.util.HashSet<>();
+        return new java.util.LinkedHashSet<>();
     }
 
     @JavaLegacyBody
     @Override
     public <T> java.util.Set<T> legacySet(java.util.Collection<T> arg) {
-        return new java.util.HashSet<>(arg);
-    }
-
-    @Override
-    public <T> Set<T> set() {
-        throw notImplementedYet();
+        return new java.util.LinkedHashSet<>();
     }
 
     @JavaLegacyBody
     @Override
-    public <T> Set<T> set(java.util.Collection<T> arg) {
-        throw notImplementedYet();
+    public <T> net.splitcells.dem.data.set.Set<T> set() {
+        return setLegacyWrapper(new java.util.LinkedHashSet<>(), true);
+    }
+
+    @JavaLegacyBody
+    @Override
+    public <T> net.splitcells.dem.data.set.Set<T> set(java.util.Collection<T> arg) {
+        return setLegacyWrapper(new java.util.LinkedHashSet<>(arg), true);
     }
 
 }

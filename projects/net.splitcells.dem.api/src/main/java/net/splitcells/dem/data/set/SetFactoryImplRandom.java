@@ -16,17 +16,16 @@
 package net.splitcells.dem.data.set;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
-import net.splitcells.dem.utils.NotImplementedYet;
 
 import static net.splitcells.dem.data.set.SetLegacyWrapper.setLegacyWrapper;
 
-public class SetFI_random implements SetF {
+public class SetFactoryImplRandom implements SetF {
 
-    public static SetF setFI_random() {
-        return new SetFI_random();
+    public static SetF setFactoryImplRandom() {
+        return new SetFactoryImplRandom();
     }
 
-    private SetFI_random() {
+    private SetFactoryImplRandom() {
 
     }
 

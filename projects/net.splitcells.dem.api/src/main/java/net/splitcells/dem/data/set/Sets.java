@@ -19,7 +19,7 @@ import net.splitcells.dem.environment.resource.ResourceOptionI;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
 import static net.splitcells.dem.Dem.configValue;
-import static net.splitcells.dem.data.set.SetFI_configured.setFiConfigured;
+import static net.splitcells.dem.data.set.SetFactoryImplConfigured.setFiConfigured;
 import static net.splitcells.dem.data.set.SetLegacyWrapper.setLegacyWrapper;
 import static net.splitcells.dem.environment.config.StaticFlags.INLINE_STANDARD_FACTORIES;
 
