@@ -75,7 +75,6 @@ public interface Set<T> extends java.util.Set<T>, SetT<T> {
     }
 
     default boolean containsAny(T... objects) {
-        boolean rVal = false;
         final var containment = Arrays.stream(objects)
                 .map(e -> contains(e))
                 .reduce((a, b) -> a || b);
