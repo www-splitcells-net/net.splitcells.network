@@ -28,8 +28,8 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 @JavaLegacyArtifact
 public class SetI<T> implements Set<T> {
 
-    public static Set make() {
-        return new SetI();
+    public static <T> Set<T> make() {
+        return new SetI<>();
     }
 
     private final java.util.Set<T> values;
