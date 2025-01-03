@@ -34,7 +34,7 @@ public final class SetFI implements SetF {
 
     @Override
     public <T> Set<T> set() {
-        return null;
+        throw notImplementedYet();
     }
 
     @JavaLegacyBody
