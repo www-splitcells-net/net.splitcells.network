@@ -26,8 +26,8 @@ public class BoolI implements Bool {
     private final boolean value;
 
     @Deprecated
-    private BoolI(boolean arg_val) {
-        value = arg_val;
+    private BoolI(boolean argVal) {
+        value = argVal;
     }
 
     @Override
