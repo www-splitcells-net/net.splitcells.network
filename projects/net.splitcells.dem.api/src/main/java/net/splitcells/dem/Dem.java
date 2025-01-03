@@ -43,6 +43,7 @@ import static net.splitcells.dem.environment.config.StaticFlags.logStaticFlags;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.communication.log.LogLevel.UNKNOWN_ERROR;
+import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.StringUtils.throwableToString;
 import static net.splitcells.dem.utils.reflection.ClassesRelated.callerClass;
@@ -332,5 +333,8 @@ public class Dem {
             Thread.currentThread().interrupt();
             throw executionException(t);
         }
+    }
+    private Dem() {
+        throw constructorIllegal();
     }
 }
