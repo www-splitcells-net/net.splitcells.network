@@ -135,26 +135,9 @@ public class Logger implements TestExecutionListener {
         return testPath;
     }
 
-    /**
-     * TODO TOFIX This does not work, because PATH and things like the git config are not available during the execution in the shell.
-     * The reason for this is unknown.
-     * In order to fix this, the executing shell script calling this logger executes the committing shell command by itself instead.
-     * <p>
-     * Some systems may not have added an OS state interface installation to the PATH environmental variable of non-interactive shells.
-     * Therefore, the standard `~/bin/net.splitcells.shell.commands.managed/command.managed.export.bin` command is used,
-     * in order to extend the PATH variable accordingly only inside the current shell session.
-     */
     @Deprecated
     public void commit() {
-        if (!(logProject instanceof FileSystemVoid)) {
-            /* TODO This instance of hack prevents error for filesystem,
-             * that do not support write operations or do not contain the corresponding git repo.
-             */
-            repository(Path.of("../../../net.splitcells.network.log")).commitAll();
-        } else {
-            logs().append("`Logger#commit` is not implemented.", LogLevel.ERROR);
-        }
-        // TODO TOFIX SystemUtils.executeShellScript("sh -c ./bin/net.splitcells.network.log.commit", networkProject);
+        repository(logProject.javaLegacyPath().orElseThrow()).commitAll();
     }
 
     @Override
