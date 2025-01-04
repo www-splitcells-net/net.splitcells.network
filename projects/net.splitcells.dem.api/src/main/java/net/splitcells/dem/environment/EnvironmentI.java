@@ -19,12 +19,17 @@ import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.dem.environment.config.ProgramLocalIdentity;
 import net.splitcells.dem.environment.config.ProgramRepresentative;
 import net.splitcells.dem.environment.config.StartTime;
+import net.splitcells.dem.environment.config.framework.ConfigDependencyRecording;
 import net.splitcells.dem.environment.config.framework.Configuration;
+import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.host.ProcessPath;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static net.splitcells.dem.environment.config.framework.ConfigurationI.configuration;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
@@ -32,6 +37,7 @@ import static net.splitcells.dem.resource.communication.log.Logs.logs;
 public class EnvironmentI implements Environment {
 
     private final Configuration config = configuration();
+    private final List<Class<? extends Cell>> dependencyCellStack = new ArrayList<>();
 
     public static Environment create(Class<?> programRepresentative) {
         return new EnvironmentI(programRepresentative);
@@ -61,6 +67,21 @@ public class EnvironmentI implements Environment {
     @Override
     public Configuration config() {
         return config;
+    }
+
+    @Override
+    public Environment withCell(Class<? extends Cell> clazz) {
+        try {
+            dependencyCellStack.add(clazz);
+            if (dependencyCellStack.size() > 1) {
+                config.configValue(ConfigDependencyRecording.class).recordDependency(dependencyCellStack.get(dependencyCellStack.size() - 2)
+                        , dependencyCellStack.get(dependencyCellStack.size() - 1));
+            }
+            config().withInitedOption(clazz).configValue(clazz).accept(this);
+        } finally {
+            dependencyCellStack.remove(dependencyCellStack.size() - 1);
+        }
+        return this;
     }
 
     @Override
