@@ -152,6 +152,8 @@ if __name__ == '__main__':
                 remoteScript += " --" + key + "='" + str(parsedVars[key]).replace("\'", "\\\'").replace("\"", "\\\"").replace("\n", "") + "'"
         remoteScript = "ssh " + parsedArgs.executeViaSshAt +  " -t \"  cd ~/.local/state/net.splitcells.repos/public/net.splitcells.network && bin/worker.execute" + remoteScript + "\""
         print(remoteScript)
+        if parsedArgs.dryRun:
+            exit(0)
         returnCode = subprocess.call(remoteScript, shell='False')
         if returnCode != 0:
             logging.error("Could not execute given command.");
