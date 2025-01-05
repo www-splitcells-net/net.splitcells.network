@@ -135,6 +135,7 @@ if __name__ == '__main__':
     parser.add_argument('--only-build-image', '--onlyBuildImage', dest='onlyBuildImage', required=False, type=str2bool, default=False, help="If set to true, the created image is not executed.")
     parser.add_argument('--only-execute-image', '--onlyExecuteImage', dest='onlyExecuteImage', required=False, type=str2bool, default=False, help="If set to true, the previously created image is executed without building it.")
     parser.add_argument('--cpu-architecture', '--cpuArchitecture', dest='cpuArchitecture', help="Set the cpu architecture for the execution.")
+    parser.add_argument('--dry-run', '--dryRun', dest='dryRun', required=False, type=str2bool, default=False, help="If true, commands are only prepared and no commands are executed.")
     parser.add_argument('--auto-configure-cpu-architecture-explicitly', '--autoConfigureCpuArchExplicitly', dest='autoConfigureCpuArchExplicitly', required=False, type=str2bool, default=False
             , help="If set to false, the command's backend automatically determines the CPU architecture." \
                 + " If set to true, the CPU architecture will be determined by this command and the determined architecture is propagated to the commands backend explicitly." \
@@ -212,9 +213,11 @@ if __name__ == '__main__':
     if parsedArgs.useHostDocuments:
         # TODO This replacement is done in a dirty way. Use a template variable instead.
         executionScript = executionScript.replace("-v $HOME/.local/state/$executionName/Documents:/root/Documents \\", "-v $HOME/Documents:/root/Documents \\")
-    if parsedArgs.verbose:
+    if parsedArgs.verbose or parsedArgs.dryRun:
         print(executionScript)
     # Execute program.
+    if parsedArgs.dryRun:
+        exit(0)
     returnCode = subprocess.call(executionScript, shell='True')
     if returnCode != 0:
         logging.error("Could not execute given command.");
