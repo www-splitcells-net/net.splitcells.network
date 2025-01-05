@@ -2,22 +2,22 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 set -e
-mkdir -p ~/.local/state/net.splitcells.repos/public
-cd ~/.local/state/net.splitcells.repos/public
+mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public
+cd ~/.local/state/net.splitcells.network.worker/repos/public
 test -d net.splitcells.network || git clone --depth 1 https://codeberg.org/splitcells-net/net.splitcells.network.git
 test -d net.splitcells.network.hub || git clone --depth 1 https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
 
-cd ~/.local/state/net.splitcells.repos/public/net.splitcells.network
+cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
   bin/worker.repos.pull
-cd ~/.local/state/net.splitcells.repos/public/net.splitcells.network/projects/net.splitcells.shell
+cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network/projects/net.splitcells.shell
   ./bin/install
-cd ~/.local/state/net.splitcells.repos/public/net.splitcells.network
+cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
   # TODO Install OSI not to a user folder, but to a folder inside the repo.
   # In other words, make an OSI installation independent from the user's home and default path settings.
   # TODO Register all projects via hub generically.
   . ~/bin/net.splitcells.shell.commands.managed/command.managed.export.bin
   bin/net.splitcells.shell.repo.subs | xargs -i sh -c 'command.repository.register $(realpath {})'
-cd ~/.local/state/net.splitcells.repos/public/net.splitcells.network.hub
+cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.hub
   command.repository.register $(realpath ../net.splitcells.shell.lib.gpl.v2)
   command.repository.register $(realpath ../net.splitcells.shell.lib.gpl.v3)
   user.bin.configure

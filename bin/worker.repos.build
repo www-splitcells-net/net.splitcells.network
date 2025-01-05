@@ -5,4 +5,4 @@
 set -e
 bin/worker.execute \
     --name=net.splitcells.network.worker \
-    --command="sh -c 'cd /root/.local/state/net.splitcells.repos/public/net.splitcells.network.hub && mvn clean install'"
+    --command="sh -c 'cd /root/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.hub && mvn clean install'"

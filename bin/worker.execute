@@ -150,7 +150,7 @@ if __name__ == '__main__':
         for key in parsedVars:
             if key != 'executeViaSshAt' and parsedVars[key] is not None:
                 remoteScript += " --" + key + "='" + str(parsedVars[key]).replace("\'", "\\\'").replace("\"", "\\\"").replace("\n", "") + "'"
-        remoteScript = "ssh " + parsedArgs.executeViaSshAt +  " -t \"  cd ~/.local/state/net.splitcells.repos/public/net.splitcells.network && bin/worker.execute" + remoteScript + "\""
+        remoteScript = "ssh " + parsedArgs.executeViaSshAt +  " -t \"  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.execute" + remoteScript + "\""
         print(remoteScript)
         if parsedArgs.dryRun:
             exit(0)
