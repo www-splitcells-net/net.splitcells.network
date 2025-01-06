@@ -37,10 +37,6 @@ import static java.nio.file.Files.isDirectory;
  */
 @Mojo(name = "source-code-check")
 public class SourceCodeCheckMojo extends AbstractMojo {
-    /**
-     * Matches a line, that only contains `@JavaLegacyArtifact`.
-     */
-    private static final Pattern CONTAINS_JAVA_LEGACY_ARTIFACT = Pattern.compile(".*[\\r\\n]@JavaLegacyArtifact[\\r\\n].*", Pattern.DOTALL);
 
     @Parameter(defaultValue = "${project}", required = true, readonly = true)
     private MavenProject project;
@@ -78,7 +74,7 @@ public class SourceCodeCheckMojo extends AbstractMojo {
      */
     private void checkJavaSourceCodeFile(Path file) {
         try {
-            if (CONTAINS_JAVA_LEGACY_ARTIFACT.matcher(java.nio.file.Files.readString(file)).matches()) {
+            if (java.nio.file.Files.readString(file).contains("@JavaLegacyArtifact")) {
                 getLog().debug("Ignoring Java legacy file: " + file);
                 return;
             }
