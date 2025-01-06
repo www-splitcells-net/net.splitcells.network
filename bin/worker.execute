@@ -116,6 +116,7 @@ def str2bool(arg):
     # The stringification of the truth boolean is `True` in Python 3 and therefore this capitalization is supported as well.
     return arg == 'true' or arg == 'True'
 if __name__ == '__main__':
+    # For each argument flag, there is an alternative name without hyphens ('-'), so these can easily be printed out and reused for this program. See `executeViaSshAt`.
     parser = argparse.ArgumentParser(description="Executes a given program as isolated as possible with all program files being persisted at `$HOME/.local/state/$executionName/` and user input being located at `$HOME/Documents`." \
             + " Executions with different names have different persisted file locations and are therefore isolated more clearly, whereas executions with the same name are assumed to share data." \
             + " This is the CLI interface to the Splitcells Network Worker.")
@@ -126,7 +127,6 @@ if __name__ == '__main__':
                                + " If scripts need to be executed one can use `sh -c \"[script]\"`."
                                + " Use this only, in order to integrate the environment with the software."
                                + " Prefer `--class-for-execution` instead.")
-    # For each flag, there is an alternative name without hyphens ('-'), so these can easily be printed out and reused for this program. See `executeViaSshAt`.
     parser.add_argument('--executable-path', '--executablePath', dest='executablePath', help="Executes the given executable file. Only set this option or --command.")
     parser.add_argument('--class-for-execution', '--classForExecution', dest='classForExecution', help="This Java class is executed.")
     parser.add_argument('--use-host-documents', '--useHostDocuments', dest='useHostDocuments', required=False, type=str2bool, default=False, help="Determines whether to mount `~/Documents` or not. This should be avoided, in order to avoid file dependencies to the host system, which makes the execution more portable.")
