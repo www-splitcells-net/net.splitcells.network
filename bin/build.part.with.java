@@ -7,6 +7,5 @@
 # as it can be hard to understand in such tools,
 # how to chain commands calls.
 set -e
-chmod +x ./bin/*
 export JAVA_VERSION=21 # This is required on FreeBSD, if an older Java version is set as default.
 mvn clean install
