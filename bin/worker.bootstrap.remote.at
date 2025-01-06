@@ -7,4 +7,3 @@
 set -e
 ssh "$1" -t "$(cat bin/worker.bootstrap)"
 ssh "$1" -t 'cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap.container'
-ssh "$1" -t 'cd ~/.local/state/net.splitcells.network.worker/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.repos.build'
