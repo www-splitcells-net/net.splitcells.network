@@ -27,11 +27,14 @@ import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
 import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.table.Tables.table2;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
-import static net.splitcells.gel.data.view.attribute.AttributeI.attributeObject;
 
 public class Proposals implements Proposal {
 
-    public static Attribute<Line> NEW_SUPPLY = attribute(Line.class, "proposal-for-new-supply");
+    /**
+     * This is an existing {@link Line} of {@link Assignments#supplies()}.
+     * It's values are used as default values for the new {@link Line} to be created.
+     */
+    public static Attribute<Line> NEW_SUPPLY_BASE = attribute(Line.class, "base for new supply");
 
     public static Proposal proposal(Solution subject) {
         return new Proposals(subject);
@@ -52,7 +55,7 @@ public class Proposals implements Proposal {
                 , table("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
         proposedAllocationsWithNewSupplies = table("proposed-allocations-with-new-supplies"
                 , subject.demands()
-                , Lists.<Attribute<? extends Object>>list().withAppended(NEW_SUPPLY)
+                , Lists.<Attribute<? extends Object>>list().withAppended(NEW_SUPPLY_BASE)
                         .withAppended(subject.supplies().headerView2())
         );
     }
