@@ -22,6 +22,7 @@ import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.assignment.AssignmentsLiveView;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.solution.Solution;
 
 /**
@@ -41,12 +42,19 @@ import net.splitcells.gel.solution.Solution;
 public interface Proposal {
 
     /**
+     * TODO This method should return a table with {@link Line} {@link Attribute} only.
+     * See {@link Assignments#demands()}, {@link Assignments#supplies()} and {@link Assignments#orderedLines()}.
+     * This allows the {@link Assignments} implementation to determine,
+     * if the values are stored directly or only referenced, which has distinct performance characteristics.
+     * This would also provide more information regarding {@link Line#index()} of the {@link #subject()}.
+     *
      * @return Set of {@link Assignments} proposed for the given {@link #subject()},
      * in order to get a better {@link Solution}.
      * With this often the domain of the demands is represented,
      * when one compares this concept to the constraint satisfaction problem.
      * The {@link Assignments#headerView()} consists of {@link Solution#demands()} and {@link Solution#supplies()}.
      */
+    @Deprecated
     Assignments proposedAllocations();
 
     /**
@@ -63,6 +71,9 @@ public interface Proposal {
     Table proposedAllocationsWithNewSupplies();
 
     /**
+     * TODO This method should return a table with {@link Line} {@link Attribute} only.
+     * See {@link #proposedAllocations()}.
+     *
      * @return Set of {@link Assignments}, for which not the proposals are generated,
      * but which provide context for the demands,
      * that need supplies proposed in {@link #proposedAllocations()}.
