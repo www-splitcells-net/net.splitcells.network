@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.proposal;
 
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
@@ -30,7 +31,7 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.attributeObject;
 
 public class Proposals implements Proposal {
 
-    public static Attribute<Object> NEW_SUPPLY = attributeObject(Line.class, "proposal-for-new-supply");
+    public static Attribute<Line> NEW_SUPPLY = attribute(Line.class, "proposal-for-new-supply");
 
     public static Proposal proposal(Solution subject) {
         return new Proposals(subject);
@@ -49,9 +50,10 @@ public class Proposals implements Proposal {
         this.contextAssignments = assignments("context-allocations"
                 , table("proposed-demands", subject.demands(), subject.demands().headerView2())
                 , table("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
-        proposedAllocationsWithNewSupplies = table2("proposed-allocations-with-new-supplies"
+        proposedAllocationsWithNewSupplies = table("proposed-allocations-with-new-supplies"
                 , subject.demands()
-                , list(NEW_SUPPLY).withAppended(subject.supplies().headerView())
+                , Lists.<Attribute<? extends Object>>list().withAppended(NEW_SUPPLY)
+                        .withAppended(subject.supplies().headerView2())
         );
     }
 
