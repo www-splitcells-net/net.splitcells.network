@@ -82,6 +82,7 @@ public interface Proposal {
      * as the lines of {@link #contextAllocations()},
      * This makes it easier to implement {@link Proposal}s for {@link net.splitcells.gel.rating.rater.framework.Rater}s.
      */
+    @Deprecated
     Assignments contextAllocations();
 
     /**
