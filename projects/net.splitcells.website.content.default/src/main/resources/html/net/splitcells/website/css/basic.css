@@ -220,7 +220,8 @@ mjx-container {
 }
 ul {
     font-family: var(--text-flowing-font);
-    padding-left: 0;
+    /* A padding to the left, avoids the clipping of the list-style-type with the screen's left border in mobile view. */
+    padding-left: .25em;
     margin-left: 1em;
     padding-bottom: .2em;
     }
