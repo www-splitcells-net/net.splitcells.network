@@ -74,7 +74,8 @@ public interface Proposal {
      * TODO This method should return a table with {@link Line} {@link Attribute} only.
      * See {@link #proposedAllocations()}.
      *
-     * @return Set of {@link Assignments}, for which not the proposals are generated,
+     * @return TODO REMOVE The following documentation does not make sense.
+     * Set of {@link Assignments}, for which not the proposals are generated,
      * but which provide context for the demands,
      * that need supplies proposed in {@link #proposedAllocations()}.
      * The format of {@link Assignments#headerView()} is {@link Solution#demands()} and {@link Solution#supplies()}.
