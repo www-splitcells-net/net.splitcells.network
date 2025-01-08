@@ -25,6 +25,8 @@ import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.solution.Solution;
 
+import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
+
 /**
  * <p>{@link #proposedAllocations} proposes new {@link Line}s for {@link Assignments},
  * in order to improve a given {@link #subject()}.
@@ -40,6 +42,8 @@ import net.splitcells.gel.solution.Solution;
  * subsets of the {@link #subject()}'s {@link Assignments#demands()} and {@link Assignments#supplies()}.</p>
  */
 public interface Proposal {
+
+    Attribute<Line> CONTEXT_ASSIGNMENT = attribute(Line.class, "context assignment");
 
     /**
      * TODO This method should return a table with {@link Line} {@link Attribute} only.
@@ -85,6 +89,14 @@ public interface Proposal {
      */
     @Deprecated
     Assignments contextAllocationsOld();
+
+    /**
+     *
+     * @return This contains all assignments of an {@link GroupId},
+     * for which proposals are generated.
+     * The {@link Table#headerView()} format is {@link #CONTEXT_ASSIGNMENT}.
+     */
+    Table contextAssignments();
 
     /**
      *

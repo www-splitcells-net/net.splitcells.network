@@ -29,7 +29,6 @@ import static net.splitcells.gel.data.table.Tables.table2;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 
 public class Proposals implements Proposal {
-
     /**
      * This is an existing {@link Line} of {@link Assignments#supplies()}.
      * It's values are used as default values for the new {@link Line} to be created.
@@ -43,6 +42,7 @@ public class Proposals implements Proposal {
     private final Solution subject;
     private final Assignments proposedAssignments;
     private final Assignments contextAssignmentsOld;
+    private final Table contextAssignments;
     private final Table proposedAllocationsWithNewSupplies;
 
     private Proposals(Solution subject) {
@@ -53,6 +53,7 @@ public class Proposals implements Proposal {
         this.contextAssignmentsOld = assignments("old-context-allocations"
                 , table("proposed-demands", subject.demands(), subject.demands().headerView2())
                 , table("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
+        contextAssignments = table("context-assignments", subject.demands(), list(CONTEXT_ASSIGNMENT));
         proposedAllocationsWithNewSupplies = table("proposed-allocations-with-new-supplies"
                 , subject.demands()
                 , Lists.<Attribute<? extends Object>>list().withAppended(NEW_SUPPLY_BASE)
@@ -76,6 +77,11 @@ public class Proposals implements Proposal {
     @Override
     public Assignments contextAllocationsOld() {
         return contextAssignmentsOld;
+    }
+
+    @Override
+    public Table contextAssignments() {
+        return contextAssignments;
     }
 
     /**
