@@ -42,7 +42,7 @@ public class Proposals implements Proposal {
 
     private final Solution subject;
     private final Assignments proposedAssignments;
-    private final Assignments contextAssignments;
+    private final Assignments contextAssignmentsOld;
     private final Table proposedAllocationsWithNewSupplies;
 
     private Proposals(Solution subject) {
@@ -50,7 +50,7 @@ public class Proposals implements Proposal {
         this.proposedAssignments = assignments("proposed-allocations"
                 , table("proposed-demands", subject.demands(), subject.demands().headerView2())
                 , table("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
-        this.contextAssignments = assignments("context-allocations"
+        this.contextAssignmentsOld = assignments("old-context-allocations"
                 , table("proposed-demands", subject.demands(), subject.demands().headerView2())
                 , table("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
         proposedAllocationsWithNewSupplies = table("proposed-allocations-with-new-supplies"
@@ -74,8 +74,8 @@ public class Proposals implements Proposal {
     }
 
     @Override
-    public Assignments contextAllocations() {
-        return contextAssignments;
+    public Assignments contextAllocationsOld() {
+        return contextAssignmentsOld;
     }
 
     /**

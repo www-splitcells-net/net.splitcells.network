@@ -45,9 +45,9 @@ public class ProposalProcessor {
                 .forEach(a -> {
                     final var origDemand = subject.allocations().demandOfAssignment(a);
                     final var origSupply = subject.allocations().supplyOfAssignment(a);
-                    final var demand = proposal.contextAllocations().demands().add(origDemand);
-                    final var supply = proposal.contextAllocations().supplies().add(origSupply);
-                    proposal.contextAllocations().assign(demand, supply);
+                    final var demand = proposal.contextAllocationsOld().demands().add(origDemand);
+                    final var supply = proposal.contextAllocationsOld().supplies().add(origSupply);
+                    proposal.contextAllocationsOld().assign(demand, supply);
                 });
         relevantDemands.forEach(d -> proposal.proposedAllocations().demands().add(d));
         constraintPath.forEach(constraint -> constraint.propose(proposal));

@@ -94,7 +94,7 @@ public class AllSame {
                                   final var values = proposal.proposedAllocations().unorderedLinesStream()
                                           .map(l -> l.value(attribute))
                                           .collect(toSetOfUniques());
-                                  proposal.contextAllocations().unorderedLinesStream()
+                                  proposal.contextAllocationsOld().unorderedLinesStream()
                                           .forEach(l -> values.add(l.value(attribute)));
                                   if (values.size() == 1) {
                                       final var value = values.stream().findFirst().orElseThrow();

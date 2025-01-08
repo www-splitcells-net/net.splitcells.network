@@ -79,11 +79,11 @@ public interface Proposal {
      * that need supplies proposed in {@link #proposedAllocations()}.
      * The format of {@link Assignments#headerView()} is {@link Solution#demands()} and {@link Solution#supplies()}.
      * Often the {@link Line}s of {@link #proposedAllocations()} are in the same {@link GroupId}
-     * as the lines of {@link #contextAllocations()},
+     * as the lines of {@link #contextAllocationsOld()},
      * This makes it easier to implement {@link Proposal}s for {@link net.splitcells.gel.rating.rater.framework.Rater}s.
      */
     @Deprecated
-    Assignments contextAllocations();
+    Assignments contextAllocationsOld();
 
     /**
      *
