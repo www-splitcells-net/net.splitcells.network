@@ -34,14 +34,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @JavaLegacyArtifact
 public interface ListView<T> extends Collection<T>, java.util.List<T>, Thing, SetT<T> {
-    /**
-     * This helper method makes it easier to distinguish {@code isEmpty} and {@code !isEmpty}.
-     *
-     * @return Whether this list has a size bigger than zero.
-     */
-    default boolean hasElements() {
-        return !isEmpty();
-    }
 
     default void requireComplianceByEveryElementWith(Predicate<T> constraint) {
         stream().filter(e -> !constraint.test(e)).findFirst().ifPresent(e -> {
