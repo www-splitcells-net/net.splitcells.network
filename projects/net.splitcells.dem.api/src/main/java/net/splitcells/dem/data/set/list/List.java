@@ -146,12 +146,6 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
         return Optional.of(get(0));
     }
 
-    default List<T> shallowCopy() {
-        final List<T> shallowCopy = Lists.list();
-        shallowCopy.addAll(this);
-        return shallowCopy;
-    }
-
     @ReturnsThis
     default List<T> reverse() {
         Collections.reverse(this);

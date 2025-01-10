@@ -35,6 +35,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @JavaLegacyArtifact
 public interface ListView<T> extends Collection<T>, java.util.List<T>, Thing, SetT<T> {
 
+    default List<T> shallowCopy() {
+        final List<T> shallowCopy = Lists.list();
+        shallowCopy.addAll(this);
+        return shallowCopy;
+    }
+
     default void requireComplianceByEveryElementWith(Predicate<T> constraint) {
         stream().filter(e -> !constraint.test(e)).findFirst().ifPresent(e -> {
             throw executionException("List element `" + e + "` does not comply with `" + constraint + "`.");
