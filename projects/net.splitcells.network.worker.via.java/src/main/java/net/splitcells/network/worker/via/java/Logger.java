@@ -22,6 +22,7 @@ import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.dem.resource.FileSystemVoid;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.log.LogLevel;
+import net.splitcells.dem.resource.communication.log.Logs;
 import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestIdentifier;
@@ -36,6 +37,7 @@ import static net.splitcells.dem.Dem.config;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.resource.ContentType.CSV;
+import static net.splitcells.dem.resource.communication.log.LogLevel.WARNING;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.network.worker.via.java.Repositories.repository;
 
@@ -134,10 +136,10 @@ public class Logger implements TestExecutionListener {
         }
         return testPath;
     }
-    
 
     public void commit() {
-        repository(logProject.javaLegacyPath().orElseThrow()).commitAll();
+        logProject.javaLegacyPath().ifPresentOrElse(path -> repository(path).commitAll()
+                , () -> logs().append("Persistence for network log not supported.", WARNING));
     }
 
     @Override
