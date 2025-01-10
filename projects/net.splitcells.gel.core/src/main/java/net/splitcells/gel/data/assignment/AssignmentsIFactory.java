@@ -29,12 +29,12 @@ public class AssignmentsIFactory implements AssignmentsFactory {
 
     @Override
     public void close() {
-
+        // Nothing needs to be done.
     }
 
     @Override
     public void flush() {
-
+        // Nothing needs to be done.
     }
 
     @Override
