@@ -16,10 +16,19 @@
 package net.splitcells.dem.object;
 
 import net.splitcells.dem.Dem;
+import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.resource.Trail;
 
+import java.util.Optional;
+
 public interface Discovery<T> {
+    /**
+     * TODO Prevent modification by creating and returning a read-only version of {@link Map}.
+     *
+     * @return A {@link Map} from the childs name to the child itself.
+     * The caller is not allowed to modify this.
+     */
     Map<String, Discovery<?>> children();
 
     default String name() {
@@ -36,7 +45,11 @@ public interface Discovery<T> {
      */
     Trail path();
 
-    <R> Discovery<R> createChild(Class<? extends R> clazz, R instance, String... relativePath);
+    <R> Discovery<R> createChild(Class<R> clazz, R instance, String... relativePath);
+
+    <R> Discovery<R> createChild(Class<R> clazz, R instance, int relativePathIndex, String... relativePath);
 
     <R> void removeChild(Discovery<R> child);
+
+    <R> Optional<R> value(Class<? extends R> clazz);
 }
