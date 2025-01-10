@@ -134,8 +134,8 @@ public class Logger implements TestExecutionListener {
         }
         return testPath;
     }
+    
 
-    @Deprecated
     public void commit() {
         repository(logProject.javaLegacyPath().orElseThrow()).commitAll();
     }
