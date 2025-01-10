@@ -4,6 +4,7 @@
 #
 # The first and only argument is the remote SSH user, where the software is bootstrapped.
 # The Format ist `[user]@[address/network name]`.
+# TODO This is probably not needed anymore.
 set -e
 bin/worker.execute \
   --execute-via-ssh-at="$1" \
