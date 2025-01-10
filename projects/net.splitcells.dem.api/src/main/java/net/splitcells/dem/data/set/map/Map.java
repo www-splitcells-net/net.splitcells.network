@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.data.set.map;
 
+import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import java.util.Optional;
@@ -22,6 +23,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import static net.splitcells.dem.data.Flows.flow;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
@@ -37,6 +39,10 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
     default Map<Key, Value> with(Key key, Value value) {
         put(key, value);
         return this;
+    }
+
+    default Flow<java.util.Map.Entry<Key, Value>> flowMappingsByValue(Value value) {
+        return flow(entrySet().stream().filter(entry -> value.equals(entry.getValue())));
     }
 
     /**
