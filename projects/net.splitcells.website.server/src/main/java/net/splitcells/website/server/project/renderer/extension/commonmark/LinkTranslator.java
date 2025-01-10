@@ -98,7 +98,7 @@ public class LinkTranslator extends AbstractVisitor {
                     .replace("./", "")
                     .substring(8)
                     .replace(".", "/")
-                    .replaceAll("/md", ".md");
+                    .replace("/md", ".md");
         } else {
             if (destinationWithoutProtocol.startsWith("../")) {
                 final var parentCount = parentCount(destinationWithoutProtocol);

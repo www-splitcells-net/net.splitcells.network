@@ -94,7 +94,7 @@ public class CommonMarkIntegration {
         final String contentToRender;
         if (eventsAsCommonMark.startsWith("#")) {
             final var titleLine = eventsAsCommonMark.split("[\r\n]+")[0];
-            title = Optional.of(titleLine.replaceAll("#", "").trim());
+            title = Optional.of(titleLine.replace("#", "").trim());
             contentToRender = eventsAsCommonMark.substring(titleLine.length());
         } else {
             title = Optional.empty();
