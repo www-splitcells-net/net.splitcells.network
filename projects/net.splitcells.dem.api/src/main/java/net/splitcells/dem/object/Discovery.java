@@ -22,14 +22,18 @@ import net.splitcells.dem.resource.Trail;
 
 import java.util.Optional;
 
-public interface Discovery<T> {
+/**
+ * <p>Generics are not used here,
+ * because the types of a tree of {@link Discovery#value(Class)} are not intended to be uniform in any way.</p>
+ */
+public interface Discovery {
     /**
      * TODO Prevent modification by creating and returning a read-only version of {@link Map}.
      *
      * @return A {@link Map} from the childs name to the child itself.
      * The caller is not allowed to modify this.
      */
-    Map<String, Discovery<?>> children();
+    Map<String, Discovery> children();
 
     default String name() {
         final var content = path().content();
@@ -45,11 +49,11 @@ public interface Discovery<T> {
      */
     Trail path();
 
-    <R> Discovery<R> createChild(Class<R> clazz, R instance, String... relativePath);
+    Discovery createChild(Object instance, String... relativePath);
 
-    <R> Discovery<R> createChild(Class<R> clazz, R instance, int relativePathIndex, String... relativePath);
+    Discovery createChild(Object instance, int relativePathIndex, String... relativePath);
 
-    <R> void removeChild(Discovery<R> child);
+    void removeChild(Discovery child);
 
     <R> Optional<R> value(Class<? extends R> clazz);
 }

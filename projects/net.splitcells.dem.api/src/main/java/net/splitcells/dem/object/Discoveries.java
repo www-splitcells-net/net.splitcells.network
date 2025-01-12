@@ -28,28 +28,28 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 
-public class Discoveries<T> implements Discovery<T> {
+public class Discoveries implements Discovery {
 
-    public static <R> Discovery<R> discoveryRoot() {
-        return new Discoveries<>();
+    public static Discovery discoveryRoot() {
+        return new Discoveries();
     }
 
-    private final Map<String, Discovery<?>> children = map();
+    private final Map<String, Discovery> children = map();
     private final Trail path;
-    private final Optional<T> value;
+    private final Optional<Object> value;
 
     private Discoveries() {
         path = trail("");
         value = Optional.empty();
     }
 
-    private Discoveries(Trail argTrail, Optional<T> argValue) {
+    private Discoveries(Trail argTrail, Optional<Object> argValue) {
         path = argTrail;
         value = argValue;
     }
 
     @Override
-    public Map<String, Discovery<?>> children() {
+    public Map<String, Discovery> children() {
         return children;
     }
 
@@ -59,12 +59,12 @@ public class Discoveries<T> implements Discovery<T> {
     }
 
     @Override
-    public <R> Discovery<R> createChild(Class<R> clazz, R instance, String... relativePath) {
-        return createChild(clazz, instance, 0, relativePath);
+    public Discovery createChild(Object instance, String... relativePath) {
+        return createChild(instance, 0, relativePath);
     }
 
     @Override
-    public <R> Discovery<R> createChild(Class<R> clazz, R instance, int relativePathIndex, String... relativePath) {
+    public Discovery createChild(Object instance, int relativePathIndex, String... relativePath) {
         final String next = relativePath[relativePathIndex];
         if (relativePath.length - relativePathIndex == 1) {
             if (children.containsKey(next)) {
@@ -74,23 +74,23 @@ public class Discoveries<T> implements Discovery<T> {
                         .withProperty("Parent value", value.map(Object::toString).orElse("empty"))
                         .withProperty("Parent path", path.unixPathString()));
             }
-            final var child = new Discoveries<>(trail(path.content().shallowCopy().withAppended(next))
+            final var child = new Discoveries(trail(path.content().shallowCopy().withAppended(next))
                     , Optional.of(instance));
             children.put(next, child);
             return child;
         } else {
             if (children.containsKey(next)) {
-                return ((Discovery<R>) children.get(next)).createChild(clazz, instance, ++relativePathIndex, relativePath);
+                return children.get(next).createChild(instance, ++relativePathIndex, relativePath);
             }
-            final var child = new Discoveries<>(trail(path.content().shallowCopy().withAppended(next))
+            final var child = new Discoveries(trail(path.content().shallowCopy().withAppended(next))
                     , Optional.empty());
-            return child.createChild(clazz, instance, ++relativePathIndex, relativePath);
+            return child.createChild(instance, ++relativePathIndex, relativePath);
         }
     }
 
 
     @Override
-    public <R> void removeChild(Discovery<R> child) {
+    public void removeChild(Discovery child) {
         final var matches = children.flowMappingsByValue(child).toList();
         matches.forEach(m -> children.remove(m.getKey()));
     }
