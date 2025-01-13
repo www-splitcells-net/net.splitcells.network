@@ -95,6 +95,12 @@ public class ValueUpdate implements GroupingRater {
         return ratingEvent;
     }
 
+    /**
+     * Part of this is a duplication of {@link #propose(Proposal)}.
+     *
+     * @param lines
+     * @return
+     */
     private ValueCalc analyse(View lines) {
         final List<Integer> times;
         final int startTime;
@@ -212,6 +218,12 @@ public class ValueUpdate implements GroupingRater {
         return listWithValuesOf();
     }
 
+    /**
+     * Part of this is a duplication of {@link #analyse(View)}.
+     *
+     * @param proposal
+     * @return
+     */
     @Override
     public Proposal propose(Proposal proposal) {
         if (proposal.subject().allowsSuppliesOnDemand()) {
