@@ -29,10 +29,14 @@ import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 
 /**
- * This {@link Rater} makes it easy to rate groups with interdependent {@link Line}s.
+ * <p>This {@link Rater} makes it easy to rate groups with interdependent {@link Line}s.
  * Every {@link Line} has the same {@link Rating} in the group.
  * Keep in mind, that during a change in the group, every {@link Line}s' {@link Rating} in the group is updated,
- * which makes the performance worse.
+ * which makes the performance worse.</p>
+ * <p>TODO {@link #ratingAfterAddition(View, Line, List, View)} and {@link #ratingAfterRemoval(View, List, View)}
+ * always update all {@link Line} regardless if the {@link Rating} changed or not.
+ * This is causes a lot of recalculations at {@link Constraint#childrenView()}.</p>
+ *
  */
 public class LineGroupRater implements Rater {
 

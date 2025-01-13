@@ -24,6 +24,7 @@ import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
+import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 
@@ -49,6 +50,11 @@ import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
+/**
+ * TODO {@link #ratingAfterAddition(View, Line, List, View)} and {@link #rating_before_removal(View, Line, List, View)}
+ * always update all {@link Line} regardless if the {@link Rating} changed or not.
+ * This is causes a lot of recalculations at {@link Constraint#childrenView()}.
+ */
 public class TimeSteps implements Rater {
     public static final String NO_TIME_STEP_GROUP = "no-time-step-group";
     public static final String WITH_UNEVEN_START_TIME = " with uneven start time";
