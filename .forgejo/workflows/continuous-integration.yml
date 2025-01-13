@@ -14,12 +14,15 @@ jobs:
           apt update # $(pwd) = /workspace/splitcells-net/net.splitcells.network
           apt install -y bash curl git python3 openjdk-21-jdk maven
           cd /workspace/splitcells-net/
+          git clone --depth 1 https://codeberg.org/splitcells-net/net.splitcells.network.bom.base.git
           git clone --depth 1 https://codeberg.org/splitcells-net/net.splitcells.network.bom.git
           git clone --depth 1 https://codeberg.org/splitcells-net/net.splitcells.network.git
       - name: Build
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
+          cd /workspace/splitcells-net/net.splitcells.network.bom.base
+          mvn clean install
           cd /workspace/splitcells-net/net.splitcells.network.bom
           mvn clean install
           cd /workspace/splitcells-net/net.splitcells.network
