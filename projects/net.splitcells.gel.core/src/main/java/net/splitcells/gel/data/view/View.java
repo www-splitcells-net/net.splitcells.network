@@ -565,12 +565,38 @@ public interface View extends Discoverable, Domable, Identifiable {
      * that are not present in {@link View#headerView()}.</p>
      *
      * @param lineAttribute This is the {@link Attribute} of this {@link View}, that contains the relevant {@link Line}.
-     * @param predicate    This is a {@link Predicate}, that all referenced {@link Line} have to comply with.
+     * @param predicate     This is a {@link Predicate}, that all referenced {@link Line} have to comply with.
      * @param <T>           This is the type of the values being retrieved.
      * @return Returns a {@link Flow} of valueAttribute values,
      * that are contained in the {@link Line} of the lineAttribute's {@link ColumnView}.
      */
     default <T> Flow<Line> linesByReference(Attribute<Line> lineAttribute, Predicate<Line> predicate) {
         return columnView(lineAttribute).flow().map(l -> l.value(lineAttribute)).filter(predicate);
+    }
+
+    /**
+     * <p>Sometimes one needs to store {@link Line} inside a new {@link View}.
+     * The problem is to decide,
+     * whether the new {@link View} should reference the {@link Line} via one {@link ColumnView} or
+     * whether to store all {@link Attribute} values of the referenced {@link Line} in dedicated {@link View#columnView(Attribute)}.
+     * In other words, one has to decide whether to reference the {@link Line} or to copy the {@link Line#values()},
+     * in order to avoid a reference lookup for each access to such a {@link Line}.
+     * Both strategies have different performance trade-offs and at time of writing,
+     * it is not clear which strategy is better in which situation.</p>
+     * <p>It was decided to ignore this issue, by providing an interface,
+     * that allows such a {@link View} to hide the fact, which of these strategies is chosen.
+     * Therefore, such an interface can be backed by different implementations with different trade-offs.
+     * Note, that copying the {@link Line#values()} would require one to use shadow {@link ColumnView},
+     * that are not present in {@link View#headerView()}.</p>
+     *
+     * @param lineAttribute  This is the {@link Attribute} of this {@link View}, that contains the relevant {@link Line}.
+     * @param valueAttribute This is the {@link Attribute} of the {@link View},
+     *                       that are referenced by the {@link Line} of lineAttribute.
+     * @param <T>            This is the type of the values being retrieved.
+     * @return Returns a {@link Flow} of valueAttribute values,
+     * that are contained in the {@link Line} of the lineAttribute's {@link ColumnView}.
+     */
+    default <T> Flow<T> referencedValues(Attribute<Line> lineAttribute, Attribute<T> valueAttribute) {
+        return columnView(lineAttribute).flow().map(line -> line.value(valueAttribute));
     }
 }
