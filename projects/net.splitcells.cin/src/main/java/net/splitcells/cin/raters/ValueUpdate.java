@@ -231,6 +231,12 @@ public class ValueUpdate implements GroupingRater {
                     .distinct()
                     .sorted(ASCENDING_INTEGERS)
                     .collect(toList());
+            if (times.size() > 2) {
+                throw executionException();
+            }
+            if (times.isEmpty()) {
+                return proposal;
+            }
             final var shouldBeDeleted = proposal.contextAssignments()
                     .linesByReference(CONTEXT_ASSIGNMENT)
                     .filter(line -> line.value(PLAYER_ATTRIBUTE) == playerAttribute
