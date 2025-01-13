@@ -215,6 +215,10 @@ public class ValueUpdate implements GroupingRater {
     @Override
     public Proposal propose(Proposal proposal) {
         if (proposal.subject().allowsSuppliesOnDemand()) {
+            final var times = proposal.contextAssignments().referencedValues(CONTEXT_ASSIGNMENT, TIME)
+                    .distinct()
+                    .sorted(ASCENDING_INTEGERS)
+                    .collect(toList());
             final var shouldBeDeleted = proposal.contextAssignments().linesByReference(CONTEXT_ASSIGNMENT
                     , line -> line.value(PLAYER_ATTRIBUTE) == playerAttribute
                             && line.value(EVENT_TYPE) == EntityManager.DELETE_VALUE
