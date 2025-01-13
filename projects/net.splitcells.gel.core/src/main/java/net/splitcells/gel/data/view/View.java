@@ -565,14 +565,12 @@ public interface View extends Discoverable, Domable, Identifiable {
      * that are not present in {@link View#headerView()}.</p>
      *
      * @param lineAttribute This is the {@link Attribute} of this {@link View}, that contains the relevant {@link Line}.
-     * @param valueAttribute This is the {@link Attribute} of the {@link View},
-     *                       that are referenced by the {@link Line} of lineAttribute.
+     * @param predicate    This is a {@link Predicate}, that all referenced {@link Line} have to comply with.
+     * @param <T>           This is the type of the values being retrieved.
      * @return Returns a {@link Flow} of valueAttribute values,
      * that are contained in the {@link Line} of the lineAttribute's {@link ColumnView}.
-     *
-     * @param <T> This is the type of the values being retrieved.
      */
-    default <T> Flow<T> referencedValues(Attribute<Line> lineAttribute, Attribute<T> valueAttribute, Predicate<T> selector) {
-        return columnView(lineAttribute).flow().map(line -> line.value(valueAttribute)).filter(selector);
+    default <T> Flow<Line> linesByReference(Attribute<Line> lineAttribute, Predicate<Line> predicate) {
+        return columnView(lineAttribute).flow().map(l -> l.value(lineAttribute)).filter(predicate);
     }
 }
