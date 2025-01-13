@@ -41,6 +41,7 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.MathUtils.distance;
 import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.constraint.Constraint.LINE;
+import static net.splitcells.gel.proposal.Proposal.CONTEXT_ASSIGNMENT;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.rater.lib.LineGroupRater.lineGroupRater;
@@ -213,6 +214,12 @@ public class ValueUpdate implements GroupingRater {
 
     @Override
     public Proposal propose(Proposal proposal) {
+        if (proposal.subject().allowsSuppliesOnDemand()) {
+            final var shouldBeDeleted = proposal.contextAssignments().linesByReference(CONTEXT_ASSIGNMENT
+                    , line -> line.value(PLAYER_ATTRIBUTE) == playerAttribute
+                            && line.value(EVENT_TYPE) == EntityManager.DELETE_VALUE
+                            && line.value(PLAYER_VALUE) == 1);
+        }
         return proposal;
     }
 }
