@@ -219,8 +219,9 @@ public class ValueUpdate implements GroupingRater {
                     .distinct()
                     .sorted(ASCENDING_INTEGERS)
                     .collect(toList());
-            final var shouldBeDeleted = proposal.contextAssignments().linesByReference(CONTEXT_ASSIGNMENT
-                    , line -> line.value(PLAYER_ATTRIBUTE) == playerAttribute
+            final var shouldBeDeleted = proposal.contextAssignments()
+                    .linesByReference(CONTEXT_ASSIGNMENT)
+                    .filter(line -> line.value(PLAYER_ATTRIBUTE) == playerAttribute
                             && line.value(EVENT_TYPE) == EntityManager.DELETE_VALUE
                             && line.value(PLAYER_VALUE) == 1);
         }
