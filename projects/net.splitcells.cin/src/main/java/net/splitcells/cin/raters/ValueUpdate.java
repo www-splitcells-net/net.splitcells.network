@@ -190,11 +190,7 @@ public class ValueUpdate implements GroupingRater {
                     .reduce(Integer::sum)
                     .orElse(0)
                     / valueSets.size();
-            if (valueAdds.isEmpty()) {
-                return new ValueCalc(endResult, valueSet, isDeleted, shouldBeDeleted);
-            } else {
-                return new ValueCalc(endResult, (valueSet + valueAdd) / 2, isDeleted, shouldBeDeleted);
-            }
+            return new ValueCalc(endResult, valueSet + valueAdd, isDeleted, shouldBeDeleted);
         }
     }
 
