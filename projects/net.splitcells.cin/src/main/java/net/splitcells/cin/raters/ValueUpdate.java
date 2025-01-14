@@ -227,6 +227,16 @@ public class ValueUpdate implements GroupingRater {
     @Override
     public Proposal propose(Proposal proposal) {
         if (proposal.subject().allowsSuppliesOnDemand()) {
+            final int startTime;
+            final int endTime;
+            final int startResult;
+            final int endResult;
+            final boolean isDeleted;
+            final List<Line> valueAdds;
+            final int valueAdd;
+            final List<Line> valueSets;
+            final List<Line> startResults;
+            final List<Line> endResults;
             final var times = proposal.contextAssignments().referencedValues(CONTEXT_ASSIGNMENT, TIME)
                     .distinct()
                     .sorted(ASCENDING_INTEGERS)
@@ -240,11 +250,57 @@ public class ValueUpdate implements GroupingRater {
             if (times.size() == 1) {
                 return proposal;
             }
+            startTime = times.get(0);
+            endTime = times.get(1);
             final var shouldBeDeleted = proposal.contextAssignments()
                     .linesByReference(CONTEXT_ASSIGNMENT)
                     .filter(line -> line.value(PLAYER_ATTRIBUTE) == playerAttribute
                             && line.value(EVENT_TYPE) == EntityManager.DELETE_VALUE
                             && line.value(PLAYER_VALUE) == 1);
+            endResults = proposal.contextAssignments()
+                    .linesByReference(CONTEXT_ASSIGNMENT)
+                    .filter(line -> line.value(PLAYER_ATTRIBUTE) == playerAttribute
+                            && line.value(EVENT_TYPE) == EntityManager.RESULT_VALUE
+                            && line.value(TIME) == endTime)
+                    .toList();
+            startResults = proposal.contextAssignments()
+                    .linesByReference(CONTEXT_ASSIGNMENT)
+                    .filter(line -> line.value(PLAYER_ATTRIBUTE) == playerAttribute
+                            && line.value(EVENT_TYPE) == EntityManager.RESULT_VALUE
+                            && line.value(TIME) == startTime)
+                    .toList();
+            if (startResults.isEmpty()) {
+                startResult = 0;
+            } else {
+                startResult = startResults.stream()
+                        .map(l -> l.value(PLAYER_VALUE))
+                        .reduce(Integer::sum)
+                        .orElse(0)
+                        / startResults.size();
+            }
+            if (endResults.isEmpty()) {
+                endResult = 0;
+                isDeleted = true;
+            } else {
+                isDeleted = false;
+                endResult = endResults.stream()
+                        .map(line -> line.value(PLAYER_VALUE))
+                        .reduce(Integer::sum)
+                        .orElse(0) / endResults.size();
+            }
+            valueAdds = proposal.contextAssignments()
+                    .linesByReference(CONTEXT_ASSIGNMENT)
+                    .filter(line -> line.value(PLAYER_ATTRIBUTE) == playerAttribute
+                            && line.value(EVENT_TYPE) == ADD_VALUE
+                            && line.value(TIME) == endTime)
+                    .collect(toList());
+            valueSets = proposal.contextAssignments()
+                    .linesByReference(CONTEXT_ASSIGNMENT)
+                    .filter(line -> line.value(PLAYER_ATTRIBUTE) == playerAttribute
+                            && line.value(EVENT_TYPE) == SET_VALUE
+                            && line.value(TIME) == endTime)
+                    .collect(toList());
+            valueAdd = valueAdds.stream().map(line -> line.value(PLAYER_VALUE)).reduce(Integer::sum).orElse(0);
         }
         return proposal;
     }
