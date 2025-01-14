@@ -293,14 +293,17 @@ public class ValueUpdate implements GroupingRater {
                     .filter(line -> line.value(PLAYER_ATTRIBUTE) == playerAttribute
                             && line.value(EVENT_TYPE) == ADD_VALUE
                             && line.value(TIME) == endTime)
-                    .collect(toList());
+                    .toList();
             valueSets = proposal.contextAssignments()
                     .linesByReference(CONTEXT_ASSIGNMENT)
                     .filter(line -> line.value(PLAYER_ATTRIBUTE) == playerAttribute
                             && line.value(EVENT_TYPE) == SET_VALUE
                             && line.value(TIME) == endTime)
-                    .collect(toList());
-            valueAdd = valueAdds.stream().map(line -> line.value(PLAYER_VALUE)).reduce(Integer::sum).orElse(0);
+                    .toList();
+            valueAdd = valueAdds.stream()
+                    .map(line -> line.value(PLAYER_VALUE))
+                    .reduce(Integer::sum)
+                    .orElse(0);
         }
         return proposal;
     }
