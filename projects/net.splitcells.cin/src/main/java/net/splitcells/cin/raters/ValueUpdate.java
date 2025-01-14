@@ -238,14 +238,7 @@ public class ValueUpdate implements GroupingRater {
                 return proposal;
             }
             if (times.size() == 1) {
-                final var actual = proposal.contextAssignments()
-                        .linesByReference(CONTEXT_ASSIGNMENT)
-                        .filter(line -> line.value(PLAYER_ATTRIBUTE) == playerAttribute
-                                && line.value(EVENT_TYPE) == EntityManager.RESULT_VALUE)
-                        .map(l -> l.value(PLAYER_VALUE))
-                        .reduce(Integer::sum)
-                        .orElse(0);
-                // TODO Propose removals.
+                return proposal;
             }
             final var shouldBeDeleted = proposal.contextAssignments()
                     .linesByReference(CONTEXT_ASSIGNMENT)
