@@ -78,21 +78,20 @@ public class ValueUpdateTest {
 
         final var assign3 = testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
                 , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 1, ADD_VALUE)));
-        testSubject.constraint().rating().requireEqualsTo(noCost());
+        testSubject.constraint().rating().requireEqualsTo(cost(4));
 
         final var assign4 = testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
                 , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 1, ADD_VALUE)));
-        // There is no cost, because of 3/2 is rounded to 1.
-        testSubject.constraint().rating().requireEqualsTo(noCost());
+        testSubject.constraint().rating().requireEqualsTo(cost(10));
 
         final var assign5 = testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
                 , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 1, ADD_VALUE)));
-        testSubject.constraint().rating().requireEqualsTo(cost(6));
+        testSubject.constraint().rating().requireEqualsTo(cost(18));
 
         testSubject.remove(assign5);
-        testSubject.constraint().rating().requireEqualsTo(noCost());
+        testSubject.constraint().rating().requireEqualsTo(cost(10));
         testSubject.remove(assign4);
-        testSubject.constraint().rating().requireEqualsTo(noCost());
+        testSubject.constraint().rating().requireEqualsTo(cost(4));
         testSubject.remove(assign3);
         testSubject.constraint().rating().requireEqualsTo(noCost());
         testSubject.remove(assign2);
