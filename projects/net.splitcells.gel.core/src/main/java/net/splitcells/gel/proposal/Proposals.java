@@ -34,6 +34,7 @@ public class Proposals implements Proposal {
      * It's values are used as default values for the new {@link Line} to be created.
      */
     public static Attribute<Line> NEW_SUPPLY_BASE = attribute(Line.class, "base for new supply");
+    public static Attribute<Line> EXISTING_DEMAND = attribute(Line.class, "Existing Demand");
 
     public static Proposal proposal(Solution subject) {
         return new Proposals(subject);
@@ -44,6 +45,7 @@ public class Proposals implements Proposal {
     private final Assignments contextAssignmentsOld;
     private final Table contextAssignments;
     private final Table proposedAllocationsWithNewSupplies;
+    private final Table proposedDisallocations;
 
     private Proposals(Solution subject) {
         this.subject = subject;
@@ -54,6 +56,7 @@ public class Proposals implements Proposal {
                 , table("proposed-demands", subject.demands(), subject.demands().headerView2())
                 , table("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
         contextAssignments = table("context-assignments", subject.demands(), list(CONTEXT_ASSIGNMENT));
+        proposedDisallocations = table("proposed-disallocations", subject.demands(), list(EXISTING_DEMAND));
         proposedAllocationsWithNewSupplies = table("proposed-allocations-with-new-supplies"
                 , subject.demands()
                 , Lists.<Attribute<? extends Object>>list().withAppended(NEW_SUPPLY_BASE)
@@ -72,6 +75,11 @@ public class Proposals implements Proposal {
     @Override
     public Table proposedAllocationsWithNewSupplies() {
         return proposedAllocationsWithNewSupplies;
+    }
+
+    @Override
+    public Table proposedDisallocations() {
+        return proposedDisallocations;
     }
 
     @Override

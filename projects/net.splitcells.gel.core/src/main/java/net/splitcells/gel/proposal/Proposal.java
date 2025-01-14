@@ -75,6 +75,17 @@ public interface Proposal {
     Table proposedAllocationsWithNewSupplies();
 
     /**
+     *
+     * @return This {@link Table} contains all {@link Solution#demands()}, that should be removed from the solution.
+     * Note, that this can lead to a situation,
+     * where an optimization step can lead to {@link Solution#demands()} without allocated {@link Solution#supplies()}.
+     * Most of the time running the optimization should fix the problem.
+     * These disallocations make most sense,
+     * when it is used in combination with {@link #proposedAllocationsWithNewSupplies()}.
+     */
+    Table proposedDisallocations();
+
+    /**
      * TODO This method should return a table with {@link Line} {@link Attribute} only.
      * See {@link #proposedAllocations()}.
      *
