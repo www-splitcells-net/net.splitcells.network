@@ -230,6 +230,8 @@ public class ValueUpdate implements GroupingRater {
             final boolean isDeleted;
             final List<Line> valueAdds;
             final int valueAdd;
+            final int targetValue;
+            final int valueSet;
             final List<Line> valueSets;
             final List<Line> startResults;
             final List<Line> endResults;
@@ -300,6 +302,18 @@ public class ValueUpdate implements GroupingRater {
                     .map(line -> line.value(PLAYER_VALUE))
                     .reduce(Integer::sum)
                     .orElse(0);
+            if (valueSets.isEmpty()) {
+                targetValue = startResult + valueAdd;
+                // TODO
+            } else {
+                valueSet = valueSets.stream()
+                        .map(line -> line.value(PLAYER_VALUE))
+                        .reduce(Integer::sum)
+                        .orElse(0)
+                        / valueSets.size();
+                targetValue = valueSet + valueAdd;
+                // TODO
+            }
         }
         return proposal;
     }
