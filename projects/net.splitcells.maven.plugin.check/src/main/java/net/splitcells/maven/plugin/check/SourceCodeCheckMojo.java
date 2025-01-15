@@ -31,6 +31,7 @@ import java.nio.file.Path;
 import java.util.regex.Pattern;
 
 import static java.nio.file.Files.isDirectory;
+import static java.util.stream.Collectors.toList;
 
 /**
  * <p>This goal should be executed in the validate phase.</p>
@@ -52,7 +53,8 @@ public class SourceCodeCheckMojo extends AbstractMojo {
                     final var rootPath = Path.of(sourceRoot.toString());
                     if (isDirectory(rootPath)) {
                         try (final var walk = Files.walk(rootPath)) {
-                            walk.filter(Files::isRegularFile).forEach(this::checkJavaSourceCodeFile);
+                            // Collect is done, because the parallel Stream of walk itself is not so good as parallelism.
+                            walk.collect(toList()).parallelStream().filter(Files::isRegularFile).forEach(this::checkJavaSourceCodeFile);
                         }
                     } else {
                         getLog().warn("Given source folder path is not an actual folder: " + rootPath);
