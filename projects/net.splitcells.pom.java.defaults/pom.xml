@@ -25,16 +25,27 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>21</java.version>
         <packaging>jar</packaging>
-        <test.groups>!testing_capabilities&amp;!experimental_test&amp;!benchmarking_runtime&amp;!testing_integration</test.groups>
+        <test.groups>!testing_capabilities&amp;!experimental_test&amp;!benchmarking_runtime&amp;!testing_integration
+        </test.groups>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.release>${java.version}</maven.compiler.release>
-        <jacoco.overall.exec>${maven.multiModuleProjectDirectory}/target/jacoco-aggregate/jacoco.exec</jacoco.overall.exec>
+        <jacoco.overall.exec>${maven.multiModuleProjectDirectory}/target/jacoco-aggregate/jacoco.exec
+        </jacoco.overall.exec>
+        <maven-profiler-report-directory>${project.build.directory}/org.apache.maven.plugins.maven-profiler-plugin</maven-profiler-report-directory>
     </properties>
     <build>
         <finalName>${project.groupId}.${project.artifactId}-${project.version}</finalName>
         <sourceDirectory>src/main/java</sourceDirectory>
         <testSourceDirectory>src/main/java</testSourceDirectory>
+        <extensions>
+            <extension>
+                <!-- This is needed by maven-profiler-plugin. -->
+                <groupId>fr.jcgay.maven</groupId>
+                <artifactId>maven-profiler</artifactId>
+                <version>3.2</version>
+            </extension>
+        </extensions>
         <plugins>
             <plugin>
                 <groupId>net.splitcells</groupId>
@@ -168,6 +179,30 @@
         </dependency>
     </dependencies>
     <profiles>
+        <profile>
+            <id>maven-profiler</id>
+            <!--
+                This requires the extension fr.jcgay.maven.maven-profiler.
+                Install it for Maven by copying the [maven-profiler Jar](https://github.com/jcgay/maven-profiler)
+                into `%M2_HOME%/lib/ext` and `~/.sdkman/candidates/mvnd/current/mvn/lib/ext`.
+
+                The property maven-profiler-report-directory is required by this profile,
+                but it needs to be placed at top.
+                If this property is placed in this profile,
+                the property does not work and the profiler folder is stored in the project folder,
+                instead of the project's target folder.
+             -->
+            <build>
+                <plugins>
+                    <plugin>
+                        <!-- Profile maven runtime profile via `mvn clean install -Dprofile` and find the report at `target/.profiler`  -->
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-profiler-plugin</artifactId>
+                        <version>1.7</version>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <profile>
             <id>uber-jar</id>
             <activation>
