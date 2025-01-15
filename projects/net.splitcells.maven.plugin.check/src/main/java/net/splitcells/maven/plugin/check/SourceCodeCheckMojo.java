@@ -76,15 +76,14 @@ public class SourceCodeCheckMojo extends AbstractMojo {
      */
     private void checkJavaSourceCodeFile(Path file) {
         try {
-            if (java.nio.file.Files.readString(file).contains("@JavaLegacyArtifact")) {
+            final var fileContent = java.nio.file.Files.readString(file);
+            if (fileContent.contains("@JavaLegacyArtifact")) {
                 getLog().debug("Ignoring Java legacy file: " + file);
                 return;
             }
             getLog().debug("Checking file: " + file);
-            final var lexer = new net.splitcells.dem.source.java.Java11Lexer
-                    (CharStreams.fromFileName(file.toString()));
-            final var parser = new net.splitcells.dem.source.java.Java11Parser
-                    (new CommonTokenStream(lexer));
+            final var lexer = new net.splitcells.dem.source.java.Java11Lexer(CharStreams.fromString(fileContent));
+            final var parser = new net.splitcells.dem.source.java.Java11Parser(new CommonTokenStream(lexer));
             // TODO These error handler and listener creates errors, but maybe this is somehow useful?
             // parser.addErrorListener(new DiagnosticErrorListener());
             // parser.setErrorHandler(new BailErrorStrategy());
