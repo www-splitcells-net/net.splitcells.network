@@ -35,8 +35,7 @@ import static net.splitcells.cin.EntityManager.PLAYER_VALUE;
 import static net.splitcells.cin.EntityManager.SET_VALUE;
 import static net.splitcells.cin.EntityManager.TIME;
 import static net.splitcells.dem.data.order.Comparators.ASCENDING_INTEGERS;
-import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.MathUtils.distance;
 import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
@@ -252,7 +251,7 @@ public class ValueUpdate implements GroupingRater {
             endTime = times.get(1);
             final var shouldBeDeleted = proposal.contextAssignments()
                     .linesByReference(CONTEXT_ASSIGNMENT)
-                    .filter(line -> line.value(PLAYER_ATTRIBUTE) == playerAttribute
+                    .anyMatch(line -> line.value(PLAYER_ATTRIBUTE) == playerAttribute
                             && line.value(EVENT_TYPE) == EntityManager.DELETE_VALUE
                             && line.value(PLAYER_VALUE) == 1);
             endResults = proposal.contextAssignments()
@@ -304,7 +303,6 @@ public class ValueUpdate implements GroupingRater {
                     .orElse(0);
             if (valueSets.isEmpty()) {
                 targetValue = startResult + valueAdd;
-                // TODO
             } else {
                 valueSet = valueSets.stream()
                         .map(line -> line.value(PLAYER_VALUE))
@@ -312,8 +310,16 @@ public class ValueUpdate implements GroupingRater {
                         .orElse(0)
                         / valueSets.size();
                 targetValue = valueSet + valueAdd;
-                // TODO
             }
+            proposal.contextAssignments()
+                    .linesByReference(CONTEXT_ASSIGNMENT)
+                    .filter(line -> line.value(PLAYER_ATTRIBUTE) == playerAttribute
+                            && line.value(EVENT_TYPE) == SET_VALUE
+                            && line.value(TIME) == endTime);
+            if (shouldBeDeleted && !isDeleted) {
+                endResults.forEach(er -> proposal.proposedDisallocations().addTranslated(list(er)));
+            }
+            // TODO
         }
         return proposal;
     }
