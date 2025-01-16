@@ -27,6 +27,8 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
+import static net.splitcells.gel.constraint.Constraint.RESULTING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.proposal.Proposals.proposal;
 
 public class ProposalProcessor {
@@ -80,17 +82,29 @@ public class ProposalProcessor {
             rootProposal.contextAssignments().addTranslated(list(allocation));
         });
         constraintPath.get(0).propose(rootProposal);
-        Map<GroupId, Proposal> currentProposal = Maps.<GroupId, Proposal>map().with(constraintPath.get(0).injectionGroup(), rootProposal);
-        final List<Map<GroupId, Proposal>> proposals = list(currentProposal);
+        final List<Map<GroupId, Proposal>> proposals = list(
+                Maps.<GroupId, Proposal>map().with(constraintPath.get(0).injectionGroup(), rootProposal));
         for (int i = 1; i < constraintPath.size(); ++i) {
             final var previousProposal = proposals.get(i - 1);
-            currentProposal = map();
+            final Map<GroupId, Proposal> currentProposals = map();
             final var currentConstraint = constraintPath.get(i);
             previousProposal.entrySet().forEach(p -> {
-                // TODO
+                currentConstraint.lineProcessing()
+                        .columnView(INCOMING_CONSTRAINT_GROUP).lookup(p.getKey())
+                        .columnView(RESULTING_CONSTRAINT_GROUP).lookup(a -> true)
+                        .unorderedLinesStream()
+                        .forEach(l -> {
+                            final var resultingGroup = l.value(RESULTING_CONSTRAINT_GROUP);
+                            final Proposal proposal;
+                            if (!currentProposals.containsKey(resultingGroup)) {
+                                currentProposals.put(resultingGroup, proposal(subject));
+                            }
+                            proposal = currentProposals.get(resultingGroup);
+                            proposal.contextAssignments().addTranslated(list(l));
+                        });
             });
-            proposals.add(currentProposal);
-            currentProposal.values().forEach(currentConstraint::propose);
+            proposals.add(currentProposals);
+            currentProposals.values().forEach(currentConstraint::propose);
         }
         throw notImplementedYet();
     }
