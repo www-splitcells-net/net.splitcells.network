@@ -66,16 +66,14 @@ public interface Proposal {
      * in order to get a better {@link Solution}.
      * With this often the domain of the demands is represented,
      * when one compares this concept to the constraint satisfaction problem.</p>
-     * <p>The {@link Assignments#headerView()} consists of {@link Solution#demands()} and
+     * <p>The {@link Table#headerView()} consists of {@link Proposals#EXISTING_DEMAND}, {@link Proposals#NEW_SUPPLY_BASE} and
      * {@link Solution#headerView()} of {@link Solution#supplies()}.
      * Such {@link Solution#supplies()} do not exist and have to be created with methods like
      * {@link AssignmentsLiveView#addTranslatedSupply(ListView)}.</p>
-     *
      */
     Table proposedAllocationsWithNewSupplies();
 
     /**
-     *
      * @return This {@link Table} contains all {@link Solution#demands()}, that should be removed from the solution.
      * Note, that this can lead to a situation,
      * where an optimization step can lead to {@link Solution#demands()} without allocated {@link Solution#supplies()}.
@@ -102,7 +100,6 @@ public interface Proposal {
     Assignments contextAllocationsOld();
 
     /**
-     *
      * @return This contains all assignments of an {@link GroupId},
      * for which proposals are generated.
      * The {@link Table#headerView()} format is {@link #CONTEXT_ASSIGNMENT}.
@@ -110,7 +107,6 @@ public interface Proposal {
     Table contextAssignments();
 
     /**
-     *
      * @return This is the {@link Solution}, for which the proposals are done.
      */
     Solution subject();
