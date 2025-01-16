@@ -17,6 +17,7 @@ package net.splitcells.cin.raters;
 
 import net.splitcells.cin.EntityManager;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
@@ -28,12 +29,7 @@ import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import net.splitcells.gel.rating.rater.lib.GroupingRater;
 
-import static net.splitcells.cin.EntityManager.ADD_VALUE;
-import static net.splitcells.cin.EntityManager.EVENT_TYPE;
-import static net.splitcells.cin.EntityManager.PLAYER_ATTRIBUTE;
-import static net.splitcells.cin.EntityManager.PLAYER_VALUE;
-import static net.splitcells.cin.EntityManager.SET_VALUE;
-import static net.splitcells.cin.EntityManager.TIME;
+import static net.splitcells.cin.EntityManager.*;
 import static net.splitcells.dem.data.order.Comparators.ASCENDING_INTEGERS;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.utils.ExecutionException.executionException;
@@ -319,7 +315,25 @@ public class ValueUpdate implements GroupingRater {
             if (shouldBeDeleted && !isDeleted) {
                 endResults.forEach(er -> proposal.proposedDisallocations().addTranslated(list(er)));
             }
-            // TODO
+            if (endResults.isEmpty()) {
+                // TODO
+            } else {
+                endResults.forEach(result -> {
+                    if (result.value(PLAYER_VALUE) != targetValue) {
+                        proposal.proposedDisallocations().addTranslated(list(result));
+                        proposal.proposedAllocationsWithNewSupplies().addTranslated(
+                                Lists.<Object>list(proposal.subject().demandOfAssignment(result)
+                                                , proposal.subject().supplyOfAssignment(result))
+                                        .withAppended(proposal.subject().headerView().stream().map(a -> {
+                                            if (a.equals(PLAYER_VALUE)) {
+                                                return targetValue;
+                                            }
+                                            return null;
+                                        }).toList())
+                        );
+                    }
+                });
+            }
         }
         return proposal;
     }
