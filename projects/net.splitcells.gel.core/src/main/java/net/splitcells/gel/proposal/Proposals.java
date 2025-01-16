@@ -18,7 +18,6 @@ package net.splitcells.gel.proposal;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.Table;
-import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.solution.Solution;
 
@@ -29,12 +28,6 @@ import static net.splitcells.gel.data.table.Tables.table2;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 
 public class Proposals implements Proposal {
-    /**
-     * This is an existing {@link Line} of {@link Assignments#supplies()}.
-     * It's values are used as default values for the new {@link Line} to be created.
-     */
-    public static Attribute<Line> NEW_SUPPLY_BASE = attribute(Line.class, "base for new supply");
-    public static Attribute<Line> EXISTING_DEMAND = attribute(Line.class, "Existing Demand");
 
     public static Proposal proposal(Solution subject) {
         return new Proposals(subject);

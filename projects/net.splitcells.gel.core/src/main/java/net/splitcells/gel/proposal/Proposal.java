@@ -44,6 +44,12 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 public interface Proposal {
 
     Attribute<Line> CONTEXT_ASSIGNMENT = attribute(Line.class, "context assignment");
+    /**
+     * This is an existing {@link Line} of {@link Assignments#supplies()}.
+     * It's values are used as default values for the new {@link Line} to be created.
+     */
+    Attribute<Line> NEW_SUPPLY_BASE = attribute(Line.class, "base for new supply");
+    Attribute<Line> EXISTING_DEMAND = attribute(Line.class, "Existing Demand");
 
     /**
      * TODO This method should return a table with {@link Line} {@link Attribute} only.
@@ -66,7 +72,7 @@ public interface Proposal {
      * in order to get a better {@link Solution}.
      * With this often the domain of the demands is represented,
      * when one compares this concept to the constraint satisfaction problem.</p>
-     * <p>The {@link Table#headerView()} consists of {@link Proposals#EXISTING_DEMAND}, {@link Proposals#NEW_SUPPLY_BASE} and
+     * <p>The {@link Table#headerView()} consists of {@link Proposal#EXISTING_DEMAND}, {@link Proposal#NEW_SUPPLY_BASE} and
      * {@link Solution#headerView()} of {@link Solution#supplies()}.
      * Such {@link Solution#supplies()} do not exist and have to be created with methods like
      * {@link AssignmentsLiveView#addTranslatedSupply(ListView)}.</p>
