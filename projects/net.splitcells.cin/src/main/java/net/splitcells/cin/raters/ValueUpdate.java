@@ -29,6 +29,8 @@ import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import net.splitcells.gel.rating.rater.lib.GroupingRater;
 
+import java.util.Optional;
+
 import static net.splitcells.cin.EntityManager.*;
 import static net.splitcells.dem.data.order.Comparators.ASCENDING_INTEGERS;
 import static net.splitcells.dem.data.set.list.Lists.*;
@@ -230,6 +232,7 @@ public class ValueUpdate implements GroupingRater {
             final List<Line> valueSets;
             final List<Line> startResults;
             final List<Line> endResults;
+            final Optional<Line> anyEndTimeEvent;
             final var times = proposal.contextAssignments().referencedValues(CONTEXT_ASSIGNMENT, TIME)
                     .distinct()
                     .sorted(ASCENDING_INTEGERS)
@@ -316,7 +319,24 @@ public class ValueUpdate implements GroupingRater {
                 endResults.forEach(er -> proposal.proposedDisallocations().addTranslated(list(er)));
             }
             if (endResults.isEmpty()) {
-                // TODO
+                anyEndTimeEvent = proposal.contextAssignments()
+                        .linesByReference(CONTEXT_ASSIGNMENT)
+                        .filter(line -> line.value(PLAYER_ATTRIBUTE) == playerAttribute
+                                && line.value(TIME) == endTime)
+                        .findAny();
+                if (anyEndTimeEvent.isPresent()) {
+                    proposal.proposedAllocationsWithNewSupplies().addTranslated(
+                            Lists.<Object>list(proposal.subject().demandOfAssignment(anyEndTimeEvent.orElseThrow())
+                                            , proposal.subject().supplyOfAssignment(anyEndTimeEvent.orElseThrow()))
+                                    .withAppended(proposal.subject().headerView().stream().map(a -> {
+                                        if (a.equals(PLAYER_VALUE)) {
+                                            return targetValue;
+                                        } else if (a.equals(EVENT_TYPE)) {
+                                            return RESULT_VALUE;
+                                        }
+                                        return null;
+                                    }).toList()));
+                }
             } else {
                 endResults.forEach(result -> {
                     if (result.value(PLAYER_VALUE) != targetValue) {
