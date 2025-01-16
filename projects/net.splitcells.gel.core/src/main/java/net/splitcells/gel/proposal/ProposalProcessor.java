@@ -76,16 +76,9 @@ public class ProposalProcessor {
      */
     public static List<Proposal> proposalsForGroups(Solution subject, List<Constraint> constraintPath, List<Line> relevantDemands) {
         final var rootProposal = proposal(subject);
-        subject.allocations().unorderedLinesStream()
-                .forEach(allocation -> {
-                    final var origDemand = subject.allocations().demandOfAssignment(allocation);
-                    final var origSupply = subject.allocations().supplyOfAssignment(allocation);
-                    final var demand = rootProposal.contextAllocationsOld().demands().add(origDemand);
-                    final var supply = rootProposal.contextAllocationsOld().supplies().add(origSupply);
-                    rootProposal.contextAllocationsOld().assign(demand, supply);
-                    rootProposal.contextAssignments().addTranslated(list(allocation));
-                });
-        relevantDemands.forEach(d -> rootProposal.proposedAllocations().demands().add(d));
+        subject.allocations().unorderedLinesStream().forEach(allocation -> {
+            rootProposal.contextAssignments().addTranslated(list(allocation));
+        });
         constraintPath.get(0).propose(rootProposal);
         Map<GroupId, Proposal> currentProposal = Maps.<GroupId, Proposal>map().with(constraintPath.get(0).injectionGroup(), rootProposal);
         final List<Map<GroupId, Proposal>> proposals = list(currentProposal);
