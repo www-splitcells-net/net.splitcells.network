@@ -43,6 +43,9 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
  */
 public interface Proposal {
 
+    /**
+     * These are {@link Constraint#lineProcessing()} elements.
+     */
     Attribute<Line> CONTEXT_ASSIGNMENT = attribute(Line.class, "context assignment");
     /**
      * This is an existing {@link Line} of {@link Assignments#supplies()}.

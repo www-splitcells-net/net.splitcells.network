@@ -62,7 +62,7 @@ public class ProposalProcessor {
     }
 
     public static List<Proposal> proposalsForGroups(Solution subject, List<Constraint> constraintPath) {
-        return proposalsForGroups(subject, constraintPath, subject.demands().unorderedLines());
+        return proposalsForGroups(subject, constraintPath, subject.constraint().lineProcessing().unorderedLines());
     }
 
     /**
@@ -72,13 +72,13 @@ public class ProposalProcessor {
      *
      * @param subject         This is the {@link Solution} for which suggestions for improvement are created.
      * @param constraintPath  These suggestions are only create for this path of {@link Constraint#childrenView()}.
-     * @param relevantDemands These demands are submitted for improvement.
+     * @param relevantLineProcessing These {@link Constraint#lineProcessing()} are submitted for improvement.
      * @return Creates a list of {@link Proposal}, where one is used for one {@link GroupId}.
      * The {@link GroupId} does not have to be of the root {@link Constraint} node.
      */
-    public static List<Proposal> proposalsForGroups(Solution subject, List<Constraint> constraintPath, List<Line> relevantDemands) {
+    public static List<Proposal> proposalsForGroups(Solution subject, List<Constraint> constraintPath, List<Line> relevantLineProcessing) {
         final var rootProposal = proposal(subject);
-        subject.allocations().unorderedLinesStream().forEach(allocation -> {
+        relevantLineProcessing.forEach(allocation -> {
             rootProposal.contextAssignments().addTranslated(list(allocation));
         });
         constraintPath.get(0).propose(rootProposal);
