@@ -16,12 +16,15 @@
 package net.splitcells.gel.proposal;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.data.set.map.Maps;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.solution.Solution;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.proposal.Proposals.proposal;
@@ -61,24 +64,32 @@ public class ProposalProcessor {
     }
 
     /**
-     * @param subject This is the {@link Solution} for which suggestions for improvement are created.
-     * @param constraintPath These suggestions are only create for this path of {@link Constraint#childrenView()}.
+     * The {@link Proposal} are created by submitting a {@link Proposal} to every {@link Constraint},
+     * where each submitted {@link Proposal} contains all {@link Line} of one {@link GroupId},
+     * located in the respective {@link Constraint}.
+     *
+     * @param subject         This is the {@link Solution} for which suggestions for improvement are created.
+     * @param constraintPath  These suggestions are only create for this path of {@link Constraint#childrenView()}.
      * @param relevantDemands These demands are submitted for improvement.
      * @return Creates a list of {@link Proposal}, where one is used for one {@link GroupId}.
      * The {@link GroupId} does not have to be of the root {@link Constraint} node.
      */
     public static List<Proposal> proposalsForGroups(Solution subject, List<Constraint> constraintPath, List<Line> relevantDemands) {
-        final var proposal = proposal(subject);
+        final var rootProposal = proposal(subject);
         subject.allocations().unorderedLinesStream()
                 .forEach(allocation -> {
                     final var origDemand = subject.allocations().demandOfAssignment(allocation);
                     final var origSupply = subject.allocations().supplyOfAssignment(allocation);
-                    final var demand = proposal.contextAllocationsOld().demands().add(origDemand);
-                    final var supply = proposal.contextAllocationsOld().supplies().add(origSupply);
-                    proposal.contextAllocationsOld().assign(demand, supply);
-                    proposal.contextAssignments().addTranslated(list(allocation));
+                    final var demand = rootProposal.contextAllocationsOld().demands().add(origDemand);
+                    final var supply = rootProposal.contextAllocationsOld().supplies().add(origSupply);
+                    rootProposal.contextAllocationsOld().assign(demand, supply);
+                    rootProposal.contextAssignments().addTranslated(list(allocation));
                 });
-        relevantDemands.forEach(d -> proposal.proposedAllocations().demands().add(d));
+        relevantDemands.forEach(d -> rootProposal.proposedAllocations().demands().add(d));
+        Constraint currentConstraint = constraintPath.get(0);
+        currentConstraint.propose(rootProposal);
+        Map<GroupId, Proposal> currentProposals = Maps.<GroupId, Proposal>map().with(currentConstraint.injectionGroup(), rootProposal);
+        final List<Map<GroupId, Proposal>> proposals = list();
         throw notImplementedYet();
     }
 }
