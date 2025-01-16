@@ -86,10 +86,19 @@ public class ProposalProcessor {
                     rootProposal.contextAssignments().addTranslated(list(allocation));
                 });
         relevantDemands.forEach(d -> rootProposal.proposedAllocations().demands().add(d));
-        Constraint currentConstraint = constraintPath.get(0);
-        currentConstraint.propose(rootProposal);
-        Map<GroupId, Proposal> currentProposals = Maps.<GroupId, Proposal>map().with(currentConstraint.injectionGroup(), rootProposal);
-        final List<Map<GroupId, Proposal>> proposals = list();
+        constraintPath.get(0).propose(rootProposal);
+        Map<GroupId, Proposal> currentProposal = Maps.<GroupId, Proposal>map().with(constraintPath.get(0).injectionGroup(), rootProposal);
+        final List<Map<GroupId, Proposal>> proposals = list(currentProposal);
+        for (int i = 1; i < constraintPath.size(); ++i) {
+            final var previousProposal = proposals.get(i - 1);
+            currentProposal = map();
+            final var currentConstraint = constraintPath.get(i);
+            previousProposal.entrySet().forEach(p -> {
+                // TODO
+            });
+            proposals.add(currentProposal);
+            currentProposal.values().forEach(currentConstraint::propose);
+        }
         throw notImplementedYet();
     }
 }
