@@ -54,4 +54,19 @@ public class ProposalProcessor {
         constraintPath.forEach(constraint -> constraint.propose(proposal));
         return proposal;
     }
+
+    public static List<Proposal> proposalsForGroups(Solution subject, List<Constraint> constraintPath) {
+        return proposalsForGroups(subject, constraintPath, subject.demands().unorderedLines());
+    }
+
+    /**
+     * @param subject This is the {@link Solution} for which suggestions for improvement are created.
+     * @param constraintPath These suggestions are only create for this path of {@link Constraint#childrenView()}.
+     * @param relevantDemands These demands are submitted for improvement.
+     * @return Creates a list of {@link Proposal}, where one is used for one {@link GroupId}.
+     * The {@link GroupId} does not have to be of the root {@link Constraint} node.
+     */
+    public static List<Proposal> proposalsForGroups(Solution subject, List<Constraint> constraintPath, List<Line> relevantDemands) {
+        throw notImplementedYet();
+    }
 }
