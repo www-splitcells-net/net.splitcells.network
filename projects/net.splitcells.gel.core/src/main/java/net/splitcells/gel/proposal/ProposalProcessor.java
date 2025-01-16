@@ -72,16 +72,17 @@ public class ProposalProcessor {
      *
      * @param subject         This is the {@link Solution} for which suggestions for improvement are created.
      * @param constraintPath  These suggestions are only create for this path of {@link Constraint#childrenView()}.
-     * @param relevantLineProcessing These {@link Constraint#lineProcessing()} are submitted for improvement.
+     * @param relevantAllocations These {@link Solution#allocations()} are submitted for improvement.
      * @return Creates a list of {@link Proposal}, where one is used for one {@link GroupId}.
      * The {@link GroupId} does not have to be of the root {@link Constraint} node.
      */
-    public static List<Proposal> proposalsForGroups(Solution subject, List<Constraint> constraintPath, List<Line> relevantLineProcessing) {
+    public static List<Proposal> proposalsForGroups(Solution subject, List<Constraint> constraintPath, List<Line> relevantAllocations) {
         final var rootProposal = proposal(subject);
-        relevantLineProcessing.forEach(allocation -> {
+        relevantAllocations.forEach(allocation -> {
             rootProposal.contextAssignments().addTranslated(list(allocation));
         });
         constraintPath.get(0).propose(rootProposal);
+        // TODO Initialize proposals correctly.
         final List<Map<GroupId, Proposal>> proposals = list(
                 Maps.<GroupId, Proposal>map().with(constraintPath.get(0).injectionGroup(), rootProposal));
         for (int i = 1; i < constraintPath.size(); ++i) {
