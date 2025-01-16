@@ -39,6 +39,7 @@ public class ProposalProcessor {
      * @param relevantDemands
      * @return
      */
+    @Deprecated
     public static Proposal propose(Solution subject, List<Constraint> constraintPath, List<Line> relevantDemands) {
         final var proposal = proposal(subject);
         subject.allocations().unorderedLinesStream()
