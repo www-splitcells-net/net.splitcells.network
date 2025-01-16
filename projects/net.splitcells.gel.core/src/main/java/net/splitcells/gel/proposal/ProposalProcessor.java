@@ -21,6 +21,7 @@ import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.solution.Solution;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.proposal.Proposals.proposal;
@@ -67,6 +68,17 @@ public class ProposalProcessor {
      * The {@link GroupId} does not have to be of the root {@link Constraint} node.
      */
     public static List<Proposal> proposalsForGroups(Solution subject, List<Constraint> constraintPath, List<Line> relevantDemands) {
+        final var proposal = proposal(subject);
+        subject.allocations().unorderedLinesStream()
+                .forEach(allocation -> {
+                    final var origDemand = subject.allocations().demandOfAssignment(allocation);
+                    final var origSupply = subject.allocations().supplyOfAssignment(allocation);
+                    final var demand = proposal.contextAllocationsOld().demands().add(origDemand);
+                    final var supply = proposal.contextAllocationsOld().supplies().add(origSupply);
+                    proposal.contextAllocationsOld().assign(demand, supply);
+                    proposal.contextAssignments().addTranslated(list(allocation));
+                });
+        relevantDemands.forEach(d -> proposal.proposedAllocations().demands().add(d));
         throw notImplementedYet();
     }
 }
