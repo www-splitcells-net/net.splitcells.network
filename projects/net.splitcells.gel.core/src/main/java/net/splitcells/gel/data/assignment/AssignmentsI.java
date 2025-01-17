@@ -50,6 +50,7 @@ import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.gel.data.table.AfterAdditionSubscriber;
 import net.splitcells.gel.data.table.BeforeRemovalSubscriber;
+import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
 /**
@@ -82,7 +83,10 @@ public class AssignmentsI implements Assignments {
     private final Table supplies;
     private final Table supplies_used;
     private final Table supplies_free;
-    private final boolean allowsSuppliesOnDemand = false;
+    /**
+     * TODO Make this configurable. This is needed for {@link Proposal}.
+     */
+    private final boolean allowsSuppliesOnDemand = true;
 
     private final Table demands;
     private final Table demands_used;

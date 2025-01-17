@@ -27,6 +27,7 @@ import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.LinePointer;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.column.ColumnView;
+import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -49,7 +50,10 @@ public class AllocationsI implements Allocations {
     private final String name;
     private final Discoverable parent;
     private final Table allocations;
-    private final boolean allowsSuppliesOnDemand = false;
+    /**
+     * TODO Make this configurable. This is needed for {@link Proposal}.
+     */
+    private final boolean allowsSuppliesOnDemand = true;
     /**
      * Maps {@link Line#index()} of {@link #allocations} to {@link AllocationState},
      * in order to determine, which data is present.
