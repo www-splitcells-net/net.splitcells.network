@@ -570,7 +570,7 @@ public interface View extends Discoverable, Domable, Identifiable {
      * that are contained in the {@link Line} of the lineAttribute's {@link ColumnView}.
      */
     default <T> Flow<Line> linesByReference(Attribute<Line> lineAttribute) {
-        return columnView(lineAttribute).flow().map(l -> l.value(lineAttribute));
+        return columnView(lineAttribute).flow().map(l -> l);
     }
 
     /**
