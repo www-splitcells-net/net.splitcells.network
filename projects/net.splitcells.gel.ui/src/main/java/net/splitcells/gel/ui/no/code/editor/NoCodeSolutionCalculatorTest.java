@@ -25,6 +25,7 @@ import static net.splitcells.dem.utils.StringUtils.requireNonEmptyString;
 import static net.splitcells.website.server.client.HtmlClients.htmlClient;
 
 public class NoCodeSolutionCalculatorTest {
+
     public static Runnable TEST_OPTIMIZATION_GUI = () -> {
         try (final var browser = htmlClient()) {
             try (final var tab = browser.openTab("/net/splitcells/gel/ui/no/code/editor/index.html")) {
@@ -40,6 +41,12 @@ public class NoCodeSolutionCalculatorTest {
         }
     };
 
+    /**
+     * <p>TODO This test should be made deterministic.</p>
+     * <p>TODO Additionally a random tests with probabilistic successes could be supported as well.
+     * It should be stored in the network log, how often the test failed or succeeded yet.
+     * Another job should check the ratio between failed tests and succeeded ones.</p>
+     */
     @IntegrationTest
     public void testOptimization() {
         process(TEST_OPTIMIZATION_GUI, GelUiCell.class).requireErrorFree();
