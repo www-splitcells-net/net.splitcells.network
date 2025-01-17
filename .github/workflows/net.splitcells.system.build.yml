@@ -31,7 +31,7 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE
           mvn install
-      - uses: actions/checkout@main
+      - uses: actions/checkout@master
         with:
           repository: www-splitcells-net/net.splitcells.network.bom
       - name: Build BOM
