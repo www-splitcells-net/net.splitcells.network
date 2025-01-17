@@ -23,7 +23,7 @@ import static net.splitcells.cin.deprecated.World.worldHistory;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireIllegalDefaultConstructor;
-import static net.splitcells.gel.proposal.ProposalProcessor.propose;
+import static net.splitcells.gel.proposal.Proposals.propose;
 
 public class WorldTest {
 

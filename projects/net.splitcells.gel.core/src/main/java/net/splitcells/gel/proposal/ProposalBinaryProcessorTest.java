@@ -23,14 +23,10 @@ import net.splitcells.gel.constraint.Constraint;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.requireIllegalDefaultConstructor;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
-import static net.splitcells.gel.proposal.ProposalProcessor.propose;
+import static net.splitcells.gel.proposal.Proposals.propose;
 import static net.splitcells.gel.rating.rater.lib.AllSame.allSame;
 
 public class ProposalBinaryProcessorTest {
-    @UnitTest
-    public void testIllegalConstructor() {
-        requireIllegalDefaultConstructor(ProposalProcessor.class);
-    }
 
     @UnitTest
     public void testProposeViaConstraintPath() {

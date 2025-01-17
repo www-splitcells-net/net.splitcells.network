@@ -32,7 +32,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.data.set.map.Pair.pair;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.gel.constraint.Constraint.*;
-import static net.splitcells.gel.proposal.ProposalProcessor.propose;
+import static net.splitcells.gel.proposal.Proposals.propose;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
 public class DemandSelectors {

@@ -16,27 +16,19 @@
 package net.splitcells.cin.raters;
 
 import net.splitcells.dem.testing.annotations.UnitTest;
-import net.splitcells.gel.constraint.Constraint;
-import net.splitcells.gel.data.view.Line;
-import net.splitcells.gel.solution.Solution;
 
 import static net.splitcells.cin.EntityManager.ADD_VALUE;
-import static net.splitcells.cin.EntityManager.EVENT_SOURCE;
 import static net.splitcells.cin.EntityManager.EVENT_TYPE;
-import static net.splitcells.cin.EntityManager.EXISTENCE_COST_EVENT_SOURCE;
 import static net.splitcells.cin.EntityManager.PLAYER_ATTRIBUTE;
 import static net.splitcells.cin.EntityManager.PLAYER_ENERGY;
 import static net.splitcells.cin.EntityManager.PLAYER_VALUE;
 import static net.splitcells.cin.EntityManager.RESULT_VALUE;
 import static net.splitcells.cin.EntityManager.SET_VALUE;
 import static net.splitcells.cin.EntityManager.TIME;
-import static net.splitcells.cin.raters.ExistenceCost.existenceCost;
-import static net.splitcells.cin.raters.TimeSteps.overlappingTimeSteps;
 import static net.splitcells.cin.raters.ValueUpdate.valueUpdate;
-import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.gel.proposal.ProposalProcessor.propose;
+import static net.splitcells.gel.proposal.Proposals.propose;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;

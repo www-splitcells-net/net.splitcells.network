@@ -121,6 +121,31 @@ public class Proposals implements Proposal {
     }
 
     /**
+     * TODO This is a simplified implementation, that does not working on many corner cases.
+     * For instance, {@link GroupId} are not considered at all.
+     *
+     * @param subject
+     * @param constraintPath
+     * @param relevantDemands
+     * @return
+     */
+    @Deprecated
+    public static Proposal propose(Solution subject, List<Constraint> constraintPath, List<Line> relevantDemands) {
+        final var proposal = proposal(subject);
+        subject.allocations().unorderedLinesStream()
+                .forEach(a -> {
+                    final var origDemand = subject.allocations().demandOfAssignment(a);
+                    final var origSupply = subject.allocations().supplyOfAssignment(a);
+                    final var demand = proposal.contextAllocationsOld().demands().add(origDemand);
+                    final var supply = proposal.contextAllocationsOld().supplies().add(origSupply);
+                    proposal.contextAllocationsOld().assign(demand, supply);
+                });
+        relevantDemands.forEach(d -> proposal.proposedAllocations().demands().add(d));
+        constraintPath.forEach(constraint -> constraint.propose(proposal));
+        return proposal;
+    }
+
+    /**
      * @return These {@link Assignments} are proposed in order to get a better {@link Solution}.
      */
     @Override
