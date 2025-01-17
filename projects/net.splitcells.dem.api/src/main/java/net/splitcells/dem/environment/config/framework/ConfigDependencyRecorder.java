@@ -52,13 +52,9 @@ public class ConfigDependencyRecorder {
 
     public void recordDependency(Class<? extends Option<? extends Object>> from
             , Class<? extends Option<? extends Object>> to) {
-        Set<Class<? extends Option<? extends Object>>> targets;
-        targets = dependencies.get(from);
-        if (targets == null) {
-            targets = setLegacyWrapper(new java.util.LinkedHashSet<>());
-            dependencies.put(from, targets);
-        }
-        targets.add(to);
+        dependencies
+                .computeIfAbsent(from, f -> setLegacyWrapper(new java.util.LinkedHashSet<>()))
+                .add(to);
     }
 
     public Map<Class<? extends Option<? extends Object>>, Set<Class<? extends Option<? extends Object>>>> dependencies() {
