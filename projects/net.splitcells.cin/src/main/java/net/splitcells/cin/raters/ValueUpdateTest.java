@@ -60,7 +60,7 @@ public class ValueUpdateTest {
         testSubject.constraint().rating().requireEqualsTo(cost(1));
         final var proposalsForGroups0 = proposalsForGroups(testSubject
                 , list(testSubject.constraint(), testSubject.constraint().child(0))
-                , testSubject.demandsFree().orderedLines());
+                , testSubject.unorderedLines());
         proposalsForGroups0.get(0).contextAssignments().unorderedLines().requireSizeOf(1);
         proposalsForGroups0.get(0).proposedAllocationsWithNewSupplies().unorderedLines().requireEmpty();
         proposalsForGroups0.get(0).proposedDisallocations().unorderedLines().requireEmpty();
