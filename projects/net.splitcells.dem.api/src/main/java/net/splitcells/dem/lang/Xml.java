@@ -262,14 +262,7 @@ public final class Xml {
     }
 
     public static String toPrettyString(Node arg) {
-        StreamResult result = new StreamResult(new StringWriter());
-        DOMSource source = new DOMSource(arg);
-        try {
-            TRANSFORMER.transform(source, result);
-        } catch (TransformerException e) {
-            throw new RuntimeException(e);
-        }
-        return result.getWriter().toString();
+        return toDocumentString(arg);
     }
 
     public static Document parse(Path file) {
