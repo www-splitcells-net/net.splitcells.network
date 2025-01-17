@@ -180,12 +180,12 @@ public final class Xml {
 
     @Deprecated
     public static Element element2(String name, Stream<Node> nodes) {
-        return elementWithChildren(elementWithChildren(name), nodes.collect(toList()));
+        return elementWithChildren(elementWithChildren(name), nodes.toList());
     }
 
     @Deprecated
     public static Element elementWithChildren(String name, Stream<Node> nodes) {
-        return elementWithChildren(elementWithChildren(name), nodes.collect(toList()));
+        return elementWithChildren(elementWithChildren(name), nodes.toList());
     }
 
     @Deprecated
