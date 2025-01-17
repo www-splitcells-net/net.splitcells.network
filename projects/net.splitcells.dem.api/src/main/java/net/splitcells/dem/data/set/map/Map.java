@@ -16,8 +16,12 @@
 package net.splitcells.dem.data.set.map;
 
 import net.splitcells.dem.data.Flow;
+import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
+import java.util.Collection;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -226,5 +230,9 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
 
     default Map<Key, Value> shallowCopy() {
         return map(this);
+    }
+
+    default List<Value> valueList() {
+        return Lists.listWithValuesOf(values());
     }
 }
