@@ -275,14 +275,9 @@ public class ValueUpdate implements GroupingRater {
                         / startResults.size();
             }
             if (endResults.isEmpty()) {
-                endResult = 0;
                 isDeleted = true;
             } else {
                 isDeleted = false;
-                endResult = endResults.stream()
-                        .map(line -> line.value(PLAYER_VALUE))
-                        .reduce(Integer::sum)
-                        .orElse(0) / endResults.size();
             }
             valueAdds = proposal.contextAssignments()
                     .linesByReference(CONTEXT_ASSIGNMENT)
