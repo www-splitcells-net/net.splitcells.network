@@ -31,10 +31,10 @@ import static net.splitcells.dem.utils.ExecutionException.executionException;
  * Processes {@link #events}, that are sent to an  {@link #subjects} asynchronously via multiple {@link EffectWorker}.
  * This therefore provides a way to process events on multiple threads at once.
  *
- * @param <Subject> The subjects' class that processes the given events asynchronously.
+ * @param <SUBJECT> The subjects' class that processes the given events asynchronously.
  */
 @JavaLegacyArtifact
-public class EffectWorkerPool<Subject> implements ExplicitEffect<Subject> {
+public class EffectWorkerPool<SUBJECT> implements ExplicitEffect<SUBJECT> {
     public static <S> EffectWorkerPool<S> effectWorkerPool(Supplier<S> subjects) {
         return effectWorkerPool(subjects, 100);
     }
@@ -43,17 +43,17 @@ public class EffectWorkerPool<Subject> implements ExplicitEffect<Subject> {
         return new EffectWorkerPool<>(subjects, maxSubjectCount);
     }
 
-    final Supplier<Subject> subjects;
+    final Supplier<SUBJECT> subjects;
     /**
      * {@link ArrayBlockingQueue} is used, because it is assumed to be one of the fastest ones in this context.
      */
-    private final ArrayBlockingQueue<Consumer<Subject>> events;
+    private final ArrayBlockingQueue<Consumer<SUBJECT>> events;
 
-    final List<EffectWorker<Subject>> effectWorkers = list();
+    final List<EffectWorker<SUBJECT>> effectWorkers = list();
 
     int nextWorker = 0;
 
-    private EffectWorkerPool(Supplier<Subject> argSubjects, int maxSubjectCount) {
+    private EffectWorkerPool(Supplier<SUBJECT> argSubjects, int maxSubjectCount) {
         if (maxSubjectCount < 1) {
             throw executionException("MaxSubjectCount should be bigger than zero, but is " + maxSubjectCount + " instead.");
         }
@@ -63,7 +63,7 @@ public class EffectWorkerPool<Subject> implements ExplicitEffect<Subject> {
     }
 
     @Override
-    public void affect(Consumer<Subject> event) {
+    public void affect(Consumer<SUBJECT> event) {
         events.add(event);
     }
 }
