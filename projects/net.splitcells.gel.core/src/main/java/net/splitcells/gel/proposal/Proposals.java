@@ -16,6 +16,7 @@
 package net.splitcells.gel.proposal;
 
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.SetT;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
@@ -32,8 +33,7 @@ import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
-import static net.splitcells.gel.constraint.Constraint.RESULTING_CONSTRAINT_GROUP;
+import static net.splitcells.gel.constraint.Constraint.*;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
 import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.table.Tables.table2;
@@ -42,7 +42,7 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 public class Proposals implements Proposal {
 
     public static List<Proposal> proposalsForGroups(Solution subject, List<Constraint> constraintPath) {
-        return proposalsForGroups(subject, constraintPath, subject.constraint().lineProcessing().unorderedLines());
+        return proposalsForGroups(subject, constraintPath, subject.unorderedLines());
     }
 
     /**
@@ -56,12 +56,12 @@ public class Proposals implements Proposal {
      * @return Creates a list of {@link Proposal}, where one is used for one {@link GroupId}.
      * The {@link GroupId} does not have to be of the root {@link Constraint} node.
      */
-    public static List<Proposal> proposalsForGroups(Solution subject, List<Constraint> constraintPath, List<Line> relevantAllocations) {
+    public static List<Proposal> proposalsForGroups(Solution subject, List<Constraint> constraintPath, SetT<Line> relevantAllocations) {
         final List<Map<GroupId, Proposal>> proposals = list();
         final var rootConstraint = constraintPath.get(0);
         proposals.add(proposalForGroup(subject
                 , Sets.setOfUniques(rootConstraint.injectionGroup())
-                , rootConstraint.lineProcessing().unorderedLinesStream()
+                , rootConstraint.lineProcessing().unorderedLinesStream().filter(lp -> relevantAllocations.contains(lp.value(LINE)))
                 , rootConstraint));
         for (int i = 1; i < constraintPath.size(); ++i) {
             proposals.add(proposalForGroup(subject
@@ -86,7 +86,7 @@ public class Proposals implements Proposal {
                 currentProposals.put(resultingGroup, proposal(subject));
             }
             proposal = currentProposals.get(resultingGroup);
-            proposal.contextAssignments().addTranslated(list(l));
+            proposal.contextAssignments().addTranslated(list(l.value(LINE)));
         });
         currentProposals.values().forEach(currentConstraint::propose);
         return currentProposals;
