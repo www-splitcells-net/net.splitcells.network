@@ -104,8 +104,8 @@ public class ProposalProcessor {
                             proposal.contextAssignments().addTranslated(list(l));
                         });
             });
-            proposals.add(currentProposals);
             currentProposals.values().forEach(currentConstraint::propose);
+            proposals.add(currentProposals);
         }
         throw notImplementedYet();
     }
