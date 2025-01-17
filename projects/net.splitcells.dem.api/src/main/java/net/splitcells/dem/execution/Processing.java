@@ -68,7 +68,7 @@ public class Processing<Argument, Result> {
      * @param argResult
      * @return
      */
-    public Processing withResult(Result argResult) {
+    public Processing<Argument, Result> withResult(Result argResult) {
         result = argResult;
         resultWaiter.release();
         return this;
