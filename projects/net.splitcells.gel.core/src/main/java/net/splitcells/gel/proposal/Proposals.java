@@ -15,19 +15,82 @@
  */
 package net.splitcells.gel.proposal;
 
+import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.Sets;
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.solution.Solution;
 
+import java.util.stream.Stream;
+
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
+import static net.splitcells.gel.constraint.Constraint.RESULTING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
 import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.table.Tables.table2;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 
 public class Proposals implements Proposal {
+
+    public static List<Proposal> proposalsForGroups(Solution subject, List<Constraint> constraintPath) {
+        return proposalsForGroups(subject, constraintPath, subject.constraint().lineProcessing().unorderedLines());
+    }
+
+    /**
+     * The {@link Proposal} are created by submitting a {@link Proposal} to every {@link Constraint},
+     * where each submitted {@link Proposal} contains all {@link Line} of one {@link GroupId},
+     * located in the respective {@link Constraint}.
+     *
+     * @param subject             This is the {@link Solution} for which suggestions for improvement are created.
+     * @param constraintPath      These suggestions are only create for this path of {@link Constraint#childrenView()}.
+     * @param relevantAllocations These {@link Solution#allocations()} are submitted for improvement.
+     * @return Creates a list of {@link Proposal}, where one is used for one {@link GroupId}.
+     * The {@link GroupId} does not have to be of the root {@link Constraint} node.
+     */
+    public static List<Proposal> proposalsForGroups(Solution subject, List<Constraint> constraintPath, List<Line> relevantAllocations) {
+        final List<Map<GroupId, Proposal>> proposals = list();
+        final var rootConstraint = constraintPath.get(0);
+        proposals.add(proposalForGroup(subject
+                , Sets.setOfUniques(rootConstraint.injectionGroup())
+                , rootConstraint.lineProcessing().unorderedLinesStream()
+                , rootConstraint));
+        for (int i = 1; i < constraintPath.size(); ++i) {
+            proposals.add(proposalForGroup(subject
+                    , proposals.get(i - 1).keySet2()
+                    , constraintPath.get(i).lineProcessing().unorderedLinesStream()
+                    , constraintPath.get(i)));
+        }
+        return proposals.flow().map(Map::valueList).reduce(List::withAppended).orElseThrow();
+    }
+
+    private static Map<GroupId, Proposal> proposalForGroup(Solution subject, Set<GroupId> incomingGroups, Stream<Line> lineProcessing, Constraint currentConstraint) {
+        return proposalForGroup(subject, lineProcessing.filter(l -> incomingGroups.has(l.value(INCOMING_CONSTRAINT_GROUP)))
+                , currentConstraint);
+    }
+
+    private static Map<GroupId, Proposal> proposalForGroup(Solution subject, Stream<Line> lineProcessing, Constraint currentConstraint) {
+        final Map<GroupId, Proposal> currentProposals = map();
+        lineProcessing.forEach(l -> {
+            final var resultingGroup = l.value(RESULTING_CONSTRAINT_GROUP);
+            final Proposal proposal;
+            if (!currentProposals.containsKey(resultingGroup)) {
+                currentProposals.put(resultingGroup, proposal(subject));
+            }
+            proposal = currentProposals.get(resultingGroup);
+            proposal.contextAssignments().addTranslated(list(l));
+        });
+        currentProposals.values().forEach(currentConstraint::propose);
+        return currentProposals;
+    }
 
     public static Proposal proposal(Solution subject) {
         return new Proposals(subject);
