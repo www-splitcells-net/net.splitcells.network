@@ -39,7 +39,7 @@ public class EffectWorker<Subject> implements ExplicitEffect<Subject> {
     }
 
     public static <S> EffectWorker<S> effectWorker(S subject, BlockingQueue<Consumer<S>> events) {
-        return new <S>EffectWorker(subject, events);
+        return new EffectWorker<>(subject, events);
     }
 
     private final BlockingQueue<Consumer<Subject>> events;

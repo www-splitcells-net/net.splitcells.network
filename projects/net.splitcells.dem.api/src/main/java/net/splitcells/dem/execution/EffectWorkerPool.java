@@ -40,7 +40,7 @@ public class EffectWorkerPool<Subject> implements ExplicitEffect<Subject> {
     }
 
     public static <S> EffectWorkerPool<S> effectWorkerPool(Supplier<S> subjects, int maxSubjectCount) {
-        return new EffectWorkerPool<S>(subjects, maxSubjectCount);
+        return new EffectWorkerPool<>(subjects, maxSubjectCount);
     }
 
     final Supplier<Subject> subjects;
@@ -49,7 +49,7 @@ public class EffectWorkerPool<Subject> implements ExplicitEffect<Subject> {
      */
     private final ArrayBlockingQueue<Consumer<Subject>> events;
 
-    final List<EffectWorker> effectWorkers = list();
+    final List<EffectWorker<Subject>> effectWorkers = list();
 
     int nextWorker = 0;
 
