@@ -177,11 +177,13 @@ public class TableI implements Table {
     public <T> ColumnView<T> columnView(Attribute<T> attribute) {
         if (ENFORCING_UNIT_CONSISTENCY) {
             describedBool(headerView().contains(attribute)
-                    , () -> attributes.stream()
+                    , () -> "The table with the following attributes:"
+                            + attributes.stream()
                             .map(a -> a.name() + ", ")
                             .reduce((a, b) -> a + b)
                             .orElse("")
-                            + ": " + attribute.name())
+                            + "\n should contain " + attribute.name()
+                            + " but does not.")
                     .required();
             describedBool(typed_column_index.containsKey(attribute)
                     , () -> attribute.name() + " is not present in "
