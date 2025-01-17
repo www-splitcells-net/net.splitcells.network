@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.environment.resource;
 
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
@@ -86,25 +87,19 @@ public class HostUtilizationRecorder implements Service {
         }
         final var recorder = this;
         final var newRunner = new Thread(() -> {
-            try {
-                while (true) {
-                    synchronized (recorder) {
-                        times.add(clock.instant());
-                        final var heapMemoryUsage = memoryBean.getHeapMemoryUsage();
-                        final var nonHeapMemoryUsage = memoryBean.getNonHeapMemoryUsage();
-                        cpuCoreAverageLoad.add(osBeam.getSystemLoadAverage() / osBeam.getAvailableProcessors());
-                        maxMemory.add(runtime.maxMemory());
-                        usedMemory.add(runtime.totalMemory() - runtime.freeMemory());
-                        freeAllocatedMemory.add(runtime.freeMemory());
-                        usedHeapMemory.add(heapMemoryUsage.getUsed());
-                        usedNoneHeapMemory.add(nonHeapMemoryUsage.getUsed());
-                    }
-                    Thread.currentThread().sleep(1000);
+            while (true) {
+                synchronized (recorder) {
+                    times.add(clock.instant());
+                    final var heapMemoryUsage = memoryBean.getHeapMemoryUsage();
+                    final var nonHeapMemoryUsage = memoryBean.getNonHeapMemoryUsage();
+                    cpuCoreAverageLoad.add(osBeam.getSystemLoadAverage() / osBeam.getAvailableProcessors());
+                    maxMemory.add(runtime.maxMemory());
+                    usedMemory.add(runtime.totalMemory() - runtime.freeMemory());
+                    freeAllocatedMemory.add(runtime.freeMemory());
+                    usedHeapMemory.add(heapMemoryUsage.getUsed());
+                    usedNoneHeapMemory.add(nonHeapMemoryUsage.getUsed());
                 }
-            } catch (InterruptedException e) {
-                times.removeAll();
-                maxMemory.removeAll();
-                Thread.currentThread().interrupt();
+                Dem.sleepAtLeast(1000);
             }
         });
         newRunner.start();
