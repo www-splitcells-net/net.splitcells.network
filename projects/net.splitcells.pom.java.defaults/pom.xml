@@ -1205,7 +1205,6 @@
                     <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
-                        <version>0.8.11</version>
                         <executions>
                             <execution>
                                 <id>test-codecov-default-prepare-agent</id>
