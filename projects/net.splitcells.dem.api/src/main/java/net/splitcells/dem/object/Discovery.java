@@ -23,6 +23,9 @@ import net.splitcells.dem.resource.Trail;
 import java.util.Optional;
 
 /**
+ * <p>{@link Discovery} is used, in order to store and coordinate kind of long living objects in a tree structure.
+ * The ID of any node is defined by the {@link #path()} from the root to the object,
+ * where one path element corresponds to a node's {@link #name()}.</p>
  * <p>Generics are not used here,
  * because the types of a tree of {@link Discovery#value(Class)} are not intended to be uniform in any way.</p>
  */
@@ -35,6 +38,9 @@ public interface Discovery {
      */
     Map<String, Discovery> children();
 
+    /**
+     * @return This is the name of the node, which is the last element of the {@link #path()}.
+     */
     default String name() {
         final var content = path().content();
         if (content.isEmpty()) {
@@ -49,11 +55,39 @@ public interface Discovery {
      */
     Trail path();
 
+    /**
+     * This method fails, if there is already a {@link Discovery} in the tree with the same {@link #path()}.
+     *
+     * @param instance
+     * @param relativePath
+     * @return This is the new {@link Discovery} created for the given instance.
+     * The {@link #path()} of the new instance is the concatenation of this {@link #path()} and the given {@code relativePath}.
+     */
     Discovery createChild(Object instance, String... relativePath);
 
+    /**
+     * This is a helper function, that works like {@link #createChild(Object, String...)},
+     * with the difference, that all elements of {@code relativePath},
+     * that have a smaller index as {@code relativePathIndex} are ignored.
+     *
+     * @param instance
+     * @param relativePathIndex
+     * @param relativePath
+     * @return
+     */
     Discovery createChild(Object instance, int relativePathIndex, String... relativePath);
 
+    /**
+     * @param child Removes this {@code child} from {@link #children()} and thereby marks the {@link #value(Class)}
+     *              of {@code child} as disposable.
+     */
     void removeChild(Discovery child);
 
+    /**
+     *
+     * @param clazz
+     * @return This returns the kind of long living object, that is linked to this {@link Discovery}.
+     * @param <R>
+     */
     <R> Optional<R> value(Class<? extends R> clazz);
 }
