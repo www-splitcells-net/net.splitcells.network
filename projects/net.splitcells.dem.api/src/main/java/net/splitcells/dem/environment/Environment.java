@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.environment;
 
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.environment.config.framework.ConfigDependencyRecording;
 import net.splitcells.dem.environment.config.framework.Configuration;
 import net.splitcells.dem.environment.resource.Service;
@@ -44,7 +45,28 @@ public interface Environment extends EnvironmentV, Service {
 
     Configuration config();
 
-    Environment withCell(Class<? extends Cell> clazz);
+    /**
+     *
+     * @param clazz
+     * @return
+     * @param <T>
+     * @see #withCell(Class, Consumer) Works like this, but with an empty {@link Consumer}.
+     */
+    default <T extends Cell> Environment withCell(Class<T> clazz) {
+        return withCell(clazz, c -> {
+        });
+    }
+
+    /**
+     * This method is the base in order to declaratively configure {@link Dem#process(Runnable, Consumer)}.
+     *
+     * @param clazz This {@link Cell} class is instantiated and then applied as a configuration.
+     * @param cellConsumer After the configuration is applied,
+     *                     one can call optional configurations of the {@link Cell} in this {@link Consumer}.
+     * @return Returns this.
+     * @param <T> This is the type of the {@link Cell} being used for configuration.
+     */
+    <T extends Cell> Environment withCell(Class<T> clazz, Consumer<T> cellConsumer);
 
     default Environment withConfig(Consumer<Environment> configurator) {
         configurator.accept(this);

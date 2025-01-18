@@ -30,6 +30,7 @@ import net.splitcells.dem.resource.host.ProcessPath;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import static net.splitcells.dem.environment.config.framework.ConfigurationI.configuration;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
@@ -70,14 +71,16 @@ public class EnvironmentI implements Environment {
     }
 
     @Override
-    public Environment withCell(Class<? extends Cell> clazz) {
+    public <T extends Cell> Environment withCell(Class<T> clazz, Consumer<T> cellConsumer) {
         try {
             dependencyCellStack.add(clazz);
             if (dependencyCellStack.size() > 1) {
                 config.configValue(ConfigDependencyRecording.class).recordDependency(dependencyCellStack.get(dependencyCellStack.size() - 2)
                         , dependencyCellStack.get(dependencyCellStack.size() - 1));
             }
-            config().withInitedOption(clazz).configValue(clazz).accept(this);
+            final var cell = config().withInitedOption(clazz).configValue(clazz);
+            cell.accept(this);
+            cellConsumer.accept((T) cell);
         } finally {
             dependencyCellStack.remove(dependencyCellStack.size() - 1);
         }
