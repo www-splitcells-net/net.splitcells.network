@@ -34,6 +34,7 @@ import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
@@ -43,8 +44,13 @@ import static net.splitcells.website.server.processor.BinaryMessage.binaryMessag
  * <p>TODO This is not working.</p>
  */
 public class UserCommandProjectRendererExtension implements ProjectRendererExtension {
+    /**
+     * @deprecated This extension is not secure. This needs to be fixed, before it can be used.
+     * @return
+     */
+    @Deprecated
     public static UserCommandProjectRendererExtension userCommandRenderer() {
-        return new UserCommandProjectRendererExtension();
+        throw executionException("This extension is not secure. This needs to be fixed, before it can be used.");
     }
 
     private static final String RENDERING_PATH = "net/splitcells/shell/installed/index.html";
