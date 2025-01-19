@@ -87,7 +87,7 @@ public class WebsiteViaJar {
                         , configValue(GelDocFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/gel/"
                         , configValue(GelCoreFileSystem.class)))
-                .withAdditionalProject(projectConfig("/net/splitcells/gel/"
+                .withAdditionalProject(projectConfig("/net/splitcells/gel/ext/"
                         , configValue(GelExtFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/gel/ui/"
                         , configValue(GelUiFileSystem.class)))
