@@ -232,7 +232,7 @@ if __name__ == '__main__':
     if parsedArgs.verbose or parsedArgs.dryRun:
         print(executionScript)
     if configFileForExecutePodmanFlags.is_file():
-        executionScript = executionScript.replace('$additionalArguments \\', configFileForExecutePodmanFlags.read_text() + '\\')
+        executionScript = executionScript.replace('$additionalArguments \\', (configFileForExecutePodmanFlags.read_text() + '\\').replace('\n', ''))
     else:
         executionScript = executionScript.replace('$additionalArguments \\', '\\')
     # Execute program.
