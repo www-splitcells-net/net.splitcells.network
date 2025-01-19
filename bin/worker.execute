@@ -118,7 +118,7 @@ podman tag $executionName:latest codeberg.org/splitcells-net/$executionName:late
 podman push codeberg.org/splitcells-net/$executionName:latest
 """
 
-configFileForExecutePodmanFlags = Path.home().join(".config/net.splitcells.network.worker/execute.podman.flags")
+configFileForExecutePodmanFlags = Path.home().joinpath(".config/net.splitcells.network.worker/execute.podman.flags")
 
 def str2bool(arg):
     # The stringification of the truth boolean is `True` in Python 3 and therefore this capitalization is supported as well.
