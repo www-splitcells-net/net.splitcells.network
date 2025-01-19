@@ -83,7 +83,7 @@ public class WebsiteViaJar {
                         , configValue(DemFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/dem/"
                         , configValue(net.splitcells.dem.DemApiFileSystem.class)))
-                .withAdditionalProject(projectConfig("/net/splitcells/gel/"
+                .withAdditionalProject(projectConfig("/net/splitcells/gel/doc/"
                         , configValue(GelDocFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/gel/"
                         , configValue(GelCoreFileSystem.class)))
