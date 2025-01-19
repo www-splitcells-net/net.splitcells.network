@@ -270,7 +270,10 @@ public class ProjectsRendererI implements ProjectsRenderer {
     }
 
     /**
-     * TODO Only use one return statement.
+     * <p>TODO Only use one return statement.</p>
+     * <p>TODO In the past only {@link ProjectRenderer} with a fitting {@link ProjectRenderer#resourceRootPath2()} where considered.
+     * The problem with that is, that not all resource paths of a project are prefixed by the {@link ProjectRenderer#resourceRootPath2()}.
+     * This probably should be the case but is not. See GelExtFileSystem for instance.</p>
      *
      * @param path path
      * @return Rendering Result
@@ -288,26 +291,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
                 this.build();
                 return render("/");
             }
-            final var matchingRoots = renderers
-                    .stream()
-                    .filter(root -> normalizedPath.startsWith(root.resourceRootPath()))
-                    .collect(toList());
-            if (matchingRoots.isEmpty()) {
-                // System.out.println("No match for: " + path);
-                //System.out.println("Patterns: " + renderers.keySet());
-                final var render = fallbackRenderer.render(normalizedPath, this);
-                if (render.isPresent()) {
-                    return validateRenderingResult(render, Path.of(normalizedPath));
-                }
-                return validateRenderingResult(fallbackRenderer.render(normalizedPath, config, fallbackRenderer)
-                        , Path.of(normalizedPath));
-            }
-            // System.out.println("Match for: " + path);
-            // System.out.println("Match on: " + matchingRoots.get(0));
-            // Sort descending.
-            matchingRoots.sort((a, b) -> Integer.valueOf(a.resourceRootPath().length()).compareTo(b.resourceRootPath().length()));
-            matchingRoots.reverse();
-            final var renderingResult = matchingRoots.stream()
+            final var renderingResult = renderers.stream()
                     .map(renderer -> {
                         final var render = renderer.render(normalizedPath, this);
                         if (render.isPresent()) {
