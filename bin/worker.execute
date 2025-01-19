@@ -35,7 +35,8 @@ RUN apt-get install --yes maven git python3 pip
 ADD net.splitcells.network.worker.pom.xml /root/opt/$NAME_FOR_EXECUTION/pom.xml
 # RUN pip install --break-system-packages playwright
 # RUN playwright install --with-deps firefox # Install all OS dependencies, that are required for Playwright. Otherwise, Playwright cannot be used in Java.
-RUN cd /root/opt/$NAME_FOR_EXECUTION/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"
+# RUN cd /root/opt/$NAME_FOR_EXECUTION/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"
+$ContainerSetupCommand
 VOLUME /root/.local/
 VOLUME /root/Documents/
 VOLUME /root/.ssh/
@@ -144,6 +145,7 @@ if __name__ == '__main__':
     parser.add_argument('--only-execute-image', '--onlyExecuteImage', dest='onlyExecuteImage', required=False, type=str2bool, default=False, help="If set to true, the previously created image is executed without building it.")
     parser.add_argument('--cpu-architecture', '--cpuArchitecture', dest='cpuArchitecture', help="Set the cpu architecture for the execution.")
     parser.add_argument('--dry-run', '--dryRun', dest='dryRun', required=False, type=str2bool, default=False, help="If true, commands are only prepared and no commands are executed.")
+    parser.add_argument('--use-playwright', '--usePlaywright', dest='usePlaywright', required=False, type=str2bool, default=False, help="If true, playwright is installed for the execution.")
     parser.add_argument('--auto-configure-cpu-architecture-explicitly', '--autoConfigureCpuArchExplicitly', dest='autoConfigureCpuArchExplicitly', required=False, type=str2bool, default=False
             , help="If set to false, the command's backend automatically determines the CPU architecture." \
                 + " If set to true, the CPU architecture will be determined by this command and the determined architecture is propagated to the commands backend explicitly." \
@@ -183,6 +185,10 @@ if __name__ == '__main__':
     else:
         raise Exception('Either `--command` or `--class-for-execution` needs to be set.')
     dockerfile = dockerfile.replace('$NAME_FOR_EXECUTION', parsedArgs.name)
+    if parsedArgs.usePlaywright:
+        dockerfile = dockerfile.replace('$ContainerSetupCommand', 'RUN cd /root/opt/$NAME_FOR_EXECUTION/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"\n')
+    else:
+        dockerfile = dockerfile.replace('$ContainerSetupCommand', '\n')
     file='target/Dockerfile-' + parsedArgs.name
     if os.path.exists(file):
         os.remove(file)
