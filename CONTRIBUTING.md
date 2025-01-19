@@ -38,11 +38,11 @@ compatibility.
 ## Notes
 
 Signing by PGP or SSH key is not required.
-Also, most open source projects do not do this and this does not seem to cause legal problem.
+Also, most open source projects do not do this and this does not seem to cause legal problems.
 The [Linux Kernel](https://docs.kernel.org/process/maintainer-pgp-guide.html) does not sign commits and
 instead focuses on verifying the developer communication instead.
 Furthermore, all signature will be temporarily valid as well,
-which reduces it usefulness,
-also it does not mean, that check a repo regarding an expired key has not its use cases.
-In the hand, commit signing creates a huge burden and has no benefits if it is not used properly.
+which reduces it usefulness in practice,
+also it does not mean, that checking a repo regarding an expired key has not its use cases.
+On the other hand, commit signing creates a huge burden and has no benefits, if it is not used properly.
 Therefore, it is disregarded as a requirement.
