@@ -82,6 +82,6 @@ public interface Cell extends Consumer<Environment>, Discoverable, Option<Consum
 
     @Override
     default Consumer<Environment> defaultValue() {
-        return this::accept;
+        return this;
     }
 }
