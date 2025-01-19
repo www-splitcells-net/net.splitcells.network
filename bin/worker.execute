@@ -185,9 +185,9 @@ if __name__ == '__main__':
     else:
         raise Exception('Either `--command` or `--class-for-execution` needs to be set.')
     if parsedArgs.usePlaywright:
-            dockerfile = dockerfile.replace('$ContainerSetupCommand', 'RUN cd /root/opt/$NAME_FOR_EXECUTION/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"\n')
-        else:
-            dockerfile = dockerfile.replace('$ContainerSetupCommand', '\n')
+        dockerfile = dockerfile.replace('$ContainerSetupCommand', 'RUN cd /root/opt/$NAME_FOR_EXECUTION/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"\n')
+    else:
+        dockerfile = dockerfile.replace('$ContainerSetupCommand', '\n')
     dockerfile = dockerfile.replace('$NAME_FOR_EXECUTION', parsedArgs.name)
     file='target/Dockerfile-' + parsedArgs.name
     if os.path.exists(file):
