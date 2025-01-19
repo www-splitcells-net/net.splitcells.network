@@ -13,12 +13,15 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
+# This scripts needs to be as portable as possible,
+# as it is run, before the Shell project is installed the first time.
+# Therefore things like `echo.debug` are not available.
 configFolder=~/.config/net.splitcells.shell
 mkdir -p $configFolder
 repoList=$configFolder/command.repositories
 touch $repoList
 if grep -q "^repo=$1$" "$repoList"; then
-	echo.debug Repository "'"$1"'" is already registered.
+	>&2 echo Repository "'"$1"'" is already registered.
 else
 	echo "repo=$1" >> $repoList
 fi
