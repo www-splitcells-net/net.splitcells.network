@@ -29,6 +29,7 @@ import static net.splitcells.cin.EntityManager.TIME;
 import static net.splitcells.cin.raters.ValueUpdate.valueUpdate;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.gel.proposal.Proposal.EXISTING_DEMAND;
 import static net.splitcells.gel.proposal.Proposals.proposalsForGroups;
 import static net.splitcells.gel.proposal.Proposals.propose;
 import static net.splitcells.gel.rating.type.Cost.cost;
@@ -75,7 +76,10 @@ public class ValueUpdateTest {
                 , list(testSubject.constraint(), testSubject.constraint().child(0))
                 , testSubject.unorderedLines());
         proposalsForGroups1.get(1).contextAssignments().requireSizeOf(2);
-        proposalsForGroups1.get(1).proposedDisallocations().requireSizeOf(1);
+        proposalsForGroups1.get(1).proposedDisallocations().requireSizeOf(1)
+                .unorderedLinesStream2()
+                .filter(l -> assign1.equalsTo(l.value(EXISTING_DEMAND)))
+                .requireSizeOf(1);
 
         final var assign2 = testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
                 , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 1, SET_VALUE)));
