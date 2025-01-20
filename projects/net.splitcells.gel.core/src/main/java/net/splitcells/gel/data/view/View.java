@@ -24,6 +24,7 @@ import static net.splitcells.dem.lang.CsvDocument.csvDocument;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.dem.utils.MathUtils.floorToInt;
 import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -597,5 +598,12 @@ public interface View extends Discoverable, Domable, Identifiable {
      */
     default <T> Flow<T> referencedValues(Attribute<Line> lineAttribute, Attribute<T> valueAttribute) {
         return columnView(lineAttribute).flow().map(line -> line.value(valueAttribute));
+    }
+
+    default void requireSizeOf(int targetSize) {
+        final int actualSize = size();
+        if (actualSize != targetSize) {
+            throw executionException("Flow should have the size of " + targetSize + ", but has a size of " + actualSize + " instead.");
+        }
     }
 }

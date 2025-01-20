@@ -25,6 +25,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import static net.splitcells.dem.utils.ExecutionException.executionException;
+
 public interface Flow<T> extends java.util.stream.Stream<T> {
     @Override
     default List<T> toList() {
@@ -73,4 +75,11 @@ public interface Flow<T> extends java.util.stream.Stream<T> {
 
     @Override
     Flow<T> onClose(Runnable closeHandler);
+
+    default void requireSizeOf(int targetSize) {
+        final int actualSize = mapToInt(element -> 1).sum();
+        if (actualSize != targetSize) {
+            throw executionException("Flow should have the size of " + targetSize + ", but has a size of " + actualSize + " instead.");
+        }
+    }
 }
