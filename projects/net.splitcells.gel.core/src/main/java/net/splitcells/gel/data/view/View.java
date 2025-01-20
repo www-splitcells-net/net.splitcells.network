@@ -610,10 +610,11 @@ public interface View extends Discoverable, Domable, Identifiable {
         return columnView(lineAttribute).flow().map(line -> line.value(valueAttribute));
     }
 
-    default void requireSizeOf(int targetSize) {
+    default View requireSizeOf(int targetSize) {
         final int actualSize = size();
         if (actualSize != targetSize) {
             throw executionException("Flow should have the size of " + targetSize + ", but has a size of " + actualSize + " instead.");
         }
+        return this;
     }
 }
