@@ -119,6 +119,15 @@ public interface View extends Discoverable, Domable, Identifiable {
     }
 
     /**
+     * @see #unorderedLinesStream2()
+     * @return
+     */
+    @Deprecated
+    default Stream<Line> unorderedLinesStream() {
+        return unorderedLines().stream();
+    }
+
+    /**
      * <p>This method exists for improved performance compared to calling
      * <code>lines().stream()</code> on certain {@link View} implementations.
      * This is caused by the fact, that this method does not need a copy all {@link Line} references,
@@ -132,10 +141,11 @@ public interface View extends Discoverable, Domable, Identifiable {
      * The reason for this, is the fact, that it is faster to construct {@link #unorderedLinesStream()}
      * via {@link #rawLines()}, than the other way around.</p>
      * <p>There is no guarantee regarding the ordering.</p>
+     * <p>TODO Replace {@link #unorderedLinesStream()} with this method.</p>
      *
      * @return An ordered {@link Stream} of {@link #orderedLines()}.
      */
-    default Stream<Line> unorderedLinesStream() {
+    default Flow<Line> unorderedLinesStream2() {
         return unorderedLines().stream();
     }
 
