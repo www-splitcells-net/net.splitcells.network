@@ -74,7 +74,8 @@ public class ValueUpdateTest {
         final var proposalsForGroups1 = proposalsForGroups(testSubject
                 , list(testSubject.constraint(), testSubject.constraint().child(0))
                 , testSubject.unorderedLines());
-        proposalsForGroups1.get(0).contextAssignments().unorderedLines().requireSizeOf(2);
+        proposalsForGroups1.get(1).contextAssignments().requireSizeOf(2);
+        proposalsForGroups1.get(1).proposedDisallocations().requireSizeOf(1);
 
         final var assign2 = testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
                 , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 1, SET_VALUE)));
