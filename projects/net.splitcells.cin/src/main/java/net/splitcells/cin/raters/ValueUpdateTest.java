@@ -85,8 +85,7 @@ public class ValueUpdateTest {
                 .unorderedLinesStream2()
                 .filter(l -> assign1.equalsTo(l.value(EXISTING_ASSIGNMENT)))
                 .requireSizeOf(1);
-        proposalsForGroups1.get(1).proposedAllocationsWithNewSupplies()
-                .requireSizeOf(1)
+        proposalsForGroups1.get(1).proposedAllocationsWithNewSupplies().requireSizeOf(1)
                 .unorderedLinesStream2()
                 .filter(l ->
                         testSubject.demandOfAssignment(l.value(EXISTING_DEMAND)).equalsTo(l.value(EXISTING_DEMAND))
