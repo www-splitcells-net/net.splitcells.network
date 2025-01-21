@@ -25,8 +25,8 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.Constrai
 import static net.splitcells.gel.solution.optimization.primitive.repair.RepairConfig.repairConfig;
 
 /**
- * This optimization is the default recommendation for problem solving.
- * It represents the currently best available optimization for problems in general.
+ * This optimization is the default recommendation for problem-solving.
+ * It represents currently the best available optimization for problems in general.
  * Note, that other optimizers might be better for specific problems or
  * if the optimizer ist adjusted to a given problem.
  */
