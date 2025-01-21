@@ -15,6 +15,8 @@
  */
 package net.splitcells.cin.raters;
 
+import net.splitcells.dem.data.atom.Thing;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.proposal.Proposals;
 
@@ -29,6 +31,7 @@ import static net.splitcells.cin.EntityManager.TIME;
 import static net.splitcells.cin.raters.ValueUpdate.valueUpdate;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.gel.proposal.Proposal.EXISTING_ASSIGNMENT;
 import static net.splitcells.gel.proposal.Proposal.EXISTING_DEMAND;
 import static net.splitcells.gel.proposal.Proposals.proposalsForGroups;
@@ -82,6 +85,14 @@ public class ValueUpdateTest {
                 .unorderedLinesStream2()
                 .filter(l -> assign1.equalsTo(l.value(EXISTING_ASSIGNMENT)))
                 .requireSizeOf(1);
+        proposalsForGroups1.get(1).proposedAllocationsWithNewSupplies()
+                .requireSizeOf(1)
+                .unorderedLinesStream2()
+                .filter(l ->
+                        testSubject.demandOfAssignment(l.value(EXISTING_DEMAND)).equalsTo(l.value(EXISTING_DEMAND))
+                                && Thing.equals(l.value(PLAYER_ATTRIBUTE), null)
+                                && Thing.equals(l.value(PLAYER_VALUE), 0)
+                                && Thing.equals(l.value(EVENT_TYPE), null))
                 .requireSizeOf(1);
 
         final var assign2 = testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
