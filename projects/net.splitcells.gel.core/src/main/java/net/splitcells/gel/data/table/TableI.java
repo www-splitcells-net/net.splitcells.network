@@ -285,6 +285,9 @@ public class TableI implements Table {
     public Line addTranslated(ListView<? extends Object> lineValues) {
         final int lineIndex;
         final Line line;
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            lineValues.requireSizeOf(columns.size());
+        }
         if (indexesOfFree.isEmpty()) {
             lineIndex = rawLines.size();
             line = LineI.line(this, lineIndex);
