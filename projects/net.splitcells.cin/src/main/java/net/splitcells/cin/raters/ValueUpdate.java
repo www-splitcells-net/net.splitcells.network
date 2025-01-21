@@ -323,11 +323,11 @@ public class ValueUpdate implements GroupingRater {
                     proposal.proposedAllocationsWithNewSupplies().addTranslated(
                             Lists.<Object>list(proposal.subject().demandOfAssignment(anyEndTimeEvent.orElseThrow())
                                             , proposal.subject().supplyOfAssignment(anyEndTimeEvent.orElseThrow()))
-                                    .withAppended(proposal.subject().headerView().stream().map(a -> {
+                                    .withAppendedValues(proposal.subject().supplies().headerView().stream().map(a -> {
                                         if (a.equals(PLAYER_VALUE)) {
                                             return targetValue;
                                         } else if (a.equals(EVENT_TYPE)) {
-                                            return RESULT_VALUE;
+                                            return (Object) RESULT_VALUE;
                                         }
                                         return null;
                                     }).toList()));
@@ -339,9 +339,9 @@ public class ValueUpdate implements GroupingRater {
                         proposal.proposedAllocationsWithNewSupplies().addTranslated(
                                 Lists.<Object>list(proposal.subject().demandOfAssignment(result)
                                                 , proposal.subject().supplyOfAssignment(result))
-                                        .withAppended(proposal.subject().headerView().stream().map(a -> {
+                                        .withAppendedValues(proposal.subject().supplies().headerView().stream().map(a -> {
                                             if (a.equals(PLAYER_VALUE)) {
-                                                return targetValue;
+                                                return (Object) targetValue;
                                             }
                                             return null;
                                         }).toList())
