@@ -29,6 +29,7 @@ import static net.splitcells.cin.EntityManager.TIME;
 import static net.splitcells.cin.raters.ValueUpdate.valueUpdate;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.gel.proposal.Proposal.EXISTING_ASSIGNMENT;
 import static net.splitcells.gel.proposal.Proposal.EXISTING_DEMAND;
 import static net.splitcells.gel.proposal.Proposals.proposalsForGroups;
 import static net.splitcells.gel.proposal.Proposals.propose;
@@ -79,7 +80,8 @@ public class ValueUpdateTest {
         proposalsForGroups1.get(1).proposedDisallocations()
                 .requireSizeOf(1)
                 .unorderedLinesStream2()
-                .filter(l -> assign1.equalsTo(l.value(EXISTING_DEMAND)))
+                .filter(l -> assign1.equalsTo(l.value(EXISTING_ASSIGNMENT)))
+                .requireSizeOf(1);
                 .requireSizeOf(1);
 
         final var assign2 = testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))

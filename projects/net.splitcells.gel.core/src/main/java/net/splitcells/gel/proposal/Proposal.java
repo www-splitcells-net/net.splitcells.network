@@ -52,7 +52,8 @@ public interface Proposal {
      * It's values are used as default values for the new {@link Line} to be created.
      */
     Attribute<Line> NEW_SUPPLY_BASE = attribute(Line.class, "base for new supply");
-    Attribute<Line> EXISTING_DEMAND = attribute(Line.class, "Existing Demand");
+    Attribute<Line> EXISTING_DEMAND = attribute(Line.class, "Existing demand");
+    Attribute<Line> EXISTING_ASSIGNMENT = attribute(Line.class, "Existing assignment");
 
     /**
      * TODO This method should return a table with {@link Line} {@link Attribute} only.
@@ -78,7 +79,7 @@ public interface Proposal {
      * <p>The {@link Table#headerView()} consists of {@link Proposal#EXISTING_DEMAND}, {@link Proposal#NEW_SUPPLY_BASE} and
      * {@link Solution#headerView()} of {@link Solution#supplies()}.
      * Such {@link Solution#supplies()} do not exist and have to be created with methods like
-     * {@link AssignmentsLiveView#addTranslatedSupply(ListView)}.</p>
+     * {@link AssignmentsLiveView#addTranslatedSupply(ListView)} by consumers of {@link Proposal}.</p>
      */
     Table proposedAllocationsWithNewSupplies();
 

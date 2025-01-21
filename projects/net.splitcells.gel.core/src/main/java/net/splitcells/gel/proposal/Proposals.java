@@ -112,7 +112,7 @@ public class Proposals implements Proposal {
                 , table("proposed-demands", subject.demands(), subject.demands().headerView2())
                 , table("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
         contextAssignments = table("context-assignments", subject.demands(), list(CONTEXT_ASSIGNMENT));
-        proposedDisallocations = table("proposed-disallocations", subject.demands(), list(EXISTING_DEMAND));
+        proposedDisallocations = table("proposed-disallocations", subject.demands(), list(EXISTING_ASSIGNMENT));
         proposedAllocationsWithNewSupplies = table("proposed-allocations-with-new-supplies"
                 , subject.demands()
                 , Lists.<Attribute<? extends Object>>list().withAppended(EXISTING_DEMAND, NEW_SUPPLY_BASE)
