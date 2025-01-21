@@ -117,6 +117,11 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
         return this;
     }
 
+    default List<T> withAppendedValues(Collection<T> args) {
+        this.addAll(args);
+        return this;
+    }
+
     default List<T> withRemovedByIndex(int index) {
         remove(index);
         return this;
