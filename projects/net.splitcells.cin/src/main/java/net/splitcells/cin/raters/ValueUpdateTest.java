@@ -145,6 +145,21 @@ public class ValueUpdateTest {
         final var assign5 = testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
                 , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 1, ADD_VALUE)));
         testSubject.constraint().rating().requireEqualsTo(cost(18));
+        final var proposalsForGroups5 = proposalsForGroups(testSubject
+                , list(testSubject.constraint(), testSubject.constraint().child(0))
+                , testSubject.unorderedLines());
+        proposalsForGroups5.get(1).contextAssignments().requireSizeOf(6);
+        proposalsForGroups5.get(1).proposedDisallocations().requireSizeOf(1).unorderedLinesStream2()
+                .filter(l -> assign1.equalsTo(l.value(EXISTING_ASSIGNMENT)))
+                .requireSizeOf(1);
+        proposalsForGroups5.get(1).proposedAllocationsWithNewSupplies().requireSizeOf(1)
+                .unorderedLinesStream2()
+                .filter(l ->
+                        testSubject.demandOfAssignment(l.value(EXISTING_DEMAND)).equalsTo(l.value(EXISTING_DEMAND))
+                                && Thing.equals(l.value(PLAYER_ATTRIBUTE), null)
+                                && Thing.equals(l.value(PLAYER_VALUE), 4)
+                                && Thing.equals(l.value(EVENT_TYPE), null))
+                .requireSizeOf(1);
 
         testSubject.remove(assign5);
         testSubject.constraint().rating().requireEqualsTo(cost(10));
