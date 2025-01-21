@@ -55,21 +55,26 @@ public class Proposals implements Proposal {
      * @param relevantAllocations These {@link Solution#allocations()} are submitted for improvement.
      * @return Creates a list of {@link Proposal}, where one is used for one {@link GroupId}.
      * The {@link GroupId} does not have to be of the root {@link Constraint} node.
+     * There is no attempt being made to resolve conflicts between the returned {@link Proposal}.
      */
     public static List<Proposal> proposalsForGroups(Solution subject, List<Constraint> constraintPath, SetT<Line> relevantAllocations) {
         final List<Map<GroupId, Proposal>> proposals = list();
+        // The list is used, in order to ensure, that the proposals of one constraint are never after the proposals of later constraints.
+        final List<Proposal> proposalsForGroups = list();
         final var rootConstraint = constraintPath.get(0);
         proposals.add(proposalForGroup(subject
                 , Sets.setOfUniques(rootConstraint.injectionGroup())
                 , rootConstraint.lineProcessing().unorderedLinesStream().filter(lp -> relevantAllocations.contains(lp.value(LINE)))
                 , rootConstraint));
+        proposalsForGroups.addAll(proposals.get(0).values());
         for (int i = 1; i < constraintPath.size(); ++i) {
             proposals.add(proposalForGroup(subject
                     , proposals.get(i - 1).keySet2()
                     , constraintPath.get(i).lineProcessing().unorderedLinesStream()
                     , constraintPath.get(i)));
+            proposalsForGroups.addAll(proposals.get(i).values());
         }
-        return proposals.flow().map(Map::valueList).reduce(List::withAppended).orElseThrow();
+        return proposalsForGroups;
     }
 
     private static Map<GroupId, Proposal> proposalForGroup(Solution subject, Set<GroupId> incomingGroups, Stream<Line> lineProcessing, Constraint currentConstraint) {
