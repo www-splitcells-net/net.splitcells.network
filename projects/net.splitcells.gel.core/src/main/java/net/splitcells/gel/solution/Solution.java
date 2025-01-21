@@ -20,6 +20,7 @@ import static net.splitcells.dem.lang.Xml.attribute;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.gel.solution.OptimizationParameters.optimizationParameters;
+import static net.splitcells.gel.solution.optimization.DefaultOptimization.defaultOptimization;
 import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 
@@ -48,6 +49,15 @@ import java.util.function.Function;
  * Maybe one could implement a very low level compatibility system based on this for other software?</p>
  */
 public interface Solution extends Problem, SolutionView {
+
+    /**
+     *
+     * @return Returns this with the default optimization being applied to it.
+     */
+    default Solution optimize() {
+        defaultOptimization().optimize(this);
+        return this;
+    }
 
     @ReturnsThis
     default Solution optimize(OfflineOptimization optimization) {
