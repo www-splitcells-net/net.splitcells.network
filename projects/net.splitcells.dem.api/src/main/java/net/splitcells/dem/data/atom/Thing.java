@@ -37,6 +37,9 @@ public interface Thing {
      * @return return
      */
     static <T> boolean equals(T a, T b) {
+        if (a == null) {
+            return b == null;
+        }
         return a.equals(b);
     }
 
