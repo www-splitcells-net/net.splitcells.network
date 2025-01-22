@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.cin.deprecated.raters;
+package net.splitcells.cin.raters;
 
 import net.splitcells.dem.data.order.Comparators;
 import net.splitcells.dem.data.set.list.List;
@@ -50,7 +50,7 @@ public class CommitmentAdherence implements Rater {
 
     @Override
     public void init(Solution solution) {
-        committedTime = solution.allocations().unorderedLinesStream()
+        committedTime = solution.allocations().unorderedLinesStream2()
                 .map(a -> a.value(time))
                 .max(Comparators.ASCENDING_INTEGERS)
                 .orElse(-1);
