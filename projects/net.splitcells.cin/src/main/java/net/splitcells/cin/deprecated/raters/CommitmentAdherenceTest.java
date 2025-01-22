@@ -51,8 +51,8 @@ public class CommitmentAdherenceTest {
                 , testSubject.supplies().orderedLine(0));
         testSubject.init();
         final var testProposal = propose(testSubject, constraintPath, testSubject.demands().unorderedLines());
-        testProposal.proposedAllocations().demands().unorderedLines().requireSizeOf(1);
-        requireEquals(testProposal.proposedAllocations().demands().unorderedLines().get(0).values()
+        testProposal.proposedAllocationsOld().demands().unorderedLines().requireSizeOf(1);
+        requireEquals(testProposal.proposedAllocationsOld().demands().unorderedLines().get(0).values()
                 , testSubject.demands().orderedLine(1).values());
 
     }

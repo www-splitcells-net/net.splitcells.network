@@ -85,12 +85,12 @@ public class CommitmentAdherence implements Rater {
      */
     @Override
     public Proposal propose(Proposal proposal) {
-        final var invalidDemands = proposal.proposedAllocations()
+        final var invalidDemands = proposal.proposedAllocationsOld()
                 .demands()
                 .unorderedLinesStream()
                 .filter(a -> a.value(time) <= committedTime)
                 .collect(toList());
-        invalidDemands.forEach(a -> proposal.proposedAllocations().demands().remove(a));
+        invalidDemands.forEach(a -> proposal.proposedAllocationsOld().demands().remove(a));
         return proposal;
     }
 }

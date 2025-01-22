@@ -28,7 +28,7 @@ import net.splitcells.gel.solution.Solution;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 
 /**
- * <p>{@link #proposedAllocations} proposes new {@link Line}s for {@link Assignments},
+ * <p>{@link #proposedAllocationsOld} proposes new {@link Line}s for {@link Assignments},
  * in order to improve a given {@link #subject()}.
  * There is no guarantee, if the {@link Proposal} actually improves the given {@link #subject()},
  * as the quality depends on the producers.
@@ -38,7 +38,7 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
  * <p>Any one of {@link Assignments#demands()} can have a number of {@link Assignments#supplies()} elements and
  * therefore one of {@link Assignments#demands()} can have multiple elements of {@link Assignments#supplies()},
  * that are part of a plausible {@link Solution} according to this {@link Proposal}.
- * {@link Assignments#demands()} and {@link Assignments#supplies()} of {@link #proposedAllocations} are corresponding
+ * {@link Assignments#demands()} and {@link Assignments#supplies()} of {@link #proposedAllocationsOld} are corresponding
  * subsets of the {@link #subject()}'s {@link Assignments#demands()} and {@link Assignments#supplies()}.</p>
  */
 public interface Proposal {
@@ -69,7 +69,7 @@ public interface Proposal {
      * The {@link Assignments#headerView()} consists of {@link Solution#demands()} and {@link Solution#supplies()}.
      */
     @Deprecated
-    Assignments proposedAllocations();
+    Assignments proposedAllocationsOld();
 
     /**
      * @return <p>Set of {@link Assignments} proposed for the given {@link #subject()},
@@ -95,14 +95,14 @@ public interface Proposal {
 
     /**
      * TODO This method should return a table with {@link Line} {@link Attribute} only.
-     * See {@link #proposedAllocations()}.
+     * See {@link #proposedAllocationsOld()}.
      *
      * @return TODO REMOVE The following documentation does not make sense.
      * Set of {@link Assignments}, for which not the proposals are generated,
      * but which provide context for the demands,
-     * that need supplies proposed in {@link #proposedAllocations()}.
+     * that need supplies proposed in {@link #proposedAllocationsOld()}.
      * The format of {@link Assignments#headerView()} is {@link Solution#demands()} and {@link Solution#supplies()}.
-     * Often the {@link Line}s of {@link #proposedAllocations()} are in the same {@link GroupId}
+     * Often the {@link Line}s of {@link #proposedAllocationsOld()} are in the same {@link GroupId}
      * as the lines of {@link #contextAllocationsOld()},
      * This makes it easier to implement {@link Proposal}s for {@link net.splitcells.gel.rating.rater.framework.Rater}s.
      */

@@ -145,7 +145,7 @@ public class Proposals implements Proposal {
                     final var supply = proposal.contextAllocationsOld().supplies().add(origSupply);
                     proposal.contextAllocationsOld().assign(demand, supply);
                 });
-        relevantDemands.forEach(d -> proposal.proposedAllocations().demands().add(d));
+        relevantDemands.forEach(d -> proposal.proposedAllocationsOld().demands().add(d));
         constraintPath.forEach(constraint -> constraint.propose(proposal));
         return proposal;
     }
@@ -154,7 +154,7 @@ public class Proposals implements Proposal {
      * @return These {@link Assignments} are proposed in order to get a better {@link Solution}.
      */
     @Override
-    public Assignments proposedAllocations() {
+    public Assignments proposedAllocationsOld() {
         return proposedAssignments;
     }
 

@@ -21,7 +21,6 @@ import net.splitcells.gel.Gel;
 import net.splitcells.gel.constraint.Constraint;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.testing.Assertions.requireIllegalDefaultConstructor;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.proposal.Proposals.propose;
 import static net.splitcells.gel.rating.rater.lib.AllSame.allSame;
@@ -51,8 +50,8 @@ public class ProposalBinaryProcessorTest {
         testSubject.assign(testSubject.demands().orderedLine(0)
                 , testSubject.supplies().orderedLine(0));
         final var testProposal = propose(testSubject, constraintPath, testSubject.demandsFree().unorderedLines());
-        testProposal.proposedAllocations().unorderedLines().requireSizeOf(1);
-        final var proposedAllocation = testProposal.proposedAllocations().unorderedLinesStream().findFirst().orElseThrow();
+        testProposal.proposedAllocationsOld().unorderedLines().requireSizeOf(1);
+        final var proposedAllocation = testProposal.proposedAllocationsOld().unorderedLinesStream().findFirst().orElseThrow();
         proposedAllocation.values().requireEqualityTo(list(1, 2, 3));
     }
 }
