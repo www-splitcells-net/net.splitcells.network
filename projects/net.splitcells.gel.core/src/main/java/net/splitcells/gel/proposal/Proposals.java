@@ -125,9 +125,10 @@ public class Proposals implements Proposal {
                         .withAppended(subject.supplies().headerView2()));
         proposedAssignments = table("proposed-assignments"
                 , subject.demands()
-                , subject.demands().headerView2().shallowCopy()
-                        .withAppended(subject.supplies().headerView2())
-                        .withAppended(ALLOCATION_PROPOSAL_TYPE));
+                , Lists.<Attribute<? extends Object>>list()
+                        .withAppended(ALLOCATION_PROPOSAL_TYPE, EXISTING_ASSIGNMENT, EXISTING_DEMAND, EXISTING_SUPPLY)
+                        .withAppended(subject.demands().headerView2())
+                        .withAppended(subject.supplies().headerView2()));
     }
 
     /**

@@ -53,6 +53,7 @@ public interface Proposal {
      */
     Attribute<Line> NEW_SUPPLY_BASE = attribute(Line.class, "Base for new supply");
     Attribute<Line> EXISTING_DEMAND = attribute(Line.class, "Existing demand");
+    Attribute<Line> EXISTING_SUPPLY = attribute(Line.class, "Existing supply");
     Attribute<Line> EXISTING_ASSIGNMENT = attribute(Line.class, "Existing assignment");
     /**
      * <ul>
@@ -95,8 +96,11 @@ public interface Proposal {
      * in order to get a better {@link Solution}.
      * With this often the domain of the demands is represented,
      * when one compares this concept to the constraint satisfaction problem.</p>
-     * <p>The {@link Table#headerView()} consists of {@link Solution#headerView()}
-     * and {@link #ALLOCATION_PROPOSAL_TYPE}.</p>
+     * <p>The {@link Table#headerView()} consists of {@link #ALLOCATION_PROPOSAL_TYPE}, {@link #EXISTING_ASSIGNMENT},
+     * {@link #EXISTING_DEMAND}, {@link #EXISTING_SUPPLY} and {@link Solution#headerView()}.
+     * {@link #EXISTING_ASSIGNMENT}, {@link #EXISTING_DEMAND} and {@link #EXISTING_SUPPLY} are used
+     * as default values for the new proposed assignment.
+     * These are overridden with values of {@link Solution#headerView()} except, when the value null is present.</p>
      */
     Table proposedAssignments();
 
