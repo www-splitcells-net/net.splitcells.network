@@ -102,18 +102,19 @@ public class Proposals implements Proposal {
     }
 
     private final Solution subject;
-    private final Assignments proposedAssignments;
-    private final Assignments contextAssignmentsOld;
+    private final Assignments proposedAllocations;
+    private final Assignments contextAllocations;
+    private final Table proposedAssignments;
     private final Table contextAssignments;
     private final Table proposedAllocationsWithNewSupplies;
     private final Table proposedDisallocations;
 
     private Proposals(Solution subject) {
         this.subject = subject;
-        this.proposedAssignments = assignments("proposed-allocations"
+        this.proposedAllocations = assignments("proposed-allocations-old"
                 , table("proposed-demands", subject.demands(), subject.demands().headerView2())
                 , table("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
-        this.contextAssignmentsOld = assignments("old-context-allocations"
+        this.contextAllocations = assignments("old-context-allocations"
                 , table("proposed-demands", subject.demands(), subject.demands().headerView2())
                 , table("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
         contextAssignments = table("context-assignments", subject.demands(), list(CONTEXT_ASSIGNMENT));
@@ -121,8 +122,12 @@ public class Proposals implements Proposal {
         proposedAllocationsWithNewSupplies = table("proposed-allocations-with-new-supplies"
                 , subject.demands()
                 , Lists.<Attribute<? extends Object>>list().withAppended(EXISTING_DEMAND, NEW_SUPPLY_BASE)
+                        .withAppended(subject.supplies().headerView2()));
+        proposedAssignments = table("proposed-assignments"
+                , subject.demands()
+                , subject.demands().headerView2().shallowCopy()
                         .withAppended(subject.supplies().headerView2())
-        );
+                        .withAppended(ALLOCATION_PROPOSAL_TYPE));
     }
 
     /**
@@ -145,7 +150,7 @@ public class Proposals implements Proposal {
                     final var supply = proposal.contextAllocationsOld().supplies().add(origSupply);
                     proposal.contextAllocationsOld().assign(demand, supply);
                 });
-        relevantDemands.forEach(d -> proposal.proposedAllocationsOld().demands().add(d));
+        relevantDemands.forEach(d -> proposal.proposedAllocations().demands().add(d));
         constraintPath.forEach(constraint -> constraint.propose(proposal));
         return proposal;
     }
@@ -154,13 +159,18 @@ public class Proposals implements Proposal {
      * @return These {@link Assignments} are proposed in order to get a better {@link Solution}.
      */
     @Override
-    public Assignments proposedAllocationsOld() {
-        return proposedAssignments;
+    public Assignments proposedAllocations() {
+        return proposedAllocations;
     }
 
     @Override
     public Table proposedAllocationsWithSupplies() {
         return proposedAllocationsWithNewSupplies;
+    }
+
+    @Override
+    public Table proposedAssignments() {
+        return proposedAssignments;
     }
 
     @Override
@@ -170,7 +180,7 @@ public class Proposals implements Proposal {
 
     @Override
     public Assignments contextAllocationsOld() {
-        return contextAssignmentsOld;
+        return contextAllocations;
     }
 
     @Override

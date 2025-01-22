@@ -136,7 +136,7 @@ public class DemandSelectors {
                         final var demandProcessing = solution.demandOfAssignment(processing.value(Constraint.LINE));
                         final var proposal = propose(solution, restrictingConstraintPath, list(demandProcessing));
                         final var hasRelevantProposal = proposal
-                                .proposedAllocationsOld()
+                                .proposedAllocations()
                                 .demands()
                                 .orderedLines()
                                 .stream()

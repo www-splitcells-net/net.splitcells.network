@@ -50,8 +50,8 @@ public class ProposalBinaryProcessorTest {
         testSubject.assign(testSubject.demands().orderedLine(0)
                 , testSubject.supplies().orderedLine(0));
         final var testProposal = propose(testSubject, constraintPath, testSubject.demandsFree().unorderedLines());
-        testProposal.proposedAllocationsOld().unorderedLines().requireSizeOf(1);
-        final var proposedAllocation = testProposal.proposedAllocationsOld().unorderedLinesStream().findFirst().orElseThrow();
+        testProposal.proposedAllocations().unorderedLines().requireSizeOf(1);
+        final var proposedAllocation = testProposal.proposedAllocations().unorderedLinesStream().findFirst().orElseThrow();
         proposedAllocation.values().requireEqualityTo(list(1, 2, 3));
     }
 }

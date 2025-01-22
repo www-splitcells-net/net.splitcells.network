@@ -91,14 +91,14 @@ public class AllSame {
 
                               @Override
                               public Proposal propose(Proposal proposal) {
-                                  final var values = proposal.proposedAllocationsOld().unorderedLinesStream()
+                                  final var values = proposal.proposedAllocations().unorderedLinesStream()
                                           .map(l -> l.value(attribute))
                                           .collect(toSetOfUniques());
                                   proposal.contextAllocationsOld().unorderedLinesStream()
                                           .forEach(l -> values.add(l.value(attribute)));
                                   if (values.size() == 1) {
                                       final var value = values.stream().findFirst().orElseThrow();
-                                      proposal.proposedAllocationsOld().demandsFree().unorderedLines().forEach(df -> {
+                                      proposal.proposedAllocations().demandsFree().unorderedLines().forEach(df -> {
                                           final var fittingSupplies = proposal.subject()
                                                   .suppliesFree()
                                                   .persistedLookup(attribute, value);
@@ -106,8 +106,8 @@ public class AllSame {
                                               final var fittingSupply = fittingSupplies.unorderedLinesStream()
                                                       .findFirst()
                                                       .orElseThrow();
-                                              final var proposedSupply = proposal.proposedAllocationsOld().suppliesFree().add(fittingSupply);
-                                              proposal.proposedAllocationsOld().assign(df, proposedSupply);
+                                              final var proposedSupply = proposal.proposedAllocations().suppliesFree().add(fittingSupply);
+                                              proposal.proposedAllocations().assign(df, proposedSupply);
                                           }
                                       });
                                   } else if (values.size() > 1) {

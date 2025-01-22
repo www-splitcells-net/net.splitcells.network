@@ -28,7 +28,7 @@ import net.splitcells.gel.solution.Solution;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 
 /**
- * <p>{@link #proposedAllocationsOld} proposes new {@link Line}s for {@link Assignments},
+ * <p>{@link #proposedAllocations} proposes new {@link Line}s for {@link Assignments},
  * in order to improve a given {@link #subject()}.
  * There is no guarantee, if the {@link Proposal} actually improves the given {@link #subject()},
  * as the quality depends on the producers.
@@ -38,7 +38,7 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
  * <p>Any one of {@link Assignments#demands()} can have a number of {@link Assignments#supplies()} elements and
  * therefore one of {@link Assignments#demands()} can have multiple elements of {@link Assignments#supplies()},
  * that are part of a plausible {@link Solution} according to this {@link Proposal}.
- * {@link Assignments#demands()} and {@link Assignments#supplies()} of {@link #proposedAllocationsOld} are corresponding
+ * {@link Assignments#demands()} and {@link Assignments#supplies()} of {@link #proposedAllocations} are corresponding
  * subsets of the {@link #subject()}'s {@link Assignments#demands()} and {@link Assignments#supplies()}.</p>
  */
 public interface Proposal {
@@ -54,6 +54,13 @@ public interface Proposal {
     Attribute<Line> NEW_SUPPLY_BASE = attribute(Line.class, "Base for new supply");
     Attribute<Line> EXISTING_DEMAND = attribute(Line.class, "Existing demand");
     Attribute<Line> EXISTING_ASSIGNMENT = attribute(Line.class, "Existing assignment");
+    /**
+     * <ul>
+     *     <li>0: Proposed allocation</li>
+     *     <li>1: Proposed allocation removal</li>
+     * </ul>
+     */
+    Attribute<Integer> ALLOCATION_PROPOSAL_TYPE = attribute(Integer.class, "Allocation");
 
     /**
      * TODO This method should return a table with {@link Line} {@link Attribute} only.
@@ -69,7 +76,7 @@ public interface Proposal {
      * The {@link Assignments#headerView()} consists of {@link Solution#demands()} and {@link Solution#supplies()}.
      */
     @Deprecated
-    Assignments proposedAllocationsOld();
+    Assignments proposedAllocations();
 
     /**
      * @return <p>Set of {@link Assignments} proposed for the given {@link #subject()},
@@ -84,6 +91,16 @@ public interface Proposal {
     Table proposedAllocationsWithSupplies();
 
     /**
+     * @return <p>Set of {@link Assignments} proposed for the given {@link #subject()},
+     * in order to get a better {@link Solution}.
+     * With this often the domain of the demands is represented,
+     * when one compares this concept to the constraint satisfaction problem.</p>
+     * <p>The {@link Table#headerView()} consists of {@link Solution#headerView()}
+     * and {@link #ALLOCATION_PROPOSAL_TYPE}.</p>
+     */
+    Table proposedAssignments();
+
+    /**
      * @return This {@link Table} contains all {@link Solution#demands()}, that should be removed from the solution.
      * Note, that this can lead to a situation,
      * where an optimization step can lead to {@link Solution#demands()} without allocated {@link Solution#supplies()}.
@@ -95,14 +112,14 @@ public interface Proposal {
 
     /**
      * TODO This method should return a table with {@link Line} {@link Attribute} only.
-     * See {@link #proposedAllocationsOld()}.
+     * See {@link #proposedAllocations()}.
      *
      * @return TODO REMOVE The following documentation does not make sense.
      * Set of {@link Assignments}, for which not the proposals are generated,
      * but which provide context for the demands,
-     * that need supplies proposed in {@link #proposedAllocationsOld()}.
+     * that need supplies proposed in {@link #proposedAllocations()}.
      * The format of {@link Assignments#headerView()} is {@link Solution#demands()} and {@link Solution#supplies()}.
-     * Often the {@link Line}s of {@link #proposedAllocationsOld()} are in the same {@link GroupId}
+     * Often the {@link Line}s of {@link #proposedAllocations()} are in the same {@link GroupId}
      * as the lines of {@link #contextAllocationsOld()},
      * This makes it easier to implement {@link Proposal}s for {@link net.splitcells.gel.rating.rater.framework.Rater}s.
      */

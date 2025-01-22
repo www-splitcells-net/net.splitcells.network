@@ -47,8 +47,8 @@ public class WorldTest {
         final var testProposal = propose(testSubject
                 , list(testSubject.constraint(), testSubject.constraint().child(0))
                 , testSubject.demands().unorderedLines());
-        testProposal.proposedAllocationsOld().demands().unorderedLines().requireSizeOf(1);
-        requireEquals(testProposal.proposedAllocationsOld().demands().orderedLine(0).values()
+        testProposal.proposedAllocations().demands().unorderedLines().requireSizeOf(1);
+        requireEquals(testProposal.proposedAllocations().demands().orderedLine(0).values()
                 , testSubject.demands().orderedLine(1).values());
     }
 }

@@ -77,8 +77,18 @@ public interface View extends Discoverable, Domable, Identifiable {
 
     String name();
 
+    /**
+     * TODO This method should return a {@link ListView}.
+     *
+     * @return
+     */
     List<Attribute<Object>> headerView();
 
+    /**
+     * TODO This method should return a {@link ListView}.
+     *
+     * @return
+     */
     List<Attribute<? extends Object>> headerView2();
 
     <T> ColumnView<T> columnView(Attribute<T> attribute);
