@@ -78,10 +78,10 @@ public interface Proposal {
      * when one compares this concept to the constraint satisfaction problem.</p>
      * <p>The {@link Table#headerView()} consists of {@link Proposal#EXISTING_DEMAND}, {@link Proposal#NEW_SUPPLY_BASE} and
      * {@link Solution#headerView()} of {@link Solution#supplies()}.
-     * Such {@link Solution#supplies()} do not exist and have to be created with methods like
+     * Such {@link Solution#supplies()} do not have to exist and have to be created with methods like
      * {@link AssignmentsLiveView#addTranslatedSupply(ListView)} by consumers of {@link Proposal}.</p>
      */
-    Table proposedAllocationsWithNewSupplies();
+    Table proposedAllocationsWithSupplies();
 
     /**
      * @return This {@link Table} contains all {@link Solution#demands()}, that should be removed from the solution.
@@ -89,7 +89,7 @@ public interface Proposal {
      * where an optimization step can lead to {@link Solution#demands()} without allocated {@link Solution#supplies()}.
      * Most of the time running the optimization should fix the problem.
      * These disallocations make most sense,
-     * when it is used in combination with {@link #proposedAllocationsWithNewSupplies()}.
+     * when it is used in combination with {@link #proposedAllocationsWithSupplies()}.
      */
     Table proposedDisallocations();
 

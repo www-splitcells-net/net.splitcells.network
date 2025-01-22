@@ -320,7 +320,7 @@ public class ValueUpdate implements GroupingRater {
                                 && line.value(TIME) == endTime)
                         .findAny();
                 if (anyEndTimeEvent.isPresent()) {
-                    proposal.proposedAllocationsWithNewSupplies().addTranslated(
+                    proposal.proposedAllocationsWithSupplies().addTranslated(
                             Lists.<Object>list(proposal.subject().demandOfAssignment(anyEndTimeEvent.orElseThrow())
                                             , proposal.subject().supplyOfAssignment(anyEndTimeEvent.orElseThrow()))
                                     .withAppendedValues(proposal.subject().supplies().headerView().stream().map(a -> {
@@ -336,7 +336,7 @@ public class ValueUpdate implements GroupingRater {
                 endResults.forEach(result -> {
                     if (result.value(PLAYER_VALUE) != targetValue) {
                         proposal.proposedDisallocations().addTranslated(list(result));
-                        proposal.proposedAllocationsWithNewSupplies().addTranslated(
+                        proposal.proposedAllocationsWithSupplies().addTranslated(
                                 Lists.<Object>list(proposal.subject().demandOfAssignment(result)
                                                 , proposal.subject().supplyOfAssignment(result))
                                         .withAppendedValues(proposal.subject().supplies().headerView().stream().map(a -> {

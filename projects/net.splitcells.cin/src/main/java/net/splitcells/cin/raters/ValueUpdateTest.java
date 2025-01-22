@@ -16,9 +16,7 @@
 package net.splitcells.cin.raters;
 
 import net.splitcells.dem.data.atom.Thing;
-import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
-import net.splitcells.gel.proposal.Proposals;
 
 import static net.splitcells.cin.EntityManager.ADD_VALUE;
 import static net.splitcells.cin.EntityManager.EVENT_TYPE;
@@ -31,11 +29,9 @@ import static net.splitcells.cin.EntityManager.TIME;
 import static net.splitcells.cin.raters.ValueUpdate.valueUpdate;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.gel.proposal.Proposal.EXISTING_ASSIGNMENT;
 import static net.splitcells.gel.proposal.Proposal.EXISTING_DEMAND;
 import static net.splitcells.gel.proposal.Proposals.proposalsForGroups;
-import static net.splitcells.gel.proposal.Proposals.propose;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
@@ -67,10 +63,10 @@ public class ValueUpdateTest {
                 , list(testSubject.constraint(), testSubject.constraint().child(0))
                 , testSubject.unorderedLines());
         proposalsForGroups0.get(0).contextAssignments().unorderedLines().requireSizeOf(1);
-        proposalsForGroups0.get(0).proposedAllocationsWithNewSupplies().unorderedLines().requireEmpty();
+        proposalsForGroups0.get(0).proposedAllocationsWithSupplies().unorderedLines().requireEmpty();
         proposalsForGroups0.get(0).proposedDisallocations().unorderedLines().requireEmpty();
         proposalsForGroups0.get(1).contextAssignments().unorderedLines().requireSizeOf(1);
-        proposalsForGroups0.get(1).proposedAllocationsWithNewSupplies().unorderedLines().requireEmpty();
+        proposalsForGroups0.get(1).proposedAllocationsWithSupplies().unorderedLines().requireEmpty();
         proposalsForGroups0.get(1).proposedDisallocations().unorderedLines().requireEmpty();
 
         final var assign1 = testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
@@ -85,7 +81,7 @@ public class ValueUpdateTest {
                 .unorderedLinesStream2()
                 .filter(l -> assign1.equalsTo(l.value(EXISTING_ASSIGNMENT)))
                 .requireSizeOf(1);
-        proposalsForGroups1.get(1).proposedAllocationsWithNewSupplies().requireSizeOf(1)
+        proposalsForGroups1.get(1).proposedAllocationsWithSupplies().requireSizeOf(1)
                 .unorderedLinesStream2()
                 .filter(l ->
                         testSubject.demandOfAssignment(l.value(EXISTING_DEMAND)).equalsTo(l.value(EXISTING_DEMAND))
@@ -102,7 +98,7 @@ public class ValueUpdateTest {
                 , testSubject.unorderedLines());
         proposalsForGroups2.get(1).contextAssignments().requireSizeOf(3);
         proposalsForGroups2.get(1).proposedDisallocations().requireSizeOf(0);
-        proposalsForGroups2.get(1).proposedAllocationsWithNewSupplies().requireSizeOf(0);
+        proposalsForGroups2.get(1).proposedAllocationsWithSupplies().requireSizeOf(0);
 
         final var assign3 = testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
                 , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 1, ADD_VALUE)));
@@ -114,7 +110,7 @@ public class ValueUpdateTest {
         proposalsForGroups3.get(1).proposedDisallocations().requireSizeOf(1).unorderedLinesStream2()
                 .filter(l -> assign1.equalsTo(l.value(EXISTING_ASSIGNMENT)))
                 .requireSizeOf(1);
-        proposalsForGroups3.get(1).proposedAllocationsWithNewSupplies().requireSizeOf(1)
+        proposalsForGroups3.get(1).proposedAllocationsWithSupplies().requireSizeOf(1)
                 .unorderedLinesStream2()
                 .filter(l ->
                         testSubject.demandOfAssignment(l.value(EXISTING_DEMAND)).equalsTo(l.value(EXISTING_DEMAND))
@@ -133,7 +129,7 @@ public class ValueUpdateTest {
         proposalsForGroups4.get(1).proposedDisallocations().requireSizeOf(1).unorderedLinesStream2()
                 .filter(l -> assign1.equalsTo(l.value(EXISTING_ASSIGNMENT)))
                 .requireSizeOf(1);
-        proposalsForGroups4.get(1).proposedAllocationsWithNewSupplies().requireSizeOf(1)
+        proposalsForGroups4.get(1).proposedAllocationsWithSupplies().requireSizeOf(1)
                 .unorderedLinesStream2()
                 .filter(l ->
                         testSubject.demandOfAssignment(l.value(EXISTING_DEMAND)).equalsTo(l.value(EXISTING_DEMAND))
@@ -152,7 +148,7 @@ public class ValueUpdateTest {
         proposalsForGroups5.get(1).proposedDisallocations().requireSizeOf(1).unorderedLinesStream2()
                 .filter(l -> assign1.equalsTo(l.value(EXISTING_ASSIGNMENT)))
                 .requireSizeOf(1);
-        proposalsForGroups5.get(1).proposedAllocationsWithNewSupplies().requireSizeOf(1)
+        proposalsForGroups5.get(1).proposedAllocationsWithSupplies().requireSizeOf(1)
                 .unorderedLinesStream2()
                 .filter(l ->
                         testSubject.demandOfAssignment(l.value(EXISTING_DEMAND)).equalsTo(l.value(EXISTING_DEMAND))

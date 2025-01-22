@@ -159,7 +159,7 @@ public class Proposals implements Proposal {
     }
 
     @Override
-    public Table proposedAllocationsWithNewSupplies() {
+    public Table proposedAllocationsWithSupplies() {
         return proposedAllocationsWithNewSupplies;
     }
 
