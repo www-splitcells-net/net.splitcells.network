@@ -51,7 +51,7 @@ public interface Proposal {
      * This is an existing {@link Line} of {@link Assignments#supplies()}.
      * It's values are used as default values for the new {@link Line} to be created.
      */
-    Attribute<Line> NEW_SUPPLY_BASE = attribute(Line.class, "base for new supply");
+    Attribute<Line> NEW_SUPPLY_BASE = attribute(Line.class, "Base for new supply");
     Attribute<Line> EXISTING_DEMAND = attribute(Line.class, "Existing demand");
     Attribute<Line> EXISTING_ASSIGNMENT = attribute(Line.class, "Existing assignment");
 
