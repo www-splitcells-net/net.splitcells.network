@@ -31,6 +31,7 @@ import net.splitcells.gel.solution.Solution;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.gel.proposal.Proposal.PROPOSE_UNCHANGED;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 
 public class CommitmentAdherence implements Rater {
@@ -85,12 +86,20 @@ public class CommitmentAdherence implements Rater {
      */
     @Override
     public Proposal propose(Proposal proposal) {
-        final var invalidDemands = proposal.proposedAllocations()
-                .demands()
-                .unorderedLinesStream()
-                .filter(a -> a.value(time) <= committedTime)
-                .collect(toList());
-        invalidDemands.forEach(a -> proposal.proposedAllocations().demands().remove(a));
+        proposal.subject().columnView(time)
+                .stream()
+                .filter(t -> t != null)
+                .filter(t -> t <= committedTime)
+                .distinct()
+                .forEach(t ->
+                        proposal.proposedAssignments().addTranslated(list(PROPOSE_UNCHANGED, null, null, null)
+                                .withAppended(proposal.subject().headerView2().flow()
+                                        .map(attribute -> {
+                                            if (time.equals(attribute)) {
+                                                return t;
+                                            }
+                                            return null;
+                                        }).toList())));
         return proposal;
     }
 }
