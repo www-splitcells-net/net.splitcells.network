@@ -57,11 +57,12 @@ public interface Proposal {
     Attribute<Line> EXISTING_ASSIGNMENT = attribute(Line.class, "Existing assignment");
     /**
      * <ul>
-     *     <li>0: Proposed allocation</li>
-     *     <li>1: Proposed allocation removal</li>
+     *     <li>0: Already existing and matching assignment, should not be changed at all.</li>
+     *     <li>1: Proposed allocation</li>
+     *     <li>2: Proposed allocation removal</li>
      * </ul>
      */
-    Attribute<Integer> ALLOCATION_PROPOSAL_TYPE = attribute(Integer.class, "Allocation");
+    Attribute<Integer> ASSIGNMENT_PROPOSAL_TYPE = attribute(Integer.class, "Assignment proposal type");
 
     /**
      * TODO This method should return a table with {@link Line} {@link Attribute} only.
@@ -96,7 +97,7 @@ public interface Proposal {
      * in order to get a better {@link Solution}.
      * With this often the domain of the demands is represented,
      * when one compares this concept to the constraint satisfaction problem.</p>
-     * <p>The {@link Table#headerView()} consists of {@link #ALLOCATION_PROPOSAL_TYPE}, {@link #EXISTING_ASSIGNMENT},
+     * <p>The {@link Table#headerView()} consists of {@link #ASSIGNMENT_PROPOSAL_TYPE}, {@link #EXISTING_ASSIGNMENT},
      * {@link #EXISTING_DEMAND}, {@link #EXISTING_SUPPLY} and {@link Solution#headerView()}.
      * {@link #EXISTING_ASSIGNMENT}, {@link #EXISTING_DEMAND} and {@link #EXISTING_SUPPLY} are used
      * as default values for the new proposed assignment.
