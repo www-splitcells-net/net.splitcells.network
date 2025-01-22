@@ -98,10 +98,14 @@ public interface Proposal {
      * With this often the domain of the demands is represented,
      * when one compares this concept to the constraint satisfaction problem.</p>
      * <p>The {@link Table#headerView()} consists of {@link #ASSIGNMENT_PROPOSAL_TYPE}, {@link #EXISTING_ASSIGNMENT},
-     * {@link #EXISTING_DEMAND}, {@link #EXISTING_SUPPLY} and {@link Solution#headerView()}.
-     * {@link #EXISTING_ASSIGNMENT}, {@link #EXISTING_DEMAND} and {@link #EXISTING_SUPPLY} are used
+     * {@link #EXISTING_DEMAND}, {@link #EXISTING_SUPPLY} and {@link Solution#headerView()}.</p>
+     * <p>{@link #EXISTING_ASSIGNMENT}, {@link #EXISTING_DEMAND} and {@link #EXISTING_SUPPLY} are used
      * as default values for the new proposed assignment.
-     * These are overridden with values of {@link Solution#headerView()} except, when the value null is present.</p>
+     * These are overridden with values of {@link Solution#headerView()} except, when the value null is present.
+     * If {@link #EXISTING_ASSIGNMENT}, {@link #EXISTING_DEMAND} and {@link #EXISTING_SUPPLY} are not set,
+     * the suggestion based on {@link #ASSIGNMENT_PROPOSAL_TYPE} will apply to any assignment,
+     * that has the same values in {@link Solution#headerView()}
+     * whereby nulls in {@link Solution#headerView()} are ignored.</p>
      */
     Table proposedAssignments();
 
