@@ -56,11 +56,14 @@ public interface Proposal {
     Attribute<Line> EXISTING_SUPPLY = attribute(Line.class, "Existing supply");
     Attribute<Line> EXISTING_ASSIGNMENT = attribute(Line.class, "Existing assignment");
     /**
-     * <ul>
-     *     <li>0: Already existing and matching assignment, should not be changed at all.</li>
-     *     <li>1: Proposed allocation</li>
-     *     <li>2: Proposed allocation removal</li>
-     * </ul>
+     * Already existing and matching assignment, should not be changed at all.
+     */
+    int PROPOSE_UNCHANGED = 0;
+    int PROPOSE_NEW_ASSIGNMENT = 1;
+    int PROPOSE_ASSIGNMENT_DELETION = 2;
+    /**
+     * The following values are supported:
+     * {@link #PROPOSE_UNCHANGED}, {@link #PROPOSE_NEW_ASSIGNMENT} and {@link #PROPOSE_ASSIGNMENT_DELETION}
      */
     Attribute<Integer> ASSIGNMENT_PROPOSAL_TYPE = attribute(Integer.class, "Assignment proposal type");
 
