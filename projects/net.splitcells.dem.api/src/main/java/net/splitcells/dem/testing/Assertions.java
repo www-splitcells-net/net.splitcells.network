@@ -71,6 +71,12 @@ public class Assertions {
     }
 
     public static <T> void requireEquals(T a, T b) {
+        if (a == null) {
+            if (b == null) {
+                return;
+            }
+            throw executionException("Arguments are required to be equal, but are not: first argument: " + a + ", second argument: " + b);
+        }
         if (!a.equals(b)) {
             throw executionException("Arguments are required to be equal, but are not: first argument: " + a + ", second argument: " + b);
         }
