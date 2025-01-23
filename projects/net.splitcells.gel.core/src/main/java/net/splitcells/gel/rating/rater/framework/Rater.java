@@ -73,7 +73,7 @@ public interface Rater extends PubliclyTyped<Rater>
      * if it was a view on the allocations.
      * </p>
      *
-     * @param lines          The already present lines of the group after the addition.
+     * @param linesOfGroup          The already present lines of the group after the addition.
      *                       The {@link View#headerView()} of this is the same as of {@link Constraint#lines()}.
      *                       In order to check, whether {@code addition} is equal to an element of {@code lines},
      *                       one should not use {@link Line#equalsTo(Line)}, as both have different {@link Line#context()}.
@@ -82,10 +82,10 @@ public interface Rater extends PubliclyTyped<Rater>
      * @param children       These are all sub {@link Constraint}s, to which the {@code linesOfGroup} can be propagated to.
      *                       A classic implementation to propagate all complying lines to all {@code children}.
      *                       See {@link Constraint#childrenView()}.
-     * @param lineProcessing This is the {@link Constraint#lineProcessing()} of the incoming group before the addition.
+     * @param lineProcessingOfGroup This is the {@link Constraint#lineProcessing()} of the incoming group before the addition.
      * @return
      */
-    RatingEvent ratingAfterAddition(View lines, Line addition, List<Constraint> children, View lineProcessing);
+    RatingEvent ratingAfterAddition(View linesOfGroup, Line addition, List<Constraint> children, View lineProcessingOfGroup);
 
     /**
      * <p>Calculate the required {@link Rating} update caused
