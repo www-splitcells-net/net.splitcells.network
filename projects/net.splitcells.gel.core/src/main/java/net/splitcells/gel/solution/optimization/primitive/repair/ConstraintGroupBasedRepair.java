@@ -22,6 +22,7 @@ import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.OnlineOptimization;
@@ -57,6 +58,7 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.RepairCo
  *     This deletes the values of all variables, which are part of some constraint defying group.</li>
  *     <li>Set the values to all free demands and thereby perform actual repair process.</li>
  * </ol>
+ * <p>TODO Create {@link Proposal} only for dissatisfying {@link GroupId}.</p>
  */
 public class ConstraintGroupBasedRepair implements OnlineOptimization {
 
