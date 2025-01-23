@@ -20,6 +20,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.object.Discoverable;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.table.AfterAdditionSubscriber;
@@ -39,7 +40,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StreamUtils.ensureSingle;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
@@ -258,7 +259,7 @@ public class LineBasedTable implements Table {
             final var castedArg = (Table) arg;
             return identity() == castedArg.identity();
         }
-        throw executionException("Invalid argument type: " + arg);
+        throw ExecutionException.execException("Invalid argument type: " + arg);
     }
 
     @Override

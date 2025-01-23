@@ -15,8 +15,10 @@
  */
 package net.splitcells.website.server.security.authorization;
 
+import net.splitcells.dem.utils.ExecutionException;
+
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.website.server.security.authentication.Authenticator.VALID_USERNAME_SYMBOLS;
 
 /**
@@ -27,7 +29,7 @@ public interface Role {
 
     static void requireValid(Role role) {
         if (!VALID_USERNAME_SYMBOLS.matcher(role.name()).matches()) {
-            throw executionException(tree("The given role name is invalid.")
+            throw ExecutionException.execException(tree("The given role name is invalid.")
                     .withProperty("role name", role.name()));
         }
     }

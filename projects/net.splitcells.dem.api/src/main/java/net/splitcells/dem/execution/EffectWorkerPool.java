@@ -17,6 +17,7 @@ package net.splitcells.dem.execution;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.utils.ExecutionException;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.function.Consumer;
@@ -25,7 +26,7 @@ import java.util.function.Supplier;
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.execution.EffectWorker.effectWorker;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
  * Processes {@link #events}, that are sent to an  {@link #subjects} asynchronously via multiple {@link EffectWorker}.
@@ -55,7 +56,7 @@ public class EffectWorkerPool<SUBJECT> implements ExplicitEffect<SUBJECT> {
 
     private EffectWorkerPool(Supplier<SUBJECT> argSubjects, int maxSubjectCount) {
         if (maxSubjectCount < 1) {
-            throw executionException("MaxSubjectCount should be bigger than zero, but is " + maxSubjectCount + " instead.");
+            throw ExecutionException.execException("MaxSubjectCount should be bigger than zero, but is " + maxSubjectCount + " instead.");
         }
         subjects = argSubjects;
         events = new ArrayBlockingQueue<>(100 * maxSubjectCount, true);

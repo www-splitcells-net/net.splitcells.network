@@ -20,7 +20,7 @@ import net.splitcells.dem.lang.annotations.ReturnsThis;
 
 import java.util.concurrent.Semaphore;
 
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
  * A thread safe object, where one stores the values to be processed by another retriever of {@link #argument}.
@@ -58,7 +58,7 @@ public class Processing<Argument, Result> {
             return resultArgument;
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            throw executionException(e);
+            throw execException(e);
         }
     }
 
@@ -88,7 +88,7 @@ public class Processing<Argument, Result> {
             return result;
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            throw executionException(e);
+            throw execException(e);
         }
     }
 
@@ -111,7 +111,7 @@ public class Processing<Argument, Result> {
             return result;
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            throw executionException(e);
+            throw execException(e);
         }
     }
 }

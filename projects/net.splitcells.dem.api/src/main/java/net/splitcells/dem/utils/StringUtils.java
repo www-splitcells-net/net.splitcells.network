@@ -22,7 +22,7 @@ import java.util.stream.IntStream;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 @JavaLegacyArtifact
 public class StringUtils {
@@ -42,7 +42,7 @@ public class StringUtils {
         if (target.startsWith(prefix)) {
             return target.substring(prefix.length());
         }
-        throw executionException(tree("The target does not start with the prefix.")
+        throw ExecutionException.execException(tree("The target does not start with the prefix.")
                 .withProperty("prefix", prefix)
                 .withProperty("target", target));
     }
@@ -51,7 +51,7 @@ public class StringUtils {
         if (target.endsWith(suffix)) {
             return target.substring(0, target.lastIndexOf(suffix));
         }
-        throw executionException(tree("The target does not end with the suffix.")
+        throw ExecutionException.execException(tree("The target does not end with the suffix.")
                 .withProperty("suffix", suffix)
                 .withProperty("target", target));
     }
@@ -105,7 +105,7 @@ public class StringUtils {
 
     public static void requireNonEmptyString(String arg) {
         if (arg.isEmpty()) {
-            throw executionException("String should not be empty, but it is empty.");
+            throw ExecutionException.execException("String should not be empty, but it is empty.");
         }
     }
 }

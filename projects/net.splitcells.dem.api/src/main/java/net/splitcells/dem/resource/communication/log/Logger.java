@@ -18,7 +18,7 @@ package net.splitcells.dem.resource.communication.log;
 import net.splitcells.dem.environment.resource.Resource;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 public interface Logger extends Log, Resource {
 }

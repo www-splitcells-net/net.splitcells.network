@@ -20,7 +20,7 @@ import net.splitcells.dem.lang.annotations.ReturnsThis;
 import java.util.function.Function;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
  * TODO Split up into generic dynamically typed and type safe table and this configuration class.

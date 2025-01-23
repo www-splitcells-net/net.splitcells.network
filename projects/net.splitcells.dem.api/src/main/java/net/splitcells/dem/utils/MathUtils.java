@@ -16,7 +16,6 @@
 package net.splitcells.dem.utils;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import java.util.stream.IntStream;
@@ -26,7 +25,7 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 @JavaLegacyArtifact
 public final class MathUtils {
@@ -102,10 +101,10 @@ public final class MathUtils {
     public static int modulus(int dividend, int divisor) {
         if (ENFORCING_UNIT_CONSISTENCY) {
             if (divisor < 0) {
-                throw executionException("Negative divisor is not supported: " + divisor);
+                throw ExecutionException.execException("Negative divisor is not supported: " + divisor);
             }
             if (dividend < 0) {
-                throw executionException("Negative dividend is not supported: " + dividend);
+                throw ExecutionException.execException("Negative dividend is not supported: " + dividend);
             }
         }
         return Math.floorMod(dividend, divisor);

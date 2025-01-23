@@ -28,6 +28,7 @@ import net.splitcells.dem.resource.communication.log.IsEchoToFile;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
 import net.splitcells.dem.testing.annotations.DisabledTest;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.GelDev;
 import net.splitcells.gel.GelEnv;
 import net.splitcells.gel.data.table.TableSynchronization;
@@ -52,7 +53,7 @@ import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.LoggerRouter.uiRouter;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.MathUtils.*;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.lambdas.DescriptiveLambda.describedPredicate;
@@ -512,7 +513,7 @@ public class SchoolCourseSchedulingTest {
                                                 , chosenSupply.toLinePointer()));
                                     });
                                 } else {
-                                    throw executionException("No course split found: targetedHours=" + targetedHours + ", retainedAllocatedHours=" + retainedAllocatedHours + ", allocatedHours=" + allocatedHours);
+                                    throw ExecutionException.execException("No course split found: targetedHours=" + targetedHours + ", retainedAllocatedHours=" + retainedAllocatedHours + ", allocatedHours=" + allocatedHours);
                                 }
                             });
                     return optimization;
@@ -592,7 +593,7 @@ public class SchoolCourseSchedulingTest {
     @DisabledTest
     public void testSchoolScheduling() {
         schoolScheduling(15, 20, 30);
-        throw executionException("Test not implemented");
+        throw ExecutionException.execException("Test not implemented");
     }
 
     private static Network registerSchoolScheduling(Network network, int minimalNumberOfStudentsPerCourse

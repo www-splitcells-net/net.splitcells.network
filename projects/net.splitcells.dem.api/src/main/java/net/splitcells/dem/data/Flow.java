@@ -19,13 +19,14 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.utils.ExecutionException;
 
 import java.util.Comparator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 public interface Flow<T> extends java.util.stream.Stream<T> {
     @Override
@@ -79,7 +80,7 @@ public interface Flow<T> extends java.util.stream.Stream<T> {
     default void requireSizeOf(int targetSize) {
         final int actualSize = mapToInt(element -> 1).sum();
         if (actualSize != targetSize) {
-            throw executionException("Flow should have the size of " + targetSize + ", but has a size of " + actualSize + " instead.");
+            throw ExecutionException.execException("Flow should have the size of " + targetSize + ", but has a size of " + actualSize + " instead.");
         }
     }
 }

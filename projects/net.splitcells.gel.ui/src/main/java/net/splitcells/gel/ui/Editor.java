@@ -16,6 +16,7 @@
 package net.splitcells.gel.ui;
 
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -24,7 +25,7 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 public class Editor {
     public static Editor editor() {
@@ -88,12 +89,12 @@ public class Editor {
 
     private void requireFreeVarName(String name) {
         if (attributeVars.containsKey(name)) {
-            throw executionException(tree("Attribute variable with name already present.")
+            throw ExecutionException.execException(tree("Attribute variable with name already present.")
                     .withProperty("New attribute variable name", name)
                     .withProperty("Attribute variables", attributeVars.toString()));
         }
         if (databaseVars.containsKey(name)) {
-            throw executionException(tree("Database variable with name already present.")
+            throw ExecutionException.execException(tree("Database variable with name already present.")
                     .withProperty("New attribute variable name", name)
                     .withProperty("Attribute variables", databaseVars.toString()));
         }

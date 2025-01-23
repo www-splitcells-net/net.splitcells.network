@@ -24,7 +24,7 @@ import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.concat;
@@ -42,6 +42,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
@@ -205,7 +206,7 @@ public class AssignmentsI implements Assignments {
             } else if (demand.index() < demands_used.rawLinesView().size()) {
                 requireNotNull(demands_used.rawLinesView().get(demand.index()));
             } else {
-                throw executionException("A demand with such an index is not known");
+                throw ExecutionException.execException("A demand with such an index is not known");
             }
             if (supply.index() < supplies.rawLinesView().size()) {
                 requireNotNull(supplies.rawLinesView().get(supply.index()));
@@ -214,7 +215,7 @@ public class AssignmentsI implements Assignments {
             } else if (supply.index() < supplies_used.rawLinesView().size()) {
                 requireNotNull(supplies_used.rawLinesView().get(supply.index()));
             } else {
-                throw executionException("A supply with such an index is not known");
+                throw ExecutionException.execException("A supply with such an index is not known");
             }
             list(supply.context()).requireContainsOneOf(supplies, supplies_free, supplies_used);
             list(demand.context()).requireContainsOneOf(demands, demands_free, demands_used);
@@ -450,7 +451,7 @@ public class AssignmentsI implements Assignments {
     public Set<Line> assignmentsOfSupply(Line supply) {
         if (ENFORCING_UNIT_CONSISTENCY) {
             if (!usedSupplyIndexes_to_allocationIndexes.containsKey(supply.index())) {
-                throw executionException(tree("No allocations for the given supply are present.")
+                throw ExecutionException.execException(tree("No allocations for the given supply are present.")
                         .withProperty("supply index", "" + supply.index())
                         .withProperty("context path", "" + supply.context().path())
                 );
@@ -554,7 +555,7 @@ public class AssignmentsI implements Assignments {
             final var castedArg = (Assignments) arg;
             return identity().equals(castedArg.identity());
         }
-        throw executionException("Invalid argument type: " + arg);
+        throw ExecutionException.execException("Invalid argument type: " + arg);
     }
 
     @Override

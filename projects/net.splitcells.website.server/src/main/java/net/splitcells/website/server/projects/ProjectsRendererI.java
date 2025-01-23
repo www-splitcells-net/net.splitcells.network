@@ -23,6 +23,7 @@ import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.log.LogLevel;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.Renderer;
@@ -52,7 +53,7 @@ import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.resource.Paths.path;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithSimplePath;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.project.validator.RenderingValidatorForHtmlLinks.renderingValidatorForHtmlLinks;
@@ -155,7 +156,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
                                 , Optional.empty()
                                 , UserSession.ANONYMOUS_USER_SESSION)).data().orElseThrow().getContent());
                     } catch (Exception e) {
-                        throw executionException(tree("Could not serve path to file system.")
+                        throw ExecutionException.execException(tree("Could not serve path to file system.")
                                         .withProperty("target", target.toString())
                                         .withProperty("path", path.toString())
                                 , e);
@@ -319,7 +320,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
                 .filter(Optional::isPresent)
                 .collect(toList());
         if (sourceCodes.size() > 1) {
-            throw executionException(tree("Multiple source codes for one trail. Trail of source code has to be unambiguous.")
+            throw ExecutionException.execException(tree("Multiple source codes for one trail. Trail of source code has to be unambiguous.")
                     .withProperty("trail", trail.toString())
                     .withProperty("source codes", sourceCodes.toString()));
         }
@@ -400,7 +401,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
             return Optional.empty();
         }
         if (metaData.size() > 1) {
-            logs().appendWarning(executionException("Expecting at most 1 meta data entries but found "
+            logs().appendWarning(ExecutionException.execException("Expecting at most 1 meta data entries but found "
                     + metaData.size()
                     + " instead: "
                     + metaData));
@@ -438,7 +439,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
                     final var projectPaths = e.projectPaths(request);
                     projectPaths.forEach(p -> {
                         if (p.isAbsolute()) {
-                            throw executionException(tree("All project paths have to be relative, but one is not.")
+                            throw ExecutionException.execException(tree("All project paths have to be relative, but one is not.")
                                     .withProperty("path", p.toString()));
                         }
                     });

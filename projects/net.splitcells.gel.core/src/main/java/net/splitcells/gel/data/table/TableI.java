@@ -33,7 +33,7 @@ import static net.splitcells.dem.data.set.list.ListViewI.listView;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.data.table.TableSynchronizationAspect.tableSynchronizationAspect;
 import static net.splitcells.gel.data.table.Tables.table2;
@@ -48,6 +48,7 @@ import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.execution.EffectSynchronization;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.constraint.type.framework.ConstraintAspect;
@@ -60,7 +61,6 @@ import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
-import org.checkerframework.checker.nullness.Opt;
 
 /**
  * <p>TODO Make all constructors private. One can use configurators for {@link TableFactory} instead.</p>
@@ -311,7 +311,7 @@ public class TableI implements Table {
             indexesOfFree.requireAbsenceOf(lineIndex);
             requireNotNegative(lineIndex);
             if (lineIndex >= rawLines.size()) {
-                throw executionException(lineIndex + ":" + rawLines.size() + path());
+                throw ExecutionException.execException(lineIndex + ":" + rawLines.size() + path());
             }
             requireNotNull(rawLines.get(lineIndex));
             lines.hasOnlyOnce(rawLines.get(lineIndex));
@@ -437,7 +437,7 @@ public class TableI implements Table {
             final var castedArg = (Table) arg;
             return identity() == castedArg.identity();
         }
-        throw executionException("Invalid argument type: " + arg);
+        throw ExecutionException.execException("Invalid argument type: " + arg);
     }
 
     @Override

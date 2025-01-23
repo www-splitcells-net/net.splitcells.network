@@ -32,7 +32,7 @@ import java.util.stream.Stream;
 
 import static java.nio.file.Files.createDirectories;
 import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
  * Some additional methods for the java.nio.file.Files class.
@@ -55,7 +55,7 @@ public interface Files {
                 throw ex;
             }
         } catch (IOException e) {
-            throw executionException(e);
+            throw execException(e);
         }
     }
 
@@ -190,7 +190,7 @@ public interface Files {
         try {
             return java.nio.file.Files.newInputStream(path);
         } catch (IOException e) {
-            throw executionException(e);
+            throw execException(e);
         }
     }
 
@@ -245,7 +245,7 @@ public interface Files {
         try {
             return new String(inputStream.readAllBytes());
         } catch (IOException e) {
-            throw executionException(e);
+            throw execException(e);
         }
     }
 }

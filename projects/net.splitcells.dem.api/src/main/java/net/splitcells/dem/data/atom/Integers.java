@@ -16,9 +16,10 @@
 package net.splitcells.dem.data.atom;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.utils.ExecutionException;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 public class Integers {
     private Integers() {
@@ -37,13 +38,13 @@ public class Integers {
 
     public static void requireEqualInts(int a, int b) {
         if (a != b) {
-            throw executionException("Ints should be equals, but are not: " + a + ", " + b);
+            throw ExecutionException.execException("Ints should be equals, but are not: " + a + ", " + b);
         }
     }
 
     public static void requireNotNegative(int a) {
         if (a < 0) {
-            throw executionException("Int mustn't be positive, but is: " + a);
+            throw ExecutionException.execException("Int mustn't be positive, but is: " + a);
         }
     }
 }

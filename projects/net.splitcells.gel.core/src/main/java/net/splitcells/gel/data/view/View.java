@@ -24,7 +24,7 @@ import static net.splitcells.dem.lang.CsvDocument.csvDocument;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.MathUtils.floorToInt;
 import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -32,7 +32,6 @@ import static net.splitcells.gel.data.table.Tables.table2;
 import static net.splitcells.gel.data.view.ViewHtmlTableConfig.viewHtmlTableConfig;
 
 import java.util.Optional;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import net.splitcells.dem.data.Flow;
@@ -45,6 +44,7 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.ConnectingConstructor;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.column.ColumnView;
@@ -623,7 +623,7 @@ public interface View extends Discoverable, Domable, Identifiable {
     default View requireSizeOf(int targetSize) {
         final int actualSize = size();
         if (actualSize != targetSize) {
-            throw executionException("Flow should have the size of " + targetSize + ", but has a size of " + actualSize + " instead.");
+            throw ExecutionException.execException("Flow should have the size of " + targetSize + ", but has a size of " + actualSize + " instead.");
         }
         return this;
     }

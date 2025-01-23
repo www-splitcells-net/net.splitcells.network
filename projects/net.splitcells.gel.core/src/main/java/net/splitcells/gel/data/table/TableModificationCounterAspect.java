@@ -17,6 +17,7 @@ package net.splitcells.gel.data.table;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.column.ColumnView;
@@ -29,7 +30,7 @@ import java.util.Optional;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 public class TableModificationCounterAspect implements Table {
     public static Table tableModificationCounterAspect(Table table) {
@@ -47,7 +48,7 @@ public class TableModificationCounterAspect implements Table {
                         .counters()
                         .get(table.path());
                 if (counter == null) {
-                    logs().appendError(executionException(tree("Could not find counter")
+                    logs().appendError(ExecutionException.execException(tree("Could not find counter")
                             .withProperty("database", table.path().toString())));
                     return "";
                 }
@@ -186,7 +187,7 @@ public class TableModificationCounterAspect implements Table {
             final var castedArg = (Table) arg;
             return castedArg.identity() == table.identity();
         }
-        throw executionException("Invalid argument type: " + arg);
+        throw ExecutionException.execException("Invalid argument type: " + arg);
     }
 
     @Override

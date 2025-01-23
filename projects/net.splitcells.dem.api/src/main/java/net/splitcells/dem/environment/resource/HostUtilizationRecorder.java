@@ -19,12 +19,12 @@ import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.dem.utils.StringUtils;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 import java.lang.management.OperatingSystemMXBean;
-import java.text.SimpleDateFormat;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -34,7 +34,7 @@ import java.util.function.Function;
 import java.util.stream.IntStream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 @JavaLegacyArtifact
 public class HostUtilizationRecorder implements Service {
@@ -83,7 +83,7 @@ public class HostUtilizationRecorder implements Service {
     @Override
     public synchronized void start() {
         if (runner.isPresent() && !runner.get().isInterrupted()) {
-            throw executionException(getClass().getName() + " is already running.");
+            throw ExecutionException.execException(getClass().getName() + " is already running.");
         }
         final var recorder = this;
         final var newRunner = new Thread(() -> {

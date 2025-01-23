@@ -22,7 +22,7 @@ import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.lang.tree.Tree.toStringPathsDescription;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.StreamUtils.reverse;
@@ -38,6 +38,7 @@ import static net.splitcells.gel.solution.history.meta.type.CompleteRating.compl
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.table.Table;
@@ -157,7 +158,7 @@ public class HistoryI implements History {
     @Override
     public void resetTo(int index) {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (ENFORCING_UNIT_CONSISTENCY) {
             require(index >= -1);
@@ -279,10 +280,10 @@ public class HistoryI implements History {
     @Override
     public void remove(Line line) {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
-            throw executionException(ERROR_HISTORY_INCONSISTENT);
+            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         throw notImplementedYet();
     }
@@ -310,10 +311,10 @@ public class HistoryI implements History {
     @Override
     public Line addTranslated(ListView<?> values) {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
-            throw executionException(ERROR_HISTORY_INCONSISTENT);
+            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         throw notImplementedYet();
     }
@@ -321,10 +322,10 @@ public class HistoryI implements History {
     @Override
     public Line add(Line line) {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
-            throw executionException(ERROR_HISTORY_INCONSISTENT);
+            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         throw notImplementedYet();
     }
@@ -337,10 +338,10 @@ public class HistoryI implements History {
     @Override
     public void remove(int indexes) {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
-            throw executionException(ERROR_HISTORY_INCONSISTENT);
+            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         if (size() != indexes + 1) {
             throw notImplementedYet();
@@ -351,10 +352,10 @@ public class HistoryI implements History {
     @Override
     public int currentIndex() {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
-            throw executionException(ERROR_HISTORY_INCONSISTENT);
+            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         return lastEventId;
     }
@@ -362,10 +363,10 @@ public class HistoryI implements History {
     @Override
     public Line assign(Line demand, Line supply) {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
-            throw executionException(ERROR_HISTORY_INCONSISTENT);
+            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         throw notImplementedYet();
     }
@@ -378,10 +379,10 @@ public class HistoryI implements History {
     @Override
     public Line anyAssignmentOf(LinePointer demand, LinePointer supply) {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
-            throw executionException(ERROR_HISTORY_INCONSISTENT);
+            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         return this.assignments.anyAssignmentOf(demand, supply);
     }
@@ -389,10 +390,10 @@ public class HistoryI implements History {
     @Override
     public Table supplies() {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
-            throw executionException(ERROR_HISTORY_INCONSISTENT);
+            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         return assignments.supplies();
     }
@@ -400,10 +401,10 @@ public class HistoryI implements History {
     @Override
     public Table suppliesUsed() {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
-            throw executionException(ERROR_HISTORY_INCONSISTENT);
+            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         return assignments.suppliesUsed();
     }
@@ -411,10 +412,10 @@ public class HistoryI implements History {
     @Override
     public Table suppliesFree() {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
-            throw executionException(ERROR_HISTORY_INCONSISTENT);
+            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         return assignments.suppliesFree();
     }
@@ -422,10 +423,10 @@ public class HistoryI implements History {
     @Override
     public Table demands() {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
-            throw executionException(ERROR_HISTORY_INCONSISTENT);
+            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         return assignments.demands();
     }
@@ -433,10 +434,10 @@ public class HistoryI implements History {
     @Override
     public Table demandsUsed() {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
-            throw executionException(ERROR_HISTORY_INCONSISTENT);
+            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         return assignments.demandsUsed();
     }
@@ -444,10 +445,10 @@ public class HistoryI implements History {
     @Override
     public Table demandsFree() {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
-            throw executionException(ERROR_HISTORY_INCONSISTENT);
+            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         return assignments.demandsFree();
     }
@@ -455,10 +456,10 @@ public class HistoryI implements History {
     @Override
     public Line demandOfAssignment(Line allocation) {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
-            throw executionException(ERROR_HISTORY_INCONSISTENT);
+            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         return assignments.demandOfAssignment(allocation);
     }
@@ -466,10 +467,10 @@ public class HistoryI implements History {
     @Override
     public Line supplyOfAssignment(Line allocation) {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
-            throw executionException(ERROR_HISTORY_INCONSISTENT);
+            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         return assignments.supplyOfAssignment(allocation);
     }
@@ -477,10 +478,10 @@ public class HistoryI implements History {
     @Override
     public Set<Line> assignmentsOfSupply(Line supply) {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
-            throw executionException(ERROR_HISTORY_INCONSISTENT);
+            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         return assignments.assignmentsOfSupply(supply);
     }
@@ -488,10 +489,10 @@ public class HistoryI implements History {
     @Override
     public Set<Line> assignmentsOfDemand(Line demand) {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
-            throw executionException(ERROR_HISTORY_INCONSISTENT);
+            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         return assignments.assignmentsOfDemand(demand);
     }
@@ -504,10 +505,10 @@ public class HistoryI implements History {
     @Override
     public List<Attribute<Object>> headerView() {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
-            throw executionException(ERROR_HISTORY_INCONSISTENT);
+            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         return assignments.headerView();
     }
@@ -515,10 +516,10 @@ public class HistoryI implements History {
     @Override
     public List<Attribute<? extends Object>> headerView2() {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
-            throw executionException(ERROR_HISTORY_INCONSISTENT);
+            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         return assignments.headerView2();
     }
@@ -526,10 +527,10 @@ public class HistoryI implements History {
     @Override
     public <T> ColumnView<T> columnView(Attribute<T> attribute) {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
-            throw executionException(ERROR_HISTORY_INCONSISTENT);
+            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         return assignments.columnView(attribute);
     }
@@ -537,10 +538,10 @@ public class HistoryI implements History {
     @Override
     public ListView<ColumnView<Object>> columnsView() {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
-            throw executionException(ERROR_HISTORY_INCONSISTENT);
+            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         return assignments.columnsView();
     }
@@ -548,10 +549,10 @@ public class HistoryI implements History {
     @Override
     public ListView<Line> rawLinesView() {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
-            throw executionException(ERROR_HISTORY_INCONSISTENT);
+            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         return assignments.rawLinesView();
     }
@@ -559,10 +560,10 @@ public class HistoryI implements History {
     @Override
     public List<Line> orderedLines() {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
-            throw executionException(ERROR_HISTORY_INCONSISTENT);
+            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         return assignments.orderedLines();
     }
@@ -570,10 +571,10 @@ public class HistoryI implements History {
     @Override
     public int size() {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
-            throw executionException(ERROR_HISTORY_INCONSISTENT);
+            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         return assignments.size();
     }
@@ -581,10 +582,10 @@ public class HistoryI implements History {
     @Override
     public List<Line> rawLines() {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
-            throw executionException(ERROR_HISTORY_INCONSISTENT);
+            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         return assignments.rawLines();
     }
@@ -592,10 +593,10 @@ public class HistoryI implements History {
     @Override
     public Line lookupEquals(Attribute<Line> attribute, Line other) {
         if (!isRegisterEventIsEnabled) {
-            throw executionException(ERROR_HISTORY_DISABLED);
+            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
         if (isHistoryConsistent) {
-            throw executionException(ERROR_HISTORY_INCONSISTENT);
+            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         return assignments.lookupEquals(attribute, other);
     }

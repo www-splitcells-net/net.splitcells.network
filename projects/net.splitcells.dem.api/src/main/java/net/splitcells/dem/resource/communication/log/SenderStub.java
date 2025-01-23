@@ -18,9 +18,10 @@ package net.splitcells.dem.resource.communication.log;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListWA;
 import net.splitcells.dem.resource.communication.Sender;
+import net.splitcells.dem.utils.ExecutionException;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 public class SenderStub<T> implements Sender<T> {
     public static <T> SenderStub<T> create() {
@@ -38,7 +39,7 @@ public class SenderStub<T> implements Sender<T> {
     @Override
     public <R extends ListWA<T>> R append(T arg) {
         if (closed) {
-            throw executionException("Sender already closed:" + this);
+            throw ExecutionException.execException("Sender already closed:" + this);
         }
         storage.add(arg);
         return (R) this;

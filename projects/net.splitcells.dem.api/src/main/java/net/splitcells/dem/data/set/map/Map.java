@@ -19,6 +19,7 @@ import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.utils.ExecutionException;
 
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -29,7 +30,7 @@ import static net.splitcells.dem.data.Flows.flow;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 @JavaLegacyArtifact
 public interface Map<KEY, VALUE> extends java.util.Map<KEY, VALUE> {
@@ -172,19 +173,19 @@ public interface Map<KEY, VALUE> extends java.util.Map<KEY, VALUE> {
 
     default void requireEmpty() {
         if (!isEmpty()) {
-            throw executionException("Expecting map to be empty, but is not: " + this);
+            throw ExecutionException.execException("Expecting map to be empty, but is not: " + this);
         }
     }
 
     default void requireSizeOf(int arg) {
         if (size() != arg) {
-            throw executionException("Map should be size of " + arg + " but has size of " + size() + " instead: " + this);
+            throw ExecutionException.execException("Map should be size of " + arg + " but has size of " + size() + " instead: " + this);
         }
     }
 
     default Map<KEY, VALUE> requireKeyAbsence(KEY key) {
         if (containsKey(key)) {
-            throw executionException(tree("Map should not contain given key, but has it.")
+            throw ExecutionException.execException(tree("Map should not contain given key, but has it.")
                     .withProperty("map", toString())
                     .withProperty("key", key.toString()));
         }
@@ -194,13 +195,13 @@ public interface Map<KEY, VALUE> extends java.util.Map<KEY, VALUE> {
     default void requireEqualityTo(Map<KEY, VALUE> requiredContent) {
         requiredContent.keySet2().forEach(requiredKey -> {
             if (!containsKey(requiredKey)) {
-                throw executionException(tree("2 sets should be equal, but are not.")
+                throw ExecutionException.execException(tree("2 sets should be equal, but are not.")
                         .withProperty("this", toString())
                         .withProperty("requiredContent", requiredContent.toString())
                         .withProperty("Missing key in this", requiredKey.toString()));
             }
             if (!requiredContent.get(requiredKey).equals(get(requiredKey))) {
-                throw executionException(tree("2 sets should be equal, but are not.")
+                throw ExecutionException.execException(tree("2 sets should be equal, but are not.")
                         .withProperty("this", toString())
                         .withProperty("requiredContent", requiredContent.toString())
                         .withProperty("Unequal value for key", requiredKey.toString())
@@ -210,13 +211,13 @@ public interface Map<KEY, VALUE> extends java.util.Map<KEY, VALUE> {
         });
         keySet2().forEach(key -> {
             if (!requiredContent.containsKey(key)) {
-                throw executionException(tree("2 sets should be equal, but are not.")
+                throw ExecutionException.execException(tree("2 sets should be equal, but are not.")
                         .withProperty("this", toString())
                         .withProperty("requiredContent", requiredContent.toString())
                         .withProperty("Missing key in required content", key.toString()));
             }
             if (!requiredContent.get(key).equals(get(key))) {
-                throw executionException(tree("2 sets should be equal, but are not.")
+                throw ExecutionException.execException(tree("2 sets should be equal, but are not.")
                         .withProperty("this", toString())
                         .withProperty("requiredContent", requiredContent.toString())
                         .withProperty("Unequal value for key", key.toString())

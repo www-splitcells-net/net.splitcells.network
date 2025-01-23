@@ -17,13 +17,14 @@ package net.splitcells.dem.data.set.map;
 
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.utils.ExecutionException;
 
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 @JavaLegacyArtifact
 public class MapLegacyWrapper<Key, Value> implements Map<Key, Value> {
@@ -84,7 +85,7 @@ public class MapLegacyWrapper<Key, Value> implements Map<Key, Value> {
     public Value put(Key key, Value value) {
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY
                 && containsKey(key)) {
-            throw executionException(tree("Key already exists")
+            throw ExecutionException.execException(tree("Key already exists")
                     .withProperty("key", key.toString())
                     .withProperty("value", value.toString()));
         }

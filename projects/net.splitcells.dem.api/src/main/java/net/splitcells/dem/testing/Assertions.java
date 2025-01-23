@@ -17,6 +17,7 @@ package net.splitcells.dem.testing;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.utils.ConstructorIllegal;
+import net.splitcells.dem.utils.ExecutionException;
 
 import java.time.Instant;
 import java.util.Optional;
@@ -26,7 +27,7 @@ import java.util.function.Supplier;
 import static net.splitcells.dem.Dem.sleepABit;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 public class Assertions {
     private Assertions() {
@@ -35,38 +36,38 @@ public class Assertions {
 
     public static <T> void assertComplies(T subject, Predicate<T> constraint, String description) {
         if (constraint.test(subject)) {
-            throw executionException(description);
+            throw ExecutionException.execException(description);
         }
     }
 
     public static <T> void requirePresenceOf(Optional<T> arg) {
         if (arg.isEmpty()) {
-            throw executionException("Optional content is required, but not present.");
+            throw ExecutionException.execException("Optional content is required, but not present.");
         }
     }
 
     public static <T> T requireNotNull(T arg) {
         if (arg == null) {
-            throw executionException("The given variable is null, but should not be.");
+            throw ExecutionException.execException("The given variable is null, but should not be.");
         }
         return arg;
     }
 
     public static <T> void requireNotNull(T arg, String message) {
         if (arg == null) {
-            throw executionException(message);
+            throw ExecutionException.execException(message);
         }
     }
 
     public static <T> void requireNull(T arg, String message) {
         if (arg != null) {
-            throw executionException(message);
+            throw ExecutionException.execException(message);
         }
     }
 
     public static <T> void requireNull(T arg) {
         if (arg != null) {
-            throw executionException("Argument is not allowed to be null, but is.");
+            throw ExecutionException.execException("Argument is not allowed to be null, but is.");
         }
     }
 
@@ -75,16 +76,16 @@ public class Assertions {
             if (b == null) {
                 return;
             }
-            throw executionException("Arguments are required to be equal, but are not: first argument: " + a + ", second argument: " + b);
+            throw ExecutionException.execException("Arguments are required to be equal, but are not: first argument: " + a + ", second argument: " + b);
         }
         if (!a.equals(b)) {
-            throw executionException("Arguments are required to be equal, but are not: first argument: " + a + ", second argument: " + b);
+            throw ExecutionException.execException("Arguments are required to be equal, but are not: first argument: " + a + ", second argument: " + b);
         }
     }
 
     public static <T> void requireDistinct(T a, T b) {
         if (a.equals(b)) {
-            throw executionException("Arguments are required to be equal, but are not: first argument: " + a + ", second argument: " + b);
+            throw ExecutionException.execException("Arguments are required to be equal, but are not: first argument: " + a + ", second argument: " + b);
         }
     }
 
@@ -123,9 +124,9 @@ public class Assertions {
             if (expectedExceptionType.isInstance(th)) {
                 return;
             }
-            throw executionException("Runnable should throw `" + expectedExceptionType + "` but did throw  `" + th.getClass() + "`.");
+            throw ExecutionException.execException("Runnable should throw `" + expectedExceptionType + "` but did throw  `" + th.getClass() + "`.");
         }
-        throw executionException("Runnable should throw `" + expectedExceptionType + "` but did not.");
+        throw ExecutionException.execException("Runnable should throw `" + expectedExceptionType + "` but did not.");
     }
 
     public static void requireThrow(Runnable run) {
@@ -134,7 +135,7 @@ public class Assertions {
         } catch (Throwable th) {
             return;
         }
-        throw executionException("Runnable should throw, but did not.");
+        throw ExecutionException.execException("Runnable should throw, but did not.");
     }
 
     public static void waitUntilRequirementIsTrue(long milliSecondsToWait, Supplier<Boolean> condition) {
@@ -147,7 +148,7 @@ public class Assertions {
             sleepABit();
             compliance = condition.get();
             if (Instant.now().isAfter(plannedEnd)) {
-                throw executionException(tree("Condition is not met during wait time.")
+                throw ExecutionException.execException(tree("Condition is not met during wait time.")
                         .withProperty("milliSecondsToWait", "" + milliSecondsToWait)
                         .withProperty("condition", "" + condition));
             }

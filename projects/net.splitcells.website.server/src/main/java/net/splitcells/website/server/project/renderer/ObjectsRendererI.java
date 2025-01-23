@@ -17,12 +17,11 @@ package net.splitcells.website.server.project.renderer;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.dem.resource.communication.log.LogLevel;
-import net.splitcells.dem.utils.StringUtils;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
@@ -39,7 +38,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.FileSystemVoid.fileSystemVoid;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.*;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
@@ -79,7 +78,7 @@ public class ObjectsRendererI implements ProjectRenderer {
                             .withProperty("object", object.toString())
                             .withProperty("path", path.toString())
                             .withProperty("alternative path", alternativePath.orElseThrow().toString())
-                    , executionException("Discoverable path is already registered."));
+                    , ExecutionException.execException("Discoverable path is already registered."));
             objects.put(alternativePath.orElseThrow(), object);
         } else {
             objects.put(path, object);
@@ -103,7 +102,7 @@ public class ObjectsRendererI implements ProjectRenderer {
                             .withProperty("object", renderer.toString())
                             .withProperty("path", path.toString())
                             .withProperty("alternative path", alternativePath.orElseThrow().toString())
-                    , executionException("Discoverable path is already registered."));
+                    , ExecutionException.execException("Discoverable path is already registered."));
             csvRenderers.put(alternativePath.orElseThrow(), renderer);
         } else {
             csvRenderers.put(path, renderer);

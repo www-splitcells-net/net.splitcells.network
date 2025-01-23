@@ -18,6 +18,7 @@ package net.splitcells.cin.raters;
 import net.splitcells.dem.data.order.Comparators;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
@@ -31,7 +32,7 @@ import net.splitcells.gel.solution.Solution;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.proposal.Proposal.PROPOSE_UNCHANGED;
@@ -62,7 +63,7 @@ public class CommitmentAdherence implements Rater {
         committedTime = solution.allocations().unorderedLinesStream2()
                 .map(a -> a.value(time))
                 .max(Comparators.ASCENDING_INTEGERS)
-                .orElse(-1);
+                .orElse(0);
     }
 
     @Override
@@ -78,7 +79,7 @@ public class CommitmentAdherence implements Rater {
     @Override
     public RatingEvent ratingAfterAddition(View lines, Line addition, List<Constraint> children, View lineProcessing) {
         if (ENFORCING_UNIT_CONSISTENCY && committedTime == -1) {
-            throw executionException();
+            throw ExecutionException.execException();
         }
         final Rating rating;
         if (addition.value(LINE).value(time) <= committedTime) {
@@ -108,7 +109,7 @@ public class CommitmentAdherence implements Rater {
     @Override
     public Proposal propose(Proposal proposal) {
         if (ENFORCING_UNIT_CONSISTENCY && committedTime == -1) {
-            throw executionException();
+            throw ExecutionException.execException();
         }
         proposal.subject().columnView(time)
                 .stream()

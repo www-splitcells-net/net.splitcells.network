@@ -21,6 +21,7 @@ import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.dem.resource.FileSystems;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutRenderer;
 import net.splitcells.website.server.project.LayoutUtils;
@@ -34,7 +35,7 @@ import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
@@ -50,7 +51,7 @@ public class UserCommandProjectRendererExtension implements ProjectRendererExten
      */
     @Deprecated
     public static UserCommandProjectRendererExtension userCommandRenderer() {
-        throw executionException("This extension is not secure. This needs to be fixed, before it can be used.");
+        throw ExecutionException.execException("This extension is not secure. This needs to be fixed, before it can be used.");
     }
 
     private static final String RENDERING_PATH = "net/splitcells/shell/installed/index.html";

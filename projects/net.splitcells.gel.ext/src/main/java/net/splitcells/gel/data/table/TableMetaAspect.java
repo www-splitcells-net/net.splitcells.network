@@ -20,6 +20,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.communication.log.LogLevel;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -39,7 +40,7 @@ import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.testing.Assertions.requireNull;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.common.Language.LINE;
 import static net.splitcells.gel.common.Language.PATH_ACCESS_SYMBOL;
 import static net.splitcells.gel.common.Language.REMOVE;
@@ -101,13 +102,13 @@ public class TableMetaAspect implements Table {
     public void remove(int lineIndex) {
         if (ENFORCING_UNIT_CONSISTENCY) {
             if (table.rawLinesView().size() <= lineIndex) {
-                throw executionException(tree("Cannot remove line by index, because the index is bigger than the biggest index in the database.")
+                throw ExecutionException.execException(tree("Cannot remove line by index, because the index is bigger than the biggest index in the database.")
                         .withText("lineIndex = " + lineIndex)
                         .withText("database = " + table.path())
                         .withText("database.size() = " + table.size()));
             }
             if (table.rawLinesView().get(lineIndex) == null) {
-                throw executionException(tree("Cannot remove line by index, because this line was already removed.")
+                throw ExecutionException.execException(tree("Cannot remove line by index, because this line was already removed.")
                         .withText("lineIndex = " + lineIndex)
                         .withText("database = " + table.path()));
             }
@@ -240,7 +241,7 @@ public class TableMetaAspect implements Table {
             final var castedArg = (Table) arg;
             return identity().equals(castedArg.identity());
         }
-        throw executionException("Invalid argument type: " + arg);
+        throw ExecutionException.execException("Invalid argument type: " + arg);
     }
 
     @Override

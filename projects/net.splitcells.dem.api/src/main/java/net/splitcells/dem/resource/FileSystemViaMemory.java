@@ -17,6 +17,7 @@ package net.splitcells.dem.resource;
 
 import com.google.common.jimfs.Jimfs;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.utils.ExecutionException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,7 +26,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.stream.Stream;
 
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 @JavaLegacyArtifact
@@ -46,7 +47,7 @@ public class FileSystemViaMemory implements FileSystem {
         try {
             Files.write(backend.getPath(path.toString()), content);
         } catch (IOException e) {
-            throw executionException(e);
+            throw execException(e);
         }
         return this;
     }
@@ -56,7 +57,7 @@ public class FileSystemViaMemory implements FileSystem {
         try {
             Files.write(backend.getPath(path.toString()), content, StandardOpenOption.APPEND);
         } catch (IOException e) {
-            throw executionException(e);
+            throw execException(e);
         }
         return this;
     }
@@ -71,7 +72,7 @@ public class FileSystemViaMemory implements FileSystem {
         try {
             return Files.newInputStream(backend.getPath(path.toString()));
         } catch (IOException e) {
-            throw executionException(e);
+            throw execException(e);
         }
     }
 
@@ -80,7 +81,7 @@ public class FileSystemViaMemory implements FileSystem {
         try {
             return java.nio.file.Files.readString(backend.getPath(path.toString()));
         } catch (IOException e) {
-            throw executionException("Could not read file: " + path, e);
+            throw ExecutionException.execException("Could not read file: " + path, e);
         }
     }
 
@@ -104,7 +105,7 @@ public class FileSystemViaMemory implements FileSystem {
         try {
             return java.nio.file.Files.walk(backend.getPath("./"));
         } catch (IOException e) {
-            throw executionException(e);
+            throw execException(e);
         }
     }
 
@@ -113,7 +114,7 @@ public class FileSystemViaMemory implements FileSystem {
         try {
             return java.nio.file.Files.walk(backend.getPath(path.toString()));
         } catch (IOException e) {
-            throw executionException(e);
+            throw execException(e);
         }
     }
 
@@ -122,7 +123,7 @@ public class FileSystemViaMemory implements FileSystem {
         try {
             return java.nio.file.Files.readAllBytes(backend.getPath(path.toString()));
         } catch (IOException e) {
-            throw executionException(e);
+            throw execException(e);
         }
     }
 

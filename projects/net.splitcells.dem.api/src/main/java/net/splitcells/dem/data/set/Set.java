@@ -17,17 +17,16 @@ package net.splitcells.dem.data.set;
 
 import net.splitcells.dem.data.atom.Bool;
 import net.splitcells.dem.data.atom.Bools;
-import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.utils.ExecutionException;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Optional;
 
 import static java.util.Arrays.asList;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -109,7 +108,7 @@ public interface Set<T> extends java.util.Set<T>, SetT<T> {
     @Override
     default boolean remove(Object arg) {
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY && !contains(arg)) {
-            throw executionException("" + arg);
+            throw ExecutionException.execException("" + arg);
         }
         ensureRemoved((T) arg);
         return true;
@@ -150,13 +149,13 @@ public interface Set<T> extends java.util.Set<T>, SetT<T> {
 
     default void requirePresenceOf(T element) {
         if (!contains(element)) {
-            throw executionException("Expecting `" + this + "` to contain `" + element + "`, but it is not present.");
+            throw ExecutionException.execException("Expecting `" + this + "` to contain `" + element + "`, but it is not present.");
         }
     }
 
     default void requireAbsenceOf(T element) {
         if (contains(element)) {
-            throw executionException("Expecting `" + this + "` to not contain `" + element + "`, but it is present.");
+            throw ExecutionException.execException("Expecting `" + this + "` to not contain `" + element + "`, but it is present.");
         }
     }
 }

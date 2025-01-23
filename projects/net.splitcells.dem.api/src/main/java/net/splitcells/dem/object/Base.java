@@ -15,12 +15,14 @@
  */
 package net.splitcells.dem.object;
 
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import net.splitcells.dem.utils.ExecutionException;
+
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 public interface Base {
     default <T> void requireEqualsTo(T arg) {
         if (!this.equals(arg)) {
-            throw executionException("This should be equals to arg, but is not: this is `" + this + "` and arg is `" + arg + "`.");
+            throw ExecutionException.execException("This should be equals to arg, but is not: this is `" + this + "` and arg is `" + arg + "`.");
         }
     }
 }

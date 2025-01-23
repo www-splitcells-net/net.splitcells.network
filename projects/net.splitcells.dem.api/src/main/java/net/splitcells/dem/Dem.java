@@ -27,8 +27,8 @@ import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.Logs;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
+import net.splitcells.dem.utils.ExecutionException;
 
-import java.security.Permission;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.ZonedDateTime;
@@ -44,7 +44,7 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.communication.log.LogLevel.UNKNOWN_ERROR;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.throwableToString;
 import static net.splitcells.dem.utils.reflection.ClassesRelated.callerClass;
 
@@ -295,7 +295,7 @@ public class Dem {
      */
     @Deprecated
     public static void systemExit(int exitCode) {
-        final var exception = executionException("Exiting system.");
+        final var exception = ExecutionException.execException("Exiting system.");
         /**
          * The {@link Exception#printStackTrace()} is a mehtod of last resort,
          * in order to get a stack trace,
@@ -331,7 +331,7 @@ public class Dem {
             } while (timeLeft > 0);
         } catch (Throwable t) {
             Thread.currentThread().interrupt();
-            throw executionException(t);
+            throw execException(t);
         }
     }
     private Dem() {

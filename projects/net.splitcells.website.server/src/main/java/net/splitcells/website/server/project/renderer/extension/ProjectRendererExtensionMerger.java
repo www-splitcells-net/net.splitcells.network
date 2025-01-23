@@ -20,6 +20,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.PageMetaData;
@@ -32,7 +33,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
  * <p>
@@ -109,7 +110,7 @@ public class ProjectRendererExtensionMerger implements ProjectRendererExtension 
                 .filter(s -> s.isPresent())
                 .collect(toList());
         if (matches.hasElements() && matches.size() != 1) {
-            throw executionException(tree("No unambiguous match for source code found.")
+            throw ExecutionException.execException(tree("No unambiguous match for source code found.")
                     .withProperty("path", path)
                     .withProperty("matches", matches.toString()));
         }

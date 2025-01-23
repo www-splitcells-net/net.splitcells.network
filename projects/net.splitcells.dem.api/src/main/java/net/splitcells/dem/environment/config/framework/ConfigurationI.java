@@ -21,6 +21,7 @@ import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.map.typed.TypedMap;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.utils.ExecutionException;
 
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -32,7 +33,7 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.environment.config.framework.ConfigDependencyRecorder.dependencyRecorder;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
  * <p>This class is synchronized, as multiple {@link Dem#process(Runnable)} can be started at once,
@@ -111,7 +112,7 @@ public class ConfigurationI implements Configuration {
             dependencyStack.add(key);
             return withConfigValue(key, key.getDeclaredConstructor().newInstance().defaultValue());
         } catch (Throwable e) {
-            throw executionException(tree("Could not initialize config with default value.")
+            throw ExecutionException.execException(tree("Could not initialize config with default value.")
                             .withProperty("key", key.getName())
                     , e);
         } finally {

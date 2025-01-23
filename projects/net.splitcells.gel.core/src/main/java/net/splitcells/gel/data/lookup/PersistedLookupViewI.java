@@ -15,7 +15,6 @@
  */
 package net.splitcells.gel.data.lookup;
 
-import com.google.common.collect.Sets;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.SetT;
 import net.splitcells.dem.data.set.list.List;
@@ -26,6 +25,7 @@ import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.AspectOrientedConstructor;
 import net.splitcells.dem.resource.AspectOrientedConstructorBase;
 import net.splitcells.dem.resource.ConnectingConstructor;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -52,7 +52,7 @@ import static net.splitcells.dem.resource.ConnectingConstructorI.connectingConst
 import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
@@ -277,7 +277,7 @@ public class PersistedLookupViewI implements PersistedLookupView {
             } else if (rawLinesCache.size() > line.index()) {
                 rawLinesCache.set(line.index(), line);
             } else {
-                throw executionException("Unaccounted indexes: rawLinesCache-size=" + rawLinesCache.size() + ", line-index=" + line.index());
+                throw ExecutionException.execException("Unaccounted indexes: rawLinesCache-size=" + rawLinesCache.size() + ", line-index=" + line.index());
             }
         }
         if (USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE) {

@@ -20,13 +20,14 @@ import net.splitcells.dem.data.Flows;
 import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.set.SetT;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.utils.ExecutionException;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.function.Predicate;
 
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -43,19 +44,19 @@ public interface ListView<T> extends Collection<T>, java.util.List<T>, Thing, Se
 
     default void requireComplianceByEveryElementWith(Predicate<T> constraint) {
         stream().filter(e -> !constraint.test(e)).findFirst().ifPresent(e -> {
-            throw executionException("List element `" + e + "` does not comply with `" + constraint + "`.");
+            throw ExecutionException.execException("List element `" + e + "` does not comply with `" + constraint + "`.");
         });
     }
 
     default void requirePresenceOf(T element) {
         if (!contains(element)) {
-            throw executionException("Expecting `" + this + "` to contain `" + element + "`, but it is not present.");
+            throw ExecutionException.execException("Expecting `" + this + "` to contain `" + element + "`, but it is not present.");
         }
     }
 
     default void requireContainsOneOf(T... arg) {
         if (!Arrays.stream(arg).map(this::contains).filter(a -> a).findFirst().orElse(false)) {
-            throw executionException("Expecting `"
+            throw ExecutionException.execException("Expecting `"
                     + this
                     + "` to contain any element of `"
                     + listWithValuesOf(arg)
@@ -65,14 +66,14 @@ public interface ListView<T> extends Collection<T>, java.util.List<T>, Thing, Se
 
     default ListView<T> requireEmpty() {
         if (!isEmpty()) {
-            throw executionException("Expecting list to be empty, but is not: " + this);
+            throw ExecutionException.execException("Expecting list to be empty, but is not: " + this);
         }
         return this;
     }
 
     default void requireSizeOf(int arg) {
         if (size() != arg) {
-            throw executionException("List should be size of " + arg + " but has size of " + size() + " instead: " + this);
+            throw ExecutionException.execException("List should be size of " + arg + " but has size of " + size() + " instead: " + this);
         }
     }
 

@@ -15,12 +15,8 @@
  */
 package net.splitcells.gel.data.lookup;
 
-import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
-import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.data.view.attribute.AttributeI;
-
-import java.util.stream.IntStream;
 
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.list.Lists.list;

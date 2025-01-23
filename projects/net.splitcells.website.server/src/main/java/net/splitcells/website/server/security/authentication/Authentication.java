@@ -17,10 +17,11 @@ package net.splitcells.website.server.security.authentication;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.environment.config.framework.Option;
+import net.splitcells.dem.utils.ExecutionException;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.website.server.security.authentication.AuthenticatorImpl.authenticator;
 import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
 
@@ -41,7 +42,7 @@ public class Authentication implements Option<Authenticator> {
 
     public static UserSession requireValid(UserSession userSession) {
         if (!configValue(Authentication.class).isValid(userSession)) {
-            throw executionException(tree("Invalid user session was found")
+            throw ExecutionException.execException(tree("Invalid user session was found")
                     .withProperty("user session", userSession.toString()));
         }
         return userSession;

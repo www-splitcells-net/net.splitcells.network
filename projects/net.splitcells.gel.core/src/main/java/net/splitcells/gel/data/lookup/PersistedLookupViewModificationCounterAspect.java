@@ -15,11 +15,11 @@
  */
 package net.splitcells.gel.data.lookup;
 
-import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.SetT;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -27,7 +27,7 @@ import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
 import static net.splitcells.dem.Dem.configValue;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 public class PersistedLookupViewModificationCounterAspect implements PersistedLookupView {
     public static PersistedLookupView lookupViewModificationCounterAspect(PersistedLookupView persistedLookupView) {
@@ -130,7 +130,7 @@ public class PersistedLookupViewModificationCounterAspect implements PersistedLo
             final var castedArg = (PersistedLookupView) arg;
             return castedArg.identity() == persistedLookupView.identity();
         }
-        throw executionException("Invalid argument type: " + arg);
+        throw ExecutionException.execException("Invalid argument type: " + arg);
     }
 
     @Override

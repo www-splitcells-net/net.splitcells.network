@@ -17,10 +17,11 @@ package net.splitcells.dem.lang.tree;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.namespace.NameSpaces;
+import net.splitcells.dem.utils.ExecutionException;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 public class Den {
 
@@ -67,7 +68,7 @@ public class Den {
                         .anyMatch(property -> property.value().get().name().equals(next)))
                 .findFirst();
         if (fittingChild.isEmpty()) {
-            throw executionException("Looking for `" + next + "` but only found `" + tree.children() + "`.");
+            throw ExecutionException.execException("Looking for `" + next + "` but only found `" + tree.children() + "`.");
         }
         return subtree(fittingChild.get()
                 , path);

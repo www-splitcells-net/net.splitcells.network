@@ -25,7 +25,7 @@ import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.rating.rater.framework.Rater;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.rating.rater.lib.AllSame.ALL_SAME_NAME;
 import static net.splitcells.gel.rating.rater.lib.AllSame.allSame;
 import static net.splitcells.gel.rating.rater.lib.HasSize.HAS_SIZE_NAME;

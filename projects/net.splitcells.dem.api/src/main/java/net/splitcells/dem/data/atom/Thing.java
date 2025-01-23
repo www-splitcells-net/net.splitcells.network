@@ -16,15 +16,14 @@
 package net.splitcells.dem.data.atom;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.utils.ExecutionException;
 
-import java.lang.reflect.InvocationTargetException;
-
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 public interface Thing {
     default <T> void requireEqualityTo(T arg) {
         if (!equals(arg)) {
-            throw executionException("Should be equal, but are not: " + this + ", " + arg);
+            throw ExecutionException.execException("Should be equal, but are not: " + this + ", " + arg);
         }
     }
 
@@ -52,7 +51,7 @@ public interface Thing {
         try {
             return clazz.getDeclaredConstructor().newInstance();
         } catch (Throwable t) {
-            throw executionException(t);
+            throw execException(t);
         }
     }
 }

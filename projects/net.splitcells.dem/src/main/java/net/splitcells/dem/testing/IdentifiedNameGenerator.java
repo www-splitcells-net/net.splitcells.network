@@ -16,10 +16,11 @@
 package net.splitcells.dem.testing;
 
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.utils.ExecutionException;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
  * Creates names, that can be mapped unambiguously to ints.
@@ -48,7 +49,7 @@ public class IdentifiedNameGenerator {
         if (firstNameIndex == MAX_FIRST_NAME_INDEX && lastNameIndex < MAX_LAST_NAME_INDEX) {
             ++lastNameIndex;
         } else if (lastNameIndex == MAX_LAST_NAME_INDEX) {
-            throw executionException(tree("Cannot generate more names.")
+            throw ExecutionException.execException(tree("Cannot generate more names.")
                     .withProperty("currentNameIndex", "" + currentNameIndex)
                     .withProperty("firstNameIndex", "" + firstNameIndex)
                     .withProperty("lastNameIndex", "" + lastNameIndex)

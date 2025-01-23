@@ -30,7 +30,7 @@ import static net.splitcells.dem.resource.FileSystems.temporaryFileSystem;
 import static net.splitcells.dem.resource.Files.processInTemporaryFolder;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
 
 public class FileSystemsTest {
@@ -45,7 +45,7 @@ public class FileSystemsTest {
                 requireEquals(new String(testSubject.inputStream(testPath).readAllBytes())
                         , testData);
             } catch (Throwable e) {
-                throw executionException(e);
+                throw execException(e);
             }
         });
     }
@@ -61,7 +61,7 @@ public class FileSystemsTest {
                 requireEquals(new String(testSubject.inputStream(testPath).readAllBytes())
                         , testData);
             } catch (Throwable e) {
-                throw executionException(e);
+                throw execException(e);
             }
         });
     }

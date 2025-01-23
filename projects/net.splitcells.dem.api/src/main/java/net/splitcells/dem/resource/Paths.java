@@ -16,6 +16,7 @@
 package net.splitcells.dem.resource;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.utils.ExecutionException;
 
 import java.nio.file.Path;
 import java.util.Collection;
@@ -25,7 +26,7 @@ import static java.util.Arrays.asList;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -78,7 +79,7 @@ public final class Paths {
         try {
             return fileName.substring(0, fileName.lastIndexOf('.'));
         } catch (Throwable th) {
-            throw executionException("Could not remove suffix from file name: " + fileName, th);
+            throw ExecutionException.execException("Could not remove suffix from file name: " + fileName, th);
         }
     }
 

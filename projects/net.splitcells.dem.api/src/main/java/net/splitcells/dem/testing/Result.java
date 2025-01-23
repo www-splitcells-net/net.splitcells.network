@@ -16,12 +16,13 @@
 package net.splitcells.dem.testing;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.utils.ExecutionException;
 
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
  * <p>Stores the results of a calculation.
@@ -69,7 +70,7 @@ public class Result<Value, Message> {
 
     public void requireWorking() {
         if (defective()) {
-            throw executionException(tree("Result is defective")
+            throw ExecutionException.execException(tree("Result is defective")
                     .withProperty("error messages", errorMessages.toString()));
         }
     }

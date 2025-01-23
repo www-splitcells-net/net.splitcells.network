@@ -17,10 +17,11 @@ package net.splitcells.gel.solution.optimization.primitive.enumerable;
 
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.utils.MathUtils;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.EnumerableOnlineOptimization;
 
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
  * This
@@ -50,11 +51,11 @@ public class Initializer implements EnumerableOnlineOptimization {
     public void optimize(Solution solution, Integer parameter) {
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
             if (parameter < 0) {
-                throw executionException("Parameter must not be negative: " + parameter);
+                throw ExecutionException.execException("Parameter must not be negative: " + parameter);
             }
             final var upperLimit = upperLimit(solution);
             if (upperLimit < parameter) {
-                throw executionException("Invalid parameter: upper limit = "
+                throw ExecutionException.execException("Invalid parameter: upper limit = "
                         + upperLimit
                         + ", parameter = "
                         + parameter);

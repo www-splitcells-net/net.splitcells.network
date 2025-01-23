@@ -41,7 +41,6 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.toList;
 import static javax.xml.transform.OutputKeys.INDENT;
 import static javax.xml.transform.OutputKeys.OMIT_XML_DECLARATION;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
@@ -134,7 +133,7 @@ public final class Xml {
             elementWithChildren(rVal, nameSpaceDecleration(nameSpace));
             return rVal;
         } catch (Throwable e) {
-            throw ExecutionException.executionException("Could not transform String to XML element: " + name, e);
+            throw ExecutionException.execException("Could not transform String to XML element: " + name, e);
         }
     }
 

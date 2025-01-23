@@ -21,6 +21,7 @@ import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.object.Discoverable;
+import net.splitcells.dem.utils.ExecutionException;
 
 import java.util.Optional;
 
@@ -28,7 +29,7 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.resource.communication.log.LogMessageI.logMessage;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.throwableToString;
 
 /**
@@ -63,7 +64,7 @@ public interface Log extends ListWA<LogMessage<Tree>> {
         logs().append("Unimplemented program part for class "
                         + clazz
                         + " at:\n"
-                        + throwableToString(executionException("no-message"))
+                        + throwableToString(ExecutionException.execException("no-message"))
                 , LogLevel.WARNING);
         return this;
     }
@@ -139,7 +140,7 @@ public interface Log extends ListWA<LogMessage<Tree>> {
      * @return
      */
     default Log appendWarning(Tree warning) {
-        final var exception = executionException("warning");
+        final var exception = ExecutionException.execException("warning");
         final var message = tree("warning");
         message.withProperty("message", message);
         message.withProperty("stack-trace", throwableToString(exception));

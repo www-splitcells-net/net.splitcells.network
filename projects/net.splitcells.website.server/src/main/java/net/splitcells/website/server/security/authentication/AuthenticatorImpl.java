@@ -19,15 +19,15 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.resource.ConfigFileSystem;
 import net.splitcells.dem.resource.FileSystemView;
+import net.splitcells.dem.utils.ExecutionException;
 
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.website.server.security.authentication.UserSession.*;
 
 
@@ -103,7 +103,7 @@ public class AuthenticatorImpl implements Authenticator {
         validUserSessions.add(userSession);
         usernames.put(userSession, login.username());
         if (!isValid(userSession)) {
-            throw executionException(tree("Could not create a valid user session, given the login.")
+            throw ExecutionException.execException(tree("Could not create a valid user session, given the login.")
                     .withProperty("login data", login.toString()));
         }
         return userSession;
@@ -149,7 +149,7 @@ public class AuthenticatorImpl implements Authenticator {
 
     private synchronized void requireValid(UserSession userSession) {
         if (!isValid(userSession)) {
-            throw executionException(tree("The given user session is invalid")
+            throw ExecutionException.execException(tree("The given user session is invalid")
                     .withProperty("user session", userSession.toString()));
         }
     }

@@ -18,6 +18,7 @@ package net.splitcells.dem.resource;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.resource.communication.log.LogLevel;
+import net.splitcells.dem.utils.ExecutionException;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import java.io.IOException;
@@ -31,7 +32,7 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.FileSystemViaClassResourcesImpl.resourceBasePath;
 import static net.splitcells.dem.resource.Files.readAsString;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StreamUtils.*;
 
@@ -81,7 +82,7 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
         try {
             return readAsString(resourceResolver.getResource(normalize("/" + basePath + path)).getInputStream());
         } catch (Throwable th) {
-            throw executionException(tree("Could not read file from class path resources:")
+            throw ExecutionException.execException(tree("Could not read file from class path resources:")
                             .withProperty("path requested", path.toString())
                             .withProperty("calculated resource path", path.toString())
                     , th);
@@ -95,7 +96,7 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
             try {
                 return Optional.of(readAsString(fileContent.getInputStream()));
             } catch (Throwable th) {
-                throw executionException(tree("Could not optionally read file from class path resources:")
+                throw ExecutionException.execException(tree("Could not optionally read file from class path resources:")
                                 .withProperty("path requested", path.toString())
                                 .withProperty("calculated resource path", path.toString())
                         , th);
@@ -267,7 +268,7 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
             }
             return pathChildren;
         } catch (Throwable e) {
-            throw executionException(tree("Could walk resources recursively:")
+            throw ExecutionException.execException(tree("Could walk resources recursively:")
                             .withProperty("path", path.toString())
                             .withProperty("clazz", clazz.toString())
                     , e);
@@ -279,7 +280,7 @@ public class FileSystemViaClassResourcesAndSpring implements FileSystemView {
         try {
             return resourceResolver.getResource(normalize("/" + basePath + path)).getInputStream().readAllBytes();
         } catch (IOException e) {
-            throw executionException(e);
+            throw execException(e);
         }
     }
 

@@ -22,6 +22,7 @@ import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.namespace.NameSpace;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.resource.communication.Sender;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.dem.utils.StringUtils;
 
 import java.util.Optional;
@@ -38,7 +39,7 @@ import static net.splitcells.dem.lang.tree.JsonConfig.jsonConfig;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
 import static net.splitcells.dem.utils.BinaryUtils.binaryOutputStream;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StringUtils.stringBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -281,21 +282,21 @@ public interface Tree extends TreeView {
 
     default void requireEqualsTo(Tree other) {
         if (!name().equals(other.name())) {
-            throw executionException(tree("Both trees should have the same name, but have not.")
+            throw ExecutionException.execException(tree("Both trees should have the same name, but have not.")
                     .withProperty("this name", name().toString())
                     .withProperty("other name", other.name().toString())
                     .withProperty("this", toXmlString())
                     .withProperty("other", other.toXmlString()));
         }
         if (!nameSpace().equals(other.nameSpace())) {
-            throw executionException(tree("Both trees should have the same name spaces, but have not.")
+            throw ExecutionException.execException(tree("Both trees should have the same name spaces, but have not.")
                     .withProperty("this name space", nameSpace().toString())
                     .withProperty("other name space", other.nameSpace().toString())
                     .withProperty("this", toXmlString())
                     .withProperty("other", other.toXmlString()));
         }
         if (children().size() != other.children().size()) {
-            throw executionException(tree("The number of children should be equals, but is not.")
+            throw ExecutionException.execException(tree("The number of children should be equals, but is not.")
                     .withProperty("this children size", children().size() + "")
                     .withProperty("other children size", children().size() + "")
                     .withProperty("this", toXmlString())
@@ -380,7 +381,7 @@ public interface Tree extends TreeView {
         } else if (nameSpace().isXmlAttribute().orElse(false)) {
             // Nothing needs to be done, as XML attributes are only rendered for HTML elements.
         } else {
-            throw executionException("Unsupported namespace `" + nameSpace().uri() + "` for value `" + name() + "`.");
+            throw ExecutionException.execException("Unsupported namespace `" + nameSpace().uri() + "` for value `" + name() + "`.");
         }
         return htmlString.toString();
     }
@@ -840,7 +841,7 @@ public interface Tree extends TreeView {
             final var isJsonDictionary = nameSpace().equals(JSON) && name().equals(JSON_OBJECT);
             if (isJsonDictionary) {
                 if (hasAnyPrimitiveValues) {
-                    throw executionException("JSON objects are not allowed to contain primitive values like arrays have. JSON objects are only allowed to have name/value pairs.");
+                    throw ExecutionException.execException("JSON objects are not allowed to contain primitive values like arrays have. JSON objects are only allowed to have name/value pairs.");
                 }
                 jsonString.append("{");
             } else if (isJsonArray) {
@@ -976,7 +977,7 @@ public interface Tree extends TreeView {
                     .filter(child -> child.name().equals(element))
                     .findFirst();
             if (next.isEmpty()) {
-                throw executionException(tree("Could not find " + getClass().getName() + " child by name.")
+                throw ExecutionException.execException(tree("Could not find " + getClass().getName() + " child by name.")
                         .withProperty("path", listWithValuesOf(path).toString())
                         .withProperty("searched", element));
             }

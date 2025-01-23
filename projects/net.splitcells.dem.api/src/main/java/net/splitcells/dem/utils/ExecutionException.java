@@ -22,7 +22,7 @@ import net.splitcells.dem.lang.tree.Tree;
 public class ExecutionException extends RuntimeException {
 
     public static ExecutionException unsupportedOperation() {
-        return executionException("Unsupported operation");
+        return execException("Unsupported operation");
     }
 
     /**
@@ -31,23 +31,23 @@ public class ExecutionException extends RuntimeException {
      * @param message This message describes reason for the exception.
      * @return This is an exception, that can be thrown in order to abort the execution.
      */
-    public static ExecutionException executionException(String message) {
+    public static ExecutionException execException(String message) {
         return new ExecutionException(message);
     }
 
-    public static ExecutionException executionException(Tree message) {
+    public static ExecutionException execException(Tree message) {
         return new ExecutionException(message.toXmlString());
     }
 
-    public static ExecutionException executionException() {
+    public static ExecutionException execException() {
         return new ExecutionException();
     }
 
-    public static ExecutionException executionException(Tree message, Throwable t) {
+    public static ExecutionException execException(Tree message, Throwable t) {
         return new ExecutionException(message.toXmlString(), t);
     }
 
-    public static ExecutionException executionException(String message, Throwable t) {
+    public static ExecutionException execException(String message, Throwable t) {
         return new ExecutionException(message, t);
     }
 
@@ -59,7 +59,7 @@ public class ExecutionException extends RuntimeException {
         super();
     }
 
-    public static ExecutionException executionException(Throwable t) {
+    public static ExecutionException execException(Throwable t) {
         return new ExecutionException(t);
     }
 

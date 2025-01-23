@@ -27,20 +27,16 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
 import java.nio.channels.FileLock;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
  * TODO cleanup
@@ -87,7 +83,7 @@ public class CommonFunctions {
         try {
             return new String(content, contentType.codeName());
         } catch (UnsupportedEncodingException e) {
-            throw executionException(e);
+            throw execException(e);
         }
     }
 
@@ -95,7 +91,7 @@ public class CommonFunctions {
         try {
             return content.getBytes(contentType.codeName());
         } catch (UnsupportedEncodingException e) {
-            throw executionException(e);
+            throw execException(e);
         }
     }
 
@@ -115,7 +111,7 @@ public class CommonFunctions {
             File file = filePath.toFile();
             if (!file.exists()) {
                 if (!file.createNewFile()) {
-                    throw executionException("Could not create file: " + filePath);
+                    throw ExecutionException.execException("Could not create file: " + filePath);
                 }
             }
             try (FileOutputStream basicOutput = new FileOutputStream(file);

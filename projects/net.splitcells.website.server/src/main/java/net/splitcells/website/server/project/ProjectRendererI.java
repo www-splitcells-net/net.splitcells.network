@@ -24,6 +24,7 @@ import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.FileSystemView;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.log.LogLevel;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.project.validator.SourceValidator;
@@ -44,7 +45,7 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.ContentType.UTF_8;
 import static net.splitcells.dem.resource.FileSystemVoid.fileSystemVoid;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StreamUtils.concat;
 import static net.splitcells.website.server.project.FileStructureTransformer.fileStructureTransformer;
@@ -116,7 +117,7 @@ public class ProjectRendererI implements ProjectRenderer {
             , Config config
             , Optional<ProjectsRenderer> projectsRendererArg) {
         if (resourceRootPath.isEmpty()) {
-            throw executionException("resourceRootPath is not allowed to be empty. It has to at least be `/`.");
+            throw ExecutionException.execException("resourceRootPath is not allowed to be empty. It has to at least be `/`.");
         }
         projectsRenderer = projectsRendererArg;
         this.typedFolder = typedFolder;
@@ -301,7 +302,7 @@ public class ProjectRendererI implements ProjectRenderer {
                         return binaryMessage((docTypePrefix + content).getBytes(UTF_8.codeName())
                                 , r.getFormat());
                     } catch (Exception e) {
-                        throw executionException(e);
+                        throw execException(e);
                     }
                 }
             }
@@ -322,7 +323,7 @@ public class ProjectRendererI implements ProjectRenderer {
                     .transform(arg)
                     .getBytes(UTF_8.codeName()));
         } catch (Exception e) {
-            throw executionException(e);
+            throw execException(e);
         }
     }
 
@@ -439,7 +440,7 @@ public class ProjectRendererI implements ProjectRenderer {
                     .replace(MARKER, bodyContent)
                     .getBytes(UTF_8.codeName()));
         } catch (Exception e) {
-            throw executionException(e);
+            throw execException(e);
         }
     }
 
@@ -480,7 +481,7 @@ public class ProjectRendererI implements ProjectRenderer {
                     .transform(xmlToRender)
                     .getBytes(UTF_8.codeName()));
         } catch (Exception e) {
-            throw executionException(e);
+            throw execException(e);
         }
     }
 
@@ -491,7 +492,7 @@ public class ProjectRendererI implements ProjectRenderer {
                     .transform(xml)
                     .getBytes(UTF_8.codeName()));
         } catch (Exception e) {
-            throw executionException(e);
+            throw execException(e);
         }
     }
 

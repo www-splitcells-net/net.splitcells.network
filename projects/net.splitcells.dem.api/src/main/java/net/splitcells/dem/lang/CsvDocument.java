@@ -21,10 +21,9 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
 import java.io.IOException;
-import java.util.stream.IntStream;
 
 import static java.util.stream.IntStream.range;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 @JavaLegacyArtifact
 public class CsvDocument implements AutoCloseable {
@@ -46,7 +45,7 @@ public class CsvDocument implements AutoCloseable {
         try {
             printer = new CSVPrinter(result, CSVFormat.RFC4180.withHeader(header.toArray(new String[header.size()])));
         } catch (IOException e) {
-            throw executionException(e);
+            throw execException(e);
         }
     }
 
@@ -54,7 +53,7 @@ public class CsvDocument implements AutoCloseable {
         try {
             printer.printRecord(line);
         } catch (IOException e) {
-            throw executionException(e);
+            throw execException(e);
         }
     }
 

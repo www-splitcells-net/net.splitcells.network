@@ -40,6 +40,7 @@ import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.Logs;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.website.Formats;
 import net.splitcells.website.server.config.PasswordAuthenticationEnabled;
 import net.splitcells.website.server.processor.Processor;
@@ -78,7 +79,7 @@ import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.log.LogLevel.WARNING;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
 import static net.splitcells.website.server.processor.Request.request;
@@ -361,7 +362,7 @@ public class Server {
                         vertx.createHttpServer(webServerOptions)
                                 .requestHandler(router)
                                 .exceptionHandler(th ->
-                                        Logs.logs().appendError(executionException("An error occurred at the HTTP server .", th)))
+                                        Logs.logs().appendError(ExecutionException.execException("An error occurred at the HTTP server .", th)))
                                 .listen((result) -> {
                                     if (result.failed()) {
                                         startPromise.fail(result.cause());
@@ -377,7 +378,7 @@ public class Server {
                     deployWaiter.acquire();
                 } catch (Throwable t) {
                     Thread.currentThread().interrupt();
-                    throw executionException("Could not start HTTP server.");
+                    throw ExecutionException.execException("Could not start HTTP server.");
                 }
                 deployResult.onComplete(result -> {
                     if (result.failed()) {
@@ -389,10 +390,10 @@ public class Server {
                     deployWaiter.acquire();
                 } catch (Throwable t) {
                     Thread.currentThread().interrupt();
-                    throw executionException("An error occurred during start of the HTTP server.");
+                    throw ExecutionException.execException("An error occurred during start of the HTTP server.");
                 }
                 if (!errors.isEmpty()) {
-                    throw executionException("Could not start HTTP server.", errors.getFirst());
+                    throw ExecutionException.execException("Could not start HTTP server.", errors.getFirst());
                 }
             }
         };
@@ -419,7 +420,7 @@ public class Server {
             return;
         }
         if (result.failed()) {
-            logs().appendError(executionException(tree("Could not process form:")
+            logs().appendError(ExecutionException.execException(tree("Could not process form:")
                             .withProperty("path", routingContext.request().path())
                     , result.cause()));
             response.setStatusCode(500);

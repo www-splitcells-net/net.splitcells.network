@@ -18,6 +18,7 @@ package net.splitcells.gel.data.assignment;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.LinePointer;
@@ -25,13 +26,11 @@ import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.solution.optimization.OnlineOptimization;
 
 
-import java.util.stream.IntStream;
-
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
  * TODO Access to things like {@link #supplies()} should be read only via {@link View} by default.
@@ -126,7 +125,7 @@ public interface AssignmentsLiveView extends View {
         if (allowsSuppliesOnDemand()) {
             return supplies().addTranslated(values);
         }
-        throw executionException(tree("Trying to add a new supply on demand in an allocations table, that does not allow such.")
+        throw ExecutionException.execException(tree("Trying to add a new supply on demand in an allocations table, that does not allow such.")
                 .withProperty("values", values.toString())
                 .withProperty("allocations", path().toString()));
     }
@@ -153,7 +152,7 @@ public interface AssignmentsLiveView extends View {
             });
             return supplies().addTranslated(newSupplyValues);
         }
-        throw executionException(tree("Trying to add a new supply on demand in an allocations table, that does not allow such.")
+        throw ExecutionException.execException(tree("Trying to add a new supply on demand in an allocations table, that does not allow such.")
                 .withProperty("supply", supply.toString())
                 .withProperty("alternative values", alternativeValues.toString())
                 .withProperty("allocations", path().toString()));

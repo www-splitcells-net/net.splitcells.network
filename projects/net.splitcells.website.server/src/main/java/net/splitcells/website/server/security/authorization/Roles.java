@@ -15,8 +15,10 @@
  */
 package net.splitcells.website.server.security.authorization;
 
+import net.splitcells.dem.utils.ExecutionException;
+
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.website.server.security.authentication.Authenticator.VALID_USERNAME_SYMBOLS;
 
 public class Roles implements Role {
@@ -29,7 +31,7 @@ public class Roles implements Role {
 
     private Roles(String argName) {
         if (!VALID_USERNAME_SYMBOLS.matcher(argName).matches()) {
-            throw executionException(tree("The given role name is invalid.")
+            throw ExecutionException.execException(tree("The given role name is invalid.")
                     .withProperty("role name", argName));
         }
         name = argName;

@@ -15,8 +15,10 @@
  */
 package net.splitcells.dem.data.atom;
 
+import net.splitcells.dem.utils.ExecutionException;
+
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 public class Bools {
     private Bools() {
@@ -25,13 +27,13 @@ public class Bools {
 
     public static void requireNot(boolean arg) {
         if (arg) {
-            throw executionException("Boolean should be false, but is not.");
+            throw ExecutionException.execException("Boolean should be false, but is not.");
         }
     }
 
     public static void require(boolean arg) {
         if (!arg) {
-            throw executionException("Boolean should be true, but is not.");
+            throw ExecutionException.execException("Boolean should be true, but is not.");
         }
     }
 

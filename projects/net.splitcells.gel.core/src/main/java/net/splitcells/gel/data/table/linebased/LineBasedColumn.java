@@ -32,7 +32,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.ExecutionException.unsupportedOperation;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.data.view.attribute.IndexedAttribute.indexedAttribute;

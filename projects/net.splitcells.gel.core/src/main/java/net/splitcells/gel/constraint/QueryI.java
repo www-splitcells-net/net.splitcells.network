@@ -23,7 +23,7 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.object.Discoverable.discoverable;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.Result.result;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StreamUtils.ensureSingle;
 import static net.splitcells.gel.constraint.type.ForAll.FOR_ALL_NAME;
@@ -41,6 +41,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.testing.Result;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.constraint.type.ForAll;
@@ -190,7 +191,7 @@ public class QueryI implements Query, QueryEditor {
             currentConstraint.withChildren(resultBase.get());
             resultingGroups.addAll(groups);
         } else {
-            throw executionException(tree("Could not find forAll child constraint with given classifier.")
+            throw ExecutionException.execException(tree("Could not find forAll child constraint with given classifier.")
                     .withProperty("classifier", classifier.toTree())
                     .withProperty("current constraint", currentConstraint.toTree()));
         }
@@ -232,7 +233,7 @@ public class QueryI implements Query, QueryEditor {
             currentConstraint.withChildren(resultBase.get());
             resultingGroup.addAll(groups);
         } else {
-            throw executionException(tree("Could not find forAll child constraint with given attribute.")
+            throw ExecutionException.execException(tree("Could not find forAll child constraint with given attribute.")
                     .withProperty("classifier", attribute.toTree())
                     .withProperty("current constraint", currentConstraint.toTree()));
         }
@@ -259,7 +260,7 @@ public class QueryI implements Query, QueryEditor {
             return nextQueryPathElement(setOfUniques(groups), resultBase.get());
         }
         if (!isBuilder) {
-            throw executionException(tree("Could not find forAll child constraint.")
+            throw ExecutionException.execException(tree("Could not find forAll child constraint.")
                     .withProperty("current constraint", currentConstraint.toTree()));
         }
         final var forAll = ForAlls.forAll(Optional.of(discoverable(currentConstraint.path())));
@@ -290,7 +291,7 @@ public class QueryI implements Query, QueryEditor {
             currentConstraint.withChildren(resultBase.get());
             resultingGroups.addAll(groups);
         } else {
-            throw executionException(tree("Could not find then child constraint with given rater.")
+            throw ExecutionException.execException(tree("Could not find then child constraint with given rater.")
                     .withProperty("classifier", rater.toTree())
                     .withProperty("current constraint", currentConstraint.toTree()));
         }
@@ -339,7 +340,7 @@ public class QueryI implements Query, QueryEditor {
             root.ifPresent(Constraint::recalculateProcessing);
             resultingGroups.addAll(groups);
         } else {
-            throw executionException(tree("Could not find given forAllCombinationsOf of attributes child constraint.")
+            throw ExecutionException.execException(tree("Could not find given forAllCombinationsOf of attributes child constraint.")
                     .withProperty("classifier", attributes.toString())
                     .withProperty("current constraint", currentConstraint.toTree()));
         }
@@ -386,7 +387,7 @@ public class QueryI implements Query, QueryEditor {
                     .withAppended("" + currentConstraint.childrenView().size()))));
             f.withChildren(forAllCatcher);
             if (!isBuilder) {
-                throw executionException(tree("Could not find forAll child constraint with given classifiers.")
+                throw ExecutionException.execException(tree("Could not find forAll child constraint with given classifiers.")
                         .withProperty("classifier", classifiers.toString())
                         .withProperty("current constraint", currentConstraint.toTree()));
             }
@@ -399,7 +400,7 @@ public class QueryI implements Query, QueryEditor {
     public Query parseConstraint(String constraintType, List<Rater> raters, List<Attribute<? extends Object>> attributes) {
         final var constraint = constraintResult(constraintType, raters, attributes);
         if (constraint.errorMessages().hasElements()) {
-            throw executionException(tree("Could not construct constraints.").withChildren(constraint.errorMessages()));
+            throw ExecutionException.execException(tree("Could not construct constraints.").withChildren(constraint.errorMessages()));
         }
         return constraint.value().orElseThrow();
     }

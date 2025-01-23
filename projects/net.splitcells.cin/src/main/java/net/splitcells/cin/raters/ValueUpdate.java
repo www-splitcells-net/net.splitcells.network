@@ -19,6 +19,7 @@ import net.splitcells.cin.EntityManager;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.dom.Domable;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
@@ -34,7 +35,7 @@ import java.util.Optional;
 import static net.splitcells.cin.EntityManager.*;
 import static net.splitcells.dem.data.order.Comparators.ASCENDING_INTEGERS;
 import static net.splitcells.dem.data.set.list.Lists.*;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.MathUtils.distance;
 import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.constraint.Constraint.LINE;
@@ -81,7 +82,7 @@ public class ValueUpdate implements GroupingRater {
             rating = cost(distance(analysis.actualValue, analysis.targetValue));
             propagationTo = listWithValuesOf();
         } else {
-            throw executionException();
+            throw ExecutionException.execException();
         }
         lines.unorderedLinesStream().forEach(line ->
                 ratingEvent.additions().put(line
@@ -118,7 +119,7 @@ public class ValueUpdate implements GroupingRater {
                 .sorted(ASCENDING_INTEGERS)
                 .collect(toList());
         if (times.size() > 2) {
-            throw executionException();
+            throw ExecutionException.execException();
         }
         if (times.isEmpty()) {
             return new ValueCalc(0, 0, true, false);
@@ -238,7 +239,7 @@ public class ValueUpdate implements GroupingRater {
                     .sorted(ASCENDING_INTEGERS)
                     .collect(toList());
             if (times.size() > 2) {
-                throw executionException();
+                throw ExecutionException.execException();
             }
             if (times.isEmpty()) {
                 return proposal;

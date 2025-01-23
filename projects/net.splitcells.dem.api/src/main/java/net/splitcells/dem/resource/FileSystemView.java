@@ -23,7 +23,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
  * <p>No 2 instances of {@link FileSystem} should have the same class name

@@ -15,10 +15,9 @@
  */
 package net.splitcells.dem.object;
 
-import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.resource.Trail;
+import net.splitcells.dem.utils.ExecutionException;
 
 import java.util.Optional;
 
@@ -26,7 +25,7 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.Trail.trail;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 public class Discoveries implements Discovery {
 
@@ -68,7 +67,7 @@ public class Discoveries implements Discovery {
         final String next = relativePath[relativePathIndex];
         if (relativePath.length - relativePathIndex == 1) {
             if (children.containsKey(next)) {
-                throw executionException(tree("Cannot add child with already existing path.")
+                throw ExecutionException.execException(tree("Cannot add child with already existing path.")
                         .withProperty("New child", instance.toString())
                         .withProperty("Existing child", children.get(next).toString())
                         .withProperty("Parent value", value.map(Object::toString).orElse("empty"))

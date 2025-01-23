@@ -18,13 +18,14 @@ package net.splitcells.website.server.projects;
 import net.splitcells.dem.resource.FileSystemView;
 import net.splitcells.dem.resource.Paths;
 import net.splitcells.dem.utils.BinaryUtils;
+import net.splitcells.dem.utils.ExecutionException;
 
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public class ProjectsRendererSourceCodeFileSystem implements FileSystemView {
@@ -48,7 +49,7 @@ public class ProjectsRendererSourceCodeFileSystem implements FileSystemView {
                     .orElseThrow()
                     .getContent());
         }
-        throw executionException(tree("Unknown root folder.")
+        throw ExecutionException.execException(tree("Unknown root folder.")
                 .withProperty("path", pathStr)
                 .withProperty("projects renderer", projectsRenderer.toString()));
     }

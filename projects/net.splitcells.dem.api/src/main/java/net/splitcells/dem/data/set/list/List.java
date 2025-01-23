@@ -20,7 +20,7 @@ import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
-import net.splitcells.dem.resource.communication.log.Logs;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.dem.utils.random.Randomness;
 
 import java.util.Arrays;
@@ -33,7 +33,7 @@ import java.util.stream.IntStream;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -72,7 +72,7 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
      */
     default void delete(T arg) {
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY && !contains(arg)) {
-            throw executionException(tree("A list should contain an element, but does not.")
+            throw ExecutionException.execException(tree("A list should contain an element, but does not.")
                     .withProperty("element", "" + arg)
                     .withProperty("list", toString()));
         }

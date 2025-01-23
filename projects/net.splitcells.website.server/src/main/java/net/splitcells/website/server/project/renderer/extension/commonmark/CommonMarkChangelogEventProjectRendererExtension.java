@@ -32,7 +32,7 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkIntegration.commonMarkIntegration;
 
@@ -61,7 +61,7 @@ public class CommonMarkChangelogEventProjectRendererExtension implements Project
                         binaryMessage(renderEvents(events).getBytes(ContentType.UTF_8.codeName())
                                 , HTML_TEXT.codeName()));
             } catch (Exception e) {
-                throw executionException(e);
+                throw execException(e);
             }
         }
         return Optional.empty();

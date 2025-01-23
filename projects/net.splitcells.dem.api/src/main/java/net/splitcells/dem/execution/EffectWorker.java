@@ -25,7 +25,7 @@ import java.util.function.Consumer;
 
 import static net.splitcells.dem.Dem.executeThread;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
  * Processes {@link #events}, that are sent to an  {@link #subject} asynchronously.
@@ -57,7 +57,7 @@ public class EffectWorker<Subject> implements ExplicitEffect<Subject> {
                     }
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
-                    throw executionException(e);
+                    throw execException(e);
                 } catch (Throwable th) {
                     /**
                      * TODO Sometimes {@link Logs#logs()} does not work. Maybe logging is currently not thread safe?

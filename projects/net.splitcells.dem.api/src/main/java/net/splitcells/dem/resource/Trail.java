@@ -19,6 +19,7 @@ import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.object.Equality_;
+import net.splitcells.dem.utils.ExecutionException;
 
 import java.nio.file.Path;
 
@@ -26,7 +27,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
  * <p>TODO Ensure that only trails, that adhere to guidelines are accepted.</p>
@@ -77,7 +78,7 @@ public class Trail implements Thing, Equality_<Trail> {
             final var other = (Trail) obj;
             return content.equals(other.content);
         } else {
-            throw executionException("Illegal argument: " + obj);
+            throw ExecutionException.execException("Illegal argument: " + obj);
         }
     }
 
@@ -114,17 +115,17 @@ public class Trail implements Thing, Equality_<Trail> {
         final var split = path.replaceAll("/+", "/").split("/");
         String result = "";
         if (path.startsWith("/")) {
-            throw executionException(tree("Only relative paths are supported.")
+            throw ExecutionException.execException(tree("Only relative paths are supported.")
                     .withProperty("path", path)
                     .withProperty("elementsToRemove", elementsToRemove + ""));
         }
         if (split.length < elementsToRemove) {
-            throw executionException(tree("Trying to remove more prefix elements from path than present.")
+            throw ExecutionException.execException(tree("Trying to remove more prefix elements from path than present.")
                     .withProperty("path", path)
                     .withProperty("elementsToRemove", elementsToRemove + ""));
         }
         if (0 > elementsToRemove) {
-            throw executionException(tree("Cannot remove negative amount of prefix elements.")
+            throw ExecutionException.execException(tree("Cannot remove negative amount of prefix elements.")
                     .withProperty("path", path)
                     .withProperty("elementsToRemove", elementsToRemove + ""));
         }
@@ -150,17 +151,17 @@ public class Trail implements Thing, Equality_<Trail> {
         final var split = path.replaceAll("/+", "/").split("/");
         String result = "";
         if (path.startsWith("/")) {
-            throw executionException(tree("Only relative paths are supported.")
+            throw ExecutionException.execException(tree("Only relative paths are supported.")
                     .withProperty("path", path)
                     .withProperty("elementsToRemove", elementsToRemove + ""));
         }
         if (split.length < elementsToRemove) {
-            throw executionException(tree("Trying to remove more suffix elements from path than present.")
+            throw ExecutionException.execException(tree("Trying to remove more suffix elements from path than present.")
                     .withProperty("path", path)
                     .withProperty("elementsToRemove", elementsToRemove + ""));
         }
         if (0 > elementsToRemove) {
-            throw executionException(tree("Cannot remove negative amount of suffix elements.")
+            throw ExecutionException.execException(tree("Cannot remove negative amount of suffix elements.")
                     .withProperty("path", path)
                     .withProperty("elementsToRemove", elementsToRemove + ""));
         }

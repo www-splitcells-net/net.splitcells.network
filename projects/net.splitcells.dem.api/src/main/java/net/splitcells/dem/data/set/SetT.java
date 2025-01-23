@@ -20,6 +20,7 @@ import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.dem.utils.StreamUtils;
 
 import java.util.Collection;
@@ -33,7 +34,7 @@ import java.util.stream.Stream;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 @JavaLegacyArtifact
 public interface SetT<T> extends Collection<T> {
@@ -90,20 +91,20 @@ public interface SetT<T> extends Collection<T> {
 
     default void requireSetSizeOf(int requiredSize) {
         if (size() != requiredSize) {
-            throw executionException("Set needs to have " + requiredSize + " elements, but has " + size() + " elements instead: " + this);
+            throw ExecutionException.execException("Set needs to have " + requiredSize + " elements, but has " + size() + " elements instead: " + this);
         }
     }
 
     default SetT<T> requireEmptySet() {
         if (!isEmpty()) {
-            throw executionException("Set should be empty, but has " + size() + " elements instead: " + this);
+            throw ExecutionException.execException("Set should be empty, but has " + size() + " elements instead: " + this);
         }
         return this;
     }
 
     default void requireAnyContent() {
         if (isEmpty()) {
-            throw executionException("Set should have any content, but has no elements instead: " + this);
+            throw ExecutionException.execException("Set should have any content, but has no elements instead: " + this);
         }
     }
 
@@ -116,7 +117,7 @@ public interface SetT<T> extends Collection<T> {
     default SetT<T> requireContentsOf(T... content) {
         StreamUtils.stream(content).forEach(c -> {
             if (!contains(c)) {
-                throw executionException("Set should contain following contents in any order, but does not: set="
+                throw ExecutionException.execException("Set should contain following contents in any order, but does not: set="
                         + this
                         + ", contents="
                         + listWithValuesOf(content));
@@ -147,7 +148,7 @@ public interface SetT<T> extends Collection<T> {
         requiredContent.forEach(c -> {
             final var contains = stream().map(t -> comparer.test(t, c)).filter(t -> t).findFirst().orElse(false);
             if (!contains) {
-                throw executionException(tree("Set should contain following contents in any order, but does not.")
+                throw ExecutionException.execException(tree("Set should contain following contents in any order, but does not.")
                         .withProperty("this", toString())
                         .withProperty("required content", listWithValuesOf(requiredContent).toString())
                         .withProperty("missing content element", c.toString())
@@ -177,7 +178,7 @@ public interface SetT<T> extends Collection<T> {
     default void requireContentsOf(SetT<T> content) {
         content.forEach(c -> {
             if (!contains(c)) {
-                throw executionException("Set should contents in any order, but does not: set="
+                throw ExecutionException.execException("Set should contents in any order, but does not: set="
                         + this
                         + ", contents="
                         + content);

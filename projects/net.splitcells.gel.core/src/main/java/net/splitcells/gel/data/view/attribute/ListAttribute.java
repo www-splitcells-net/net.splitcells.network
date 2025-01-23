@@ -18,10 +18,11 @@ package net.splitcells.gel.data.view.attribute;
 import static net.splitcells.dem.data.atom.Bools.bool;
 import static net.splitcells.dem.data.atom.Bools.untrue;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.common.Language;
 
 import net.splitcells.dem.data.atom.Bool;
@@ -75,7 +76,7 @@ public class ListAttribute<T> implements Attribute<List<T>> {
     @Override
     public void assertArgumentCompatibility(Object arg) {
         if (isInstanceOf(arg).isFalse()) {
-            throw executionException("Given object not compatible to list attribute: name=" + name
+            throw ExecutionException.execException("Given object not compatible to list attribute: name=" + name
                     + ", type=" + type
                     + ", givenType=" + arg.getClass()
                     + ", arg=" + arg);

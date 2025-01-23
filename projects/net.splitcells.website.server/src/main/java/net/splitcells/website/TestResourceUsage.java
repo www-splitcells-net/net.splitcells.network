@@ -15,7 +15,7 @@
  */
 package net.splitcells.website;
 
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 public class TestResourceUsage {
     public static void main(String... args) {
@@ -23,7 +23,7 @@ public class TestResourceUsage {
             System.out.println(TestResourceUsage.class.getResourceAsStream("/net/splitcells/website/server/index.xml")
                     .readAllBytes());
         } catch (Throwable th) {
-            throw executionException(th);
+            throw execException(th);
         }
     }
 }

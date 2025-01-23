@@ -16,12 +16,13 @@
 package net.splitcells.website.server.security.authentication;
 
 import net.splitcells.dem.environment.config.framework.Option;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.website.server.security.authorization.Authorization;
 
 import java.util.Optional;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
  * <p>An instance of this class, is the claim,
@@ -61,7 +62,7 @@ public class UserSession {
         if (userSession == INSECURE_USER_SESSION) {
             return INSECURE_USER_NAME;
         }
-        throw executionException(tree("Not a valid no login user was given")
+        throw ExecutionException.execException(tree("Not a valid no login user was given")
                 .withProperty("user session", userSession.toString()));
     }
 

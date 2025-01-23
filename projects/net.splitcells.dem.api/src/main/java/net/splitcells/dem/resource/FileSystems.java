@@ -17,6 +17,7 @@ package net.splitcells.dem.resource;
 
 import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.utils.ExecutionException;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -29,7 +30,7 @@ import java.util.stream.Stream;
 import static java.nio.file.Files.createDirectories;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
@@ -51,7 +52,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 public class FileSystems implements FileSystem {
     public static FileSystem fileSystemOnLocalHost(Path rootPath) {
         if (!java.nio.file.Files.isDirectory(rootPath)) {
-            throw executionException(tree("Could not create file system API for given folder, because the folder does not exist:")
+            throw ExecutionException.execException(tree("Could not create file system API for given folder, because the folder does not exist:")
                     .withProperty("rootPath", rootPath.toString()));
         }
         return new FileSystems(rootPath);
@@ -136,7 +137,7 @@ public class FileSystems implements FileSystem {
                 }
             };
         } catch (IOException e) {
-            throw executionException(e);
+            throw execException(e);
         }
     }
 
@@ -170,7 +171,7 @@ public class FileSystems implements FileSystem {
         try {
             return java.nio.file.Files.newInputStream(rootPath.resolve(path));
         } catch (IOException e) {
-            throw executionException(e);
+            throw execException(e);
         }
     }
 
@@ -179,7 +180,7 @@ public class FileSystems implements FileSystem {
         try {
             return java.nio.file.Files.readString(rootPath.resolve(path));
         } catch (IOException e) {
-            throw executionException("Could not read file: " + path, e);
+            throw ExecutionException.execException("Could not read file: " + path, e);
         }
     }
 
@@ -192,7 +193,7 @@ public class FileSystems implements FileSystem {
         try (final var writer = new FileOutputStream(targetPath.toFile())) {
             writer.write(content);
         } catch (Exception e) {
-            throw executionException(e);
+            throw execException(e);
         }
         return this;
     }
@@ -226,7 +227,7 @@ public class FileSystems implements FileSystem {
         try {
             return java.nio.file.Files.walk(rootPath).map(rootPath::relativize);
         } catch (IOException e) {
-            throw executionException(e);
+            throw execException(e);
         }
     }
 
@@ -235,7 +236,7 @@ public class FileSystems implements FileSystem {
         try {
             return java.nio.file.Files.walk(rootPath.resolve(path)).map(rootPath::relativize);
         } catch (IOException e) {
-            throw executionException(e);
+            throw execException(e);
         }
     }
 
@@ -276,7 +277,7 @@ public class FileSystems implements FileSystem {
     @Override
     public Optional<Path> javaLegacyPath(Path path) {
         if (path.isAbsolute()) {
-            throw executionException(tree("The given path is not allowed to be absolute.")
+            throw ExecutionException.execException(tree("The given path is not allowed to be absolute.")
                     .withProperty("path", path.toString()));
         }
         return Optional.of(rootPath.resolve(path));

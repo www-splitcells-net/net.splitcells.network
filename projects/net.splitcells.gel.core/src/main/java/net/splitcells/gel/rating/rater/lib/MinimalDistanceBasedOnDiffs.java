@@ -26,6 +26,7 @@ import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.dem.utils.MathUtils;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
@@ -45,7 +46,7 @@ import static net.splitcells.dem.data.order.Comparators.ASCENDING_DOUBLES;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.utils.ExecutionException.executionException;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.MathUtils.absolute;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.constraint.Constraint.RATING;
@@ -164,7 +165,7 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
                 }
             }
         } else {
-            throw executionException("" + sortedIndexes);
+            throw ExecutionException.execException("" + sortedIndexes);
         }
         return ratingEvent;
     }
@@ -220,7 +221,7 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
                 }
             }
         } catch (Throwable t) {
-            throw executionException(t);
+            throw execException(t);
         }
     }
 
@@ -300,7 +301,7 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
                 }
             }
         } else {
-            throw executionException("" + sortedIndex);
+            throw ExecutionException.execException("" + sortedIndex);
         }
         return ratingEvent;
     }
