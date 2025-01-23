@@ -40,6 +40,7 @@ import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.lib.classification.ForAllAttributeValues;
 import net.splitcells.gel.rating.rater.lib.classification.Propagation;
 import net.splitcells.gel.rating.rater.lib.classification.RaterBasedOnGrouping;
+import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
@@ -47,6 +48,11 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+/**
+ * TODO Consider creating {@link Proposal} for {@link ForAll},
+ * that proposes assignment changes, that moves each {@link Line} away of the given {@link ForAll},
+ * so that successive {@link #childrenView()} {@link Constraint} cannot cause {@link Cost}.
+ */
 public class ForAll implements Constraint {
 
     public static final String FOR_ALL_NAME = "forAll";
