@@ -115,7 +115,8 @@ public interface Proposal {
     Table proposedAssignments();
 
     /**
-     * @return This {@link Table} contains all {@link Solution#demands()}, that should be removed from the solution.
+     * @return This {@link Table} contains all {@link Solution#orderedLines()}, that should be removed from the solution.
+     * The {@link Table#headerView()} format is {@link #EXISTING_ASSIGNMENT}.
      * Note, that this can lead to a situation,
      * where an optimization step can lead to {@link Solution#demands()} without allocated {@link Solution#supplies()}.
      * Most of the time running the optimization should fix the problem.
