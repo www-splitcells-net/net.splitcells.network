@@ -58,7 +58,9 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.RepairCo
  *     This deletes the values of all variables, which are part of some constraint defying group.</li>
  *     <li>Set the values to all free demands and thereby perform actual repair process.</li>
  * </ol>
- * <p>TODO Create {@link Proposal} only for dissatisfying {@link GroupId}.</p>
+ * <p>TODO Create and use {@link Proposal} only for dissatisfying {@link GroupId}.</p>
+ * <p>TODO Create and use {@link Proposal} only for certain {@link Constraint} nodes.
+ * In other words, search for any kind of relations between {@link Constraint} nodes.</p>
  */
 public class ConstraintGroupBasedRepair implements OnlineOptimization {
 
