@@ -42,8 +42,7 @@ import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
 /**
- * This {@link Rater} is incomplete, as it only works via {@link #propose(Proposal)}.
- * Methods like {@link #ratingAfterAddition(View, Line, List, View)} are empty implementations.
+ * This {@link Rater} can not prevent {@link Line} removals.
  */
 public class CommitmentAdherence implements Rater {
 
