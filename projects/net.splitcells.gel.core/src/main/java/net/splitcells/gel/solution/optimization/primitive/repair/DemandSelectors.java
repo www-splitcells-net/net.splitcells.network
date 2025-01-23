@@ -94,9 +94,13 @@ public class DemandSelectors {
     }
 
     /**
-     * Builds a demand selector for {@link Solution}s,
+     * <p>Builds a demand selector for {@link Solution}s,
      * where {@link GroupId}s are considered,
-     * that contain defying {@link Line}s.
+     * that contain defying {@link Line}s.</p>
+     * <p>TODO Currently, only demands are considered, which have an entry in {@link Proposal#proposedAllocations()}.
+     * via {@link Constraint#propose(Proposal)}.
+     * Shouldn't this be configurable?</p>
+     * <p>TODO Support {@link Proposal#proposedAssignments()}}.</p>
      *
      * @param restrictingConstraintPath Uses this {@link Query#constraintPath} in order to guide the selection via
      *                                  {@link Constraint#propose(Proposal)}.
