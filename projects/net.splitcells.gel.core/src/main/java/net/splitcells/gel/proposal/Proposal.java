@@ -40,6 +40,8 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
  * that are part of a plausible {@link Solution} according to this {@link Proposal}.
  * {@link Assignments#demands()} and {@link Assignments#supplies()} of {@link #proposedAllocations} are corresponding
  * subsets of the {@link #subject()}'s {@link Assignments#demands()} and {@link Assignments#supplies()}.</p>
+ * <p>TODO Create a {@link Table} like the {@link #proposedAssignments()},
+ * where {@link Attribute} of {@link #subject()} are replaced with kind of matcher functions.</p>
  */
 public interface Proposal {
 
