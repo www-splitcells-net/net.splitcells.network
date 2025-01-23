@@ -34,6 +34,10 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.gel.proposal.Proposal.PROPOSE_UNCHANGED;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 
+/**
+ * This {@link Rater} is incomplete, as it only works via {@link #propose(Proposal)}.
+ * Methods like {@link #ratingAfterAddition(View, Line, List, View)} are empty implementations.
+ */
 public class CommitmentAdherence implements Rater {
 
     public static Rater commitmentAdherence(Attribute<Integer> time) {
