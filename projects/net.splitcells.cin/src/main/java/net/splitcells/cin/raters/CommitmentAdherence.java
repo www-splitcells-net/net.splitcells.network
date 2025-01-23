@@ -24,6 +24,8 @@ import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.proposal.Proposal;
+import net.splitcells.gel.rating.framework.LocalRatingI;
+import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import net.splitcells.gel.solution.Solution;
@@ -31,8 +33,13 @@ import net.splitcells.gel.solution.Solution;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
+import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.proposal.Proposal.PROPOSE_UNCHANGED;
+import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
+import static net.splitcells.gel.rating.type.Cost.cost;
+import static net.splitcells.gel.rating.type.Cost.noCost;
 
 /**
  * This {@link Rater} is incomplete, as it only works via {@link #propose(Proposal)}.
@@ -72,7 +79,16 @@ public class CommitmentAdherence implements Rater {
      */
     @Override
     public RatingEvent ratingAfterAddition(View lines, Line addition, List<Constraint> children, View lineProcessing) {
-        return ratingEvent();
+        final Rating rating;
+        if (addition.value(LINE).value(time) <= committedTime) {
+            rating = cost(1);
+        } else {
+            rating = noCost();
+        }
+        return ratingEvent().addRating_viaAddition(addition, localRating()
+                .withPropagationTo(children)
+                .withResultingGroupId(addition.value(INCOMING_CONSTRAINT_GROUP))
+                .withRating(rating));
     }
 
     @Override
