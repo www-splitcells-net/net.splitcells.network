@@ -71,8 +71,10 @@ public interface RatingEvent {
 
     Set<Line> removal();
 
-    default void addRating_viaAddition(Line line, LocalRating localRating) {
+    @ReturnsThis
+    default RatingEvent addRating_viaAddition(Line line, LocalRating localRating) {
         additions().put(line, localRating);
+        return this;
     }
 
     default void addRating_viaAddition(Line subject
