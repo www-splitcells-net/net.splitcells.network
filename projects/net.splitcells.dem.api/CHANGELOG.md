@@ -5,7 +5,9 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
-* **2025-01-23\#51** Rename `ExecutionException#executionException()` to `ExecutionException#execException()`, in order to ease its writing. 
+* **2025-01-23\#51** Rename `ExecutionException#executionException()` to `ExecutionException#execException()`,
+  in order to ease its writing,
+  as the autocompletion for the static method `executionException` is very bad.
 * **2025-01-04\#32** Standardize class names:
     1. SetFI -> SetFactoryImpl
     2. SetFI_configured -> SetFactoryImplConfigured

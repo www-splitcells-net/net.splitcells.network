@@ -26,7 +26,8 @@ public class ExecutionException extends RuntimeException {
     }
 
     /**
-     * TODO Support {@link Tree} as message.
+     * {@link #execException(String)} is named different from {@link ExecutionException},
+     * as the autocompletion for the static method `executionException` is very bad.
      *
      * @param message This message describes reason for the exception.
      * @return This is an exception, that can be thrown in order to abort the execution.
