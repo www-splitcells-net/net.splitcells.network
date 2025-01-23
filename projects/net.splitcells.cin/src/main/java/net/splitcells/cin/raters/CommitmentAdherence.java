@@ -24,15 +24,14 @@ import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.proposal.Proposal;
-import net.splitcells.gel.rating.framework.LocalRatingI;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import net.splitcells.gel.solution.Solution;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
+import static net.splitcells.dem.utils.ExecutionException.executionException;
 import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.proposal.Proposal.PROPOSE_UNCHANGED;
@@ -78,6 +77,9 @@ public class CommitmentAdherence implements Rater {
      */
     @Override
     public RatingEvent ratingAfterAddition(View lines, Line addition, List<Constraint> children, View lineProcessing) {
+        if (ENFORCING_UNIT_CONSISTENCY && committedTime == -1) {
+            throw executionException();
+        }
         final Rating rating;
         if (addition.value(LINE).value(time) <= committedTime) {
             rating = cost(1);
@@ -105,6 +107,9 @@ public class CommitmentAdherence implements Rater {
      */
     @Override
     public Proposal propose(Proposal proposal) {
+        if (ENFORCING_UNIT_CONSISTENCY && committedTime == -1) {
+            throw executionException();
+        }
         proposal.subject().columnView(time)
                 .stream()
                 .filter(t -> t != null)
