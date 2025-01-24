@@ -66,5 +66,19 @@ public class CommitmentAdherenceTest {
                 requireEquals(proposedAssignment1.value(attribute), null);
             }
         });
+        testSubject.assign(testSubject.demands().orderedLine(1)
+                , testSubject.supplies().orderedLine(1));
+        final var testProposal2 = proposalsForGroups(testSubject, constraintPath);
+        testProposal2.get(1).contextAssignments().unorderedLines().requireSizeOf(2);
+        testProposal2.get(1).proposedAssignments().unorderedLines().requireSizeOf(1);
+        final var proposedAssignment2 = testProposal2.get(1).proposedAssignments().unorderedLines().get(0);
+        requireEquals(proposedAssignment2.value(ASSIGNMENT_PROPOSAL_TYPE), PROPOSE_UNCHANGED);
+        testSubject.headerView().forEach(attribute -> {
+            if (demandingAttribute.equals(attribute)) {
+                requireEquals(proposedAssignment2.value(attribute), 1);
+            } else {
+                requireEquals(proposedAssignment2.value(attribute), null);
+            }
+        });
     }
 }
