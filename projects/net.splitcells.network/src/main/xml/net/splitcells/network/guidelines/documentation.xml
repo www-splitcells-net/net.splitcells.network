@@ -9,8 +9,8 @@
         -->
         <title>Documentation Guidelines</title>
     </meta>
-    <paragraph>Documentation links syntax to semantics or represents meta data.
-        At least one single point of entry should be provided from where every part of the documentation is reachable.
+    <paragraph>Documentation links syntax to semantics or represents metadata.
+        At least one single point of entry should be provided from, where every part of the documentation is reachable.
         The main point of entry should contain or link to the project's objectives.
         Each objective should have a link, that provides access to the user's and programmer's manuals
         relevant for the objectives.
@@ -26,10 +26,8 @@
             This includes all words, that are used in implementation.
             The manual should not describe the API.
             For simplicity this should only consist of flowing structured text and inlines objects (i.e. images).
-            In Java this is done via CommonMark files.
         </paragraph>
         <paragraph>API documentation describes all things that can be accessed legally.
-            Implementation internals should not be noted here.
             In Java this is done via Javadoc.
         </paragraph>
     </chapter>
@@ -73,20 +71,14 @@
         <paragraph>Updating the documentation is always a problem.
             Minimize the amount of documentation.
             In the best case, the name of a thing is its documentation,
-            but keep in mind that people have vastly different contexts,
-            when they access something,
+            but keep in mind that people have vastly different contexts, when they access something,
             which makes it hard to minimize the document's size.
-            Documenting justifications may also be required in order to omit regressions
-            or developing things in a circle.
         </paragraph>
-        <paragraph>If large documentation like a user manual is required, make it a project of its own.
-            Otherwise, documentation and the software development will hinder each other,
-            because of the combined complexity.
-        </paragraph>
-        <paragraph>Every public API component should not only have a name/id but also have at least an naturally
-            described
-            summary of its functionality in order to merge syntax and semantics.
-            This can be omitted if the name/id is also a natural description.
+        <paragraph>Obsolete docs are better than no documentation,
+            as it gives hints to the actual current state of the project.
+            Obsolete and therefore false documentation can create more problems than it is worth,
+            so making it obvious, if documentation is obsolete or not is important.
+            Alternatively, make it hard to access obsolete documentation.
         </paragraph>
     </chapter>
 </article>
