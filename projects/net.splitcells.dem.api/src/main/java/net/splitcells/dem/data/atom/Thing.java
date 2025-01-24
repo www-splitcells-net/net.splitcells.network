@@ -54,4 +54,11 @@ public interface Thing {
             throw execException(t);
         }
     }
+
+    public static String toStringOrNull(Object arg) {
+        if (arg == null) {
+            return null;
+        }
+        return arg.toString();
+    }
 }
