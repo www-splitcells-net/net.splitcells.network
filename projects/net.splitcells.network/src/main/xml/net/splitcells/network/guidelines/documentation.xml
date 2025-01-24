@@ -81,5 +81,15 @@
             so making it obvious, if documentation is obsolete or not is important.
             Alternatively, make it hard to access obsolete documentation.
         </paragraph>
+        <paragraph>From a complexity point of view there are 2 types of documents:
+            One type represent information as an ordered list or a flowing text.
+            The second type, represents info as a tree or a graph.
+            The former one can be viewed as a train of thought, an archive or a linear process.
+            The latter one structures the information, in order to describe a complex thing and
+            i.e. is suitable for project management.
+            Minimize the amount of tree/graph kind of documentation,
+            that need to be kept up to date.
+            Such structures require an enormous amount of energy to be kept up to date or useful.
+        </paragraph>
     </chapter>
 </article>
