@@ -80,5 +80,27 @@ public class CommitmentAdherenceTest {
                 requireEquals(proposedAssignment2.value(attribute), null);
             }
         });
+        testSubject.init();
+        final var testProposal3 = proposalsForGroups(testSubject, constraintPath);
+        testProposal3.get(1).contextAssignments().unorderedLines().requireSizeOf(2);
+        testProposal3.get(1).proposedAssignments().unorderedLines().requireSizeOf(2);
+        final var proposedAssignment31 = testProposal3.get(1).proposedAssignments().unorderedLines().get(0);
+        final var proposedAssignment32 = testProposal3.get(1).proposedAssignments().unorderedLines().get(1);
+        requireEquals(proposedAssignment31.value(ASSIGNMENT_PROPOSAL_TYPE), PROPOSE_UNCHANGED);
+        requireEquals(proposedAssignment32.value(ASSIGNMENT_PROPOSAL_TYPE), PROPOSE_UNCHANGED);
+        testSubject.headerView().forEach(attribute -> {
+            if (demandingAttribute.equals(attribute)) {
+                requireEquals(proposedAssignment31.value(attribute), 1);
+            } else {
+                requireEquals(proposedAssignment31.value(attribute), null);
+            }
+        });
+        testSubject.headerView().forEach(attribute -> {
+            if (demandingAttribute.equals(attribute)) {
+                requireEquals(proposedAssignment32.value(attribute), 2);
+            } else {
+                requireEquals(proposedAssignment32.value(attribute), null);
+            }
+        });
     }
 }
