@@ -91,5 +91,7 @@
             that need to be kept up to date.
             Such structures require an enormous amount of energy to be kept up to date or useful.
         </paragraph>
+        <d:toDo>Create a way to automatically ensure, that not too many tree/graph kind of documentation exists.
+        </d:toDo>
     </chapter>
 </article>
