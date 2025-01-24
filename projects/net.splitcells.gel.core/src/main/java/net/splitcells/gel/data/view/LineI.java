@@ -16,6 +16,7 @@
 package net.splitcells.gel.data.view;
 
 import static java.util.stream.IntStream.range;
+import static net.splitcells.dem.data.atom.Thing.toStringOrNull;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
@@ -77,7 +78,7 @@ public class LineI implements Line {
     public String toString() {
         final var header = context().headerView();
         return "index = " + index() + ", " + range(0, header.size())
-                .mapToObj(i -> header.get(i).name() + " = " + value(header.get(i)).toString())
+                .mapToObj(i -> header.get(i).name() + " = " + toStringOrNull(value(header.get(i))))
                 .reduce("", (a, b) -> {
                     if (!a.isBlank()) {
                         return a + ", " + b;
