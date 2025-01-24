@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.proposal;
 
+import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.SetT;
 import net.splitcells.dem.data.set.Sets;
@@ -40,6 +41,20 @@ import static net.splitcells.gel.data.table.Tables.table2;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 
 public class Proposals implements Proposal {
+
+    public static Proposal proposalsForConstraintTree(Solution subject) {
+        return proposalsForConstraintTree(subject, subject.constraint(), subject.unorderedLinesStream2());
+    }
+
+    public static Proposal proposalsForConstraintTree(Solution subject, Constraint constraint, Flow<Line> lineProcessing) {
+        final List<Map<GroupId, Proposal>> proposals = list();
+        final var proposal = proposal(subject);
+        lineProcessing.forEach(lp ->
+                proposal.contextAssignments().addTranslated(list(lp.value(LINE)))
+        );
+        // TODO
+        return proposal;
+    }
 
     public static List<Proposal> proposalsForGroups(Solution subject, List<Constraint> constraintPath) {
         return proposalsForGroups(subject, constraintPath, subject.unorderedLines());
