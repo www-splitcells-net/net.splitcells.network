@@ -224,7 +224,6 @@ public class ValueUpdate implements GroupingRater {
             final int startTime;
             final int endTime;
             final int startResult;
-            final int endResult;
             final boolean isDeleted;
             final List<Line> valueAdds;
             final int valueAdd;
