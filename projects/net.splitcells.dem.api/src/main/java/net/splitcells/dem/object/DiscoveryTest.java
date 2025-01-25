@@ -24,7 +24,7 @@ import static net.splitcells.dem.testing.Assertions.requireThrow;
 
 public class DiscoveryTest {
     @UnitTest
-    public void testChildCreation() {
+    public void testChildCreationAndRemoval() {
         final var testSubject = discoveryRoot();
         final var firstChild = testSubject.createChild("test-value", "relative", "path");
         firstChild.path().content().requireEquals(list("relative", "path"));
@@ -32,6 +32,8 @@ public class DiscoveryTest {
         final var secondChild = testSubject.createChild("another-value", "relative", "second", "path");
         secondChild.path().content().requireEquals(list("relative", "second", "path"));
         requireEquals(secondChild, testSubject.childByPath("relative", "second", "path"));
+        testSubject.childByPath("relative", "second", "path").removeChild(secondChild);
+        testSubject.childByPath("relative", "second", "path").children().requireEmpty();
         requireThrow(() -> testSubject.createChild("third-value", "relative", "second", "path"));
     }
 }
