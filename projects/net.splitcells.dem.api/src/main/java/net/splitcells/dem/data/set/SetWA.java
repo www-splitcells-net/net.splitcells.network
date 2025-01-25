@@ -57,16 +57,16 @@ public interface SetWA<T> {
 	static <A, B> SetWA<B> extend(final B first_prefix, final B defaultPrefix, final SetWA<B> sender) {
 		return new SetWA<B>() {
 
-			private boolean wasFirst_added = false;
+			private boolean wasFirstAdded = false;
 
 			@SuppressWarnings("unchecked")
 			@ReturnsThis
 			public <R extends SetWA<B>> R add(B arg) {
-				if (wasFirst_added) {
+				if (wasFirstAdded) {
 					sender.addAll(defaultPrefix, arg);
 				} else {
 					sender.addAll(first_prefix, arg);
-					wasFirst_added = true;
+					wasFirstAdded = true;
 				}
 				return (R) this;
 			}
