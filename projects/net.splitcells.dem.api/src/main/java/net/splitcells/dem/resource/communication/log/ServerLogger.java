@@ -15,7 +15,7 @@
  */
 package net.splitcells.dem.resource.communication.log;
 
-import net.splitcells.dem.data.set.list.ListWA;
+import net.splitcells.dem.data.set.list.AppendableList;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.communication.Sender;
 
@@ -40,7 +40,7 @@ public class ServerLogger implements Logger {
     }
 
     @Override
-    public <R extends ListWA<LogMessage<Tree>>> R append(LogMessage<Tree> arg) {
+    public <R extends AppendableList<LogMessage<Tree>>> R append(LogMessage<Tree> arg) {
         if (messageFilter.test(arg)) {
             output.append(arg.content().createToJsonPrintable().toJsonString());
         }

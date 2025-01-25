@@ -16,7 +16,7 @@
 package net.splitcells.dem.resource.communication.log;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.ListWA;
+import net.splitcells.dem.data.set.list.AppendableList;
 import net.splitcells.dem.resource.communication.Sender;
 import net.splitcells.dem.utils.ExecutionException;
 
@@ -37,7 +37,7 @@ public class SenderStub<T> implements Sender<T> {
     }
 
     @Override
-    public <R extends ListWA<T>> R append(T arg) {
+    public <R extends AppendableList<T>> R append(T arg) {
         if (closed) {
             throw ExecutionException.execException("Sender already closed:" + this);
         }

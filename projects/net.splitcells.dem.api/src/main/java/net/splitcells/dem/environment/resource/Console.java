@@ -16,7 +16,7 @@
 package net.splitcells.dem.environment.resource;
 
 import net.splitcells.dem.Dem;
-import net.splitcells.dem.data.set.list.ListWA;
+import net.splitcells.dem.data.set.list.AppendableList;
 import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.environment.config.StartTime;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
@@ -83,7 +83,7 @@ public final class Console extends ResourceOptionI<Sender<String>> {
                         }
 
                         @Override
-                        public <R extends ListWA<String>> R append(String arg) {
+                        public <R extends AppendableList<String>> R append(String arg) {
                             systemOutSender.append(arg);
                             return fileOutSender.append(arg);
                         }

@@ -5,6 +5,8 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2025-01-25\#32** Rename `ListWA` to `AppendableList` and `SetWA` to `AppendableSet`,
+  in order to better signal their function.
 * **2025-01-23\#51** Rename `ExecutionException#executionException()` to `ExecutionException#execException()`,
   in order to ease its writing,
   as the autocompletion for the static method `executionException` is very bad.

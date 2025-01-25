@@ -16,7 +16,7 @@
 package net.splitcells.dem.resource.communication.log;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.ListWA;
+import net.splitcells.dem.data.set.list.AppendableList;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.StartTime;
@@ -62,7 +62,7 @@ public class LoggerRouter implements Logger {
     }
 
     @Override
-    public <R extends ListWA<LogMessage<Tree>>> R append(LogMessage<Tree> arg) {
+    public <R extends AppendableList<LogMessage<Tree>>> R append(LogMessage<Tree> arg) {
         if (messageFilter.test(arg)) {
             if (!routing.containsKey(arg.path())) {
                 Path consolePath;
