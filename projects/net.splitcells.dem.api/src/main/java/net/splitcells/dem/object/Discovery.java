@@ -38,6 +38,17 @@ public interface Discovery {
      */
     Map<String, Discovery> children();
 
+    default Discovery childByPath(String... path) {
+        return childByPath(0, path);
+    }
+
+    default Discovery childByPath(int index, String... path) {
+        if (index == path.length - 1) {
+            return children().get(path[index]);
+        }
+        return children().get(path[index]).childByPath(index + 1, path);
+    }
+
     /**
      * @return This is the name of the node, which is the last element of the {@link #path()}.
      */
@@ -84,10 +95,9 @@ public interface Discovery {
     void removeChild(Discovery child);
 
     /**
-     *
      * @param clazz
-     * @return This returns the kind of long living object, that is linked to this {@link Discovery}.
      * @param <R>
+     * @return This returns the kind of long living object, that is linked to this {@link Discovery}.
      */
     <R> Optional<R> value(Class<? extends R> clazz);
 }

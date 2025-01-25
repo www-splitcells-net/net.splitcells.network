@@ -83,6 +83,7 @@ public class Discoveries implements Discovery {
             }
             final var child = new Discoveries(trail(path.content().shallowCopy().withAppended(next))
                     , Optional.empty());
+            children.put(next, child);
             return child.createChild(instance, ++relativePathIndex, relativePath);
         }
     }
