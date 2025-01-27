@@ -61,9 +61,14 @@ public class Proposals implements Proposal {
     }
 
     /**
-     * The {@link Proposal} are created by submitting a {@link Proposal} to every {@link Constraint},
+     * <p>The {@link Proposal} are created by submitting a {@link Proposal} to every {@link Constraint},
      * where each submitted {@link Proposal} contains all {@link Line} of one {@link GroupId},
-     * located in the respective {@link Constraint}.
+     * located in the respective {@link Constraint}.</p>
+     * <p>Note on the implementation: there is no check,
+     * if a {@link Line} is present in a {@link Constraint#childrenView()} explicitly.
+     * It this is implicitly done by checking {@link Constraint#INCOMING_CONSTRAINT_GROUP} and
+     * {@link Constraint#RESULTING_CONSTRAINT_GROUP},
+     * as in this case {@link Line} are not present in {@link Constraint#childrenView()}.</p>
      *
      * @param subject             This is the {@link Solution} for which suggestions for improvement are created.
      * @param constraintPath      These suggestions are only create for this path of {@link Constraint#childrenView()}.
