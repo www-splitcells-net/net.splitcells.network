@@ -118,7 +118,8 @@ ol > ol {
 	background-color: var(--background-color-priority-1);
         color: var(--foreground-color-priority-1);
 	}
-.net-splitcells-priority-4 .net-splitcells-button {
+.net-splitcells-priority-4 .net-splitcells-button
+,.net-splitcells-priority-4 p {
 	background-color: var(--background-color-priority-3);
     color: var(--foreground-color-priority-3);
 	}
