@@ -24,6 +24,7 @@ import net.splitcells.dem.utils.ExecutionException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
 import static net.splitcells.dem.utils.ExecutionException.execException;
@@ -71,6 +72,10 @@ public interface Set<T> extends java.util.Set<T>, SetT<T> {
 
     default void addAll(T... objects) {
         Arrays.stream(objects).forEach(e -> add(e));
+    }
+
+    default void addAll(Stream<T> objects) {
+        objects.forEach(this::add);
     }
 
     default boolean containsAny(T... objects) {
