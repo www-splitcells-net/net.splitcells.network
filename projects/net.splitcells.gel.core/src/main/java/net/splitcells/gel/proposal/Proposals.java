@@ -32,6 +32,7 @@ import net.splitcells.gel.solution.Solution;
 
 import java.util.stream.Stream;
 
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.gel.constraint.Constraint.*;
@@ -67,8 +68,14 @@ public class Proposals implements Proposal {
                                 .filter(l -> l.value(INCOMING_CONSTRAINT_GROUP).equals(cp))));
             });
         });
-        // TODO
         final var proposal = proposal(subject);
+        final Set<Line> contextAssignments = setOfUniques();
+        // TODO
+        childrenProposals.forEach(cp -> {
+            contextAssignments.addAll(cp.contextAssignments().unorderedLinesStream2()
+                    .map(ca -> ca.value(CONTEXT_ASSIGNMENT)));
+        });
+        contextAssignments.forEach(ca -> proposal.contextAssignments().addTranslated(list(ca)));
         return proposal;
     }
 
@@ -99,7 +106,7 @@ public class Proposals implements Proposal {
         final List<Proposal> proposalsForGroups = list();
         final var rootConstraint = constraintPath.get(0);
         proposals.add(proposalForGroup(subject
-                , Sets.setOfUniques(rootConstraint.injectionGroup())
+                , setOfUniques(rootConstraint.injectionGroup())
                 , rootConstraint.lineProcessing().unorderedLinesStream().filter(lp -> relevantAllocations.contains(lp.value(LINE)))
                 , rootConstraint));
         proposalsForGroups.addAll(proposals.get(0).values());
