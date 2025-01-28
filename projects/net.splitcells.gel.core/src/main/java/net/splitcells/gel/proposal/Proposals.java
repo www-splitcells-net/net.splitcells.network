@@ -46,8 +46,11 @@ public class Proposals implements Proposal {
     /**
      * {@link Proposal#proposedAllocations()} are not supported.
      *
-     * @param subject
-     * @return
+     * @param subject The {@link Solution} for which the {@link Proposal} are generated.
+     * @return This {@link Proposal} contains all suggestions of the complete {@link Constraint} tree,
+     * available at {@link Solution#constraint()} of the {@code subject}.
+     * This is done by creating {@link Proposal} instances via {@link Constraint#propose(Proposal)} and
+     * then merging these together.
      */
     public static Proposal proposalsForConstraintTree(Solution subject) {
         return proposalsForConstraintTree(subject, subject.constraint()
