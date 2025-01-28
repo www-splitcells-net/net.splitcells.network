@@ -43,7 +43,8 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 public class Proposals implements Proposal {
 
     public static Proposal proposalsForConstraintTree(Solution subject) {
-        return proposalsForConstraintTree(subject, subject.constraint(), subject.unorderedLinesStream2());
+        return proposalsForConstraintTree(subject, subject.constraint()
+                , subject.constraint().lineProcessing().unorderedLinesStream2());
     }
 
     public static Proposal proposalsForConstraintTree(Solution subject, Constraint constraint, Flow<Line> lineProcessing) {
