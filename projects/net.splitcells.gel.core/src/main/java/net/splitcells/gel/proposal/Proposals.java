@@ -43,6 +43,12 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 
 public class Proposals implements Proposal {
 
+    /**
+     * {@link Proposal#proposedAllocations()} are not supported.
+     *
+     * @param subject
+     * @return
+     */
     public static Proposal proposalsForConstraintTree(Solution subject) {
         return proposalsForConstraintTree(subject, subject.constraint()
                 , subject.constraint().lineProcessing().unorderedLinesStream2());
