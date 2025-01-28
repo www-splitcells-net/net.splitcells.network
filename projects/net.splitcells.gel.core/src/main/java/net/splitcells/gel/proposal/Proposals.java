@@ -47,12 +47,19 @@ public class Proposals implements Proposal {
     }
 
     public static Proposal proposalsForConstraintTree(Solution subject, Constraint constraint, Flow<Line> lineProcessing) {
-        final List<Map<GroupId, Proposal>> proposals = list();
-        final var proposal = proposal(subject);
-        lineProcessing.forEach(lp ->
-                proposal.contextAssignments().addTranslated(list(lp.value(LINE)))
-        );
+        final Map<GroupId, Proposal> currentProposals = map();
+        lineProcessing.forEach(lp -> {
+            final var resultingGroup = lp.value(RESULTING_CONSTRAINT_GROUP);
+            final Proposal proposal;
+            if (!currentProposals.containsKey(resultingGroup)) {
+                currentProposals.put(resultingGroup, proposal(subject));
+            }
+            proposal = currentProposals.get(resultingGroup);
+            proposal.contextAssignments().addTranslated(list(lp.value(LINE)));
+        });
+        currentProposals.values().forEach(constraint::propose);
         // TODO
+        final var proposal = proposal(subject);
         return proposal;
     }
 
