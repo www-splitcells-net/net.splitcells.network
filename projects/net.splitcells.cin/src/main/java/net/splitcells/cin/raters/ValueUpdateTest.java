@@ -59,15 +59,16 @@ public class ValueUpdateTest {
         final var assign0 = testSubject.assign(demands.addTranslated(listWithValuesOf(startTime))
                 , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 0, RESULT_VALUE)));
         testSubject.constraint().rating().requireEqualsTo(cost(1));
-        final var proposalsForGroups0 = proposalsForGroups(testSubject
+        final var proposalsForGroups0a = proposalsForGroups(testSubject
                 , list(testSubject.constraint(), testSubject.constraint().child(0))
                 , testSubject.unorderedLines());
-        proposalsForGroups0.get(0).contextAssignments().unorderedLines().requireSizeOf(1);
-        proposalsForGroups0.get(0).proposedAllocationsWithSupplies().unorderedLines().requireEmpty();
-        proposalsForGroups0.get(0).proposedDisallocations().unorderedLines().requireEmpty();
-        proposalsForGroups0.get(1).contextAssignments().unorderedLines().requireSizeOf(1);
-        proposalsForGroups0.get(1).proposedAllocationsWithSupplies().unorderedLines().requireEmpty();
-        proposalsForGroups0.get(1).proposedDisallocations().unorderedLines().requireEmpty();
+        proposalsForGroups0a.get(0).contextAssignments().unorderedLines().requireSizeOf(1);
+        proposalsForGroups0a.get(0).proposedAllocationsWithSupplies().unorderedLines().requireEmpty();
+        proposalsForGroups0a.get(0).proposedDisallocations().unorderedLines().requireEmpty();
+        proposalsForGroups0a.get(1).contextAssignments().unorderedLines().requireSizeOf(1);
+        proposalsForGroups0a.get(1).proposedAllocationsWithSupplies().unorderedLines().requireEmpty();
+        proposalsForGroups0a.get(1).proposedDisallocations().unorderedLines().requireEmpty();
+        final var proposalsForGroups0b = testSubject.propose();
 
         final var assign1 = testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
                 , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 1, RESULT_VALUE)));
