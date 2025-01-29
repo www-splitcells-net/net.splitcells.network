@@ -63,9 +63,11 @@ public class Proposals implements Proposal {
             final var resultingGroup = lp.value(RESULTING_CONSTRAINT_GROUP);
             final Proposal proposal;
             if (!currentProposals.containsKey(resultingGroup)) {
-                currentProposals.put(resultingGroup, proposal(subject));
+                proposal = proposal(subject);
+                currentProposals.put(resultingGroup, proposal);
+            } else {
+                proposal = currentProposals.get(resultingGroup);
             }
-            proposal = currentProposals.get(resultingGroup);
             proposal.contextAssignments().addTranslated(list(lp.value(LINE)));
         });
         currentProposals.values().forEach(constraint::propose);
