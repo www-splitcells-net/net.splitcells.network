@@ -44,7 +44,6 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 public class Proposals implements Proposal {
 
     /**
-     *
      * @param subject The {@link Solution} for which the {@link Proposal} are generated.
      * @return This {@link Proposal} contains all suggestions of the complete {@link Constraint} tree,
      * available at {@link Solution#constraint()} of the {@code subject}.
@@ -80,7 +79,7 @@ public class Proposals implements Proposal {
         });
         final var proposal = proposal(subject);
         final Set<Line> contextAssignments = setOfUniques();
-        childrenProposals.forEach(cp -> {
+        childrenProposals.flow().withAppended(currentProposals.values().stream()).forEach(cp -> {
             contextAssignments.addAll(cp.contextAssignments().unorderedLinesStream2()
                     .map(ca -> ca.value(CONTEXT_ASSIGNMENT)));
             cp.proposedAllocationsWithSupplies().unorderedLinesStream2().forEach(as ->
