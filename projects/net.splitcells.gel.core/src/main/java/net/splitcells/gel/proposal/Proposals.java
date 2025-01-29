@@ -80,7 +80,6 @@ public class Proposals implements Proposal {
         });
         final var proposal = proposal(subject);
         final Set<Line> contextAssignments = setOfUniques();
-        // TODO
         childrenProposals.forEach(cp -> {
             contextAssignments.addAll(cp.contextAssignments().unorderedLinesStream2()
                     .map(ca -> ca.value(CONTEXT_ASSIGNMENT)));
