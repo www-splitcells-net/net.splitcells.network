@@ -19,6 +19,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.Xml.attribute;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
+import static net.splitcells.gel.proposal.Proposals.proposalsForConstraintTree;
 import static net.splitcells.gel.solution.OptimizationParameters.optimizationParameters;
 import static net.splitcells.gel.solution.optimization.DefaultOptimization.defaultOptimization;
 import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
@@ -29,6 +30,8 @@ import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.attribute.Attribute;
+import net.splitcells.gel.proposal.Proposal;
+import net.splitcells.gel.proposal.Proposals;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.solution.optimization.OfflineOptimization;
@@ -49,6 +52,10 @@ import java.util.function.Function;
  * Maybe one could implement a very low level compatibility system based on this for other software?</p>
  */
 public interface Solution extends Problem, SolutionView {
+
+    default Proposal propose() {
+        return proposalsForConstraintTree(this);
+    }
 
     /**
      *
