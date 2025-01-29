@@ -22,13 +22,21 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.utils.ExecutionException;
 
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
+import static net.splitcells.dem.data.Flows.flow;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
 public interface Flow<T> extends java.util.stream.Stream<T> {
+
+    default Flow<T> withAppended(Flow<T> other) {
+        return flow(java.util.stream.Stream.concat(this, other));
+    }
+
     @Override
     default List<T> toList() {
         return collect(Lists.toList());
