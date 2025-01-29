@@ -44,7 +44,6 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 public class Proposals implements Proposal {
 
     /**
-     * {@link Proposal#proposedAllocations()} are not supported.
      *
      * @param subject The {@link Solution} for which the {@link Proposal} are generated.
      * @return This {@link Proposal} contains all suggestions of the complete {@link Constraint} tree,
@@ -83,6 +82,16 @@ public class Proposals implements Proposal {
         childrenProposals.forEach(cp -> {
             contextAssignments.addAll(cp.contextAssignments().unorderedLinesStream2()
                     .map(ca -> ca.value(CONTEXT_ASSIGNMENT)));
+            cp.proposedAllocationsWithSupplies().unorderedLinesStream2().forEach(as ->
+                    proposal.proposedAllocationsWithSupplies().addTranslated(as.values()));
+            cp.proposedAssignments().unorderedLinesStream2().forEach(pa ->
+                    proposal.proposedAssignments().addTranslated(pa.values()));
+            cp.proposedDisallocations().unorderedLinesStream2().forEach(pa ->
+                    proposal.proposedDisallocations().addTranslated(pa.values()));
+            cp.contextAllocationsOld().unorderedLinesStream2().forEach(pa ->
+                    proposal.contextAllocationsOld().addTranslated(pa.values()));
+            cp.proposedAllocations().unorderedLinesStream2().forEach(pa ->
+                    proposal.proposedAllocations().addTranslated(pa.values()));
         });
         contextAssignments.forEach(ca -> proposal.contextAssignments().addTranslated(list(ca)));
         return proposal;
