@@ -33,7 +33,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 
 public interface Flow<T> extends java.util.stream.Stream<T> {
 
-    default Flow<T> withAppended(Flow<T> other) {
+    default Flow<T> withAppended(Stream<T> other) {
         return flow(java.util.stream.Stream.concat(this, other));
     }
 
