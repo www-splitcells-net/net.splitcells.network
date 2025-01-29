@@ -19,6 +19,10 @@ import net.splitcells.dem.object.Discoverable;
 
 import java.util.Optional;
 
+/**
+ * TODO IDEA Render private attributes of {@link DiscoverableRenderer} for debugging.
+ * For this paths would have to be automatically generated for each private attribute.
+ */
 public interface DiscoverableRenderer extends Discoverable {
     /**
      *
