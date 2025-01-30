@@ -79,16 +79,31 @@ public class ValueUpdateTest {
         final var assign1 = testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
                 , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 1, RESULT_VALUE)));
         testSubject.constraint().rating().requireEqualsTo(cost(2));
-        final var proposalsForGroups1 = proposalsForGroups(testSubject
+        final var proposalsForGroups1a = proposalsForGroups(testSubject
                 , list(testSubject.constraint(), testSubject.constraint().child(0))
                 , testSubject.unorderedLines());
-        proposalsForGroups1.get(1).contextAssignments().requireSizeOf(2);
-        proposalsForGroups1.get(1).proposedDisallocations()
+        proposalsForGroups1a.get(1).contextAssignments().requireSizeOf(2);
+        proposalsForGroups1a.get(1).proposedDisallocations()
                 .requireSizeOf(1)
                 .unorderedLinesStream2()
                 .filter(l -> assign1.equalsTo(l.value(EXISTING_ASSIGNMENT)))
                 .requireSizeOf(1);
-        proposalsForGroups1.get(1).proposedAllocationsWithSupplies().requireSizeOf(1)
+        proposalsForGroups1a.get(1).proposedAllocationsWithSupplies().requireSizeOf(1)
+                .unorderedLinesStream2()
+                .filter(l ->
+                        testSubject.demandOfAssignment(l.value(EXISTING_DEMAND)).equalsTo(l.value(EXISTING_DEMAND))
+                                && Thing.equals(l.value(PLAYER_ATTRIBUTE), null)
+                                && Thing.equals(l.value(PLAYER_VALUE), 0)
+                                && Thing.equals(l.value(EVENT_TYPE), null))
+                .requireSizeOf(1);
+        final var proposalsForGroups1b = testSubject.propose();
+        proposalsForGroups1b.contextAssignments().requireSizeOf(2);
+        proposalsForGroups1b.proposedDisallocations()
+                .requireSizeOf(1)
+                .unorderedLinesStream2()
+                .filter(l -> assign1.equalsTo(l.value(EXISTING_ASSIGNMENT)))
+                .requireSizeOf(1);
+        proposalsForGroups1b.proposedAllocationsWithSupplies().requireSizeOf(1)
                 .unorderedLinesStream2()
                 .filter(l ->
                         testSubject.demandOfAssignment(l.value(EXISTING_DEMAND)).equalsTo(l.value(EXISTING_DEMAND))
@@ -100,24 +115,39 @@ public class ValueUpdateTest {
         final var assign2 = testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
                 , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 1, SET_VALUE)));
         testSubject.constraint().rating().requireEqualsTo(noCost());
-        final var proposalsForGroups2 = proposalsForGroups(testSubject
-                , list(testSubject.constraint(), testSubject.constraint().child(0))
-                , testSubject.unorderedLines());
-        proposalsForGroups2.get(1).contextAssignments().requireSizeOf(3);
-        proposalsForGroups2.get(1).proposedDisallocations().requireSizeOf(0);
-        proposalsForGroups2.get(1).proposedAllocationsWithSupplies().requireSizeOf(0);
+        final var proposalsForGroups2a = testSubject.propose();
+        proposalsForGroups2a.contextAssignments().requireSizeOf(3);
+        proposalsForGroups2a.proposedDisallocations().requireSizeOf(0);
+        proposalsForGroups2a.proposedAllocationsWithSupplies().requireSizeOf(0);
+        final var proposalsForGroups2b = testSubject.propose();
+        proposalsForGroups2b.contextAssignments().requireSizeOf(3);
+        proposalsForGroups2b.proposedDisallocations().requireSizeOf(0);
+        proposalsForGroups2b.proposedAllocationsWithSupplies().requireSizeOf(0);
 
         final var assign3 = testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
                 , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 1, ADD_VALUE)));
         testSubject.constraint().rating().requireEqualsTo(cost(4));
-        final var proposalsForGroups3 = proposalsForGroups(testSubject
+        final var proposalsForGroups3a = proposalsForGroups(testSubject
                 , list(testSubject.constraint(), testSubject.constraint().child(0))
                 , testSubject.unorderedLines());
-        proposalsForGroups3.get(1).contextAssignments().requireSizeOf(4);
-        proposalsForGroups3.get(1).proposedDisallocations().requireSizeOf(1).unorderedLinesStream2()
+        proposalsForGroups3a.get(1).contextAssignments().requireSizeOf(4);
+        proposalsForGroups3a.get(1).proposedDisallocations().requireSizeOf(1).unorderedLinesStream2()
                 .filter(l -> assign1.equalsTo(l.value(EXISTING_ASSIGNMENT)))
                 .requireSizeOf(1);
-        proposalsForGroups3.get(1).proposedAllocationsWithSupplies().requireSizeOf(1)
+        proposalsForGroups3a.get(1).proposedAllocationsWithSupplies().requireSizeOf(1)
+                .unorderedLinesStream2()
+                .filter(l ->
+                        testSubject.demandOfAssignment(l.value(EXISTING_DEMAND)).equalsTo(l.value(EXISTING_DEMAND))
+                                && Thing.equals(l.value(PLAYER_ATTRIBUTE), null)
+                                && Thing.equals(l.value(PLAYER_VALUE), 2)
+                                && Thing.equals(l.value(EVENT_TYPE), null))
+                .requireSizeOf(1);
+        final var proposalsForGroups3b = testSubject.propose();
+        proposalsForGroups3b.contextAssignments().requireSizeOf(4);
+        proposalsForGroups3b.proposedDisallocations().requireSizeOf(1).unorderedLinesStream2()
+                .filter(l -> assign1.equalsTo(l.value(EXISTING_ASSIGNMENT)))
+                .requireSizeOf(1);
+        proposalsForGroups3b.proposedAllocationsWithSupplies().requireSizeOf(1)
                 .unorderedLinesStream2()
                 .filter(l ->
                         testSubject.demandOfAssignment(l.value(EXISTING_DEMAND)).equalsTo(l.value(EXISTING_DEMAND))
@@ -129,14 +159,27 @@ public class ValueUpdateTest {
         final var assign4 = testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
                 , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 1, ADD_VALUE)));
         testSubject.constraint().rating().requireEqualsTo(cost(10));
-        final var proposalsForGroups4 = proposalsForGroups(testSubject
+        final var proposalsForGroups4a = proposalsForGroups(testSubject
                 , list(testSubject.constraint(), testSubject.constraint().child(0))
                 , testSubject.unorderedLines());
-        proposalsForGroups4.get(1).contextAssignments().requireSizeOf(5);
-        proposalsForGroups4.get(1).proposedDisallocations().requireSizeOf(1).unorderedLinesStream2()
+        proposalsForGroups4a.get(1).contextAssignments().requireSizeOf(5);
+        proposalsForGroups4a.get(1).proposedDisallocations().requireSizeOf(1).unorderedLinesStream2()
                 .filter(l -> assign1.equalsTo(l.value(EXISTING_ASSIGNMENT)))
                 .requireSizeOf(1);
-        proposalsForGroups4.get(1).proposedAllocationsWithSupplies().requireSizeOf(1)
+        proposalsForGroups4a.get(1).proposedAllocationsWithSupplies().requireSizeOf(1)
+                .unorderedLinesStream2()
+                .filter(l ->
+                        testSubject.demandOfAssignment(l.value(EXISTING_DEMAND)).equalsTo(l.value(EXISTING_DEMAND))
+                                && Thing.equals(l.value(PLAYER_ATTRIBUTE), null)
+                                && Thing.equals(l.value(PLAYER_VALUE), 3)
+                                && Thing.equals(l.value(EVENT_TYPE), null))
+                .requireSizeOf(1);
+        final var proposalsForGroups4b = testSubject.propose();
+        proposalsForGroups4b.contextAssignments().requireSizeOf(5);
+        proposalsForGroups4b.proposedDisallocations().requireSizeOf(1).unorderedLinesStream2()
+                .filter(l -> assign1.equalsTo(l.value(EXISTING_ASSIGNMENT)))
+                .requireSizeOf(1);
+        proposalsForGroups4b.proposedAllocationsWithSupplies().requireSizeOf(1)
                 .unorderedLinesStream2()
                 .filter(l ->
                         testSubject.demandOfAssignment(l.value(EXISTING_DEMAND)).equalsTo(l.value(EXISTING_DEMAND))
@@ -148,14 +191,27 @@ public class ValueUpdateTest {
         final var assign5 = testSubject.assign(demands.addTranslated(listWithValuesOf(endTime))
                 , supplies.addTranslated(listWithValuesOf(PLAYER_ENERGY, 1, ADD_VALUE)));
         testSubject.constraint().rating().requireEqualsTo(cost(18));
-        final var proposalsForGroups5 = proposalsForGroups(testSubject
+        final var proposalsForGroups5a = proposalsForGroups(testSubject
                 , list(testSubject.constraint(), testSubject.constraint().child(0))
                 , testSubject.unorderedLines());
-        proposalsForGroups5.get(1).contextAssignments().requireSizeOf(6);
-        proposalsForGroups5.get(1).proposedDisallocations().requireSizeOf(1).unorderedLinesStream2()
+        proposalsForGroups5a.get(1).contextAssignments().requireSizeOf(6);
+        proposalsForGroups5a.get(1).proposedDisallocations().requireSizeOf(1).unorderedLinesStream2()
                 .filter(l -> assign1.equalsTo(l.value(EXISTING_ASSIGNMENT)))
                 .requireSizeOf(1);
-        proposalsForGroups5.get(1).proposedAllocationsWithSupplies().requireSizeOf(1)
+        proposalsForGroups5a.get(1).proposedAllocationsWithSupplies().requireSizeOf(1)
+                .unorderedLinesStream2()
+                .filter(l ->
+                        testSubject.demandOfAssignment(l.value(EXISTING_DEMAND)).equalsTo(l.value(EXISTING_DEMAND))
+                                && Thing.equals(l.value(PLAYER_ATTRIBUTE), null)
+                                && Thing.equals(l.value(PLAYER_VALUE), 4)
+                                && Thing.equals(l.value(EVENT_TYPE), null))
+                .requireSizeOf(1);
+        final var proposalsForGroups5b = testSubject.propose();
+        proposalsForGroups5b.contextAssignments().requireSizeOf(6);
+        proposalsForGroups5b.proposedDisallocations().requireSizeOf(1).unorderedLinesStream2()
+                .filter(l -> assign1.equalsTo(l.value(EXISTING_ASSIGNMENT)))
+                .requireSizeOf(1);
+        proposalsForGroups5b.proposedAllocationsWithSupplies().requireSizeOf(1)
                 .unorderedLinesStream2()
                 .filter(l ->
                         testSubject.demandOfAssignment(l.value(EXISTING_DEMAND)).equalsTo(l.value(EXISTING_DEMAND))
