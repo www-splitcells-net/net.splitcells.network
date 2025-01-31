@@ -45,13 +45,13 @@ public class DemandSelectors {
      * where {@link GroupId}s are considered,
      * that contain defying {@link Line}s.
      *
-     * @param repairCompliants If set to true, selects all {@link Line}s of a given {@link GroupId},
+     * @param repairCompliance If set to true, selects all {@link Line}s of a given {@link GroupId},
      *                         if it contains at least one defying {@link Line}.
      *                         Otherwise, only defying {@link Line}s are considered.
      * @return
      */
     @Deprecated
-    public static DemandSelector demandSelector(boolean repairCompliants) {
+    public static DemandSelector demandSelector(boolean repairCompliance) {
         return (Constraint constraintGrouping, Solution solution) -> {
             final Map<GroupId, Set<Line>> demandGrouping = map();
             final Map<GroupId, Set<Line>> defianceCache = Maps.map();
@@ -72,7 +72,7 @@ public class DemandSelectors {
                      * It reimplements part of {@link ConstraintGroupBasedOfflineRepair#freeDefyingGroupOfConstraintGroup}.
                      */
                     .filter(processing -> {
-                        if (!repairCompliants) {
+                        if (!repairCompliance) {
                             return !processing.value(RATING).equalz(noCost());
                         }
                         return true;
