@@ -20,7 +20,7 @@ import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 public class MutablePair<K, V> {
 
     public static <A, B> MutablePair<A, B> mutablePair(A key, B value) {
-        return new MutablePair<A, B>(key, value);
+        return new MutablePair<>(key, value);
     }
 
     private K key;
