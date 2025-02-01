@@ -52,7 +52,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
  */
 @JavaLegacyArtifact
 public class ConfigurationImpl implements Configuration {
-    private final Map<Object, Object> config_store;
+    private final Map<Object, Object> configStore;
     @Deprecated
     private final Map<Class<?>, Set<OptionSubscriber<Object>>> subscribers;
     private final ConfigDependencyRecorder dependencyRecorder;
@@ -63,10 +63,10 @@ public class ConfigurationImpl implements Configuration {
     }
 
     private ConfigurationImpl() {
-        config_store = new HashMap<>();
+        configStore = new HashMap<>();
         subscribers = new HashMap<>();
         dependencyRecorder = dependencyRecorder();
-        config_store.put(ConfigDependencyRecording.class, dependencyRecorder);
+        configStore.put(ConfigDependencyRecording.class, dependencyRecorder);
     }
 
     private void recordConfigAccess(Class<? extends Option<? extends Object>> key) {
@@ -82,23 +82,23 @@ public class ConfigurationImpl implements Configuration {
     }
 
     @Override
-    public synchronized <T extends Object> Configuration withConfigValue(Class<? extends Option<T>> key, T new_value) {
+    public synchronized <T extends Object> Configuration withConfigValue(Class<? extends Option<T>> key, T newValue) {
         try {
             recordConfigAccess(key);
-            final Set<OptionSubscriber<Object>> key_subscribers;
-            if (config_store.containsKey(key)) {
-                key_subscribers = subscribers.get(key);
+            final Set<OptionSubscriber<Object>> keySubscribers;
+            if (configStore.containsKey(key)) {
+                keySubscribers = subscribers.get(key);
             } else {
                 if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
                     Bools.require(!subscribers.containsKey(key));
                 }
-                key_subscribers = new HashSet<>();
-                subscribers.put(key, key_subscribers);
+                keySubscribers = new HashSet<>();
+                subscribers.put(key, keySubscribers);
             }
-            final Object old_value = config_store.get(key);
-            config_store.put(key, new_value);
-            key_subscribers.stream().forEach(subscriber -> {
-                subscriber.accept(old_value, new_value);
+            final Object oldValue = configStore.get(key);
+            configStore.put(key, newValue);
+            keySubscribers.stream().forEach(subscriber -> {
+                subscriber.accept(oldValue, newValue);
             });
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -123,29 +123,29 @@ public class ConfigurationImpl implements Configuration {
     @SuppressWarnings("unchecked")
     @Override
     public synchronized <T> T configValue(Class<? extends Option<T>> key) {
-        if (!this.config_store.containsKey(key)) {
+        if (!this.configStore.containsKey(key)) {
             withInitedOption(key);
         }
         recordConfigAccess(key);
-        return (T) this.config_store.get(key);
+        return (T) this.configStore.get(key);
     }
 
     @Override
     public synchronized Object configValueUntyped(Object key) {
         recordConfigAccess((Class<? extends Option<? extends Object>>) key);
-        return config_store.get(key);
+        return configStore.get(key);
     }
 
     @Override
     public net.splitcells.dem.data.set.Set<Class<? extends Option<?>>> keys() {
-        return config_store.keySet().stream()
+        return configStore.keySet().stream()
                 .map(arg -> (Class<? extends Option<?>>) arg)
                 .collect(Sets.toSetOfUniques());
     }
 
     @Override
     public <T> void process(Class<? extends T> type, Function<T, T> processor) {
-        listWithValuesOf(config_store.entrySet()).forEach(entry -> {
+        listWithValuesOf(configStore.entrySet()).forEach(entry -> {
             if (type.isAssignableFrom(entry.getValue().getClass())) {
                 entry.setValue(
                         processor.apply(((T) entry.getValue()))
@@ -156,7 +156,7 @@ public class ConfigurationImpl implements Configuration {
 
     @Override
     public <KeyType extends Class<? extends Option<ValueType>>, ValueType> void consume(KeyType type, BiConsumer<KeyType, ValueType> consumer) {
-        listWithValuesOf(config_store.entrySet()).forEach(entry -> {
+        listWithValuesOf(configStore.entrySet()).forEach(entry -> {
             if (type.isAssignableFrom((KeyType) entry.getKey())) {
                 consumer.accept((KeyType) entry.getKey(), (ValueType) entry.getValue());
             }
