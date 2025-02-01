@@ -59,7 +59,7 @@ public interface AppendableSet<T> {
 		};
 	}
 
-	static <A, B> AppendableSet<B> extend(final B first_prefix, final B defaultPrefix, final AppendableSet<B> sender) {
+	static <A, B> AppendableSet<B> extend(final B firstPrefix, final B defaultPrefix, final AppendableSet<B> sender) {
 		return new AppendableSet<B>() {
 
 			private boolean wasFirstAdded = false;
@@ -70,7 +70,7 @@ public interface AppendableSet<T> {
 				if (wasFirstAdded) {
 					sender.addAll(defaultPrefix, arg);
 				} else {
-					sender.addAll(first_prefix, arg);
+					sender.addAll(firstPrefix, arg);
 					wasFirstAdded = true;
 				}
 				return (R) this;
