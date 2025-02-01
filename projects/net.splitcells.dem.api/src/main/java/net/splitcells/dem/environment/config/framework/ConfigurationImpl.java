@@ -51,7 +51,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
  * that the config values are final after the environment consumer's execution.</p>
  */
 @JavaLegacyArtifact
-public class ConfigurationI implements Configuration {
+public class ConfigurationImpl implements Configuration {
     private final Map<Object, Object> config_store;
     @Deprecated
     private final Map<Class<?>, Set<OptionSubscriber<Object>>> subscribers;
@@ -59,10 +59,10 @@ public class ConfigurationI implements Configuration {
     private final List<Class<? extends Option<?>>> dependencyStack = new ArrayList<>();
 
     public static Configuration configuration() {
-        return new ConfigurationI();
+        return new ConfigurationImpl();
     }
 
-    private ConfigurationI() {
+    private ConfigurationImpl() {
         config_store = new HashMap<>();
         subscribers = new HashMap<>();
         dependencyRecorder = dependencyRecorder();

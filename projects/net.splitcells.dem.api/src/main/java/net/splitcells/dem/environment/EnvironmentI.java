@@ -21,7 +21,6 @@ import net.splitcells.dem.environment.config.ProgramRepresentative;
 import net.splitcells.dem.environment.config.StartTime;
 import net.splitcells.dem.environment.config.framework.ConfigDependencyRecording;
 import net.splitcells.dem.environment.config.framework.Configuration;
-import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
@@ -32,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static net.splitcells.dem.environment.config.framework.ConfigurationI.configuration;
+import static net.splitcells.dem.environment.config.framework.ConfigurationImpl.configuration;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 
 public class EnvironmentI implements Environment {
