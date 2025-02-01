@@ -15,24 +15,55 @@
  */
 package net.splitcells.network.system;
 
+import net.splitcells.cin.CinFileSystem;
+import net.splitcells.dem.Dem;
+import net.splitcells.dem.DemFileSystem;
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.Cell;
 import net.splitcells.dem.environment.Environment;
+import net.splitcells.gel.GelCoreFileSystem;
+import net.splitcells.gel.doc.GelDocFileSystem;
+import net.splitcells.gel.ext.GelExtFileSystem;
+import net.splitcells.gel.ui.GelUiFileSystem;
+import net.splitcells.gel.ui.SolutionCalculator;
+import net.splitcells.gel.ui.no.code.editor.NoCodeSolutionCalculator;
+import net.splitcells.network.NetworkFileSystem;
+import net.splitcells.network.worker.via.java.NetworkWorkerFileSystem;
+import net.splitcells.project.ProjectFileSystem;
+import net.splitcells.shell.OsiFileSystem;
+import net.splitcells.shell.lib.OsiLibFileSystem;
+import net.splitcells.website.WebsiteServerFileSystem;
+import net.splitcells.website.content.defaults.WebsiteContentDefaultsFileSystem;
+import net.splitcells.website.server.Config;
 import net.splitcells.website.server.ServerConfig;
+import net.splitcells.website.server.ServerService;
 import net.splitcells.website.server.WebsiteServerCell;
+import net.splitcells.website.server.project.ProjectRenderer;
+import net.splitcells.website.server.project.validator.SourceValidator;
+import net.splitcells.website.server.projects.ProjectsRenderer;
+import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.test.HtmlLiveTest;
 
+import java.util.Optional;
+import java.util.function.Function;
+
+import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.Dem.serve;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
-import static net.splitcells.dem.testing.Assertions.waitUntilRequirementIsTrue;
-import static net.splitcells.dem.utils.StringUtils.requireNonEmptyString;
+import static net.splitcells.gel.ui.SolutionCalculator.solutionCalculator;
+import static net.splitcells.gel.ui.no.code.editor.FunctionMeta.functionMeta;
+import static net.splitcells.gel.ui.no.code.editor.Functions.functions;
+import static net.splitcells.gel.ui.no.code.editor.NoCodeSolutionCalculator.noCodeSolutionCalculator;
 import static net.splitcells.gel.ui.no.code.editor.NoCodeSolutionCalculatorTest.TEST_OPTIMIZATION_GUI;
-import static net.splitcells.website.server.client.HtmlClientImpl.publicHtmlClient;
+import static net.splitcells.network.system.PerformanceReport.performanceReport;
+import static net.splitcells.website.server.ProgramConfig.programConfig;
+import static net.splitcells.website.server.ProjectConfig.projectConfig;
 
 public class SystemCell implements Cell {
 
     public static void main(String... args) {
         serve(SystemCell.class);
     }
+
 
     @Override
     public String groupId() {
@@ -47,9 +78,171 @@ public class SystemCell implements Cell {
     @Override
     public void accept(Environment env) {
         env.config()
-                .withConfigValue(ServerConfig.class, WebsiteViaJar.config(env.config().configValue(ServerConfig.class)))
+                .withConfigValue(ServerConfig.class, config(env.config().configValue(ServerConfig.class)))
                 .withConfigValue(HtmlLiveTest.class, TEST_OPTIMIZATION_GUI)
         ;
         env.withCell(WebsiteServerCell.class);
+    }
+
+    @Deprecated
+    public Config config2() {
+        return config();
+    }
+
+    @Deprecated
+    public Config config2(Config arg) {
+        return config(arg);
+    }
+
+    public ProjectsRendererI projectsRenderer2(Config config) {
+        return projectsRenderer(config);
+    }
+
+    @Deprecated
+    public ProjectsRendererI projectsRenderer2(String profile
+            , Function<ProjectsRenderer, ProjectRenderer> fallbackProjectRenderer
+            , Function<ProjectsRenderer, List<ProjectRenderer>> additionalProjects
+            , SourceValidator sourceValidator
+            , Config config) {
+        return projectsRenderer(profile, fallbackProjectRenderer, additionalProjects, sourceValidator, config);
+    }
+
+    @Deprecated
+    public ProjectRenderer fallbackProjectRenderer2(ProjectsRenderer projectsRenderer, String profile
+            , SourceValidator sourceValidator
+            , Config config) {
+        return fallbackProjectRenderer(projectsRenderer, profile, sourceValidator, config);
+    }
+
+    /**
+     * @return
+     * @deprecated TODO This method is used for versions, where the server is not managed by {@link Dem}.
+     * Remove the callers and after that remove this method.
+     */
+    @Deprecated
+    public static Config config() {
+        return config(Config.create());
+    }
+
+    /**
+     * @param arg
+     * @return
+     * @deprecated TODO Move this method into {@link SystemCell}.
+     */
+    @Deprecated
+    public static Config config(Config arg) {
+        return arg
+                .withAdditionalProject(projectConfig("/net/splitcells/cin/"
+                        , configValue(CinFileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/dem/"
+                        , configValue(DemFileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/dem/"
+                        , configValue(net.splitcells.dem.DemApiFileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/gel/doc/"
+                        , configValue(GelDocFileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/gel/"
+                        , configValue(GelCoreFileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/gel/ext/"
+                        , configValue(GelExtFileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/gel/ui/"
+                        , configValue(GelUiFileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/network/"
+                        , configValue(NetworkFileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/network/worker/via/java/"
+                        , configValue(NetworkWorkerFileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/shell/"
+                        , configValue(OsiFileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/shell/lib/"
+                        , configValue(OsiLibFileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/network/system/"
+                        , configValue(SystemsFileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/project"
+                        , configValue(ProjectFileSystem.class)))
+                .withAdditionalProject(projectConfig("/"
+                        , configValue(WebsiteServerFileSystem.class)))
+                .withAdditionalProject(projectConfig("/"
+                        , configValue(WebsiteContentDefaultsFileSystem.class)))
+                .withDetailedXslMenu(Optional.of(configValue(WebsiteContentDefaultsFileSystem.class)
+                        .readString("src/main/xsl/net/splitcells/website/detailed-menu.xsl")))
+                .withXslWindowMenu(Optional.of(configValue(WebsiteContentDefaultsFileSystem.class)
+                        .readString("src/main/xsl/net/splitcells/website/window-menu.xsl")))
+                .withAdditionalJsBackgroundFiles("net/splitcells/website/js/jquery.js")
+                .withAdditionalJsBackgroundFiles("net/splitcells/website/js/codemirror-editor-bundle.js")
+                .withAdditionalJsBackgroundFiles("net/splitcells/website/js/basic.js")
+                .withAdditionalJsBackgroundFiles("net/splitcells/website/js/basic.default.js")
+                .withAdditionalJsBackgroundFiles("net/splitcells/website/js/dragula.min.js")
+                .withAdditionalCssFile("net/splitcells/website/css/theme.white.variables.css")
+                .withAdditionalCssFile("net/splitcells/website/css/basic.themed.css")
+                .withAdditionalCssFile("net/splitcells/website/css/basic.css")
+                .withAdditionalCssFile("net/splitcells/website/css/den.css")
+                .withAdditionalCssFile("net/splitcells/website/css/layout.default.css")
+                .withAdditionalCssFile("net/splitcells/website/css/theme.css")
+                .withAdditionalCssFile("net/splitcells/gel/ui/no/code/editor/style.css")
+                .withAdditionalCssFile("net/splitcells/website/css/tabulator.min.css")
+                .withAdditionalCssFile("net/splitcells/website/css/dragula.min.css")
+                .withAdditionalProgramConfig(programConfig("Splitcells Network Documentation"
+                        , "/net/splitcells/network/hub/README")
+                        .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/community.2016.12.11.chrom.0.dina4.jpg"))
+                        .withDescription(Optional.of("We provide an open source ecosystem centered around optimization and operations research.")))
+                .withAdditionalProgramConfig(programConfig("Generic Allocation No-Code Editor"
+                        , "/net/splitcells/gel/ui/no/code/editor/index")
+                        .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/net.splitcells.gel.ui.no.code.logo.jpg"))
+                        .withDescription(Optional.of("Define and solve assignment problems interactively.")))
+                .withAdditionalProgramConfig(programConfig("Generic Allocation Editor's Tough Love Edition"
+                        , "/net/splitcells/gel/ui/editor")
+                        .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/net.splitcells.gel.ui.logo.jpg"))
+                        .withDescription(Optional.of("Define and solve assignment problems in text form.")))
+                .withAdditionalProcessor(SolutionCalculator.PATH, solutionCalculator())
+                .withAdditionalProcessor(NoCodeSolutionCalculator.PATH, noCodeSolutionCalculator())
+                .withAdditionalProjectsRendererExtension(functions())
+                .withAdditionalProjectsRendererExtension(functionMeta())
+                .withAdditionalProjectsRendererExtension(performanceReport())
+                ;
+    }
+
+    /**
+     * Use {@link ServerService#projectsRenderer(Config)} instead.
+     *
+     * @param config
+     * @return
+     */
+    @Deprecated
+    public static ProjectsRendererI projectsRenderer(Config config) {
+        return ServerService.projectsRenderer(config);
+    }
+
+    /**
+     * Use {@link ServerService#projectsRenderer(String, Function, Function, Config)} instead.
+     *
+     * @param profile
+     * @param fallbackProjectRenderer
+     * @param additionalProjects
+     * @param sourceValidator
+     * @param config
+     * @return
+     */
+    @Deprecated
+    public static ProjectsRendererI projectsRenderer(String profile
+            , Function<ProjectsRenderer, ProjectRenderer> fallbackProjectRenderer
+            , Function<ProjectsRenderer, List<ProjectRenderer>> additionalProjects
+            , SourceValidator sourceValidator
+            , Config config) {
+        return ServerService.projectsRenderer(profile, fallbackProjectRenderer, additionalProjects, config);
+    }
+
+    /**
+     * Use {@link ServerService#fallbackProjectRenderer(ProjectsRenderer, String, SourceValidator, Config)} instead.
+     *
+     * @param projectsRenderer
+     * @param profile
+     * @param sourceValidator
+     * @param config
+     * @return
+     */
+    @Deprecated
+    public static ProjectRenderer fallbackProjectRenderer(ProjectsRenderer projectsRenderer, String profile
+            , SourceValidator sourceValidator
+            , Config config) {
+        return ServerService.fallbackProjectRenderer(projectsRenderer, profile, sourceValidator, config);
     }
 }
