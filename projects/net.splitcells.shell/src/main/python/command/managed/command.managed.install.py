@@ -23,15 +23,16 @@ import logging
 def currentFolder():
 	return Path.cwd()
 class Command:
-	def __init__(self
-			, commandPath
-			, targetFolder = Path.home().joinpath('bin', 'net.splitcells.shell.commands.managed')
-			):
+	def __init__(self, commandPath):
 		commandPosixPath = PosixPath(commandPath)
 		self.name = commandPosixPath.name
 		self.sourceFolder = commandPosixPath.parent
-		self.targetFolder = targetFolder
 		self.managedCommandNaming = "commandName = '" + self.name + "'"
+		if 'NET_SPLITCELLS_SHELL_PATH' in environ:
+			self.targetFolder = PosixPath(environ['NET_SPLITCELLS_SHELL_PATH'])
+		else:
+			self.targetFolder = Path.home()
+		self.targetFolder = self.targetFolder.joinpath('bin', 'net.splitcells.shell.commands.managed')
 	def install(self):
 		executionCounter = 0
 		targetFileName = self.name
@@ -55,7 +56,8 @@ if __name__ == '__main__':
 		logging.basicConfig(format='%(message)s', level=logging.DEBUG)
 	else:
 	    logging.basicConfig(format='%(message)s', level=logging.INFO)
-	parser = argparse.ArgumentParser(description='Installs command to ~/bin and integrates commands already present.') # TODO If command already present, check if it is a manager. If this is not the case, throw an error.
+	parser = argparse.ArgumentParser(description='Installs command to ~/bin and integrates commands already present.'
+	    + 'Use the environment variable `NET_SPLITCELLS_SHELL_PATH` in order to change the target install directory.' ) # TODO If command already present, check if it is a manager. If this is not the case, throw an error.
 	parser.add_argument('commandToInstall', nargs='?', type=str, help='The name of the command that is installed.')
 	parsedArgs = parser.parse_args()
 	Command(parsedArgs.commandToInstall).install()
