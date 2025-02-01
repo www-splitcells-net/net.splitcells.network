@@ -15,12 +15,12 @@
  */
 package net.splitcells.dem.resource;
 
-import net.splitcells.dem.environment.config.framework.OptionI;
+import net.splitcells.dem.environment.config.framework.OptionImpl;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.resource.FileSystemViaClassResourcesFactoryImpl._fileSystemViaClassResourcesFactoryImpl;
 
-public class FileSystemViaClassResources extends OptionI<FileSystemViaClassResourcesFactoryApi> {
+public class FileSystemViaClassResources extends OptionImpl<FileSystemViaClassResourcesFactoryApi> {
     public FileSystemViaClassResources() {
         super(() -> _fileSystemViaClassResourcesFactoryImpl());
     }

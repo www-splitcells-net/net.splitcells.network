@@ -15,14 +15,14 @@
  */
 package net.splitcells.dem.resource.communication.log;
 
-import net.splitcells.dem.environment.config.framework.OptionI;
+import net.splitcells.dem.environment.config.framework.OptionImpl;
 
 /**
  * TODO RENAME This {@link net.splitcells.dem.environment.config.framework.Option}
  * main function is to enable shell persistence.
  * The kind of persistence is not important here.
  */
-public class IsEchoToFile extends OptionI<Boolean> {
+public class IsEchoToFile extends OptionImpl<Boolean> {
 
 	public IsEchoToFile() {
 		super(() -> false);

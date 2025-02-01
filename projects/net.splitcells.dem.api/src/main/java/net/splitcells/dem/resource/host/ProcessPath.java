@@ -16,7 +16,7 @@
 package net.splitcells.dem.resource.host;
 
 import net.splitcells.dem.Dem;
-import net.splitcells.dem.environment.config.framework.OptionI;
+import net.splitcells.dem.environment.config.framework.OptionImpl;
 import net.splitcells.dem.resource.Files;
 
 import java.nio.file.Path;
@@ -25,7 +25,7 @@ import java.nio.file.Path;
  * <p>This path points to the folder.
  * The Folder contains the files of the process created by {@link Dem#process}.</p>
  */
-public class ProcessPath extends OptionI<Path> {
+public class ProcessPath extends OptionImpl<Path> {
     public ProcessPath() {
         super(() -> Files.usersStateFiles());
     }

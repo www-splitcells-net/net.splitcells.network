@@ -15,9 +15,9 @@
  */
 package net.splitcells.dem.environment.config;
 
-import net.splitcells.dem.environment.config.framework.OptionI;
+import net.splitcells.dem.environment.config.framework.OptionImpl;
 
-public class ProgramRepresentative extends OptionI<Class<?>> {
+public class ProgramRepresentative extends OptionImpl<Class<?>> {
 
 	public ProgramRepresentative() {
 		super(null);

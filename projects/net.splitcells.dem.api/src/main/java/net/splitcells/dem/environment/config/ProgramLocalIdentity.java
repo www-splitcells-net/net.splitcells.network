@@ -16,11 +16,11 @@
 package net.splitcells.dem.environment.config;
 
 import net.splitcells.dem.Dem;
-import net.splitcells.dem.environment.config.framework.OptionI;
+import net.splitcells.dem.environment.config.framework.OptionImpl;
 
 import java.time.format.DateTimeFormatter;
 
-public class ProgramLocalIdentity extends OptionI<String> {
+public class ProgramLocalIdentity extends OptionImpl<String> {
 
     public ProgramLocalIdentity() {
         super(() -> Dem.environment().config().configValue(ProgramName.class)

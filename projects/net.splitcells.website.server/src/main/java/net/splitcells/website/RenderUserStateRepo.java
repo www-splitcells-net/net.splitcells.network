@@ -15,9 +15,9 @@
  */
 package net.splitcells.website;
 
-import net.splitcells.dem.environment.config.framework.OptionI;
+import net.splitcells.dem.environment.config.framework.OptionImpl;
 
-public class RenderUserStateRepo extends OptionI<Boolean> {
+public class RenderUserStateRepo extends OptionImpl<Boolean> {
     public RenderUserStateRepo() {
         super(() -> false);
     }

@@ -15,9 +15,9 @@
  */
 package net.splitcells.dem.utils.random;
 
-import net.splitcells.dem.environment.config.framework.OptionI;
+import net.splitcells.dem.environment.config.framework.OptionImpl;
 
-public class DeterministicRootSourceSeed extends OptionI<Long> {
+public class DeterministicRootSourceSeed extends OptionImpl<Long> {
 
 	public DeterministicRootSourceSeed() {
 		super(() -> 3L);

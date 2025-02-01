@@ -17,7 +17,7 @@ package net.splitcells.website.server;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.environment.resource.ResourceOptionI;
+import net.splitcells.dem.environment.resource.ResourceOptionImpl;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.website.content.defaults.WebsiteContentDefaultsFileSystem;
 import net.splitcells.website.server.project.ProjectRenderer;
@@ -27,26 +27,20 @@ import net.splitcells.website.server.project.validator.SourceValidator;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 
-import java.nio.file.Path;
-import java.util.Optional;
 import java.util.function.Function;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
-import static net.splitcells.dem.resource.Files.readFileAsString;
-import static net.splitcells.dem.resource.Paths.userHome;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.website.Projects.projectsRenderer;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
 import static net.splitcells.website.server.project.validator.SourceValidator.VOID_VALIDATOR;
-import static net.splitcells.website.server.project.validator.SourceValidatorViaSchema.validatorViaSchema;
 
 /**
  * Provides the main web server as a {@link Service}.
  */
-public class ServerService extends ResourceOptionI<Service> {
+public class ServerService extends ResourceOptionImpl<Service> {
     public ServerService() {
         super(() -> {
             return new Service() {

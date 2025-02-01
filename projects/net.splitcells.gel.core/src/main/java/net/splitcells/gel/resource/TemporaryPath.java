@@ -19,10 +19,10 @@ import static net.splitcells.dem.Dem.environment;
 
 import java.nio.file.Path;
 
-import net.splitcells.dem.environment.config.framework.OptionI;
+import net.splitcells.dem.environment.config.framework.OptionImpl;
 import net.splitcells.dem.resource.host.ProcessPath;
 
-public class TemporaryPath extends OptionI<Path> {
+public class TemporaryPath extends OptionImpl<Path> {
     public TemporaryPath() {
         super(() -> environment().config()
                 .configValue(ProcessPath.class)

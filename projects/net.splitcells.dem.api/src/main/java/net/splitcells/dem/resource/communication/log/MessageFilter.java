@@ -15,7 +15,7 @@
  */
 package net.splitcells.dem.resource.communication.log;
 
-import net.splitcells.dem.environment.config.framework.OptionI;
+import net.splitcells.dem.environment.config.framework.OptionImpl;
 import net.splitcells.dem.lang.tree.Tree;
 
 import java.util.function.Predicate;
@@ -28,7 +28,7 @@ import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
  * If a {@link LogMessage} is true according to this predicate,
  * it should be printed according to this predicate.
  */
-public class MessageFilter extends OptionI<Predicate<LogMessage<Tree>>> {
+public class MessageFilter extends OptionImpl<Predicate<LogMessage<Tree>>> {
     public MessageFilter() {
         super(() -> logMessage -> logMessage.priority().greaterThan(DEBUG));
     }

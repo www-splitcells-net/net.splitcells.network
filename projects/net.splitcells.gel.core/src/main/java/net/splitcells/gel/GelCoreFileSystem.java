@@ -15,12 +15,12 @@
  */
 package net.splitcells.gel;
 
-import net.splitcells.dem.environment.config.framework.OptionI;
+import net.splitcells.dem.environment.config.framework.OptionImpl;
 import net.splitcells.dem.resource.FileSystemView;
 
 import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
 
-public class GelCoreFileSystem extends OptionI<FileSystemView> {
+public class GelCoreFileSystem extends OptionImpl<FileSystemView> {
     public GelCoreFileSystem() {
         super(() -> fileSystemViaClassResources(GelCoreFileSystem.class, "net.splitcells", "gel.core"));
     }

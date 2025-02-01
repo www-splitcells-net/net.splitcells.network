@@ -16,7 +16,7 @@
 package net.splitcells.dem.resource.communication.log;
 
 import net.splitcells.dem.environment.resource.Console;
-import net.splitcells.dem.environment.resource.ResourceOptionI;
+import net.splitcells.dem.environment.resource.ResourceOptionImpl;
 import net.splitcells.dem.resource.communication.Sender;
 
 import java.util.function.Predicate;
@@ -32,7 +32,7 @@ import static net.splitcells.dem.resource.communication.log.CommonMarkLogger.com
  * so that rendering can be separated from the rest.
  * </p>
  */
-public class Logs extends ResourceOptionI<Logger> {
+public class Logs extends ResourceOptionImpl<Logger> {
     /**
      * {@link CommonMarkLogger#commonMarkDui(Sender, Predicate)} is used by default,
      * as it looks nice in consoles and on websites supporting CommonMark rendering.

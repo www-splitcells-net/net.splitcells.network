@@ -16,7 +16,7 @@
 package net.splitcells.gel.data.table;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.environment.resource.ResourceOptionI;
+import net.splitcells.dem.environment.resource.ResourceOptionImpl;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.data.view.attribute.Attribute;
 
@@ -24,7 +24,7 @@ import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.gel.data.table.TableIFactory.databaseFactory;
 
-public class Tables extends ResourceOptionI<TableFactory> {
+public class Tables extends ResourceOptionImpl<TableFactory> {
     public Tables() {
         super(() -> databaseFactory());
     }

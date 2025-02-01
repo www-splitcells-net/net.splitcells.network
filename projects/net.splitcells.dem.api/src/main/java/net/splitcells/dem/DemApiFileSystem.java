@@ -15,13 +15,13 @@
  */
 package net.splitcells.dem;
 
-import net.splitcells.dem.environment.config.framework.OptionI;
+import net.splitcells.dem.environment.config.framework.OptionImpl;
 import net.splitcells.dem.resource.FileSystemView;
 
 import static net.splitcells.dem.Dem.MAVEN_GROUP_ID;
 import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
 
-public class DemApiFileSystem extends OptionI<FileSystemView> {
+public class DemApiFileSystem extends OptionImpl<FileSystemView> {
     public static final String DEM_API = "dem.api";
     public DemApiFileSystem() {
         super(() -> fileSystemViaClassResources(Dem.class, MAVEN_GROUP_ID, DEM_API));

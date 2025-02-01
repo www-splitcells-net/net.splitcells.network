@@ -15,7 +15,7 @@
  */
 package net.splitcells.dem.resource.host;
 
-import net.splitcells.dem.environment.config.framework.OptionI;
+import net.splitcells.dem.environment.config.framework.OptionImpl;
 import net.splitcells.dem.utils.ExecutionException;
 
 import java.nio.file.Path;
@@ -23,7 +23,7 @@ import java.nio.file.Path;
 import static net.splitcells.dem.resource.host.SystemUtils.runShellScript;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
-public class HostName extends OptionI<String> {
+public class HostName extends OptionImpl<String> {
     public HostName() {
         super(() -> {
             final var hostname = runShellScript("hostname", Path.of("."));

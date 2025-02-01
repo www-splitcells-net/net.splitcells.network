@@ -15,12 +15,12 @@
  */
 package net.splitcells.cin;
 
-import net.splitcells.dem.environment.config.framework.OptionI;
+import net.splitcells.dem.environment.config.framework.OptionImpl;
 import net.splitcells.dem.resource.FileSystemView;
 
 import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
 
-public class CinFileSystem extends OptionI<FileSystemView> {
+public class CinFileSystem extends OptionImpl<FileSystemView> {
     public CinFileSystem() {
         super(() -> fileSystemViaClassResources(CinFileSystem.class, "net.splitcells", "cin"));
     }

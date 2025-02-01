@@ -15,7 +15,7 @@
  */
 package net.splitcells.dem.data.set;
 
-import net.splitcells.dem.environment.resource.ResourceOptionI;
+import net.splitcells.dem.environment.resource.ResourceOptionImpl;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
 import static net.splitcells.dem.Dem.configValue;
@@ -23,7 +23,7 @@ import static net.splitcells.dem.data.set.SetFactoryImplConfigured.setFiConfigur
 import static net.splitcells.dem.data.set.SetLegacyWrapper.setLegacyWrapper;
 import static net.splitcells.dem.environment.config.StaticFlags.INLINE_STANDARD_FACTORIES;
 
-public class Sets extends ResourceOptionI<SetF> {
+public class Sets extends ResourceOptionImpl<SetF> {
     public Sets() {
         super(() -> setFiConfigured());
     }

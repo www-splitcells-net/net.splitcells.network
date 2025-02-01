@@ -15,13 +15,13 @@
  */
 package net.splitcells.shell.lib;
 
-import net.splitcells.dem.environment.config.framework.OptionI;
+import net.splitcells.dem.environment.config.framework.OptionImpl;
 import net.splitcells.dem.resource.FileSystemView;
 
 import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
 
 
-public class OsiLibFileSystem extends OptionI<FileSystemView> {
+public class OsiLibFileSystem extends OptionImpl<FileSystemView> {
     public OsiLibFileSystem() {
         super(() -> fileSystemViaClassResources(OsiLibFileSystem.class, "net.splitcells", "shell.lib"));
     }

@@ -15,11 +15,12 @@
  */
 package net.splitcells.network.worker.via.java;
 
-import net.splitcells.dem.environment.config.framework.OptionI;
+import net.splitcells.dem.environment.config.framework.OptionImpl;
+import net.splitcells.dem.resource.FileSystem;
 
 import static net.splitcells.dem.resource.FileSystemVoid.fileSystemVoid;
 
-public class NetworkLog extends OptionI<net.splitcells.dem.resource.FileSystem> {
+public class NetworkLog extends OptionImpl<FileSystem> {
     public NetworkLog() {
         super(() -> fileSystemVoid());
     }

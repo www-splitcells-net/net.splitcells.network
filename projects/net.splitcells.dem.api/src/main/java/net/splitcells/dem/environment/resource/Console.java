@@ -45,7 +45,7 @@ import static net.splitcells.dem.resource.Files.createDirectory;
  * <p>TODO Use alternative async backend.</p>
  */
 @JavaLegacyArtifact
-public final class Console extends ResourceOptionI<Sender<String>> {
+public final class Console extends ResourceOptionImpl<Sender<String>> {
 
     public static final String CONSOLE_FILE_NAME = "echo.sum.xml";
 

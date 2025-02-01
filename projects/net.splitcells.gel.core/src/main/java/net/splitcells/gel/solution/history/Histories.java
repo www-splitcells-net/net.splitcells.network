@@ -15,12 +15,12 @@
  */
 package net.splitcells.gel.solution.history;
 
-import net.splitcells.dem.environment.resource.ResourceOptionI;
+import net.splitcells.dem.environment.resource.ResourceOptionImpl;
 import net.splitcells.gel.solution.Solution;
 
 import static net.splitcells.dem.Dem.environment;
 
-public class Histories extends ResourceOptionI<HistoryFactory> {
+public class Histories extends ResourceOptionImpl<HistoryFactory> {
     public Histories() {
         super(() -> new HistoryIFactory());
     }

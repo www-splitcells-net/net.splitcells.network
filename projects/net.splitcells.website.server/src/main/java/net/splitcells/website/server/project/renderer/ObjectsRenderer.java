@@ -4,15 +4,14 @@
  */
 package net.splitcells.website.server.project.renderer;
 
-import net.splitcells.dem.environment.config.framework.OptionI;
+import net.splitcells.dem.environment.config.framework.OptionImpl;
 
 import java.nio.file.Path;
-import java.util.function.Supplier;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.website.server.project.renderer.ObjectsRendererI.objectsRenderer;
 
-public class ObjectsRenderer extends OptionI<ObjectsRendererI> {
+public class ObjectsRenderer extends OptionImpl<ObjectsRendererI> {
     public ObjectsRenderer() {
         super(() -> objectsRenderer(Path.of("/")));
     }

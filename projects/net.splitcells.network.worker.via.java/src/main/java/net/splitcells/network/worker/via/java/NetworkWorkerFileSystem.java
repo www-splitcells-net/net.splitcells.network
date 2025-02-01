@@ -15,12 +15,12 @@
  */
 package net.splitcells.network.worker.via.java;
 
-import net.splitcells.dem.environment.config.framework.OptionI;
+import net.splitcells.dem.environment.config.framework.OptionImpl;
 import net.splitcells.dem.resource.FileSystemView;
 
 import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
 
-public class NetworkWorkerFileSystem extends OptionI<FileSystemView> {
+public class NetworkWorkerFileSystem extends OptionImpl<FileSystemView> {
     public NetworkWorkerFileSystem() {
         super(() -> fileSystemViaClassResources(NetworkWorkerFileSystem.class, "net.splitcells", "network.worker"));
     }

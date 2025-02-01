@@ -15,12 +15,12 @@
  */
 package net.splitcells.gel.data.assignment;
 
-import net.splitcells.dem.environment.resource.ResourceOptionI;
+import net.splitcells.dem.environment.resource.ResourceOptionImpl;
 import net.splitcells.gel.data.table.Table;
 
 import static net.splitcells.dem.Dem.environment;
 
-public class Assignmentss extends ResourceOptionI<AssignmentsFactory> {
+public class Assignmentss extends ResourceOptionImpl<AssignmentsFactory> {
     public Assignmentss() {
         super(() -> new AssignmentsIFactory());
     }

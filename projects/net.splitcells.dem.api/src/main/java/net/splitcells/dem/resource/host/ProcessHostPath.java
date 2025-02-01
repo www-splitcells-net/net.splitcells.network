@@ -15,13 +15,12 @@
  */
 package net.splitcells.dem.resource.host;
 
-import net.splitcells.dem.environment.config.framework.OptionI;
+import net.splitcells.dem.environment.config.framework.OptionImpl;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.function.Supplier;
 
-public class ProcessHostPath extends OptionI<Path> {
+public class ProcessHostPath extends OptionImpl<Path> {
     public ProcessHostPath() {
         super(() -> {
             if ("true".equals(System.getProperty("net.splitcells.mode.build"))) {

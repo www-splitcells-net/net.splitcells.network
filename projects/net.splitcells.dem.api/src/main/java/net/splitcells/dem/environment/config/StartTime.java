@@ -15,11 +15,11 @@
  */
 package net.splitcells.dem.environment.config;
 
-import net.splitcells.dem.environment.config.framework.OptionI;
+import net.splitcells.dem.environment.config.framework.OptionImpl;
 
 import java.time.ZonedDateTime;
 
-public class StartTime extends OptionI<ZonedDateTime> {
+public class StartTime extends OptionImpl<ZonedDateTime> {
 
 	public StartTime() {
 		super(() -> ZonedDateTime.now());

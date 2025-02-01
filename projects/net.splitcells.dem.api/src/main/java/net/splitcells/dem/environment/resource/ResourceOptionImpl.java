@@ -15,9 +15,7 @@
  */
 package net.splitcells.dem.environment.resource;
 
-import net.splitcells.dem.environment.config.framework.OptionI;
-import net.splitcells.dem.resource.communication.Closeable;
-import net.splitcells.dem.resource.communication.Flushable;
+import net.splitcells.dem.environment.config.framework.OptionImpl;
 
 import java.util.function.Supplier;
 
@@ -25,8 +23,8 @@ import java.util.function.Supplier;
  * @param <T> Type Of Resource
  * @deprecated Use {@link ResourceOption} interface directly instead.
  */
-public class ResourceOptionI<T extends Resource> extends OptionI<T> implements ResourceOption<T> {
-    public ResourceOptionI(Supplier<T> arg_default_value) {
+public class ResourceOptionImpl<T extends Resource> extends OptionImpl<T> implements ResourceOption<T> {
+    public ResourceOptionImpl(Supplier<T> arg_default_value) {
         super(arg_default_value);
     }
 }

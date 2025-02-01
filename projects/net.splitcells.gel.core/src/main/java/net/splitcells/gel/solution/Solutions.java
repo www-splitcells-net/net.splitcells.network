@@ -15,12 +15,12 @@
  */
 package net.splitcells.gel.solution;
 
-import net.splitcells.dem.environment.resource.ResourceOptionI;
+import net.splitcells.dem.environment.resource.ResourceOptionImpl;
 import net.splitcells.gel.problem.Problem;
 
 import static net.splitcells.dem.Dem.environment;
 
-public class Solutions extends ResourceOptionI<SolutionFactory> {
+public class Solutions extends ResourceOptionImpl<SolutionFactory> {
     public Solutions() {
         super(() -> new SolutionFactoryI());
     }

@@ -25,11 +25,11 @@ import java.util.function.Supplier;
  * because there is no need to determine the default value via the constructor.
  */
 @Deprecated
-public class OptionI<V> implements Option<V> {
+public class OptionImpl<V> implements Option<V> {
 
     private final Supplier<V> defaultValue;
 
-    public OptionI(Supplier<V> argDefaultValue) {
+    public OptionImpl(Supplier<V> argDefaultValue) {
         defaultValue = argDefaultValue;
     }
 

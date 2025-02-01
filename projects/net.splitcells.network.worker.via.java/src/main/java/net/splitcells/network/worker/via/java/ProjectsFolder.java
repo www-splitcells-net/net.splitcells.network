@@ -15,14 +15,13 @@
  */
 package net.splitcells.network.worker.via.java;
 
-import net.splitcells.dem.environment.config.framework.OptionI;
+import net.splitcells.dem.environment.config.framework.OptionImpl;
 
 import java.nio.file.Path;
-import java.util.function.Supplier;
 
 import static net.splitcells.dem.resource.Paths.userHome;
 
-public class ProjectsFolder extends OptionI<Path> {
+public class ProjectsFolder extends OptionImpl<Path> {
     public ProjectsFolder() {
         super(() -> userHome("Documents/projects/net.splitcells.martins.avots.support.system/public/"));
     }

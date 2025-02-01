@@ -15,13 +15,13 @@
  */
 package net.splitcells.website;
 
-import net.splitcells.dem.environment.config.framework.OptionI;
+import net.splitcells.dem.environment.config.framework.OptionImpl;
 import net.splitcells.dem.resource.FileSystemView;
 
 import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
 
 
-public class WebsiteServerFileSystem extends OptionI<FileSystemView> {
+public class WebsiteServerFileSystem extends OptionImpl<FileSystemView> {
     public WebsiteServerFileSystem() {
         super(() -> fileSystemViaClassResources(WebsiteServerFileSystem.class, "net.splitcells", "website.server"));
     }

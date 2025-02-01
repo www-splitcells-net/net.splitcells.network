@@ -15,13 +15,13 @@
  */
 package net.splitcells.gel.doc;
 
-import net.splitcells.dem.environment.config.framework.OptionI;
+import net.splitcells.dem.environment.config.framework.OptionImpl;
 import net.splitcells.dem.resource.FileSystemView;
 
 import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
 
 
-public class GelDocFileSystem extends OptionI<FileSystemView> {
+public class GelDocFileSystem extends OptionImpl<FileSystemView> {
     public GelDocFileSystem() {
         super(() -> fileSystemViaClassResources(GelDocFileSystem.class, "net.splitcells", "gel.doc"));
     }
