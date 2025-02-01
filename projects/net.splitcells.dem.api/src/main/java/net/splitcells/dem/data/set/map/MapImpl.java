@@ -26,7 +26,7 @@ import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
 @JavaLegacyArtifact
-public class MapI<K, V> extends HashMap<K, V> implements Map<K, V> {
+public class MapImpl<K, V> extends HashMap<K, V> implements Map<K, V> {
 
     @Override
     public Map<K, V> ensurePresence(K key, V value) {
