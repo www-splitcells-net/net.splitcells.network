@@ -33,7 +33,7 @@ public interface Discovery {
     /**
      * TODO Prevent modification by creating and returning a read-only version of {@link Map}.
      *
-     * @return A {@link Map} from the childs name to the child itself.
+     * @return A {@link Map} from the child's name to the child itself.
      * The caller is not allowed to modify this.
      */
     Map<String, Discovery> children();
