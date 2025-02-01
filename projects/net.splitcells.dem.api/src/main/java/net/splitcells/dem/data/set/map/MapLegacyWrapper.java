@@ -27,7 +27,7 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
 @JavaLegacyArtifact
-public class MapLegacyWrapper<Key, Value> implements Map<Key, Value> {
+public class MapLegacyWrapper<K, V> implements Map<K, V> {
 
     public static <Key, Value> Map<Key, Value> mapLegacyWrapper(java.util.Map<Key, Value> content) {
         return new MapLegacyWrapper<>(content, Optional.empty());
@@ -37,10 +37,10 @@ public class MapLegacyWrapper<Key, Value> implements Map<Key, Value> {
         return new MapLegacyWrapper<>(content, Optional.of(isDeterministic));
     }
 
-    private final java.util.Map<Key, Value> content;
+    private final java.util.Map<K, V> content;
     private final Optional<Boolean> isDeterministic;
 
-    private MapLegacyWrapper(java.util.Map<Key, Value> content, Optional<Boolean> isDeterministic) {
+    private MapLegacyWrapper(java.util.Map<K, V> content, Optional<Boolean> isDeterministic) {
         this.content = content;
         this.isDeterministic = isDeterministic;
     }
@@ -66,23 +66,23 @@ public class MapLegacyWrapper<Key, Value> implements Map<Key, Value> {
     }
 
     @Override
-    public Value get(Object key) {
+    public V get(Object key) {
         return content.get(key);
     }
 
     @Override
-    public Map<Key, Value> ensurePresence(Key key, Value value) {
+    public Map<K, V> ensurePresence(K key, V value) {
         content.put(key, value);
         return this;
     }
 
     @Override
-    public Value ensurePresenceAndValue(Key key, Value value) {
+    public V ensurePresenceAndValue(K key, V value) {
         return content.put(key, value);
     }
 
     @Override
-    public Value put(Key key, Value value) {
+    public V put(K key, V value) {
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY
                 && containsKey(key)) {
             throw ExecutionException.execException(tree("Key already exists")
@@ -93,12 +93,12 @@ public class MapLegacyWrapper<Key, Value> implements Map<Key, Value> {
     }
 
     @Override
-    public Value remove(Object key) {
+    public V remove(Object key) {
         return content.remove(key);
     }
 
     @Override
-    public void putAll(java.util.Map<? extends Key, ? extends Value> m) {
+    public void putAll(java.util.Map<? extends K, ? extends V> m) {
         content.putAll(m);
     }
 
@@ -108,17 +108,17 @@ public class MapLegacyWrapper<Key, Value> implements Map<Key, Value> {
     }
 
     @Override
-    public Set<Key> keySet() {
+    public Set<K> keySet() {
         return content.keySet();
     }
 
     @Override
-    public Collection<Value> values() {
+    public Collection<V> values() {
         return content.values();
     }
 
     @Override
-    public Set<Entry<Key, Value>> entrySet() {
+    public Set<Entry<K, V>> entrySet() {
         return content.entrySet();
     }
 
