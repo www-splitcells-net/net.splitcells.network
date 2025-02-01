@@ -33,5 +33,5 @@ public interface ConfigurationV {
      * @param consumer    Function that consumes the corresponding {@link Option} and their values.
      * @param <ValueType> Type of {@link Option#defaultValue()}, that will be consumed.
      */
-    <KeyType extends Class<? extends Option<ValueType>>, ValueType> void consume(KeyType type, BiConsumer<KeyType, ValueType> consumer);
+    <K extends Class<? extends Option<ValueType>>, ValueType> void consume(K type, BiConsumer<K, ValueType> consumer);
 }
