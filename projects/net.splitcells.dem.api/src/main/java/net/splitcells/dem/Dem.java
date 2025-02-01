@@ -103,8 +103,10 @@ public class Dem {
     }
 
     /**
-     * It is assumed, that {@link #initializeProcess(Class, Consumer)} or
-     * similar is already called before on the current thread.
+     * <p>It is assumed, that {@link #initializeProcess(Class, Consumer)} or
+     * similar is already called before on the current thread.</p>
+     * <p>This thread is set to be a daemon thread.
+     * This prevents a system exit code of none 0, when being executed in Maven's exec:java goal.</p>
      *
      * @param program This is the code, that the thread executes.
      */
@@ -334,6 +336,7 @@ public class Dem {
             throw execException(t);
         }
     }
+
     private Dem() {
         throw constructorIllegal();
     }
