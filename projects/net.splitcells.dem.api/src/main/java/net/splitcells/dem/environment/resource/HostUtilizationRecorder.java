@@ -99,7 +99,13 @@ public class HostUtilizationRecorder implements Service {
                     usedHeapMemory.add(heapMemoryUsage.getUsed());
                     usedNoneHeapMemory.add(nonHeapMemoryUsage.getUsed());
                 }
-                Dem.sleepAtLeast(1000);
+                try {
+                    Dem.sleepAtLeast(1000);
+                } catch (Throwable th) {
+                    // This prevents a System-Exit code of none 0, when being executed in Maven's exec:java goal.
+                    th.printStackTrace(System.out);
+                    break;
+                }
             }
         });
         newRunner.start();
