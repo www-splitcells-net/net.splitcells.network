@@ -30,7 +30,7 @@ public class Maps extends ResourceOptionI<MapF> {
         super(() -> deterministicMapFactory());
     }
 
-    public static <Key, Value> Map<Key, Value> map() {
+    public static <K, V> Map<K, V> map() {
         return configValue(Maps.class).map();
     }
 
