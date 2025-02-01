@@ -33,6 +33,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.IntStream;
 
+import static net.splitcells.dem.Dem.executeThread;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
@@ -61,7 +62,7 @@ public class HostUtilizationRecorder implements Service {
 
     private final List<Long> usedHeapMemory = list();
     private final List<Long> usedNoneHeapMemory = list();
-    private Optional<Thread> runner = Optional.empty();
+    private volatile boolean isRunning = false;
 
     private HostUtilizationRecorderAccess access = new HostUtilizationRecorderAccess() {
 
@@ -82,13 +83,13 @@ public class HostUtilizationRecorder implements Service {
 
     @Override
     public synchronized void start() {
-        if (runner.isPresent() && !runner.get().isInterrupted()) {
+        if (isRunning) {
             throw ExecutionException.execException(getClass().getName() + " is already running.");
         }
-        final var recorder = this;
-        final var newRunner = new Thread(() -> {
-            while (true) {
-                synchronized (recorder) {
+        isRunning = true;
+        executeThread(HostUtilizationRecorder.class.getName(), () -> {
+            while (HostUtilizationRecorder.this.isRunning) {
+                synchronized (HostUtilizationRecorder.this) {
                     times.add(clock.instant());
                     final var heapMemoryUsage = memoryBean.getHeapMemoryUsage();
                     final var nonHeapMemoryUsage = memoryBean.getNonHeapMemoryUsage();
@@ -99,22 +100,14 @@ public class HostUtilizationRecorder implements Service {
                     usedHeapMemory.add(heapMemoryUsage.getUsed());
                     usedNoneHeapMemory.add(nonHeapMemoryUsage.getUsed());
                 }
-                try {
-                    Dem.sleepAtLeast(1000);
-                } catch (Throwable th) {
-                    // This prevents a System-Exit code of none 0, when being executed in Maven's exec:java goal.
-                    th.printStackTrace(System.out);
-                    break;
-                }
+                Dem.sleepAtLeast(1000);
             }
         });
-        newRunner.start();
-        runner = Optional.of(newRunner);
     }
 
     @Override
     public synchronized void close() {
-        runner.ifPresent(Thread::interrupt);
+        isRunning = false;
     }
 
     @Override
