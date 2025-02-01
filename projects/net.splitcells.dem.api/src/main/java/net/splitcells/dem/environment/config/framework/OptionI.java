@@ -20,21 +20,21 @@ import java.util.function.Supplier;
 /**
  * This template simplifies the implementation of new options.
  *
- * @param <Value> Type of the options value.
+ * @param <V> Type of the options value.
  * @deprecated This class is deprecated,
  * because there is no need to determine the default value via the constructor.
  */
 @Deprecated
-public class OptionI<Value> implements Option<Value> {
+public class OptionI<V> implements Option<V> {
 
-    private final Supplier<Value> defaultValue;
+    private final Supplier<V> defaultValue;
 
-    public OptionI(Supplier<Value> arg_default_value) {
-        defaultValue = arg_default_value;
+    public OptionI(Supplier<V> argDefaultValue) {
+        defaultValue = argDefaultValue;
     }
 
     @Override
-    public Value defaultValue() {
+    public V defaultValue() {
         return defaultValue.get();
     }
 
