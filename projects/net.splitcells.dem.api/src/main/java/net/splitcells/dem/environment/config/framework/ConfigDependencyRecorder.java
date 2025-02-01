@@ -18,11 +18,11 @@ package net.splitcells.dem.environment.config.framework;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.data.set.map.MapFI_deterministic;
+import net.splitcells.dem.data.set.map.DeterministicMapFactory;
 
 import static net.splitcells.dem.data.set.SetLegacyWrapper.setLegacyWrapper;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
-import static net.splitcells.dem.data.set.map.MapFI_deterministic.mapFI_deterministic;
+import static net.splitcells.dem.data.set.map.DeterministicMapFactory.deterministicMapFactory;
 import static net.splitcells.dem.data.set.map.Maps.map;
 
 /**
@@ -40,11 +40,11 @@ public class ConfigDependencyRecorder {
      * Maps for every {@link Option}, which are set via {@link Configuration#withConfigValue(Class, Object)} etc.,
      * to a set of {@link Option}, that are required for its initialization.
      * <p>
-     * {@link MapFI_deterministic#mapFI_deterministic} is used,
+     * {@link DeterministicMapFactory#deterministicMapFactory} is used,
      * in order to avoid duplicate {@link Dem#process} initialization.
      */
     private final Map<Class<? extends Option<? extends Object>>, Set<Class<? extends Option<? extends Object>>>>
-            dependencies = mapFI_deterministic().map();
+            dependencies = deterministicMapFactory().map();
 
     private ConfigDependencyRecorder() {
 

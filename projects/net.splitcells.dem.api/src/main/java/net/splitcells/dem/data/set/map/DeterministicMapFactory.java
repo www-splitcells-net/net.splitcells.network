@@ -19,13 +19,13 @@ import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
 import static net.splitcells.dem.data.set.map.MapLegacyWrapper.mapLegacyWrapper;
 
-public final class MapFI_deterministic implements MapF {
+public final class DeterministicMapFactory implements MapF {
     
-    public static MapF mapFI_deterministic() {
-        return new MapFI_deterministic();
+    public static MapF deterministicMapFactory() {
+        return new DeterministicMapFactory();
     }
     
-    private MapFI_deterministic() {
+    private DeterministicMapFactory() {
 
     }
 

@@ -22,7 +22,7 @@ import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
 import java.util.Optional;
 
-import static net.splitcells.dem.data.set.map.MapFI_deterministic.mapFI_deterministic;
+import static net.splitcells.dem.data.set.map.DeterministicMapFactory.deterministicMapFactory;
 import static net.splitcells.dem.data.set.map.MapFI_random.mapFI_random;
 
 public class MapFI_configured implements MapF {
@@ -36,7 +36,7 @@ public class MapFI_configured implements MapF {
     private MapFI_configured() {
         final var isDeterministic = Dem.configValue(IsDeterministic.class);
         if (isDeterministic.isPresent() && isDeterministic.get().isTrue()) {
-            mapF = mapFI_deterministic();
+            mapF = deterministicMapFactory();
         } else {
             mapF = mapFI_random();
         }
@@ -58,7 +58,7 @@ public class MapFI_configured implements MapF {
         if (newValue.isEmpty()) {
             mapF = mapFI_random();
         } else if (newValue.get().isTrue()) {
-            mapF = mapFI_deterministic();
+            mapF = deterministicMapFactory();
         } else {
             mapF = mapFI_random();
         }
