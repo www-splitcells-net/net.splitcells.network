@@ -28,6 +28,6 @@ public class Pair<K, V> extends SimpleImmutableEntry<K, V> {
 	}
 
 	public static <A, B> Pair<A, B> pair(A key, B value) {
-		return new Pair<A, B>(key, value);
+		return new Pair<>(key, value);
 	}
 }
