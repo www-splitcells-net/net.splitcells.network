@@ -183,7 +183,7 @@ if __name__ == '__main__':
         dockerfile += javaClassExecutionTemplate
         dockerfile += dockerfile.replace('$CLASS_FOR_EXECUTION', parsedArgs.classForExecution)
     else:
-        raise Exception('Either `--command` or `--class-for-execution` needs to be set.')
+        raise Exception('Either `--command`, `--executable-path` or `--class-for-execution` needs to be set.')
     if parsedArgs.usePlaywright:
         dockerfile = dockerfile.replace('$ContainerSetupCommand', 'RUN cd /root/opt/$NAME_FOR_EXECUTION/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"\n')
     else:
