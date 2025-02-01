@@ -26,16 +26,16 @@ import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
 @JavaLegacyArtifact
-public class MapI<Key, Value> extends HashMap<Key, Value> implements Map<Key, Value> {
+public class MapI<K, V> extends HashMap<K, V> implements Map<K, V> {
 
     @Override
-    public Map<Key, Value> ensurePresence(Key key, Value value) {
+    public Map<K, V> ensurePresence(K key, V value) {
         super.put(key, value);
         return this;
     }
 
     @Override
-    public Value put(Key key, Value value) {
+    public V put(K key, V value) {
         if (StaticFlags.ENFORCING_UNIT_CONSISTENCY
                 && containsKey(key)) {
             throw ExecutionException.execException(tree("Key already exists")
@@ -46,12 +46,12 @@ public class MapI<Key, Value> extends HashMap<Key, Value> implements Map<Key, Va
     }
 
     @Override
-    public Value ensurePresenceAndValue(Key key, Value value) {
+    public V ensurePresenceAndValue(K key, V value) {
         return super.put(key, value);
     }
 
     @Override
-    public Value get(Object key) {
+    public V get(Object key) {
         final var result = super.get(key);
         requireNotNull(result);
         return result;
