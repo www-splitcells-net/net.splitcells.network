@@ -13,10 +13,10 @@ set -e
 # Install shell project.
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network/projects/net.splitcells.shell
   ./bin/install
+  . ~/bin/net.splitcells.shell.commands.managed/command.managed.export.bin
 # Install shell libraries.
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.hub
   # TODO Install OSI not to a user folder, but to a folder inside the repo.
   # In other words, make an OSI installation independent from the user's home and default path settings.
   bin/net.splitcells.shell.projects.peers.for.commands | xargs -i sh -c 'command.repository.register $(realpath {})'
   user.bin.configure
-  . ~/bin/net.splitcells.shell.commands.managed/command.managed.export.bin
