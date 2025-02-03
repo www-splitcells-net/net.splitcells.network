@@ -24,12 +24,22 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
 
+/**
+ * This config class is created in order to easily add new parameters to {@link ConstraintGroupBasedRepair}.
+ * This concept partially became invalid, when it became clear,
+ * that using primitive config values in this class is not viable.
+ * Such an approach is hard to understand for a given primitive value set,
+ * what complex config values like {@link #groupSelector} are constructed with such primitives.
+ * Using dedicated builders for such seems to be me more viable.
+ */
 public class RepairConfig {
     public static RepairConfig repairConfig() {
         return new RepairConfig();
     }
 
+    @Deprecated
     private int numberOfGroupsSelectedPerDefiance = 1;
+    @Deprecated
     private int minimumConstraintGroupPath = 1;
 
     private FluentGroupSelector groupSelector = GroupSelectors.groupSelector(randomness(), minimumConstraintGroupPath
