@@ -111,7 +111,7 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
     private ConstraintGroupBasedRepair(RepairConfig repairConfig) {
         groupSelector = repairConfig.groupSelector();
         supplySelector = repairConfig.supplySelector();
-        repairCompliance = repairConfig.repairCompliants();
+        repairCompliance = repairConfig.repairCompliance();
         demandSelector = repairConfig.demandSelector();
         freeDefyingGroupOfConstraintGroup = repairConfig.freeDefyingGroupOfConstraintGroup();
     }

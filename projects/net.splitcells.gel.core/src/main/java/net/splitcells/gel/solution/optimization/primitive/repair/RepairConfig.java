@@ -90,7 +90,7 @@ public class RepairConfig {
         return this;
     }
 
-    public boolean repairCompliants() {
+    public boolean repairCompliance() {
         return repairCompliants;
     }
 
