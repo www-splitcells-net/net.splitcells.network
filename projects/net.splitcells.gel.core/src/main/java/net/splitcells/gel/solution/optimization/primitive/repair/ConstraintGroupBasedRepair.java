@@ -104,14 +104,14 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
 
     private final FluentGroupSelector groupSelector;
     private final SupplySelector supplySelector;
-    private final boolean repairCompliants;
+    private final boolean repairCompliance;
     private boolean freeDefyingGroupOfConstraintGroup = true;
 
 
     private ConstraintGroupBasedRepair(RepairConfig repairConfig) {
         groupSelector = repairConfig.groupSelector();
         supplySelector = repairConfig.supplySelector();
-        repairCompliants = repairConfig.repairCompliants();
+        repairCompliance = repairConfig.repairCompliants();
         demandSelector = repairConfig.demandSelector();
         freeDefyingGroupOfConstraintGroup = repairConfig.freeDefyingGroupOfConstraintGroup();
     }
@@ -164,7 +164,7 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
                     .flatMap(streamOfLineList -> streamOfLineList.stream())
                     .distinct()
                     .filter(allocation -> {
-                        if (!repairCompliants) {
+                        if (!repairCompliance) {
                             return !constraint
                                     .lineProcessing()
                                     .columnView(LINE)
