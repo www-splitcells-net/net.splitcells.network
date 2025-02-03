@@ -39,19 +39,17 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSel
 import static net.splitcells.gel.solution.optimization.primitive.repair.RepairConfig.repairConfig;
 
 /**
- * <p>
- * Optimize a problem by find faulty groups and reallocating them.
- * </p>
+ * <p>Optimize a problem by find faulty groups and reallocating them.</p>
  * <p>This {@link OnlineOptimization} consists of three phases.</p>
  * <ol>
  *     <li>Select a set of {@link Constraint} paths in the {@link net.splitcells.gel.solution.Solution#constraint} tree
- *     via a {@link #groupSelector}
- *     and therefore decide, which constraints of the problems are repaired during the optimization.
- *     </li>
- *     <li>Determine all {@link GroupId}s in the selected {@link Constraint}s via a {@link #supplySelector}, that
+ *     via a {@link #groupSelector} and therefore decide,
+ *     which constraints of the problems are repaired during the optimization.</li>
+ *     <li>Determine all {@link GroupId}s in the selected {@link Constraint}s via a {@link #demandSelector}, that
  *     have a {@link Cost} bigger than zero. Free all demands of these groups.
  *     This deletes the values of all variables, which are part of some constraint defying group.</li>
- *     <li>Set the values to all free demands and thereby perform actual repair process.</li>
+ *     <li>Set the values to all free demands and
+ *     thereby perform the actual repair process via the {@link #supplySelector}</li>
  * </ol>
  * <p>TODO Create and use {@link Proposal} only for dissatisfying {@link GroupId}.</p>
  * <p>TODO Create and use {@link Proposal} only for certain {@link Constraint} nodes.
