@@ -43,13 +43,13 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.RepairCo
  * <p>This {@link OnlineOptimization} consists of three phases.</p>
  * <ol>
  *     <li>Select a set of {@link Constraint} paths in the {@link net.splitcells.gel.solution.Solution#constraint} tree
- *     via a {@link #groupSelector} and therefore decide,
+ *     via a {@link RepairConfig#groupSelector()} and therefore decide,
  *     which constraints of the problems are repaired during the optimization.</li>
- *     <li>Determine all {@link GroupId}s in the selected {@link Constraint}s via a {@link #demandSelector}, that
+ *     <li>Determine all {@link GroupId}s in the selected {@link Constraint}s via a {@link RepairConfig#demandSelector()}, that
  *     have a {@link Cost} bigger than zero. Free all demands of these groups.
  *     This deletes the values of all variables, which are part of some constraint defying group.</li>
  *     <li>Set the values to all free demands and
- *     thereby perform the actual repair process via the {@link #supplySelector}</li>
+ *     thereby perform the actual repair process via the {@link RepairConfig#supplySelector()}</li>
  * </ol>
  * <p>TODO Create and use {@link Proposal} only for dissatisfying {@link GroupId}.</p>
  * <p>TODO Create and use {@link Proposal} only for certain {@link Constraint} nodes.
@@ -93,20 +93,11 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
         return new ConstraintGroupBasedRepair(repairConfig);
     }
 
-    private final DemandSelector demandSelector;
-
-    private final FluentGroupSelector groupSelector;
-    private final SupplySelector supplySelector;
-    private final boolean repairCompliance;
-    private boolean freeDefyingGroupOfConstraintGroup = true;
+    private final RepairConfig config;
 
 
-    private ConstraintGroupBasedRepair(RepairConfig repairConfig) {
-        groupSelector = repairConfig.groupSelector();
-        supplySelector = repairConfig.supplySelector();
-        repairCompliance = repairConfig.repairCompliance();
-        demandSelector = repairConfig.demandSelector();
-        freeDefyingGroupOfConstraintGroup = repairConfig.freeDefyingGroupOfConstraintGroup();
+    private ConstraintGroupBasedRepair(RepairConfig argConfig) {
+        config = argConfig;
     }
 
     @Override
@@ -116,7 +107,7 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
                 .stream()
                 .map(e -> e
                         .lastValue()
-                        .map(f -> demandSelector.demandGrouping(f, solution))
+                        .map(f -> config.demandSelector().demandGrouping(f, solution))
                         .orElseGet(() -> map()))
                 .collect(toList());
         groupsOfConstraintGroup
@@ -131,15 +122,15 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
 
     public void repair(Solution solution
             , Map<GroupId, Set<Line>> freeDemandGroups) {
-        supplySelector.apply(freeDemandGroups).optimize(solution);
+        config.supplySelector().apply(freeDemandGroups).optimize(solution);
     }
 
     public List<List<Constraint>> groupOfConstraintGroup(Solution solution) {
-        return groupSelector.apply(solution.constraint());
+        return config.groupSelector().apply(solution.constraint());
     }
 
     public void freeDefyingGroupOfConstraintGroup(Solution solution, Constraint constraint) {
-        if (freeDefyingGroupOfConstraintGroup) {
+        if (config.freeDefyingGroupOfConstraintGroup()) {
             final var incomingGroups = Sets.setOfUniques
                     (constraint
                             .lineProcessing()
@@ -157,7 +148,7 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
                     .flatMap(streamOfLineList -> streamOfLineList.stream())
                     .distinct()
                     .filter(allocation -> {
-                        if (!repairCompliance) {
+                        if (!config.repairCompliance()) {
                             return !constraint
                                     .lineProcessing()
                                     .columnView(LINE)
