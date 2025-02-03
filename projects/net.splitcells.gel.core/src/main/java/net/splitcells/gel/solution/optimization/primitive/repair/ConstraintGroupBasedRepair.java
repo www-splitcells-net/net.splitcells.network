@@ -42,11 +42,6 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.RepairCo
  * <p>
  * Optimize a problem by find faulty groups and reallocating them.
  * </p>
- * <p>
- * “When the Japanese mend broken objects, they aggrandize the damage by filling the cracks with gold.
- * They believe that when something's suffered damage and has a history it becomes more beautiful.”
- * ― Barbara Bloom
- * </p>
  * <p>This {@link OnlineOptimization} consists of three phases.</p>
  * <ol>
  *     <li>Select a set of {@link Constraint} paths in the {@link net.splitcells.gel.solution.Solution#constraint} tree
