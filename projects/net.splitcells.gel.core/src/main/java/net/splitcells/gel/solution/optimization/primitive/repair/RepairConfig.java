@@ -31,10 +31,10 @@ public class RepairConfig {
             , numberOfGroupsSelectedPerDefiance);
     private SupplySelector supplySelector = SupplySelectors.supplySelector();
 
-    private boolean repairCompliants = true;
+    private boolean repairCompliance = true;
     private boolean freeDefyingGroupOfConstraintGroup = true;
 
-    private DemandSelector demandSelector = DemandSelectors.demandSelector(repairCompliants);
+    private DemandSelector demandSelector = DemandSelectors.demandSelector(repairCompliance);
 
     private RepairConfig() {
 
@@ -58,7 +58,7 @@ public class RepairConfig {
     }
 
     public RepairConfig withRepairCompliants(boolean arg) {
-        repairCompliants = arg;
+        repairCompliance = arg;
         return this;
     }
 
@@ -91,7 +91,7 @@ public class RepairConfig {
     }
 
     public boolean repairCompliance() {
-        return repairCompliants;
+        return repairCompliance;
     }
 
     public RepairConfig withDemandSelector(DemandSelector demandSelector) {
