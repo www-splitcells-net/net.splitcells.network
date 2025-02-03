@@ -72,7 +72,7 @@ public class World {
     public static OnlineOptimization worldOptimizer(Solution currentWorldHistory) {
         return constraintGroupBasedRepair(
                 repairConfig()
-                        .withRepairCompliants(false)
+                        .withRepairCompliance(false)
                         .withFreeDefyingGroupOfConstraintGroup(false)
                         .withDemandSelector(demandSelector(demandSelectorsConfig()
                                         .withRepairCompliants(false)

@@ -62,7 +62,7 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
         return new ConstraintGroupBasedRepair(repairConfig()
                 .withGroupSelector(groupSelector)
                 .withSupplySelector(supplySelector)
-                .withRepairCompliants(repairCompliants));
+                .withRepairCompliance(repairCompliants));
     }
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair

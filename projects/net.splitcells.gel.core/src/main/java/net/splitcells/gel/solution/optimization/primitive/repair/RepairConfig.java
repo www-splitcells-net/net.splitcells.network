@@ -57,7 +57,7 @@ public class RepairConfig {
         return this;
     }
 
-    public RepairConfig withRepairCompliants(boolean arg) {
+    public RepairConfig withRepairCompliance(boolean arg) {
         repairCompliance = arg;
         return this;
     }
