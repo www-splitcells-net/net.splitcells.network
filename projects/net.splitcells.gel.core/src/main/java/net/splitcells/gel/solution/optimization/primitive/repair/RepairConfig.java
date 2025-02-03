@@ -15,6 +15,11 @@
  */
 package net.splitcells.gel.solution.optimization.primitive.repair;
 
+import net.splitcells.gel.constraint.GroupId;
+import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.rating.type.Cost;
+import net.splitcells.gel.solution.Solution;
+
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
@@ -57,6 +62,13 @@ public class RepairConfig {
         return this;
     }
 
+    /**
+     * Determines whether {@link Line} of a {@link GroupId} in a {@link Solution#allocations()},
+     * that cause no {@link Cost}, should be changed during the optimization or not.
+     *
+     * @param arg This is the new value for this flag.
+     * @return Returns this.
+     */
     public RepairConfig withRepairCompliance(boolean arg) {
         repairCompliance = arg;
         return this;
