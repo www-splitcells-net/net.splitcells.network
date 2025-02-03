@@ -42,6 +42,7 @@ public class DefaultOptimization implements OnlineOptimization {
     @Override
     public void optimize(Solution solution) {
         onlineLinearInitialization().optimize(solution);
+        final var initialProposal = solution.propose();
         final var maxDepth = solution.constraint().longestConstraintPathLength();
         final var deescalation = deescalation(currentDepth -> s -> {
                     final int execCount = currentDepth + 1;
