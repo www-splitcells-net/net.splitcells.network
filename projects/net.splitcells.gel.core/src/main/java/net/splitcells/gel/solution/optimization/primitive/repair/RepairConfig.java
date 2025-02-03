@@ -50,12 +50,24 @@ public class RepairConfig {
                 , numberOfGroupsSelectedPerDefiance);
     }
 
+    /**
+     * @deprecated Create a {@link FluentGroupSelector} builder instead.
+     * @param minimumConstraintGroupPathArg
+     * @return
+     */
+    @Deprecated
     public RepairConfig withMinimumConstraintGroupPath(int minimumConstraintGroupPathArg) {
         minimumConstraintGroupPath = minimumConstraintGroupPathArg;
         setupGroupSelector();
         return this;
     }
 
+    /**
+     * @deprecated Create a {@link FluentGroupSelector} builder instead.
+     * @param numberOfGroupsSelectedPerDefianceArg
+     * @return
+     */
+    @Deprecated
     public RepairConfig withNumberOfGroupsSelectedPerDefiance(int numberOfGroupsSelectedPerDefianceArg) {
         numberOfGroupsSelectedPerDefiance = numberOfGroupsSelectedPerDefianceArg;
         setupGroupSelector();
@@ -82,8 +94,10 @@ public class RepairConfig {
      * Sets {@link #groupSelector()} in such a way,
      * that only the root {@link net.splitcells.gel.constraint.Constraint} is selected.
      *
+     * @deprecated Create a {@link FluentGroupSelector} builder instead.
      * @return The current {@link RepairConfig} state.
      */
+    @Deprecated
     public RepairConfig withGroupSelectorOfRoot() {
         return withGroupSelector(rootConstraint -> list(list(rootConstraint)));
     }
