@@ -18,10 +18,12 @@ package net.splitcells.gel.solution.optimization;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.meta.OfflineEscalator;
+import net.splitcells.gel.solution.optimization.primitive.repair.DemandSelectors;
 
 import static net.splitcells.gel.solution.optimization.meta.Deescalation.deescalation;
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.constraintGroupBasedRepair;
+import static net.splitcells.gel.solution.optimization.primitive.repair.DemandSelectors.commitCompliance;
 import static net.splitcells.gel.solution.optimization.primitive.repair.RepairConfig.repairConfig;
 
 /**
@@ -47,8 +49,10 @@ public class DefaultOptimization implements OnlineOptimization {
         final var deescalation = deescalation(currentDepth -> s -> {
                     final int execCount = currentDepth + 1;
                     for (int j = 0; j < execCount; ++j) {
-                        constraintGroupBasedRepair(repairConfig().withMinimumConstraintGroupPath(currentDepth))
-                                .optimize(s);
+                        final var config = repairConfig()
+                                .withMinimumConstraintGroupPath(currentDepth)
+                                .withDemandSelector(commitCompliance(repairConfig().demandSelector(), initialProposal));
+                        constraintGroupBasedRepair(config).optimize(s);
                     }
                 }
                 , maxDepth, 0, maxDepth);
