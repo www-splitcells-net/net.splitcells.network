@@ -45,6 +45,11 @@ public class SourceCodeCheckMojo extends AbstractMojo {
     @Override
     public void execute() throws MojoExecutionException {
         try {
+            final var enabled = System.getenv("net_splitcells_maven_plugin_check_enabled");
+            if (enabled != null && !enabled.equals("1")) {
+                getLog().warn("Source code checking is disabled by the environment variable `net_splitcells_maven_plugin_check_enabled`.");
+                return;
+            }
             for (final var sourceRoot : project.getCompileSourceRoots()) {
                 // TODO The if is an hack.
                 if (sourceRoot.toString().contains("generated-sources")) {
