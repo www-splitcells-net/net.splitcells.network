@@ -24,5 +24,5 @@ import net.splitcells.gel.solution.Solution;
 
 @FunctionalInterface
 public interface DemandSelector {
-    Map<GroupId, Set<Line>> demandGrouping(Constraint constraintGrouping, Solution solution);
+    Map<GroupId, Set<Line>> demandGrouping(Constraint constraint, Solution solution);
 }
