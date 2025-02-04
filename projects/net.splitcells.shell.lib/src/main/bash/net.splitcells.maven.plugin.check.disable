@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+echo 'Execute the following command, in order to disable the source code check inside the current shell.'
+echo 'export net_splitcells_maven_plugin_check_enabled=0'
+echo 'Alternatively, execute `. $(which net.splitcells.maven.plugin.check.disable)` in the current shell.'
+export net_splitcells_maven_plugin_check_enabled=0
