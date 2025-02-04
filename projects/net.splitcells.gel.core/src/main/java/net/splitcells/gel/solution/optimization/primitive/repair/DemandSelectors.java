@@ -27,17 +27,37 @@ import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.gel.solution.Solution;
 
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.data.set.map.Pair.pair;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.gel.constraint.Constraint.*;
+import static net.splitcells.gel.proposal.Proposal.*;
 import static net.splitcells.gel.proposal.Proposals.propose;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
 public class DemandSelectors {
     private DemandSelectors() {
         throw constructorIllegal();
+    }
+
+    public static DemandSelector commitCompliance(DemandSelector demandSelector, Proposal commitment) {
+        return (constraint, solution) -> {
+            final var baseGrouping = demandSelector.demandGrouping(constraint, solution);
+            baseGrouping.values().forEach(group -> {
+                final Set<Line> toRemove = setOfUniques();
+                group.forEach(g -> {
+                    if (commitment.proposedAssignments().unorderedLinesStream2()
+                            .anyMatch(c -> c.value(ASSIGNMENT_PROPOSAL_TYPE).equals(PROPOSE_UNCHANGED)
+                                    && c.value(EXISTING_ASSIGNMENT).equalsTo(g.value(LINE)))) {
+                        toRemove.add(g);
+                    }
+                });
+                toRemove.forEach(group::delete);
+            });
+            return baseGrouping;
+        };
     }
 
     /**
@@ -82,7 +102,7 @@ public class DemandSelectors {
                     .forEach(processing -> {
                         final Set<Line> group;
                         if (!demandGrouping.containsKey(processing.getKey())) {
-                            group = Sets.setOfUniques();
+                            group = setOfUniques();
                             demandGrouping.put(processing.getKey(), group);
                         } else {
                             group = demandGrouping.get(processing.getKey());
@@ -156,7 +176,7 @@ public class DemandSelectors {
                     .forEach(processing -> {
                         final Set<Line> group;
                         if (!demandGrouping.containsKey(processing.getKey())) {
-                            group = Sets.setOfUniques();
+                            group = setOfUniques();
                             demandGrouping.put(processing.getKey(), group);
                         } else {
                             group = demandGrouping.get(processing.getKey());
