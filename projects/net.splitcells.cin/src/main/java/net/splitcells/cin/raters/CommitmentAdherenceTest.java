@@ -17,6 +17,7 @@ package net.splitcells.cin.raters;
 
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.testing.annotations.DisabledTest;
+import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.Gel;
 import net.splitcells.gel.constraint.Constraint;
@@ -102,5 +103,27 @@ public class CommitmentAdherenceTest {
                 requireEquals(proposedAssignment32.value(attribute), null);
             }
         });
+    }
+
+    @IntegrationTest
+    public void testDefaultOptimization() {
+        final var demandingAttribute = attribute(Integer.class, "demandingAttribute");
+        final var suppliedAttribute = attribute(Integer.class, "suppliedAttribute");
+        final var constraintPath = Lists.<Constraint>list();
+        final var testSubject = defineProblem("testProposeViaConstraintPath")
+                .withDemandAttributes(demandingAttribute)
+                .withDemands(list(list(1), list(2)))
+                .withSupplyAttributes(suppliedAttribute)
+                .withSupplies(list(list(2), list(1)))
+                .withConstraint(q -> {
+                    constraintPath.addAll(
+                            q.then(commitmentAdherence(demandingAttribute)).constraintPath());
+                    return q;
+                })
+                .toProblem()
+                .asSolution();
+        testSubject.assign(testSubject.demands().orderedLine(0)
+                , testSubject.supplies().orderedLine(0));
+        testSubject.init();
     }
 }
