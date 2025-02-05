@@ -25,11 +25,6 @@
             <version>${revision}</version>
         </dependency>
         <dependency>
-            <!-- Used in order to export tables to spreadsheets. -->
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-        </dependency>
-        <dependency>
             <groupId>net.splitcells</groupId>
             <artifactId>website.server</artifactId>
             <version>0.0.1-SNAPSHOT</version>
