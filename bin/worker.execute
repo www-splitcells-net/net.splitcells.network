@@ -63,7 +63,7 @@ pom = """<project xmlns="http://maven.apache.org/POM/4.0.0"
 javaClassExecutionTemplate = """COPY deployable-jars/* /root/opt/$NAME_FOR_EXECUTION/jars/
 WORKDIR /root/opt/$NAME_FOR_EXECUTION/
 ENTRYPOINT ["/opt/java/openjdk/bin/java"]
-CMD ["-XX:ErrorFile=/root/.local/state/$executionName/.local/dumps/hs_err_pid_%p.log", "-cp", "./jars/*", "$CLASS_FOR_EXECUTION"]
+CMD ["-XX:ErrorFile=/root/.local/state/$NAME_FOR_EXECUTION/.local/dumps/hs_err_pid_%p.log", "-cp", "./jars/*", "$CLASS_FOR_EXECUTION"]
 """
 
 prepareExecution = """set -e
