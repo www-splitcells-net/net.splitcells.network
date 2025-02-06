@@ -117,7 +117,7 @@ public class CommitmentAdherence implements Rater {
                 .filter(t -> t <= committedTime)
                 .distinct()
                 .forEach(t ->
-                        proposal.proposedAssignments().addTranslated(list(PROPOSE_UNCHANGED, null, null, null)
+                        proposal.proposedAssignments().addTranslated(list(PROPOSE_UNCHANGED, Integer.MAX_VALUE, null, null, null)
                                 .withAppended(proposal.subject().headerView2().flow()
                                         .map(attribute -> {
                                             if (time.equals(attribute)) {

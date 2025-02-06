@@ -68,6 +68,10 @@ public interface Proposal {
      * {@link #PROPOSE_UNCHANGED}, {@link #PROPOSE_NEW_ASSIGNMENT} and {@link #PROPOSE_ASSIGNMENT_DELETION}
      */
     Attribute<Integer> ASSIGNMENT_PROPOSAL_TYPE = attribute(Integer.class, "Assignment proposal type");
+    /**
+     * The higher the value, the higher the priority.
+     */
+    Attribute<Integer> PROPOSAL_PRIORITY = attribute(Integer.class, "proposal priority");
 
     /**
      * TODO This method should return a table with {@link Line} {@link Attribute} only.
@@ -102,8 +106,9 @@ public interface Proposal {
      * in order to get a better {@link Solution}.
      * With this often the domain of the demands is represented,
      * when one compares this concept to the constraint satisfaction problem.</p>
-     * <p>The {@link Table#headerView()} consists of {@link #ASSIGNMENT_PROPOSAL_TYPE}, {@link #EXISTING_ASSIGNMENT},
-     * {@link #EXISTING_DEMAND}, {@link #EXISTING_SUPPLY} and {@link Solution#headerView()}.</p>
+     * <p>The {@link Table#headerView()} consists of {@link #ASSIGNMENT_PROPOSAL_TYPE}, {@link #PROPOSAL_PRIORITY},
+     * {@link #EXISTING_ASSIGNMENT}, {@link #EXISTING_DEMAND},{@link #EXISTING_SUPPLY} and
+     * {@link Solution#headerView()}.</p>
      * <p>{@link #EXISTING_ASSIGNMENT}, {@link #EXISTING_DEMAND} and {@link #EXISTING_SUPPLY} are used
      * as default values for the new proposed assignment.
      * These are overridden with values of {@link Solution#headerView()} except, when the value null is present.

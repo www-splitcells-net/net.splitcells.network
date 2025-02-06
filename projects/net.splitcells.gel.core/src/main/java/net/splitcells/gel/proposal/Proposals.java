@@ -187,7 +187,7 @@ public class Proposals implements Proposal {
         proposedAssignments = table("proposed-assignments"
                 , subject.demands()
                 , Lists.<Attribute<? extends Object>>list()
-                        .withAppended(ASSIGNMENT_PROPOSAL_TYPE, EXISTING_ASSIGNMENT, EXISTING_DEMAND, EXISTING_SUPPLY)
+                        .withAppended(ASSIGNMENT_PROPOSAL_TYPE, PROPOSAL_PRIORITY, EXISTING_ASSIGNMENT, EXISTING_DEMAND, EXISTING_SUPPLY)
                         .withAppended(subject.demands().headerView2())
                         .withAppended(subject.supplies().headerView2()));
     }
