@@ -16,6 +16,7 @@
 package net.splitcells.gel.data.table;
 
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
@@ -69,6 +70,10 @@ public interface Table extends View {
      * @return Returns the newly added {@link Line}.
      */
     Line addTranslated(ListView<Object> lineValues, int index);
+
+    default Line addTranslated(Object... values) {
+        return addTranslated(listWithValuesOf(values));
+    }
 
     Line addTranslated(ListView<? extends Object> values);
 
