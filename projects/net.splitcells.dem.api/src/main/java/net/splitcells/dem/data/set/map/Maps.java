@@ -34,8 +34,8 @@ public class Maps extends ResourceOptionImpl<MapF> {
         return configValue(Maps.class).map();
     }
 
-    public static <Key, Value> Map<Key, Value> map(Map<Key, Value> arg) {
-        var rVal = configValue(Maps.class).<Key, Value>map();
+    public static <K2, V1> Map<K2, V1> map(Map<K2, V1> arg) {
+        var rVal = configValue(Maps.class).<K2, V1>map();
         arg.entrySet().forEach(entry -> rVal.put(entry.getKey(), entry.getValue()));
         return rVal;
     }
