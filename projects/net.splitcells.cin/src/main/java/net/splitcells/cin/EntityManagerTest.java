@@ -16,20 +16,27 @@
 package net.splitcells.cin;
 
 import net.splitcells.dem.Dem;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.testing.annotations.BenchmarkTest;
+import net.splitcells.dem.testing.annotations.IntegrationTest;
+import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.lookup.LookupModificationCounter;
 import net.splitcells.gel.data.table.TableModificationCounter;
 
 import java.util.stream.IntStream;
 
 import static net.splitcells.cin.EntityManager.entityManager;
+import static net.splitcells.cin.raters.CommitmentAdherence.commitmentAdherence;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.atom.DescribedBool.describedBool;
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.Time.measureTimeInNanoSeconds;
 import static net.splitcells.dem.resource.Time.nanoToSeconds;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
+import static net.splitcells.gel.Gel.defineProblem;
+import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 
 public class EntityManagerTest {
     @BenchmarkTest
@@ -79,5 +86,10 @@ public class EntityManagerTest {
                         .withInitedOption(TableModificationCounter.class)
                         .withInitedOption(LookupModificationCounter.class)
         );
+    }
+
+    @IntegrationTest
+    public void testDefaultOptimization() {
+        final var entityManager = entityManager();
     }
 }

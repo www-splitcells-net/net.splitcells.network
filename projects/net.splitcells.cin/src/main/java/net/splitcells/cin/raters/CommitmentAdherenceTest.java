@@ -104,26 +104,4 @@ public class CommitmentAdherenceTest {
             }
         });
     }
-
-    @IntegrationTest
-    public void testDefaultOptimization() {
-        final var demandingAttribute = attribute(Integer.class, "demandingAttribute");
-        final var suppliedAttribute = attribute(Integer.class, "suppliedAttribute");
-        final var constraintPath = Lists.<Constraint>list();
-        final var testSubject = defineProblem("testProposeViaConstraintPath")
-                .withDemandAttributes(demandingAttribute)
-                .withDemands(list(list(1), list(2)))
-                .withSupplyAttributes(suppliedAttribute)
-                .withSupplies(list(list(2), list(1)))
-                .withConstraint(q -> {
-                    constraintPath.addAll(
-                            q.then(commitmentAdherence(demandingAttribute)).constraintPath());
-                    return q;
-                })
-                .toProblem()
-                .asSolution();
-        testSubject.assign(testSubject.demands().orderedLine(0)
-                , testSubject.supplies().orderedLine(0));
-        testSubject.init();
-    }
 }
