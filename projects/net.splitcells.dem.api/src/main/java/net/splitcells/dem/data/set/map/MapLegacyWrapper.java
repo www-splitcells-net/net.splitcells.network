@@ -29,11 +29,11 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 @JavaLegacyArtifact
 public class MapLegacyWrapper<K, V> implements Map<K, V> {
 
-    public static <Key, Value> Map<Key, Value> mapLegacyWrapper(java.util.Map<Key, Value> content) {
+    public static <K1, V1> Map<K1, V1> mapLegacyWrapper(java.util.Map<K1, V1> content) {
         return new MapLegacyWrapper<>(content, Optional.empty());
     }
 
-    public static <Key, Value> Map<Key, Value> mapLegacyWrapper(java.util.Map<Key, Value> content, Boolean isDeterministic) {
+    public static <K1, V1> Map<K1, V1> mapLegacyWrapper(java.util.Map<K1, V1> content, Boolean isDeterministic) {
         return new MapLegacyWrapper<>(content, Optional.of(isDeterministic));
     }
 
