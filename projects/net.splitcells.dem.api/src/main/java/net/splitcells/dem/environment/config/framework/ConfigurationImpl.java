@@ -155,10 +155,10 @@ public class ConfigurationImpl implements Configuration {
     }
 
     @Override
-    public <KeyType extends Class<? extends Option<ValueType>>, ValueType> void consume(KeyType type, BiConsumer<KeyType, ValueType> consumer) {
+    public <K extends Class<? extends Option<V>>, V> void consume(K type, BiConsumer<K, V> consumer) {
         listWithValuesOf(configStore.entrySet()).forEach(entry -> {
-            if (type.isAssignableFrom((KeyType) entry.getKey())) {
-                consumer.accept((KeyType) entry.getKey(), (ValueType) entry.getValue());
+            if (type.isAssignableFrom((K) entry.getKey())) {
+                consumer.accept((K) entry.getKey(), (V) entry.getValue());
             }
         });
     }
