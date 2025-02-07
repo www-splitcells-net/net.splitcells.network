@@ -16,6 +16,7 @@
 package net.splitcells.dem.object;
 
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.utils.ExecutionException;
 
@@ -47,6 +48,23 @@ public class Discoveries implements Discovery {
         value = argValue;
     }
 
+    private void requireConsistency() {
+        if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
+            value.ifPresent(v -> {
+                if (v instanceof Discoverable discoverable) {
+                    discoverable.path().requireEqualityTo(path.content());
+                }
+            });
+            children.values().forEach(child -> {
+                child.value().ifPresent(cv -> {
+                    if (cv instanceof Discoverable discoverable) {
+                        discoverable.path().requireEqualityTo(path.content());
+                    }
+                });
+            });
+        }
+    }
+
     @Override
     public Map<String, Discovery> children() {
         return children;
@@ -76,6 +94,7 @@ public class Discoveries implements Discovery {
             final var child = new Discoveries(trail(path.content().shallowCopy().withAppended(next))
                     , Optional.of(instance));
             children.put(next, child);
+            requireConsistency();
             return child;
         } else {
             if (children.containsKey(next)) {
@@ -84,6 +103,7 @@ public class Discoveries implements Discovery {
             final var child = new Discoveries(trail(path.content().shallowCopy().withAppended(next))
                     , Optional.empty());
             children.put(next, child);
+            requireConsistency();
             return child.createChild(instance, ++relativePathIndex, relativePath);
         }
     }
@@ -93,6 +113,7 @@ public class Discoveries implements Discovery {
     public void removeChild(Discovery child) {
         final var matches = children.flowMappingsByValue(child).toList();
         matches.forEach(m -> children.remove(m.getKey()));
+        requireConsistency();
     }
 
     @Override

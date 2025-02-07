@@ -100,4 +100,8 @@ public interface Discovery {
      * @return This returns the kind of long living object, that is linked to this {@link Discovery}.
      */
     <R> Optional<R> value(Class<? extends R> clazz);
+
+    default Optional<Object> value() {
+        return value(Object.class);
+    }
 }
