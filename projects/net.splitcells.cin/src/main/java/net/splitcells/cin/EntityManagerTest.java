@@ -20,13 +20,15 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.testing.annotations.BenchmarkTest;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
+import net.splitcells.dem.testing.annotations.UnitTest;
+import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.lookup.LookupModificationCounter;
 import net.splitcells.gel.data.table.TableModificationCounter;
 
 import java.util.stream.IntStream;
 
-import static net.splitcells.cin.EntityManager.entityManager;
+import static net.splitcells.cin.EntityManager.*;
 import static net.splitcells.cin.raters.CommitmentAdherence.commitmentAdherence;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.atom.DescribedBool.describedBool;
@@ -35,6 +37,7 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.Time.measureTimeInNanoSeconds;
 import static net.splitcells.dem.resource.Time.nanoToSeconds;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
+import static net.splitcells.dem.utils.StreamUtils.streamOf;
 import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 
@@ -88,8 +91,23 @@ public class EntityManagerTest {
         );
     }
 
-    @IntegrationTest
-    public void testDefaultOptimization() {
+    /**
+     * TODO This should be an integration test, but integration tests are not regularly executed yet.
+     */
+    @UnitTest
+    public void testCommitAdherenceByDefaultOptimization() {
+        final var playerAttribute = 1;
         final var entityManager = entityManager();
+        entityManager.entities().assign(entityManager.entities().demands().addTranslated(0, 0)
+                , entityManager.entities().supplies().addTranslated(playerAttribute, 1, RESULT_VALUE, NO_SOURCE));
+        entityManager.withInitedPlayerState();
+        entityManager.entities().assign(entityManager.entities().demands().addTranslated(1, 0)
+                , entityManager.entities().supplies().addTranslated(playerAttribute, 1, ADD_VALUE, NO_SOURCE));
+        entityManager.entities().assign(entityManager.entities().demands().addTranslated(1, 0)
+                , entityManager.entities().supplies().addTranslated(playerAttribute, 1, RESULT_VALUE, NO_SOURCE));
+        // TODO Thest whether the default optimization changes the result value of the time 1.
+        // entityManager.withOptimized();
+        entityManager.withInitedPlayerState();
+        // TODO Thest whether the default optimization changes the result value of the time 1.
     }
 }
