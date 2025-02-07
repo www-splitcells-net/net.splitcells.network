@@ -15,6 +15,7 @@
  */
 package net.splitcells.cin;
 
+import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.Table;
@@ -22,6 +23,8 @@ import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.OnlineOptimization;
+
+import java.util.stream.Stream;
 
 import static java.util.stream.IntStream.range;
 import static net.splitcells.cin.raters.ExistenceCost.existenceCost;
@@ -99,10 +102,8 @@ public class EntityManager {
     private final Solution entities;
     private final Table entityDemands;
     private final Table entitySupplies;
-    private int initTime = 1;
-    private int currentTime = initTime;
-    private int nextTime = currentTime + 1;
-    private int numberOfPlayers = 3;
+    private int currentTime = -1;
+    private int nextTime = -1;
     private final Randomness random = randomness();
 
     /**
@@ -149,7 +150,13 @@ public class EntityManager {
     }
 
     public EntityManager withInitedPlayers() {
-        range(0, numberOfPlayers).forEach(i -> entityDemands.addTranslated(list(initTime, i)));
+        return withInitedPlayers(range(0, 3).mapToObj(i -> list(1, i)));
+    }
+
+    public EntityManager withInitedPlayers(Stream<ListView<? extends Object>> initialValues) {
+        initialValues.forEach(entityDemands::addTranslated);
+        currentTime = entityDemands.columnView(TIME).stream().max(Integer::compareTo).orElse(0);
+        nextTime = currentTime + 1;
         return this;
     }
 
