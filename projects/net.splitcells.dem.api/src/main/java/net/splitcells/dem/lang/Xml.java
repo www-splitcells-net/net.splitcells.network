@@ -301,7 +301,6 @@ public final class Xml {
 
     @Deprecated
     public static Element directChildElementByName(Element element, String name, NameSpace nameSpace) {
-        final var nodeList = element.getChildNodes();
         final var directChildrenByName = directChildElementsByName(element, name, nameSpace)
                 .collect(Lists.toList());
         if (directChildrenByName.size() != 1) {
