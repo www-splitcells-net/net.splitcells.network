@@ -136,6 +136,7 @@ public class EntityManager {
     public EntityManager withOptimized() {
         entities.demandsFree().unorderedLines()
                 .forEach(fd -> entitySupplies.addTranslated(list(PLAYER_ENERGY, random.integer(1, 100), RESULT_VALUE, NO_SOURCE)));
+        entities.init();
         entities.optimize();
         return this;
     }
@@ -150,11 +151,21 @@ public class EntityManager {
     }
 
     public EntityManager withInitedPlayers() {
-        return withInitedPlayers(range(0, 3).mapToObj(i -> list(1, i)));
+        return withInitedPlayers(range(0, 3).mapToObj(i -> list(0, i)));
     }
 
     public EntityManager withInitedPlayers(Stream<ListView<? extends Object>> initialValues) {
         initialValues.forEach(entityDemands::addTranslated);
+        withInitedPlayerState();
+        return this;
+    }
+
+    /**
+     * This method assumes, that beforehand new player values were added {@link #entities}.
+     *
+     * @return
+     */
+    public EntityManager withInitedPlayerState() {
         currentTime = entityDemands.columnView(TIME).stream().max(Integer::compareTo).orElse(0);
         nextTime = currentTime + 1;
         return this;
