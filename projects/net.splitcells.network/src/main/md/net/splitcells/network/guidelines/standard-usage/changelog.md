@@ -10,29 +10,19 @@ This file adheres to the [CommonMark](https://spec.commonmark.org/0.29) specific
 ```
 # Changelog
 The changelog format can be found [here](./src/main/md/net/splitcells/network/guidelines/changelog.md).
-<Links to Ticketing Systems>
-<Further Comments>
 ## [Unreleased]
 ### Summary
-<Really Important General Release Comments>
-<Main Tasks Description
-[**\#<Ticket Number>**: <Ticket Title>](Link to Ticket)
-[**\#<Ticket Number>**: <Ticket Title>](Link to Ticket):
-<Ticket Description And Comments>
->
-<General Release Comments>
+[Release Description]
+* **[Date] \#[Ticket Number]**: [Title and/or Description]
+* **[Date] \#[Ticket Number]**: [Title and/or Description]
 ### Major Changes
-* **<Date Of Completion If Known>
-  * [**\#<Ticket Number>**: <Ticket Title>](Link to Ticket):
-     <Ticket Description And Comments>
-  * **\#<Ticket Number>**: <Ticket Title>
-     <Ticket Description And Comments>
-  * **\#<Related Ticket Number>**: <Description>
-  * <Description>
+* **[Date Of Completion If Known]**:
+  1. [**\#[Ticket Number]**: [Title and/or Description]
+  2. [**\#[Ticket Number]**: [Title and/or Description]
 ### Minor Changes
-<Like Major Changes>
+[Like Major Changes]
 ### Patches
-<Like Major Changes>
+[Like Major Changes]
 ```
 
 ----
