@@ -24,7 +24,7 @@ import java.util.function.Supplier;
  * @deprecated Use {@link ResourceOption} interface directly instead.
  */
 public class ResourceOptionImpl<T extends Resource> extends OptionImpl<T> implements ResourceOption<T> {
-    public ResourceOptionImpl(Supplier<T> arg_default_value) {
-        super(arg_default_value);
+    public ResourceOptionImpl(Supplier<T> argDefaultValue) {
+        super(argDefaultValue);
     }
 }
