@@ -19,6 +19,8 @@ import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.ProgramRepresentative;
 
+import java.util.Optional;
+
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.reflection.ClassesRelated.simplifiedName;
 
@@ -62,5 +64,15 @@ public interface Discoverable {
                 return rThis.path().shallowCopy().withAppended(extension);
             }
         };
+    }
+
+    /**
+     * @return Returns all metadata.
+     * The {@link Discovery#value(Class)} is this and {@link #path()} and {@link Discovery#path()} are equals.
+     * If the returned value is not {@link Optional#empty()}, than it is ensured, that {@link #path()} is unique
+     * in the {@link Discovery} tree.
+     */
+    default Optional<Discovery> discovery() {
+        return Optional.empty();
     }
 }
