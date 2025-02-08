@@ -3,7 +3,6 @@
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
 :root {
-	/* TODO Move to own file. */
 	--foreground-color-structural-guide:#000000;
 	--foreground-color-priority-0:#000000;
 	--foreground-color-priority-1:#101000;/*standard priority*/
