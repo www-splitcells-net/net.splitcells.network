@@ -143,11 +143,6 @@ ol > ol {
     padding-right: .5em;
     font-weight: bold;
     }
-.splitcells-net-background-window-menu {
-    background-color: var(--background-color-priority-5);
-    color: var(--foreground-color-priority-5);
-    box-shadow: 0em .06em .1em 0em var(--shadow-color-priority-5);
-    }
 *.net-splitcells-structural-guide {
 	background-color: var(--background-color-structural-guide);
 	color: var(--foreground-color-structural-guide);
