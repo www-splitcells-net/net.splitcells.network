@@ -27,7 +27,9 @@ import java.util.Optional;
  * The ID of any node is defined by the {@link #path()} from the root to the object,
  * where one path element corresponds to a node's {@link #name()}.</p>
  * <p>Generics are not used here,
- * because the types of a tree of {@link Discovery#value(Class)} are not intended to be uniform in any way.</p>
+ * because the types of a tree of {@link Discovery#value(Class)} are not intended to be uniform in any way.
+ * A dedicated object is used, instead of an interface like {@link Discoverable},
+ * in order to ensure the uniqueness of {@link #path()} inside the tree, that is constructed by {@link #children()}.</p>
  */
 public interface Discovery {
     /**

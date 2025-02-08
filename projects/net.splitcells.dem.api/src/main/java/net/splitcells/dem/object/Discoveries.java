@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.object;
 
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.resource.Trail;
@@ -26,9 +27,14 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.Trail.trail;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
 public class Discoveries implements Discovery {
+    /**
+     * TODO This will be removed, when `Ensure local unique discoverability #56` is done.
+     */
+    public static final boolean ENFORCE_PATH_IDENTITY = false;
 
     public static Discovery discoveryRoot() {
         return new Discoveries();
@@ -84,16 +90,31 @@ public class Discoveries implements Discovery {
     public Discovery createChild(Object instance, int relativePathIndex, String... relativePath) {
         final String next = relativePath[relativePathIndex];
         if (relativePath.length - relativePathIndex == 1) {
+            final String actualNext;
             if (children.containsKey(next)) {
-                throw ExecutionException.execException(tree("Cannot add child with already existing path.")
-                        .withProperty("New child", instance.toString())
-                        .withProperty("Existing child", children.get(next).toString())
-                        .withProperty("Parent value", value.map(Object::toString).orElse("empty"))
-                        .withProperty("Parent path", path.unixPathString()));
+                if (ENFORCE_PATH_IDENTITY) {
+                    throw ExecutionException.execException(tree("Cannot add child with already existing path.")
+                            .withProperty("New child", instance.toString())
+                            .withProperty("Existing child", children.get(next).toString())
+                            .withProperty("Parent value", value.map(Object::toString).orElse("empty"))
+                            .withProperty("Parent path", path.unixPathString()));
+                } else {
+                    logs().appendWarning(tree("Duplicate path")
+                            .withProperty("relative path index", "")
+                            .withProperty("relative path", "" + listWithValuesOf(relativePath)));
+                    int i = 0;
+                    String nextCandidate = next + "-" + i;
+                    while (children.containsKey(nextCandidate)) {
+                        nextCandidate = next + "-" + ++i;
+                    }
+                    actualNext = nextCandidate;
+                }
+            } else {
+                actualNext = next;
             }
-            final var child = new Discoveries(trail(path.content().shallowCopy().withAppended(next))
+            final var child = new Discoveries(trail(path.content().shallowCopy().withAppended(actualNext))
                     , Optional.of(instance));
-            children.put(next, child);
+            children.put(actualNext, child);
             requireConsistency();
             return child;
         } else {

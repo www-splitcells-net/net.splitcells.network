@@ -18,6 +18,7 @@ package net.splitcells.dem.object;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.object.Discoveries.ENFORCE_PATH_IDENTITY;
 import static net.splitcells.dem.object.Discoveries.discoveryRoot;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
@@ -34,6 +35,8 @@ public class DiscoveryTest {
         requireEquals(secondChild, testSubject.childByPath("relative", "second", "path"));
         testSubject.childByPath("relative", "second", "path").removeChild(secondChild);
         testSubject.childByPath("relative", "second", "path").children().requireEmpty();
-        requireThrow(() -> testSubject.createChild("third-value", "relative", "second", "path"));
+        if (ENFORCE_PATH_IDENTITY) {
+            requireThrow(() -> testSubject.createChild("third-value", "relative", "second", "path"));
+        }
     }
 }
