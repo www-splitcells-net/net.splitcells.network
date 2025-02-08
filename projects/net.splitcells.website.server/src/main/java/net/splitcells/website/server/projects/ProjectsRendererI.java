@@ -69,6 +69,7 @@ import static net.splitcells.website.server.projects.extension.impls.GlobalChang
 import static net.splitcells.website.server.projects.extension.impls.LayoutExtension.layoutExtension;
 import static net.splitcells.website.server.projects.extension.impls.LayoutFancyTreeExtension.layoutFancyTreeExtension;
 import static net.splitcells.website.server.projects.extension.impls.LayoutTreeExtension.layoutTreeExtension;
+import static net.splitcells.website.server.projects.extension.impls.LicensePageExtension.licensePageExtension;
 import static net.splitcells.website.server.projects.extension.impls.TestExtension.testExtension;
 import static net.splitcells.website.server.projects.extension.impls.UserProfilePageExtension.userProfilePageExtension;
 import static net.splitcells.website.server.projects.extension.status.HostCpuUtilizationExtension.hostCpuUtilizationExtension;
@@ -206,6 +207,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
             , testExtension()
             , layoutFancyTreeExtension()
             , configDependencyRecordingExtension()
+            , licensePageExtension()
     );
 
     private ProjectsRendererI(String name
