@@ -97,7 +97,7 @@ public final class AttributeI<T> implements Attribute<T> {
 
     @Override
     public void assertArgumentCompatibility(Object arg) {
-        if (!type.isAssignableFrom(arg.getClass())) {
+        if (arg != null && !type.isAssignableFrom(arg.getClass())) {
             throw ExecutionException.execException("Given object not compatible to attribute: name=" + name
                     + ", type=" + type
                     + ", givenType=" + arg.getClass()

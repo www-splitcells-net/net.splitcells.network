@@ -65,7 +65,7 @@ public class MapAttribute<T> implements Attribute<Map<Class<T>, T>> {
 
     @Override
     public void assertArgumentCompatibility(Object arg) {
-        if (isInstanceOf(arg).isFalse()) {
+        if (arg != null && isInstanceOf(arg).isFalse()) {
             throw ExecutionException.execException("Given object not compatible to attribute: name=" + name
                     + ", type=" + type
                     + ", givenType=" + arg.getClass()
