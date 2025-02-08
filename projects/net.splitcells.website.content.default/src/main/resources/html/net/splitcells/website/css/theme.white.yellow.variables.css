@@ -3,14 +3,21 @@
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
 :root {
+    /* The foreground color is basically the font color.
+     * Other than the background color,
+     * it is preferred to keep the low priority font colors similar to the high priority font colors.
+     * The reason for that is,
+     * that although low priority colors are very effective at signaling the low priority to the user,
+     * it often reduced the readability of the fonts by too much.
+     */
 	--foreground-color-structural-guide:#000000;
 	--foreground-color-priority-0:#000000;
-	--foreground-color-priority-1:#101000;/*standard priority*/
-	--foreground-color-priority-2:#505000;
-	--foreground-color-priority-3:#505050;
-	--foreground-color-priority-4:#606060;
-	--foreground-color-priority-5:#707070;
-	--foreground-color-priority-6:#808080;
+	--foreground-color-priority-1:#101010;/*standard priority*/
+	--foreground-color-priority-2:#202020;
+	--foreground-color-priority-3:#303040;
+	--foreground-color-priority-4:#404040;
+	--foreground-color-priority-5:#505050;
+	--foreground-color-priority-6:#606060;
 
 	--background-color-structural-guide:#FFFFD0;
 	--background-color-priority-0:#FFFFB0;
