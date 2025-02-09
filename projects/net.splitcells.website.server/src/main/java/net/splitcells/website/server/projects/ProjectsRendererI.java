@@ -403,10 +403,10 @@ public class ProjectsRendererI implements ProjectsRenderer {
             return Optional.empty();
         }
         if (metaData.size() > 1) {
-            logs().appendWarning(ExecutionException.execException("Expecting at most 1 meta data entries but found "
+            throw execException("Expecting at most 1 meta data entries but found "
                     + metaData.size()
                     + " instead: "
-                    + metaData));
+                    + metaData);
         }
         return metaData.get(0);
     }
