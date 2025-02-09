@@ -16,5 +16,5 @@
 # This command is needed for shells without setup environments.
 
 export HOME=/home/$(whoami)
-. $HOME/bin/net.splitcells.shell.commands.managed/command.managed.export.bin
+. "$(command.managed.bin)/command.managed.export.bin"
 $@

@@ -16,7 +16,7 @@
 # Minimize the number of dependencies as the context of this program is not known and is used for bootstrapping.
 # TODO Remove this command in order to minimize source code size.
 cd $1
-mkdir -p ~/bin
-	cp ./* ~/bin/
-	chmod -R +x ~/bin/*
+mkdir -p "$(command.managed.bin)"
+	cp ./* "$(command.managed.bin)/"
+	chmod -R +x "$(command.managed.bin)/"*
 echo Commands at $1 installed.

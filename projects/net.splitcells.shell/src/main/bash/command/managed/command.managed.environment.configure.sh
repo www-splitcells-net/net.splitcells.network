@@ -13,15 +13,8 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
-# TODO This is an workaround. The API with arguments is not stable.
-if [ -z "$1" ]; then
-	userFolder=$HOME
-else
-	userFolder=$1
-fi
 
-
-mkdir -p $userFolder/bin/net.splitcells.shell.commands.managed
+mkdir -p "$(command.managed.bin)"
 mkdir -p $userFolder/.config/net.splitcells.shell
 
 # Adds this framework's PATHs only to interactive shells.
@@ -37,9 +30,9 @@ mkdir -p $userFolder/.config/net.splitcells.shell
 # but make it so, that dependency injection is optional and therefore this script also works without `command.managed.export`.
 
 touch $userFolder/.bashrc
-grep -q -F '. ~/bin/net.splitcells.shell.commands.managed/command.managed.export.bin' $userFolder/.bashrc
+grep -q -F ". $(command.managed.bin)/command.managed.export.bin" $userFolder/.bashrc
 if [ "$?" -ne "0" ]; then
-	echo '. ~/bin/net.splitcells.shell.commands.managed/command.managed.export.bin' >> $userFolder/.bashrc
+	echo ". $(command.managed.bin)/command.managed.export.bin" >> $userFolder/.bashrc
 	echo '' >> $userFolder/.bashrc
 	echo You may need to restart the computer in order to access the installed programs.
 	echo At the very least you need to execute "'". ~/.bashrc"'" or open a new terminal in order to access these programs.

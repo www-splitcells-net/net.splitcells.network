@@ -16,8 +16,8 @@
 # TODO Document supported repository file structure.
 # Installs user commands and registers the installed commands to the PATH variable for new shells.
 
-mkdir -p ~/bin/net.splitcells.shell.commands.managed
-find ~/bin/net.splitcells.shell.commands.managed -maxdepth 1 -type f -delete
+mkdir -p "$(command.managed.bin)"
+find "$(command.managed.bin)" -maxdepth 1 -type f -delete
 
 repoList=~/.config/net.splitcells.shell/command.repositories
 hasPrefix() { case $2 in "$1"*) true;; *) false;; esac; }
@@ -38,7 +38,7 @@ if hasPrefix 'repo=' "$bootstrapRepoProperty"; then
 	installer=$bootstrapRepo/src/main/python/command/managed/command.managed.install.py
 		chmod +x $installer
 		$installer $installer
-	chmod +x ~/bin/net.splitcells.shell.commands.managed/*
+	chmod +x "$(command.managed.bin)/"*
 fi
 while IFS= read -r property
 do
@@ -62,7 +62,7 @@ do
 			find . -type f | sort -n | xargs -r -n 1 $installer
 			cd ..
 		fi
-		chmod +x ~/bin/net.splitcells.shell.commands.managed/*
+		chmod +x "$(command.managed.bin)/"*
 		if [ -d ../doc/man1 ]; then
 			cd ../doc/man1
 			mkdir -p ~/bin/man/man1

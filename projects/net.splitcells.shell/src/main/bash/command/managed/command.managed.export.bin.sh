@@ -15,6 +15,6 @@
 
 # TODO Remove explicit addition of `$HOME/bin` to PATH, as this is not part of the shell project.
 export PATH="$HOME/bin:$PATH"
-export PATH="$HOME/bin/net.splitcells.shell.commands.managed:$PATH"
+export PATH="$(command.managed.bin):$PATH"
 # TODO Remove concept of disabled command, as it adds complexity, that has no real use case.
 export PATH="$HOME/bin/net.splitcells.shell.commands.disabled:$PATH"

@@ -16,7 +16,7 @@ set -e
 this.requires user.bin.configure.0 && command.managed.execute conjunction user.bin.configure
 command.repositories.install
 command.managed.install.project.commands
-  chmod +x ~/bin/net.splitcells.shell.commands.managed/*
+  chmod +x "$(command.managed.bin)/"*
 if user.bin.configure.uses.test.dependencies
 then
   test.dependencies
