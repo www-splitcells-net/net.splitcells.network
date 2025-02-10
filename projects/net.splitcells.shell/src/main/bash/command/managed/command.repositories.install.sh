@@ -74,14 +74,14 @@ do
 done < "$repoList"
 if test -d "$HOME/.config/net.splitcells.shell/src"; then
 	cd "$HOME/.config/net.splitcells.shell/src"
-	find . -mindepth 1 -type f -exec command.managed.install {} \;
+	find . -mindepth 1 -type f -exec $installer {} \;
 fi
-if [[ ":$PATH:" == *":$(command.managed.bin):"* ]]; then
+if [[ ":$PATH:" == *":$($bootstrapRepo/src/main/bash/command/managed/command.managed.bin.sh)"* ]]; then
   exit
 else
-  echo "The commands were installed at '$(command.managed.bin)'."
+  echo "The commands were installed at '$($bootstrapRepo/src/main/bash/command/managed/command.managed.bin.sh)'."
   echo In order to use these, the folder needs to be added to the PATH variable.
   echo "One can edit the '~/.bashrc' automatically via the command"
-  echo '$(command.managed.bin)/command.managed.environment.configure.sh',
+  echo 'export PATH="$($HOME/bin/net.splitcells.shell.commands.managed/command.managed.bin)/:$PATH"',
   echo in order to add the new folder to the PATH variable in new shells by default.
 fi
