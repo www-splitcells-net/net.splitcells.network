@@ -13,8 +13,16 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
+# This command need to be able to work without any Shell project installation being present,
+# for things like reinstallations.
+# In other words, this command is used for bootstrapping a Shell project installation.
+
 # TODO Remove explicit addition of `$HOME/bin` to PATH, as this is not part of the shell project.
 export PATH="$HOME/bin:$PATH"
-export PATH="$(command.managed.bin):$PATH"
+if [ -z "$NET_SPLITCELLS_SHELL_PATH" ]; then
+  export PATH="$(realpath $HOME/bin/net.splitcells.shell.commands.managed):$PATH"
+else
+  export PATH="$NET_SPLITCELLS_SHELL_PATH:$PATH"
+fi
 # TODO Remove concept of disabled command, as it adds complexity, that has no real use case.
 export PATH="$HOME/bin/net.splitcells.shell.commands.disabled:$PATH"
