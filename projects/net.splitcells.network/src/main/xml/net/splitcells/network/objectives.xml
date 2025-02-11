@@ -43,7 +43,11 @@
         </list>
     </chapter>
     <chapter>
-        <title>Objective Relevant Guidelines</title>
+        <title>Objective Relevant Guidelines and Decisions</title>
+        <paragraph>The following guidelines change or to be more precisely color the goals of the project
+            by effectively ruling out certain approaches to the objectives.
+            That in turn makes the actual ambitions more focused and concrete.
+        </paragraph>
         <list>
             <link post="net/splitcells/network/guidelines/inherently-broken-and-rotten-by-design">Inherently Broken and Rotten by Design</link>
         </list>
