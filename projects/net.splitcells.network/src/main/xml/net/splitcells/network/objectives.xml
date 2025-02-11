@@ -42,4 +42,10 @@
             </item>
         </list>
     </chapter>
+    <chapter>
+        <title>Objective Relevant Guidelines</title>
+        <list>
+            <link post="net/splitcells/network/guidelines/inherently-broken-and-rotten-by-design">Inherently Broken and Rotten by Design</link>
+        </list>
+    </chapter>
 </article>
