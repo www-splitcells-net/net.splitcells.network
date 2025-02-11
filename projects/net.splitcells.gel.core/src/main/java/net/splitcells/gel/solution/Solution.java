@@ -22,6 +22,7 @@ import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.gel.proposal.Proposals.proposalsForConstraintTree;
 import static net.splitcells.gel.solution.OptimizationParameters.optimizationParameters;
 import static net.splitcells.gel.solution.optimization.DefaultOptimization.defaultOptimization;
+import static net.splitcells.gel.solution.optimization.DefaultOptimization2.defaultOptimization2;
 import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 
@@ -62,7 +63,7 @@ public interface Solution extends Problem, SolutionView {
      * @return Returns this with the default optimization being applied to it.
      */
     default Solution optimize() {
-        defaultOptimization().optimize(this);
+        defaultOptimization2().optimize(this);
         return this;
     }
 
