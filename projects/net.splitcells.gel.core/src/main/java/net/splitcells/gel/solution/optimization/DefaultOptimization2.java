@@ -20,6 +20,7 @@ import net.splitcells.gel.solution.Solution;
 import static net.splitcells.gel.solution.optimization.meta.Deescalation.deescalation;
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.constraintGroupBasedRepair;
+import static net.splitcells.gel.solution.optimization.primitive.repair.DemandSelectors.commitCompliance;
 import static net.splitcells.gel.solution.optimization.primitive.repair.RepairConfig.repairConfig;
 
 public class DefaultOptimization2 implements OnlineOptimization {
@@ -33,6 +34,21 @@ public class DefaultOptimization2 implements OnlineOptimization {
     @Override
     public void optimize(Solution solution) {
         onlineLinearInitialization().optimize(solution);
+        final var initialProposal = solution.propose();
+        final var maxDepth = solution.constraint().longestConstraintPathLength();
+        final var deescalation = deescalation(currentDepth -> s -> {
+                    final int execCount = currentDepth + 1;
+                    for (int j = 0; j < execCount; ++j) {
+                        final var config = repairConfig()
+                                .withMinimumConstraintGroupPath(currentDepth)
+                                .withDemandSelector(commitCompliance(repairConfig().demandSelector(), initialProposal));
+                        constraintGroupBasedRepair(config).optimize(s);
+                    }
+                }
+                , maxDepth, 0, maxDepth);
+        for (int x = 0; x <= 100; ++x) {
+            deescalation.optimize(solution);
+        }
         // Ensures, that at the end of the optimization all values are assigned.
         onlineLinearInitialization().optimize(solution);
     }
