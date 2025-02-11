@@ -27,5 +27,6 @@
         <title>Finishing The Package</title>
         <d:todo>Tension based stability</d:todo>
         <d:todo>Positive dividends of technical debts by skipping migrations</d:todo>
+        <d:todo>Fitting developers</d:todo>
     </chapter>
 </article>
