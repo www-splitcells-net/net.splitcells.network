@@ -29,6 +29,7 @@ import static net.splitcells.dem.lang.namespace.NameSpaces.GEL;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.common.Language.ARGUMENTATION;
 import static net.splitcells.gel.common.Language.EMPTY_STRING;
@@ -181,10 +182,10 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
                         , lineProcessing
                                 .columnView(INCOMING_CONSTRAINT_GROUP)
                                 .lookup(incomingGroup)));
-        if (ENFORCING_UNIT_CONSISTENCY) {
-            describedBool(lineProcessing.demandsUsed().contains(addition)
-                    , "The rater did not provide a rating to the added line.")
-                    .required();
+        if (ENFORCING_UNIT_CONSISTENCY && lineProcessing.demandsUsed().misses(addition)) {
+            throw execException(tree("The rater did not provide a rating to the added line.")
+                    .withProperty("constraint", this.toTree())
+                    .withProperty("rater", rater.toSimpleDescription(addition, lineProcessing, incomingGroup)));
         }
     }
 

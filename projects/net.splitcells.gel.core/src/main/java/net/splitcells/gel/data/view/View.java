@@ -110,6 +110,10 @@ public interface View extends Discoverable, Domable, Identifiable {
         }
     }
 
+    default boolean misses(Line line) {
+        return !contains(line);
+    }
+
     /**
      * @return {@link List} of {@link Line}, that is ordered by {@link Line#index()}.
      */
