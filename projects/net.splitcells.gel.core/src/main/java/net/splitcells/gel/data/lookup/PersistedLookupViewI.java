@@ -191,7 +191,7 @@ public class PersistedLookupViewI implements PersistedLookupView {
             return rawLinesCache.stream().filter(e -> e != null);
         }
         if (USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE) {
-            return rawLinesHashedCache.values().stream();
+            return rawLinesHashedCache.values().stream().filter(e -> e != null);
         }
         return content.stream().map(viewView::rawLine).filter(e -> e != null);
     }
