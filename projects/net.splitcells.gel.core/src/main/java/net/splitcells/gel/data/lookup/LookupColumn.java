@@ -124,7 +124,7 @@ public class LookupColumn<T> implements Column<T> {
 
     @Override
     public T get(int index) {
-        if (ENFORCING_UNIT_CONSISTENCY &&  !table.contentIndexes().contains(index)) {
+        if (ENFORCING_UNIT_CONSISTENCY && !table.contentIndexes().contains(index)) {
             throw ExecutionException.execException(tree("Given index is not present in lookup table.")
                     .withProperty("index", index + "")
                     .withProperty("lookup table", table.path().toString()));
