@@ -173,15 +173,15 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
 
     public void processLineAddition(Line addition) {
         final var incomingGroup = addition.value(INCOMING_CONSTRAINT_GROUP);
-        processRatingEvent(
-                rater.ratingAfterAddition(
-                        lines.columnView(INCOMING_CONSTRAINT_GROUP)
-                                .lookup(incomingGroup)
-                        , addition
-                        , childrenView()
-                        , lineProcessing
-                                .columnView(INCOMING_CONSTRAINT_GROUP)
-                                .lookup(incomingGroup)));
+        final var ratingEvent = rater.ratingAfterAddition(
+                lines.columnView(INCOMING_CONSTRAINT_GROUP)
+                        .lookup(incomingGroup)
+                , addition
+                , childrenView()
+                , lineProcessing
+                        .columnView(INCOMING_CONSTRAINT_GROUP)
+                        .lookup(incomingGroup));
+        processRatingEvent(ratingEvent);
         if (ENFORCING_UNIT_CONSISTENCY && lineProcessing.demandsUsed().misses(addition)) {
             throw execException(tree("The rater did not provide a rating to the added line.")
                     .withProperty("constraint", this.toTree())
