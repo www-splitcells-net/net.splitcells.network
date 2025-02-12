@@ -118,7 +118,6 @@ public class EntityManager {
                 .withSupplies()
                 .withConstraint(query -> {
                     final var playerTimeSteps = query.forAll(PLAYER).forAll(overlappingTimeSteps(TIME));
-                    playerTimeSteps.then(existenceCost());
                     playerTimeSteps.then(valueUpdate(PLAYER_ENERGY));
                     return query;
                 })
