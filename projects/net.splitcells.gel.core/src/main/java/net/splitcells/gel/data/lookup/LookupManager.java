@@ -162,9 +162,8 @@ public class LookupManager<T> implements Lookup<T> {
     public void register_addition(T addition, int index) {
         ++lookupWriteCount;
         ++lastStrategyTime;
-        final var wasPersistedLookupActive = isPersistedLookupActive;
         updateStatistics(index, INVALID_INDEX);
-        if (wasPersistedLookupActive && isPersistedLookupActive) {
+        if (isPersistedLookupActive) {
             persistedLookup.register_addition(addition, index);
         }
     }
@@ -173,9 +172,8 @@ public class LookupManager<T> implements Lookup<T> {
     public void register_removal(T removal, int index) {
         ++lookupWriteCount;
         ++lastStrategyTime;
-        final var wasPersistedLookupActive = isPersistedLookupActive;
         updateStatistics(INVALID_INDEX, index);
-        if (wasPersistedLookupActive && isPersistedLookupActive) {
+        if (isPersistedLookupActive) {
             persistedLookup.register_removal(removal, index);
         }
     }
