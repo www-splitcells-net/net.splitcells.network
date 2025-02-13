@@ -73,6 +73,7 @@ public class DemandSelectors {
     @Deprecated
     public static DemandSelector demandSelector(boolean repairCompliance) {
         return (Constraint constraintGrouping, Solution solution) -> {
+            final Set<Line> selectedDemands = setOfUniques();
             final Map<GroupId, Set<Line>> demandGrouping = map();
             final Map<GroupId, Set<Line>> defianceCache = Maps.map();
             constraintGrouping
@@ -100,6 +101,10 @@ public class DemandSelectors {
                     .map(processing -> pair(processing.value(Constraint.RESULTING_CONSTRAINT_GROUP)
                             , processing.value(LINE)))
                     .forEach(processing -> {
+                        if (selectedDemands.has(processing.getValue())) {
+                            return;
+                        }
+                        selectedDemands.add(processing.getValue());
                         final Set<Line> group;
                         if (!demandGrouping.containsKey(processing.getKey())) {
                             group = setOfUniques();
