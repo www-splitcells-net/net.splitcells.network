@@ -174,8 +174,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
     public void processLineAddition(Line addition) {
         final var incomingGroup = addition.value(INCOMING_CONSTRAINT_GROUP);
         final var ratingEvent = rater.ratingAfterAddition(
-                lines.columnView(INCOMING_CONSTRAINT_GROUP)
-                        .lookup(incomingGroup)
+                lines.columnView(INCOMING_CONSTRAINT_GROUP).lookup(incomingGroup)
                 , addition
                 , childrenView()
                 , lineProcessing
