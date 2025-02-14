@@ -39,6 +39,10 @@ import static net.splitcells.dem.utils.reflection.ClassesRelated.simplifiedName;
  */
 public interface Discoverable {
 
+    /**
+     * This is basically the null value of {@link Discoverable} and states,
+     * that the respective object is not part of a {@link Discoverable} tree.
+     */
     Discoverable NO_CONTEXT = () -> list();
 
     static Discoverable discoverable(List<String> path) {
