@@ -1054,10 +1054,8 @@ public interface Tree extends TreeView {
     default Optional<List<Tree>> pathOfValueTree(PathQueryConfig config, List<String> stringPath) {
         final List<Tree> path = listWithValuesOf();
         Tree currentNode = this;
-        if (config.checkRootNode()) {
-            if (!name().equals(stringPath.remove(0))) {
+        if (config.checkRootNode() && !name().equals(stringPath.remove(0))) {
                 return Optional.empty();
-            }
         }
         while (stringPath.hasElements()) {
             final var currentPathElement = stringPath.remove(0);
