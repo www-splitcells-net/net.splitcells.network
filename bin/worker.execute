@@ -3,6 +3,7 @@
 SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
+TODO Create test for all `worker.execute` flags.
 TODO Create option to delete things like `.m2`, `repos` and `net.splitcells.shell.commands.managed`,
      so it can be made sure, that bootstrapping actually works.
 TODO Use string's substitute method, instead of string's replace.
@@ -88,6 +89,7 @@ podman build -f "target/Dockerfile-$executionName" \\
 prepareExecutionWithoutBuild = """set -e
 set -x
 executionName="$executionName"
+# TODO executionCommand is currently not used.
 executionCommand="$executionCommand"
 # Prepare file system.
 mkdir -p $HOME/.local/state/$executionName/.m2/
