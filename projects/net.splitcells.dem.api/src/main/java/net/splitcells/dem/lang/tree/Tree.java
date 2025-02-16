@@ -283,8 +283,8 @@ public interface Tree extends TreeView {
     default void requireEqualsTo(Tree other) {
         if (!name().equals(other.name())) {
             throw ExecutionException.execException(tree("Both trees should have the same name, but have not.")
-                    .withProperty("this name", name().toString())
-                    .withProperty("other name", other.name().toString())
+                    .withProperty("this name", name())
+                    .withProperty("other name", other.name())
                     .withProperty("this", toXmlString())
                     .withProperty("other", other.toXmlString()));
         }
