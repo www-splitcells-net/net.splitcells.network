@@ -13,7 +13,7 @@ set -e
 # Install shell project.
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network/projects/net.splitcells.shell
   ./bin/install
-  . ~/bin/net.splitcells.shell.commands.managed/command.managed.export.bin
+  . src/main/bash/command/managed/command.managed.export.bin.sh
 # Install shell libraries.
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.hub
   # TODO Install OSI not to a user folder, but to a folder inside the repo.
