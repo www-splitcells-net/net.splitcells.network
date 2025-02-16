@@ -40,6 +40,8 @@ class Command:
 			targetFileName = self.name[:-3]
 		if (self.name.endswith('.py')):
 			targetFileName = self.name[:-3]
+		if not Path.is_dir(self.targetFolder):
+			Path.mkdir(self.targetFolder, parents=True)
 		targetFile = self.targetFolder.joinpath(targetFileName) # TODO Create test, where a command is installed and check if suffix processing works correctly.
 		if targetFile.exists():
 			while True:
