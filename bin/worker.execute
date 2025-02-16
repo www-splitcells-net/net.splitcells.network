@@ -212,7 +212,7 @@ if __name__ == '__main__':
         executionScript += executeViaPodman
     executionScript = executionScript.replace('"$executionName"', parsedArgs.name)
     if parsedArgs.command is not None:
-        executionScript = executionScript.replace('"$executionCommand"', "'" + parsedArgs.command + "'")
+        executionScript = executionScript.replace('"$executionCommand"', "'" + parsedArgs.command.replace("'", "'\\''") + "'")
     additionalPodmanArgs = ''
     if parsedArgs.portPublishing is not None:
         for portMapping in parsedArgs.portPublishing.split(','):
