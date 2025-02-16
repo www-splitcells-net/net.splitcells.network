@@ -32,84 +32,99 @@ public class FileSystemVoid implements FileSystem {
         return new FileSystemVoid();
     }
 
+    private boolean isUsageWarned = false;
+
     private FileSystemVoid() {
 
     }
 
+    private void warnUsage() {
+        if (!isUsageWarned) {
+            logs().appendUnimplementedWarning(FileSystemVoid.class);
+            isUsageWarned = true;
+        }
+    }
+
     @Override
     public FileSystem writeToFile(Path path, byte[] content) {
-        logs().appendUnimplementedWarning(FileSystemVoid.class);
+        warnUsage();
         return this;
     }
 
     @Override
     public FileSystem appendToFile(Path path, byte[] content) {
-        logs().appendUnimplementedWarning(FileSystemVoid.class);
+        warnUsage();
         return this;
     }
 
     @Override
     public FileSystem subFileSystem(Path path) {
-        logs().appendUnimplementedWarning(FileSystemVoid.class);
+        warnUsage();
         return this;
     }
 
     @Override
     public InputStream inputStream(Path path) {
-        throw notImplementedYet();
+        warnUsage();
+        return new InputStream() {
+            @Override
+            public int read() {
+                return -1;  // end of stream
+            }
+        };
     }
 
     @Override
     public String readString(Path path) {
-        logs().appendUnimplementedWarning(FileSystemVoid.class);
+        warnUsage();
         return "";
     }
 
     @Override
     public boolean exists() {
-        logs().appendUnimplementedWarning(FileSystemVoid.class);
+        warnUsage();
         return false;
     }
 
     @Override
     public boolean isFile(Path path) {
-        logs().appendUnimplementedWarning(FileSystemVoid.class);
+        warnUsage();
         return false;
     }
 
     @Override
     public boolean isDirectory(Path path) {
-        logs().appendUnimplementedWarning(FileSystemVoid.class);
+        warnUsage();
         return false;
     }
 
     @Override
     public Stream<Path> walkRecursively() {
-        logs().appendUnimplementedWarning(FileSystemVoid.class);
+        warnUsage();
         return Stream.empty();
     }
 
     @Override
     public Stream<Path> walkRecursively(Path path) {
-        logs().appendUnimplementedWarning(FileSystemVoid.class);
+        warnUsage();
         return Stream.empty();
     }
 
     @Override
     public byte[] readFileAsBytes(Path path) {
-        logs().appendUnimplementedWarning(FileSystemVoid.class);
+        warnUsage();
         return emptyByteArray();
     }
 
     @Override
     public FileSystemView subFileSystemView(String path) {
-        logs().appendUnimplementedWarning(FileSystemVoid.class);
+        warnUsage();
         return this;
     }
 
     @Override
     public FileSystem createDirectoryPath(String path) {
-        logs().appendUnimplementedWarning(FileSystemVoid.class);
+        warnUsage();
         return this;
     }
 }
