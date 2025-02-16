@@ -32,8 +32,6 @@ import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.Xml.optionalDirectChildElementsByName;
-import static net.splitcells.dem.lang.tree.Den.subtree;
-import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
 import static net.splitcells.dem.resource.Paths.removeFileSuffix;
 import static net.splitcells.dem.utils.StreamUtils.emptyStream;
@@ -109,7 +107,7 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
             if (xmlPath.isPresent()) {
                 final var layoutConfig = layoutConfig(path)
                         .withLocalPathContext(projectsRenderer.config().layoutPerspective()
-                                .map(l -> subtree(l, pathFolder)));
+                                .map(l -> l.subtree(pathFolder)));
                 return renderFile(path, projectRenderer.projectFileSystem().readString(xmlPath.get())
                         , projectRenderer, projectsRenderer, layoutConfig);
             } else {
@@ -118,7 +116,7 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
                 if (projectRenderer.projectFileSystem().isFile(sumXmlFile)) {
                     final var layoutConfig = layoutConfig(path)
                             .withLocalPathContext(projectsRenderer.config().layoutPerspective()
-                                    .map(l -> subtree(l, pathFolder)));
+                                    .map(l -> l.subtree(pathFolder)));
                     return renderFile(path, "<start xmlns=\"http://splitcells.net/den.xsd\">"
                                     + projectRenderer.projectFileSystem().readString(sumXmlFile)
                                     + "</start>"
