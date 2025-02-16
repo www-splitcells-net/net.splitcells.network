@@ -955,6 +955,32 @@ public interface Tree extends TreeView {
         }
     }
 
+    /**
+     * @deprecated This method should be replaced by {@link #subtree(List)}.
+     * Currently, it cannot be replaced, because this method behaves differently and
+     * thereby causes problems in XmlProjectRendererExtension.
+     * @param tree
+     * @param path
+     * @return
+     */
+    @Deprecated
+    public static Tree subtree(Tree tree, List<String> path) {
+        if (path.isEmpty()) {
+            return tree;
+        }
+        final var next = path.remove(0);
+        final var fittingChild = tree.children().stream()
+                .filter(child -> child.nameIs(NameSpaces.VAL, NameSpaces.DEN))
+                .filter(child -> child.propertyInstances(NameSpaces.NAME, NameSpaces.DEN).stream()
+                        .anyMatch(property -> property.value().get().name().equals(next)))
+                .findFirst();
+        if (fittingChild.isEmpty()) {
+            throw ExecutionException.execException("Looking for `" + next + "` but only found `" + tree.children() + "`.");
+        }
+        return subtree(fittingChild.get()
+                , path);
+    }
+
     default Tree subtree(List<String> path) {
         if (path.isEmpty()) {
             return this;
