@@ -37,8 +37,8 @@ if hasPrefix 'repo=' "$bootstrapRepoProperty"; then
   	PATH=$bootstrapRepo/src/main/bash/command/managed/:$PATH
 	export PATH
 	echo "Installing shell project to '$($bootstrapRepo/src/main/bash/command/managed/command.managed.bin.sh)'."
-	find $($bootstrapRepo/src/main/bash/command/managed/command.managed.bin.sh) -maxdepth 1 -type f -delete
 	mkdir -p $($bootstrapRepo/src/main/bash/command/managed/command.managed.bin.sh)
+	find $($bootstrapRepo/src/main/bash/command/managed/command.managed.bin.sh) -maxdepth 1 -type f -delete
 	installer=$bootstrapRepo/src/main/python/command/managed/command.managed.install.py
 		chmod +x $installer
 		$installer $installer
