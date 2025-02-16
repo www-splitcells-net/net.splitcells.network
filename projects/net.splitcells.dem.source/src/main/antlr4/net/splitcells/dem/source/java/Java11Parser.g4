@@ -154,6 +154,7 @@ expression
     | Brace_round_open expression
     	Brace_round_closed expression_child?
     | String access?
+    | TextBlock access?
     | Char access?
     | expression Keyword_instanceof type_declaration name?
     | expression operator expression
@@ -295,6 +296,7 @@ reference
 	: expression
     | lambda
     | String
+    | TextBlock
     | String Operator_plus reference
     | reference Keysymbol_function_reference type_argument? name
     ;

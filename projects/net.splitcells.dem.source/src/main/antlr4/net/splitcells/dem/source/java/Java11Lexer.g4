@@ -150,6 +150,51 @@ lexer grammar Java11Lexer;
 	Line_comment: '//' .*? Line_ending;
 /* Generic Content */
 	Name: [a-zA-Z_][a-zA-Z0-9_]*;
+	TextBlock: '"""' TextBlock_character+ '"""';
+	fragment TextBlock_character
+		: [a-zA-Z0-9_-]
+		| '\\"'
+		| '\n'
+		| '\r'
+		| '\t'
+		| '\\n'
+		| '\\r'
+		| '\\t'
+		| '.'
+		| ' '
+		| '<'
+		| '>'
+		| '?'
+		| '='
+		| ':'
+		| '/'
+		| '\\\\'
+		| ','
+		| '['
+		| ']'
+		| '$'
+		| '*'
+		| '`'
+		| '\''
+		| '('
+		| ')'
+		| '^'
+		| ';'
+		| '+'
+		| '#'
+		| '!'
+		| '&'
+		| '~'
+		| '_'
+		| '-'
+		| '{'
+		| '}'
+		| '|'
+		| '™' /* TODO Maybe this should be done via dedicated static variables, that are code pointers? */
+		| '@'
+		| '%'
+		| '^'
+		;
 	String
 		:'"' String_character* '"';
 	Char: '\'' String_character '\'';
