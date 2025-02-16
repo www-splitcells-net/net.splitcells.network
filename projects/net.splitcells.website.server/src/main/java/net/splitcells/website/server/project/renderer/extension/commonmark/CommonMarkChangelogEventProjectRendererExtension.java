@@ -57,9 +57,8 @@ public class CommonMarkChangelogEventProjectRendererExtension implements Project
             final var pathContent = projectRenderer.projectFileSystem().readString(CHANGELOG);
             final var events = renderer.events(pathContent, projectRenderer, path, config);
             try {
-                return Optional.of(
-                        binaryMessage(renderEvents(events).getBytes(ContentType.UTF_8.codeName())
-                                , HTML_TEXT.codeName()));
+                return Optional.of(binaryMessage(renderEvents(events).getBytes(ContentType.UTF_8.codeName())
+                        , HTML_TEXT.codeName()));
             } catch (Exception e) {
                 throw execException(e);
             }
