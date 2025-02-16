@@ -5,5 +5,5 @@
 # The first and only argument is the remote SSH user, where the software is bootstrapped.
 # The Format ist `[user]@[address/network name]`.
 set -e
-ssh "$1" -t "$(cat bin/worker.bootstrap)"
+cat bin/worker.bootstrap | ssh "$1" "/usr/bin/sh"
 ssh "$1" -t 'cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap.container'
