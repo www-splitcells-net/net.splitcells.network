@@ -19,6 +19,8 @@
 # TODO Document supported repository file structure.
 # Installs user commands.
 
+set -e
+
 repoList=~/.config/net.splitcells.shell/command.repositories
 hasPrefix() { case $2 in "$1"*) true;; *) false;; esac; }
 bootstrapRepoProperty=$(head -n 1 $repoList)
