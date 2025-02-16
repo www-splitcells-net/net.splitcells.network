@@ -24,7 +24,8 @@ import static net.splitcells.dem.utils.BinaryUtils.emptyByteArray;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
- * Provides a placeholder file system.
+ * Provides a placeholder file system, that never creates errors and is always empty.
+ * If you need a temporary {@link FileSystem} with no content, use {@link FileSystemViaMemory} instead.
  */
 public class FileSystemVoid implements FileSystem {
     public static FileSystem fileSystemVoid() {
