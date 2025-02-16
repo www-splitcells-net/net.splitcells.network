@@ -3,7 +3,7 @@
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
 if [ -z "$NET_SPLITCELLS_SHELL_PATH" ]; then
-  echo "$(realpath $HOME/bin/net.splitcells.shell.commands.managed)"
+  echo "$HOME/bin/net.splitcells.shell.commands.managed" # Realpath is not used, because it does not work, when the path does not exist.
 else
   echo $NET_SPLITCELLS_SHELL_PATH
 fi
