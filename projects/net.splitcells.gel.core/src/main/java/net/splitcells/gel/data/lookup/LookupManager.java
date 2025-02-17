@@ -172,8 +172,9 @@ public class LookupManager<T> implements Lookup<T> {
     public void register_removal(T removal, int index) {
         ++lookupWriteCount;
         ++lastStrategyTime;
+        final var wasPersistedLookupActive = isPersistedLookupActive;
         updateStatistics(INVALID_INDEX, index);
-        if (isPersistedLookupActive) {
+        if (wasPersistedLookupActive) {
             persistedLookup.register_removal(removal, index);
         }
     }
