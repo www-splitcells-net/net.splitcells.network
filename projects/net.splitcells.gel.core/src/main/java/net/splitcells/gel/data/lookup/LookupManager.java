@@ -68,7 +68,7 @@ public class LookupManager<T> implements Lookup<T> {
         isPersistedLookupActive = true;
         lastStrategyTime = 0;
         view.unorderedLinesStream()
-                .filter(l -> l.index() != additionIndex)
+                .filter(l -> l.index() != additionIndex && l.index() != removalIndex)
                 .forEach(l -> persistedLookup.register_addition(l.value(attribute), l.index()));
     }
 
