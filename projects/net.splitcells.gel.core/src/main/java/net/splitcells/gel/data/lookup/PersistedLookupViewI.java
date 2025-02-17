@@ -196,13 +196,7 @@ public class PersistedLookupViewI implements PersistedLookupView {
         return content.stream().map(viewView::rawLine).filter(e -> e != null);
     }
 
-    /**
-     * The indexes needs to be preserved and therefore the null value gaps needs to be added as well.
-     *
-     * @return
-     */
-    @Override
-    public ListView<Line> rawLinesView() {
+    private void checkConsistency() {
         if (ENFORCING_UNIT_CONSISTENCY) {
             range(0, viewView.rawLinesView().size()).forEach(i -> {
                 if (content.contains(i)) {
@@ -212,6 +206,16 @@ public class PersistedLookupViewI implements PersistedLookupView {
                 }
             });
         }
+    }
+
+    /**
+     * The indexes needs to be preserved and therefore the null value gaps needs to be added as well.
+     *
+     * @return
+     */
+    @Override
+    public ListView<Line> rawLinesView() {
+        checkConsistency();
         if (useExperimentalRawLineCache) {
             return listView(rawLinesCache);
         }
@@ -248,6 +252,7 @@ public class PersistedLookupViewI implements PersistedLookupView {
     @Override
     public void register(Line line) {
         if (ENFORCING_UNIT_CONSISTENCY) {
+            checkConsistency();
             content.requireAbsenceOf(line.index());
         }
         if (TRACING) {
@@ -297,6 +302,7 @@ public class PersistedLookupViewI implements PersistedLookupView {
                     , this, DEBUG);
         }
         if (ENFORCING_UNIT_CONSISTENCY) {
+            checkConsistency();
             content.requirePresenceOf(line.index());
         }
         lookupColumns.forEach(column -> column.registerBeforeRemoval(line));
