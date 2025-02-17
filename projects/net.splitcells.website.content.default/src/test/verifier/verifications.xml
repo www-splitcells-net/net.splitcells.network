@@ -1,0 +1,7 @@
+<verifications>
+    <files>
+        <file>
+            <location>src/main/resources/html/net/splitcells/website/js/jquery.js</location>
+        </file>
+    </files>
+</verifications>
