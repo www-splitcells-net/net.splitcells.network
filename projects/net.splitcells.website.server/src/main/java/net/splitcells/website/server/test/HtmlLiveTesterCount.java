@@ -22,8 +22,14 @@ import net.splitcells.dem.environment.resource.HostHardware;
  * States, how many tests are run in simultaneously.
  */
 public class HtmlLiveTesterCount implements Option<Integer> {
+    /**
+     * This value is set to {@link HostHardware#cpuCoreCount()}, in order to have a full CPU utilization by default.
+     * Thereby, it is tested, that the program still works under kind of full load.
+     *
+     * @return
+     */
     @Override
     public Integer defaultValue() {
-        return HostHardware.cpuCoreCount() / 2;
+        return HostHardware.cpuCoreCount();
     }
 }
