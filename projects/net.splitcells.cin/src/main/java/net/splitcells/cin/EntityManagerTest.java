@@ -98,6 +98,7 @@ public class EntityManagerTest {
     public void testCommitAdherenceByDefaultOptimization() {
         final var playerAttribute = 1;
         final var entityManager = entityManager();
+        entityManager.entities().init();
         entityManager.entities().assign(entityManager.entities().demands().addTranslated(0, 0)
                 , entityManager.entities().supplies().addTranslated(playerAttribute, 1, RESULT_VALUE, NO_SOURCE));
         entityManager.withInitedPlayerState();

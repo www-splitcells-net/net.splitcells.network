@@ -27,6 +27,7 @@ import net.splitcells.gel.solution.optimization.OnlineOptimization;
 import java.util.stream.Stream;
 
 import static java.util.stream.IntStream.range;
+import static net.splitcells.cin.raters.CommitmentAdherence.commitmentAdherence;
 import static net.splitcells.cin.raters.ExistenceCost.existenceCost;
 import static net.splitcells.cin.raters.TimeSteps.overlappingTimeSteps;
 import static net.splitcells.cin.raters.ValueUpdate.valueUpdate;
@@ -119,6 +120,7 @@ public class EntityManager {
                 .withConstraint(query -> {
                     final var playerTimeSteps = query.forAll(PLAYER).forAll(overlappingTimeSteps(TIME));
                     playerTimeSteps.then(valueUpdate(PLAYER_ENERGY));
+                    query.then(commitmentAdherence(TIME));
                     return query;
                 })
                 .toProblem()
