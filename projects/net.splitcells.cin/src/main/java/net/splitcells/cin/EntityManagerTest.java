@@ -108,6 +108,7 @@ public class EntityManagerTest {
                 , entityManager.entities().supplies().addTranslated(playerAttribute, 1, RESULT_VALUE, NO_SOURCE));
         // TODO Thest whether the default optimization changes the result value of the time 1.
         entityManager.withOptimized();
+        entityManager.entities().init();
         entityManager.withInitedPlayerState();
         // TODO Thest whether the default optimization changes the result value of the time 1.
     }
