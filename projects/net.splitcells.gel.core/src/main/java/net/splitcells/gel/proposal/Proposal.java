@@ -42,6 +42,11 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
  * subsets of the {@link #subject()}'s {@link Assignments#demands()} and {@link Assignments#supplies()}.</p>
  * <p>TODO Create a {@link Table} like the {@link #proposedAssignments()},
  * where {@link Attribute} of {@link #subject()} are replaced with kind of matcher functions.</p>
+ * <p>TODO IDEA Create a {@link Proposal} tree, that matches the {@link Constraint} tree.
+ * In this case the {@link Proposal} needs a column in order to store propagation info.
+ * From this tree a SAT problem can be defined and solved by a SAT solver,
+ * in order to resolve conflicting {@link Proposal}.
+ * See "Lazy Clause Generation Reengineered" - Feydy, T., Stuckey, P.J. (2009).</p>
  */
 public interface Proposal {
 
