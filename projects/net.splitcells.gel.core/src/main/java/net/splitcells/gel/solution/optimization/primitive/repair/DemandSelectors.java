@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.solution.optimization.primitive.repair;
 
+import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
@@ -50,7 +51,8 @@ public class DemandSelectors {
                 group.forEach(g -> {
                     if (commitment.proposedAssignments().unorderedLinesStream2()
                             .anyMatch(c -> c.value(ASSIGNMENT_PROPOSAL_TYPE).equals(PROPOSE_UNCHANGED)
-                                    && c.value(EXISTING_ASSIGNMENT).equalsTo(g.value(LINE)))) {
+                                    && Thing.equals(c.value(EXISTING_ASSIGNMENT), g)
+                            )) {
                         toRemove.add(g);
                     }
                 });
