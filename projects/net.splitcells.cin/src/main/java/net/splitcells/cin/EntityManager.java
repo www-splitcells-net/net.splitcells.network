@@ -28,7 +28,6 @@ import java.util.stream.Stream;
 
 import static java.util.stream.IntStream.range;
 import static net.splitcells.cin.raters.CommitmentAdherence.commitmentAdherence;
-import static net.splitcells.cin.raters.ExistenceCost.existenceCost;
 import static net.splitcells.cin.raters.TimeSteps.overlappingTimeSteps;
 import static net.splitcells.cin.raters.ValueUpdate.valueUpdate;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -146,6 +145,7 @@ public class EntityManager {
         withDemandedNextTime();
         withDeletedOldTime();
         withOptimized();
+        entities().init();
         currentTime = nextTime;
         nextTime = currentTime + 1;
         return this;
@@ -157,16 +157,16 @@ public class EntityManager {
 
     public EntityManager withInitedPlayers(Stream<ListView<? extends Object>> initialValues) {
         initialValues.forEach(entityDemands::addTranslated);
-        withInitedPlayerState();
+        withUpdateTimeTrackers();
         return this;
     }
 
     /**
-     * This method assumes, that beforehand new player values were added {@link #entities}.
+     * This updates all variables, that are tracking the currently relevant times.
      *
      * @return
      */
-    public EntityManager withInitedPlayerState() {
+    private EntityManager withUpdateTimeTrackers() {
         currentTime = entityDemands.columnView(TIME).stream().max(Integer::compareTo).orElse(0);
         nextTime = currentTime + 1;
         return this;
