@@ -49,6 +49,8 @@ public interface Discoverable {
      *
      * @return Returns true, if there is no path, which means,
      * that there is semantically no parent or owning element for this {@link Discoverable}.
+     * Such objects can be considered to be temporary objects,
+     * that most of the time are not integrated in persistent data structures.
      */
     default boolean isNoContext() {
         return path().isEmpty();
