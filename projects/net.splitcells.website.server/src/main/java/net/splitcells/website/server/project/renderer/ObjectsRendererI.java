@@ -89,29 +89,29 @@ public class ObjectsRendererI implements ProjectRenderer {
         return this;
     }
 
-    public synchronized ObjectsRendererI withObject(CsvRenderer renderer) {
-        if (renderer.isNoContext()) {
+    public synchronized ObjectsRendererI withObject(CsvRenderer object) {
+        if (object.isNoContext()) {
             return this;
         }
-        final var path = Path.of(pathPrefix + "/" + renderer.path().stream().reduce((a, b) -> a + "/" + b).orElseThrow());
+        final var path = Path.of(pathPrefix + "/" + object.path().stream().reduce((a, b) -> a + "/" + b).orElseThrow());
         Optional<Path> alternativePath = Optional.empty();
         if (csvRenderers.containsKey(path)) {
             // This makes it easier to analyse problems, when the same path is present multiple times.
             int i = 0;
             do {
-                alternativePath = Optional.of(Path.of(pathPrefix + "/" + renderer.path().stream().reduce((a, b) -> a + "/" + b)
+                alternativePath = Optional.of(Path.of(pathPrefix + "/" + object.path().stream().reduce((a, b) -> a + "/" + b)
                         .orElseThrow()
                         + "."
                         + ++i));
             } while (csvRenderers.containsKey(alternativePath.orElseThrow()));
             logs().appendWarning(tree("Discoverable path is already registered. Using alternative path for rendering instead.")
-                            .withProperty("object", renderer.toString())
+                            .withProperty("object", object.toString())
                             .withProperty("path", path.toString())
                             .withProperty("alternative path", alternativePath.orElseThrow().toString())
                     , ExecutionException.execException("Discoverable path is already registered."));
-            csvRenderers.put(alternativePath.orElseThrow(), renderer);
+            csvRenderers.put(alternativePath.orElseThrow(), object);
         } else {
-            csvRenderers.put(path, renderer);
+            csvRenderers.put(path, object);
         }
         return this;
     }
