@@ -388,7 +388,7 @@ a {
 .net-splitcells-meta-column-left-border,
 .net-splitcells-right-decoration-left-border {
     z-index: 5;
-    width:.25em;
+    width: .125em;
     background-color: var(--background-color-structural-guide);
     }
 .net-splitcells-content-column a, .rightDecoration a, .splitcells-net-title-logo a {

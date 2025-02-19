@@ -257,8 +257,8 @@ ul {
 .net-splitcells-structural-guide {
 	/* For overlays use 2000000000 <= index < 2147483647. */
 	z-index: 6;
-	min-height: .25em;
-	min-width: .25em;
+	min-height: .125em;
+	min-width: .125em;
 	}
 .Button {
 	display: inline-block;
