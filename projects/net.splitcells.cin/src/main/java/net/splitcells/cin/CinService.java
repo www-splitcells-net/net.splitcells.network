@@ -46,9 +46,6 @@ public class CinService implements ResourceOption<Service> {
             @Override
             public synchronized void start() {
                 final var entityManager = entityManager();
-                registerObject(entityManager.entities().discoverableRenderer());
-                registerObject(entityManager.entities().demands().discoverableRenderer());
-                registerObject(entityManager.entities().supplies().discoverableRenderer());
                 entityManager.withInitedPlayers();
                 if (configValue(CinServiceInitTest.class)) {
                     executeThread(CinService.class, () ->
