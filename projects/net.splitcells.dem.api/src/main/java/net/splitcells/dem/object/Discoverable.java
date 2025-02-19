@@ -43,17 +43,26 @@ public interface Discoverable {
      * This is basically the null value of {@link Discoverable} and states,
      * that the respective object is not part of a {@link Discoverable} tree.
      */
+    @Deprecated
     Discoverable NO_CONTEXT = () -> list();
 
+    String EXPLICIT_NO_CONTEXT_ROOT = "no-context";
+
     /**
-     *
+     * This is just like {@link #NO_CONTEXT}, but with the difference,
+     * that other {@link Discoverable} can use this as a parent,
+     * without becoming a {@link Discoverable} with a context.
+     */
+    Discoverable EXPLICIT_NO_CONTEXT = () -> list(EXPLICIT_NO_CONTEXT_ROOT);
+
+    /**
      * @return Returns true, if there is no path, which means,
      * that there is semantically no parent or owning element for this {@link Discoverable}.
      * Such objects can be considered to be temporary objects,
      * that most of the time are not integrated in persistent data structures.
      */
     default boolean isNoContext() {
-        return path().isEmpty();
+        return path().isEmpty() || EXPLICIT_NO_CONTEXT_ROOT.equals(path().get(0));
     }
 
     static Discoverable discoverable(List<String> path) {
