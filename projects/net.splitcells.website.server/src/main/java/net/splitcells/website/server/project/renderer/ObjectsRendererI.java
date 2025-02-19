@@ -90,6 +90,9 @@ public class ObjectsRendererI implements ProjectRenderer {
     }
 
     public synchronized ObjectsRendererI withObject(CsvRenderer renderer) {
+        if (renderer.isNoContext()) {
+            return this;
+        }
         final var path = Path.of(pathPrefix + "/" + renderer.path().stream().reduce((a, b) -> a + "/" + b).orElseThrow());
         Optional<Path> alternativePath = Optional.empty();
         if (csvRenderers.containsKey(path)) {
