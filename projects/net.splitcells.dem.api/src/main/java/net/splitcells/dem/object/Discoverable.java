@@ -45,8 +45,8 @@ public interface Discoverable {
      */
     Discoverable NO_CONTEXT = () -> list();
 
-    static boolean isNoContext(Discoverable arg) {
-        return arg.path().isEmpty();
+    default boolean isNoContext() {
+        return path().isEmpty();
     }
 
     static Discoverable discoverable(List<String> path) {
