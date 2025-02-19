@@ -22,6 +22,7 @@ import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.assignment.Assignments;
@@ -35,6 +36,7 @@ import java.util.stream.Stream;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.gel.constraint.Constraint.*;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
 import static net.splitcells.gel.data.table.Tables.table;
@@ -173,19 +175,19 @@ public class Proposals implements Proposal {
     private Proposals(Solution subject) {
         this.subject = subject;
         this.proposedAllocations = assignments("proposed-allocations-old"
-                , table("proposed-demands", subject.demands(), subject.demands().headerView2())
-                , table("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
+                , table("proposed-demands", EXPLICIT_NO_CONTEXT, subject.demands().headerView2())
+                , table("proposed-supplies", EXPLICIT_NO_CONTEXT, subject.supplies().headerView2()));
         this.contextAllocations = assignments("old-context-allocations"
-                , table("proposed-demands", subject.demands(), subject.demands().headerView2())
-                , table("proposed-supplies", subject.supplies(), subject.supplies().headerView2()));
-        contextAssignments = table("context-assignments", subject.demands(), list(CONTEXT_ASSIGNMENT));
-        proposedDisallocations = table("proposed-disallocations", subject.demands(), list(EXISTING_ASSIGNMENT));
+                , table("proposed-demands", EXPLICIT_NO_CONTEXT, subject.demands().headerView2())
+                , table("proposed-supplies", EXPLICIT_NO_CONTEXT, subject.supplies().headerView2()));
+        contextAssignments = table("context-assignments", EXPLICIT_NO_CONTEXT, list(CONTEXT_ASSIGNMENT));
+        proposedDisallocations = table("proposed-disallocations", EXPLICIT_NO_CONTEXT, list(EXISTING_ASSIGNMENT));
         proposedAllocationsWithNewSupplies = table("proposed-allocations-with-new-supplies"
-                , subject.demands()
+                , EXPLICIT_NO_CONTEXT
                 , Lists.<Attribute<? extends Object>>list().withAppended(EXISTING_DEMAND, NEW_SUPPLY_BASE)
                         .withAppended(subject.supplies().headerView2()));
         proposedAssignments = table("proposed-assignments"
-                , subject.demands()
+                , EXPLICIT_NO_CONTEXT
                 , Lists.<Attribute<? extends Object>>list()
                         .withAppended(ASSIGNMENT_PROPOSAL_TYPE, PROPOSAL_PRIORITY, EXISTING_ASSIGNMENT, EXISTING_DEMAND, EXISTING_SUPPLY)
                         .withAppended(subject.demands().headerView2())
