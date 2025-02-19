@@ -45,6 +45,11 @@ public interface Discoverable {
      */
     Discoverable NO_CONTEXT = () -> list();
 
+    /**
+     *
+     * @return Returns true, if there is no path, which means,
+     * that there is semantically no parent or owning element for this {@link Discoverable}.
+     */
     default boolean isNoContext() {
         return path().isEmpty();
     }
