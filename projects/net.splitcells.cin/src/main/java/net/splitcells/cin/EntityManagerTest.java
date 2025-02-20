@@ -40,6 +40,7 @@ import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.StreamUtils.streamOf;
 import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
+import static net.splitcells.gel.rating.type.Cost.noCost;
 
 public class EntityManagerTest {
     @BenchmarkTest
@@ -102,6 +103,8 @@ public class EntityManagerTest {
             entityManager.entities().init();
             entityManager.entities().assign(entityManager.entities().demands().addTranslated(0, 0)
                     , entityManager.entities().supplies().addTranslated(playerAttribute, 1, RESULT_VALUE, NO_SOURCE));
+            entityManager.entities().init();
+            noCost().requireEqualsTo(entityManager.entities().constraint().rating());
         }
         {
             entityManager.entities().assign(entityManager.entities().demands().addTranslated(1, 0)
