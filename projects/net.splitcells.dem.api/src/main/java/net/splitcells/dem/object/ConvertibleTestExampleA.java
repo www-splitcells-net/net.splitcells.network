@@ -31,6 +31,8 @@ public class ConvertibleTestExampleA implements Convertible {
     @Override
     public Merger merge(Merger merger) {
         name = merger.merge("name", name);
+        a = merger.merge("a", a);
+        b = merger.merge("b", b);
         return merger;
     }
 

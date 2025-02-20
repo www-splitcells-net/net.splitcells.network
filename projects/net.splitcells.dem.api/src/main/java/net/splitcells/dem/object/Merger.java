@@ -54,7 +54,10 @@ public class Merger {
             intAttributes.put(attribute, value);
             return value;
         }
-        return intAttributes.get(attribute);
+        if (intAttributes.containsKey(attribute)) {
+            return intAttributes.get(attribute);
+        }
+        return value;
     }
 
     public String merge(String attribute, String value) {
@@ -62,6 +65,9 @@ public class Merger {
             stringAttributes.put(attribute, value);
             return value;
         }
-        return stringAttributes.get(attribute);
+        if (stringAttributes.containsKey(attribute)) {
+            return stringAttributes.get(attribute);
+        }
+        return value;
     }
 }

@@ -32,4 +32,17 @@ public class ConvertibleTest {
         converter().convert(input, output);
         requireEquals(output.name(), testData);
     }
+
+    @UnitTest
+    public void testConvert() {
+        final var testName = "test-name";
+        final var testA = 3;
+        final var testB = 4;
+        final var input = convertibleTestExampleA().withA(testA).withB(testB).withName(testName);
+        final var output = convertibleTestExampleA().withA(5).withB(6).withName("another-name");
+        converter().convert(input, output);
+        requireEquals(output.name(), testName);
+        requireEquals(output.a(), testA);
+        requireEquals(output.b(), testB);
+    }
 }
