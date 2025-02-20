@@ -16,6 +16,7 @@
 package net.splitcells.gel.rating.type;
 
 import static net.splitcells.dem.data.atom.Bools.bool;
+import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.order.Ordering.*;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
@@ -24,6 +25,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import java.util.Optional;
 
 import net.splitcells.dem.data.atom.Thing;
+import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.gel.rating.framework.MetaRating;
@@ -147,6 +149,12 @@ public class Cost implements Rating {
     @Override
     public boolean betterThan(Rating rating) {
         return smallerThan(rating);
+    }
+
+    @ReturnsThis
+    public Cost requireBetterThan(Rating rating) {
+        require(smallerThan(rating));
+        return this;
     }
 
     @Override
