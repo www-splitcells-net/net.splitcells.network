@@ -46,12 +46,14 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
  */
 public class CommitmentAdherence implements Rater {
 
+    private static final int NO_COMMITMENT = Integer.MIN_VALUE;
+
     public static Rater commitmentAdherence(Attribute<Integer> time) {
         return new CommitmentAdherence(time);
     }
 
     private final Attribute<Integer> time;
-    private int committedTime = -1;
+    private int committedTime = NO_COMMITMENT;
 
 
     private CommitmentAdherence(Attribute<Integer> time) {
@@ -63,7 +65,7 @@ public class CommitmentAdherence implements Rater {
         committedTime = solution.allocations().unorderedLinesStream2()
                 .map(a -> a.value(time))
                 .max(Comparators.ASCENDING_INTEGERS)
-                .orElse(0);
+                .orElse(-1);
     }
 
     @Override
@@ -78,7 +80,7 @@ public class CommitmentAdherence implements Rater {
      */
     @Override
     public RatingEvent ratingAfterAddition(View lines, Line addition, List<Constraint> children, View lineProcessing) {
-        if (ENFORCING_UNIT_CONSISTENCY && committedTime == -1) {
+        if (ENFORCING_UNIT_CONSISTENCY && committedTime == NO_COMMITMENT) {
             throw ExecutionException.execException();
         }
         final Rating rating;
