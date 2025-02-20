@@ -111,6 +111,7 @@ public class EntityManagerTest {
                     , entityManager.entities().supplies().addTranslated(playerAttribute, 1, ADD_VALUE, NO_SOURCE));
             entityManager.entities().assign(entityManager.entities().demands().addTranslated(1, 0)
                     , entityManager.entities().supplies().addTranslated(playerAttribute, 1, RESULT_VALUE, NO_SOURCE));
+            noCost().requireBetterThan(entityManager.entities().constraint().rating());
             // TODO Thest whether the default optimization changes the result value of the time 1.
             entityManager.withOptimized();
         }
