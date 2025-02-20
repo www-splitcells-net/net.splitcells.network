@@ -21,6 +21,8 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.namespace.NameSpace;
 import net.splitcells.dem.lang.namespace.NameSpaces;
+import net.splitcells.dem.object.Convertible;
+import net.splitcells.dem.object.Merger;
 import net.splitcells.dem.resource.communication.Sender;
 import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.dem.utils.StringUtils;
@@ -66,7 +68,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * A perspective has children, if it contains multiple values.</p>
  */
 @SuppressWarnings("ALL")
-public interface Tree extends TreeView {
+public interface Tree extends TreeView, Convertible {
 
     Pattern _VALID_XML_NAME = Pattern.compile("[a-zA-Z][a-zA-Z0-9-_\\.]*");
     String JSON_ARRAY = "array";
@@ -1095,5 +1097,11 @@ public interface Tree extends TreeView {
             path.withAppended(currentNode);
         }
         return Optional.of(path);
+    }
+
+    default Merger merge(Merger merger) {
+        merger.requireIsRecording();
+        merger.merge("name", name());
+        return merger;
     }
 }

@@ -15,9 +15,12 @@
  */
 package net.splitcells.dem.utils;
 
+import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.testing.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static net.splitcells.dem.data.atom.Bools.require;
+import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.atom.Integers.requireEqualInts;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.StringUtils.countChar;
@@ -35,5 +38,16 @@ public class StringUtilsTest {
     @Test
     public void testMultiple() {
         requireEquals(multiple("23", 3), "232323");
+    }
+
+    @Test
+    public void testParseInt() {
+        Assertions.requireEquals(StringUtils.parseInt("123"), 123);
+    }
+
+    @Test
+    public void testIsInt() {
+        require(StringUtils.isInt("123"));
+        requireNot(StringUtils.isInt("++123"));
     }
 }

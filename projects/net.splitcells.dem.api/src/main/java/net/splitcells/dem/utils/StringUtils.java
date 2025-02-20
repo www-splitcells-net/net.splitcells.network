@@ -64,6 +64,14 @@ public class StringUtils {
         return new String(arg, StandardCharsets.UTF_8);
     }
 
+    public static boolean isInt(String arg) {
+        return arg.matches("-?\\d+");
+    }
+
+    public static int parseInt(String arg) {
+        return Integer.parseInt(arg);
+    }
+
     public static int countChar(String string, char character) {
         var count = 0;
         for (int i = 0; i < string.length(); i++) {
