@@ -26,11 +26,18 @@ import static net.splitcells.dem.testing.Assertions.requireEquals;
 public class ConvertibleTest {
     @UnitTest
     public void testConvertFromTree() {
-        final var testData = "test-name";
-        final var input = tree(testData);
-        final var output = convertibleTestExampleA().withA(1).withB(2).withName("another-name");
+        final var testName = "test-name";
+        final var testA = 3;
+        final var testB = 4;
+        final var input = tree("")
+                .withProperty("name", testName)
+                .withProperty("a", "1")
+                .withProperty("b", "2");
+        final var output = convertibleTestExampleA().withA(testA).withB(testB).withName("another-name");
         converter().convert(input, output);
-        requireEquals(output.name(), testData);
+        requireEquals(output.name(), testName);
+        requireEquals(output.a(), testA);
+        requireEquals(output.b(), testB);
     }
 
     @UnitTest

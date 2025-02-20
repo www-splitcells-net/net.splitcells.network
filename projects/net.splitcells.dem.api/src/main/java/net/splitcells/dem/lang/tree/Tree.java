@@ -1101,7 +1101,11 @@ public interface Tree extends TreeView, Convertible {
 
     default Merger merge(Merger merger) {
         merger.requireIsRecording();
-        merger.merge("name", name());
+        children().forEach(c -> {
+            c.children().requireSizeOf(1);
+            c.child(0).children().requireEmpty();
+            merger.merge(c.name(), c.child(0).name());
+        });
         return merger;
     }
 }
