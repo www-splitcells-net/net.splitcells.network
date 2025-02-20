@@ -63,7 +63,7 @@ public interface Solution extends Problem, SolutionView {
      * @return Returns this with the default optimization being applied to it.
      */
     default Solution optimize() {
-        defaultOptimization2().optimize(this);
+        defaultOptimization().optimize(this);
         return this;
     }
 
