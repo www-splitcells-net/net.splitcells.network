@@ -116,6 +116,8 @@ public class EntityManagerTest {
             entityManager.withOptimized();
         }
         // TODO Thest whether the default optimization changes the result value of the time 1.
+        entityManager.withDemandedNextTime();
+        // TODO Test with correct first assignment.
     }
 
     @UnitTest
