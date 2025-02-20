@@ -113,4 +113,9 @@ public class EntityManagerTest {
         }
         // TODO Thest whether the default optimization changes the result value of the time 1.
     }
+
+    @UnitTest
+    public void testInitialization() {
+        // TODO
+    }
 }
