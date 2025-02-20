@@ -114,8 +114,8 @@ public class EntityManagerTest {
             noCost().requireBetterThan(entityManager.entities().constraint().rating());
             // TODO Thest whether the default optimization changes the result value of the time 1.
             entityManager.withOptimized();
+            // TODO noCost().requireEqualsTo(entityManager.entities().constraint().rating());
         }
-        // TODO Thest whether the default optimization changes the result value of the time 1.
         entityManager.withDemandedNextTime();
         // TODO Test with correct first assignment.
     }
