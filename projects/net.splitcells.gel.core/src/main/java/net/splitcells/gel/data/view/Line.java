@@ -31,6 +31,8 @@ import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.TreeI;
+import net.splitcells.dem.object.Convertible;
+import net.splitcells.dem.object.Merger;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.attribute.IndexedAttribute;
 
@@ -38,7 +40,7 @@ import net.splitcells.gel.data.view.attribute.IndexedAttribute;
  * TODO {@link Line}s and {@link View}s should be typed. Use a meta {@link Attribute}, which
  * supports multiple types and just use one attribute type per data base.
  */
-public interface Line extends Domable {
+public interface Line extends Domable, Convertible {
 
     static List<?> concat(Line... lines) {
         final List<Object> concatenation = list();
@@ -161,5 +163,13 @@ public interface Line extends Domable {
             root.withProperty(VALUE.value(), attributeRender);
         });
         return root;
+    }
+
+    default Merger merge(Merger merger) {
+        merger.requireIsRecording();
+        context().headerView().forEach(h -> {
+            merger.merge(h.name(), "" + value(h));
+        });
+        return merger;
     }
 }
