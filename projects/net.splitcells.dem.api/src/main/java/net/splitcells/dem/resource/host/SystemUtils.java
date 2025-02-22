@@ -31,7 +31,7 @@ import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 @JavaLegacyArtifact
 public final class SystemUtils {
-    public SystemUtils() {
+    private SystemUtils() {
         throw constructorIllegal();
     }
 
