@@ -37,7 +37,7 @@ public final class SystemUtils {
 
     @JavaLegacyBody
     public static ShellResult runShellScript(String command, Path workingDirectory) {
-        final var rVal = new StringBuffer();
+        final var rVal = new StringBuilder();
         final Process process;
         try {
             process = Runtime.getRuntime().exec
