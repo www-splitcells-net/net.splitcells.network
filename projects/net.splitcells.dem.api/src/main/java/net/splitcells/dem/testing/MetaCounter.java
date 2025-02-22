@@ -52,12 +52,12 @@ public class MetaCounter implements Discoverable, ImplicitEffect {
 
     public synchronized void count(Discoverable subject, long times) {
         final Counter counter;
-        final var path = subject.path();
-        if (counters.containsKey(path)) {
-            counter = counters.get(path);
+        final var subjectPath = subject.path();
+        if (counters.containsKey(subjectPath)) {
+            counter = counters.get(subjectPath);
         } else {
             counter = counter();
-            counters.put(path, counter);
+            counters.put(subjectPath, counter);
         }
         counter.count(times);
         sumCounter.count(times);
