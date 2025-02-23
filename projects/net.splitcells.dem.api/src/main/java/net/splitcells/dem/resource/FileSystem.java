@@ -15,6 +15,8 @@
  */
 package net.splitcells.dem.resource;
 
+import net.splitcells.dem.Dem;
+import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 
@@ -50,6 +52,8 @@ import static net.splitcells.dem.utils.StringUtils.toBytes;
  * Especially, don't allow pointing outside the file system via `../` and
  * discourage any usage of `..` and absolute paths.
  * </p>
+ * <p>TODO Check on start of {@link Dem#process(Runnable)},
+ * if every or none {@link FileSystem} {@link Option} is set and warn accordingly.</p>
  */
 public interface FileSystem extends FileSystemView {
 
