@@ -20,6 +20,11 @@
             <version>${revision}</version>
         </dependency>
         <dependency>
+            <groupId>net.splitcells</groupId>
+            <artifactId>network.log</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
             <groupId>org.eclipse.jgit</groupId>
             <artifactId>org.eclipse.jgit</artifactId>
         </dependency>

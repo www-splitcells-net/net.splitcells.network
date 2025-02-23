@@ -19,6 +19,7 @@ import net.splitcells.dem.Dem;
 import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.resource.FileSystems;
 import net.splitcells.dem.resource.host.SystemUtils;
+import net.splitcells.network.log.NetworkLogFileSystem;
 
 import static net.splitcells.dem.Dem.config;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -38,7 +39,7 @@ public class Builder {
         }
         Dem.process(() -> testUnits(list(logger()))
                 , env -> env.config().withConfigValue(ProgramName.class, args[0])
-                        .withConfigValue(NetworkLog.class
+                        .withConfigValue(NetworkLogFileSystem.class
                                 , fileSystemOnLocalHost(config()
                                         .configValue(ProjectsFolder.class)
                                         .resolve("net.splitcells.network.log"))));
