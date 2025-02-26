@@ -42,6 +42,13 @@ import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
  * <p>IDEA Get values out of properties file.</p>
  */
 public final class StaticFlags {
+    /**
+     * This flag is used, in order to disable if blocks in a way,
+     * that is not triggering static code analyzers noticing unreachable blocks of code.
+     * This is done, by providing a static final variable with a descriptive name,
+     * instead of using the constant {@code false}.
+     */
+    public static final boolean DISABLED_FUNCTIONALITY = false;
     public static final String ENFORCING_UNIT_CONSISTENCY_KEY = "net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY";
     /**
      *
