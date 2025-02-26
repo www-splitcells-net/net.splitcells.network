@@ -22,6 +22,7 @@ import net.splitcells.dem.environment.resource.Service;
 import static net.splitcells.dem.Dem.config;
 import static net.splitcells.dem.data.atom.Thing.instance;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.environment.config.StaticFlags.DISABLED_FUNCTIONALITY;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
@@ -38,7 +39,7 @@ public class FileSystemRegistry<Key> implements Service {
     }
 
     public FileSystemRegistry<Key> withFileSystemView(Key key, FileSystemView fileSystemView) {
-        if (false && content.containsKey(key)) {
+        if (DISABLED_FUNCTIONALITY && content.containsKey(key)) {
             // TODO Remove this code, when it is clear, that it is really not needed.
             logs().appendWarning(tree("Ignoring file system registration, as it is already present.")
                     .withProperty("key", key.toString())
