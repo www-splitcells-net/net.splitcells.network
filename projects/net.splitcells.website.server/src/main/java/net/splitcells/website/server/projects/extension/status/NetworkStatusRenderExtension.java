@@ -171,7 +171,7 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                 .map(l -> l.split(",")[1])
                 .map(Double::parseDouble)
                 .orElse(0d);
-        if (currentInvalidLinkCount.equals(historyMinimum)) {
+        if (currentInvalidLinkCount <= historyMinimum) {
             return statusReport(INFO
                     , "<li><a href=\""
                             + "/net/splitcells/website/server/project/validator/RenderingValidatorForHtmlLinks/build/"

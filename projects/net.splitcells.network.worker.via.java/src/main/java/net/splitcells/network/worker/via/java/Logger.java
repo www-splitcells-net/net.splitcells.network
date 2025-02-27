@@ -20,10 +20,10 @@ import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.dem.resource.FileSystemVoid;
+import net.splitcells.dem.resource.FileSystemWriteWrapper;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.Logs;
-import net.splitcells.network.log.NetworkLogFileSystem;
 import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestIdentifier;
@@ -61,7 +61,7 @@ import static net.splitcells.network.worker.via.java.Repositories.repository;
 public class Logger implements TestExecutionListener {
 
     public static Logger logger() {
-        return logger(config().configValue(NetworkLogFileSystem.class));
+        return logger(config().configValue(NetworkWorkerLogFileSystem.class));
     }
 
     private static Logger logger(FileSystem networkProject) {
