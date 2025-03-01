@@ -57,21 +57,25 @@ public class CommonFunctions {
     public static void makeSystemOutputTracing() {
         final PrintStream outF = new PrintStream(System.out);
         System.setOut(new PrintStream(System.out) {
+            @Override
             public void println(String x) {
                 outF.println(x);
                 new Throwable().printStackTrace(outF);
             }
 
+            @Override
             public void println(long x) {
                 outF.println(x);
                 new Throwable().printStackTrace(outF);
             }
 
+            @Override
             public void println(Object x) {
                 outF.println(x);
                 new Throwable().printStackTrace(outF);
             }
 
+            @Override
             public void println(int x) {
                 outF.println(x);
                 new Throwable().printStackTrace(outF);
