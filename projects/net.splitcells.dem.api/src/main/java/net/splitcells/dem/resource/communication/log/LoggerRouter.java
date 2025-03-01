@@ -66,7 +66,7 @@ public class LoggerRouter implements Logger {
         if (messageFilter.test(arg)) {
             if (!routing.containsKey(arg.path())) {
                 Path consolePath;
-                if (arg.path().size() == 0) {
+                if (arg.path().isEmpty()) {
                     consolePath = environment().config().configValue(ProcessPath.class)
                             .resolve("src")
                             .resolve("main")
