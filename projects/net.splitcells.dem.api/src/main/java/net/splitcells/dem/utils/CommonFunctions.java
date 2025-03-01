@@ -113,10 +113,8 @@ public class CommonFunctions {
     public static void appendToFile(Path filePath, String content) {
         try {
             File file = filePath.toFile();
-            if (!file.exists()) {
-                if (!file.createNewFile()) {
-                    throw ExecutionException.execException("Could not create file: " + filePath);
-                }
+            if (!file.exists() && !file.createNewFile()) {
+                throw ExecutionException.execException("Could not create file: " + filePath);
             }
             try (FileOutputStream basicOutput = new FileOutputStream(file);
                  OutputStreamWriter managedOutput = new OutputStreamWriter(basicOutput, "UTF8");
