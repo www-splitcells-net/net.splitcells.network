@@ -21,7 +21,7 @@ import net.splitcells.dem.object.Discoverable;
 public class LogMessageI<T> implements LogMessage<T> {
 
 	public static <T> LogMessage<T> logMessage(T content, Discoverable context, LogLevel priority) {
-		return new LogMessageI<T>(content, context, priority);
+		return new LogMessageI<>(content, context, priority);
 	}
 
 	private final T content;
