@@ -123,10 +123,10 @@ public interface Sender<T> extends AppendableList<T>, Resource {
         };
     }
 
-    static Sender<String> extend(Sender<String> sender, String prefix, String suffix, String first_prefix, String first_suffix) {
+    static Sender<String> extend(Sender<String> sender, String prefix, String suffix, String firstPrefix, String firstSuffix) {
         return new Sender<>() {
 
-            boolean is_first = true;
+            boolean isFirst = true;
 
             @Override
             public void close() {
@@ -141,8 +141,8 @@ public interface Sender<T> extends AppendableList<T>, Resource {
             @SuppressWarnings("unchecked")
             @Override
             public <R extends AppendableList<String>> R append(String value) {
-                if (is_first) {
-                    sender.append(first_prefix + value + first_suffix);
+                if (isFirst) {
+                    sender.append(firstPrefix + value + firstSuffix);
                 } else {
                     sender.append(prefix + value + suffix);
                 }
