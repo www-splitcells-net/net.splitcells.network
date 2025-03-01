@@ -351,7 +351,6 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
                         return walk.stream().filter(w -> w.startsWith(normalize(basePath + path)))
                                 .map(w -> Path.of("./" + (w + "/")
                                         .replace("//", "/")
-                                        .toString()
                                         .substring(basePath.length())));
                     }
                 }
