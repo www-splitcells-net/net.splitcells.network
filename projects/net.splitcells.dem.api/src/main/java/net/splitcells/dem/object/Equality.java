@@ -24,6 +24,6 @@ package net.splitcells.dem.object;
  *
  * Here, no fish will be forced to fly and no bird will be forced to swim. - Motto of an Ottoman school?
  */
-public interface Equality_<T> {
+public interface Equality<T> {
     <A extends T> boolean equalContents(A arg);
 }

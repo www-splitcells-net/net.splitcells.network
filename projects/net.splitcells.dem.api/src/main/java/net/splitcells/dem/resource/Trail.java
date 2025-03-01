@@ -18,7 +18,7 @@ package net.splitcells.dem.resource;
 import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.dem.object.Equality_;
+import net.splitcells.dem.object.Equality;
 import net.splitcells.dem.utils.ExecutionException;
 
 import java.nio.file.Path;
@@ -39,7 +39,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
  * Thereby bugs are avoided,
  * that are created via {@link Path#resolve(Path)} by accidentally mixing relative and absolute paths.</p>
  */
-public class Trail implements Thing, Equality_<Trail> {
+public class Trail implements Thing, Equality<Trail> {
     public static Trail trail(String... content) {
         return new Trail(listWithValuesOf(content).stream().filter(e -> !e.isEmpty()).collect(toList()));
     }
