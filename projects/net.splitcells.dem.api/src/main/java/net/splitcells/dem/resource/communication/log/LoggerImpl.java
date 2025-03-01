@@ -59,9 +59,9 @@ public class LoggerImpl implements Logger {
                     print(output, content.children().get(0), prefix + "." + content.name());
                 }
                 return;
-            } else if (content.children().size() > 0) {
+            } else if (content.children().hasElements()) {
                 output.append(prefix + content.name() + ":");
-            } else if (content.children().size() == 0) {
+            } else if (content.children().isEmpty()) {
                 if (prefix.isEmpty()) {
                     output.append(content.name());
                 } else {
