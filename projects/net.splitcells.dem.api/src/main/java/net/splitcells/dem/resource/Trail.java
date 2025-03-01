@@ -74,8 +74,7 @@ public class Trail implements Thing, Equality<Trail> {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Trail) {
-            final var other = (Trail) obj;
+        if (obj instanceof Trail other) {
             return content.equals(other.content);
         } else {
             throw ExecutionException.execException("Illegal argument: " + obj);
