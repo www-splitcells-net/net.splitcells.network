@@ -25,7 +25,7 @@ public class ReportEntryTimeKey extends ReportEntryKey<Long> {
 
     public static final ReportEntryTimeKey START_TIME = new ReportEntryTimeKey();
     public static final ReportEntryTimeKey END_TIME = new ReportEntryTimeKey();
-    public static DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ISO_ZONED_DATE_TIME;
+    public static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ISO_ZONED_DATE_TIME;
 
     protected ReportEntryTimeKey() {
         super(Long.class);
