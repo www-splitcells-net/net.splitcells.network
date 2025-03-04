@@ -58,7 +58,7 @@ public class EditorTest {
                 , constraintDescription(functionCallDescription("forEach", list()))
         );
         final var colloquium = solutionEditor(testSubject, colloquiumDescription);
-        colloquium.parse(colloquiumDescription);
+        colloquium.parse(colloquiumDescription).requireWorking();
         colloquium.attributes().requirePresence("student", stringAttribute("student"), CONTENT_COMPARISON)
                 .requirePresence("examiner", stringAttribute("examiner"), CONTENT_COMPARISON)
                 .requirePresence("observer", stringAttribute("observer"), CONTENT_COMPARISON)

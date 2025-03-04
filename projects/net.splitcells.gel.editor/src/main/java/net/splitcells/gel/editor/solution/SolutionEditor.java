@@ -18,7 +18,9 @@ package net.splitcells.gel.editor.solution;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.StaticFlags;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.object.Discoverable;
+import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.table.Table;
@@ -34,6 +36,7 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
@@ -61,7 +64,9 @@ public class SolutionEditor implements Discoverable {
         name = solutionDescription.name();
     }
 
-    public SolutionEditor parse(SolutionDescription solutionDescription) {
+    public Result<SolutionEditor, Tree> parse(SolutionDescription solutionDescription) {
+        final Result<SolutionEditor, Tree> result = result();
+        result.withValue(this);
         solutionDescription.attributes().entrySet().forEach(ad -> {
             final var attributeDesc = ad.getValue();
             final Attribute<?> attribute;
@@ -84,7 +89,7 @@ public class SolutionEditor implements Discoverable {
                     .toProblem()
                     .asSolution());
         }
-        return this;
+        return result;
     }
 
     private Constraint parseConstraint(ConstraintDescription constraintDescription, Query query) {
