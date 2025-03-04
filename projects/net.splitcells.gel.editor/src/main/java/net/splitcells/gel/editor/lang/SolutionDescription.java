@@ -25,14 +25,15 @@ public class SolutionDescription {
     }
 
     private String name;
-    private Map<String, AttributeDescription> attributeDescriptions = map();
+    private Map<String, AttributeDescription> attributes = map();
+    private Map<String, TableDescription> tables = map();
 
     private SolutionDescription(String argName) {
         name = argName;
     }
 
-    public Map<String, AttributeDescription> attributeDescriptions() {
-        return attributeDescriptions;
+    public Map<String, AttributeDescription> attributes() {
+        return attributes;
     }
 
     public String name() {

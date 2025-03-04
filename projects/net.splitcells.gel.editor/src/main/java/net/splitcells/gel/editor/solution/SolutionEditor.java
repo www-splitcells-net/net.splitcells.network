@@ -36,7 +36,7 @@ public class SolutionEditor {
 
     private SolutionEditor(SolutionDescription solutionDescription) {
         name = solutionDescription.name();
-        solutionDescription.attributeDescriptions().entrySet().forEach(ad -> {
+        solutionDescription.attributes().entrySet().forEach(ad -> {
             final var attributeDesc = ad.getValue();
             final Attribute<? extends Object> attribute;
             if (INTEGER.equals(attributeDesc.primitiveType())) {
