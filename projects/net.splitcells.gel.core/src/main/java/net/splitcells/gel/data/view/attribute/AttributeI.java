@@ -15,11 +15,15 @@
  */
 package net.splitcells.gel.data.view.attribute;
 
+import static net.splitcells.dem.data.order.Ordering.EQUAL;
+import static net.splitcells.dem.data.order.Ordering.LESSER_THAN;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.data.atom.Bools.bool;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
+import net.splitcells.dem.data.order.Comparison;
+import net.splitcells.dem.data.order.Ordering;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.common.Language;
@@ -29,6 +33,16 @@ import net.splitcells.dem.data.atom.Bool;
 import java.util.function.Function;
 
 public final class AttributeI<T> implements Attribute<T> {
+
+    public static final Comparison<Attribute<? extends Object>> CONTENT_COMPARISON = new Comparison<Attribute<? extends Object>>() {
+        @Override
+        public Ordering compareTo(Attribute<?> a, Attribute<?> b) {
+            if (a.name().equals(b.name()) && a.type().equals(b.type())) {
+                return EQUAL;
+            }
+            return LESSER_THAN;
+        }
+    };
 
     private final Class<?> type;
     private final String name;

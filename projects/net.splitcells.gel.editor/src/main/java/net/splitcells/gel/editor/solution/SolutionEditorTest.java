@@ -19,6 +19,7 @@ import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.editor.lang.PrimitiveType;
 import net.splitcells.gel.editor.lang.SolutionDescription;
 
+import static net.splitcells.gel.data.view.attribute.AttributeI.*;
 import static net.splitcells.gel.editor.lang.AttributeDescription.attributeDescription;
 import static net.splitcells.gel.editor.lang.PrimitiveType.INTEGER;
 import static net.splitcells.gel.editor.lang.PrimitiveType.STRING;
@@ -35,5 +36,11 @@ public class SolutionEditorTest {
         testData.attributeDescriptions().put("shift", attributeDescription("shift", INTEGER));
         testData.attributeDescriptions().put("roomNumber", attributeDescription("roomNumber", INTEGER));
         final var testSubject = solutionEditor(testData);
+        testSubject.attributes().requirePresence("student", stringAttribute("student"), CONTENT_COMPARISON);
+        testSubject.attributes().requirePresence("examiner", stringAttribute("examiner"), CONTENT_COMPARISON);
+        testSubject.attributes().requirePresence("observer", stringAttribute("observer"), CONTENT_COMPARISON);
+        testSubject.attributes().requirePresence("date", integerAttribute("date"), CONTENT_COMPARISON);
+        testSubject.attributes().requirePresence("shift", integerAttribute("shift"), CONTENT_COMPARISON);
+        testSubject.attributes().requirePresence("roomNumber", integerAttribute("roomNumber"), CONTENT_COMPARISON);
     }
 }
