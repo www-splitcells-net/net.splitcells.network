@@ -29,18 +29,18 @@ public class SolutionEditorTest {
     @UnitTest
     public void testParsingColloquium() {
         final var testData = SolutionDescription.solutionDescription("test-subject");
-        testData.attributeDescriptions().put("student", attributeDescription("student", STRING));
-        testData.attributeDescriptions().put("examiner", attributeDescription("examiner", STRING));
-        testData.attributeDescriptions().put("observer", attributeDescription("observer", STRING));
-        testData.attributeDescriptions().put("date", attributeDescription("date", INTEGER));
-        testData.attributeDescriptions().put("shift", attributeDescription("shift", INTEGER));
-        testData.attributeDescriptions().put("roomNumber", attributeDescription("roomNumber", INTEGER));
+        testData.attributes().with("student", attributeDescription("student", STRING))
+                .with("examiner", attributeDescription("examiner", STRING))
+                .with("observer", attributeDescription("observer", STRING))
+                .with("date", attributeDescription("date", INTEGER))
+                .with("shift", attributeDescription("shift", INTEGER))
+                .with("roomNumber", attributeDescription("roomNumber", INTEGER));
         final var testSubject = solutionEditor(testData);
-        testSubject.attributes().requirePresence("student", stringAttribute("student"), CONTENT_COMPARISON);
-        testSubject.attributes().requirePresence("examiner", stringAttribute("examiner"), CONTENT_COMPARISON);
-        testSubject.attributes().requirePresence("observer", stringAttribute("observer"), CONTENT_COMPARISON);
-        testSubject.attributes().requirePresence("date", integerAttribute("date"), CONTENT_COMPARISON);
-        testSubject.attributes().requirePresence("shift", integerAttribute("shift"), CONTENT_COMPARISON);
-        testSubject.attributes().requirePresence("roomNumber", integerAttribute("roomNumber"), CONTENT_COMPARISON);
+        testSubject.attributes().requirePresence("student", stringAttribute("student"), CONTENT_COMPARISON)
+                .requirePresence("examiner", stringAttribute("examiner"), CONTENT_COMPARISON)
+                .requirePresence("observer", stringAttribute("observer"), CONTENT_COMPARISON)
+                .requirePresence("date", integerAttribute("date"), CONTENT_COMPARISON)
+                .requirePresence("shift", integerAttribute("shift"), CONTENT_COMPARISON)
+                .requirePresence("roomNumber", integerAttribute("roomNumber"), CONTENT_COMPARISON);
     }
 }
