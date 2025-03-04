@@ -16,7 +16,7 @@
 package net.splitcells.gel.editor.lang;
 
 public class AttributeDescription {
-    public static AttributeDescription solutionDescription(String name, PrimitiveType primitiveType) {
+    public static AttributeDescription attributeDescription(String name, PrimitiveType primitiveType) {
         return new AttributeDescription(name, primitiveType);
     }
 

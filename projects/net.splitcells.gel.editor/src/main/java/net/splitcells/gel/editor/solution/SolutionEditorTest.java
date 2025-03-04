@@ -16,14 +16,24 @@
 package net.splitcells.gel.editor.solution;
 
 import net.splitcells.dem.testing.annotations.UnitTest;
+import net.splitcells.gel.editor.lang.PrimitiveType;
 import net.splitcells.gel.editor.lang.SolutionDescription;
 
+import static net.splitcells.gel.editor.lang.AttributeDescription.attributeDescription;
+import static net.splitcells.gel.editor.lang.PrimitiveType.INTEGER;
+import static net.splitcells.gel.editor.lang.PrimitiveType.STRING;
 import static net.splitcells.gel.editor.solution.SolutionEditor.solutionEditor;
 
 public class SolutionEditorTest {
     @UnitTest
-    public void parsingTest() {
+    public void testParsingColloquium() {
         final var testData = SolutionDescription.solutionDescription("test-subject");
+        testData.attributeDescriptions().put("student", attributeDescription("student", STRING));
+        testData.attributeDescriptions().put("examiner", attributeDescription("examiner", STRING));
+        testData.attributeDescriptions().put("observer", attributeDescription("observer", STRING));
+        testData.attributeDescriptions().put("date", attributeDescription("date", INTEGER));
+        testData.attributeDescriptions().put("shift", attributeDescription("shift", INTEGER));
+        testData.attributeDescriptions().put("roomNumber", attributeDescription("roomNumber", INTEGER));
         final var testSubject = solutionEditor(testData);
     }
 }
