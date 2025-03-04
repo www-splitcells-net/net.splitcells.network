@@ -16,31 +16,28 @@
 package net.splitcells.gel.editor.lang;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.ListView;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 
 public class TableDescription {
-    public static TableDescription tableDescription(String name) {
-        return new TableDescription(name);
+    public static TableDescription tableDescription(String name, List<ReferenceDescription<AttributeDescription>> header) {
+        return new TableDescription(name, header);
     }
 
     private final String name;
     private List<ReferenceDescription<AttributeDescription>> header = list();
 
-    private TableDescription(String argName) {
+    private TableDescription(String argName, List<ReferenceDescription<AttributeDescription>> argHeader) {
         name = argName;
+        header = argHeader;
     }
 
     public String name() {
         return name;
     }
 
-    public List<ReferenceDescription<AttributeDescription>> header() {
+    public ListView<ReferenceDescription<AttributeDescription>> header() {
         return header;
-    }
-
-    public TableDescription withAttribute(ReferenceDescription<AttributeDescription> attribute) {
-        header.add(attribute);
-        return this;
     }
 }

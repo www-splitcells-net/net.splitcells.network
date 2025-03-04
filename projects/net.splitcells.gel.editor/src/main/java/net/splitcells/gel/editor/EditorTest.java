@@ -46,14 +46,14 @@ public class EditorTest {
                 .with("date", attributeDescription("date", INTEGER))
                 .with("shift", attributeDescription("shift", INTEGER))
                 .with("roomNumber", attributeDescription("roomNumber", INTEGER));
-        colloquiumDescription.withDemands(tableDescription("exams")
-                .withAttribute(referenceDescription("student", AttributeDescription.class))
-                .withAttribute(referenceDescription("examiner", AttributeDescription.class))
-                .withAttribute(referenceDescription("observer", AttributeDescription.class)));
-        colloquiumDescription.withSupplies(tableDescription("exam slot")
-                .withAttribute(referenceDescription("date", AttributeDescription.class))
-                .withAttribute(referenceDescription("shift", AttributeDescription.class))
-                .withAttribute(referenceDescription("roomNumber", AttributeDescription.class)));
+        colloquiumDescription.withDemands(tableDescription("exams"
+                , list(referenceDescription("student", AttributeDescription.class)
+                        , referenceDescription("examiner", AttributeDescription.class)
+                        , referenceDescription("observer", AttributeDescription.class))));
+        colloquiumDescription.withSupplies(tableDescription("exam slot"
+                , list(referenceDescription("date", AttributeDescription.class)
+                        , referenceDescription("shift", AttributeDescription.class)
+                        , referenceDescription("roomNumber", AttributeDescription.class))));
         final var colloquium = solutionEditor(testSubject, colloquiumDescription);
         colloquium.attributes().requirePresence("student", stringAttribute("student"), CONTENT_COMPARISON)
                 .requirePresence("examiner", stringAttribute("examiner"), CONTENT_COMPARISON)
