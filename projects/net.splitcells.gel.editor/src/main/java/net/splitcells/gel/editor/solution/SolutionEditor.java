@@ -20,6 +20,8 @@ import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.constraint.Query;
+import net.splitcells.gel.constraint.type.ForAlls;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -29,10 +31,14 @@ import net.splitcells.gel.editor.lang.SolutionDescription;
 import net.splitcells.gel.editor.lang.TableDescription;
 import net.splitcells.gel.solution.Solution;
 
+import java.util.Optional;
+
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.gel.constraint.QueryI.query;
+import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
 import static net.splitcells.gel.data.view.attribute.AttributeI.stringAttribute;
@@ -73,7 +79,7 @@ public class SolutionEditor implements Discoverable {
             solution = defineProblem("solution")
                     .withDemands(demands)
                     .withSupplies(supplies)
-                    .withConstraint(parse(solutionDescription.constraint()))
+                    .withConstraint(parse(solutionDescription.constraint(), query(forAll(Optional.of(NO_CONTEXT)))))
                     .toProblem()
                     .asSolution();
         } else {
@@ -82,7 +88,7 @@ public class SolutionEditor implements Discoverable {
         }
     }
 
-    private Constraint parse(ConstraintDescription constraintDescription) {
+    private Constraint parse(ConstraintDescription constraintDescription, Query query) {
         // TODO
         return null;
     }
