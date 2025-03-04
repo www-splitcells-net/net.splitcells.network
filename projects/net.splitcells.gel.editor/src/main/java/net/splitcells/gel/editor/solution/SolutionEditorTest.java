@@ -15,19 +15,11 @@
  */
 package net.splitcells.gel.editor.solution;
 
-import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.gel.data.view.attribute.Attribute;
+import net.splitcells.dem.testing.annotations.UnitTest;
 
-import static net.splitcells.dem.data.set.map.Maps.map;
-
-public class SolutionEditor {
-    public static SolutionEditor solutionEditor() {
-        return new SolutionEditor();
-    }
-
-    private final Map<String, Attribute<? extends Object>> attributes = map();
-
-    private SolutionEditor() {
+public class SolutionEditorTest {
+    @UnitTest
+    public void parsingTest() {
 
     }
 }

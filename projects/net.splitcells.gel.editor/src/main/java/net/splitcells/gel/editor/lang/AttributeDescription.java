@@ -13,21 +13,25 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.editor.solution;
+package net.splitcells.gel.editor.lang;
 
-import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.gel.data.view.attribute.Attribute;
-
-import static net.splitcells.dem.data.set.map.Maps.map;
-
-public class SolutionEditor {
-    public static SolutionEditor solutionEditor() {
-        return new SolutionEditor();
+public class AttributeDescription {
+    public static AttributeDescription solutionDescription(String name, PrimitiveType primitiveType) {
+        return new AttributeDescription(name, primitiveType);
     }
 
-    private final Map<String, Attribute<? extends Object>> attributes = map();
+    private final String name;
+    private final PrimitiveType primitiveType;
 
-    private SolutionEditor() {
+    private AttributeDescription(String argName, PrimitiveType argPrimitiveType) {
+        name = argName;
+        primitiveType = argPrimitiveType;
+    }
+    public String name() {
+        return name;
+    }
 
+    public PrimitiveType primitiveType() {
+        return primitiveType;
     }
 }
