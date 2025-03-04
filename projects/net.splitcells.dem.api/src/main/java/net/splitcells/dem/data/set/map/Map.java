@@ -16,6 +16,8 @@
 package net.splitcells.dem.data.set.map;
 
 import net.splitcells.dem.data.Flow;
+import net.splitcells.dem.data.order.Comparison;
+import net.splitcells.dem.data.order.Ordering;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
@@ -27,24 +29,25 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static net.splitcells.dem.data.Flows.flow;
+import static net.splitcells.dem.data.order.Ordering.EQUAL;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
 @JavaLegacyArtifact
-public interface Map<K, V> extends java.util.Map<K, V> {
+public interface Map<Key, Value> extends java.util.Map<Key, Value> {
 
-    default Optional<V> getOptionally(K key) {
+    default Optional<Value> getOptionally(Key key) {
         return Optional.ofNullable(get(key));
     }
 
-    default Map<K, V> with(K key, V value) {
+    default Map<Key, Value> with(Key key, Value value) {
         put(key, value);
         return this;
     }
 
-    default Flow<java.util.Map.Entry<K, V>> flowMappingsByValue(V value) {
+    default Flow<java.util.Map.Entry<Key, Value>> flowMappingsByValue(Value value) {
         return flow(entrySet().stream().filter(entry -> value.equals(entry.getValue())));
     }
 
@@ -58,7 +61,7 @@ public interface Map<K, V> extends java.util.Map<K, V> {
      * @param value
      * @return
      */
-    Map<K, V> ensurePresence(K key, V value);
+    Map<Key, Value> ensurePresence(Key key, Value value);
 
     /**
      * Works like {@link #ensurePresence(Object, Object)}, but returns the given value instead.
@@ -67,12 +70,12 @@ public interface Map<K, V> extends java.util.Map<K, V> {
      * @param value
      * @return
      */
-    V ensurePresenceAndValue(K key, V value);
+    Value ensurePresenceAndValue(Key key, Value value);
 
 
     @Override
-    default V computeIfPresent(K key, BiFunction<? super K, ? super V, ? extends V> updateFunction) {
-        final V oldValue = get(key);
+    default Value computeIfPresent(Key key, BiFunction<? super Key, ? super Value, ? extends Value> updateFunction) {
+        final Value oldValue = get(key);
         if (oldValue != null) {
             final var newValue = updateFunction.apply(key, oldValue);
             if (newValue != null) {
@@ -97,13 +100,13 @@ public interface Map<K, V> extends java.util.Map<K, V> {
      * @param value
      * @return
      */
-    V put(K key, V value);
+    Value put(Key key, Value value);
 
-    default net.splitcells.dem.data.set.Set<K> keySet2() {
+    default net.splitcells.dem.data.set.Set<Key> keySet2() {
         return setOfUniques(keySet());
     }
 
-    default Map<K, V> withMerged(Map<K, V> args, BiFunction<V, V, V> mergeFunction) {
+    default Map<Key, Value> withMerged(Map<Key, Value> args, BiFunction<Value, Value, Value> mergeFunction) {
         args.forEach((aKey, aVal) -> this.merge(aKey, aVal, mergeFunction));
         return this;
     }
@@ -115,7 +118,7 @@ public interface Map<K, V> extends java.util.Map<K, V> {
      * @param args This contains the mappings to be added.
      * @return Returns this.
      */
-    default Map<K, V> withMissingEntries(Map<K, V> args) {
+    default Map<Key, Value> withMissingEntries(Map<Key, Value> args) {
         args.entrySet().forEach(e -> {
             if (!containsKey(e.getKey())) {
                 put(e.getKey(), e.getValue());
@@ -133,7 +136,7 @@ public interface Map<K, V> extends java.util.Map<K, V> {
      * @param merger
      * @return
      */
-    default Map<K, V> withMergedEntries(Map<K, V> args, BiFunction<V, V, V> merger) {
+    default Map<Key, Value> withMergedEntries(Map<Key, Value> args, BiFunction<Value, Value, Value> merger) {
         args.entrySet().forEach(e -> {
             final var key = e.getKey();
             final var existingValue = get(key);
@@ -151,8 +154,8 @@ public interface Map<K, V> extends java.util.Map<K, V> {
      * <p>
      * RENAME
      */
-    default V addIfAbsent(K key, Supplier<V> valueSupplier) {
-        V rVal = get(key);
+    default Value addIfAbsent(Key key, Supplier<Value> valueSupplier) {
+        Value rVal = get(key);
         if (!containsKey(key)) {
             rVal = valueSupplier.get();
             put(key, rVal);
@@ -183,7 +186,42 @@ public interface Map<K, V> extends java.util.Map<K, V> {
         }
     }
 
-    default Map<K, V> requireKeyAbsence(K key) {
+    default Map<Key, Value> requirePresence(Key key, Value value) {
+        if (containsKey(key)) {
+            throw ExecutionException.execException(tree("Map should not contain given key, but has not.")
+                    .withProperty("map", toString())
+                    .withProperty("key", key.toString())
+                    .withProperty("value", value.toString()));
+        }
+        if (get(key).equals(value)) {
+            throw ExecutionException.execException(tree("Map should not contain given value for the given key, but has not.")
+                    .withProperty("map", toString())
+                    .withProperty("required-key", key.toString())
+                    .withProperty("actual-key", get(key).toString())
+                    .withProperty("value", value.toString()));
+        }
+        return this;
+    }
+
+    default Map<Key, Value> requirePresence(Key key, Value value, Comparison<Value> comparison) {
+        if (!containsKey(key)) {
+            throw ExecutionException.execException(tree("Map should not contain given key, but has not.")
+                    .withProperty("map", toString())
+                    .withProperty("key", key.toString())
+                    .withProperty("value", value.toString()));
+        }
+
+        if (comparison.compareTo(get(key), value) != EQUAL) {
+            throw ExecutionException.execException(tree("Map should not contain given value for the given key, but has not.")
+                    .withProperty("map", toString())
+                    .withProperty("required-key", key.toString())
+                    .withProperty("actual-key", get(key).toString())
+                    .withProperty("value", value.toString()));
+        }
+        return this;
+    }
+
+    default Map<Key, Value> requireKeyAbsence(Key key) {
         if (containsKey(key)) {
             throw ExecutionException.execException(tree("Map should not contain given key, but has it.")
                     .withProperty("map", toString())
@@ -192,7 +230,7 @@ public interface Map<K, V> extends java.util.Map<K, V> {
         return this;
     }
 
-    default void requireEqualityTo(Map<K, V> requiredContent) {
+    default void requireEqualityTo(Map<Key, Value> requiredContent) {
         requiredContent.keySet2().forEach(requiredKey -> {
             if (!containsKey(requiredKey)) {
                 throw ExecutionException.execException(tree("2 sets should be equal, but are not.")
@@ -227,11 +265,11 @@ public interface Map<K, V> extends java.util.Map<K, V> {
         });
     }
 
-    default Map<K, V> shallowCopy() {
+    default Map<Key, Value> shallowCopy() {
         return map(this);
     }
 
-    default List<V> valueList() {
+    default List<Value> valueList() {
         return Lists.listWithValuesOf(values());
     }
 }
