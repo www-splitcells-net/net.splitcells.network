@@ -24,6 +24,7 @@ import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.lang.SolutionDescription;
 import net.splitcells.gel.editor.lang.TableDescription;
+import net.splitcells.gel.solution.Solution;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
@@ -34,6 +35,7 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute
 import static net.splitcells.gel.data.view.attribute.AttributeI.stringAttribute;
 import static net.splitcells.gel.editor.lang.PrimitiveType.INTEGER;
 import static net.splitcells.gel.editor.lang.PrimitiveType.STRING;
+import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 
 public class SolutionEditor implements Discoverable {
     public static SolutionEditor solutionEditor(Editor parent, SolutionDescription solutionDescription) {
@@ -63,6 +65,9 @@ public class SolutionEditor implements Discoverable {
         });
         demands = parse(solutionDescription.demands().orElseThrow());
         supplies = parse(solutionDescription.supplies().orElseThrow());
+        defineProblem("solution")
+                .withDemands(demands)
+                .withSupplies(supplies);
     }
 
     private Table parse(TableDescription tableDescription) {
