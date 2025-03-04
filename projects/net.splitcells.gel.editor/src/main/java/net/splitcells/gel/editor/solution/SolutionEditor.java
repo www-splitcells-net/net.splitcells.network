@@ -81,20 +81,24 @@ public class SolutionEditor implements Discoverable {
         });
         demands = Optional.of(parseTable(solutionDescription.demands()));
         supplies = Optional.of(parseTable(solutionDescription.supplies()));
-        if (StaticFlags.DISABLED_FUNCTIONALITY) {
-            solution = Optional.of(defineProblem("solution")
-                    .withDemands(demands.orElseThrow())
-                    .withSupplies(supplies.orElseThrow())
-                    .withConstraint(parseConstraint(solutionDescription.constraint(), query(forAll(Optional.of(NO_CONTEXT)))))
-                    .toProblem()
-                    .asSolution());
+        final var problemData = defineProblem("solution")
+                .withDemands(demands.orElseThrow())
+                .withSupplies(supplies.orElseThrow());
+        final var parsedConstraints = parseConstraint(solutionDescription.constraint(), query(forAll(Optional.of(NO_CONTEXT))));
+        if (parsedConstraints.defective()) {
+            result.errorMessages().withAppended(parsedConstraints.errorMessages());
+            return result;
         }
+        solution = Optional.of(problemData
+                .withConstraint(parsedConstraints.value().orElseThrow())
+                .toProblem()
+                .asSolution());
         return result;
     }
 
-    private Constraint parseConstraint(ConstraintDescription constraintDescription, Query query) {
-        // TODO
-        return null;
+    private Result<Constraint, Tree> parseConstraint(ConstraintDescription constraintDescription, Query query) {
+        final Result<Constraint, Tree> constraint = result();
+        return constraint;
     }
 
     private Table parseTable(TableDescription tableDescription) {
