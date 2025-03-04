@@ -28,6 +28,7 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.*;
 import static net.splitcells.gel.editor.Editor.editor;
 import static net.splitcells.gel.editor.lang.AttributeDescription.attributeDescription;
 import static net.splitcells.gel.editor.lang.ConstraintDescription.constraintDescription;
+import static net.splitcells.gel.editor.lang.FunctionCallDescription.functionCallDescription;
 import static net.splitcells.gel.editor.lang.PrimitiveType.INTEGER;
 import static net.splitcells.gel.editor.lang.PrimitiveType.STRING;
 import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
@@ -54,7 +55,7 @@ public class EditorTest {
                         , list(referenceDescription("date", AttributeDescription.class)
                                 , referenceDescription("shift", AttributeDescription.class)
                                 , referenceDescription("roomNumber", AttributeDescription.class)))
-                , constraintDescription()
+                , constraintDescription(functionCallDescription("forEach", list()))
         );
         final var colloquium = solutionEditor(testSubject, colloquiumDescription);
         colloquium.attributes().requirePresence("student", stringAttribute("student"), CONTENT_COMPARISON)

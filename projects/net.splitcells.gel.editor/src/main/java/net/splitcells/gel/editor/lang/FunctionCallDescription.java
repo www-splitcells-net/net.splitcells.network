@@ -15,25 +15,26 @@
  */
 package net.splitcells.gel.editor.lang;
 
-public final class ReferenceDescription<T> implements ArgumentDescription {
+import net.splitcells.dem.data.set.list.List;
 
-    public static <R> ReferenceDescription<R> referenceDescription(String name, Class<? extends R> clazz) {
-        return new ReferenceDescription<>(name, clazz);
+public final class FunctionCallDescription implements ArgumentDescription {
+    public static FunctionCallDescription functionCallDescription(String functionName, List<ArgumentDescription> arguments) {
+        return new FunctionCallDescription(functionName, arguments);
     }
 
-    private final String name;
-    private final Class<? extends T> clazz;
+    private final String functionName;
+    private final List<ArgumentDescription> arguments;
 
-    private ReferenceDescription(String argName, Class<? extends T> argClazz) {
-        name = argName;
-        clazz = argClazz;
+    private FunctionCallDescription(String argFunctionName, List<ArgumentDescription> argArguments) {
+        arguments = argArguments;
+        functionName = argFunctionName;
     }
 
-    public String name() {
-        return name;
+    public List<ArgumentDescription> arguments() {
+        return arguments;
     }
 
-    public Class<? extends T> clazz() {
-        return clazz;
+    public String functionName() {
+        return functionName;
     }
 }

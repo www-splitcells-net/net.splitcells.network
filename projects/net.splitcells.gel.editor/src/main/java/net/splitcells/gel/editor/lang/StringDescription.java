@@ -15,25 +15,18 @@
  */
 package net.splitcells.gel.editor.lang;
 
-public final class ReferenceDescription<T> implements ArgumentDescription {
-
-    public static <R> ReferenceDescription<R> referenceDescription(String name, Class<? extends R> clazz) {
-        return new ReferenceDescription<>(name, clazz);
+public final class StringDescription implements ArgumentDescription {
+    public static StringDescription stringDescription(String value) {
+        return new StringDescription(value);
     }
 
-    private final String name;
-    private final Class<? extends T> clazz;
+    private final String value;
 
-    private ReferenceDescription(String argName, Class<? extends T> argClazz) {
-        name = argName;
-        clazz = argClazz;
+    private StringDescription(String argValue) {
+        value = argValue;
     }
 
-    public String name() {
-        return name;
-    }
-
-    public Class<? extends T> clazz() {
-        return clazz;
+    public String value() {
+        return value;
     }
 }

@@ -15,25 +15,8 @@
  */
 package net.splitcells.gel.editor.lang;
 
-public final class ReferenceDescription<T> implements ArgumentDescription {
-
-    public static <R> ReferenceDescription<R> referenceDescription(String name, Class<? extends R> clazz) {
-        return new ReferenceDescription<>(name, clazz);
-    }
-
-    private final String name;
-    private final Class<? extends T> clazz;
-
-    private ReferenceDescription(String argName, Class<? extends T> argClazz) {
-        name = argName;
-        clazz = argClazz;
-    }
-
-    public String name() {
-        return name;
-    }
-
-    public Class<? extends T> clazz() {
-        return clazz;
-    }
+public sealed interface ArgumentDescription permits FunctionCallDescription
+        , StringDescription
+        , IntegerDescription
+        , ReferenceDescription {
 }
