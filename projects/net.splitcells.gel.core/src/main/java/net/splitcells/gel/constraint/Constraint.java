@@ -197,8 +197,19 @@ public interface Constraint extends TableSynchronization, ConstraintWriter, Disc
 
     Line addResult(LocalRating localRating);
 
+    /**
+     * @deprecated Write access should only be given in {@link ConstraintWriter}.
+     */
+    @Deprecated
     default Query query() {
         return QueryI.query(this);
+    }
+
+    /**
+     * @return Provides a read-only {@link Query} interface.
+     */
+    default Query readQuery() {
+        return QueryI.query(this, false);
     }
 
     View lineProcessing();

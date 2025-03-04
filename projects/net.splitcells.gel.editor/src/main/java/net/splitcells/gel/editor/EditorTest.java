@@ -55,7 +55,8 @@ public class EditorTest {
                         , list(referenceDescription("date", AttributeDescription.class)
                                 , referenceDescription("shift", AttributeDescription.class)
                                 , referenceDescription("roomNumber", AttributeDescription.class)))
-                , list()
+                , list(constraintDescription(functionCallDescription("forEach"
+                        , list(referenceDescription("observer", AttributeDescription.class)))))
         );
         final var colloquium = solutionEditor(testSubject, colloquiumDescription);
         colloquium.parse(colloquiumDescription).requireWorking();
@@ -75,5 +76,7 @@ public class EditorTest {
                         , integerAttribute("shift")
                         , integerAttribute("roomNumber"))
                 , CONTENT_COMPARISON);
+        final var solution = colloquium.solution().orElseThrow();
+        solution.constraint().readQuery().forAll(solution.attributeByName("observer"));
     }
 }

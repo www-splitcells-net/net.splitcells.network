@@ -24,9 +24,7 @@ import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
-import net.splitcells.gel.editor.lang.ConstraintDescription;
-import net.splitcells.gel.editor.lang.SolutionDescription;
-import net.splitcells.gel.editor.lang.TableDescription;
+import net.splitcells.gel.editor.lang.*;
 import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
@@ -39,6 +37,7 @@ import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.constraint.type.ForAll.FOR_ALL_NAME;
+import static net.splitcells.gel.constraint.type.ForAlls.FOR_EACH_NAME;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
@@ -114,6 +113,28 @@ public class SolutionEditor implements Discoverable {
                         .withProperty(AFFECTED_CONTENT, toString()));
             }
             nextConstraint = parentConstraint.forAll();
+        } else if (constraintDescription.definition().functionName().equals(FOR_EACH_NAME)) {
+            if (constraintDescription.definition().arguments().isEmpty()) {
+                nextConstraint = parentConstraint.forAll();
+            } else if (constraintDescription.definition().arguments().size() == 1) {
+                final var arg = constraintDescription.definition().arguments().get(0);
+                switch (arg) {
+                    case ReferenceDescription ref -> {
+                        nextConstraint = parentConstraint.forAll(attributes.get(ref.name()));
+                    }
+                    default -> {
+                        return constraint.withErrorMessage(tree("ForEach requires a reference as the argument.")
+                                .withProperty("Argument class", arg.getClass().getName())
+                                .withProperty("Argument", arg.toString()));
+                    }
+                }
+            } else if (constraintDescription.definition().arguments().size() > 1) {
+                return constraint.withErrorMessage(tree("ForEach does not support multiple arguments.")
+                        .withProperty(AFFECTED_CONTENT
+                                , toString()));
+            } else {
+                throw execException();
+            }
         } else {
             throw execException();
         }
@@ -153,6 +174,10 @@ public class SolutionEditor implements Discoverable {
 
     public Optional<Table> supplies() {
         return supplies;
+    }
+
+    public Optional<Solution> solution() {
+        return solution;
     }
 
     /**
