@@ -126,4 +126,9 @@ public class MapLegacyWrapper<K, V> implements Map<K, V> {
     public Optional<Boolean> _isDeterministic() {
         return isDeterministic;
     }
+
+    @Override
+    public String toString() {
+        return content.toString();
+    }
 }
