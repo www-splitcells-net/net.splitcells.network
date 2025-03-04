@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.editor.lang;
 
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 
 import java.util.Optional;
@@ -22,23 +23,30 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.map.Maps.map;
 
 public class SolutionDescription {
-    public static SolutionDescription solutionDescription(String name, Map<String, AttributeDescription> attributes, TableDescription demands, TableDescription supplies) {
-        return new SolutionDescription(name, attributes, demands, supplies);
+    public static SolutionDescription solutionDescription(String name
+            , List<AttributeDescription> attributes
+            , TableDescription demands
+            , TableDescription supplies
+            , ConstraintDescription constraint) {
+        return new SolutionDescription(name, attributes, demands, supplies, constraint);
     }
 
     private final String name;
-    private final Map<String, AttributeDescription> attributes;
+    private final Map<String, AttributeDescription> attributes = map();
     private final TableDescription demands;
     private final TableDescription supplies;
+    private final ConstraintDescription constraint;
 
     private SolutionDescription(String argName
-            , Map<String, AttributeDescription> argAttributes
+            , List<AttributeDescription> argAttributes
             , TableDescription argDemands
-            , TableDescription argSupplies) {
+            , TableDescription argSupplies
+            , ConstraintDescription argConstraint) {
         name = argName;
-        attributes = argAttributes;
+        argAttributes.forEach(a -> attributes.put(a.name(), a));
         demands = argDemands;
         supplies = argSupplies;
+        constraint = argConstraint;
     }
 
     /**
@@ -60,5 +68,9 @@ public class SolutionDescription {
 
     public String name() {
         return name;
+    }
+
+    public ConstraintDescription constraint() {
+        return constraint;
     }
 }
