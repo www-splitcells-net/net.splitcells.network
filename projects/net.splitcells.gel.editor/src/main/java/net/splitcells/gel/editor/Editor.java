@@ -15,19 +15,33 @@
  */
 package net.splitcells.gel.editor;
 
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.editor.solution.SolutionEditor;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
 
-public class Editor {
-    public static Editor editor() {
-        return new Editor();
+public class Editor implements Discoverable {
+    public static Editor editor(String name, Discoverable parent) {
+        return new Editor(name, parent);
     }
 
+    private final String name;
+    private final Discoverable parent;
     private final Map<String, SolutionEditor> solutions = map();
 
-    private Editor() {
+    private Editor(String argName, Discoverable argParent) {
+        name = argName;
+        parent = argParent;
+    }
 
+    @Override
+    public List<String> path() {
+        return parent.path().withAppended(name);
+    }
+
+    public String name() {
+        return name;
     }
 }
