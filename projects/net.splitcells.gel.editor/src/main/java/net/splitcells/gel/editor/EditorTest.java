@@ -44,7 +44,7 @@ import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 
 public class EditorTest {
     @UnitTest
-    public void testParsingColloquium() {
+    public void testAllParsingBranches() {
         final var testSubject = editor("test-subject", EXPLICIT_NO_CONTEXT);
         final var colloquiumDescription = solutionDescription("colloquium-planning"
                 , list(attributeDescription("student", STRING)
