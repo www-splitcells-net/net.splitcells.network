@@ -21,9 +21,7 @@ import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
-import net.splitcells.gel.constraint.type.ForAlls;
 import net.splitcells.gel.data.table.Table;
-import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.lang.ConstraintDescription;
@@ -73,13 +71,13 @@ public class SolutionEditor implements Discoverable {
             }
             attributes.put(attributeDesc.name(), attribute);
         });
-        demands = parse(solutionDescription.demands());
-        supplies = parse(solutionDescription.supplies());
+        demands = parseTable(solutionDescription.demands());
+        supplies = parseTable(solutionDescription.supplies());
         if (StaticFlags.DISABLED_FUNCTIONALITY) {
             solution = defineProblem("solution")
                     .withDemands(demands)
                     .withSupplies(supplies)
-                    .withConstraint(parse(solutionDescription.constraint(), query(forAll(Optional.of(NO_CONTEXT)))))
+                    .withConstraint(parseConstraint(solutionDescription.constraint(), query(forAll(Optional.of(NO_CONTEXT)))))
                     .toProblem()
                     .asSolution();
         } else {
@@ -88,12 +86,12 @@ public class SolutionEditor implements Discoverable {
         }
     }
 
-    private Constraint parse(ConstraintDescription constraintDescription, Query query) {
+    private Constraint parseConstraint(ConstraintDescription constraintDescription, Query query) {
         // TODO
         return null;
     }
 
-    private Table parse(TableDescription tableDescription) {
+    private Table parseTable(TableDescription tableDescription) {
         final List<Attribute<?>> header = list();
         tableDescription.header().flow()
                 .map(h -> (Attribute<?>) attributes.get(h.name()))
