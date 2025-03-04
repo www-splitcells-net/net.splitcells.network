@@ -16,8 +16,16 @@
 package net.splitcells.gel.editor.lang;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
+
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 
 public final class FunctionCallDescription implements ArgumentDescription {
+
+    public static FunctionCallDescription functionCallDescription(String functionName, ArgumentDescription... arguments) {
+        return functionCallDescription(functionName, listWithValuesOf(arguments));
+    }
+
     public static FunctionCallDescription functionCallDescription(String functionName, List<ArgumentDescription> arguments) {
         return new FunctionCallDescription(functionName, arguments);
     }

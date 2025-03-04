@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.editor.solution;
 
+import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.framework.Option;
@@ -26,6 +27,7 @@ import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.lang.*;
+import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
@@ -40,11 +42,18 @@ import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.constraint.type.ForAll.FOR_ALL_NAME;
 import static net.splitcells.gel.constraint.type.ForAlls.*;
 import static net.splitcells.gel.constraint.type.ForAlls.FOR_ALL_COMBINATIONS_OF;
+import static net.splitcells.gel.constraint.type.Then.THEN_NAME;
 import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
 import static net.splitcells.gel.data.view.attribute.AttributeI.stringAttribute;
 import static net.splitcells.gel.editor.lang.PrimitiveType.INTEGER;
 import static net.splitcells.gel.editor.lang.PrimitiveType.STRING;
+import static net.splitcells.gel.rating.rater.lib.AllSame.ALL_SAME_NAME;
+import static net.splitcells.gel.rating.rater.lib.AllSame.allSame;
+import static net.splitcells.gel.rating.rater.lib.HasSize.HAS_SIZE_NAME;
+import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
+import static net.splitcells.gel.rating.rater.lib.MinimalDistance.MINIMAL_DISTANCE_NAME;
+import static net.splitcells.gel.rating.rater.lib.MinimalDistance.has_minimal_distance_of;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 
 public class SolutionEditor implements Discoverable {
@@ -108,17 +117,19 @@ public class SolutionEditor implements Discoverable {
         final Result<Query, Tree> constraint = result();
         constraint.withValue(parentConstraint);
         final Query nextConstraint;
-        if (constraintDescription.definition().functionName().equals(FOR_ALL_NAME)) {
-            if (constraintDescription.definition().arguments().hasElements()) {
+        final var constraintName = constraintDescription.definition().functionName();
+        final var arguments = constraintDescription.definition().arguments();
+        if (constraintName.equals(FOR_ALL_NAME)) {
+            if (arguments.hasElements()) {
                 return constraint.withErrorMessage(tree("ForAll does not support arguments.")
-                        .withProperty(AFFECTED_CONTENT, toString()));
+                        .withProperty(AFFECTED_CONTENT, constraintDescription.toString()));
             }
             nextConstraint = parentConstraint.forAll();
-        } else if (constraintDescription.definition().functionName().equals(FOR_EACH_NAME)) {
-            if (constraintDescription.definition().arguments().isEmpty()) {
+        } else if (constraintName.equals(FOR_EACH_NAME)) {
+            if (arguments.isEmpty()) {
                 nextConstraint = parentConstraint.forAll();
-            } else if (constraintDescription.definition().arguments().size() == 1) {
-                final var arg = constraintDescription.definition().arguments().get(0);
+            } else if (arguments.size() == 1) {
+                final var arg = arguments.get(0);
                 switch (arg) {
                     case ReferenceDescription ref -> {
                         nextConstraint = parentConstraint.forAll(attributes.get(ref.name()));
@@ -132,17 +143,17 @@ public class SolutionEditor implements Discoverable {
             } else if (constraintDescription.definition().arguments().size() > 1) {
                 return constraint.withErrorMessage(tree("ForEach does not support multiple arguments.")
                         .withProperty(AFFECTED_CONTENT
-                                , toString()));
+                                , constraintDescription.toString()));
             } else {
                 throw execException();
             }
-        } else if (constraintDescription.definition().functionName().equals(FOR_ALL_COMBINATIONS_OF)) {
-            if (constraintDescription.definition().arguments().size() < 2) {
+        } else if (constraintName.equals(FOR_ALL_COMBINATIONS_OF)) {
+            if (arguments.size() < 2) {
                 return constraint.withErrorMessage(tree(FOR_ALL_COMBINATIONS_OF + " requires at least 2 arguments.")
-                        .withProperty(AFFECTED_CONTENT, toString()));
+                        .withProperty(AFFECTED_CONTENT, constraintDescription.toString()));
             }
             final List<Attribute<? extends Object>> combinations = list();
-            for (final var arg : constraintDescription.definition().arguments()) {
+            for (final var arg : arguments) {
                 switch (arg) {
                     case ReferenceDescription ref -> {
                         combinations.add(attributeByName(ref.name()));
@@ -156,8 +167,37 @@ public class SolutionEditor implements Discoverable {
                 }
             }
             nextConstraint = parentConstraint.forAllCombinationsOf(combinations);
+        } else if (constraintName.equals(THEN_NAME)) {
+            if (arguments.isEmpty()) {
+                return constraint
+                        .withErrorMessage(tree("Then constraint requires at least one argument.")
+                                .withProperty(AFFECTED_CONTENT, constraintDescription.toString()));
+            }
+            if (arguments.size() > 1) {
+                return constraint.withErrorMessage(tree("Then constraint only support one argument at maximum")
+                        .withProperty(AFFECTED_CONTENT, constraintDescription.toString()));
+            }
+            final Rater rater;
+            switch (arguments.get(0)) {
+                case FunctionCallDescription functionCall -> {
+                    final var parserRater = parseRater(functionCall);
+                    if (parserRater.defective()) {
+                        constraint.errorMessages().withAppended(parserRater.errorMessages());
+                        return constraint;
+                    }
+                    rater = parserRater.value().orElseThrow();
+                }
+                default -> {
+                    constraint.withErrorMessage(tree("`" + THEN_NAME + "` requires exactly function call as an argument. Instead an `" + arguments.get(0).getClass().getName() + "` was given.")
+                            .withProperty(AFFECTED_CONTENT, constraintDescription.toString()));
+                    return constraint;
+                }
+            }
+            nextConstraint = parentConstraint.then(rater);
         } else {
-            throw execException();
+            return constraint.withErrorMessage(tree("Unknown constraint type")
+                    .withProperty(AFFECTED_CONTENT, constraintDescription.toString())
+                    .withProperty("constraint type", constraintName));
         }
         constraintDescription.children().forEach(c -> {
             final var cResult = parseConstraint(c, nextConstraint);
@@ -166,6 +206,64 @@ public class SolutionEditor implements Discoverable {
             }
         });
         return constraint;
+    }
+
+    private Result<Rater, Tree> parseRater(FunctionCallDescription functionCall) {
+        final Result<Rater, Tree> rater = Result.result();
+        final var name = functionCall.functionName();
+        if (name.equals(HAS_SIZE_NAME)) {
+            switch (functionCall.arguments().get(0)) {
+                case IntegerDescription integer -> {
+                    return rater.withValue(hasSize(integer.value()));
+                }
+                default -> {
+                    return rater.withErrorMessage(tree("`" + HAS_SIZE_NAME + "` requires exactly one integer as an argument. Instead an `" + functionCall.arguments().get(0).getClass().getName() + "` was given.")
+                            .withProperty(AFFECTED_CONTENT, functionCall.toString()));
+                }
+            }
+        } else if (name.equals(ALL_SAME_NAME)) {
+            switch (functionCall.arguments().get(0)) {
+                case StringDescription string -> {
+                    return rater.withValue(allSame(attributeByName(string.value())));
+                }
+                default -> {
+                    return rater.withErrorMessage(tree("`" + HAS_SIZE_NAME + "` requires exactly one string as an argument. Instead an `" + functionCall.arguments().get(0).getClass().getName() + "` was given.")
+                            .withProperty(AFFECTED_CONTENT, functionCall.toString()));
+                }
+            }
+        } else if (name.equals(MINIMAL_DISTANCE_NAME)) {
+            if (functionCall.arguments().isEmpty()) {
+                return rater.withErrorMessage(tree("Rater `" + MINIMAL_DISTANCE_NAME + "` requires exactly 2 arguments, but has none.")
+                        .withProperty("rater", functionCall.toString()));
+            }
+            if (functionCall.arguments().size() != 2) {
+                return rater.withErrorMessage(tree("Rater `" + MINIMAL_DISTANCE_NAME + "` requires exactly 2 arguments.")
+                        .withProperty("rater", functionCall.toString()));
+            }
+            final Attribute<? extends Object> attribute;
+            switch (functionCall.arguments().get(0)) {
+                case ReferenceDescription ref -> {
+                    attribute = attributeByName(ref.name());
+                }
+                default -> {
+                    return rater.withErrorMessage(tree("`" + MINIMAL_DISTANCE_NAME + "` first argument has to be a reference. Instead an `" + functionCall.arguments().get(0).getClass().getName() + "` was given.")
+                            .withProperty(AFFECTED_CONTENT, functionCall.toString()));
+                }
+            }
+            final int minimumDistance;
+            switch (functionCall.arguments().get(1)) {
+                case IntegerDescription integer -> {
+                    minimumDistance = integer.value();
+                }
+                default -> {
+                    return rater.withErrorMessage(tree("`" + MINIMAL_DISTANCE_NAME + "` second argument has to be an integer. Instead an `" + functionCall.arguments().get(1).getClass().getName() + "` was given.")
+                            .withProperty(AFFECTED_CONTENT, functionCall.toString()));
+                }
+            }
+            return rater.withValue(has_minimal_distance_of((Attribute<Integer>) attribute, minimumDistance));
+
+        }
+        return rater.withErrorMessage(tree("Unknown rater function: " + functionCall.toString()));
     }
 
     private Attribute<? extends Object> attributeByName(String name) {

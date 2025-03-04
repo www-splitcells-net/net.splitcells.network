@@ -26,17 +26,20 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT;
 import static net.splitcells.gel.constraint.type.ForAlls.FOR_ALL_COMBINATIONS_OF;
 import static net.splitcells.gel.constraint.type.ForAlls.FOR_EACH_NAME;
+import static net.splitcells.gel.constraint.type.Then.THEN_NAME;
 import static net.splitcells.gel.data.view.attribute.AttributeI.*;
 import static net.splitcells.gel.editor.Editor.editor;
 import static net.splitcells.gel.editor.lang.AttributeDescription.attributeDescription;
 import static net.splitcells.gel.editor.lang.ConstraintDescription.constraintDescription;
 import static net.splitcells.gel.editor.lang.FunctionCallDescription.functionCallDescription;
+import static net.splitcells.gel.editor.lang.IntegerDescription.integerDescription;
 import static net.splitcells.gel.editor.lang.PrimitiveType.INTEGER;
 import static net.splitcells.gel.editor.lang.PrimitiveType.STRING;
 import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
 import static net.splitcells.gel.editor.lang.SolutionDescription.solutionDescription;
 import static net.splitcells.gel.editor.lang.TableDescription.tableDescription;
 import static net.splitcells.gel.editor.solution.SolutionEditor.solutionEditor;
+import static net.splitcells.gel.rating.rater.lib.HasSize.HAS_SIZE_NAME;
 
 public class EditorTest {
     @UnitTest
@@ -63,7 +66,9 @@ public class EditorTest {
                                         , list(referenceDescription("date", AttributeDescription.class)
                                                 , referenceDescription("shift", AttributeDescription.class)
                                         ))
-                                , list()))))
+                                , list(constraintDescription(functionCallDescription(THEN_NAME
+                                                , list(functionCallDescription(HAS_SIZE_NAME, integerDescription(1))))
+                                        , list()))))))
         );
         final var colloquium = solutionEditor(testSubject, colloquiumDescription);
         colloquium.parse(colloquiumDescription).requireWorking();
