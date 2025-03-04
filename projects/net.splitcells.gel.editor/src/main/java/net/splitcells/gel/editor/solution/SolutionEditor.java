@@ -17,11 +17,9 @@ package net.splitcells.gel.editor.solution;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.testing.Result;
-import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -36,9 +34,11 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.constraint.QueryI.query;
+import static net.splitcells.gel.constraint.type.ForAll.FOR_ALL_NAME;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
@@ -48,6 +48,8 @@ import static net.splitcells.gel.editor.lang.PrimitiveType.STRING;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 
 public class SolutionEditor implements Discoverable {
+    private static final String AFFECTED_CONTENT = "affected content";
+
     public static SolutionEditor solutionEditor(Editor parent, SolutionDescription solutionDescription) {
         return new SolutionEditor(parent, solutionDescription);
     }
@@ -84,20 +86,43 @@ public class SolutionEditor implements Discoverable {
         final var problemData = defineProblem("solution")
                 .withDemands(demands.orElseThrow())
                 .withSupplies(supplies.orElseThrow());
-        final var parsedConstraints = parseConstraint(solutionDescription.constraint(), query(forAll(Optional.of(NO_CONTEXT))));
-        if (parsedConstraints.defective()) {
-            result.errorMessages().withAppended(parsedConstraints.errorMessages());
+        final var constraintRoot = query(forAll(Optional.of(NO_CONTEXT)));
+        final var parsedConstraints = solutionDescription.constraints()
+                .mapped(c -> parseConstraint(c, constraintRoot));
+        parsedConstraints.forEach(c -> {
+            if (c.defective()) {
+                result.errorMessages().withAppended(c.errorMessages());
+            }
+        });
+        if (result.defective()) {
             return result;
         }
         solution = Optional.of(problemData
-                .withConstraint(parsedConstraints.value().orElseThrow())
+                .withConstraint(constraintRoot.root().orElseThrow())
                 .toProblem()
                 .asSolution());
         return result;
     }
 
-    private Result<Constraint, Tree> parseConstraint(ConstraintDescription constraintDescription, Query query) {
-        final Result<Constraint, Tree> constraint = result();
+    private Result<Query, Tree> parseConstraint(ConstraintDescription constraintDescription, Query parentConstraint) {
+        final Result<Query, Tree> constraint = result();
+        constraint.withValue(parentConstraint);
+        final Query nextConstraint;
+        if (constraintDescription.definition().functionName().equals(FOR_ALL_NAME)) {
+            if (constraintDescription.definition().arguments().hasElements()) {
+                return constraint.withErrorMessage(tree("ForAll does not support arguments.")
+                        .withProperty(AFFECTED_CONTENT, toString()));
+            }
+            nextConstraint = parentConstraint.forAll();
+        } else {
+            throw execException();
+        }
+        constraintDescription.children().forEach(c -> {
+            final var cResult = parseConstraint(c, nextConstraint);
+            if (cResult.defective()) {
+                constraint.errorMessages().withAppended(cResult.errorMessages());
+            }
+        });
         return constraint;
     }
 
@@ -128,5 +153,15 @@ public class SolutionEditor implements Discoverable {
 
     public Optional<Table> supplies() {
         return supplies;
+    }
+
+    /**
+     * TODO Return a serialization, so it is clear, which part is incorrect.
+     *
+     * @return
+     */
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }

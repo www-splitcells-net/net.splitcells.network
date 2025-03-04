@@ -55,7 +55,7 @@ public class EditorTest {
                         , list(referenceDescription("date", AttributeDescription.class)
                                 , referenceDescription("shift", AttributeDescription.class)
                                 , referenceDescription("roomNumber", AttributeDescription.class)))
-                , constraintDescription(functionCallDescription("forEach", list()))
+                , list()
         );
         final var colloquium = solutionEditor(testSubject, colloquiumDescription);
         colloquium.parse(colloquiumDescription).requireWorking();

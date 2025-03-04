@@ -18,8 +18,6 @@ package net.splitcells.gel.editor.lang;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 
-import java.util.Optional;
-
 import static net.splitcells.dem.data.set.map.Maps.map;
 
 public class SolutionDescription {
@@ -27,26 +25,26 @@ public class SolutionDescription {
             , List<AttributeDescription> attributes
             , TableDescription demands
             , TableDescription supplies
-            , ConstraintDescription constraint) {
-        return new SolutionDescription(name, attributes, demands, supplies, constraint);
+            , List<ConstraintDescription> constraints) {
+        return new SolutionDescription(name, attributes, demands, supplies, constraints);
     }
 
     private final String name;
     private final Map<String, AttributeDescription> attributes = map();
     private final TableDescription demands;
     private final TableDescription supplies;
-    private final ConstraintDescription constraint;
+    private final List<ConstraintDescription> constraints;
 
     private SolutionDescription(String argName
             , List<AttributeDescription> argAttributes
             , TableDescription argDemands
             , TableDescription argSupplies
-            , ConstraintDescription argConstraint) {
+            , List<ConstraintDescription> argConstraints) {
         name = argName;
         argAttributes.forEach(a -> attributes.put(a.name(), a));
         demands = argDemands;
         supplies = argSupplies;
-        constraint = argConstraint;
+        constraints = argConstraints;
     }
 
     /**
@@ -70,7 +68,7 @@ public class SolutionDescription {
         return name;
     }
 
-    public ConstraintDescription constraint() {
-        return constraint;
+    public List<ConstraintDescription> constraints() {
+        return constraints;
     }
 }
