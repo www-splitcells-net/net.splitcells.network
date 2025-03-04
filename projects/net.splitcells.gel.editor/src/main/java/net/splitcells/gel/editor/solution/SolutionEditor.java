@@ -17,6 +17,7 @@ package net.splitcells.gel.editor.solution;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.testing.Result;
@@ -37,8 +38,8 @@ import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.constraint.type.ForAll.FOR_ALL_NAME;
-import static net.splitcells.gel.constraint.type.ForAlls.FOR_EACH_NAME;
-import static net.splitcells.gel.constraint.type.ForAlls.forAll;
+import static net.splitcells.gel.constraint.type.ForAlls.*;
+import static net.splitcells.gel.constraint.type.ForAlls.FOR_ALL_COMBINATIONS_OF;
 import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
 import static net.splitcells.gel.data.view.attribute.AttributeI.stringAttribute;
@@ -135,6 +136,26 @@ public class SolutionEditor implements Discoverable {
             } else {
                 throw execException();
             }
+        } else if (constraintDescription.definition().functionName().equals(FOR_ALL_COMBINATIONS_OF)) {
+            if (constraintDescription.definition().arguments().size() < 2) {
+                return constraint.withErrorMessage(tree(FOR_ALL_COMBINATIONS_OF + " requires at least 2 arguments.")
+                        .withProperty(AFFECTED_CONTENT, toString()));
+            }
+            final List<Attribute<? extends Object>> combinations = list();
+            for (final var arg : constraintDescription.definition().arguments()) {
+                switch (arg) {
+                    case ReferenceDescription ref -> {
+                        combinations.add(attributeByName(ref.name()));
+                    }
+                    default -> {
+                        return constraint.withErrorMessage(tree("ForAllCombinationsOf only takes attribute references as arguments.")
+                                .withProperty("Argument class", arg.getClass().getName())
+                                .withProperty("Argument", arg.toString())
+                                .withProperty(AFFECTED_CONTENT, arg.toString()));
+                    }
+                }
+            }
+            nextConstraint = parentConstraint.forAllCombinationsOf(combinations);
         } else {
             throw execException();
         }
@@ -145,6 +166,17 @@ public class SolutionEditor implements Discoverable {
             }
         });
         return constraint;
+    }
+
+    private Attribute<? extends Object> attributeByName(String name) {
+        Optional<Attribute<? extends Object>> attribute = Optional.empty();
+        if (demands.isPresent()) {
+            attribute = demands.orElseThrow().searchAttributeByName(name);
+        }
+        if (attribute.isEmpty() && supplies.isPresent()) {
+            attribute = supplies.orElseThrow().searchAttributeByName(name);
+        }
+        return attribute.orElseThrow();
     }
 
     private Table parseTable(TableDescription tableDescription) {

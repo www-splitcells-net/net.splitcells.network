@@ -24,6 +24,8 @@ import net.splitcells.gel.editor.lang.*;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT;
+import static net.splitcells.gel.constraint.type.ForAlls.FOR_ALL_COMBINATIONS_OF;
+import static net.splitcells.gel.constraint.type.ForAlls.FOR_EACH_NAME;
 import static net.splitcells.gel.data.view.attribute.AttributeI.*;
 import static net.splitcells.gel.editor.Editor.editor;
 import static net.splitcells.gel.editor.lang.AttributeDescription.attributeDescription;
@@ -55,8 +57,13 @@ public class EditorTest {
                         , list(referenceDescription("date", AttributeDescription.class)
                                 , referenceDescription("shift", AttributeDescription.class)
                                 , referenceDescription("roomNumber", AttributeDescription.class)))
-                , list(constraintDescription(functionCallDescription("forEach"
-                        , list(referenceDescription("observer", AttributeDescription.class)))))
+                , list(constraintDescription(functionCallDescription(FOR_EACH_NAME
+                                , list(referenceDescription("observer", AttributeDescription.class)))
+                        , list(constraintDescription(functionCallDescription(FOR_ALL_COMBINATIONS_OF
+                                        , list(referenceDescription("date", AttributeDescription.class)
+                                                , referenceDescription("shift", AttributeDescription.class)
+                                        ))
+                                , list()))))
         );
         final var colloquium = solutionEditor(testSubject, colloquiumDescription);
         colloquium.parse(colloquiumDescription).requireWorking();
@@ -77,6 +84,8 @@ public class EditorTest {
                         , integerAttribute("roomNumber"))
                 , CONTENT_COMPARISON);
         final var solution = colloquium.solution().orElseThrow();
-        solution.constraint().readQuery().forAll(solution.attributeByName("observer"));
+        solution.constraint().readQuery()
+                .forAll(solution.attributeByName("observer"))
+                .forAllCombinationsOf(solution.attributeByName("date"), solution.attributeByName("shift"));
     }
 }

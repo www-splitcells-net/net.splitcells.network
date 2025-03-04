@@ -86,12 +86,14 @@ public class QueryI implements Query, QueryEditor {
                     , nextGroups
                     , root()
                     , constraintPath().shallowCopy().withAppended(nextConstraint)
-                    , subject().orElseThrow());
+                    , subject().orElseThrow()
+                    , isBuilder);
         }
         return new QueryI(nextConstraint
                 , nextGroups
                 , root()
-                , constraintPath().shallowCopy().withAppended(nextConstraint));
+                , constraintPath().shallowCopy().withAppended(nextConstraint)
+                , isBuilder);
     }
 
     /**
@@ -154,6 +156,15 @@ public class QueryI implements Query, QueryEditor {
         isBuilder = true;
     }
 
+    private QueryI(Constraint currentInjectionGroup, Set<GroupId> groups, Optional<Constraint> root, List<Constraint> constraintPath, boolean argIsBuilder) {
+        this.currentConstraint = currentInjectionGroup;
+        this.groups = groups;
+        this.root = root;
+        this.constraintPath = constraintPath;
+        subject = Optional.empty();
+        isBuilder = argIsBuilder;
+    }
+
     private QueryI(Constraint currentInjectionGroup, Set<GroupId> groups, Optional<Constraint> root, List<Constraint> constraintPath, Assignments subject) {
         this.currentConstraint = currentInjectionGroup;
         this.groups = groups;
@@ -161,6 +172,15 @@ public class QueryI implements Query, QueryEditor {
         this.constraintPath = constraintPath;
         this.subject = Optional.of(subject);
         isBuilder = true;
+    }
+
+    private QueryI(Constraint currentInjectionGroup, Set<GroupId> groups, Optional<Constraint> root, List<Constraint> constraintPath, Assignments subject, boolean argIsBuilder) {
+        this.currentConstraint = currentInjectionGroup;
+        this.groups = groups;
+        this.root = root;
+        this.constraintPath = constraintPath;
+        this.subject = Optional.of(subject);
+        isBuilder = argIsBuilder;
     }
 
     @Override

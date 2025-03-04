@@ -133,8 +133,8 @@ public interface View extends Discoverable, Domable, Identifiable {
     }
 
     /**
-     * @see #unorderedLinesStream2()
      * @return
+     * @see #unorderedLinesStream2()
      */
     @Deprecated
     default Stream<Line> unorderedLinesStream() {
@@ -388,6 +388,12 @@ public interface View extends Discoverable, Domable, Identifiable {
                 .filter(da -> da.name().equals(name))
                 .findFirst()
                 .orElseThrow();
+    }
+
+    default Optional<Attribute<? extends Object>> searchAttributeByName(String name) {
+        return headerView2().stream()
+                .filter(da -> da.name().equals(name))
+                .findFirst();
     }
 
     /**
