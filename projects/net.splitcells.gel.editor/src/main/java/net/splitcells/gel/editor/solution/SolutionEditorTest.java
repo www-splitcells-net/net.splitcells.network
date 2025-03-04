@@ -16,10 +16,14 @@
 package net.splitcells.gel.editor.solution;
 
 import net.splitcells.dem.testing.annotations.UnitTest;
+import net.splitcells.gel.editor.lang.SolutionDescription;
+
+import static net.splitcells.gel.editor.solution.SolutionEditor.solutionEditor;
 
 public class SolutionEditorTest {
     @UnitTest
     public void parsingTest() {
-
+        final var testData = SolutionDescription.solutionDescription("test-subject");
+        final var testSubject = solutionEditor(testData);
     }
 }

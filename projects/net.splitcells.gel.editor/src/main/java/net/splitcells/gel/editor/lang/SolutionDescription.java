@@ -20,17 +20,22 @@ import net.splitcells.dem.data.set.map.Map;
 import static net.splitcells.dem.data.set.map.Maps.map;
 
 public class SolutionDescription {
-    public static SolutionDescription solutionDescription() {
-        return new SolutionDescription();
+    public static SolutionDescription solutionDescription(String name) {
+        return new SolutionDescription(name);
     }
 
+    private String name;
     private Map<String, AttributeDescription> attributeDescriptions = map();
 
-    private SolutionDescription() {
-
+    private SolutionDescription(String argName) {
+        name = argName;
     }
 
     public Map<String, AttributeDescription> attributeDescriptions() {
         return attributeDescriptions;
+    }
+
+    public String name() {
+        return name;
     }
 }

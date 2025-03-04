@@ -27,18 +27,15 @@ import static net.splitcells.gel.editor.lang.PrimitiveType.INTEGER;
 import static net.splitcells.gel.editor.lang.PrimitiveType.STRING;
 
 public class SolutionEditor {
-    public static SolutionEditor solutionEditor(String name) {
-        return new SolutionEditor(name);
+    public static SolutionEditor solutionEditor(SolutionDescription solutionDescription) {
+        return new SolutionEditor(solutionDescription);
     }
 
     private final String name;
     private final Map<String, Attribute<? extends Object>> attributes = map();
 
-    private SolutionEditor(String argName) {
-        name = argName;
-    }
-
-    public SolutionEditor parse(SolutionDescription solutionDescription) {
+    private SolutionEditor(SolutionDescription solutionDescription) {
+        name = solutionDescription.name();
         solutionDescription.attributeDescriptions().entrySet().forEach(ad -> {
             final var attributeDesc = ad.getValue();
             final Attribute<? extends Object> attribute;
@@ -51,7 +48,6 @@ public class SolutionEditor {
             }
             attributes.put(attributeDesc.name(), attribute);
         });
-        return this;
     }
 
     public Map<String, Attribute<? extends Object>> attributes() {
