@@ -52,13 +52,16 @@ public class SolutionEditor implements Discoverable {
     private final Editor parent;
     private final String name;
     private final Map<String, Attribute<?>> attributes = map();
-    private final Table demands;
-    private final Table supplies;
-    private final Solution solution;
+    private Optional<Table> demands = Optional.empty();
+    private Optional<Table> supplies;
+    private Optional<Solution> solution = Optional.empty();
 
     private SolutionEditor(Editor argParent, SolutionDescription solutionDescription) {
         parent = argParent;
         name = solutionDescription.name();
+    }
+
+    public SolutionEditor parse(SolutionDescription solutionDescription) {
         solutionDescription.attributes().entrySet().forEach(ad -> {
             final var attributeDesc = ad.getValue();
             final Attribute<?> attribute;
@@ -71,19 +74,17 @@ public class SolutionEditor implements Discoverable {
             }
             attributes.put(attributeDesc.name(), attribute);
         });
-        demands = parseTable(solutionDescription.demands());
-        supplies = parseTable(solutionDescription.supplies());
+        demands = Optional.of(parseTable(solutionDescription.demands()));
+        supplies = Optional.of(parseTable(solutionDescription.supplies()));
         if (StaticFlags.DISABLED_FUNCTIONALITY) {
-            solution = defineProblem("solution")
-                    .withDemands(demands)
-                    .withSupplies(supplies)
+            solution = Optional.of(defineProblem("solution")
+                    .withDemands(demands.orElseThrow())
+                    .withSupplies(supplies.orElseThrow())
                     .withConstraint(parseConstraint(solutionDescription.constraint(), query(forAll(Optional.of(NO_CONTEXT)))))
                     .toProblem()
-                    .asSolution();
-        } else {
-            // TODO
-            solution = null;
+                    .asSolution());
         }
+        return this;
     }
 
     private Constraint parseConstraint(ConstraintDescription constraintDescription, Query query) {
@@ -112,11 +113,11 @@ public class SolutionEditor implements Discoverable {
         return parent.path().withAppended(name);
     }
 
-    public Table demands() {
+    public Optional<Table> demands() {
         return demands;
     }
 
-    public Table supplies() {
+    public Optional<Table> supplies() {
         return supplies;
     }
 }

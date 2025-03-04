@@ -58,18 +58,19 @@ public class EditorTest {
                 , constraintDescription(functionCallDescription("forEach", list()))
         );
         final var colloquium = solutionEditor(testSubject, colloquiumDescription);
+        colloquium.parse(colloquiumDescription);
         colloquium.attributes().requirePresence("student", stringAttribute("student"), CONTENT_COMPARISON)
                 .requirePresence("examiner", stringAttribute("examiner"), CONTENT_COMPARISON)
                 .requirePresence("observer", stringAttribute("observer"), CONTENT_COMPARISON)
                 .requirePresence("date", integerAttribute("date"), CONTENT_COMPARISON)
                 .requirePresence("shift", integerAttribute("shift"), CONTENT_COMPARISON)
                 .requirePresence("roomNumber", integerAttribute("roomNumber"), CONTENT_COMPARISON);
-        colloquium.demands().headerView2().requireEquality(list(
+        colloquium.demands().orElseThrow().headerView2().requireEquality(list(
                         stringAttribute("student")
                         , stringAttribute("examiner")
                         , stringAttribute("observer"))
                 , CONTENT_COMPARISON);
-        colloquium.supplies().headerView2().requireEquality(list(
+        colloquium.supplies().orElseThrow().headerView2().requireEquality(list(
                         integerAttribute("date")
                         , integerAttribute("shift")
                         , integerAttribute("roomNumber"))
