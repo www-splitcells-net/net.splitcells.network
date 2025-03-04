@@ -202,13 +202,24 @@ integer
 	| Floating_point_short
 	| Hyphen_minus Digits
 	;
+/* Sealed classes are only allowed for providing a list of things, where only exactly one element is present.
+ * So, when a class contains multiple optional attributes, where exactly one is set at any given time,
+ * sealed classes aka union types can be used.
+ * This is also useful for lists, that have to contain a fixed set of types.
+ * Sealed classes are not intended to be used as an replacement for interfaces or polymorphism.
+ */
 interface_definition
     : javadoc? annotation* Keyword_public? Keyword_final? Keyword_interface?
     	name
     	type_argument?
     	interface_extension?
         Brace_curly_open interface_definition_member* Brace_curly_closed
+    | javadoc? annotation* Keyword_public? Keyword_sealed? Keyword_interface?
+        name
+        interface_permits
+        Brace_curly_open Brace_curly_closed
     ;
+interface_permits: Keyword_permits name (Comma name)*;
 interface_extension
 	: Keyword_extends type_declaration interface_extension_additional*
 	;
