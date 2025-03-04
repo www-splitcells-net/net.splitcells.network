@@ -28,6 +28,7 @@ import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
 import static net.splitcells.gel.data.view.attribute.AttributeI.stringAttribute;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
+import static net.splitcells.gel.rating.rater.lib.MinimalDistance.has_minimal_distance_of;
 import static net.splitcells.gel.rating.rater.lib.MinimalDistance.minimalDistance;
 import static net.splitcells.gel.ui.no.code.editor.NoCodeProblemParser.*;
 
@@ -65,10 +66,10 @@ public class NoCodeProblemParserTest {
                 .then(hasSize(1));
         query(problem.constraint(), false)
                 .forAll(student)
-                .then(minimalDistance((Attribute<Double>) date, 3));
+                .then(has_minimal_distance_of((Attribute<Integer>) date, 3));
         query(problem.constraint(), false)
                 .forAll(student)
-                .then(minimalDistance((Attribute<Double>) date, 5));
+                .then(has_minimal_distance_of((Attribute<Integer>) date, 5));
     }
 
     @UnitTest
