@@ -188,13 +188,13 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
 
     default Map<Key, Value> requirePresence(Key key, Value value) {
         if (containsKey(key)) {
-            throw ExecutionException.execException(tree("Map should not contain given key, but has not.")
+            throw ExecutionException.execException(tree("Map should contain given key, but has not.")
                     .withProperty("map", toString())
                     .withProperty("key", key.toString())
                     .withProperty("value", value.toString()));
         }
         if (get(key).equals(value)) {
-            throw ExecutionException.execException(tree("Map should not contain given value for the given key, but has not.")
+            throw ExecutionException.execException(tree("Map should contain given value for the given key, but has not.")
                     .withProperty("map", toString())
                     .withProperty("required-key", key.toString())
                     .withProperty("actual-key", get(key).toString())
@@ -205,14 +205,14 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
 
     default Map<Key, Value> requirePresence(Key key, Value value, Comparison<Value> comparison) {
         if (!containsKey(key)) {
-            throw ExecutionException.execException(tree("Map should not contain given key, but has not.")
+            throw ExecutionException.execException(tree("Map should contain given key, but has not.")
                     .withProperty("map", toString())
                     .withProperty("key", key.toString())
                     .withProperty("value", value.toString()));
         }
 
         if (comparison.compareTo(get(key), value) != EQUAL) {
-            throw ExecutionException.execException(tree("Map should not contain given value for the given key, but has not.")
+            throw ExecutionException.execException(tree("Map should contain given value for the given key, but has not.")
                     .withProperty("map", toString())
                     .withProperty("required-key", key.toString())
                     .withProperty("actual-key", get(key).toString())
