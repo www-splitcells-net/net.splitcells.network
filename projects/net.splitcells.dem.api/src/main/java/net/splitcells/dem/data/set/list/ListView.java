@@ -18,6 +18,8 @@ package net.splitcells.dem.data.set.list;
 import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.Flows;
 import net.splitcells.dem.data.atom.Thing;
+import net.splitcells.dem.data.order.Comparison;
+import net.splitcells.dem.data.order.Ordering;
 import net.splitcells.dem.data.set.SetT;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.utils.ExecutionException;
@@ -26,7 +28,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.function.Predicate;
 
+import static java.util.stream.IntStream.range;
+import static net.splitcells.dem.data.order.Ordering.EQUAL;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -79,6 +84,21 @@ public interface ListView<T> extends Collection<T>, java.util.List<T>, Thing, Se
 
     default void requireEquals(List<T> arg) {
         assertThat(this).isEqualTo(arg);
+    }
+
+    default ListView<T> requireEquality(List<T> arg, Comparison<T> comparison) {
+        requireSizeOf(arg.size());
+        range(0, size()).forEach(i -> {
+            if (comparison.compareTo(get(i), arg.get(i)) != EQUAL) {
+                throw execException(tree("This lists is not equal to given list, even though they should.")
+                        .withProperty("This list", toString())
+                        .withProperty("Given list", arg.toString())
+                        .withProperty("First index of unequal content", "" + i)
+                        .withProperty("Comparison", comparison.toString())
+                );
+            }
+        });
+        return this;
     }
 
     default T requireLastValue() {
