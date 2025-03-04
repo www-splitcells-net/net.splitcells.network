@@ -17,7 +17,6 @@ package net.splitcells.gel.editor.solution;
 
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.gel.data.view.attribute.Attribute;
-import net.splitcells.gel.editor.lang.PrimitiveType;
 import net.splitcells.gel.editor.lang.SolutionDescription;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -28,14 +27,15 @@ import static net.splitcells.gel.editor.lang.PrimitiveType.INTEGER;
 import static net.splitcells.gel.editor.lang.PrimitiveType.STRING;
 
 public class SolutionEditor {
-    public static SolutionEditor solutionEditor() {
-        return new SolutionEditor();
+    public static SolutionEditor solutionEditor(String name) {
+        return new SolutionEditor(name);
     }
 
+    private final String name;
     private final Map<String, Attribute<? extends Object>> attributes = map();
 
-    private SolutionEditor() {
-
+    private SolutionEditor(String argName) {
+        name = argName;
     }
 
     public SolutionEditor parse(SolutionDescription solutionDescription) {
@@ -56,5 +56,9 @@ public class SolutionEditor {
 
     public Map<String, Attribute<? extends Object>> attributes() {
         return attributes;
+    }
+
+    public String name() {
+        return name;
     }
 }
