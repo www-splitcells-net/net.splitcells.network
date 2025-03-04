@@ -26,6 +26,11 @@
         </dependency>
         <dependency>
             <groupId>net.splitcells</groupId>
+            <artifactId>gel.editor</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.splitcells</groupId>
             <artifactId>website.server</artifactId>
             <version>${revision}</version>
         </dependency>
