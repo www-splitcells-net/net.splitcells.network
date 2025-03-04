@@ -29,6 +29,7 @@
         <module>projects/net.splitcells.maven.plugin.check</module>
         <module>projects/net.splitcells.gel.core</module>
         <module>projects/net.splitcells.gel.ext</module>
+        <module>projects/net.splitcells.gel.editor</module>
         <module>projects/net.splitcells.gel.ui</module>
         <module>projects/net.splitcells.gel.doc</module>
         <module>projects/net.splitcells.gel.quickstart</module>
