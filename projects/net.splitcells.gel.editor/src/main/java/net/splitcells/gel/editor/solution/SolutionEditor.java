@@ -17,11 +17,14 @@ package net.splitcells.gel.editor.solution;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.object.Discoverable;
+import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
+import net.splitcells.gel.editor.lang.ConstraintDescription;
 import net.splitcells.gel.editor.lang.SolutionDescription;
 import net.splitcells.gel.editor.lang.TableDescription;
 import net.splitcells.gel.solution.Solution;
@@ -47,6 +50,7 @@ public class SolutionEditor implements Discoverable {
     private final Map<String, Attribute<?>> attributes = map();
     private final Table demands;
     private final Table supplies;
+    private final Solution solution;
 
     private SolutionEditor(Editor argParent, SolutionDescription solutionDescription) {
         parent = argParent;
@@ -65,9 +69,22 @@ public class SolutionEditor implements Discoverable {
         });
         demands = parse(solutionDescription.demands());
         supplies = parse(solutionDescription.supplies());
-        defineProblem("solution")
-                .withDemands(demands)
-                .withSupplies(supplies);
+        if (StaticFlags.DISABLED_FUNCTIONALITY) {
+            solution = defineProblem("solution")
+                    .withDemands(demands)
+                    .withSupplies(supplies)
+                    .withConstraint(parse(solutionDescription.constraint()))
+                    .toProblem()
+                    .asSolution();
+        } else {
+            // TODO
+            solution = null;
+        }
+    }
+
+    private Constraint parse(ConstraintDescription constraintDescription) {
+        // TODO
+        return null;
     }
 
     private Table parse(TableDescription tableDescription) {
