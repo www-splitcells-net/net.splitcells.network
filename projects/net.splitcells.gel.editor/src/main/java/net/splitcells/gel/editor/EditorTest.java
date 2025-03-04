@@ -40,6 +40,7 @@ import static net.splitcells.gel.editor.lang.SolutionDescription.solutionDescrip
 import static net.splitcells.gel.editor.lang.TableDescription.tableDescription;
 import static net.splitcells.gel.editor.solution.SolutionEditor.solutionEditor;
 import static net.splitcells.gel.rating.rater.lib.HasSize.HAS_SIZE_NAME;
+import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 
 public class EditorTest {
     @UnitTest
@@ -91,6 +92,7 @@ public class EditorTest {
         final var solution = colloquium.solution().orElseThrow();
         solution.constraint().readQuery()
                 .forAll(solution.attributeByName("observer"))
-                .forAllCombinationsOf(solution.attributeByName("date"), solution.attributeByName("shift"));
+                .forAllCombinationsOf(solution.attributeByName("date"), solution.attributeByName("shift"))
+                .then(hasSize(1));
     }
 }
