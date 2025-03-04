@@ -15,13 +15,22 @@
  */
 package net.splitcells.gel.editor.lang;
 
-public enum PrimitiveType {
-    INTEGER("integer"), STRING("string");
-    private final String id;
-    PrimitiveType(String argId) {
-        id = argId;
+import net.splitcells.dem.data.set.map.Map;
+
+import static net.splitcells.dem.data.set.map.Maps.map;
+
+public class SolutionDescription {
+    public static SolutionDescription solutionDescription() {
+        return new SolutionDescription();
     }
-    public String id() {
-        return id;
+
+    private Map<String, AttributeDescription> attributeDescriptions = map();
+
+    private SolutionDescription() {
+
+    }
+
+    public Map<String, AttributeDescription> attributeDescriptions() {
+        return attributeDescriptions;
     }
 }

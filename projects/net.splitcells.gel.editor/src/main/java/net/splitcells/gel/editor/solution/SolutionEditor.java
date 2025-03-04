@@ -17,8 +17,15 @@ package net.splitcells.gel.editor.solution;
 
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.gel.data.view.attribute.Attribute;
+import net.splitcells.gel.editor.lang.PrimitiveType;
+import net.splitcells.gel.editor.lang.SolutionDescription;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.stringAttribute;
+import static net.splitcells.gel.editor.lang.PrimitiveType.INTEGER;
+import static net.splitcells.gel.editor.lang.PrimitiveType.STRING;
 
 public class SolutionEditor {
     public static SolutionEditor solutionEditor() {
@@ -29,5 +36,25 @@ public class SolutionEditor {
 
     private SolutionEditor() {
 
+    }
+
+    public SolutionEditor parse(SolutionDescription solutionDescription) {
+        solutionDescription.attributeDescriptions().entrySet().forEach(ad -> {
+            final var attributeDesc = ad.getValue();
+            final Attribute<? extends Object> attribute;
+            if (INTEGER.equals(attributeDesc.primitiveType())) {
+                attribute = integerAttribute(attributeDesc.name());
+            } else if (STRING.equals(attributeDesc.primitiveType())) {
+                attribute = stringAttribute(attributeDesc.name());
+            } else {
+                throw execException();
+            }
+            attributes.put(attributeDesc.name(), attribute);
+        });
+        return this;
+    }
+
+    public Map<String, Attribute<? extends Object>> attributes() {
+        return attributes;
     }
 }
