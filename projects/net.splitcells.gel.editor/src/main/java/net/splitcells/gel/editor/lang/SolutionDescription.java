@@ -22,38 +22,39 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.map.Maps.map;
 
 public class SolutionDescription {
-    public static SolutionDescription solutionDescription(String name) {
-        return new SolutionDescription(name);
+    public static SolutionDescription solutionDescription(String name, Map<String, AttributeDescription> attributes, TableDescription demands, TableDescription supplies) {
+        return new SolutionDescription(name, attributes, demands, supplies);
     }
 
-    private String name;
-    private final Map<String, AttributeDescription> attributes = map();
-    private Optional<TableDescription> demands = Optional.empty();
-    private Optional<TableDescription> supplies = Optional.empty();
+    private final String name;
+    private final Map<String, AttributeDescription> attributes;
+    private final TableDescription demands;
+    private final TableDescription supplies;
 
-    private SolutionDescription(String argName) {
+    private SolutionDescription(String argName
+            , Map<String, AttributeDescription> argAttributes
+            , TableDescription argDemands
+            , TableDescription argSupplies) {
         name = argName;
+        attributes = argAttributes;
+        demands = argDemands;
+        supplies = argSupplies;
     }
 
+    /**
+     * TODO The returned value, is not allowed to be changed. Create a ready-only interface for this.
+     *
+     * @return
+     */
     public Map<String, AttributeDescription> attributes() {
         return attributes;
     }
 
-    public Optional<TableDescription> demands() {
+    public TableDescription demands() {
         return demands;
     }
 
-    public SolutionDescription withDemands(TableDescription arg) {
-        demands = Optional.of(arg);
-        return this;
-    }
-
-    public SolutionDescription withSupplies(TableDescription arg) {
-        supplies = Optional.of(arg);
-        return this;
-    }
-
-    public Optional<TableDescription> supplies() {
+    public TableDescription supplies() {
         return supplies;
     }
 

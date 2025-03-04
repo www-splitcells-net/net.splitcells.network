@@ -63,8 +63,8 @@ public class SolutionEditor implements Discoverable {
             }
             attributes.put(attributeDesc.name(), attribute);
         });
-        demands = parse(solutionDescription.demands().orElseThrow());
-        supplies = parse(solutionDescription.supplies().orElseThrow());
+        demands = parse(solutionDescription.demands());
+        supplies = parse(solutionDescription.supplies());
         defineProblem("solution")
                 .withDemands(demands)
                 .withSupplies(supplies);

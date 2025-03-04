@@ -16,6 +16,7 @@
 package net.splitcells.gel.editor;
 
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.data.set.map.Maps;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.editor.lang.AttributeDescription;
@@ -24,6 +25,7 @@ import net.splitcells.gel.editor.lang.SolutionDescription;
 import net.splitcells.gel.editor.lang.TableDescription;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT;
 import static net.splitcells.gel.data.view.attribute.AttributeI.*;
 import static net.splitcells.gel.editor.Editor.editor;
@@ -39,21 +41,22 @@ public class EditorTest {
     @UnitTest
     public void testParsingColloquium() {
         final var testSubject = editor("test-subject", EXPLICIT_NO_CONTEXT);
-        final var colloquiumDescription = solutionDescription("colloquium-planning");
-        colloquiumDescription.attributes().with("student", attributeDescription("student", STRING))
-                .with("examiner", attributeDescription("examiner", STRING))
-                .with("observer", attributeDescription("observer", STRING))
-                .with("date", attributeDescription("date", INTEGER))
-                .with("shift", attributeDescription("shift", INTEGER))
-                .with("roomNumber", attributeDescription("roomNumber", INTEGER));
-        colloquiumDescription.withDemands(tableDescription("exams"
-                , list(referenceDescription("student", AttributeDescription.class)
-                        , referenceDescription("examiner", AttributeDescription.class)
-                        , referenceDescription("observer", AttributeDescription.class))));
-        colloquiumDescription.withSupplies(tableDescription("exam slot"
-                , list(referenceDescription("date", AttributeDescription.class)
-                        , referenceDescription("shift", AttributeDescription.class)
-                        , referenceDescription("roomNumber", AttributeDescription.class))));
+        final var colloquiumDescription = solutionDescription("colloquium-planning"
+                , Maps.<String, AttributeDescription>map()
+                        .with("student", attributeDescription("student", STRING))
+                        .with("examiner", attributeDescription("examiner", STRING))
+                        .with("observer", attributeDescription("observer", STRING))
+                        .with("date", attributeDescription("date", INTEGER))
+                        .with("shift", attributeDescription("shift", INTEGER))
+                        .with("roomNumber", attributeDescription("roomNumber", INTEGER))
+                , tableDescription("exams"
+                        , list(referenceDescription("student", AttributeDescription.class)
+                                , referenceDescription("examiner", AttributeDescription.class)
+                                , referenceDescription("observer", AttributeDescription.class)))
+                , tableDescription("exam slot"
+                        , list(referenceDescription("date", AttributeDescription.class)
+                                , referenceDescription("shift", AttributeDescription.class)
+                                , referenceDescription("roomNumber", AttributeDescription.class))));
         final var colloquium = solutionEditor(testSubject, colloquiumDescription);
         colloquium.attributes().requirePresence("student", stringAttribute("student"), CONTENT_COMPARISON)
                 .requirePresence("examiner", stringAttribute("examiner"), CONTENT_COMPARISON)
