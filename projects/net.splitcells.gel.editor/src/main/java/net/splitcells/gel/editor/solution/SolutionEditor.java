@@ -15,30 +15,43 @@
  */
 package net.splitcells.gel.editor.solution;
 
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.object.Discoverable;
+import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.view.attribute.Attribute;
+import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.lang.SolutionDescription;
+import net.splitcells.gel.editor.lang.TableDescription;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
 import static net.splitcells.gel.data.view.attribute.AttributeI.stringAttribute;
 import static net.splitcells.gel.editor.lang.PrimitiveType.INTEGER;
 import static net.splitcells.gel.editor.lang.PrimitiveType.STRING;
 
-public class SolutionEditor {
-    public static SolutionEditor solutionEditor(SolutionDescription solutionDescription) {
-        return new SolutionEditor(solutionDescription);
+public class SolutionEditor implements Discoverable {
+    public static SolutionEditor solutionEditor(Editor parent, SolutionDescription solutionDescription) {
+        return new SolutionEditor(parent, solutionDescription);
     }
 
+    private final Editor parent;
     private final String name;
-    private final Map<String, Attribute<? extends Object>> attributes = map();
+    private final Map<String, Attribute<?>> attributes = map();
+    private final Table demands;
+    private final Table supplies;
 
-    private SolutionEditor(SolutionDescription solutionDescription) {
+    private SolutionEditor(Editor argParent, SolutionDescription solutionDescription) {
+        parent = argParent;
         name = solutionDescription.name();
         solutionDescription.attributes().entrySet().forEach(ad -> {
             final var attributeDesc = ad.getValue();
-            final Attribute<? extends Object> attribute;
+            final Attribute<?> attribute;
             if (INTEGER.equals(attributeDesc.primitiveType())) {
                 attribute = integerAttribute(attributeDesc.name());
             } else if (STRING.equals(attributeDesc.primitiveType())) {
@@ -48,6 +61,16 @@ public class SolutionEditor {
             }
             attributes.put(attributeDesc.name(), attribute);
         });
+        demands = parse(solutionDescription.demands().orElseThrow());
+        supplies = parse(solutionDescription.supplies().orElseThrow());
+    }
+
+    private Table parse(TableDescription tableDescription) {
+        final List<Attribute<?>> header = list();
+        tableDescription.header().flow()
+                .map(h -> (Attribute<?>) attributes.get(h.name()))
+                .forEach(h -> header.add(h));
+        return table(tableDescription.name(), (Discoverable) this, header);
     }
 
     public Map<String, Attribute<? extends Object>> attributes() {
@@ -56,5 +79,18 @@ public class SolutionEditor {
 
     public String name() {
         return name;
+    }
+
+    @Override
+    public List<String> path() {
+        return parent.path().withAppended(name);
+    }
+
+    public Table demands() {
+        return demands;
+    }
+
+    public Table supplies() {
+        return supplies;
     }
 }

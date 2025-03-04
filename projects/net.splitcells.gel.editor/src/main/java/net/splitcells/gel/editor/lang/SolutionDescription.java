@@ -17,6 +17,8 @@ package net.splitcells.gel.editor.lang;
 
 import net.splitcells.dem.data.set.map.Map;
 
+import java.util.Optional;
+
 import static net.splitcells.dem.data.set.map.Maps.map;
 
 public class SolutionDescription {
@@ -25,8 +27,9 @@ public class SolutionDescription {
     }
 
     private String name;
-    private Map<String, AttributeDescription> attributes = map();
-    private Map<String, TableDescription> tables = map();
+    private final Map<String, AttributeDescription> attributes = map();
+    private Optional<TableDescription> demands = Optional.empty();
+    private Optional<TableDescription> supplies = Optional.empty();
 
     private SolutionDescription(String argName) {
         name = argName;
@@ -34,6 +37,24 @@ public class SolutionDescription {
 
     public Map<String, AttributeDescription> attributes() {
         return attributes;
+    }
+
+    public Optional<TableDescription> demands() {
+        return demands;
+    }
+
+    public SolutionDescription withDemands(TableDescription arg) {
+        demands = Optional.of(arg);
+        return this;
+    }
+
+    public SolutionDescription withSupplies(TableDescription arg) {
+        supplies = Optional.of(arg);
+        return this;
+    }
+
+    public Optional<TableDescription> supplies() {
+        return supplies;
     }
 
     public String name() {

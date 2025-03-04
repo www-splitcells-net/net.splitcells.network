@@ -38,4 +38,9 @@ public class TableDescription {
     public List<ReferenceDescription<AttributeDescription>> header() {
         return header;
     }
+
+    public TableDescription withAttribute(ReferenceDescription<AttributeDescription> attribute) {
+        header.add(attribute);
+        return this;
+    }
 }
