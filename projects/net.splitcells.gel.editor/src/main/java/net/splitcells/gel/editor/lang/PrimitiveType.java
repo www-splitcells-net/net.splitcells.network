@@ -15,13 +15,29 @@
  */
 package net.splitcells.gel.editor.lang;
 
+import java.util.Optional;
+
+import static net.splitcells.dem.utils.ExecutionException.execException;
+
 public enum PrimitiveType {
     INTEGER("integer"), STRING("string");
     private final String id;
+
     PrimitiveType(String argId) {
         id = argId;
     }
+
     public String id() {
         return id;
+    }
+
+    public static Optional<PrimitiveType> parse(String arg) {
+        if ("integer".equals(arg)) {
+            return Optional.of(INTEGER);
+        } else if ("string".equals(arg)) {
+            return Optional.of(STRING);
+        } else {
+            return Optional.empty();
+        }
     }
 }

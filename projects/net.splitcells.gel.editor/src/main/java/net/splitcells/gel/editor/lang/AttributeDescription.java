@@ -15,7 +15,26 @@
  */
 package net.splitcells.gel.editor.lang;
 
+import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.testing.Result;
+import net.splitcells.gel.data.view.attribute.Attribute;
+
+import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.testing.Result.result;
+import static net.splitcells.gel.data.view.attribute.AttributeI.*;
+
 public class AttributeDescription {
+    public static Result<AttributeDescription, Tree> parseAttributeDescription(String name, String type) {
+        final Result<AttributeDescription, Tree> attribute = result();
+        final var primitiveType = PrimitiveType.parse(type);
+        if (primitiveType.isEmpty()) {
+            return attribute.withErrorMessage(tree("Unknown attribute type.")
+                    .withProperty("name", name)
+                    .withProperty("type", type));
+        }
+        return attribute.withValue(attributeDescription(name, primitiveType.get()));
+    }
+
     public static AttributeDescription attributeDescription(String name, PrimitiveType primitiveType) {
         return new AttributeDescription(name, primitiveType);
     }
@@ -27,6 +46,7 @@ public class AttributeDescription {
         name = argName;
         primitiveType = argPrimitiveType;
     }
+
     public String name() {
         return name;
     }
