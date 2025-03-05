@@ -42,13 +42,14 @@ import static net.splitcells.gel.editor.lang.StringDescription.stringDescription
 import static net.splitcells.gel.editor.solution.SolutionEditor.AFFECTED_CONTENT;
 
 public class CodeConstraintLangParser extends DenParserBaseVisitor<Result<List<ConstraintDescription>, Tree>> {
-    public static Result<List<ConstraintDescription>, Tree> parseConstraints(SolutionEditor solutionEditor, DenParser.Source_unitContext sourceUnit) {
+    public static Result<List<ConstraintDescription>, Tree> parseConstraints(DenParser.Source_unitContext sourceUnit) {
         final var parser = new CodeConstraintLangParser();
         parser.visitSource_unit(sourceUnit);
         return parser.constraints;
     }
 
-    private final Result<List<ConstraintDescription>, Tree> constraints = result();
+    private final Result<List<ConstraintDescription>, Tree> constraints
+            = Result.<List<ConstraintDescription>, Tree>result().withValue(list());
 
     private CodeConstraintLangParser() {
 
@@ -108,7 +109,7 @@ public class CodeConstraintLangParser extends DenParserBaseVisitor<Result<List<C
                         .withProperty(AFFECTED_CONTENT, arguments.getText()));
             }
         }
-        return parsedFunctionCallDescription;
+        return parsedFunctionCallDescription.withValue(functionCallDescription(name, args));
     }
 
     private Result<ConstraintDescription, Tree> parseConstraintDescription(DenParser.Function_callContext functionCall) {
@@ -141,7 +142,11 @@ public class CodeConstraintLangParser extends DenParserBaseVisitor<Result<List<C
 
     @Override
     public Result<List<ConstraintDescription>, Tree> visitFunction_call(DenParser.Function_callContext functionCall) {
-        parseConstraintDescription(functionCall);
-        return null;
+        final var parsedConstraint = parseConstraintDescription(functionCall);
+        if (parsedConstraint.defective()) {
+            return constraints.withErrorMessages(parsedConstraint);
+        }
+        constraints.value().orElseThrow().add(parsedConstraint.value().orElseThrow());
+        return constraints;
     }
 }
