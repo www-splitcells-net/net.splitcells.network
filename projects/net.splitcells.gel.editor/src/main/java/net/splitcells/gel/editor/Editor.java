@@ -18,6 +18,7 @@ package net.splitcells.gel.editor;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.object.Discoverable;
+import net.splitcells.gel.editor.lang.SolutionDescription;
 import net.splitcells.gel.editor.solution.SolutionEditor;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -43,5 +44,9 @@ public class Editor implements Discoverable {
 
     public String name() {
         return name;
+    }
+
+    public SolutionEditor solutionEditor(SolutionDescription solutionDescription) {
+        return SolutionEditor.solutionEditor(this, solutionDescription);
     }
 }
