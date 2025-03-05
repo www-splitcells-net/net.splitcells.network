@@ -25,6 +25,11 @@ options {
     tokenVocab=DenLexer;
 }
 source_unit: statement*;
+/* Defining function chains recursively is probably a bad idea,
+ * because `access` and `function_call` parsing cannot share parsing code as easily as
+ * when one uses dedicated `function_call` and the list `function_chain` containing `function_call`.
+ * Also using a list for a list like thing instead of nesting is probably a good idea.
+ */
 access: Dot Name function_call_arguments access?;
 block_statement
     : Brace_curly_open Brace_curly_closed
