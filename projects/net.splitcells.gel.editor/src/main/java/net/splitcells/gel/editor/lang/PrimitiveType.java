@@ -31,13 +31,17 @@ public enum PrimitiveType {
         return id;
     }
 
+    /**
+     * TODO The short versions of {@code arg} are deprecated.
+     *
+     * @param arg
+     * @return
+     */
     public static Optional<PrimitiveType> parse(String arg) {
-        if ("integer".equals(arg)) {
-            return Optional.of(INTEGER);
-        } else if ("string".equals(arg)) {
-            return Optional.of(STRING);
-        } else {
-            return Optional.empty();
-        }
+        return switch (arg) {
+            case "string" -> Optional.of(STRING);
+            case "int", "integer" -> Optional.of(INTEGER);
+            default -> Optional.empty();
+        };
     }
 }
