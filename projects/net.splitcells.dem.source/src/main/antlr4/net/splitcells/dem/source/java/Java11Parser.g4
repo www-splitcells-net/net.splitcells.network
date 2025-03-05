@@ -170,6 +170,7 @@ expression
     | expression_with_prefix
     | Hyphen_minus expression
     | lambda
+    | statement_switch
     ;
 expression_with_prefix
     : Operator_plus Operator_plus expression
@@ -338,15 +339,20 @@ statement
     | Keyword_while Brace_round_open expression Brace_round_closed statement_body
     | Keyword_do statement_body Keyword_while Brace_round_open expression Brace_round_closed Semicolon
     | annotation statement
-    | statement_switch
     ;
-statement_switch:
-    Keyword_switch Brace_round_open call_arguments_element Brace_round_closed
-    Brace_curly_open statement_switch_case+ Brace_curly_closed
+statement_switch
+    : Keyword_switch Brace_round_open call_arguments_element Brace_round_closed
+        Brace_curly_open statement_switch_case_by_type+ Brace_curly_closed
+    | Keyword_switch Brace_round_open call_arguments_element Brace_round_closed
+        Brace_curly_open statement_switch_case_by_value+ Brace_curly_closed
     ;
-statement_switch_case:
-    Keyword_case type_declaration name Arrow Brace_curly_open statement* Brace_curly_closed
+statement_switch_case_by_type
+    : Keyword_case type_declaration name Arrow Brace_curly_open statement* Brace_curly_closed
     | Keyword_default Arrow Brace_curly_open statement* Brace_curly_closed
+    ;
+statement_switch_case_by_value
+    : Keyword_default Arrow statement
+    | Keyword_case String (Comma String)* Arrow statement
     ;
 statement_for
     : Keyword_for Brace_round_open variable_declaration (Equals expression)? Semicolon expression Semicolon expression Brace_round_closed statement_body
