@@ -34,7 +34,7 @@ import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.gel.editor.Editor.editor;
 import static net.splitcells.gel.solution.optimization.DefaultOptimization.defaultOptimization;
-import static net.splitcells.gel.ui.code.editor.CodeEditorLangParsing.editorLangParsing;
+import static net.splitcells.gel.ui.code.editor.CodeEditorLangParser.editorLangParsing;
 import static net.splitcells.website.server.processor.Response.response;
 
 public class CodeSolutionCalculator implements Processor<Tree, Tree> {

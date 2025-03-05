@@ -39,7 +39,7 @@ import static net.splitcells.gel.editor.lang.TableDescription.tableDescription;
  * Using {@link SolutionDescription} avoid an indirect ANTLR API dependency.
  * The split also makes it easier, to make backward compatible changes to the parsing regarding the input syntax.
  */
-public class CodeEditorLangParsing extends DenParserBaseVisitor<Result<SolutionDescription, Tree>> {
+public class CodeEditorLangParser extends DenParserBaseVisitor<Result<SolutionDescription, Tree>> {
     public static Result<SolutionDescription, Tree> editorLangParsing(String arg) {
         final var lexer = new net.splitcells.dem.source.den.DenLexer(CharStreams.fromString(arg));
         final var parser = new net.splitcells.dem.source.den.DenParser(new CommonTokenStream(lexer));
@@ -66,7 +66,7 @@ public class CodeEditorLangParsing extends DenParserBaseVisitor<Result<SolutionD
                 }
             }
         });
-        final var parsedEditor = new CodeEditorLangParsing().visitSource_unit(parser.source_unit());
+        final var parsedEditor = new CodeEditorLangParser().visitSource_unit(parser.source_unit());
         parsedEditor.errorMessages().withAppended(parsingErrors);
         return parsedEditor;
     }
@@ -80,7 +80,7 @@ public class CodeEditorLangParsing extends DenParserBaseVisitor<Result<SolutionD
     private List<ReferenceDescription<AttributeDescription>> columnAttributesForOutputFormat = list();
     private List<ReferenceDescription<AttributeDescription>> rowAttributesForOutputFormat = list();
 
-    private CodeEditorLangParsing() {
+    private CodeEditorLangParser() {
 
     }
 
