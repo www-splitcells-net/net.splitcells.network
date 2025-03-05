@@ -17,7 +17,9 @@ package net.splitcells.gel.editor;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.object.Discoverable;
+import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.editor.lang.SolutionDescription;
 import net.splitcells.gel.editor.solution.SolutionEditor;
 
@@ -46,7 +48,8 @@ public class Editor implements Discoverable {
         return name;
     }
 
-    public SolutionEditor solutionEditor(SolutionDescription solutionDescription) {
-        return SolutionEditor.solutionEditor(this, solutionDescription);
+    public Result<SolutionEditor, Tree> solutionEditor(SolutionDescription solutionDescription) {
+        final var solutionEditor = SolutionEditor.solutionEditor(this, solutionDescription);
+        return solutionEditor.parse(solutionDescription);
     }
 }

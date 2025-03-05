@@ -63,8 +63,7 @@ public class SolutionCalculator implements Processor<Tree, Tree> {
         if (solutionDescription.defective()) {
             return editorParsing.withErrorMessages(solutionDescription);
         }
-        return editorParsing.withValue(editor("editor", EXPLICIT_NO_CONTEXT)
-                .solutionEditor(solutionDescription.value().orElseThrow()));
+        return editor("editor", EXPLICIT_NO_CONTEXT).solutionEditor(solutionDescription.value().orElseThrow());
     }
 
     @Override
