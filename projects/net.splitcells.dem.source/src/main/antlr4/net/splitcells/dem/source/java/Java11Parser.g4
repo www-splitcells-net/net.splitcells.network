@@ -339,6 +339,7 @@ statement
     | Keyword_while Brace_round_open expression Brace_round_closed statement_body
     | Keyword_do statement_body Keyword_while Brace_round_open expression Brace_round_closed Semicolon
     | annotation statement
+    | statement_switch
     ;
 statement_switch
     : Keyword_switch Brace_round_open call_arguments_element Brace_round_closed
