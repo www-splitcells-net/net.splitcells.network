@@ -18,6 +18,8 @@ package net.splitcells.gel.ui.code.editor;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.Trail;
+import net.splitcells.dem.testing.Result;
+import net.splitcells.gel.editor.solution.SolutionEditor;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
@@ -27,9 +29,12 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.CsvDocument.toCsvString;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
+import static net.splitcells.dem.testing.Result.result;
+import static net.splitcells.gel.editor.Editor.editor;
 import static net.splitcells.gel.solution.optimization.DefaultOptimization.defaultOptimization;
-import static net.splitcells.gel.ui.ProblemParser.parseProblem;
+import static net.splitcells.gel.ui.code.editor.EditorLangParsing.editorLangParsing;
 import static net.splitcells.website.server.processor.Response.response;
 
 public class SolutionCalculator implements Processor<Tree, Tree> {
@@ -52,25 +57,31 @@ public class SolutionCalculator implements Processor<Tree, Tree> {
 
     }
 
+    private Result<SolutionEditor, Tree> parseSolutionCodeEditor(String editorCode) {
+        final Result<SolutionEditor, Tree> editorParsing = result();
+        final var solutionDescription = editorLangParsing(editorCode);
+        if (solutionDescription.defective()) {
+            return editorParsing.withErrorMessages(solutionDescription);
+        }
+        return editorParsing.withValue(editor("editor", EXPLICIT_NO_CONTEXT)
+                .solutionEditor(solutionDescription.value().orElseThrow()));
+    }
+
     @Override
     public Response<Tree> process(Request<Tree> request) {
         final var formUpdate = tree(FORM_UPDATE);
         try {
             PATH.requireEqualityTo(request.trail());
-            final var problemParsing = parseProblem(request
+            final var solutionEditorParsing = parseSolutionCodeEditor(request
                     .data()
                     .namedChild(PROBLEM_DEFINITION)
                     .child(0)
                     .name());
-            final var isProblemParsed = problemParsing.value().isPresent();
-            if (isProblemParsed) {
-                final var problemParameters = problemParsing.value().orElseThrow();
-                final var solution = problemParameters
-                        .problem()
-                        .asSolution();
-                final var demandDefinitions = request
-                        .data()
-                        .namedChildren(DEMANDS);
+            final var isSolutionEditorParsed = solutionEditorParsing.value().isPresent();
+            if (isSolutionEditorParsed) {
+                final var solutionEditor = solutionEditorParsing.value().orElseThrow();
+                final var solution = solutionEditor.solution().orElseThrow();
+                final var demandDefinitions = request.data().namedChildren(DEMANDS);
                 if (demandDefinitions.hasElements()) {
                     final var demandsCsv = demandDefinitions.get(0).child(0).name();
                     final var firstLineEnding = demandsCsv.indexOf('\n');
@@ -97,11 +108,11 @@ public class SolutionCalculator implements Processor<Tree, Tree> {
                             standardizeInput(suppliesCsv.substring(firstLineEnding + 1)));
                 }
                 defaultOptimization().optimize(solution);
-                if (problemParameters.columnAttributesForOutputFormat().hasElements()
-                        || problemParameters.rowAttributesForOutputFormat().hasElements()) {
+                if (solutionEditor.columnAttributesForOutputFormat().hasElements()
+                        || solutionEditor.rowAttributesForOutputFormat().hasElements()) {
                     final var reformattedSolution = solution.toReformattedTable
-                            (problemParameters.columnAttributesForOutputFormat().mapped(solution::attributeByName)
-                                    , problemParameters.rowAttributesForOutputFormat().mapped(solution::attributeByName));
+                            (solutionEditor.columnAttributesForOutputFormat().mapped(solution::attributeByName)
+                                    , solutionEditor.rowAttributesForOutputFormat().mapped(solution::attributeByName));
                     final List<List<String>> csvContent = list();
                     csvContent.addAll(rangeClosed(1, reformattedSolution.get(0).size())
                             .mapToObj(i -> "" + i)
@@ -113,12 +124,12 @@ public class SolutionCalculator implements Processor<Tree, Tree> {
                 }
                 formUpdate.withProperty(SOLUTION_RATING, solution.constraint().rating().toTree());
             }
-            if (problemParsing.errorMessages().hasElements() || !isProblemParsed) {
+            if (solutionEditorParsing.errorMessages().hasElements() || !isSolutionEditorParsed) {
                 final var errorReport = tree("Errors solving the given problem.");
-                if (!isProblemParsed) {
+                if (!isSolutionEditorParsed) {
                     errorReport.withChild(tree("Could not parse problem."));
                 }
-                errorReport.withChildren(problemParsing.errorMessages());
+                errorReport.withChildren(solutionEditorParsing.errorMessages());
                 formUpdate.withProperty(ERRORS, errorReport.toCommonMarkString());
             }
         } catch (Throwable t) {
