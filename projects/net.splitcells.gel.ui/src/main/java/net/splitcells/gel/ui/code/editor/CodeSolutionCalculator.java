@@ -34,10 +34,10 @@ import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.gel.editor.Editor.editor;
 import static net.splitcells.gel.solution.optimization.DefaultOptimization.defaultOptimization;
-import static net.splitcells.gel.ui.code.editor.EditorLangParsing.editorLangParsing;
+import static net.splitcells.gel.ui.code.editor.CodeEditorLangParsing.editorLangParsing;
 import static net.splitcells.website.server.processor.Response.response;
 
-public class SolutionCalculator implements Processor<Tree, Tree> {
+public class CodeSolutionCalculator implements Processor<Tree, Tree> {
     public static final Trail PATH = Trail.trail("net/splitcells/gel/ui/code/editor/calculate-solution.form");
     public static final String PROBLEM_DEFINITION = "net-splitcells-gel-ui-editor-form-problem-definition";
 
@@ -49,11 +49,11 @@ public class SolutionCalculator implements Processor<Tree, Tree> {
     public static final String ERRORS = "net-splitcells-gel-ui-editor-form-errors";
     public static final String FORM_UPDATE = "net-splitcells-websiter-server-form-update";
 
-    public static SolutionCalculator solutionCalculator() {
-        return new SolutionCalculator();
+    public static CodeSolutionCalculator solutionCalculator() {
+        return new CodeSolutionCalculator();
     }
 
-    private SolutionCalculator() {
+    private CodeSolutionCalculator() {
 
     }
 

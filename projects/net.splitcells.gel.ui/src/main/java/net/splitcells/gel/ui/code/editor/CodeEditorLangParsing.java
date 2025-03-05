@@ -20,12 +20,7 @@ import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.source.den.DenParser;
 import net.splitcells.dem.source.den.DenParserBaseVisitor;
 import net.splitcells.dem.testing.Result;
-import net.splitcells.gel.data.table.Table;
-import net.splitcells.gel.data.view.attribute.Attribute;
-import net.splitcells.gel.data.view.attribute.Attributes;
 import net.splitcells.gel.editor.lang.*;
-import net.splitcells.gel.ui.ProblemParser;
-import net.splitcells.gel.ui.SolutionParameters;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
@@ -34,22 +29,17 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Result.result;
-import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
 import static net.splitcells.gel.data.table.Tables.table;
-import static net.splitcells.gel.editor.lang.AttributeDescription.attributeDescription;
 import static net.splitcells.gel.editor.lang.AttributeDescription.parseAttributeDescription;
-import static net.splitcells.gel.editor.lang.PrimitiveType.parse;
 import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
 import static net.splitcells.gel.editor.lang.SolutionDescription.solutionDescription;
 import static net.splitcells.gel.editor.lang.TableDescription.tableDescription;
-import static net.splitcells.gel.problem.ProblemI.problem;
-import static net.splitcells.gel.ui.QueryParser.parseQuery;
 
 /**
  * Using {@link SolutionDescription} avoid an indirect ANTLR API dependency.
  * The split also makes it easier, to make backward compatible changes to the parsing regarding the input syntax.
  */
-public class EditorLangParsing extends DenParserBaseVisitor<Result<SolutionDescription, Tree>> {
+public class CodeEditorLangParsing extends DenParserBaseVisitor<Result<SolutionDescription, Tree>> {
     public static Result<SolutionDescription, Tree> editorLangParsing(String arg) {
         final var lexer = new net.splitcells.dem.source.den.DenLexer(CharStreams.fromString(arg));
         final var parser = new net.splitcells.dem.source.den.DenParser(new CommonTokenStream(lexer));
@@ -76,7 +66,7 @@ public class EditorLangParsing extends DenParserBaseVisitor<Result<SolutionDescr
                 }
             }
         });
-        final var parsedEditor = new EditorLangParsing().visitSource_unit(parser.source_unit());
+        final var parsedEditor = new CodeEditorLangParsing().visitSource_unit(parser.source_unit());
         parsedEditor.errorMessages().withAppended(parsingErrors);
         return parsedEditor;
     }
@@ -90,7 +80,7 @@ public class EditorLangParsing extends DenParserBaseVisitor<Result<SolutionDescr
     private List<ReferenceDescription<AttributeDescription>> columnAttributesForOutputFormat = list();
     private List<ReferenceDescription<AttributeDescription>> rowAttributesForOutputFormat = list();
 
-    private EditorLangParsing() {
+    private CodeEditorLangParsing() {
 
     }
 

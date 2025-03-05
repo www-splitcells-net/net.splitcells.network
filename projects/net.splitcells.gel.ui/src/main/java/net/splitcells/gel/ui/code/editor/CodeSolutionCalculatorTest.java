@@ -22,11 +22,11 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
 import static net.splitcells.gel.data.view.attribute.AttributeI.stringAttribute;
-import static net.splitcells.gel.ui.code.editor.SolutionCalculator.PROBLEM_DEFINITION;
-import static net.splitcells.gel.ui.code.editor.SolutionCalculator.solutionCalculator;
+import static net.splitcells.gel.ui.code.editor.CodeSolutionCalculator.PROBLEM_DEFINITION;
+import static net.splitcells.gel.ui.code.editor.CodeSolutionCalculator.solutionCalculator;
 import static net.splitcells.website.server.processor.Request.request;
 
-public class SolutionCalculatorTest {
+public class CodeSolutionCalculatorTest {
     @UnitTest
     public void testMinimalProcess() {
         final var testData = "demands={a=integer();b=string()};\n"
@@ -34,11 +34,11 @@ public class SolutionCalculatorTest {
                 + "constraints=forEach(a).then(hasSize(2));\n"
                 + "constraints().forEach(b).then(allSame(c));\n"
                 + "name=\"testParseProblem\";\n";
-        final var testResult = solutionCalculator().process(request(SolutionCalculator.PATH
+        final var testResult = solutionCalculator().process(request(CodeSolutionCalculator.PATH
                 , tree("").withProperty(PROBLEM_DEFINITION,
                         tree(testData))));
         requireEquals(testResult.data()
-                        .propertyInstance(SolutionCalculator.SOLUTION)
+                        .propertyInstance(CodeSolutionCalculator.SOLUTION)
                         .orElseThrow()
                         .child(0)
                         .name()
