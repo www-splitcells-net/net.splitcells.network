@@ -30,7 +30,6 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
  * if, for instance, the calculation was not successful.
  * This does only make sense, if multiple errors are somehow to be combined.</p>
  *
- *
  * @param <Value>
  * @param <Message>
  */
@@ -56,6 +55,11 @@ public class Result<Value, Message> {
 
     public Result<Value, Message> withErrorMessage(Message arg) {
         errorMessages.add(arg);
+        return this;
+    }
+
+    public Result<Value, Message> withErrorMessages(Result<?, Message> otherResult) {
+        errorMessages.withAppended(otherResult.errorMessages());
         return this;
     }
 
