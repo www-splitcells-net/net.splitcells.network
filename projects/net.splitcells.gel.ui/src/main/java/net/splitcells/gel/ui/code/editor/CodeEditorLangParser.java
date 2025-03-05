@@ -21,6 +21,7 @@ import net.splitcells.dem.source.den.DenParser;
 import net.splitcells.dem.source.den.DenParserBaseVisitor;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.editor.lang.*;
+import net.splitcells.gel.editor.solution.SolutionEditor;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
@@ -34,6 +35,7 @@ import static net.splitcells.gel.editor.lang.AttributeDescription.parseAttribute
 import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
 import static net.splitcells.gel.editor.lang.SolutionDescription.solutionDescription;
 import static net.splitcells.gel.editor.lang.TableDescription.tableDescription;
+import static net.splitcells.gel.ui.code.editor.CodeConstraintLangParser.parseConstraints;
 
 /**
  * Using {@link SolutionDescription} avoid an indirect ANTLR API dependency.
@@ -88,6 +90,11 @@ public class CodeEditorLangParser extends DenParserBaseVisitor<Result<SolutionDe
     public Result<SolutionDescription, Tree> visitSource_unit(net.splitcells.dem.source.den.DenParser.Source_unitContext sourceUnit) {
         visitChildren(sourceUnit);
         if (name.isPresent() && demands.isPresent() && supplies.isPresent() && result.errorMessages().isEmpty()) {
+            final var parsedConstraints = parseConstraints(sourceUnit);
+            if (parsedConstraints.defective()) {
+                return result.withErrorMessages(parsedConstraints);
+            }
+            constraints.withAppended(parsedConstraints.value().orElseThrow());
             result.withValue(solutionDescription(name.get(), attributes, demands.get(), supplies.get(), constraints));
         } else {
             if (name.isEmpty()) {
