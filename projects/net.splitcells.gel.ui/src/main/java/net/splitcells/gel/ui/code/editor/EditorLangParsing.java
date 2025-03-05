@@ -177,7 +177,7 @@ public class EditorLangParsing extends DenParserBaseVisitor<Result<SolutionDescr
                 result.errorMessages().withAppended(parsedAttribute.errorMessages());
             });
             attributes.withAppended(supplyAttributes);
-            demands = Optional.of(tableDescription("demands"
+            supplies = Optional.of(tableDescription("supplies"
                     , supplyAttributes.mapped(sa -> referenceDescription(sa.name(), AttributeDescription.class))));
         }
         return null;
