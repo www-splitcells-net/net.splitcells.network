@@ -22,10 +22,7 @@ import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.attribute.Attributes;
-import net.splitcells.gel.editor.lang.AttributeDescription;
-import net.splitcells.gel.editor.lang.PrimitiveType;
-import net.splitcells.gel.editor.lang.SolutionDescription;
-import net.splitcells.gel.editor.lang.TableDescription;
+import net.splitcells.gel.editor.lang.*;
 import net.splitcells.gel.ui.ProblemParser;
 import net.splitcells.gel.ui.SolutionParameters;
 import org.antlr.v4.runtime.*;
@@ -36,12 +33,16 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Result.result;
+import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
 import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.editor.lang.AttributeDescription.attributeDescription;
 import static net.splitcells.gel.editor.lang.AttributeDescription.parseAttributeDescription;
 import static net.splitcells.gel.editor.lang.PrimitiveType.parse;
 import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
+import static net.splitcells.gel.editor.lang.SolutionDescription.solutionDescription;
 import static net.splitcells.gel.editor.lang.TableDescription.tableDescription;
+import static net.splitcells.gel.problem.ProblemI.problem;
+import static net.splitcells.gel.ui.QueryParser.parseQuery;
 
 public class EditorLangParsing extends DenParserBaseVisitor<Result<SolutionDescription, Tree>> {
     public static Result<SolutionDescription, Tree> editorLangParsing(String arg) {
@@ -79,10 +80,30 @@ public class EditorLangParsing extends DenParserBaseVisitor<Result<SolutionDescr
     private List<AttributeDescription> attributes = list();
     private Optional<TableDescription> demands = Optional.empty();
     private Optional<TableDescription> supplies = Optional.empty();
+    private List<ConstraintDescription> constraints = list();
     private Result<SolutionDescription, Tree> result = result();
 
     private EditorLangParsing() {
 
+    }
+
+    @Override
+    public Result<SolutionDescription, Tree> visitSource_unit(net.splitcells.dem.source.den.DenParser.Source_unitContext sourceUnit) {
+        visitChildren(sourceUnit);
+        if (name.isPresent() && demands.isPresent() && supplies.isPresent() && result.errorMessages().isEmpty()) {
+            result.withValue(solutionDescription(name.get(), attributes, demands.get(), supplies.get(), constraints));
+        } else {
+            if (name.isEmpty()) {
+                result.withErrorMessage(tree("No name was defined via `name=\"[...]\"`."));
+            }
+            if (demands.isEmpty()) {
+                result.withErrorMessage(tree("No demands was defined via `demands=\"[...]\"`."));
+            }
+            if (supplies.isEmpty()) {
+                result.withErrorMessage(tree("No supplies was defined via `supplies=\"[...]\"`."));
+            }
+        }
+        return result;
     }
 
     @Override
