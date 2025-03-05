@@ -57,7 +57,7 @@ public class SolutionCalculator implements Processor<Tree, Tree> {
 
     }
 
-    private Result<SolutionEditor, Tree> parseSolutionCodeEditor(String editorCode) {
+    public Result<SolutionEditor, Tree> parseSolutionCodeEditor(String editorCode) {
         final Result<SolutionEditor, Tree> editorParsing = result();
         final var solutionDescription = editorLangParsing(editorCode);
         if (solutionDescription.defective()) {

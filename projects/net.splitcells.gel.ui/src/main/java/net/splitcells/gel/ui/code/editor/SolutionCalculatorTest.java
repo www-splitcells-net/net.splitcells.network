@@ -17,15 +17,18 @@ package net.splitcells.gel.ui.code.editor;
 
 import net.splitcells.dem.testing.annotations.UnitTest;
 
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
+import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.stringAttribute;
 import static net.splitcells.gel.ui.code.editor.SolutionCalculator.PROBLEM_DEFINITION;
 import static net.splitcells.gel.ui.code.editor.SolutionCalculator.solutionCalculator;
 import static net.splitcells.website.server.processor.Request.request;
 
 public class SolutionCalculatorTest {
     @UnitTest
-    public void testMinimal() {
+    public void testMinimalProcess() {
         final var testData = "demands={a=integer();b=string()};\n"
                 + "supplies={c=integer()};\n"
                 + "constraints=forEach(a).then(hasSize(2));\n"
@@ -40,5 +43,21 @@ public class SolutionCalculatorTest {
                         .child(0)
                         .name()
                 , "a,b,c,argumentation\n");
+    }
+
+    @UnitTest
+    public void testMinimalProblem() {
+        final var testData = "demands={a=integer();b=string()};\n"
+                + "supplies={c=integer()};\n"
+                + "constraints=forEach(a).then(hasSize(2));\n"
+                + "constraints().forEach(b).then(allSame(c));\n"
+                + "name=\"testParseProblem\";\n";
+        final var testResult = solutionCalculator().parseSolutionCodeEditor(testData);
+        testResult.requireWorking();
+        final var solution = testResult.value().orElseThrow().solution().orElseThrow();
+        solution.headerView2().requireContentsOf((a, b) -> a.equalContentTo(b)
+                , integerAttribute("a")
+                , stringAttribute("b")
+                , integerAttribute("c"));
     }
 }
