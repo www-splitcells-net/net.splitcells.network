@@ -70,6 +70,9 @@ public class SolutionEditor implements Discoverable {
     private Optional<Table> supplies;
     private Optional<Solution> solution = Optional.empty();
 
+    private List<String> columnAttributesForOutputFormat = list();
+    private List<String> rowAttributesForOutputFormat = list();
+
     private SolutionEditor(Editor argParent, SolutionDescription solutionDescription) {
         parent = argParent;
         name = solutionDescription.name();
@@ -318,5 +321,13 @@ public class SolutionEditor implements Discoverable {
     @Override
     public String toString() {
         return super.toString();
+    }
+
+    public List<String> columnAttributesForOutputFormat() {
+        return columnAttributesForOutputFormat;
+    }
+
+    public List<String> rowAttributesForOutputFormat() {
+        return rowAttributesForOutputFormat;
     }
 }

@@ -18,6 +18,7 @@ package net.splitcells.gel.editor.lang;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 
 public class SolutionDescription {
@@ -34,6 +35,8 @@ public class SolutionDescription {
     private final TableDescription demands;
     private final TableDescription supplies;
     private final List<ConstraintDescription> constraints;
+    private List<ReferenceDescription<AttributeDescription>> columnAttributesForOutputFormat = list();
+    private List<ReferenceDescription<AttributeDescription>> rowAttributesForOutputFormat = list();
 
     private SolutionDescription(String argName
             , List<AttributeDescription> argAttributes
@@ -70,5 +73,12 @@ public class SolutionDescription {
 
     public List<ConstraintDescription> constraints() {
         return constraints;
+    }
+
+    public List<ReferenceDescription<AttributeDescription>> columnAttributesForOutputFormat() {
+        return columnAttributesForOutputFormat;
+    }
+    public List<ReferenceDescription<AttributeDescription>> rowAttributesForOutputFormat() {
+        return rowAttributesForOutputFormat;
     }
 }

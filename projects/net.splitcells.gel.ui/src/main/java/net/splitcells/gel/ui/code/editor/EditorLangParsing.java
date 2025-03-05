@@ -17,6 +17,7 @@ package net.splitcells.gel.ui.code.editor;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.source.den.DenParser;
 import net.splitcells.dem.source.den.DenParserBaseVisitor;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.data.table.Table;
@@ -44,6 +45,10 @@ import static net.splitcells.gel.editor.lang.TableDescription.tableDescription;
 import static net.splitcells.gel.problem.ProblemI.problem;
 import static net.splitcells.gel.ui.QueryParser.parseQuery;
 
+/**
+ * Using {@link SolutionDescription} avoid an indirect ANTLR API dependency.
+ * The split also makes it easier, to make backward compatible changes to the parsing regarding the input syntax.
+ */
 public class EditorLangParsing extends DenParserBaseVisitor<Result<SolutionDescription, Tree>> {
     public static Result<SolutionDescription, Tree> editorLangParsing(String arg) {
         final var lexer = new net.splitcells.dem.source.den.DenLexer(CharStreams.fromString(arg));
@@ -82,6 +87,8 @@ public class EditorLangParsing extends DenParserBaseVisitor<Result<SolutionDescr
     private Optional<TableDescription> supplies = Optional.empty();
     private List<ConstraintDescription> constraints = list();
     private Result<SolutionDescription, Tree> result = result();
+    private List<ReferenceDescription<AttributeDescription>> columnAttributesForOutputFormat = list();
+    private List<ReferenceDescription<AttributeDescription>> rowAttributesForOutputFormat = list();
 
     private EditorLangParsing() {
 
@@ -172,6 +179,48 @@ public class EditorLangParsing extends DenParserBaseVisitor<Result<SolutionDescr
             attributes.withAppended(supplyAttributes);
             demands = Optional.of(tableDescription("demands"
                     , supplyAttributes.mapped(sa -> referenceDescription(sa.name(), AttributeDescription.class))));
+        }
+        return null;
+    }
+
+    @Override
+    public Result<SolutionDescription, Tree> visitFunction_call(DenParser.Function_callContext ctx) {
+        final var subjectName = ctx.Name().getText();
+        if (ctx.Name().getText().equals("constraints")) {
+            return null;
+        }
+        if (ctx.access() == null && ctx.function_call_arguments() == null) {
+            result.withErrorMessage(tree("Empty function calls are not supported at the top level.")
+                    .withProperty("function call", ctx.getText()));
+            return null;
+        }
+        if (ctx.access() == null && ctx.function_call_arguments() != null && !ctx.Name().getText().equals("constraints")) {
+            result.withErrorMessage(tree("Only the constraints function is allowed to be called at the top level without a subject.")
+                    .withProperty("function call", ctx.getText()));
+            return null;
+        }
+        final var functionName = ctx.access().Name().getText();
+        if (functionName.equals("columnAttributesForOutputFormat")
+                && subjectName.equals("solution")) {
+            columnAttributesForOutputFormat.add(referenceDescription(
+                    ctx.access().function_call_arguments().function_call_arguments_element().Name().getText()
+                    , AttributeDescription.class));
+            ctx.access().function_call_arguments().function_call_arguments_next()
+                    .forEach(e -> columnAttributesForOutputFormat.add(
+                            referenceDescription(e.getText(), AttributeDescription.class)));
+        } else if (functionName.equals("rowAttributesForOutputFormat")
+                && subjectName.equals("solution")) {
+            rowAttributesForOutputFormat.add(referenceDescription(
+                    ctx.access().function_call_arguments().function_call_arguments_element().Name().getText()
+                    , AttributeDescription.class));
+            ctx.access().function_call_arguments().function_call_arguments_next()
+                    .forEach(e -> rowAttributesForOutputFormat
+                            .add(referenceDescription(e.function_call_arguments_element().Name().getText()
+                                    , AttributeDescription.class)));
+        } else {
+            result.withErrorMessage(tree("There is an unknown top level function call.")
+                    .withProperty("subject name", subjectName)
+                    .withProperty("function name", functionName));
         }
         return null;
     }
