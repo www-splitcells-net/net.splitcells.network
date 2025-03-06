@@ -22,6 +22,7 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
 import static net.splitcells.gel.data.view.attribute.AttributeI.stringAttribute;
+import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.gel.ui.code.editor.CodeSolutionCalculator.PROBLEM_DEFINITION;
 import static net.splitcells.gel.ui.code.editor.CodeSolutionCalculator.solutionCalculator;
 import static net.splitcells.website.server.processor.Request.request;
@@ -59,5 +60,6 @@ public class CodeSolutionCalculatorTest {
                 , integerAttribute("a")
                 , stringAttribute("b")
                 , integerAttribute("c"));
+        solution.constraint().readQuery().forAll(solution.attributeByName("a")).then(hasSize(2));
     }
 }
