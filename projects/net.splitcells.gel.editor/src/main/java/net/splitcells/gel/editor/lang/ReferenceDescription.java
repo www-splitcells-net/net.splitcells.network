@@ -15,6 +15,8 @@
  */
 package net.splitcells.gel.editor.lang;
 
+import net.splitcells.dem.data.atom.Thing;
+
 public final class ReferenceDescription<T> implements ArgumentDescription {
 
     public static <R> ReferenceDescription<R> referenceDescription(String name, Class<? extends R> clazz) {
@@ -35,5 +37,18 @@ public final class ReferenceDescription<T> implements ArgumentDescription {
 
     public Class<? extends T> clazz() {
         return clazz;
+    }
+
+    @Override
+    public boolean equals(Object arg) {
+        if (arg instanceof ReferenceDescription<?> other) {
+            return name.equals(other.name()) && clazz.equals(other.clazz());
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Thing.hashCode(name, clazz);
     }
 }
