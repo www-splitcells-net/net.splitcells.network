@@ -142,7 +142,12 @@ public class CodeConstraintLangParser extends DenParserBaseVisitor<Result<List<C
 
     @Override
     public Result<List<ConstraintDescription>, Tree> visitFunction_call(DenParser.Function_callContext functionCall) {
-        final var parsedConstraint = parseConstraintDescription(functionCall);
+        if (!"constraints".equals(functionCall.Name().getText())) {
+            return constraints;
+        }
+        final var parsedConstraint = parseConstraintDescription(functionCall.access().Name().getText()
+                , functionCall.access().function_call_arguments()
+                , Optional.empty());
         if (parsedConstraint.defective()) {
             return constraints.withErrorMessages(parsedConstraint);
         }
