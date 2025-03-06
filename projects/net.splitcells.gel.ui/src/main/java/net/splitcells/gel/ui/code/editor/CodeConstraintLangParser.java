@@ -34,6 +34,7 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Result.result;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.editor.lang.ConstraintDescription.constraintDescription;
 import static net.splitcells.gel.editor.lang.FunctionCallDescription.functionCallDescription;
 import static net.splitcells.gel.editor.lang.IntegerDescription.integerDescription;
@@ -55,12 +56,12 @@ public class CodeConstraintLangParser extends DenParserBaseVisitor<Result<List<C
 
     }
 
-    private Result<FunctionCallDescription, Tree> parseFunctionCallDescription(DenParser.Function_callContext functionCall) {
+    private static Result<FunctionCallDescription, Tree> parseFunctionCallDescription(DenParser.Function_callContext functionCall) {
         return parseFunctionCallDescription(functionCall.Name().getText(), functionCall.function_call_arguments());
     }
 
 
-    private Result<FunctionCallDescription, Tree> parseFunctionCallDescription(String name
+    private static Result<FunctionCallDescription, Tree> parseFunctionCallDescription(String name
             , DenParser.Function_call_argumentsContext arguments
     ) {
         final Result<FunctionCallDescription, Tree> parsedFunctionCallDescription = result();
@@ -104,13 +105,13 @@ public class CodeConstraintLangParser extends DenParserBaseVisitor<Result<List<C
         return parsedFunctionCallDescription.withValue(functionCallDescription(name, args));
     }
 
-    private Result<ConstraintDescription, Tree> parseConstraintDescription(DenParser.Function_callContext functionCall) {
-        return parseConstraintDescription(functionCall.Name().getText(), functionCall.function_call_arguments(), Optional.of(functionCall));
+    private static Result<ConstraintDescription, Tree> parseConstraintDescription(DenParser.Function_callContext functionCall) {
+        return parseConstraintDescription(functionCall.Name().getText(), functionCall.function_call_arguments(), Optional.ofNullable(functionCall.access()));
     }
 
-    private Result<ConstraintDescription, Tree> parseConstraintDescription(String name
+    private static Result<ConstraintDescription, Tree> parseConstraintDescription(String name
             , DenParser.Function_call_argumentsContext arguments
-            , Optional<DenParser.Function_callContext> functionCall
+            , Optional<DenParser.AccessContext> child
     ) {
         final Result<ConstraintDescription, Tree> parsedConstraintDescription = result();
         final var parsedConstraintFunction = parseFunctionCallDescription(name, arguments);
@@ -118,26 +119,24 @@ public class CodeConstraintLangParser extends DenParserBaseVisitor<Result<List<C
             return parsedConstraintDescription.withErrorMessages(parsedConstraintFunction);
         }
         final var constraint = constraintDescription(parsedConstraintFunction.value().orElseThrow());
-        if (functionCall.isPresent()) {
-            final var fc = functionCall.orElseThrow();
-            if (fc.access() != null) {
-                final var parsedChild = parseFunctionCallDescription(fc.access().Name().getText()
-                        , fc.access().function_call_arguments());
-                if (parsedChild.defective()) {
-                    return parsedConstraintDescription.withErrorMessages(parsedChild);
-                }
-                constraint.children().add(constraintDescription(parsedChild.value().orElseThrow()));
+        child.ifPresent(childVal -> {
+            final var parsedChild = parseConstraintDescription(childVal.Name().getText()
+                    , childVal.function_call_arguments()
+                    , Optional.ofNullable(childVal.access()));
+            parsedConstraintDescription.withErrorMessages(parsedChild);
+            if (parsedChild.working()) {
+                constraint.children().add(parsedChild.value().orElseThrow());
             }
-        }
+        });
         return parsedConstraintDescription.withValue(constraint);
     }
 
     @Override
     public Result<List<ConstraintDescription>, Tree> visitFunction_call(DenParser.Function_callContext functionCall) {
-        if ("constraints".equals(functionCall.Name().getText())) {
+        if ("constraints".equals(functionCall.Name().getText()) && functionCall.access() != null) {
             final var parsedConstraint = parseConstraintDescription(functionCall.access().Name().getText()
                     , functionCall.access().function_call_arguments()
-                    , Optional.empty());
+                    , Optional.ofNullable(functionCall.access().access()));
             if (parsedConstraint.defective()) {
                 return constraints.withErrorMessages(parsedConstraint);
             }

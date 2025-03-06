@@ -50,7 +50,7 @@ public class CodeSolutionCalculatorTest {
     public void testMinimalProblem() {
         final var testData = "demands={a=integer();b=string()};\n"
                 + "supplies={c=integer()};\n"
-                + "constraints=forEach(a).then(hasSize(2));\n"
+                + "constraints=forEach(a).forEach(b).then(hasSize(2));\n"
                 + "constraints().forEach(b).then(allSame(c));\n"
                 + "name=\"testParseProblem\";\n";
         final var testResult = solutionCalculator().parseSolutionCodeEditor(testData);
@@ -60,6 +60,6 @@ public class CodeSolutionCalculatorTest {
                 , integerAttribute("a")
                 , stringAttribute("b")
                 , integerAttribute("c"));
-        solution.constraint().readQuery().forAll(solution.attributeByName("a")).then(hasSize(2));
+        solution.constraint().readQuery().forAll(solution.attributeByName("a")).forAll(solution.attributeByName("b")).then(hasSize(2));
     }
 }
