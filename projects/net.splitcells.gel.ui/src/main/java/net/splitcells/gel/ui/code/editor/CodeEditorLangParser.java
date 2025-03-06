@@ -95,7 +95,10 @@ public class CodeEditorLangParser extends DenParserBaseVisitor<Result<SolutionDe
                 return result.withErrorMessages(parsedConstraints);
             }
             constraints.withAppended(parsedConstraints.value().orElseThrow());
-            result.withValue(solutionDescription(name.get(), attributes, demands.get(), supplies.get(), constraints));
+            final var solutionDescription = solutionDescription(name.get(), attributes, demands.get(), supplies.get(), constraints);
+            solutionDescription.columnAttributesForOutputFormat().withAppended(columnAttributesForOutputFormat);
+            solutionDescription.rowAttributesForOutputFormat().withAppended(rowAttributesForOutputFormat);
+            result.withValue(solutionDescription);
         } else {
             if (name.isEmpty()) {
                 result.withErrorMessage(tree("No name was defined via `name=\"[...]\"`."));
