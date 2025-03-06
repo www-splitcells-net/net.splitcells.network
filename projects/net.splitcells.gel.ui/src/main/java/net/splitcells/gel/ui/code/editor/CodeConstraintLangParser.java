@@ -55,14 +55,6 @@ public class CodeConstraintLangParser extends DenParserBaseVisitor<Result<List<C
 
     }
 
-    @Override
-    public Result<List<ConstraintDescription>, Tree> visitVariable_definition(DenParser.Variable_definitionContext ctx) {
-        if (ctx.Name().getText().equals("constraints")) {
-            visitFunction_call(ctx.function_call());
-        }
-        return constraints;
-    }
-
     private Result<FunctionCallDescription, Tree> parseFunctionCallDescription(DenParser.Function_callContext functionCall) {
         return parseFunctionCallDescription(functionCall.Name().getText(), functionCall.function_call_arguments());
     }
@@ -142,16 +134,27 @@ public class CodeConstraintLangParser extends DenParserBaseVisitor<Result<List<C
 
     @Override
     public Result<List<ConstraintDescription>, Tree> visitFunction_call(DenParser.Function_callContext functionCall) {
-        if (!"constraints".equals(functionCall.Name().getText())) {
-            return constraints;
+        if ("constraints".equals(functionCall.Name().getText())) {
+            final var parsedConstraint = parseConstraintDescription(functionCall.access().Name().getText()
+                    , functionCall.access().function_call_arguments()
+                    , Optional.empty());
+            if (parsedConstraint.defective()) {
+                return constraints.withErrorMessages(parsedConstraint);
+            }
+            constraints.value().orElseThrow().add(parsedConstraint.value().orElseThrow());
         }
-        final var parsedConstraint = parseConstraintDescription(functionCall.access().Name().getText()
-                , functionCall.access().function_call_arguments()
-                , Optional.empty());
-        if (parsedConstraint.defective()) {
-            return constraints.withErrorMessages(parsedConstraint);
+        return constraints;
+    }
+
+    @Override
+    public Result<List<ConstraintDescription>, Tree> visitVariable_definition(DenParser.Variable_definitionContext ctx) {
+        if (ctx.Name().getText().equals("constraints")) {
+            final var parsedConstraint = parseConstraintDescription(ctx.function_call());
+            if (parsedConstraint.defective()) {
+                return constraints.withErrorMessages(parsedConstraint);
+            }
+            constraints.value().orElseThrow().add(parsedConstraint.value().orElseThrow());
         }
-        constraints.value().orElseThrow().add(parsedConstraint.value().orElseThrow());
         return constraints;
     }
 }
