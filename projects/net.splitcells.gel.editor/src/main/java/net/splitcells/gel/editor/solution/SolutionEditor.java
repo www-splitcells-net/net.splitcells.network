@@ -226,11 +226,11 @@ public class SolutionEditor implements Discoverable {
             }
         } else if (name.equals(ALL_SAME_NAME)) {
             switch (functionCall.arguments().get(0)) {
-                case StringDescription string -> {
-                    return rater.withValue(allSame(attributeByName(string.value())));
+                case ReferenceDescription<?> ref -> {
+                    return rater.withValue(allSame(attributeByName(ref.name())));
                 }
                 default -> {
-                    return rater.withErrorMessage(tree("`" + HAS_SIZE_NAME + "` requires exactly one string as an argument. Instead an `" + functionCall.arguments().get(0).getClass().getName() + "` was given.")
+                    return rater.withErrorMessage(tree("`" + ALL_SAME_NAME + "` requires exactly one string as an argument. Instead an `" + functionCall.arguments().get(0).getClass().getName() + "` was given.")
                             .withProperty(AFFECTED_CONTENT, functionCall.toString()));
                 }
             }
