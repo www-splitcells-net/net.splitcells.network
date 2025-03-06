@@ -72,6 +72,10 @@ public class Result<Value, Message> {
         return value.isEmpty() || errorMessages.hasElements();
     }
 
+    public boolean working() {
+        return !defective();
+    }
+
     public void requireWorking() {
         if (defective()) {
             throw ExecutionException.execException(tree("Result is defective")
