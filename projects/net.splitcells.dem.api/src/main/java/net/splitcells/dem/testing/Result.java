@@ -76,10 +76,11 @@ public class Result<Value, Message> {
         return !defective();
     }
 
-    public void requireWorking() {
+    public Result<Value, Message> requireWorking() {
         if (defective()) {
             throw ExecutionException.execException(tree("Result is defective")
                     .withProperty("error messages", errorMessages.toString()));
         }
+        return this;
     }
 }
