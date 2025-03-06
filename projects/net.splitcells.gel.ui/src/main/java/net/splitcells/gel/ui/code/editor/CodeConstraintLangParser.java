@@ -88,7 +88,7 @@ public class CodeConstraintLangParser extends DenParserBaseVisitor<Result<List<C
         for (final var argNext : arguments.function_call_arguments_next()) {
             final var argCurrent = argNext.function_call_arguments_element();
             if (argCurrent.Integer() != null) {
-                args.add(integerDescription(Integers.parse(argCurrent.Name().getText())));
+                args.add(integerDescription(Integers.parse(argCurrent.Integer().getText())));
             } else if (argCurrent.Name() != null) {
                 args.add(referenceDescription(argCurrent.Name().getText(), Object.class));
             } else if (argCurrent.function_call() != null) {
