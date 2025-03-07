@@ -20,8 +20,6 @@ import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenParserBaseVisitor;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.editor.lang.*;
-import net.splitcells.gel.ui.SolutionParameters;
-import net.splitcells.gel.ui.code.editor.CodeEditorLangParser;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
@@ -32,7 +30,7 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Result.result;
 
 public class NoCodeEditorLangParser extends NoCodeDenParserBaseVisitor<Result<SolutionDescription, Tree>> {
-    private Result<SolutionDescription, Tree> editorLangParsing(String arg) {
+    private Result<SolutionDescription, Tree> noCodeEditorLangParsing(String arg) {
         final var lexer = new net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenLexer(CharStreams.fromString(arg));
         final var parser = new net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenParser(new CommonTokenStream(lexer));
         final List<Tree> parsingErrors = list();

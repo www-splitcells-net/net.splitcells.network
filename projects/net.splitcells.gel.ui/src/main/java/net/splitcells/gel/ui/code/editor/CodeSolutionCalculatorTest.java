@@ -23,7 +23,6 @@ import net.splitcells.gel.constraint.type.ForAll;
 import net.splitcells.gel.constraint.type.Then;
 import net.splitcells.gel.editor.lang.AttributeDescription;
 import net.splitcells.gel.ui.GelUiFileSystem;
-import net.splitcells.gel.ui.code.editor.CodeSolutionCalculator;
 import net.splitcells.website.server.projects.extension.impls.ColloquiumPlanningDemandsTestData;
 import net.splitcells.website.server.projects.extension.impls.ColloquiumPlanningSuppliesTestData;
 import org.antlr.v4.runtime.CharStreams;
@@ -43,7 +42,7 @@ import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescr
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.lib.classification.ForAllValueCombinations.FOR_ALL_VALUE_COMBINATIONS_NAME;
 import static net.splitcells.gel.ui.code.editor.CodeSolutionCalculator.*;
-import static net.splitcells.gel.ui.code.editor.CodeEditorLangParser.editorLangParsing;
+import static net.splitcells.gel.ui.code.editor.CodeEditorLangParser.codeEditorLangParsing;
 import static net.splitcells.gel.ui.code.editor.CodeSolutionCalculator.PROBLEM_DEFINITION;
 import static net.splitcells.gel.ui.code.editor.CodeSolutionCalculator.codeSolutionCalculator;
 import static net.splitcells.website.server.processor.Request.request;
@@ -100,7 +99,7 @@ public class CodeSolutionCalculatorTest {
 
     @UnitTest
     public void testOutputFormat() {
-        final var resultData = editorLangParsing(Dem.configValue(GelUiFileSystem.class)
+        final var resultData = codeEditorLangParsing(Dem.configValue(GelUiFileSystem.class)
                 .readString("src/main/resources/html/net/splitcells/gel/ui/examples/school-course-scheduling-problem.txt")).requireWorking()
                 .optionalValue().orElseThrow();
         resultData.columnAttributesForOutputFormat().requireEqualityTo(list(referenceDescription("roomNumber", AttributeDescription.class)));

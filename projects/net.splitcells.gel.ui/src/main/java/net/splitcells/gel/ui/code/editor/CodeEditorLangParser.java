@@ -41,7 +41,7 @@ import static net.splitcells.gel.ui.code.editor.CodeConstraintLangParser.parseCo
  * The split also makes it easier, to make backward compatible changes to the parsing regarding the input syntax.
  */
 public class CodeEditorLangParser extends DenParserBaseVisitor<Result<SolutionDescription, Tree>> {
-    public static Result<SolutionDescription, Tree> editorLangParsing(String arg) {
+    public static Result<SolutionDescription, Tree> codeEditorLangParsing(String arg) {
         final var lexer = new net.splitcells.dem.source.den.DenLexer(CharStreams.fromString(arg));
         final var parser = new net.splitcells.dem.source.den.DenParser(new CommonTokenStream(lexer));
         final List<Tree> parsingErrors = list();

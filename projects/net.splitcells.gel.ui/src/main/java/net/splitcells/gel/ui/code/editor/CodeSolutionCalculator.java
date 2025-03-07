@@ -34,7 +34,7 @@ import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.gel.editor.Editor.editor;
 import static net.splitcells.gel.solution.optimization.DefaultOptimization.defaultOptimization;
-import static net.splitcells.gel.ui.code.editor.CodeEditorLangParser.editorLangParsing;
+import static net.splitcells.gel.ui.code.editor.CodeEditorLangParser.codeEditorLangParsing;
 import static net.splitcells.website.server.processor.Response.response;
 
 public class CodeSolutionCalculator implements Processor<Tree, Tree> {
@@ -59,7 +59,7 @@ public class CodeSolutionCalculator implements Processor<Tree, Tree> {
 
     public Result<SolutionEditor, Tree> parseSolutionCodeEditor(String editorCode) {
         final Result<SolutionEditor, Tree> editorParsing = result();
-        final var solutionDescription = editorLangParsing(editorCode);
+        final var solutionDescription = codeEditorLangParsing(editorCode);
         if (solutionDescription.defective()) {
             return editorParsing.withErrorMessages(solutionDescription);
         }
