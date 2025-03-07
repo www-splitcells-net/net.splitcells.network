@@ -15,10 +15,8 @@
  */
 package net.splitcells.gel.editor.solution;
 
-import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.testing.Result;
@@ -188,7 +186,7 @@ public class SolutionEditor implements Discoverable {
                         constraint.errorMessages().withAppended(parserRater.errorMessages());
                         return constraint;
                     }
-                    rater = parserRater.value().orElseThrow();
+                    rater = parserRater.optionalValue().orElseThrow();
                 }
                 default -> {
                     constraint.withErrorMessage(tree("`" + THEN_NAME + "` requires exactly function call as an argument. Instead an `" + arguments.get(0).getClass().getName() + "` was given.")

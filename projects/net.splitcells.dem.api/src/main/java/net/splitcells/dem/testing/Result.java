@@ -49,15 +49,23 @@ public class Result<Value, Message> {
         return errorMessages;
     }
 
-    public Optional<Value> value() {
+    /**
+     * This method's name is chosen to be longer, so that its usage is discouraged.
+     * Use this method only, when an {@link Optional} is required.
+     * Otherwise, use {@link #requiredValue()} instead,
+     * so that you get better error messages, when an assumption is not fulfilled.
+     *
+     * @return
+     */
+    public Optional<Value> optionalValue() {
         return value;
     }
 
     /**
-     * This method ensures, that the required {@link #value()} is present or
+     * This method ensures, that the required {@link #optionalValue()} is present or
      * that the reason for its absence is known.
      *
-     * @return Returns {@link #value()} or throws existing {@link #errorMessages()}.
+     * @return Returns {@link #optionalValue()} or throws existing {@link #errorMessages()}.
      */
     public Value requiredValue() {
         if (value.isEmpty()) {

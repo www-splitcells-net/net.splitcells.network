@@ -85,8 +85,8 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
         final var parseResults = parseQuery(firstCall.function_call_name().string_value().getText()
                 , firstCall.function_call_argument()
                 , firstCall);
-        if (parseResults.value().isPresent()) {
-            nextConstraint.withValue(parseResults.value().orElseThrow())
+        if (parseResults.optionalValue().isPresent()) {
+            nextConstraint.withValue(parseResults.optionalValue().orElseThrow())
                     .errorMessages().withAppended(parseResults.errorMessages());
         } else {
             nextConstraint.errorMessages().withAppended(parseResults.errorMessages());
@@ -94,9 +94,9 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
         }
 
         if (currentIndex < functionCallChain.size() - 1) {
-            final var childConstraintParser = new NoCodeQueryParser(editor, nextConstraint.value().orElseThrow());
+            final var childConstraintParser = new NoCodeQueryParser(editor, nextConstraint.optionalValue().orElseThrow());
             final var intermediate = childConstraintParser.visitFunction_call(functionCallChain, ++currentIndex);
-            nextConstraint.withValue(intermediate.value().orElseThrow());
+            nextConstraint.withValue(intermediate.optionalValue().orElseThrow());
             nextConstraint.errorMessages().withAppended(intermediate.errorMessages());
         }
         return nextConstraint;
@@ -165,7 +165,7 @@ public class NoCodeQueryParser extends NoCodeDenParserBaseVisitor<Result<Query, 
                 parsedConstraint.errorMessages().withAppended(rater.errorMessages());
                 return parsedConstraint;
             }
-            return parsedConstraint.withValue(parentConstraint.then(rater.value().orElseThrow()));
+            return parsedConstraint.withValue(parentConstraint.then(rater.optionalValue().orElseThrow()));
         } else {
             return parsedConstraint.withErrorMessage(tree("Unknown constraint type")
                     .withProperty(AFFECTED_CONTENT, constraintFunctionCall.getText())

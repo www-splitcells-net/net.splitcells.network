@@ -21,13 +21,9 @@ import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.source.den.DenParser;
 import net.splitcells.dem.source.den.DenParserBaseVisitor;
 import net.splitcells.dem.testing.Result;
-import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.editor.lang.ArgumentDescription;
 import net.splitcells.gel.editor.lang.ConstraintDescription;
 import net.splitcells.gel.editor.lang.FunctionCallDescription;
-import net.splitcells.gel.editor.lang.ReferenceDescription;
-import net.splitcells.gel.editor.solution.SolutionEditor;
-import net.splitcells.gel.ui.QueryParser;
 
 import java.util.Optional;
 
@@ -39,7 +35,6 @@ import static net.splitcells.gel.editor.lang.ConstraintDescription.constraintDes
 import static net.splitcells.gel.editor.lang.FunctionCallDescription.functionCallDescription;
 import static net.splitcells.gel.editor.lang.IntegerDescription.integerDescription;
 import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
-import static net.splitcells.gel.editor.lang.StringDescription.stringDescription;
 import static net.splitcells.gel.editor.solution.SolutionEditor.AFFECTED_CONTENT;
 
 public class CodeConstraintLangParser extends DenParserBaseVisitor<Result<List<ConstraintDescription>, Tree>> {
@@ -78,7 +73,7 @@ public class CodeConstraintLangParser extends DenParserBaseVisitor<Result<List<C
                     if (tmp.defective()) {
                         return parsedFunctionCallDescription.withErrorMessages(tmp);
                     }
-                    args.add(tmp.value().orElseThrow());
+                    args.add(tmp.optionalValue().orElseThrow());
                 } else {
                     return parsedFunctionCallDescription.withErrorMessage(tree("Unknown first function call argument syntax.")
                             .withProperty(AFFECTED_CONTENT, arguments.getText()));
@@ -96,7 +91,7 @@ public class CodeConstraintLangParser extends DenParserBaseVisitor<Result<List<C
                 if (tmp.defective()) {
                     return parsedFunctionCallDescription.withErrorMessages(tmp);
                 }
-                args.add(tmp.value().orElseThrow());
+                args.add(tmp.optionalValue().orElseThrow());
             } else {
                 return parsedFunctionCallDescription.withErrorMessage(tree("Unknown first function call argument syntax.")
                         .withProperty(AFFECTED_CONTENT, arguments.getText()));
@@ -118,14 +113,14 @@ public class CodeConstraintLangParser extends DenParserBaseVisitor<Result<List<C
         if (parsedConstraintFunction.defective()) {
             return parsedConstraintDescription.withErrorMessages(parsedConstraintFunction);
         }
-        final var constraint = constraintDescription(parsedConstraintFunction.value().orElseThrow());
+        final var constraint = constraintDescription(parsedConstraintFunction.optionalValue().orElseThrow());
         child.ifPresent(childVal -> {
             final var parsedChild = parseConstraintDescription(childVal.Name().getText()
                     , childVal.function_call_arguments()
                     , Optional.ofNullable(childVal.access()));
             parsedConstraintDescription.withErrorMessages(parsedChild);
             if (parsedChild.working()) {
-                constraint.children().add(parsedChild.value().orElseThrow());
+                constraint.children().add(parsedChild.optionalValue().orElseThrow());
             }
         });
         return parsedConstraintDescription.withValue(constraint);
@@ -140,7 +135,7 @@ public class CodeConstraintLangParser extends DenParserBaseVisitor<Result<List<C
             if (parsedConstraint.defective()) {
                 return constraints.withErrorMessages(parsedConstraint);
             }
-            constraints.value().orElseThrow().add(parsedConstraint.value().orElseThrow());
+            constraints.optionalValue().orElseThrow().add(parsedConstraint.optionalValue().orElseThrow());
         }
         return constraints;
     }
@@ -152,7 +147,7 @@ public class CodeConstraintLangParser extends DenParserBaseVisitor<Result<List<C
             if (parsedConstraint.defective()) {
                 return constraints.withErrorMessages(parsedConstraint);
             }
-            constraints.value().orElseThrow().add(parsedConstraint.value().orElseThrow());
+            constraints.optionalValue().orElseThrow().add(parsedConstraint.optionalValue().orElseThrow());
         }
         return constraints;
     }

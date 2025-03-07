@@ -72,7 +72,7 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Tree>> {
     public Result<Query, Tree> visitAccess(DenParser.AccessContext access) {
         nextConstraint = parseQuery(access.Name().getText(), access.function_call_arguments());
         if (access.access() != null) {
-            final var childConstraintParser = new QueryParser(assignments, nextConstraint.value().orElseThrow());
+            final var childConstraintParser = new QueryParser(assignments, nextConstraint.optionalValue().orElseThrow());
             final var intermediate = childConstraintParser.visitAccess(access.access());
             nextConstraint.errorMessages().withAppended(intermediate.errorMessages());
         }
@@ -155,7 +155,7 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Tree>> {
                     parsedConstraint.errorMessages().withAppended(rater.errorMessages());
                     return parsedConstraint;
                 }
-                return parsedConstraint.withValue(parentConstraint.then(rater.value().orElseThrow()));
+                return parsedConstraint.withValue(parentConstraint.then(rater.optionalValue().orElseThrow()));
             }
             parsedConstraint.withErrorMessage(tree("Could not parse argument of then constraint: "
                     + arguments.getText()));
@@ -203,8 +203,8 @@ public class QueryParser extends DenParserBaseVisitor<Result<Query, Tree>> {
     public Result<Query, Tree> visitFunction_call(DenParser.Function_callContext functionCall) {
         nextConstraint = parseQuery(functionCall.Name().getText()
                 , functionCall.function_call_arguments());
-        if (functionCall.access() != null && nextConstraint.value().isPresent()) {
-            final var childConstraintParser = new QueryParser(assignments, nextConstraint.value().orElseThrow());
+        if (functionCall.access() != null && nextConstraint.optionalValue().isPresent()) {
+            final var childConstraintParser = new QueryParser(assignments, nextConstraint.optionalValue().orElseThrow());
             final var intermediate = childConstraintParser.visitAccess(functionCall.access());
             nextConstraint.errorMessages().withAppended(intermediate.errorMessages());
         }

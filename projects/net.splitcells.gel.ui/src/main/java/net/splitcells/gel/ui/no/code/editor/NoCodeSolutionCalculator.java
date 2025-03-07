@@ -63,9 +63,9 @@ public class NoCodeSolutionCalculator implements Processor<Tree, Tree> {
                     .namedChild(PROBLEM_DEFINITION)
                     .child(0)
                     .name());
-            final var isProblemParsed = problemParsing.value().isPresent();
+            final var isProblemParsed = problemParsing.optionalValue().isPresent();
             if (isProblemParsed) {
-                final var problemParameters = problemParsing.value().orElseThrow();
+                final var problemParameters = problemParsing.optionalValue().orElseThrow();
                 final var solution = problemParameters
                         .problem()
                         .asSolution();

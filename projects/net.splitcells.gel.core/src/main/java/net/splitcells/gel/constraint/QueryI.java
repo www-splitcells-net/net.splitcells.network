@@ -422,7 +422,7 @@ public class QueryI implements Query, QueryEditor {
         if (constraint.errorMessages().hasElements()) {
             throw ExecutionException.execException(tree("Could not construct constraints.").withChildren(constraint.errorMessages()));
         }
-        return constraint.value().orElseThrow();
+        return constraint.optionalValue().orElseThrow();
     }
 
     @Override

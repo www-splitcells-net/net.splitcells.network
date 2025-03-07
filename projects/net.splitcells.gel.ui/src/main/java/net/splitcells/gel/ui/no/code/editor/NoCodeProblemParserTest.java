@@ -44,7 +44,7 @@ public class NoCodeProblemParserTest {
     public void testAttributeParsing() {
         final var problem = parseNoCodeProblem(Dem.configValue(GelUiFileSystem.class)
                 .readString("src/main/resources/html/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"))
-                .value()
+                .optionalValue()
                 .orElseThrow()
                 .problem();
         final var observer = problem.allocations().attributeByName("observer");
@@ -107,7 +107,7 @@ public class NoCodeProblemParserTest {
         final var testResult = parseNoCodeProblem(Dem.configValue(GelUiFileSystem.class)
                 .readString("src/main/resources/html/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"));
         testResult.requireWorking();
-        setOfUniques(testResult.value().orElseThrow().problem().headerView2()).requireContentsOf((a, b) -> a.equalContentTo(b)
+        setOfUniques(testResult.optionalValue().orElseThrow().problem().headerView2()).requireContentsOf((a, b) -> a.equalContentTo(b)
                 , stringAttribute("student")
                 , stringAttribute("examiner")
                 , stringAttribute("observer")
@@ -120,7 +120,7 @@ public class NoCodeProblemParserTest {
     public void testProblemParsing2() {
         final var testResult = parseNoCodeProblem(Dem.configValue(GelUiFileSystem.class)
                 .readString("src/main/resources/html/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"));
-        testResult.value().orElseThrow().columnAttributesForOutputFormat().requireEqualityTo(list("roomNumber"));
-        testResult.value().orElseThrow().rowAttributesForOutputFormat().requireEqualityTo(list("date", "shift"));
+        testResult.optionalValue().orElseThrow().columnAttributesForOutputFormat().requireEqualityTo(list("roomNumber"));
+        testResult.optionalValue().orElseThrow().rowAttributesForOutputFormat().requireEqualityTo(list("date", "shift"));
     }
 }

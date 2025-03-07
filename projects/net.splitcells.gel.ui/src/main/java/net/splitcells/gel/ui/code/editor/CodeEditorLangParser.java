@@ -21,7 +21,6 @@ import net.splitcells.dem.source.den.DenParser;
 import net.splitcells.dem.source.den.DenParserBaseVisitor;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.editor.lang.*;
-import net.splitcells.gel.editor.solution.SolutionEditor;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
@@ -94,7 +93,7 @@ public class CodeEditorLangParser extends DenParserBaseVisitor<Result<SolutionDe
             if (parsedConstraints.defective()) {
                 return result.withErrorMessages(parsedConstraints);
             }
-            constraints.withAppended(parsedConstraints.value().orElseThrow());
+            constraints.withAppended(parsedConstraints.optionalValue().orElseThrow());
             final var solutionDescription = solutionDescription(name.get(), attributes, demands.get(), supplies.get(), constraints);
             solutionDescription.columnAttributesForOutputFormat().withAppended(columnAttributesForOutputFormat);
             solutionDescription.rowAttributesForOutputFormat().withAppended(rowAttributesForOutputFormat);
@@ -132,7 +131,7 @@ public class CodeEditorLangParser extends DenParserBaseVisitor<Result<SolutionDe
             if (firstDemandAttribute != null) {
                 final var parsedAttribute = parseAttributeDescription(firstDemandAttribute.Name().getText()
                         , firstDemandAttribute.function_call().Name().getText());
-                final var parsedAttributeValue = parsedAttribute.value();
+                final var parsedAttributeValue = parsedAttribute.optionalValue();
                 if (parsedAttributeValue.isPresent()) {
                     demandAttributes.add(parsedAttributeValue.get());
                 }
@@ -142,8 +141,8 @@ public class CodeEditorLangParser extends DenParserBaseVisitor<Result<SolutionDe
             additionalDemandAttributes.forEach(da -> {
                         final var parsedAttribute = parseAttributeDescription(da.variable_definition().Name().getText()
                                 , da.variable_definition().function_call().Name().getText());
-                        if (parsedAttribute.value().isPresent()) {
-                            demandAttributes.add(parsedAttribute.value().get());
+                        if (parsedAttribute.optionalValue().isPresent()) {
+                            demandAttributes.add(parsedAttribute.optionalValue().get());
                         }
                         result.errorMessages().withAppended(parsedAttribute.errorMessages());
                     }
@@ -161,7 +160,7 @@ public class CodeEditorLangParser extends DenParserBaseVisitor<Result<SolutionDe
             if (firstSupplyAttribute != null) {
                 final var parsedAttribute = parseAttributeDescription(firstSupplyAttribute.Name().getText()
                         , firstSupplyAttribute.function_call().Name().getText());
-                final var parsedAttributeValue = parsedAttribute.value();
+                final var parsedAttributeValue = parsedAttribute.optionalValue();
                 if (parsedAttributeValue.isPresent()) {
                     supplyAttributes.add(parsedAttributeValue.get());
                 }
@@ -171,8 +170,8 @@ public class CodeEditorLangParser extends DenParserBaseVisitor<Result<SolutionDe
             additionalSupplyAttributes.forEach(sa -> {
                 final var parsedAttribute = parseAttributeDescription(sa.variable_definition().Name().getText()
                         , sa.variable_definition().function_call().Name().getText());
-                if (parsedAttribute.value().isPresent()) {
-                    supplyAttributes.add(parsedAttribute.value().get());
+                if (parsedAttribute.optionalValue().isPresent()) {
+                    supplyAttributes.add(parsedAttribute.optionalValue().get());
                 }
                 result.errorMessages().withAppended(parsedAttribute.errorMessages());
             });

@@ -100,10 +100,10 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
             final var assignments = assignments(name.orElseThrow(), demands.orElseThrow(), supplies.orElseThrow());
             final var parsedQuery = parseQuery(sourceUnit, assignments);
             result.errorMessages().withAppended(parsedQuery.errorMessages());
-            if (parsedQuery.value().isEmpty()) {
+            if (parsedQuery.optionalValue().isEmpty()) {
                 return result;
             }
-            solutionParameters.withProblem(problem(assignments, parsedQuery.value().orElseThrow().root().orElseThrow()));
+            solutionParameters.withProblem(problem(assignments, parsedQuery.optionalValue().orElseThrow().root().orElseThrow()));
             result.withValue(solutionParameters);
         } else {
             if (name.isEmpty()) {
@@ -138,7 +138,7 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
             if (firstDemandAttribute != null) {
                 final var parsedAttribute = Attributes.parseAttribute(firstDemandAttribute.Name().getText()
                         , firstDemandAttribute.function_call().Name().getText());
-                final var parsedAttributeValue = parsedAttribute.value();
+                final var parsedAttributeValue = parsedAttribute.optionalValue();
                 if (parsedAttributeValue.isPresent()) {
                     demandAttributes.add(parsedAttributeValue.get());
                 }
@@ -148,8 +148,8 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
             additionalDemandAttributes.forEach(da -> {
                         final var parsedAttribute = Attributes.parseAttribute(da.variable_definition().Name().getText()
                                 , da.variable_definition().function_call().Name().getText());
-                        if (parsedAttribute.value().isPresent()) {
-                            demandAttributes.add(parsedAttribute.value().get());
+                        if (parsedAttribute.optionalValue().isPresent()) {
+                            demandAttributes.add(parsedAttribute.optionalValue().get());
                         }
                         result.errorMessages().withAppended(parsedAttribute.errorMessages());
                     }
@@ -165,7 +165,7 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
             if (firstSupplyAttribute != null) {
                 final var parsedAttribute = Attributes.parseAttribute(firstSupplyAttribute.Name().getText()
                         , firstSupplyAttribute.function_call().Name().getText());
-                final var parsedAttributeValue = parsedAttribute.value();
+                final var parsedAttributeValue = parsedAttribute.optionalValue();
                 if (parsedAttributeValue.isPresent()) {
                     supplyAttributes.add(parsedAttributeValue.get());
                 }
@@ -175,8 +175,8 @@ public class ProblemParser extends DenParserBaseVisitor<Result<SolutionParameter
             additionalSupplyAttributes.forEach(sa -> {
                 final var parsedAttribute = Attributes.parseAttribute(sa.variable_definition().Name().getText()
                         , sa.variable_definition().function_call().Name().getText());
-                if (parsedAttribute.value().isPresent()) {
-                    supplyAttributes.add(parsedAttribute.value().get());
+                if (parsedAttribute.optionalValue().isPresent()) {
+                    supplyAttributes.add(parsedAttribute.optionalValue().get());
                 }
                 result.errorMessages().withAppended(parsedAttribute.errorMessages());
             });

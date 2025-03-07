@@ -47,8 +47,8 @@ public class ProblemParserTest {
     public void testOutputFormat() {
         final var resultData = parseProblem(Dem.configValue(GelUiFileSystem.class)
                 .readString("src/main/resources/html/net/splitcells/gel/ui/examples/school-course-scheduling-problem.txt"));
-        resultData.value().orElseThrow().columnAttributesForOutputFormat().requireEqualityTo(list("roomNumber"));
-        resultData.value().orElseThrow().rowAttributesForOutputFormat().requireEqualityTo(list("date", "shift"));
+        resultData.optionalValue().orElseThrow().columnAttributesForOutputFormat().requireEqualityTo(list("roomNumber"));
+        resultData.optionalValue().orElseThrow().rowAttributesForOutputFormat().requireEqualityTo(list("date", "shift"));
     }
 
     @UnitTest
@@ -58,7 +58,7 @@ public class ProblemParserTest {
                 + "constraints=forEach(a).then(hasSize(2));\n"
                 + "constraints().forEach(b).then(allSame(c));\n"
                 + "name=\"testParseProblem\";\n";
-        final var testSubject = parseProblem(testData).value().orElseThrow().problem();
+        final var testSubject = parseProblem(testData).optionalValue().orElseThrow().problem();
         final var forEachA = testSubject.constraint().child(0);
         requireEquals(forEachA.type(), ForAll.class);
         requirePresenceOf(forEachA.arguments().get(0).toTree().pathOfValueTree(
@@ -101,7 +101,7 @@ public class ProblemParserTest {
                 + "supplies = {c = float()};\n"
                 + "constraints = forAllCombinationsOf(a, b, c);\n"
                 + "name = \"testParseProblem\";\n";
-        final var testSubject = parseProblem(testData).value().orElseThrow().problem();
+        final var testSubject = parseProblem(testData).optionalValue().orElseThrow().problem();
         final var forAllCombinationsOf = testSubject.constraint().child(0);
         requireEquals(forAllCombinationsOf.type(), ForAll.class);
         requirePresenceOf(forAllCombinationsOf.arguments().get(0).toTree().pathOfValueTree(

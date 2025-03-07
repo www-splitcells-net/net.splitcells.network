@@ -63,7 +63,7 @@ public class CodeSolutionCalculator implements Processor<Tree, Tree> {
         if (solutionDescription.defective()) {
             return editorParsing.withErrorMessages(solutionDescription);
         }
-        return editor("editor", EXPLICIT_NO_CONTEXT).solutionEditor(solutionDescription.value().orElseThrow());
+        return editor("editor", EXPLICIT_NO_CONTEXT).solutionEditor(solutionDescription.optionalValue().orElseThrow());
     }
 
     @Override
@@ -76,9 +76,9 @@ public class CodeSolutionCalculator implements Processor<Tree, Tree> {
                     .namedChild(PROBLEM_DEFINITION)
                     .child(0)
                     .name());
-            final var isSolutionEditorParsed = solutionEditorParsing.value().isPresent();
+            final var isSolutionEditorParsed = solutionEditorParsing.optionalValue().isPresent();
             if (isSolutionEditorParsed) {
-                final var solutionEditor = solutionEditorParsing.value().orElseThrow();
+                final var solutionEditor = solutionEditorParsing.optionalValue().orElseThrow();
                 final var solution = solutionEditor.solution().orElseThrow();
                 final var demandDefinitions = request.data().namedChildren(DEMANDS);
                 if (demandDefinitions.hasElements()) {

@@ -221,7 +221,7 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
                 if (parsedQuery.defective()) {
                     return result;
                 }
-                solutionParameters.withProblem(problem(assignments, parsedQuery.value().orElseThrow().root().orElseThrow()));
+                solutionParameters.withProblem(problem(assignments, parsedQuery.optionalValue().orElseThrow().root().orElseThrow()));
                 result.withValue(solutionParameters);
             } else if (functionName.equals(TABLE)) {
                 if (functionCall.function_call_argument().size() < 2) {
@@ -283,7 +283,7 @@ public class NoCodeProblemParser extends NoCodeDenParserBaseVisitor<Result<Solut
                     result.errorMessages().addAll(attributeParsing.errorMessages());
                     return null;
                 }
-                final var newAttribute = attributeParsing.value().orElseThrow();
+                final var newAttribute = attributeParsing.optionalValue().orElseThrow();
                 editor.withAttributeVar(variableName, newAttribute);
                 return null;
             } else {

@@ -68,7 +68,7 @@ public class CodeSolutionCalculatorTest {
                 + "name=\"testParseProblem\";\n";
         final var testResult = solutionCalculator().parseSolutionCodeEditor(testData);
         testResult.requireWorking();
-        final var solution = testResult.value().orElseThrow().solution().orElseThrow();
+        final var solution = testResult.optionalValue().orElseThrow().solution().orElseThrow();
         solution.headerView2().requireContentsOf((a, b) -> a.equalContentTo(b)
                 , integerAttribute("a")
                 , stringAttribute("b")
@@ -94,7 +94,7 @@ public class CodeSolutionCalculatorTest {
     public void testOutputFormat() {
         final var resultData = editorLangParsing(Dem.configValue(GelUiFileSystem.class)
                 .readString("src/main/resources/html/net/splitcells/gel/ui/examples/school-course-scheduling-problem.txt")).requireWorking()
-                .value().orElseThrow();
+                .optionalValue().orElseThrow();
         resultData.columnAttributesForOutputFormat().requireEqualityTo(list(referenceDescription("roomNumber", AttributeDescription.class)));
         resultData.rowAttributesForOutputFormat().requireEqualityTo(list(referenceDescription("date", AttributeDescription.class)
                 , referenceDescription("shift", AttributeDescription.class)));
@@ -107,7 +107,10 @@ public class CodeSolutionCalculatorTest {
                 + "constraints=forEach(a).then(hasSize(2));\n"
                 + "constraints().forEach(b).then(allSame(c));\n"
                 + "name=\"testParseProblem\";\n";
-        final var testSubject = parseProblem(testData).value().orElseThrow().problem();
+        final var testSubject = solutionCalculator().parseSolutionCodeEditor(testData)
+                .requiredValue()
+                .solution()
+                .orElseThrow();
         final var forEachA = testSubject.constraint().child(0);
         requireEquals(forEachA.type(), ForAll.class);
         requirePresenceOf(forEachA.arguments().get(0).toTree().pathOfValueTree(
@@ -150,7 +153,7 @@ public class CodeSolutionCalculatorTest {
                 + "supplies = {c = float()};\n"
                 + "constraints = forAllCombinationsOf(a, b, c);\n"
                 + "name = \"testParseProblem\";\n";
-        final var testSubject = parseProblem(testData).value().orElseThrow().problem();
+        final var testSubject = parseProblem(testData).optionalValue().orElseThrow().problem();
         final var forAllCombinationsOf = testSubject.constraint().child(0);
         requireEquals(forAllCombinationsOf.type(), ForAll.class);
         requirePresenceOf(forAllCombinationsOf.arguments().get(0).toTree().pathOfValueTree(
