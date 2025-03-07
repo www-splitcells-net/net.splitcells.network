@@ -42,11 +42,10 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.stringAttribute;
 import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.lib.classification.ForAllValueCombinations.FOR_ALL_VALUE_COMBINATIONS_NAME;
-import static net.splitcells.gel.ui.ProblemParser.parseProblem;
 import static net.splitcells.gel.ui.SolutionCalculator.*;
 import static net.splitcells.gel.ui.code.editor.CodeEditorLangParser.editorLangParsing;
 import static net.splitcells.gel.ui.code.editor.CodeSolutionCalculator.PROBLEM_DEFINITION;
-import static net.splitcells.gel.ui.code.editor.CodeSolutionCalculator.solutionCalculator;
+import static net.splitcells.gel.ui.code.editor.CodeSolutionCalculator.codeSolutionCalculator;
 import static net.splitcells.website.server.processor.Request.request;
 
 public class CodeSolutionCalculatorTest {
@@ -57,7 +56,7 @@ public class CodeSolutionCalculatorTest {
                 + "constraints=forEach(a).then(hasSize(2));\n"
                 + "constraints().forEach(b).then(allSame(c));\n"
                 + "name=\"testParseProblem\";\n";
-        final var testResult = solutionCalculator().process(request(CodeSolutionCalculator.PATH
+        final var testResult = codeSolutionCalculator().process(request(CodeSolutionCalculator.PATH
                 , tree("").withProperty(PROBLEM_DEFINITION,
                         tree(testData))));
         requireEquals(testResult.data()
@@ -75,7 +74,7 @@ public class CodeSolutionCalculatorTest {
                 + "constraints=forEach(a).forEach(b).then(hasSize(2));\n"
                 + "constraints().forEach(b).then(allSame(c));\n"
                 + "name=\"testParseProblem\";\n";
-        final var testResult = solutionCalculator().parseSolutionCodeEditor(testData);
+        final var testResult = codeSolutionCalculator().parseSolutionCodeEditor(testData);
         testResult.requireWorking();
         final var solution = testResult.optionalValue().orElseThrow().solution().orElseThrow();
         solution.headerView2().requireContentsOf((a, b) -> a.equalContentTo(b)
@@ -116,7 +115,7 @@ public class CodeSolutionCalculatorTest {
                 + "constraints=forEach(a).then(hasSize(2));\n"
                 + "constraints().forEach(b).then(allSame(c));\n"
                 + "name=\"testParseProblem\";\n";
-        final var testSubject = solutionCalculator().parseSolutionCodeEditor(testData)
+        final var testSubject = codeSolutionCalculator().parseSolutionCodeEditor(testData)
                 .requiredValue()
                 .solution()
                 .orElseThrow();
@@ -162,7 +161,7 @@ public class CodeSolutionCalculatorTest {
                 + "supplies = {c = integer()};\n"
                 + "constraints = forAllCombinationsOf(a, b, c);\n"
                 + "name = \"testParseProblem\";\n";
-        final var testSubject = solutionCalculator().parseSolutionCodeEditor(testData).requiredValue().solution().orElseThrow();
+        final var testSubject = codeSolutionCalculator().parseSolutionCodeEditor(testData).requiredValue().solution().orElseThrow();
         final var forAllCombinationsOf = testSubject.constraint().child(0);
         requireEquals(forAllCombinationsOf.type(), ForAll.class);
         requirePresenceOf(forAllCombinationsOf.arguments().get(0).toTree().pathOfValueTree(
@@ -187,7 +186,7 @@ public class CodeSolutionCalculatorTest {
                 + "supplies={};"
                 + "constraints=forEach(a);"
                 + "name=\"testInvalidDemandAttribute\";";
-        solutionCalculator().parseSolutionCodeEditor(testData).errorMessages().requireAnyContent();
+        codeSolutionCalculator().parseSolutionCodeEditor(testData).errorMessages().requireAnyContent();
     }
 
     @UnitTest
@@ -196,7 +195,7 @@ public class CodeSolutionCalculatorTest {
                 + "supplies={a=invalid_attribute()};"
                 + "constraints=forEach(a);"
                 + "name=\"testInvalidDemandAttribute\";";
-        solutionCalculator().parseSolutionCodeEditor(testData).errorMessages().requireAnyContent();
+        codeSolutionCalculator().parseSolutionCodeEditor(testData).errorMessages().requireAnyContent();
     }
 
     @CapabilityTest
@@ -206,7 +205,7 @@ public class CodeSolutionCalculatorTest {
                                     .readString("src/main/resources/html/net/splitcells/gel/ui/examples/school-course-scheduling-problem.txt");
                             final String demands = ColloquiumPlanningDemandsTestData.testData();
                             final String supplies = ColloquiumPlanningSuppliesTestData.testData();
-                            final var testResult = solutionCalculator().process(request(CodeSolutionCalculator.PATH
+                            final var testResult = codeSolutionCalculator().process(request(CodeSolutionCalculator.PATH
                                     , tree("")
                                             .withProperty(SolutionCalculator.PROBLEM_DEFINITION, tree(problemDefinition))
                                             .withProperty(DEMANDS, tree(demands))

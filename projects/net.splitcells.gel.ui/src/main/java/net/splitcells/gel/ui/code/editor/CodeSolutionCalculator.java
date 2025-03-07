@@ -49,7 +49,7 @@ public class CodeSolutionCalculator implements Processor<Tree, Tree> {
     public static final String ERRORS = "net-splitcells-gel-ui-editor-form-errors";
     public static final String FORM_UPDATE = "net-splitcells-websiter-server-form-update";
 
-    public static CodeSolutionCalculator solutionCalculator() {
+    public static CodeSolutionCalculator codeSolutionCalculator() {
         return new CodeSolutionCalculator();
     }
 
