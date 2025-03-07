@@ -26,6 +26,7 @@ import net.splitcells.gel.doc.GelDocFileSystem;
 import net.splitcells.gel.ext.GelExtFileSystem;
 import net.splitcells.gel.ui.GelUiFileSystem;
 import net.splitcells.gel.ui.SolutionCalculator;
+import net.splitcells.gel.ui.code.editor.CodeSolutionCalculator;
 import net.splitcells.gel.ui.no.code.editor.NoCodeSolutionCalculator;
 import net.splitcells.network.NetworkFileSystem;
 import net.splitcells.network.worker.via.java.NetworkWorkerFileSystem;
@@ -49,7 +50,7 @@ import java.util.function.Function;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.Dem.serve;
-import static net.splitcells.gel.ui.SolutionCalculator.solutionCalculator;
+import static net.splitcells.gel.ui.code.editor.CodeSolutionCalculator.codeSolutionCalculator;
 import static net.splitcells.gel.ui.no.code.editor.FunctionMeta.functionMeta;
 import static net.splitcells.gel.ui.no.code.editor.Functions.functions;
 import static net.splitcells.gel.ui.no.code.editor.NoCodeSolutionCalculator.noCodeSolutionCalculator;
@@ -192,7 +193,7 @@ public class SystemCell implements Cell {
                         , "/net/splitcells/gel/ui/editor")
                         .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/net.splitcells.gel.ui.logo.jpg"))
                         .withDescription(Optional.of("Define and solve assignment problems in text form.")))
-                .withAdditionalProcessor(SolutionCalculator.PATH, solutionCalculator())
+                .withAdditionalProcessor(CodeSolutionCalculator.PATH, codeSolutionCalculator())
                 .withAdditionalProcessor(NoCodeSolutionCalculator.PATH, noCodeSolutionCalculator())
                 .withAdditionalProjectsRendererExtension(functions())
                 .withAdditionalProjectsRendererExtension(functionMeta())
