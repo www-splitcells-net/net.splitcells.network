@@ -103,7 +103,7 @@ public class CodeSolutionCalculatorTest {
     @UnitTest
     public void testParseProblem() {
         final var testData = "demands={a=int();b=string()};\n"
-                + "supplies={c=float()};\n"
+                + "supplies={c=integer()};\n"
                 + "constraints=forEach(a).then(hasSize(2));\n"
                 + "constraints().forEach(b).then(allSame(c));\n"
                 + "name=\"testParseProblem\";\n";
