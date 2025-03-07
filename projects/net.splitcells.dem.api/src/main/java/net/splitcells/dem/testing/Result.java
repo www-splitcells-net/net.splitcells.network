@@ -53,6 +53,10 @@ public class Result<Value, Message> {
         return value;
     }
 
+    public Value requiredValue() {
+        return value.orElseThrow();
+    }
+
     public Result<Value, Message> withErrorMessage(Message arg) {
         errorMessages.add(arg);
         return this;
