@@ -27,6 +27,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
+@Deprecated
 public class Editor {
     public static Editor editor() {
         return new Editor();

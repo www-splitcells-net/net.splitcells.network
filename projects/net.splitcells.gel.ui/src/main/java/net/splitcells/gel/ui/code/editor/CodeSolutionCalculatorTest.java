@@ -23,7 +23,7 @@ import net.splitcells.gel.constraint.type.ForAll;
 import net.splitcells.gel.constraint.type.Then;
 import net.splitcells.gel.editor.lang.AttributeDescription;
 import net.splitcells.gel.ui.GelUiFileSystem;
-import net.splitcells.gel.ui.SolutionCalculator;
+import net.splitcells.gel.ui.code.editor.CodeSolutionCalculator;
 import net.splitcells.website.server.projects.extension.impls.ColloquiumPlanningDemandsTestData;
 import net.splitcells.website.server.projects.extension.impls.ColloquiumPlanningSuppliesTestData;
 import org.antlr.v4.runtime.CharStreams;
@@ -42,7 +42,7 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.stringAttribute;
 import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.lib.classification.ForAllValueCombinations.FOR_ALL_VALUE_COMBINATIONS_NAME;
-import static net.splitcells.gel.ui.SolutionCalculator.*;
+import static net.splitcells.gel.ui.code.editor.CodeSolutionCalculator.*;
 import static net.splitcells.gel.ui.code.editor.CodeEditorLangParser.editorLangParsing;
 import static net.splitcells.gel.ui.code.editor.CodeSolutionCalculator.PROBLEM_DEFINITION;
 import static net.splitcells.gel.ui.code.editor.CodeSolutionCalculator.codeSolutionCalculator;
@@ -207,7 +207,7 @@ public class CodeSolutionCalculatorTest {
                             final String supplies = ColloquiumPlanningSuppliesTestData.testData();
                             final var testResult = codeSolutionCalculator().process(request(CodeSolutionCalculator.PATH
                                     , tree("")
-                                            .withProperty(SolutionCalculator.PROBLEM_DEFINITION, tree(problemDefinition))
+                                            .withProperty(CodeSolutionCalculator.PROBLEM_DEFINITION, tree(problemDefinition))
                                             .withProperty(DEMANDS, tree(demands))
                                             .withProperty(SUPPLIES, tree(supplies))));
                             requireEquals(testResult.data().namedChildren(SOLUTION_RATING).get(0).child(0)
