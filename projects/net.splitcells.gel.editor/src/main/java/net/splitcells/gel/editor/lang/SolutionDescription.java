@@ -17,6 +17,7 @@ package net.splitcells.gel.editor.lang;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.gel.data.view.attribute.Attribute;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -31,6 +32,9 @@ public class SolutionDescription {
     }
 
     private final String name;
+    /**
+     * TODO The {@link Attribute} lookup should be provided by the editor.
+     */
     private final Map<String, AttributeDescription> attributes = map();
     private final TableDescription demands;
     private final TableDescription supplies;
