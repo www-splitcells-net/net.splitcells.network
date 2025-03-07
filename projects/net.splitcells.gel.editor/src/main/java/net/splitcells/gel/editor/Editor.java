@@ -25,6 +25,12 @@ import net.splitcells.gel.editor.solution.SolutionEditor;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
 
+/**
+ * There is no distinction, between a things name and their variable name.
+ * So something like `a = attribute(string, "Alpha")` is not supported,
+ * as having multiple ids for one thing will cause problems.
+ * Otherwise, error messages and debugging can get hard to understand.
+ */
 public class Editor implements Discoverable {
     public static Editor editor(String name, Discoverable parent) {
         return new Editor(name, parent);
