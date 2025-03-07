@@ -150,10 +150,10 @@ public class CodeSolutionCalculatorTest {
     @UnitTest
     public void testParseProblemWithForAllCombinationsOf() {
         final var testData = "demands = {a = int(); b = string()};\n"
-                + "supplies = {c = float()};\n"
+                + "supplies = {c = integer()};\n"
                 + "constraints = forAllCombinationsOf(a, b, c);\n"
                 + "name = \"testParseProblem\";\n";
-        final var testSubject = parseProblem(testData).optionalValue().orElseThrow().problem();
+        final var testSubject = solutionCalculator().parseSolutionCodeEditor(testData).requiredValue().solution().orElseThrow();
         final var forAllCombinationsOf = testSubject.constraint().child(0);
         requireEquals(forAllCombinationsOf.type(), ForAll.class);
         requirePresenceOf(forAllCombinationsOf.arguments().get(0).toTree().pathOfValueTree(
@@ -178,7 +178,7 @@ public class CodeSolutionCalculatorTest {
                 + "supplies={};"
                 + "constraints=forEach(a);"
                 + "name=\"testInvalidDemandAttribute\";";
-        parseProblem(testData).errorMessages().requireAnyContent();
+        solutionCalculator().parseSolutionCodeEditor(testData).errorMessages().requireAnyContent();
     }
 
     @UnitTest
@@ -187,6 +187,6 @@ public class CodeSolutionCalculatorTest {
                 + "supplies={a=invalid_attribute()};"
                 + "constraints=forEach(a);"
                 + "name=\"testInvalidDemandAttribute\";";
-        parseProblem(testData).errorMessages().requireAnyContent();
+        solutionCalculator().parseSolutionCodeEditor(testData).errorMessages().requireAnyContent();
     }
 }
