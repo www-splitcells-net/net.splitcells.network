@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 jobs:
   # This workflow contains a single job called "build"
-  # Use the lastest version of actions/cache, as v1 was deleted at GitHub.
+  # Note: "uses" without a version do not work.
   build:
     runs-on: ubuntu-latest
     strategy:
@@ -20,7 +20,7 @@ jobs:
           java-version: '21'
           java-package: 'jdk'
       - name: Cache Maven packages
-        uses: actions/cache
+        uses: actions/cache@v4
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
