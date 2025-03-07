@@ -15,12 +15,24 @@
  */
 package net.splitcells.gel.ui.editor.nocode;
 
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.testing.annotations.CapabilityTest;
-import net.splitcells.dem.testing.annotations.UnitTest;
+import net.splitcells.gel.data.view.attribute.Attribute;
+import net.splitcells.gel.ui.GelUiFileSystem;
+
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.gel.constraint.QueryI.query;
+import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
+import static net.splitcells.gel.rating.rater.lib.MinimalDistance.has_minimal_distance_of;
+import static net.splitcells.gel.ui.editor.nocode.NoCodeEditorLangParser.parseNoCodeSolutionDescription;
+import static net.splitcells.gel.ui.no.code.editor.NoCodeProblemParser.parseNoCodeProblem;
 
 public class NoCodeEditorLangParserTest {
     @CapabilityTest
-    public void test() {
-
+    public void testAttributeParsing() {
+        final var testResult = parseNoCodeSolutionDescription(Dem.configValue(GelUiFileSystem.class)
+                .readString("src/main/resources/html/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"));
+        testResult.requireWorking();
     }
+
 }

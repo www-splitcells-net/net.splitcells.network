@@ -16,6 +16,7 @@
 package net.splitcells.gel.ui.editor.nocode;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenParserBaseVisitor;
@@ -39,6 +40,7 @@ import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
 import static net.splitcells.gel.data.view.attribute.Attributes.parseAttribute;
 import static net.splitcells.gel.editor.lang.AttributeDescription.parseAttributeDescription;
 import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
+import static net.splitcells.gel.editor.lang.SolutionDescription.solutionDescription;
 import static net.splitcells.gel.editor.lang.TableDescription.tableDescription;
 import static net.splitcells.gel.problem.ProblemI.problem;
 import static net.splitcells.gel.ui.no.code.editor.NoCodeQueryParser.parseNoCodeQuery;
@@ -58,7 +60,7 @@ public class NoCodeEditorLangParser extends NoCodeDenParserBaseVisitor<Result<So
     private static final String SOLUTION = "solution";
     private static final String SUPPLIES = "supplies";
 
-    private Result<SolutionDescription, Tree> noCodeEditorLangParsing(String arg) {
+    public static Result<SolutionDescription, Tree> parseNoCodeSolutionDescription(String arg) {
         final var lexer = new net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenLexer(CharStreams.fromString(arg));
         final var parser = new net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenParser(new CommonTokenStream(lexer));
         final List<Tree> parsingErrors = list();
@@ -89,7 +91,6 @@ public class NoCodeEditorLangParser extends NoCodeDenParserBaseVisitor<Result<So
         return parsedProblem;
     }
 
-    private Optional<String> name = Optional.empty();
     private Map<String, AttributeDescription> attributes = map();
     private Optional<TableDescription> demands = Optional.empty();
     private Optional<TableDescription> supplies = Optional.empty();
@@ -100,6 +101,22 @@ public class NoCodeEditorLangParser extends NoCodeDenParserBaseVisitor<Result<So
 
     private NoCodeEditorLangParser() {
 
+    }
+
+    @Override
+    public Result<SolutionDescription, Tree> visitSource_unit(net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenParser.Source_unitContext sourceUnit) {
+        visitChildren(sourceUnit);
+        if (demands.isPresent() && supplies.isPresent() && result.errorMessages().isEmpty()) {
+            return result.withValue(solutionDescription("solution", Lists.listWithValuesOf(attributes.values()), demands.get(), supplies.get(), constraints));
+        } else {
+            if (demands.isEmpty()) {
+                result.withErrorMessage(tree("No demands was defined via `demands=\"[...]\"`."));
+            }
+            if (supplies.isEmpty()) {
+                result.withErrorMessage(tree("No supplies was defined via `supplies=\"[...]\"`."));
+            }
+        }
+        return result;
     }
 
     /**
