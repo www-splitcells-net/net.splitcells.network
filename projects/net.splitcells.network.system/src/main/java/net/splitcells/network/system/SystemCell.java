@@ -25,7 +25,6 @@ import net.splitcells.gel.GelCoreFileSystem;
 import net.splitcells.gel.doc.GelDocFileSystem;
 import net.splitcells.gel.ext.GelExtFileSystem;
 import net.splitcells.gel.ui.GelUiFileSystem;
-import net.splitcells.gel.ui.SolutionCalculator;
 import net.splitcells.gel.ui.code.editor.CodeSolutionCalculator;
 import net.splitcells.gel.ui.no.code.editor.NoCodeSolutionCalculator;
 import net.splitcells.network.NetworkFileSystem;
