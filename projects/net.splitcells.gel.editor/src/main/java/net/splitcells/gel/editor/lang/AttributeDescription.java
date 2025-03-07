@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.editor.lang;
 
+import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -53,5 +54,19 @@ public class AttributeDescription {
 
     public PrimitiveType primitiveType() {
         return primitiveType;
+    }
+
+
+    @Override
+    public boolean equals(Object arg) {
+        if (arg instanceof AttributeDescription other) {
+            return name.equals(other.name()) && primitiveType.equals(other.primitiveType());
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Thing.hashCode(name, primitiveType);
     }
 }
