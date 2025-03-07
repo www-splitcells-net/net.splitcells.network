@@ -53,7 +53,17 @@ public class Result<Value, Message> {
         return value;
     }
 
+    /**
+     * This method ensures, that the required {@link #value()} is present or
+     * that the reason for its absence is known.
+     *
+     * @return Returns {@link #value()} or throws existing {@link #errorMessages()}.
+     */
     public Value requiredValue() {
+        if (value.isEmpty()) {
+            throw execException(tree("The required value is not present.")
+                    .withProperty("Error Messages", errorMessages().toString()));
+        }
         return value.orElseThrow();
     }
 
