@@ -16,14 +16,22 @@
 package net.splitcells.gel.ui.code.editor;
 
 import net.splitcells.dem.Dem;
+import net.splitcells.dem.environment.config.IsDeterministic;
+import net.splitcells.dem.testing.annotations.CapabilityTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.constraint.type.ForAll;
 import net.splitcells.gel.constraint.type.Then;
 import net.splitcells.gel.editor.lang.AttributeDescription;
 import net.splitcells.gel.ui.GelUiFileSystem;
+import net.splitcells.gel.ui.SolutionCalculator;
+import net.splitcells.website.server.projects.extension.impls.ColloquiumPlanningDemandsTestData;
+import net.splitcells.website.server.projects.extension.impls.ColloquiumPlanningSuppliesTestData;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
+import java.util.Optional;
+
+import static net.splitcells.dem.data.atom.Bools.truthful;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
@@ -35,6 +43,7 @@ import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescr
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.lib.classification.ForAllValueCombinations.FOR_ALL_VALUE_COMBINATIONS_NAME;
 import static net.splitcells.gel.ui.ProblemParser.parseProblem;
+import static net.splitcells.gel.ui.SolutionCalculator.*;
 import static net.splitcells.gel.ui.code.editor.CodeEditorLangParser.editorLangParsing;
 import static net.splitcells.gel.ui.code.editor.CodeSolutionCalculator.PROBLEM_DEFINITION;
 import static net.splitcells.gel.ui.code.editor.CodeSolutionCalculator.solutionCalculator;
@@ -188,5 +197,30 @@ public class CodeSolutionCalculatorTest {
                 + "constraints=forEach(a);"
                 + "name=\"testInvalidDemandAttribute\";";
         solutionCalculator().parseSolutionCodeEditor(testData).errorMessages().requireAnyContent();
+    }
+
+    @CapabilityTest
+    public void testDemonstrationExample() {
+        Dem.process(() -> {
+                            final var problemDefinition = Dem.configValue(GelUiFileSystem.class)
+                                    .readString("src/main/resources/html/net/splitcells/gel/ui/examples/school-course-scheduling-problem.txt");
+                            final String demands = ColloquiumPlanningDemandsTestData.testData();
+                            final String supplies = ColloquiumPlanningSuppliesTestData.testData();
+                            final var testResult = solutionCalculator().process(request(CodeSolutionCalculator.PATH
+                                    , tree("")
+                                            .withProperty(SolutionCalculator.PROBLEM_DEFINITION, tree(problemDefinition))
+                                            .withProperty(DEMANDS, tree(demands))
+                                            .withProperty(SUPPLIES, tree(supplies))));
+                            requireEquals(testResult.data().namedChildren(SOLUTION_RATING).get(0).child(0)
+                                            .createToJsonPrintable().toJsonString()
+                                    , "{\"Cost\":\"0.0\"}");
+                            /* TODO Improve solver to solve this example.
+                             * requireEquals(testResult.data().namedChildren(SOLUTION_RATING).get(0).child(0)
+                             *               .createToJsonPrintable().toJsonString()
+                             *       , "{\"Cost\":\"0.0\"}");
+                             * */
+                        },
+                        env -> env.config().withConfigValue(IsDeterministic.class, Optional.of(truthful())))
+                .requireErrorFree();
     }
 }
