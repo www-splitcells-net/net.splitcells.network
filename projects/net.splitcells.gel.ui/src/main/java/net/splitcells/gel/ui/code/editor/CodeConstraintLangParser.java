@@ -37,6 +37,10 @@ import static net.splitcells.gel.editor.lang.IntegerDescription.integerDescripti
 import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
 import static net.splitcells.gel.editor.solution.SolutionEditor.AFFECTED_CONTENT;
 
+/**
+ * IDEA Logically this code should be inside {@link CodeEditorLangParser},
+ * as the separation between the 2 only seem to create more complexity.
+ */
 public class CodeConstraintLangParser extends DenParserBaseVisitor<Result<List<ConstraintDescription>, Tree>> {
     public static Result<List<ConstraintDescription>, Tree> parseConstraints(DenParser.Source_unitContext sourceUnit) {
         final var parser = new CodeConstraintLangParser();
