@@ -89,7 +89,6 @@ public class RandomnessTest {
         final var max = 7;
         final var randomness = randomness(0L);
         final var runs = 1_000;
-        final var deviation = 0.1f;
         final var sum = rangeClosed(1, runs)
                 .map(i -> randomness.integer(min, mean, max))
                 .reduce((a, b) -> a + b)
