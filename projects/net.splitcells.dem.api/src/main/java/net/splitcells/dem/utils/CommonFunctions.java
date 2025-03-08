@@ -138,13 +138,13 @@ public class CommonFunctions {
     @JavaLegacyBody
     public static <T extends Object> T[] concat(T[] a, T[] b) {
         final T[] rVal = CommonFunctions.<T>createArray(a.length + b.length);
-        int current_index = 0;
+        int currentIndex = 0;
 
         for (int i = 0; i < a.length; i++) {
-            rVal[current_index++] = a[i];
+            rVal[currentIndex++] = a[i];
         }
         for (int i = 0; i < b.length; i++) {
-            rVal[current_index++] = b[i];
+            rVal[currentIndex++] = b[i];
         }
         return rVal;
     }
