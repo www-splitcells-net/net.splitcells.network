@@ -35,9 +35,9 @@ public class ClassRelatedI extends SecurityManager implements ClassRelated {
     }
 
     @Override
-    public List<Class<?>> allClassesOf(String packageName) {
+    public List<Class<?>> allClassesOf(String rootPackage) {
         final var classLoader = Thread.currentThread().getContextClassLoader();
-        final var path = packageName.replace('.', '/');
+        final var path = rootPackage.replace('.', '/');
         try {
             final var resources = classLoader.getResources(path);
             final List<File> dirs = list();
@@ -48,7 +48,7 @@ public class ClassRelatedI extends SecurityManager implements ClassRelated {
             final List<Class<?>> classes = list();
             for (File directory : dirs) {
                 try {
-                    classes.addAll(findClasses(directory, packageName));
+                    classes.addAll(findClasses(directory, rootPackage));
                 } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }

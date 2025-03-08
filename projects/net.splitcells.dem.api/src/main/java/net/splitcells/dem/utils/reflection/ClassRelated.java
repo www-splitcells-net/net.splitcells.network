@@ -21,7 +21,7 @@ public interface ClassRelated {
 
     List<Class<?>> allClasses();
 
-    List<Class<?>> allClassesOf(String root_package);
+    List<Class<?>> allClassesOf(String rootPackage);
 
     Class<?> callerClass();
 
