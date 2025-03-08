@@ -22,12 +22,14 @@ import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.lang.AttributeDescription;
 import net.splitcells.gel.editor.lang.PrimitiveType;
+import net.splitcells.gel.editor.lang.ReferenceDescription;
 import net.splitcells.gel.ui.GelUiFileSystem;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.editor.lang.AttributeDescription.attributeDescription;
+import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.lib.MinimalDistance.has_minimal_distance_of;
 import static net.splitcells.gel.ui.editor.nocode.NoCodeEditorLangParser.parseNoCodeSolutionDescription;
@@ -46,6 +48,16 @@ public class NoCodeEditorLangParserTest {
                 , attributeDescription("date", PrimitiveType.INTEGER)
                 , attributeDescription("shift", PrimitiveType.INTEGER)
                 , attributeDescription("roomNumber", PrimitiveType.INTEGER));
+        testResult.demands().header().requireEquals(list(
+                referenceDescription("student", AttributeDescription.class)
+                , referenceDescription("examiner", AttributeDescription.class)
+                , referenceDescription("observer", AttributeDescription.class)
+        ));
+        testResult.supplies().header().requireEquals(list(
+                referenceDescription("date", AttributeDescription.class)
+                , referenceDescription("shift", AttributeDescription.class)
+                , referenceDescription("roomNumber", AttributeDescription.class)
+        ));
         // TODO Test constraints.
     }
 
