@@ -25,7 +25,7 @@ import java.net.URL;
 import static net.splitcells.dem.data.set.list.Lists.list;
 
 @JavaLegacyArtifact
-public class ClassRelatedI extends SecurityManager implements ClassRelated {
+public class ClassRelatedI implements ClassRelated {
 
     public static ClassRelated classRelated() {
         return new ClassRelatedI();
@@ -81,15 +81,6 @@ public class ClassRelatedI extends SecurityManager implements ClassRelated {
     @Override
     public List<Class<?>> allClasses() {
         return allClassesOf("");
-    }
-
-    @Override
-    public Class<?> callerClass() {
-        return callerClass(0);
-    }
-
-    public Class<?> callerClass(int i) {
-        return getClassContext()[1 + i];
     }
 
     @Override

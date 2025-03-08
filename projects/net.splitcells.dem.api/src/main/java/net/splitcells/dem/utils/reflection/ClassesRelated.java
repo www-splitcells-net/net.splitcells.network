@@ -39,14 +39,6 @@ public class ClassesRelated {
 		return INSTANCE.allClasses();
 	}
 
-	public static Class<?> callerClass() {
-		return INSTANCE.callerClass();
-	}
-
-	public static Class<?> callerClass(int i) {
-		return INSTANCE.callerClass(i);
-	}
-
 	public static String simplifiedName(Class<?> arg) {
 		return INSTANCE.simplifiedName(arg);
 	}

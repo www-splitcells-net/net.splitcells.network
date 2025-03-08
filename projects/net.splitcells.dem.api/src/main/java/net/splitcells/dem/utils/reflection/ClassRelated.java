@@ -23,10 +23,6 @@ public interface ClassRelated {
 
     List<Class<?>> allClassesOf(String rootPackage);
 
-    Class<?> callerClass();
-
-    Class<?> callerClass(int i);
-
     String simplifiedName(Class<?> arg);
 
 }

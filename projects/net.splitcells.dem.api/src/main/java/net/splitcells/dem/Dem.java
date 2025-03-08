@@ -46,7 +46,6 @@ import static net.splitcells.dem.resource.communication.log.LogLevel.UNKNOWN_ERR
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.throwableToString;
-import static net.splitcells.dem.utils.reflection.ClassesRelated.callerClass;
 
 /**
  * <p>This is the starting point of all process definitions.
@@ -232,7 +231,7 @@ public class Dem {
     public static EnvironmentV ensuredInitialized(Consumer<Environment> configurator) {
         EnvironmentV rVal;
         if (CURRENT.get() == null) {
-            rVal = initializeProcess(callerClass(1), configurator);
+            rVal = initializeProcess(Dem.class, configurator);
         } else {
             rVal = CURRENT.get();
         }
@@ -252,7 +251,7 @@ public class Dem {
     public static EnvironmentV ensuredInitialized() {
         EnvironmentV rVal;
         if (CURRENT.get() == null) {
-            rVal = initializeProcess(callerClass(1), dem -> {
+            rVal = initializeProcess(Dem.class, dem -> {
                 configureByEnvironment(dem);
             });
         } else {
