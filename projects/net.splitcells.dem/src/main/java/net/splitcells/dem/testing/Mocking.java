@@ -16,6 +16,9 @@
 package net.splitcells.dem.testing;
 
 public class Mocking {
+	private Mocking() {
+		
+	}
 
 	/**
 	 * TODO
