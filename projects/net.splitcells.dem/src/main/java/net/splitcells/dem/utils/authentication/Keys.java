@@ -20,4 +20,7 @@ public class Keys {
 		return new Key() {
 		};
 	}
+	private Keys() {
+
+	}
 }
