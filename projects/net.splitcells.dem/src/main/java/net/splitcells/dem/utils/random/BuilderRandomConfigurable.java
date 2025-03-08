@@ -46,7 +46,7 @@ public class BuilderRandomConfigurable implements RndSrcF {
     public void updateDeterminism(Optional<Bool> arg) {
         if (arg.isEmpty() || arg.get().isTrue()) {
             deterministicBuilder(environment().config().configValue(DeterministicRootSourceSeed.class));
-        } else if (arg.isPresent() && arg.get().isFalse()) {
+        } else if (arg.get().isFalse()) {
             this.builderRandom = new RndSrcStandardF();
         } else {
             throw new RuntimeException();
