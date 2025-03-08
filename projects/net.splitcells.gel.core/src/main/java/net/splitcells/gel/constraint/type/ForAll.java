@@ -57,24 +57,24 @@ public class ForAll implements Constraint {
 
     public static final String FOR_ALL_NAME = "forAll";
 
-    private static final BiFunction<ConstraintBasedOnLocalGroupsAI, Report, String> LOCAL_NATURAL_ARGUMENTATION = (constraint, report) -> {
-        final var raterBasedOnGrouping = constraint.rater().casted(RaterBasedOnGrouping.class);
+    private static final BiFunction<ConstraintBasedOnLocalGroupsAI, Report, String> LOCAL_NATURAL_ARGUMENTATION = (argConstraint, report) -> {
+        final var raterBasedOnGrouping = argConstraint.rater().casted(RaterBasedOnGrouping.class);
         if (raterBasedOnGrouping.isPresent()) {
             if (raterBasedOnGrouping.get().classifier().type().equals(Propagation.class)) {
                 return raterBasedOnGrouping.get().classifier().toSimpleDescription(report.line()
-                        , constraint.lineProcessing()
+                        , argConstraint.lineProcessing()
                                 .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
                                 .lookup(report.group())
                         , report.group());
             }
         }
-        if (constraint.rater().type().equals(ForAllAttributeValues.class)) {
-            return constraint.rater().toSimpleDescription(report.line()
-                    , constraint.lineProcessing().columnView(Constraint.INCOMING_CONSTRAINT_GROUP).lookup(report.group())
+        if (argConstraint.rater().type().equals(ForAllAttributeValues.class)) {
+            return argConstraint.rater().toSimpleDescription(report.line()
+                    , argConstraint.lineProcessing().columnView(Constraint.INCOMING_CONSTRAINT_GROUP).lookup(report.group())
                     , report.group());
         } else {
-            return "For all " + constraint.rater().toSimpleDescription(report.line()
-                    , constraint.lineProcessing().columnView(Constraint.INCOMING_CONSTRAINT_GROUP).lookup(report.group())
+            return "For all " + argConstraint.rater().toSimpleDescription(report.line()
+                    , argConstraint.lineProcessing().columnView(Constraint.INCOMING_CONSTRAINT_GROUP).lookup(report.group())
                     , report.group());
         }
     };
