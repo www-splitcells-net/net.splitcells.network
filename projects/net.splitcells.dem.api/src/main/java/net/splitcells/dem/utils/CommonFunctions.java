@@ -117,7 +117,7 @@ public class CommonFunctions {
                 throw ExecutionException.execException("Could not create file: " + filePath);
             }
             try (FileOutputStream basicOutput = new FileOutputStream(file);
-                 OutputStreamWriter managedOutput = new OutputStreamWriter(basicOutput, "UTF8");
+                 OutputStreamWriter managedOutput = new OutputStreamWriter(basicOutput, StandardCharsets.UTF_8);
                  FileLock outputFileLock = basicOutput.getChannel().lock()) {
                 managedOutput.append(content);
                 managedOutput.flush();
