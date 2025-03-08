@@ -5,6 +5,9 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2025-03-08\#32**
+    1. Rename `MapF*` to `MapFactory*`.
+    2. Remove `ClassesRelated#callerClass`.
 * **2025-03-07\#37** Rename `Result#value()` to `Result#optionalValue()`, in order to discourage its usage.
   Most of the time the new method `Result#requiredValue()` will be a better fit.
 * **2025-02-01\#32** Rename `OptionI` to `OptionImpl`, in order to standardize naming.

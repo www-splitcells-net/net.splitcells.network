@@ -24,7 +24,7 @@ import net.splitcells.dem.utils.ExecutionException;
 import java.util.Optional;
 
 import static net.splitcells.dem.Dem.process;
-import static net.splitcells.dem.data.set.map.MapFI_configured.mapFI_configured;
+import static net.splitcells.dem.data.set.map.MapFactoryConfigured.mapFI_configured;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static org.assertj.core.api.Assertions.assertThat;

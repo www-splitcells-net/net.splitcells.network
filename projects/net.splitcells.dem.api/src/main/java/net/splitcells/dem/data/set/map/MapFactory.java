@@ -15,37 +15,20 @@
  */
 package net.splitcells.dem.data.set.map;
 
+import net.splitcells.dem.environment.resource.Resource;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
-import static net.splitcells.dem.data.set.map.MapLegacyWrapper.mapLegacyWrapper;
+public interface MapFactory extends Resource {
 
-/**
- * FIXME Randomization is currently not present.
- */
-public class MapFI_random implements MapF {
-    
-    public static MapF mapFI_random() {
-        return new MapFI_random();
-    }
-    
-    private MapFI_random() {
-
-    }
+    <K, V> Map<K, V> map();
 
     @JavaLegacyBody
-    @Override
-    public <K, V> Map<K, V> map() {
-        return mapLegacyWrapper(new java.util.HashMap<K, V>(), false);
-    }
+    <K, V> Map<K, V> map(java.util.Map<K, V> arg);
 
-    @JavaLegacyBody
-    @Override
-    public <K, V> Map<K, V> map(java.util.Map<K, V> arg) {
-        return mapLegacyWrapper(new java.util.HashMap<K, V>(arg), false);
-    }
+    /**
+     * Usually nothing needs to be done.
+     */
+    default void flush() {
 
-    @Override
-    public void close() {
-        // Nothing needs to be done.
     }
 }

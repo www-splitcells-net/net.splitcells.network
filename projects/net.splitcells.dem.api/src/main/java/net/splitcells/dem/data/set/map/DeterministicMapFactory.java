@@ -19,9 +19,9 @@ import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
 import static net.splitcells.dem.data.set.map.MapLegacyWrapper.mapLegacyWrapper;
 
-public final class DeterministicMapFactory implements MapF {
+public final class DeterministicMapFactory implements MapFactory {
     
-    public static MapF deterministicMapFactory() {
+    public static MapFactory deterministicMapFactory() {
         return new DeterministicMapFactory();
     }
     

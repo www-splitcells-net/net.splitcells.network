@@ -23,44 +23,44 @@ import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.map.DeterministicMapFactory.deterministicMapFactory;
-import static net.splitcells.dem.data.set.map.MapFI_random.mapFI_random;
+import static net.splitcells.dem.data.set.map.MapFactoryRandom.mapFI_random;
 
-public class MapFI_configured implements MapF {
+public class MapFactoryConfigured implements MapFactory {
 
-    public static MapFI_configured mapFI_configured() {
-        return new MapFI_configured();
+    public static MapFactoryConfigured mapFI_configured() {
+        return new MapFactoryConfigured();
     }
 
-    private MapF mapF;
+    private MapFactory mapFactory;
 
-    private MapFI_configured() {
+    private MapFactoryConfigured() {
         final var isDeterministic = Dem.configValue(IsDeterministic.class);
         if (isDeterministic.isPresent() && isDeterministic.get().isTrue()) {
-            mapF = deterministicMapFactory();
+            mapFactory = deterministicMapFactory();
         } else {
-            mapF = mapFI_random();
+            mapFactory = mapFI_random();
         }
     }
 
     @Override
     public <K, V> Map<K, V> map() {
-        return mapF.map();
+        return mapFactory.map();
     }
 
     @JavaLegacyBody
     @Override
     public <K, V> Map<K, V> map(java.util.Map<K, V> arg) {
-        return mapF.map(arg);
+        return mapFactory.map(arg);
     }
 
     @Deprecated
     private void update(Optional<Bool> oldValue, Optional<Bool> newValue) {
         if (newValue.isEmpty()) {
-            mapF = mapFI_random();
+            mapFactory = mapFI_random();
         } else if (newValue.get().isTrue()) {
-            mapF = deterministicMapFactory();
+            mapFactory = deterministicMapFactory();
         } else {
-            mapF = mapFI_random();
+            mapFactory = mapFI_random();
         }
     }
 

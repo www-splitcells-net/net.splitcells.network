@@ -24,7 +24,7 @@ import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.map.DeterministicMapFactory.deterministicMapFactory;
 import static net.splitcells.dem.data.set.map.MapLegacyWrapper.mapLegacyWrapper;
 
-public class Maps extends ResourceOptionImpl<MapF> {
+public class Maps extends ResourceOptionImpl<MapFactory> {
 
     public Maps() {
         super(() -> deterministicMapFactory());
