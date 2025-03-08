@@ -345,11 +345,11 @@ public class QueryI implements Query, QueryEditor {
                 }).reduce(ensureSingle());
         final var resultingGroups = Sets.<GroupId>setOfUniques();
         if (resultBase.isPresent()) {
-            for (GroupId groups : groups) {
+            for (GroupId group : groups) {
                 resultingGroups.addAll(
                         currentConstraint.lineProcessing()
                                 .columnView(Constraint.INCOMING_CONSTRAINT_GROUP)
-                                .lookup(groups)
+                                .lookup(group)
                                 .columnView(Constraint.RESULTING_CONSTRAINT_GROUP)
                                 .values());
             }
