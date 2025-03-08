@@ -58,6 +58,8 @@ public class NoCodeEditorLangParserTest {
                 , referenceDescription("shift", AttributeDescription.class)
                 , referenceDescription("roomNumber", AttributeDescription.class)
         ));
+        testResult.columnAttributesForOutputFormat().requireEmpty();
+        testResult.rowAttributesForOutputFormat().requireEmpty();
         // TODO Test constraints.
     }
 
