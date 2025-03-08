@@ -88,9 +88,7 @@ public class CommonFunctions {
 		}
 		Set<E> rVal = new HashSet<>();
 		for (E ele : all) {
-			if (exceptThis.contains(ele)) {
-
-			} else {
+			if (!exceptThis.contains(ele)) {
 				rVal.add(ele);
 			}
 		}
