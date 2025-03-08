@@ -85,7 +85,6 @@ public interface Randomness {
             assertThat(min).isLessThanOrEqualTo(mean);
             assertThat(mean).isLessThanOrEqualTo(max);
         }
-        final var distance = distance(min, max);
         if (truthValue()) {
             return integer(min, mean);
         } else {
