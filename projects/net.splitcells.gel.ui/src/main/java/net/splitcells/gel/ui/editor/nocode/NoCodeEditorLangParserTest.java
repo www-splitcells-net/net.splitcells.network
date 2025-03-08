@@ -35,7 +35,7 @@ import static net.splitcells.gel.ui.no.code.editor.NoCodeProblemParser.parseNoCo
 
 public class NoCodeEditorLangParserTest {
     @UnitTest
-    public void testAttributeParsing() {
+    public void testParsing() {
         final var testResult = parseNoCodeSolutionDescription(Dem.configValue(GelUiFileSystem.class)
                 .readString("src/main/resources/html/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"))
                 .requiredValue();
@@ -46,6 +46,7 @@ public class NoCodeEditorLangParserTest {
                 , attributeDescription("date", PrimitiveType.INTEGER)
                 , attributeDescription("shift", PrimitiveType.INTEGER)
                 , attributeDescription("roomNumber", PrimitiveType.INTEGER));
+        // TODO Test constraints.
     }
 
 }
