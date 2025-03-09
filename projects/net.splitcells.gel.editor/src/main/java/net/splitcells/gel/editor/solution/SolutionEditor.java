@@ -56,6 +56,7 @@ import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 
 public class SolutionEditor implements Discoverable {
     public static final String AFFECTED_CONTENT = "affected content";
+    public static final String AFFECTED_CONTEXT = "affected context";
 
     public static SolutionEditor solutionEditor(Editor parent, SolutionDescription solutionDescription) {
         return new SolutionEditor(parent, solutionDescription);

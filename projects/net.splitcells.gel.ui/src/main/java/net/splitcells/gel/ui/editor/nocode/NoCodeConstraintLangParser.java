@@ -15,22 +15,33 @@
  */
 package net.splitcells.gel.ui.editor.nocode;
 
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenParser;
 import net.splitcells.dem.source.den.DenParser;
 import net.splitcells.dem.testing.Result;
+import net.splitcells.gel.editor.lang.ArgumentDescription;
+import net.splitcells.gel.editor.lang.AttributeDescription;
 import net.splitcells.gel.editor.lang.ConstraintDescription;
+import net.splitcells.gel.editor.lang.FunctionCallDescription;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.editor.lang.ConstraintDescription.constraintDescription;
+import static net.splitcells.gel.editor.lang.FunctionCallDescription.functionCallDescription;
+import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
+import static net.splitcells.gel.editor.lang.StringDescription.stringDescription;
 import static net.splitcells.gel.editor.solution.SolutionEditor.AFFECTED_CONTENT;
+import static net.splitcells.gel.editor.solution.SolutionEditor.AFFECTED_CONTEXT;
 
+@JavaLegacyArtifact
 public class NoCodeConstraintLangParser {
     private NoCodeConstraintLangParser() {
     }
@@ -41,6 +52,50 @@ public class NoCodeConstraintLangParser {
             return constraintDescription.withErrorMessage(tree("An empty function chain is invalid.")
                     .withProperty(AFFECTED_CONTENT, parent.getText()));
         }
+        constraintDescription.withResult(parseConstraintDescription(functionChain.get(0)));
+        if (constraintDescription.defective()) {
+            return constraintDescription;
+        }
+        ConstraintDescription childConstraint = constraintDescription.requiredValue();
+        for (int i = 1; i < functionChain.size(); ++i) {
+            final var functionCall = functionChain.get(i);
+            final var parsedChildConstraint = parseConstraintDescription(functionCall);
+            constraintDescription.withErrorMessages(parsedChildConstraint);
+            if (constraintDescription.defective()) {
+                return constraintDescription;
+            }
+            childConstraint.children().add(parsedChildConstraint.requiredValue());
+            childConstraint = parsedChildConstraint.requiredValue();
+        }
         return constraintDescription;
+    }
+
+    private static Result<ConstraintDescription, Tree> parseConstraintDescription(NoCodeDenParser.Function_callContext functionCall) {
+        final Result<ConstraintDescription, Tree> constraintDescription = result();
+        final var name = functionCall.function_call_name().string_value().getText();
+        final net.splitcells.dem.data.set.list.List<ArgumentDescription> args = list();
+        for (final var arg : functionCall.function_call_argument()) {
+            if (arg.value().string_value() != null) {
+                args.add(stringDescription(arg.value().string_value().getText()));
+            } else if (arg.value().function_call() != null && !arg.value().function_call().isEmpty()) {
+                final var functionArg = parseFunctionCallDescription(functionCall);
+                if (functionArg.defective()) {
+                    return constraintDescription.withErrorMessages(functionArg);
+                }
+                // TODO args.add(functionArg.requiredValue());
+            } else if (arg.value().variable_reference() != null) {
+                args.add(referenceDescription(arg.value().variable_reference().Name().getText(), AttributeDescription.class));
+            } else {
+                return constraintDescription.withErrorMessage(tree("One function call argument for constraint is invalid.")
+                        .withProperty(AFFECTED_CONTENT, arg.getText())
+                        .withProperty(AFFECTED_CONTEXT, functionCall.getText()));
+            }
+        }
+        return constraintDescription.withValue(constraintDescription(functionCallDescription(name, args)));
+    }
+
+    private static Result<FunctionCallDescription, Tree> parseFunctionCallDescription(NoCodeDenParser.Function_callContext functionCall) {
+        final Result<FunctionCallDescription, Tree> functionCallDescription = result();
+        return functionCallDescription;
     }
 }
