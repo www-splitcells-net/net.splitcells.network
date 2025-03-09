@@ -26,8 +26,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class JavaRandomWrapper implements Randomness, RndSrcCrypt {
 	private final Random rnd;
 
-	protected JavaRandomWrapper(Random arg_rnd) {
-		rnd = arg_rnd;
+	protected JavaRandomWrapper(Random argRnd) {
+		rnd = argRnd;
 	}
 
 	@Override
