@@ -66,8 +66,7 @@ public class LineI implements Line {
     public boolean equals(Object arg) {
         if (this == arg) {
             return true;
-        } else if (arg instanceof Line) {
-            final var argLine = (Line) arg;
+        } else if (arg instanceof Line argLine) {
             return index() == argLine.index() && context().equals(argLine.context());
         } else {
             return false;
