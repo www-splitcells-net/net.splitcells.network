@@ -52,7 +52,7 @@ public class LookupI<T> implements Lookup<T> {
         return new LookupI<>(view, attribute, isPersisted);
     }
 
-    private final PersistedLookupView lookupTable;
+    private final PersistedLookupView mainLookup;
 
     private final View view;
     private final Map<T, PersistedLookupView> content = map();
@@ -61,7 +61,7 @@ public class LookupI<T> implements Lookup<T> {
 
     private LookupI(View view, Attribute<T> attribute, boolean isPersisted) {
         this.view = view;
-        this.lookupTable = lookupTable(view, attribute);
+        this.mainLookup = lookupTable(view, attribute);
         this.attribute = attribute;
         if (isPersisted) {
             view.unorderedLinesStream().forEach(e -> register_addition(e.value(attribute), e.index()));
@@ -132,7 +132,7 @@ public class LookupI<T> implements Lookup<T> {
         if (content.containsKey(value)) {
             return content.get(value);
         }
-        return lookupTable;
+        return mainLookup;
     }
 
     @Override
