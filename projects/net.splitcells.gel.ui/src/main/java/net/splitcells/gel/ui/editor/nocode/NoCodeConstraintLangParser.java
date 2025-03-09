@@ -61,7 +61,7 @@ public class NoCodeConstraintLangParser {
             final var functionCall = functionChain.get(i);
             final var parsedChildConstraint = parseConstraintDescription(functionCall);
             constraintDescription.withErrorMessages(parsedChildConstraint);
-            if (constraintDescription.defective()) {
+            if (parsedChildConstraint.defective()) {
                 return constraintDescription;
             }
             childConstraint.children().add(parsedChildConstraint.requiredValue());
