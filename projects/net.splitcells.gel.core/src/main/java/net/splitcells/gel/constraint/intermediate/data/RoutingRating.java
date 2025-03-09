@@ -39,13 +39,13 @@ public class RoutingRating {
 
     }
     private final List<Rating> ratings = list();
-    private final Map<Constraint, Set<GroupId>> children_to_groups = map();
+    private final Map<Constraint, Set<GroupId>> childrenToGroups = map();
 
     public List<Rating> ratingComponents() {
         return ratings;
     }
 
     public Map<Constraint, Set<GroupId>> children_to_groups() {
-        return children_to_groups;
+        return childrenToGroups;
     }
 }
