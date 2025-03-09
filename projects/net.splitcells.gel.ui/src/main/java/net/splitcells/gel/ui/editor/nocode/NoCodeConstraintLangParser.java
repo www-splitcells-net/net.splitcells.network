@@ -75,16 +75,21 @@ public class NoCodeConstraintLangParser {
         final var name = functionCall.function_call_name().string_value().getText();
         final net.splitcells.dem.data.set.list.List<ArgumentDescription> args = list();
         for (final var arg : functionCall.function_call_argument()) {
-            if (arg.value().string_value() != null) {
-                args.add(stringDescription(arg.value().string_value().getText()));
-            } else if (arg.value().function_call() != null && !arg.value().function_call().isEmpty()) {
+            final var argVal = arg.value();
+            if (argVal.string_value() != null) {
+                args.add(stringDescription(argVal.string_value().getText()));
+            } else if (argVal.function_call() != null && !argVal.function_call().isEmpty()) {
                 final var functionArg = parseFunctionCallDescription(functionCall);
                 if (functionArg.defective()) {
                     return constraintDescription.withErrorMessages(functionArg);
                 }
                 // TODO args.add(functionArg.requiredValue());
-            } else if (arg.value().variable_reference() != null) {
-                args.add(referenceDescription(arg.value().variable_reference().Name().getText(), AttributeDescription.class));
+            } else if (argVal.Undefined() != null) {
+                continue;
+            } else if (argVal.Function_call_var_arg() != null) {
+                continue;
+            } else if (argVal.variable_reference() != null) {
+                args.add(referenceDescription(argVal.variable_reference().Name().getText(), AttributeDescription.class));
             } else {
                 return constraintDescription.withErrorMessage(tree("One function call argument for constraint is invalid.")
                         .withProperty(AFFECTED_CONTENT, arg.getText())
