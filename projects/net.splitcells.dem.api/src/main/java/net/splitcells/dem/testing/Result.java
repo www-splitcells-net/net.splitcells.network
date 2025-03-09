@@ -85,6 +85,12 @@ public class Result<Value, Message> {
         return this;
     }
 
+    public Result<Value, Message> withResult(Result<Value, Message> otherResult) {
+        errorMessages.withAppended(otherResult.errorMessages());
+        value = otherResult.optionalValue();
+        return this;
+    }
+
     public Result<Value, Message> withValue(Value arg) {
         value = Optional.of(arg);
         return this;
