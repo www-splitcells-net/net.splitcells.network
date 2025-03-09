@@ -78,7 +78,7 @@ public class LookupColumn<T> implements Column<T> {
     }
 
     @Override
-    public <T> T[] toArray(T[] a) {
+    public <R> R[] toArray(R[] a) {
         throw notImplementedYet();
     }
 
