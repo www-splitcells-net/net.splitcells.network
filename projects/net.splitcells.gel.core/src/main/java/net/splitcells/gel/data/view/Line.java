@@ -153,8 +153,8 @@ public interface Line extends Domable, Convertible {
             if (attributeValue == null) {
                 attributeRender = tree("");
             } else {
-                if (attributeValue instanceof Domable) {
-                    attributeRender = ((Domable) attributeValue).toTree();
+                if (attributeValue instanceof Domable dom) {
+                    attributeRender = dom.toTree();
                 } else {
                     attributeRender = tree(attributeValue.toString());
                 }
