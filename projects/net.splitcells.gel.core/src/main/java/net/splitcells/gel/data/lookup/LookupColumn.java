@@ -133,7 +133,7 @@ public class LookupColumn<T> implements Column<T> {
     }
 
     @Override
-    public T set(int indekss, T elements) {
+    public T set(int indexes, T elements) {
         throw notImplementedYet();
     }
 
