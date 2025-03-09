@@ -16,7 +16,6 @@
 package net.splitcells.dem.utils.random;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
 import java.nio.ByteBuffer;
 import java.security.SecureRandom;
@@ -27,11 +26,11 @@ public class BuilderRandomDeterministic implements RndSrcF {
 
     private final Random seedGenerator;
     // HACK constructor argument should be parameterized
-    private final SecureRandom seedGenerator_crypt;
+    private final SecureRandom seedGeneratorCrypt;
 
     public BuilderRandomDeterministic(long seed) {
         seedGenerator = new Random(seed);
-        seedGenerator_crypt = new SecureRandom(
+        seedGeneratorCrypt = new SecureRandom(
                 ByteBuffer.allocate(Long.BYTES).putLong(seed).array());
     }
 
@@ -48,7 +47,7 @@ public class BuilderRandomDeterministic implements RndSrcF {
     @Override
     public RndSrcCrypt rndCrypt() {
         return new JavaRandomWrapper(
-                new SecureRandom(seedGenerator_crypt.generateSeed(20)));
+                new SecureRandom(seedGeneratorCrypt.generateSeed(20)));
     }
 
 }
