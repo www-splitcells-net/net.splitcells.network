@@ -183,9 +183,8 @@ public class TableModificationCounterAspect implements Table {
 
     @Override
     public boolean equals(Object arg) {
-        if (arg instanceof Table) {
-            final var castedArg = (Table) arg;
-            return castedArg.identity() == table.identity();
+        if (arg instanceof Table argTable) {
+            return argTable.identity() == table.identity();
         }
         throw ExecutionException.execException("Invalid argument type: " + arg);
     }
