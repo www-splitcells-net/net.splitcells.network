@@ -433,9 +433,8 @@ public class TableI implements Table {
 
     @Override
     public boolean equals(Object arg) {
-        if (arg instanceof Table) {
-            final var castedArg = (Table) arg;
-            return identity() == castedArg.identity();
+        if (arg instanceof Table table) {
+            return identity() == table.identity();
         }
         throw ExecutionException.execException("Invalid argument type: " + arg);
     }
