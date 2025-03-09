@@ -57,7 +57,7 @@ public class CommonFunctions {
 
 	@Deprecated
 	public static <E> Set<E> intersection(Collection<Set<E>> arg) {
-		if (arg.size() == 0) {
+		if (arg.isEmpty()) {
 			return new HashSet<>();
 		} else if (arg.size() == 1) {
 			return arg.iterator().next();
