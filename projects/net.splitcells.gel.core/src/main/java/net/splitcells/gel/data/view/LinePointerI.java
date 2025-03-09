@@ -53,8 +53,7 @@ public class LinePointerI implements LinePointer {
 
     @Override
     public boolean equals(Object arg) {
-        if (arg instanceof LinePointer) {
-            final var other = (LinePointer) arg;
+        if (arg instanceof LinePointer other) {
             return context().equals(other.context()) && index() == other.index();
         } else {
             return false;
