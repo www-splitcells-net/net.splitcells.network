@@ -291,9 +291,8 @@ public class TableSynchronizationAspect implements Table {
 
     @Override
     public synchronized boolean equals(Object arg) {
-        if (arg instanceof Table) {
-            final var castedArg = (Table) arg;
-            return castedArg.identity() == content.identity();
+        if (arg instanceof Table table) {
+            return table.identity() == content.identity();
         }
         throw ExecutionException.execException("Invalid argument type: " + arg);
     }
