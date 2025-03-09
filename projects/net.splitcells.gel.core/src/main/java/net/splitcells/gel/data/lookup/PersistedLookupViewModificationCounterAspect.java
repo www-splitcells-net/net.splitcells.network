@@ -33,10 +33,13 @@ public class PersistedLookupViewModificationCounterAspect implements PersistedLo
     public static PersistedLookupView lookupViewModificationCounterAspect(PersistedLookupView persistedLookupView) {
         return new PersistedLookupViewModificationCounterAspect(persistedLookupView);
     }
+
     private final PersistedLookupView persistedLookupView;
+
     private PersistedLookupViewModificationCounterAspect(PersistedLookupView argPersistedLookupView) {
         persistedLookupView = argPersistedLookupView;
     }
+
     @Override
     public void register(Line line) {
         configValue(LookupModificationCounter.class).count(this, 1 + (long) line.values().size());
@@ -126,9 +129,8 @@ public class PersistedLookupViewModificationCounterAspect implements PersistedLo
 
     @Override
     public boolean equals(Object arg) {
-        if (arg instanceof PersistedLookupView) {
-            final var castedArg = (PersistedLookupView) arg;
-            return castedArg.identity() == persistedLookupView.identity();
+        if (arg instanceof PersistedLookupView view) {
+            return view.identity() == persistedLookupView.identity();
         }
         throw ExecutionException.execException("Invalid argument type: " + arg);
     }
