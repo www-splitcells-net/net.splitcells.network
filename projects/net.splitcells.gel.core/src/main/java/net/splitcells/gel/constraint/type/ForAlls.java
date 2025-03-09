@@ -76,7 +76,7 @@ public class ForAlls {
     public static Constraint forAllCombinationsOf(final Attribute<?>... arguments) {
         return ForAllFactory.instance().forAllCombinations(arguments);
     }
-    
+
     private ForAlls() {
 
     }

@@ -49,9 +49,9 @@ public class Then implements Constraint {
 
     public static final String THEN_NAME = "then";
 
-    private static final BiFunction<ConstraintBasedOnLocalGroupsAI, Report, String> LOCAL_NATURAL_ARGUMENTATION = (constraint, report) -> {
-        return "Then " + constraint.rater().toSimpleDescription(report.line()
-                , constraint.lineProcessing().columnView(Constraint.INCOMING_CONSTRAINT_GROUP).lookup(report.group())
+    private static final BiFunction<ConstraintBasedOnLocalGroupsAI, Report, String> LOCAL_NATURAL_ARGUMENTATION = (argConstraint, report) -> {
+        return "Then " + argConstraint.rater().toSimpleDescription(report.line()
+                , argConstraint.lineProcessing().columnView(Constraint.INCOMING_CONSTRAINT_GROUP).lookup(report.group())
                 , report.group());
     };
 
