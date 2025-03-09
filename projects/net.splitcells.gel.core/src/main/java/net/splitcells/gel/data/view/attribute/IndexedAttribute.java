@@ -39,7 +39,7 @@ import static java.util.stream.IntStream.range;
 public class IndexedAttribute<T> {
 
     public static <A> IndexedAttribute<A> indexedAttribute(Attribute<A> attribute, View context) {
-        return new IndexedAttribute<A>(attribute, context);
+        return new IndexedAttribute<>(attribute, context);
     }
 
     private final Attribute<T> attribute;
