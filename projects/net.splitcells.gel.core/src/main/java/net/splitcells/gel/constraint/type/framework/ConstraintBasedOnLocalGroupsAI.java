@@ -550,8 +550,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
 
     private Optional<String> localNaturalArgumentation
             (Line line, GroupId group, Predicate<AllocationRating> allocationSelector) {
-        final var localNaturalArgumentation
-                = lineProcessing
+        return lineProcessing
                 .columnView(LINE)
                 .lookup(line)
                 .columnView(INCOMING_CONSTRAINT_GROUP)
@@ -568,7 +567,6 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
                                 , allocation.value(RATING)))
                 .map(report -> localNaturalArgumentation(report))
                 .findFirst();
-        return localNaturalArgumentation;
     }
 
     @Override
