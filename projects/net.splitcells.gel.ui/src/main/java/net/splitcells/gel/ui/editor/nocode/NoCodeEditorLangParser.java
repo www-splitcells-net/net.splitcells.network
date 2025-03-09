@@ -146,7 +146,7 @@ public class NoCodeEditorLangParser extends NoCodeDenParserBaseVisitor<Result<So
                                 .add(referenceDescription(arg.value().variable_reference().Name().getText(), AttributeDescription.class)));
             }
         } else if (CONSTRAINTS.equals(referencedName)) {
-            final var parsedConstraints = parseConstraintDescription(ctx.function_call());
+            final var parsedConstraints = parseConstraintDescription(ctx.function_call(), ctx);
             if (parsedConstraints.defective()) {
                 return result.withErrorMessages(parsedConstraints);
             }
