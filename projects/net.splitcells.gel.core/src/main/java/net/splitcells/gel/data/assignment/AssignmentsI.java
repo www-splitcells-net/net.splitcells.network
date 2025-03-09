@@ -56,7 +56,7 @@ import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
 /**
  * <p>{@link #demandsUsed()} ()} and {@link #demandsFree()} contain all {@link Line} of {@link #demands()}.</p>
- * <p>Line removal from {@link #demands_free} and {@link #supplies_free} has no subscriptions,
+ * <p>Line removal from {@link #demandsFree} and {@link #suppliesFree} has no subscriptions,
  * because {@link Table} lines can be remove from the {@link Assignments} completely
  * or they can be moved to the respectively used tables.</p>
  * <p>TODO Fix {@link #demandOfAssignment(Line)} by using {@link #demandsUsed()}.</p>
@@ -82,25 +82,25 @@ public class AssignmentsI implements Assignments {
     private final List<BeforeRemovalSubscriber> afterRemovalSubscriptions = list();
 
     private final Table supplies;
-    private final Table supplies_used;
-    private final Table supplies_free;
+    private final Table suppliesUsed;
+    private final Table suppliesFree;
     /**
      * TODO Make this configurable. This is needed for {@link Proposal}.
      */
     private final boolean allowsSuppliesOnDemand = true;
 
     private final Table demands;
-    private final Table demands_used;
-    private final Table demands_free;
+    private final Table demandsUsed;
+    private final Table demandsFree;
 
-    private final Map<Integer, Integer> allocationsIndex_to_usedDemandIndex = map();
-    private final Map<Integer, Integer> allocationsIndex_to_usedSupplyIndex = map();
+    private final Map<Integer, Integer> allocationsIndexToUsedDemandIndex = map();
+    private final Map<Integer, Integer> allocationsIndexToUsedSupplyIndex = map();
 
-    private final Map<Integer, Set<Integer>> usedDemandIndexes_to_allocationIndexes = map();
-    private final Map<Integer, Set<Integer>> usedSupplyIndexes_to_allocationIndexes = map();
+    private final Map<Integer, Set<Integer>> usedDemandIndexesToAllocationIndexes = map();
+    private final Map<Integer, Set<Integer>> usedSupplyIndexesToAllocationIndexes = map();
 
-    private final Map<Integer, Set<Integer>> usedDemandsIndex_to_usedSuppliesIndex = map();
-    private final Map<Integer, Set<Integer>> usedSupplyIndex_to_usedDemandsIndex = map();
+    private final Map<Integer, Set<Integer>> usedDemandsIndexToUsedSuppliesIndex = map();
+    private final Map<Integer, Set<Integer>> usedSupplyIndexToUsedDemandsIndex = map();
 
     private AssignmentsI(String name, Table demand, Table supply) {
         this.names = name;
@@ -108,46 +108,46 @@ public class AssignmentsI implements Assignments {
         // TODO Remove code and comment duplications.
         {
             this.demands = demand;
-            demands_free = Tables.table2("demands-free", this, demand.headerView());
-            demands_used = Tables.table2("demands-used", this, demand.headerView());
-            demand.rawLinesView().forEach(demands_free::add);
-            demand.subscribeToAfterAdditions(demands_free::add);
+            demandsFree = Tables.table2("demands-free", this, demand.headerView());
+            demandsUsed = Tables.table2("demands-used", this, demand.headerView());
+            demand.rawLinesView().forEach(demandsFree::add);
+            demand.subscribeToAfterAdditions(demandsFree::add);
             demand.subscribeToBeforeRemoval(removalOf -> {
-                if (usedDemandIndexes_to_allocationIndexes.containsKey(removalOf.index())) {
+                if (usedDemandIndexesToAllocationIndexes.containsKey(removalOf.index())) {
                     listWithValuesOf(
-                            usedDemandIndexes_to_allocationIndexes.get(removalOf.index()))
+                            usedDemandIndexesToAllocationIndexes.get(removalOf.index()))
                             .forEach(allocationOfDemand -> remove(assignments.rawLinesView().get(allocationOfDemand)));
                 }
-                if (demands_free.contains(removalOf)) {
-                    demands_free.remove(removalOf);
+                if (demandsFree.contains(removalOf)) {
+                    demandsFree.remove(removalOf);
                 }
                 // TODO FIX Does something needs to be done if the condition is false.
-                if (demands_used.contains(removalOf)) {
-                    demands_used.remove(removalOf);
+                if (demandsUsed.contains(removalOf)) {
+                    demandsUsed.remove(removalOf);
                 }
             });
         }
         {
             this.supplies = requireNotNull(supply);
-            supplies_free = Tables.table2("supply-free", this, supply.headerView());
-            supplies_used = Tables.table2("supply-used", this, supply.headerView());
-            supply.rawLinesView().forEach(supplies_free::add);
+            suppliesFree = Tables.table2("supply-free", this, supply.headerView());
+            suppliesUsed = Tables.table2("supply-used", this, supply.headerView());
+            supply.rawLinesView().forEach(suppliesFree::add);
             supply.subscribeToAfterAdditions(i -> {
-                supplies_free.add(i);
+                suppliesFree.add(i);
             });
             supply.subscribeToBeforeRemoval(removalOf -> {
-                if (usedSupplyIndexes_to_allocationIndexes.containsKey(removalOf.index())) {
+                if (usedSupplyIndexesToAllocationIndexes.containsKey(removalOf.index())) {
                     listWithValuesOf
-                            (usedSupplyIndexes_to_allocationIndexes.get(removalOf.index()))
+                            (usedSupplyIndexesToAllocationIndexes.get(removalOf.index()))
                             .forEach(allocationsOfSupply
                                     -> remove(assignments.rawLinesView().get(allocationsOfSupply)));
                 }
-                if (supplies_free.contains(removalOf)) {
-                    supplies_free.remove(removalOf);
+                if (suppliesFree.contains(removalOf)) {
+                    suppliesFree.remove(removalOf);
                 }
                 // TODO FIX Does something needs to be done if the condition is false.
-                if (supplies_used.contains(removalOf)) {
-                    supplies_used.remove(removalOf);
+                if (suppliesUsed.contains(removalOf)) {
+                    suppliesUsed.remove(removalOf);
                 }
             });
         }
@@ -160,12 +160,12 @@ public class AssignmentsI implements Assignments {
 
     @Override
     public Table suppliesUsed() {
-        return supplies_used;
+        return suppliesUsed;
     }
 
     @Override
     public Table suppliesFree() {
-        return supplies_free;
+        return suppliesFree;
     }
 
     @Override
@@ -175,12 +175,12 @@ public class AssignmentsI implements Assignments {
 
     @Override
     public Table demandsUsed() {
-        return demands_used;
+        return demandsUsed;
     }
 
     @Override
     public Table demandsFree() {
-        return demands_free;
+        return demandsFree;
     }
 
     @Override
@@ -196,41 +196,41 @@ public class AssignmentsI implements Assignments {
                     , DEBUG);
         }
         if (ENFORCING_UNIT_CONSISTENCY) {
-            list(demand.context()).requireContainsOneOf(demands_free, demands);
-            list(demand.context()).requireContainsOneOf(demands_free, demands);
-            list(supply.context()).requireContainsOneOf(supplies, supplies_free);
+            list(demand.context()).requireContainsOneOf(demandsFree, demands);
+            list(demand.context()).requireContainsOneOf(demandsFree, demands);
+            list(supply.context()).requireContainsOneOf(supplies, suppliesFree);
             if (demand.index() < demands.rawLinesView().size()) {
                 requireNotNull(demands.rawLinesView().get(demand.index()));
-            } else if (demand.index() < demands_free.rawLinesView().size()) {
-                requireNotNull(demands_free.rawLinesView().get(demand.index()));
-            } else if (demand.index() < demands_used.rawLinesView().size()) {
-                requireNotNull(demands_used.rawLinesView().get(demand.index()));
+            } else if (demand.index() < demandsFree.rawLinesView().size()) {
+                requireNotNull(demandsFree.rawLinesView().get(demand.index()));
+            } else if (demand.index() < demandsUsed.rawLinesView().size()) {
+                requireNotNull(demandsUsed.rawLinesView().get(demand.index()));
             } else {
                 throw ExecutionException.execException("A demand with such an index is not known");
             }
             if (supply.index() < supplies.rawLinesView().size()) {
                 requireNotNull(supplies.rawLinesView().get(supply.index()));
-            } else if (supply.index() < supplies_free.rawLinesView().size()) {
-                requireNotNull(supplies_free.rawLinesView().get(supply.index()));
-            } else if (supply.index() < supplies_used.rawLinesView().size()) {
-                requireNotNull(supplies_used.rawLinesView().get(supply.index()));
+            } else if (supply.index() < suppliesFree.rawLinesView().size()) {
+                requireNotNull(suppliesFree.rawLinesView().get(supply.index()));
+            } else if (supply.index() < suppliesUsed.rawLinesView().size()) {
+                requireNotNull(suppliesUsed.rawLinesView().get(supply.index()));
             } else {
                 throw ExecutionException.execException("A supply with such an index is not known");
             }
-            list(supply.context()).requireContainsOneOf(supplies, supplies_free, supplies_used);
-            list(demand.context()).requireContainsOneOf(demands, demands_free, demands_used);
+            list(supply.context()).requireContainsOneOf(supplies, suppliesFree, suppliesUsed);
+            list(demand.context()).requireContainsOneOf(demands, demandsFree, demandsUsed);
             {
                 // Multiple allocations per supply or demand are allowed.
                 boolean valid = false;
-                if (demand.index() < demands_used.rawLinesView().size()) {
-                    valid |= demands_used.rawLinesView().get(demand.index()) != null;
-                    if (demand.index() < demands_free.rawLinesView().size()) {
-                        valid |= demands_free.rawLinesView().get(demand.index()) != null;
+                if (demand.index() < demandsUsed.rawLinesView().size()) {
+                    valid |= demandsUsed.rawLinesView().get(demand.index()) != null;
+                    if (demand.index() < demandsFree.rawLinesView().size()) {
+                        valid |= demandsFree.rawLinesView().get(demand.index()) != null;
                     }
-                } else if (demand.index() < demands_free.rawLinesView().size()) {
-                    valid |= demands_free.rawLinesView().get(demand.index()) != null;
-                    if (demand.index() < demands_used.rawLinesView().size()) {
-                        valid |= demands_used.rawLinesView().get(demand.index()) != null;
+                } else if (demand.index() < demandsFree.rawLinesView().size()) {
+                    valid |= demandsFree.rawLinesView().get(demand.index()) != null;
+                    if (demand.index() < demandsUsed.rawLinesView().size()) {
+                        valid |= demandsUsed.rawLinesView().get(demand.index()) != null;
                     }
                 } else {
                     throw new IllegalArgumentException();
@@ -245,42 +245,42 @@ public class AssignmentsI implements Assignments {
             }
         }
         final var allocation = assignments.addTranslated(Line.concat(demand, supply));
-        if (!usedSupplyIndexes_to_allocationIndexes.containsKey(supply.index())) {
-            supplies_used.addWithSameHeaderPrefix(supply);
-            supplies_free.remove(supply);
+        if (!usedSupplyIndexesToAllocationIndexes.containsKey(supply.index())) {
+            suppliesUsed.addWithSameHeaderPrefix(supply);
+            suppliesFree.remove(supply);
         }
-        if (!usedDemandIndexes_to_allocationIndexes.containsKey(demand.index())) {
-            demands_used.addWithSameHeaderPrefix(demand);
-            demands_free.remove(demand);
+        if (!usedDemandIndexesToAllocationIndexes.containsKey(demand.index())) {
+            demandsUsed.addWithSameHeaderPrefix(demand);
+            demandsFree.remove(demand);
         }
         {
-            allocationsIndex_to_usedDemandIndex.put(allocation.index(), demand.index());
-            allocationsIndex_to_usedSupplyIndex.put(allocation.index(), supply.index());
+            allocationsIndexToUsedDemandIndex.put(allocation.index(), demand.index());
+            allocationsIndexToUsedSupplyIndex.put(allocation.index(), supply.index());
         }
         {
             {
-                if (!usedDemandIndexes_to_allocationIndexes.containsKey(demand.index())) {
-                    usedDemandIndexes_to_allocationIndexes.put(demand.index(), setOfUniques());
+                if (!usedDemandIndexesToAllocationIndexes.containsKey(demand.index())) {
+                    usedDemandIndexesToAllocationIndexes.put(demand.index(), setOfUniques());
                 }
-                usedDemandIndexes_to_allocationIndexes.get(demand.index()).add(allocation.index());
-                if (!usedSupplyIndexes_to_allocationIndexes.containsKey(supply.index())) {
-                    usedSupplyIndexes_to_allocationIndexes.put(supply.index(), setOfUniques());
+                usedDemandIndexesToAllocationIndexes.get(demand.index()).add(allocation.index());
+                if (!usedSupplyIndexesToAllocationIndexes.containsKey(supply.index())) {
+                    usedSupplyIndexesToAllocationIndexes.put(supply.index(), setOfUniques());
                 }
-                usedSupplyIndexes_to_allocationIndexes.get(supply.index()).add(allocation.index());
+                usedSupplyIndexesToAllocationIndexes.get(supply.index()).add(allocation.index());
             }
         }
         {
             {
-                if (!usedDemandsIndex_to_usedSuppliesIndex.containsKey(demand.index())) {
-                    usedDemandsIndex_to_usedSuppliesIndex.put(demand.index(), setOfUniques());
+                if (!usedDemandsIndexToUsedSuppliesIndex.containsKey(demand.index())) {
+                    usedDemandsIndexToUsedSuppliesIndex.put(demand.index(), setOfUniques());
                 }
-                usedDemandsIndex_to_usedSuppliesIndex.get(demand.index()).add(supply.index());
+                usedDemandsIndexToUsedSuppliesIndex.get(demand.index()).add(supply.index());
             }
             {
-                if (!usedSupplyIndex_to_usedDemandsIndex.containsKey(supply.index())) {
-                    usedSupplyIndex_to_usedDemandsIndex.put(supply.index(), setOfUniques());
+                if (!usedSupplyIndexToUsedDemandsIndex.containsKey(supply.index())) {
+                    usedSupplyIndexToUsedDemandsIndex.put(supply.index(), setOfUniques());
                 }
-                usedSupplyIndex_to_usedDemandsIndex.get(supply.index()).add(demand.index());
+                usedSupplyIndexToUsedDemandsIndex.get(supply.index()).add(demand.index());
             }
         }
         additionSubscriptions.forEach(listener -> listener.registerAddition(allocation));
@@ -295,13 +295,13 @@ public class AssignmentsI implements Assignments {
     @Override
     public Line demandOfAssignment(Line allocation) {
         return demands.rawLinesView()
-                .get(allocationsIndex_to_usedDemandIndex.get(allocation.index()));
+                .get(allocationsIndexToUsedDemandIndex.get(allocation.index()));
     }
 
     @Override
     public Line supplyOfAssignment(Line allocation) {
         return supplies.rawLinesView()
-                .get(allocationsIndex_to_usedSupplyIndex.get(allocation.index()));
+                .get(allocationsIndexToUsedSupplyIndex.get(allocation.index()));
     }
 
     @Override
@@ -339,52 +339,52 @@ public class AssignmentsI implements Assignments {
                     , DEBUG);
         }
         if (ENFORCING_UNIT_CONSISTENCY) {
-            list(demand.context()).requireContainsOneOf(demands, demands_used);
-            list(supply.context()).requireContainsOneOf(supplies, supplies_used);
+            list(demand.context()).requireContainsOneOf(demands, demandsUsed);
+            list(supply.context()).requireContainsOneOf(supplies, suppliesUsed);
             requireEquals(allocation.context(), assignments);
-            usedDemandIndexes_to_allocationIndexes.get(demand.index()).requirePresenceOf(allocation.index());
-            usedSupplyIndexes_to_allocationIndexes.get(supply.index()).requirePresenceOf(allocation.index());
-            requireEquals(allocationsIndex_to_usedDemandIndex.get(allocation.index()), demand.index());
-            requireEquals(allocationsIndex_to_usedSupplyIndex.get(allocation.index()), supply.index());
+            usedDemandIndexesToAllocationIndexes.get(demand.index()).requirePresenceOf(allocation.index());
+            usedSupplyIndexesToAllocationIndexes.get(supply.index()).requirePresenceOf(allocation.index());
+            requireEquals(allocationsIndexToUsedDemandIndex.get(allocation.index()), demand.index());
+            requireEquals(allocationsIndexToUsedSupplyIndex.get(allocation.index()), supply.index());
         }
         beforeRemovalSubscriptions.forEach(subscriber -> subscriber.registerBeforeRemoval(allocation));
         assignments.remove(allocation);
         // TODO Make following code a remove subscription to allocations.
         {
-            allocationsIndex_to_usedDemandIndex.remove(allocation.index());
-            allocationsIndex_to_usedSupplyIndex.remove(allocation.index());
+            allocationsIndexToUsedDemandIndex.remove(allocation.index());
+            allocationsIndexToUsedSupplyIndex.remove(allocation.index());
         }
         {
             {
-                usedDemandsIndex_to_usedSuppliesIndex.get(demand.index()).remove(supply.index());
-                if (usedDemandsIndex_to_usedSuppliesIndex.get(demand.index()).isEmpty()) {
-                    usedDemandsIndex_to_usedSuppliesIndex.remove(demand.index());
+                usedDemandsIndexToUsedSuppliesIndex.get(demand.index()).remove(supply.index());
+                if (usedDemandsIndexToUsedSuppliesIndex.get(demand.index()).isEmpty()) {
+                    usedDemandsIndexToUsedSuppliesIndex.remove(demand.index());
                 }
-                usedSupplyIndex_to_usedDemandsIndex.get(supply.index()).remove(demand.index());
-                if (usedSupplyIndex_to_usedDemandsIndex.get(supply.index()).isEmpty()) {
-                    usedSupplyIndex_to_usedDemandsIndex.remove(supply.index());
+                usedSupplyIndexToUsedDemandsIndex.get(supply.index()).remove(demand.index());
+                if (usedSupplyIndexToUsedDemandsIndex.get(supply.index()).isEmpty()) {
+                    usedSupplyIndexToUsedDemandsIndex.remove(supply.index());
                 }
             }
             {
-                usedSupplyIndexes_to_allocationIndexes.get(supply.index()).remove(allocation.index());
-                if (usedSupplyIndexes_to_allocationIndexes.get(supply.index()).isEmpty()) {
-                    usedSupplyIndexes_to_allocationIndexes.remove(supply.index());
+                usedSupplyIndexesToAllocationIndexes.get(supply.index()).remove(allocation.index());
+                if (usedSupplyIndexesToAllocationIndexes.get(supply.index()).isEmpty()) {
+                    usedSupplyIndexesToAllocationIndexes.remove(supply.index());
                 }
-                usedDemandIndexes_to_allocationIndexes.get(demand.index()).remove(allocation.index());
-                if (usedDemandIndexes_to_allocationIndexes.get(demand.index()).isEmpty()) {
-                    usedDemandIndexes_to_allocationIndexes.remove(demand.index());
+                usedDemandIndexesToAllocationIndexes.get(demand.index()).remove(allocation.index());
+                if (usedDemandIndexesToAllocationIndexes.get(demand.index()).isEmpty()) {
+                    usedDemandIndexesToAllocationIndexes.remove(demand.index());
                 }
             }
         }
-        allocationsIndex_to_usedDemandIndex.remove(allocation.index());
-        allocationsIndex_to_usedSupplyIndex.remove(allocation.index());
-        if (!usedDemandsIndex_to_usedSuppliesIndex.containsKey(demand.index())) {
-            demands_used.remove(demand);
-            demands_free.addWithSameHeaderPrefix(demand);
+        allocationsIndexToUsedDemandIndex.remove(allocation.index());
+        allocationsIndexToUsedSupplyIndex.remove(allocation.index());
+        if (!usedDemandsIndexToUsedSuppliesIndex.containsKey(demand.index())) {
+            demandsUsed.remove(demand);
+            demandsFree.addWithSameHeaderPrefix(demand);
         }
-        if (!usedSupplyIndex_to_usedDemandsIndex.containsKey(supply.index())) {
-            supplies_used.remove(supply);
-            supplies_free.addWithSameHeaderPrefix(supply);
+        if (!usedSupplyIndexToUsedDemandsIndex.containsKey(supply.index())) {
+            suppliesUsed.remove(supply);
+            suppliesFree.addWithSameHeaderPrefix(supply);
         }
         afterRemovalSubscriptions.forEach(listener -> listener.registerBeforeRemoval(allocation));
     }
@@ -450,7 +450,7 @@ public class AssignmentsI implements Assignments {
     @Override
     public Set<Line> assignmentsOfSupply(Line supply) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            if (!usedSupplyIndexes_to_allocationIndexes.containsKey(supply.index())) {
+            if (!usedSupplyIndexesToAllocationIndexes.containsKey(supply.index())) {
                 throw ExecutionException.execException(tree("No allocations for the given supply are present.")
                         .withProperty("supply index", "" + supply.index())
                         .withProperty("context path", "" + supply.context().path())
@@ -458,7 +458,7 @@ public class AssignmentsI implements Assignments {
             }
         }
         final Set<Line> allocationsOfSupply = setOfUniques();
-        usedSupplyIndexes_to_allocationIndexes
+        usedSupplyIndexesToAllocationIndexes
                 .get(supply.index())
                 .forEach(allocationIndex ->
                         allocationsOfSupply.add(assignments.rawLinesView().get(allocationIndex)));
@@ -468,10 +468,10 @@ public class AssignmentsI implements Assignments {
     @Override
     public Set<Line> assignmentsOfDemand(Line demand) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            setOfUniques(usedDemandIndexes_to_allocationIndexes.keySet()).requirePresenceOf(demand.index());
+            setOfUniques(usedDemandIndexesToAllocationIndexes.keySet()).requirePresenceOf(demand.index());
         }
         final Set<Line> allocationsOfDemand = setOfUniques();
-        usedDemandIndexes_to_allocationIndexes
+        usedDemandIndexesToAllocationIndexes
                 .get(demand.index())
                 .forEach(allocationIndex ->
                         allocationsOfDemand.add(assignments.rawLinesView().get(allocationIndex)));
@@ -481,24 +481,24 @@ public class AssignmentsI implements Assignments {
     @Override
     public Line anyAssignmentOf(LinePointer demand, LinePointer supply) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            usedDemandIndexes_to_allocationIndexes
+            usedDemandIndexesToAllocationIndexes
                     .get(demand.index())
                     .assertSizeIs(1);
-            usedSupplyIndexes_to_allocationIndexes
+            usedSupplyIndexesToAllocationIndexes
                     .get(supply.index())
                     .assertSizeIs(1);
-            final var demandLine = usedDemandIndexes_to_allocationIndexes
+            final var demandLine = usedDemandIndexesToAllocationIndexes
                     .get(demand.index())
                     .iterator()
                     .next();
-            final var supplyLine = usedSupplyIndexes_to_allocationIndexes
+            final var supplyLine = usedSupplyIndexesToAllocationIndexes
                     .get(supply.index())
                     .iterator()
                     .next();
             Integers.requireEqualInts(demandLine, supplyLine);
         }
         return assignments.rawLine(
-                usedDemandIndexes_to_allocationIndexes
+                usedDemandIndexesToAllocationIndexes
                         .get(demand.index())
                         .iterator()
                         .next());
