@@ -149,10 +149,8 @@ public class MetaRatingI implements MetaRating {
 
     @Override
     public <R extends Rating> R translate(Class<R> type) {
-        if (ratingMap.size() == 1) {
-            if (ratingMap.containsKey(Profit.class)) {
-                return (R) Profit.profit(getContentValue(Profit.class).value());
-            }
+        if (ratingMap.size() == 1 && ratingMap.containsKey(Profit.class)) {
+            return (R) Profit.profit(getContentValue(Profit.class).value());
         }
         return (R) this;
     }
