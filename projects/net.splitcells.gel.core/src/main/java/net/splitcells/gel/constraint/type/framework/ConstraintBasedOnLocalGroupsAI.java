@@ -53,7 +53,6 @@ import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.tree.Tree;
-import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.constraint.QueryI;
@@ -104,7 +103,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
     }
 
     private final Rater rater;
-    private final BiFunction<ConstraintBasedOnLocalGroupsAI, Report, String> localNaturalArgumentation;
+    private final BiFunction<ConstraintBasedOnLocalGroupsAI, Report, String> localNaturalArgumentor;
     private final GroupId injectionGroup;
     private final net.splitcells.dem.data.set.list.List<Constraint> children = list();
     private Optional<Discoverable> mainContext = Optional.empty();
@@ -162,7 +161,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         resultingConstraintGroupIndex = indexedAttribute(RESULTING_CONSTRAINT_GROUP, lineProcessing);
         ratingIndex = indexedAttribute(RATING, lineProcessing);
         this.rater = rater;
-        this.localNaturalArgumentation = localNaturalArgumentation;
+        this.localNaturalArgumentor = localNaturalArgumentation;
     }
 
     @Override
@@ -230,7 +229,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
     }
 
     public String localNaturalArgumentation(Report report) {
-        return localNaturalArgumentation.apply(this, report);
+        return localNaturalArgumentor.apply(this, report);
     }
 
     @Override
