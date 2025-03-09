@@ -74,7 +74,7 @@ public class TableI implements Table {
     private final List<Column<Object>> columns = list();
     private final ListView<Column<Object>> columnsView = listView(columns);
     private final ListView<ColumnView<Object>> columnsViewView;
-    private final Map<Attribute<?>, Integer> typed_column_index = map();
+    private final Map<Attribute<?>, Integer> typedColumnIndex = map();
     private final Set<Line> lines = setOfUniques();
     private final List<Line> rawLines = list();
     private final ListView<Line> rawLinesView = listView(rawLines);
@@ -108,7 +108,7 @@ public class TableI implements Table {
         this.parent = Optional.ofNullable(parent);
         final List<Attribute<Object>> headerAttributes = list();
         attributes.forEach(att -> {
-            typed_column_index.put(att, headerAttributes.size());
+            typedColumnIndex.put(att, headerAttributes.size());
             headerAttributes.add(att);
             columns.add(ColumnI.column(this, att));
         });
@@ -185,16 +185,16 @@ public class TableI implements Table {
                             + "\n should contain " + attribute.name()
                             + " but does not.")
                     .required();
-            describedBool(typed_column_index.containsKey(attribute)
+            describedBool(typedColumnIndex.containsKey(attribute)
                     , () -> attribute.name() + " is not present in "
-                            + typed_column_index.keySet().stream()
+                            + typedColumnIndex.keySet().stream()
                             .map(a -> a.name())
                             .reduce((a, b) -> a + ", " + b)
                             .orElseThrow())
                     .required();
         }
         try {
-            return (Column<T>) columns.get(typed_column_index.get(attribute));
+            return (Column<T>) columns.get(typedColumnIndex.get(attribute));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
