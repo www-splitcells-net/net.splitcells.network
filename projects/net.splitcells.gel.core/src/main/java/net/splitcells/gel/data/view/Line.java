@@ -129,8 +129,8 @@ public interface Line extends Domable, Convertible {
             if (value == null) {
                 domValue = tree("");
             } else {
-                if (value instanceof Domable) {
-                    domValue = ((Domable) value).toTree();
+                if (value instanceof Domable dom) {
+                    domValue = dom.toTree();
                 } else {
                     domValue = TreeI.tree(value.toString(), STRING);
                 }
