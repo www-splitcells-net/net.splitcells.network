@@ -43,6 +43,7 @@ import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescr
 import static net.splitcells.gel.editor.lang.SolutionDescription.solutionDescription;
 import static net.splitcells.gel.editor.lang.TableDescription.tableDescription;
 import static net.splitcells.gel.problem.ProblemI.problem;
+import static net.splitcells.gel.ui.editor.nocode.NoCodeConstraintLangParser.parseConstraintDescription;
 import static net.splitcells.gel.ui.no.code.editor.NoCodeQueryParser.parseNoCodeQuery;
 
 /**
@@ -145,6 +146,11 @@ public class NoCodeEditorLangParser extends NoCodeDenParserBaseVisitor<Result<So
                                 .add(referenceDescription(arg.value().variable_reference().Name().getText(), AttributeDescription.class)));
             }
         } else if (CONSTRAINTS.equals(referencedName)) {
+            final var parsedConstraints = parseConstraintDescription(ctx.function_call());
+            if (parsedConstraints.defective()) {
+                return result.withErrorMessages(parsedConstraints);
+            }
+            // TODO Set result value.
             return result;
         } else {
             result.withErrorMessage(tree("Only function calls"));
