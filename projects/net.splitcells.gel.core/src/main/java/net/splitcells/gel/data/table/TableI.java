@@ -138,7 +138,7 @@ public class TableI implements Table {
     @Deprecated
     private TableI(List<Attribute<?>> attributes, Collection<List<Object>> linesValues) {
         this(attributes);
-        linesValues.forEach(line_values -> addTranslated(line_values));
+        linesValues.forEach(lineValues -> addTranslated(lineValues));
     }
 
     private TableI(String name, Discoverable parent, Attribute<? extends Object>... attributes) {
