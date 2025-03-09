@@ -96,8 +96,8 @@ public class LineI implements Line {
             if (value == null) {
                 domValue = tree("");
             } else {
-                if (value instanceof Domable) {
-                    domValue = ((Domable) value).toTree();
+                if (value instanceof Domable dom) {
+                    domValue = dom.toTree();
                 } else {
                     domValue = tree(value.toString());
                 }
