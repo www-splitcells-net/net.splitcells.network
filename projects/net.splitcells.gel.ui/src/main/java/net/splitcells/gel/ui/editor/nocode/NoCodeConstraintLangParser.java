@@ -88,7 +88,7 @@ public class NoCodeConstraintLangParser {
                 if (functionArg.defective()) {
                     return constraintDescription.withErrorMessages(functionArg);
                 }
-                // TODO args.add(functionArg.requiredValue());
+                args.add(functionArg.requiredValue());
             } else if (argVal.Undefined() != null) {
                 continue;
             } else if (argVal.Function_call_var_arg() != null) {
