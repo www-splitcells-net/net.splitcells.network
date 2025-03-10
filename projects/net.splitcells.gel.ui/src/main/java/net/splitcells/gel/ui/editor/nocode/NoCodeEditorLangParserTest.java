@@ -29,6 +29,7 @@ import net.splitcells.gel.ui.GelUiFileSystem;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.constraint.type.ForAlls.FOR_EACH_NAME;
 import static net.splitcells.gel.editor.lang.AttributeDescription.attributeDescription;
@@ -36,35 +37,40 @@ import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescr
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.lib.MinimalDistance.has_minimal_distance_of;
 import static net.splitcells.gel.ui.editor.nocode.NoCodeEditorLangParser.parseNoCodeSolutionDescription;
+import static net.splitcells.gel.ui.editor.nocode.NoCodeEditorLangParser.parseNoCodeSolutionEditor;
 import static net.splitcells.gel.ui.no.code.editor.NoCodeProblemParser.parseNoCodeProblem;
 
 public class NoCodeEditorLangParserTest {
     @UnitTest
     public void testParsing() {
-        final var testResult = parseNoCodeSolutionDescription(Dem.configValue(GelUiFileSystem.class)
+        final var problem = parseNoCodeSolutionEditor(Dem.configValue(GelUiFileSystem.class)
                 .readString("src/main/resources/html/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"))
-                .requiredValue();
-        final var attributes = testResult.attributes().values();
-        setOfUniques(attributes).requireContentsOf(attributeDescription("student", PrimitiveType.STRING)
-                , attributeDescription("examiner", PrimitiveType.STRING)
-                , attributeDescription("observer", PrimitiveType.STRING)
-                , attributeDescription("date", PrimitiveType.INTEGER)
-                , attributeDescription("shift", PrimitiveType.INTEGER)
-                , attributeDescription("roomNumber", PrimitiveType.INTEGER));
-        testResult.demands().header().requireEquals(list(
-                referenceDescription("student", AttributeDescription.class)
-                , referenceDescription("examiner", AttributeDescription.class)
-                , referenceDescription("observer", AttributeDescription.class)
-        ));
-        testResult.supplies().header().requireEquals(list(
-                referenceDescription("date", AttributeDescription.class)
-                , referenceDescription("shift", AttributeDescription.class)
-                , referenceDescription("roomNumber", AttributeDescription.class)
-        ));
-        testResult.columnAttributesForOutputFormat().requireEmpty();
-        testResult.rowAttributesForOutputFormat().requireEmpty();
-        Assertions.requireEquals(testResult.constraints().get(0).definition().functionName(), FOR_EACH_NAME);
-        // TODO Test constraints.
+                .requiredValue()
+                .solution()
+                .orElseThrow();
+        final var observer = problem.allocations().attributeByName("observer");
+        final var examiner = problem.allocations().attributeByName("examiner");
+        final var student = problem.allocations().attributeByName("student");
+        final var date = problem.allocations().attributeByName("date");
+        final var shift = problem.allocations().attributeByName("shift");
+        query(problem.constraint(), false)
+                .forAll(observer)
+                .forAllCombinationsOf(list(date, shift))
+                .then(hasSize(1));
+        query(problem.constraint(), false)
+                .forAll(examiner)
+                .forAllCombinationsOf(list(date, shift))
+                .then(hasSize(1));
+        query(problem.constraint(), false)
+                .forAll(student)
+                .forAllCombinationsOf(list(date, shift))
+                .then(hasSize(1));
+        query(problem.constraint(), false)
+                .forAll(student)
+                .then(has_minimal_distance_of((Attribute<Integer>) date, 3));
+        query(problem.constraint(), false)
+                .forAll(student)
+                .then(has_minimal_distance_of((Attribute<Integer>) date, 5));
     }
 
 }
