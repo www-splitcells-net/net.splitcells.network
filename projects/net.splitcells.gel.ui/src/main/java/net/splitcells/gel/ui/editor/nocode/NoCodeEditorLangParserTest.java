@@ -96,4 +96,19 @@ public class NoCodeEditorLangParserTest {
                         , integerAttribute("roomNumber")));
     }
 
+    @UnitTest
+    public void testProblemParsing() {
+        final var testResult = parseNoCodeSolutionEditor(Dem.configValue(GelUiFileSystem.class)
+                .readString("src/main/resources/html/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"))
+                .requiredValue()
+                .solution()
+                .orElseThrow();
+        setOfUniques(testResult.headerView2()).requireContentsOf((a, b) -> a.equalContentTo(b)
+                , stringAttribute("student")
+                , stringAttribute("examiner")
+                , stringAttribute("observer")
+                , integerAttribute("date")
+                , integerAttribute("shift")
+                , integerAttribute("roomNumber"));
+    }
 }
