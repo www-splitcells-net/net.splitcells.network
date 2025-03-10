@@ -33,6 +33,7 @@ import org.antlr.v4.runtime.misc.ParseCancellationException;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT;
@@ -122,7 +123,10 @@ public class NoCodeEditorLangParser extends NoCodeDenParserBaseVisitor<Result<So
     public Result<SolutionDescription, Tree> visitSource_unit(net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenParser.Source_unitContext sourceUnit) {
         visitChildren(sourceUnit);
         if (demands.isPresent() && supplies.isPresent() && result.errorMessages().isEmpty()) {
-            return result.withValue(solutionDescription("solution", Lists.listWithValuesOf(attributes.values()), demands.get(), supplies.get(), constraints));
+            final var solution = solutionDescription("solution", listWithValuesOf(attributes.values()), demands.get(), supplies.get(), constraints);
+            solution.columnAttributesForOutputFormat().addAll(columnAttributesForOutputFormat);
+            solution.rowAttributesForOutputFormat().addAll(rowAttributesForOutputFormat);
+            return result.withValue(solution);
         } else {
             if (demands.isEmpty()) {
                 result.withErrorMessage(tree("No demands was defined via `demands=\"[...]\"`."));
