@@ -46,7 +46,7 @@ public class NoCodeSolutionCalculator implements Processor<Tree, Tree> {
     public static final String FORM_UPDATE = "net-splitcells-websiter-server-form-update";
 
     public static Processor<Tree, Tree> noCodeSolutionCalculator() {
-        return new NoCodeSolutionCalculator();
+        return net.splitcells.gel.ui.editor.nocode.NoCodeSolutionCalculator.noCodeSolutionCalculator();
     }
 
     private NoCodeSolutionCalculator() {
