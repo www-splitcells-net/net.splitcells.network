@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.editor.solution;
 
+import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
@@ -30,6 +31,7 @@ import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.data.atom.Integers.isNumber;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -218,6 +220,14 @@ public class SolutionEditor implements Discoverable {
                 case IntegerDescription integer -> {
                     return rater.withValue(hasSize(integer.value()));
                 }
+                case StringDescription string -> {
+                    if (!isNumber(string.value())) {
+                        // TODO This is an hack for backwards compatibility.
+                        return rater.withErrorMessage(tree("`" + HAS_SIZE_NAME + "` requires exactly one integer as an argument. Instead an `" + functionCall.arguments().get(0).getClass().getName() + "` was given.")
+                                .withProperty(AFFECTED_CONTENT, functionCall.toString()));
+                    }
+                    return rater.withValue(hasSize(Integers.parse(string.value())));
+                }
                 default -> {
                     return rater.withErrorMessage(tree("`" + HAS_SIZE_NAME + "` requires exactly one integer as an argument. Instead an `" + functionCall.arguments().get(0).getClass().getName() + "` was given.")
                             .withProperty(AFFECTED_CONTENT, functionCall.toString()));
@@ -256,6 +266,14 @@ public class SolutionEditor implements Discoverable {
             switch (functionCall.arguments().get(1)) {
                 case IntegerDescription integer -> {
                     minimumDistance = integer.value();
+                }
+                case StringDescription string -> {
+                    if (!isNumber(string.value())) {
+                        // TODO This is an hack for backwards compatibility.
+                        return rater.withErrorMessage(tree("`" + MINIMAL_DISTANCE_NAME + "` second argument has to be an integer. Instead an `" + functionCall.arguments().get(1).getClass().getName() + "` was given.")
+                                .withProperty(AFFECTED_CONTENT, functionCall.toString()));
+                    }
+                    return rater.withValue(has_minimal_distance_of((Attribute<Integer>) attribute, Integers.parse(string.value())));
                 }
                 default -> {
                     return rater.withErrorMessage(tree("`" + MINIMAL_DISTANCE_NAME + "` second argument has to be an integer. Instead an `" + functionCall.arguments().get(1).getClass().getName() + "` was given.")
