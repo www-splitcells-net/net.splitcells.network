@@ -26,7 +26,6 @@ import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.lang.*;
 import net.splitcells.gel.editor.solution.SolutionEditor;
 import net.splitcells.gel.ui.SolutionParameters;
-import net.splitcells.gel.ui.no.code.editor.NoCodeQueryParser;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
@@ -50,7 +49,6 @@ import static net.splitcells.gel.editor.solution.SolutionEditor.AFFECTED_CONTENT
 import static net.splitcells.gel.problem.ProblemI.problem;
 import static net.splitcells.gel.ui.code.editor.CodeEditorLangParser.codeEditorLangParsing;
 import static net.splitcells.gel.ui.editor.nocode.NoCodeConstraintLangParser.parseConstraintDescription;
-import static net.splitcells.gel.ui.no.code.editor.NoCodeQueryParser.parseNoCodeQuery;
 
 /**
  * <p>TODO Remove the distinction between variable names and the object's name (i.e. `variable_name = attribute(string, "Another Name")`.</p>
@@ -138,13 +136,6 @@ public class NoCodeEditorLangParser extends NoCodeDenParserBaseVisitor<Result<So
         return result;
     }
 
-    /**
-     * Nothing needs to be done for variable access for {@link #CONSTRAINTS},
-     * as this is handled by {@link NoCodeQueryParser}.
-     *
-     * @param ctx the parse tree
-     * @return
-     */
     @Override
     public Result<SolutionDescription, Tree> visitVariable_access(net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenParser.Variable_accessContext ctx) {
         final var referencedName = ctx.variable_reference().Name().getText();
