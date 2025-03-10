@@ -25,7 +25,8 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
- * <p>Stores the results of a calculation.
+ * <p>This is the preferred way to model explicit error handling.
+ * Stores the results of a calculation.
  * There may not be any value present,
  * if, for instance, the calculation was not successful.
  * This does only make sense, if multiple errors are somehow to be combined.</p>
@@ -62,8 +63,10 @@ public class Result<Value, Message> {
     }
 
     /**
-     * This method ensures, that the required {@link #optionalValue()} is present or
-     * that the reason for its absence is known.
+     * This method ensures, that the required {@link #optionalValue()} is present and errors are absent.
+     * This helps one to fail fast and early with a description.
+     * This avoids situations, where later on the {@link Result} is thrown away and
+     * the {@link #value} is found to be invalid.
      *
      * @return Returns {@link #optionalValue()} or throws existing {@link #errorMessages()}.
      */
@@ -71,6 +74,11 @@ public class Result<Value, Message> {
         if (value.isEmpty()) {
             throw execException(tree("The required value is not present.")
                     .withProperty("Error Messages", errorMessages().toString()));
+        }
+        if (errorMessages.hasElements()) {
+            throw execException(tree("A value and errors are present.")
+                    .withProperty("Error Messages", errorMessages().toString())
+                    .withProperty("Value", value.get().toString()));
         }
         return value.orElseThrow();
     }
