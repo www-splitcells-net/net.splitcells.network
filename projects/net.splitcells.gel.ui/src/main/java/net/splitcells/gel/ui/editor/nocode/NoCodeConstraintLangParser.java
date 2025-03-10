@@ -79,7 +79,12 @@ public class NoCodeConstraintLangParser {
             if (argVal.string_value() != null) {
                 args.add(stringDescription(argVal.string_value().getText()));
             } else if (argVal.function_call() != null && !argVal.function_call().isEmpty()) {
-                final var functionArg = parseFunctionCallDescription(argVal.function_call());
+                if (argVal.function_call().size() != 1) {
+                    return constraintDescription.withErrorMessage(tree("Function chaining is not supported for constraint arguments.")
+                            .withProperty(AFFECTED_CONTENT, argVal.getText())
+                            .withProperty(AFFECTED_CONTEXT, functionCall.getText()));
+                }
+                final var functionArg = parseFunctionCallDescription(argVal.function_call().get(0));
                 if (functionArg.defective()) {
                     return constraintDescription.withErrorMessages(functionArg);
                 }
