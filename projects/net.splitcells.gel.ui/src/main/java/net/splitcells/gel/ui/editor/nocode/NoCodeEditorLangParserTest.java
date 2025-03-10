@@ -111,4 +111,15 @@ public class NoCodeEditorLangParserTest {
                 , integerAttribute("shift")
                 , integerAttribute("roomNumber"));
     }
+
+    @UnitTest
+    public void testProblemParsing2() {
+        final var testResult = parseNoCodeSolutionEditor(Dem.configValue(GelUiFileSystem.class)
+                .readString("src/main/resources/html/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"))
+                .requiredValue();
+        final var solution = testResult.solution().orElseThrow();
+        testResult.columnAttributesForOutputFormat().requireEqualityTo(list(solution.attributeByName("roomNumber")));
+        testResult.rowAttributesForOutputFormat()
+                .requireEqualityTo(list(solution.attributeByName("date"), solution.attributeByName("shift")));
+    }
 }
