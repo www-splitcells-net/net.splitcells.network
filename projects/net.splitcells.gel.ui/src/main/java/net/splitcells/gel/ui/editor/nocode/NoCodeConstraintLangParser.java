@@ -79,7 +79,7 @@ public class NoCodeConstraintLangParser {
             if (argVal.string_value() != null) {
                 args.add(stringDescription(argVal.string_value().getText()));
             } else if (argVal.function_call() != null && !argVal.function_call().isEmpty()) {
-                final var functionArg = parseFunctionCallDescription(functionCall);
+                final var functionArg = parseFunctionCallDescription(argVal.function_call());
                 if (functionArg.defective()) {
                     return constraintDescription.withErrorMessages(functionArg);
                 }
