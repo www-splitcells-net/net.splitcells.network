@@ -110,8 +110,8 @@ public class CodeSolutionCalculator implements Processor<Tree, Tree> {
                 if (solutionEditor.columnAttributesForOutputFormat().hasElements()
                         || solutionEditor.rowAttributesForOutputFormat().hasElements()) {
                     final var reformattedSolution = solution.toReformattedTable
-                            (solutionEditor.columnAttributesForOutputFormat().mapped(solution::attributeByName)
-                                    , solutionEditor.rowAttributesForOutputFormat().mapped(solution::attributeByName));
+                            (solutionEditor.columnAttributesForOutputFormat()
+                                    , solutionEditor.rowAttributesForOutputFormat());
                     final List<List<String>> csvContent = list();
                     csvContent.addAll(rangeClosed(1, reformattedSolution.get(0).size())
                             .mapToObj(i -> "" + i)

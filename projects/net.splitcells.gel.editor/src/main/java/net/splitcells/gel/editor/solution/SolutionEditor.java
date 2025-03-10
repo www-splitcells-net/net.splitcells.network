@@ -71,8 +71,8 @@ public class SolutionEditor implements Discoverable {
     private Optional<Table> supplies;
     private Optional<Solution> solution = Optional.empty();
 
-    private List<String> columnAttributesForOutputFormat = list();
-    private List<String> rowAttributesForOutputFormat = list();
+    private List<Attribute<?>> columnAttributesForOutputFormat = list();
+    private List<Attribute<?>> rowAttributesForOutputFormat = list();
 
     private SolutionEditor(Editor argParent, SolutionDescription solutionDescription) {
         parent = argParent;
@@ -114,6 +114,12 @@ public class SolutionEditor implements Discoverable {
                 .withConstraint(constraintRoot.root().orElseThrow())
                 .toProblem()
                 .asSolution());
+        columnAttributesForOutputFormat.addAll(
+                solutionDescription.columnAttributesForOutputFormat()
+                        .mapped(a -> solution.orElseThrow().attributeByName(a.name())));
+        rowAttributesForOutputFormat.addAll(
+                solutionDescription.rowAttributesForOutputFormat()
+                        .mapped(a -> solution.orElseThrow().attributeByName(a.name())));
         return result;
     }
 
@@ -340,11 +346,11 @@ public class SolutionEditor implements Discoverable {
         return super.toString();
     }
 
-    public List<String> columnAttributesForOutputFormat() {
+    public List<Attribute<?>> columnAttributesForOutputFormat() {
         return columnAttributesForOutputFormat;
     }
 
-    public List<String> rowAttributesForOutputFormat() {
+    public List<Attribute<?>> rowAttributesForOutputFormat() {
         return rowAttributesForOutputFormat;
     }
 }
