@@ -53,7 +53,7 @@ import static net.splitcells.gel.ui.code.editor.CodeSolutionCalculator.codeSolut
 import static net.splitcells.gel.ui.no.code.editor.FunctionMeta.functionMeta;
 import static net.splitcells.gel.ui.no.code.editor.Functions.functions;
 import static net.splitcells.gel.ui.no.code.editor.NoCodeSolutionCalculator.noCodeSolutionCalculator;
-import static net.splitcells.gel.ui.no.code.editor.NoCodeSolutionCalculatorTest.TEST_OPTIMIZATION_GUI;
+import static net.splitcells.gel.ui.editor.nocode.NoCodeSolutionCalculatorTest.TEST_OPTIMIZATION_GUI;
 import static net.splitcells.network.system.PerformanceReport.performanceReport;
 import static net.splitcells.website.server.ProgramConfig.programConfig;
 import static net.splitcells.website.server.ProjectConfig.projectConfig;
