@@ -17,8 +17,10 @@ package net.splitcells.gel.ui.editor.nocode;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.Sets;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.CapabilityTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
+import net.splitcells.gel.constraint.type.ForAll;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.lang.AttributeDescription;
 import net.splitcells.gel.editor.lang.PrimitiveType;
@@ -28,6 +30,7 @@ import net.splitcells.gel.ui.GelUiFileSystem;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.constraint.QueryI.query;
+import static net.splitcells.gel.constraint.type.ForAlls.FOR_EACH_NAME;
 import static net.splitcells.gel.editor.lang.AttributeDescription.attributeDescription;
 import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
@@ -60,6 +63,7 @@ public class NoCodeEditorLangParserTest {
         ));
         testResult.columnAttributesForOutputFormat().requireEmpty();
         testResult.rowAttributesForOutputFormat().requireEmpty();
+        Assertions.requireEquals(testResult.constraints().get(0).definition().functionName(), FOR_EACH_NAME);
         // TODO Test constraints.
     }
 
