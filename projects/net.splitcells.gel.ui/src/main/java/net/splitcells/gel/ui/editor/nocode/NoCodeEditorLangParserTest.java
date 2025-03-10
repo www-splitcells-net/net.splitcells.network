@@ -21,6 +21,7 @@ import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.CapabilityTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.constraint.type.ForAll;
+import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.lang.AttributeDescription;
 import net.splitcells.gel.editor.lang.PrimitiveType;
@@ -32,6 +33,9 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.constraint.type.ForAlls.FOR_EACH_NAME;
+import static net.splitcells.gel.data.table.Tables.table;
+import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
+import static net.splitcells.gel.data.view.attribute.AttributeI.stringAttribute;
 import static net.splitcells.gel.editor.lang.AttributeDescription.attributeDescription;
 import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
@@ -71,6 +75,25 @@ public class NoCodeEditorLangParserTest {
         query(problem.constraint(), false)
                 .forAll(student)
                 .then(has_minimal_distance_of((Attribute<Integer>) date, 5));
+    }
+
+    @UnitTest
+    public void testDatabaseParsing() {
+        final var parsedDatabases = parseNoCodeSolutionEditor(Dem.configValue(GelUiFileSystem.class)
+                .readString("src/main/resources/html/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"))
+                .requiredValue()
+                .solution()
+                .orElseThrow();
+        parsedDatabases.demands().requireEqualFormat(
+                table("demands"
+                        , stringAttribute("student")
+                        , stringAttribute("examiner")
+                        , stringAttribute("observer")));
+        parsedDatabases.supplies().requireEqualFormat(
+                table("supplies"
+                        , integerAttribute("date")
+                        , integerAttribute("shift")
+                        , integerAttribute("roomNumber")));
     }
 
 }
