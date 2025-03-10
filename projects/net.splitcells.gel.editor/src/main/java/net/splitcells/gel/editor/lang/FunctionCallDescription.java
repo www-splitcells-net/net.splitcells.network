@@ -45,4 +45,9 @@ public final class FunctionCallDescription implements ArgumentDescription {
     public String functionName() {
         return functionName;
     }
+
+    @Override
+    public String toString() {
+        return functionName + arguments;
+    }
 }

@@ -40,4 +40,9 @@ public class TableDescription {
     public ListView<ReferenceDescription<AttributeDescription>> header() {
         return header;
     }
+
+    @Override
+    public String toString() {
+        return "Name: " + name + ", header: " + header;
+    }
 }

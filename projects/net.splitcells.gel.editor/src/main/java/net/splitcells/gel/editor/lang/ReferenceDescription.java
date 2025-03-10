@@ -51,4 +51,9 @@ public final class ReferenceDescription<T> implements ArgumentDescription {
     public int hashCode() {
         return Thing.hashCode(name, clazz);
     }
+
+    @Override
+    public String toString() {
+        return "Reference to " + name + " of type " + clazz.getName();
+    }
 }

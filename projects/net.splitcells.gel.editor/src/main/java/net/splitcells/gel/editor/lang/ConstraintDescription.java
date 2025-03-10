@@ -47,4 +47,9 @@ public class ConstraintDescription {
     public FunctionCallDescription definition() {
         return definition;
     }
+
+    @Override
+    public String toString() {
+        return "definition: " + definition.toString() + ", children: " + children;
+    }
 }

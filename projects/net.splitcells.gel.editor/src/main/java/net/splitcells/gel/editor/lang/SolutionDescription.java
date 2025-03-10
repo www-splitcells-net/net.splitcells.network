@@ -85,4 +85,15 @@ public class SolutionDescription {
     public List<ReferenceDescription<AttributeDescription>> rowAttributesForOutputFormat() {
         return rowAttributesForOutputFormat;
     }
+
+    @Override
+    public String toString() {
+        return "Name: " + name
+                + ", attributes: " + attributes
+                + ", demands: " + demands
+                + ", supplies: " + supplies
+                + ", constraints: " + constraints
+                + ", columnAttributesForOutputFormat: " + columnAttributesForOutputFormat
+                + ", rowAttributesForOutputFormat: " + rowAttributesForOutputFormat;
+    }
 }
