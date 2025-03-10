@@ -20,6 +20,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.lang.CsvDocument.csvDocument;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
@@ -42,6 +43,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.ConnectingConstructor;
 import net.splitcells.dem.utils.ExecutionException;
@@ -387,7 +389,9 @@ public interface View extends Discoverable, Domable, Identifiable {
         return headerView().stream()
                 .filter(da -> da.name().equals(name))
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> execException(tree("Could not find attribute by name.")
+                        .withProperty("Table", toString())
+                        .withProperty("Search Attribute Name", name)));
     }
 
     default Optional<Attribute<? extends Object>> searchAttributeByName(String name) {
