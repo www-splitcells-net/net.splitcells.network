@@ -573,6 +573,15 @@ public interface View extends Discoverable, Domable, Identifiable {
         return reformattedTable;
     }
 
+    default View requireEqualFormat(Table otherTable) {
+        if (!isEqualFormat(otherTable)) {
+            throw execException(tree("Tables should have equal headers, but do not.")
+                    .withProperty("This", toString())
+                    .withProperty("OtherTable", toString()));
+        }
+        return this;
+    }
+
     default boolean isEqualFormat(Table otherTable) {
         return setOfUniques(headerView()).hasContentOf((a, b) -> a.equalContentTo(b), otherTable.headerView())
                 && name().equals(otherTable.name());
