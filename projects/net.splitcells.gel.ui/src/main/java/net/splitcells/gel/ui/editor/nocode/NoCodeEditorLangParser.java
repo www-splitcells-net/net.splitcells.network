@@ -24,6 +24,7 @@ import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.lang.*;
+import net.splitcells.gel.editor.solution.SolutionEditor;
 import net.splitcells.gel.ui.SolutionParameters;
 import net.splitcells.gel.ui.no.code.editor.NoCodeQueryParser;
 import org.antlr.v4.runtime.*;
@@ -34,16 +35,19 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
 import static net.splitcells.gel.data.view.attribute.Attributes.parseAttribute;
+import static net.splitcells.gel.editor.Editor.editor;
 import static net.splitcells.gel.editor.lang.AttributeDescription.parseAttributeDescription;
 import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
 import static net.splitcells.gel.editor.lang.SolutionDescription.solutionDescription;
 import static net.splitcells.gel.editor.lang.TableDescription.tableDescription;
 import static net.splitcells.gel.editor.solution.SolutionEditor.AFFECTED_CONTENT;
 import static net.splitcells.gel.problem.ProblemI.problem;
+import static net.splitcells.gel.ui.code.editor.CodeEditorLangParser.codeEditorLangParsing;
 import static net.splitcells.gel.ui.editor.nocode.NoCodeConstraintLangParser.parseConstraintDescription;
 import static net.splitcells.gel.ui.no.code.editor.NoCodeQueryParser.parseNoCodeQuery;
 
@@ -61,6 +65,15 @@ public class NoCodeEditorLangParser extends NoCodeDenParserBaseVisitor<Result<So
     private static final String NAME = "name";
     private static final String SOLUTION = "solution";
     private static final String SUPPLIES = "supplies";
+
+    public static Result<SolutionEditor, Tree> parseNoCodeSolutionEditor(String editorCode) {
+        final Result<SolutionEditor, Tree> editorParsing = result();
+        final var solutionDescription = parseNoCodeSolutionDescription(editorCode);
+        if (solutionDescription.defective()) {
+            return editorParsing.withErrorMessages(solutionDescription);
+        }
+        return editor("editor", EXPLICIT_NO_CONTEXT).solutionEditor(solutionDescription.optionalValue().orElseThrow());
+    }
 
     public static Result<SolutionDescription, Tree> parseNoCodeSolutionDescription(String arg) {
         final var lexer = new net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenLexer(CharStreams.fromString(arg));
