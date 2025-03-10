@@ -18,10 +18,15 @@ package net.splitcells.dem.data.atom;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.utils.ExecutionException;
 
+import java.util.regex.Pattern;
+
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
 public class Integers {
+
+    private static final Pattern NUMBER = Pattern.compile("[0-9]+");
+
     private Integers() {
         throw constructorIllegal();
     }
@@ -34,6 +39,11 @@ public class Integers {
     @JavaLegacyBody
     public static boolean isEven(Integer arg) {
         return arg % 2 == 0;
+    }
+
+    @JavaLegacyBody
+    public static boolean isNumber(String arg) {
+        return NUMBER.matcher(arg).matches();
     }
 
     public static void requireEqualInts(int a, int b) {
