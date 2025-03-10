@@ -42,6 +42,7 @@ import static net.splitcells.gel.editor.lang.AttributeDescription.parseAttribute
 import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
 import static net.splitcells.gel.editor.lang.SolutionDescription.solutionDescription;
 import static net.splitcells.gel.editor.lang.TableDescription.tableDescription;
+import static net.splitcells.gel.editor.solution.SolutionEditor.AFFECTED_CONTENT;
 import static net.splitcells.gel.problem.ProblemI.problem;
 import static net.splitcells.gel.ui.editor.nocode.NoCodeConstraintLangParser.parseConstraintDescription;
 import static net.splitcells.gel.ui.no.code.editor.NoCodeQueryParser.parseNoCodeQuery;
@@ -150,7 +151,7 @@ public class NoCodeEditorLangParser extends NoCodeDenParserBaseVisitor<Result<So
             if (parsedConstraints.defective()) {
                 return result.withErrorMessages(parsedConstraints);
             }
-            // TODO Set result value.
+            constraints.add(parsedConstraints.requiredValue());
             return result;
         } else {
             result.withErrorMessage(tree("Only function calls"));
@@ -161,8 +162,17 @@ public class NoCodeEditorLangParser extends NoCodeDenParserBaseVisitor<Result<So
     @Override
     public Result<SolutionDescription, Tree> visitVariable_definition(net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenParser.Variable_definitionContext ctx) {
         final var variableName = ctx.variable_definition_name().Name().getText();
-        if (variableName.equals("constraints")) {
-            return null;
+        if (variableName.equals(CONSTRAINTS)) {
+            if (ctx.variable_definition_value() == null || ctx.variable_definition_value().value() == null || ctx.variable_definition_value().value().function_call() == null) {
+                return result.withErrorMessage(tree("Constraint variable assignment has missing content.")
+                        .withProperty(AFFECTED_CONTENT, ctx.getText()));
+            }
+            final var parsedConstraints = parseConstraintDescription(ctx.variable_definition_value().value().function_call(), ctx);
+            if (parsedConstraints.defective()) {
+                return result.withErrorMessages(parsedConstraints);
+            }
+            constraints.add(parsedConstraints.requiredValue());
+            return result;
         }
         if (ctx.variable_definition_value() == null || ctx.variable_definition_value().value() == null) {
             result.withErrorMessage(tree("Variable definition is missing a name.")
