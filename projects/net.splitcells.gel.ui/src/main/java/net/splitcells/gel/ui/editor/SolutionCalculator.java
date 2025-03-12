@@ -51,7 +51,7 @@ public class SolutionCalculator implements Processor<Tree, Tree> {
     public static final String ERRORS = "net-splitcells-gel-editor-form-errors";
     public static final String FORM_UPDATE = "net-splitcells-websiter-server-form-update";
 
-    public static SolutionCalculator solutionCalculator()  {
+    public static SolutionCalculator solutionCalculator() {
         return solutionCalculator(list(codeSolutionEditorParser(), noCodeSolutionEditorParser()));
     }
 
@@ -70,6 +70,9 @@ public class SolutionCalculator implements Processor<Tree, Tree> {
         final var parsings = solutionParsers.flow().map(lp -> lp.apply(request)).iterator();
         while (parsings.hasNext()) {
             final var parsing = parsings.next();
+            if (parsing.errorMessages().isEmpty() && parsing.optionalValue().isEmpty()) {
+                continue;
+            }
             if (parsing.errorMessages().hasElements()) {
                 solutionCodeEditor.withErrorMessages(parsing);
                 continue;

@@ -22,6 +22,7 @@ import net.splitcells.website.server.processor.Request;
 
 import java.util.function.Function;
 
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.gel.editor.Editor.editor;
@@ -39,9 +40,17 @@ public class CodeSolutionEditorParser implements Function<Request<Tree>, Result<
     @Override
     public Result<SolutionEditor, Tree> apply(Request<Tree> request) {
         final Result<SolutionEditor, Tree> editorParsing = result();
-        final var editorCode = request
+        final var problemDefinition = request
                 .data()
-                .namedChild(PROBLEM_DEFINITION)
+                .namedChildren(PROBLEM_DEFINITION);
+        final var problemDefinitionSize = problemDefinition.size();
+        if (problemDefinitionSize == 0) {
+            return editorParsing;
+        } else if (problemDefinitionSize > 1) {
+            return editorParsing.withErrorMessage(tree("More than 1 problem definition was given."));
+        }
+        final var editorCode = problemDefinition
+                .get(0)
                 .child(0)
                 .name();
         final var solutionDescription = codeEditorLangParsing(editorCode);
