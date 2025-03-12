@@ -208,6 +208,7 @@ interface_definition
         Brace_curly_open interface_definition_member* Brace_curly_closed
     | javadoc? annotation* Keyword_public? Keyword_sealed? Keyword_interface?
         name
+        interface_extension?
         interface_permits
         Brace_curly_open Brace_curly_closed
     ;
