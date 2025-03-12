@@ -68,7 +68,7 @@
         <accept-notification>I agree, with the terms of service for using this server.</accept-notification>
     </notification>
     <form-editor id="net-splitcells-gel-ui-editor-nocode-form"
-                 action="/net/splitcells/gel/editor/calculate-solution.form">
+                 action="/net/splitcells/gel/ui/editor/calculate-solution.form">
         <library path="net/splitcells/gel/ui/no/code/editor/lib"/>
         <no-code-editor id="net-splitcells-gel-ui-editor-nocode-form-problem-definition"
                         name="Definition"

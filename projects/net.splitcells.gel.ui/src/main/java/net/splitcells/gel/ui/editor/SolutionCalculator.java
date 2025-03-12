@@ -43,7 +43,7 @@ import static net.splitcells.gel.ui.editor.nocode.NoCodeSolutionEditorParser.noC
 import static net.splitcells.website.server.processor.Response.response;
 
 public class SolutionCalculator implements Processor<Tree, Tree> {
-    public static final Trail PATH = Trail.trail("net/splitcells/gel/editor/calculate-solution.form");
+    public static final Trail PATH = Trail.trail("net/splitcells/gel/ui/editor/calculate-solution.form");
     public static final String SOLUTION_RATING = "net-splitcells-gel-editor-form-solution-rating";
     public static final String SOLUTION = "net-splitcells-gel-editor-form-solution";
     public static final String DEMANDS = "net-splitcells-gel-editor-form-demands";
