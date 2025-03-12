@@ -167,6 +167,9 @@ function net_splitcells_webserver_form_submit(config) {
         var responseObject = JSON.parse(this.responseText);
         if ('net-splitcells-websiter-server-form-update' in responseObject) {
             for (const [key, value] of Object.entries(responseObject['net-splitcells-websiter-server-form-update'])) {
+                if (document.getElementById(key) === null) {
+                    console.log('Could not find form field for update: ' + key);
+                }
                 document.getElementById(key).value = value; // value is used by form elements like textarea.
                 document.getElementById(key).innerHTML = value; // innerHTML is used by div elements inside forms.
                 if (document.getElementById(key).getAttribute('content-types') === undefined) {
