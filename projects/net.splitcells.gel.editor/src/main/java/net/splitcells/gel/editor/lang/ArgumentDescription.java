@@ -15,7 +15,7 @@
  */
 package net.splitcells.gel.editor.lang;
 
-public sealed interface ArgumentDescription permits FunctionCallDescription
+public sealed interface ArgumentDescription extends SourceCodeQuotation permits FunctionCallDescription
         , StringDescription
         , IntegerDescription
         , ReferenceDescription {
