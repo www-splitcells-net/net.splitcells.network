@@ -22,6 +22,7 @@ import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.constraint.type.ForAll;
 import net.splitcells.gel.constraint.type.Then;
 import net.splitcells.gel.editor.lang.AttributeDescription;
+import net.splitcells.gel.editor.lang.ReferenceDescription;
 import net.splitcells.gel.ui.GelUiFileSystem;
 import net.splitcells.gel.ui.editor.SolutionCalculator;
 import net.splitcells.website.server.projects.extension.impls.ColloquiumPlanningDemandsTestData;
@@ -41,6 +42,8 @@ import static net.splitcells.dem.testing.Assertions.requirePresenceOf;
 import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
 import static net.splitcells.gel.data.view.attribute.AttributeI.stringAttribute;
 import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
+import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuote;
+import static net.splitcells.gel.editor.lang.SourceCodeQuote.sourceCodeQuote;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.lib.classification.ForAllValueCombinations.FOR_ALL_VALUE_COMBINATIONS_NAME;
 import static net.splitcells.gel.ui.editor.code.CodeEditorLangParser.codeEditorLangParsing;
@@ -105,9 +108,11 @@ public class CodeSolutionCalculatorTest {
         final var resultData = codeEditorLangParsing(Dem.configValue(GelUiFileSystem.class)
                 .readString("src/main/resources/html/net/splitcells/gel/ui/editor/code/examples/school-course-scheduling-problem.txt")).requireWorking()
                 .optionalValue().orElseThrow();
-        resultData.columnAttributesForOutputFormat().requireEqualityTo(list(referenceDescription("roomNumber", AttributeDescription.class)));
-        resultData.rowAttributesForOutputFormat().requireEqualityTo(list(referenceDescription("date", AttributeDescription.class)
-                , referenceDescription("shift", AttributeDescription.class)));
+        resultData.columnAttributesForOutputFormat().requireEquality(list(referenceDescription("roomNumber", AttributeDescription.class, sourceCodeQuote("", "", 0)))
+                , ReferenceDescription.equalMeaning());
+        resultData.rowAttributesForOutputFormat().requireEquality(list(referenceDescription("date", AttributeDescription.class, sourceCodeQuote("", "", -1))
+                        , referenceDescription("shift", AttributeDescription.class, sourceCodeQuote("", "", -1)))
+                , ReferenceDescription.equalMeaning());
     }
 
     @UnitTest

@@ -33,6 +33,7 @@ import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.editor.lang.AttributeDescription.parseAttributeDescription;
 import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
 import static net.splitcells.gel.editor.lang.SolutionDescription.solutionDescription;
+import static net.splitcells.gel.editor.lang.SourceCodeQuote.sourceCodeQuote;
 import static net.splitcells.gel.editor.lang.TableDescription.tableDescription;
 import static net.splitcells.gel.ui.editor.code.CodeConstraintLangParser.parseConstraints;
 
@@ -94,7 +95,7 @@ public class CodeEditorLangParser extends DenParserBaseVisitor<Result<SolutionDe
                 return result.withErrorMessages(parsedConstraints);
             }
             constraints.withAppended(parsedConstraints.optionalValue().orElseThrow());
-            final var solutionDescription = solutionDescription(name.get(), attributes, demands.get(), supplies.get(), constraints);
+            final var solutionDescription = solutionDescription(name.get(), attributes, demands.get(), supplies.get(), constraints, sourceCodeQuote(sourceUnit));
             solutionDescription.columnAttributesForOutputFormat().withAppended(columnAttributesForOutputFormat);
             solutionDescription.rowAttributesForOutputFormat().withAppended(rowAttributesForOutputFormat);
             result.withValue(solutionDescription);
@@ -130,7 +131,8 @@ public class CodeEditorLangParser extends DenParserBaseVisitor<Result<SolutionDe
             final var firstDemandAttribute = ctx.block_statement().variable_definition();
             if (firstDemandAttribute != null) {
                 final var parsedAttribute = parseAttributeDescription(firstDemandAttribute.Name().getText()
-                        , firstDemandAttribute.function_call().Name().getText());
+                        , firstDemandAttribute.function_call().Name().getText()
+                        , sourceCodeQuote(firstDemandAttribute));
                 final var parsedAttributeValue = parsedAttribute.optionalValue();
                 if (parsedAttributeValue.isPresent()) {
                     demandAttributes.add(parsedAttributeValue.get());
@@ -140,7 +142,8 @@ public class CodeEditorLangParser extends DenParserBaseVisitor<Result<SolutionDe
             final var additionalDemandAttributes = ctx.block_statement().statement_reversed();
             additionalDemandAttributes.forEach(da -> {
                         final var parsedAttribute = parseAttributeDescription(da.variable_definition().Name().getText()
-                                , da.variable_definition().function_call().Name().getText());
+                                , da.variable_definition().function_call().Name().getText()
+                                , sourceCodeQuote(da));
                         if (parsedAttribute.optionalValue().isPresent()) {
                             demandAttributes.add(parsedAttribute.optionalValue().get());
                         }
@@ -149,7 +152,7 @@ public class CodeEditorLangParser extends DenParserBaseVisitor<Result<SolutionDe
             );
             attributes.withAppended(demandAttributes);
             demands = Optional.of(tableDescription("demands"
-                    , demandAttributes.mapped(da -> referenceDescription(da.name(), AttributeDescription.class))));
+                    , demandAttributes.mapped(da -> referenceDescription(da.name(), AttributeDescription.class, da.sourceCodeQuote())), sourceCodeQuote(ctx)));
         } else if (ctxName.equals("supplies")) {
             if (supplies.isPresent()) {
                 result.withErrorMessage(tree("Supplies are not allowed to be defined multiple times."));
@@ -159,7 +162,8 @@ public class CodeEditorLangParser extends DenParserBaseVisitor<Result<SolutionDe
             final var firstSupplyAttribute = ctx.block_statement().variable_definition();
             if (firstSupplyAttribute != null) {
                 final var parsedAttribute = parseAttributeDescription(firstSupplyAttribute.Name().getText()
-                        , firstSupplyAttribute.function_call().Name().getText());
+                        , firstSupplyAttribute.function_call().Name().getText()
+                        , sourceCodeQuote(firstSupplyAttribute));
                 final var parsedAttributeValue = parsedAttribute.optionalValue();
                 if (parsedAttributeValue.isPresent()) {
                     supplyAttributes.add(parsedAttributeValue.get());
@@ -169,7 +173,8 @@ public class CodeEditorLangParser extends DenParserBaseVisitor<Result<SolutionDe
             final var additionalSupplyAttributes = ctx.block_statement().statement_reversed();
             additionalSupplyAttributes.forEach(sa -> {
                 final var parsedAttribute = parseAttributeDescription(sa.variable_definition().Name().getText()
-                        , sa.variable_definition().function_call().Name().getText());
+                        , sa.variable_definition().function_call().Name().getText()
+                        , sourceCodeQuote(sa));
                 if (parsedAttribute.optionalValue().isPresent()) {
                     supplyAttributes.add(parsedAttribute.optionalValue().get());
                 }
@@ -177,7 +182,8 @@ public class CodeEditorLangParser extends DenParserBaseVisitor<Result<SolutionDe
             });
             attributes.withAppended(supplyAttributes);
             supplies = Optional.of(tableDescription("supplies"
-                    , supplyAttributes.mapped(sa -> referenceDescription(sa.name(), AttributeDescription.class))));
+                    , supplyAttributes.mapped(sa -> referenceDescription(sa.name(), AttributeDescription.class, sa.sourceCodeQuote()))
+                    , sourceCodeQuote(ctx)));
         }
         return null;
     }
@@ -203,19 +209,21 @@ public class CodeEditorLangParser extends DenParserBaseVisitor<Result<SolutionDe
                 && subjectName.equals("solution")) {
             columnAttributesForOutputFormat.add(referenceDescription(
                     ctx.access().function_call_arguments().function_call_arguments_element().Name().getText()
-                    , AttributeDescription.class));
+                    , AttributeDescription.class
+                    , sourceCodeQuote(ctx)));
             ctx.access().function_call_arguments().function_call_arguments_next()
                     .forEach(e -> columnAttributesForOutputFormat.add(
-                            referenceDescription(e.getText(), AttributeDescription.class)));
+                            referenceDescription(e.getText(), AttributeDescription.class, sourceCodeQuote(ctx))));
         } else if (functionName.equals("rowAttributesForOutputFormat")
                 && subjectName.equals("solution")) {
             rowAttributesForOutputFormat.add(referenceDescription(
                     ctx.access().function_call_arguments().function_call_arguments_element().Name().getText()
-                    , AttributeDescription.class));
+                    , AttributeDescription.class, sourceCodeQuote(ctx)));
             ctx.access().function_call_arguments().function_call_arguments_next()
                     .forEach(e -> rowAttributesForOutputFormat
                             .add(referenceDescription(e.function_call_arguments_element().Name().getText()
-                                    , AttributeDescription.class)));
+                                    , AttributeDescription.class
+                                    , sourceCodeQuote(e))));
         } else {
             result.withErrorMessage(tree("There is an unknown top level function call.")
                     .withProperty("subject name", subjectName)

@@ -16,8 +16,22 @@
 package net.splitcells.gel.editor.lang;
 
 import net.splitcells.dem.data.atom.Thing;
+import net.splitcells.dem.data.order.Comparison;
+import net.splitcells.dem.data.order.Ordering;
 
 public final class ReferenceDescription<T> implements ArgumentDescription, SourceCodeQuotation {
+
+    public static <R> Comparison<ReferenceDescription<R>> equalMeaning() {
+        return new Comparison<>() {
+            @Override
+            public Ordering compareTo(ReferenceDescription<R> a, ReferenceDescription<R> b) {
+                if (a.name().equals(b.name()) && a.clazz().equals(b.clazz())) {
+                    return Ordering.EQUAL;
+                }
+                return Ordering.LESSER_THAN;
+            }
+        };
+    }
 
     public static <R> ReferenceDescription<R> referenceDescription(String name, Class<? extends R> clazz, SourceCodeQuote sourceCodeQuote) {
         return new ReferenceDescription<>(name, clazz, sourceCodeQuote);

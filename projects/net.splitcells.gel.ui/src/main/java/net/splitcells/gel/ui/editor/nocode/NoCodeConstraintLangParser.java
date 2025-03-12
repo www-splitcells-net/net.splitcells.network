@@ -21,10 +21,7 @@ import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenParser;
 import net.splitcells.dem.source.den.DenParser;
 import net.splitcells.dem.testing.Result;
-import net.splitcells.gel.editor.lang.ArgumentDescription;
-import net.splitcells.gel.editor.lang.AttributeDescription;
-import net.splitcells.gel.editor.lang.ConstraintDescription;
-import net.splitcells.gel.editor.lang.FunctionCallDescription;
+import net.splitcells.gel.editor.lang.*;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 import java.util.Optional;
@@ -37,6 +34,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.editor.lang.ConstraintDescription.constraintDescription;
 import static net.splitcells.gel.editor.lang.FunctionCallDescription.functionCallDescription;
 import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
+import static net.splitcells.gel.editor.lang.SourceCodeQuote.sourceCodeQuote;
 import static net.splitcells.gel.editor.lang.StringDescription.stringDescription;
 import static net.splitcells.gel.editor.solution.SolutionEditor.AFFECTED_CONTENT;
 import static net.splitcells.gel.editor.solution.SolutionEditor.AFFECTED_CONTEXT;
@@ -77,7 +75,7 @@ public class NoCodeConstraintLangParser {
         if (argsParsing.defective()) {
             return constraintDescription.withErrorMessages(argsParsing);
         }
-        return constraintDescription.withValue(constraintDescription(functionCallDescription(name, argsParsing.requiredValue())));
+        return constraintDescription.withValue(constraintDescription(functionCallDescription(name, argsParsing.requiredValue(), sourceCodeQuote(functionCall)), sourceCodeQuote(functionCall)));
     }
 
     private static Result<FunctionCallDescription, Tree> parseFunctionCallDescription(NoCodeDenParser.Function_callContext functionCall) {
@@ -87,7 +85,7 @@ public class NoCodeConstraintLangParser {
         if (argsParsing.defective()) {
             return functionCallDescription.withErrorMessages(argsParsing);
         }
-        return functionCallDescription.withValue(functionCallDescription(name, argsParsing.requiredValue()));
+        return functionCallDescription.withValue(functionCallDescription(name, argsParsing.requiredValue(), sourceCodeQuote(functionCall)));
     }
 
     private static Result<List<ArgumentDescription>, Tree> parseArgumentDescriptions(java.util.List<NoCodeDenParser.Function_call_argumentContext> arguments, ParserRuleContext parent) {
@@ -96,7 +94,7 @@ public class NoCodeConstraintLangParser {
         for (final var arg : arguments) {
             final var argVal = arg.value();
             if (argVal.string_value() != null) {
-                args.add(stringDescription(argVal.string_value().getText()));
+                args.add(stringDescription(argVal.string_value().getText(), sourceCodeQuote(argVal)));
             } else if (argVal.function_call() != null && !argVal.function_call().isEmpty()) {
                 if (argVal.function_call().size() != 1) {
                     return argumentDescriptions.withErrorMessage(tree("Function chaining is not supported for constraint arguments.")
@@ -113,7 +111,7 @@ public class NoCodeConstraintLangParser {
             } else if (argVal.Function_call_var_arg() != null) {
                 continue;
             } else if (argVal.variable_reference() != null) {
-                args.add(referenceDescription(argVal.variable_reference().Name().getText(), AttributeDescription.class));
+                args.add(referenceDescription(argVal.variable_reference().Name().getText(), AttributeDescription.class, sourceCodeQuote(argVal)));
             } else {
                 return argumentDescriptions.withErrorMessage(tree("One function call argument for constraint is invalid.")
                         .withProperty(AFFECTED_CONTENT, arg.getText())

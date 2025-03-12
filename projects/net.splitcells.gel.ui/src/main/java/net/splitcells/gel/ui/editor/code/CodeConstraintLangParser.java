@@ -24,17 +24,21 @@ import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.editor.lang.ArgumentDescription;
 import net.splitcells.gel.editor.lang.ConstraintDescription;
 import net.splitcells.gel.editor.lang.FunctionCallDescription;
+import net.splitcells.gel.editor.lang.SourceCodeQuote;
 
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.source.SourceUtils.getLine;
+import static net.splitcells.dem.source.SourceUtils.root;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.editor.lang.ConstraintDescription.constraintDescription;
 import static net.splitcells.gel.editor.lang.FunctionCallDescription.functionCallDescription;
 import static net.splitcells.gel.editor.lang.IntegerDescription.integerDescription;
 import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
+import static net.splitcells.gel.editor.lang.SourceCodeQuote.sourceCodeQuote;
 import static net.splitcells.gel.editor.solution.SolutionEditor.AFFECTED_CONTENT;
 
 /**
@@ -69,9 +73,9 @@ public class CodeConstraintLangParser extends DenParserBaseVisitor<Result<List<C
             final var firstArgument = arguments.function_call_arguments_element();
             if (firstArgument != null) {
                 if (firstArgument.Integer() != null) {
-                    args.add(integerDescription(Integers.parse(firstArgument.Integer().getText())));
+                    args.add(integerDescription(Integers.parse(firstArgument.Integer().getText()), sourceCodeQuote(firstArgument)));
                 } else if (firstArgument.Name() != null) {
-                    args.add(referenceDescription(firstArgument.Name().getText(), Object.class));
+                    args.add(referenceDescription(firstArgument.Name().getText(), Object.class, sourceCodeQuote(firstArgument)));
                 } else if (firstArgument.function_call() != null) {
                     final var tmp = parseFunctionCallDescription(firstArgument.function_call());
                     if (tmp.defective()) {
@@ -87,9 +91,9 @@ public class CodeConstraintLangParser extends DenParserBaseVisitor<Result<List<C
         for (final var argNext : arguments.function_call_arguments_next()) {
             final var argCurrent = argNext.function_call_arguments_element();
             if (argCurrent.Integer() != null) {
-                args.add(integerDescription(Integers.parse(argCurrent.Integer().getText())));
+                args.add(integerDescription(Integers.parse(argCurrent.Integer().getText()), sourceCodeQuote(argCurrent)));
             } else if (argCurrent.Name() != null) {
-                args.add(referenceDescription(argCurrent.Name().getText(), Object.class));
+                args.add(referenceDescription(argCurrent.Name().getText(), Object.class, sourceCodeQuote(argCurrent)));
             } else if (argCurrent.function_call() != null) {
                 final var tmp = parseFunctionCallDescription(argCurrent.function_call());
                 if (tmp.defective()) {
@@ -101,7 +105,7 @@ public class CodeConstraintLangParser extends DenParserBaseVisitor<Result<List<C
                         .withProperty(AFFECTED_CONTENT, arguments.getText()));
             }
         }
-        return parsedFunctionCallDescription.withValue(functionCallDescription(name, args));
+        return parsedFunctionCallDescription.withValue(functionCallDescription(name, args, sourceCodeQuote(arguments)));
     }
 
     private static Result<ConstraintDescription, Tree> parseConstraintDescription(DenParser.Function_callContext functionCall) {
@@ -117,7 +121,7 @@ public class CodeConstraintLangParser extends DenParserBaseVisitor<Result<List<C
         if (parsedConstraintFunction.defective()) {
             return parsedConstraintDescription.withErrorMessages(parsedConstraintFunction);
         }
-        final var constraint = constraintDescription(parsedConstraintFunction.optionalValue().orElseThrow());
+        final var constraint = constraintDescription(parsedConstraintFunction.optionalValue().orElseThrow(), sourceCodeQuote(arguments));
         child.ifPresent(childVal -> {
             final var parsedChild = parseConstraintDescription(childVal.Name().getText()
                     , childVal.function_call_arguments()

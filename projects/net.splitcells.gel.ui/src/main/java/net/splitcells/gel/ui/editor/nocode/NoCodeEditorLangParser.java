@@ -37,6 +37,7 @@ import static net.splitcells.gel.editor.Editor.editor;
 import static net.splitcells.gel.editor.lang.AttributeDescription.parseAttributeDescription;
 import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
 import static net.splitcells.gel.editor.lang.SolutionDescription.solutionDescription;
+import static net.splitcells.gel.editor.lang.SourceCodeQuote.sourceCodeQuote;
 import static net.splitcells.gel.editor.lang.TableDescription.tableDescription;
 import static net.splitcells.gel.editor.solution.SolutionEditor.AFFECTED_CONTENT;
 import static net.splitcells.gel.ui.editor.nocode.NoCodeConstraintLangParser.parseConstraintDescription;
@@ -112,7 +113,7 @@ public class NoCodeEditorLangParser extends NoCodeDenParserBaseVisitor<Result<So
     public Result<SolutionDescription, Tree> visitSource_unit(net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenParser.Source_unitContext sourceUnit) {
         visitChildren(sourceUnit);
         if (demands.isPresent() && supplies.isPresent() && result.errorMessages().isEmpty()) {
-            final var solution = solutionDescription("solution", listWithValuesOf(attributes.values()), demands.get(), supplies.get(), constraints);
+            final var solution = solutionDescription("solution", listWithValuesOf(attributes.values()), demands.get(), supplies.get(), constraints, sourceCodeQuote(sourceUnit));
             solution.columnAttributesForOutputFormat().addAll(columnAttributesForOutputFormat);
             solution.rowAttributesForOutputFormat().addAll(rowAttributesForOutputFormat);
             return result.withValue(solution);
@@ -139,11 +140,11 @@ public class NoCodeEditorLangParser extends NoCodeDenParserBaseVisitor<Result<So
             if ("columnAttributesForOutputFormat".equals(functionCallname)) {
                 ctx.function_call(0).function_call_argument()
                         .forEach(arg -> columnAttributesForOutputFormat
-                                .add(referenceDescription(arg.value().variable_reference().Name().getText(), AttributeDescription.class)));
+                                .add(referenceDescription(arg.value().variable_reference().Name().getText(), AttributeDescription.class, sourceCodeQuote(arg))));
             } else if ("rowAttributesForOutputFormat".equals(functionCallname)) {
                 ctx.function_call(0).function_call_argument()
                         .forEach(arg -> rowAttributesForOutputFormat
-                                .add(referenceDescription(arg.value().variable_reference().Name().getText(), AttributeDescription.class)));
+                                .add(referenceDescription(arg.value().variable_reference().Name().getText(), AttributeDescription.class, sourceCodeQuote(arg))));
             }
         } else if (CONSTRAINTS.equals(referencedName)) {
             final var parsedConstraints = parseConstraintDescription(ctx.function_call(), ctx);
@@ -235,12 +236,12 @@ public class NoCodeEditorLangParser extends NoCodeDenParserBaseVisitor<Result<So
                                 .withProperty(CONTENT, ctx.getText()));
                         return null;
                     }
-                    databaseAttributes.add(referenceDescription(attributeText.variable_reference().Name().getText(), AttributeDescription.class));
+                    databaseAttributes.add(referenceDescription(attributeText.variable_reference().Name().getText(), AttributeDescription.class, sourceCodeQuote(attributeText)));
                 }
                 if (DEMANDS.equals(variableName)) {
-                    this.demands = Optional.of(tableDescription(variableName, databaseAttributes));
+                    this.demands = Optional.of(tableDescription(variableName, databaseAttributes, sourceCodeQuote(ctx)));
                 } else if (SUPPLIES.equals(variableName)) {
-                    this.supplies = Optional.of(tableDescription(variableName, databaseAttributes));
+                    this.supplies = Optional.of(tableDescription(variableName, databaseAttributes, sourceCodeQuote(ctx)));
                 } else {
                     return result.withErrorMessage(tree("The only valid variable names are `demands` and `supplies`. Instead `" + variableName + "` was given.")
                             .withProperty(CONTENT, ctx.getText()));
@@ -266,7 +267,8 @@ public class NoCodeEditorLangParser extends NoCodeDenParserBaseVisitor<Result<So
                     return null;
                 }
                 final var parsedAttribute = parseAttributeDescription(attributeName.value().string_value().getText()
-                        , attributeType.value().string_value().getText());
+                        , attributeType.value().string_value().getText()
+                        , sourceCodeQuote(ctx));
                 if (parsedAttribute.defective()) {
                     result.errorMessages().withAppended(parsedAttribute.errorMessages());
                     return result;
