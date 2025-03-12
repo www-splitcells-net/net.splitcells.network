@@ -31,14 +31,11 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.CsvDocument.toCsvString;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
-import static net.splitcells.gel.editor.Editor.editor;
 import static net.splitcells.gel.solution.optimization.DefaultOptimization.defaultOptimization;
-import static net.splitcells.gel.ui.code.editor.CodeEditorLangParser.codeEditorLangParsing;
-import static net.splitcells.gel.ui.code.editor.CodeSolutionEditorParser.codeSolutionEditorParser;
+import static net.splitcells.gel.ui.editor.code.CodeSolutionEditorParser.codeSolutionEditorParser;
 import static net.splitcells.gel.ui.editor.nocode.NoCodeSolutionEditorParser.noCodeSolutionEditorParser;
 import static net.splitcells.website.server.processor.Response.response;
 

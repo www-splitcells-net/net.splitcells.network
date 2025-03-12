@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.ui.code.editor;
+package net.splitcells.gel.ui.editor.code;
 
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.testing.Result;
@@ -26,7 +26,7 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.gel.editor.Editor.editor;
-import static net.splitcells.gel.ui.code.editor.CodeEditorLangParser.codeEditorLangParsing;
+import static net.splitcells.gel.ui.editor.code.CodeEditorLangParser.codeEditorLangParsing;
 
 public class CodeSolutionEditorParser implements Function<Request<Tree>, Result<SolutionEditor, Tree>> {
     public static final String PROBLEM_DEFINITION = "net-splitcells-gel-ui-editor-code-form-problem-definition";

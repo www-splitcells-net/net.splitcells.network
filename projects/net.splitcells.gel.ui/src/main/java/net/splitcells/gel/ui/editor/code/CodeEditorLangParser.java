@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.ui.code.editor;
+package net.splitcells.gel.ui.editor.code;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.tree.Tree;
@@ -34,7 +34,7 @@ import static net.splitcells.gel.editor.lang.AttributeDescription.parseAttribute
 import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
 import static net.splitcells.gel.editor.lang.SolutionDescription.solutionDescription;
 import static net.splitcells.gel.editor.lang.TableDescription.tableDescription;
-import static net.splitcells.gel.ui.code.editor.CodeConstraintLangParser.parseConstraints;
+import static net.splitcells.gel.ui.editor.code.CodeConstraintLangParser.parseConstraints;
 
 /**
  * Using {@link SolutionDescription} avoid an indirect ANTLR API dependency.

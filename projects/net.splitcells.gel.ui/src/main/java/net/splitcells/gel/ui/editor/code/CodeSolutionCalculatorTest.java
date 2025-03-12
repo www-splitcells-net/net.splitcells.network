@@ -13,11 +13,10 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.ui.code.editor;
+package net.splitcells.gel.ui.editor.code;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.environment.config.IsDeterministic;
-import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.testing.annotations.CapabilityTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.constraint.type.ForAll;
@@ -44,9 +43,9 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.stringAttribute;
 import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.lib.classification.ForAllValueCombinations.FOR_ALL_VALUE_COMBINATIONS_NAME;
-import static net.splitcells.gel.ui.code.editor.CodeEditorLangParser.codeEditorLangParsing;
-import static net.splitcells.gel.ui.code.editor.CodeSolutionEditorParser.PROBLEM_DEFINITION;
-import static net.splitcells.gel.ui.code.editor.CodeSolutionEditorParser.codeSolutionEditorParser;
+import static net.splitcells.gel.ui.editor.code.CodeEditorLangParser.codeEditorLangParsing;
+import static net.splitcells.gel.ui.editor.code.CodeSolutionEditorParser.PROBLEM_DEFINITION;
+import static net.splitcells.gel.ui.editor.code.CodeSolutionEditorParser.codeSolutionEditorParser;
 import static net.splitcells.gel.ui.editor.SolutionCalculator.*;
 import static net.splitcells.website.server.processor.Request.request;
 
