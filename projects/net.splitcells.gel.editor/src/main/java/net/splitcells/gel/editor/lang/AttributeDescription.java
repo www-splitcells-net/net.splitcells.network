@@ -23,6 +23,7 @@ import net.splitcells.gel.data.view.attribute.Attribute;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.gel.data.view.attribute.AttributeI.*;
+import static net.splitcells.gel.editor.solution.SolutionEditor.AFFECTED_CONTENT;
 
 public class AttributeDescription implements SourceCodeQuotation {
     public static Result<AttributeDescription, Tree> parseAttributeDescription(String name, String type, SourceCodeQuote sourceCodeQuote) {
@@ -31,7 +32,8 @@ public class AttributeDescription implements SourceCodeQuotation {
         if (primitiveType.isEmpty()) {
             return attribute.withErrorMessage(tree("Unknown attribute type.")
                     .withProperty("name", name)
-                    .withProperty("type", type));
+                    .withProperty("type", type)
+                    .withProperty(AFFECTED_CONTENT, sourceCodeQuote.userReference()));
         }
         return attribute.withValue(attributeDescription(name, primitiveType.get(), sourceCodeQuote));
     }

@@ -132,7 +132,7 @@ public class SolutionEditor implements Discoverable {
         if (constraintName.equals(FOR_ALL_NAME)) {
             if (arguments.hasElements()) {
                 return constraint.withErrorMessage(tree("ForAll does not support arguments.")
-                        .withProperty(AFFECTED_CONTENT, constraintDescription.toString()));
+                        .withProperty(AFFECTED_CONTENT, constraintDescription.sourceCodeQuote().userReference()));
             }
             nextConstraint = parentConstraint.forAll();
         } else if (constraintName.equals(FOR_EACH_NAME)) {
@@ -147,20 +147,20 @@ public class SolutionEditor implements Discoverable {
                     default -> {
                         return constraint.withErrorMessage(tree("ForEach requires a reference as the argument.")
                                 .withProperty("Argument class", arg.getClass().getName())
-                                .withProperty("Argument", arg.toString()));
+                                .withProperty("Argument", arg.toString())
+                                .withProperty(AFFECTED_CONTENT, constraintDescription.sourceCodeQuote().userReference()));
                     }
                 }
             } else if (constraintDescription.definition().arguments().size() > 1) {
                 return constraint.withErrorMessage(tree("ForEach does not support multiple arguments.")
-                        .withProperty(AFFECTED_CONTENT
-                                , constraintDescription.toString()));
+                        .withProperty(AFFECTED_CONTENT, constraintDescription.sourceCodeQuote().userReference()));
             } else {
                 throw execException();
             }
         } else if (constraintName.equals(FOR_ALL_COMBINATIONS_OF)) {
             if (arguments.size() < 2) {
                 return constraint.withErrorMessage(tree(FOR_ALL_COMBINATIONS_OF + " requires at least 2 arguments.")
-                        .withProperty(AFFECTED_CONTENT, constraintDescription.toString()));
+                        .withProperty(AFFECTED_CONTENT, constraintDescription.sourceCodeQuote().userReference()));
             }
             final List<Attribute<? extends Object>> combinations = list();
             for (final var arg : arguments) {
@@ -171,8 +171,7 @@ public class SolutionEditor implements Discoverable {
                     default -> {
                         return constraint.withErrorMessage(tree("ForAllCombinationsOf only takes attribute references as arguments.")
                                 .withProperty("Argument class", arg.getClass().getName())
-                                .withProperty("Argument", arg.toString())
-                                .withProperty(AFFECTED_CONTENT, arg.toString()));
+                                .withProperty("Argument", arg.toString()));
                     }
                 }
             }
@@ -181,11 +180,11 @@ public class SolutionEditor implements Discoverable {
             if (arguments.isEmpty()) {
                 return constraint
                         .withErrorMessage(tree("Then constraint requires at least one argument.")
-                                .withProperty(AFFECTED_CONTENT, constraintDescription.toString()));
+                                .withProperty(AFFECTED_CONTENT, constraintDescription.sourceCodeQuote().userReference()));
             }
             if (arguments.size() > 1) {
                 return constraint.withErrorMessage(tree("Then constraint only support one argument at maximum")
-                        .withProperty(AFFECTED_CONTENT, constraintDescription.toString()));
+                        .withProperty(AFFECTED_CONTENT, constraintDescription.sourceCodeQuote().userReference()));
             }
             final Rater rater;
             switch (arguments.get(0)) {
@@ -199,14 +198,14 @@ public class SolutionEditor implements Discoverable {
                 }
                 default -> {
                     constraint.withErrorMessage(tree("`" + THEN_NAME + "` requires exactly function call as an argument. Instead an `" + arguments.get(0).getClass().getName() + "` was given.")
-                            .withProperty(AFFECTED_CONTENT, constraintDescription.toString()));
+                            .withProperty(AFFECTED_CONTENT, constraintDescription.sourceCodeQuote().userReference()));
                     return constraint;
                 }
             }
             nextConstraint = parentConstraint.then(rater);
         } else {
             return constraint.withErrorMessage(tree("Unknown constraint type")
-                    .withProperty(AFFECTED_CONTENT, constraintDescription.toString())
+                    .withProperty(AFFECTED_CONTENT, constraintDescription.sourceCodeQuote().userReference())
                     .withProperty("constraint type", constraintName));
         }
         constraintDescription.children().forEach(c -> {
@@ -230,13 +229,13 @@ public class SolutionEditor implements Discoverable {
                     if (!isNumber(string.value())) {
                         // TODO This is an hack for backwards compatibility.
                         return rater.withErrorMessage(tree("`" + HAS_SIZE_NAME + "` requires exactly one integer as an argument. Instead an `" + functionCall.arguments().get(0).getClass().getName() + "` was given.")
-                                .withProperty(AFFECTED_CONTENT, functionCall.toString()));
+                                .withProperty(AFFECTED_CONTENT, functionCall.sourceCodeQuote().userReference()));
                     }
                     return rater.withValue(hasSize(Integers.parse(string.value())));
                 }
                 default -> {
                     return rater.withErrorMessage(tree("`" + HAS_SIZE_NAME + "` requires exactly one integer as an argument. Instead an `" + functionCall.arguments().get(0).getClass().getName() + "` was given.")
-                            .withProperty(AFFECTED_CONTENT, functionCall.toString()));
+                            .withProperty(AFFECTED_CONTENT, functionCall.sourceCodeQuote().userReference()));
                 }
             }
         } else if (name.equals(ALL_SAME_NAME)) {
@@ -246,17 +245,17 @@ public class SolutionEditor implements Discoverable {
                 }
                 default -> {
                     return rater.withErrorMessage(tree("`" + ALL_SAME_NAME + "` requires exactly one string as an argument. Instead an `" + functionCall.arguments().get(0).getClass().getName() + "` was given.")
-                            .withProperty(AFFECTED_CONTENT, functionCall.toString()));
+                            .withProperty(AFFECTED_CONTENT, functionCall.sourceCodeQuote().userReference()));
                 }
             }
         } else if (name.equals(MINIMAL_DISTANCE_NAME)) {
             if (functionCall.arguments().isEmpty()) {
                 return rater.withErrorMessage(tree("Rater `" + MINIMAL_DISTANCE_NAME + "` requires exactly 2 arguments, but has none.")
-                        .withProperty("rater", functionCall.toString()));
+                        .withProperty(AFFECTED_CONTENT, functionCall.sourceCodeQuote().userReference()));
             }
             if (functionCall.arguments().size() != 2) {
                 return rater.withErrorMessage(tree("Rater `" + MINIMAL_DISTANCE_NAME + "` requires exactly 2 arguments.")
-                        .withProperty("rater", functionCall.toString()));
+                        .withProperty(AFFECTED_CONTENT, functionCall.sourceCodeQuote().userReference()));
             }
             final Attribute<? extends Object> attribute;
             switch (functionCall.arguments().get(0)) {
@@ -265,7 +264,7 @@ public class SolutionEditor implements Discoverable {
                 }
                 default -> {
                     return rater.withErrorMessage(tree("`" + MINIMAL_DISTANCE_NAME + "` first argument has to be a reference. Instead an `" + functionCall.arguments().get(0).getClass().getName() + "` was given.")
-                            .withProperty(AFFECTED_CONTENT, functionCall.toString()));
+                            .withProperty(AFFECTED_CONTENT, functionCall.sourceCodeQuote().userReference()));
                 }
             }
             final int minimumDistance;
@@ -277,13 +276,13 @@ public class SolutionEditor implements Discoverable {
                     if (!isNumber(string.value())) {
                         // TODO This is an hack for backwards compatibility.
                         return rater.withErrorMessage(tree("`" + MINIMAL_DISTANCE_NAME + "` second argument has to be an integer. Instead an `" + functionCall.arguments().get(1).getClass().getName() + "` was given.")
-                                .withProperty(AFFECTED_CONTENT, functionCall.toString()));
+                                .withProperty(AFFECTED_CONTENT, functionCall.sourceCodeQuote().userReference()));
                     }
                     return rater.withValue(has_minimal_distance_of((Attribute<Integer>) attribute, Integers.parse(string.value())));
                 }
                 default -> {
                     return rater.withErrorMessage(tree("`" + MINIMAL_DISTANCE_NAME + "` second argument has to be an integer. Instead an `" + functionCall.arguments().get(1).getClass().getName() + "` was given.")
-                            .withProperty(AFFECTED_CONTENT, functionCall.toString()));
+                            .withProperty(AFFECTED_CONTENT, functionCall.sourceCodeQuote().userReference()));
                 }
             }
             return rater.withValue(has_minimal_distance_of((Attribute<Integer>) attribute, minimumDistance));
