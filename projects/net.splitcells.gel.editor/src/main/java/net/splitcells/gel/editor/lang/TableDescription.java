@@ -45,7 +45,7 @@ public class TableDescription implements SourceCodeQuotation {
 
     @Override
     public String toString() {
-        return "Name: " + name + ", header: " + header;
+        return "Name: " + name + ", header: " + header + " sourceCodeQuote: " + sourceCodeQuote;
     }
 
     @Override

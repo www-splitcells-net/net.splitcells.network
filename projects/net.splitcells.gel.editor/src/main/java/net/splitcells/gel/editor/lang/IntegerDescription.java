@@ -36,7 +36,7 @@ public final class IntegerDescription implements ArgumentDescription, SourceCode
 
     @Override
     public String toString() {
-        return value + "";
+        return value + " sourceCodeQuote: " + sourceCodeQuote;
     }
 
     @Override

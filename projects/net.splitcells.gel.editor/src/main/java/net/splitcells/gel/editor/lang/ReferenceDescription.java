@@ -56,7 +56,7 @@ public final class ReferenceDescription<T> implements ArgumentDescription, Sourc
 
     @Override
     public String toString() {
-        return "Reference to " + name + " of type " + clazz.getName();
+        return "Reference to " + name + " of type " + clazz.getName() + " sourceCodeQuote: " + sourceCodeQuote;
     }
 
     @Override

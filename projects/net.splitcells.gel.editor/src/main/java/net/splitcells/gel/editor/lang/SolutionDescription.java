@@ -100,7 +100,8 @@ public class SolutionDescription implements SourceCodeQuotation {
                 + ", supplies: " + supplies
                 + ", constraints: " + constraints
                 + ", columnAttributesForOutputFormat: " + columnAttributesForOutputFormat
-                + ", rowAttributesForOutputFormat: " + rowAttributesForOutputFormat;
+                + ", rowAttributesForOutputFormat: " + rowAttributesForOutputFormat
+                + " sourceCodeQuote: " + sourceCodeQuote;
     }
 
     @Override

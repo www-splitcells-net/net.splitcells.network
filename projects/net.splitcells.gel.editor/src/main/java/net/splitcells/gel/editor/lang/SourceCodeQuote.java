@@ -69,4 +69,9 @@ public class SourceCodeQuote {
     public int hashCode() {
         return Thing.hashCode(quote, document, quoteLine);
     }
+
+    @Override
+    public String toString() {
+        return "quote: " + quote + ", document: " + document + ", quoteLine: " + quoteLine;
+    }
 }

@@ -51,7 +51,7 @@ public final class FunctionCallDescription implements ArgumentDescription, Sourc
 
     @Override
     public String toString() {
-        return functionName + arguments;
+        return functionName + arguments + " sourceCodeQuote: " + sourceCodeQuote;
     }
 
     @Override

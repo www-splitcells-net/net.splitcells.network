@@ -24,6 +24,7 @@ public class ConstraintDescription implements SourceCodeQuotation {
     public static ConstraintDescription constraintDescription(FunctionCallDescription definition, SourceCodeQuote sourceCodeQuote) {
         return new ConstraintDescription(definition, list(), sourceCodeQuote);
     }
+
     public static ConstraintDescription constraintDescription(FunctionCallDescription definition, List<ConstraintDescription> children, SourceCodeQuote sourceCodeQuote) {
         return new ConstraintDescription(definition, children, sourceCodeQuote);
     }
@@ -53,7 +54,7 @@ public class ConstraintDescription implements SourceCodeQuotation {
 
     @Override
     public String toString() {
-        return "definition: " + definition.toString() + ", children: " + children;
+        return "definition: " + definition.toString() + ", children: " + children + ", sourceCodeQuote: " + sourceCodeQuote;
     }
 
     @Override

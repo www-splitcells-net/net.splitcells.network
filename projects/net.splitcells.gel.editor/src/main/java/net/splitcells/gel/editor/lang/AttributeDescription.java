@@ -76,4 +76,9 @@ public class AttributeDescription implements SourceCodeQuotation {
     public SourceCodeQuote sourceCodeQuote() {
         return sourceCodeQuote;
     }
+
+    @Override
+    public String toString() {
+        return "name: " + name + ", primitiveType: " + primitiveType + ", sourceCodeQuote: " + sourceCodeQuote;
+    }
 }
