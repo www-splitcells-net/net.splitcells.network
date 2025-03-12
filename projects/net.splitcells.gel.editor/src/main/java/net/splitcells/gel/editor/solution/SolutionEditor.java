@@ -166,7 +166,12 @@ public class SolutionEditor implements Discoverable {
             for (final var arg : arguments) {
                 switch (arg) {
                     case ReferenceDescription ref -> {
-                        combinations.add(attributeByName(ref.name()));
+                        final var attributeMatch = attributeByName(ref.name());
+                        if (attributeMatch.isEmpty()) {
+                            return constraint.withErrorMessage(tree("The reference attribute is not known.")
+                                    .withProperty(AFFECTED_CONTENT, ref.sourceCodeQuote().userReference()));
+                        }
+                        combinations.add(attributeMatch.get());
                     }
                     default -> {
                         return constraint.withErrorMessage(tree("ForAllCombinationsOf only takes attribute references as arguments.")
@@ -241,7 +246,12 @@ public class SolutionEditor implements Discoverable {
         } else if (name.equals(ALL_SAME_NAME)) {
             switch (functionCall.arguments().get(0)) {
                 case ReferenceDescription<?> ref -> {
-                    return rater.withValue(allSame(attributeByName(ref.name())));
+                    final var attributeMatch = attributeByName(ref.name());
+                    if (attributeMatch.isEmpty()) {
+                        return rater.withErrorMessage(tree("The reference attribute is not known.")
+                                .withProperty(AFFECTED_CONTENT, ref.sourceCodeQuote().userReference()));
+                    }
+                    return rater.withValue(allSame(attributeMatch.get()));
                 }
                 default -> {
                     return rater.withErrorMessage(tree("`" + ALL_SAME_NAME + "` requires exactly one string as an argument. Instead an `" + functionCall.arguments().get(0).getClass().getName() + "` was given.")
@@ -260,7 +270,12 @@ public class SolutionEditor implements Discoverable {
             final Attribute<? extends Object> attribute;
             switch (functionCall.arguments().get(0)) {
                 case ReferenceDescription ref -> {
-                    attribute = attributeByName(ref.name());
+                    final var attributeMatch = attributeByName(ref.name());
+                    if (attributeMatch.isEmpty()) {
+                        return rater.withErrorMessage(tree("The reference attribute is not known.")
+                                .withProperty(AFFECTED_CONTENT, ref.sourceCodeQuote().userReference()));
+                    }
+                    attribute = attributeMatch.get();
                 }
                 default -> {
                     return rater.withErrorMessage(tree("`" + MINIMAL_DISTANCE_NAME + "` first argument has to be a reference. Instead an `" + functionCall.arguments().get(0).getClass().getName() + "` was given.")
@@ -291,7 +306,7 @@ public class SolutionEditor implements Discoverable {
         return rater.withErrorMessage(tree("Unknown rater function: " + functionCall.toString()));
     }
 
-    private Attribute<? extends Object> attributeByName(String name) {
+    private Optional<Attribute<? extends Object>> attributeByName(String name) {
         Optional<Attribute<? extends Object>> attribute = Optional.empty();
         if (demands.isPresent()) {
             attribute = demands.orElseThrow().searchAttributeByName(name);
@@ -299,7 +314,7 @@ public class SolutionEditor implements Discoverable {
         if (attribute.isEmpty() && supplies.isPresent()) {
             attribute = supplies.orElseThrow().searchAttributeByName(name);
         }
-        return attribute.orElseThrow();
+        return attribute;
     }
 
     private Table parseTable(TableDescription tableDescription) {
