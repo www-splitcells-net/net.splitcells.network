@@ -16,16 +16,12 @@
 package net.splitcells.gel.ui.editor.nocode;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.no.code.antlr4.NoCodeDenParserBaseVisitor;
 import net.splitcells.dem.testing.Result;
-import net.splitcells.gel.data.table.Tables;
-import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.lang.*;
 import net.splitcells.gel.editor.solution.SolutionEditor;
-import net.splitcells.gel.ui.SolutionParameters;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
@@ -36,18 +32,13 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT;
-import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
 import static net.splitcells.dem.testing.Result.result;
-import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
-import static net.splitcells.gel.data.view.attribute.Attributes.parseAttribute;
 import static net.splitcells.gel.editor.Editor.editor;
 import static net.splitcells.gel.editor.lang.AttributeDescription.parseAttributeDescription;
 import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
 import static net.splitcells.gel.editor.lang.SolutionDescription.solutionDescription;
 import static net.splitcells.gel.editor.lang.TableDescription.tableDescription;
 import static net.splitcells.gel.editor.solution.SolutionEditor.AFFECTED_CONTENT;
-import static net.splitcells.gel.problem.ProblemI.problem;
-import static net.splitcells.gel.ui.code.editor.CodeEditorLangParser.codeEditorLangParsing;
 import static net.splitcells.gel.ui.editor.nocode.NoCodeConstraintLangParser.parseConstraintDescription;
 
 /**
