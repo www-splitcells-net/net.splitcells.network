@@ -30,14 +30,14 @@ public class NoCodeSolutionCalculatorTest {
     public static Runnable TEST_OPTIMIZATION_GUI = () -> {
         try (final var browser = htmlClient()) {
             try (final var tab = browser.openTab("/net/splitcells/gel/ui/no/code/editor/index.html")) {
-                requireEquals("", tab.elementById("net-splitcells-gel-ui-no-code-editor-form-errors").textContent());
-                requireEquals("", tab.elementById("net-splitcells-gel-ui-no-code-editor-form-solution").textContent());
-                requireEquals("", tab.elementById("net-splitcells-gel-ui-no-code-editor-form-solution-rating").textContent());
+                requireEquals("", tab.elementById("net-splitcells-gel-editor-form-errors").textContent());
+                requireEquals("", tab.elementById("net-splitcells-gel-editor-form-solution").textContent());
+                requireEquals("", tab.elementById("net-splitcells-gel-editor-form-solution-rating").textContent());
                 tab.elementByClass("net-splitcells-website-pop-up-confirmation-button").click();
-                tab.elementById("net-splitcells-gel-ui-no-code-editor-calculate-solution-form-submit-1").click();
-                waitUntilRequirementIsTrue(1000L * 60, () -> !tab.elementById("net-splitcells-gel-ui-no-code-editor-form-solution").value().isEmpty());
-                requireEquals("", tab.elementById("net-splitcells-gel-ui-no-code-editor-form-errors").textContent());
-                requireNonEmptyString(tab.elementById("net-splitcells-gel-ui-no-code-editor-form-solution-rating").textContent());
+                tab.elementById("net-splitcells-gel-ui-editor-nocode-calculate-solution-form-submit-1").click();
+                waitUntilRequirementIsTrue(1000L * 60, () -> !tab.elementById("net-splitcells-gel-ui-editor-form-solution").value().isEmpty());
+                requireEquals("", tab.elementById("net-splitcells-gel-ui-editor-nocode-form-errors").textContent());
+                requireNonEmptyString(tab.elementById("net-splitcells-gel-ui-editor-form-solution-rating").textContent());
             }
         }
     };

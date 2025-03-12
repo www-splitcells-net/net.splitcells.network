@@ -3,22 +3,22 @@
  */
  var net_splitcells_gel_ui_editor_no_code_last_node_id = -1;
 let net_splitcells_gel_ui_no_code_editor_form_solution = null;
-function net_splitcells_gel_ui_no_code_editor_calculate_solution_form_solution_download_as_csv() {
+function net_splitcells_gel_ui_editor_nocode_calculate_solution_form_solution_download_as_csv() {
     if (net_splitcells_gel_ui_no_code_editor_form_solution != undefined) {
         net_splitcells_gel_ui_no_code_editor_form_solution.download("csv", "solution.csv", {delimiter:","});
     }
 }
-function net_splitcells_gel_ui_no_code_editor_form_submit() {
+function net_splitcells_gel_ui_editor_nocode_form_submit() {
     // The close is needed, in order to ensure, that GUI elements are not submitted to the server.
     net_splitcells_gel_ui_editor_no_code_action_menu_close();
     var config = net_splitcells_webserver_form_submit_config();
-    config['form-id'] = 'net-splitcells-gel-ui-no-code-editor-form'
-    config['submit-button-id'] = 'net-splitcells-gel-ui-no-code-editor-calculate-solution-form-submit-1';
+    config['form-id'] = 'net-splitcells-gel-ui-editor-nocode-form'
+    config['submit-button-id'] = 'net-splitcells-gel-ui-editor-nocode-calculate-solution-form-submit-1';
     config['on-submission-completion'] = () => {
         // TODO Use paging for table.
         // TODO Inject Tabulator in order to avoid direct dependency.
-        net_splitcells_gel_ui_no_code_editor_form_solution = new Tabulator("#net-splitcells-gel-ui-no-code-editor-form-solution-as-csv-output"
-            , {data: document.getElementById('net-splitcells-gel-ui-no-code-editor-form-solution').value
+        net_splitcells_gel_ui_no_code_editor_form_solution = new Tabulator("#net-splitcells-gel-ui-editor-form-solution-as-csv-output"
+            , {data: document.getElementById('net-splitcells-gel-ui-editor-form-solution').value
             , importFormat: 'csv'
             , autoColumns: true });
     };
@@ -560,10 +560,10 @@ function net_splitcells_gel_ui_editor_no_code_append_variable_access() {
     net_splitcells_gel_ui_editor_no_code_ast_element_enhance();
     net_splitcells_gel_ui_editor_no_code_action_menu_close();
 }
-function net_splitcells_gel_ui_no_code_editor_definition_downloadStringAsFile(editor) {
+function net_splitcells_gel_ui_editor_nocode_definition_downloadStringAsFile(editor) {
     downloadStringAsFile(editor.value, 'problem-definition.html');
 }
-function net_splitcells_gel_ui_no_code_editor_definition_upload(editor) {
+function net_splitcells_gel_ui_editor_nocode_definition_upload(editor) {
     uploadFileAsString((uploadContent) => {
         // TODO Why is `editor.innerHTML = uploadContent;` required? Otherwise, this is not working.
         editor.innerHTML = uploadContent;

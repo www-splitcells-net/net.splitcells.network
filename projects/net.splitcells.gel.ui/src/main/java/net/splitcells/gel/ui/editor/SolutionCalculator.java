@@ -17,11 +17,14 @@ package net.splitcells.gel.ui.editor;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.editor.solution.SolutionEditor;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
+
+import java.util.function.Function;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -35,33 +38,48 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.editor.Editor.editor;
 import static net.splitcells.gel.solution.optimization.DefaultOptimization.defaultOptimization;
 import static net.splitcells.gel.ui.code.editor.CodeEditorLangParser.codeEditorLangParsing;
+import static net.splitcells.gel.ui.code.editor.CodeSolutionEditorParser.codeSolutionEditorParser;
+import static net.splitcells.gel.ui.editor.nocode.NoCodeSolutionEditorParser.noCodeSolutionEditorParser;
 import static net.splitcells.website.server.processor.Response.response;
 
 public class SolutionCalculator implements Processor<Tree, Tree> {
-    public static final String PROBLEM_DEFINITION = "net-splitcells-gel-ui-editor-form-problem-definition";
-
-    public static final String SOLUTION_RATING = "net-splitcells-gel-ui-editor-form-solution-rating";
-    public static final String SOLUTION = "net-splitcells-gel-ui-editor-form-solution";
-    public static final String DEMANDS = "net-splitcells-gel-ui-editor-form-demands";
-    public static final String SUPPLIES = "net-splitcells-gel-ui-editor-form-supplies";
-
-    public static final String ERRORS = "net-splitcells-gel-ui-editor-form-errors";
+    public static final Trail PATH = Trail.trail("net/splitcells/gel/editor/calculate-solution.form");
+    public static final String SOLUTION_RATING = "net-splitcells-gel-editor-form-solution-rating";
+    public static final String SOLUTION = "net-splitcells-gel-editor-form-solution";
+    public static final String DEMANDS = "net-splitcells-gel-editor-form-demands";
+    public static final String SUPPLIES = "net-splitcells-gel-editor-form-supplies";
+    public static final String ERRORS = "net-splitcells-gel-editor-form-errors";
     public static final String FORM_UPDATE = "net-splitcells-websiter-server-form-update";
 
-    public static SolutionCalculator solutionCalculator() {
-        return new SolutionCalculator();
+    public static SolutionCalculator solutionCalculator()  {
+        return solutionCalculator(list(codeSolutionEditorParser(), noCodeSolutionEditorParser()));
     }
 
-    private SolutionCalculator() {
+    public static SolutionCalculator solutionCalculator(List<Function<Request<Tree>, Result<SolutionEditor, Tree>>> solutionParsers) {
+        return new SolutionCalculator(solutionParsers);
+    }
 
+    private final List<Function<Request<Tree>, Result<SolutionEditor, Tree>>> solutionParsers;
+
+    private SolutionCalculator(List<Function<Request<Tree>, Result<SolutionEditor, Tree>>> argSolutionParsers) {
+        solutionParsers = argSolutionParsers;
     }
 
     public Result<SolutionEditor, Tree> parseSolutionCodeEditor(Request<Tree> request) {
-        final var editorCode = request.data()
-                .namedChild(PROBLEM_DEFINITION)
-                .child(0)
-                .name();
-        throw notImplementedYet();
+        final Result<SolutionEditor, Tree> solutionCodeEditor = result();
+        final var parsings = solutionParsers.flow().map(lp -> lp.apply(request)).iterator();
+        while (parsings.hasNext()) {
+            final var parsing = parsings.next();
+            if (parsing.errorMessages().hasElements()) {
+                solutionCodeEditor.withErrorMessages(parsing);
+                continue;
+            }
+            if (parsing.optionalValue().isPresent()) {
+                solutionCodeEditor.withValue(parsing.requiredValue());
+                break;
+            }
+        }
+        return solutionCodeEditor;
     }
 
     @Override

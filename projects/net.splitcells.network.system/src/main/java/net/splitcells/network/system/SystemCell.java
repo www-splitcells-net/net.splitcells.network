@@ -25,8 +25,7 @@ import net.splitcells.gel.GelCoreFileSystem;
 import net.splitcells.gel.doc.GelDocFileSystem;
 import net.splitcells.gel.ext.GelExtFileSystem;
 import net.splitcells.gel.ui.GelUiFileSystem;
-import net.splitcells.gel.ui.code.editor.CodeSolutionCalculator;
-import net.splitcells.gel.ui.editor.nocode.NoCodeSolutionCalculator;
+import net.splitcells.gel.ui.editor.SolutionCalculator;
 import net.splitcells.network.NetworkFileSystem;
 import net.splitcells.network.worker.via.java.NetworkWorkerFileSystem;
 import net.splitcells.project.ProjectFileSystem;
@@ -49,8 +48,7 @@ import java.util.function.Function;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.Dem.serve;
-import static net.splitcells.gel.ui.code.editor.CodeSolutionCalculator.codeSolutionCalculator;
-import static net.splitcells.gel.ui.editor.nocode.NoCodeSolutionCalculator.noCodeSolutionCalculator;
+import static net.splitcells.gel.ui.editor.SolutionCalculator.solutionCalculator;
 import static net.splitcells.gel.ui.no.code.editor.FunctionMeta.functionMeta;
 import static net.splitcells.gel.ui.no.code.editor.Functions.functions;
 import static net.splitcells.gel.ui.editor.nocode.NoCodeSolutionCalculatorTest.TEST_OPTIMIZATION_GUI;
@@ -192,8 +190,7 @@ public class SystemCell implements Cell {
                         , "/net/splitcells/gel/ui/editor")
                         .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/net.splitcells.gel.ui.logo.jpg"))
                         .withDescription(Optional.of("Define and solve assignment problems in text form.")))
-                .withAdditionalProcessor(CodeSolutionCalculator.PATH, codeSolutionCalculator())
-                .withAdditionalProcessor(NoCodeSolutionCalculator.PATH, noCodeSolutionCalculator())
+                .withAdditionalProcessor(SolutionCalculator.PATH, solutionCalculator())
                 .withAdditionalProjectsRendererExtension(functions())
                 .withAdditionalProjectsRendererExtension(functionMeta())
                 .withAdditionalProjectsRendererExtension(performanceReport())

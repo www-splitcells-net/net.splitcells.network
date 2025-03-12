@@ -17,12 +17,14 @@ package net.splitcells.gel.ui.code.editor;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.environment.config.IsDeterministic;
+import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.testing.annotations.CapabilityTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.constraint.type.ForAll;
 import net.splitcells.gel.constraint.type.Then;
 import net.splitcells.gel.editor.lang.AttributeDescription;
 import net.splitcells.gel.ui.GelUiFileSystem;
+import net.splitcells.gel.ui.editor.SolutionCalculator;
 import net.splitcells.website.server.projects.extension.impls.ColloquiumPlanningDemandsTestData;
 import net.splitcells.website.server.projects.extension.impls.ColloquiumPlanningSuppliesTestData;
 import org.antlr.v4.runtime.CharStreams;
@@ -34,6 +36,7 @@ import static net.splitcells.dem.data.atom.Bools.truthful;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requirePresenceOf;
 import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
@@ -41,10 +44,10 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.stringAttribute;
 import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.lib.classification.ForAllValueCombinations.FOR_ALL_VALUE_COMBINATIONS_NAME;
-import static net.splitcells.gel.ui.code.editor.CodeSolutionCalculator.*;
 import static net.splitcells.gel.ui.code.editor.CodeEditorLangParser.codeEditorLangParsing;
-import static net.splitcells.gel.ui.code.editor.CodeSolutionCalculator.PROBLEM_DEFINITION;
-import static net.splitcells.gel.ui.code.editor.CodeSolutionCalculator.codeSolutionCalculator;
+import static net.splitcells.gel.ui.code.editor.CodeSolutionEditorParser.PROBLEM_DEFINITION;
+import static net.splitcells.gel.ui.code.editor.CodeSolutionEditorParser.codeSolutionEditorParser;
+import static net.splitcells.gel.ui.editor.SolutionCalculator.*;
 import static net.splitcells.website.server.processor.Request.request;
 
 public class CodeSolutionCalculatorTest {
@@ -55,11 +58,11 @@ public class CodeSolutionCalculatorTest {
                 + "constraints=forEach(a).then(hasSize(2));\n"
                 + "constraints().forEach(b).then(allSame(c));\n"
                 + "name=\"testParseProblem\";\n";
-        final var testResult = codeSolutionCalculator().process(request(CodeSolutionCalculator.PATH
+        final var testResult = solutionCalculator().process(request(SolutionCalculator.PATH
                 , tree("").withProperty(PROBLEM_DEFINITION,
                         tree(testData))));
         requireEquals(testResult.data()
-                        .propertyInstance(CodeSolutionCalculator.SOLUTION)
+                        .propertyInstance(SolutionCalculator.SOLUTION)
                         .orElseThrow()
                         .child(0)
                         .name()
@@ -73,7 +76,8 @@ public class CodeSolutionCalculatorTest {
                 + "constraints=forEach(a).forEach(b).then(hasSize(2));\n"
                 + "constraints().forEach(b).then(allSame(c));\n"
                 + "name=\"testParseProblem\";\n";
-        final var testResult = codeSolutionCalculator().parseSolutionCodeEditor(testData);
+        final var testResult = codeSolutionEditorParser()
+                .apply(request(trail(), tree("").withProperty(PROBLEM_DEFINITION, testData)));
         testResult.requireWorking();
         final var solution = testResult.optionalValue().orElseThrow().solution().orElseThrow();
         solution.headerView2().requireContentsOf((a, b) -> a.equalContentTo(b)
@@ -114,7 +118,8 @@ public class CodeSolutionCalculatorTest {
                 + "constraints=forEach(a).then(hasSize(2));\n"
                 + "constraints().forEach(b).then(allSame(c));\n"
                 + "name=\"testParseProblem\";\n";
-        final var testSubject = codeSolutionCalculator().parseSolutionCodeEditor(testData)
+        final var testSubject = codeSolutionEditorParser()
+                .apply(request(trail(), tree("").withProperty(PROBLEM_DEFINITION, testData)))
                 .requiredValue()
                 .solution()
                 .orElseThrow();
@@ -160,7 +165,11 @@ public class CodeSolutionCalculatorTest {
                 + "supplies = {c = integer()};\n"
                 + "constraints = forAllCombinationsOf(a, b, c);\n"
                 + "name = \"testParseProblem\";\n";
-        final var testSubject = codeSolutionCalculator().parseSolutionCodeEditor(testData).requiredValue().solution().orElseThrow();
+        final var testSubject = codeSolutionEditorParser()
+                .apply(request(trail(), tree("").withProperty(PROBLEM_DEFINITION, testData)))
+                .requiredValue()
+                .solution()
+                .orElseThrow();
         final var forAllCombinationsOf = testSubject.constraint().child(0);
         requireEquals(forAllCombinationsOf.type(), ForAll.class);
         requirePresenceOf(forAllCombinationsOf.arguments().get(0).toTree().pathOfValueTree(
@@ -185,7 +194,9 @@ public class CodeSolutionCalculatorTest {
                 + "supplies={};"
                 + "constraints=forEach(a);"
                 + "name=\"testInvalidDemandAttribute\";";
-        codeSolutionCalculator().parseSolutionCodeEditor(testData).errorMessages().requireAnyContent();
+        codeSolutionEditorParser()
+                .apply(request(trail(), tree("").withProperty(PROBLEM_DEFINITION, testData)))
+                .errorMessages().requireAnyContent();
     }
 
     @UnitTest
@@ -194,7 +205,9 @@ public class CodeSolutionCalculatorTest {
                 + "supplies={a=invalid_attribute()};"
                 + "constraints=forEach(a);"
                 + "name=\"testInvalidDemandAttribute\";";
-        codeSolutionCalculator().parseSolutionCodeEditor(testData).errorMessages().requireAnyContent();
+        codeSolutionEditorParser()
+                .apply(request(trail(), tree("").withProperty(PROBLEM_DEFINITION, testData)))
+                .errorMessages().requireAnyContent();
     }
 
     @CapabilityTest
@@ -204,9 +217,9 @@ public class CodeSolutionCalculatorTest {
                                     .readString("src/main/resources/html/net/splitcells/gel/ui/examples/school-course-scheduling-problem.txt");
                             final String demands = ColloquiumPlanningDemandsTestData.testData();
                             final String supplies = ColloquiumPlanningSuppliesTestData.testData();
-                            final var testResult = codeSolutionCalculator().process(request(CodeSolutionCalculator.PATH
+                            final var testResult = solutionCalculator().process(request(SolutionCalculator.PATH
                                     , tree("")
-                                            .withProperty(CodeSolutionCalculator.PROBLEM_DEFINITION, tree(problemDefinition))
+                                            .withProperty(PROBLEM_DEFINITION, tree(problemDefinition))
                                             .withProperty(DEMANDS, tree(demands))
                                             .withProperty(SUPPLIES, tree(supplies))));
                             requireEquals(testResult.data().namedChildren(SOLUTION_RATING).get(0).child(0)

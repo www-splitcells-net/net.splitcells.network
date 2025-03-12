@@ -17,12 +17,12 @@ package net.splitcells.gel.ui;
 
 import net.splitcells.dem.environment.Cell;
 import net.splitcells.dem.environment.Environment;
-import net.splitcells.gel.ui.editor.nocode.NoCodeSolutionCalculator;
+import net.splitcells.gel.ui.editor.SolutionCalculator;
 import net.splitcells.website.server.ServerConfig;
 import net.splitcells.website.server.WebsiteServerCell;
 
 import static net.splitcells.dem.Dem.configValue;
-import static net.splitcells.gel.ui.editor.nocode.NoCodeSolutionCalculator.noCodeSolutionCalculator;
+import static net.splitcells.gel.ui.editor.SolutionCalculator.solutionCalculator;
 import static net.splitcells.website.server.ProjectConfig.projectConfig;
 
 public class GelUiCell implements Cell {
@@ -42,7 +42,7 @@ public class GelUiCell implements Cell {
                 .withAdditionalProject(projectConfig("/net/splitcells/gel/ui/"
                         , configValue(GelUiFileSystem.class)))
                 .withAdditionalCssFile("net/splitcells/gel/ui/no/code/editor/style.css")
-                .withAdditionalProcessor(NoCodeSolutionCalculator.PATH, noCodeSolutionCalculator());
+                .withAdditionalProcessor(SolutionCalculator.PATH, solutionCalculator());
         env.withCell(WebsiteServerCell.class);
     }
 }
