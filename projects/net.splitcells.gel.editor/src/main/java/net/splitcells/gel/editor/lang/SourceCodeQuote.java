@@ -74,4 +74,11 @@ public class SourceCodeQuote {
     public String toString() {
         return "quote: " + quote + ", document: " + document + ", quoteLine: " + quoteLine;
     }
+
+    /**
+     * @return Provides a string, that describes in a short manner the quote's content and where it is located.
+     */
+    public String userReference() {
+        return "quote: " + quote + ", quoteLine: " + quoteLine;
+    }
 }
