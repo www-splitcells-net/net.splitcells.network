@@ -15,30 +15,6 @@
  */
 package net.splitcells.gel.editor.lang;
 
-public final class StringDescription implements ArgumentDescription, SourceCodeQuotation {
-    public static StringDescription stringDescription(String value, SourceCodeQuote sourceCodeQuote) {
-        return new StringDescription(value, sourceCodeQuote);
-    }
-
-    private final String value;
-    private final SourceCodeQuote sourceCodeQuote;
-
-    private StringDescription(String argValue, SourceCodeQuote argSourceCodeQuote) {
-        value = argValue;
-        sourceCodeQuote = argSourceCodeQuote;
-    }
-
-    public String value() {
-        return value;
-    }
-
-    @Override
-    public String toString() {
-        return value;
-    }
-
-    @Override
-    public SourceCodeQuote sourceCodeQuote() {
-        return sourceCodeQuote;
-    }
+public interface SourceCodeQuotation {
+    SourceCodeQuote sourceCodeQuote();
 }

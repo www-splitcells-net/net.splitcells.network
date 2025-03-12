@@ -20,17 +20,19 @@ import net.splitcells.dem.data.set.list.ListView;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 
-public class TableDescription {
-    public static TableDescription tableDescription(String name, List<ReferenceDescription<AttributeDescription>> header) {
-        return new TableDescription(name, header);
+public class TableDescription implements SourceCodeQuotation {
+    public static TableDescription tableDescription(String name, List<ReferenceDescription<AttributeDescription>> header, SourceCodeQuote sourceCodeQuote) {
+        return new TableDescription(name, header, sourceCodeQuote);
     }
 
     private final String name;
     private List<ReferenceDescription<AttributeDescription>> header = list();
+    private final SourceCodeQuote sourceCodeQuote;
 
-    private TableDescription(String argName, List<ReferenceDescription<AttributeDescription>> argHeader) {
+    private TableDescription(String argName, List<ReferenceDescription<AttributeDescription>> argHeader, SourceCodeQuote argSourceCodeQuote) {
         name = argName;
         header = argHeader;
+        sourceCodeQuote = argSourceCodeQuote;
     }
 
     public String name() {
@@ -44,5 +46,10 @@ public class TableDescription {
     @Override
     public String toString() {
         return "Name: " + name + ", header: " + header;
+    }
+
+    @Override
+    public SourceCodeQuote sourceCodeQuote() {
+        return sourceCodeQuote;
     }
 }

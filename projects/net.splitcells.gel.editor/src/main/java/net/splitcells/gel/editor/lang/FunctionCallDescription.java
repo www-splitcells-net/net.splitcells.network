@@ -15,27 +15,30 @@
  */
 package net.splitcells.gel.editor.lang;
 
+import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 
-public final class FunctionCallDescription implements ArgumentDescription {
+public final class FunctionCallDescription implements ArgumentDescription, SourceCodeQuotation {
 
-    public static FunctionCallDescription functionCallDescription(String functionName, ArgumentDescription... arguments) {
-        return functionCallDescription(functionName, listWithValuesOf(arguments));
+    public static FunctionCallDescription functionCallDescription(String functionName, SourceCodeQuote sourceCodeQuote, ArgumentDescription... arguments) {
+        return functionCallDescription(functionName, listWithValuesOf(arguments), sourceCodeQuote);
     }
 
-    public static FunctionCallDescription functionCallDescription(String functionName, List<ArgumentDescription> arguments) {
-        return new FunctionCallDescription(functionName, arguments);
+    public static FunctionCallDescription functionCallDescription(String functionName, List<ArgumentDescription> arguments, SourceCodeQuote sourceCodeQuote) {
+        return new FunctionCallDescription(functionName, arguments, sourceCodeQuote);
     }
 
     private final String functionName;
     private final List<ArgumentDescription> arguments;
+    private final SourceCodeQuote sourceCodeQuote;
 
-    private FunctionCallDescription(String argFunctionName, List<ArgumentDescription> argArguments) {
+    private FunctionCallDescription(String argFunctionName, List<ArgumentDescription> argArguments, SourceCodeQuote argSourceCodeQuote) {
         arguments = argArguments;
         functionName = argFunctionName;
+        sourceCodeQuote = argSourceCodeQuote;
     }
 
     public List<ArgumentDescription> arguments() {
@@ -49,5 +52,23 @@ public final class FunctionCallDescription implements ArgumentDescription {
     @Override
     public String toString() {
         return functionName + arguments;
+    }
+
+    @Override
+    public SourceCodeQuote sourceCodeQuote() {
+        return sourceCodeQuote;
+    }
+
+    @Override
+    public boolean equals(Object arg) {
+        if (arg instanceof FunctionCallDescription other) {
+            return functionName.equals(other.functionName()) && arguments.equals(other.arguments()) && sourceCodeQuote.equals(other.sourceCodeQuote());
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Thing.hashCode(functionName, arguments, sourceCodeQuote);
     }
 }

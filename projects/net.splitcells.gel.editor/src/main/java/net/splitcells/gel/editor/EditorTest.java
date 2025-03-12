@@ -37,6 +37,7 @@ import static net.splitcells.gel.editor.lang.PrimitiveType.INTEGER;
 import static net.splitcells.gel.editor.lang.PrimitiveType.STRING;
 import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
 import static net.splitcells.gel.editor.lang.SolutionDescription.solutionDescription;
+import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuote;
 import static net.splitcells.gel.editor.lang.TableDescription.tableDescription;
 import static net.splitcells.gel.editor.solution.SolutionEditor.solutionEditor;
 import static net.splitcells.gel.rating.rater.lib.HasSize.HAS_SIZE_NAME;
@@ -47,29 +48,35 @@ public class EditorTest {
     public void testAllParsingBranches() {
         final var testSubject = editor("test-subject", EXPLICIT_NO_CONTEXT);
         final var colloquiumDescription = solutionDescription("colloquium-planning"
-                , list(attributeDescription("student", STRING)
-                        , attributeDescription("examiner", STRING)
-                        , attributeDescription("observer", STRING)
-                        , attributeDescription("date", INTEGER)
-                        , attributeDescription("shift", INTEGER)
-                        , attributeDescription("roomNumber", INTEGER))
+                , list(attributeDescription("student", STRING, emptySourceCodeQuote())
+                        , attributeDescription("examiner", STRING, emptySourceCodeQuote())
+                        , attributeDescription("observer", STRING, emptySourceCodeQuote())
+                        , attributeDescription("date", INTEGER, emptySourceCodeQuote())
+                        , attributeDescription("shift", INTEGER, emptySourceCodeQuote())
+                        , attributeDescription("roomNumber", INTEGER, emptySourceCodeQuote()))
                 , tableDescription("exams"
-                        , list(referenceDescription("student", AttributeDescription.class)
-                                , referenceDescription("examiner", AttributeDescription.class)
-                                , referenceDescription("observer", AttributeDescription.class)))
+                        , list(referenceDescription("student", AttributeDescription.class, emptySourceCodeQuote())
+                                , referenceDescription("examiner", AttributeDescription.class, emptySourceCodeQuote())
+                                , referenceDescription("observer", AttributeDescription.class, emptySourceCodeQuote()))
+                        , emptySourceCodeQuote())
                 , tableDescription("exam slot"
-                        , list(referenceDescription("date", AttributeDescription.class)
-                                , referenceDescription("shift", AttributeDescription.class)
-                                , referenceDescription("roomNumber", AttributeDescription.class)))
+                        , list(referenceDescription("date", AttributeDescription.class, emptySourceCodeQuote())
+                                , referenceDescription("shift", AttributeDescription.class, emptySourceCodeQuote())
+                                , referenceDescription("roomNumber", AttributeDescription.class, emptySourceCodeQuote()))
+                        , emptySourceCodeQuote())
                 , list(constraintDescription(functionCallDescription(FOR_EACH_NAME
-                                , list(referenceDescription("observer", AttributeDescription.class)))
+                                , list(referenceDescription("observer", AttributeDescription.class, emptySourceCodeQuote()))
+                                , emptySourceCodeQuote())
                         , list(constraintDescription(functionCallDescription(FOR_ALL_COMBINATIONS_OF
-                                        , list(referenceDescription("date", AttributeDescription.class)
-                                                , referenceDescription("shift", AttributeDescription.class)
-                                        ))
+                                        , list(referenceDescription("date", AttributeDescription.class, emptySourceCodeQuote())
+                                                , referenceDescription("shift", AttributeDescription.class, emptySourceCodeQuote())),
+                                        emptySourceCodeQuote())
                                 , list(constraintDescription(functionCallDescription(THEN_NAME
-                                                , list(functionCallDescription(HAS_SIZE_NAME, integerDescription(1))))
-                                        , list()))))))
+                                                , list(functionCallDescription(HAS_SIZE_NAME, emptySourceCodeQuote(), integerDescription(1, emptySourceCodeQuote())))
+                                                , emptySourceCodeQuote())
+                                        , list()
+                                        , emptySourceCodeQuote())), emptySourceCodeQuote())), emptySourceCodeQuote()))
+                , emptySourceCodeQuote()
         );
         final var colloquium = solutionEditor(testSubject, colloquiumDescription);
         colloquium.parse(colloquiumDescription).requireWorking();

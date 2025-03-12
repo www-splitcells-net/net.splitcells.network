@@ -24,8 +24,8 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.gel.data.view.attribute.AttributeI.*;
 
-public class AttributeDescription {
-    public static Result<AttributeDescription, Tree> parseAttributeDescription(String name, String type) {
+public class AttributeDescription implements SourceCodeQuotation {
+    public static Result<AttributeDescription, Tree> parseAttributeDescription(String name, String type, SourceCodeQuote sourceCodeQuote) {
         final Result<AttributeDescription, Tree> attribute = result();
         final var primitiveType = PrimitiveType.parse(type);
         if (primitiveType.isEmpty()) {
@@ -33,19 +33,21 @@ public class AttributeDescription {
                     .withProperty("name", name)
                     .withProperty("type", type));
         }
-        return attribute.withValue(attributeDescription(name, primitiveType.get()));
+        return attribute.withValue(attributeDescription(name, primitiveType.get(), sourceCodeQuote));
     }
 
-    public static AttributeDescription attributeDescription(String name, PrimitiveType primitiveType) {
-        return new AttributeDescription(name, primitiveType);
+    public static AttributeDescription attributeDescription(String name, PrimitiveType primitiveType, SourceCodeQuote sourceCodeQuote) {
+        return new AttributeDescription(name, primitiveType, sourceCodeQuote);
     }
 
     private final String name;
     private final PrimitiveType primitiveType;
+    private final SourceCodeQuote sourceCodeQuote;
 
-    private AttributeDescription(String argName, PrimitiveType argPrimitiveType) {
+    private AttributeDescription(String argName, PrimitiveType argPrimitiveType, SourceCodeQuote argSourceCodeQuote) {
         name = argName;
         primitiveType = argPrimitiveType;
+        sourceCodeQuote = argSourceCodeQuote;
     }
 
     public String name() {
@@ -60,13 +62,18 @@ public class AttributeDescription {
     @Override
     public boolean equals(Object arg) {
         if (arg instanceof AttributeDescription other) {
-            return name.equals(other.name()) && primitiveType.equals(other.primitiveType());
+            return name.equals(other.name()) && primitiveType.equals(other.primitiveType()) && sourceCodeQuote.equals(other.sourceCodeQuote());
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        return Thing.hashCode(name, primitiveType);
+        return Thing.hashCode(name, primitiveType, sourceCodeQuote);
+    }
+
+    @Override
+    public SourceCodeQuote sourceCodeQuote() {
+        return sourceCodeQuote;
     }
 }

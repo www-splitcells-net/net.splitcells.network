@@ -15,24 +15,27 @@
  */
 package net.splitcells.gel.editor.lang;
 
+import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.set.list.List;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 
-public class ConstraintDescription {
-    public static ConstraintDescription constraintDescription(FunctionCallDescription definition) {
-        return new ConstraintDescription(definition, list());
+public class ConstraintDescription implements SourceCodeQuotation {
+    public static ConstraintDescription constraintDescription(FunctionCallDescription definition, SourceCodeQuote sourceCodeQuote) {
+        return new ConstraintDescription(definition, list(), sourceCodeQuote);
     }
-    public static ConstraintDescription constraintDescription(FunctionCallDescription definition, List<ConstraintDescription> children) {
-        return new ConstraintDescription(definition, children);
+    public static ConstraintDescription constraintDescription(FunctionCallDescription definition, List<ConstraintDescription> children, SourceCodeQuote sourceCodeQuote) {
+        return new ConstraintDescription(definition, children, sourceCodeQuote);
     }
 
     private final FunctionCallDescription definition;
     private final List<ConstraintDescription> children;
+    private final SourceCodeQuote sourceCodeQuote;
 
-    private ConstraintDescription(FunctionCallDescription argDefinition, List<ConstraintDescription> argChildren) {
+    private ConstraintDescription(FunctionCallDescription argDefinition, List<ConstraintDescription> argChildren, SourceCodeQuote argSourceCodeQuote) {
         children = argChildren;
         definition = argDefinition;
+        sourceCodeQuote = argSourceCodeQuote;
     }
 
     public List<ConstraintDescription> children() {
@@ -51,5 +54,23 @@ public class ConstraintDescription {
     @Override
     public String toString() {
         return "definition: " + definition.toString() + ", children: " + children;
+    }
+
+    @Override
+    public SourceCodeQuote sourceCodeQuote() {
+        return sourceCodeQuote;
+    }
+
+    @Override
+    public boolean equals(Object arg) {
+        if (arg instanceof ConstraintDescription other) {
+            return definition.equals(other.definition()) && children.equals(other.children()) && sourceCodeQuote.equals(other.sourceCodeQuote());
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Thing.hashCode(definition, children, sourceCodeQuote);
     }
 }

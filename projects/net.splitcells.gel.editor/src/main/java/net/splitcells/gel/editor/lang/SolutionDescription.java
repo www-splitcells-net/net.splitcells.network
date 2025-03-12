@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.editor.lang;
 
+import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -22,13 +23,14 @@ import net.splitcells.gel.data.view.attribute.Attribute;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 
-public class SolutionDescription {
+public class SolutionDescription implements SourceCodeQuotation {
     public static SolutionDescription solutionDescription(String name
             , List<AttributeDescription> attributes
             , TableDescription demands
             , TableDescription supplies
-            , List<ConstraintDescription> constraints) {
-        return new SolutionDescription(name, attributes, demands, supplies, constraints);
+            , List<ConstraintDescription> constraints
+            , SourceCodeQuote sourceCodeQuote) {
+        return new SolutionDescription(name, attributes, demands, supplies, constraints, sourceCodeQuote);
     }
 
     private final String name;
@@ -39,19 +41,22 @@ public class SolutionDescription {
     private final TableDescription demands;
     private final TableDescription supplies;
     private final List<ConstraintDescription> constraints;
-    private List<ReferenceDescription<AttributeDescription>> columnAttributesForOutputFormat = list();
-    private List<ReferenceDescription<AttributeDescription>> rowAttributesForOutputFormat = list();
+    private final List<ReferenceDescription<AttributeDescription>> columnAttributesForOutputFormat = list();
+    private final List<ReferenceDescription<AttributeDescription>> rowAttributesForOutputFormat = list();
+    private final SourceCodeQuote sourceCodeQuote;
 
     private SolutionDescription(String argName
             , List<AttributeDescription> argAttributes
             , TableDescription argDemands
             , TableDescription argSupplies
-            , List<ConstraintDescription> argConstraints) {
+            , List<ConstraintDescription> argConstraints
+            , SourceCodeQuote argSourceCodeQuote) {
         name = argName;
         argAttributes.forEach(a -> attributes.put(a.name(), a));
         demands = argDemands;
         supplies = argSupplies;
         constraints = argConstraints;
+        sourceCodeQuote = argSourceCodeQuote;
     }
 
     /**
@@ -82,6 +87,7 @@ public class SolutionDescription {
     public List<ReferenceDescription<AttributeDescription>> columnAttributesForOutputFormat() {
         return columnAttributesForOutputFormat;
     }
+
     public List<ReferenceDescription<AttributeDescription>> rowAttributesForOutputFormat() {
         return rowAttributesForOutputFormat;
     }
@@ -95,5 +101,35 @@ public class SolutionDescription {
                 + ", constraints: " + constraints
                 + ", columnAttributesForOutputFormat: " + columnAttributesForOutputFormat
                 + ", rowAttributesForOutputFormat: " + rowAttributesForOutputFormat;
+    }
+
+    @Override
+    public SourceCodeQuote sourceCodeQuote() {
+        return sourceCodeQuote;
+    }
+
+    @Override
+    public boolean equals(Object arg) {
+        if (arg instanceof SolutionDescription other) {
+            return name.equals(other.name())
+                    && demands.equals(other.demands())
+                    && supplies.equals(other.supplies())
+                    && constraints.equals(other.constraints())
+                    && columnAttributesForOutputFormat.equals(other.columnAttributesForOutputFormat())
+                    && rowAttributesForOutputFormat.equals(other.rowAttributesForOutputFormat())
+                    && sourceCodeQuote.equals(other.sourceCodeQuote());
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Thing.hashCode(name
+                , demands
+                , supplies
+                , constraints
+                , columnAttributesForOutputFormat
+                , rowAttributesForOutputFormat
+                , sourceCodeQuote);
     }
 }

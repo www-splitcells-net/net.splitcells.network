@@ -15,15 +15,19 @@
  */
 package net.splitcells.gel.editor.lang;
 
-public final class IntegerDescription implements ArgumentDescription {
-    public static IntegerDescription integerDescription(int value) {
-        return new IntegerDescription(value);
+import net.splitcells.dem.data.atom.Thing;
+
+public final class IntegerDescription implements ArgumentDescription, SourceCodeQuotation {
+    public static IntegerDescription integerDescription(int value, SourceCodeQuote sourceCodeQuote) {
+        return new IntegerDescription(value, sourceCodeQuote);
     }
 
     private final int value;
+    private final SourceCodeQuote sourceCodeQuote;
 
-    private IntegerDescription(int argValue) {
+    private IntegerDescription(int argValue, SourceCodeQuote argSourceCodeQuote) {
         value = argValue;
+        sourceCodeQuote = argSourceCodeQuote;
     }
 
     public int value() {
@@ -33,5 +37,23 @@ public final class IntegerDescription implements ArgumentDescription {
     @Override
     public String toString() {
         return value + "";
+    }
+
+    @Override
+    public SourceCodeQuote sourceCodeQuote() {
+        return sourceCodeQuote;
+    }
+
+    @Override
+    public boolean equals(Object arg) {
+        if (arg instanceof IntegerDescription other) {
+            return value == other.value() && sourceCodeQuote.equals(other.sourceCodeQuote());
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Thing.hashCode(value, sourceCodeQuote);
     }
 }

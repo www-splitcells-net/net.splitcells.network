@@ -17,18 +17,20 @@ package net.splitcells.gel.editor.lang;
 
 import net.splitcells.dem.data.atom.Thing;
 
-public final class ReferenceDescription<T> implements ArgumentDescription {
+public final class ReferenceDescription<T> implements ArgumentDescription, SourceCodeQuotation {
 
-    public static <R> ReferenceDescription<R> referenceDescription(String name, Class<? extends R> clazz) {
-        return new ReferenceDescription<>(name, clazz);
+    public static <R> ReferenceDescription<R> referenceDescription(String name, Class<? extends R> clazz, SourceCodeQuote sourceCodeQuote) {
+        return new ReferenceDescription<>(name, clazz, sourceCodeQuote);
     }
 
     private final String name;
     private final Class<? extends T> clazz;
+    private final SourceCodeQuote sourceCodeQuote;
 
-    private ReferenceDescription(String argName, Class<? extends T> argClazz) {
+    private ReferenceDescription(String argName, Class<? extends T> argClazz, SourceCodeQuote argSourceCodeQuote) {
         name = argName;
         clazz = argClazz;
+        sourceCodeQuote = argSourceCodeQuote;
     }
 
     public String name() {
@@ -42,18 +44,23 @@ public final class ReferenceDescription<T> implements ArgumentDescription {
     @Override
     public boolean equals(Object arg) {
         if (arg instanceof ReferenceDescription<?> other) {
-            return name.equals(other.name()) && clazz.equals(other.clazz());
+            return name.equals(other.name()) && clazz.equals(other.clazz()) && sourceCodeQuote.equals(other.sourceCodeQuote());
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        return Thing.hashCode(name, clazz);
+        return Thing.hashCode(name, clazz, sourceCodeQuote);
     }
 
     @Override
     public String toString() {
         return "Reference to " + name + " of type " + clazz.getName();
+    }
+
+    @Override
+    public SourceCodeQuote sourceCodeQuote() {
+        return sourceCodeQuote;
     }
 }
