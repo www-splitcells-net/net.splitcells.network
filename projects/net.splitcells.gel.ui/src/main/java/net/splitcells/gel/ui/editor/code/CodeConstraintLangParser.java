@@ -25,6 +25,7 @@ import net.splitcells.gel.editor.lang.ArgumentDescription;
 import net.splitcells.gel.editor.lang.ConstraintDescription;
 import net.splitcells.gel.editor.lang.FunctionCallDescription;
 import net.splitcells.gel.editor.lang.SourceCodeQuote;
+import org.antlr.v4.runtime.ParserRuleContext;
 
 import java.util.Optional;
 
@@ -109,23 +110,33 @@ public class CodeConstraintLangParser extends DenParserBaseVisitor<Result<List<C
     }
 
     private static Result<ConstraintDescription, Tree> parseConstraintDescription(DenParser.Function_callContext functionCall) {
-        return parseConstraintDescription(functionCall.Name().getText(), functionCall.function_call_arguments(), Optional.ofNullable(functionCall.access()));
+        return parseConstraintDescription(functionCall.Name().getText()
+                , functionCall.function_call_arguments()
+                , Optional.ofNullable(functionCall.access())
+                , Optional.ofNullable(functionCall));
     }
 
     private static Result<ConstraintDescription, Tree> parseConstraintDescription(String name
             , DenParser.Function_call_argumentsContext arguments
             , Optional<DenParser.AccessContext> child
+            , Optional<ParserRuleContext> parent
     ) {
         final Result<ConstraintDescription, Tree> parsedConstraintDescription = result();
         final var parsedConstraintFunction = parseFunctionCallDescription(name, arguments);
         if (parsedConstraintFunction.defective()) {
             return parsedConstraintDescription.withErrorMessages(parsedConstraintFunction);
         }
-        final var constraint = constraintDescription(parsedConstraintFunction.optionalValue().orElseThrow(), sourceCodeQuote(arguments));
+        final ConstraintDescription constraint;
+        if (parent.isPresent()) {
+            constraint = constraintDescription(parsedConstraintFunction.optionalValue().orElseThrow(), sourceCodeQuote(parent.get()));
+        } else {
+            constraint = constraintDescription(parsedConstraintFunction.optionalValue().orElseThrow(), sourceCodeQuote(arguments));
+        }
         child.ifPresent(childVal -> {
             final var parsedChild = parseConstraintDescription(childVal.Name().getText()
                     , childVal.function_call_arguments()
-                    , Optional.ofNullable(childVal.access()));
+                    , Optional.ofNullable(childVal.access())
+                    , Optional.ofNullable(childVal));
             parsedConstraintDescription.withErrorMessages(parsedChild);
             if (parsedChild.working()) {
                 constraint.children().add(parsedChild.optionalValue().orElseThrow());
@@ -139,6 +150,7 @@ public class CodeConstraintLangParser extends DenParserBaseVisitor<Result<List<C
         if ("constraints".equals(functionCall.Name().getText()) && functionCall.access() != null) {
             final var parsedConstraint = parseConstraintDescription(functionCall.access().Name().getText()
                     , functionCall.access().function_call_arguments()
+                    , Optional.ofNullable(functionCall.access().access())
                     , Optional.ofNullable(functionCall.access().access()));
             if (parsedConstraint.defective()) {
                 return constraints.withErrorMessages(parsedConstraint);
