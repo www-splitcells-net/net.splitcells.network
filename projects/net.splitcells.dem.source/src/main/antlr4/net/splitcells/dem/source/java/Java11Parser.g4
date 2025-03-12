@@ -17,21 +17,12 @@ parser grammar Java11Parser;
  /*
   * TODO Create JavaDoc grammar.
   */
-/* source_unit is the root rule. */
-/* Grammar guidelines:
- * A grammar files with implicit tokens, would be easier to write, understand and maintain.
- * Implicit tokens are not used, because they have caused many cryptic errors.
+/* source_unit is the root rule.
+ *
+ * Implementation note:
+ * One grammar file with implicit tokens, would be easier to write, understand and maintain.
+ * Implicit tokens are not used, because they have caused many cryptic errors in the past.
  * The author of this does not understand how implicit tokens really work in ANLTR4.
- *
- * Whitespaces are not parsed at the end of the rule, if the whitespace is not required, in order to not
- * take away whitespace from rules, which need them.
- * Whitespace skipping is not used, because otherwise it is hard to allow an arbitrary amount of whitespace between
- * things.
- *
- * Parser guidelines:
- * Make parser as much independent from Lexer as possible.
- * Use string constants instead of token identifier.
- * Use tokens only for string patterns (tokens with regex or fragments with quantifiers).
  *
  */
 @header {
