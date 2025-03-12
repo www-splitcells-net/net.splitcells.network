@@ -50,12 +50,12 @@
         <accept-notification>I agree, with the terms of service for using this server.</accept-notification>
     </notification>
     <form-editor id="net-splitcells-gel-ui-editor-form"
-                 action="/net/splitcells/gel/ui/code/editor/calculate-solution.form">
+                 action="/net/splitcells/gel/ui/editor/calculate-solution.form">
         <library path="net/splitcells/gel/ui/editor"/>
-        <text-area id="net-splitcells-gel-ui-editor-form-problem-definition" name="Definition" main-tab="true" initial-content-at="/net/splitcells/gel/ui/examples/school-course-scheduling-problem.txt"/>
-        <text-area id="net-splitcells-gel-ui-editor-form-errors" name="Errors" content-types=" error-output "></text-area>
-        <text-area id="net-splitcells-gel-ui-editor-form-demands" name="Demands" initial-content-at="/net/splitcells/gel/ui/colloquium-planning-demands-test-data.csv"><![CDATA[]]></text-area>
-        <text-area id="net-splitcells-gel-ui-editor-form-supplies" name="Supplies" initial-content-at="/net/splitcells/gel/ui/colloquium-planning-supplies-test-data.csv"><![CDATA[]]></text-area>
+        <text-area id="net-splitcells-gel-ui-editor-code-form-problem-definition" name="Definition" main-tab="true" initial-content-at="/net/splitcells/gel/ui/examples/school-course-scheduling-problem.txt"/>
+        <text-area id="net-splitcells-gel-editor-form-errors" name="Errors" content-types=" error-output "></text-area>
+        <text-area id="net-splitcells-gel-editor-form-demands" name="Demands" initial-content-at="/net/splitcells/gel/ui/colloquium-planning-demands-test-data.csv"><![CDATA[]]></text-area>
+        <text-area id="net-splitcells-gel-editor-form-supplies" name="Supplies" initial-content-at="/net/splitcells/gel/ui/colloquium-planning-supplies-test-data.csv"><![CDATA[]]></text-area>
         <text-area id="net-splitcells-gel-editor-form-solution" name="Solution" content-types=" csv-output result-output "/>
         <text-area id="net-splitcells-gel-editor-form-solution-rating" name="Rating"/>
     </form-editor>
