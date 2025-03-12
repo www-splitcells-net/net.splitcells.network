@@ -49,8 +49,8 @@ import java.util.function.Function;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.Dem.serve;
 import static net.splitcells.gel.ui.editor.SolutionCalculator.solutionCalculator;
-import static net.splitcells.gel.ui.no.code.editor.FunctionMeta.functionMeta;
-import static net.splitcells.gel.ui.no.code.editor.Functions.functions;
+import static net.splitcells.gel.ui.editor.nocode.FunctionMeta.functionMeta;
+import static net.splitcells.gel.ui.editor.nocode.Functions.functions;
 import static net.splitcells.gel.ui.editor.nocode.NoCodeSolutionCalculatorTest.TEST_OPTIMIZATION_GUI;
 import static net.splitcells.network.system.PerformanceReport.performanceReport;
 import static net.splitcells.website.server.ProgramConfig.programConfig;
@@ -175,7 +175,7 @@ public class SystemCell implements Cell {
                 .withAdditionalCssFile("net/splitcells/website/css/den.css")
                 .withAdditionalCssFile("net/splitcells/website/css/layout.default.css")
                 .withAdditionalCssFile("net/splitcells/website/css/theme.css")
-                .withAdditionalCssFile("net/splitcells/gel/ui/no/code/editor/style.css")
+                .withAdditionalCssFile("net/splitcells/gel/ui/editor/nocode/style.css")
                 .withAdditionalCssFile("net/splitcells/website/css/tabulator.min.css")
                 .withAdditionalCssFile("net/splitcells/website/css/dragula.min.css")
                 .withAdditionalProgramConfig(programConfig("Splitcells Network Documentation"
@@ -183,11 +183,11 @@ public class SystemCell implements Cell {
                         .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/community.2016.12.11.chrom.0.dina4.jpg"))
                         .withDescription(Optional.of("We provide an open source ecosystem centered around optimization and operations research.")))
                 .withAdditionalProgramConfig(programConfig("Generic Allocation No-Code Editor"
-                        , "/net/splitcells/gel/ui/no/code/editor/index")
+                        , "/net/splitcells/gel/ui/editor/nocode/index")
                         .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/net.splitcells.gel.ui.no.code.logo.jpg"))
                         .withDescription(Optional.of("Define and solve assignment problems interactively.")))
                 .withAdditionalProgramConfig(programConfig("Generic Allocation Editor's Tough Love Edition"
-                        , "/net/splitcells/gel/ui/editor")
+                        , "/net/splitcells/gel/ui/editor/code/index")
                         .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/net.splitcells.gel.ui.logo.jpg"))
                         .withDescription(Optional.of("Define and solve assignment problems in text form.")))
                 .withAdditionalProcessor(SolutionCalculator.PATH, solutionCalculator())

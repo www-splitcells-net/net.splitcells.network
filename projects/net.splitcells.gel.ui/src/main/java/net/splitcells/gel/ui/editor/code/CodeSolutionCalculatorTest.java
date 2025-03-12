@@ -103,7 +103,7 @@ public class CodeSolutionCalculatorTest {
     @UnitTest
     public void testOutputFormat() {
         final var resultData = codeEditorLangParsing(Dem.configValue(GelUiFileSystem.class)
-                .readString("src/main/resources/html/net/splitcells/gel/ui/examples/school-course-scheduling-problem.txt")).requireWorking()
+                .readString("src/main/resources/html/net/splitcells/gel/ui/editor/code/examples/school-course-scheduling-problem.txt")).requireWorking()
                 .optionalValue().orElseThrow();
         resultData.columnAttributesForOutputFormat().requireEqualityTo(list(referenceDescription("roomNumber", AttributeDescription.class)));
         resultData.rowAttributesForOutputFormat().requireEqualityTo(list(referenceDescription("date", AttributeDescription.class)
@@ -213,7 +213,7 @@ public class CodeSolutionCalculatorTest {
     public void testDemonstrationExample() {
         Dem.process(() -> {
                             final var problemDefinition = Dem.configValue(GelUiFileSystem.class)
-                                    .readString("src/main/resources/html/net/splitcells/gel/ui/examples/school-course-scheduling-problem.txt");
+                                    .readString("src/main/resources/html/net/splitcells/gel/ui/editor/code/examples/school-course-scheduling-problem.txt");
                             final String demands = ColloquiumPlanningDemandsTestData.testData();
                             final String supplies = ColloquiumPlanningSuppliesTestData.testData();
                             final var testResult = solutionCalculator().process(request(SolutionCalculator.PATH

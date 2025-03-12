@@ -350,7 +350,7 @@ function net_splitcells_gel_ui_editor_no_code_variable_definition_delete(deleteB
 }
 function net_splitcells_gel_ui_editor_no_code_function_call_set(setButton) {
     var httpRequest = new XMLHttpRequest();
-    httpRequest.open("GET", "/net/splitcells/gel/ui/no/code/editor/functions.json", true);
+    httpRequest.open("GET", "/net/splitcells/gel/ui/editor/nocode/functions.json", true);
     httpRequest.onload = (e) => {
         var topLevelFunctions = JSON.parse(httpRequest.responseText);
         net_splitcells_gel_ui_editor_no_code_function_call_set_pop_up(setButton, topLevelFunctions);
@@ -393,7 +393,7 @@ function net_splitcells_gel_ui_editor_no_code_function_call_set_pop_up(setAction
 function net_splitcells_gel_ui_editor_no_code_function_call_add(appendButton) {
     let functionCall = $('.net-splitcells-no-code-insert-target').first().get()[0].parentNode;
     var httpRequest = new XMLHttpRequest();
-    httpRequest.open("GET", "/net/splitcells/gel/ui/no/code/editor/functions.json", true);
+    httpRequest.open("GET", "/net/splitcells/gel/ui/editor/nocode/functions.json", true);
     httpRequest.onload = (e) => {
         var topLevelFunctions = JSON.parse(httpRequest.responseText);
         net_splitcells_gel_ui_editor_no_code_function_call_append_pop_up(appendButton, topLevelFunctions);
@@ -431,7 +431,7 @@ function net_splitcells_gel_ui_editor_no_code_function_call_append_pop_up(append
 }
 function net_splitcells_gel_ui_editor_no_code_function_call_add_arguments(functionCall, functionName) {
     var requestFunctionMeta = new XMLHttpRequest();
-    requestFunctionMeta.open("GET", "/net/splitcells/gel/ui/no/code/editor/function-meta.json", true);
+    requestFunctionMeta.open("GET", "/net/splitcells/gel/ui/editor/nocode/function-meta.json", true);
     requestFunctionMeta.onload = (e) => {
         var functionMeta = JSON.parse(requestFunctionMeta.responseText);
         let numberOfArguments = functionMeta[functionName]['number-of-arguments'];

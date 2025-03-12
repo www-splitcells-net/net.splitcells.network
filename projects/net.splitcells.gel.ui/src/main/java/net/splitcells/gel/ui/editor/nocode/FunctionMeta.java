@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.ui.no.code.editor;
+package net.splitcells.gel.ui.editor.nocode;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
@@ -31,7 +31,6 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
-import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
@@ -41,7 +40,7 @@ public class FunctionMeta implements ProjectsRendererExtension {
         return new FunctionMeta();
     }
 
-    private static final String PATH = "/net/splitcells/gel/ui/no/code/editor/function-meta.json";
+    private static final String PATH = "/net/splitcells/gel/ui/editor/nocode/function-meta.json";
     /**
      * TODO Use read only version.
      */

@@ -31,7 +31,7 @@
             </paragraph>
             <paragraph>The conceptional documentation<link post="net/splitcells/gel/index">is provided here</link>.
                 This editor has the same base model as
-                <link post="net/splitcells/gel/ui/editor">the general editor</link>
+                <link post="net/splitcells/gel/ui/editor/code/index">the general editor</link>
                 and therefore provides the same functionality,
                 with a different interface.
             </paragraph>
@@ -69,12 +69,12 @@
     </notification>
     <form-editor id="net-splitcells-gel-ui-editor-nocode-form"
                  action="/net/splitcells/gel/ui/editor/calculate-solution.form">
-        <library path="net/splitcells/gel/ui/no/code/editor/lib"/>
+        <library path="net/splitcells/gel/ui/editor/nocode/lib"/>
         <no-code-editor id="net-splitcells-gel-ui-editor-nocode-form-problem-definition"
                         name="Definition"
                         main-tab="true"
                         content-types=" /net/splitcells/gel/ui/no-code-editor-language "
-                        initial-content-at="/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"/>
+                        initial-content-at="/net/splitcells/gel/ui/editor/nocode/examples/school-course-scheduling-problem.xml"/>
         <text-area id="net-splitcells-gel-editor-form-errors" name="Errors" content-types=" error-output "></text-area>
         <text-area id="net-splitcells-gel-editor-form-demands" name="Demands" initial-content-at="/net/splitcells/gel/ui/colloquium-planning-demands-test-data.csv"><![CDATA[]]></text-area>
         <text-area id="net-splitcells-gel-editor-form-supplies" name="Supplies" initial-content-at="/net/splitcells/gel/ui/colloquium-planning-supplies-test-data.csv"><![CDATA[]]></text-area>

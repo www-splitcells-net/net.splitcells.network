@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.ui.no.code.editor;
+package net.splitcells.gel.ui.editor.nocode;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.gel.constraint.Query;
@@ -36,7 +36,7 @@ public class Functions implements ProjectsRendererExtension {
         return new Functions();
     }
 
-    private static final String PATH = "/net/splitcells/gel/ui/no/code/editor/functions.json";
+    private static final String PATH = "/net/splitcells/gel/ui/editor/nocode/functions.json";
 
     private Functions() {
 

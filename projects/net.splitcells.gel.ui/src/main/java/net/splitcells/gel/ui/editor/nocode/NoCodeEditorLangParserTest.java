@@ -47,7 +47,7 @@ public class NoCodeEditorLangParserTest {
     @UnitTest
     public void testParsing() {
         final var problem = parseNoCodeSolutionEditor(Dem.configValue(GelUiFileSystem.class)
-                .readString("src/main/resources/html/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"))
+                .readString("src/main/resources/html/net/splitcells/gel/ui/editor/nocode/examples/school-course-scheduling-problem.xml"))
                 .requiredValue()
                 .solution()
                 .orElseThrow();
@@ -79,7 +79,7 @@ public class NoCodeEditorLangParserTest {
     @UnitTest
     public void testDatabaseParsing() {
         final var parsedDatabases = parseNoCodeSolutionEditor(Dem.configValue(GelUiFileSystem.class)
-                .readString("src/main/resources/html/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"))
+                .readString("src/main/resources/html/net/splitcells/gel/ui/editor/nocode/examples/school-course-scheduling-problem.xml"))
                 .requiredValue()
                 .solution()
                 .orElseThrow();
@@ -98,7 +98,7 @@ public class NoCodeEditorLangParserTest {
     @UnitTest
     public void testProblemParsing() {
         final var testResult = parseNoCodeSolutionEditor(Dem.configValue(GelUiFileSystem.class)
-                .readString("src/main/resources/html/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"))
+                .readString("src/main/resources/html/net/splitcells/gel/ui/editor/nocode/examples/school-course-scheduling-problem.xml"))
                 .requiredValue()
                 .solution()
                 .orElseThrow();
@@ -114,7 +114,7 @@ public class NoCodeEditorLangParserTest {
     @UnitTest
     public void testProblemParsing2() {
         final var testResult = parseNoCodeSolutionEditor(Dem.configValue(GelUiFileSystem.class)
-                .readString("src/main/resources/html/net/splitcells/gel/ui/no/code/editor/examples/school-course-scheduling-problem.xml"))
+                .readString("src/main/resources/html/net/splitcells/gel/ui/editor/nocode/examples/school-course-scheduling-problem.xml"))
                 .requiredValue();
         final var solution = testResult.solution().orElseThrow();
         testResult.columnAttributesForOutputFormat().requireEqualityTo(list(solution.attributeByName("roomNumber")));
