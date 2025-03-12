@@ -17,8 +17,8 @@ function net_splitcells_gel_ui_editor_nocode_form_submit() {
     config['on-submission-completion'] = () => {
         // TODO Use paging for table.
         // TODO Inject Tabulator in order to avoid direct dependency.
-        net_splitcells_gel_ui_no_code_editor_form_solution = new Tabulator("#net-splitcells-gel-ui-editor-form-solution-as-csv-output"
-            , {data: document.getElementById('net-splitcells-gel-ui-editor-form-solution').value
+        net_splitcells_gel_ui_no_code_editor_form_solution = new Tabulator("#net-splitcells-gel-editor-form-solution-as-csv-output"
+            , {data: document.getElementById('net-splitcells-gel-editor-form-solution').value
             , importFormat: 'csv'
             , autoColumns: true });
     };

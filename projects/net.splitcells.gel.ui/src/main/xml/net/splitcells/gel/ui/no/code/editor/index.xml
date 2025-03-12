@@ -78,7 +78,7 @@
         <text-area id="net-splitcells-gel-editor-form-errors" name="Errors" content-types=" error-output "></text-area>
         <text-area id="net-splitcells-gel-editor-form-demands" name="Demands" initial-content-at="/net/splitcells/gel/ui/colloquium-planning-demands-test-data.csv"><![CDATA[]]></text-area>
         <text-area id="net-splitcells-gel-editor-form-supplies" name="Supplies" initial-content-at="/net/splitcells/gel/ui/colloquium-planning-supplies-test-data.csv"><![CDATA[]]></text-area>
-        <text-area id="net-splitcells-gel-ui-editor-form-solution" name="Solution" content-types=" csv-output result-output "/>
+        <text-area id="net-splitcells-gel-editor-form-solution" name="Solution" content-types=" csv-output result-output "/>
         <text-area id="net-splitcells-gel-editor-form-solution-rating" name="Rating"/>
     </form-editor>
 </article>
