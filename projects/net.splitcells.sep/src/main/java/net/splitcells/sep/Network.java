@@ -29,7 +29,7 @@ import java.util.function.Function;
 import static net.splitcells.dem.data.set.map.Maps.map;
 
 /**
- * <p>TODO Migrate this into {@link net.splitcells.gel.ui.Editor}.</p>
+ * <p>TODO Migrate this into {@link net.splitcells.gel.editor.Editor}.</p>
  * <p>TODO Clean up the interface and document intent of this.</p>
  * <p>TODO Ensure that all solutions have a name,
  * because otherwise it can get hard pretty easily to distinguish one {@link net.splitcells.gel.problem.Problem}

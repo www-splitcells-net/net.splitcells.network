@@ -34,7 +34,7 @@ import static net.splitcells.dem.execution.ThreadLoop.threadLoop;
 import static net.splitcells.website.server.project.renderer.ObjectsRenderer.registerObject;
 
 /**
- * TODO Use {@link net.splitcells.gel.ui.Editor} in the future,
+ * TODO Use {@link net.splitcells.gel.editor.Editor} in the future,
  * instead of pure {@link net.splitcells.gel.solution.Solution} or {@link net.splitcells.sep.Network}.
  */
 public class CinService implements ResourceOption<Service> {
