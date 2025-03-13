@@ -405,3 +405,8 @@ Podman
 * License: Apache-2.0
 * Source Code: https://github.com/containers/podman
 * Website: https://podman.io/
+
+Apache Commons CLI
+* License: Apache-2.0
+* Source Code: https://github.com/apache/commons-cli
+* Website: https://commons.apache.org/proper/commons-cli/
