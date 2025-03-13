@@ -15,8 +15,16 @@
  */
 package net.splitcells.network.worker.via.java.execute;
 
+import net.splitcells.dem.data.atom.Integers;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 import org.apache.commons.cli.*;
+
+import java.util.Optional;
+
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.resource.Trail.trail;
+import static net.splitcells.network.worker.via.java.execute.ExecuteConfig.executeConfig;
 
 @JavaLegacy
 public class ExecuteMain {
@@ -153,6 +161,42 @@ public class ExecuteMain {
         final var formatter = new HelpFormatter();
         try {
             final var cmd = parser.parse(options, args);
+            final var config = executeConfig(cmd.getOptionValue(name))
+                    .withCommand(Optional.ofNullable(cmd.getOptionValue(command)))
+                    .withExecutablePath(
+                            Optional.ofNullable(cmd.getOptionValue(executablePath)).map(ep -> trail(ep)))
+                    .withClassForExecution(Optional.ofNullable(cmd.getParsedOptionValue(classForExecution)))
+                    .withCpuArchitecture(Optional.ofNullable(cmd.getParsedOptionValue(cpuArchitecture)))
+                    .withExecuteViaSshAt(Optional.ofNullable(cmd.getParsedOptionValue(executeViaSshAt)));
+            if (cmd.hasOption(useHostDocuments)) {
+                config.withUseHostDocuments(cmd.getParsedOptionValue(useHostDocuments));
+            }
+            if (cmd.hasOption(publishExecutionImage)) {
+                config.withPublishExecutionImage(cmd.getParsedOptionValue(publishExecutionImage));
+            }
+            if (cmd.hasOption(verbose)) {
+                config.withVerbose(cmd.getParsedOptionValue(verbose));
+            }
+            if (cmd.hasOption(onlyBuildImage)) {
+                config.withOnlyBuildImage(cmd.getParsedOptionValue(onlyBuildImage));
+            }
+            if (cmd.hasOption(onlyExecuteImage)) {
+                config.withOnlyExecuteImage(cmd.getParsedOptionValue(onlyExecuteImage));
+            }
+            if (cmd.hasOption(dryRun)) {
+                config.withDryRun(cmd.getParsedOptionValue(dryRun));
+            }
+            if (cmd.hasOption(usePlaywright)) {
+                config.withUsePlaywright(cmd.getParsedOptionValue(usePlaywright));
+            }
+            if (cmd.hasOption(autoConfigureCpuArchExplicitly)) {
+                config.withAutoConfigureCpuArchExplicitly(cmd.getParsedOptionValue(autoConfigureCpuArchExplicitly));
+            }
+            if (cmd.hasOption(portPublishing)) {
+                config.withPortPublishing(listWithValuesOf(cmd.getOptionValue(autoConfigureCpuArchExplicitly)
+                        .split(","))
+                        .mapped(Integers::parse));
+            }
         } catch (Throwable e) {
             e.printStackTrace();
             formatter.printHelp("worker.execute", options);

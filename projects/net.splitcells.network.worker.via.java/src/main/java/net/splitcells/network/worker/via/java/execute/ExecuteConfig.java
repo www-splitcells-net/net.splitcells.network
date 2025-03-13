@@ -47,7 +47,7 @@ public class ExecuteConfig {
         name = argName;
     }
 
-    public ExecuteConfig executeViaSshAt(Optional<String> arg) {
+    public ExecuteConfig withExecuteViaSshAt(Optional<String> arg) {
         executeViaSshAt = arg;
         return this;
     }
@@ -56,7 +56,7 @@ public class ExecuteConfig {
         return executeViaSshAt;
     }
 
-    public ExecuteConfig portPublishing(List<Integer> arg) {
+    public ExecuteConfig withPortPublishing(List<Integer> arg) {
         portPublishing = arg;
         return this;
     }
@@ -65,7 +65,7 @@ public class ExecuteConfig {
         return portPublishing;
     }
 
-    public ExecuteConfig autoConfigureCpuArchExplicitly(boolean arg) {
+    public ExecuteConfig withAutoConfigureCpuArchExplicitly(boolean arg) {
         autoConfigureCpuArchExplicitly = arg;
         return this;
     }
@@ -74,7 +74,7 @@ public class ExecuteConfig {
         return autoConfigureCpuArchExplicitly;
     }
 
-    public ExecuteConfig usePlaywright(boolean arg) {
+    public ExecuteConfig withUsePlaywright(boolean arg) {
         usePlaywright = arg;
         return this;
     }
@@ -83,7 +83,7 @@ public class ExecuteConfig {
         return usePlaywright;
     }
 
-    public ExecuteConfig dryRun(boolean arg) {
+    public ExecuteConfig withDryRun(boolean arg) {
         dryRun = arg;
         return this;
     }
@@ -92,7 +92,7 @@ public class ExecuteConfig {
         return dryRun;
     }
 
-    public ExecuteConfig cpuArchitecture(Optional<String> arg) {
+    public ExecuteConfig withCpuArchitecture(Optional<String> arg) {
         cpuArchitecture = arg;
         return this;
     }
@@ -101,7 +101,7 @@ public class ExecuteConfig {
         return cpuArchitecture;
     }
 
-    public ExecuteConfig onlyExecuteImage(boolean arg) {
+    public ExecuteConfig withOnlyExecuteImage(boolean arg) {
         onlyExecuteImage = arg;
         return this;
     }
@@ -110,7 +110,7 @@ public class ExecuteConfig {
         return onlyExecuteImage;
     }
 
-    public ExecuteConfig onlyBuildImage(boolean arg) {
+    public ExecuteConfig withOnlyBuildImage(boolean arg) {
         onlyBuildImage = arg;
         return this;
     }
@@ -119,7 +119,7 @@ public class ExecuteConfig {
         return onlyBuildImage;
     }
 
-    public ExecuteConfig verbose(boolean arg) {
+    public ExecuteConfig withVerbose(boolean arg) {
         verbose = arg;
         return this;
     }
@@ -128,7 +128,7 @@ public class ExecuteConfig {
         return verbose;
     }
 
-    public ExecuteConfig publishExecutionImage(boolean arg) {
+    public ExecuteConfig withPublishExecutionImage(boolean arg) {
         publishExecutionImage = arg;
         return this;
     }
@@ -137,7 +137,7 @@ public class ExecuteConfig {
         return publishExecutionImage;
     }
 
-    public ExecuteConfig useHostDocuments(boolean arg) {
+    public ExecuteConfig withUseHostDocuments(boolean arg) {
         useHostDocuments = arg;
         return this;
     }
@@ -146,7 +146,7 @@ public class ExecuteConfig {
         return useHostDocuments;
     }
 
-    public ExecuteConfig classForExecution(Optional<String> arg) {
+    public ExecuteConfig withClassForExecution(Optional<String> arg) {
         classForExecution = arg;
         return this;
     }
