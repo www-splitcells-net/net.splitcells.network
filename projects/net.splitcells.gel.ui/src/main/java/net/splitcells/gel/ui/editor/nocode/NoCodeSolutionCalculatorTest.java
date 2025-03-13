@@ -29,7 +29,7 @@ public class NoCodeSolutionCalculatorTest {
 
     public static Runnable TEST_OPTIMIZATION_GUI = () -> {
         try (final var browser = htmlClient()) {
-            try (final var tab = browser.openTab("/net/splitcells/gel/ui/no/code/editor/index.html")) {
+            try (final var tab = browser.openTab("/net/splitcells/gel/ui/editor/nocode/index.html")) {
                 requireEquals("", tab.elementById("net-splitcells-gel-editor-form-errors").textContent());
                 requireEquals("", tab.elementById("net-splitcells-gel-editor-form-solution").textContent());
                 requireEquals("", tab.elementById("net-splitcells-gel-editor-form-solution-rating").textContent());
