@@ -16,8 +16,10 @@
 package net.splitcells.network.worker.via.java;
 
 import net.splitcells.network.worker.via.java.execution.WorkerExecution;
+import net.splitcells.network.worker.via.java.execution.WorkerExecutionConfig;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 import static net.splitcells.network.worker.via.java.execution.WorkerExecution.workerExecution;
 import static net.splitcells.network.worker.via.java.execution.WorkerExecutionConfig.workerExecutionConfig;
@@ -32,12 +34,16 @@ public class NetworkWorker {
     }
 
     public WorkerExecution testAtRemote(String hostname) {
+        return testAtRemote(hostname, a -> a);
+    }
+
+    public WorkerExecution testAtRemote(String hostname, Function<WorkerExecutionConfig, WorkerExecutionConfig> defaultConfig) {
         final var workerExecution = workerExecution();
-        workerExecution.accept(workerExecutionConfig("net.splitcells.network.worker")
+        final var config = defaultConfig.apply(workerExecutionConfig("net.splitcells.network.worker"))
                 .withExecuteViaSshAt(Optional.of(hostname))
                 .withCommand(Optional.of("cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap.container"))
-                .withAutoConfigureCpuArchExplicitly(true)
-        );
+                .withAutoConfigureCpuArchExplicitly(true);
+        workerExecution.accept(config);
         return workerExecution;
     }
 }
