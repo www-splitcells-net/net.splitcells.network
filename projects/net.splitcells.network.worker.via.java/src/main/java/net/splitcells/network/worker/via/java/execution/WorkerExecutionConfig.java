@@ -48,10 +48,19 @@ public class WorkerExecutionConfig {
     private Optional<String> executeViaSshAt = Optional.empty();
     private FileSystem fileSystem = configValue(HostFileSystem.class);
 
+    /**
+     *
+     * @param arg Escapes a string,
+     *            so it can be placed inside `"[...]"` of a shell script without changing the resulting string,
+     *            when compared to {@code arg}.
+     * @return Returns {@code arg} as an escaped string.
+     */
     private String escape(String arg) {
-        return arg.replace("'", "\\'")
+        return "'"
+                + arg.replace("'", "\\'")
                 .replace("\"", "\\\"")
-                .replace("\n", "");
+                .replace("\n", "")
+                + "'";
     }
 
     public String shellArgumentString() {
