@@ -15,13 +15,12 @@
  */
 package net.splitcells.network.worker.via.java;
 
-import net.splitcells.network.worker.via.java.execute.WorkerExecution;
-import net.splitcells.network.worker.via.java.execute.WorkerExecutionConfig;
+import net.splitcells.network.worker.via.java.execution.WorkerExecution;
 
 import java.util.Optional;
 
-import static net.splitcells.network.worker.via.java.execute.WorkerExecution.workerExecution;
-import static net.splitcells.network.worker.via.java.execute.WorkerExecutionConfig.workerExecutionConfig;
+import static net.splitcells.network.worker.via.java.execution.WorkerExecution.workerExecution;
+import static net.splitcells.network.worker.via.java.execution.WorkerExecutionConfig.workerExecutionConfig;
 
 public class NetworkWorker {
     public static NetworkWorker networkWorker() {

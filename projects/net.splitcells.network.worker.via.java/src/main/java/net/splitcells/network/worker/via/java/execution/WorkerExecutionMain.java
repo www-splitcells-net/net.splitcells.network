@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.network.worker.via.java.execute;
+package net.splitcells.network.worker.via.java.execution;
 
 import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
@@ -23,7 +23,7 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.resource.Trail.trail;
-import static net.splitcells.network.worker.via.java.execute.WorkerExecutionConfig.workerExecutionConfig;
+import static net.splitcells.network.worker.via.java.execution.WorkerExecutionConfig.workerExecutionConfig;
 
 @JavaLegacy
 public class WorkerExecutionMain {
