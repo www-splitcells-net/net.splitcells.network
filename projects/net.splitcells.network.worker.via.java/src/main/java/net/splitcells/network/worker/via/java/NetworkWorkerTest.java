@@ -25,6 +25,6 @@ public class NetworkWorkerTest {
     @UnitTest
     public void testTestAtRemote() {
         requireEquals(networkWorker().testAtRemote("user@address")
-                .remoteExecutionScript(), "--name=net.splitcells.network.worker --command=cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap.container --execute-via-ssh-at=user@address --use-host-documents=false --publish-execution-image=false --verbose=false --only-build-image=false --only-execute-image=false --dry-run=true --use-playwrightfalse --auto-configure-cpu-architecture-explicitly=true");
+                .remoteExecutionScript(), "ssh user@address -t \"cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.execute --name=net.splitcells.network.worker --command=cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap.container --execute-via-ssh-at=user@address --use-host-documents=false --publish-execution-image=false --verbose=false --only-build-image=false --only-execute-image=false --dry-run=true --use-playwrightfalse --auto-configure-cpu-architecture-explicitly=true\"");
     }
 }
