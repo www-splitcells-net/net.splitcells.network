@@ -16,7 +16,6 @@
 package net.splitcells.network.worker.via.java.execute;
 
 import net.splitcells.dem.data.atom.Integers;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 import org.apache.commons.cli.*;
 
@@ -24,10 +23,10 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.resource.Trail.trail;
-import static net.splitcells.network.worker.via.java.execute.ExecuteConfig.executeConfig;
+import static net.splitcells.network.worker.via.java.execute.WorkerExecuteConfig.workerExecuteConfig;
 
 @JavaLegacy
-public class ExecuteMain {
+public class WorkerExecuteMain {
     public static void main(String... args) {
         final var options = new Options();
         final var name = Option.builder("n")
@@ -161,7 +160,7 @@ public class ExecuteMain {
         final var formatter = new HelpFormatter();
         try {
             final var cmd = parser.parse(options, args);
-            final var config = executeConfig(cmd.getOptionValue(name))
+            final var config = workerExecuteConfig(cmd.getOptionValue(name))
                     .withCommand(Optional.ofNullable(cmd.getOptionValue(command)))
                     .withExecutablePath(
                             Optional.ofNullable(cmd.getOptionValue(executablePath)).map(ep -> trail(ep)))
@@ -197,6 +196,7 @@ public class ExecuteMain {
                         .split(","))
                         .mapped(Integers::parse));
             }
+
         } catch (Throwable e) {
             e.printStackTrace();
             formatter.printHelp("worker.execute", options);
@@ -204,7 +204,7 @@ public class ExecuteMain {
         }
     }
 
-    private ExecuteMain() {
+    private WorkerExecuteMain() {
 
     }
 }

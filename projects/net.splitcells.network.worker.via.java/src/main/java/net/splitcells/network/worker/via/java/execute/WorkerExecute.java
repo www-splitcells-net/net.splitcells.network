@@ -15,8 +15,12 @@
  */
 package net.splitcells.network.worker.via.java.execute;
 
-public class Execute {
-    private Execute()  {
+public class WorkerExecute {
+    public static void workerExecute(WorkerExecuteConfig config) {
+
+    }
+
+    private WorkerExecute() {
 
     }
 }

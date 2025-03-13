@@ -25,9 +25,9 @@ import java.util.Optional;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
 
-public class ExecuteConfig {
-    public static ExecuteConfig executeConfig(String name) {
-        return new ExecuteConfig(name);
+public class WorkerExecuteConfig {
+    public static WorkerExecuteConfig workerExecuteConfig(String name) {
+        return new WorkerExecuteConfig(name);
     }
 
     private String name;
@@ -47,11 +47,11 @@ public class ExecuteConfig {
     private Optional<String> executeViaSshAt = Optional.empty();
     private FileSystem fileSystem = configValue(HostFileSystem.class);
 
-    private ExecuteConfig(String argName) {
+    private WorkerExecuteConfig(String argName) {
         name = argName;
     }
 
-    public ExecuteConfig withFileSystem(FileSystem arg) {
+    public WorkerExecuteConfig withFileSystem(FileSystem arg) {
         fileSystem = arg;
         return this;
     }
@@ -60,7 +60,7 @@ public class ExecuteConfig {
         return fileSystem;
     }
 
-    public ExecuteConfig withExecuteViaSshAt(Optional<String> arg) {
+    public WorkerExecuteConfig withExecuteViaSshAt(Optional<String> arg) {
         executeViaSshAt = arg;
         return this;
     }
@@ -69,7 +69,7 @@ public class ExecuteConfig {
         return executeViaSshAt;
     }
 
-    public ExecuteConfig withPortPublishing(List<Integer> arg) {
+    public WorkerExecuteConfig withPortPublishing(List<Integer> arg) {
         portPublishing = arg;
         return this;
     }
@@ -78,7 +78,7 @@ public class ExecuteConfig {
         return portPublishing;
     }
 
-    public ExecuteConfig withAutoConfigureCpuArchExplicitly(boolean arg) {
+    public WorkerExecuteConfig withAutoConfigureCpuArchExplicitly(boolean arg) {
         autoConfigureCpuArchExplicitly = arg;
         return this;
     }
@@ -87,7 +87,7 @@ public class ExecuteConfig {
         return autoConfigureCpuArchExplicitly;
     }
 
-    public ExecuteConfig withUsePlaywright(boolean arg) {
+    public WorkerExecuteConfig withUsePlaywright(boolean arg) {
         usePlaywright = arg;
         return this;
     }
@@ -96,7 +96,7 @@ public class ExecuteConfig {
         return usePlaywright;
     }
 
-    public ExecuteConfig withDryRun(boolean arg) {
+    public WorkerExecuteConfig withDryRun(boolean arg) {
         dryRun = arg;
         return this;
     }
@@ -105,7 +105,7 @@ public class ExecuteConfig {
         return dryRun;
     }
 
-    public ExecuteConfig withCpuArchitecture(Optional<String> arg) {
+    public WorkerExecuteConfig withCpuArchitecture(Optional<String> arg) {
         cpuArchitecture = arg;
         return this;
     }
@@ -114,7 +114,7 @@ public class ExecuteConfig {
         return cpuArchitecture;
     }
 
-    public ExecuteConfig withOnlyExecuteImage(boolean arg) {
+    public WorkerExecuteConfig withOnlyExecuteImage(boolean arg) {
         onlyExecuteImage = arg;
         return this;
     }
@@ -123,7 +123,7 @@ public class ExecuteConfig {
         return onlyExecuteImage;
     }
 
-    public ExecuteConfig withOnlyBuildImage(boolean arg) {
+    public WorkerExecuteConfig withOnlyBuildImage(boolean arg) {
         onlyBuildImage = arg;
         return this;
     }
@@ -132,7 +132,7 @@ public class ExecuteConfig {
         return onlyBuildImage;
     }
 
-    public ExecuteConfig withVerbose(boolean arg) {
+    public WorkerExecuteConfig withVerbose(boolean arg) {
         verbose = arg;
         return this;
     }
@@ -141,7 +141,7 @@ public class ExecuteConfig {
         return verbose;
     }
 
-    public ExecuteConfig withPublishExecutionImage(boolean arg) {
+    public WorkerExecuteConfig withPublishExecutionImage(boolean arg) {
         publishExecutionImage = arg;
         return this;
     }
@@ -150,7 +150,7 @@ public class ExecuteConfig {
         return publishExecutionImage;
     }
 
-    public ExecuteConfig withUseHostDocuments(boolean arg) {
+    public WorkerExecuteConfig withUseHostDocuments(boolean arg) {
         useHostDocuments = arg;
         return this;
     }
@@ -159,7 +159,7 @@ public class ExecuteConfig {
         return useHostDocuments;
     }
 
-    public ExecuteConfig withClassForExecution(Optional<String> arg) {
+    public WorkerExecuteConfig withClassForExecution(Optional<String> arg) {
         classForExecution = arg;
         return this;
     }
@@ -172,7 +172,7 @@ public class ExecuteConfig {
         return executablePath;
     }
 
-    public ExecuteConfig withExecutablePath(Optional<Trail> arg) {
+    public WorkerExecuteConfig withExecutablePath(Optional<Trail> arg) {
         executablePath = arg;
         return this;
     }
@@ -181,7 +181,7 @@ public class ExecuteConfig {
         return command;
     }
 
-    public ExecuteConfig withCommand(Optional<String> arg) {
+    public WorkerExecuteConfig withCommand(Optional<String> arg) {
         command = arg;
         return this;
     }
