@@ -82,10 +82,10 @@ public class WorkerExecutionConfig {
         if (optionSelector.test("class-for-execution")) {
             classForExecution.ifPresent(c -> result.append(" --class-for-execution=" + escape(c)));
         }
-        if (optionSelector.test(" cpu-architecture")) {
+        if (optionSelector.test("cpu-architecture")) {
             cpuArchitecture.ifPresent(c -> result.append(" --cpu-architecture=" + escape(c + "")));
         }
-        if (optionSelector.test(" use-host-documents")) {
+        if (optionSelector.test("use-host-documents")) {
             result.append(" --use-host-documents=" + escape(useHostDocuments + ""));
         }
         if (optionSelector.test("publish-execution-image")) {
