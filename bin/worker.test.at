@@ -9,5 +9,5 @@ set -e
 bin/worker.execute \
   --execute-via-ssh-at="$1" \
   --name=net.splitcells.network.worker \
-  --command="'cd ~/.local/state/net.splitcells.network.worker/repos/public && test.everything'" \
+  --command="cd ~/.local/state/net.splitcells.network.worker/repos/public && test.everything" \
   --auto-configure-cpu-architecture-explicitly=true
