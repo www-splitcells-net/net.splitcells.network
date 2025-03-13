@@ -43,7 +43,7 @@ public class WorkerExecution implements Consumer<WorkerExecutionConfig> {
                     + config.executeViaSshAt().get()
                     + " -t"
                     + " \"cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.execute "
-                    + config.shellArgumentString()
+                    + config.shellArgumentString(a -> !"execute-via-ssh-at".equals(a))
                     + "\"";
         }
     }
