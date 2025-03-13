@@ -66,6 +66,7 @@ public class WorkerExecution implements Consumer<WorkerExecutionConfig> {
             if (!config.dryRun()) {
                 executeShellCommand(remoteExecutionScript);
             }
+            return;
         }
     }
 
