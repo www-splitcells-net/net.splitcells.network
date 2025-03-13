@@ -35,7 +35,6 @@ public final class SystemUtils {
         throw constructorIllegal();
     }
 
-    @JavaLegacyBody
     public static ShellResult runShellScript(String command, Path workingDirectory) {
         final var rVal = new StringBuilder();
         final Process process;
@@ -75,7 +74,6 @@ public final class SystemUtils {
         return shellResult(process.exitValue(), rVal.toString());
     }
 
-    @JavaLegacyBody
     public static void executeShellScript(String command, Path workingDirectory) {
         // REMOVE or write output to log.
         System.out.println(command);
