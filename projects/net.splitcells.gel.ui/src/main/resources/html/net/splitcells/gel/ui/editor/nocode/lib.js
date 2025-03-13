@@ -1,5 +1,8 @@
 /* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+ *
+ * TODO Many features of jQuery can now relatively easily be done with vanilla JavaScript in the browser.
+ * Consider removing the jQuery dependency for general JavaScript code.
  */
  var net_splitcells_gel_ui_editor_no_code_last_node_id = -1;
 let net_splitcells_gel_ui_no_code_editor_form_solution = null;
