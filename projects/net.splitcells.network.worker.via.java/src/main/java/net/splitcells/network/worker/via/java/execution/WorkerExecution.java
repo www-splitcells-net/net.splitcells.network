@@ -16,10 +16,12 @@
 package net.splitcells.network.worker.via.java.execution;
 
 import net.splitcells.dem.resource.communication.log.LogLevel;
+import net.splitcells.dem.resource.host.CurrentFileSystem;
 
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.host.SystemUtils.executeShellCommand;
@@ -68,6 +70,7 @@ public class WorkerExecution implements Consumer<WorkerExecutionConfig> {
             }
             return;
         }
+        configValue(CurrentFileSystem.class).createDirectoryPath("./target");
     }
 
     public String remoteExecutionScript() {
