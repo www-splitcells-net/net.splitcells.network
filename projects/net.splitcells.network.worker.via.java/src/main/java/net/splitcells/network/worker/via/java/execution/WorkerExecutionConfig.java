@@ -21,6 +21,7 @@ import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.resource.host.HostFileSystem;
 
 import java.util.Optional;
+import java.util.function.Predicate;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -49,7 +50,6 @@ public class WorkerExecutionConfig {
     private FileSystem fileSystem = configValue(HostFileSystem.class);
 
     /**
-     *
      * @param arg Escapes a string,
      *            so it can be placed inside `"[...]"` of a shell script without changing the resulting string,
      *            when compared to {@code arg}.
@@ -64,21 +64,51 @@ public class WorkerExecutionConfig {
     }
 
     public String shellArgumentString() {
+        return shellArgumentString(a -> true);
+    }
+
+    public String shellArgumentString(Predicate<String> optionSelector) {
         var result = stringBuilder();
         result.append("--name=" + escape(name));
-        command.ifPresent(c -> result.append(" --command=" + escape(c)));
-        executeViaSshAt.ifPresent(e -> result.append(" --execute-via-ssh-at=" + escape(e)));
-        executablePath.ifPresent(t -> result.append(" --executable-path=" + escape(t.unixPathString())));
-        classForExecution.ifPresent(c -> result.append(" --class-for-execution=" + escape(c)));
-        cpuArchitecture.ifPresent(c -> result.append(" --cpu-architecture=" + escape(c + "")));
-        result.append(" --use-host-documents=" + escape(useHostDocuments + ""));
-        result.append(" --publish-execution-image=" + escape(publishExecutionImage + ""));
-        result.append(" --verbose=" + escape(verbose + ""));
-        result.append(" --only-build-image=" + escape(onlyBuildImage + ""));
-        result.append(" --only-execute-image=" + escape(onlyExecuteImage + ""));
-        result.append(" --dry-run=" + escape(dryRun + ""));
-        result.append(" --use-playwright=" + escape(usePlaywright + ""));
-        result.append(" --auto-configure-cpu-architecture-explicitly=" + escape(autoConfigureCpuArchExplicitly + ""));
+        if (optionSelector.test("command")) {
+            command.ifPresent(c -> result.append(" --command=" + escape(c)));
+        }
+        if (optionSelector.test("execute-via-ssh-at")) {
+            executeViaSshAt.ifPresent(e -> result.append(" --execute-via-ssh-at=" + escape(e)));
+        }
+        if (optionSelector.test("executable-path")) {
+            executablePath.ifPresent(t -> result.append(" --executable-path=" + escape(t.unixPathString())));
+        }
+        if (optionSelector.test("class-for-execution")) {
+            classForExecution.ifPresent(c -> result.append(" --class-for-execution=" + escape(c)));
+        }
+        if (optionSelector.test(" cpu-architecture")) {
+            cpuArchitecture.ifPresent(c -> result.append(" --cpu-architecture=" + escape(c + "")));
+        }
+        if (optionSelector.test(" use-host-documents")) {
+            result.append(" --use-host-documents=" + escape(useHostDocuments + ""));
+        }
+        if (optionSelector.test("publish-execution-image")) {
+            result.append(" --publish-execution-image=" + escape(publishExecutionImage + ""));
+        }
+        if (optionSelector.test("verbose")) {
+            result.append(" --verbose=" + escape(verbose + ""));
+        }
+        if (optionSelector.test("only-build-image")) {
+            result.append(" --only-build-image=" + escape(onlyBuildImage + ""));
+        }
+        if (optionSelector.test("only-execute-image")) {
+            result.append(" --only-execute-image=" + escape(onlyExecuteImage + ""));
+        }
+        if (optionSelector.test("dry-run")) {
+            result.append(" --dry-run=" + escape(dryRun + ""));
+        }
+        if (optionSelector.test("use-playwright")) {
+            result.append(" --use-playwright=" + escape(usePlaywright + ""));
+        }
+        if (optionSelector.test("auto-configure-cpu-architecture-explicitly")) {
+            result.append(" --auto-configure-cpu-architecture-explicitly=" + escape(autoConfigureCpuArchExplicitly + ""));
+        }
         return result.toString();
     }
 
