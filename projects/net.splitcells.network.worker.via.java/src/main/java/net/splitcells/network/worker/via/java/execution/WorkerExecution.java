@@ -57,7 +57,7 @@ public class WorkerExecution implements Consumer<WorkerExecutionConfig> {
         dryRun.ifPresent(config::withDryRun);
         if (config.executeViaSshAt().isPresent()) {
             remoteExecutionScript = "ssh "
-                    + config.executeViaSshAt().get()
+                    + config.executeViaSshAt().orElseThrow()
                     + " -t"
                     + " \"cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.execute "
                     + config.shellArgumentString(a -> !"execute-via-ssh-at".equals(a))
