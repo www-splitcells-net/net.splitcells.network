@@ -85,7 +85,8 @@
     background-color: var(--background-color-selected-priority-0);
     z-index: 7;
     padding-bottom: 1em;
-    width: 15em;
+    /* Ensure, that the title is not longer than the menu. */
+    min-width: 15em;
     font-family: var(--text-font-family);
     border-radius: var(--border-radius-for-actions);
     border: 0.125em solid var(--background-color-priority-4);
