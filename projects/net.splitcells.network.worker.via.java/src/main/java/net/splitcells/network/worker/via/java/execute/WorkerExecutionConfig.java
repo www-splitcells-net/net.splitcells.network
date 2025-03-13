@@ -58,17 +58,18 @@ public class WorkerExecutionConfig {
         var result = stringBuilder();
         result.append("--name=" + escape(name));
         command.ifPresent(c -> result.append(" --command=" + escape(c)));
+        executeViaSshAt.ifPresent(e -> result.append(" --execute-via-ssh-at=" + escape(e)));
         executablePath.ifPresent(t -> result.append(" --executable-path=" + escape(t.unixPathString())));
         classForExecution.ifPresent(c -> result.append(" --class-for-execution=" + escape(c)));
-        result.append("--use-host-documents=" + escape(useHostDocuments + ""));
-        result.append("--publish-execution-image=" + escape(publishExecutionImage + ""));
-        result.append("--verbose=" + escape(verbose + ""));
-        result.append("--only-build-image=" + escape(onlyBuildImage + ""));
-        result.append("--only-execute-image=" + escape(onlyExecuteImage + ""));
-        result.append("--cpu-architecture=" + escape(cpuArchitecture + ""));
-        result.append("--dry-run=" + escape(dryRun + ""));
-        result.append("--use-playwright" + escape(usePlaywright + ""));
-        result.append("--auto-configure-cpu-architecture-explicitly=" + escape(autoConfigureCpuArchExplicitly + ""));
+        cpuArchitecture.ifPresent(c -> result.append(" --cpu-architecture=" + escape(c + "")));
+        result.append(" --use-host-documents=" + escape(useHostDocuments + ""));
+        result.append(" --publish-execution-image=" + escape(publishExecutionImage + ""));
+        result.append(" --verbose=" + escape(verbose + ""));
+        result.append(" --only-build-image=" + escape(onlyBuildImage + ""));
+        result.append(" --only-execute-image=" + escape(onlyExecuteImage + ""));
+        result.append(" --dry-run=" + escape(dryRun + ""));
+        result.append(" --use-playwright" + escape(usePlaywright + ""));
+        result.append(" --auto-configure-cpu-architecture-explicitly=" + escape(autoConfigureCpuArchExplicitly + ""));
         return result.toString();
     }
 

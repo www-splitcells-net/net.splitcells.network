@@ -15,6 +15,7 @@
  */
 package net.splitcells.network.worker.via.java.execute;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 
 public class WorkerExecution implements Consumer<WorkerExecutionConfig> {
@@ -22,14 +23,21 @@ public class WorkerExecution implements Consumer<WorkerExecutionConfig> {
         return new WorkerExecution();
     }
 
+    private Optional<Boolean> dryRun = Optional.of(true);
     private String remoteExecutionScript = "";
 
     private WorkerExecution() {
 
     }
 
+    public WorkerExecution withDryRun(Optional<Boolean> arg) {
+        dryRun = arg;
+        return this;
+    }
+
     @Override
     public void accept(WorkerExecutionConfig config) {
+        dryRun.ifPresent(config::withDryRun);
         if (config.executeViaSshAt().isPresent()) {
             remoteExecutionScript = config.shellArgumentString();
         }
