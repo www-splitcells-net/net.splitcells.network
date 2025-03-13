@@ -15,9 +15,13 @@
  */
 package net.splitcells.network.worker.via.java.execution;
 
+import net.splitcells.dem.resource.communication.log.LogLevel;
+
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.host.SystemUtils.executeShellCommand;
 
 public class WorkerExecution implements Consumer<WorkerExecutionConfig> {
@@ -56,6 +60,9 @@ public class WorkerExecution implements Consumer<WorkerExecutionConfig> {
                     + " \"cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.execute "
                     + config.shellArgumentString(a -> !"execute-via-ssh-at".equals(a))
                     + "\"";
+            if (config.verbose()) {
+                logs().append("Executing: " + remoteExecutionScript, INFO);
+            }
             if (!config.dryRun()) {
                 executeShellCommand(remoteExecutionScript);
             }
