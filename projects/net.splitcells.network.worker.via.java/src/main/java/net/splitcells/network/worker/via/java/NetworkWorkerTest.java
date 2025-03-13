@@ -24,7 +24,7 @@ import static net.splitcells.network.worker.via.java.NetworkWorker.networkWorker
 public class NetworkWorkerTest {
     @UnitTest
     public void testTestAtRemote() {
-        requireEquals(networkWorker().testAtRemote("user@address", config -> config.withDryRun(true))
+        requireEquals(networkWorker().testAtRemote("user@address")
                 .remoteExecutionScript(), "ssh user@address -t \"cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.execute --name='net.splitcells.network.worker' --command='cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap.container' --use-host-documents='false' --publish-execution-image='false' --verbose='false' --only-build-image='false' --only-execute-image='false' --dry-run='true' --use-playwright='false' --auto-configure-cpu-architecture-explicitly='true'\"");
     }
 }
