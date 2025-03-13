@@ -23,10 +23,10 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.resource.Trail.trail;
-import static net.splitcells.network.worker.via.java.execute.WorkerExecuteConfig.workerExecuteConfig;
+import static net.splitcells.network.worker.via.java.execute.WorkerExecutionConfig.workerExecutionConfig;
 
 @JavaLegacy
-public class WorkerExecuteMain {
+public class WorkerExecutionMain {
     public static void main(String... args) {
         final var options = new Options();
         final var name = Option.builder("n")
@@ -160,7 +160,7 @@ public class WorkerExecuteMain {
         final var formatter = new HelpFormatter();
         try {
             final var cmd = parser.parse(options, args);
-            final var config = workerExecuteConfig(cmd.getOptionValue(name))
+            final var config = workerExecutionConfig(cmd.getOptionValue(name))
                     .withCommand(Optional.ofNullable(cmd.getOptionValue(command)))
                     .withExecutablePath(
                             Optional.ofNullable(cmd.getOptionValue(executablePath)).map(ep -> trail(ep)))
@@ -204,7 +204,7 @@ public class WorkerExecuteMain {
         }
     }
 
-    private WorkerExecuteMain() {
+    private WorkerExecutionMain() {
 
     }
 }

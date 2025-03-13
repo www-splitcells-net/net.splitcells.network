@@ -24,10 +24,11 @@ import java.util.Optional;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.utils.StringUtils.stringBuilder;
 
-public class WorkerExecuteConfig {
-    public static WorkerExecuteConfig workerExecuteConfig(String name) {
-        return new WorkerExecuteConfig(name);
+public class WorkerExecutionConfig {
+    public static WorkerExecutionConfig workerExecutionConfig(String name) {
+        return new WorkerExecutionConfig(name);
     }
 
     private String name;
@@ -47,11 +48,35 @@ public class WorkerExecuteConfig {
     private Optional<String> executeViaSshAt = Optional.empty();
     private FileSystem fileSystem = configValue(HostFileSystem.class);
 
-    private WorkerExecuteConfig(String argName) {
+    private String escape(String arg) {
+        return arg.replace("'", "\\'")
+                .replace("\"", "\\\"")
+                .replace("\n", "");
+    }
+
+    public String shellArgumentString() {
+        var result = stringBuilder();
+        result.append("--name=" + escape(name));
+        command.ifPresent(c -> result.append(" --command=" + escape(c)));
+        executablePath.ifPresent(t -> result.append(" --executable-path=" + escape(t.unixPathString())));
+        classForExecution.ifPresent(c -> result.append(" --class-for-execution=" + escape(c)));
+        result.append("--use-host-documents=" + escape(useHostDocuments + ""));
+        result.append("--publish-execution-image=" + escape(publishExecutionImage + ""));
+        result.append("--verbose=" + escape(verbose + ""));
+        result.append("--only-build-image=" + escape(onlyBuildImage + ""));
+        result.append("--only-execute-image=" + escape(onlyExecuteImage + ""));
+        result.append("--cpu-architecture=" + escape(cpuArchitecture + ""));
+        result.append("--dry-run=" + escape(dryRun + ""));
+        result.append("--use-playwright" + escape(usePlaywright + ""));
+        result.append("--auto-configure-cpu-architecture-explicitly=" + escape(autoConfigureCpuArchExplicitly + ""));
+        return result.toString();
+    }
+
+    private WorkerExecutionConfig(String argName) {
         name = argName;
     }
 
-    public WorkerExecuteConfig withFileSystem(FileSystem arg) {
+    public WorkerExecutionConfig withFileSystem(FileSystem arg) {
         fileSystem = arg;
         return this;
     }
@@ -60,7 +85,7 @@ public class WorkerExecuteConfig {
         return fileSystem;
     }
 
-    public WorkerExecuteConfig withExecuteViaSshAt(Optional<String> arg) {
+    public WorkerExecutionConfig withExecuteViaSshAt(Optional<String> arg) {
         executeViaSshAt = arg;
         return this;
     }
@@ -69,7 +94,7 @@ public class WorkerExecuteConfig {
         return executeViaSshAt;
     }
 
-    public WorkerExecuteConfig withPortPublishing(List<Integer> arg) {
+    public WorkerExecutionConfig withPortPublishing(List<Integer> arg) {
         portPublishing = arg;
         return this;
     }
@@ -78,7 +103,7 @@ public class WorkerExecuteConfig {
         return portPublishing;
     }
 
-    public WorkerExecuteConfig withAutoConfigureCpuArchExplicitly(boolean arg) {
+    public WorkerExecutionConfig withAutoConfigureCpuArchExplicitly(boolean arg) {
         autoConfigureCpuArchExplicitly = arg;
         return this;
     }
@@ -87,7 +112,7 @@ public class WorkerExecuteConfig {
         return autoConfigureCpuArchExplicitly;
     }
 
-    public WorkerExecuteConfig withUsePlaywright(boolean arg) {
+    public WorkerExecutionConfig withUsePlaywright(boolean arg) {
         usePlaywright = arg;
         return this;
     }
@@ -96,7 +121,7 @@ public class WorkerExecuteConfig {
         return usePlaywright;
     }
 
-    public WorkerExecuteConfig withDryRun(boolean arg) {
+    public WorkerExecutionConfig withDryRun(boolean arg) {
         dryRun = arg;
         return this;
     }
@@ -105,7 +130,7 @@ public class WorkerExecuteConfig {
         return dryRun;
     }
 
-    public WorkerExecuteConfig withCpuArchitecture(Optional<String> arg) {
+    public WorkerExecutionConfig withCpuArchitecture(Optional<String> arg) {
         cpuArchitecture = arg;
         return this;
     }
@@ -114,7 +139,7 @@ public class WorkerExecuteConfig {
         return cpuArchitecture;
     }
 
-    public WorkerExecuteConfig withOnlyExecuteImage(boolean arg) {
+    public WorkerExecutionConfig withOnlyExecuteImage(boolean arg) {
         onlyExecuteImage = arg;
         return this;
     }
@@ -123,7 +148,7 @@ public class WorkerExecuteConfig {
         return onlyExecuteImage;
     }
 
-    public WorkerExecuteConfig withOnlyBuildImage(boolean arg) {
+    public WorkerExecutionConfig withOnlyBuildImage(boolean arg) {
         onlyBuildImage = arg;
         return this;
     }
@@ -132,7 +157,7 @@ public class WorkerExecuteConfig {
         return onlyBuildImage;
     }
 
-    public WorkerExecuteConfig withVerbose(boolean arg) {
+    public WorkerExecutionConfig withVerbose(boolean arg) {
         verbose = arg;
         return this;
     }
@@ -141,7 +166,7 @@ public class WorkerExecuteConfig {
         return verbose;
     }
 
-    public WorkerExecuteConfig withPublishExecutionImage(boolean arg) {
+    public WorkerExecutionConfig withPublishExecutionImage(boolean arg) {
         publishExecutionImage = arg;
         return this;
     }
@@ -150,7 +175,7 @@ public class WorkerExecuteConfig {
         return publishExecutionImage;
     }
 
-    public WorkerExecuteConfig withUseHostDocuments(boolean arg) {
+    public WorkerExecutionConfig withUseHostDocuments(boolean arg) {
         useHostDocuments = arg;
         return this;
     }
@@ -159,7 +184,7 @@ public class WorkerExecuteConfig {
         return useHostDocuments;
     }
 
-    public WorkerExecuteConfig withClassForExecution(Optional<String> arg) {
+    public WorkerExecutionConfig withClassForExecution(Optional<String> arg) {
         classForExecution = arg;
         return this;
     }
@@ -172,7 +197,7 @@ public class WorkerExecuteConfig {
         return executablePath;
     }
 
-    public WorkerExecuteConfig withExecutablePath(Optional<Trail> arg) {
+    public WorkerExecutionConfig withExecutablePath(Optional<Trail> arg) {
         executablePath = arg;
         return this;
     }
@@ -181,7 +206,7 @@ public class WorkerExecuteConfig {
         return command;
     }
 
-    public WorkerExecuteConfig withCommand(Optional<String> arg) {
+    public WorkerExecutionConfig withCommand(Optional<String> arg) {
         command = arg;
         return this;
     }

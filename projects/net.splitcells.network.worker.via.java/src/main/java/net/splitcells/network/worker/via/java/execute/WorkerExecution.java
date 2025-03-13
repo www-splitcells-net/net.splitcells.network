@@ -15,12 +15,28 @@
  */
 package net.splitcells.network.worker.via.java.execute;
 
-public class WorkerExecute {
-    public static void workerExecute(WorkerExecuteConfig config) {
+import java.util.Optional;
+import java.util.function.Consumer;
+
+public class WorkerExecution implements Consumer<WorkerExecutionConfig> {
+    public static WorkerExecution workerExecute(WorkerExecutionConfig config) {
+        return new WorkerExecution();
+    }
+
+    private String remoteExecutionScript = "";
+
+    private WorkerExecution() {
 
     }
 
-    private WorkerExecute() {
+    @Override
+    public void accept(WorkerExecutionConfig config) {
+        if (config.executeViaSshAt().isPresent()) {
+            remoteExecutionScript = config.shellArgumentString();
+        }
+    }
 
+    public String remoteExecutionScript() {
+        return remoteExecutionScript;
     }
 }
