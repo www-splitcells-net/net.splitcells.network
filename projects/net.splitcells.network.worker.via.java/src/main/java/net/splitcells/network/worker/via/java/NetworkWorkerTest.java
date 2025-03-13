@@ -13,29 +13,13 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.network.worker.via.java.execute;
+package net.splitcells.network.worker.via.java;
 
-import java.util.function.Consumer;
+import net.splitcells.dem.testing.annotations.UnitTest;
 
-public class WorkerExecution implements Consumer<WorkerExecutionConfig> {
-    public static WorkerExecution workerExecution() {
-        return new WorkerExecution();
-    }
+public class NetworkWorkerTest {
+    @UnitTest
+    public void test() {
 
-    private String remoteExecutionScript = "";
-
-    private WorkerExecution() {
-
-    }
-
-    @Override
-    public void accept(WorkerExecutionConfig config) {
-        if (config.executeViaSshAt().isPresent()) {
-            remoteExecutionScript = config.shellArgumentString();
-        }
-    }
-
-    public String remoteExecutionScript() {
-        return remoteExecutionScript;
     }
 }
