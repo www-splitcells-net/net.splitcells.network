@@ -345,11 +345,11 @@ function net_splitcells_gel_ui_editor_no_code_variable_access_delete(deleteButto
 }
 function net_splitcells_gel_ui_editor_no_code_function_call_delete(deleteButton) {
     $('.net-splitcells-no-code-update-subject')[0].parentNode.remove();
-    net_splitcells_gel_ui_editor_no_code_pop_ups_close();
+    net_splitcells_gel_ui_editor_no_code_action_menu_close();
 }
 function net_splitcells_gel_ui_editor_no_code_variable_definition_delete(deleteButton) {
     deleteButton.parentNode.parentNode.parentNode.removeChild(deleteButton.parentNode.parentNode);
-    net_splitcells_gel_ui_editor_no_code_pop_ups_close();
+    net_splitcells_gel_ui_editor_no_code_action_menu_close();
 }
 function net_splitcells_gel_ui_editor_no_code_function_call_set(setButton) {
     var httpRequest = new XMLHttpRequest();
