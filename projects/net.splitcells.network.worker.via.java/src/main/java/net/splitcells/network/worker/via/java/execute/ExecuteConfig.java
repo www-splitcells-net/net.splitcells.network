@@ -16,10 +16,13 @@
 package net.splitcells.network.worker.via.java.execute;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.dem.resource.Trail;
+import net.splitcells.dem.resource.host.HostFileSystem;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
 
 public class ExecuteConfig {
@@ -42,9 +45,19 @@ public class ExecuteConfig {
     private boolean autoConfigureCpuArchExplicitly = false;
     private List<Integer> portPublishing = list();
     private Optional<String> executeViaSshAt = Optional.empty();
+    private FileSystem fileSystem = configValue(HostFileSystem.class);
 
     private ExecuteConfig(String argName) {
         name = argName;
+    }
+
+    public ExecuteConfig withFileSystem(FileSystem arg) {
+        fileSystem = arg;
+        return this;
+    }
+
+    public FileSystem fileSystem() {
+        return fileSystem;
     }
 
     public ExecuteConfig withExecuteViaSshAt(Optional<String> arg) {
