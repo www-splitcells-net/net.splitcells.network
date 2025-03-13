@@ -16,6 +16,7 @@
 package net.splitcells.dem.resource.host;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.resource.communication.log.LogLevel;
@@ -24,11 +25,18 @@ import java.io.*;
 import java.nio.file.Path;
 import java.util.Arrays;
 
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.host.ShellResult.shellResult;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
+/**
+ * TODO Use only {@link #executeProgram(String...)}, where the first 2 arguments are "sh" "-c".
+ * The third argument is the sh script to be executed.
+ * The other functions do not have access to the same environment, as the user's default shell.
+ * For instance, the PATH variable seems to be different.
+ */
 @JavaLegacyArtifact
 public final class SystemUtils {
     private SystemUtils() {
