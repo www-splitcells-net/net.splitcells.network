@@ -77,7 +77,7 @@ public class WorkerExecutionConfig {
         result.append(" --only-build-image=" + escape(onlyBuildImage + ""));
         result.append(" --only-execute-image=" + escape(onlyExecuteImage + ""));
         result.append(" --dry-run=" + escape(dryRun + ""));
-        result.append(" --use-playwright" + escape(usePlaywright + ""));
+        result.append(" --use-playwright=" + escape(usePlaywright + ""));
         result.append(" --auto-configure-cpu-architecture-explicitly=" + escape(autoConfigureCpuArchExplicitly + ""));
         return result.toString();
     }
