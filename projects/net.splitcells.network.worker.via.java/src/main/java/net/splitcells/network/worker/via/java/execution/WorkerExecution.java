@@ -51,11 +51,12 @@ public class WorkerExecution implements Consumer<WorkerExecutionConfig> {
         dryRun = arg;
         return this;
     }
-
+    
     @Override
     public void accept(WorkerExecutionConfig config) {
         dryRun.ifPresent(config::withDryRun);
         if (config.executeViaSshAt().isPresent()) {
+            // `-t` prevents error, when a command like sudo is executed.
             remoteExecutionScript = "ssh "
                     + config.executeViaSshAt().orElseThrow()
                     + " -t"
