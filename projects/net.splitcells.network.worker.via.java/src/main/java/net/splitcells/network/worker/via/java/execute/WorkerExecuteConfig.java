@@ -38,7 +38,7 @@ public class WorkerExecuteConfig {
     private boolean publishExecutionImage = false;
     private boolean verbose = false;
     private boolean onlyBuildImage = false;
-    public boolean onlyExecuteImage = false;
+    private boolean onlyExecuteImage = false;
     private Optional<String> cpuArchitecture = Optional.empty();
     private boolean dryRun = false;
     private boolean usePlaywright = false;
