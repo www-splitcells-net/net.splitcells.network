@@ -32,7 +32,7 @@ import static net.splitcells.dem.resource.host.ShellResult.shellResult;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 /**
- * TODO Use only {@link #executeProgram(String...)}, where the first 2 arguments are "sh" "-c".
+ * TODO Use only {@link #executeShellCommand(String)}.
  * The third argument is the sh script to be executed.
  * The other functions do not have access to the same environment, as the user's default shell.
  * For instance, the PATH variable seems to be different.
@@ -43,6 +43,7 @@ public final class SystemUtils {
         throw constructorIllegal();
     }
 
+    @Deprecated
     public static ShellResult runShellScript(String command, Path workingDirectory) {
         final var rVal = new StringBuilder();
         final Process process;
@@ -82,6 +83,7 @@ public final class SystemUtils {
         return shellResult(process.exitValue(), rVal.toString());
     }
 
+    @Deprecated
     public static void executeShellScript(String command, Path workingDirectory) {
         // REMOVE or write output to log.
         System.out.println(command);
@@ -123,6 +125,7 @@ public final class SystemUtils {
         }
     }
 
+    @Deprecated
     public static void executeProgram(List<String> command, Path workingDirectory) {
         // REMOVE or write output to log.
         System.out.println(command);
@@ -162,6 +165,7 @@ public final class SystemUtils {
         }
     }
 
+    @Deprecated
     public static void executeProgram(String... command) {
         logs().append(tree("Executing program.").withChild(tree(Arrays.toString(command))), LogLevel.DEBUG);
         final Process process;
@@ -198,7 +202,7 @@ public final class SystemUtils {
     }
 
     public static void executeShellCommand(String script) {
-        executeProgram("/bin/bash", "-c", script);
+        executeProgram("sh", "-c", script);
     }
 
     /**
