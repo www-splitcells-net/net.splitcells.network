@@ -7,7 +7,7 @@
         SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
     -->
     <meta>
-        <title>Generic Allocator's Main Objectives</title>
+        <title>Main Objectives of The Generic Allocator</title>
     </meta>
     <paragraph>Enable the user to understand the results given a solver and a problem.
         The user should be able to understand the state of a solution, especially it's errors and costs in relation to a given problem.
@@ -15,5 +15,11 @@
         the user should be informed,
         why the given solver was not able to solve the given problem.
         Thereby, the user should know, what capabilities the solver is missing in order to solve the given problem.
+    </paragraph>
+    <paragraph>
+        The editor defines an interface for
+        <link url="https://live.splitcells.net/net/splitcells/gel/ui/editor/nocode/index.html">users</link>
+        and <link post="net/splitcells/gel/test/functionality/n-queen-problem.implementation">program developers</link>,
+        in order to define optimization problems.
     </paragraph>
 </article>

@@ -38,6 +38,7 @@
             <link post="/net/splitcells/network/community/projects/2024-04-06-school-organization-project">School Organization Project</link>
             <item>
                 Discovery based Networks of Perspectives and Changes as an overarching semantic inventory system (
+            <item>The<link post="/net/splitcells/gel/objectives">Generic Allocator</link>is the foundation for models and their optimization.</item>
                 This has no dedicated project yet and is part of the Symbiosis project.
                 This should probably be a subproject of the Network project.
                 Also, see `src/main/java/net/splitcells/dem/object/Discoverable.java` and `net.splitcells.shell` for info regarding existing implementations.)
