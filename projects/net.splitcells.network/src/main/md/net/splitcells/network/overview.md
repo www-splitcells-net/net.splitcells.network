@@ -71,13 +71,16 @@ Project Cluster
     * [system](./projects/net.splitcells.system/README.md):
       Manages all integrated subprojects of the network.
       In particular, it can be used to use all integrated projects as a dependency.
-* **Related projects/repositories**:
-  Related projects are located in repositories, which are at the same folder as the
-  [net.splitcells.network](http://splitcells.net) project.
-  These projects are not inside this repository and are managed more independently.
-  They may be managed by users with [OS state interface](./projects/net.splitcells.os.state.interface/README.md).
-  It is recommended to not nest repositories.
-    * `net.splitcells.network.log` contains data like benchmark results.
-    * `net.splitcells.os.state.interface.lib.*` are command repositories,
-      that can be used independently or can be registered to an installation
-      of `net.splitcells.os.state.interface`.
+
+Related projects are located in repositories, which are at the same folder as the
+[net.splitcells.network](http://splitcells.net) project and are sometimes called peer projects/repos
+(see [net.splitcells.osi.repos.peers files](https://codeberg.org/splitcells-net/net.splitcells.network.hub/src/branch/main/bin/net.splitcells.osi.repos.peers)).
+These projects are not inside this repository and are managed more independently.
+They may be managed by users with [OS state interface](./projects/net.splitcells.os.state.interface/README.md).
+It is recommended to not nest repositories.
+Examples are:
+
+* [net.splitcells.network.log](https://codeberg.org/splitcells-net/net.splitcells.network.log) contains data like benchmark results.
+* [net.splitcells.shell.lib.gpl.v2](https://codeberg.org/splitcells-net/net.splitcells.shell.lib.gpl.v2) is a command repository,
+  that can be used independently or can be registered to an installation
+  of `net.splitcells.shell`.
