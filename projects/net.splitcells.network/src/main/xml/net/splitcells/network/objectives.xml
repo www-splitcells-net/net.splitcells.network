@@ -5,11 +5,11 @@
             SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
             SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
         -->
-        <title>Splitcells Network's objective</title>
+        <title>Splitcells Network's Objective</title>
         <d:toDo>Convert each goal or part of it, in order to show, how these are achieved.</d:toDo>
     </meta>
     <chapter>
-        <title>Abstract goals of the Network project</title>
+        <title>Primary Goals of The Splitcells Network Project</title>
         <paragraph>
             We provide an open source ecosystem centered around optimization and operations research,
             in order to achieve the following:
@@ -26,10 +26,12 @@
         </list>
     </chapter>
     <chapter>
-        <title>Sub Projects to achieve the abstract goals</title>
+        <title>Subprojects to Achieve The Primary Goals</title>
         <paragraph>
-            In the following is a list of subprojects,
-            that demonstrate how the general goals of the project are fulfilled.
+            The <quote>Splitcells Network</quote> is the overarching project,
+            that brings everything together and establishes general project guidelines.
+            The following is a list of subprojects,
+            that demonstrate how the general goals of the project are fulfilled:
         </paragraph>
         <list>
             <link post="/net/splitcells/cin/objectives">Crisis Network Project</link>
@@ -43,10 +45,8 @@
         </list>
     </chapter>
     <chapter>
-        <title>Objective Relevant Guidelines and Decisions</title>
-        <paragraph>The following guidelines change or to be more precisely color the goals of the project
-            by effectively ruling out certain approaches to the objectives.
-            That in turn makes the actual ambitions more focused and concrete.
+        <title>Guidelines and Decisions Relevant for The Primary Goals</title>
+        <paragraph>The following list makes the approaches for reaching the objectives more focused and concrete:
         </paragraph>
         <list>
             <link post="net/splitcells/network/guidelines/inherently-broken-and-rotten-by-design">Inherently Broken and Rotten by Design</link>
