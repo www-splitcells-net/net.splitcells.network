@@ -633,12 +633,12 @@ document.addEventListener('DOMContentLoaded', function(){
                     <xsl:attribute name="id" select="$id"/>
                     <div class="heading">
                         <xsl:attribute name="id" select="./s:title/@id"/>
-                        <div style="width: 100%;">
-                            <a style="margin-right: .5em;">
-                                <xsl:attribute name="href" select="concat('#', $id)"/>
-                                <xsl:apply-templates select="./s:title/node()"/>
-                            </a>
-                            <div class="net-splitcells-action-button" style="float: right;">
+                        <a style="margin-right: .5em;" class="net-splitcells-heading-title">
+                            <xsl:attribute name="href" select="concat('#', $id)"/>
+                            <xsl:apply-templates select="./s:title/node()"/>
+                        </a>
+
+                            <div class="net-splitcells-action-button">
                                 <xsl:choose>
                                     <xsl:when test="$priority!='none'">
                                         <xsl:attribute name="class"
@@ -662,7 +662,6 @@ document.addEventListener('DOMContentLoaded', function(){
                                 </xsl:choose>
                                 <xsl:attribute name="id" select="concat($id, '-button-hide')"/>
                                 <xsl:attribute name="style">
-                                    <xsl:text>float: right;</xsl:text>
                                     <xsl:choose>
                                         <xsl:when test="./@minimized='true'">display: none; visibility: hidden;
                                         </xsl:when>
@@ -713,7 +712,7 @@ document.addEventListener('DOMContentLoaded', function(){
                                 </xsl:attribute>
                                 +
                             </div>
-                        </div>
+
                     </div>
                     <div>
                         <xsl:attribute name="id" select="concat($id, '-body')"/>

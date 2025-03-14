@@ -80,6 +80,7 @@ ol > ol {
     border-radius: var(--border-radius-for-actions);
     min-width: 1.5em;
     text-align: center;
+    height: 1.5em;
 }
 .net-splitcells-action-text-button {
     text-align: left;

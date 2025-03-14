@@ -459,12 +459,15 @@ h3, .heading {
 h4 {
     padding-left: .4em;
     }
-article .heading {
-    /* This s currently required, so that multi line headings are rendered correctly in mobile view.
-     * TODO Avoid using additional wrapper div inside heading, as this is causing problems.
-     * Use flex in order to format the heading and its buttons.
-     */
-    display: inline-block;
+ .net-splitcells-heading-title {
+    flex: 1;
+    }
+.heading {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    }
+article {
     width: 100%;
     }
 article .heading,
