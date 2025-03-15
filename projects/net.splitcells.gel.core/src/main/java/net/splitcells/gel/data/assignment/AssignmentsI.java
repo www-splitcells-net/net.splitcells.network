@@ -434,11 +434,7 @@ public class AssignmentsI implements Assignments {
 
     @Override
     public void remove(int lineIndex) {
-        try {
-            remove(assignments.rawLinesView().get(lineIndex));
-        } catch (Exception e) {
-            throw e;
-        }
+        remove(assignments.rawLinesView().get(lineIndex));
     }
 
     @Override
