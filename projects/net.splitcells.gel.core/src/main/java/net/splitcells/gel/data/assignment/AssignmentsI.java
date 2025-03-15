@@ -544,8 +544,7 @@ public class AssignmentsI implements Assignments {
 
     @Override
     public boolean equals(Object arg) {
-        if (arg instanceof Assignments) {
-            final var castedArg = (Assignments) arg;
+        if (arg instanceof Assignments castedArg) {
             return identity().equals(castedArg.identity());
         }
         throw ExecutionException.execException("Invalid argument type: " + arg);
