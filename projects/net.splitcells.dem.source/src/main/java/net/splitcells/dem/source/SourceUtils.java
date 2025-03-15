@@ -17,6 +17,10 @@ package net.splitcells.dem.source;/*
 import org.antlr.v4.runtime.ParserRuleContext;
 
 public class SourceUtils {
+    private SourceUtils() {
+        throw new RuntimeException();
+    }
+
     public static ParserRuleContext root(ParserRuleContext arg) {
         if (arg.getParent() == null) {
             return arg;
