@@ -175,8 +175,8 @@ public class MetaRatingI implements MetaRating {
 
     @Override
     public boolean equals(Object arg) {
-        if (arg instanceof Rating) {
-            final var equality = compare_partially_to((Rating) arg);
+        if (arg instanceof Rating other) {
+            final var equality = compare_partially_to(other);
             if (equality.isEmpty()) {
                 return false;
             }
@@ -192,8 +192,7 @@ public class MetaRatingI implements MetaRating {
 
     @Override
     public Optional<Ordering> compare_partially_to(Rating arg) {
-        if (arg instanceof MetaRating) {
-            final MetaRating other = (MetaRating) arg;
+        if (arg instanceof MetaRating other) {
             /* TODO This block is a hack patch.
              * if (!translator.equals(other.translator()) || !merger.equals(other.merger())) {
              *    return Optional.empty();
@@ -212,11 +211,11 @@ public class MetaRatingI implements MetaRating {
             }
             throw notImplementedYet();
         }
-        if (arg instanceof Cost) {
+        if (arg instanceof Cost otherCost) {
             if (content().containsKey(Cost.class)) {
                 return this.getContentValue(Cost.class).compare_partially_to(arg);
             }
-            if (content().isEmpty() && 0 == ((Cost) arg).value()) {
+            if (content().isEmpty() && 0 == (otherCost).value()) {
                 return Optional.of(EQUAL);
             }
             if (content().containsKey(Optimality.class)) {
