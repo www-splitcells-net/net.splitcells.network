@@ -445,13 +445,10 @@ public class AssignmentsI implements Assignments {
 
     @Override
     public Set<Line> assignmentsOfSupply(Line supply) {
-        if (ENFORCING_UNIT_CONSISTENCY) {
-            if (!usedSupplyIndexesToAllocationIndexes.containsKey(supply.index())) {
-                throw ExecutionException.execException(tree("No allocations for the given supply are present.")
-                        .withProperty("supply index", "" + supply.index())
-                        .withProperty("context path", "" + supply.context().path())
-                );
-            }
+        if (ENFORCING_UNIT_CONSISTENCY && !usedSupplyIndexesToAllocationIndexes.containsKey(supply.index())) {
+            throw ExecutionException.execException(tree("No allocations for the given supply are present.")
+                    .withProperty("supply index", "" + supply.index())
+                    .withProperty("context path", "" + supply.context().path()));
         }
         final Set<Line> allocationsOfSupply = setOfUniques();
         usedSupplyIndexesToAllocationIndexes
