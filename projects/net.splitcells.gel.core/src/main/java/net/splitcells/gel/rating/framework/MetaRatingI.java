@@ -223,10 +223,8 @@ public class MetaRatingI implements MetaRating {
             }
             throw notImplementedYet();
         }
-        if (arg instanceof Optimality) {
-            if (content().containsKey(Cost.class)) {
-                return this.getContentValue(Cost.class).compare_partially_to(arg);
-            }
+        if (arg instanceof Optimality && content().containsKey(Cost.class)) {
+            return this.getContentValue(Cost.class).compare_partially_to(arg);
         }
         throw notImplementedYet();
     }
