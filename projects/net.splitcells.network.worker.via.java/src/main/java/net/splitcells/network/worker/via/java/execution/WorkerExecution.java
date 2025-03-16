@@ -42,6 +42,103 @@ public class WorkerExecution {
         return workerExecution;
     }
 
+    private static final String DOCKERFILE_SERVICE_TEMPLATE = """
+            FROM docker.io/eclipse-temurin:21-jdk-noble
+            RUN apt-get clean
+            RUN apt-get update # This fixes install errors. It is unknown why this is the case.
+            RUN apt-get install --yes maven git python3 pip
+            ADD net.splitcells.network.worker.pom.xml /root/opt/$NAME_FOR_EXECUTION/pom.xml
+            # RUN pip install --break-system-packages playwright
+            # RUN playwright install --with-deps firefox # Install all OS dependencies, that are required for Playwright. Otherwise, Playwright cannot be used in Java.
+            # RUN cd /root/opt/$NAME_FOR_EXECUTION/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"
+            $ContainerSetupCommand
+            VOLUME /root/.local/
+            VOLUME /root/Documents/
+            VOLUME /root/.ssh/
+            VOLUME /root/.m2/
+            """;
+
+    private static final String POM = """
+            <project xmlns="http://maven.apache.org/POM/4.0.0"
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+                <modelVersion>4.0.0</modelVersion>
+                <groupId>net.splitcells</groupId>
+                <artifactId>network.worker.container.pom</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.microsoft.playwright</groupId>
+                        <artifactId>playwright</artifactId>
+                        <version>1.45.0</version>
+                    </dependency>
+                </dependencies>
+            </project>
+            """;
+
+    private static final String JAVA_CLASS_EXECUTION_TEMPLATE = """
+            COPY deployable-jars/* /root/opt/$NAME_FOR_EXECUTION/jars/
+            WORKDIR /root/opt/$NAME_FOR_EXECUTION/
+            ENTRYPOINT ["/opt/java/openjdk/bin/java"]
+            CMD ["-XX:ErrorFile=/root/.local/state/$NAME_FOR_EXECUTION/.local/dumps/hs_err_pid_%p.log", "-cp", "./jars/*", "$CLASS_FOR_EXECUTION"]
+            """;
+
+    private static final String PREPARE_EXECUTION_TEMPLATE = """
+            set -e
+            set -x
+            executionName="$executionName"
+            executionCommand="$executionCommand"
+            # Prepare file system.
+            mkdir -p $HOME/.local/state/$executionName/.m2/
+            mkdir -p $HOME/.local/state/$executionName/.ssh/
+            mkdir -p $HOME/.local/state/$executionName/.local/dumps
+            mkdir -p $HOME/.local/state/$executionName/Documents/
+            mkdir -p ./target/
+            test -f target/program-$executionName && chmod +x target/program-$executionName # This file does not exist, when '--executable-path' is not set.
+            podman build -f "target/Dockerfile-$executionName" \\
+                --tag "localhost/$executionName"  \\
+                --arch string \\
+                $additionalArguments \\
+                --log-level=warn # `--log-level=warn` is podman's default.
+                # Logging is used, in order to better understand build runtime performance.
+            """;
+
+    private static final String PREPARE_EXECUTION_WITHOUT_BUILD_TEMPLATE = """
+            set -e
+            set -x
+            executionName="$executionName"
+            # TODO executionCommand is currently not used.
+            executionCommand="$executionCommand"
+            # Prepare file system.
+            mkdir -p $HOME/.local/state/$executionName/.m2/
+            mkdir -p $HOME/.local/state/$executionName/.ssh/
+            mkdir -p $HOME/.local/state/$executionName/.local/
+            mkdir -p $HOME/.local/state/$executionName/Documents/
+            mkdir -p ./target/
+            test -f target/program-$executionName && chmod +x target/program-$executionName # This file does not exist, when '--executable-path' is not set.
+            """;
+
+    private static final String EXECUTE_VIA_PODMAN_TEMPLATE = """
+            set -x
+            podman run --name "$executionName" \\
+              --network slirp4netns:allow_host_loopback=true \\
+              $additionalArguments \\
+              --rm \\
+              -v $HOME/.local/state/$executionName/Documents:/root/Documents \\
+              -v $HOME/.local/state/$executionName/.ssh:/root/.ssh \\
+              -v $HOME/.local/state/$executionName/.m2:/root/.m2 \\
+              -v $HOME/.local/state/$executionName/.local:/root/.local \\
+              "$podmanParameters" \\
+              "localhost/$executionName"
+              #
+              # allow_host_loopback is required, so that the software in the container can connect to the host.
+            """;
+
+    private static final String PUBLISH_VIA_PODMAN_TEMPLATE = """
+            podman tag $executionName:latest codeberg.org/splitcells-net/$executionName:latest
+            podman push codeberg.org/splitcells-net/$executionName:latest
+            """;
+
     private boolean wasExecuted = false;
     private String remoteExecutionScript = "";
     private String dockerfile = "";
