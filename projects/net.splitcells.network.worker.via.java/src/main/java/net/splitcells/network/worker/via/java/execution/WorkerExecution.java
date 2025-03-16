@@ -43,6 +43,7 @@ public class WorkerExecution {
 
     private boolean wasExecuted = false;
     private final StringBuilder remoteExecutionScript = stringBuilder();
+    private StringBuilder dockerfile = stringBuilder();
 
     private WorkerExecution() {
 
@@ -74,5 +75,9 @@ public class WorkerExecution {
 
     public String remoteExecutionScript() {
         return remoteExecutionScript.toString();
+    }
+
+    public String dockerfile() {
+        return dockerfile.toString();
     }
 }
