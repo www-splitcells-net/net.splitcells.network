@@ -150,8 +150,8 @@ public class WorkerExecution {
     private boolean wasExecuted = false;
     private String remoteExecutionScript = "";
     private String dockerfile = "";
-    private Optional<String> dockerFilePath = Optional.empty();
-    private Optional<String> programName = Optional.empty();
+    private String dockerFilePath = "";
+    private String programName = "";
 
     private WorkerExecution() {
 
@@ -183,7 +183,7 @@ public class WorkerExecution {
         if (config.command().isPresent()) {
             dockerfile += "ENTRYPOINT " + config.command().get();
         } else if (config.executablePath().isPresent()) {
-            programName = Optional.of("program-" + config.name());
+            programName = "program-" + config.name();
             copyFileFrom(Path.of(config.executablePath().get().unixPathString()), Path.of("./target/" + programName.get()));
             dockerfile += "ADD ./" + programName + " /root/program\n";
             dockerfile += "ENTRYPOINT /root/program";
@@ -196,7 +196,7 @@ public class WorkerExecution {
             dockerfile = dockerfile.replace("$ContainerSetupCommand", "\n");
         }
         dockerfile = dockerfile.replace("$NAME_FOR_EXECUTION", config.name());
-        dockerFilePath = Optional.of("target/Dockerfile-" + config.name());
+        dockerFilePath = "target/Dockerfile-" + config.name();
     }
 
     public String remoteExecutionScript() {
@@ -207,7 +207,7 @@ public class WorkerExecution {
         return dockerfile;
     }
 
-    public Optional<String> programName() {
+    public String programName() {
         return programName;
     }
 }
