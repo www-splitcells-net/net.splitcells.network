@@ -15,15 +15,19 @@
  */
 package net.splitcells.network.worker.via.java.execution;
 
+import net.splitcells.dem.environment.config.framework.Option;
+import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.host.CurrentFileSystem;
 import net.splitcells.dem.utils.StringUtils;
 
+import java.nio.file.Path;
 import java.util.Optional;
 import java.util.function.Consumer;
 
 import static net.splitcells.dem.Dem.configValue;
+import static net.splitcells.dem.resource.Files.copyFileFrom;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
@@ -146,6 +150,7 @@ public class WorkerExecution {
     private boolean wasExecuted = false;
     private String remoteExecutionScript = "";
     private String dockerfile = "";
+    private Optional<String> programName = Optional.empty();
 
     private WorkerExecution() {
 
@@ -174,6 +179,16 @@ public class WorkerExecution {
         }
         configValue(CurrentFileSystem.class).createDirectoryPath("./target");
         dockerfile = DOCKERFILE_SERVICE_TEMPLATE;
+        if (config.command().isPresent()) {
+            dockerfile += "ENTRYPOINT " + config.command().get();
+        } else if (config.executablePath().isPresent()) {
+            programName = Optional.of("program-" + config.name());
+            copyFileFrom(Path.of(config.executablePath().get().unixPathString()), Path.of("./target/" + programName.get()));
+            dockerfile += "ADD ./" + programName + " /root/program\n";
+            dockerfile += "ENTRYPOINT /root/program";
+        } else {
+            throw execException("Either `--command`, `--executable-path` or `--class-for-execution` needs to be set.");
+        }
     }
 
     public String remoteExecutionScript() {
@@ -182,5 +197,9 @@ public class WorkerExecution {
 
     public String dockerfile() {
         return dockerfile;
+    }
+
+    public Optional<String> programName() {
+        return programName;
     }
 }
