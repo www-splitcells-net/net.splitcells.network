@@ -26,6 +26,11 @@ import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.host.SystemUtils.executeShellCommand;
 
+/**
+ * Executes something based on the given {@link WorkerExecutionConfig}.
+ * This class only stores the result of the execution.
+ * Any input is handled by {@link WorkerExecutionConfig}.
+ */
 public class WorkerExecution {
     public static WorkerExecution workerExecution(WorkerExecutionConfig config) {
         final var workerExecution = new WorkerExecution();
