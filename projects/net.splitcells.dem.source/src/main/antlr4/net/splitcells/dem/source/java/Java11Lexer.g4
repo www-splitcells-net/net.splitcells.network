@@ -198,6 +198,7 @@ lexer grammar Java11Lexer;
 		| '@'
 		| '%'
 		| '^'
+		| '"'
 		;
 	String
 		:'"' String_character* '"';
