@@ -190,6 +190,7 @@ public class WorkerExecution {
         }
         dockerFile = dockerFile.replace("$NAME_FOR_EXECUTION", config.name());
         dockerFilePath = "target/Dockerfile-" + config.name();
+        config.currentFileSystem().deleteIfExists(dockerFilePath);
     }
 
     public String remoteExecutionScript() {
