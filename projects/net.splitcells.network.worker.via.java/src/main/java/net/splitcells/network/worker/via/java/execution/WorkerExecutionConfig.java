@@ -18,6 +18,7 @@ package net.splitcells.network.worker.via.java.execution;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.dem.resource.Trail;
+import net.splitcells.dem.resource.host.CurrentFileSystem;
 import net.splitcells.dem.resource.host.HostFileSystem;
 import net.splitcells.dem.resource.host.UserHomeFileSystem;
 
@@ -59,6 +60,7 @@ public class WorkerExecutionConfig {
     private Optional<String> executeViaSshAt = Optional.empty();
     private FileSystem fileSystem = configValue(HostFileSystem.class);
     private FileSystem userHome = configValue(UserHomeFileSystem.class);
+    private FileSystem currentFileSystem = configValue(CurrentFileSystem.class);
 
     /**
      * @param arg Escapes a string,
@@ -272,6 +274,15 @@ public class WorkerExecutionConfig {
 
     public WorkerExecutionConfig withUserHome(FileSystem arg) {
         userHome = arg;
+        return this;
+    }
+
+    public FileSystem currentFileSystem() {
+        return currentFileSystem;
+    }
+
+    public WorkerExecutionConfig withCurrentFileSystem(FileSystem arg) {
+        currentFileSystem = arg;
         return this;
     }
 }
