@@ -58,6 +58,12 @@ public class FileSystemWriteWrapper implements FileSystem {
     }
 
     @Override
+    public FileSystem delete(String path) {
+        warnUsage();
+        return this;
+    }
+
+    @Override
     public InputStream inputStream(Path path) {
         return view.inputStream(path);
     }

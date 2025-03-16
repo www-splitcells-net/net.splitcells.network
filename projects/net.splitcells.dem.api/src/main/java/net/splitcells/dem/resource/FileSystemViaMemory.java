@@ -141,4 +141,14 @@ public class FileSystemViaMemory implements FileSystem {
         }
         return this;
     }
+
+    @Override
+    public FileSystem delete(String path) {
+        try {
+            Files.delete(backend.getPath(path));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return this;
+    }
 }

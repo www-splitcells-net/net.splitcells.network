@@ -135,6 +135,12 @@ public class FileSystems implements FileSystem {
                     baseFileSystem.createDirectoryPath(path);
                     return this;
                 }
+
+                @Override
+                public FileSystem delete(String path) {
+                    baseFileSystem.delete(path);
+                    return this;
+                }
             };
         } catch (IOException e) {
             throw execException(e);
@@ -162,6 +168,16 @@ public class FileSystems implements FileSystem {
             createDirectories(rootPath.resolve(path));
         } catch (IOException e) {
             throw new UncheckedIOException(e);
+        }
+        return this;
+    }
+
+    @Override
+    public FileSystem delete(String path) {
+        try {
+            java.nio.file.Files.delete(rootPath.resolve(path));
+        } catch (IOException e) {
+            throw execException(e);
         }
         return this;
     }

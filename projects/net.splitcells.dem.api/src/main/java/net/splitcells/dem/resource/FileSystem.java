@@ -83,6 +83,15 @@ public interface FileSystem extends FileSystemView {
         throw notImplementedYet();
     }
 
+    default FileSystem deleteIfExists(String path) {
+        if (isFile(path)) {
+            delete(path);
+        }
+        return this;
+    }
+
+    FileSystem delete(String path);
+
     /**
      * This method is used, in order make {@link FileSystem} compatible with tools,
      * that can only work with {@link Path}.

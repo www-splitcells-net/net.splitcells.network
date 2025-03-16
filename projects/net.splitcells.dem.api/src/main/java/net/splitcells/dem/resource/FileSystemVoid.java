@@ -127,4 +127,10 @@ public class FileSystemVoid implements FileSystem {
         warnUsage();
         return this;
     }
+
+    @Override
+    public FileSystem delete(String path) {
+        warnUsage();
+        return this;
+    }
 }
