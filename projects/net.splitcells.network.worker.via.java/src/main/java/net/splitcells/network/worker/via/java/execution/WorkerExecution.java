@@ -15,6 +15,7 @@
  */
 package net.splitcells.network.worker.via.java.execution;
 
+import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.host.CurrentFileSystem;
 import net.splitcells.dem.utils.StringUtils;
@@ -23,6 +24,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 import static net.splitcells.dem.Dem.configValue;
+import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.host.SystemUtils.executeShellCommand;
@@ -41,6 +43,8 @@ public class WorkerExecution {
         workerExecution.execute(config);
         return workerExecution;
     }
+
+    private static final Trail PODMAN_FLAGS_CONFIG_FILES = trail(".config/net.splitcells.network.worker/execute.podman.flags");
 
     private static final String DOCKERFILE_SERVICE_TEMPLATE = """
             FROM docker.io/eclipse-temurin:21-jdk-noble
