@@ -173,6 +173,7 @@ public class WorkerExecution {
             return;
         }
         configValue(CurrentFileSystem.class).createDirectoryPath("./target");
+        dockerfile = DOCKERFILE_SERVICE_TEMPLATE;
     }
 
     public String remoteExecutionScript() {
