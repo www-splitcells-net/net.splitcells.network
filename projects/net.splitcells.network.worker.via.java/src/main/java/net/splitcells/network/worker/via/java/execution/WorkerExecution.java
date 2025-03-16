@@ -15,16 +15,10 @@
  */
 package net.splitcells.network.worker.via.java.execution;
 
-import net.splitcells.dem.environment.config.framework.Option;
-import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.Trail;
-import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.host.CurrentFileSystem;
-import net.splitcells.dem.utils.StringUtils;
 
 import java.nio.file.Path;
-import java.util.Optional;
-import java.util.function.Consumer;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.resource.Files.copyFileFrom;
@@ -33,7 +27,6 @@ import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.host.SystemUtils.executeShellCommand;
 import static net.splitcells.dem.utils.ExecutionException.execException;
-import static net.splitcells.dem.utils.StringUtils.stringBuilder;
 
 /**
  * <p>Executes something based on the given {@link WorkerExecutionConfig}.
@@ -149,7 +142,7 @@ public class WorkerExecution {
 
     private boolean wasExecuted = false;
     private String remoteExecutionScript = "";
-    private String dockerfile = "";
+    private String dockerFile = "";
     private String dockerFilePath = "";
     private String programName = "";
 
@@ -179,23 +172,23 @@ public class WorkerExecution {
             return;
         }
         configValue(CurrentFileSystem.class).createDirectoryPath("./target");
-        dockerfile = DOCKERFILE_SERVICE_TEMPLATE;
+        dockerFile = DOCKERFILE_SERVICE_TEMPLATE;
         if (config.command().isPresent()) {
-            dockerfile += "ENTRYPOINT " + config.command().get();
+            dockerFile += "ENTRYPOINT " + config.command().get();
         } else if (config.executablePath().isPresent()) {
             programName = "program-" + config.name();
             copyFileFrom(Path.of(config.executablePath().get().unixPathString()), Path.of("./target/" + programName.get()));
-            dockerfile += "ADD ./" + programName + " /root/program\n";
-            dockerfile += "ENTRYPOINT /root/program";
+            dockerFile += "ADD ./" + programName + " /root/program\n";
+            dockerFile += "ENTRYPOINT /root/program";
         } else {
             throw execException("Either `--command`, `--executable-path` or `--class-for-execution` needs to be set.");
         }
         if (config.usePlaywright()) {
-            dockerfile = dockerfile.replace("$ContainerSetupCommand", "RUN cd /root/opt/$NAME_FOR_EXECUTION/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args=\"install-deps\"\n");
+            dockerFile = dockerFile.replace("$ContainerSetupCommand", "RUN cd /root/opt/$NAME_FOR_EXECUTION/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args=\"install-deps\"\n");
         } else {
-            dockerfile = dockerfile.replace("$ContainerSetupCommand", "\n");
+            dockerFile = dockerFile.replace("$ContainerSetupCommand", "\n");
         }
-        dockerfile = dockerfile.replace("$NAME_FOR_EXECUTION", config.name());
+        dockerFile = dockerFile.replace("$NAME_FOR_EXECUTION", config.name());
         dockerFilePath = "target/Dockerfile-" + config.name();
     }
 
@@ -204,7 +197,7 @@ public class WorkerExecution {
     }
 
     public String dockerfile() {
-        return dockerfile;
+        return dockerFile;
     }
 
     public String programName() {
