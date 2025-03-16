@@ -30,9 +30,10 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.stringBuilder;
 
 /**
- * Executes something based on the given {@link WorkerExecutionConfig}.
+ * <p>Executes something based on the given {@link WorkerExecutionConfig}.
  * This class only stores the result of the execution.
- * Any input is handled by {@link WorkerExecutionConfig}.
+ * Any input is handled by {@link WorkerExecutionConfig}.</p>
+ * <p>Strings instead of {@link StringBuilder} are used, so that replace methods can be used.</p>
  */
 public class WorkerExecution {
     public static WorkerExecution workerExecution(WorkerExecutionConfig config) {
@@ -42,8 +43,8 @@ public class WorkerExecution {
     }
 
     private boolean wasExecuted = false;
-    private final StringBuilder remoteExecutionScript = stringBuilder();
-    private StringBuilder dockerfile = stringBuilder();
+    private String remoteExecutionScript = "";
+    private String dockerfile = "";
 
     private WorkerExecution() {
 
@@ -56,12 +57,12 @@ public class WorkerExecution {
         wasExecuted = true;
         if (config.executeViaSshAt().isPresent()) {
             // `-t` prevents errors, when a command like sudo is executed.
-            remoteExecutionScript.append("ssh "
+            remoteExecutionScript = "ssh "
                     + config.executeViaSshAt().orElseThrow()
                     + " -t"
                     + " \"cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.execute "
                     + config.shellArgumentString(a -> !"execute-via-ssh-at".equals(a))
-                    + "\"");
+                    + "\"";
             if (config.verbose()) {
                 logs().append("Executing: " + remoteExecutionScript, INFO);
             }
@@ -74,10 +75,10 @@ public class WorkerExecution {
     }
 
     public String remoteExecutionScript() {
-        return remoteExecutionScript.toString();
+        return remoteExecutionScript;
     }
 
     public String dockerfile() {
-        return dockerfile.toString();
+        return dockerfile;
     }
 }
