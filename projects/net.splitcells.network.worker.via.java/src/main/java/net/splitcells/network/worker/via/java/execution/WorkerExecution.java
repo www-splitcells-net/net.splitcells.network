@@ -144,6 +144,7 @@ public class WorkerExecution {
 
     private boolean wasExecuted = false;
     private String remoteExecutionScript = "";
+    private String executionScript = "";
     private String dockerFile = "";
     private String dockerFilePath = "";
     private String programName = "";
