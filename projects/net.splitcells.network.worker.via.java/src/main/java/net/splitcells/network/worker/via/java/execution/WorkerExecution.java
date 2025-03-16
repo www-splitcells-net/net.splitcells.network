@@ -25,6 +25,7 @@ import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.host.SystemUtils.executeShellCommand;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
  * Executes something based on the given {@link WorkerExecutionConfig}.
@@ -38,6 +39,7 @@ public class WorkerExecution {
         return workerExecution;
     }
 
+    private boolean wasExecuted = false;
     private String remoteExecutionScript = "";
 
     private WorkerExecution() {
@@ -45,6 +47,10 @@ public class WorkerExecution {
     }
 
     private void execute(WorkerExecutionConfig config) {
+        if (wasExecuted) {
+            throw execException(getClass().getSimpleName() + " instance cannot be executed twice.");
+        }
+        wasExecuted = true;
         if (config.executeViaSshAt().isPresent()) {
             // `-t` prevents errors, when a command like sudo is executed.
             remoteExecutionScript = "ssh "
