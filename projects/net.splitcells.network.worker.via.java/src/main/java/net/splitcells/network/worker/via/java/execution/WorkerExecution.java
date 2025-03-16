@@ -17,6 +17,7 @@ package net.splitcells.network.worker.via.java.execution;
 
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.resource.host.CurrentFileSystem;
+import net.splitcells.dem.utils.StringUtils;
 
 import java.nio.file.Path;
 
@@ -27,6 +28,7 @@ import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.host.SystemUtils.executeShellCommand;
 import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.dem.utils.StringUtils.toBytes;
 
 /**
  * <p>Executes something based on the given {@link WorkerExecutionConfig}.
@@ -191,6 +193,7 @@ public class WorkerExecution {
         dockerFile = dockerFile.replace("$NAME_FOR_EXECUTION", config.name());
         dockerFilePath = "target/Dockerfile-" + config.name();
         config.currentFileSystem().deleteIfExists(dockerFilePath);
+        config.currentFileSystem().writeToFile(dockerFilePath, toBytes(dockerFile));
     }
 
     public String remoteExecutionScript() {
