@@ -19,6 +19,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.resource.host.HostFileSystem;
+import net.splitcells.dem.resource.host.UserHomeFileSystem;
 
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -57,6 +58,7 @@ public class WorkerExecutionConfig {
     private List<Integer> portPublishing = list();
     private Optional<String> executeViaSshAt = Optional.empty();
     private FileSystem fileSystem = configValue(HostFileSystem.class);
+    private FileSystem userHome = configValue(UserHomeFileSystem.class);
 
     /**
      * @param arg Escapes a string,
@@ -262,5 +264,14 @@ public class WorkerExecutionConfig {
 
     public String name() {
         return name;
+    }
+
+    public FileSystem userHome() {
+        return userHome;
+    }
+
+    public WorkerExecutionConfig withUserHome(FileSystem arg) {
+        userHome = arg;
+        return this;
     }
 }
