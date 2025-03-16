@@ -17,6 +17,7 @@ package net.splitcells.network.worker.via.java.execution;
 
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.host.CurrentFileSystem;
+import net.splitcells.dem.utils.StringUtils;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -26,6 +27,7 @@ import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.host.SystemUtils.executeShellCommand;
 import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.dem.utils.StringUtils.stringBuilder;
 
 /**
  * Executes something based on the given {@link WorkerExecutionConfig}.
@@ -40,7 +42,7 @@ public class WorkerExecution {
     }
 
     private boolean wasExecuted = false;
-    private String remoteExecutionScript = "";
+    private final StringBuilder remoteExecutionScript = stringBuilder();
 
     private WorkerExecution() {
 
@@ -53,17 +55,17 @@ public class WorkerExecution {
         wasExecuted = true;
         if (config.executeViaSshAt().isPresent()) {
             // `-t` prevents errors, when a command like sudo is executed.
-            remoteExecutionScript = "ssh "
+            remoteExecutionScript.append("ssh "
                     + config.executeViaSshAt().orElseThrow()
                     + " -t"
                     + " \"cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.execute "
                     + config.shellArgumentString(a -> !"execute-via-ssh-at".equals(a))
-                    + "\"";
+                    + "\"");
             if (config.verbose()) {
                 logs().append("Executing: " + remoteExecutionScript, INFO);
             }
             if (!config.dryRun()) {
-                executeShellCommand(remoteExecutionScript);
+                executeShellCommand(remoteExecutionScript.toString());
             }
             return;
         }
@@ -71,6 +73,6 @@ public class WorkerExecution {
     }
 
     public String remoteExecutionScript() {
-        return remoteExecutionScript;
+        return remoteExecutionScript.toString();
     }
 }
