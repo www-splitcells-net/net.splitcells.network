@@ -31,30 +31,14 @@ public class WorkerExecution implements Consumer<WorkerExecutionConfig> {
         return new WorkerExecution();
     }
 
-    /**
-     * We do not want to execute shell commands by accident and damage the operating system,
-     * which can be hard to detect, when the commands output is overlooked.
-     * Not executing shell commands is at least not actively harmful, and
-     * it is easier to detect, because some desired effect is missing.
-     * If something is not executed by accident and is also not required to be executed
-     * than the code is not of a good quality,
-     * but at least nothing is being potentially harmed.
-     */
-    private Optional<Boolean> dryRun = Optional.of(true);
     private String remoteExecutionScript = "";
 
     private WorkerExecution() {
 
     }
 
-    public WorkerExecution withDryRun(Optional<Boolean> arg) {
-        dryRun = arg;
-        return this;
-    }
-
     @Override
     public void accept(WorkerExecutionConfig config) {
-        dryRun.ifPresent(config::withDryRun);
         if (config.executeViaSshAt().isPresent()) {
             // `-t` prevents errors, when a command like sudo is executed.
             remoteExecutionScript = "ssh "

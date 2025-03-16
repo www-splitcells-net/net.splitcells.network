@@ -42,7 +42,16 @@ public class WorkerExecutionConfig {
     private boolean onlyBuildImage = false;
     private boolean onlyExecuteImage = false;
     private Optional<String> cpuArchitecture = Optional.empty();
-    private boolean dryRun = false;
+    /**
+     * We do not want to execute shell commands by accident and damage the operating system,
+     * which can be hard to detect, when the commands output is overlooked.
+     * Not executing shell commands is at least not actively harmful, and
+     * it is easier to detect, because some desired effect is missing.
+     * If something is not executed by accident and is also not required to be executed
+     * than the code is not of a good quality,
+     * but at least nothing is being potentially harmed.
+     */
+    private boolean dryRun = true;
     private boolean usePlaywright = false;
     private boolean autoConfigureCpuArchExplicitly = false;
     private List<Integer> portPublishing = list();
