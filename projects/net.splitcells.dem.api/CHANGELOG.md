@@ -80,6 +80,7 @@
      This also makes it possible to use the name `Resource` for an interface
      of resource like things.
 ### Minor Changes
+* **2025-03-16 \#59** Define UserHomeFileSystem option, that provides access to `~/`. 
 * **2024-11-19 \#51** Create wrapper for Java's `Collection#stream()`,
   in order to provide own additional methods fluently.
 * **2024-07-28 \#26** `NameSpace#isXmlAttribute` now encodes, if values of that namespace should be rendered as XML attributes.
