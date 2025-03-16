@@ -189,6 +189,11 @@ public class WorkerExecution {
         } else {
             throw execException("Either `--command`, `--executable-path` or `--class-for-execution` needs to be set.");
         }
+        if (config.usePlaywright()) {
+            dockerfile = dockerfile.replace("$ContainerSetupCommand", "RUN cd /root/opt/$NAME_FOR_EXECUTION/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args=\"install-deps\"\n");
+        } else {
+            dockerfile = dockerfile.replace("$ContainerSetupCommand", "\n");
+        }
     }
 
     public String remoteExecutionScript() {
