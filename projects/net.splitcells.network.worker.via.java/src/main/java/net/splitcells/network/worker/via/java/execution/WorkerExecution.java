@@ -177,7 +177,7 @@ public class WorkerExecution {
             dockerFile += "ENTRYPOINT " + config.command().get();
         } else if (config.executablePath().isPresent()) {
             programName = "program-" + config.name();
-            copyFileFrom(Path.of(config.executablePath().get().unixPathString()), Path.of("./target/" + programName.get()));
+            copyFileFrom(Path.of(config.executablePath().get().unixPathString()), Path.of("./target/" + programName));
             dockerFile += "ADD ./" + programName + " /root/program\n";
             dockerFile += "ENTRYPOINT /root/program";
         } else {
