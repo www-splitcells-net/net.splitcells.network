@@ -26,9 +26,11 @@ import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.host.SystemUtils.executeShellCommand;
 
-public class WorkerExecution implements Consumer<WorkerExecutionConfig> {
-    public static WorkerExecution workerExecution() {
-        return new WorkerExecution();
+public class WorkerExecution {
+    public static WorkerExecution workerExecution(WorkerExecutionConfig config) {
+        final var workerExecution = new WorkerExecution();
+        workerExecution.execute(config);
+        return workerExecution;
     }
 
     private String remoteExecutionScript = "";
@@ -37,8 +39,7 @@ public class WorkerExecution implements Consumer<WorkerExecutionConfig> {
 
     }
 
-    @Override
-    public void accept(WorkerExecutionConfig config) {
+    private void execute(WorkerExecutionConfig config) {
         if (config.executeViaSshAt().isPresent()) {
             // `-t` prevents errors, when a command like sudo is executed.
             remoteExecutionScript = "ssh "

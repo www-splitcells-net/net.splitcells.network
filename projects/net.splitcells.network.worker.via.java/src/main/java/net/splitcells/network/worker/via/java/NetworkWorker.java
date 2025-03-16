@@ -38,12 +38,10 @@ public class NetworkWorker {
     }
 
     public WorkerExecution testAtRemote(String hostname, Function<WorkerExecutionConfig, WorkerExecutionConfig> defaultConfig) {
-        final var workerExecution = workerExecution();
         final var config = defaultConfig.apply(workerExecutionConfig("net.splitcells.network.worker"))
                 .withExecuteViaSshAt(Optional.of(hostname))
                 .withCommand(Optional.of("cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap.container"))
                 .withAutoConfigureCpuArchExplicitly(true);
-        workerExecution.accept(config);
-        return workerExecution;
+        return workerExecution(config);
     }
 }
