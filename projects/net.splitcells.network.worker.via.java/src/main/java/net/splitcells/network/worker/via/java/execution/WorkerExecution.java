@@ -150,6 +150,7 @@ public class WorkerExecution {
     private boolean wasExecuted = false;
     private String remoteExecutionScript = "";
     private String dockerfile = "";
+    private Optional<String> dockerFilePath = Optional.empty();
     private Optional<String> programName = Optional.empty();
 
     private WorkerExecution() {
@@ -195,6 +196,7 @@ public class WorkerExecution {
             dockerfile = dockerfile.replace("$ContainerSetupCommand", "\n");
         }
         dockerfile = dockerfile.replace("$NAME_FOR_EXECUTION", config.name());
+        dockerFilePath = Optional.of("target/Dockerfile-" + config.name());
     }
 
     public String remoteExecutionScript() {
