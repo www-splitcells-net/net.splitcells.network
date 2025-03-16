@@ -194,6 +194,7 @@ public class WorkerExecution {
         } else {
             dockerfile = dockerfile.replace("$ContainerSetupCommand", "\n");
         }
+        dockerfile = dockerfile.replace("$NAME_FOR_EXECUTION", config.name());
     }
 
     public String remoteExecutionScript() {
