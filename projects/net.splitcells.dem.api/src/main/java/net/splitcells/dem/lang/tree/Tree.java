@@ -106,6 +106,10 @@ public interface Tree extends TreeView, Convertible {
         return withValues(TreeI.tree(text, STRING));
     }
 
+    default Tree withValue(String text, NameSpace nameSpace) {
+        return withValues(TreeI.tree(text, nameSpace));
+    }
+
     default Tree withProperty(String name, NameSpace nameSpace, String value) {
         return withValue(TreeI.tree(name, nameSpace)
                 .withValue(TreeI.tree(value, STRING)));
@@ -530,7 +534,12 @@ public interface Tree extends TreeView, Convertible {
             return "<empty/>";
         }
         if (children().isEmpty()) {
-            xmlString += "<" + toXmlElementStartName(xmlConfig) + "/>";
+            if (_VALID_XML_NAME.matcher(name()).matches()) {
+                xmlString += "<" + toXmlElementStartName(xmlConfig) + "/>";
+                xmlString += "</" + toXmlElementName(xmlConfig) + ">";
+            } else {
+                xmlString += name();
+            }
         } else {
             xmlString += "<" + toXmlElementStartName(xmlConfig) + ">";
             xmlString += children().stream()
