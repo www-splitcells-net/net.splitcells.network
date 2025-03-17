@@ -485,7 +485,7 @@ public interface Tree extends TreeView, Convertible {
         if (xmlConfig.printNameSpaceAttributeAtTop()) {
             final Set<NameSpace> nameSpaces = setOfUniques();
             visit(p -> nameSpaces.add(p.nameSpace()));
-            name += nameSpaceDeclarations(nameSpaces);
+            name += nameSpaceDeclarations(nameSpaces, xmlConfig);
         }
         name += children().stream()
                 .map(c -> {
@@ -593,6 +593,22 @@ public interface Tree extends TreeView, Convertible {
             declarations.append(n.uri());
             declarations.append("\" ");
         });
+        return declarations.toString();
+    }
+
+    private static String nameSpaceDeclarations(Set<NameSpace> nameSpaces, XmlConfig xmlConfig) {
+        final var declarations = stringBuilder();
+        nameSpaces.forEach(n -> {
+            declarations.append(" xmlns:");
+            declarations.append(n.defaultPrefix());
+            declarations.append("=\"");
+            declarations.append(n.uri());
+            declarations.append("\"");
+        });
+        declarations.append(" xmlns");
+        declarations.append("=\"");
+        declarations.append(xmlConfig.defaultNameSpace().uri());
+        declarations.append("\"");
         return declarations.toString();
     }
 
@@ -967,12 +983,12 @@ public interface Tree extends TreeView, Convertible {
     }
 
     /**
-     * @deprecated This method should be replaced by {@link #subtree(List)}.
-     * Currently, it cannot be replaced, because this method behaves differently and
-     * thereby causes problems in XmlProjectRendererExtension.
      * @param tree
      * @param path
      * @return
+     * @deprecated This method should be replaced by {@link #subtree(List)}.
+     * Currently, it cannot be replaced, because this method behaves differently and
+     * thereby causes problems in XmlProjectRendererExtension.
      */
     @Deprecated
     public static Tree subtree(Tree tree, List<String> path) {
@@ -1092,7 +1108,7 @@ public interface Tree extends TreeView, Convertible {
         final List<Tree> path = listWithValuesOf();
         Tree currentNode = this;
         if (config.checkRootNode() && !name().equals(stringPath.remove(0))) {
-                return Optional.empty();
+            return Optional.empty();
         }
         while (stringPath.hasElements()) {
             final var currentPathElement = stringPath.remove(0);

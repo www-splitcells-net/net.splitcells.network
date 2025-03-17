@@ -15,6 +15,8 @@
  */
 package net.splitcells.dem.lang.tree;
 
+import net.splitcells.dem.lang.namespace.NameSpace;
+import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.object.DeepCloneable2;
 
 public class XmlConfig implements DeepCloneable2<XmlConfig> {
@@ -24,6 +26,7 @@ public class XmlConfig implements DeepCloneable2<XmlConfig> {
 
     private boolean printNameSpaceAttributeAtTop = true;
     private boolean printXmlDeclaration = true;
+    private NameSpace defaultNameSpace = NameSpaces.STRING;
 
     private XmlConfig() {
 
@@ -51,6 +54,16 @@ public class XmlConfig implements DeepCloneable2<XmlConfig> {
     public XmlConfig deepClone() {
         return xmlConfig()
                 .withPrintNameSpaceAttributeAtTop(printNameSpaceAttributeAtTop)
-                .withPrintXmlDeclaration(printXmlDeclaration);
+                .withPrintXmlDeclaration(printXmlDeclaration)
+                .withDefaultNameSpace(defaultNameSpace);
+    }
+
+    public NameSpace defaultNameSpace() {
+        return this.defaultNameSpace;
+    }
+
+    public XmlConfig withDefaultNameSpace(NameSpace arg) {
+        defaultNameSpace = arg;
+        return this;
     }
 }
