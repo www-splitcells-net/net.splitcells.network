@@ -13,11 +13,10 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.network.worker.via.java;
+package net.splitcells.network.worker.via.java.repo;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.GitAPIException;
 
 import java.io.IOException;
 import java.net.InetAddress;

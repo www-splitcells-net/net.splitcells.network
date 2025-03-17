@@ -19,11 +19,7 @@ import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.resource.FileSystem;
-import net.splitcells.dem.resource.FileSystemVoid;
-import net.splitcells.dem.resource.FileSystemWriteWrapper;
 import net.splitcells.dem.resource.Files;
-import net.splitcells.dem.resource.communication.log.LogLevel;
-import net.splitcells.dem.resource.communication.log.Logs;
 import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestIdentifier;
@@ -40,7 +36,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.resource.ContentType.CSV;
 import static net.splitcells.dem.resource.communication.log.LogLevel.WARNING;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
-import static net.splitcells.network.worker.via.java.Repositories.repository;
+import static net.splitcells.network.worker.via.java.repo.Repositories.repository;
 
 /**
  * <p>Logs the runtime of tests into a project folder

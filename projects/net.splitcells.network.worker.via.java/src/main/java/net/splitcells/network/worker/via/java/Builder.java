@@ -17,13 +17,11 @@ package net.splitcells.network.worker.via.java;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.environment.config.ProgramName;
-import net.splitcells.dem.resource.FileSystems;
-import net.splitcells.dem.resource.host.SystemUtils;
+import net.splitcells.network.worker.via.java.repo.ProjectsFolder;
 
 import static net.splitcells.dem.Dem.config;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
-import static net.splitcells.dem.resource.Paths.userHome;
 import static net.splitcells.dem.testing.Test.testUnits;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.network.worker.via.java.Logger.logger;
