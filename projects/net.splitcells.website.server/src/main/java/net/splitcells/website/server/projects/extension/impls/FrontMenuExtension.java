@@ -16,31 +16,23 @@
 package net.splitcells.website.server.projects.extension.impls;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.tree.TreeI;
-import net.splitcells.dem.utils.StreamUtils;
-import net.splitcells.dem.utils.StringUtils;
-import net.splitcells.network.hub.NetworkHubFileSystem;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkIntegration;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.RenderRequest;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
-import org.commonmark.renderer.html.HtmlRenderer;
 
 import java.nio.file.Path;
 import java.util.Optional;
 
-import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
-import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.namespace.NameSpaces.HTML;
 import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
-import static net.splitcells.dem.utils.StringUtils.parseString;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 public class FrontMenuExtension implements ProjectsRendererExtension {
@@ -62,8 +54,7 @@ public class FrontMenuExtension implements ProjectsRendererExtension {
         if (EXTENSION_PATH.equals(path) && config.programConfigs().hasElements()) {
             final var article = TreeI.tree("article", SEW);
             final var metaColumnContent = commonMarkIntegration.renderBareHtml(
-                    configValue(NetworkHubFileSystem.class)
-                            .readString("README-for-users.md")
+                    config.frontMenuCommonMarkDescription()
                     , projectsRendererI.projectRenderers().get(0)
                     , EXTENSION_PATH.substring(1)
                     , config

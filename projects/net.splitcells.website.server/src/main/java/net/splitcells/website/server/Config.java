@@ -55,6 +55,11 @@ public class Config {
     private boolean isSecured = false;
 
     /**
+     * The content of the meta column in the HTML format.
+     */
+    private String frontMenuDescription = "Contains all major programs and documents of this site.";
+
+    /**
      * No SSL-Keystore is required by default, in order to easy minimal deployments.
      */
     private Optional<String> sslKeystorePassword = Optional.empty();
@@ -550,6 +555,15 @@ public class Config {
 
     public Config withIsMultiThreaded(boolean argIsMultiThreaded) {
         isMultiThreaded = argIsMultiThreaded;
+        return this;
+    }
+
+    public String frontMenuCommonMarkDescription() {
+        return frontMenuDescription;
+    }
+
+    public Config withFrontMenuCommonMarkDescription(String arg) {
+        frontMenuDescription = arg;
         return this;
     }
 }
