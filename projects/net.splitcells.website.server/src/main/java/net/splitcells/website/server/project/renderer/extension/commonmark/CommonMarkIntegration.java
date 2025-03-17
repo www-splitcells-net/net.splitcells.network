@@ -53,13 +53,26 @@ public class CommonMarkIntegration {
     private CommonMarkIntegration() {
     }
 
-    public byte[] render(String arg, ProjectRenderer projectRenderer, String path, Config config
+    public String renderBareHtml(String arg, ProjectRenderer projectRenderer, String path, Config config
             , ProjectsRenderer projectsRenderer) {
-        final Optional<String> title;
         final String contentToRender;
         if (arg.startsWith(LICENSE_HEADER)) {
             arg = arg.substring(LICENSE_HEADER.length()) + "\n\n" + LICENSE_HEADER;
         }
+        if (arg.startsWith("#")) {
+            final var titleLine = arg.split("[\r\n]+")[0];
+            contentToRender = arg.substring(titleLine.length());
+        } else {
+            contentToRender = arg;
+        }
+        final var parsed = parser.parse(contentToRender);
+        parsed.accept(linkTranslator(withoutSuffixElements(path, 1), projectsRenderer));
+        return renderer.render(parsed);
+    }
+
+    public byte[] render(String arg, ProjectRenderer projectRenderer, String path, Config config
+            , ProjectsRenderer projectsRenderer) {
+        final Optional<String> title;
         if (arg.startsWith("#")) {
             final var titleLine = arg.split("[\r\n]+")[0];
             /** This is a dirty quick hack. Note that rendering the title via CommonMark library,
@@ -69,15 +82,11 @@ public class CommonMarkIntegration {
             title = Optional.of(titleLine.replace("#", "")
                     .replaceAll("\\[™\\]\\(.*\\)", "™")
                     .trim());
-            contentToRender = arg.substring(titleLine.length());
         } else {
             title = Optional.empty();
-            contentToRender = arg;
         }
-        final var parsed = parser.parse(contentToRender);
-        parsed.accept(linkTranslator(withoutSuffixElements(path, 1), projectsRenderer));
         return projectRenderer
-                .renderHtmlBodyContent(renderer.render(parsed)
+                .renderHtmlBodyContent(renderBareHtml(arg, projectRenderer, path, config, projectsRenderer)
                         , title
                         , Optional.of(path)
                         , config
