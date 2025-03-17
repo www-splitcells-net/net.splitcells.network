@@ -31,6 +31,12 @@
             <version>${revision}</version>
         </dependency>
         <dependency>
+            <!-- TODO This is only required for an extension. In the future, the extensions should be moved outside this project, in order to keep the server's dependencies minimal. -->
+            <groupId>net.splitcells</groupId>
+            <artifactId>network.hub</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
             <groupId>net.splitcells</groupId>
             <artifactId>network.worker.via.java</artifactId>
             <version>${revision}</version>
