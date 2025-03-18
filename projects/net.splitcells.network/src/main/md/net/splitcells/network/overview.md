@@ -22,23 +22,27 @@ instead of foundational modules.
 <div align="center">
     <code class="mermaid">
 graph TD
-    developer --> Network
-    Osi --> repos.process
-    repos.process --> git
-    Network --> Osi
-    Network --> Blog
-    Dem --> Worker
-    Blog --> splitcells.net
-    Network --> Pom
-    Osi --> Osi.lib
-    Pom --> Dem
+    Developer --> Network-Project[Network Project]
+    Shell --> repos.process
+    Shell --> Shell-Libs[Shell Libs]
+    Shell --> Network-Worker
+    Network-Project --> Shell
+    Dem --> Network-Worker[Network Worker]
+    Community-Project --> Network-Distro
+    Network-Distro --> splitcells.net
+    Network-Project --> POMs 
+    POMs --> Dem
     Gel --> Sep
-    Worker --> Webserver
+    Gel --> Gel-Editor[Gel Editor]
+    Gel-Editor --> Gel-UI[Gel UI]
+    Network-Worker --> Webserver
     Sep --> Cin
     Webserver --> splitcells.net
     Webserver --> Gel
-    Webserver --> logs
-    splitcells.net --> user
+    Webserver --> Community-Project[Community Project]
+    Cin --> Network-Distro[Network Distro]
+    Gel-UI --> Network-Distro
+    splitcells.net[splitcells.net Deployment] --> user[End User]
     </code>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
