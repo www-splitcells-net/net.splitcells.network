@@ -53,6 +53,14 @@ public class CommonMarkIntegration {
     private CommonMarkIntegration() {
     }
 
+    public Optional<String> extractTitle(String arg) {
+        if (arg.startsWith("# ")) {
+            final var titleLine = arg.split("[\r\n]+")[0];
+            return Optional.of(arg.substring(2, titleLine.length()));
+        }
+        return Optional.empty();
+    }
+
     public String renderBareHtml(String arg, ProjectRenderer projectRenderer, String path, Config config
             , ProjectsRenderer projectsRenderer) {
         final String contentToRender;

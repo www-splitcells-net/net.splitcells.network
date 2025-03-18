@@ -705,7 +705,18 @@ request.send();]]>
                                                     </div>
                                                     <div class="net-splitcells-structural-guide"/>
                                                     <div id="net-splitcells-website-file-browser" class="net-splitcells-component-priority-2 splitcells-net-window-menu-line-2">
-                                                        <div class="splitcells-net-line-title">Meta</div>
+                                                        <xsl:message select="./s:content/s:meta/s:description-title"/>
+                                                        <xsl:message select="'test'"/>
+                                                        <xsl:choose>
+                                                            <xsl:when test="./s:content/s:meta/s:description-title">
+                                                                <div class="splitcells-net-line-title">
+                                                                    <xsl:copy-of select="./s:content/s:meta/s:description-title/node()"/>
+                                                                </div>
+                                                            </xsl:when>
+                                                            <xsl:otherwise>
+                                                                <div class="splitcells-net-line-title">Meta</div>
+                                                            </xsl:otherwise>
+                                                        </xsl:choose>
                                                     </div>
                                                 </div>
                                             </xsl:if>

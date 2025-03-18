@@ -28,8 +28,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
-import static net.splitcells.dem.lang.namespace.NameSpaces.HTML;
-import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
+import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
@@ -59,7 +58,10 @@ public class FrontMenuExtension implements ProjectsRendererExtension {
                     , EXTENSION_PATH.substring(1)
                     , config
                     , projectsRendererI);
-            article.withChild(TreeI.tree("meta", SEW)
+            final var metaTitle = commonMarkIntegration.extractTitle(config.frontMenuCommonMarkDescription());
+            final var articleMeta = TreeI.tree("meta", SEW);
+            metaTitle.ifPresent(mt -> articleMeta.withProperty("description-title", SEW, tree(mt, STRING)));
+            article.withChild(articleMeta
                     .withChildren(TreeI.tree("title", SEW).withText("Front Menu")
                             , TreeI.tree("description", SEW)
                                     .withValue(metaColumnContent, HTML)));
