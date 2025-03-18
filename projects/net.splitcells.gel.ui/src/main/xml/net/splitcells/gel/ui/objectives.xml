@@ -12,4 +12,9 @@
     <meta>
         <title>Generic Allocation UI Objectives</title>
     </meta>
+    <paragraph>The code editor provides a general programming language,
+        in order to persist, import and export optimization models.
+        At the same time the source code is realistically editable by the user with simple text editors.
+        As most programs are small a real IDE is not required for now.
+    </paragraph>
 </article>
