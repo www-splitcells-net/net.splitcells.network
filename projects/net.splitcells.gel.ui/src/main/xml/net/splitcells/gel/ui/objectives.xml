@@ -17,4 +17,9 @@
         At the same time the source code is realistically editable by the user with simple text editors.
         As most programs are small a real IDE is not required for now.
     </paragraph>
+    <paragraph>The no-code editor provides an interactive GUI to optimization models.
+        It makes features discoverable by the user and prohibits the user from constructing formally incorrect models.
+        The editor will also be the basis for a generic GUI for interacting
+        with complex program objects like configurations or persisted optimization models.
+    </paragraph>
 </article>
