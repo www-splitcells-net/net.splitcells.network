@@ -705,8 +705,6 @@ request.send();]]>
                                                     </div>
                                                     <div class="net-splitcells-structural-guide"/>
                                                     <div id="net-splitcells-website-file-browser" class="net-splitcells-component-priority-2 splitcells-net-window-menu-line-2">
-                                                        <xsl:message select="./s:content/s:meta/s:description-title"/>
-                                                        <xsl:message select="'test'"/>
                                                         <xsl:choose>
                                                             <xsl:when test="./s:content/s:meta/s:description-title">
                                                                 <div class="splitcells-net-line-title">
