@@ -21,6 +21,8 @@
         It makes features discoverable by the user and prohibits the user from constructing formally incorrect models.
         The editor will also be the basis for a generic GUI for interacting
         with complex program objects like configurations or persisted optimization models.
+        Unfortunately, for this to work,
+        the underlying abstract programming language would have to be made more general.
         No-code is no replacement for an editor documentation,
         as users have very limited alternative options to learn about the finer concept details of the software.
     </paragraph>
