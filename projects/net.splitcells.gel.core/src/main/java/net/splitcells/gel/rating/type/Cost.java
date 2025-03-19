@@ -78,8 +78,8 @@ public class Cost implements Rating {
 
     @Override
     public Optional<Ordering> compare_partially_to(Rating arg) {
-        if (arg instanceof Cost) {
-            final var order = COST_VALUE_COMPARISON.compareTo(value, ((Cost) arg).value());
+        if (arg instanceof Cost cost) {
+            final var order = COST_VALUE_COMPARISON.compareTo(value, cost.value());
             if (order.equals(EQUAL)) {
                 return Optional.of(EQUAL);
             } else if (order.equals(LESSER_THAN)) {
@@ -90,12 +90,11 @@ public class Cost implements Rating {
                 throw new IllegalArgumentException();
             }
         }
-        if (arg instanceof Optimality) {
-            final Optimality argOptimality = ((Optimality) arg);
-            if (argOptimality.value() == 1 && value == 0) {
+        if (arg instanceof Optimality optimality) {
+            if (optimality.value() == 1 && value == 0) {
                 return Optional.of(EQUAL);
             }
-            if (argOptimality.value() == 1 && value > 0) {
+            if (optimality.value() == 1 && value > 0) {
                 return Optional.of(LESSER_THAN);
             }
             return Optional.empty();
