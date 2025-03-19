@@ -25,6 +25,7 @@ public enum Formats {
     , CSS("text/css")
     , CSV("text/csv")
     , TEXT_PLAIN("text/plain")
+    , COMMON_MARK("text/markdown")
     , JSON("application/json")
     , XML("application/xml");
 
