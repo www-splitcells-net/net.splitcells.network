@@ -117,6 +117,10 @@ public interface ProjectRenderer extends Renderer {
                 , Optional.of(projectsRenderer));
     }
 
+    default void init(ProjectsRenderer renderer) {
+        // Nothing needs to be done.
+    }
+
     FileSystemView projectFileSystem();
 
     default Optional<PageMetaData> metaData(String path, ProjectsRenderer projectsRenderer) {
