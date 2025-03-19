@@ -34,6 +34,10 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkChangelogEventProjectRendererExtension.commonMarkChangelogEventRenderer;
 
+/**
+ * TODO The implementation details are obsolete.
+ * See {@link NotificationExtension}.
+ */
 public class GlobalChangelogExtension implements ProjectsRendererExtension {
     public static GlobalChangelogExtension globalChangelogExtension() {
         return new GlobalChangelogExtension();

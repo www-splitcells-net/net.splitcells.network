@@ -84,8 +84,6 @@ public interface ProjectsRenderer extends Firewall {
     @Deprecated
     void serveTo(Path target);
 
-    NotificationQueue notificationQueue();
-
     /**
      * <p>TODO This belongs to a dedicated class.</p>
      * <p>`ProjectsRenderer#httpServer()` should not be used anymore. Use `Server#serveToHttpAt()` instead, because multi threading is not supported for `ProjectsRenderer#httpServer()`.</p>

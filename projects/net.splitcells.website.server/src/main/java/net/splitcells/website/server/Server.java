@@ -121,11 +121,6 @@ public class Server {
             }
 
             @Override
-            public NotificationQueue notificationQueue() {
-                throw notImplementedYet();
-            }
-
-            @Override
             public Service httpServer() {
                 throw notImplementedYet();
             }

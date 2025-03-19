@@ -24,7 +24,6 @@ import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.utils.ExecutionException;
-import net.splitcells.website.server.notify.NotificationQueue;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.Renderer;
@@ -71,6 +70,7 @@ import static net.splitcells.website.server.projects.extension.impls.LayoutExten
 import static net.splitcells.website.server.projects.extension.impls.LayoutFancyTreeExtension.layoutFancyTreeExtension;
 import static net.splitcells.website.server.projects.extension.impls.LayoutTreeExtension.layoutTreeExtension;
 import static net.splitcells.website.server.projects.extension.impls.LicensePageExtension.licensePageExtension;
+import static net.splitcells.website.server.projects.extension.impls.NotificationExtension.notificationExtension;
 import static net.splitcells.website.server.projects.extension.impls.TestExtension.testExtension;
 import static net.splitcells.website.server.projects.extension.impls.UserProfilePageExtension.userProfilePageExtension;
 import static net.splitcells.website.server.projects.extension.status.HostCpuUtilizationExtension.hostCpuUtilizationExtension;
@@ -168,11 +168,6 @@ public class ProjectsRendererI implements ProjectsRenderer {
     }
 
     @Override
-    public NotificationQueue notificationQueue() {
-        return notificationQueue;
-    }
-
-    @Override
     public Service httpServer() {
         logs().appendWarning(tree("`ProjectsRenderer#httpServer()` should not be used anymore. Use `Server#serveToHttpAt()` instead, because multi threading is not supported for `ProjectsRenderer#httpServer()`."));
         build();
@@ -193,7 +188,6 @@ public class ProjectsRendererI implements ProjectsRenderer {
     private Optional<Set<Path>> projectPathsCache = Optional.empty();
     private final ProjectRenderer fallbackRenderer;
     private final RenderingValidator renderingValidator = renderingValidatorForHtmlLinks();
-    private final NotificationQueue notificationQueue = notificationQueue();
     /**
      * TODO In the future, all extensions should be added via dependency injection.
      */
@@ -215,6 +209,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
             , layoutFancyTreeExtension()
             , configDependencyRecordingExtension()
             , licensePageExtension()
+            , notificationExtension()
     );
 
     private ProjectsRendererI(String name
@@ -227,7 +222,6 @@ public class ProjectsRendererI implements ProjectsRenderer {
         this.config = config;
         config.projectsRendererExtensions().forEach(extension::withRegisteredExtension);
         extensions.addAll(config.projectsRendererExtensions());
-        renderers.forEach(r -> r.init(this));
     }
 
     private ProjectsRendererI(String name
@@ -240,7 +234,6 @@ public class ProjectsRendererI implements ProjectsRenderer {
         extensions.addAll(config.projectsRendererExtensions());
         this.fallbackRenderer = fallbackRenderer.apply(this);
         this.renderers = renderers.apply(this);
-        this.renderers.forEach(r -> r.init(this));
     }
 
     private String normalizedPath(String path) {
