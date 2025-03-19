@@ -55,6 +55,16 @@ import static org.w3c.dom.Node.ELEMENT_NODE;
  */
 @JavaLegacyArtifact
 public final class Xml {
+
+    public static String escape(String arg) {
+        return arg
+                .replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\"", "&quot;")
+                .replace("'", "&apos;")
+                .replace("~", "&Tilde;");
+    }
     /**
      * Using this is deprecated, because it causes race conditions.
      */
