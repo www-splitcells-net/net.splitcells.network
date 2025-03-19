@@ -107,15 +107,13 @@ public class Cost implements Rating {
     public Rating combine(Rating... additionalRatings) {
         if (additionalRatings.length == 1) {
             final Rating additionalRating = additionalRatings[0];
-            if (additionalRating instanceof Cost) {
-                final Cost otherCost = (Cost) additionalRating;
+            if (additionalRating instanceof Cost otherCost) {
                 return cost(value + otherCost.value);
             }
             if (additionalRating instanceof MetaRating) {
                 return additionalRating.combine(this);
             }
-            if (additionalRating instanceof Optimality) {
-                final Optimality additionalOptimality = (Optimality) additionalRating;
+            if (additionalRating instanceof Optimality additionalOptimality) {
                 if (additionalOptimality.value() == 1 && value == 0) {
                     throw notImplementedYet();
                 }
@@ -126,8 +124,8 @@ public class Cost implements Rating {
 
     @Override
     public boolean equals(Object ob) {
-        if (ob instanceof Rating) {
-            return compare_partially_to((Rating) ob).orElseThrow().equals(EQUAL);
+        if (ob instanceof Rating rating) {
+            return compare_partially_to(rating).orElseThrow().equals(EQUAL);
         }
         return false;
     }
