@@ -66,10 +66,8 @@ public class Cost implements Rating {
     }
 
     private Cost(double value) {
-        if (ENFORCING_UNIT_CONSISTENCY) {
-            if (value < 0) {
-                throw new IllegalArgumentException("" + value);
-            }
+        if (ENFORCING_UNIT_CONSISTENCY && value < 0) {
+            throw new IllegalArgumentException("" + value);
         }
         this.value = value;
     }
