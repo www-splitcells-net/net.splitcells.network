@@ -40,7 +40,7 @@ public class GroupMultiplier implements Rater {
     }
 
     private final List<Rater> classifiers;
-    private final Map<List<GroupId>, GroupId> groupMultiplier = map();
+    private final Map<List<GroupId>, GroupId> raterGroupsToResultGroup = map();
     private final List<Discoverable> contexts = list();
 
     private GroupMultiplier(Rater... classifiers) {
@@ -75,7 +75,7 @@ public class GroupMultiplier implements Rater {
                         .map(additionRating -> additionRating.resultingConstraintGroupId())
                         .collect(toList())
         );
-        groupMultiplier.computeIfAbsent(
+        raterGroupsToResultGroup.computeIfAbsent(
                 groupingOfAddition
                 , key -> key
                         .reduced((a, b) -> GroupId.multiply(a, b))
@@ -85,7 +85,7 @@ public class GroupMultiplier implements Rater {
                 , localRating()
                         .withPropagationTo(children)
                         .withRating(noCost())
-                        .withResultingGroupId(groupMultiplier.get(groupingOfAddition)));
+                        .withResultingGroupId(raterGroupsToResultGroup.get(groupingOfAddition)));
         return ratingEvent;
     }
 
