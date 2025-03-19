@@ -22,6 +22,7 @@ import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.website.Formats;
+import net.splitcells.website.server.notify.Notification;
 import net.splitcells.website.server.notify.NotificationQueue;
 import net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkChangelogEventProjectRendererExtension;
 import net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkIntegration;
@@ -31,6 +32,7 @@ import net.splitcells.website.server.projects.RenderResponse;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
 
 import java.nio.file.Path;
+import java.time.Instant;
 import java.time.ZoneId;
 import java.util.Optional;
 
@@ -45,6 +47,7 @@ import static net.splitcells.website.server.project.LayoutConfig.layoutConfig;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkChangelogEventProjectRendererExtension.commonMarkChangelogEventRenderer;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkIntegration.commonMarkIntegration;
 import static net.splitcells.website.server.projects.RenderResponse.renderResponse;
+import static net.splitcells.website.server.projects.extension.impls.ProjectPathsRequest.projectPathsRequest;
 import static net.splitcells.website.server.security.authorization.AdminRole.ADMIN_ROLE;
 import static net.splitcells.website.server.security.authorization.Authorization.missesRole;
 
@@ -76,6 +79,26 @@ public class NotificationExtension implements ProjectsRendererExtension {
                                     notification(event.dateTime().atZone(ZoneId.of("UTC")).toInstant()
                                             , HTML
                                             , renderer.render(event.node()))).toList());
+            notificationQueue.withAdditionalNotifications(
+                    projectsRenderer.projectPaths(projectPathsRequest(projectsRenderer).withUser(request.user()))
+                            .stream()
+                            .filter(p -> p.toString().startsWith("net/splitcells/network/community/blog/articles/"))
+                            .map(article ->
+                                    projectsRenderer.metaData(article.toString())
+                                            .flatMap(meta -> meta.title().map(title -> notification(Instant.now(), HTML, title))))
+                            .filter(Optional::isPresent)
+                            .map(Optional::get)
+                            .toList());
+            notificationQueue.withAdditionalNotifications(
+                    projectsRenderer.projectsPaths()
+                            .stream()
+                            .filter(p -> p.toString().startsWith("net/splitcells/network/community/blog/articles/"))
+                            .map(article ->
+                                    projectsRenderer.metaData(article.toString())
+                                            .flatMap(meta -> meta.title().map(title -> notification(Instant.now(), HTML, title))))
+                            .filter(Optional::isPresent)
+                            .map(Optional::get)
+                            .toList());
             if (ENFORCING_UNIT_CONSISTENCY) {
                 notificationQueue.notifications().forEach(n -> requireEquals(n.format(), HTML));
             }
