@@ -60,6 +60,7 @@ import net.splitcells.gel.rating.rater.framework.RatingEvent;
 public class MinimalDistance<T> implements Rater {
 
     public static final String MINIMAL_DISTANCE_NAME = "minimalDistance";
+
     public static MinimalDistance<Integer> has_minimal_distance_of(Attribute<Integer> attribute, double minimumDistance) {
         return minimalDistance(attribute, minimumDistance, ASCENDING_INTEGERS, MathUtils::distance);
     }
@@ -260,11 +261,11 @@ public class MinimalDistance<T> implements Rater {
 
     @Override
     public boolean equals(Object arg) {
-        if (arg != null && arg instanceof MinimalDistance) {
-            return this.minimumDistance == ((MinimalDistance) arg).minimumDistance
-                    && this.attribute.equals(((MinimalDistance) arg).attribute)
-                    && this.comparison.equals(((MinimalDistance) arg).comparison)
-                    && this.distanceMeassurer.equals(((MinimalDistance) arg).distanceMeassurer);
+        if (arg instanceof MinimalDistance<?> cArg) {
+            return this.minimumDistance == cArg.minimumDistance
+                    && this.attribute.equals(cArg.attribute)
+                    && this.comparison.equals(cArg.comparison)
+                    && this.distanceMeassurer.equals(cArg.distanceMeassurer);
         }
         return false;
     }
@@ -287,16 +288,8 @@ public class MinimalDistance<T> implements Rater {
     private Stream<Line> sortedStream(View lines) {
         return lines.rawLinesView().stream()
                 .filter(e -> e != null)
-                .sorted((a, b) -> {
-                            try {
-                                return comparison.compare
-                                        (a.value(LINE).value(attribute)
-                                                , b.value(LINE).value(attribute));
-                            } catch (RuntimeException e) {
-                                throw e;
-                            }
-                        }
-                );
+                .sorted((a, b) ->
+                        comparison.compare(a.value(LINE).value(attribute), b.value(LINE).value(attribute)));
     }
 
     private List<Line> sorted(View lines) {
