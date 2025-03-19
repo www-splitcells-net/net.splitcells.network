@@ -26,6 +26,7 @@ import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import static net.splitcells.dem.resource.Trail.withoutSuffixElements;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.LinkTranslator.linkTranslator;
@@ -43,6 +44,8 @@ public class CommonMarkIntegration {
             + ": Contributors To The `net.splitcells.*` Projects\n"
             + "----\n";
 
+    private static final Pattern TITLE = Pattern.compile("(.*)(title: )(.*)\n.*");
+
     public static CommonMarkIntegration commonMarkIntegration() {
         return new CommonMarkIntegration();
     }
@@ -54,6 +57,35 @@ public class CommonMarkIntegration {
     }
 
     public Optional<String> extractTitle(String arg) {
+        var title = extractTitleWithHeader(arg, "---\n");
+        if (title.isPresent()) {
+            return title;
+        }
+        title = extractTitleWithHeader(arg, "----\n");
+        if (title.isPresent()) {
+            return title;
+        }
+        return extractTitleWithoutHeader(arg);
+    }
+
+    public Optional<String> extractTitleWithHeader(String arg, String headerDelimiter) {
+        if (arg.startsWith(headerDelimiter)) {
+            final var headerSplit = arg.split(headerDelimiter);
+            if (headerSplit.length > 1) {
+                final var titleMatch = TITLE.matcher(headerSplit[1]);
+                if (titleMatch.matches()) {
+                    return Optional.of(titleMatch.group(1));
+                }
+
+            }
+            if (headerSplit.length > 2) {
+                return extractTitleWithoutHeader(headerSplit[2]);
+            }
+        }
+        return Optional.empty();
+    }
+
+    private Optional<String> extractTitleWithoutHeader(String arg) {
         if (arg.startsWith("# ")) {
             final var titleLine = arg.split("[\r\n]+")[0];
             return Optional.of(arg.substring(2, titleLine.length()));
