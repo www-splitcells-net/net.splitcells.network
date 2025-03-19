@@ -19,6 +19,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.website.server.Config;
+import net.splitcells.website.server.notify.NotificationQueue;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.processor.BinaryMessage;
@@ -82,6 +83,8 @@ public interface ProjectsRenderer extends Firewall {
      */
     @Deprecated
     void serveTo(Path target);
+
+    NotificationQueue notificationQueue();
 
     /**
      * <p>TODO This belongs to a dedicated class.</p>
