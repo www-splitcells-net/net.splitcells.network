@@ -52,6 +52,9 @@ import static net.splitcells.website.server.projects.extension.impls.ProjectPath
 import static net.splitcells.website.server.security.authorization.AdminRole.ADMIN_ROLE;
 import static net.splitcells.website.server.security.authorization.Authorization.missesRole;
 
+/**
+ * TODO IDEA Render Codeberg issues, that are relevant to this project.
+ */
 public class NotificationExtension implements ProjectsRendererExtension {
     private static final Trail PATH = trail("net/splitcells/website/notifications.html");
 
