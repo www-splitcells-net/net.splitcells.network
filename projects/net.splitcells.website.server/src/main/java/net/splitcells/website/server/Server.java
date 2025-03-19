@@ -43,6 +43,7 @@ import net.splitcells.dem.resource.communication.log.Logs;
 import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.website.Formats;
 import net.splitcells.website.server.config.PasswordAuthenticationEnabled;
+import net.splitcells.website.server.notify.NotificationQueue;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
@@ -116,6 +117,11 @@ public class Server {
 
             @Override
             public void serveTo(Path target) {
+                throw notImplementedYet();
+            }
+
+            @Override
+            public NotificationQueue notificationQueue() {
                 throw notImplementedYet();
             }
 
