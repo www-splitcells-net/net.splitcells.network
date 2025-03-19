@@ -117,35 +117,35 @@ public class MinimalDistance<T> implements Rater {
         return rateDistance(sorted(lines), children, Optional.of(addition));
     }
 
-    private RatingEvent rateDistance(List<Line> sortedLines, List<Constraint> children, Optional<Line> potential_new_line) {
+    private RatingEvent rateDistance(List<Line> sortedLines, List<Constraint> children, Optional<Line> potentialNewLine) {
         final var ratingEvent = ratingEvent();
         range(0, sortedLines.size()).forEach(i -> {
-            final var current_line = sortedLines.get(i);
-            potential_new_line.ifPresentOrElse(new_line -> {
-                        if (!new_line.equalsTo(current_line)) {
+            final var currentLine = sortedLines.get(i);
+            potentialNewLine.ifPresentOrElse(newLine -> {
+                        if (!newLine.equalsTo(currentLine)) {
                             ratingEvent.removal().add(sortedLines.get(i).value(LINE));
                         }
                     },
                     () -> ratingEvent.removal().add(sortedLines.get(i).value(LINE)));
             ratingEvent.addRating_viaAddition
-                    (current_line
+                    (currentLine
                             , noCost()
                             , children
                             , Optional.empty());
             range(0, i).forEach(left -> {
-                final var pairRating = pairRating(sortedLines.get(left), current_line);
+                final var pairRating = pairRating(sortedLines.get(left), currentLine);
                 // TODO PERFORAMNCE Only check rating, where it is needed.
                 ratingEvent.addRating_viaAddition
-                        (current_line
+                        (currentLine
                                 , pairRating
                                 , children
                                 , Optional.empty());
             });
             range(i + 1, sortedLines.size()).forEach(right -> {
-                final var pairRating = pairRating(current_line, sortedLines.get(right));
+                final var pairRating = pairRating(currentLine, sortedLines.get(right));
                 // TODO PERFORAMNCE Only check rating, where it is needed.
                 ratingEvent.addRating_viaAddition
-                        (current_line
+                        (currentLine
                                 , pairRating
                                 , children
                                 , Optional.empty());
