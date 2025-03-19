@@ -27,6 +27,7 @@ import net.splitcells.website.server.notify.Notification;
 import net.splitcells.website.server.notify.NotificationQueue;
 import net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkChangelogEventProjectRendererExtension;
 import net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkIntegration;
+import net.splitcells.website.server.project.renderer.extension.commonmark.NotificationParser;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.RenderRequest;
 import net.splitcells.website.server.projects.RenderResponse;
@@ -47,6 +48,7 @@ import static net.splitcells.website.server.notify.NotificationQueue.notificatio
 import static net.splitcells.website.server.project.LayoutConfig.layoutConfig;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkChangelogEventProjectRendererExtension.commonMarkChangelogEventRenderer;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkIntegration.commonMarkIntegration;
+import static net.splitcells.website.server.project.renderer.extension.commonmark.NotificationParser.parseNotifications;
 import static net.splitcells.website.server.projects.RenderResponse.renderResponse;
 import static net.splitcells.website.server.projects.extension.impls.ProjectPathsRequest.projectPathsRequest;
 import static net.splitcells.website.server.security.authorization.AdminRole.ADMIN_ROLE;
@@ -75,14 +77,9 @@ public class NotificationExtension implements ProjectsRendererExtension {
             final var notificationQueue = notificationQueue();
             notificationQueue.withAdditionalNotifications(
                     projectsRenderer.projectRenderers().stream()
-                            .map(pr -> eventUtils.extractEvent(pr.resourceRootPath2().resolve("CHANGELOG.events.html").toString(), pr, projectsRenderer.config()))
+                            .map(pr -> parseNotifications(pr))
                             .reduce(List::withAppended)
-                            .orElseGet(Lists::list)
-                            .stream()
-                            .map(event ->
-                                    notification(event.dateTime().atZone(ZoneId.of("UTC")).toInstant()
-                                            , HTML
-                                            , renderer.render(event.node()))).toList());
+                            .orElseGet(Lists::list));
             notificationQueue.withAdditionalNotifications(
                     projectsRenderer.projectPaths(projectPathsRequest(projectsRenderer).withUser(request.user()))
                             .stream()
