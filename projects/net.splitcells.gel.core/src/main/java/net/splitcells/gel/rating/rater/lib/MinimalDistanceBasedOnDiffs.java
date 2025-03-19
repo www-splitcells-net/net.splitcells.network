@@ -361,11 +361,11 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
 
     @Override
     public boolean equals(Object arg) {
-        if (arg != null && arg instanceof MinimalDistanceBasedOnDiffs) {
-            return this.minimumDistance == ((MinimalDistanceBasedOnDiffs) arg).minimumDistance
-                    && this.attribute.equals(((MinimalDistanceBasedOnDiffs) arg).attribute)
-                    && this.comparison.equals(((MinimalDistanceBasedOnDiffs) arg).comparison)
-                    && this.distanceMeassurer.equals(((MinimalDistanceBasedOnDiffs) arg).distanceMeassurer);
+        if (arg instanceof MinimalDistanceBasedOnDiffs cArg) {
+            return this.minimumDistance == cArg.minimumDistance
+                    && this.attribute.equals(cArg.attribute)
+                    && this.comparison.equals(cArg.comparison)
+                    && this.distanceMeassurer.equals(cArg.distanceMeassurer);
         }
         return false;
     }
@@ -388,16 +388,8 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
     private List<Line> sorted(View lines) {
         return lines.rawLinesView().stream()
                 .filter(e -> e != null)
-                .sorted((a, b) -> {
-                            try {
-                                return comparison.compare
-                                        (a.value(LINE).value(attribute)
-                                                , b.value(LINE).value(attribute));
-                            } catch (RuntimeException e) {
-                                throw e;
-                            }
-                        }
-                )
+                .sorted((a, b)
+                        -> comparison.compare(a.value(LINE).value(attribute), b.value(LINE).value(attribute)))
                 .collect(toList());
     }
 
