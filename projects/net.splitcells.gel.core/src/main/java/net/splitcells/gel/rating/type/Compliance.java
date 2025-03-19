@@ -64,8 +64,8 @@ public class Compliance implements Rating {
 
     @Override
     public boolean equals(Object arg) {
-        if (arg instanceof Compliance) {
-            return this.value == ((Compliance) arg).value;
+        if (arg instanceof Compliance compliance) {
+            return this.value == compliance.value;
         }
         return false;
     }
