@@ -18,7 +18,9 @@ package net.splitcells.website.server.projects.extension.impls;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.resource.Trail;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.website.Formats;
 import net.splitcells.website.server.notify.NotificationQueue;
 import net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkChangelogEventProjectRendererExtension;
@@ -33,7 +35,10 @@ import java.time.ZoneId;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.resource.Trail.trail;
+import static net.splitcells.dem.testing.Assertions.requireEquals;
+import static net.splitcells.website.Formats.HTML;
 import static net.splitcells.website.server.notify.Notification.notification;
 import static net.splitcells.website.server.notify.NotificationQueue.notificationQueue;
 import static net.splitcells.website.server.project.LayoutConfig.layoutConfig;
@@ -69,8 +74,11 @@ public class NotificationExtension implements ProjectsRendererExtension {
                             .stream()
                             .map(event ->
                                     notification(event.dateTime().atZone(ZoneId.of("UTC")).toInstant()
-                                            , Formats.HTML
+                                            , HTML
                                             , renderer.render(event.node()))).toList());
+            if (ENFORCING_UNIT_CONSISTENCY) {
+                notificationQueue.notifications().forEach(n -> requireEquals(n.format(), HTML));
+            }
             final var content = "<ol xmlns=\"http://www.w3.org/1999/xhtml\">"
                     + notificationQueue.notifications().reversed().stream()
                     .map(n -> n.content())
