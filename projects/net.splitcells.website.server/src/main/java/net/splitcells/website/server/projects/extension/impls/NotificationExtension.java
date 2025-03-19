@@ -19,6 +19,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.config.StaticFlags;
+import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.website.Formats;
@@ -85,7 +86,7 @@ public class NotificationExtension implements ProjectsRendererExtension {
                             .filter(p -> p.toString().startsWith("net/splitcells/network/community/blog/articles/"))
                             .map(article ->
                                     projectsRenderer.metaData(article.toString())
-                                            .flatMap(meta -> meta.title().map(title -> notification(Instant.now(), HTML, title))))
+                                            .flatMap(meta -> meta.title().map(title -> notification(Instant.now(), HTML, Xml.escape(title)))))
                             .filter(Optional::isPresent)
                             .map(Optional::get)
                             .toList());
@@ -95,7 +96,7 @@ public class NotificationExtension implements ProjectsRendererExtension {
                             .filter(p -> p.toString().startsWith("net/splitcells/network/community/blog/articles/"))
                             .map(article ->
                                     projectsRenderer.metaData(article.toString())
-                                            .flatMap(meta -> meta.title().map(title -> notification(Instant.now(), HTML, title))))
+                                            .flatMap(meta -> meta.title().map(title -> notification(Instant.now(), HTML, Xml.escape(title)))))
                             .filter(Optional::isPresent)
                             .map(Optional::get)
                             .toList());
