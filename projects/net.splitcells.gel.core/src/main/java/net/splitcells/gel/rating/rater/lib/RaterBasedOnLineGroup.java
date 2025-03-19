@@ -108,10 +108,8 @@ public class RaterBasedOnLineGroup implements Rater {
             @Override
             public RatingEvent rating(View lines, Optional<Line> addition, Optional<Line> removal, List<Constraint> children) {
                 final var rating = rater.routing(lines, children);
-                if (addition.isPresent()) {
-                    if (rating.removal().contains(addition.get())) {
-                        rating.removal().remove(addition.get());
-                    }
+                if (addition.isPresent() && rating.removal().contains(addition.get())) {
+                    rating.removal().remove(addition.get());
                 }
                 if (removal.isPresent()) {
                     if (rating.additions().keySet().contains(removal.get())) {
