@@ -125,8 +125,8 @@ public class HasMinimalSize implements Rater {
 
     @Override
     public boolean equals(Object arg) {
-        if (arg != null && arg instanceof HasMinimalSize) {
-            return this.minimalSize == ((HasMinimalSize) arg).minimalSize;
+        if (arg instanceof HasMinimalSize cArg) {
+            return this.minimalSize == cArg.minimalSize;
         }
         return false;
     }

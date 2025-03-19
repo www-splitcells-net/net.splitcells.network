@@ -97,8 +97,8 @@ public class MetaRatingMergerI implements MetaRatingMerger {
     @Deprecated
     private static List<Rating> simplify(Rating... ratings) {
         return list(ratings).stream().flatMap(rating -> {
-            if (rating instanceof MetaRating) {
-                return ((MetaRating) rating).content().values().stream();
+            if (rating instanceof MetaRating cRating) {
+                return cRating.content().values().stream();
             }
             return StreamUtils.streamOf(rating);
         }).collect(toList());

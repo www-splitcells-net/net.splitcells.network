@@ -130,8 +130,8 @@ public class HasSize implements Rater {
 
     @Override
     public boolean equals(Object arg) {
-        if (arg != null && arg instanceof HasSize) {
-            return this.targetSize == ((HasSize) arg).targetSize;
+        if (arg instanceof HasSize cArg) {
+            return this.targetSize == cArg.targetSize;
         }
         return false;
     }
