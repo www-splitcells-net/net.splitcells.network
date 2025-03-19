@@ -47,8 +47,8 @@ public class Compliance implements Rating {
 
     @Override
     public Optional<Ordering> compare_partially_to(Rating arg) {
-        if (arg instanceof Compliance) {
-            return Optional.of(COMPARISON.compareTo(value, ((Compliance) arg).value));
+        if (arg instanceof Compliance compliance) {
+            return Optional.of(COMPARISON.compareTo(value, compliance.value));
         }
         throw new IllegalArgumentException(arg.getClass().getName());
     }
