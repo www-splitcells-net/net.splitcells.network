@@ -15,6 +15,7 @@
  */
 package net.splitcells.website.server.projects.extension.impls;
 
+import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
@@ -39,6 +40,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
@@ -62,6 +64,7 @@ import static net.splitcells.website.server.security.authorization.Authorization
 public class NotificationExtension implements ProjectsRendererExtension {
     private static final Trail PATH = trail("net/splitcells/website/notifications.html");
     private static final DateTimeFormatter NOTIFICATION_DATE = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    public static final Pattern ARTICLE_FILE_NAME_DATE_PREFIX = Pattern.compile("\\d{4}-\\d{2}-\\d{2}-.*");
 
     public static NotificationExtension notificationExtension() {
         return new NotificationExtension();
@@ -72,6 +75,24 @@ public class NotificationExtension implements ProjectsRendererExtension {
 
     private NotificationExtension() {
 
+    }
+
+    /**
+     * @param fileName The file name of a blog article in the Network Community.
+     * @return The date time in the given {@code fileName}.
+     */
+    private static ZonedDateTime parseArticleDate(String fileName) {
+        if (ARTICLE_FILE_NAME_DATE_PREFIX.matcher(fileName).matches()) {
+            return ZonedDateTime.of(Integers.parse(fileName.substring(0, 4))
+                    , Integers.parse(fileName.substring(5, 7))
+                    , Integers.parse(fileName.substring(8, 10))
+                    , 0
+                    , 0
+                    , 0
+                    , 0
+                    , ZoneId.of("UTC"));
+        }
+        return ZonedDateTime.now();
     }
 
     @Override
@@ -89,7 +110,7 @@ public class NotificationExtension implements ProjectsRendererExtension {
                             .filter(p -> p.toString().startsWith("net/splitcells/network/community/blog/articles/"))
                             .map(article ->
                                     projectsRenderer.metaData(article.toString())
-                                            .flatMap(meta -> meta.title().map(title -> notification(ZonedDateTime.now(), HTML, Xml.escape(title)))))
+                                            .flatMap(meta -> meta.title().map(title -> notification(parseArticleDate(article.getFileName().toString()), HTML, Xml.escape(title)))))
                             .filter(Optional::isPresent)
                             .map(Optional::get)
                             .toList());
@@ -99,7 +120,7 @@ public class NotificationExtension implements ProjectsRendererExtension {
                             .filter(p -> p.toString().startsWith("net/splitcells/network/community/blog/articles/"))
                             .map(article ->
                                     projectsRenderer.metaData(article.toString())
-                                            .flatMap(meta -> meta.title().map(title -> notification(ZonedDateTime.now(), HTML, Xml.escape(title)))))
+                                            .flatMap(meta -> meta.title().map(title -> notification(parseArticleDate(article.getFileName().toString()), HTML, Xml.escape(title)))))
                             .filter(Optional::isPresent)
                             .map(Optional::get)
                             .toList());
