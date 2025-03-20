@@ -47,6 +47,10 @@ public class NotificationParser extends AbstractVisitor {
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public static final Pattern DATE_TIME_PATTERN = Pattern.compile("([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9])( .*)?");
+    /**
+     *
+     */
+    public static final Pattern DATE_PREFIX = Pattern.compile("<strong>\\d{4}-\\d{2}-\\d{2}.*");
     private static final Path CHANGELOG = Path.of("CHANGELOG.md");
 
     private static final Parser commonMarkParser = Parser.builder().build();
@@ -107,7 +111,7 @@ public class NotificationParser extends AbstractVisitor {
                     content = content.substring(0, content.length() - 1 - 5);
                 }
                 // The replace makes the regex work.
-                if (content.replace("\n", "").matches("<strong>\\d{4}-\\d{2}-\\d{2}.*")) {
+                if (DATE_PREFIX.matcher(content.replace("\n", "")).matches()) {
                     content = "<strong>" + content.substring(18);
                 }
                 parsedNotifications.add(notification(dateTime, Formats.HTML, content));
