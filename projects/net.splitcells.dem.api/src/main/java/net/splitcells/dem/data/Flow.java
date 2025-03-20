@@ -42,6 +42,10 @@ public interface Flow<T> extends java.util.stream.Stream<T> {
         return collect(Lists.toList());
     }
 
+    default Flow<T> concat(Stream<T> arg) {
+        return Flows.flow(java.util.stream.Stream.concat(this, arg));
+    }
+
     default Set<T> toSetOfUniques() {
         return collect(Sets.toSetOfUniques());
     }
