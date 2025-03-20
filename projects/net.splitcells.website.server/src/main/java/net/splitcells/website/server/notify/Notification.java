@@ -19,6 +19,7 @@ import net.splitcells.website.Formats;
 
 import java.time.Instant;
 import java.time.ZonedDateTime;
+import java.util.Optional;
 
 public class Notification {
     public static Notification notification(ZonedDateTime time, Formats format, String content) {
@@ -28,6 +29,8 @@ public class Notification {
     private final ZonedDateTime time;
     private final Formats format;
     private final String content;
+    private Optional<String> title = Optional.empty();
+    private Optional<String> link = Optional.empty();
 
     private Notification(ZonedDateTime argTime, Formats argFormat, String argContent) {
         time = argTime;
@@ -50,5 +53,23 @@ public class Notification {
     @Override
     public String toString() {
         return "time: " + time + ", format: " + format + ", content: " + content;
+    }
+
+    public Optional<String> title() {
+        return title;
+    }
+
+    public Notification withTitle(Optional<String> arg) {
+        title = arg;
+        return this;
+    }
+
+    public Optional<String> link() {
+        return link;
+    }
+
+    public Notification withLink(Optional<String> arg) {
+        link = arg;
+        return this;
     }
 }
