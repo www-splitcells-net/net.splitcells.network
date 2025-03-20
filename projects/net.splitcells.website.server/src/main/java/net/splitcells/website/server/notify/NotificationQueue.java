@@ -38,6 +38,12 @@ public class NotificationQueue {
         return this;
     }
 
+    public NotificationQueue withAdditionalNotification(Notification arg) {
+        notifications.add(arg);
+        notifications.sort((a, b) -> a.time().compareTo(b.time()));
+        return this;
+    }
+
     public ListView<Notification> notifications() {
         return notifications;
     }
