@@ -23,6 +23,7 @@ import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.testing.Assertions;
+import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.website.Formats;
 import net.splitcells.website.server.notify.Notification;
 import net.splitcells.website.server.notify.NotificationQueue;
@@ -46,6 +47,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
+import static net.splitcells.dem.utils.StreamUtils.concat;
 import static net.splitcells.website.Formats.HTML;
 import static net.splitcells.website.server.notify.Notification.notification;
 import static net.splitcells.website.server.notify.NotificationQueue.notificationQueue;
@@ -104,20 +106,12 @@ public class NotificationExtension implements ProjectsRendererExtension {
                             .map(pr -> parseNotifications(pr))
                             .reduce(List::withAppended)
                             .orElseGet(Lists::list));
+            final var paths = projectsRenderer
+                    .projectPaths(projectPathsRequest(projectsRenderer).withUser(request.user()))
+                    .stream()
+                    .concat(projectsRenderer.projectsPaths().stream());
             notificationQueue.withAdditionalNotifications(
-                    projectsRenderer.projectPaths(projectPathsRequest(projectsRenderer).withUser(request.user()))
-                            .stream()
-                            .filter(p -> p.toString().startsWith("net/splitcells/network/community/blog/articles/"))
-                            .map(article ->
-                                    projectsRenderer.metaData(article.toString())
-                                            .flatMap(meta -> meta.title().map(title -> notification(parseArticleDate(article.getFileName().toString()), HTML, Xml.escape(title)))))
-                            .filter(Optional::isPresent)
-                            .map(Optional::get)
-                            .toList());
-            notificationQueue.withAdditionalNotifications(
-                    projectsRenderer.projectsPaths()
-                            .stream()
-                            .filter(p -> p.toString().startsWith("net/splitcells/network/community/blog/articles/"))
+                    paths.filter(p -> p.toString().startsWith("net/splitcells/network/community/blog/articles/"))
                             .map(article ->
                                     projectsRenderer.metaData(article.toString())
                                             .flatMap(meta -> meta.title().map(title -> notification(parseArticleDate(article.getFileName().toString()), HTML, Xml.escape(title)))))
