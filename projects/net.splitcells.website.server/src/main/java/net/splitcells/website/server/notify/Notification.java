@@ -18,23 +18,24 @@ package net.splitcells.website.server.notify;
 import net.splitcells.website.Formats;
 
 import java.time.Instant;
+import java.time.ZonedDateTime;
 
 public class Notification {
-    public static Notification notification(Instant time, Formats format, String content) {
+    public static Notification notification(ZonedDateTime time, Formats format, String content) {
         return new Notification(time, format, content);
     }
 
-    private final Instant time;
+    private final ZonedDateTime time;
     private final Formats format;
     private final String content;
 
-    private Notification(Instant argTime, Formats argFormat, String argContent) {
+    private Notification(ZonedDateTime argTime, Formats argFormat, String argContent) {
         time = argTime;
         format = argFormat;
         content = argContent;
     }
 
-    public Instant time() {
+    public ZonedDateTime time() {
         return time;
     }
 

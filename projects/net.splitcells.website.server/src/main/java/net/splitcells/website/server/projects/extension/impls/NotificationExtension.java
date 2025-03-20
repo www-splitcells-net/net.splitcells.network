@@ -36,6 +36,8 @@ import net.splitcells.website.server.projects.extension.ProjectsRendererExtensio
 import java.nio.file.Path;
 import java.time.Instant;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
@@ -59,6 +61,7 @@ import static net.splitcells.website.server.security.authorization.Authorization
  */
 public class NotificationExtension implements ProjectsRendererExtension {
     private static final Trail PATH = trail("net/splitcells/website/notifications.html");
+    private static final DateTimeFormatter NOTIFICATION_DATE = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public static NotificationExtension notificationExtension() {
         return new NotificationExtension();
@@ -86,7 +89,7 @@ public class NotificationExtension implements ProjectsRendererExtension {
                             .filter(p -> p.toString().startsWith("net/splitcells/network/community/blog/articles/"))
                             .map(article ->
                                     projectsRenderer.metaData(article.toString())
-                                            .flatMap(meta -> meta.title().map(title -> notification(Instant.now(), HTML, Xml.escape(title)))))
+                                            .flatMap(meta -> meta.title().map(title -> notification(ZonedDateTime.now(), HTML, Xml.escape(title)))))
                             .filter(Optional::isPresent)
                             .map(Optional::get)
                             .toList());
@@ -96,7 +99,7 @@ public class NotificationExtension implements ProjectsRendererExtension {
                             .filter(p -> p.toString().startsWith("net/splitcells/network/community/blog/articles/"))
                             .map(article ->
                                     projectsRenderer.metaData(article.toString())
-                                            .flatMap(meta -> meta.title().map(title -> notification(Instant.now(), HTML, Xml.escape(title)))))
+                                            .flatMap(meta -> meta.title().map(title -> notification(ZonedDateTime.now(), HTML, Xml.escape(title)))))
                             .filter(Optional::isPresent)
                             .map(Optional::get)
                             .toList());
@@ -105,7 +108,7 @@ public class NotificationExtension implements ProjectsRendererExtension {
             }
             final var content = "<ol xmlns=\"http://www.w3.org/1999/xhtml\">"
                     + notificationQueue.notifications().reversed().stream()
-                    .map(n -> "<li>" + n.content() + "</li>")
+                    .map(n -> "<li><strong>" + NOTIFICATION_DATE.format(n.time()) + "</strong>: " + n.content() + "</li>")
                     .reduce((a, b) -> a + "\n" + b)
                     .orElse("")
                     + "</ol>";

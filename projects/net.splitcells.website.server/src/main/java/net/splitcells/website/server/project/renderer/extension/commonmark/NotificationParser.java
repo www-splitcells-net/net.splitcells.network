@@ -97,8 +97,7 @@ public class NotificationParser extends AbstractVisitor {
             final var dateMatcher = DATE_TIME_PATTERN.matcher(possibleDateText);
             if (dateMatcher.matches()) {
                 final var dateTime = LocalDate.parse(dateMatcher.group(1), DATE_TIME_FORMATTER)
-                        .atStartOfDay(ZoneId.of("UTC"))
-                        .toInstant();
+                        .atStartOfDay(ZoneId.of("UTC"));
                 var content = renderer.render(listItem);
                 if (content.startsWith("<li>")) {
                     content = content.substring(4);

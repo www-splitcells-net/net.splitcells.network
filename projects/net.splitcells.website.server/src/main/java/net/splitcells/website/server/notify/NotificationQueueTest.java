@@ -19,6 +19,8 @@ import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.website.Formats;
 
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.website.Formats.COMMON_MARK;
@@ -29,12 +31,14 @@ public class NotificationQueueTest {
     @UnitTest
     public void testWithAdditionalNotifications() {
         final var testSubject = notificationQueue();
-        final var testData1 = list(notification(Instant.ofEpochMilli(1000), COMMON_MARK, "A")
-                , notification(Instant.ofEpochMilli(1010), COMMON_MARK, "B")
-                , notification(Instant.ofEpochMilli(1030), COMMON_MARK, "C"));
-        final var testData2 = list(notification(Instant.ofEpochMilli(1000), COMMON_MARK, "D")
-                , notification(Instant.ofEpochMilli(1011), COMMON_MARK, "E")
-                , notification(Instant.ofEpochMilli(1029), COMMON_MARK, "F"));
+
+
+        final var testData1 = list(notification(ZonedDateTime.of(1992,3,11,0,0,0,1000, ZoneId.of("UTC")), COMMON_MARK, "A")
+                , notification(ZonedDateTime.of(1992,3,11,0,0,0,1010, ZoneId.of("UTC")), COMMON_MARK, "B")
+                , notification(ZonedDateTime.of(1992,3,11,0,0,0,1030, ZoneId.of("UTC")), COMMON_MARK, "C"));
+        final var testData2 = list(notification(ZonedDateTime.of(1992,3,11,0,0,0,1000, ZoneId.of("UTC")), COMMON_MARK, "D")
+                , notification(ZonedDateTime.of(1992,3,11,0,0,0,1011, ZoneId.of("UTC")), COMMON_MARK, "E")
+                , notification(ZonedDateTime.of(1992,3,11,0,0,0,1029, ZoneId.of("UTC")), COMMON_MARK, "F"));
         testSubject.withAdditionalNotifications(testData1);
         testSubject.withAdditionalNotifications(testData2);
         testSubject.notifications().requireEquals(list(
