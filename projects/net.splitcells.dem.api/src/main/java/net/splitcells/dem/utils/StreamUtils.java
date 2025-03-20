@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.utils;
 
+import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
@@ -27,7 +28,11 @@ import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
+/**
+ * @see {@link Flow}
+ */
 @JavaLegacyArtifact
+@Deprecated
 public final class StreamUtils {
 
     private StreamUtils() {
@@ -38,6 +43,7 @@ public final class StreamUtils {
         return Stream.of(args);
     }
 
+    @Deprecated
     public static <T> Stream<T> concat(Stream<T> a, Stream<T> b) {
         return java.util.stream.Stream.concat(a, b);
     }
