@@ -77,6 +77,12 @@ public class NotificationParser extends AbstractVisitor {
         return parser.parsedNotifications;
     }
 
+    /**
+     * The rendering is a hack, because it is not known,
+     * how to just render a list item's content while skipping the first AST element.
+     *
+     * @param listItem
+     */
     @Override
     public void visit(ListItem listItem) {
         final var itemContent = listItem.getFirstChild();
@@ -93,13 +99,14 @@ public class NotificationParser extends AbstractVisitor {
                 final var dateTime = LocalDate.parse(dateMatcher.group(1), DATE_TIME_FORMATTER)
                         .atStartOfDay(ZoneId.of("UTC"))
                         .toInstant();
-                var content = StringUtils.stringBuilder();
-                var currentChild = listItem.getFirstChild();
-                while (currentChild != null) {
-                    content.append(renderer.render(currentChild));
-                    currentChild = currentChild.getNext();
+                var content = renderer.render(listItem);
+                if (content.startsWith("<li>")) {
+                    content = content.substring(4);
                 }
-                parsedNotifications.add(Notification.notification(dateTime, Formats.HTML, content.toString()));
+                if (content.endsWith("</li>\n")) {
+                    content = content.substring(0, content.length() - 1 - 5);
+                }
+                parsedNotifications.add(Notification.notification(dateTime, Formats.HTML, content));
             }
         }
         visitChildren(listItem);
