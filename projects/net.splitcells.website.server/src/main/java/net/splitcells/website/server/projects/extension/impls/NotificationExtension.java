@@ -27,6 +27,7 @@ import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.website.Formats;
 import net.splitcells.website.server.notify.Notification;
 import net.splitcells.website.server.notify.NotificationQueue;
+import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkChangelogEventProjectRendererExtension;
 import net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkIntegration;
 import net.splitcells.website.server.project.renderer.extension.commonmark.NotificationParser;
@@ -110,14 +111,17 @@ public class NotificationExtension implements ProjectsRendererExtension {
                     .projectPaths(projectPathsRequest(projectsRenderer).withUser(request.user()))
                     .stream()
                     .concat(projectsRenderer.projectsPaths().stream());
-            notificationQueue.withAdditionalNotifications(
-                    paths.filter(p -> p.toString().startsWith("net/splitcells/network/community/blog/articles/"))
-                            .map(article ->
-                                    projectsRenderer.metaData(article.toString())
-                                            .flatMap(meta -> meta.title().map(title -> notification(parseArticleDate(article.getFileName().toString()), HTML, Xml.escape(title)))))
-                            .filter(Optional::isPresent)
-                            .map(Optional::get)
-                            .toList());
+            paths.filter(p -> p.toString().startsWith("net/splitcells/network/community/blog/articles/"))
+                    .forEach(article -> {
+                                final var metaData = projectsRenderer.metaData(article.toString());
+                                final var title = metaData.flatMap(PageMetaData::title);
+                                if (title.isPresent()) {
+                                    notificationQueue.withAdditionalNotification(notification(parseArticleDate(article.getFileName().toString()), HTML, "")
+                                            .withTitle(Optional.of(Xml.escape(title.get())))
+                                            .withLink(Optional.of("/" + article))
+                                    );
+                                }
+                            });
             if (ENFORCING_UNIT_CONSISTENCY) {
                 notificationQueue.notifications().forEach(n -> requireEquals(n.format(), HTML));
             }
