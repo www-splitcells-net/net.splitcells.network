@@ -35,6 +35,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.website.server.notify.Notification.notification;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkIntegration.commonMarkIntegration;
 
 /**
@@ -105,7 +106,11 @@ public class NotificationParser extends AbstractVisitor {
                 if (content.endsWith("</li>\n")) {
                     content = content.substring(0, content.length() - 1 - 5);
                 }
-                parsedNotifications.add(Notification.notification(dateTime, Formats.HTML, content));
+                // The replace makes the regex work.
+                if (content.replace("\n", "").matches("<strong>\\d{4}-\\d{2}-\\d{2}.*")) {
+                    content = "<strong>" + content.substring(18);
+                }
+                parsedNotifications.add(notification(dateTime, Formats.HTML, content));
             }
         }
         visitChildren(listItem);
