@@ -29,7 +29,8 @@ import static java.util.stream.Collectors.toList;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 /**
- * @see {@link Flow}
+ *
+ * @deprecated {@link Flow} is the replacement.
  */
 @JavaLegacyArtifact
 @Deprecated
