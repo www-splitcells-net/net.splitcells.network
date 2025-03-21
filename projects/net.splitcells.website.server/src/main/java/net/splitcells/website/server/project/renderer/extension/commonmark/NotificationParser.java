@@ -32,6 +32,7 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -56,19 +57,20 @@ public class NotificationParser extends AbstractVisitor {
     private static final Parser commonMarkParser = Parser.builder().build();
     private final CommonMarkIntegration renderer = commonMarkIntegration();
     private List<Notification> parsedNotifications = list();
+    private final String changelogPath;
 
-    private NotificationParser() {
-
+    private NotificationParser(String argChangelogPath) {
+        changelogPath = argChangelogPath;
     }
 
     public static List<Notification> parseNotifications(ProjectRenderer projectRenderer) {
         if (projectRenderer.projectFileSystem().isFile(CHANGELOG)) {
-            return parseNotifications(projectRenderer.projectFileSystem().readString(CHANGELOG));
+            return parseNotifications(projectRenderer.projectFileSystem().readString(CHANGELOG), projectRenderer.resourceRootPath2().toString() + "/CHANGELOG.html");
         }
         return list();
     }
 
-    public static List<Notification> parseNotifications(String eventsAsCommonMark) {
+    private static List<Notification> parseNotifications(String eventsAsCommonMark, String changelogPath) {
         final String contentToRender;
         if (eventsAsCommonMark.startsWith("#")) {
             final var titleLine = eventsAsCommonMark.split("[\r\n]+")[0];
@@ -77,7 +79,7 @@ public class NotificationParser extends AbstractVisitor {
             contentToRender = eventsAsCommonMark;
         }
         final var parsing = commonMarkParser.parse(contentToRender);
-        final var parser = new NotificationParser();
+        final var parser = new NotificationParser(changelogPath);
         parsing.accept(parser);
         return parser.parsedNotifications;
     }
@@ -114,7 +116,8 @@ public class NotificationParser extends AbstractVisitor {
                 if (DATE_PREFIX.matcher(content.replace("\n", "")).matches()) {
                     content = "<strong>" + content.substring(18);
                 }
-                parsedNotifications.add(notification(dateTime, Formats.HTML, content));
+                parsedNotifications.add(notification(dateTime, Formats.HTML, content)
+                        .withLink(Optional.of(changelogPath)));
             }
         }
         visitChildren(listItem);
