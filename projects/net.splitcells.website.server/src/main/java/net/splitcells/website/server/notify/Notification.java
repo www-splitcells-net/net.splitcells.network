@@ -98,6 +98,9 @@ public class Notification {
             html += ": ";
         }
         html += content;
+        if (title.isEmpty() && link.isPresent()) {
+            html += html += " <a href=\"" + link.get() + "\">(link)</a>";
+        }
         return html;
     }
 }
