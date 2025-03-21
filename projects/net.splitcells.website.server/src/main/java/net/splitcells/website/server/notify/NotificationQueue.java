@@ -27,6 +27,7 @@ public class NotificationQueue {
     }
 
     private final List<Notification> notifications = list();
+    private boolean isSorted = true;
 
     private NotificationQueue() {
 
@@ -34,17 +35,20 @@ public class NotificationQueue {
 
     public NotificationQueue withAdditionalNotifications(List<Notification> arg) {
         notifications.addAll(arg);
-        notifications.sort((a, b) -> a.time().compareTo(b.time()));
+        isSorted = false;
         return this;
     }
 
     public NotificationQueue withAdditionalNotification(Notification arg) {
         notifications.add(arg);
-        notifications.sort((a, b) -> a.time().compareTo(b.time()));
+        isSorted = false;
         return this;
     }
 
     public ListView<Notification> notifications() {
+        if (!isSorted) {
+            notifications.sort((a, b) -> a.time().compareTo(b.time()));
+        }
         return notifications;
     }
 }
