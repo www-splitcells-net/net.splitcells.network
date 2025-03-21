@@ -66,23 +66,24 @@ public class SourceCodeCheckMojo extends AbstractMojo {
                     final var rootPath = Path.of(sourceRoot.toString());
                     if (isDirectory(rootPath)) {
                         try (final var walk = Files.walk(rootPath)) {
+                            // Collect is done, because the parallel Stream of walk itself is not as good as a dedicated parallel processing.
                             final var files = walk.parallel().collect(toList());
                             if (useExectorParallism) {
-                                final var executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-                                files.stream().filter(Files::isRegularFile).forEach(f -> {
-                                    executor.submit(() -> {
-                                        checkJavaSourceCodeFile(f);
+                                try (final var executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())) {
+                                    files.stream().filter(Files::isRegularFile).forEach(f -> {
+                                        executor.submit(() -> {
+                                            checkJavaSourceCodeFile(f);
+                                        });
                                     });
-                                });
-                                try {
-                                    executor.shutdown();
-                                    executor.awaitTermination(1, TimeUnit.MINUTES);
-                                } catch (InterruptedException e) {
-                                    throw new RuntimeException("Source code checking takes too much time.", e);
+                                    try {
+                                        executor.shutdown();
+                                        executor.awaitTermination(1, TimeUnit.MINUTES);
+                                    } catch (InterruptedException e) {
+                                        throw new RuntimeException("Source code checking takes too much time.", e);
+                                    }
                                 }
                             } else {
                                 getLog().warn("${exector.parallism.use} is set to false. This is the about 4 times slower parallelism mechanism.");
-                                // Collect is done, because the parallel Stream of walk itself is not so good as parallelism.
                                 files.parallelStream().filter(Files::isRegularFile).forEach(this::checkJavaSourceCodeFile);
                             }
                         }
