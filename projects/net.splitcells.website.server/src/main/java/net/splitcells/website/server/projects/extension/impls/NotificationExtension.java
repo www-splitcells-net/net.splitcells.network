@@ -127,7 +127,7 @@ public class NotificationExtension implements ProjectsRendererExtension {
             }
             final var content = "<ol xmlns=\"http://www.w3.org/1999/xhtml\">"
                     + notificationQueue.notifications().reversed().stream()
-                    .map(n -> "<li><strong>" + NOTIFICATION_DATE.format(n.time()) + "</strong>: " + n.content() + "</li>")
+                    .map(n -> "<li>" + n.toHtml() + "</li>")
                     .reduce((a, b) -> a + "\n" + b)
                     .orElse("")
                     + "</ol>";

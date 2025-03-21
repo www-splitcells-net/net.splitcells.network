@@ -15,13 +15,22 @@
  */
 package net.splitcells.website.server.notify;
 
+import net.splitcells.dem.environment.config.StaticFlags;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.website.Formats;
 
 import java.time.Instant;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
+import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
+import static net.splitcells.dem.testing.Assertions.requireEquals;
+import static net.splitcells.website.Formats.HTML;
+
 public class Notification {
+    private static final DateTimeFormatter NOTIFICATION_DATE = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
     public static Notification notification(ZonedDateTime time, Formats format, String content) {
         return new Notification(time, format, content);
     }
@@ -71,5 +80,24 @@ public class Notification {
     public Notification withLink(Optional<String> arg) {
         link = arg;
         return this;
+    }
+
+    public String toHtml() {
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            requireEquals(format, HTML);
+        }
+        var html = "<strong>" + NOTIFICATION_DATE.format(time) + "</strong>: ";
+        if (title.isPresent()) {
+            if (link.isPresent()) {
+                html += "<a href=\"" + link.get() + "\">" + title.get() + "</a>";
+            } else {
+                html += "<strong>" + title.get() + "</strong>";
+            }
+        }
+        if (!content.isEmpty()) {
+            html += ": ";
+        }
+        html += content;
+        return html;
     }
 }
