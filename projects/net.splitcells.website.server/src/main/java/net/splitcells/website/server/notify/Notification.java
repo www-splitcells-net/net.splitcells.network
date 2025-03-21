@@ -86,21 +86,19 @@ public class Notification {
         if (ENFORCING_UNIT_CONSISTENCY) {
             requireEquals(format, HTML);
         }
-        var html = "<strong>" + NOTIFICATION_DATE.format(time) + "</strong>: ";
+        var html = "<strong>" + NOTIFICATION_DATE.format(time);
+        if (title.isEmpty() && link.isPresent()) {
+            html += " <a href=\"" + link.get() + "\">(link)</a>";
+        }
+        html += "</strong>: ";
         if (title.isPresent()) {
             if (link.isPresent()) {
-                html += "<a href=\"" + link.get() + "\">" + title.get() + "</a>";
+                html += "<a href=\"" + link.get() + "\">" + title.get() + "</a>: ";
             } else {
-                html += "<strong>" + title.get() + "</strong>";
+                html += "<strong>" + title.get() + "</strong>: ";
             }
         }
-        if (!content.isEmpty()) {
-            html += ": ";
-        }
         html += content;
-        if (title.isEmpty() && link.isPresent()) {
-            html += html += " <a href=\"" + link.get() + "\">(link)</a>";
-        }
         return html;
     }
 }
