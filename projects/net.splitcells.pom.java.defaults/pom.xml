@@ -120,6 +120,7 @@
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
@@ -984,9 +985,6 @@
                     <name>generate_code_with_lombok</name>
                 </property>
             </activation>
-            <properties>
-                <lombok.version>1.18.10</lombok.version>
-            </properties>
             <dependencies>
                 <dependency>
                     <groupId>org.projectlombok</groupId>
