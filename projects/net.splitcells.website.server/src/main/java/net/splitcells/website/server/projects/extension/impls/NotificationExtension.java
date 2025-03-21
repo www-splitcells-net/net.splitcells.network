@@ -113,15 +113,15 @@ public class NotificationExtension implements ProjectsRendererExtension {
                     .concat(projectsRenderer.projectsPaths().stream());
             paths.filter(p -> p.toString().startsWith("net/splitcells/network/community/blog/articles/"))
                     .forEach(article -> {
-                                final var metaData = projectsRenderer.metaData(article.toString());
-                                final var title = metaData.flatMap(PageMetaData::title);
-                                if (title.isPresent()) {
-                                    notificationQueue.withAdditionalNotification(notification(parseArticleDate(article.getFileName().toString()), HTML, "")
-                                            .withTitle(Optional.of(Xml.escape(title.get())))
-                                            .withLink(Optional.of("/" + article))
-                                    );
-                                }
-                            });
+                        final var metaData = projectsRenderer.metaData(article.toString());
+                        final var title = metaData.flatMap(PageMetaData::title);
+                        if (title.isPresent()) {
+                            notificationQueue.withAdditionalNotification(notification(parseArticleDate(article.getFileName().toString()), HTML, "")
+                                    .withTitle(Optional.of(Xml.escape(title.get())))
+                                    .withLink(Optional.of("/" + article))
+                            );
+                        }
+                    });
             if (ENFORCING_UNIT_CONSISTENCY) {
                 notificationQueue.notifications().forEach(n -> requireEquals(n.format(), HTML));
             }
