@@ -295,16 +295,8 @@ public class MinimalDistance<T> implements Rater {
     private List<Line> sorted(View lines) {
         return lines.rawLinesView().stream()
                 .filter(e -> e != null)
-                .sorted((a, b) -> {
-                            try {
-                                return comparison.compare
-                                        (a.value(LINE).value(attribute)
-                                                , b.value(LINE).value(attribute));
-                            } catch (RuntimeException e) {
-                                throw e;
-                            }
-                        }
-                )
+                .sorted((a, b) -> comparison.compare(a.value(LINE).value(attribute)
+                        , b.value(LINE).value(attribute)))
                 .collect(toList());
     }
 
