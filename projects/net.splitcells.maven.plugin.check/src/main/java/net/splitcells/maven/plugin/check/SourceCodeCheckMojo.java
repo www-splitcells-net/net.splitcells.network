@@ -79,6 +79,7 @@ public class SourceCodeCheckMojo extends AbstractMojo {
                                         executor.shutdown();
                                         executor.awaitTermination(1, TimeUnit.MINUTES);
                                     } catch (InterruptedException e) {
+                                        Thread.currentThread().interrupt();
                                         throw new RuntimeException("Source code checking takes too much time.", e);
                                     }
                                 }
