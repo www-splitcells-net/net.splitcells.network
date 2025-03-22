@@ -67,7 +67,7 @@ public class SourceCodeCheckMojo extends AbstractMojo {
                     if (isDirectory(rootPath)) {
                         try (final var walk = Files.walk(rootPath)) {
                             // Collect is done, because the parallel Stream of walk itself is not as good as a dedicated parallel processing.
-                            final var files = walk.parallel().collect(toList());
+                            final var files = walk.parallel().toList();
                             if (useExectorParallism) {
                                 try (final var executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())) {
                                     files.stream().filter(Files::isRegularFile).forEach(f -> {
