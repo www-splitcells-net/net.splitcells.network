@@ -55,11 +55,12 @@ import static net.splitcells.website.server.processor.Request.request;
 public class CodeSolutionCalculatorTest {
     @UnitTest
     public void testMinimalProcess() {
-        final var testData = "demands={a=integer();b=string()};\n"
-                + "supplies={c=integer()};\n"
-                + "constraints=forEach(a).then(hasSize(2));\n"
-                + "constraints().forEach(b).then(allSame(c));\n"
-                + "name=\"testParseProblem\";\n";
+        final var testData = """
+                demands={a=integer();b=string()};
+                supplies={c=integer()};
+                constraints=forEach(a).then(hasSize(2));
+                constraints().forEach(b).then(allSame(c));
+                name="testParseProblem";""";
         final var testResult = solutionCalculator().process(request(SolutionCalculator.PATH
                 , tree("").withProperty(PROBLEM_DEFINITION,
                         tree(testData))));
@@ -73,11 +74,12 @@ public class CodeSolutionCalculatorTest {
 
     @UnitTest
     public void testMinimalProblem() {
-        final var testData = "demands={a=integer();b=string()};\n"
-                + "supplies={c=integer()};\n"
-                + "constraints=forEach(a).forEach(b).then(hasSize(2));\n"
-                + "constraints().forEach(b).then(allSame(c));\n"
-                + "name=\"testParseProblem\";\n";
+        final var testData = """
+                demands={a=integer();b=string()};
+                supplies={c=integer()};
+                constraints=forEach(a).forEach(b).then(hasSize(2));
+                constraints().forEach(b).then(allSame(c));
+                name="testParseProblem";""";
         final var testResult = codeSolutionEditorParser()
                 .apply(request(trail(), tree("").withProperty(PROBLEM_DEFINITION, testData)));
         testResult.requireWorking();
@@ -117,11 +119,12 @@ public class CodeSolutionCalculatorTest {
 
     @UnitTest
     public void testParseProblem() {
-        final var testData = "demands={a=int();b=string()};\n"
-                + "supplies={c=integer()};\n"
-                + "constraints=forEach(a).then(hasSize(2));\n"
-                + "constraints().forEach(b).then(allSame(c));\n"
-                + "name=\"testParseProblem\";\n";
+        final var testData = """
+                demands={a=int();b=string()};
+                supplies={c=integer()};
+                constraints=forEach(a).then(hasSize(2));
+                constraints().forEach(b).then(allSame(c));
+                name="testParseProblem";""";
         final var testSubject = codeSolutionEditorParser()
                 .apply(request(trail(), tree("").withProperty(PROBLEM_DEFINITION, testData)))
                 .requiredValue()
@@ -165,10 +168,11 @@ public class CodeSolutionCalculatorTest {
 
     @UnitTest
     public void testParseProblemWithForAllCombinationsOf() {
-        final var testData = "demands = {a = int(); b = string()};\n"
-                + "supplies = {c = integer()};\n"
-                + "constraints = forAllCombinationsOf(a, b, c);\n"
-                + "name = \"testParseProblem\";\n";
+        final var testData = """
+                demands = {a = int(); b = string()};
+                supplies = {c = integer()};
+                constraints = forAllCombinationsOf(a, b, c);
+                name = "testParseProblem";""";
         final var testSubject = codeSolutionEditorParser()
                 .apply(request(trail(), tree("").withProperty(PROBLEM_DEFINITION, testData)))
                 .requiredValue()
@@ -194,10 +198,11 @@ public class CodeSolutionCalculatorTest {
 
     @UnitTest
     public void testInvalidDemandAttribute() {
-        final var testData = "demands={a=invalid_attribute()};"
-                + "supplies={};"
-                + "constraints=forEach(a);"
-                + "name=\"testInvalidDemandAttribute\";";
+        final var testData = """
+                demands={a=invalid_attribute()};
+                supplies={};
+                constraints=forEach(a);
+                name="testInvalidDemandAttribute";""";
         codeSolutionEditorParser()
                 .apply(request(trail(), tree("").withProperty(PROBLEM_DEFINITION, testData)))
                 .errorMessages().requireAnyContent();
@@ -205,10 +210,11 @@ public class CodeSolutionCalculatorTest {
 
     @UnitTest
     public void testInvalidSupplyAttribute() {
-        final var testData = "demands={};"
-                + "supplies={a=invalid_attribute()};"
-                + "constraints=forEach(a);"
-                + "name=\"testInvalidDemandAttribute\";";
+        final var testData = """
+                demands={};
+                supplies={a=invalid_attribute()};
+                constraints=forEach(a);
+                name="testInvalidDemandAttribute";""";
         codeSolutionEditorParser()
                 .apply(request(trail(), tree("").withProperty(PROBLEM_DEFINITION, testData)))
                 .errorMessages().requireAnyContent();
