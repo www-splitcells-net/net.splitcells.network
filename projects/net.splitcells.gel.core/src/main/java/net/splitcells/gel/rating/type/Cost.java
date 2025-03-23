@@ -113,10 +113,10 @@ public class Cost implements Rating {
             if (additionalRating instanceof MetaRating) {
                 return additionalRating.combine(this);
             }
-            if (additionalRating instanceof Optimality additionalOptimality) {
-                if (additionalOptimality.value() == 1 && value == 0) {
-                    throw notImplementedYet();
-                }
+            if (additionalRating instanceof Optimality additionalOptimality
+                    && additionalOptimality.value() == 1
+                    && value == 0) {
+                throw notImplementedYet();
             }
         }
         throw notImplementedYet();
