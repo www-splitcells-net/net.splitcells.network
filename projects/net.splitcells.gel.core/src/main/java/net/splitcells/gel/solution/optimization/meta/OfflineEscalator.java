@@ -36,8 +36,8 @@ public class OfflineEscalator implements OfflineOptimization {
         return new OfflineEscalator(optimizations, 0, 0, Integer.MAX_VALUE);
     }
 
-    public static OfflineEscalator escalator(Function<Integer, OfflineOptimization> optimizations, int escalationLevel, int minimum_escalation_level, int maximum_escalation_level) {
-        return new OfflineEscalator(optimizations, escalationLevel, minimum_escalation_level, maximum_escalation_level);
+    public static OfflineEscalator escalator(Function<Integer, OfflineOptimization> optimizations, int escalationLevel, int minimumEscalationLevel, int maximumEscalationLevel) {
+        return new OfflineEscalator(optimizations, escalationLevel, minimumEscalationLevel, maximumEscalationLevel);
     }
 
     private final Function<Integer, OfflineOptimization> optimizations;

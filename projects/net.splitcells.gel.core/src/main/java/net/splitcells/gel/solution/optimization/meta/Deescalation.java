@@ -22,8 +22,8 @@ import java.util.function.Function;
 
 public class Deescalation implements OnlineOptimization {
 
-    public static Deescalation deescalation(Function<Integer, OnlineOptimization> optimizations, int escalationLevel, int minimum_escalation_level, int maximum_escalation_level) {
-        return new Deescalation(optimizations, escalationLevel, minimum_escalation_level, maximum_escalation_level);
+    public static Deescalation deescalation(Function<Integer, OnlineOptimization> optimizations, int escalationLevel, int minimumEscalationLevel, int maximumEscalationLevel) {
+        return new Deescalation(optimizations, escalationLevel, minimumEscalationLevel, maximumEscalationLevel);
     }
 
     private final Function<Integer, OnlineOptimization> optimizations;
