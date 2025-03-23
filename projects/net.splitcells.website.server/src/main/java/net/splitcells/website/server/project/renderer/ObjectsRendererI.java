@@ -67,7 +67,7 @@ public class ObjectsRendererI implements ProjectRenderer {
             return this;
         }
         final var path = Path.of(pathPrefix + "/" + object.path().stream().reduce((a, b) -> a + "/" + b).orElseThrow());
-        Optional<Path> alternativePath = Optional.empty();
+        Optional<Path> alternativePath;
         if (objects.containsKey(path)) {
             // This makes it easier to analyse problems, when the same path is present multiple times.
             int i = 0;
@@ -94,7 +94,7 @@ public class ObjectsRendererI implements ProjectRenderer {
             return this;
         }
         final var path = Path.of(pathPrefix + "/" + object.path().stream().reduce((a, b) -> a + "/" + b).orElseThrow());
-        Optional<Path> alternativePath = Optional.empty();
+        Optional<Path> alternativePath;
         if (csvRenderers.containsKey(path)) {
             // This makes it easier to analyse problems, when the same path is present multiple times.
             int i = 0;
