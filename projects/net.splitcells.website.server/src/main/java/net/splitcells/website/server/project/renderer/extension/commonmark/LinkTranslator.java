@@ -80,6 +80,7 @@ public class LinkTranslator extends AbstractVisitor {
         this.visitChildren(image);
     }
 
+    @Override
     public void visit(Link link) {
         final var destination = link.getDestination();
         final var protocolMatch = PROTOCOL.matcher(destination);

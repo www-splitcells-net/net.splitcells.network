@@ -109,6 +109,7 @@ public class RenderingValidatorForHtmlLinks implements RenderingValidator {
         return invalid.isEmpty();
     }
 
+    @Override
     public void startReport(String name) {
         reportName = name;
         invalidLinkCount = 0;
