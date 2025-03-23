@@ -209,8 +209,7 @@ public class ConstraintGroupBasedRepairTest {
                 .asSolution();
         solution.optimize(offlineLinearInitialization());
         solution.unorderedLines().requireSizeOf(7);
-
-        final var testSubject = ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(0);
+        
         final var testProduct = demandSelector(true)
                 .demandGrouping(solution.constraint().childrenView().get(3).childrenView().get(0)
                         , solution);
