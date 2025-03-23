@@ -198,6 +198,7 @@ public class Dem {
                 Thread.sleep(1000L);
             } catch (InterruptedException e) {
                 processResult.hasError(true);
+                Thread.currentThread().interrupt();
                 throw new RuntimeException(e);
             }
         });
@@ -207,6 +208,7 @@ public class Dem {
         try {
             root.join();
         } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
             throw new RuntimeException(e);
         }
         return processResult;
