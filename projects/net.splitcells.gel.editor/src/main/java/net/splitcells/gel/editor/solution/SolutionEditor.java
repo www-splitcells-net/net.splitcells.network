@@ -224,8 +224,8 @@ public class SolutionEditor implements Discoverable {
 
     private Result<Rater, Tree> parseRater(FunctionCallDescription functionCall) {
         final Result<Rater, Tree> rater = Result.result();
-        final var name = functionCall.functionName();
-        if (name.equals(HAS_SIZE_NAME)) {
+        final var functionName = functionCall.functionName();
+        if (functionName.equals(HAS_SIZE_NAME)) {
             switch (functionCall.arguments().get(0)) {
                 case IntegerDescription integer -> {
                     return rater.withValue(hasSize(integer.value()));
@@ -243,7 +243,7 @@ public class SolutionEditor implements Discoverable {
                             .withProperty(AFFECTED_CONTENT, functionCall.sourceCodeQuote().userReference()));
                 }
             }
-        } else if (name.equals(ALL_SAME_NAME)) {
+        } else if (functionName.equals(ALL_SAME_NAME)) {
             switch (functionCall.arguments().get(0)) {
                 case ReferenceDescription<?> ref -> {
                     final var attributeMatch = attributeByName(ref.name());
@@ -258,7 +258,7 @@ public class SolutionEditor implements Discoverable {
                             .withProperty(AFFECTED_CONTENT, functionCall.sourceCodeQuote().userReference()));
                 }
             }
-        } else if (name.equals(MINIMAL_DISTANCE_NAME)) {
+        } else if (functionName.equals(MINIMAL_DISTANCE_NAME)) {
             if (functionCall.arguments().isEmpty()) {
                 return rater.withErrorMessage(tree("Rater `" + MINIMAL_DISTANCE_NAME + "` requires exactly 2 arguments, but has none.")
                         .withProperty(AFFECTED_CONTENT, functionCall.sourceCodeQuote().userReference()));
