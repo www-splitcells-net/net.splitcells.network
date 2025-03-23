@@ -32,6 +32,7 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
@@ -131,10 +132,8 @@ public class ProjectRendererExtensionMerger implements ProjectRendererExtension 
         final Set<Path> projectPaths = setOfUniques();
         projectRendererExtensions.forEach(e -> {
             final var path = e.projectPaths(projectRenderer);
-            if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
-                if (path.toString().startsWith("/")) {
-                    throw new IllegalStateException("Absolute project paths are not allowed: " + path.toString());
-                }
+            if (ENFORCING_UNIT_CONSISTENCY && path.toString().startsWith("/")) {
+                throw new IllegalStateException("Absolute project paths are not allowed: " + path.toString());
             }
             projectPaths.addAll(path);
         });
@@ -152,10 +151,8 @@ public class ProjectRendererExtensionMerger implements ProjectRendererExtension 
         final Set<Path> relevantProjectPaths = setOfUniques();
         projectRendererExtensions.forEach(e -> {
             final var path = e.relevantProjectPaths(projectRenderer);
-            if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
-                if (path.toString().startsWith("/")) {
-                    throw new IllegalStateException("Absolute project paths are not allowed: " + path.toString());
-                }
+            if (ENFORCING_UNIT_CONSISTENCY && path.toString().startsWith("/")) {
+                throw new IllegalStateException("Absolute project paths are not allowed: " + path.toString());
             }
             relevantProjectPaths.addAll(path);
         });
