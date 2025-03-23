@@ -59,7 +59,6 @@ public interface Solution extends Problem, SolutionView {
     }
 
     /**
-     *
      * @return Returns this with the default optimization being applied to it.
      */
     default Solution optimize() {
@@ -304,10 +303,10 @@ public interface Solution extends Problem, SolutionView {
         } else if (event.stepType().equals(REMOVAL)) {
             final var demandBeforeRemoval = event.demand().interpret();
             final var supplyBeforeRemoval = event.supply().interpret();
-            if (parameters.dublicateRemovalAllowed()) {
-                if (demandBeforeRemoval.isEmpty() && supplyBeforeRemoval.isEmpty()) {
-                    return this;
-                }
+            if (parameters.dublicateRemovalAllowed()
+                    && demandBeforeRemoval.isEmpty()
+                    && supplyBeforeRemoval.isEmpty()) {
+                return this;
             }
             remove(assignmentsOf
                     (demandBeforeRemoval.orElseThrow()
