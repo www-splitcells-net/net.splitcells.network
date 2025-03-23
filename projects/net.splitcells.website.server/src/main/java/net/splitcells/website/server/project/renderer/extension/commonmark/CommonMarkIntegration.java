@@ -139,14 +139,11 @@ public class CommonMarkIntegration {
     }
 
     public List<Event> events(String eventsAsCommonMark, ProjectRenderer projectRenderer, String path, Config config) {
-        final Optional<String> title;
         final String contentToRender;
         if (eventsAsCommonMark.startsWith("#")) {
             final var titleLine = eventsAsCommonMark.split("[\r\n]+")[0];
-            title = Optional.of(titleLine.replace("#", "").trim());
             contentToRender = eventsAsCommonMark.substring(titleLine.length());
         } else {
-            title = Optional.empty();
             contentToRender = eventsAsCommonMark;
         }
         final var parsed = parser.parse(contentToRender);
