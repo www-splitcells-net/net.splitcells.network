@@ -399,7 +399,7 @@ public class ProjectRendererI implements ProjectRenderer {
         }
         if (path.isPresent()) {
             final var pathElement = elementWithChildren(SEW, "path");
-            pathElement.appendChild(Xml.textNode(path.get().toString()));
+            pathElement.appendChild(Xml.textNode(path.get()));
             metaElement.appendChild(pathElement);
         }
         if (path.isPresent()) {
