@@ -35,7 +35,7 @@ public class SupplySelectors {
     }
 
     public static SupplySelector indexBasedRepairer(Function<Integer, Integer> indexSelector) {
-        return (freeDemandGroups) -> solution -> {
+        return freeDemandGroups -> solution -> {
             final var demandsUsed = Sets.<Line>setOfUniques();
             freeDemandGroups.entrySet().forEach(group -> {
                 group.getValue().forEach(demand -> {
@@ -100,6 +100,6 @@ public class SupplySelectors {
 
     public static SupplySelector supplySelector() {
         final var randomness = randomness();
-        return indexBasedRepairer((i) -> randomness.integer(0, i));
+        return indexBasedRepairer(i -> randomness.integer(0, i));
     }
 }
