@@ -170,7 +170,7 @@ public class WorkerExecution {
                 logs().append("Executing: " + remoteExecutionScript, INFO);
             }
             if (!config.dryRun()) {
-                executeShellCommand(remoteExecutionScript.toString());
+                executeShellCommand(remoteExecutionScript);
             }
             return;
         }
