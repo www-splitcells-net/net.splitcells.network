@@ -343,6 +343,7 @@ public interface Solution extends Problem, SolutionView {
         constraint().init(this);
     }
 
+    @Override
     default String toSimplifiedCSV() {
         final var simplifiedCsv = new StringBuilder();
         simplifiedCsv.append(headerView().stream()
