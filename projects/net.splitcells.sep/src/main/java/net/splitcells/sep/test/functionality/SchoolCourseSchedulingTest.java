@@ -310,9 +310,11 @@ public class SchoolCourseSchedulingTest {
                             allFreeCoursesById.put(freeCourseId, setOfUniques(freeCourseInstances));
                         }
                     }
-                    for (final var freeCourseGroupId : freeCoursesByGroupId.keySet()) {
-                        final var freeCourseRepresentant = freeCoursesByGroupId.get(freeCourseGroupId).iterator().next();
-                        final var freeCourseId = freeCourseRepresentant.value(COURSE_ID);
+                    for (final var coursesOfGroup : freeCoursesByGroupId.entrySet()) {
+                        final var freeCourseGroupId = coursesOfGroup.getKey();
+                        final var freeCourse = coursesOfGroup.getValue();
+                        final var freeCourseRepresentative = freeCourse.iterator().next();
+                        final var freeCourseId = freeCourseRepresentative.value(COURSE_ID);
                         final var sameCourseInstances = solution.allocations()
                                 .lookup(COURSE_ID, freeCourseId)
                                 .unorderedLines();
