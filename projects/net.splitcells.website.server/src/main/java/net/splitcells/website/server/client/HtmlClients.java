@@ -58,7 +58,7 @@ public class HtmlClients {
                 return htmlClient;
             }
             if (MAX_HTML_CLIENT_COUNT > USED_HTML_CLIENT.size()) {
-                htmlClient = htmlClientSharer(htmlClientImpl(), (sharer) -> {
+                htmlClient = htmlClientSharer(htmlClientImpl(), sharer -> {
                     try {
                         HTML_CLIENT_LOCK.acquireUninterruptibly();
                         FREE_HTML_CLIENT.add(sharer);
