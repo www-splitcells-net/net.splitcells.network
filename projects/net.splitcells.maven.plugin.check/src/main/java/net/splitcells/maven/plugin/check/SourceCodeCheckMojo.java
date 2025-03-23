@@ -124,8 +124,7 @@ public class SourceCodeCheckMojo extends AbstractMojo {
                 @Override
                 public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e)
                         throws ParseCancellationException {
-                    if (offendingSymbol instanceof CommonToken) {
-                        final var token = (CommonToken) offendingSymbol;
+                    if (offendingSymbol instanceof CommonToken token) {
                         getLog().error("Invalid line; " + line + ", charPositionInLine = " + charPositionInLine + ", msg = " + msg + ", token = " + token.toString(recognizer));
                     } else {
                         getLog().error("Invalid line: " + line + ", charPositionInLine = " + charPositionInLine + ", msg = " + msg + ", offendingSymbol = offendingSymbol " + offendingSymbol);
