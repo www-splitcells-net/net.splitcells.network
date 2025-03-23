@@ -78,7 +78,7 @@ public class Optimality implements Rating {
     }
 
     @Override
-    public Rating combine(Rating... addtionalRatings) {
+    public Rating combine(Rating... additionalRatings) {
         throw notImplementedYet();
     }
 
