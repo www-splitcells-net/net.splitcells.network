@@ -184,7 +184,7 @@ public class NoCodeEditorLangParser extends NoCodeDenParserBaseVisitor<Result<So
             return null;
         }
         if (ctx.variable_definition_value().value().function_call() != null) {
-            if (ctx.variable_definition_value().value().function_call().size() < 1) {
+            if (ctx.variable_definition_value().value().function_call().isEmpty()) {
                 result.withErrorMessage(tree("Variable definition with a function call chain as its value, needs at least one function call, but has none.")
                         .withProperty(CONTENT, ctx.getText()));
                 return null;
