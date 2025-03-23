@@ -82,10 +82,10 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
     }
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
-            (int minimum_constraint_group_path, int numberOfGroupsSelectedPerDefiance) {
+            (int minimumConstraintGroupPath, int numberOfGroupsSelectedPerDefiance) {
         final var randomness = randomness();
         return new ConstraintGroupBasedRepair
-                (repairConfig().withGroupSelector(groupSelector(randomness, minimum_constraint_group_path
+                (repairConfig().withGroupSelector(groupSelector(randomness, minimumConstraintGroupPath
                         , numberOfGroupsSelectedPerDefiance)));
     }
 

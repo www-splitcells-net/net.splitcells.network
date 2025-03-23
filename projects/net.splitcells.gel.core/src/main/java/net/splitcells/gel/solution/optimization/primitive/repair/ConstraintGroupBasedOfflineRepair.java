@@ -89,9 +89,9 @@ public class ConstraintGroupBasedOfflineRepair implements OfflineOptimization {
     }
 
     public static ConstraintGroupBasedOfflineRepair simpleConstraintGroupBasedOfflineRepair
-            (int minimum_constraint_group_path, int numberOfGroupsSelectedPerDefiance) {
+            (int minimumConstraintGroupPath, int numberOfGroupsSelectedPerDefiance) {
         final var randomness = randomness();
-        return new ConstraintGroupBasedOfflineRepair(groupSelector(randomness, minimum_constraint_group_path
+        return new ConstraintGroupBasedOfflineRepair(groupSelector(randomness, minimumConstraintGroupPath
                 , numberOfGroupsSelectedPerDefiance)
                 , SupplyOfflineSelectors.supplySelector());
     }
