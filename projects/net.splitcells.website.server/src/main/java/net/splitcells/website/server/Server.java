@@ -484,7 +484,7 @@ public class Server {
                         });
                         router.route("/*").handler(routingContext -> {
                             HttpServerResponse response = routingContext.response();
-                            vertx.<byte[]>executeBlocking((promise) -> {
+                            vertx.<byte[]>executeBlocking(promise -> {
                                 final String requestPath;
                                 if ("".equals(routingContext.request().path()) || "/".equals(routingContext.request().path())) {
                                     requestPath = "index.html";
@@ -498,7 +498,7 @@ public class Server {
                                 } else {
                                     promise.fail(new DocumentNotFound(requestPath));
                                 }
-                            }, (result) -> {
+                            }, result -> {
                                 if (result.failed()) {
                                     logs().appendError(result.cause());
                                     response.setStatusCode(500);
