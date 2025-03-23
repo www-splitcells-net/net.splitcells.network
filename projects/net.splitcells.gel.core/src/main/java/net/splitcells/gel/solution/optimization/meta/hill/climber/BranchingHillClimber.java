@@ -43,7 +43,7 @@ public class BranchingHillClimber implements OfflineOptimization {
 
     @Override
     public List<OptimizationEvent> optimize(SolutionView solution) {
-        final var nextBranch = nextBranch(solution);
+        nextBranch(solution);
         throw notImplementedYet();
     }
 
