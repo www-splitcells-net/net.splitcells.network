@@ -166,17 +166,13 @@ public class DemandSelectors {
                     .filter(processing -> {
                         final var demandProcessing = solution.demandOfAssignment(processing.value(Constraint.LINE));
                         final var proposal = propose(solution, restrictingConstraintPath, list(demandProcessing));
-                        final var hasRelevantProposal = proposal
+                        // If true the restrictingConstraintPath does not prohibit allocations for demandProcessing.
+                        return proposal
                                 .proposedAllocations()
                                 .demands()
                                 .orderedLines()
                                 .stream()
                                 .anyMatch(l -> l.equalContents(demandProcessing));
-                        if (hasRelevantProposal) {
-                            // In this case restrictingConstraintPath does not prohibit allocations for demandProcessing.
-                            return true;
-                        }
-                        return false;
                     })
                     .map(processing -> pair(processing.value(Constraint.RESULTING_CONSTRAINT_GROUP)
                             , processing.value(LINE)))
