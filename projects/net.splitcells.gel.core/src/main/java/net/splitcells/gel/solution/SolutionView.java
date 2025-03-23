@@ -264,9 +264,9 @@ public interface SolutionView extends ProblemView {
         {
             final var allocationCost = TreeI.tree("table-cell", FODS_TABLE);
             tableLine.withChild(allocationCost);
-            final var allocation_cost_value = TreeI.tree("p", FODS_TEXT);
-            allocationCost.withChild(allocation_cost_value);
-            allocation_cost_value.withChild(
+            final var allocationCostValue = TreeI.tree("p", FODS_TEXT);
+            allocationCost.withChild(allocationCostValue);
+            allocationCostValue.withChild(
                     tree(""
                             + constraint()
                             .rating(allocation)
