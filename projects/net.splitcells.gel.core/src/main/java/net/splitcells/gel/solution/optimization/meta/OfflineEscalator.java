@@ -65,9 +65,9 @@ public class OfflineEscalator implements OfflineOptimization {
         if (escalationLevel < minimum_escalation_level) {
             return list();
         }
-        final var optimizations = this.optimizations.apply(escalationLevel).optimize(solution);
+        final var optimizationEvents = this.optimizations.apply(escalationLevel).optimize(solution);
         // TODO PERFORMANCE This line of code can duplicate the runtime of the complete code.
-        final var currentRating = solution.rating(optimizations);
+        final var currentRating = solution.rating(optimizationEvents);
         if (currentRating.betterThan(rootRating)) {
             if (escalationLevel < maximum_escalation_level) {
                 escalationLevel += 1;
@@ -75,6 +75,6 @@ public class OfflineEscalator implements OfflineOptimization {
         } else {
             escalationLevel -= 1;
         }
-        return optimizations;
+        return optimizationEvents;
     }
 }
