@@ -468,23 +468,20 @@ public class ColloquiumPlanningTest extends TestSuiteI {
      * TODO
      */
     private Constraint studentSpecificConstraints() {
-        Constraint rVal = forAll();
-        return rVal;
+        return forAll();
     }
 
     /**
      * TODO
      */
     private Constraint examinerSpecificConstraints() {
-        Constraint rVal = forAll();
-        return rVal;
+        return forAll();
     }
 
     /**
      * TODO
      */
     private Constraint checkerSpecificConstraints() {
-        Constraint rVal = forAll();
-        return rVal;
+        return forAll();
     }
 }
