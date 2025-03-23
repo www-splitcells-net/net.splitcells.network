@@ -62,7 +62,6 @@ public class OfflineEscalator implements OfflineOptimization {
                     , () -> solution.path().withAppended(OPTIMIZATION.value(), getClass().getSimpleName())
                     , LogLevel.TRACE);
         }
-        final var rootHistoryIndex = solution.history().currentIndex();
         if (escalationLevel < minimum_escalation_level) {
             return list();
         }
