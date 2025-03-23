@@ -20,23 +20,23 @@ import net.splitcells.dem.lang.tree.Tree;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 
 public class AllocationNaturalArgumentation implements MetaData<String> {
-    public static AllocationNaturalArgumentation allocationNaturalArgumentation(String allocationNaturalArgumentation) {
-        return new AllocationNaturalArgumentation(allocationNaturalArgumentation);
+    public static AllocationNaturalArgumentation allocationNaturalArgumentation(String value) {
+        return new AllocationNaturalArgumentation(value);
     }
 
-    private final String allocationNaturalArgumentation;
+    private final String value;
 
-    private AllocationNaturalArgumentation(String allocationNaturalArgumentation) {
-        this.allocationNaturalArgumentation = allocationNaturalArgumentation;
+    private AllocationNaturalArgumentation(String argValue) {
+        this.value = argValue;
     }
 
     @Override
     public Tree toTree() {
-        return tree(allocationNaturalArgumentation);
+        return tree(value);
     }
 
     @Override
     public String value() {
-        return allocationNaturalArgumentation;
+        return value;
     }
 }
