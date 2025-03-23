@@ -361,7 +361,7 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
 
     @Override
     public boolean equals(Object arg) {
-        if (arg instanceof MinimalDistanceBasedOnDiffs cArg) {
+        if (arg instanceof MinimalDistanceBasedOnDiffs<?> cArg) {
             return this.minimumDistance == cArg.minimumDistance
                     && this.attribute.equals(cArg.attribute)
                     && this.comparison.equals(cArg.comparison)
