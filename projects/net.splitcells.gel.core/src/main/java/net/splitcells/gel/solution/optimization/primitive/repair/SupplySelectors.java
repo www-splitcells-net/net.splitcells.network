@@ -54,7 +54,6 @@ public class SupplySelectors {
     }
 
     public static SupplySelector hillClimber() {
-        final var randomness = randomness();
         return freeDemandGroups -> solution -> {
             final var distinctFreeSupplies = solution.suppliesFree().distinctLines();
             for (final var demandGroup : freeDemandGroups.values()) {
