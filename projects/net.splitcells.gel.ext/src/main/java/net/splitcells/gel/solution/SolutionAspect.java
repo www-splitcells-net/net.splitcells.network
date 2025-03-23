@@ -61,14 +61,14 @@ public class SolutionAspect implements Solution {
 
     @Override
     public Solution optimize(List<OptimizationEvent> events) {
-        final var solution = Solution.super.optimize(events);
+        Solution.super.optimize(events);
         if (StaticFlags.TRACING) {
             logs().append
                     (constraint().rating()
-                            , () -> solution.path().withAppended(RATING.value())
+                            , () -> this.path().withAppended(RATING.value())
                             , LogLevel.TRACE);
         }
-        return solution;
+        return this;
     }
 
     @Override
