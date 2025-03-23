@@ -141,9 +141,8 @@ public class SolutionEditor implements Discoverable {
             } else if (arguments.size() == 1) {
                 final var arg = arguments.get(0);
                 switch (arg) {
-                    case ReferenceDescription<?> ref -> {
-                        nextConstraint = parentConstraint.forAll(attributes.get(ref.name()));
-                    }
+                    case ReferenceDescription<?> ref ->
+                            nextConstraint = parentConstraint.forAll(attributes.get(ref.name()));
                     default -> {
                         return constraint.withErrorMessage(tree("ForEach requires a reference as the argument.")
                                 .withProperty("Argument class", arg.getClass().getName())
@@ -284,9 +283,7 @@ public class SolutionEditor implements Discoverable {
             }
             final int minimumDistance;
             switch (functionCall.arguments().get(1)) {
-                case IntegerDescription integer -> {
-                    minimumDistance = integer.value();
-                }
+                case IntegerDescription integer -> minimumDistance = integer.value();
                 case StringDescription string -> {
                     if (!isNumber(string.value())) {
                         // TODO This is an hack for backwards compatibility.
@@ -322,7 +319,7 @@ public class SolutionEditor implements Discoverable {
         tableDescription.header().flow()
                 .map(h -> (Attribute<?>) attributes.get(h.name()))
                 .forEach(h -> header.add(h));
-        return table(tableDescription.name(), (Discoverable) this, header);
+        return table(tableDescription.name(), this, header);
     }
 
     public Map<String, Attribute<? extends Object>> attributes() {
