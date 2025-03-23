@@ -201,10 +201,6 @@ public class ConstraintGroupBasedOfflineRepair implements OfflineOptimization {
                         .lineProcessing()
                         .columnView(INCOMING_CONSTRAINT_GROUP)
                         .values());
-        final var defyingGroup = incomingGroups
-                .stream()
-                .filter(group -> !constraint.defying(group).isEmpty())
-                .count();
         return incomingGroups
                 .stream()
                 .filter(group -> !constraint.defying(group).isEmpty())
