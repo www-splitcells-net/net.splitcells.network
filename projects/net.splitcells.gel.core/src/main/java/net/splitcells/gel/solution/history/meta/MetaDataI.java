@@ -63,8 +63,8 @@ public class MetaDataI implements MetaDataView, MetaDataWriter {
             keyData.withChild(tree(key.getName()));
             final var valueData = tree(VALUE.value());
             {
-                if (value instanceof Domable) {
-                    valueData.withChild(((Domable) value).toTree());
+                if (value instanceof Domable domable) {
+                    valueData.withChild(domable.toTree());
                 } else {
                     valueData.withChild(tree(value.toString()));
                 }
