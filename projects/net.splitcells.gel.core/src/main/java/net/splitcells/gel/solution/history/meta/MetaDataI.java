@@ -59,7 +59,6 @@ public class MetaDataI implements MetaDataView, MetaDataWriter {
     public Tree toTree() {
         final var dom = tree(META_DATA.value());
         data.forEach((key, value) -> {
-            final var data = tree(META_DATA.value());
             final var keyData = tree(KEY.value());
             keyData.withChild(tree(key.getName()));
             final var valueData = tree(VALUE.value());
