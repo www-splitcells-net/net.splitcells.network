@@ -217,7 +217,6 @@ public class NoCodeEditorLangParser extends NoCodeDenParserBaseVisitor<Result<So
                             .withProperty(CONTENT, ctx.getText()));
                     return null;
                 }
-                final var databaseName = databaseNameText.value().string_value().getText();
                 final List<ReferenceDescription<AttributeDescription>> databaseAttributes = list();
                 for (int i = 1; i < functionCall.function_call_argument().size(); ++i) {
                     final var attributeText = functionCall.function_call_argument(i).value();
