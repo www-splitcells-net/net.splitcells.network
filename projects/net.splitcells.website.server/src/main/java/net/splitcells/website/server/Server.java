@@ -309,7 +309,7 @@ public class Server {
                                 .handler(routingContext -> {
                                     HttpServerResponse response = routingContext.response();
                                     if (routingContext.request().isExpectMultipart()) {
-                                        vertx.<byte[]>executeBlocking((promise) -> {
+                                        vertx.<byte[]>executeBlocking(promise -> {
                                                     final var binaryRequest = parseBinaryRequest(routingContext.request().path()
                                                             , routingContext.request().formAttributes());
                                                     logs().append(tree("Processing web server binary request.")
@@ -321,9 +321,9 @@ public class Server {
                                                     promise.complete(toBytes(binaryResponse.data().createToJsonPrintable()
                                                             .toJsonString()));
                                                 }, config.isSingleThreaded()
-                                                , (result) -> handleResult(routingContext, result));
+                                                , result -> handleResult(routingContext, result));
                                     } else {
-                                        vertx.<byte[]>executeBlocking((promise) -> {
+                                        vertx.<byte[]>executeBlocking(promise -> {
                                                     try {
                                                         final String requestPath = requestPath(routingContext);
                                                         logs().append(tree("Processing web server rendering request.")
@@ -354,7 +354,7 @@ public class Server {
                                                         throw new RuntimeException(e);
                                                     }
                                                 }, config.isSingleThreaded()
-                                                , (result) -> handleResult(routingContext, result));
+                                                , result -> handleResult(routingContext, result));
                                     }
                                 });
                         router.errorHandler(500, e -> {
@@ -364,7 +364,7 @@ public class Server {
                                 .requestHandler(router)
                                 .exceptionHandler(th ->
                                         Logs.logs().appendError(ExecutionException.execException("An error occurred at the HTTP server .", th)))
-                                .listen((result) -> {
+                                .listen(result -> {
                                     if (result.failed()) {
                                         startPromise.fail(result.cause());
                                     } else {
