@@ -22,6 +22,7 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Mocking.anyClass;
 import static net.splitcells.dem.testing.Mocking.anyString;
 import static net.splitcells.dem.testing.Result.result;
+import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.gel.data.view.attribute.AttributeI.*;
 
 public class Attributes {
@@ -41,5 +42,9 @@ public class Attributes {
 		return parsedAttribute.withErrorMessage(tree("Unknown attribute type.")
 				.withProperty("name", name)
 				.withProperty("type", type));
+	}
+
+	private Attributes()  {
+		throw constructorIllegal();
 	}
 }
