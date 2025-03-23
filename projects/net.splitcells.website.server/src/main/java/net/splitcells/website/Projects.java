@@ -35,6 +35,7 @@ import java.util.function.Function;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
+import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.website.server.project.validator.SourceValidator.VOID_VALIDATOR;
 import static net.splitcells.website.server.project.validator.SourceValidatorViaSchema.validatorViaSchema;
@@ -279,5 +280,9 @@ public class Projects {
             logs().append("Project 'net.splitcells.symbiosis' does not exist.", LogLevel.WARNING);
         }
         return projectRenderers;
+    }
+
+    private Projects() {
+        throw constructorIllegal();
     }
 }
