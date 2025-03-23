@@ -440,8 +440,7 @@ public class Server {
         multiMap.entries().forEach(entry -> {
             requestData.withProperty(entry.getKey(), entry.getValue());
         });
-        final var binaryRequest = request(trail(pathSplit), requestData);
-        return binaryRequest;
+        return request(trail(pathSplit), requestData);
     }
 
     /**
