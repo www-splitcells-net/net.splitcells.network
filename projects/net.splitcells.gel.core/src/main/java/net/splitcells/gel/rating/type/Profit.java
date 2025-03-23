@@ -59,8 +59,8 @@ public class Profit implements Rating {
 
     @Override
     public Optional<Ordering> compare_partially_to(Rating rating) {
-        if (rating instanceof Profit) {
-            return Optional.of(PROFIT_VALUE_COMPARISON.compareTo(value, ((Profit) rating).value()));
+        if (rating instanceof Profit argProfit) {
+            return Optional.of(PROFIT_VALUE_COMPARISON.compareTo(value, argProfit.value()));
         }
         throw new IllegalArgumentException(rating.getClass().getName());
     }
@@ -68,8 +68,7 @@ public class Profit implements Rating {
     @SuppressWarnings("unchecked")
     @Override
     public Profit combine(Rating... additionalRatings) {
-        if (additionalRatings[0] instanceof Profit) {
-            final Profit otherCost = (Profit) additionalRatings[0];
+        if (additionalRatings[0] instanceof Profit otherCost) {
             return profit(value + otherCost.value);
         }
         throw notImplementedYet();
