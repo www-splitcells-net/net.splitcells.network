@@ -37,12 +37,12 @@ public class CommonMarkIntegration {
      * This string is split into multiple lines,
      * in order to prevent REUSE compliance checkers to falsely classify this source code part as real license info.
      */
-    private static final String LICENSE_HEADER = "----\n"
-            + "* SPDX-License-Identifier"
-            + ": EPL-2.0 OR GPL-2.0-or-later\n"
-            + "* SPDX-FileCopyrightText"
-            + ": Contributors To The `net.splitcells.*` Projects\n"
-            + "----\n";
+    private static final String LICENSE_HEADER = """
+            ----
+            * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+            * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+            ----
+            """;
 
     private static final Pattern TITLE = Pattern.compile("(.*)(title: )(.*)\n.*");
 
