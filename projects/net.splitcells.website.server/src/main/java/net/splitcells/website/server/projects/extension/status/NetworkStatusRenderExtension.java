@@ -21,6 +21,7 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.host.HostName;
+import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.website.Formats;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.processor.BinaryMessage;
@@ -45,6 +46,7 @@ import static net.splitcells.dem.utils.CommonFunctions.asString;
 import static net.splitcells.dem.utils.CommonFunctions.getBytes;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StreamUtils.stream;
+import static net.splitcells.dem.utils.StringUtils.stringBuilder;
 import static net.splitcells.network.worker.via.java.Logger.logger;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.projects.extension.status.StatusReport.statusReport;
@@ -67,8 +69,8 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
     public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         // TODO Avoid code duplication in if else structure.
         if (path.equals("/" + STATUS_DOCUMENT_PATH)) {
-            final var disruptedStatuses = new StringBuffer();
-            final var successfulStatuses = new StringBuffer();
+            final var disruptedStatuses = stringBuilder();
+            final var successfulStatuses = stringBuilder();
             projectsRendererI.projectsPaths().stream()
                     .filter(p -> p.startsWith(RUNTIME_FOLDER))
                     .filter(p -> p.toString().endsWith(".csv"))
