@@ -69,7 +69,7 @@ public class ProjectRendererExtensionMerger implements ProjectRendererExtension 
                     .reduce((a, b) -> a + ", " + b)
                     .orElseThrow();
             throw new RuntimeException("Multiple matches are present: "
-                    + projectRenderer.resourceRootPath2().toString()
+                    + projectRenderer.resourceRootPath2()
                     + ": "
                     + matchedExtensions);
         }
@@ -93,7 +93,7 @@ public class ProjectRendererExtensionMerger implements ProjectRendererExtension 
                     .reduce((a, b) -> a + ", " + b)
                     .orElseThrow();
             throw new RuntimeException("Multiple matches are present: "
-                    + projectRenderer.resourceRootPath2().toString()
+                    + projectRenderer.resourceRootPath2()
                     + ": "
                     + matchedExtensions);
         }
@@ -133,7 +133,7 @@ public class ProjectRendererExtensionMerger implements ProjectRendererExtension 
         projectRendererExtensions.forEach(e -> {
             final var path = e.projectPaths(projectRenderer);
             if (ENFORCING_UNIT_CONSISTENCY && path.toString().startsWith("/")) {
-                throw new IllegalStateException("Absolute project paths are not allowed: " + path.toString());
+                throw new IllegalStateException("Absolute project paths are not allowed: " + path);
             }
             projectPaths.addAll(path);
         });
@@ -152,7 +152,7 @@ public class ProjectRendererExtensionMerger implements ProjectRendererExtension 
         projectRendererExtensions.forEach(e -> {
             final var path = e.relevantProjectPaths(projectRenderer);
             if (ENFORCING_UNIT_CONSISTENCY && path.toString().startsWith("/")) {
-                throw new IllegalStateException("Absolute project paths are not allowed: " + path.toString());
+                throw new IllegalStateException("Absolute project paths are not allowed: " + path);
             }
             relevantProjectPaths.addAll(path);
         });
