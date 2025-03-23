@@ -83,6 +83,7 @@ public class SolutionAspect implements Solution {
         return rating;
     }
 
+    @Override
     @ReturnsThis
     public Solution optimize(OptimizationEvent event, OptimizationParameters parameters) {
         if (event.demand().interpret().isEmpty()) {
