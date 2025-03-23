@@ -62,11 +62,10 @@ public class Optimality implements Rating {
 
     @Override
     public Optional<Ordering> compare_partially_to(Rating arg) {
-        if (arg instanceof Optimality) {
-            return Optional.of(OPTIMALITY_VALUE_COMPARISON.compareTo(value, ((Optimality) arg).value));
+        if (arg instanceof Optimality optimality) {
+            return Optional.of(OPTIMALITY_VALUE_COMPARISON.compareTo(value, optimality.value));
         }
-        if (arg instanceof Cost) {
-            final Cost argCost = ((Cost) arg);
+        if (arg instanceof Cost argCost) {
             if (value == 1 && argCost.value() == 0) {
                 return Optional.of(EQUAL);
             }
