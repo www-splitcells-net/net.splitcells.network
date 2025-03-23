@@ -74,8 +74,7 @@ public final class OptimizationEvent implements Domable {
 
     @Override
     public boolean equals(Object arg) {
-        if (arg instanceof OptimizationEvent) {
-            final var other = (OptimizationEvent) arg;
+        if (arg instanceof OptimizationEvent other) {
             return demand.equals(other.demand())
                     && supply.equals(other.supply())
                     && stepType.equals(other.stepType());
