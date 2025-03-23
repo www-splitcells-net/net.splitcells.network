@@ -208,4 +208,12 @@ public class WorkerExecution {
     public String programName() {
         return programName;
     }
+
+    public String dockerFilePath() {
+        return dockerFilePath;
+    }
+
+    public String executionScript() {
+        return executionScript;
+    }
 }
