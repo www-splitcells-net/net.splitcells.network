@@ -30,6 +30,7 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 
 /**
  * <p>
@@ -81,10 +82,8 @@ public class ProjectsRendererExtensionMerger implements ProjectsRendererExtensio
         final Set<Path> projectPaths = setOfUniques();
         projectsRendererExtensions.forEach(e -> {
             final var path = e.projectPaths(projectsRendererI);
-            if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
-                if (path.toString().startsWith("/")) {
-                    throw new IllegalStateException("Absolute project paths are not allowed: " + path);
-                }
+            if (ENFORCING_UNIT_CONSISTENCY && path.toString().startsWith("/")) {
+                throw new IllegalStateException("Absolute project paths are not allowed: " + path);
             }
             projectPaths.addAll(path);
         });
