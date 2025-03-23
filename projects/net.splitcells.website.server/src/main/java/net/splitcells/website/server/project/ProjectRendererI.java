@@ -249,8 +249,6 @@ public class ProjectRendererI implements ProjectRenderer {
             if (extensionRendering.isPresent()) {
                 return extensionRendering;
             }
-            // TODO Do not use path, in the following code.
-            final var normalizedPath = path;
             // TODO Devide rendering function into routing and content type determination.
             // TODO Move this into extensions.
             if (path.endsWith(".png")) {
