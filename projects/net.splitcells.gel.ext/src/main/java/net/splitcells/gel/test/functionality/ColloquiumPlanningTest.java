@@ -164,7 +164,6 @@ public class ColloquiumPlanningTest extends TestSuiteI {
                         , 6
                         , randomness(0L))
                 .asSolution();
-        final var initialSolutionTemplate = testSubject.dataContainer().resolve("previous").resolve("results.fods");
         testSubject.optimize(offlineLinearInitialization());
         intervalClosed(1, 100).forEach(i -> {
             if (testSubject.isOptimal()) {
