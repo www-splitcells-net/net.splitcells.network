@@ -64,48 +64,48 @@ public class ConstraintTest {
 
     @Test
     public void testAllocationGroups() {
-        final var constraint_1 = forAll();
-        final var constraint_2 = forAll();
-        final var constraint_3 = forAll();
-        final var constraint_4 = forAll();
-        final var constraint_5 = forAll();
+        final var constraint1 = forAll();
+        final var constraint2 = forAll();
+        final var constraint3 = forAll();
+        final var constraint4 = forAll();
+        final var constraint5 = forAll();
         @SuppressWarnings("unchecked") final var solution
                 = defineProblem("testAllocationGroups")
                 .withDemandAttributes()
                 .withNoDemands()
                 .withSupplyAttributes()
                 .withNoSupplies()
-                .withConstraint(constraint_1
-                        .withChildren(constraint_2)
-                        .withChildren(constraint_3
-                                .withChildren(constraint_4)
-                                .withChildren(constraint_5)))
+                .withConstraint(constraint1
+                        .withChildren(constraint2)
+                        .withChildren(constraint3
+                                .withChildren(constraint4)
+                                .withChildren(constraint5)))
                 .toProblem()
                 .asSolution();
         final var testProduct = allocationGroups(solution.constraint());
-        assertThat(testProduct.get(0)).containsExactly(constraint_1);
-        assertThat(testProduct.get(1)).containsExactly(constraint_1, constraint_2);
-        assertThat(testProduct.get(2)).containsExactly(constraint_1, constraint_3);
-        assertThat(testProduct.get(3)).containsExactly(constraint_1, constraint_3, constraint_4);
-        assertThat(testProduct.get(4)).containsExactly(constraint_1, constraint_3, constraint_5);
+        assertThat(testProduct.get(0)).containsExactly(constraint1);
+        assertThat(testProduct.get(1)).containsExactly(constraint1, constraint2);
+        assertThat(testProduct.get(2)).containsExactly(constraint1, constraint3);
+        assertThat(testProduct.get(3)).containsExactly(constraint1, constraint3, constraint4);
+        assertThat(testProduct.get(4)).containsExactly(constraint1, constraint3, constraint5);
         assertThat(testProduct).hasSize(5);
     }
 
     @Test
     public void test_allocation_groups_with_different_attributes() {
-        final var A = attribute(Integer.class, "a");
-        final var B = attribute(Integer.class, "b");
-        final var C = attribute(Integer.class, "c");
-        final var D = attribute(Integer.class, "d");
+        final var a = attribute(Integer.class, "a");
+        final var b = attribute(Integer.class, "b");
+        final var c = attribute(Integer.class, "c");
+        final var d = attribute(Integer.class, "d");
         final var solution = defineProblem("test_allocation_groups_with_different_attributes")
-                .withDemandAttributes(A, B)
+                .withDemandAttributes(a, b)
                 .withNoDemands()
-                .withSupplyAttributes(C, D)
+                .withSupplyAttributes(c, d)
                 .withNoSupplies()
-                .withConstraint(ForAlls.forEach(A)
-                        .withChildren(ForAlls.forEach(B)
-                                , ForAlls.forEach(C)
-                                        .withChildren(ForAlls.forEach(D))))
+                .withConstraint(ForAlls.forEach(a)
+                        .withChildren(ForAlls.forEach(b)
+                                , ForAlls.forEach(c)
+                                        .withChildren(ForAlls.forEach(d))))
                 .toProblem()
                 .asSolution();
         final var testData = allocationGroups(solution.constraint());
