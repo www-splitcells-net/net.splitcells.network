@@ -141,7 +141,7 @@ public class SolutionEditor implements Discoverable {
             } else if (arguments.size() == 1) {
                 final var arg = arguments.get(0);
                 switch (arg) {
-                    case ReferenceDescription ref -> {
+                    case ReferenceDescription<?> ref -> {
                         nextConstraint = parentConstraint.forAll(attributes.get(ref.name()));
                     }
                     default -> {
@@ -165,7 +165,7 @@ public class SolutionEditor implements Discoverable {
             final List<Attribute<? extends Object>> combinations = list();
             for (final var arg : arguments) {
                 switch (arg) {
-                    case ReferenceDescription ref -> {
+                    case ReferenceDescription<?> ref -> {
                         final var attributeMatch = attributeByName(ref.name());
                         if (attributeMatch.isEmpty()) {
                             return constraint.withErrorMessage(tree("The reference attribute is not known.")
@@ -269,7 +269,7 @@ public class SolutionEditor implements Discoverable {
             }
             final Attribute<? extends Object> attribute;
             switch (functionCall.arguments().get(0)) {
-                case ReferenceDescription ref -> {
+                case ReferenceDescription<?> ref -> {
                     final var attributeMatch = attributeByName(ref.name());
                     if (attributeMatch.isEmpty()) {
                         return rater.withErrorMessage(tree("The reference attribute is not known.")
