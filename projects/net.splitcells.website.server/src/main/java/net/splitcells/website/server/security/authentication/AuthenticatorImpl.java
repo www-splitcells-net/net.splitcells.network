@@ -67,7 +67,7 @@ public class AuthenticatorImpl implements Authenticator {
      * but in this case some status info in the admin GUI or user data update form needs to signal the cache status</p>
      */
     public static Authenticator authenticatorBasedOnFiles(FileSystemView userData) {
-        return new AuthenticatorImpl((login, authenticator) -> {
+        return new AuthenticatorImpl((login, argAuthenticator) -> {
             if (!userData.isFile(login.username() + AuthenticatorImpl.PASSWORD_FILE)) {
                 return INSECURE_USER_SESSION;
             }
@@ -82,7 +82,7 @@ public class AuthenticatorImpl implements Authenticator {
             if (!login.password().equals(storedPassword)) {
                 return INSECURE_USER_SESSION;
             }
-            return UserSession.user(authenticator);
+            return UserSession.user(argAuthenticator);
         });
     }
 
