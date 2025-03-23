@@ -27,7 +27,7 @@ import static net.splitcells.website.server.client.HtmlClients.htmlClient;
 
 public class NoCodeSolutionCalculatorTest {
 
-    public static Runnable TEST_OPTIMIZATION_GUI = () -> {
+    public static final Runnable TEST_OPTIMIZATION_GUI = () -> {
         try (final var browser = htmlClient()) {
             try (final var tab = browser.openTab("/net/splitcells/gel/ui/editor/nocode/index.html")) {
                 requireEquals("", tab.elementById("net-splitcells-gel-editor-form-errors").textContent());
