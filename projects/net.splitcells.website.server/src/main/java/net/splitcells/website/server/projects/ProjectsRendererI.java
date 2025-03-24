@@ -362,7 +362,10 @@ public class ProjectsRendererI implements ProjectsRenderer {
                 .map(Renderer::projectPaths)
                 .reduce((a, b) -> a.with(b))
                 .orElse(setOfUniques())
-                .with(extension.projectPaths(this));
+                .with(extension.projectPaths(this))
+                .with(extensions.stream().map(e -> e.projectPaths(this))
+                        .reduce((a, b) -> a.with(b))
+                        .orElseGet(Sets::setOfUniques));
     }
 
     @Override
