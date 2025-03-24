@@ -15,6 +15,7 @@
  */
 package net.splitcells.website.server.projects.extension.impls;
 
+import lombok.val;
 import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
@@ -66,6 +67,7 @@ import static net.splitcells.website.server.security.authorization.Authorization
  * TODO IDEA Render Codeberg issues, that are relevant to this project.
  */
 public class NotificationExtension implements ProjectsRendererExtension {
+    public static final String BLOG_ARTICLE = "blog article";
     private static final Trail PATH = trail("net/splitcells/website/notifications.html");
     private static final DateTimeFormatter NOTIFICATION_DATE = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public static final Pattern ARTICLE_FILE_NAME_DATE_PREFIX = Pattern.compile("\\d{4}-\\d{2}-\\d{2}-.*");
@@ -99,6 +101,18 @@ public class NotificationExtension implements ProjectsRendererExtension {
         return ZonedDateTime.now();
     }
 
+    private void parseNotification(NotificationQueue notificationQueue, ProjectsRenderer projectsRenderer, Path article, String... tags) {
+        final var metaData = projectsRenderer.metaData(article.toString());
+        final var title = metaData.flatMap(PageMetaData::title);
+        if (title.isPresent()) {
+            val notification = notification(parseArticleDate(article.getFileName().toString()), HTML, "")
+                    .withTitle(Optional.of(Xml.escape(title.get())))
+                    .withLink(Optional.of("/" + article))
+                    .withTags(tags);
+            notificationQueue.withAdditionalNotification(notification);
+        }
+    }
+
     @Override
     public RenderResponse render(RenderRequest request, ProjectsRenderer projectsRenderer) {
         if (PATH.equals(request.trail())) {
@@ -108,21 +122,12 @@ public class NotificationExtension implements ProjectsRendererExtension {
                             .map(pr -> parseNotifications(pr))
                             .reduce(List::withAppended)
                             .orElseGet(Lists::list));
-            final var paths = projectsRenderer
+            projectsRenderer
                     .projectPaths(projectPathsRequest(projectsRenderer).withUser(request.user()))
                     .stream()
-                    .concat(projectsRenderer.projectsPaths().stream());
-            paths.filter(p -> p.toString().startsWith("net/splitcells/network/community/blog/articles/"))
-                    .forEach(article -> {
-                        final var metaData = projectsRenderer.metaData(article.toString());
-                        final var title = metaData.flatMap(PageMetaData::title);
-                        if (title.isPresent()) {
-                            notificationQueue.withAdditionalNotification(notification(parseArticleDate(article.getFileName().toString()), HTML, "")
-                                    .withTitle(Optional.of(Xml.escape(title.get())))
-                                    .withLink(Optional.of("/" + article))
-                            );
-                        }
-                    });
+                    .concat(projectsRenderer.projectsPaths().stream())
+                    .filter(p -> p.toString().startsWith("net/splitcells/network/community/blog/articles/"))
+                    .forEach(a -> parseNotification(notificationQueue, projectsRenderer, a, BLOG_ARTICLE));
             if (ENFORCING_UNIT_CONSISTENCY) {
                 notificationQueue.notifications().forEach(n -> requireEquals(n.format(), HTML));
             }

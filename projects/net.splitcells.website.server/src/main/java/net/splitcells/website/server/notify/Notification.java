@@ -15,6 +15,7 @@
  */
 package net.splitcells.website.server.notify;
 
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.website.Formats;
@@ -24,6 +25,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.website.Formats.HTML;
@@ -40,6 +42,7 @@ public class Notification {
     private final String content;
     private Optional<String> title = Optional.empty();
     private Optional<String> link = Optional.empty();
+    private final List<String> tags = list();
 
     private Notification(ZonedDateTime argTime, Formats argFormat, String argContent) {
         time = argTime;
@@ -100,5 +103,14 @@ public class Notification {
         }
         html += content;
         return html;
+    }
+
+    public List<String> tags() {
+        return tags;
+    }
+
+    public Notification withTags(String... arg) {
+        tags.withAppended(arg);
+        return this;
     }
 }
