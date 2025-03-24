@@ -17,9 +17,7 @@ package net.splitcells.website.server.project.renderer.extension.commonmark;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.website.Formats;
-import net.splitcells.website.server.Config;
 import net.splitcells.website.server.notify.Notification;
 import net.splitcells.website.server.project.ProjectRenderer;
 import org.commonmark.node.AbstractVisitor;
@@ -58,19 +56,21 @@ public class NotificationParser extends AbstractVisitor {
     private final CommonMarkIntegration renderer = commonMarkIntegration();
     private List<Notification> parsedNotifications = list();
     private final String changelogPath;
+    private final String[] tags;
 
-    private NotificationParser(String argChangelogPath) {
+    private NotificationParser(String argChangelogPath, String... argTags) {
         changelogPath = argChangelogPath;
+        tags = argTags;
     }
 
-    public static List<Notification> parseNotifications(ProjectRenderer projectRenderer) {
+    public static List<Notification> parseNotificationsFromChangelog(ProjectRenderer projectRenderer, String... tags) {
         if (projectRenderer.projectFileSystem().isFile(CHANGELOG)) {
-            return parseNotifications(projectRenderer.projectFileSystem().readString(CHANGELOG), projectRenderer.resourceRootPath2().toString() + "/CHANGELOG.html");
+            return parseNotificationsFromChangelog(projectRenderer.projectFileSystem().readString(CHANGELOG), projectRenderer.resourceRootPath2().toString() + "/CHANGELOG.html", tags);
         }
         return list();
     }
 
-    private static List<Notification> parseNotifications(String eventsAsCommonMark, String changelogPath) {
+    private static List<Notification> parseNotificationsFromChangelog(String eventsAsCommonMark, String changelogPath, String... tags) {
         final String contentToRender;
         if (eventsAsCommonMark.startsWith("#")) {
             final var titleLine = eventsAsCommonMark.split("[\r\n]+")[0];
@@ -79,7 +79,7 @@ public class NotificationParser extends AbstractVisitor {
             contentToRender = eventsAsCommonMark;
         }
         final var parsing = commonMarkParser.parse(contentToRender);
-        final var parser = new NotificationParser(changelogPath);
+        final var parser = new NotificationParser(changelogPath, tags);
         parsing.accept(parser);
         return parser.parsedNotifications;
     }
@@ -117,7 +117,8 @@ public class NotificationParser extends AbstractVisitor {
                     content = "<strong>" + content.substring(18);
                 }
                 parsedNotifications.add(notification(dateTime, Formats.HTML, content)
-                        .withLink(Optional.of(changelogPath)));
+                        .withLink(Optional.of(changelogPath))
+                        .withTags(tags));
             }
         }
         visitChildren(listItem);

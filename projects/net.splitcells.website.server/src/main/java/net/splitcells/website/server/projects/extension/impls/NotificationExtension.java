@@ -20,18 +20,12 @@ import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.resource.Trail;
-import net.splitcells.dem.testing.Assertions;
-import net.splitcells.dem.utils.StreamUtils;
-import net.splitcells.website.Formats;
-import net.splitcells.website.server.notify.Notification;
 import net.splitcells.website.server.notify.NotificationQueue;
 import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkChangelogEventProjectRendererExtension;
 import net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkIntegration;
-import net.splitcells.website.server.project.renderer.extension.commonmark.NotificationParser;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.RenderRequest;
@@ -39,7 +33,6 @@ import net.splitcells.website.server.projects.RenderResponse;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
 
 import java.nio.file.Path;
-import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -57,17 +50,16 @@ import static net.splitcells.website.server.notify.NotificationQueue.notificatio
 import static net.splitcells.website.server.project.LayoutConfig.layoutConfig;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkChangelogEventProjectRendererExtension.commonMarkChangelogEventRenderer;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkIntegration.commonMarkIntegration;
-import static net.splitcells.website.server.project.renderer.extension.commonmark.NotificationParser.parseNotifications;
+import static net.splitcells.website.server.project.renderer.extension.commonmark.NotificationParser.parseNotificationsFromChangelog;
 import static net.splitcells.website.server.projects.RenderResponse.renderResponse;
 import static net.splitcells.website.server.projects.extension.impls.ProjectPathsRequest.projectPathsRequest;
-import static net.splitcells.website.server.security.authorization.AdminRole.ADMIN_ROLE;
-import static net.splitcells.website.server.security.authorization.Authorization.missesRole;
 
 /**
  * TODO IDEA Render Codeberg issues, that are relevant to this project.
  */
 public class NotificationExtension implements ProjectsRendererExtension {
     public static final String BLOG_ARTICLE = "blog article";
+    public static final String CHANGELOG = "changelog";
     private static final Trail PATH = trail("net/splitcells/website/notifications.html");
     private static final DateTimeFormatter NOTIFICATION_DATE = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public static final Pattern ARTICLE_FILE_NAME_DATE_PREFIX = Pattern.compile("\\d{4}-\\d{2}-\\d{2}-.*");
@@ -117,11 +109,9 @@ public class NotificationExtension implements ProjectsRendererExtension {
     public RenderResponse render(RenderRequest request, ProjectsRenderer projectsRenderer) {
         if (PATH.equals(request.trail())) {
             final var notificationQueue = notificationQueue();
-            notificationQueue.withAdditionalNotifications(
-                    projectsRenderer.projectRenderers().stream()
-                            .map(pr -> parseNotifications(pr))
-                            .reduce(List::withAppended)
-                            .orElseGet(Lists::list));
+            projectsRenderer.projectRenderers().stream()
+                    .map(pr -> parseNotificationsFromChangelog(pr, CHANGELOG))
+                    .forEach(ns -> ns.forEach(notificationQueue::withAdditionalNotification));
             projectsRenderer
                     .projectPaths(projectPathsRequest(projectsRenderer).withUser(request.user()))
                     .stream()
