@@ -32,6 +32,7 @@ import net.splitcells.website.server.project.renderer.extension.commonmark.Commo
 import net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkIntegration;
 import net.splitcells.website.server.project.renderer.extension.commonmark.NotificationParser;
 import net.splitcells.website.server.projects.ProjectsRenderer;
+import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.RenderRequest;
 import net.splitcells.website.server.projects.RenderResponse;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
@@ -146,6 +147,10 @@ public class NotificationExtension implements ProjectsRendererExtension {
 
     @Override
     public Set<Path> projectPaths(ProjectPathsRequest request) {
+        return setOfUniques(Path.of(PATH.unixPathString()));
+    }
+
+    public Set<Path> projectPaths(ProjectsRendererI projectsRendererI) {
         return setOfUniques(Path.of(PATH.unixPathString()));
     }
 }

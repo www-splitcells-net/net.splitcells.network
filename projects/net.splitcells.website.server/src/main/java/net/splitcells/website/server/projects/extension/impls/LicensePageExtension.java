@@ -15,18 +15,22 @@
  */
 package net.splitcells.website.server.projects.extension.impls;
 
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.tree.XmlConfig;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.website.Formats;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.projects.ProjectsRenderer;
+import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.RenderRequest;
 import net.splitcells.website.server.projects.RenderResponse;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
 
+import java.nio.file.Path;
 import java.util.Optional;
 
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
@@ -61,5 +65,10 @@ public class LicensePageExtension implements ProjectsRendererExtension {
     @Override
     public boolean requiresAuthentication(RenderRequest request) {
         return false;
+    }
+
+    @Override
+    public Set<Path> projectPaths(ProjectsRendererI projectsRenderer) {
+        return setOfUniques(Path.of(PATH.unixPathString()));
     }
 }

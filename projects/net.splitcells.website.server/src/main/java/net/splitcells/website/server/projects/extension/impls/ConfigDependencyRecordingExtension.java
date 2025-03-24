@@ -21,6 +21,7 @@ import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.website.server.projects.ProjectsRenderer;
+import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.RenderRequest;
 import net.splitcells.website.server.projects.RenderResponse;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
@@ -94,6 +95,11 @@ public class ConfigDependencyRecordingExtension implements ProjectsRendererExten
     @Override
     public boolean requiresAuthentication(RenderRequest request) {
         return request.trail().equalContents(DEPENDENCY_RECORDING_PATH);
+    }
+
+    @Override
+    public Set<Path> projectPaths(ProjectsRendererI projectsRenderer) {
+        return setOfUniques(Path.of(DEPENDENCY_RECORDING_PATH.unixPathString()));
     }
 
     @Override

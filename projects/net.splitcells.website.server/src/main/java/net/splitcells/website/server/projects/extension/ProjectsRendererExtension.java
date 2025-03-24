@@ -23,6 +23,7 @@ import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.RenderRequest;
 import net.splitcells.website.server.projects.RenderResponse;
+import net.splitcells.website.server.projects.extension.impls.LayoutExtension;
 import net.splitcells.website.server.projects.extension.impls.ProjectPathsRequest;
 
 import java.nio.file.Path;
@@ -52,15 +53,14 @@ public interface ProjectsRendererExtension {
 
     /**
      * The paths are relative to the website's {@link Config#rootPath()}.
+     * This method is required, because otherwise the paths are not available in {@link LayoutExtension}.
      *
      * @param projectsRenderer
      * @deprecated Use {@link #projectPaths(ProjectPathsRequest)} instead, but this method is not ready for that yet.
      * @return Set of paths relative to {@link Config#rootPath()}.
      */
     @Deprecated
-    default Set<Path> projectPaths(@Deprecated ProjectsRendererI projectsRenderer) {
-        return setOfUniques();
-    }
+    Set<Path> projectPaths(@Deprecated ProjectsRendererI projectsRenderer);
 
     default Set<Path> projectPaths(ProjectPathsRequest request) {
         return setOfUniques();
