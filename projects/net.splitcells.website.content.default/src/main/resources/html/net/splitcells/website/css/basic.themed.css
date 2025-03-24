@@ -372,8 +372,11 @@ a.NonStandard {
 a {
 	text-decoration: none;
 	font-weight: bold;
-	/* A sans serif font, makes the text recognizable as a link. */
-	font-family: var(--text-font-family);
+	/* A sans serif font, would make the text more recognizable as a link per the website's style guide,
+	 * but a sans serif font's height depends on its weight.
+	 * This makes it impossible to style a paragraph's lines with alternating background colors and
+	 * correct line heights for the background coloring.
+	 */
 	}
 .splitcells-net-window-menu .splitcells-net-line {
     box-shadow: 0em 0.1em .2em var(--shadow-color-priority-1);
