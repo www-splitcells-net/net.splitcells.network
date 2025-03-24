@@ -96,9 +96,9 @@ public class Notification {
         html += "</strong>";
         if (title.isPresent()) {
             if (link.isPresent()) {
-                html += "<a href=\"" + link.get() + "\">" + title.get() + "</a>";
+                html += " <a href=\"" + link.get() + "\">" + title.get() + "</a>";
             } else {
-                html += "<strong>" + title.get() + "</strong>";
+                html += " <strong>" + title.get() + "</strong>";
             }
         }
         if (!content.isBlank()) {
