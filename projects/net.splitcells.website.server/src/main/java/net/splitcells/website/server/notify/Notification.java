@@ -93,15 +93,17 @@ public class Notification {
         if (title.isEmpty() && link.isPresent()) {
             html += " <a href=\"" + link.get() + "\">(link)</a>";
         }
-        html += "</strong>: ";
+        html += "</strong>";
         if (title.isPresent()) {
             if (link.isPresent()) {
-                html += "<a href=\"" + link.get() + "\">" + title.get() + "</a>: ";
+                html += "<a href=\"" + link.get() + "\">" + title.get() + "</a>";
             } else {
-                html += "<strong>" + title.get() + "</strong>: ";
+                html += "<strong>" + title.get() + "</strong>";
             }
         }
-        html += content;
+        if (!content.isBlank()) {
+            html += ": " + content;
+        }
         return html;
     }
 
