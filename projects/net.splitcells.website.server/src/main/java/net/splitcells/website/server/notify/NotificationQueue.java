@@ -18,6 +18,9 @@ package net.splitcells.website.server.notify;
 import net.splitcells.dem.data.order.Comparators;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.data.set.list.Lists;
+
+import java.util.Arrays;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 
@@ -26,7 +29,7 @@ public class NotificationQueue {
         return new NotificationQueue();
     }
 
-    private final List<Notification> notifications = list();
+    private List<Notification> notifications = list();
     private boolean isSorted = true;
 
     private NotificationQueue() {
@@ -45,10 +48,33 @@ public class NotificationQueue {
         return this;
     }
 
-    public ListView<Notification> notifications() {
+    public List<Notification> notifications() {
         if (!isSorted) {
             notifications.sort((a, b) -> a.time().compareTo(b.time()));
         }
         return notifications;
+    }
+
+    private boolean hasAtLeastOneTag(Notification notification, String... tags) {
+        for (int i = 0; i < tags.length; ++i) {
+            if (notification.tags().contains(tags[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public NotificationQueue withSelectedTags(String... tags) {
+        notifications = notifications.stream().filter(n -> hasAtLeastOneTag(n, tags)).toList();
+        return this;
+    }
+
+    public String toHtml() {
+        return "<ol xmlns=\"http://www.w3.org/1999/xhtml\">"
+                + notifications.reversed().stream()
+                .map(n -> "<li>" + n.toHtml() + "</li>")
+                .reduce((a, b) -> a + "\n" + b)
+                .orElse("")
+                + "</ol>";
     }
 }
