@@ -408,6 +408,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
             return Optional.empty();
         }
         if (metaData.size() > 1) {
+            // TODO This throws sometimes an error on files, that are present in the Network Log repo
             throw execException("Expecting at most 1 meta data entries but found "
                     + metaData.size()
                     + " instead: "
