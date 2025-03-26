@@ -59,6 +59,7 @@ import static net.splitcells.website.server.projects.extension.impls.ProjectPath
  */
 public class NotificationExtension implements ProjectsRendererExtension {
     public static final String BLOG_ARTICLE = "blog article";
+    public static final String PROJECT = "project";
     public static final String CHANGELOG = "changelog";
     private static final Trail PATH = trail("net/splitcells/website/notifications.html");
     private static final DateTimeFormatter NOTIFICATION_DATE = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -116,8 +117,16 @@ public class NotificationExtension implements ProjectsRendererExtension {
                     .projectPaths(projectPathsRequest(projectsRenderer).withUser(request.user()))
                     .stream()
                     .concat(projectsRenderer.projectsPaths().stream())
-                    .filter(p -> p.toString().startsWith("net/splitcells/network/community/blog/articles/"))
-                    .forEach(a -> parseNotification(notificationQueue, projectsRenderer, a, BLOG_ARTICLE));
+                    .forEach(p -> {
+                        if (!ARTICLE_FILE_NAME_DATE_PREFIX.matcher(p.getFileName().toString()).matches()) {
+                            return;
+                        }
+                        if (p.toString().startsWith("net/splitcells/network/community/blog/")) {
+                            parseNotification(notificationQueue, projectsRenderer, p, BLOG_ARTICLE);
+                        } else if (p.toString().startsWith("net/splitcells/network/community/")) {
+                            parseNotification(notificationQueue, projectsRenderer, p, PROJECT);
+                        }
+                    });
             if (ENFORCING_UNIT_CONSISTENCY) {
                 notificationQueue.notifications().forEach(n -> requireEquals(n.format(), HTML));
             }
