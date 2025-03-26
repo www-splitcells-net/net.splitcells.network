@@ -3,6 +3,8 @@
  *
  * TODO Many features of jQuery can now relatively easily be done with vanilla JavaScript in the browser.
  * Consider removing the jQuery dependency for general JavaScript code.
+ * Alternatively, create a list of allowed jQuery functions and only uses these,
+ * while trying to minimize the amount of allowed functions.
  */
  var net_splitcells_gel_ui_editor_no_code_last_node_id = -1;
 let net_splitcells_gel_ui_no_code_editor_form_solution = null;
