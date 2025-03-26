@@ -190,6 +190,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
     private final RenderingValidator renderingValidator = renderingValidatorForHtmlLinks();
     /**
      * TODO In the future, all extensions should be added via dependency injection.
+     * TODO Merge {@link #extension} and {@link #extensions}.
      */
     private final ProjectsRendererExtensionMerger extension = projectsRendererExtensionMerger()
             .withRegisteredExtension(globalChangelogExtension())
@@ -210,6 +211,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
             , configDependencyRecordingExtension()
             , licensePageExtension()
             , notificationExtension()
+            , globalChangelogExtension()
     );
 
     private ProjectsRendererI(String name
