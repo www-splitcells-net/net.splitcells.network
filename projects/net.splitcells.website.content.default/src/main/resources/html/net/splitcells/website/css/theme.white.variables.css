@@ -89,9 +89,15 @@
 
     /* The roundness of the corner signals to the user, that something is a button,
      * that will cause an action in the current page.
+     * This is done, by given the feeling to the user, that something has a 3 dimensional shape.
      * It is chosen as small as possible, to have this signalling effect,
-     * and as small as possible to not disrupt the overhaul style by adding shapes,
+     * and as small as possible to not disrupt the overhaul style by adding shapes and noise,
      * that are in contrast with the rest of the layout.
      */
     --border-radius-for-actions:.25em;
+
+    /* Apart from color round corners are used, in order to emphasis something gently.
+     * It is also used to make the images' borders more gentle to the eyes.
+     */
+    --border-radius-for-gentle-emphasis:.25em;
 	}
