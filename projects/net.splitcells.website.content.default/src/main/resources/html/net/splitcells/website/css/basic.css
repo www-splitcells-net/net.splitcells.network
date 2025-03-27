@@ -105,6 +105,10 @@ ol {
 ol ol {
     padding-left: 1.75em;
     }
+span {
+    /* Inline elements are assumed to contain flowing text by default. */
+    font-family: var(--text-flowing-font);
+    }
 li {
    /* This element can contain any type of content. Therefore, the font is not determined by this class. */
    border-left: .1em solid rgb(100,100,100);
