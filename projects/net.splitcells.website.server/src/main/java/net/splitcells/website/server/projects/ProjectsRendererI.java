@@ -70,6 +70,7 @@ import static net.splitcells.website.server.projects.extension.impls.LayoutExten
 import static net.splitcells.website.server.projects.extension.impls.LayoutFancyTreeExtension.layoutFancyTreeExtension;
 import static net.splitcells.website.server.projects.extension.impls.LayoutTreeExtension.layoutTreeExtension;
 import static net.splitcells.website.server.projects.extension.impls.LicensePageExtension.licensePageExtension;
+import static net.splitcells.website.server.projects.extension.impls.NewsExtension.newsExtension;
 import static net.splitcells.website.server.projects.extension.impls.NotificationExtension.notificationExtension;
 import static net.splitcells.website.server.projects.extension.impls.TestExtension.testExtension;
 import static net.splitcells.website.server.projects.extension.impls.UserProfilePageExtension.userProfilePageExtension;
@@ -199,7 +200,8 @@ public class ProjectsRendererI implements ProjectsRenderer {
             .withRegisteredExtension(layoutTreeExtension())
             .withRegisteredExtension(frontMenuExtension())
             .withRegisteredExtension(colloquiumPlanningDemandTestData())
-            .withRegisteredExtension(colloquiumPlanningSuppliesTestData());
+            .withRegisteredExtension(colloquiumPlanningSuppliesTestData())
+            .withRegisteredExtension(newsExtension());
 
     private final List<ProjectsRendererExtension> extensions = listWithValuesOf(
             hostCpuUtilizationExtension()
@@ -212,6 +214,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
             , licensePageExtension()
             , notificationExtension()
             , globalChangelogExtension()
+            , newsExtension()
     );
 
     private ProjectsRendererI(String name
