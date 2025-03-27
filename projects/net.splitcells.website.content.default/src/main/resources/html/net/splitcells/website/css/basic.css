@@ -106,14 +106,13 @@ ol ol {
     padding-left: 1.75em;
     }
 li {
+   /* This element can contain any type of content. Therefore, the font is not determined by this class. */
    border-left: .1em solid rgb(100,100,100);
    padding-left: .5em;
    box-shadow: 0em 0.1em 0.1em -0.1em var(--shadow-color-priority-3);
    margin-top: .1em;
    margin-right: .1em;
    margin-bottom: .1em;
-   /* By default flowing text is present in lists. */
-   font-family: var(--text-flowing-font);
    }
 ol li:last-child::before {
   border-left: .1em solid rgb(100,100,100);
