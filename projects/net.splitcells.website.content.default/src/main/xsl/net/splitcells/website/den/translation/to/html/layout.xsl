@@ -633,7 +633,8 @@ request.send();]]>
                                                 </xsl:choose>
                                             </div>
                                             <div class="net-splitcells-structural-guide"/>
-                                            <div class="splitcells-net-window-menu-line-2 splitcells-net-line net-splitcells-component-priority-1-a">
+                                            <div class="splitcells-net-window-menu-line-2 net-splitcells-component-priority-1-a">
+                                                <!-- This element is not a `splitcells-net-line-title`, so that it does not inherit its height. -->
                                                 <div class="splitcells-net-line-title">
                                                     <xsl:if test="./s:title.detailed">
                                                         <xsl:value-of select="./s:title.detailed"/>
