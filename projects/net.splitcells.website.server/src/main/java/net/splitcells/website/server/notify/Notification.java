@@ -85,15 +85,19 @@ public class Notification {
         return this;
     }
 
+    /**
+     * As the date is secondary information it is not marked and styled strongly or with a big weight.
+     *
+     * @return
+     */
     public String toHtml() {
         if (ENFORCING_UNIT_CONSISTENCY) {
             requireEquals(format, HTML);
         }
-        var html = "<strong>" + NOTIFICATION_DATE.format(time);
+        var html = "<span>" + NOTIFICATION_DATE.format(time) + "</span>";
         if (title.isEmpty() && link.isPresent()) {
             html += " <a href=\"" + link.get() + "\">(link)</a>";
         }
-        html += "</strong>";
         if (title.isPresent()) {
             if (link.isPresent()) {
                 html += " <a href=\"" + link.get() + "\">" + title.get() + "</a>";
