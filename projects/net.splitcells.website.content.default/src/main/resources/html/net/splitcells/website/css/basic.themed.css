@@ -433,8 +433,9 @@ article p mjx-container {
     }
 article img {
     background-color:  var(--background-color-priority-1);
-    /*box-shadow: .25em 0.25em 0.125em var(--shadow-color-priority-3);*/
+    /* TODO box-shadow: .25em 0.25em 0.125em var(--shadow-color-priority-3);*/
     box-shadow: 0em 0.25em 0.25em -0.1em var(--shadow-color-priority-3);
+    border-radius: var(--border-radius-for-gentle-emphasis);
 }
 .net-splitcells-den-paragraph {
     line-height: 1.4em;
