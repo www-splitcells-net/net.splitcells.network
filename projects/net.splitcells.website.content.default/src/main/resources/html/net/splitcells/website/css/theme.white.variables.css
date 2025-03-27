@@ -11,81 +11,81 @@
     --text-font-family: Arial, Helvetica, sans-serif;
     --no-code-text-font-family: Arial, Helvetica, sans-serif;
 
-    --column-standard-width:40em;
+    --column-standard-width: 40em;
 
     /* The foreground/text color differences between the priorities is minimized,
      * as otherwise, the decreased contrast between the foreground and background colors
      * worsens the readability too much.
      */
-	--foreground-color-structural-guide:#000000;
-	--foreground-color-priority-0:#000000;
-	--foreground-color-priority-1:#080808;/*standard priority*/
-	--foreground-color-priority-2:#0F0F0F;
-	--foreground-color-priority-3:#181818;
-	--foreground-color-priority-4:#1F1F1F;
-	--foreground-color-priority-5:#282828;
-	--foreground-color-priority-6:#2F2F2F;
+	--foreground-color-structural-guide: #000000;
+	--foreground-color-priority-0: #000000;
+	--foreground-color-priority-1: #080808;/*standard priority*/
+	--foreground-color-priority-2: #0F0F0F;
+	--foreground-color-priority-3: #181818;
+	--foreground-color-priority-4: #1F1F1F;
+	--foreground-color-priority-5: #282828;
+	--foreground-color-priority-6: #2F2F2F;
 
-	--background-color-structural-guide:#FFFFFF;
-	--background-color-priority-0:#F6F6F6;
-	--background-color-priority-1:#E8E8E8;
-	--background-color-priority-1-a:#EEEEEE;
-	--background-color-priority-1-b:#E1E1E1;
-	--background-color-priority-2:#DADADA;
-	--background-color-priority-3:#CCCCCC;
-	--background-color-priority-4:#BEBEBE;
-	--background-color-priority-5:#B0B0B0;
-	--background-color-priority-6:#A2A2A2;
-	--background-color-priority-7:#949494;
+	--background-color-structural-guide: #FFFFFF;
+	--background-color-priority-0: #F6F6F6;
+	--background-color-priority-1: #E8E8E8;
+	--background-color-priority-1-a: #EEEEEE;
+	--background-color-priority-1-b: #E1E1E1;
+	--background-color-priority-2: #DADADA;
+	--background-color-priority-3: #CCCCCC;
+	--background-color-priority-4: #BEBEBE;
+	--background-color-priority-5: #B0B0B0;
+	--background-color-priority-6: #A2A2A2;
+	--background-color-priority-7: #949494;
 	
-	--paragraph-background-color-priority-0-a:#FCFCFC;
-	--paragraph-background-color-priority-0-b:#EFEFEF;
-	--paragraph-background-color-priority-1-a:#EEEEEE;
-	--paragraph-background-color-priority-1-b:#E1E1E1;
+	--paragraph-background-color-priority-0-a: #FCFCFC;
+	--paragraph-background-color-priority-0-b: #EFEFEF;
+	--paragraph-background-color-priority-1-a: #EEEEEE;
+	--paragraph-background-color-priority-1-b: #E1E1E1;
 
-	--foreground-color-selected-priority-0:#303030;
-	--foreground-color-selected-priority-1:#303030;
-	--foreground-color-selected-priority-2:#303030;
-	--foreground-color-selected-priority-3:#303030;
-	--foreground-color-selected-priority-4:#303030;
-	--foreground-color-selected-priority-5:#303030;
-	--foreground-color-selected-priority-6:#303030;
+	--foreground-color-selected-priority-0: #303030;
+	--foreground-color-selected-priority-1: #303030;
+	--foreground-color-selected-priority-2: #303030;
+	--foreground-color-selected-priority-3: #303030;
+	--foreground-color-selected-priority-4: #303030;
+	--foreground-color-selected-priority-5: #303030;
+	--foreground-color-selected-priority-6: #303030;
 
     --background-color-start: rgba(255, 255, 255, 0);
     --background-color-end: var(--background-color-priority-7);
 
-	--background-color-selected-priority-0:#FFFFFF;
-	--background-color-selected-priority-1:#FFFFFF;
-	--background-color-selected-priority-2:#FFFFFF;
-	--background-color-selected-priority-3:#FFFFFF;
-	--background-color-selected-priority-4:#FFFFFF;
-	--background-color-selected-priority-5:#FFFFFF;
-	--background-color-selected-priority-6:#FFFFFF;
+	--background-color-selected-priority-0: #FFFFFF;
+	--background-color-selected-priority-1: #FFFFFF;
+	--background-color-selected-priority-2: #FFFFFF;
+	--background-color-selected-priority-3: #FFFFFF;
+	--background-color-selected-priority-4: #FFFFFF;
+	--background-color-selected-priority-5: #FFFFFF;
+	--background-color-selected-priority-6: #FFFFFF;
 	
-	--shadow-color-structural-guide:rgba(0, 0, 0, 0.75);
-	--shadow-color-priority-0:rgba(0, 0, 0, 0.5);
-	--shadow-color-priority-1:rgba(0, 0, 0, 0.25);
-	--shadow-color-priority-2:rgba(0, 0, 0, 0.125);
-	--shadow-color-priority-3:rgba(0, 0, 0, 0.125);
-	--shadow-color-priority-4:rgba(0, 0, 0, 0.125);
-	--shadow-color-priority-5:rgba(0, 0, 0, 0.125);
+	--shadow-color-structural-guide: rgba(0, 0, 0, 0.75);
+	--shadow-color-priority-0: rgba(0, 0, 0, 0.5);
+	--shadow-color-priority-1: rgba(0, 0, 0, 0.25);
+	--shadow-color-priority-2: rgba(0, 0, 0, 0.125);
+	--shadow-color-priority-3: rgba(0, 0, 0, 0.125);
+	--shadow-color-priority-4: rgba(0, 0, 0, 0.125);
+	--shadow-color-priority-5: rgba(0, 0, 0, 0.125);
 
-	--error-foreground-color-priority-0:#000000;
-	--error-foreground-color-priority-1:#fd686f;
+	--error-foreground-color-priority-0: #000000;
+	--error-foreground-color-priority-1: #fd686f;
 
-	--update-background-color-priority-1:#50e297;
+	--update-background-color-priority-1: #50e297;
 	
-	--error-background-color-priority-0:#FFFFFF;
-	--error-background-color-priority-1:#F6F6F6;
+	--error-background-color-priority-0: #FFFFFF;
+	--error-background-color-priority-1: #F6F6F6;
 
-	--foreground-color-activity:#000000;
-	--background-color-activity:#ff9900;
+	--foreground-color-activity: #000000;
+	--background-color-activity: #ff9900;
 
-	--background-color-activity-animation-start:var(--background-color-priority-0);
-    --foreground-color-activity-animation-start:#000000;
+	--background-color-activity-animation-start: var(--background-color-priority-0);
+    --foreground-color-activity-animation-start: #000000;
 
-    --background-color-activity-animation-end:#ff9900;
-    --foreground-color-activity-animation-end:#000000;
+    --background-color-activity-animation-end: #ff9900;
+    --foreground-color-activity-animation-end: #000000;
 
     /* The roundness of the corner signals to the user, that something is a button,
      * that will cause an action in the current page.
@@ -94,10 +94,10 @@
      * and as small as possible to not disrupt the overhaul style by adding shapes and noise,
      * that are in contrast with the rest of the layout.
      */
-    --border-radius-for-actions:.25em;
+    --border-radius-for-actions: .25em;
 
     /* Apart from color round corners are used, in order to emphasis something gently.
      * It is also used to make the images' borders more gentle to the eyes.
      */
-    --border-radius-for-gentle-emphasis:.25em;
+    --border-radius-for-gentle-emphasis: .25em;
 	}
