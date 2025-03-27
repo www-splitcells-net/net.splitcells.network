@@ -858,7 +858,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     </xsl:attribute>
                     <xsl:attribute name="style">
                         <xsl:text>padding: 0em; margin-top: 1.4em; margin-bottom: 1.4em; display: flex; flex-direction:
-                            row;
+                            row; border-radius: var(--border-radius-for-gentle-emphasis);
                         </xsl:text>
                         <xsl:choose>
                             <xsl:when test="./s:logos">
@@ -932,7 +932,7 @@ document.addEventListener('DOMContentLoaded', function(){
                             <!-- Randomize logo selection if multiple logos are available. -->
                             <xsl:attribute name="style">
                                 <xsl:text><![CDATA[width: 50%; overflow: hidden; background-size: 100% auto; background-repeat:
-                                    no-repeat; background-image: url(']]></xsl:text>
+                                    no-repeat; border-radius: var(--border-radius-for-gentle-emphasis); background-image: url(']]></xsl:text>
                                 <xsl:choose>
                                     <xsl:when test="./s:logos/*[1]/@license">
                                         <!-- TODO REMOVE This is legacy code. -->
