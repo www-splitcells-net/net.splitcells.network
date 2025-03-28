@@ -44,8 +44,6 @@ public class CommonMarkIntegration {
             ----
             """;
 
-    private static final Pattern TITLE = Pattern.compile("(.*)(title: )(.*)\n.*");
-
     public static CommonMarkIntegration commonMarkIntegration() {
         return new CommonMarkIntegration();
     }
@@ -72,9 +70,10 @@ public class CommonMarkIntegration {
         if (arg.startsWith(headerDelimiter)) {
             final var headerSplit = arg.split(headerDelimiter);
             if (headerSplit.length > 1) {
-                final var titleMatch = TITLE.matcher(headerSplit[1]);
-                if (titleMatch.matches()) {
-                    return Optional.of(titleMatch.group(1));
+                // Regex is not used in order to avoid catastrophic backtracking.
+                if (headerSplit[1].contains("title: ")) {
+                    final var titleStart = headerSplit[1].split("title: ")[1];
+                    return Optional.of(titleStart.substring(0, titleStart.indexOf("\n")));
                 }
 
             }
