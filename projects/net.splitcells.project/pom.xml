@@ -5,7 +5,7 @@
           SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
     -->
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>project.files.standard</artifactId>
+    <artifactId>project</artifactId>
     <name>Splitcell's Project Standard</name>
     <parent>
         <groupId>net.splitcells</groupId>

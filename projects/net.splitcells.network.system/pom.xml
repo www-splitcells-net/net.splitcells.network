@@ -75,7 +75,7 @@
         </dependency>
         <dependency>
             <groupId>net.splitcells</groupId>
-            <artifactId>project.files.standard</artifactId>
+            <artifactId>project</artifactId>
             <version>${revision}</version>
         </dependency>
     </dependencies>
