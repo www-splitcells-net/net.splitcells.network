@@ -46,7 +46,7 @@ public class CommonMarkChangelogProjectRendererExtension implements ProjectRende
 
     @Override
     public Optional<BinaryMessage> renderFile(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
-        if (path.endsWith("CHANGELOG.html") && projectRenderer.projectFileSystem().isFile(CHANGELOG)) {
+        if (path.equals(projectRenderer.resourceRootPath().substring(1) + "CHANGELOG.html") && projectRenderer.projectFileSystem().isFile(CHANGELOG)) {
             final var pathContent = projectRenderer.projectFileSystem().readString(CHANGELOG);
             return Optional.of(
                     binaryMessage(renderer.render(pathContent, projectRenderer, path, projectsRenderer.config(), projectsRenderer)
