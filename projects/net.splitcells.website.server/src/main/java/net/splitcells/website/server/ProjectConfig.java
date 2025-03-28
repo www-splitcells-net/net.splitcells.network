@@ -17,6 +17,9 @@ package net.splitcells.website.server;
 
 import net.splitcells.dem.resource.FileSystemView;
 
+import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.ExecutionException.execException;
+
 public class ProjectConfig {
     public static ProjectConfig projectConfig(String rootPath, FileSystemView projectFiles) {
         return new ProjectConfig(rootPath, projectFiles);
@@ -26,6 +29,10 @@ public class ProjectConfig {
     private final FileSystemView projectFiles;
 
     private ProjectConfig(String rootPath, FileSystemView projectFiles) {
+        if (!rootPath.endsWith("/")) {
+            throw execException(tree("The given root path has to end with `/`, but does not.")
+                    .withProperty("root path", rootPath));
+        }
         this.rootPath = rootPath;
         this.projectFiles = projectFiles;
     }
