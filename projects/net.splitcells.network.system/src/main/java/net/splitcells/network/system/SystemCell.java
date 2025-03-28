@@ -154,7 +154,7 @@ public class SystemCell implements Cell {
                         , configValue(OsiLibFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/network/system/"
                         , configValue(SystemsFileSystem.class)))
-                .withAdditionalProject(projectConfig("/net/splitcells/project"
+                .withAdditionalProject(projectConfig("/net/splitcells/project/"
                         , configValue(ProjectFileSystem.class)))
                 .withAdditionalProject(projectConfig("/"
                         , configValue(WebsiteServerFileSystem.class)))
