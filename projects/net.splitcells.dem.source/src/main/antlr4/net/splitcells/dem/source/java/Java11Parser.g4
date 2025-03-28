@@ -53,7 +53,7 @@ source_unit
 access
     : inline_comment? Dot type_argument? name call_arguments access? inline_comment?
     | inline_comment? Dot name access? inline_comment?
-    | Brackets_open expression Brackets_closed
+    | Brackets_open expression Brackets_closed access?
     ;
 annotation
     /* TODO call_arguments is a hack. */
