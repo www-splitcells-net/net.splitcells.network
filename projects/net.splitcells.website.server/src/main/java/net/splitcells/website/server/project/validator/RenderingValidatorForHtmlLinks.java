@@ -40,12 +40,12 @@ import static net.splitcells.network.worker.via.java.Logger.logger;
  * in order to avoid additional external dependencies.
  */
 public class RenderingValidatorForHtmlLinks implements RenderingValidator {
-    private static Pattern HTML_HREF = Pattern.compile("(href=\\\")([^\\\"]*)(\\\")");
+    private static final Pattern HTML_HREF = Pattern.compile("(href=\\\")([^\\\"]*)(\\\")");
     /**
      * According to Sonarcloud's java:S5998 the possessive `++` avoids backtracking and
      * therefore a potential stackoverflow of Java's REGEX engine.
      */
-    public static Pattern PATH = Pattern.compile("(\\.)?(\\/)?([a-zA-Z0-9\\.\\-]++\\/)*[a-zA-Z0-9\\.\\-]+");
+    public static final Pattern PATH = Pattern.compile("(\\.)?(\\/)?([a-zA-Z0-9\\.\\-]++\\/)*[a-zA-Z0-9\\.\\-]+");
 
     public static RenderingValidatorForHtmlLinks renderingValidatorForHtmlLinks() {
         return new RenderingValidatorForHtmlLinks();
