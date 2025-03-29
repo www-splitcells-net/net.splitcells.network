@@ -161,7 +161,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
                     } catch (Exception e) {
                         throw ExecutionException.execException(tree("Could not serve path to file system.")
                                         .withProperty("target", target.toString())
-                                        .withProperty("path", path.toString())
+                                        .withProperty("path", path)
                                 , e);
                     }
                 });
@@ -330,7 +330,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
                 .collect(toList());
         if (sourceCodes.size() > 1) {
             throw ExecutionException.execException(tree("Multiple source codes for one trail. Trail of source code has to be unambiguous.")
-                    .withProperty("trail", trail.toString())
+                    .withProperty("trail", trail)
                     .withProperty("source codes", sourceCodes.toString()));
         }
         if (sourceCodes.hasElements()) {
