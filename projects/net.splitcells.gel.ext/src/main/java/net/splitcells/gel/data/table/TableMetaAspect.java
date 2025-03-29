@@ -102,13 +102,13 @@ public class TableMetaAspect implements Table {
     public void remove(int lineIndex) {
         if (ENFORCING_UNIT_CONSISTENCY) {
             if (table.rawLinesView().size() <= lineIndex) {
-                throw ExecutionException.execException(tree("Cannot remove line by index, because the index is bigger than the biggest index in the database.")
+                throw execException(tree("Cannot remove line by index, because the index is bigger than the biggest index in the database.")
                         .withText("lineIndex = " + lineIndex)
                         .withText("database = " + table.path())
                         .withText("database.size() = " + table.size()));
             }
             if (table.rawLinesView().get(lineIndex) == null) {
-                throw ExecutionException.execException(tree("Cannot remove line by index, because this line was already removed.")
+                throw execException(tree("Cannot remove line by index, because this line was already removed.")
                         .withText("lineIndex = " + lineIndex)
                         .withText("database = " + table.path()));
             }
@@ -237,10 +237,10 @@ public class TableMetaAspect implements Table {
 
     @Override
     public boolean equals(Object arg) {
-        if (arg instanceof Table table) {
-            return identity().equals(table.identity());
+        if (arg instanceof Table argTable) {
+            return identity().equals(argTable.identity());
         }
-        throw ExecutionException.execException("Invalid argument type: " + arg);
+        throw execException("Invalid argument type: " + arg);
     }
 
     @Override
