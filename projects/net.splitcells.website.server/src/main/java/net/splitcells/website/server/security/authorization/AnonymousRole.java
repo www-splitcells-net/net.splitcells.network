@@ -16,7 +16,7 @@
 package net.splitcells.website.server.security.authorization;
 
 public class AnonymousRole implements StaticRole {
-    public static Role ANONYMOUS_ROLE = new AnonymousRole();
+    public static final Role ANONYMOUS_ROLE = new AnonymousRole();
 
     private AnonymousRole() {
 

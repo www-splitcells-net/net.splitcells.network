@@ -16,7 +16,7 @@
 package net.splitcells.website.server.security.authorization;
 
 public class AdminRole implements StaticRole {
-    public static Role ADMIN_ROLE = new AdminRole();
+    public static final Role ADMIN_ROLE = new AdminRole();
     private AdminRole() {
 
     }
