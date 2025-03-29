@@ -69,13 +69,10 @@ public class CommonMarkIntegration {
     public Optional<String> extractTitleWithHeader(String arg, String headerDelimiter) {
         if (arg.startsWith(headerDelimiter)) {
             final var headerSplit = arg.split(headerDelimiter);
-            if (headerSplit.length > 1) {
-                // Regex is not used in order to avoid catastrophic backtracking.
-                if (headerSplit[1].contains("title: ")) {
+            // Regex is not used in order to avoid catastrophic backtracking.
+            if (headerSplit.length > 1 && headerSplit[1].contains("title: ")) {
                     final var titleStart = headerSplit[1].split("title: ")[1];
                     return Optional.of(titleStart.substring(0, titleStart.indexOf("\n")));
-                }
-
             }
             if (headerSplit.length > 2) {
                 return extractTitleWithoutHeader(headerSplit[2]);
