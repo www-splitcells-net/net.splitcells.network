@@ -106,9 +106,7 @@ public class NoCodeConstraintLangParser {
                     return argumentDescriptions.withErrorMessages(functionArg);
                 }
                 args.add(functionArg.requiredValue());
-            } else if (argVal.Undefined() != null) {
-                continue;
-            } else if (argVal.Function_call_var_arg() != null) {
+            } else if (argVal.Undefined() != null || argVal.Function_call_var_arg() != null) {
                 continue;
             } else if (argVal.variable_reference() != null) {
                 args.add(referenceDescription(argVal.variable_reference().Name().getText(), AttributeDescription.class, sourceCodeQuote(argVal)));
