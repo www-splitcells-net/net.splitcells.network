@@ -51,9 +51,9 @@ public class LinkTranslator extends AbstractVisitor {
      * Matches to paths that point to a sub project's README in a git repository.
      * This helpful, when the sub projects' READMEs are embedded into the software.
      */
-    private static Pattern SUB_PROJECT_README = Pattern.compile("(\\./)?projects/[a-zA-Z\\.]+/README.md");
+    private static final Pattern SUB_PROJECT_README = Pattern.compile("(\\./)?projects/[a-zA-Z\\.]+/README.md");
 
-    private static Pattern RELATIVE_PATH = Pattern.compile("(../)+.*");
+    private static final Pattern RELATIVE_PATH = Pattern.compile("(../)+.*");
 
     private final String currentPath;
     /**
