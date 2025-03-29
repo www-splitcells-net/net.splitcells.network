@@ -31,14 +31,14 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 @Deprecated
 public class BranchingHillClimber implements OfflineOptimization {
 
-    public static BranchingHillClimber branchingHillClimber() {
-        return new BranchingHillClimber();
+    public static BranchingHillClimber branchingHillClimber(Supplier<Boolean> planner) {
+        return new BranchingHillClimber(planner);
     }
 
-    private final Supplier<Boolean> planner = () -> true;
+    private final Supplier<Boolean> planner;
 
-    private BranchingHillClimber() {
-
+    private BranchingHillClimber(Supplier<Boolean> argPlanner) {
+        planner = argPlanner;
     }
 
     @Override
