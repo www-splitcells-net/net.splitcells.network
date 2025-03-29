@@ -76,8 +76,8 @@ public class Profit implements Rating {
 
     @Override
     public boolean equals(Object other) {
-        if (other instanceof Rating) {
-            return compare_partially_to((Rating) other).orElseThrow().equals(EQUAL);
+        if (other instanceof Rating rating) {
+            return compare_partially_to(rating).orElseThrow().equals(EQUAL);
         }
         return false;
     }
