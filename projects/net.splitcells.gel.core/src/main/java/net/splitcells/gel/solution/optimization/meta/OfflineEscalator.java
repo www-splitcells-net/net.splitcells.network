@@ -42,14 +42,14 @@ public class OfflineEscalator implements OfflineOptimization {
 
     private final Function<Integer, OfflineOptimization> optimizations;
     private int escalationLevel;
-    private final int minimum_escalation_level;
-    private final int maximum_escalation_level;
+    private final int minimumEscalationLevel;
+    private final int maximumEscalationLevel;
 
-    private OfflineEscalator(Function<Integer, OfflineOptimization> optimizations, int escalationLevel, int minimum_escalation_level, int maximum_escalation_level) {
-        this.optimizations = optimizations;
-        this.escalationLevel = escalationLevel;
-        this.minimum_escalation_level = minimum_escalation_level;
-        this.maximum_escalation_level = maximum_escalation_level;
+    private OfflineEscalator(Function<Integer, OfflineOptimization> argOptimizations, int argEscalationLevel, int argMinimumEscalationLevel, int argMaximumEscalationLevel) {
+        this.optimizations = argOptimizations;
+        this.escalationLevel = argEscalationLevel;
+        this.minimumEscalationLevel = argMinimumEscalationLevel;
+        this.maximumEscalationLevel = argMaximumEscalationLevel;
     }
 
     @Override
@@ -62,14 +62,14 @@ public class OfflineEscalator implements OfflineOptimization {
                     , () -> solution.path().withAppended(OPTIMIZATION.value(), getClass().getSimpleName())
                     , LogLevel.TRACE);
         }
-        if (escalationLevel < minimum_escalation_level) {
+        if (escalationLevel < minimumEscalationLevel) {
             return list();
         }
         final var optimizationEvents = this.optimizations.apply(escalationLevel).optimize(solution);
         // TODO PERFORMANCE This line of code can duplicate the runtime of the complete code.
         final var currentRating = solution.rating(optimizationEvents);
         if (currentRating.betterThan(rootRating)) {
-            if (escalationLevel < maximum_escalation_level) {
+            if (escalationLevel < maximumEscalationLevel) {
                 escalationLevel += 1;
             }
         } else {
