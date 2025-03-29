@@ -58,8 +58,7 @@ public class EventExtractor extends AbstractVisitor {
             return;
         }
         final var possibleDate = itemContent.getFirstChild();
-        if (possibleDate instanceof StrongEmphasis) {
-            final var possibleDateEmphasis = (StrongEmphasis) possibleDate;
+        if (possibleDate instanceof StrongEmphasis possibleDateEmphasis) {
             final var possibleDateText = ((Text) possibleDateEmphasis.getFirstChild()).getLiteral();
             final var dateMatcher = DATE_TIME_PATTERN.matcher(possibleDateText);
             if (dateMatcher.matches()) {
