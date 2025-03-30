@@ -19,7 +19,13 @@
 mkdir -p "$(command.managed.bin)"
 find "$(command.managed.bin)" -maxdepth 1 -type f -delete
 
-repoList=~/.config/net.splitcells.shell/command.repositories
+if [ -z "$NET_SPLITCELLS_SHELL_CONFIG_FOLDER" ]; then
+  configFolder="$NET_SPLITCELLS_SHELL_CONFIG_FOLDER"
+else
+  configFolder="$HOME/.config/net.splitcells.shell"
+fi
+
+repoList=$configFolder/command.repositories
 hasPrefix() { case $2 in "$1"*) true;; *) false;; esac; }
 bootstrapRepoProperty=$(head -n 1 $repoList)
 if hasPrefix 'repo=' "$bootstrapRepoProperty"; then
@@ -70,7 +76,7 @@ do
 		fi
 	fi
 done < "$repoList"
-if test -d "$HOME/.config/net.splitcells.shell/src"; then
-	cd "$HOME/.config/net.splitcells.shell/src"
+if test -d "$configFolder/src"; then
+	cd "$configFolder/src"
 	find . -mindepth 1 -type f -exec command.managed.install {} \;
 fi

@@ -16,7 +16,11 @@
 # This scripts needs to be as portable as possible,
 # as it is run, before the Shell project is installed the first time.
 # Therefore things like `echo.debug` are not available.
-configFolder=~/.config/net.splitcells.shell
+if [ -z "$NET_SPLITCELLS_SHELL_CONFIG_FOLDER" ]; then
+  configFolder="$NET_SPLITCELLS_SHELL_CONFIG_FOLDER"
+else
+  configFolder="$HOME/.config/net.splitcells.shell"
+fi
 mkdir -p $configFolder
 repoList=$configFolder/command.repositories
 touch $repoList

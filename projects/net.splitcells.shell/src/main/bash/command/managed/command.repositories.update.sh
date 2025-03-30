@@ -15,7 +15,13 @@
 
 # Updates user command repositories.
 
-repoList=~/.config/net.splitcells.shell/command.repositories
+if [ -z "$NET_SPLITCELLS_SHELL_CONFIG_FOLDER" ]; then
+  configFolder="$NET_SPLITCELLS_SHELL_CONFIG_FOLDER"
+else
+  configFolder="$HOME/.config/net.splitcells.shell"
+fi
+
+repoList=$configFolder/command.repositories
 hasPrefix() { case $2 in "$1"*) true;; *) false;; esac; }
 while IFS= read -r property
 do
