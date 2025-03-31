@@ -15,8 +15,11 @@
  */
 package net.splitcells.website.server.project.renderer.extension.commonmark;
 
+import lombok.val;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
+import net.splitcells.dem.utils.StringUtils;
+import net.splitcells.website.Formats;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.PageMetaData;
@@ -29,6 +32,7 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
+import static net.splitcells.website.Formats.COMMON_MARK;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.project.renderer.PageMetaData.pageMetaData;
 
@@ -41,6 +45,19 @@ public class CommonMarkProjectRendererExtension implements ProjectRendererExtens
 
     private CommonMarkProjectRendererExtension() {
 
+    }
+
+    @Override
+    public Optional<BinaryMessage> sourceCode(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
+        if (path.endsWith(".html")) {
+            val commonMarkFile = Path.of("src/main/md")
+                    .resolve(path.substring(0, path.lastIndexOf(".html")) + ".md");
+            if (projectRenderer.projectFileSystem().isFile(commonMarkFile)) {
+                val sourceContent = projectRenderer.projectFileSystem().readString(commonMarkFile);
+                return Optional.of(binaryMessage(StringUtils.toBytes(sourceContent), COMMON_MARK));
+            }
+        }
+        return Optional.empty();
     }
 
     @Override
