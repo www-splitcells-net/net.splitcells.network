@@ -18,6 +18,8 @@ package net.splitcells.website.server.notify;
 import lombok.val;
 import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.lang.Xml;
+import net.splitcells.dem.utils.StringUtils;
+import net.splitcells.dem.utils.TimeUtils;
 import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.RenderRequest;
@@ -31,6 +33,7 @@ import java.util.regex.Pattern;
 
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
+import static net.splitcells.dem.utils.StringUtils.parseString;
 import static net.splitcells.dem.utils.TimeUtils.parseZonedDate;
 import static net.splitcells.website.Formats.HTML;
 import static net.splitcells.website.server.notify.Notification.notification;
@@ -47,6 +50,7 @@ public class NotificationQueueParser {
     public static final String CHANGELOG = "changelog";
     private static final DateTimeFormatter NOTIFICATION_DATE = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final Pattern ARTICLE_FILE_NAME_DATE_PREFIX = Pattern.compile("\\d{4}-\\d{2}-\\d{2}-.*");
+    private static final Pattern START_DATE = Pattern.compile("(\\* Start Date: )(\\d{4}-\\d{2}-\\d{2})");
 
     private NotificationQueueParser() {
 
@@ -63,6 +67,14 @@ public class NotificationQueueParser {
         return ZonedDateTime.now();
     }
 
+    private static Optional<ZonedDateTime> parseArticleStartDate(String content) {
+        val matcher = START_DATE.matcher(content);
+        if (matcher.find()) {
+            return Optional.of(parseZonedDate(matcher.group(2)));
+        }
+        return Optional.empty();
+    }
+
     private static void parseNotification(NotificationQueue notificationQueue, ProjectsRenderer projectsRenderer, Path article, String... tags) {
         final var metaData = projectsRenderer.metaData(article.toString());
         final var title = metaData.flatMap(PageMetaData::title);
@@ -72,6 +84,8 @@ public class NotificationQueueParser {
                     .withLink(Optional.of("/" + article))
                     .withTags(tags);
             notificationQueue.withAdditionalNotification(notification);
+            parseArticleStartDate(parseString(projectsRenderer.sourceCode(article.toString()).orElseThrow().getContent()))
+                    .ifPresent(startDate -> notification.deepClone(Notification.class).withTime(startDate));
         }
     }
 
