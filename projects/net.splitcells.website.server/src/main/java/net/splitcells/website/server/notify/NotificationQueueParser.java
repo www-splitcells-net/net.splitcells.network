@@ -55,7 +55,7 @@ public class NotificationQueueParser {
      * @param fileName The file name of a blog article in the Network Community.
      * @return The date time in the given {@code fileName}.
      */
-    private static ZonedDateTime parseArticleDate(String fileName) {
+    private static ZonedDateTime parseArticleDateFromFileName(String fileName) {
         if (ARTICLE_FILE_NAME_DATE_PREFIX.matcher(fileName).matches()) {
             return ZonedDateTime.of(Integers.parse(fileName.substring(0, 4))
                     , Integers.parse(fileName.substring(5, 7))
@@ -73,7 +73,7 @@ public class NotificationQueueParser {
         final var metaData = projectsRenderer.metaData(article.toString());
         final var title = metaData.flatMap(PageMetaData::title);
         if (title.isPresent()) {
-            val notification = notification(parseArticleDate(article.getFileName().toString()), HTML, "")
+            val notification = notification(parseArticleDateFromFileName(article.getFileName().toString()), HTML, "")
                     .withTitle(Optional.of(Xml.escape(title.get())))
                     .withLink(Optional.of("/" + article))
                     .withTags(tags);
