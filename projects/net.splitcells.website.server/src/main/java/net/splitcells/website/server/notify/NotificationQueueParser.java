@@ -51,6 +51,7 @@ public class NotificationQueueParser {
     private static final DateTimeFormatter NOTIFICATION_DATE = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final Pattern ARTICLE_FILE_NAME_DATE_PREFIX = Pattern.compile("\\d{4}-\\d{2}-\\d{2}-.*");
     private static final Pattern START_DATE = Pattern.compile("(\\* Start Date: )(\\d{4}-\\d{2}-\\d{2})");
+    private static final Pattern END_DATE = Pattern.compile("(\\* End Date: )(\\d{4}-\\d{2}-\\d{2})");
 
     private NotificationQueueParser() {
 
@@ -75,6 +76,14 @@ public class NotificationQueueParser {
         return Optional.empty();
     }
 
+    private static Optional<ZonedDateTime> parseArticleEndDate(String content) {
+        val matcher = END_DATE.matcher(content);
+        if (matcher.find()) {
+            return Optional.of(parseZonedDate(matcher.group(2)));
+        }
+        return Optional.empty();
+    }
+
     private static void parseNotification(NotificationQueue notificationQueue, ProjectsRenderer projectsRenderer, Path article, String... tags) {
         final var metaData = projectsRenderer.metaData(article.toString());
         final var title = metaData.flatMap(PageMetaData::title);
@@ -85,7 +94,15 @@ public class NotificationQueueParser {
                     .withTags(tags);
             notificationQueue.withAdditionalNotification(notification);
             parseArticleStartDate(parseString(projectsRenderer.sourceCode(article.toString()).orElseThrow().getContent()))
-                    .ifPresent(startDate -> notification.deepClone(Notification.class).withTime(startDate));
+                    .ifPresent(startDate -> notificationQueue.withAdditionalNotification(
+                            notification.deepClone(Notification.class)
+                                    .withTime(startDate)
+                                    .withTitle(notification.title().map(t -> "Start of `" + t + "`."))));
+            parseArticleEndDate(parseString(projectsRenderer.sourceCode(article.toString()).orElseThrow().getContent()))
+                    .ifPresent(startDate -> notificationQueue.withAdditionalNotification(
+                            notification.deepClone(Notification.class)
+                                    .withTime(startDate)
+                                    .withTitle(notification.title().map(t -> "End of `" + t + "`."))));
         }
     }
 
