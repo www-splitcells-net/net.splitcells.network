@@ -16,7 +16,9 @@
 package net.splitcells.website.server.notify;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.config.StaticFlags;
+import net.splitcells.dem.object.DeepCloneable;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.website.Formats;
 
@@ -26,18 +28,22 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
+import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.website.Formats.HTML;
 
-public class Notification {
+public class Notification implements DeepCloneable {
     private static final DateTimeFormatter NOTIFICATION_DATE = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public static Notification notification(ZonedDateTime time, Formats format, String content) {
         return new Notification(time, format, content);
     }
 
-    private final ZonedDateTime time;
+    private ZonedDateTime time;
     private final Formats format;
     private final String content;
     private Optional<String> title = Optional.empty();
@@ -52,6 +58,11 @@ public class Notification {
 
     public ZonedDateTime time() {
         return time;
+    }
+
+    public Notification withTime(ZonedDateTime argTime) {
+        time = argTime;
+        return this;
     }
 
     public Formats format() {
@@ -118,5 +129,21 @@ public class Notification {
     public Notification withTags(String... arg) {
         tags.withAppended(arg);
         return this;
+    }
+
+    public Notification withTags(List<String> arg) {
+        tags.withAppended(arg);
+        return this;
+    }
+
+    @Override
+    public <R> R deepClone(Class<? extends R> arg) {
+        if (arg.equals(Notification.class)) {
+            return (R) notification(time, format, content)
+                    .withTags(listWithValuesOf(tags))
+                    .withLink(link)
+                    .withTitle(title);
+        }
+        throw execException(tree("Cannot clone instance of " + getClass().getName() + " to an instance of " + arg.getName()));
     }
 }
