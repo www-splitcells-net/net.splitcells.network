@@ -31,6 +31,7 @@ import java.util.regex.Pattern;
 
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
+import static net.splitcells.dem.utils.TimeUtils.parseZonedDate;
 import static net.splitcells.website.Formats.HTML;
 import static net.splitcells.website.server.notify.Notification.notification;
 import static net.splitcells.website.server.notify.NotificationQueue.notificationQueue;
@@ -57,14 +58,7 @@ public class NotificationQueueParser {
      */
     private static ZonedDateTime parseArticleDateFromFileName(String fileName) {
         if (ARTICLE_FILE_NAME_DATE_PREFIX.matcher(fileName).matches()) {
-            return ZonedDateTime.of(Integers.parse(fileName.substring(0, 4))
-                    , Integers.parse(fileName.substring(5, 7))
-                    , Integers.parse(fileName.substring(8, 10))
-                    , 0
-                    , 0
-                    , 0
-                    , 0
-                    , ZoneId.of("UTC"));
+            return parseZonedDate(fileName.substring(0, 10));
         }
         return ZonedDateTime.now();
     }

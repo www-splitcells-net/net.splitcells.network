@@ -15,9 +15,12 @@
  */
 package net.splitcells.dem.utils;
 
+import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
@@ -29,5 +32,21 @@ public class TimeUtils {
 
     public static LocalTime currentLocalTime() {
         return LocalTime.now();
+    }
+
+    /**
+     *
+     * @param arg A Stirng in the format `YYYY-MM-DD`.
+     * @return
+     */
+    public static ZonedDateTime parseZonedDate(String arg) {
+        return ZonedDateTime.of(Integers.parse(arg.substring(0, 4))
+                , Integers.parse(arg.substring(5, 7))
+                , Integers.parse(arg.substring(8, 10))
+                , 0
+                , 0
+                , 0
+                , 0
+                , ZoneId.of("UTC"));
     }
 }
