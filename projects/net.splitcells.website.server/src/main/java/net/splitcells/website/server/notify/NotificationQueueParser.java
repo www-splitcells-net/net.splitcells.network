@@ -92,7 +92,6 @@ public class NotificationQueueParser {
                     .withTitle(Optional.of(Xml.escape(title.get())))
                     .withLink(Optional.of("/" + article))
                     .withTags(tags);
-            notificationQueue.withAdditionalNotification(notification);
             parseArticleStartDate(parseString(projectsRenderer.sourceCode(article.toString()).orElseThrow().getContent()))
                     .ifPresent(startDate -> notificationQueue.withAdditionalNotification(
                             notification.deepClone(Notification.class)
@@ -103,6 +102,8 @@ public class NotificationQueueParser {
                             notification.deepClone(Notification.class)
                                     .withTime(startDate)
                                     .withTitle(notification.title().map(t -> "End of `" + t + "`."))));
+            notification.withTitle(notification.title().map(t -> "Propose `" + t + "`."));
+            notificationQueue.withAdditionalNotification(notification);
         }
     }
 
