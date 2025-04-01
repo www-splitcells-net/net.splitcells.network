@@ -88,23 +88,45 @@ public class NotificationQueueParser {
         final var metaData = projectsRenderer.metaData(article.toString());
         final var title = metaData.flatMap(PageMetaData::title);
         if (title.isPresent()) {
+            val titleVar = title.get();
             val notification = notification(parseArticleDateFromFileName(article.getFileName().toString()), HTML, "")
-                    .withTitle(Optional.of(Xml.escape(title.get())))
+                    .withTitle(Optional.of(Xml.escape(titleVar)))
                     .withLink(Optional.of("/" + article))
                     .withTags(tags);
             parseArticleStartDate(parseString(projectsRenderer.sourceCode(article.toString()).orElseThrow().getContent()))
                     .ifPresent(startDate -> notificationQueue.withAdditionalNotification(
                             notification.deepClone(Notification.class)
                                     .withTime(startDate)
-                                    .withTitle(notification.title().map(t -> "Start of `" + t + "`."))));
+                                    .withTitle(toStartTitle(titleVar))));
             parseArticleEndDate(parseString(projectsRenderer.sourceCode(article.toString()).orElseThrow().getContent()))
                     .ifPresent(startDate -> notificationQueue.withAdditionalNotification(
                             notification.deepClone(Notification.class)
                                     .withTime(startDate)
-                                    .withTitle(notification.title().map(t -> "End of `" + t + "`."))));
-            notification.withTitle(notification.title().map(t -> "Propose `" + t + "`."));
+                                    .withTitle(toEndTitle(titleVar))));
+            notification.withTitle(toProposalTitle(titleVar));
             notificationQueue.withAdditionalNotification(notification);
         }
+    }
+
+    private static String toStartTitle(String arg) {
+        if (arg.endsWith(".")) {
+            return "Project Start: " + arg;
+        }
+        return "Start of the Project " + arg;
+    }
+
+    private static String toEndTitle(String arg) {
+        if (arg.endsWith(".")) {
+            return "Project End: " + arg;
+        }
+        return "End of the Project " + arg;
+    }
+
+    private static String toProposalTitle(String arg) {
+        if (arg.endsWith(".")) {
+            return "Project Proposal: " + arg;
+        }
+        return "Proposal of the Project " + arg;
     }
 
     public static NotificationQueue parseNotificationQueue(RenderRequest request, ProjectsRenderer projectsRenderer) {

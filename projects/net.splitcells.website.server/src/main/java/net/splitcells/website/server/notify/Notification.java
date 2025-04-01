@@ -87,6 +87,11 @@ public class Notification implements DeepCloneable {
         return this;
     }
 
+    public Notification withTitle(String arg) {
+        title = Optional.of(arg);
+        return this;
+    }
+
     public Optional<String> link() {
         return link;
     }
