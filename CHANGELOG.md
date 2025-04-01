@@ -479,7 +479,7 @@
   2. **\#128** [Create word dictionary with links to their definition.](https://github.com/www-splitcells-net/net.splitcells.network/issues/128).
 * **2021-10-05** Create blog articles:
   1. [Development Timing And Discovery Based Networks Of Perspectives](https://splitcells-net.srht.site/blog/2021-10-04-development-timing-and-discovery-based-networks-of-perspectives/)
-  2.[There is the bad, there is the horrible and than there is \<sight\> error handling.](https://splitcells-net.srht.site/blog/2021-10-04-there-is-bad-there-is-horrible-and-than-there-is-error-handling/)
+  2.[There is the bad, there is the horrible and than there is [sight] error handling.](https://splitcells-net.srht.site/blog/2021-10-04-there-is-bad-there-is-horrible-and-than-there-is-error-handling/)
 * **2021-10-03** **\#101** [Support gemini protocol for network blog](https://github.com/www-splitcells-net/net.splitcells.network/issues/101):
   The site was deployed to `splitcells-net.srht.site`([Gemini link](gemini://splitcells-net.srht.site)).
 * **2021-10-02** **\#99** [Add license headers to all webservers default content](https://github.com/www-splitcells-net/net.splitcells.network/issues/99):
