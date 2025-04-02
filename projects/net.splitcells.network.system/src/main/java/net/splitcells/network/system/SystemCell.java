@@ -182,6 +182,10 @@ public class SystemCell implements Cell {
                         , "/net/splitcells/network/hub/README")
                         .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/community.2016.12.11.chrom.0.dina4.jpg"))
                         .withDescription(Optional.of("We provide an open source ecosystem centered around optimization and operations research.")))
+                .withAdditionalProgramConfig(programConfig("News"
+                        , "/net/splitcells/website/news")
+                        .withLogoPath(Optional.of("net/splitcells/website/images/average.source.code.image.generator.filling.via.horizontal.100.percent.jpg"))
+                        .withDescription(Optional.of("All User and Developer Relevant News in One Place at Your Finger Tips")))
                 .withAdditionalProgramConfig(programConfig("Generic Allocation No-Code Editor"
                         , "/net/splitcells/gel/ui/editor/nocode/index")
                         .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/net.splitcells.gel.ui.no.code.logo.jpg"))
