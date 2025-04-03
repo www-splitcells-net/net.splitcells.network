@@ -209,10 +209,12 @@ public class WorkerExecution {
             executionScript += EXECUTE_VIA_PODMAN_TEMPLATE;
         }
         if (config.command().isPresent()) {
-            executionScript = executionScript.replace("\"$executionCommand\"", "'" + config.command().get().replace("'", "'\\''") + "'");
+            executionScript = executionScript.replace("\"$executionCommand\""
+                    , "'" + config.command().orElseThrow().replace("'", "'\\''") + "'");
         }
         if (config.autoConfigureCpuArchExplicitly()) {
-            executionScript = executionScript.replace("\n    --arch string \\\n", "\n    --arch " + System.getProperty("os.arch") + " \\\n");
+            executionScript = executionScript.replace("\n    --arch string \\\n"
+                    , "\n    --arch " + System.getProperty("os.arch") + " \\\n");
         }
         if (config.cpuArchitecture().isEmpty()) {
             executionScript = executionScript.replace("\n    --arch string \\\n", "\n");
