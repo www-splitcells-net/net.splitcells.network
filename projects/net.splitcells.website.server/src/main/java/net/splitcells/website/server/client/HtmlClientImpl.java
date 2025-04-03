@@ -29,6 +29,8 @@ import net.splitcells.website.server.config.PublicDomain;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
  * <p>The<a href="https://playwright.dev/python/docs/library#threading">Playwright library</a> is not thread safe.
@@ -136,6 +138,7 @@ public class HtmlClientImpl implements HtmlClient {
 
     @Override
     public void close() {
+        logs().appendWarning(execException("Closing HTML clients is implemented, but is not actually expected to be used in production."));
         openTabs.forEach(Page::close);
         openTabs.removeAll();
         browser.close();
