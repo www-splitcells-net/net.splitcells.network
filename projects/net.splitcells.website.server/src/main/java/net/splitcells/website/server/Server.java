@@ -31,6 +31,7 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BasicAuthHandler;
 import io.vertx.ext.web.handler.BodyHandler;
+import lombok.val;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.resource.Service;
@@ -310,7 +311,8 @@ public class Server {
                                     HttpServerResponse response = routingContext.response();
                                     if (routingContext.request().isExpectMultipart()) {
                                         vertx.<byte[]>executeBlocking(promise -> {
-                                                    final var binaryRequest = parseBinaryRequest(routingContext.request().path()
+                                                    val requestPath = routingContext.request().path();
+                                                    final var binaryRequest = parseBinaryRequest(requestPath
                                                             , routingContext.request().formAttributes());
                                                     logs().append(tree("Processing web server binary request.")
                                                                     .withProperty("Binary request", binaryRequest.data())
@@ -318,8 +320,12 @@ public class Server {
                                                     final var binaryResponse = binaryProcessor
                                                             .process(binaryRequest);
                                                     response.putHeader("content-type", Formats.JSON.mimeTypes());
-                                                    promise.complete(toBytes(binaryResponse.data().createToJsonPrintable()
-                                                            .toJsonString()));
+                                                    if (binaryResponse.hasData()) {
+                                                        promise.complete(toBytes(binaryResponse.data().createToJsonPrintable()
+                                                                .toJsonString()));
+                                                    } else {
+                                                        promise.fail(new DocumentNotFound(requestPath));
+                                                    }
                                                 }, config.isSingleThreaded()
                                                 , result -> handleResult(routingContext, result));
                                     } else {
