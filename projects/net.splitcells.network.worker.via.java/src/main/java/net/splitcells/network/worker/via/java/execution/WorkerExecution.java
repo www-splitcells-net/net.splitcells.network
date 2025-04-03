@@ -201,6 +201,9 @@ public class WorkerExecution {
         if (config.command().isPresent()) {
             executionScript = executionScript.replace("\"$executionCommand\"", "'" + config.command().get().replace("'", "'\\''") + "'");
         }
+        if (config.cpuArchitecture().isEmpty()) {
+            executionScript = executionScript.replace("\n    --arch string \\\n", "\n");
+        }
     }
 
     public String remoteExecutionScript() {
