@@ -583,7 +583,8 @@ request.send();]]>
                                                                 select="s:default-root-relative-url('net/splitcells/website/server/front-menu.html')"/>
                                                     </xsl:attribute>
                                                 </a>
-                                                <a class="net-splitcells-button-inline" href="#net-splitcells-detailed-menu">Menu</a>
+                                                <!-- The Menu link has no use in the desktop view, as the link and the menu are at the top of the site in this case. -->
+                                                <a class="net-splitcells-button-inline minimal-only" href="#net-splitcells-detailed-menu">Menu</a>
                                                 <a class="net-splitcells-button-inline" href="#net-splitcells-website-file-browser">Explore!</a>
                                                 <div class="net-splitcells-error-status-indicator net-splitcells-button-inline"
                                                      style="visibility: hidden; display: none;">Error
