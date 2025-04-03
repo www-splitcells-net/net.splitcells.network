@@ -183,6 +183,9 @@ public class WorkerExecution {
             copyFileFrom(Path.of(config.executablePath().get().unixPathString()), Path.of("./target/" + programName));
             dockerFile += "ADD ./" + programName + " /root/program\n";
             dockerFile += "ENTRYPOINT /root/program";
+        } else if (config.classForExecution().isPresent()) {
+            dockerFile += JAVA_CLASS_EXECUTION_TEMPLATE;
+            dockerFile += dockerFile.replace("$CLASS_FOR_EXECUTION", config.classForExecution().get());
         } else {
             throw execException("Either `--command`, `--executable-path` or `--class-for-execution` needs to be set.");
         }
