@@ -200,6 +200,8 @@ public class WorkerExecution {
         config.currentFileSystem().replaceFile("target/net.splitcells.network.worker.pom.xml", toBytes(POM));
         if (config.publishExecutionImage()) {
             executionScript += PUBLISH_VIA_PODMAN_TEMPLATE;
+        } else if (!config.onlyBuildImage()) {
+            executionScript += EXECUTE_VIA_PODMAN_TEMPLATE;
         }
         if (config.command().isPresent()) {
             executionScript = executionScript.replace("\"$executionCommand\"", "'" + config.command().get().replace("'", "'\\''") + "'");
