@@ -22,6 +22,7 @@
  *   This could be avoided, by showing the full content, when the user hovers over the tree item,
  *   but this may work badly with link items on smartphones.
  *   Maybe enable this only on desktops?
+ * - TODO Consider using a typewriter effect in order to lead the user to the next interactive step.
 */
 .net-splitcells-website-form-editor-tab-bar {
     display: flex;
