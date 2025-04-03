@@ -201,6 +201,8 @@ public class ProjectsRendererI implements ProjectsRenderer {
             .withRegisteredExtension(frontMenuExtension())
             .withRegisteredExtension(colloquiumPlanningDemandTestData())
             .withRegisteredExtension(colloquiumPlanningSuppliesTestData())
+            .withRegisteredExtension(notificationExtension())
+            .withRegisteredExtension(globalChangelogExtension())
             .withRegisteredExtension(newsExtension());
 
     private final List<ProjectsRendererExtension> extensions = listWithValuesOf(
