@@ -126,13 +126,13 @@ public class LayoutFancyTreeExtension implements ProjectsRendererExtension {
 
     @Override
     public Set<Path> projectPaths(ProjectsRendererI projectsRenderer) {
-        return setOfUniques(Path.of(PATH.unixPathString().substring(1)));
+        return setOfUniques(Path.of(PATH.unixPathString()));
     }
 
     @Override
     public Set<Path> projectPaths(ProjectPathsRequest request) {
         if (request.projectsRenderer().config().layout().isPresent()) {
-            return setOfUniques(Path.of(PATH.unixPathString().substring(1)));
+            return setOfUniques(Path.of(PATH.unixPathString()));
         }
         return setOfUniques();
     }
