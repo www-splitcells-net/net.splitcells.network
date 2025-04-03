@@ -38,6 +38,18 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 @JavaLegacyArtifact
 public interface Map<Key, Value> extends java.util.Map<Key, Value> {
 
+    /**
+     * @see #hasKey(Object)
+     * @param key key whose presence in this map is to be tested
+     * @return
+     */
+    @Deprecated
+    boolean containsKey(Object key);
+
+    default boolean hasKey(Key key) {
+        return containsKey(key);
+    }
+
     default Optional<Value> getOptionally(Key key) {
         return Optional.ofNullable(get(key));
     }
