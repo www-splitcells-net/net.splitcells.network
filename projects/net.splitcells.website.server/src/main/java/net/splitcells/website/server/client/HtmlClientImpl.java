@@ -129,6 +129,7 @@ public class HtmlClientImpl implements HtmlClient {
             @Override
             public void close() {
                 page.close();
+                openTabs.delete(page);
             }
         };
     }
@@ -136,6 +137,7 @@ public class HtmlClientImpl implements HtmlClient {
     @Override
     public void close() {
         openTabs.forEach(Page::close);
+        openTabs.removeAll();
         browser.close();
         playwright.close();
     }
