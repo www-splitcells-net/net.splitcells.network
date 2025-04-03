@@ -198,6 +198,11 @@ public class WorkerExecution {
         dockerFilePath = "target/Dockerfile-" + config.name();
         config.currentFileSystem().replaceFile(dockerFilePath, toBytes(dockerFile));
         config.currentFileSystem().replaceFile("target/net.splitcells.network.worker.pom.xml", toBytes(POM));
+        if (config.onlyExecuteImage()) {
+            executionScript = PREPARE_EXECUTION_WITHOUT_BUILD_TEMPLATE;
+        } else {
+            executionScript = PREPARE_EXECUTION_TEMPLATE;
+        }
         if (config.publishExecutionImage()) {
             executionScript += PUBLISH_VIA_PODMAN_TEMPLATE;
         } else if (!config.onlyBuildImage()) {
