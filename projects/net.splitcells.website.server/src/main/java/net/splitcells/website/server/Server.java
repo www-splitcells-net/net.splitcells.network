@@ -63,6 +63,7 @@ import net.splitcells.website.server.security.encryption.PublicIdentityPemStore;
 import net.splitcells.website.server.security.encryption.SslEnabled;
 import net.splitcells.website.server.vertx.DocumentNotFound;
 
+import javax.net.ssl.SSLHandshakeException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
@@ -78,6 +79,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.execution.EffectWorkerPool.effectWorkerPool;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.Trail.trail;
+import static net.splitcells.dem.resource.communication.log.LogLevel.ERROR;
 import static net.splitcells.dem.resource.communication.log.LogLevel.WARNING;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
@@ -364,7 +366,12 @@ public class Server {
                                     }
                                 });
                         router.errorHandler(500, e -> {
-                            logs().appendError(e.failure());
+                            if (e.failure() instanceof SSLHandshakeException sslHandshakeException) {
+                                // Avoid stack trace for error, that is present on the client and not this program.
+                                logs().append(tree("Could not establish SSL connection.").withProperty("reason", sslHandshakeException.getMessage()), ERROR);
+                            } else {
+                                logs().appendError(e.failure());
+                            }
                         });
                         vertx.createHttpServer(webServerOptions)
                                 .requestHandler(router)
@@ -421,7 +428,7 @@ public class Server {
         if (result.failed() && result.cause() instanceof DocumentNotFound) {
             logs().append(tree("Could not find render for path")
                             .withProperty("path", result.cause().getMessage())
-                    , LogLevel.ERROR);
+                    , ERROR);
             response.setStatusCode(404);
             response.end();
             return;
