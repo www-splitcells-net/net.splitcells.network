@@ -207,9 +207,18 @@ public class WorkerExecution {
         if (config.cpuArchitecture().isEmpty()) {
             executionScript = executionScript.replace("\n    --arch string \\\n", "\n");
         }
+        if (config.verbose()) {
+            executionScript = executionScript.replace("--log-level=info", "--log-level=debug");
+        }
         if (config.useHostDocuments()) {
             // TODO This replacement is done in a dirty way. Use a template variable instead.
             executionScript = executionScript.replace("-v $HOME/.local/state/$executionName/Documents:/root/Documents \\", "-v $HOME/Documents:/root/Documents \\");
+        }
+        if (config.verbose() || config.dryRun()) {
+            logs().append(executionScript);
+        }
+        if (config.dryRun()) {
+            return;
         }
     }
 
