@@ -47,4 +47,9 @@ public class RenderResponse implements Response<Optional<BinaryMessage>> {
     public Optional<BinaryMessage> data() {
         return data;
     }
+
+    @Override
+    public boolean hasData() {
+        return data.isPresent();
+    }
 }

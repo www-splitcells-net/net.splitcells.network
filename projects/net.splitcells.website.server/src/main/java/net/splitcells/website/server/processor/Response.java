@@ -22,5 +22,14 @@ public interface Response<T> {
         return responseImpl(data);
     }
 
+    static <T> Response<T> emptyResponse() {
+        return responseImpl();
+    }
+
+    /**
+     * @return TODO This should return an optional value, as generic error handling is not possible otherwise.
+     */
     T data();
+
+    boolean hasData();
 }

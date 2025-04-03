@@ -20,13 +20,26 @@ public class ResponseImpl<T> implements Response<T>{
         return new ResponseImpl<>(data);
     }
 
+    public static <T> ResponseImpl<T> responseImpl() {
+        return new ResponseImpl<>();
+    }
+
     private final T data;
 
     private ResponseImpl(T dataArg) {
         data = dataArg;
     }
 
+    private ResponseImpl() {
+        data = null;
+    }
+
     public T data() {
         return data;
+    }
+
+    @Override
+    public boolean hasData() {
+        return data != null;
     }
 }
