@@ -195,6 +195,9 @@ public class WorkerExecution {
         dockerFilePath = "target/Dockerfile-" + config.name();
         config.currentFileSystem().replaceFile(dockerFilePath, toBytes(dockerFile));
         config.currentFileSystem().replaceFile("target/net.splitcells.network.worker.pom.xml", toBytes(POM));
+        if (config.command().isPresent()) {
+            executionScript = executionScript.replace("\"$executionCommand\"", "'" + config.command().get().replace("'", "'\\''") + "'");
+        }
     }
 
     public String remoteExecutionScript() {
