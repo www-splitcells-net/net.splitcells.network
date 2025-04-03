@@ -213,7 +213,8 @@ public class WorkerExecution {
         }
         if (config.autoConfigureCpuArchExplicitly()) {
             executionScript = executionScript.replace("\n    --arch string \\\n", "\n    --arch " + System.getProperty("os.arch") + " \\\n");
-        } if (config.cpuArchitecture().isEmpty()) {
+        }
+        if (config.cpuArchitecture().isEmpty()) {
             executionScript = executionScript.replace("\n    --arch string \\\n", "\n");
         }
         if (config.verbose()) {
@@ -222,6 +223,11 @@ public class WorkerExecution {
         if (config.useHostDocuments()) {
             // TODO This replacement is done in a dirty way. Use a template variable instead.
             executionScript = executionScript.replace("-v $HOME/.local/state/$executionName/Documents:/root/Documents \\", "-v $HOME/Documents:/root/Documents \\");
+        }
+        if (config.fileSystem().isFile(PODMAN_FLAGS_CONFIG_FILES.unixPathString())) {
+            executionScript = executionScript.replace("$additionalArguments \\", (config.fileSystem().readString(PODMAN_FLAGS_CONFIG_FILES.unixPathString()) + "\\").replace("\n", ""));
+        } else {
+            executionScript = executionScript.replace("$additionalArguments \\", "\\");
         }
         if (config.verbose() || config.dryRun()) {
             logs().append(executionScript);
