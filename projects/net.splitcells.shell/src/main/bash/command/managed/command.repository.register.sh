@@ -17,9 +17,9 @@
 # as it is run, before the Shell project is installed the first time.
 # Therefore things like `echo.debug` are not available.
 if [ -z "$NET_SPLITCELLS_SHELL_CONFIG_FOLDER" ]; then
-  configFolder="$NET_SPLITCELLS_SHELL_CONFIG_FOLDER"
-else
   configFolder="$HOME/.config/net.splitcells.shell"
+else
+  configFolder="$NET_SPLITCELLS_SHELL_CONFIG_FOLDER"
 fi
 mkdir -p $configFolder
 repoList=$configFolder/command.repositories

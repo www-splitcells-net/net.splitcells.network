@@ -16,9 +16,9 @@
 # Updates user command repositories.
 
 if [ -z "$NET_SPLITCELLS_SHELL_CONFIG_FOLDER" ]; then
-  configFolder="$NET_SPLITCELLS_SHELL_CONFIG_FOLDER"
-else
   configFolder="$HOME/.config/net.splitcells.shell"
+else
+  configFolder="$NET_SPLITCELLS_SHELL_CONFIG_FOLDER"
 fi
 
 repoList=$configFolder/command.repositories
