@@ -77,6 +77,12 @@ lexer grammar Java11Lexer;
     		| 'import java.util.Iterator;'
     		| 'import java.util.ListIterator;'
     		| 'import java.util.Collection;'
+    		| 'import lombok.Getter;'
+    		| 'import lombok.Setter;'
+    		| 'import lombok.experimental.Accessors;'
+    		| 'import lombok.experimental.Delegate'
+    		| 'import lombok.EqualsAndHashCode'
+    		| 'import lombok.Data'
     		;
 	Arrow: '->';
 	Bigger_than: '>';
