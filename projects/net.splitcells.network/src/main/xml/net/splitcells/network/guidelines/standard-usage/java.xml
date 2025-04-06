@@ -93,9 +93,9 @@
     <chapter>
         <title>Lombok Usage</title>
         <paragraph>Any not explicitly allowed usage of Lombok is prohibited,
-            in order to limit dependencies, that are hard to replace.
+            in order to limit dependencies, that are hard to replace and to avoid unintended effects caused by Lombok.
         </paragraph>
-        <paragraph>This is used for val as a syntactic sugar for <quote>final var</quote>.
+        <paragraph>Val is used as a syntactic sugar for <quote>final var</quote>.
             Lombok was removed temporary in the past,
             as val was increasing the compile time by about a factor of 10.
             This was caused by the fact, that in the past Lombok needed to do the type inference by itself.
@@ -105,26 +105,24 @@
         <paragraph><quote>@Accessors(chain=true)</quote>, <quote>@Setter</quote> and <quote>@Getter</quote> is used to create getters and setters,
             in order to minimize boilerplate code and to focus on definitions.
             This also makes it easy to see,
-            when only some getters or setters are overwritten with diverging implementations.
+            when only some getters or setters are overwritten with custom implementations.
             It is preferred but not possible to create getters without prefixes and setters with a set prefix.
             The get prefix is used in order to differentiate between static and not static methods.
             This is not required, but comes handy, in order to reason,
             why static getters or constructors do not use the same get prefix.
         </paragraph>
         <paragraph>
-            <quote>@EqualsAndHashCode</quote>
-            and <quote>@Data</quote> are primarily used for data objects.
+            <quote>@EqualsAndHashCode</quote> and <quote>@Data</quote> are primarily used for data objects.
         </paragraph>
         <paragraph>
-            <quote>@ExtensionMethod</quote>
-            would be nice, in order to extend existing classes like String,
+            <quote>@ExtensionMethod</quote> would be nice, in order to extend existing classes like String,
             but this feature is experimental and has bugs.
         </paragraph>
         <paragraph>
-            <quote>@Delegate</quote>
-            would be an excellent feature for aspects and such,
+            <quote>@Delegate</quote> would be an excellent feature for aspects and such,
             but this feature does not work, if only some methods are manually overridden.
-            Furthermore, this feature may even be removed from Lombok according to its <link url="https://projectlombok.org/features/experimental/Delegate">documentation</link>.
+            Furthermore, this feature may even be removed from Lombok according to its
+            <link url="https://projectlombok.org/features/experimental/Delegate">documentation</link>.
         </paragraph>
     </chapter>
 </article>
