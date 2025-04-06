@@ -238,7 +238,7 @@ public class Server {
                                 .setMaxEventLoopExecuteTimeUnit(SECONDS)
                                 .setMaxEventLoopExecuteTime(60L)
                                 .setBlockedThreadCheckInterval(60_000L))
-                        .exceptionHandler(t -> Logs.logs().appendError(t));
+                        .exceptionHandler(t -> logs().appendError(t));
                 // TODO Use own worker pool/executor provided by Dem.
                 final var deploymentOptions = new DeploymentOptions()
                         .setWorkerPoolName(Server.class.getName())
@@ -376,7 +376,8 @@ public class Server {
                         vertx.createHttpServer(webServerOptions)
                                 .requestHandler(router)
                                 .exceptionHandler(th ->
-                                        Logs.logs().appendError(ExecutionException.execException("An error occurred at the HTTP server .", th)))
+                                        // Avoid logging stack traces for connection issues.
+                                        logs().append("An error occurred at the HTTP server: " + th.getMessage(), ERROR))
                                 .listen(result -> {
                                     if (result.failed()) {
                                         startPromise.fail(result.cause());
