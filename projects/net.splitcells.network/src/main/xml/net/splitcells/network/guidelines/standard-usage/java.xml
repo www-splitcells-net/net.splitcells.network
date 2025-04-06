@@ -38,6 +38,9 @@
                 as complex attributes cause problems via their identity, equals and hashcode.
             </link>
         </paragraph>
+        <paragraph>Inheritance works great as adhoc wrappers and type and implementation extenders, but nothing more.
+            Inheritance does not support swapping out the parent implementation, which makes it often not portable in practice.
+        </paragraph>
     </chapter>
     <chapter>
         <title>Abbreviations</title>
