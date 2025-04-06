@@ -155,13 +155,6 @@
         </paragraph>
     </chapter>
     <chapter>
-        <title>Logging</title>
-        <paragraph>By default settings only events, that require action, signal overhaul execution progress for the log inspector should be shown.
-            Log code should be separated from the actual as much as possible, in order to reduce noise of regular program code.
-            This is especially the case for trace logging.
-        </paragraph>
-    </chapter>
-    <chapter>
         <title>Support</title>
         <paragraph>Prefer placing support documentation for errors and similar in program code,
             instead of documentation, as this is more stable regarding automatic code refactoring.

@@ -25,6 +25,9 @@ import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.resource.communication.log.CommonMarkLogger.commonMarkDui;
 
 /**
+ * <p>By default, only events, that require action, signal overhaul execution progress for the log inspector should be shown.
+ * Log code should be separated from the actual as much as possible, in order to reduce noise of regular program code.
+ * This is especially the case for trace logging.</p>
  * <p>TODO Create compact and standardize log format.
  * Each message should only take up one line, so that filtering messages is easy.</p>
  * <p>TODO In the future, this should be a counter part of the web server.</p>
