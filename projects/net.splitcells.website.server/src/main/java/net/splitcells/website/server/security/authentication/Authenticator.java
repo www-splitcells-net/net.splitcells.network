@@ -28,12 +28,15 @@ import java.util.regex.Pattern;
  */
 public interface Authenticator {
     /**
-     * Dots are not valid characters in usernames,
+     * <p>Dots are not valid characters in usernames,
      * as dots are used in order to navigate folders relatively for instance via `../`.
      * Strictly speaking dots could be allowed, because slash (`/`) is not part of a valid username,
-     * but it is better to be safe than sorry.
+     * but it is better to be safe than sorry.</p>
+     * <p>Whitespaces are disallowed, because there could be unintended side effects,
+     * when such usernames are handled in URLs or via a terminal.
+     * Better to be safe than sorry.</p>
      */
-    Pattern VALID_USERNAME_SYMBOLS = Pattern.compile("[a-zA-Z0-9 \\-]+");
+    Pattern VALID_USERNAME_SYMBOLS = Pattern.compile("[a-zA-Z0-9\\-]+");
 
     UserSession userSession(Login login);
 
