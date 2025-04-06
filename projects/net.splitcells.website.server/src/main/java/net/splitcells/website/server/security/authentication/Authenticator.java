@@ -27,7 +27,13 @@ import java.util.regex.Pattern;
  * if a none thread safe implementation is accidentally used in multithreaded environments by accident.</p>
  */
 public interface Authenticator {
-    Pattern VALID_USERNAME_SYMBOLS = Pattern.compile("[a-zA-Z0-9 \\-\\.]+");
+    /**
+     * Dots are not valid characters in usernames,
+     * as dots are used in order to navigate folders relatively for instance via `../`.
+     * Strictly speaking dots could be allowed, because slash (`/`) is not part of a valid username,
+     * but it is better to be safe than sorry.
+     */
+    Pattern VALID_USERNAME_SYMBOLS = Pattern.compile("[a-zA-Z0-9 \\-]+");
 
     UserSession userSession(Login login);
 
