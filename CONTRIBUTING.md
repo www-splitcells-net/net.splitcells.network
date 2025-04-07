@@ -6,6 +6,7 @@
 * [Licensing](./LICENSE.md) and [License Notices](./NOTICE.md) of This Project
 * [Source Code Guidelines](https://splitcells.net/net/splitcells/network/guidelines/index.html)
 * [Build Instructions](https://splitcells.net/net/splitcells/network/BUILD.html)
+* [API Compatibility](https://splitcells.net/net/splitcells/network/guidelines/backwards-compatibility.xml)
 ## Submitting via Pull Request
 * The authors of the commits have to sign off all commits of the pull request
   according to the [Developer’s Certificate of Origin (DCO)](src/main/txt/net/splitcells/network/legal/Developer_Certificate_of_Origin.v1.1.txt).
