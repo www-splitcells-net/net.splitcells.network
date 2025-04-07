@@ -27,6 +27,16 @@
             Regardless of that, keep in mind, that there is no guarantee of backwards
             compatibility.
         </paragraph>
+        <paragraph>If full backwards compatibility should every become a requirement,
+            a central stable API project should be created,
+            that defines the backward compatible API for all other projects.
+            This API should consist of one fluent build interface,
+            that constructs and runs a program.
+            This way, internally great changes and refactorings are still possibles without breaking compatibility.
+            The integration between the stable API and the other projects should be done in a dedicated project,
+            so it's easy to statically check for a given project,
+            if it really depends only on the API and not on a specific implementation.
+        </paragraph>
         <paragraph>Forwards compatibility is not a goal.</paragraph>
     </chapter>
     <chapter>
