@@ -25,35 +25,27 @@
             </paragraph>
         </chapter>
         <chapter>
-            <title>Fast Function Removal Protocol</title>
-            <paragraph>If there are not many users of the affected function or
-                if the migration costs for the code users are reasonable,
-                the fast protocol can be considered.
-                In this case, the removal should be done with a minimum amount of commits and time.
-                After the removal is done, the rest of the main project's code still needs to work.
-                Any required adjustments for the function removal are part of the function removal and
-                should be done in the same time.
-                In other words, do not break the build with a function removal.
-            </paragraph>
-        </chapter>
-        <chapter>
-            <title>Slow Function Removal Protocol</title>
+            <title>Migration Based Development</title>
             <paragraph>When a function is to be removed, that is important for code users and is used often,
-                prefer the following protocol:</paragraph>
+                prefer the following protocol, in order to avoid broken builds or functionality.
+                Steps can be skipped, if doing them are not useful for the project:</paragraph>
             <list>
-                <item>Mark function as deprecated and thereby create compile time warnings.</item>
-                <item>Create warning log message, when the deprecated method is executed.
-                    Users, maintainers and developers are thereby warned about the deprecation.
-                </item>
+                <item>Mark the function as deprecated and thereby create compile time warnings.</item>
+                <item>Create a warning log message, when the deprecated method is executed.</item>
                 <item>Create error log message, in order to create urgency.</item>
                 <item>Create feature flag for function and enable function by default.</item>
                 <item>Make the feature disabled by default via the feature flag.</item>
                 <item>Drop support for the function and mark it as unsupported.</item>
-                <item>Move the deprecated function to another project, so it's not included in the project.
-                    Instead the function will be injected into the project via the other project.
-                    This step may not be important and may be ignored.
+                <item>Delete the function, if it is not important enough.
+                    Alternatively move the function to a different deprecation project,
+                    so it's not included in the original project.
+                    Instead, the function will be injected into the original project via the deprecation project.
                 </item>
             </list>
+            <paragraph>If many slow function removals are present,
+                this is called migration based development,
+                as it allows to change many things quickly at low cost in the near future.
+                This makes it possible to turn technical debt into a technical investment.</paragraph>
         </chapter>
     </chapter>
 </article>
