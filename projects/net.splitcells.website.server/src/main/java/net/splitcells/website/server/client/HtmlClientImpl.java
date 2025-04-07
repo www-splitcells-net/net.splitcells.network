@@ -62,8 +62,9 @@ public class HtmlClientImpl implements HtmlClient {
                 + configValue(InternalPublicPort.class).map(port -> ":" + port).orElse(""));
     }
 
-    private final Playwright playwright = Playwright.create();
-    private final Browser browser = playwright.firefox().launch();
+    private final Playwright playwright;
+    private final Browser browser;
+    private final Object playwrightSynchronizer = new Object();
     /**
      * The URL's schema and authority of the webserver.
      * For example, `http://localhost:8443` would be such a URL.
@@ -73,76 +74,102 @@ public class HtmlClientImpl implements HtmlClient {
 
     private HtmlClientImpl(String addressArg) {
         address = addressArg;
+        synchronized (playwrightSynchronizer) {
+            playwright = Playwright.create();
+            browser = playwright.firefox().launch();
+        }
     }
 
     @Override
     public Tab openTab(String path) {
-        final var page = browser.newPage();
-        openTabs.add(page);
-        page.navigate(address + path);
-        return new Tab() {
+        synchronized (playwrightSynchronizer) {
+            final var page = browser.newPage();
+            openTabs.add(page);
+            page.navigate(address + path);
+            return new Tab() {
 
-            @Override
-            public Element elementByClass(String cssClass) {
-                return new Element() {
+                @Override
+                public Element elementByClass(String cssClass) {
+                    synchronized (playwrightSynchronizer) {
+                        return new Element() {
 
-                    final Locator locator = page.locator("." + cssClass);
+                            final Locator locator = page.locator("." + cssClass);
 
-                    @Override
-                    public void click() {
-                        locator.click();
+                            @Override
+                            public void click() {
+                                synchronized (playwrightSynchronizer) {
+                                    locator.click();
+                                }
+                            }
+
+                            @Override
+                            public String textContent() {
+                                synchronized (playwrightSynchronizer) {
+                                    return locator.textContent();
+                                }
+                            }
+
+                            @Override
+                            public String value() {
+                                synchronized (playwrightSynchronizer) {
+                                    return locator.inputValue();
+                                }
+                            }
+                        };
                     }
+                }
 
-                    @Override
-                    public String textContent() {
-                        return locator.textContent();
+                @Override
+                public Element elementById(String id) {
+                    synchronized (playwrightSynchronizer) {
+                        return new Element() {
+
+                            final Locator locator = page.locator("#" + id);
+
+                            @Override
+                            public void click() {
+                                synchronized (playwrightSynchronizer) {
+                                    locator.click();
+                                }
+                            }
+
+                            @Override
+                            public String textContent() {
+                                synchronized (playwrightSynchronizer) {
+                                    return locator.textContent();
+                                }
+                            }
+
+                            @Override
+                            public String value() {
+                                synchronized (playwrightSynchronizer) {
+                                    return locator.inputValue();
+                                }
+                            }
+                        };
                     }
+                }
 
-                    @Override
-                    public String value() {
-                        return locator.inputValue();
+                @Override
+                public void close() {
+                    synchronized (playwrightSynchronizer) {
+                        page.close();
+                        openTabs.delete(page);
                     }
-                };
-            }
-
-            @Override
-            public Element elementById(String id) {
-                return new Element() {
-
-                    final Locator locator = page.locator("#" + id);
-
-                    @Override
-                    public void click() {
-                        locator.click();
-                    }
-
-                    @Override
-                    public String textContent() {
-                        return locator.textContent();
-                    }
-
-                    @Override
-                    public String value() {
-                        return locator.inputValue();
-                    }
-                };
-            }
-
-            @Override
-            public void close() {
-                page.close();
-                openTabs.delete(page);
-            }
-        };
+                }
+            };
+        }
     }
 
     @Override
     public void close() {
-        logs().appendWarning(execException("Closing HTML clients is implemented, but is not actually expected to be used in production."));
-        openTabs.forEach(Page::close);
-        openTabs.removeAll();
-        browser.close();
-        playwright.close();
+        synchronized (playwrightSynchronizer) {
+            logs().appendWarning(execException("Closing HTML clients is implemented, but is not actually expected to be used in production."));
+            openTabs.forEach(Page::close);
+            openTabs.removeAll();
+            browser.close();
+            playwright.close();
+        }
     }
 
     @Override

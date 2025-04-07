@@ -28,6 +28,7 @@ import static net.splitcells.website.server.client.HtmlClientImpl.htmlClientImpl
 import static net.splitcells.website.server.client.HtmlClientSharer.htmlClientSharer;
 
 public class HtmlClients {
+    private static final HtmlClient ROOT_CLIENT = htmlClientImpl();
     private static final List<HtmlClient> FREE_HTML_CLIENT = list();
     private static final List<HtmlClient> USED_HTML_CLIENT = list();
     private static final Semaphore HTML_CLIENT_LOCK = new Semaphore(1);
@@ -58,7 +59,7 @@ public class HtmlClients {
                 return htmlClient;
             }
             if (MAX_HTML_CLIENT_COUNT > USED_HTML_CLIENT.size()) {
-                htmlClient = htmlClientSharer(htmlClientImpl(), sharer -> {
+                htmlClient = htmlClientSharer(ROOT_CLIENT, sharer -> {
                     try {
                         HTML_CLIENT_LOCK.acquireUninterruptibly();
                         FREE_HTML_CLIENT.add(sharer);
