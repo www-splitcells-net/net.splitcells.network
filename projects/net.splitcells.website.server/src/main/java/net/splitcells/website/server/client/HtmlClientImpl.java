@@ -154,13 +154,16 @@ public class HtmlClientImpl implements HtmlClient {
                     }
                 }
 
+                /**
+                 * The context and page might not be present, because they were already removed by the {@link HtmlClientImpl#close()} method.
+                 */
                 @Override
                 public void close() {
                     synchronized (playwrightSynchronizer) {
                         context.close();
                         page.close();
-                        tabContexts.delete(context);
-                        openTabs.delete(page);
+                        tabContexts.deleteIfPresent(context);
+                        openTabs.deleteIfPresent(page);
                     }
                 }
             };
