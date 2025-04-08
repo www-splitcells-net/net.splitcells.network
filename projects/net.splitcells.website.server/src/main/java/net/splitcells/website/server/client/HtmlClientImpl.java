@@ -31,7 +31,10 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
  * <p>The<a href="https://playwright.dev/python/docs/library#threading">Playwright library</a> is not thread safe.
- * Therefore, use 1 instance per thread.</p>
+ * Therefore, use 1 instance per thread.
+ * Only creating 1 instance per program is even better,
+ * as launching multiple ones often results in some broken ones,
+ * that litter the process tree.</p>
  * <p>TODO Test Firefox and Chromium automatically in tests using a {@link HtmlClient}.</p>
  */
 @JavaLegacyArtifact
