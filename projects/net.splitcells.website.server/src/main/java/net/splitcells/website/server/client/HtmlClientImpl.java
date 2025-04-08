@@ -34,7 +34,10 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
  * Therefore, use 1 instance per thread.
  * Only creating 1 instance per program is even better,
  * as launching multiple ones often results in some broken ones,
- * that litter the process tree.</p>
+ * that litter the process tree.
+ * For this to be reactive, it is probably important to never use handlers,
+ * as these are probably not thread safe and would therefore require additional synchronization.
+ * This synchronization during the execution of one handler would block all other {@link HtmlClientImpl} actions.</p>
  * <p>TODO Test Firefox and Chromium automatically in tests using a {@link HtmlClient}.</p>
  */
 @JavaLegacyArtifact
