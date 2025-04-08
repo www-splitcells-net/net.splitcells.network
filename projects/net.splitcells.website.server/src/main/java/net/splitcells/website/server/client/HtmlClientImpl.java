@@ -176,6 +176,8 @@ public class HtmlClientImpl implements HtmlClient {
             logs().appendWarning(execException("Closing HTML clients is implemented, but is not actually expected to be used in production."));
             openTabs.forEach(Page::close);
             openTabs.removeAll();
+            tabContexts.forEach(BrowserContext::close);
+            tabContexts.removeAll();
             browser.close();
             playwright.close();
         }
