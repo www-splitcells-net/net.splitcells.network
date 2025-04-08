@@ -15,10 +15,7 @@
  */
 package net.splitcells.website.server.client;
 
-import com.microsoft.playwright.Browser;
-import com.microsoft.playwright.Locator;
-import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.*;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
@@ -71,6 +68,11 @@ public class HtmlClientImpl implements HtmlClient {
      */
     private final String address;
     private final List<Page> openTabs = list();
+    /**
+     * The life cycle management of {@link #openTabs} can only be done with their respective {@link BrowserContext}
+     * according to the Playwright doc.
+     */
+    private final List<BrowserContext> tabContexts = list();
 
     private HtmlClientImpl(String addressArg) {
         address = addressArg;
@@ -83,7 +85,9 @@ public class HtmlClientImpl implements HtmlClient {
     @Override
     public Tab openTab(String path) {
         synchronized (playwrightSynchronizer) {
-            final var page = browser.newPage();
+            final var context = browser.newContext();
+            tabContexts.add(context);
+            final var page = context.newPage();
             openTabs.add(page);
             page.navigate(address + path);
             return new Tab() {
@@ -153,7 +157,9 @@ public class HtmlClientImpl implements HtmlClient {
                 @Override
                 public void close() {
                     synchronized (playwrightSynchronizer) {
+                        context.close();
                         page.close();
+                        tabContexts.delete(context);
                         openTabs.delete(page);
                     }
                 }
