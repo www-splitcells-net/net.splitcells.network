@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.object;
 
+import net.splitcells.dem.data.set.SetT;
 import net.splitcells.dem.data.set.map.Map;
 
 import static net.splitcells.dem.data.atom.Bools.require;
@@ -42,6 +43,18 @@ public class Merger {
     public Merger withIsRecording(boolean arg) {
         isRecording = arg;
         return this;
+    }
+
+    public SetT<String> intNames() {
+        return intAttributes.keySet2();
+    }
+
+    public SetT<String> stringNames() {
+        return stringAttributes.keySet2();
+    }
+
+    public boolean isRecording() {
+        return isRecording;
     }
 
     public Merger requireIsRecording() {

@@ -1125,12 +1125,23 @@ public interface Tree extends TreeView, Convertible {
     }
 
     default Merger merge(Merger merger) {
-        merger.requireIsRecording();
-        children().forEach(c -> {
-            c.children().requireSizeOf(1);
-            c.child(0).children().requireEmpty();
-            merger.merge(c.name(), c.child(0).name());
-        });
+        if (merger.isRecording()) {
+            children().forEach(c -> {
+                c.children().requireSizeOf(1);
+                c.child(0).children().requireEmpty();
+                merger.merge(c.name(), c.child(0).name());
+            });
+        } else {
+            merger.stringNames().forEach(name -> {
+                final var existing = propertyInstance(name);
+                if (existing.isPresent()) {
+                    children().delete(existing.get());
+                    withProperty(name, merger.merge(name, existing.get().child(0).name()));
+                } else {
+                    withProperty(name, tree(merger.merge(name, null)));
+                }
+            });
+        }
         return merger;
     }
 }
