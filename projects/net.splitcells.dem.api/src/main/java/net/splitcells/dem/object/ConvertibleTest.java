@@ -27,13 +27,13 @@ public class ConvertibleTest {
     @UnitTest
     public void testConvertFromTree() {
         final var testName = "test-name";
-        final var testA = 3;
-        final var testB = 4;
+        final var testA = "3";
+        final var testB = "4";
         final var input = tree("")
                 .withProperty("name", testName)
-                .withProperty("a", "1")
-                .withProperty("b", "2");
-        final var output = convertibleTestExampleA().withA(testA).withB(testB).withName("another-name");
+                .withProperty("a", testA + "")
+                .withProperty("b", testB + "");
+        final var output = convertibleTestExampleA().withA("5").withB("6").withName("another-name");
         converter().convert(input, output);
         requireEquals(output.name(), testName);
         requireEquals(output.a(), testA);
@@ -43,10 +43,10 @@ public class ConvertibleTest {
     @UnitTest
     public void testConvert() {
         final var testName = "test-name";
-        final var testA = 3;
-        final var testB = 4;
+        final var testA = "3";
+        final var testB = "4";
         final var input = convertibleTestExampleA().withA(testA).withB(testB).withName(testName);
-        final var output = convertibleTestExampleA().withA(5).withB(6).withName("another-name");
+        final var output = convertibleTestExampleA().withA("5").withB("6").withName("another-name");
         converter().convert(input, output);
         requireEquals(output.name(), testName);
         requireEquals(output.a(), testA);

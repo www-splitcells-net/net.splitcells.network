@@ -24,8 +24,8 @@ public class ConvertibleTestExampleA implements Convertible {
 
     }
 
-    private int a = 0;
-    private int b = 0;
+    private String a = "0";
+    private String b = "0";
     private String name = "";
 
     @Override
@@ -36,20 +36,20 @@ public class ConvertibleTestExampleA implements Convertible {
         return merger;
     }
 
-    public int a() {
+    public String a() {
         return a;
     }
 
-    public ConvertibleTestExampleA withA(int arg) {
+    public ConvertibleTestExampleA withA(String arg) {
         a = arg;
         return this;
     }
 
-    public int b() {
+    public String b() {
         return b;
     }
 
-    public ConvertibleTestExampleA withB(int arg) {
+    public ConvertibleTestExampleA withB(String arg) {
         b = arg;
         return this;
     }
