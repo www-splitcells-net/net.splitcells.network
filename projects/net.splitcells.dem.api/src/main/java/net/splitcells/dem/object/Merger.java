@@ -22,10 +22,14 @@ import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.set.map.Maps.map;
 
 /**
- * Records the current attributes of an object or provides the current attributers of an object.
+ * <p>Records the current attributes of an object or provides the current attributers of an object.
  * In other words, each {@link #merge(String, int)} method is used, in order to read values of an object
  * or to provide the values of an object.
- * This way the serialization and de-serialization of an object can be defined by one method, instead of two.
+ * This way the serialization and de-serialization of an object can be defined by one method, instead of two.</p>
+ * <p>TODO In the future, only one map should be used for the attributes,
+ * where the value is generic and has to be casted,
+ * in order to be used.
+ * A respective {@link #merge(String, int)} has to be provided for more complex data types.</p>
  */
 public class Merger {
     public static Merger merger() {
