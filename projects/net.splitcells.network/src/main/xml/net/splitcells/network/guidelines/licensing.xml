@@ -139,78 +139,114 @@
     </chapter>
     <chapter>
         <title>Licensing Reasoning</title>
-        <paragraph>
-            Dual licensing the program source code under MIT and Apache 2.0
-            was considered as a correct way,
-            because Rust seemed to be a good open source role model.
-            It provided patent protections and great flexibility.
-            The reasoning for
-            <link>
-                <text>dual licensing</text>
-                <url>https://mail.mozilla.org/pipermail/rust-dev/2012-November/002664.html</url>
-            </link>
-            seemed to be good, so it was considered.
-        </paragraph>
-        <paragraph>
-            Alternative licenses,
-            which provided extended copyright protection via copyleft
-            (
-            <link>
-                <text>example argumentation context for copyleft</text>
-                <url>https://sfconservancy.org/blog/2021/jul/23/tivoization-and-the-gpl-right-to-install/</url>
-            </link>
-            ),
-            were also checked.
-            Some additional protections were wanted,
-            but using strong copyleft from the start seemed to have some downsides in practice,
-            primarily because of standard dependencies like JUnit.
-            Furthermore, the inability to integrate external code with incompatible licenses,
-            would be hindered.
-            So, instead weak copyleft licensing was considered.
-        </paragraph>
-        <paragraph>
-            MPL 2.0 was considered,
-            but the termination clause seemed to be awful:
-            if one did some error regarding the licensing,
-            one could loose the license of an IP simply by missing some time frames
-            set by the license.
-            It was also noted, that one may even get terminated after fixing of licensing issues,
-            if the contributor choose to do so and if certain conditions are met.
-            This seems to be a too big uncertainty.
-        </paragraph>
-        <paragraph>
-            A similar problem arises from the termination clause in the (L)GPL 2.x license.
-            Some corporations even explicitly stated,
-            <link>
-                <text>that the termination clause of this license will not be enforced</text>
-                <url>https://gplcc.github.io/gplcc/</url>
-            </link>
-            (
-            <link>
-                <text>additional source</text>
-                <url>https://sfconservancy.org/blog/2019/may/11/termination-backports/</url>
-            </link>
-            ).
-        </paragraph>
-        <paragraph>
-            Next the EPL 2.0 was considered.
-            The termination clauses seemed to be very ...**drom roll** ... reasonable
-            **BA DUM TSS** and it was a weak copyleft license.
-        </paragraph>
-        <paragraph>
-            The Apache Software Foundation is an American organization,
-            whereas the Eclipse Foundation AISBL is an Euorpean-based organization.
-            The founder of the project is located in Europe,
-            so it makes more sense to target European communities.
-            The weak copy-left approach of the EPL-2.0 also enables some extended copyright protections,
-            while offering improved license compatibility,
-            so <quote>EPL-2.0 OR GPL-2.0-or-later</quote> was adopted (
-            <link>
-                <text>Developing Software at Gunpoint: Weak Copy Left Versus Pseudo Permissive</text>
-                <url>https://splitcells-net.srht.site/blog/2021-08-10-developing-software-at-gunpoint-weak-copy-left-versus-pseudo-permissive/</url>
-            </link>
-            ).
-        </paragraph>
+        <chapter>
+            <title>Commercial Dual Licensing</title>
+            <paragraph>Dual licensing the program under a very strong copy-left license and a commercial license was considered,
+                as a way to profit from a company's profits based on this open source project.
+                See the <link url="https://www.cs.auckland.ac.nz/~pgut001/pubs/oss_development.pdf">Sleepycat License</link> usage for example.
+                This was rejected, because of 2 reason.
+            </paragraph>
+            <paragraph>First, very strong copy-left licenses make it near impossible to use pseudo permissive licensed dependencies like the Apache 2.0 projects.
+                Either it is not possible or one creates a permissively licensed API definition,
+                that allows permissively licensed code to indirectly use strong copy-left licensed code (aka. GPL condom).
+                Using pseudo permissively licensed dependencies was a requirement at the start of the project,
+                as Apache dependencies were used.
+                Furthermore, being able to freely use the permissively licensed API makes it also relatively easy
+                to reengineer a basic and minimal reimplementation of the project from scratch,
+                which also defeats the purpose.
+                On the other hand, it would be possible to license a relatively small part of the API permissively,
+                that is required in order to integrate generic functionality like file access and serialization and deserialization frameworks
+                or web servers.
+                Unfortunately, this whole attempt seems to be very costly and legally fragile.
+            </paragraph>
+            <paragraph>Furthermore, such dual licensing does not work, if there is no overarching organization,
+                when there is more than one contributor.
+                Contribution by externals also may become harder this way,
+                as a contributor agreement between the organization and the contributor would potentially be needed as well.
+                Also note, that such an organization's ownership can change,
+                which in turn can defeat this as well.
+                Also, countermeasures against such are possible, such an approach gets time-consuming very quickly as well.
+                Especially, when this is done by only one person.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>Considered Open Source Dual Licensing</title>
+            <paragraph>
+                Dual licensing the program source code under MIT and Apache 2.0
+                was considered as a correct way,
+                because Rust seemed to be a good open source role model.
+                It provided patent protections and great flexibility.
+                The reasoning for
+                <link>
+                    <text>dual licensing</text>
+                    <url>https://mail.mozilla.org/pipermail/rust-dev/2012-November/002664.html</url>
+                </link>
+                seemed to be good, so it was considered.
+            </paragraph>
+            <paragraph>
+                Alternative licenses,
+                which provided extended copyright protection via copyleft
+                (
+                <link>
+                    <text>example argumentation context for copyleft</text>
+                    <url>https://sfconservancy.org/blog/2021/jul/23/tivoization-and-the-gpl-right-to-install/</url>
+                </link>
+                ),
+                were also checked.
+                Some additional protections were wanted,
+                but using strong copyleft from the start seemed to have some downsides in practice,
+                primarily because of standard dependencies like JUnit.
+                Furthermore, the inability to integrate external code with incompatible licenses,
+                would be hindered.
+                So, instead weak copyleft licensing was considered.
+            </paragraph>
+            <paragraph>
+                MPL 2.0 was considered,
+                but the termination clause seemed to be awful:
+                if one did some error regarding the licensing,
+                one could loose the license of an IP simply by missing some time frames
+                set by the license.
+                It was also noted, that one may even get terminated after fixing of licensing issues,
+                if the contributor choose to do so and if certain conditions are met.
+                This seems to be a too big uncertainty.
+            </paragraph>
+            <paragraph>
+                A similar problem arises from the termination clause in the (L)GPL 2.x license.
+                Some corporations even explicitly stated,
+                <link>
+                    <text>that the termination clause of this license will not be enforced</text>
+                    <url>https://gplcc.github.io/gplcc/</url>
+                </link>
+                (
+                <link>
+                    <text>additional source</text>
+                    <url>https://sfconservancy.org/blog/2019/may/11/termination-backports/</url>
+                </link>
+                ).
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>Final Licensing Reasoning</title>
+            <paragraph>
+                Next the EPL 2.0 was considered.
+                The termination clauses seemed to be very ...**drom roll** ... reasonable
+                **BA DUM TSS** and it was a weak copyleft license.
+            </paragraph>
+            <paragraph>
+                The Apache Software Foundation is an American organization,
+                whereas the Eclipse Foundation AISBL is an Euorpean-based organization.
+                The founder of the project is located in Europe,
+                so it makes more sense to target European communities.
+                The weak copy-left approach of the EPL-2.0 also enables some extended copyright protections,
+                while offering improved license compatibility,
+                so <quote>EPL-2.0 OR GPL-2.0-or-later</quote> was adopted (
+                <link>
+                    <text>Developing Software at Gunpoint: Weak Copy Left Versus Pseudo Permissive</text>
+                    <url>https://splitcells-net.srht.site/blog/2021-08-10-developing-software-at-gunpoint-weak-copy-left-versus-pseudo-permissive/</url>
+                </link>
+                ).
+            </paragraph>
+        </chapter>
     </chapter>
     <chapter>
         <title>Licensing Implementation</title>
