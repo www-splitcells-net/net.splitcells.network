@@ -101,15 +101,25 @@ and therefore this might create a conflict with such programs.
 On the other hand, there is a convention in Unix to put executable programs inside bin folders like
 `$HOME/bin`,  `/bin` and `/usr/bin`.
 
-It is preferred, if the scripts are written in such a way,
+It is required, that the scripts are written in such a way,
 that the current folder is located at the project's root folder.
+If a script assumes, that the current working folder also contains the executed script, use `./binr/*` instead.
 Such commands are called project commands.
+When a shell is opened at the project's root folder, these commands are therefore executed via `bin/*`.
 
 Common commands and command prefixes:
 * `build` & `build.*`
 * `check` & `check.*`
 * `deploy` & `deploy.*`
 * `test` & `test.*`
+## Files at `./binr/*`
+This folder contains scripts like `./bin/*`,
+but every executed command assumes, that the current working directory for the executed command is `./binr`.
+
+This is useful, when commands need to be executed easily via an IDE.
+When starting a shell script, many IDEs set the current working directory for such a script to the folder of the script.
+
+Note, that scripts from `./binr/*` are allowed to call and link to `./bin/*` and vice versa.
 ## Files at `./lib/*`
 Contains dependencies of the project.
 ## Files at `./projects/*`
