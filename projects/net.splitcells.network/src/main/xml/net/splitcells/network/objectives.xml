@@ -49,6 +49,7 @@
         </paragraph>
         <list>
             <link post="net/splitcells/network/guidelines/inherently-broken-and-rotten-by-design">Inherently Broken and Rotten by Design</link>
+            <item>Ensure, that the software is reliable for its users.</item>
         </list>
     </chapter>
 </article>
