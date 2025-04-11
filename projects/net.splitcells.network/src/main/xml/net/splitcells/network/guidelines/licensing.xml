@@ -546,18 +546,9 @@ SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
     <chapter>
         <title>Interesting Third Party Documents</title>
         <list>
-            <item>
-                <link>
-                    <text>ASF 3rd Party License Policy</text>
-                    <url>https://www.apache.org/legal/resolved.html</url>
-                </link>
-            </item>
-            <item>
-                <link>
-                    <text>The installer of GPL software seems to not have to be licensed under GPL.</text>
-                    <url>https://www.gnu.org/licenses/gpl-faq.html#GPLCompatInstaller</url>
-                </link>
-            </item>
+            <link url="https://www.apache.org/legal/resolved.html">ASF 3rd Party License Policy</link>
+            <link url="https://www.gnu.org/licenses/gpl-faq.html#GPLCompatInstaller">The installer of GPL software seems to not have to be licensed under GPL.</link>
+            <link url="https://www.cs.auckland.ac.nz/~pgut001/pubs/oss_development.pdf">Self-Sustaining Open Source Software Development Peter Gutmann University of Auckland — or — Programmer or Prostitute?</link>
         </list>
     </chapter>
 </article>
