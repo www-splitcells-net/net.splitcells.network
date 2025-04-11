@@ -24,6 +24,7 @@ import java.util.Optional;
 import static net.splitcells.dem.data.atom.Bools.parseBoolean;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.resource.Trail.trail;
+import static net.splitcells.network.worker.via.java.execution.WorkerExecution.workerExecution;
 import static net.splitcells.network.worker.via.java.execution.WorkerExecutionConfig.workerExecutionConfig;
 
 @JavaLegacy
@@ -197,7 +198,7 @@ public class WorkerExecutionMain {
                         .split(","))
                         .mapped(Integers::parse));
             }
-
+            workerExecution(config);
         } catch (Throwable e) {
             e.printStackTrace();
             formatter.printHelp("worker.execute", options);
