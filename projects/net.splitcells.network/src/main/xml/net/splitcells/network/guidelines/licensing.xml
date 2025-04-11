@@ -168,6 +168,10 @@
                 Also, countermeasures against such are possible, such an approach gets time-consuming very quickly as well.
                 Especially, when this is done by only one person.
             </paragraph>
+            <paragraph>If one wants to attempt to use commercial licensing,
+                the open core paradigm might be suitable by creating special extensions,
+                that use the commercial dual licensing approach.
+            </paragraph>
         </chapter>
         <chapter>
             <title>Considered Open Source Dual Licensing</title>
