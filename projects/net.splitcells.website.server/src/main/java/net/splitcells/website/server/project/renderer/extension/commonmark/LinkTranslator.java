@@ -53,8 +53,6 @@ public class LinkTranslator extends AbstractVisitor {
      */
     private static final Pattern SUB_PROJECT_README = Pattern.compile("(\\./)?projects/[a-zA-Z\\.]+/README.md");
 
-    private static final Pattern RELATIVE_PATH = Pattern.compile("(../)+.*");
-
     private final String currentPath;
     /**
      * Number of elements inside {@link #currentPath}.
@@ -108,8 +106,7 @@ public class LinkTranslator extends AbstractVisitor {
                             + "/"
                             + withoutPrefixElements(destinationWithoutProtocol, parentCount))
                             .replace("//", "/");
-                    if (RELATIVE_PATH.matcher(destinationWithoutProtocol).matches()
-                            && projectsRenderer.projectsPaths().contains(Path.of(relativePath))) {
+                    if (projectsRenderer.projectsPaths().contains(Path.of(relativePath))) {
                         link.setDestination("/" + relativePath);
                         visitChildren(link);
                         return;
