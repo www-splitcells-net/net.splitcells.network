@@ -41,6 +41,10 @@ public class Bools {
         return BoolI.bool(arg);
     }
 
+    public static boolean parseBoolean(String parse) {
+        return parse.toLowerCase().equals("true");
+    }
+
     public static Bool truthful() {
         return BoolI.bool(true);
     }
