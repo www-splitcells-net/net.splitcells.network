@@ -21,6 +21,7 @@ import org.apache.commons.cli.*;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.data.atom.Bools.parseBoolean;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.network.worker.via.java.execution.WorkerExecutionConfig.workerExecutionConfig;
@@ -171,7 +172,7 @@ public class WorkerExecutionMain {
                 config.withUseHostDocuments(cmd.getParsedOptionValue(useHostDocuments));
             }
             if (cmd.hasOption(publishExecutionImage)) {
-                config.withPublishExecutionImage(cmd.getParsedOptionValue(publishExecutionImage));
+                config.withPublishExecutionImage(parseBoolean(cmd.getParsedOptionValue(publishExecutionImage)));
             }
             if (cmd.hasOption(verbose)) {
                 config.withVerbose(cmd.getParsedOptionValue(verbose));
