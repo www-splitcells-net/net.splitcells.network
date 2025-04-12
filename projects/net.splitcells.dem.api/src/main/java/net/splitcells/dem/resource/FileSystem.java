@@ -61,6 +61,11 @@ public interface FileSystem extends FileSystemView {
     FileSystem writeToFile(Path path, byte[] content);
 
     @ReturnsThis
+    default FileSystem copyFileFromTo(Trail from, Trail to) {
+        throw notImplementedYet();
+    }
+
+    @ReturnsThis
     FileSystem appendToFile(Path path, byte[] content);
 
     @ReturnsThis

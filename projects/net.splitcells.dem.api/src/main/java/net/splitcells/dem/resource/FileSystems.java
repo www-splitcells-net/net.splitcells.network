@@ -163,6 +163,16 @@ public class FileSystems implements FileSystem {
     }
 
     @Override
+    public FileSystem copyFileFromTo(Trail from, Trail to) {
+        try {
+            java.nio.file.Files.copy(from.javaLegacyPath(), to.javaLegacyPath());
+        } catch (IOException e) {
+            throw execException(e);
+        }
+        return this;
+    }
+
+    @Override
     public FileSystem createDirectoryPath(String path) {
         try {
             createDirectories(rootPath.resolve(path));
