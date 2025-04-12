@@ -17,12 +17,8 @@ package net.splitcells.network.worker.via.java.execution;
 
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.resource.host.CurrentFileSystem;
-import net.splitcells.dem.utils.StringUtils;
-
-import java.nio.file.Path;
 
 import static net.splitcells.dem.Dem.configValue;
-import static net.splitcells.dem.resource.Files.copyFileFrom;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
@@ -180,7 +176,8 @@ public class WorkerExecution {
             dockerFile += "ENTRYPOINT " + config.command().get();
         } else if (config.executablePath().isPresent()) {
             programName = "program-" + config.name();
-            copyFileFrom(Path.of(config.executablePath().get().unixPathString()), Path.of("./target/" + programName));
+            config.currentFileSystem().copyFileFromTo(config.executablePath().get()
+                    , trail("target", programName));
             dockerFile += "ADD ./" + programName + " /root/program\n";
             dockerFile += "ENTRYPOINT /root/program";
         } else if (config.classForExecution().isPresent()) {
