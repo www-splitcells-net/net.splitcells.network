@@ -15,6 +15,7 @@
  */
 package net.splitcells.network.worker.via.java.execution;
 
+import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 import org.apache.commons.cli.*;
@@ -176,7 +177,7 @@ public class WorkerExecutionMain {
                 config.withPublishExecutionImage(parseBoolean(cmd.getParsedOptionValue(publishExecutionImage)));
             }
             if (cmd.hasOption(verbose)) {
-                config.withVerbose(cmd.getParsedOptionValue(verbose));
+                config.withVerbose(parseBoolean(cmd.getParsedOptionValue(verbose)));
             }
             if (cmd.hasOption(onlyBuildImage)) {
                 config.withOnlyBuildImage(cmd.getParsedOptionValue(onlyBuildImage));
@@ -185,7 +186,7 @@ public class WorkerExecutionMain {
                 config.withOnlyExecuteImage(cmd.getParsedOptionValue(onlyExecuteImage));
             }
             if (cmd.hasOption(dryRun)) {
-                config.withDryRun(cmd.getParsedOptionValue(dryRun));
+                config.withDryRun(parseBoolean(cmd.getParsedOptionValue(dryRun)));
             }
             if (cmd.hasOption(usePlaywright)) {
                 config.withUsePlaywright(cmd.getParsedOptionValue(usePlaywright));
