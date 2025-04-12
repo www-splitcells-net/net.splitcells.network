@@ -68,6 +68,10 @@ public class Trail implements Thing, Equality<Trail> {
                 .reduce((a, b) -> a + "/" + b).orElse("");
     }
 
+    public Path javaLegacyPath() {
+        return Path.of(unixPathString());
+    }
+
     public String toString() {
         return unixPathString();
     }
