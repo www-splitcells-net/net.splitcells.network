@@ -20,3 +20,4 @@ set -e
   # In other words, make an OSI installation independent from the user's home and default path settings.
   bin/net.splitcells.shell.projects.peers.for.commands | xargs -i sh -c 'command.repository.register $(realpath {})'
   user.bin.configure
+echo Worker was successfully bootstrapped. # This is used, in order to check, if `user.bin.configure` was executed successfully.
