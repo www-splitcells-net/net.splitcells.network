@@ -153,7 +153,7 @@ public class WorkerExecutionMain {
                 .argName("executeViaSshAt")
                 .hasArg()
                 .required(false)
-                .longOpt("executeViaSshAt")
+                .longOpt("execute-via-ssh-at")
                 .desc("Execute the given command at an remote server via SSH. The format is `[user]@[address/network name]`.")
                 .build();
         options.addOption(executeViaSshAt);
