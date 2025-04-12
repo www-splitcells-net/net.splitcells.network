@@ -25,7 +25,7 @@ mkdir -p $configFolder
 repoList=$configFolder/command.repositories
 touch $repoList
 if grep -q "^repo=$1$" "$repoList"; then
-	>&2 echo Repository "'"$1"'" is already registered.
+	echo Repository "'"$1"'" is already registered.
 else
 	echo "repo=$1" >> $repoList
 fi
