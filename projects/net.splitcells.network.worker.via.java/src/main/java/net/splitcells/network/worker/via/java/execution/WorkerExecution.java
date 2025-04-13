@@ -31,6 +31,12 @@ import static net.splitcells.dem.utils.StringUtils.toBytes;
  * This class only stores the result of the execution.
  * Any input is handled by {@link WorkerExecutionConfig}.</p>
  * <p>Strings instead of {@link StringBuilder} are used, so that replace methods can be used.</p>
+ * <p>TODO IDEA Currently, everything is stored in `$HOME/.local/state/$executionName/*`.
+ * If more strict file isolation is required, in order to prevent file accidents,
+ * a namespace could be used, that is implemented as a hidden parent folder for the execution folder:
+ * `$HOME/.local/state/.$namespace/$executionName/*`.
+ * See `repo.process` for inspiration.
+ * Of course, different users could be used instead.</p>
  */
 public class WorkerExecution {
     public static WorkerExecution workerExecution(WorkerExecutionConfig config) {
