@@ -25,6 +25,9 @@ import java.util.regex.Pattern;
  * <p>Implementations should be thread safe, in order to minimize the number of {@link Authenticator} used at once.
  * This also avoid race conditions,
  * if a none thread safe implementation is accidentally used in multithreaded environments by accident.</p>
+ * <p>TODO It is also advised, to limit the number of simultaneously logged aka {@link #isValid(UserSession)} {@link UserSession},
+ * in order to avoid bugs via too many requests and to potentially further implicitly the lifetime of {@link UserSession}</p>
+ * <p>TODO Store the create time of an {@link UserSession} and make these invalid after a certain amount of time.</p>
  */
 public interface Authenticator {
     /**
