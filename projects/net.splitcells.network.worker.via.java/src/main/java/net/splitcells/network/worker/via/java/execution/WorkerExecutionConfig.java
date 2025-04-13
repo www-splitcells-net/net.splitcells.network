@@ -15,6 +15,9 @@
  */
 package net.splitcells.network.worker.via.java.execution;
 
+import lombok.experimental.Accessors;
+import lombok.Getter;
+import lombok.Setter;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.dem.resource.Trail;
@@ -56,6 +59,11 @@ public class WorkerExecutionConfig {
     private boolean dryRun = true;
     private boolean usePlaywright = false;
     private boolean autoConfigureCpuArchExplicitly = false;
+    /**
+     * TODO This flag is only needed as an option for the Python version of `worker.execute`.
+     * Remove it, when `worker.execute` is deleted.
+     */
+    private @Accessors(chain = true) @Setter @Getter boolean flatFolders = true;
     private List<Integer> portPublishing = list();
     private Optional<String> executeViaSshAt = Optional.empty();
     private FileSystem fileSystem = configValue(HostFileSystem.class);
@@ -83,6 +91,7 @@ public class WorkerExecutionConfig {
     public String shellArgumentString(Predicate<String> optionSelector) {
         var result = stringBuilder();
         result.append("--name=" + escape(name));
+        result.append(" --flat-folders=" + escape(flatFolders + ""));
         if (optionSelector.test("command")) {
             command.ifPresent(c -> result.append(" --command=" + escape(c)));
         }
