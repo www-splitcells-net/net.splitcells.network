@@ -154,6 +154,7 @@ if __name__ == '__main__':
                 + " This is useful, because some tools have not a good CPU auto detection (i.e. Podman on RISC-V cannot find the fitting images based on the CPU arch automatically).")
     parser.add_argument('--port-publishing', '--portPublishing', dest='portPublishing', help="This is a comma separated list of `host-port:container-port`, that describes the port forwarding on the host.")
     parser.add_argument('--execute-via-ssh-at', '--executeViaSshAt', dest='executeViaSshAt', help="Execute the given command at an remote server via SSH. The format is `[user]@[address/network name]`.")
+    parser.add_argument('--flat-folders', '--flatFolders', dest='flatFolders', required=False, type=str2bool, default=False, help="If this is set to true, the `~/.local/state/$executionName` is not mapped to `~/.local/state/$executionName/.local/state/$executionName` via containers.")
     parsedArgs = parser.parse_args()
     if parsedArgs.executeViaSshAt is not None:
         remoteScript = ""
@@ -210,6 +211,11 @@ if __name__ == '__main__':
         pass
     else:
         executionScript += executeViaPodman
+    if parsedArgs.flatFolders:
+        dockerfile.replace("-v $HOME/.local/state/$executionName/Documents:/root/Documents ", "-v $HOME/.local/state/$executionName/Documents:/root/.local/state/$executionName/Documents ")
+        dockerfile.replace("-v $HOME/.local/state/$executionName/.ssh:/root/.ssh ", "-v $HOME/.local/state/$executionName/.ssh:/root/.local/state/$executionName/.ssh ")
+        dockerfile.replace("-v $HOME/.local/state/$executionName/.m2:/root/.m2 ", "-v $HOME/.local/state/$executionName/.m2:/root/.local/state/$executionName/.m2 ")
+        dockerfile.replace("-v $HOME/.local/state/$executionName/.local:/root/.local/state/$executionName/.local ")
     executionScript = executionScript.replace('"$executionName"', parsedArgs.name)
     if parsedArgs.command is not None:
         executionScript = executionScript.replace('"$executionCommand"', "'" + parsedArgs.command.replace("'", "'\\''") + "'")
