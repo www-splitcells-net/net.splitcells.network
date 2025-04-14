@@ -37,6 +37,11 @@ import static net.splitcells.dem.utils.StringUtils.toBytes;
  * `$HOME/.local/state/.$namespace/$executionName/*`.
  * See `repo.process` for inspiration.
  * Of course, different users could be used instead.</p>
+ * <p>TODO The way, that the execution strings are created is too complex.
+ * From the feature complexity it should be a relatively simple string templating like $NAME_FOR_EXECUTION and
+ * no arbitrary replacement of strings in the template should be done,
+ * like it is on `-v $HOME/.local/state/$executionName/Documents:/root/Documents`.
+ * In other words, separate the configuration via {@link WorkerExecutionConfig} more strictly from the template processing.</p>
  */
 public class WorkerExecution {
     public static WorkerExecution workerExecution(WorkerExecutionConfig config) {
