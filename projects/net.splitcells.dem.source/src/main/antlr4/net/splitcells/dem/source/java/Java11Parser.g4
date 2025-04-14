@@ -57,7 +57,19 @@ access
     ;
 annotation
     /* TODO call_arguments is a hack. */
-	: Keysymbol_at name call_arguments?;
+	: Keysymbol_at name annotation_arguments?;
+annotation_arguments
+    : Brace_round_open Brace_round_closed
+    | Brace_round_open annotation_arguments_element annotation_arguments_next* Brace_round_closed
+    ;
+annotation_arguments_element
+    : Line_comment* annotation? (name Equals)? reference
+    | Line_comment* annotation? (name Equals)? expression
+    | Line_comment* annotation? variable_declaration
+    ;
+annotation_arguments_next
+    : Comma annotation_arguments_element
+    ;
 /* TODO Using interface_definition_member is a hack. */
 annotation_definition
     : javadoc? annotation* Keyword_public Keyword_annotation* name
@@ -109,9 +121,9 @@ class_member_method_definition
     ;
 class_member_method_definition_throws : Keyword_throws name;
 class_member_value_declaration
-    : javadoc? annotation? modifier_visibility? Keyword_static? Keyword_final?
+    : javadoc? annotation* modifier_visibility? annotation* Keyword_static? Keyword_final?
         type_declaration? name Equals statement
-    | javadoc? annotation? modifier_visibility? Keyword_static? Keyword_final?
+    | javadoc? annotation* modifier_visibility? annotation* Keyword_static? Keyword_final?
               type_declaration? name Semicolon
     ;
 enum_constructor
