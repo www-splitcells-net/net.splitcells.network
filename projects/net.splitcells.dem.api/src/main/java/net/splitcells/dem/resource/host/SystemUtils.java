@@ -177,23 +177,30 @@ public final class SystemUtils {
         try (BufferedReader inputReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
              BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
             // FIXME Print Process output while waiting for process's completion.
-            String inputLine = null;
-            String errorLine = null;
-            try {
-                // Some commands wait for input although they do not needed to.
-                process.getOutputStream().close();
-                while ((inputLine = inputReader.readLine()) != null || (errorLine = errorReader.readLine()) != null) {
-
-                    if (errorLine != null) {
-                        System.out.println(errorLine);
-                    }
-                    if (inputLine != null) {
-                        System.out.println(inputLine);
+            new Thread(() -> {
+                String inputLine = null;
+                while (process.isAlive()) {
+                    try {
+                        while ((inputLine = inputReader.readLine()) != null) {
+                            System.out.println(inputLine);
+                        }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
                 }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            }).start();
+            new Thread(() -> {
+                String errorLine = null;
+                while (process.isAlive()) {
+                    try {
+                        while ((errorLine = errorReader.readLine()) != null) {
+                            System.err.println(errorLine);
+                        }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }).start();
             process.waitFor();
         } catch (Throwable e) {
             Thread.currentThread().interrupt();
