@@ -42,6 +42,7 @@ VOLUME /root/.local/
 VOLUME /root/Documents/
 VOLUME /root/.ssh/
 VOLUME /root/.m2/
+VOLUME /root/repos/
 """
 
 pom = """<project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -76,6 +77,7 @@ mkdir -p $HOME/.local/state/$executionName/.m2/
 mkdir -p $HOME/.local/state/$executionName/.ssh/
 mkdir -p $HOME/.local/state/$executionName/.local/dumps
 mkdir -p $HOME/.local/state/$executionName/Documents/
+mkdir -p $HOME/.local/state/$executionName/repos
 mkdir -p ./target/
 test -f target/program-$executionName && chmod +x target/program-$executionName # This file does not exist, when '--executable-path' is not set.
 podman build -f "target/Dockerfile-$executionName" \\
@@ -96,6 +98,7 @@ mkdir -p $HOME/.local/state/$executionName/.m2/
 mkdir -p $HOME/.local/state/$executionName/.ssh/
 mkdir -p $HOME/.local/state/$executionName/.local/
 mkdir -p $HOME/.local/state/$executionName/Documents/
+mkdir -p $HOME/.local/state/$executionName/repos/
 mkdir -p ./target/
 test -f target/program-$executionName && chmod +x target/program-$executionName # This file does not exist, when '--executable-path' is not set.
 """
@@ -107,6 +110,7 @@ podman run --name "$executionName" \\
   $additionalArguments \\
   --rm \\
   -v $HOME/.local/state/$executionName/Documents:/root/Documents \\
+  -v $HOME/.local/state/$executionName/repos:/root/repos \\
   -v $HOME/.local/state/$executionName/.ssh:/root/.ssh \\
   -v $HOME/.local/state/$executionName/.m2:/root/.m2 \\
   -v $HOME/.local/state/$executionName/.local:/root/.local \\
@@ -213,11 +217,13 @@ if __name__ == '__main__':
         executionScript += executeViaPodman
     if parsedArgs.flatFolders:
         executionScript = executionScript.replace("-v $HOME/.local/state/$executionName/Documents:/root/Documents ", "-v $HOME/.local/state/$executionName/Documents:/root/.local/state/$executionName/Documents ")
+        executionScript = executionScript.replace("-v $HOME/.local/state/$executionName/.local:/root/repos ", "-v $HOME/.local/state/$executionName/.local:/root/.local/state/$executionName/repos ")
         executionScript = executionScript.replace("-v $HOME/.local/state/$executionName/.ssh:/root/.ssh ", "-v $HOME/.local/state/$executionName/.ssh:/root/.local/state/$executionName/.ssh ")
         executionScript = executionScript.replace("-v $HOME/.local/state/$executionName/.m2:/root/.m2 ", "-v $HOME/.local/state/$executionName/.m2:/root/.local/state/$executionName/.m2 ")
         executionScript = executionScript.replace("-v $HOME/.local/state/$executionName/.local:/root/.local ", "-v $HOME/.local/state/$executionName/.local:/root/.local/state/$executionName/.local ")
         dockerfile = dockerfile.replace("VOLUME /root/.local/", "VOLUME /root/.local/state/$executionName/.local/")
         dockerfile = dockerfile.replace("VOLUME /root/Documents/", "VOLUME /root/.local/state/$executionName/Documents/")
+        dockerfile = dockerfile.replace("VOLUME /root/Documents/", "VOLUME /root/.local/state/$executionName/repos/")
         dockerfile = dockerfile.replace("VOLUME /root/.ssh/", "VOLUME /root/.local/state/$executionName/.ssh/")
         dockerfile = dockerfile.replace("VOLUME /root/.m2/", "VOLUME /root/.local/state/$executionName/.m2/")
     if parsedArgs.command is not None:
