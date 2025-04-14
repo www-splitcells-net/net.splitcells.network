@@ -244,7 +244,7 @@ if __name__ == '__main__':
         executionScript = executionScript.replace('$additionalArguments \\', (configFileForExecutePodmanFlags.read_text() + '\\').replace('\n', ''))
     else:
         executionScript = executionScript.replace('$additionalArguments \\', '\\')
-    dockerfile = executionScript.replace('"$executionName"', parsedArgs.name)
+    executionScript = executionScript.replace('"$executionName"', parsedArgs.name)
     dockerfile = dockerfile.replace('"$executionName"', parsedArgs.name)
     # Execute program.
     if parsedArgs.verbose or parsedArgs.dryRun:
