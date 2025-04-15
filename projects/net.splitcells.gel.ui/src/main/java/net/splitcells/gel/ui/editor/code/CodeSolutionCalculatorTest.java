@@ -18,11 +18,14 @@ package net.splitcells.gel.ui.editor.code;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.dem.testing.annotations.CapabilityTest;
+import net.splitcells.dem.testing.annotations.DisabledTest;
+import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.constraint.type.ForAll;
 import net.splitcells.gel.constraint.type.Then;
 import net.splitcells.gel.editor.lang.AttributeDescription;
 import net.splitcells.gel.editor.lang.ReferenceDescription;
+import net.splitcells.gel.ui.GelUiCell;
 import net.splitcells.gel.ui.GelUiFileSystem;
 import net.splitcells.gel.ui.editor.SolutionCalculator;
 import net.splitcells.website.server.projects.extension.impls.ColloquiumPlanningDemandsTestData;
@@ -32,13 +35,14 @@ import org.antlr.v4.runtime.CommonTokenStream;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.Dem.process;
 import static net.splitcells.dem.data.atom.Bools.truthful;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.Trail.trail;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
-import static net.splitcells.dem.testing.Assertions.requirePresenceOf;
+import static net.splitcells.dem.testing.Assertions.*;
+import static net.splitcells.dem.utils.StringUtils.requireNonEmptyString;
 import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
 import static net.splitcells.gel.data.view.attribute.AttributeI.stringAttribute;
 import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
@@ -50,9 +54,38 @@ import static net.splitcells.gel.ui.editor.code.CodeEditorLangParser.codeEditorL
 import static net.splitcells.gel.ui.editor.code.CodeSolutionEditorParser.PROBLEM_DEFINITION;
 import static net.splitcells.gel.ui.editor.code.CodeSolutionEditorParser.codeSolutionEditorParser;
 import static net.splitcells.gel.ui.editor.SolutionCalculator.*;
+import static net.splitcells.website.server.client.HtmlClients.htmlClient;
 import static net.splitcells.website.server.processor.Request.request;
 
 public class CodeSolutionCalculatorTest {
+    public static final Runnable TEST_OPTIMIZATION_GUI = () -> {
+        try (final var browser = htmlClient()) {
+            try (final var tab = browser.openTab("/net/splitcells/gel/ui/editor/code/index.html")) {
+                requireEquals("", tab.elementById("net-splitcells-gel-editor-form-errors").textContent());
+                requireEquals("", tab.elementById("net-splitcells-gel-editor-form-solution").textContent());
+                requireEquals("", tab.elementById("net-splitcells-gel-editor-form-solution-rating").textContent());
+                tab.elementByClass("net-splitcells-website-pop-up-confirmation-button").click();
+                tab.elementById("net-splitcells-gel-ui-calculate-solution-form-submit-1").click();
+                waitUntilRequirementIsTrue(1000L * 60, () -> !tab.elementById("net-splitcells-gel-editor-form-solution").value().isEmpty());
+                requireEquals("", tab.elementById("net-splitcells-gel-editor-form-errors").textContent());
+                requireNonEmptyString(tab.elementById("net-splitcells-gel-editor-form-solution-rating").textContent());
+            }
+        }
+    };
+
+    /**
+     * <p>TODO This test does not work on Codeberg.</p>
+     * <p>TODO This test should be made deterministic.</p>
+     * <p>TODO Additionally a random tests with probabilistic successes could be supported as well.
+     * It should be stored in the network log, how often the test failed or succeeded yet.
+     * Another job should check the ratio between failed tests and succeeded ones.</p>
+     */
+    @IntegrationTest
+    @DisabledTest
+    public void testOptimization() {
+        process(TEST_OPTIMIZATION_GUI, GelUiCell.class).requireErrorFree();
+    }
+
     @UnitTest
     public void testMinimalProcess() {
         final var testData = """

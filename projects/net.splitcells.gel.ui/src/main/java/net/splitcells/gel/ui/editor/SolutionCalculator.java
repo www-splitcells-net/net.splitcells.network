@@ -36,9 +36,12 @@ import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.solution.optimization.DefaultOptimization.defaultOptimization;
 import static net.splitcells.gel.ui.editor.code.CodeSolutionEditorParser.codeSolutionEditorParser;
-import static net.splitcells.gel.ui.editor.nocode.NoCodeSolutionEditorParser.noCodeSolutionEditorParser;
 import static net.splitcells.website.server.processor.Response.response;
 
+/**
+ * This provides a uniform interface for multiple parsers.
+ * This got kind of obsolete with the no-code editor removal, that had its own syntax for problem definitions.
+ */
 public class SolutionCalculator implements Processor<Tree, Tree> {
     public static final Trail PATH = Trail.trail("net/splitcells/gel/ui/editor/calculate-solution.form");
     public static final String SOLUTION_RATING = "net-splitcells-gel-editor-form-solution-rating";
@@ -49,7 +52,7 @@ public class SolutionCalculator implements Processor<Tree, Tree> {
     public static final String FORM_UPDATE = "net-splitcells-websiter-server-form-update";
 
     public static SolutionCalculator solutionCalculator() {
-        return solutionCalculator(list(codeSolutionEditorParser(), noCodeSolutionEditorParser()));
+        return solutionCalculator(list(codeSolutionEditorParser()));
     }
 
     public static SolutionCalculator solutionCalculator(List<Function<Request<Tree>, Result<SolutionEditor, Tree>>> solutionParsers) {

@@ -49,9 +49,7 @@ import java.util.function.Function;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.Dem.serve;
 import static net.splitcells.gel.ui.editor.SolutionCalculator.solutionCalculator;
-import static net.splitcells.gel.ui.editor.nocode.FunctionMeta.functionMeta;
-import static net.splitcells.gel.ui.editor.nocode.Functions.functions;
-import static net.splitcells.gel.ui.editor.nocode.NoCodeSolutionCalculatorTest.TEST_OPTIMIZATION_GUI;
+import static net.splitcells.gel.ui.editor.code.CodeSolutionCalculatorTest.TEST_OPTIMIZATION_GUI;
 import static net.splitcells.network.system.PerformanceReport.performanceReport;
 import static net.splitcells.website.server.ProgramConfig.programConfig;
 import static net.splitcells.website.server.ProjectConfig.projectConfig;
@@ -191,8 +189,6 @@ public class SystemCell implements Cell {
                         .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/net.splitcells.gel.ui.logo.jpg"))
                         .withDescription(Optional.of("Define and solve assignment problems in text form.")))
                 .withAdditionalProcessor(SolutionCalculator.PATH, solutionCalculator())
-                .withAdditionalProjectsRendererExtension(functions())
-                .withAdditionalProjectsRendererExtension(functionMeta())
                 .withAdditionalProjectsRendererExtension(performanceReport())
                 ;
     }
