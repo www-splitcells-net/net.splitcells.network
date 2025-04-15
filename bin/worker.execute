@@ -223,7 +223,7 @@ if __name__ == '__main__':
         executionScript = executionScript.replace("-v $HOME/.local/state/$executionName/.local:/root/.local ", "-v $HOME/.local/state/$executionName/.local:/root/.local/state/$executionName/.local ")
         dockerfile = dockerfile.replace("VOLUME /root/.local/", "VOLUME /root/.local/state/$executionName/.local/")
         dockerfile = dockerfile.replace("VOLUME /root/Documents/", "VOLUME /root/.local/state/$executionName/Documents/")
-        dockerfile = dockerfile.replace("VOLUME /root/Documents/", "VOLUME /root/.local/state/$executionName/repos/")
+        dockerfile = dockerfile.replace("VOLUME /root/repos/", "VOLUME /root/.local/state/$executionName/repos/")
         dockerfile = dockerfile.replace("VOLUME /root/.ssh/", "VOLUME /root/.local/state/$executionName/.ssh/")
         dockerfile = dockerfile.replace("VOLUME /root/.m2/", "VOLUME /root/.local/state/$executionName/.m2/")
     if parsedArgs.command is not None:
