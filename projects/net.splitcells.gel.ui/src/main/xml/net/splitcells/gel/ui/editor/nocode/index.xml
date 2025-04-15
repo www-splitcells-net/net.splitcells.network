@@ -12,6 +12,9 @@
     <meta>
         <title>Generic Allocation No-Code Editor</title>
         <description>
+            <paragraph>This editor is deprecated and disabled.
+                See <link post="net/splitcells/gel/ui/objectives">the UI objectives</link> for further details.
+            </paragraph>
             <paragraph>
                 Define and solve assignment problems.
             </paragraph>
@@ -42,25 +45,6 @@
             <d:toDo>Edit supply and demand data via Tabulator for a better use experience.</d:toDo>
             <d:toDo>Export and import data from Excel format.</d:toDo>
         </d:toDo>
-        <commands>
-            <command id="net-splitcells-gel-ui-editor-nocode-calculate-solution-form-submit-1"
-                     method="net_splitcells_gel_ui_editor_nocode_form_submit">Calculate solution
-            </command>
-            <command id="net-splitcells-gel-ui-editor-nocode-form-problem-definition-download"
-                     method="net_splitcells_gel_ui_editor_nocode_definition_downloadStringAsFile"
-                     target-id="net-splitcells-gel-ui-editor-nocode-form-problem-definition">
-                Export definition
-            </command>
-            <command id="net-splitcells-gel-ui-no-code-calculate-solution-form-solution-download-as-csv"
-                     method="net_splitcells_gel_ui_editor_nocode_calculate_solution_form_solution_download_as_csv">
-                Export solution
-            </command>
-            <command id="net-splitcells-gel-ui-editor-nocode-form-problem-definition-upload"
-                     method="net_splitcells_gel_ui_editor_nocode_definition_upload"
-                     target-id="net-splitcells-gel-ui-editor-nocode-form-problem-definition">
-                Import definition
-            </command>
-        </commands>
     </meta>
     <notification>
         <only-for-general-public>true</only-for-general-public>
