@@ -6,6 +6,11 @@
             SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
         -->
         <title>Splitcells Network's Objective</title>
+        <d:toDo>
+            Add the symbiosis project to the objectives, when the project is mature enough.
+            <item>The <link post="/net/splitcells/symbiosis/index">symbiosis project</link> is a philosophical discovery of the open source nature of this project in relation to society.
+            </item>
+        </d:toDo>
     </meta>
     <chapter>
         <title>Primary Goals of The Splitcells Network Project</title>
