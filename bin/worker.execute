@@ -191,18 +191,18 @@ if __name__ == '__main__':
         dockerfile += dockerfile.replace('$CLASS_FOR_EXECUTION', parsedArgs.classForExecution)
     else:
         raise Exception('Either `--command`, `--executable-path` or `--class-for-execution` needs to be set.')
-    if parsedArgs.usePlaywright:
-        dockerfile = dockerfile.replace('$ContainerSetupCommand', 'RUN cd /root/opt/$NAME_FOR_EXECUTION/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"\n')
-    else:
-        dockerfile = dockerfile.replace('$ContainerSetupCommand', '\n')
-    dockerfile = dockerfile.replace('$NAME_FOR_EXECUTION', parsedArgs.name)
-    dockerfile = dockerfile.replace('"$executionName"', parsedArgs.name)
     if parsedArgs.flatFolders:
         dockerfile = dockerfile.replace("VOLUME /root/.local/", "VOLUME /root/.local/state/$executionName/.local/")
         dockerfile = dockerfile.replace("VOLUME /root/Documents/", "VOLUME /root/.local/state/$executionName/Documents/")
         dockerfile = dockerfile.replace("VOLUME /root/repos/", "VOLUME /root/.local/state/$executionName/repos/")
         dockerfile = dockerfile.replace("VOLUME /root/.ssh/", "VOLUME /root/.local/state/$executionName/.ssh/")
         dockerfile = dockerfile.replace("VOLUME /root/.m2/", "VOLUME /root/.local/state/$executionName/.m2/")
+    if parsedArgs.usePlaywright:
+        dockerfile = dockerfile.replace('$ContainerSetupCommand', 'RUN cd /root/opt/$NAME_FOR_EXECUTION/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"\n')
+    else:
+        dockerfile = dockerfile.replace('$ContainerSetupCommand', '\n')
+    dockerfile = dockerfile.replace('$NAME_FOR_EXECUTION', parsedArgs.name)
+    dockerfile = dockerfile.replace('"$executionName"', parsedArgs.name)
     file='target/Dockerfile-' + parsedArgs.name
     if os.path.exists(file):
         os.remove(file)
