@@ -224,7 +224,7 @@ if __name__ == '__main__':
         executionScript += executeViaPodman
     if parsedArgs.flatFolders:
         executionScript = executionScript.replace("-v $HOME/.local/state/$executionName/Documents:/root/Documents ", "-v $HOME/.local/state/$executionName/Documents:/root/.local/state/$executionName/Documents ")
-        executionScript = executionScript.replace("-v $HOME/.local/state/$executionName/repos:/root/repos ", "-v $HOME/.local/state/$executionName/.local:/root/.local/state/$executionName/repos ")
+        executionScript = executionScript.replace("-v $HOME/.local/state/$executionName/repos:/root/repos ", "-v $HOME/.local/state/$executionName/repos:/root/.local/state/$executionName/repos ")
         executionScript = executionScript.replace("-v $HOME/.local/state/$executionName/.ssh:/root/.ssh ", "-v $HOME/.local/state/$executionName/.ssh:/root/.local/state/$executionName/.ssh ")
         executionScript = executionScript.replace("-v $HOME/.local/state/$executionName/.m2:/root/.m2 ", "-v $HOME/.local/state/$executionName/.m2:/root/.local/state/$executionName/.m2 ")
         executionScript = executionScript.replace("-v $HOME/.local/state/$executionName/.local:/root/.local ", "-v $HOME/.local/state/$executionName/.local:/root/.local/state/$executionName/.local ")
