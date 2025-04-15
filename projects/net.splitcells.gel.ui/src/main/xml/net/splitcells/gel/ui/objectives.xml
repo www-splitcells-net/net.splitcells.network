@@ -21,7 +21,7 @@
         so that status information can be stored, viewed and updated in the source code as well.
         Think for example of a command in the source, that notes, that the source code
         was uploaded to the server, which version is available at the server and what the document ID is.
-        In other words, source code can also be used as a UI.
+        In other words, source code can also be used as an UI.
     </paragraph>
     <paragraph>A no-code editor was once tried and it basically worked.
         It was removed, because modelling logic in no-code seems to be the same as code,
