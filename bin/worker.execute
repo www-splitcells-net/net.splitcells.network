@@ -196,6 +196,7 @@ if __name__ == '__main__':
     else:
         dockerfile = dockerfile.replace('$ContainerSetupCommand', '\n')
     dockerfile = dockerfile.replace('$NAME_FOR_EXECUTION', parsedArgs.name)
+    dockerfile = dockerfile.replace('"$executionName"', parsedArgs.name)
     if parsedArgs.flatFolders:
         dockerfile = dockerfile.replace("VOLUME /root/.local/", "VOLUME /root/.local/state/$executionName/.local/")
         dockerfile = dockerfile.replace("VOLUME /root/Documents/", "VOLUME /root/.local/state/$executionName/Documents/")
@@ -252,7 +253,6 @@ if __name__ == '__main__':
     else:
         executionScript = executionScript.replace('$additionalArguments \\', '\\')
     executionScript = executionScript.replace('"$executionName"', parsedArgs.name)
-    dockerfile = dockerfile.replace('"$executionName"', parsedArgs.name)
     # Execute program.
     if parsedArgs.verbose or parsedArgs.dryRun:
         print(executionScript)
