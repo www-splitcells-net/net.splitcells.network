@@ -15,15 +15,19 @@
     <paragraph>The code editor provides a general programming language,
         in order to persist, import and export optimization models.
         At the same time the source code is realistically editable by the user with simple text editors.
-        As most programs are small a real IDE is not required for now.
+        We the editor to be a full IDE.
     </paragraph>
-    <paragraph>The no-code editor provides an interactive GUI to optimization models.
-        It makes features discoverable by the user and prohibits the user from constructing formally incorrect models.
-        The editor will also be the basis for a generic GUI for interacting
-        with complex program objects like configurations or persisted optimization models.
-        Unfortunately, for this to work,
-        the underlying abstract programming language would have to be made more general.
-        No-code is no replacement for an editor documentation,
-        as users have very limited alternative options to learn about the finer concept details of the software.
+    <paragraph>In the future the source code in the editor should also be able to be updated by the server,
+        so that status information can be stored, viewed and updated in the source code as well.
+        Think for example of a command in the source, that notes, that the source code
+        was uploaded to the server, which version is available at the server and what the document ID is.
+        In other words, source code can also be used as a UI.
+    </paragraph>
+    <paragraph>A no-code editor was once tried and it basically worked.
+        It was removed, because modelling logic in no-code seems to be the same as code,
+        especially when modern GUI editors with autocompletion and co. are considered.
+        Furthermore, a no-code editor was no replacement for a missing programming language documentation.
+        The no-code editor also required some development and maintenance capacity and
+        in order to lower the cost it was removed.
     </paragraph>
 </article>
