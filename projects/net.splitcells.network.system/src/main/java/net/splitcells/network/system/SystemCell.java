@@ -186,10 +186,6 @@ public class SystemCell implements Cell {
                         , "/net/splitcells/website/news")
                         .withLogoPath(Optional.of("net/splitcells/website/images/average.source.code.image.generator.filling.via.horizontal.100.percent.jpg"))
                         .withDescription(Optional.of("All User and Developer Relevant News in One Place at Your Finger Tips")))
-                .withAdditionalProgramConfig(programConfig("Generic Allocation No-Code Editor"
-                        , "/net/splitcells/gel/ui/editor/nocode/index")
-                        .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/net.splitcells.gel.ui.no.code.logo.jpg"))
-                        .withDescription(Optional.of("Define and solve assignment problems interactively.")))
                 .withAdditionalProgramConfig(programConfig("Generic Allocation Editor's Tough Love Edition"
                         , "/net/splitcells/gel/ui/editor/code/index")
                         .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/net.splitcells.gel.ui.logo.jpg"))
