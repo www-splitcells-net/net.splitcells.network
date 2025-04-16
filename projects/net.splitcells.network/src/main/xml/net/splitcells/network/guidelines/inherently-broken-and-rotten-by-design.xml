@@ -8,6 +8,12 @@
         <title>Inherently Broken and Rotten by Design</title>
     </meta>
     <chapter>
+        <title>Reason for These Guidelines</title>
+        <d:todo>It's hard for humans to do reasoning outside ones own scope of knowledge or
+            to do a big change of reasoning direction without major errors.
+        </d:todo>
+    </chapter>
+    <chapter>
         <title>Broken by Design</title>
         <d:todo>Making correct decisions or core components like the software architecture and goal are not likely.
         </d:todo>
