@@ -23,11 +23,17 @@
         was uploaded to the server, which version is available at the server and what the document ID is.
         In other words, source code can also be used as an UI.
     </paragraph>
-    <paragraph>A no-code editor was once tried and it basically worked.
-        It was removed, because modelling logic in no-code seems to be the same as code,
-        especially when modern GUI editors with autocompletion and co. are considered.
-        Furthermore, a no-code editor was no replacement for a missing programming language documentation.
-        The no-code editor also required some development and maintenance capacity and
-        in order to lower the cost it was removed.
-    </paragraph>
+    <chapter>
+        <title>The None-Goal No-Code Editor</title>
+        <paragraph>A no-code editor was once tried and it basically worked.
+            It was removed, because modelling logic in no-code seems to be the same as code,
+            especially when modern GUI editors with autocompletion and co. are considered.
+            Furthermore, a no-code editor was no replacement for a missing programming language documentation.
+            The no-code editor also required some development and maintenance capacity and
+            in order to lower the cost it was removed.
+        </paragraph>
+        <paragraph>On the other hand, a no-code editor could the basis for a click based UI,
+            instead of a writing based UI, which is the case for the code editor.
+        </paragraph>
+    </chapter>
 </article>
