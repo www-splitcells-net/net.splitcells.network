@@ -170,8 +170,8 @@ public class WorkerExecution {
             remoteExecutionScript = "ssh "
                     + config.executeViaSshAt().orElseThrow()
                     + " -t"
-                    + " \"cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.execute "
-                    + config.shellArgumentString(a -> !"execute-via-ssh-at".equals(a))
+                    + " \"cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network \\\n&& bin/worker.execute \\\n"
+                    + config.shellArgumentString(a -> !"execute-via-ssh-at".equals(a)).replace("\\\n", "\\\n  ")
                     + "\"";
             if (config.verbose()) {
                 logs().append("Executing: " + remoteExecutionScript, INFO);

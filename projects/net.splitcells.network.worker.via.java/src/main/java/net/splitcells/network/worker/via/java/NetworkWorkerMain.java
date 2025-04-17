@@ -29,18 +29,19 @@ public class NetworkWorkerMain {
         final var testAtRemote = Option.builder()
                 .argName("test-at-remote")
                 .hasArg()
-                .required(true)
+                .required(false)
                 .longOpt("test-at-remote")
                 .desc("This is the ssh address for testing in the form of `username@host`.")
                 .build();
         final var bootstrapRemote = Option.builder()
                 .argName("bootstrap-remote")
                 .hasArg()
-                .required(true)
+                .required(false)
                 .longOpt("bootstrap-remote")
                 .desc("This is the ssh address for bootstrapping in the form of `username@host`.")
                 .build();
         options.addOption(testAtRemote);
+        options.addOption(bootstrapRemote);
         final var parser = new DefaultParser();
         final var formatter = new HelpFormatter();
         try {
@@ -48,7 +49,7 @@ public class NetworkWorkerMain {
             if (cmd.hasOption(testAtRemote)) {
                 networkWorker().testAtRemote(cmd.getParsedOptionValue(testAtRemote), c -> c.withDryRun(false));
             } else if (cmd.hasOption(bootstrapRemote)) {
-                networkWorker().bootstrapRemote(cmd.getParsedOptionValue(bootstrapRemote), c -> c.withDryRun(false));
+                networkWorker().bootstrapRemote(cmd.getParsedOptionValue(bootstrapRemote), c -> c.withDryRun(false).withVerbose(true));
             } else {
                 logs().append("No action to be done is present in the arguments.");
                 System.exit(1);

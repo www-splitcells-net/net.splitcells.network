@@ -88,49 +88,58 @@ public class WorkerExecutionConfig {
         return shellArgumentString(a -> true);
     }
 
+    /**
+     *
+     * @param optionSelector
+     * @return Returns a string representation of all arguments for the terminal.
+     * Every argument is printed in a dedicated line, in order to make it easier to read.
+     * The new line symbols are escaped via a backslash, in order to make the string shell compatible.
+     */
     public String shellArgumentString(Predicate<String> optionSelector) {
         var result = stringBuilder();
-        result.append("--name=" + escape(name));
-        result.append(" --flat-folders=" + escape(flatFolders + ""));
+        result.append("--name=" + escape(name) + "\\\n");
+        result.append(" --flat-folders=" + escape(flatFolders + "") + "\\\n");
         if (optionSelector.test("command")) {
-            command.ifPresent(c -> result.append(" --command=" + escape(c)));
+            command.ifPresent(c -> result.append(" --command=" + escape(c) + "\\\n"));
         }
         if (optionSelector.test("execute-via-ssh-at")) {
-            executeViaSshAt.ifPresent(e -> result.append(" --execute-via-ssh-at=" + escape(e)));
+            executeViaSshAt.ifPresent(e -> result.append(" --execute-via-ssh-at=" + escape(e) + "\\\n"));
         }
         if (optionSelector.test("executable-path")) {
-            executablePath.ifPresent(t -> result.append(" --executable-path=" + escape(t.unixPathString())));
+            executablePath.ifPresent(t -> result.append(" --executable-path=" + escape(t.unixPathString()) + "\\\n"));
         }
         if (optionSelector.test("class-for-execution")) {
-            classForExecution.ifPresent(c -> result.append(" --class-for-execution=" + escape(c)));
+            classForExecution.ifPresent(c -> result.append(" --class-for-execution=" + escape(c) + "\\\n"));
         }
         if (optionSelector.test("cpu-architecture")) {
-            cpuArchitecture.ifPresent(c -> result.append(" --cpu-architecture=" + escape(c + "")));
+            cpuArchitecture.ifPresent(c -> result.append(" --cpu-architecture=" + escape(c + "") + "\\\n"));
         }
         if (optionSelector.test("use-host-documents")) {
-            result.append(" --use-host-documents=" + escape(useHostDocuments + ""));
+            result.append(" --use-host-documents=" + escape(useHostDocuments + "") + "\\\n");
         }
         if (optionSelector.test("publish-execution-image")) {
-            result.append(" --publish-execution-image=" + escape(publishExecutionImage + ""));
+            result.append(" --publish-execution-image=" + escape(publishExecutionImage + "") + "\\\n");
         }
         if (optionSelector.test("verbose")) {
-            result.append(" --verbose=" + escape(verbose + ""));
+            result.append(" --verbose=" + escape(verbose + "") + "\\\n");
         }
         if (optionSelector.test("only-build-image")) {
-            result.append(" --only-build-image=" + escape(onlyBuildImage + ""));
+            result.append(" --only-build-image=" + escape(onlyBuildImage + "") + "\\\n");
         }
         if (optionSelector.test("only-execute-image")) {
-            result.append(" --only-execute-image=" + escape(onlyExecuteImage + ""));
+            result.append(" --only-execute-image=" + escape(onlyExecuteImage + "") + "\\\n");
         }
         if (optionSelector.test("dry-run")) {
-            result.append(" --dry-run=" + escape(dryRun + ""));
+            result.append(" --dry-run=" + escape(dryRun + "") + "\\\n");
         }
         if (optionSelector.test("use-playwright")) {
-            result.append(" --use-playwright=" + escape(usePlaywright + ""));
+            result.append(" --use-playwright=" + escape(usePlaywright + "") + "\\\n");
         }
         if (optionSelector.test("auto-configure-cpu-architecture-explicitly")) {
-            result.append(" --auto-configure-cpu-architecture-explicitly=" + escape(autoConfigureCpuArchExplicitly + ""));
+            result.append(" --auto-configure-cpu-architecture-explicitly=" + escape(autoConfigureCpuArchExplicitly + "") + "\\\n");
         }
+        // Remove last character, as it is a new line symbol.
+        result.setLength(result.length() - 2);
         return result.toString();
     }
 
