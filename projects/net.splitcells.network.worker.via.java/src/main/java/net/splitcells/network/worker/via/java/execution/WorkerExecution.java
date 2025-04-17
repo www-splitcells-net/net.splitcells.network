@@ -135,8 +135,8 @@ public class WorkerExecution {
               $additionalArguments \\
               --rm \\
               -v $HOME/.local/state/$executionName/Documents:/root/Documents \\
-              -v $HOME/.local/state/$executionName/.ssh:/root/.local/state/$executionName/.ssh \\
-              -v $HOME/.local/state/$executionName/.m2:/root/.local/state/$executionName/.m2 \\
+              -v $HOME/.local/state/$executionName/.ssh:/root/.ssh \\
+              -v $HOME/.local/state/$executionName/.m2:/root/.m2 \\
               -v $HOME/.local/state/$executionName/.local:/root/.local/state/$executionName/.local \\
               "$podmanParameters" \\
               "localhost/$executionName"

@@ -195,8 +195,7 @@ if __name__ == '__main__':
         dockerfile = dockerfile.replace("VOLUME /root/.local/", "VOLUME /root/.local/state/$executionName/.local/")
         dockerfile = dockerfile.replace("VOLUME /root/Documents/", "VOLUME /root/.local/state/$executionName/Documents/")
         dockerfile = dockerfile.replace("VOLUME /root/repos/", "VOLUME /root/.local/state/$executionName/repos/")
-        dockerfile = dockerfile.replace("VOLUME /root/.ssh/", "VOLUME /root/.local/state/$executionName/.ssh/")
-        dockerfile = dockerfile.replace("VOLUME /root/.m2/", "VOLUME /root/.local/state/$executionName/.m2/")
+        # .ssh and .m2 does not have to be replaced, as these are used for environment configuration of tools inside the container.
     if parsedArgs.usePlaywright:
         dockerfile = dockerfile.replace('$ContainerSetupCommand', 'RUN cd /root/opt/$NAME_FOR_EXECUTION/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"\n')
     else:
