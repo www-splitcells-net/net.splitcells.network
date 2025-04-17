@@ -3,4 +3,4 @@
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 set -e
 cd ..
-  net.splitcells.network.hub/bin/net.splitcells.osi.repos.peers | xargs -i sh -c "cd {} && git remote get-url origin > /dev/null && git remote set-url origin ssh://git@codeberg.org:splitcells-net/{}.git || git remote add origin ssh://git@codeberg.org:splitcells-net/{}.git"
+  net.splitcells.network.hub/bin/net.splitcells.osi.repos.peers | xargs -i sh -c "cd {} && git remote get-url origin > /dev/null && git remote set-url origin git@codeberg.org:splitcells-net/{}.git || git remote add origin git@codeberg.org:splitcells-net/{}.git"
