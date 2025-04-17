@@ -4,4 +4,3 @@
 set -e
 export JAVA_VERSION=11
 ./bin/build.part.with.java
-./bin/build.part.with.python
