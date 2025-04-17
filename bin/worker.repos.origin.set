@@ -2,5 +2,9 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 set -e
-cd ..
-  net.splitcells.network.hub/bin/net.splitcells.osi.repos.peers | xargs -i sh -c "cd {} && git remote get-url origin > /dev/null && git remote set-url origin git@codeberg.org:splitcells-net/{}.git || git remote add origin git@codeberg.org:splitcells-net/{}.git"
+cd ../net.splitcells.network.hub
+  # Push and pull remote cannot be set with 1 command.
+  git remote get-url origin > /dev/null && git remote set-url origin git@codeberg.org:splitcells-net/net.splitcells.network.hub.git || git remote add origin git@codeberg.org:splitcells-net/net.splitcells.network.hub.git
+  git remote get-url origin > /dev/null && git remote set-url --push origin git@codeberg.org:splitcells-net/net.splitcells.network.hub.git || git remote add origin git@codeberg.org:splitcells-net/net.splitcells.network.hub.git
+  cd ..
+net.splitcells.network.hub/bin/net.splitcells.osi.repos.peers | xargs -i sh -c "cd {} && git remote get-url origin > /dev/null && git remote set-url origin git@codeberg.org:splitcells-net/{}.git || git remote add origin git@codeberg.org:splitcells-net/{}.git"
