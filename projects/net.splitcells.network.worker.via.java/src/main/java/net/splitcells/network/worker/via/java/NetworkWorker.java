@@ -54,10 +54,11 @@ public class NetworkWorker {
         try {
             final var cmd = parser.parse(options, args);
             if (cmd.hasOption(testAtRemote)) {
-                networkWorker().testAtRemote(cmd.getParsedOptionValue(testAtRemote), c -> c.withDryRun(false));
+                networkWorker().testAtRemote(cmd.getParsedOptionValue(testAtRemote)
+                        , c -> c.withDryRun(false).setPullNetworkLog(true));
             } else if (cmd.hasOption(bootstrapRemote)) {
                 networkWorker().bootstrapRemote(cmd.getParsedOptionValue(bootstrapRemote)
-                        , c -> c.withDryRun(false).withVerbose(true).setPullNetworkLog(true));
+                        , c -> c.withDryRun(false).withVerbose(true));
             } else {
                 logs().append("No action to be done is present in the arguments.");
                 System.exit(1);
