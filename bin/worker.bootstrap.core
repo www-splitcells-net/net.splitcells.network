@@ -1,0 +1,27 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+set -e
+# Bootstrap minimal required repos.
+  mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public
+  cd ~/.local/state/net.splitcells.network.worker/repos/public
+  test -d net.splitcells.network || git clone --depth 1 https://codeberg.org/splitcells-net/net.splitcells.network.git
+  test -d net.splitcells.network.hub || git clone --depth 1 https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
+# Pull all repos.
+  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
+  bin/worker.repos.pull
+# Install shell project.
+  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network/projects/net.splitcells.shell
+  ./bin/install
+  . src/main/bash/command/managed/command.managed.export.bin.sh
+# Install shell libraries.
+  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.hub
+  # TODO Install OSI not to a user folder, but to a folder inside the repo.
+  # In other words, make an OSI installation independent from the user's home and default path settings.
+  bin/net.splitcells.shell.projects.peers.for.commands | xargs -i sh -c 'command.repository.register $(realpath {})'
+  user.bin.configure
+# Build and provide the software, so that the Java version of the Network Worker can be used.
+  cd ../net.splitcells.network.hub
+  export JAVA_VERSION=21 # This is required on FreeBSD, if an older Java version is set as default.
+  mvn clean install -DskipTests
+echo Worker was successfully bootstrapped. # This is used, in order to check, if `user.bin.configure` was executed successfully.
