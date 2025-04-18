@@ -7,6 +7,9 @@ set -e
   cd ~/.local/state/net.splitcells.network.worker/repos/public
   test -d net.splitcells.network || git clone --depth 1 https://codeberg.org/splitcells-net/net.splitcells.network.git
   test -d net.splitcells.network.hub || git clone --depth 1 https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
+# Pull all repos.
+  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
+  bin/worker.repos.pull
 # Restart bootstrapping.
   # This split/duplication ensures, that updates of `worker.bootstrap.core`,
   # that are pulled during the bootstrapping apply immediately and not starting with subsequent runs.
