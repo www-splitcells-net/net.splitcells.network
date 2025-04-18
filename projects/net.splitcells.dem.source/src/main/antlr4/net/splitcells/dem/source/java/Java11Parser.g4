@@ -156,8 +156,8 @@ expression
     	/* Only upcasting should be done. */
     | Brace_round_open expression
     	Brace_round_closed expression_child?
-    | String access?
     | TextBlock access?
+    | String access?
     | Char access?
     | expression Keyword_instanceof type_declaration name?
     | expression operator expression
@@ -311,8 +311,8 @@ prefix_operator
 reference
 	: expression
     | lambda
-    | String
     | TextBlock
+    | String
     | String Operator_plus reference
     | reference Keysymbol_function_reference type_argument? name
     ;
