@@ -22,6 +22,7 @@ import net.splitcells.network.worker.via.java.repo.ProjectsFolder;
 import static net.splitcells.dem.Dem.config;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
+import static net.splitcells.dem.resource.Paths.userHome;
 import static net.splitcells.dem.testing.Test.testFunctionality;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.network.worker.via.java.Logger.logger;
@@ -38,6 +39,7 @@ public class Tester {
         Dem.process(() -> testFunctionality(list(logger()))
                 , env -> env.config()
                         .withConfigValue(ProgramName.class, args[0])
+                        .withConfigValue(ProjectsFolder.class, userHome(".local/state/net.splitcells.network.worker/repos/public/"))
                         .withConfigValue(NetworkWorkerLogFileSystem.class
                                 , fileSystemOnLocalHost(config()
                                         .configValue(ProjectsFolder.class)
