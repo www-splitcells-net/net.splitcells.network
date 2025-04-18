@@ -29,6 +29,7 @@ import static net.splitcells.network.worker.via.java.Logger.logger;
 /**
  * Executes tests and logs their result.
  */
+@Deprecated
 public class Builder {
     public static void main(String... args) {
         if (args.length != 1) {
