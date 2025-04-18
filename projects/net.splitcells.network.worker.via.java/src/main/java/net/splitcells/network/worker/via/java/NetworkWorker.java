@@ -80,6 +80,14 @@ public class NetworkWorker {
         return bootstrapRemote(hostname, a -> a);
     }
 
+    /**
+     * The split between building the project via Maven and executing the tests via Java instead of Maven,
+     * fixes a test execution via Maven problem on RISCV servers.
+     *
+     * @param hostname
+     * @param defaultConfig
+     * @return
+     */
     public WorkerExecution bootstrapRemote(String hostname, Function<WorkerExecutionConfig, WorkerExecutionConfig> defaultConfig) {
         final var config = defaultConfig.apply(workerExecutionConfig("net.splitcells.network.worker"))
                 .withExecuteViaSshAt(Optional.of(hostname))
