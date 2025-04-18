@@ -15,6 +15,7 @@
  */
 package net.splitcells.network.worker.via.java;
 
+import lombok.val;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
@@ -24,21 +25,36 @@ import static net.splitcells.network.worker.via.java.NetworkWorker.networkWorker
 public class NetworkWorkerTest {
     @UnitTest
     public void testBootstrapRemote() {
-        requireEquals(networkWorker().bootstrapRemote("user@address")
-                .remoteExecutionScript(), """
-                ssh user@address -t "cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network \\
-                && bin/worker.execute \\
-                --name='net.splitcells.network.worker'\\
-                   --flat-folders='true'\\
-                   --command='cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'\\
-                   --use-host-documents='false'\\
-                   --publish-execution-image='false'\\
-                   --verbose='false'\\
-                   --only-build-image='false'\\
-                   --only-execute-image='false'\\
-                   --dry-run='true'\\
-                   --use-playwright='false'\\
-                   --auto-configure-cpu-architecture-explicitly='true'\"""");
+        val testExecution = networkWorker().bootstrapRemote("user@address");
+        requireEquals(testExecution.remoteExecutionScript()
+                , """
+                        ssh user@address -t "cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network \\
+                        && bin/worker.execute \\
+                        --name='net.splitcells.network.worker'\\
+                           --flat-folders='true'\\
+                           --command='cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'\\
+                           --use-host-documents='false'\\
+                           --publish-execution-image='false'\\
+                           --verbose='false'\\
+                           --only-build-image='false'\\
+                           --only-execute-image='false'\\
+                           --dry-run='true'\\
+                           --use-playwright='false'\\
+                           --auto-configure-cpu-architecture-explicitly='true'\"""");
+        requireEquals(testExecution.getPullNetworkLogScript(), "");
+    }
+
+    @UnitTest
+    public void testBootstrapRemoteWithPullingNetworkLog() {
+        val testExecution = networkWorker().bootstrapRemote("user@address"
+                , c -> c.setPullNetworkLog(true));
+        requireEquals(testExecution.getPullNetworkLogScript()
+                , """
+                        cd ../net.splitcells.network.log
+                        git remote set-url user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
+                        git remote set-url --push user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
+                        git pull user@address
+                        """);
     }
 
     @UnitTest

@@ -187,16 +187,18 @@ public class WorkerExecution {
             }
             if (!config.dryRun()) {
                 executeShellCommand(remoteExecutionScript);
-                if (config.isPullNetworkLog()) {
-                    // TODO I don't know why, but using multi line strings here brakes the grammar check.
-                    pullNetworkLogScript = "cd ../net.splitcells.network.log\n"
-                            + "git remote set-url $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network\n"
-                            + "git remote set-url --push $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network\n"
-                            + "git pull $executeViaSshAt\n";
-                    pullNetworkLogScript = pullNetworkLogScript
-                            .replace("$executeViaSshAt", executeViaSshAt)
-                            .replace("$username", username);
-                    logs().append("Executing: " + pullNetworkLogScript, INFO);
+            }
+            if (config.isPullNetworkLog()) {
+                // TODO I don't know why, but using multi line strings here brakes the grammar check.
+                pullNetworkLogScript = "cd ../net.splitcells.network.log\n"
+                        + "git remote set-url $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network\n"
+                        + "git remote set-url --push $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network\n"
+                        + "git pull $executeViaSshAt\n";
+                pullNetworkLogScript = pullNetworkLogScript
+                        .replace("$executeViaSshAt", executeViaSshAt)
+                        .replace("$username", username);
+                logs().append("Executing: " + pullNetworkLogScript, INFO);
+                if (!config.dryRun()) {
                     executeShellCommand(pullNetworkLogScript);
                 }
             }
