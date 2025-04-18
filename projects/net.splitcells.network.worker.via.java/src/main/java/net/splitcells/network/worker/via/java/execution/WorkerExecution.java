@@ -15,6 +15,9 @@
  */
 package net.splitcells.network.worker.via.java.execution;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import lombok.val;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.resource.host.CurrentFileSystem;
@@ -24,8 +27,10 @@ import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.host.SystemUtils.executeShellCommand;
+import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
+import static net.splitcells.network.worker.via.java.NetworkWorker.networkWorker;
 
 /**
  * <p>Executes something based on the given {@link WorkerExecutionConfig}.
@@ -152,6 +157,7 @@ public class WorkerExecution {
 
     private boolean wasExecuted = false;
     private String remoteExecutionScript = "";
+    private @Accessors(chain = true) @Setter @Getter String pullNetworkLogScript = "";
     private String executionScript = "";
     private String dockerFile = "";
     private String dockerFilePath = "";
@@ -182,12 +188,11 @@ public class WorkerExecution {
             if (!config.dryRun()) {
                 executeShellCommand(remoteExecutionScript);
                 if (config.isPullNetworkLog()) {
-                    var pullNetworkLogScript = """
-                            cd ../net.splitcells.network.log
-                            git remote set-url $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
-                            git remote set-url --push $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
-                            git pull $executeViaSshAt;
-                            """;
+                    // TODO I don't know why, but using multi line strings here brakes the grammar check.
+                    pullNetworkLogScript = "cd ../net.splitcells.network.log\n"
+                            + "git remote set-url $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network\n"
+                            + "git remote set-url --push $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network\n"
+                            + "git pull $executeViaSshAt\n";
                     pullNetworkLogScript = pullNetworkLogScript
                             .replace("$executeViaSshAt", executeViaSshAt)
                             .replace("$username", username);

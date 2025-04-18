@@ -56,7 +56,8 @@ public class NetworkWorker {
             if (cmd.hasOption(testAtRemote)) {
                 networkWorker().testAtRemote(cmd.getParsedOptionValue(testAtRemote), c -> c.withDryRun(false));
             } else if (cmd.hasOption(bootstrapRemote)) {
-                networkWorker().bootstrapRemote(cmd.getParsedOptionValue(bootstrapRemote), c -> c.withDryRun(false).withVerbose(true));
+                networkWorker().bootstrapRemote(cmd.getParsedOptionValue(bootstrapRemote)
+                        , c -> c.withDryRun(false).withVerbose(true).setPullNetworkLog(true));
             } else {
                 logs().append("No action to be done is present in the arguments.");
                 System.exit(1);
