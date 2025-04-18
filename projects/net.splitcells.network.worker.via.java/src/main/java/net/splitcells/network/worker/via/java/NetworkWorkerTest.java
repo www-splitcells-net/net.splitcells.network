@@ -49,7 +49,7 @@ public class NetworkWorkerTest {
                 && bin/worker.execute \\
                 --name='net.splitcells.network.worker'\\
                    --flat-folders='true'\\
-                   --command='cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.build'\\
+                   --command='cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.test'\\
                    --use-host-documents='false'\\
                    --publish-execution-image='false'\\
                    --verbose='false'\\
