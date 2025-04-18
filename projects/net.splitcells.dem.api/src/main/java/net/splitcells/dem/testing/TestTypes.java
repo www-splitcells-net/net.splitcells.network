@@ -24,13 +24,23 @@ import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 /**
  * <p>Avoid tag names with dots, because they cause problems regarding
  * command line.</p>
+ * <p>TODO Clean up test types.</p>
  * <p>TODO IDEA Use verification or validation instead of testing for tag names
  * in order to clear their meaning.</p>
  */
 public final class TestTypes {
 
     public static final String UNIT_TEST = "testing_unit";
+    /**
+     * Test the integration with external dependencies.
+     * These may be tricky on certain platforms and operating systems as things like browser integration are required.
+     */
     public static final String INTEGRATION_TEST = "testing_integration";
+    /**
+     * <p>Tests functionality provided by multiple modules.
+     * These are commonly also called integration tests.</p>
+     * <p>TODO Maybe the naming for tests is wrong in this project.</p>
+     */
     public static final String FUNCTIONAL_TEST = "testing_functional";
     /**
      * Such tests may take a lot of time, compared to other test types.
