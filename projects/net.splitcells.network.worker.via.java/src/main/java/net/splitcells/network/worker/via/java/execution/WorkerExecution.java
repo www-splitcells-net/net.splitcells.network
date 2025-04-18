@@ -15,6 +15,7 @@
  */
 package net.splitcells.network.worker.via.java.execution;
 
+import lombok.val;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.resource.host.CurrentFileSystem;
 
@@ -166,9 +167,11 @@ public class WorkerExecution {
         }
         wasExecuted = true;
         if (config.executeViaSshAt().isPresent()) {
+            val executeViaSshAt = config.executeViaSshAt().orElseThrow();
+            val username = executeViaSshAt.split("@")[0];
             // `-t` prevents errors, when a command like sudo is executed.
             remoteExecutionScript = "ssh "
-                    + config.executeViaSshAt().orElseThrow()
+                    + executeViaSshAt
                     + " -t"
                     + " \"cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network \\\n&& bin/worker.execute \\\n"
                     + config.shellArgumentString(a -> !"execute-via-ssh-at".equals(a)).replace("\\\n", "\\\n  ")
@@ -178,6 +181,19 @@ public class WorkerExecution {
             }
             if (!config.dryRun()) {
                 executeShellCommand(remoteExecutionScript);
+                if (config.isPullNetworkLog()) {
+                    var pullNetworkLogScript = """
+                            cd ../net.splitcells.network.log
+                            git remote set-url $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
+                            git remote set-url --push $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
+                            git pull $executeViaSshAt;
+                            """;
+                    pullNetworkLogScript = pullNetworkLogScript
+                            .replace("$executeViaSshAt", executeViaSshAt)
+                            .replace("$username", username);
+                    logs().append("Executing: " + pullNetworkLogScript, INFO);
+                    executeShellCommand(pullNetworkLogScript);
+                }
             }
             return;
         }
@@ -238,6 +254,9 @@ public class WorkerExecution {
             executionScript = executionScript.replace("$additionalArguments \\", (config.fileSystem().readString(PODMAN_FLAGS_CONFIG_FILES.unixPathString()) + "\\").replace("\n", ""));
         } else {
             executionScript = executionScript.replace("$additionalArguments \\", "\\");
+        }
+        if (config.isPullNetworkLog()) {
+            throw execException("Pulling the network log is only possible for remote executions.");
         }
         if (config.verbose() || config.dryRun()) {
             logs().append(executionScript);

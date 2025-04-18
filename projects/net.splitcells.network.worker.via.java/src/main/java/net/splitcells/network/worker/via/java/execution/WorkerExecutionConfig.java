@@ -69,6 +69,10 @@ public class WorkerExecutionConfig {
     private FileSystem fileSystem = configValue(HostFileSystem.class);
     private FileSystem userHome = configValue(UserHomeFileSystem.class);
     private FileSystem currentFileSystem = configValue(CurrentFileSystem.class);
+    /**
+     * If this is true, the repo `net.splitcells.network.log` will be pulled from the remote server.
+     */
+    private @Accessors(chain = true) @Setter @Getter boolean pullNetworkLog = false;
 
     /**
      * @param arg Escapes a string,
@@ -89,7 +93,6 @@ public class WorkerExecutionConfig {
     }
 
     /**
-     *
      * @param optionSelector
      * @return Returns a string representation of all arguments for the terminal.
      * Every argument is printed in a dedicated line, in order to make it easier to read.
