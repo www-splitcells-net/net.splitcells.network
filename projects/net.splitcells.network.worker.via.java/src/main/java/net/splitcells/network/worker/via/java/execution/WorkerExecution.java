@@ -185,9 +185,7 @@ public class WorkerExecution {
             if (config.isPullNetworkLog()) {
                 // TODO I don't know why, but using multi line strings here brakes the grammar check.
                 preparingPullNetworkLogScript
-                        = "if [ ! -d ../net.splitcells.network.log ]; then\n"
-                        + "  exit\n"
-                        + "fi\n"
+                        = "ssh -q $executeViaSshAt \"sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'\" || exit\n"
                         + "cd ../net.splitcells.network.log\n"
                         + "git config remote.$executeViaSshAt.url >&- || git remote add $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
                         + "git remote set-url $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
