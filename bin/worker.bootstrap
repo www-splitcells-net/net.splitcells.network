@@ -14,4 +14,4 @@ set -e
   # This split/duplication ensures, that updates of `worker.bootstrap.core`,
   # that are pulled during the bootstrapping apply immediately and not starting with subsequent runs.
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
-  bin/worker.bootstrap.core
+  . bin/worker.bootstrap.core
