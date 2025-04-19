@@ -47,13 +47,24 @@ public class NetworkWorkerTest {
     public void testBootstrapRemoteWithPullingNetworkLog() {
         val testExecution = networkWorker().bootstrapRemote("user@address"
                 , c -> c.setPullNetworkLog(true));
+        requireEquals(testExecution.getPreparingPullNetworkLogScript()
+                , """
+                        if [ ! -d ../net.splitcells.network.log ]; then
+                          exit
+                        fi
+                        cd ../net.splitcells.network.log
+                        git config remote.user@address.url >&- || git remote add user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+                        git remote set-url user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+                        git remote set-url --push user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+                        git pull user@address master
+                        """);
         requireEquals(testExecution.getClosingPullNetworkLogScript()
                 , """
                         cd ../net.splitcells.network.log
-                        git config remote.user@address.url >&- || git remote add user@address
-                        git remote set-url user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
-                        git remote set-url --push user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
-                        git pull user@address
+                        git config remote.user@address.url >&- || git remote add user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+                        git remote set-url user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+                        git remote set-url --push user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+                        git pull user@address master
                         """);
     }
 

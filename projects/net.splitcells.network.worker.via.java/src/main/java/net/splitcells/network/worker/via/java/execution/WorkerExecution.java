@@ -189,10 +189,10 @@ public class WorkerExecution {
                         + "  exit\n"
                         + "fi\n"
                         + "cd ../net.splitcells.network.log\n"
-                        + "git config remote.$executeViaSshAt.url >&- || git remote add $executeViaSshAt\n"
-                        + "git remote set-url $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network\n"
-                        + "git remote set-url --push $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network\n"
-                        + "git pull $executeViaSshAt\n";
+                        + "git config remote.$executeViaSshAt.url >&- || git remote add $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
+                        + "git remote set-url $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
+                        + "git remote set-url --push $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
+                        + "git pull $executeViaSshAt master\n";
                 preparingPullNetworkLogScript = preparingPullNetworkLogScript
                         .replace("$executeViaSshAt", executeViaSshAt)
                         .replace("$username", username);
@@ -217,10 +217,10 @@ public class WorkerExecution {
             if (config.isPullNetworkLog()) {
                 // TODO I don't know why, but using multi line strings here brakes the grammar check.
                 closingPullNetworkLogScript = "cd ../net.splitcells.network.log\n"
-                        + "git config remote.$executeViaSshAt.url >&- || git remote add $executeViaSshAt\n"
-                        + "git remote set-url $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network\n"
-                        + "git remote set-url --push $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network\n"
-                        + "git pull $executeViaSshAt\n";
+                        + "git config remote.$executeViaSshAt.url >&- || git remote add $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
+                        + "git remote set-url $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
+                        + "git remote set-url --push $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
+                        + "git pull $executeViaSshAt master\n";
                 closingPullNetworkLogScript = closingPullNetworkLogScript
                         .replace("$executeViaSshAt", executeViaSshAt)
                         .replace("$username", username);
