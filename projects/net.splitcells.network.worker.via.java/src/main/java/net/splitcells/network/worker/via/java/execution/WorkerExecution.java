@@ -27,10 +27,8 @@ import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.host.SystemUtils.executeShellCommand;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
-import static net.splitcells.network.worker.via.java.NetworkWorker.networkWorker;
 
 /**
  * <p>Executes something based on the given {@link WorkerExecutionConfig}.
@@ -157,7 +155,16 @@ public class WorkerExecution {
 
     private boolean wasExecuted = false;
     private String remoteExecutionScript = "";
-    private @Accessors(chain = true) @Setter @Getter String pullNetworkLogScript = "";
+    /**
+     * Script that is used, in order to pull the Network Log repo,
+     * before anything is done on the remote.
+     */
+    private @Accessors(chain = true) @Setter @Getter String preparingPullNetworkLogScript = "";
+    /**
+     * Script that is used, in order to pull the Network Log repo,
+     * after everything is done on the remote.
+     */
+    private @Accessors(chain = true) @Setter @Getter String closingPullNetworkLogScript = "";
     private String executionScript = "";
     private String dockerFile = "";
     private String dockerFilePath = "";
@@ -190,16 +197,17 @@ public class WorkerExecution {
             }
             if (config.isPullNetworkLog()) {
                 // TODO I don't know why, but using multi line strings here brakes the grammar check.
-                pullNetworkLogScript = "cd ../net.splitcells.network.log\n"
+                closingPullNetworkLogScript = "cd ../net.splitcells.network.log\n"
+                        + "git config remote.$executeViaSshAt.url >&- || git remote add $executeViaSshAt\n"
                         + "git remote set-url $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network\n"
                         + "git remote set-url --push $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network\n"
                         + "git pull $executeViaSshAt\n";
-                pullNetworkLogScript = pullNetworkLogScript
+                closingPullNetworkLogScript = closingPullNetworkLogScript
                         .replace("$executeViaSshAt", executeViaSshAt)
                         .replace("$username", username);
-                logs().append("Executing: " + pullNetworkLogScript, INFO);
+                logs().append("Executing: " + closingPullNetworkLogScript, INFO);
                 if (!config.dryRun()) {
-                    executeShellCommand(pullNetworkLogScript);
+                    executeShellCommand(closingPullNetworkLogScript);
                 }
             }
             return;

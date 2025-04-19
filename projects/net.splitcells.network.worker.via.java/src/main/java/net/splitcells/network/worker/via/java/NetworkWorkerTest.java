@@ -16,7 +16,6 @@
 package net.splitcells.network.worker.via.java;
 
 import lombok.val;
-import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.dem.testing.Assertions.requireEquals;
@@ -41,16 +40,17 @@ public class NetworkWorkerTest {
                            --dry-run='true'\\
                            --use-playwright='false'\\
                            --auto-configure-cpu-architecture-explicitly='true'\"""");
-        requireEquals(testExecution.getPullNetworkLogScript(), "");
+        requireEquals(testExecution.getClosingPullNetworkLogScript(), "");
     }
 
     @UnitTest
     public void testBootstrapRemoteWithPullingNetworkLog() {
         val testExecution = networkWorker().bootstrapRemote("user@address"
                 , c -> c.setPullNetworkLog(true));
-        requireEquals(testExecution.getPullNetworkLogScript()
+        requireEquals(testExecution.getClosingPullNetworkLogScript()
                 , """
                         cd ../net.splitcells.network.log
+                        git config remote.user@address.url >&- || git remote add user@address
                         git remote set-url user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
                         git remote set-url --push user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
                         git pull user@address
