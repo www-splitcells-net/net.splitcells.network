@@ -182,6 +182,25 @@ public class WorkerExecution {
         if (config.executeViaSshAt().isPresent()) {
             val executeViaSshAt = config.executeViaSshAt().orElseThrow();
             val username = executeViaSshAt.split("@")[0];
+            if (config.isPullNetworkLog()) {
+                // TODO I don't know why, but using multi line strings here brakes the grammar check.
+                preparingPullNetworkLogScript
+                        = "if [ ! -d ../net.splitcells.network.log ]; then\n"
+                        + "  exit\n"
+                        + "fi\n"
+                        + "cd ../net.splitcells.network.log\n"
+                        + "git config remote.$executeViaSshAt.url >&- || git remote add $executeViaSshAt\n"
+                        + "git remote set-url $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network\n"
+                        + "git remote set-url --push $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network\n"
+                        + "git pull $executeViaSshAt\n";
+                preparingPullNetworkLogScript = preparingPullNetworkLogScript
+                        .replace("$executeViaSshAt", executeViaSshAt)
+                        .replace("$username", username);
+                logs().append("Executing: " + preparingPullNetworkLogScript, INFO);
+                if (!config.dryRun()) {
+                    executeShellCommand(preparingPullNetworkLogScript);
+                }
+            }
             // `-t` prevents errors, when a command like sudo is executed.
             remoteExecutionScript = "ssh "
                     + executeViaSshAt
