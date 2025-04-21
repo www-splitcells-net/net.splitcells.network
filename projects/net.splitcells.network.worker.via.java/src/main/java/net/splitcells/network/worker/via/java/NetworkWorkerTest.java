@@ -27,7 +27,7 @@ public class NetworkWorkerTest {
         val testExecution = networkWorker().bootstrapRemote("user@address");
         requireEquals(testExecution.getRemoteExecutionScript()
                 , """
-                        # Execution Main Task Remotely
+                        # Execute Main Task Remotely
                         ssh user@address /bin/sh << EOF
                           set -e
                           if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then
@@ -69,7 +69,7 @@ public class NetworkWorkerTest {
                           cd ../net.splitcells.network
                         fi
                         
-                        # Execution Main Task Remotely
+                        # Execute Main Task Remotely
                         ssh user@address /bin/sh << EOF
                           set -e
                           if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then
@@ -105,7 +105,7 @@ public class NetworkWorkerTest {
     public void testTestAtRemote() {
         requireEquals(networkWorker().testAtRemote("user@address")
                 .getRemoteExecutionScript(), """
-                # Execution Main Task Remotely
+                # Execute Main Task Remotely
                 ssh user@address /bin/sh << EOF
                   set -e
                   if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then

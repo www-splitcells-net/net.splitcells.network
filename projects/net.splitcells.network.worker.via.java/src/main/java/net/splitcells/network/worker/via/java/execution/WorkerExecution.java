@@ -205,7 +205,7 @@ public class WorkerExecution {
             preparingNetworkLogPullScript = "";
         }
         // `-t` prevents errors, when a command like sudo is executed.
-        mainRemoteExecutionScript = "# Execution Main Task Remotely\n"
+        mainRemoteExecutionScript = "# Execute Main Task Remotely\n"
                 + "ssh " + executeViaSshAt + " /bin/sh << EOF\n"
                 + "  set -e\n"
                 + "  if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then\n"
