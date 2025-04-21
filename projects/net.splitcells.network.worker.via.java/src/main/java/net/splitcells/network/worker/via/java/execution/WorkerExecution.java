@@ -40,16 +40,16 @@ import static net.splitcells.dem.utils.StringUtils.toBytes;
  * in order to simplify the overview and ease the understanding of the shell commands.
  * Thereby, one could even store the generated scripts and execute these without using Java at all,
  * which makes the hole thing more portable as well.</p>
- * <p>TODO IDEA Currently, everything is stored in `$HOME/.local/state/$executionName/*`.
+ * <p>TODO IDEA Currently, everything is stored in `$HOME/.local/state/$(executionName)/*`.
  * If more strict file isolation is required, in order to prevent file accidents,
  * a namespace could be used, that is implemented as a hidden parent folder for the execution folder:
- * `$HOME/.local/state/.$namespace/$executionName/*`.
+ * `$HOME/.local/state/.$namespace/$(executionName)/*`.
  * See `repo.process` for inspiration.
  * Of course, different users could be used instead.</p>
  * <p>TODO The way, that the execution strings are created is too complex.
  * From the feature complexity it should be a relatively simple string templating like $NAME_FOR_EXECUTION and
  * no arbitrary replacement of strings in the template should be done,
- * like it is on `-v $HOME/.local/state/$executionName/Documents:/root/Documents`.
+ * like it is on `-v $HOME/.local/state/$(executionName)/Documents:/root/Documents`.
  * In other words, separate the configuration via {@link WorkerExecutionConfig} more strictly from the template processing.</p>
  */
 public class WorkerExecution {
@@ -105,17 +105,17 @@ public class WorkerExecution {
     private static final String PREPARE_EXECUTION_TEMPLATE = """
             set -e
             set -x
-            executionName="$executionName"
+            executionName="$(executionName)"
             executionCommand="$executionCommand"
             # Prepare file system.
-            mkdir -p $HOME/.local/state/$executionName/.m2/
-            mkdir -p $HOME/.local/state/$executionName/.ssh/
-            mkdir -p $HOME/.local/state/$executionName/.local/dumps
-            mkdir -p $HOME/.local/state/$executionName/Documents/
+            mkdir -p $HOME/.local/state/$(executionName)/.m2/
+            mkdir -p $HOME/.local/state/$(executionName)/.ssh/
+            mkdir -p $HOME/.local/state/$(executionName)/.local/dumps
+            mkdir -p $HOME/.local/state/$(executionName)/Documents/
             mkdir -p ./target/
-            test -f target/program-$executionName && chmod +x target/program-$executionName # This file does not exist, when '--executable-path' is not set.
-            podman build -f "target/Dockerfile-$executionName" \\
-                --tag "localhost/$executionName"  \\
+            test -f target/program-$(executionName) && chmod +x target/program-$(executionName) # This file does not exist, when '--executable-path' is not set.
+            podman build -f "target/Dockerfile-$(executionName)" \\
+                --tag "localhost/$(executionName)"  \\
                 --arch string \\
                 $additionalArguments \\
                 --log-level=warn # `--log-level=warn` is podman's default.
@@ -125,37 +125,37 @@ public class WorkerExecution {
     private static final String PREPARE_EXECUTION_WITHOUT_BUILD_TEMPLATE = """
             set -e
             set -x
-            executionName="$executionName"
+            executionName="$(executionName)"
             # TODO executionCommand is currently not used.
             executionCommand="$executionCommand"
             # Prepare file system.
-            mkdir -p $HOME/.local/state/$executionName/.m2/
-            mkdir -p $HOME/.local/state/$executionName/.ssh/
-            mkdir -p $HOME/.local/state/$executionName/.local/
-            mkdir -p $HOME/.local/state/$executionName/Documents/
+            mkdir -p $HOME/.local/state/$(executionName)/.m2/
+            mkdir -p $HOME/.local/state/$(executionName)/.ssh/
+            mkdir -p $HOME/.local/state/$(executionName)/.local/
+            mkdir -p $HOME/.local/state/$(executionName)/Documents/
             mkdir -p ./target/
-            test -f target/program-$executionName && chmod +x target/program-$executionName # This file does not exist, when '--executable-path' is not set.
+            test -f target/program-$(executionName) && chmod +x target/program-$(executionName) # This file does not exist, when '--executable-path' is not set.
             """;
 
     private static final String EXECUTE_VIA_PODMAN_TEMPLATE = """
             set -x
-            podman run --name "$executionName" \\
+            podman run --name "$(executionName)" \\
               --network slirp4netns:allow_host_loopback=true \\
               $additionalArguments \\
               --rm \\
-              -v $HOME/.local/state/$executionName/Documents:/root/Documents \\
-              -v $HOME/.local/state/$executionName/.ssh:/root/.ssh \\
-              -v $HOME/.local/state/$executionName/.m2:/root/.m2 \\
-              -v $HOME/.local/state/$executionName/.local:/root/.local/state/$executionName/.local \\
+              -v $HOME/.local/state/$(executionName)/Documents:/root/Documents \\
+              -v $HOME/.local/state/$(executionName)/.ssh:/root/.ssh \\
+              -v $HOME/.local/state/$(executionName)/.m2:/root/.m2 \\
+              -v $HOME/.local/state/$(executionName)/.local:/root/.local/state/$(executionName)/.local \\
               "$podmanParameters" \\
-              "localhost/$executionName"
+              "localhost/$(executionName)"
               #
               # allow_host_loopback is required, so that the software in the container can connect to the host.
             """;
 
     private static final String PUBLISH_VIA_PODMAN_TEMPLATE = """
-            podman tag $executionName:latest codeberg.org/splitcells-net/$executionName:latest
-            podman push codeberg.org/splitcells-net/$executionName:latest
+            podman tag $(executionName):latest codeberg.org/splitcells-net/$(executionName):latest
+            podman push codeberg.org/splitcells-net/$(executionName):latest
             """;
 
     private boolean wasExecuted = false;
@@ -190,12 +190,12 @@ public class WorkerExecution {
         if (config.isPullNetworkLog()) {
             // TODO I don't know why, but using multi line strings here brakes the grammar check.
             preparingNetworkLogPullScript = "# Preparing Execution via Network Log Pull\n"
-                    + "ssh -q $executeViaSshAt \"sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'\" || exit\n"
+                    + "ssh -q $(executeViaSshAt) \"sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'\" || exit\n"
                     + "cd ../net.splitcells.network.log\n"
-                    + "git config remote.$executeViaSshAt.url >&- || git remote add $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
-                    + "git remote set-url $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
-                    + "git remote set-url --push $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
-                    + "git pull $executeViaSshAt master\n";
+                    + "git config remote.$(executeViaSshAt).url >&- || git remote add $(executeViaSshAt) $(executeViaSshAt):/home/$(username)/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
+                    + "git remote set-url $(executeViaSshAt) $(executeViaSshAt):/home/$(username)/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
+                    + "git remote set-url --push $(executeViaSshAt) $(executeViaSshAt):/home/$(username)/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
+                    + "git pull $(executeViaSshAt) master\n";
         } else {
             preparingNetworkLogPullScript = "";
         }
@@ -216,19 +216,19 @@ public class WorkerExecution {
             // TODO I don't know why, but using multi line strings here brakes the grammar check.
             closingPullNetworkLogScript = "# Closing Execution via Network Log Pull\n"
                     + "cd ../net.splitcells.network.log\n"
-                    + "git config remote.$executeViaSshAt.url >&- || git remote add $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
-                    + "git remote set-url $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
-                    + "git remote set-url --push $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
-                    + "git pull $executeViaSshAt master\n";
+                    + "git config remote.$(executeViaSshAt).url >&- || git remote add $(executeViaSshAt) $(executeViaSshAt):/home/$(username)/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
+                    + "git remote set-url $(executeViaSshAt) $(executeViaSshAt):/home/$(username)/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
+                    + "git remote set-url --push $(executeViaSshAt) $(executeViaSshAt):/home/$(username)/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
+                    + "git pull $(executeViaSshAt) master\n";
         } else {
             closingPullNetworkLogScript = "";
         }
         remoteExecutionScript = formatDocument(formatSection(preparingNetworkLogPullScript)
                 + formatSection(mainRemoteExecutionScript)
                 + formatSection(closingPullNetworkLogScript))
-                .replace("$executeViaSshAt", executeViaSshAt)
-                .replace("$username", username)
-                .replace("$executionName", config.name());
+                .replace("$(executeViaSshAt)", executeViaSshAt)
+                .replace("$(username)", username)
+                .replace("$(executionName)", config.name());
         if (!config.dryRun()) {
             logs().append("Executing script: \n" + remoteExecutionScript);
             executeShellCommand(remoteExecutionScript);
@@ -306,7 +306,7 @@ public class WorkerExecution {
         }
         if (config.useHostDocuments()) {
             // TODO This replacement is done in a dirty way. Use a template variable instead.
-            executionScript = executionScript.replace("-v $HOME/.local/state/$executionName/Documents:/root/Documents \\", "-v $HOME/Documents:/root/Documents \\");
+            executionScript = executionScript.replace("-v $HOME/.local/state/$(executionName)/Documents:/root/Documents \\", "-v $HOME/Documents:/root/Documents \\");
         }
         if (config.fileSystem().isFile(PODMAN_FLAGS_CONFIG_FILES.unixPathString())) {
             executionScript = executionScript.replace("$additionalArguments \\", (config.fileSystem().readString(PODMAN_FLAGS_CONFIG_FILES.unixPathString()) + "\\").replace("\n", ""));
