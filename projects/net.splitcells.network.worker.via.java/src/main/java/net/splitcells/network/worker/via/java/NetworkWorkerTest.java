@@ -59,12 +59,15 @@ public class NetworkWorkerTest {
         requireEquals(testExecution.getRemoteExecutionScript()
                 , """
                         # Preparing Execution via Network Log Pull
-                        ssh -q user@address "sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'" || exit
-                        cd ../net.splitcells.network.log
-                        git config remote.user@address.url >&- || git remote add user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
-                        git remote set-url user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
-                        git remote set-url --push user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
-                        git pull user@address master
+                        if ssh -q user@address "sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'"
+                        then
+                          cd ../net.splitcells.network.log
+                          git config remote.user@address.url >&- || git remote add user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+                          git remote set-url user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+                          git remote set-url --push user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+                          git pull user@address master
+                          cd ../net.splitcells.network
+                        fi
                         
                         # Execution Main Task Remotely
                         ssh user@address /bin/sh << EOF

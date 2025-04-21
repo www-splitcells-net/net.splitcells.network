@@ -20,10 +20,12 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import lombok.val;
 import net.splitcells.dem.resource.Trail;
+import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.host.CurrentFileSystem;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.resource.Trail.trail;
+import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.host.SystemUtils.executeShellCommand;
 import static net.splitcells.dem.utils.ExecutionException.execException;
@@ -190,12 +192,15 @@ public class WorkerExecution {
         if (config.isPullNetworkLog()) {
             // TODO I don't know why, but using multi line strings here brakes the grammar check.
             preparingNetworkLogPullScript = "# Preparing Execution via Network Log Pull\n"
-                    + "ssh -q $(executeViaSshAt) \"sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'\" || exit\n"
-                    + "cd ../net.splitcells.network.log\n"
-                    + "git config remote.$(executeViaSshAt).url >&- || git remote add $(executeViaSshAt) $(executeViaSshAt):/home/$(username)/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
-                    + "git remote set-url $(executeViaSshAt) $(executeViaSshAt):/home/$(username)/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
-                    + "git remote set-url --push $(executeViaSshAt) $(executeViaSshAt):/home/$(username)/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
-                    + "git pull $(executeViaSshAt) master\n";
+                    + "if ssh -q $(executeViaSshAt) \"sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'\"\n"
+                    + "then\n"
+                    + "  cd ../net.splitcells.network.log\n"
+                    + "  git config remote.$(executeViaSshAt).url >&- || git remote add $(executeViaSshAt) $(executeViaSshAt):/home/$(username)/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
+                    + "  git remote set-url $(executeViaSshAt) $(executeViaSshAt):/home/$(username)/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
+                    + "  git remote set-url --push $(executeViaSshAt) $(executeViaSshAt):/home/$(username)/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
+                    + "  git pull $(executeViaSshAt) master\n"
+                    + "  cd ../net.splitcells.network\n"
+                    + "fi\n";
         } else {
             preparingNetworkLogPullScript = "";
         }
@@ -230,10 +235,10 @@ public class WorkerExecution {
                 .replace("$(username)", username)
                 .replace("$(executionName)", config.name());
         if (!config.dryRun()) {
-            logs().append("Executing script: \n" + remoteExecutionScript);
+            logs().append("Executing script: \n" + remoteExecutionScript, INFO);
             executeShellCommand(remoteExecutionScript);
         } else {
-            logs().append("Generated script: \n" + remoteExecutionScript);
+            logs().append("Generated script: \n" + remoteExecutionScript, INFO);
         }
     }
 
