@@ -176,6 +176,18 @@ public class WorkerExecution {
 
     }
 
+    private void execute(WorkerExecutionConfig config) {
+        if (wasExecuted) {
+            throw execException(getClass().getSimpleName() + " instance cannot be executed twice.");
+        }
+        wasExecuted = true;
+        if (config.executeViaSshAt().isPresent()) {
+            executeRemotelyViaSsh(config);
+            return;
+        }
+        executeLocally(config);
+    }
+
     private void executeRemotelyViaSsh(WorkerExecutionConfig config) {
         val executeViaSshAt = config.executeViaSshAt().orElseThrow();
         val username = executeViaSshAt.split("@")[0];
@@ -231,15 +243,7 @@ public class WorkerExecution {
         }
     }
 
-    private void execute(WorkerExecutionConfig config) {
-        if (wasExecuted) {
-            throw execException(getClass().getSimpleName() + " instance cannot be executed twice.");
-        }
-        wasExecuted = true;
-        if (config.executeViaSshAt().isPresent()) {
-            executeRemotelyViaSsh(config);
-            return;
-        }
+    private void executeLocally(WorkerExecutionConfig config) {
         configValue(CurrentFileSystem.class).createDirectoryPath("./target");
         dockerFile = DOCKERFILE_SERVICE_TEMPLATE;
         if (config.command().isPresent()) {
