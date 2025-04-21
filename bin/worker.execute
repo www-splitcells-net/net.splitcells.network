@@ -114,10 +114,13 @@ podman run --name "$executionName" \\
   -v $HOME/.local/state/$executionName/.ssh:/root/.ssh \\
   -v $HOME/.local/state/$executionName/.m2:/root/.m2 \\
   -v $HOME/.local/state/$executionName/.local:/root/.local \\
+  --hostname "$(hostname)" \\
   "$podmanParameters" \\
   "localhost/$executionName"
   #
   # allow_host_loopback is required, so that the software in the container can connect to the host.
+  # --hostname is used for writing commits to the Network Log,
+  # as the podman container has a random hostname.
 """
 
 publishViaPodman = """
