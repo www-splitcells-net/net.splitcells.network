@@ -35,6 +35,8 @@ import static net.splitcells.dem.utils.StringUtils.toBytes;
  * This class only stores the result of the execution.
  * Any input is handled by {@link WorkerExecutionConfig}.</p>
  * <p>Strings instead of {@link StringBuilder} are used, so that replace methods can be used.</p>
+ * <p>sh is used explicitly instead of the default shell, because on many servers custom shells like fish are used,
+ * that have different shell syntaxes, but provide good UI features for users.</p>
  * <p>TODO IDEA Currently, everything is stored in `$HOME/.local/state/$executionName/*`.
  * If more strict file isolation is required, in order to prevent file accidents,
  * a namespace could be used, that is implemented as a hidden parent folder for the execution folder:
@@ -200,12 +202,17 @@ public class WorkerExecution {
                 }
             }
             // `-t` prevents errors, when a command like sudo is executed.
-            remoteExecutionScript = "ssh "
-                    + executeViaSshAt
-                    + " -t"
-                    + " \"cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network \\\n&& bin/worker.execute \\\n"
-                    + config.shellArgumentString(a -> !"execute-via-ssh-at".equals(a)).replace("\\\n", "\\\n  ")
-                    + "\"";
+            remoteExecutionScript = "ssh " + executeViaSshAt + " /bin/sh << EOF\n"
+                    + "  set -e\n"
+                    + "  if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then\n"
+                    + "    mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/\n"
+                    + "    cd ~/.local/state/net.splitcells.network.worker/repos/public/\n"
+                    + "    git clone https://codeberg.org/splitcells-net/net.splitcells.network.git\n"
+                    + "  fi\n"
+                    + "  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network \\\n  && bin/worker.execute \\\n"
+                    + "    "
+                    + config.shellArgumentString(a -> !"execute-via-ssh-at".equals(a)).replace("\\\n", "\\\n   ")
+                    + "\nEOF";
             if (config.verbose()) {
                 logs().append("Executing: " + remoteExecutionScript, INFO);
             }

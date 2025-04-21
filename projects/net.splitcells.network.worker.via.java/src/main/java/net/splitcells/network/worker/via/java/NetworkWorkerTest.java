@@ -27,19 +27,27 @@ public class NetworkWorkerTest {
         val testExecution = networkWorker().bootstrapRemote("user@address");
         requireEquals(testExecution.remoteExecutionScript()
                 , """
-                        ssh user@address -t "cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network \\
-                        && bin/worker.execute \\
-                        --name='net.splitcells.network.worker'\\
-                           --flat-folders='true'\\
-                           --command='cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'\\
-                           --use-host-documents='false'\\
-                           --publish-execution-image='false'\\
-                           --verbose='false'\\
-                           --only-build-image='false'\\
-                           --only-execute-image='false'\\
-                           --dry-run='true'\\
-                           --use-playwright='false'\\
-                           --auto-configure-cpu-architecture-explicitly='true'\"""");
+                        ssh user@address /bin/sh << EOF
+                          set -e
+                          if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then
+                            mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/
+                            cd ~/.local/state/net.splitcells.network.worker/repos/public/
+                            git clone https://codeberg.org/splitcells-net/net.splitcells.network.git
+                          fi
+                          cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network \\
+                          && bin/worker.execute \\
+                            --name='net.splitcells.network.worker'\\
+                            --flat-folders='true'\\
+                            --command='cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'\\
+                            --use-host-documents='false'\\
+                            --publish-execution-image='false'\\
+                            --verbose='false'\\
+                            --only-build-image='false'\\
+                            --only-execute-image='false'\\
+                            --dry-run='true'\\
+                            --use-playwright='false'\\
+                            --auto-configure-cpu-architecture-explicitly='true'
+                        EOF""");
         requireEquals(testExecution.getClosingPullNetworkLogScript(), "");
     }
 
@@ -70,18 +78,26 @@ public class NetworkWorkerTest {
     public void testTestAtRemote() {
         requireEquals(networkWorker().testAtRemote("user@address")
                 .remoteExecutionScript(), """
-                ssh user@address -t "cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network \\
-                && bin/worker.execute \\
-                --name='net.splitcells.network.worker'\\
-                   --flat-folders='true'\\
-                   --command='cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.test'\\
-                   --use-host-documents='false'\\
-                   --publish-execution-image='false'\\
-                   --verbose='false'\\
-                   --only-build-image='false'\\
-                   --only-execute-image='false'\\
-                   --dry-run='true'\\
-                   --use-playwright='false'\\
-                   --auto-configure-cpu-architecture-explicitly='true'\"""");
+                ssh user@address /bin/sh << EOF
+                  set -e
+                  if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then
+                    mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/
+                    cd ~/.local/state/net.splitcells.network.worker/repos/public/
+                    git clone https://codeberg.org/splitcells-net/net.splitcells.network.git
+                  fi
+                  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network \\
+                  && bin/worker.execute \\
+                    --name='net.splitcells.network.worker'\\
+                    --flat-folders='true'\\
+                    --command='cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.test'\\
+                    --use-host-documents='false'\\
+                    --publish-execution-image='false'\\
+                    --verbose='false'\\
+                    --only-build-image='false'\\
+                    --only-execute-image='false'\\
+                    --dry-run='true'\\
+                    --use-playwright='false'\\
+                    --auto-configure-cpu-architecture-explicitly='true'
+                EOF""");
     }
 }
