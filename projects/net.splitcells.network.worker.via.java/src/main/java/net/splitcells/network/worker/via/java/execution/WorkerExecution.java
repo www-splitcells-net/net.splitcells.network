@@ -227,7 +227,8 @@ public class WorkerExecution {
                 + formatSection(mainRemoteExecutionScript)
                 + formatSection(closingPullNetworkLogScript))
                 .replace("$executeViaSshAt", executeViaSshAt)
-                .replace("$username", username);
+                .replace("$username", username)
+                .replace("$executionName", config.name());
         if (!config.dryRun()) {
             logs().append("Executing script: \n" + remoteExecutionScript);
             executeShellCommand(remoteExecutionScript);
