@@ -176,64 +176,68 @@ public class WorkerExecution {
 
     }
 
+    private void executeRemotelyViaSsh(WorkerExecutionConfig config) {
+        val executeViaSshAt = config.executeViaSshAt().orElseThrow();
+        val username = executeViaSshAt.split("@")[0];
+        if (config.isPullNetworkLog()) {
+            // TODO I don't know why, but using multi line strings here brakes the grammar check.
+            preparingNetworkLogPullScript
+                    = "ssh -q $executeViaSshAt \"sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'\" || exit\n"
+                    + "cd ../net.splitcells.network.log\n"
+                    + "git config remote.$executeViaSshAt.url >&- || git remote add $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
+                    + "git remote set-url $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
+                    + "git remote set-url --push $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
+                    + "git pull $executeViaSshAt master\n";
+            preparingNetworkLogPullScript = preparingNetworkLogPullScript
+                    .replace("$executeViaSshAt", executeViaSshAt)
+                    .replace("$username", username);
+            logs().append("Executing preparing Network Log pull script: " + preparingNetworkLogPullScript, INFO);
+            if (!config.dryRun()) {
+                executeShellCommand(preparingNetworkLogPullScript);
+            }
+        }
+        // `-t` prevents errors, when a command like sudo is executed.
+        remoteExecutionScript = "ssh " + executeViaSshAt + " /bin/sh << EOF\n"
+                + "  set -e\n"
+                + "  if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then\n"
+                + "    mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/\n"
+                + "    cd ~/.local/state/net.splitcells.network.worker/repos/public/\n"
+                + "    git clone https://codeberg.org/splitcells-net/net.splitcells.network.git\n"
+                + "  fi\n"
+                + "  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network \\\n  && bin/worker.execute \\\n"
+                + "    "
+                + config.shellArgumentString(a -> !"execute-via-ssh-at".equals(a)).replace("\\\n", "\\\n   ")
+                + "\nEOF";
+        if (config.verbose()) {
+            logs().append("Executing remote execution script: " + remoteExecutionScript, INFO);
+        }
+        if (!config.dryRun()) {
+            executeShellCommand(remoteExecutionScript);
+        }
+        if (config.isPullNetworkLog()) {
+            // TODO I don't know why, but using multi line strings here brakes the grammar check.
+            closingPullNetworkLogScript = "cd ../net.splitcells.network.log\n"
+                    + "git config remote.$executeViaSshAt.url >&- || git remote add $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
+                    + "git remote set-url $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
+                    + "git remote set-url --push $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
+                    + "git pull $executeViaSshAt master\n";
+            closingPullNetworkLogScript = closingPullNetworkLogScript
+                    .replace("$executeViaSshAt", executeViaSshAt)
+                    .replace("$username", username);
+            logs().append("Executing closing pull Network Log script: " + closingPullNetworkLogScript, INFO);
+            if (!config.dryRun()) {
+                executeShellCommand(closingPullNetworkLogScript);
+            }
+        }
+    }
+
     private void execute(WorkerExecutionConfig config) {
         if (wasExecuted) {
             throw execException(getClass().getSimpleName() + " instance cannot be executed twice.");
         }
         wasExecuted = true;
         if (config.executeViaSshAt().isPresent()) {
-            val executeViaSshAt = config.executeViaSshAt().orElseThrow();
-            val username = executeViaSshAt.split("@")[0];
-            if (config.isPullNetworkLog()) {
-                // TODO I don't know why, but using multi line strings here brakes the grammar check.
-                preparingNetworkLogPullScript
-                        = "ssh -q $executeViaSshAt \"sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'\" || exit\n"
-                        + "cd ../net.splitcells.network.log\n"
-                        + "git config remote.$executeViaSshAt.url >&- || git remote add $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
-                        + "git remote set-url $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
-                        + "git remote set-url --push $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
-                        + "git pull $executeViaSshAt master\n";
-                preparingNetworkLogPullScript = preparingNetworkLogPullScript
-                        .replace("$executeViaSshAt", executeViaSshAt)
-                        .replace("$username", username);
-                logs().append("Executing preparing Network Log pull script: " + preparingNetworkLogPullScript, INFO);
-                if (!config.dryRun()) {
-                    executeShellCommand(preparingNetworkLogPullScript);
-                }
-            }
-            // `-t` prevents errors, when a command like sudo is executed.
-            remoteExecutionScript = "ssh " + executeViaSshAt + " /bin/sh << EOF\n"
-                    + "  set -e\n"
-                    + "  if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then\n"
-                    + "    mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/\n"
-                    + "    cd ~/.local/state/net.splitcells.network.worker/repos/public/\n"
-                    + "    git clone https://codeberg.org/splitcells-net/net.splitcells.network.git\n"
-                    + "  fi\n"
-                    + "  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network \\\n  && bin/worker.execute \\\n"
-                    + "    "
-                    + config.shellArgumentString(a -> !"execute-via-ssh-at".equals(a)).replace("\\\n", "\\\n   ")
-                    + "\nEOF";
-            if (config.verbose()) {
-                logs().append("Executing remote execution script: " + remoteExecutionScript, INFO);
-            }
-            if (!config.dryRun()) {
-                executeShellCommand(remoteExecutionScript);
-            }
-            if (config.isPullNetworkLog()) {
-                // TODO I don't know why, but using multi line strings here brakes the grammar check.
-                closingPullNetworkLogScript = "cd ../net.splitcells.network.log\n"
-                        + "git config remote.$executeViaSshAt.url >&- || git remote add $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
-                        + "git remote set-url $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
-                        + "git remote set-url --push $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
-                        + "git pull $executeViaSshAt master\n";
-                closingPullNetworkLogScript = closingPullNetworkLogScript
-                        .replace("$executeViaSshAt", executeViaSshAt)
-                        .replace("$username", username);
-                logs().append("Executing closing pull Network Log script: " + closingPullNetworkLogScript, INFO);
-                if (!config.dryRun()) {
-                    executeShellCommand(closingPullNetworkLogScript);
-                }
-            }
+            executeRemotelyViaSsh(config);
             return;
         }
         configValue(CurrentFileSystem.class).createDirectoryPath("./target");
