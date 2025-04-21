@@ -24,7 +24,6 @@ import net.splitcells.dem.resource.host.CurrentFileSystem;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.resource.Trail.trail;
-import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.host.SystemUtils.executeShellCommand;
 import static net.splitcells.dem.utils.ExecutionException.execException;
@@ -37,6 +36,10 @@ import static net.splitcells.dem.utils.StringUtils.toBytes;
  * <p>Strings instead of {@link StringBuilder} are used, so that replace methods can be used.</p>
  * <p>sh is used explicitly instead of the default shell, because on many servers custom shells like fish are used,
  * that have different shell syntaxes, but provide good UI features for users.</p>
+ * <p>The implementation tries to create one single script for the shell execution,
+ * in order to simplify the overview and ease the understanding of the shell commands.
+ * Thereby, one could even store the generated scripts and execute these without using Java at all,
+ * which makes the hole thing more portable as well.</p>
  * <p>TODO IDEA Currently, everything is stored in `$HOME/.local/state/$executionName/*`.
  * If more strict file isolation is required, in order to prevent file accidents,
  * a namespace could be used, that is implemented as a hidden parent folder for the execution folder:
@@ -156,7 +159,8 @@ public class WorkerExecution {
             """;
 
     private boolean wasExecuted = false;
-    private String remoteExecutionScript = "";
+    private String mainRemoteExecutionScript = "";
+    private @Accessors(chain = true) @Setter @Getter String remoteExecutionScript = "";
     /**
      * Script that is used, in order to pull the Network Log repo,
      * before anything is done on the remote.
@@ -193,8 +197,8 @@ public class WorkerExecution {
         val username = executeViaSshAt.split("@")[0];
         if (config.isPullNetworkLog()) {
             // TODO I don't know why, but using multi line strings here brakes the grammar check.
-            preparingNetworkLogPullScript
-                    = "ssh -q $executeViaSshAt \"sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'\" || exit\n"
+            preparingNetworkLogPullScript = "# Preparing Execution via Network Log Pull\n"
+                    + "ssh -q $executeViaSshAt \"sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'\" || exit\n"
                     + "cd ../net.splitcells.network.log\n"
                     + "git config remote.$executeViaSshAt.url >&- || git remote add $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
                     + "git remote set-url $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
@@ -203,13 +207,10 @@ public class WorkerExecution {
             preparingNetworkLogPullScript = preparingNetworkLogPullScript
                     .replace("$executeViaSshAt", executeViaSshAt)
                     .replace("$username", username);
-            logs().append("Executing preparing Network Log pull script: " + preparingNetworkLogPullScript, INFO);
-            if (!config.dryRun()) {
-                executeShellCommand(preparingNetworkLogPullScript);
-            }
         }
         // `-t` prevents errors, when a command like sudo is executed.
-        remoteExecutionScript = "ssh " + executeViaSshAt + " /bin/sh << EOF\n"
+        mainRemoteExecutionScript = "# Execution Main Task Remotely\n"
+                + "ssh " + executeViaSshAt + " /bin/sh << EOF\n"
                 + "  set -e\n"
                 + "  if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then\n"
                 + "    mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/\n"
@@ -220,15 +221,10 @@ public class WorkerExecution {
                 + "    "
                 + config.shellArgumentString(a -> !"execute-via-ssh-at".equals(a)).replace("\\\n", "\\\n   ")
                 + "\nEOF";
-        if (config.verbose()) {
-            logs().append("Executing remote execution script: " + remoteExecutionScript, INFO);
-        }
-        if (!config.dryRun()) {
-            executeShellCommand(remoteExecutionScript);
-        }
         if (config.isPullNetworkLog()) {
             // TODO I don't know why, but using multi line strings here brakes the grammar check.
-            closingPullNetworkLogScript = "cd ../net.splitcells.network.log\n"
+            closingPullNetworkLogScript = "# Closing Execution via Network Log Pull\n"
+                    + "cd ../net.splitcells.network.log\n"
                     + "git config remote.$executeViaSshAt.url >&- || git remote add $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
                     + "git remote set-url $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
                     + "git remote set-url --push $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
@@ -236,11 +232,33 @@ public class WorkerExecution {
             closingPullNetworkLogScript = closingPullNetworkLogScript
                     .replace("$executeViaSshAt", executeViaSshAt)
                     .replace("$username", username);
-            logs().append("Executing closing pull Network Log script: " + closingPullNetworkLogScript, INFO);
-            if (!config.dryRun()) {
-                executeShellCommand(closingPullNetworkLogScript);
-            }
         }
+        remoteExecutionScript = formatDocument(formatSection(preparingNetworkLogPullScript)
+                + formatSection(mainRemoteExecutionScript)
+                + formatSection(closingPullNetworkLogScript));
+        if (!config.dryRun()) {
+            logs().append("Executing script: \n" + remoteExecutionScript);
+            executeShellCommand(remoteExecutionScript);
+        } else {
+            logs().append("Generated script: \n" + remoteExecutionScript);
+        }
+    }
+
+    private String formatDocument(String arg) {
+        if (arg.endsWith("\n\n")) {
+            return arg.substring(0, arg.length() - 1);
+        }
+        return arg;
+    }
+
+    private String formatSection(String arg) {
+        if (arg.isBlank()) {
+            return "";
+        }
+        if (arg.endsWith("\n")) {
+            return arg + "\n";
+        }
+        return arg + "\n\n";
     }
 
     private void executeLocally(WorkerExecutionConfig config) {
@@ -313,8 +331,8 @@ public class WorkerExecution {
         }
     }
 
-    public String remoteExecutionScript() {
-        return remoteExecutionScript;
+    public String mainRemoteExecutionScript() {
+        return mainRemoteExecutionScript;
     }
 
     public String dockerfile() {

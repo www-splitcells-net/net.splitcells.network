@@ -25,8 +25,9 @@ public class NetworkWorkerTest {
     @UnitTest
     public void testBootstrapRemote() {
         val testExecution = networkWorker().bootstrapRemote("user@address");
-        requireEquals(testExecution.remoteExecutionScript()
+        requireEquals(testExecution.getRemoteExecutionScript()
                 , """
+                        # Execution Main Task Remotely
                         ssh user@address /bin/sh << EOF
                           set -e
                           if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then
@@ -47,25 +48,49 @@ public class NetworkWorkerTest {
                             --dry-run='true'\\
                             --use-playwright='false'\\
                             --auto-configure-cpu-architecture-explicitly='true'
-                        EOF""");
+                        EOF
+                        """);
         requireEquals(testExecution.getClosingPullNetworkLogScript(), "");
     }
 
     @UnitTest
-    public void testBootstrapRemoteWithPullingNetworkLog() {
+    public void testBootstrapRemoteWithNetworkLogPull() {
         val testExecution = networkWorker().bootstrapRemote("user@address"
                 , c -> c.setPullNetworkLog(true));
-        requireEquals(testExecution.getPreparingNetworkLogPullScript()
+        requireEquals(testExecution.getRemoteExecutionScript()
                 , """
+                        # Preparing Execution via Network Log Pull
                         ssh -q user@address "sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'" || exit
                         cd ../net.splitcells.network.log
                         git config remote.user@address.url >&- || git remote add user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
                         git remote set-url user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
                         git remote set-url --push user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
                         git pull user@address master
-                        """);
-        requireEquals(testExecution.getClosingPullNetworkLogScript()
-                , """
+                        
+                        # Execution Main Task Remotely
+                        ssh user@address /bin/sh << EOF
+                          set -e
+                          if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then
+                            mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/
+                            cd ~/.local/state/net.splitcells.network.worker/repos/public/
+                            git clone https://codeberg.org/splitcells-net/net.splitcells.network.git
+                          fi
+                          cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network \\
+                          && bin/worker.execute \\
+                            --name='net.splitcells.network.worker'\\
+                            --flat-folders='true'\\
+                            --command='cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'\\
+                            --use-host-documents='false'\\
+                            --publish-execution-image='false'\\
+                            --verbose='false'\\
+                            --only-build-image='false'\\
+                            --only-execute-image='false'\\
+                            --dry-run='true'\\
+                            --use-playwright='false'\\
+                            --auto-configure-cpu-architecture-explicitly='true'
+                        EOF
+                        
+                        # Closing Execution via Network Log Pull
                         cd ../net.splitcells.network.log
                         git config remote.user@address.url >&- || git remote add user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
                         git remote set-url user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
@@ -77,7 +102,8 @@ public class NetworkWorkerTest {
     @UnitTest
     public void testTestAtRemote() {
         requireEquals(networkWorker().testAtRemote("user@address")
-                .remoteExecutionScript(), """
+                .getRemoteExecutionScript(), """
+                # Execution Main Task Remotely
                 ssh user@address /bin/sh << EOF
                   set -e
                   if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then
@@ -98,6 +124,7 @@ public class NetworkWorkerTest {
                     --dry-run='true'\\
                     --use-playwright='false'\\
                     --auto-configure-cpu-architecture-explicitly='true'
-                EOF""");
+                EOF
+                """);
     }
 }
