@@ -159,18 +159,7 @@ public class WorkerExecution {
             """;
 
     private boolean wasExecuted = false;
-    private String mainRemoteExecutionScript = "";
     private @Accessors(chain = true) @Setter @Getter String remoteExecutionScript = "";
-    /**
-     * Script that is used, in order to pull the Network Log repo,
-     * before anything is done on the remote.
-     */
-    private @Accessors(chain = true) @Setter @Getter String preparingNetworkLogPullScript = "";
-    /**
-     * Script that is used, in order to pull the Network Log repo,
-     * after everything is done on the remote.
-     */
-    private @Accessors(chain = true) @Setter @Getter String closingPullNetworkLogScript = "";
     private String executionScript = "";
     private String dockerFile = "";
     private String dockerFilePath = "";
@@ -195,6 +184,9 @@ public class WorkerExecution {
     private void executeRemotelyViaSsh(WorkerExecutionConfig config) {
         val executeViaSshAt = config.executeViaSshAt().orElseThrow();
         val username = executeViaSshAt.split("@")[0];
+        final String preparingNetworkLogPullScript;
+        final String closingPullNetworkLogScript;
+        final String mainRemoteExecutionScript;
         if (config.isPullNetworkLog()) {
             // TODO I don't know why, but using multi line strings here brakes the grammar check.
             preparingNetworkLogPullScript = "# Preparing Execution via Network Log Pull\n"
@@ -204,9 +196,8 @@ public class WorkerExecution {
                     + "git remote set-url $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
                     + "git remote set-url --push $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
                     + "git pull $executeViaSshAt master\n";
-            preparingNetworkLogPullScript = preparingNetworkLogPullScript
-                    .replace("$executeViaSshAt", executeViaSshAt)
-                    .replace("$username", username);
+        } else {
+            preparingNetworkLogPullScript = "";
         }
         // `-t` prevents errors, when a command like sudo is executed.
         mainRemoteExecutionScript = "# Execution Main Task Remotely\n"
@@ -229,13 +220,14 @@ public class WorkerExecution {
                     + "git remote set-url $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
                     + "git remote set-url --push $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
                     + "git pull $executeViaSshAt master\n";
-            closingPullNetworkLogScript = closingPullNetworkLogScript
-                    .replace("$executeViaSshAt", executeViaSshAt)
-                    .replace("$username", username);
+        } else {
+            closingPullNetworkLogScript = "";
         }
         remoteExecutionScript = formatDocument(formatSection(preparingNetworkLogPullScript)
                 + formatSection(mainRemoteExecutionScript)
-                + formatSection(closingPullNetworkLogScript));
+                + formatSection(closingPullNetworkLogScript))
+                .replace("$executeViaSshAt", executeViaSshAt)
+                .replace("$username", username);
         if (!config.dryRun()) {
             logs().append("Executing script: \n" + remoteExecutionScript);
             executeShellCommand(remoteExecutionScript);
@@ -329,10 +321,6 @@ public class WorkerExecution {
         if (config.dryRun()) {
             return;
         }
-    }
-
-    public String mainRemoteExecutionScript() {
-        return mainRemoteExecutionScript;
     }
 
     public String dockerfile() {

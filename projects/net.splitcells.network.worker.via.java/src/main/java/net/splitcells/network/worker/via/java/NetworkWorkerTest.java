@@ -50,7 +50,6 @@ public class NetworkWorkerTest {
                             --auto-configure-cpu-architecture-explicitly='true'
                         EOF
                         """);
-        requireEquals(testExecution.getClosingPullNetworkLogScript(), "");
     }
 
     @UnitTest
