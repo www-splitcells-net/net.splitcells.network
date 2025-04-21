@@ -161,7 +161,7 @@ public class WorkerExecution {
      * Script that is used, in order to pull the Network Log repo,
      * before anything is done on the remote.
      */
-    private @Accessors(chain = true) @Setter @Getter String preparingPullNetworkLogScript = "";
+    private @Accessors(chain = true) @Setter @Getter String preparingNetworkLogPullScript = "";
     /**
      * Script that is used, in order to pull the Network Log repo,
      * after everything is done on the remote.
@@ -186,19 +186,19 @@ public class WorkerExecution {
             val username = executeViaSshAt.split("@")[0];
             if (config.isPullNetworkLog()) {
                 // TODO I don't know why, but using multi line strings here brakes the grammar check.
-                preparingPullNetworkLogScript
+                preparingNetworkLogPullScript
                         = "ssh -q $executeViaSshAt \"sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'\" || exit\n"
                         + "cd ../net.splitcells.network.log\n"
                         + "git config remote.$executeViaSshAt.url >&- || git remote add $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
                         + "git remote set-url $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
                         + "git remote set-url --push $executeViaSshAt $executeViaSshAt:/home/$username/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log\n"
                         + "git pull $executeViaSshAt master\n";
-                preparingPullNetworkLogScript = preparingPullNetworkLogScript
+                preparingNetworkLogPullScript = preparingNetworkLogPullScript
                         .replace("$executeViaSshAt", executeViaSshAt)
                         .replace("$username", username);
-                logs().append("Executing: " + preparingPullNetworkLogScript, INFO);
+                logs().append("Executing preparing Network Log pull script: " + preparingNetworkLogPullScript, INFO);
                 if (!config.dryRun()) {
-                    executeShellCommand(preparingPullNetworkLogScript);
+                    executeShellCommand(preparingNetworkLogPullScript);
                 }
             }
             // `-t` prevents errors, when a command like sudo is executed.
@@ -214,7 +214,7 @@ public class WorkerExecution {
                     + config.shellArgumentString(a -> !"execute-via-ssh-at".equals(a)).replace("\\\n", "\\\n   ")
                     + "\nEOF";
             if (config.verbose()) {
-                logs().append("Executing: " + remoteExecutionScript, INFO);
+                logs().append("Executing remote execution script: " + remoteExecutionScript, INFO);
             }
             if (!config.dryRun()) {
                 executeShellCommand(remoteExecutionScript);
@@ -229,7 +229,7 @@ public class WorkerExecution {
                 closingPullNetworkLogScript = closingPullNetworkLogScript
                         .replace("$executeViaSshAt", executeViaSshAt)
                         .replace("$username", username);
-                logs().append("Executing: " + closingPullNetworkLogScript, INFO);
+                logs().append("Executing closing pull Network Log script: " + closingPullNetworkLogScript, INFO);
                 if (!config.dryRun()) {
                     executeShellCommand(closingPullNetworkLogScript);
                 }
@@ -298,7 +298,7 @@ public class WorkerExecution {
             throw execException("Pulling the network log is only possible for remote executions.");
         }
         if (config.verbose() || config.dryRun()) {
-            logs().append(executionScript);
+            logs().append("Executing script: " + executionScript);
         }
         if (config.dryRun()) {
             return;

@@ -55,7 +55,7 @@ public class NetworkWorkerTest {
     public void testBootstrapRemoteWithPullingNetworkLog() {
         val testExecution = networkWorker().bootstrapRemote("user@address"
                 , c -> c.setPullNetworkLog(true));
-        requireEquals(testExecution.getPreparingPullNetworkLogScript()
+        requireEquals(testExecution.getPreparingNetworkLogPullScript()
                 , """
                         ssh -q user@address "sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'" || exit
                         cd ../net.splitcells.network.log
