@@ -23,5 +23,5 @@ set -e
 # Build and provide the software, so that the Java version of the Network Worker can be used.
   cd ../net.splitcells.network.hub
   export JAVA_VERSION=21 # This is required on FreeBSD, if an older Java version is set as default.
-  mvn clean install -DskipTests
+  # mvn clean install -DskipTests # TODO Enable this, when worker.process works for live server.
 echo Worker was successfully bootstrapped. # This is used, in order to check, if `user.bin.configure` was executed successfully.
