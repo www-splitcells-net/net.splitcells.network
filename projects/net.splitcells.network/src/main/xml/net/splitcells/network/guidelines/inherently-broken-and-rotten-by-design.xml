@@ -9,9 +9,14 @@
     </meta>
     <chapter>
         <title>Reason for These Guidelines</title>
-        <d:todo>It's hard for humans to do reasoning outside ones own scope of knowledge or
-            to do a big change of reasoning direction without major errors.
-        </d:todo>
+        <paragraph>It's hard to get things right on the first try and to be honest on the second, third and so on.
+            There is the inherit problem,
+            that as humans we are not able to somewhat reliably determine as a group,
+            if something is correct or better than something else,
+            according to a given knowledge base.
+            On average, we are not even able to determine, the best person for a job.
+            Instead of living in denial, this is an attempt to cope with this situation.
+        </paragraph>
     </chapter>
     <chapter>
         <title>Broken by Design</title>
