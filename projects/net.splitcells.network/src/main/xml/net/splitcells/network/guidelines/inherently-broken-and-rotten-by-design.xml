@@ -20,11 +20,29 @@
     </chapter>
     <chapter>
         <title>Broken by Design</title>
-        <d:todo>Making correct decisions or core components like the software architecture and goal are not likely.
-        </d:todo>
-        <d:todo>Minimize damage by incorrect core components and
-            maximize profit by delaying correcting core components.
-        </d:todo>
+        <paragraph>So, it is assumed, that core decisions regarding the software architecture and
+            features will be done incorrectly.
+            The main target is to minimize the damage done by incorrect decisions or
+            human errors during their implementations.
+        </paragraph>
+        <paragraph>Delaying decisions or their implementation can minimize their caused damage by skipping
+            obsolete actions or by improving their planning based on new information.
+            The basic idea is, that most of the time some knowledge is missing,
+            when a decision is being made.
+            Delaying a decision or an implementation while using the software or developing different features,
+            will provide additional useful info.
+            This info can potentially be used, in order to improve the planning.
+            Even programming parts that are not part of a decision, can provide insights.
+        </paragraph>
+        <paragraph>Therefore, a minimalistic implementation can be done first,
+            that just barely meets the requirements and does not have any extras.
+            By delaying the complete implementation as much as possible,
+            the usage of the minimalistic implementation can provide more info regarding the features' usefulness and
+            how a correct and full implementation would look like.
+            In other words, technical debt can be build up,
+            in order to finance a technical investment, that may lead to a development loss or profit.
+        </paragraph>
+        <d:todo>Example</d:todo>
         <d:todo>Migration based Development</d:todo>
         <d:todo>Minimize architecture.</d:todo>
     </chapter>
