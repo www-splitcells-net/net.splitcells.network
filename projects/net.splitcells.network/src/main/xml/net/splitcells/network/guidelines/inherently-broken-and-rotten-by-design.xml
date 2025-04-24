@@ -60,19 +60,27 @@
             fly as well
             Minimize architecture.
         </d:todo>
+        <paragraph>This approach creates an inherently broken design, as decisions are delayed as much as possible.
+            Things like a complete overarching software architecture or explicit requirement engineering
+            are avoided as long as there is no concrete need for it.
+            Therefore, big, deep and fundamental adaptations may need to be done at any moment without any warning,
+            as decisions are revisioned.
+            It is expected that the positives of the technical debt outweigh the negatives.
+            The minimization and containment of the adaptation costs by using migration based development for example
+            is one of the highest priorities, as otherwise these costs will kill the project.
+        </paragraph>
     </chapter>
     <chapter>
         <title>Rotten by Design</title>
-        <d:todo>All feature requests are accepted.</d:todo>
-        <d:todo>Bad or no memory and performance optimization</d:todo>
-        <d:todo>Explosion of Complexity</d:todo>
-        <d:todo>Only developers decided the features, that are implemented. Project leader etc. only can request.</d:todo>
-        <d:todo>Security</d:todo>
+        <d:todo>All non-conflicting feature requests, that are financed, are accepted.</d:todo>
+        <d:todo>Embrace the Explosion of Complexity of the whole and minimize the complexity of small components.
+            Migration based Development
+        </d:todo>
+        <d:todo>Only developers decided the features, that are implemented. Project leader etc. only can request.
+        </d:todo>
     </chapter>
     <chapter>
         <title>Finishing The Package</title>
         <d:todo>Tension based stability</d:todo>
-        <d:todo>Positive dividends of technical debts by skipping migrations</d:todo>
-        <d:todo>Fitting developers</d:todo>
     </chapter>
 </article>
