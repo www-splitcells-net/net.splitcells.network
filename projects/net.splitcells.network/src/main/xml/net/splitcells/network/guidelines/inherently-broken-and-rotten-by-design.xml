@@ -42,9 +42,24 @@
             In other words, technical debt can be build up,
             in order to finance a technical investment, that may lead to a development loss or profit.
         </paragraph>
-        <d:todo>Example</d:todo>
-        <d:todo>Migration based Development</d:todo>
-        <d:todo>Minimize architecture.</d:todo>
+        <paragraph>Let's assume, that your application needs an export of table data,
+            so that a user can access it via a spreadsheet program like Excel.
+            You could start implementing a proper export for Excel's XSLX file format,
+            or you could start by implementing a CSV export.
+            The CSV variant would be easier to implement, also the user would have to convert the CSV data.
+        </paragraph>
+        <paragraph>Of course, you would not implement a proper CSV export first, but a ghetto version.
+            This version just joins together the values of lines via commas and lines via new line symbols,
+            without regards for escaping special characters.
+            After some time, you notice, that the user doesn't actually use Excel,
+            but LibreOffice instead.
+            Therefore, you scrap the plans for an XSLX export and build an ODS export for LibreOffice instead.
+        </paragraph>
+        <d:todo>Many more projects are started this way Migration based Development</d:todo>
+        <d:todo>architecture is a source of errors with limited benefits as interfaces can model architectures on the
+            fly as well
+            Minimize architecture.
+        </d:todo>
     </chapter>
     <chapter>
         <title>Rotten by Design</title>
