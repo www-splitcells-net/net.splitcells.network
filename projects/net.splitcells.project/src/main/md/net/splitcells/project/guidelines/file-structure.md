@@ -102,22 +102,20 @@ On the other hand, there is a convention in Unix to put executable programs insi
 `$HOME/bin`,  `/bin` and `/usr/bin`.
 
 It is required, that the scripts are written in such a way,
-that the current folder is located at the project's root folder.
-If a script assumes, that the current working folder also contains the executed script, use `./binr/*` instead.
-Such commands are called project commands.
-When a shell is opened at the project's root folder, these commands are therefore executed via `bin/*`.
+that it supports having the current folder of the shell session being located at the project's root folder.
+
+If a script wants to support having the current shell execution folder being the bin folder itself.
+The script can detect, if is executed inside the bin folder,
+by checking if the current folder contains a folder named bin.
+Is this not the case, the script changes the current folder to the parent of the current folder via `[ ! -d "bin" ] && cd ..`.
+This is useful, when commands need to be executed easily via an IDE.
+When starting a shell script, many IDEs set the current working directory for such a script to the folder of the script.
 
 Common commands and command prefixes:
 * `build` & `build.*`
 * `check` & `check.*`
 * `deploy` & `deploy.*`
 * `test` & `test.*`
-## Files at `./binr/*`
-This folder contains scripts like `./bin/*`,
-but every executed command assumes, that the current working directory for the executed command is `./binr`.
-
-This is useful, when commands need to be executed easily via an IDE.
-When starting a shell script, many IDEs set the current working directory for such a script to the folder of the script.
 
 Note, that scripts from `./binr/*` are allowed to call and link to `./bin/*` and vice versa.
 ## Files at `./lib/*`
