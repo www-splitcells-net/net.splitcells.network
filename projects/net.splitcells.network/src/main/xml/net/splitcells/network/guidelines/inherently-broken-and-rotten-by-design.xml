@@ -55,19 +55,6 @@
             but LibreOffice instead.
             Therefore, you scrap the plans for an XSLX export and build an ODS export for LibreOffice instead.
         </paragraph>
-        <d:todo>Many more projects are started this way Migration based Development
-            backward compatible development for internal and external components
-            automatic refactoring avoids the need for backward compatible development
-            lots of legacy code
-            legacy code as profit margin
-        </d:todo>
-        <d:todo>architecture is considered a thing, that is not part of the source code and determines the overhaul structure.
-            architecture is a source of errors with limited benefits as interfaces can model pseudo architectures on the
-            fly as well
-            consider every  module, package and source code file its own project and draft the interfaces and functionality accordingly
-            this is pseudo architecture
-            Minimize architecture.
-        </d:todo>
         <paragraph>This approach creates an inherently broken design,
             as decisions are delayed or incomplete as much as possible.
             Every delayed or incomplete decision breaks the contract in some way with requirements of the software.
@@ -82,6 +69,19 @@
     </chapter>
     <chapter>
         <title>Rotten by Design</title>
+        <d:todo>Many more projects are started this way Migration based Development
+            backward compatible development for internal and external components
+            automatic refactoring avoids the need for backward compatible development
+            lots of legacy code
+            legacy code as profit margin
+        </d:todo>
+        <d:todo>architecture is considered a thing, that is not part of the source code and determines the overhaul structure.
+            architecture is a source of errors with limited benefits as interfaces can model pseudo architectures on the
+            fly as well
+            consider every  module, package and source code file its own project and draft the interfaces and functionality accordingly
+            this is pseudo architecture
+            Minimize architecture.
+        </d:todo>
         <d:todo>All non-conflicting feature requests, that are financed, are accepted.</d:todo>
         <d:todo>Embrace the Explosion of Complexity of the whole and minimize the complexity of small components.
             Migration based Development
