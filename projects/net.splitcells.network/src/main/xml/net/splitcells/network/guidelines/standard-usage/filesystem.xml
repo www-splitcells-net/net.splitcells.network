@@ -90,4 +90,10 @@
             </paragraph>
         </chapter>
     </chapter>
+    <chapter>
+        <title>Notes</title>
+        <list>
+            <link url="https://lore.kernel.org/lkml/CAHk-=wjajMJyoTv2KZdpVRoPn0LFZ94Loci37WLVXmMxDbLOjg@mail.gmail.com/">Linus Torvalds's opinion on case-insensitive file systems.</link>
+        </list>
+    </chapter>
 </article>
