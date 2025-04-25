@@ -70,6 +70,7 @@
         </d:todo>
         <paragraph>This approach creates an inherently broken design,
             as decisions are delayed or incomplete as much as possible.
+            Every delayed or incomplete decision breaks the contract in some way with requirements of the software.
             Things like a complete overarching software architecture or explicit requirement engineering
             are avoided as long as there is no concrete need for it.
             Therefore, big, deep and fundamental adaptations may need to be done at any moment without any warning,
