@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 set -e
+[ ! -d "bin" ] && cd ..
 git pull --ff-only # Ensure, that current repo is up to date.
 cd ..
   test -d net.splitcells.network.hub || git clone git@codeberg.org:splitcells-net/net.splitcells.network.hub.git
