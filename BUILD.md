@@ -3,19 +3,17 @@
 * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 ----
 # Building The Splitcells Network Project
-# Cloning the repositories
-2 repositories are needed in order to build the software:
-* `git@github.com:www-splitcells-net/net.splitcells.network.git`
-* `git@github.com:www-splitcells-net/net.splitcells.network.bom.git`
-
-Clone these into the same directory:
-* `git clone git@github.com:www-splitcells-net/net.splitcells.network.git`
-* `git clone git@github.com:www-splitcells-net/net.splitcells.network.bom.git`
+The following describes, how all projects of the Splitcells Network Project can be build locally.
+In order to build this project Java 21 ([Eclipse Temurin](https://adoptium.net/) is preferred), Maven, Git and Bash is required. 
+# Cloning The Repositories
+Only the [core repository](https://codeberg.org/splitcells-net/net.splitcells.network)
+has to be manually cloned, in order to build the software.
+Clone this repo into one directory by the following terminal command:
+`git clone https://codeberg.org/splitcells-net/net.splitcells.network.git`
+Execute `bin/workers.repos.pull` in the `net.splitcells.network` repo,
+in order to download all other repositories.
 # Building the actual code
-Java 21 ([Eclipse Temurin](https://adoptium.net/) is preferred), Maven, Python 3, Git and Bash is required in
-order to build this project.
-Execute `./bin/build`, that's it. ✨
-The Java projects can be build via `mvn clean install` at the root folder.
+Execute `bin/repos.build` of the `net.splitcells.network` repo and you are done.
 # Windows specifics
 When installing Git on Windows,
 the setup provides some configuration options.
