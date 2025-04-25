@@ -55,12 +55,21 @@
             but LibreOffice instead.
             Therefore, you scrap the plans for an XSLX export and build an ODS export for LibreOffice instead.
         </paragraph>
-        <d:todo>Many more projects are started this way Migration based Development</d:todo>
-        <d:todo>architecture is a source of errors with limited benefits as interfaces can model architectures on the
+        <d:todo>Many more projects are started this way Migration based Development
+            backward compatible development for internal and external components
+            automatic refactoring avoids the need for backward compatible development
+            lots of legacy code
+            legacy code as profit margin
+        </d:todo>
+        <d:todo>architecture is considered a thing, that is not part of the source code and determines the overhaul structure.
+            architecture is a source of errors with limited benefits as interfaces can model pseudo architectures on the
             fly as well
+            consider every  module, package and source code file its own project and draft the interfaces and functionality accordingly
+            this is pseudo architecture
             Minimize architecture.
         </d:todo>
-        <paragraph>This approach creates an inherently broken design, as decisions are delayed as much as possible.
+        <paragraph>This approach creates an inherently broken design,
+            as decisions are delayed or incomplete as much as possible.
             Things like a complete overarching software architecture or explicit requirement engineering
             are avoided as long as there is no concrete need for it.
             Therefore, big, deep and fundamental adaptations may need to be done at any moment without any warning,
@@ -82,5 +91,7 @@
     <chapter>
         <title>Finishing The Package</title>
         <d:todo>Tension based stability</d:todo>
+        <d:todo>Security through hostile environments</d:todo>
+        <d:todo>Edge of chaos</d:todo>
     </chapter>
 </article>
