@@ -205,7 +205,13 @@ public class Server {
     /**
      * <p>TODO Move this code into vertx package, in order to contain {@link io.vertx} dependencies.</p>
      * <p>TODO Always open 2 ports.</p>
-     * <p>TODO Why is Vert.x is used at all? Is Netty (the base of Vert.x) for instance not enough?</p>
+     * <p>TODO Why is Vert.x is used at all? Is Netty (the base of Vert.x) or Jetty (more focused on HTTP) for instance not enough?
+     * Netty is probably a tad bit more complex to use than Jetty, as Netty focuses more on the low level communication protocols instead of HTTP.
+     * Low level communication protocols should be handled by dedicated libraries instead.
+     * Especially, because the HTTP protocol is a special case compared to TCP, UDP, FTP and co.
+     * At the time of writing 25-04-2025 Jetty already supports HTTP/3 in the base project,
+     * whereas in Netty HTTP/3 support seems to be an experimental incubator project.
+     * Therefore, Jetty should be the prefered option.</p>
      * <p>TODO IDEA Every HTTP login should be indicated in HTTP protocol as valid,
      * in order to make attacks harder.
      * It is unclear, if something like this is useful for normal deployments.</p>
