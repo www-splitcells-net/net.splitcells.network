@@ -8,6 +8,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.resource.FileSystemView;
+import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutConfig;
@@ -30,6 +31,9 @@ public class ObjectsMediaRendererI implements ProjectRenderer {
     }
 
     private final String pathPrefix;
+    /**
+     * TODO Use {@link Trail} instead of {@link Path}.
+     */
     private final Map<Path, DiscoverableMediaRenderer> objects = map();
 
     private ObjectsMediaRendererI(Path basePath) {
@@ -42,7 +46,12 @@ public class ObjectsMediaRendererI implements ProjectRenderer {
     }
 
     public ObjectsMediaRendererI withMediaObject(DiscoverableMediaRenderer object) {
-        objects.put(Path.of(pathPrefix + "/" + object.path().stream().reduce((a, b) -> a + "/" + b).orElseThrow()), object);
+        final var discovery = object.discovery();
+        if (discovery.isPresent()) {
+            objects.put(Path.of(pathPrefix + "/" + discovery.get().path().unixPathString()), object);
+        } else {
+            objects.put(Path.of(pathPrefix + "/" + object.path().stream().reduce((a, b) -> a + "/" + b).orElseThrow()), object);
+        }
         return this;
     }
 
