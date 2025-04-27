@@ -35,8 +35,17 @@ public class DiscoveryTest {
         requireEquals(secondChild, testSubject.childByPath("relative", "second", "path"));
         testSubject.childByPath("relative", "second", "path").removeChild(secondChild);
         testSubject.childByPath("relative", "second", "path").children().requireEmpty();
+    }
+
+    @UnitTest
+    public void testDuplicatePaths() {
+        final var testSubject = discoveryRoot();
         if (ENFORCE_PATH_IDENTITY) {
-            requireThrow(() -> testSubject.createChild("third-value", "relative", "second", "path"));
+            requireThrow(() -> {
+                testSubject.createChild("first", "second", "third", "path");
+                testSubject.createChild("third", "second", "third", "path");
+            });
+            testSubject.createChild("third", "second", "third", "another-path");
         }
     }
 }
