@@ -15,8 +15,13 @@
  */
 package net.splitcells.website.server.translation.to.html;
 
+import net.sf.saxon.Configuration;
+import net.sf.saxon.TransformerFactoryImpl;
+import net.sf.saxon.lib.FeatureKeys;
+import net.sf.saxon.lib.Logger;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.resource.communication.log.LogLevel;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -27,6 +32,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import static net.sf.saxon.lib.Logger.WARNING;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 
 /**
@@ -63,10 +69,28 @@ public class XslTransformer {
         };
     }
 
+    private static Logger xslLogger() {
+        return new Logger() {
+            @Override
+            public void println(String message, int severity) {
+                if (severity == WARNING) {
+                    logs().append(message, LogLevel.WARNING);
+                } else if (severity > WARNING) {
+                    logs().append(message, LogLevel.ERROR);
+                } else {
+                    logs().append(message);
+                }
+            }
+        };
+    }
+
     public XslTransformer(InputStream xsl, URIResolver uriSolver) {
         TransformerFactory factory = TransformerFactory.newInstance();
         factory.setErrorListener(errorListener());
         factory.setURIResolver(uriSolver);
+        if (factory instanceof TransformerFactoryImpl impl) {
+            impl.getConfiguration().setLogger(xslLogger());
+        }
         try {
             Templates template = factory.newTemplates(new StreamSource(xsl));
             transformer = template.newTransformer();
