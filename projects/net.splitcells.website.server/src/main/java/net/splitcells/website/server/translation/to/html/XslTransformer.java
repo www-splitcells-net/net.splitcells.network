@@ -53,13 +53,11 @@ public class XslTransformer {
 
             @Override
             public void error(TransformerException exception) throws TransformerException {
-                System.out.println(1234);
                 logs().appendWarning("XML transformation error", exception);
             }
 
             @Override
             public void fatalError(TransformerException exception) throws TransformerException {
-                System.out.println(1235);
                 logs().appendWarning("Fatal error XML transformation", exception);
             }
         };
