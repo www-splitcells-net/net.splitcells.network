@@ -87,11 +87,29 @@
             These heightened requirements make it unlikely, that an API is backwards compatible,
             when no decision was done.
         </paragraph>
-        <d:todo>Embrace the Explosion of Complexity of the whole and minimize the complexity of small components.
-            Migration based Development
-        </d:todo>
-        <d:todo>Tension based stability</d:todo>
-        <d:todo>Security through hostile environments</d:todo>
-        <d:todo>Edge of chaos, circular dependencies and recursive calls</d:todo>
+        <paragraph>The longer and longer the migration based development is applied,
+            the more and more complexity is collected and every code change becomes harder.
+            Use this complexity in order to enforce good programming.
+            In other words, the more complex the software is, the easier it is to write bad code and
+            the more damage such code will create.
+            This in turn increases the incentives to code correctly.
+        </paragraph>
+        <paragraph>In order to contain the cost of maintaining features,
+            create a hostile environment in regard to errors.
+            The hostile environment's job is to detect any errors with little regard of its significance,
+            to exploit them and to massively increase the cost and damage of doing things wrong.
+            Such environments have to make it easy to fix the found errors,
+            as otherwise the development cost escalate.
+            The things that are checked by the hostile environment have therefore to be carefully balanced,
+            so that the checks are not too strict to avoid the cost of fixing or not creating errors and
+            are not too loose to prevent the cost caused by programmer errors.
+        </paragraph>
+        <paragraph>This is a stability created by tension.
+            For example, if you want to have a secure infrastructure one could create a hacking group,
+            that has the permission to find and exploit any security issue,
+            is allowed to actively cause real damage and is rewarded for it.
+            When you have such a hacking group the developers will prioritize the security of their software,
+            as they know, that any work done by them can be destroyed by the hacking group at any time.
+        </paragraph>
     </chapter>
 </article>
