@@ -87,13 +87,6 @@
             These heightened requirements make it unlikely, that an API is backwards compatible,
             when no decision was done.
         </paragraph>
-        <d:todo>architecture is considered a thing, that is not part of the source code and determines the overhaul structure.
-            architecture is a source of errors with limited benefits as interfaces can model pseudo architectures on the
-            fly as well
-            consider every module, package and source code file its own project and draft the interfaces and functionality accordingly
-            this is pseudo architecture
-            Minimize architecture.
-        </d:todo>
         <d:todo>Embrace the Explosion of Complexity of the whole and minimize the complexity of small components.
             Migration based Development
         </d:todo>
