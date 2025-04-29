@@ -69,16 +69,28 @@
     </chapter>
     <chapter>
         <title>Rotten by Design</title>
-        <d:todo>Many more projects are started this way Migration based Development
-            backward compatible development for internal and external components
-            automatic refactoring avoids the need for backward compatible development
-            lots of legacy code
-            legacy code as profit margin
-        </d:todo>
+        <paragraph>The software is broken by design and therefore,
+            there will be more features implemented than when the software would not be broken by design.
+            The larger amount of features and therefore complexity increases the damage done by a changed line of code,
+            that is not backwards compatible to the rest of the code.
+        </paragraph>
+        <paragraph>Therefore, any changed line of code should either be done in a backwards compatible way or
+            all other related code should be changed/migrated in the same step so the code as a whole stays correct.
+            The complexer a development step is, the hard and more unlikely it is,
+            that the step is done correctly.
+            Therefore, backwards incompatible changes are preferred and is called migration based development.
+        </paragraph>
+        <paragraph>Note, that this does not mean, that public APIs do not change.
+            The backwards compatibility of the API is part of the software's requirement and is a decision to be made.
+            By default, public API development is assumed to be backwards incompatible,
+            as backwards compatible development often requires planning and higher resources.
+            These heightened requirements make it unlikely, that an API is backwards compatible,
+            when no decision was done.
+        </paragraph>
         <d:todo>architecture is considered a thing, that is not part of the source code and determines the overhaul structure.
             architecture is a source of errors with limited benefits as interfaces can model pseudo architectures on the
             fly as well
-            consider every  module, package and source code file its own project and draft the interfaces and functionality accordingly
+            consider every module, package and source code file its own project and draft the interfaces and functionality accordingly
             this is pseudo architecture
             Minimize architecture.
         </d:todo>
