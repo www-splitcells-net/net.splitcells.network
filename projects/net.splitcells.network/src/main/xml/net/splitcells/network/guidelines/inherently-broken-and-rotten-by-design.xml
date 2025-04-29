@@ -82,17 +82,11 @@
             this is pseudo architecture
             Minimize architecture.
         </d:todo>
-        <d:todo>All non-conflicting feature requests, that are financed, are accepted.</d:todo>
         <d:todo>Embrace the Explosion of Complexity of the whole and minimize the complexity of small components.
             Migration based Development
         </d:todo>
-        <d:todo>Only developers decided the features, that are implemented. Project leader etc. only can request.
-        </d:todo>
-    </chapter>
-    <chapter>
-        <title>Finishing The Package</title>
         <d:todo>Tension based stability</d:todo>
         <d:todo>Security through hostile environments</d:todo>
-        <d:todo>Edge of chaos</d:todo>
+        <d:todo>Edge of chaos, circular dependencies and recursive calls</d:todo>
     </chapter>
 </article>
