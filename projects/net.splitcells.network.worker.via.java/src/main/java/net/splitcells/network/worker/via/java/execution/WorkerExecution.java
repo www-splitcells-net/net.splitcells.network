@@ -204,7 +204,10 @@ public class WorkerExecution {
             preparingNetworkLogPullScript = "";
         }
         if (config.isDaemon()) {
-            remoteExecutionScript = "";
+            remoteExecutionScript = "# Set up Systemd service remotely\n"
+                    + "ssh " + executeViaSshAt + " /bin/sh << EOF\n"
+                    + "  set -e\n"
+                    + "\nEOF";
         } else {
             // `-t` prevents errors, when a command like sudo is executed.
             remoteExecutionScript = "# Execute Main Task Remotely\n"
