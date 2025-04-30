@@ -21,7 +21,6 @@ import lombok.experimental.Accessors;
 import lombok.val;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.resource.host.CurrentFileSystem;
-import net.splitcells.dem.utils.random.RandomnessSource;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.resource.Trail.trail;
@@ -66,6 +65,10 @@ public class WorkerExecution {
     }
 
     private static final Trail PODMAN_FLAGS_CONFIG_FILES = trail(".config/net.splitcells.network.worker/execute.podman.flags");
+    /**
+     * This file name prefix is used, to make it easy to delete just such temporary services.
+     */
+    private static final String TEMPORARY_FILE_PREFIX = "temporary-";
 
     private static final String DOCKERFILE_SERVICE_TEMPLATE = """
             FROM docker.io/eclipse-temurin:21-jdk-noble
@@ -210,7 +213,7 @@ public class WorkerExecution {
         if (config.isDaemon()) {
             final String daemonName;
             if (config.getForcedDaemonName().isEmpty()) {
-                daemonName = "temporary-" + config.name() + "-" + toUtcStringForFiles(zonedDateTime()) + "-" + randomness().integer();
+                daemonName = TEMPORARY_FILE_PREFIX + config.name() + "-" + toUtcStringForFiles(zonedDateTime()) + "-" + randomness().integer();
             } else {
                 daemonName = config.getForcedDaemonName();
             }
