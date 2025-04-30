@@ -122,14 +122,14 @@ public class WorkerExecutionMain {
                 .longOpt("dry-run")
                 .desc("If true, commands are only prepared and no commands are executed.")
                 .build();
-        final var daemon = Option.builder("daemon")
-                .argName("daemon")
+        final var isDaemon = Option.builder("isDaemon")
+                .argName("isDaemon")
                 .hasArg()
                 .required(false)
-                .longOpt("daemon")
+                .longOpt("is-daemon")
                 .desc("If this is true, the process is executed in the background.")
                 .build();
-        options.addOption(dryRun);
+        options.addOption(isDaemon);
         final var usePlaywright = Option.builder("usePlaywright")
                 .argName("usePlaywright")
                 .hasArg()
@@ -176,8 +176,8 @@ public class WorkerExecutionMain {
                     .withClassForExecution(Optional.ofNullable(cmd.getParsedOptionValue(classForExecution)))
                     .withCpuArchitecture(Optional.ofNullable(cmd.getParsedOptionValue(cpuArchitecture)))
                     .withExecuteViaSshAt(Optional.ofNullable(cmd.getParsedOptionValue(executeViaSshAt)));
-            if (cmd.hasOption(daemon)) {
-                config.setDaemon(cmd.getParsedOptionValue(daemon));
+            if (cmd.hasOption(isDaemon)) {
+                config.setDaemon(cmd.getParsedOptionValue(isDaemon));
             }
             if (cmd.hasOption(useHostDocuments)) {
                 config.withUseHostDocuments(cmd.getParsedOptionValue(useHostDocuments));

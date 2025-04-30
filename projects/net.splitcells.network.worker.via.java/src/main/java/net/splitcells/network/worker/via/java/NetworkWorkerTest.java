@@ -53,6 +53,30 @@ public class NetworkWorkerTest {
     }
 
     @UnitTest
+    public void testBootstrapRemoteViaADaemon() {
+        val testExecution = networkWorker().bootstrapRemote("user@address"
+                , c -> c.setDaemon(true).setForcedDaemonName("forced-daemon-name"));
+        requireEquals(testExecution.getRemoteExecutionScript()
+                , """
+                        # Set up Systemd service remotely
+                        ssh user@address /bin/sh << EOF
+                          set -e
+                          mkdir -p ~/.config/systemd/user
+                          cat > ~/.config/systemd/user/forced-daemon-name <<SERVICE_EOL
+                        [Unit]
+                        Description=Execute forced-daemon-name
+                        
+                        [Service]
+                        Type=oneshot
+                        StandardOutput=journal
+                        ExecStart=/usr/bin/date
+                        SERVICE_EOL
+                        
+                        EOF
+                        """);
+    }
+
+    @UnitTest
     public void testBootstrapRemoteWithNetworkLogPull() {
         val testExecution = networkWorker().bootstrapRemote("user@address"
                 , c -> c.setPullNetworkLog(true));

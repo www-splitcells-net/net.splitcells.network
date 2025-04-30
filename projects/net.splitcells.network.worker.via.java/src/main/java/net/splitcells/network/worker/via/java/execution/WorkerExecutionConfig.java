@@ -77,6 +77,7 @@ public class WorkerExecutionConfig {
      * If this is true, the process is executed in the background.
      */
     private @Accessors(chain = true) @Setter @Getter boolean isDaemon = false;
+    private @Accessors(chain = true) @Setter @Getter String forcedDaemonName = "";
 
     /**
      * @param arg Escapes a string,

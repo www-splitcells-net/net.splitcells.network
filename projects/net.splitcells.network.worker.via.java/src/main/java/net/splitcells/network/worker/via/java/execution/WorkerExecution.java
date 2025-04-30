@@ -21,6 +21,7 @@ import lombok.experimental.Accessors;
 import lombok.val;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.resource.host.CurrentFileSystem;
+import net.splitcells.dem.utils.random.RandomnessSource;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.resource.Trail.trail;
@@ -30,6 +31,9 @@ import static net.splitcells.dem.resource.host.SystemUtils.executeShellCommand;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
+import static net.splitcells.dem.utils.TimeUtils.toUtcStringForFiles;
+import static net.splitcells.dem.utils.TimeUtils.zonedDateTime;
+import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 
 /**
  * <p>Executes something based on the given {@link WorkerExecutionConfig}.
@@ -204,9 +208,27 @@ public class WorkerExecution {
             preparingNetworkLogPullScript = "";
         }
         if (config.isDaemon()) {
+            final String daemonName;
+            if (config.getForcedDaemonName().isEmpty()) {
+                daemonName = "temporary-" + config.name() + "-" + toUtcStringForFiles(zonedDateTime()) + "-" + randomness().integer();
+            } else {
+                daemonName = config.getForcedDaemonName();
+            }
+            final var daemonFolder = "~/.config/systemd/user";
+            final var daemonFile = daemonFolder + "/" + daemonName;
             remoteExecutionScript = "# Set up Systemd service remotely\n"
                     + "ssh " + executeViaSshAt + " /bin/sh << EOF\n"
                     + "  set -e\n"
+                    + "  mkdir -p " + daemonFolder + "\n"
+                    + "  cat > " + daemonFile + " <<SERVICE_EOL\n"
+                    + "[Unit]\n"
+                    + "Description=Execute " + daemonName + "\n"
+                    + "\n"
+                    + "[Service]\n"
+                    + "Type=oneshot\n"
+                    + "StandardOutput=journal\n"
+                    + "ExecStart=/usr/bin/date\n"
+                    + "SERVICE_EOL\n"
                     + "\nEOF";
         } else {
             // `-t` prevents errors, when a command like sudo is executed.
