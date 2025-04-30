@@ -20,18 +20,23 @@ import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 @JavaLegacyArtifact
 public class TimeUtils {
-    private TimeUtils() {
-        throw constructorIllegal();
-    }
+
+    private static final DateTimeFormatter UTC_DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
 
     public static LocalTime currentLocalTime() {
         return LocalTime.now();
+    }
+
+    public static ZonedDateTime zonedDateTime() {
+        return ZonedDateTime.now();
     }
 
     /**
@@ -48,5 +53,13 @@ public class TimeUtils {
                 , 0
                 , 0
                 , ZoneId.of("UTC"));
+    }
+
+    public static String toUtcStringForFiles(ZonedDateTime arg)  {
+        return arg.withZoneSameInstant(ZoneOffset.UTC).format(UTC_DATE_TIME_FORMAT);
+    }
+
+    private TimeUtils() {
+        throw constructorIllegal();
     }
 }
