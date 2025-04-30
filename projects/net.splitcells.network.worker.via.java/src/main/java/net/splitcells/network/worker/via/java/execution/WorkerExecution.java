@@ -231,7 +231,6 @@ public class WorkerExecution {
                     + "SERVICE_EOL\n"
                     + "\nEOF";
         } else {
-            // `-t` prevents errors, when a command like sudo is executed.
             remoteExecutionScript = "# Execute Main Task Remotely\n"
                     + "ssh " + executeViaSshAt + " /bin/sh << EOF\n"
                     + "  set -e\n"
