@@ -112,17 +112,28 @@
             why static getters or constructors do not use the same get prefix.
         </paragraph>
         <paragraph>
-            <quote>@EqualsAndHashCode</quote> and <quote>@Data</quote> are primarily used for data objects.
+            <quote>@EqualsAndHashCode</quote>
+            and <quote>@Data</quote> are primarily used for data objects.
         </paragraph>
         <paragraph>
-            <quote>@ExtensionMethod</quote> would be nice, in order to extend existing classes like String,
+            <quote>@ExtensionMethod</quote>
+            would be nice, in order to extend existing classes like String,
             but this feature is experimental and has bugs.
         </paragraph>
         <paragraph>
-            <quote>@Delegate</quote> would be an excellent feature for aspects and such,
+            <quote>@Delegate</quote>
+            would be an excellent feature for aspects and such,
             but this feature does not work, if only some methods are manually overridden.
             Furthermore, this feature may even be removed from Lombok according to its
             <link url="https://projectlombok.org/features/experimental/Delegate">documentation</link>.
+        </paragraph>
+    </chapter>
+    <chapter>
+        <title>Java Syntax</title>
+        <paragraph>Do not use Java's naming convention regarding generic parameters,
+            as this makes it hard, when the generic parameter has a special meaning,
+            that is not easy to encode via 1 character.
+            So, this rule can also be disabled in code scanning.
         </paragraph>
     </chapter>
 </article>
