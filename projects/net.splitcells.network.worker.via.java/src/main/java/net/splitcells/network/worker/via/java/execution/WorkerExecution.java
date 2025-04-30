@@ -20,7 +20,6 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import lombok.val;
 import net.splitcells.dem.resource.Trail;
-import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.host.CurrentFileSystem;
 
 import static net.splitcells.dem.Dem.configValue;
@@ -189,7 +188,6 @@ public class WorkerExecution {
         val username = executeViaSshAt.split("@")[0];
         final String preparingNetworkLogPullScript;
         final String closingPullNetworkLogScript;
-        final String mainRemoteExecutionScript;
         if (config.isPullNetworkLog()) {
             // TODO I don't know why, but using multi line strings here brakes the grammar check.
             preparingNetworkLogPullScript = "# Preparing Execution via Network Log Pull\n"
@@ -205,19 +203,23 @@ public class WorkerExecution {
         } else {
             preparingNetworkLogPullScript = "";
         }
-        // `-t` prevents errors, when a command like sudo is executed.
-        mainRemoteExecutionScript = "# Execute Main Task Remotely\n"
-                + "ssh " + executeViaSshAt + " /bin/sh << EOF\n"
-                + "  set -e\n"
-                + "  if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then\n"
-                + "    mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/\n"
-                + "    cd ~/.local/state/net.splitcells.network.worker/repos/public/\n"
-                + "    git clone https://codeberg.org/splitcells-net/net.splitcells.network.git\n"
-                + "  fi\n"
-                + "  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network \\\n  && bin/worker.execute \\\n"
-                + "    "
-                + config.shellArgumentString(a -> !"execute-via-ssh-at".equals(a)).replace("\\\n", "\\\n   ")
-                + "\nEOF";
+        if (config.isDaemon()) {
+            remoteExecutionScript = "";
+        } else {
+            // `-t` prevents errors, when a command like sudo is executed.
+            remoteExecutionScript = "# Execute Main Task Remotely\n"
+                    + "ssh " + executeViaSshAt + " /bin/sh << EOF\n"
+                    + "  set -e\n"
+                    + "  if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then\n"
+                    + "    mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/\n"
+                    + "    cd ~/.local/state/net.splitcells.network.worker/repos/public/\n"
+                    + "    git clone https://codeberg.org/splitcells-net/net.splitcells.network.git\n"
+                    + "  fi\n"
+                    + "  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network \\\n  && bin/worker.execute \\\n"
+                    + "    "
+                    + config.shellArgumentString(a -> !"execute-via-ssh-at".equals(a)).replace("\\\n", "\\\n   ")
+                    + "\nEOF";
+        }
         if (config.isPullNetworkLog()) {
             // TODO I don't know why, but using multi line strings here brakes the grammar check.
             closingPullNetworkLogScript = "# Closing Execution via Network Log Pull\n"
@@ -230,7 +232,7 @@ public class WorkerExecution {
             closingPullNetworkLogScript = "";
         }
         remoteExecutionScript = formatDocument(formatSection(preparingNetworkLogPullScript)
-                + formatSection(mainRemoteExecutionScript)
+                + formatSection(remoteExecutionScript)
                 + formatSection(closingPullNetworkLogScript))
                 .replace("$(executeViaSshAt)", executeViaSshAt)
                 .replace("$(username)", username)
