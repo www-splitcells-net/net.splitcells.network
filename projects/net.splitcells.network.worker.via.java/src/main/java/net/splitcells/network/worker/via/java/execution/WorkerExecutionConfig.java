@@ -73,6 +73,10 @@ public class WorkerExecutionConfig {
      * If this is true, the repo `net.splitcells.network.log` will be pulled from the remote server.
      */
     private @Accessors(chain = true) @Setter @Getter boolean pullNetworkLog = false;
+    /**
+     * If this is true, the process is executed in the background.
+     */
+    private @Accessors(chain = true) @Setter @Getter boolean isDaemon = false;
 
     /**
      * @param arg Escapes a string,

@@ -15,7 +15,6 @@
  */
 package net.splitcells.network.worker.via.java.execution;
 
-import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 import org.apache.commons.cli.*;
@@ -123,6 +122,13 @@ public class WorkerExecutionMain {
                 .longOpt("dry-run")
                 .desc("If true, commands are only prepared and no commands are executed.")
                 .build();
+        final var daemon = Option.builder("daemon")
+                .argName("daemon")
+                .hasArg()
+                .required(false)
+                .longOpt("daemon")
+                .desc("If this is true, the process is executed in the background.")
+                .build();
         options.addOption(dryRun);
         final var usePlaywright = Option.builder("usePlaywright")
                 .argName("usePlaywright")
@@ -170,6 +176,9 @@ public class WorkerExecutionMain {
                     .withClassForExecution(Optional.ofNullable(cmd.getParsedOptionValue(classForExecution)))
                     .withCpuArchitecture(Optional.ofNullable(cmd.getParsedOptionValue(cpuArchitecture)))
                     .withExecuteViaSshAt(Optional.ofNullable(cmd.getParsedOptionValue(executeViaSshAt)));
+            if (cmd.hasOption(daemon)) {
+                config.setDaemon(cmd.getParsedOptionValue(daemon));
+            }
             if (cmd.hasOption(useHostDocuments)) {
                 config.withUseHostDocuments(cmd.getParsedOptionValue(useHostDocuments));
             }

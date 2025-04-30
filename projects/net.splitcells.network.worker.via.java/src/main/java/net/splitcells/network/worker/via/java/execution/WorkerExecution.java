@@ -29,6 +29,7 @@ import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.host.SystemUtils.executeShellCommand;
 import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
 
 /**
@@ -260,6 +261,9 @@ public class WorkerExecution {
     }
 
     private void executeLocally(WorkerExecutionConfig config) {
+        if (config.isDaemon()) {
+            throw notImplementedYet();
+        }
         configValue(CurrentFileSystem.class).createDirectoryPath("./target");
         dockerFile = DOCKERFILE_SERVICE_TEMPLATE;
         if (config.command().isPresent()) {
