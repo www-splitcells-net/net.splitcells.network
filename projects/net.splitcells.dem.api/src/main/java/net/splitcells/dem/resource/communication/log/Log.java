@@ -27,6 +27,7 @@ import java.util.Optional;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
+import static net.splitcells.dem.resource.communication.log.LogLevel.ERROR;
 import static net.splitcells.dem.resource.communication.log.LogMessageI.logMessage;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.execException;
@@ -75,6 +76,10 @@ public interface Log extends AppendableList<LogMessage<Tree>> {
 
     default Log append(Tree tree, LogLevel logLevel) {
         return append(logMessage(tree, NO_CONTEXT, logLevel));
+    }
+
+    default Log appendError(Tree tree) {
+        return append(logMessage(tree, NO_CONTEXT, ERROR));
     }
 
     default Log append(Domable content, Discoverable context, LogLevel logLevel) {
