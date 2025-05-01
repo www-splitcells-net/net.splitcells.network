@@ -382,8 +382,8 @@ public class Server {
                         vertx.createHttpServer(webServerOptions)
                                 .requestHandler(router)
                                 .exceptionHandler(th ->
-                                        // Avoid logging stack traces for connection issues.
-                                        logs().append("An error occurred at the HTTP server: " + th.getMessage(), ERROR))
+                                        // TODO Avoid logging stack traces for connection issues. Filter appropriate stack traces.
+                                        logs().appendError(tree("An error occurred at the HTTP server.").with(th)))
                                 .listen(result -> {
                                     if (result.failed()) {
                                         startPromise.fail(result.cause());
