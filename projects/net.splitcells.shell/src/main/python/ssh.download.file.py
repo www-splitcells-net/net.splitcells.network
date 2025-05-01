@@ -21,7 +21,7 @@ if __name__ == '__main__':
 	parser.add_argument('--remote-file-address', dest='remoteFileAddress', required=True, help="The format is `username@remote.host:remote/file/path`. The path is relative to the user's home folder.")
 	parser.add_argument('--target-file', dest='targetFile', required=True)
 	parsedArgs = parser.parse_args()
-	commandToExecute = 'scp ' + parsedArgs.remoteFileAddress + ' ' + parsedArgs.targetFile
+	commandToExecute = 'scp -r ' + parsedArgs.remoteFileAddress + ' ' + parsedArgs.targetFile
 	logging.debug("Executing: " + commandToExecute)
 	returnCode = subprocess.call(commandToExecute, shell='True')
 	if returnCode != 0:
