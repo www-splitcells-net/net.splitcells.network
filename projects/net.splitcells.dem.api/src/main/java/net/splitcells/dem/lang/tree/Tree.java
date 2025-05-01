@@ -44,6 +44,7 @@ import static net.splitcells.dem.utils.BinaryUtils.binaryOutputStream;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StringUtils.stringBuilder;
+import static net.splitcells.dem.utils.StringUtils.throwableToString;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -1143,5 +1144,12 @@ public interface Tree extends TreeView, Convertible {
             });
         }
         return merger;
+    }
+
+    default Tree with(Throwable throwable) {
+        final var throwableTree = tree("throwable")
+                .withChild(tree("message").withChild(tree(throwable.getMessage())))
+                .withChild(tree("stack-trace").withChild(tree(throwableToString(throwable))));
+        return withChild(throwableTree);
     }
 }
