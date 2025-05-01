@@ -382,7 +382,7 @@ public class Server {
                         vertx.createHttpServer(webServerOptions)
                                 .requestHandler(router)
                                 .exceptionHandler(th ->
-                                        // TODO Avoid logging stack traces for connection issues. Filter appropriate stack traces.
+                                        // TODO Avoid logging stack traces for connection issues. Filter appropriate stack traces. When filtering is added, at least log the type of filtered exceptions and not just the message.
                                         logs().appendError(tree("An error occurred at the HTTP server.").with(th)))
                                 .listen(result -> {
                                     if (result.failed()) {
