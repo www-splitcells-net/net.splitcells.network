@@ -58,4 +58,12 @@ public class LinkTranslatorTest {
         testSubject.visit(testData);
         assertThat(testData.getDestination()).isEqualTo("/net/splitcells/network/build-with-github-snapshot.pom.html");
     }
+
+    @Test
+    public void testSourceProjectCrossReposLink() {
+        final var testSubject = linkTranslator("", projectsRenderer("test", a -> null, a -> list(), Config.create()));
+        final var testData = new Link("../../../../../../../../../../net.splitcells.network.community/src/main/md/net/splitcells/network/community/blog/articles/2025-04-29-consolidating-the-projects-focus.md", "here");
+        testSubject.visit(testData);
+        assertThat(testData.getDestination()).isEqualTo("/net/splitcells/network/community/blog/articles/2025-04-29-consolidating-the-projects-focus.html");
+    }
 }

@@ -114,6 +114,7 @@ public class LinkTranslator extends AbstractVisitor {
                 }
             }
             normalizedDestination = destinationWithoutProtocol.replace("../", "")
+                    .replaceAll("^(\\./)?[a-z\\.]+/src\\/main\\/[a-z\\-]+\\/", "/")
                     .replaceAll("^(\\./)?src\\/main\\/[a-z\\-]+\\/", "/")
                     .replaceAll("projects\\/[a-z\\.]+\\/src/main/[a-z]+/", "/")
                     .replaceAll("projects\\/[a-z\\.]+\\/", "/")
