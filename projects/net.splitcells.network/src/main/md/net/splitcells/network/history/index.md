@@ -5,7 +5,8 @@
 # History Of Splitcells Network Project
 ## The Beginnings
 * [The History Of The Dependency Manager](../../../../../../../../../projects/net.splitcells.dem/src/main/xml/net/splitcells/dem/history.xml)
-* [The History Of The Generic Allocator](../../../../../../../../../projects/net.splitcells.gel.doc/src/main/xml/net/splitcells/gel/history/index.xml)
+* [Manual for The Generic Allocator's Predecessor](../../../../../../../../../projects/net.splitcells.gel.doc/src/main/xml/net/splitcells/gel/history/universal-allocation-program-manual.xml)
+* [Story About The Creation of The Generic Allocator](../../../../../../../../../projects/net.splitcells.gel.doc/src/main/xml/net/splitcells/gel/history/origin-of-the-project-generic-allocator.xml)
 ## The Lost Years Of 2015 To 2023
 * [On Creating The First Public Release](../../../../../../../../../projects/net.splitcells.network.blog/src/main/md/net/splitcells/network/blog/articles/2021-07-07-Creating-The-First-Public-Release.md)
 * [Pulling The Rip Line](../../../../../../../../../projects/net.splitcells.network.blog/src/main/md/net/splitcells/network/blog/articles/2021-07-20-Pulling-The-Rip-Line.md)
