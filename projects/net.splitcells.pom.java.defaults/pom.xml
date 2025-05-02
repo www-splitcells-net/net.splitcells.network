@@ -1232,10 +1232,13 @@
                                 </goals>
                                 <configuration>
                                     <dataFile>${jacoco.overall.exec}</dataFile>
-                                    <!-- This `excludes` causes JaCoCo to ignore jars, that are placed into the build jar.
+                                    <!-- This `excludes` causes JaCoCo to ignore jars and zips with jars, that are placed into the build jar.
                                          Thereby, only classes of the source code are considered for the report.
                                          This in turn avoids the `Can't add different class with same name:` error. -->
-                                    <excludes>**/*.jar</excludes>
+                                    <excludes>
+                                        <exclude>**/*.jar</exclude>
+                                        <exclude>**/*.zip</exclude>
+                                    </excludes>
                                 </configuration>
                             </execution>
                             <execution>
