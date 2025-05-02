@@ -14,3 +14,5 @@
 * [It's over. Its finally over](../../../../../../../../../../net.splitcells.network.community/src/main/md/net/splitcells/network/community/blog/articles/2021-08-6-Its-over-Its-finnally-over.md)
 * [Note On Creating Your Own Web Layout And Style](../../../../../../../../../../net.splitcells.network.community/src/main/md/net/splitcells/network/community/blog/articles/2022-05-01-Note-On-Creating-Your-Own-Web-Layout-And-Style.md)
 * [Reprioritization](../../../../../../../../../../net.splitcells.network.community/src/main/md/net/splitcells/network/community/blog/articles/2022-10-11-Reprioritization.md)
+## Optimization IDE
+* [Consolidating the project's focus.](../../../../../../../../../../net.splitcells.network.community/src/main/md/net/splitcells/network/community/blog/articles/2025-04-29-consolidating-the-projects-focus.md)
