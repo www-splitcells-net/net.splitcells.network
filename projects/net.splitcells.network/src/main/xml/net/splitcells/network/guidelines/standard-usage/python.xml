@@ -11,7 +11,11 @@
     </meta>
     <paragraph>
         Python is used mainly for easily portable scripts and project commands.
-        No dependencies should be used in this case, if possible.
+        All Python scripts have to compatible to Python 3.12,
+        so it is highly likely, that the operating system and especially Linux have the required package natively.
+        This is especially important, in order to easily support bootstrapping the software build.
+        No dependencies should be used in this case, if possible,
+        as this avoids having a build step for this.
         If dependencies are required, consider Java instead.
     </paragraph>
     <paragraph>

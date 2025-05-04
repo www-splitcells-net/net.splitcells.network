@@ -36,9 +36,12 @@
             <item>Shell (sh) is used to simply integrate software into the environment.
                 In other words, shell scripts are used to call other programs.
             </item>
-            <item>Python 3 is used for complex software integration into the environment.
+            <item>Python 3.12 is used for complex software integration into the environment.
                 In other words, Python 3 is used instead of shell,
                 when somewhat complex logic would be done in shell scripts or argument parsing needs to be done.
+                Python 3.12 is used, because it cannot be automatically ensured,
+                that the Java and Maven version of a Linux distribution are as new as required.
+                This is especially important, in order to easily support bootstrapping the software build.
             </item>
             <item>Java and Maven for the main programs</item>
         </list>
