@@ -4,7 +4,7 @@
 ----
 # Building The Splitcells Network Project
 The following describes, how all projects of the Splitcells Network Project can be build locally.
-In order to build this project Java 21 ([Eclipse Temurin](https://adoptium.net/) is preferred), Maven, Git and Bash is required. 
+In order to build this project Java 21 ([Eclipse Temurin](https://adoptium.net/) is preferred), Maven, Python 3, Git and Bash is required. 
 # Cloning The Repositories
 Only the [core repository](https://codeberg.org/splitcells-net/net.splitcells.network)
 has to be manually cloned, in order to build the software.
