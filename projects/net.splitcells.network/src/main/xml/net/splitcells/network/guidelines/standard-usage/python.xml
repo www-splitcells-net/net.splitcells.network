@@ -23,4 +23,8 @@
         Help messages in CLI commands should only describe the minimal interface and
         show how more detailed information can be obtained.
     </paragraph>
+    <paragraph>
+        Python code should adhere to <link url="https://peps.python.org/pep-0008">PEP 8 – Style Guide for Python Code</link>,
+        as much as reasonable.
+    </paragraph>
 </article>
