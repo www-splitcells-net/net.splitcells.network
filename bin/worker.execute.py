@@ -149,3 +149,11 @@ PUBLISH_VIA_PODMAN_TEMPLATE = """
 podman tag $(executionName):latest codeberg.org/splitcells-net/$(executionName):latest
 podman push codeberg.org/splitcells-net/$(executionName):latest
 """
+
+class WorkerExecution:
+    was_executed = False
+    remote_execution_script = ""
+    local_execution_script = ""
+    docker_file = ""
+    docker_file_path = ""
+    program_name = ""
