@@ -157,3 +157,7 @@ class WorkerExecution:
     docker_file = ""
     docker_file_path = ""
     program_name = ""
+    def execute(self, config):
+        if self.was_executed:
+            raise Exception("A WorkerExecution instance cannot be executed twice.")
+        self.was_executed = True
