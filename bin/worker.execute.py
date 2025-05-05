@@ -11,6 +11,11 @@ in order to simplify the overview and ease the understanding of the shell comman
 Thereby, one could even store the generated scripts and execute these without using Python at all,
 which makes the hole thing more portable as well
 
+The processing and string templating are separated as much as possible
+by writing to any variable or attribute only once.
+These variables are only used as an argument for other variables or
+as variables in template strings.
+
 TODO Create test for all `worker.execute` flags.
 TODO Create option to delete things like `.m2`, `repos` and `net.splitcells.shell.commands.managed`,
      so it can be made sure, that bootstrapping actually works.
