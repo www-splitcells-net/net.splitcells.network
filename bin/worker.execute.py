@@ -3,6 +3,14 @@
 SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
+sh is used explicitly instead of the default shell, because on many servers custom shells like fish are used,
+that have different shell syntaxes, but provide good UI features for users.
+
+The implementation tries to create one single script for the shell execution,
+in order to simplify the overview and ease the understanding of the shell commands.
+Thereby, one could even store the generated scripts and execute these without using Python at all,
+which makes the hole thing more portable as well
+
 TODO Create test for all `worker.execute` flags.
 TODO Create option to delete things like `.m2`, `repos` and `net.splitcells.shell.commands.managed`,
      so it can be made sure, that bootstrapping actually works.
@@ -12,6 +20,12 @@ TODO Support executing as systemd service. Create a user service for that.
 TODO Currently, there is not distinction between the name of the thing being executed and its namespace.
      This will probably create problems in the future, where you have multiple containers with the same namespace,
      but with different commands.
+TODO IDEA Currently, everything is stored in `$HOME/.local/state/$(executionName)/*`.
+     If more strict file isolation is required, in order to prevent file accidents,
+     a namespace could be used, that is implemented as a hidden parent folder for the execution folder:
+     `$HOME/.local/state/.$namespace/$(executionName)/*`.
+     See `repo.process` for inspiration.
+     Of course, different users could be used instead.
 """
 
 __author__ = "Mārtiņš Avots"
