@@ -32,18 +32,51 @@
     <chapter>
         <title>Recommended Default Software Stacks</title>
         <paragraph>The following software stacks are currently recommended:</paragraph>
-        <list>
-            <item>Shell (sh) is used to simply integrate software into the environment.
+        <chapter>
+            <title>Java and Maven</title>
+            <paragraph>Java and Maven are the main base technologies for the projects core functionality.
+                These are also the preferred basis for any software part.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>Shell (sh)</title>
+            <paragraph>Shell (sh) is used to simply integrate software into the environment.
                 In other words, shell scripts are used to call other programs.
-            </item>
-            <item>Python 3.12 or newer is used for complex software integration into the environment.
+            </paragraph>
+        </chapter>
+        <chapter>
+            <title>Python 3</title>
+            <paragraph>At least Python 3.12 is used for complex software integration into the environment.
                 In other words, Python 3 is used instead of shell,
-                when somewhat complex logic would be done in shell scripts or argument parsing needs to be done.
-                Python 3.12 is used, because it cannot be automatically ensured,
-                that the Java and Maven version of a Linux distribution are as new as required.
-                This is especially important, in order to easily support bootstrapping the software build.
-            </item>
-            <item>Java and Maven for the main programs</item>
-        </list>
+                when otherwise somewhat complex logic would be done in shell scripts or argument parsing needs to be done.
+            </paragraph>
+            <paragraph>It cannot be automatically ensured,
+                that the Java and Maven version of a Linux distribution are as new as required
+                (which was sometimes a problem in the past).
+                This would cause issues especially at a time, when a new major Java is released.
+                Therefore, Java and Maven are preferredly executed inside containers.
+                At least Python 3.12 is used, because most Linux distribution provide such a Python version,
+                regardless if the distro is a long term supported (LTS) one or not.
+            </paragraph>
+            <paragraph>This is especially important, in order to easily support bootstrapping the software build across multiple servers,
+                because executing such Python scripts without a container is always assumed to be easily possible.
+                Such bootstrapping was not known to be easily possible via shell scripts and
+                therefore Python was used to create the bootstrap tooling called Network Worker Execution (<quote>bin/worker.execute</quote>).
+                Now it is known, that Java and shell could have been used for bootstrapping as well,
+                even though it would be a bit more complex.
+                If in the future the Worker Execution is needed for the Java services as well,
+                in order to coordinate Java processes across servers,
+                the Worker Execution should be ported to Java and the Python version of the Worker should be considered for deletion.
+            </paragraph>
+            <paragraph>Keeping the size of the minimal technology stack as small as possible,
+                is a goal of this project, in order to simplify development and deployment.
+                If it where not for small, but a bit complex scripts,
+                Python would have been removed from this project.
+                Java provides a way to execute a single file source code program, as easily as Python,
+                but Java's standard library does not provide a good library for shell argument parsing.
+                Therefore, a parsing library is required,
+                which makes such sing file source code programs harder to implement.
+            </paragraph>
+        </chapter>
     </chapter>
 </article>
