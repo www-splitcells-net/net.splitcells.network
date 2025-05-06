@@ -198,8 +198,7 @@ ssh ${executeViaSshAt} + " /bin/sh << EOF
     git clone https://codeberg.org/splitcells-net/net.splitcells.network.git
   fi
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
-  bin/worker.execute \
-    ${remoteNetworkerArguments}
+  bin/worker.execute \\\n${remoteNetworkerArguments}
 EOF"""
 
 SET_UP_SYSTEMD_SERVICE_REMOTELY = """# Set up Systemd service remotely\n"
@@ -257,8 +256,9 @@ class WorkerExecution:
         # TODO The method for generating the remote script is an hack.
             parsedVars = vars(parsedArgs)
             for key in parsedVars:
+                self.remote_networker_arguments + "\n"
                 if key != 'executeViaSshAt' and parsedVars[key] is not None:
-                    self.remote_networker_arguments += " --" + key + "='" + str(parsedVars[key]).replace("\'", "\\\'").replace("\"", "\\\"").replace("\n", "") + "'"
+                    self.remote_networker_arguments += "    --" + key + "='" + str(parsedVars[key]).replace("\'", "\\\'").replace("\"", "\\\"").replace("\n", "") + "'\n"
             self.remote_execution_script_template = self.applyTemplate(EXECUTE_MAIN_TASK_REMOTELY)
         if self.config.pullNetworkLog:
             closingPullNetworkLogScript = DEFAULT_CLOSING_PULL_NETWORK_LOG_SCRIPT
