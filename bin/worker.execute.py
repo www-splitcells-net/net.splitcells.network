@@ -161,3 +161,11 @@ class WorkerExecution:
         if self.was_executed:
             raise Exception("A WorkerExecution instance cannot be executed twice.")
         self.was_executed = True
+        if config.executeViaSshAt is None:
+            self.executeRemotelyViaSsh(config)
+        else:
+            self.executeLocally(config)
+    def executeRemotelyViaSsh(self, config):
+        return
+    def executeLocally(self, config):
+        return
