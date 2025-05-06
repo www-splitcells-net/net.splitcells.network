@@ -230,7 +230,9 @@ class WorkerExecution:
     daemonFolder = ""
     daemonName = ""
     daemonFile = ""
-    def execute(self, config):
+    configParser = None
+    def execute(self, configParser, config):
+        self.configParser = configParser
         self.config = config
         if self.was_executed:
             raise Exception("A WorkerExecution instance cannot be executed twice.")
@@ -257,7 +259,7 @@ class WorkerExecution:
             parsedVars = vars(parsedArgs)
             for key in parsedVars:
                 self.remote_networker_arguments + "\n"
-                if key != 'executeViaSshAt' and parsedVars[key] is not None:
+                if key != 'executeViaSshAt' and parsedVars[key] is not None and self.configParser.get_default(key) != parsedVars[key]:
                     self.remote_networker_arguments += "    --" + key + "='" + str(parsedVars[key]).replace("\'", "\\\'").replace("\"", "\\\"").replace("\n", "") + "'\n"
             self.remote_execution_script_template = self.applyTemplate(EXECUTE_MAIN_TASK_REMOTELY)
         if self.config.pullNetworkLog:
@@ -336,4 +338,4 @@ if __name__ == '__main__':
     else:
         logging.error("Exactly one of the arguments --name, --test-remote or --bootstrap-remote has to be set, in order to execute this program.");
         exit(1)
-    workerExecution.execute(parsedArgs)
+    workerExecution.execute(parser, parsedArgs)
