@@ -152,7 +152,10 @@ podman push codeberg.org/splitcells-net/$(executionName):latest
 
 PROGRAMS_DESCRIPTION = """Executes a given program as isolated as possible with all program files being persisted at `$HOME/.local/state/$executionName/` and user input being located at `$HOME/Documents`.
 Executions with different names have different persisted file locations and are therefore isolated more clearly, whereas executions with the same name are assumed to share data.
-This is the CLI interface to the Splitcells Network Worker."""
+This is the CLI interface to the Splitcells Network Worker.
+Exactly one of arguments --name, --test-at-remote or --bootstrap-remote has to be set,
+in order to execute this program.
+"""
 
 CLI_FLAG_COMMAND_HELP = """This is the shell command, to execute the task.
 It consists of only one program call.
@@ -189,7 +192,9 @@ def str2bool(arg):
 if __name__ == '__main__':
     # TODO Is the following really needed? If not remove the comment, and the hyphenless flag names. For each argument flag, there is an alternative name without hyphens ('-'), so these can easily be printed out and reused for this program. See `executeViaSshAt`.
     parser = argparse.ArgumentParser(description=PROGRAMS_DESCRIPTION)
-    parser.add_argument('--name', dest='name', required=True, help="This is the name of the task being executed.")
+    parser.add_argument('--name', dest='name', required=False, help="This is the name of the task being executed.")
+    parser.add_argument('--bootstrap-remote', dest='bootstrapRemote', required=False, help="This is the ssh address for bootstrapping in the form of `username@host`. If this is set, other parameters are set automatically as well, in order to bootstrap the Network repos on a remote server in a standardized way.")
+    parser.add_argument('--test-at-remote', dest='testAtRemote', required=False, help="This is the ssh address for testing in the form of `username@host`. If this is set, other parameters are set automatically as well, in order to test the Network repos on a remote server in a standardized way.")
     parser.add_argument('--command', dest='command', help=CLI_FLAG_COMMAND_HELP)
     parser.add_argument('--executable-path', '--executablePath', dest='executablePath', help="Executes the given executable file. Only set this option or --command.")
     parser.add_argument('--class-for-execution', '--classForExecution', dest='classForExecution', help="This Java class is executed.")
@@ -208,3 +213,12 @@ if __name__ == '__main__':
     parser.add_argument('--execute-via-ssh-at', '--executeViaSshAt', dest='executeViaSshAt', help="Execute the given command at an remote server via SSH. The format is `[user]@[address/network name]`.")
     parser.add_argument('--flat-folders', '--flatFolders', dest='flatFolders', required=False, type=str2bool, default=False, help="If this is set to true, the `~/.local/state/$executionName` is not mapped to `~/.local/state/$executionName/.local/state/$executionName` via containers.")
     parsedArgs = parser.parse_args()
+    if parsedArgs.name is not None:
+        exit(0)
+    if parsedArgs.bootstrapRemote is not None:
+        exit(0)
+    if parsedArgs.testAtRemote is not None:
+        exit(0)
+    else:
+        logging.error("Exactly one of the arguments --name, --test-at-remote or --bootstrap-remote has to be set, in order to execute this program.");
+        exit(1)
