@@ -195,6 +195,7 @@ if __name__ == '__main__':
     parser.add_argument('--name', dest='name', required=False, help="This is the name of the task being executed.")
     parser.add_argument('--bootstrap-remote', dest='bootstrapRemote', required=False, help="This is the ssh address for bootstrapping in the form of `username@host`. If this is set, other parameters are set automatically as well, in order to bootstrap the Network repos on a remote server in a standardized way.")
     parser.add_argument('--test-at-remote', dest='testAtRemote', required=False, help="This is the ssh address for testing in the form of `username@host`. If this is set, other parameters are set automatically as well, in order to test the Network repos on a remote server in a standardized way.")
+    parser.add_argument('--pull-network-log', dest='pullNetworkLog', required=False, type=str2bool, default=False, help="If set to true, the repo `net.splitcells.network.log` will be pulled from the remote.")
     parser.add_argument('--command', dest='command', help=CLI_FLAG_COMMAND_HELP)
     parser.add_argument('--executable-path', '--executablePath', dest='executablePath', help="Executes the given executable file. Only set this option or --command.")
     parser.add_argument('--class-for-execution', '--classForExecution', dest='classForExecution', help="This Java class is executed.")
@@ -216,8 +217,10 @@ if __name__ == '__main__':
     if parsedArgs.name is not None:
         exit(0)
     if parsedArgs.bootstrapRemote is not None:
+        parsedArgs.pullNetworkLog = True
         exit(0)
     if parsedArgs.testAtRemote is not None:
+        parsedArgs.pullNetworkLog = True
         exit(0)
     else:
         logging.error("Exactly one of the arguments --name, --test-at-remote or --bootstrap-remote has to be set, in order to execute this program.");
