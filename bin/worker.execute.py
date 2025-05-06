@@ -171,22 +171,22 @@ If set to true, the CPU architecture will be determined by this command and the 
 This is useful, because some tools have not a good CPU auto detection (i.e. Podman on RISC-V cannot find the fitting images based on the CPU arch automatically)."""
 
 DEFAULT_NETWORK_PULL_SCRIPT = """# Preparing Execution via Network Log Pull
-if ssh -q $(executeViaSshAt) "sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'"
+if ssh -q ${executeViaSshAt} "sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'"
 then
   cd ../net.splitcells.network.log
-  git config remote.$(executeViaSshAt).url >&- || git remote add $(executeViaSshAt) $(executeViaSshAt):/home/$(username)/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
-  git remote set-url $(executeViaSshAt) $(executeViaSshAt):/home/$(username)/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
-  git remote set-url --push $(executeViaSshAt) $(executeViaSshAt):/home/$(username)/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
-  git pull $(executeViaSshAt) master
+  git config remote.${executeViaSshAt}.url >&- || git remote add ${executeViaSshAt} ${executeViaSshAt}:/home/${username}/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+  git remote set-url ${executeViaSshAt} ${executeViaSshAt}:/home/${username}/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+  git remote set-url --push ${executeViaSshAt} ${executeViaSshAt}:/home/${username}/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+  git pull ${executeViaSshAt} master
   cd ../net.splitcells.network
 fi"""
 
 DEFAULT_CLOSING_PULL_NETWORK_LOG_SCRIPT = """# Closing Execution via Network Log Pull
 cd ../net.splitcells.network.log
-git config remote.$(executeViaSshAt).url >&- || git remote add $(executeViaSshAt) $(executeViaSshAt):/home/$(username)/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
-git remote set-url $(executeViaSshAt) $(executeViaSshAt):/home/$(username)/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
-git remote set-url --push $(executeViaSshAt) $(executeViaSshAt):/home/$(username)/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
-git pull $(executeViaSshAt) master
+git config remote.${executeViaSshAt}.url >&- || git remote add ${executeViaSshAt} ${executeViaSshAt}:/home/${username}/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+git remote set-url ${executeViaSshAt} ${executeViaSshAt}:/home/${username}/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+git remote set-url --push ${executeViaSshAt} ${executeViaSshAt}:/home/${username}/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+git pull ${executeViaSshAt} master
 """
 
 class WorkerExecution:
@@ -251,7 +251,7 @@ class WorkerExecution:
             closingPullNetworkLogScript = DEFAULT_CLOSING_PULL_NETWORK_LOG_SCRIPT
         else:
             closingPullNetworkLogScript = ""
-        self.remote_execution_script = self.remoteExecutionScript = (self.formatDocument(self.formatSection(preparingNetworkLogPullScript)
+        self.remote_execution_script = (self.formatDocument(self.formatSection(preparingNetworkLogPullScript)
             + self.formatSection(self.remote_execution_script)
             + self.formatSection(closingPullNetworkLogScript)))
         self.remote_execution_script = Template(self.remote_execution_script).safe_substitute(
@@ -259,7 +259,7 @@ class WorkerExecution:
             username = username,
             name = config.name)
         if config.dryRun:
-            logging.info("Generated script: \n" + self.remoteExecutionScript)
+            logging.info("Generated script: \n" + self.remote_execution_script)
         return
     def formatDocument(self, arg):
         """Ensure, that the document ends with a single new line symbol."""
