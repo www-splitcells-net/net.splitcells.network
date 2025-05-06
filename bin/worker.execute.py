@@ -189,78 +189,96 @@ git remote set-url --push ${executeViaSshAt} ${executeViaSshAt}:/home/${username
 git pull ${executeViaSshAt} master
 """
 
+EXECUTE_MAIN_TASK_REMOTELY = """# Execute Main Task Remotely
+ssh ${executeViaSshAt} + " /bin/sh << EOF
+  set -e
+  if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then
+    mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/
+    cd ~/.local/state/net.splitcells.network.worker/repos/public/
+    git clone https://codeberg.org/splitcells-net/net.splitcells.network.git
+  fi
+  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
+  bin/worker.execute \
+    ${remoteNetworkerArguments}
+EOF"""
+
+SET_UP_SYSTEMD_SERVICE_REMOTELY = """# Set up Systemd service remotely\n"
+ssh " + ${executeViaSshAt} + " /bin/sh << EOF\n"
+  set -e\n"
+  mkdir -p " + ${daemonFolder} + "\n"
+  cat > " + ${daemonFile} + " <<SERVICE_EOL\n"
+[Unit]\n"
+Description=Execute ${daemonName}
+
+[Service]
+Type=oneshot
+StandardOutput=journal
+ExecStart=/usr/bin/date
+SERVICE_EOL
+EOF"""
+
 class WorkerExecution:
     was_executed = False
+    remote_execution_script_template = ""
     remote_execution_script = ""
     local_execution_script = ""
     docker_file = ""
     docker_file_path = ""
     program_name = ""
+    username = None
+    config = None
+    remote_networker_arguments = ""
+    daemonFolder = ""
+    daemonName = ""
+    daemonFile = ""
     def execute(self, config):
+        self.config = config
         if self.was_executed:
             raise Exception("A WorkerExecution instance cannot be executed twice.")
         self.was_executed = True
         if config.executeViaSshAt is None:
-            self.executeLocally(config)
+            self.executeLocally()
         else:
-            self.executeRemotelyViaSsh(config)
-    def executeRemotelyViaSsh(self, config):
-        username = config.executeViaSshAt.split("@")[0]
+            self.executeRemotelyViaSsh()
+    def executeRemotelyViaSsh(self):
+        username = self.config.executeViaSshAt.split("@")[0]
         preparingNetworkLogPullScript = None;
         closingPullNetworkLogScript = None;
-        if config.pullNetworkLog:
+        if self.config.pullNetworkLog:
             preparingNetworkLogPullScript = DEFAULT_NETWORK_PULL_SCRIPT
         else:
             preparingNetworkLogPullScript = ""
-        if config.isDaemon:
-            daemonName = TEMPORARY_FILE_PREFIX + config.name() + "-" + datetime.now().strftime('%Y-%m-%d-%H-%M-%S') + "-" + random.randint(1, 999_999_999);
-            daemonFolder = "~/.config/systemd/user";
-            daemonFile = daemonFolder + "/" + daemonName;
-            self.remote_execution_script = ("# Set up Systemd service remotely\n"
-                + "ssh " + config.executeViaSshAt + " /bin/sh << EOF\n"
-                + "  set -e\n"
-                + "  mkdir -p " + daemonFolder + "\n"
-                + "  cat > " + daemonFile + " <<SERVICE_EOL\n"
-                + "[Unit]\n"
-                + "Description=Execute " + daemonName + "\n"
-                + "\n"
-                + "[Service]\n"
-                + "Type=oneshot\n"
-                + "StandardOutput=journal\n"
-                + "ExecStart=/usr/bin/date\n"
-                + "SERVICE_EOL\n"
-                + "\nEOF")
+        if self.config.isDaemon:
+            self.daemonName = TEMPORARY_FILE_PREFIX + self.config.name() + "-" + datetime.now().strftime('%Y-%m-%d-%H-%M-%S') + "-" + random.randint(1, 999_999_999);
+            self.daemonFolder = "~/.config/systemd/user";
+            self.daemonFile = self.daemonFolder + "/" + self.daemonName;
+            self.remote_execution_script_template = self.applyTemplate(SET_UP_SYSTEMD_SERVICE_REMOTELY)
         else: # Else is not a daemon.
         # TODO The method for generating the remote script is an hack.
-            arguments = ""
             parsedVars = vars(parsedArgs)
             for key in parsedVars:
                 if key != 'executeViaSshAt' and parsedVars[key] is not None:
-                    arguments += " --" + key + "='" + str(parsedVars[key]).replace("\'", "\\\'").replace("\"", "\\\"").replace("\n", "") + "'"
-            self.remote_execution_script = ("# Execute Main Task Remotely\n"
-                + "ssh " + config.executeViaSshAt + " /bin/sh << EOF\n"
-                + "  set -e\n"
-                + "  if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then\n"
-                + "    mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/\n"
-                + "    cd ~/.local/state/net.splitcells.network.worker/repos/public/\n"
-                + "    git clone https://codeberg.org/splitcells-net/net.splitcells.network.git\n"
-                + "  fi\n"
-                + "  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network \\\n  && bin/worker.execute \\\n"
-                + "    " + arguments + "\nEOF")
-        if config.pullNetworkLog:
+                    self.remote_networker_arguments += " --" + key + "='" + str(parsedVars[key]).replace("\'", "\\\'").replace("\"", "\\\"").replace("\n", "") + "'"
+            self.remote_execution_script_template = self.applyTemplate(EXECUTE_MAIN_TASK_REMOTELY)
+        if self.config.pullNetworkLog:
             closingPullNetworkLogScript = DEFAULT_CLOSING_PULL_NETWORK_LOG_SCRIPT
         else:
             closingPullNetworkLogScript = ""
-        self.remote_execution_script = (self.formatDocument(self.formatSection(preparingNetworkLogPullScript)
-            + self.formatSection(self.remote_execution_script)
+        self.remote_execution_script = self.applyTemplate(self.formatDocument(self.formatSection(preparingNetworkLogPullScript)
+            + self.formatSection(self.remote_execution_script_template)
             + self.formatSection(closingPullNetworkLogScript)))
-        self.remote_execution_script = Template(self.remote_execution_script).safe_substitute(
-            executeViaSshAt = config.executeViaSshAt,
-            username = username,
-            name = config.name)
-        if config.dryRun:
+        if self.config.dryRun:
             logging.info("Generated script: \n" + self.remote_execution_script)
         return
+    def applyTemplate(self, string):
+        return Template(string).safe_substitute(
+            executeViaSshAt = self.config.executeViaSshAt,
+            username = self.username,
+            name = self.config.name,
+            remoteNetworkerArguments = self.remote_networker_arguments,
+            daemonFolder = self.daemonFolder,
+            daemonName = self.daemonName,
+            daemonFile = self.daemonFile)
     def formatDocument(self, arg):
         """Ensure, that the document ends with a single new line symbol."""
         if arg.endswith("\n\n"):
@@ -273,7 +291,7 @@ class WorkerExecution:
         if arg.endswith("\n"):
             return arg + "\n"
         return arg + "\n\n"
-    def executeLocally(self, config):
+    def executeLocally(self):
         return
 def str2bool(arg):
     # The stringification of the truth boolean is `True` in Python 3 and therefore this capitalization is supported as well.
