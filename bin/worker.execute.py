@@ -214,20 +214,16 @@ if __name__ == '__main__':
     parser.add_argument('--execute-via-ssh-at', '--executeViaSshAt', dest='executeViaSshAt', help="Execute the given command at an remote server via SSH. The format is `[user]@[address/network name]`.")
     parser.add_argument('--flat-folders', '--flatFolders', dest='flatFolders', required=False, type=str2bool, default=False, help="If this is set to true, the `~/.local/state/$executionName` is not mapped to `~/.local/state/$executionName/.local/state/$executionName` via containers.")
     parsedArgs = parser.parse_args()
-    if parsedArgs.name is not None:
-        exit(0)
     if parsedArgs.bootstrapRemote is not None:
         parsedArgs.name = "net.splitcells.network.worker"
         parsedArgs.executeViaSshAt = parsedArgs.bootstrapRemote
         parsedArgs.command = "cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap"
         parsedArgs.pullNetworkLog = True
-        exit(0)
-    if parsedArgs.testRemote is not None:
+    elif parsedArgs.testRemote is not None:
         parsedArgs.name = "net.splitcells.network.worker"
         parsedArgs.executeViaSshAt = parsedArgs.testRemote
         parsedArgs.command = "cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.test"
         parsedArgs.pullNetworkLog = True
-        exit(0)
     else:
         logging.error("Exactly one of the arguments --name, --test-remote or --bootstrap-remote has to be set, in order to execute this program.");
         exit(1)
