@@ -150,6 +150,20 @@ podman tag $(executionName):latest codeberg.org/splitcells-net/$(executionName):
 podman push codeberg.org/splitcells-net/$(executionName):latest
 """
 
+PROGRAMS_DESCRIPTION = """Executes a given program as isolated as possible with all program files being persisted at `$HOME/.local/state/$executionName/` and user input being located at `$HOME/Documents`.
+Executions with different names have different persisted file locations and are therefore isolated more clearly, whereas executions with the same name are assumed to share data.
+This is the CLI interface to the Splitcells Network Worker."""
+
+CLI_FLAG_COMMAND_HELP = """This is the shell command, to execute the task.
+It consists of only one program call.
+If scripts need to be executed one can use `sh -c "[script]"`.
+Use this only, in order to integrate the environment with the software.
+Prefer `--class-for-execution` instead."""
+
+CLI_FLAG_AUTO_CPU_ARCH_HELP = """If set to false, the command's backend automatically determines the CPU architecture.
+If set to true, the CPU architecture will be determined by this command and the determined architecture is propagated to the commands backend explicitly.
+This is useful, because some tools have not a good CPU auto detection (i.e. Podman on RISC-V cannot find the fitting images based on the CPU arch automatically)."""
+
 class WorkerExecution:
     was_executed = False
     remote_execution_script = ""
@@ -169,3 +183,28 @@ class WorkerExecution:
         return
     def executeLocally(self, config):
         return
+def str2bool(arg):
+    # The stringification of the truth boolean is `True` in Python 3 and therefore this capitalization is supported as well.
+    return arg == 'true' or arg == 'True'
+if __name__ == '__main__':
+    # TODO Is the following really needed? If not remove the comment, and the hyphenless flag names. For each argument flag, there is an alternative name without hyphens ('-'), so these can easily be printed out and reused for this program. See `executeViaSshAt`.
+    parser = argparse.ArgumentParser(description=PROGRAMS_DESCRIPTION)
+    parser.add_argument('--name', dest='name', required=True, help="This is the name of the task being executed.")
+    parser.add_argument('--command', dest='command', help=CLI_FLAG_COMMAND_HELP)
+    parser.add_argument('--executable-path', '--executablePath', dest='executablePath', help="Executes the given executable file. Only set this option or --command.")
+    parser.add_argument('--class-for-execution', '--classForExecution', dest='classForExecution', help="This Java class is executed.")
+    # TODO --use-host-documents is probably not needed anymore, as there is not a concrete use case for this at the moment.
+    parser.add_argument('--use-host-documents', '--useHostDocuments', dest='useHostDocuments', required=False, type=str2bool, default=False, help="Determines whether to mount `~/Documents` or not. This should be avoided, in order to avoid file dependencies to the host system, which makes the execution more portable.")
+    parser.add_argument('--publish-execution-image', '--publishExecutionImage', dest='publishExecutionImage', required=False, type=str2bool, default=False, help="If set to true, the given command is not executed, but a container image is published instead.")
+    parser.add_argument('--verbose', dest='verbose', required=False, type=str2bool, default=False, help="If set to true, the output is verbose.")
+    parser.add_argument('--only-build-image', '--onlyBuildImage', dest='onlyBuildImage', required=False, type=str2bool, default=False, help="If set to true, the created image is not executed.")
+    parser.add_argument('--only-execute-image', '--onlyExecuteImage', dest='onlyExecuteImage', required=False, type=str2bool, default=False, help="If set to true, the previously created image is executed without building it.")
+    parser.add_argument('--cpu-architecture', '--cpuArchitecture', dest='cpuArchitecture', help="Set the cpu architecture for the execution.")
+    parser.add_argument('--dry-run', '--dryRun', dest='dryRun', required=False, type=str2bool, default=False, help="If true, commands are only prepared and no commands are executed.")
+    parser.add_argument('--is-daemon', '--isDaemon', dest='isDaemon', required=False, type=str2bool, default=False, help="If this is true, the process is executed in the background.")
+    parser.add_argument('--use-playwright', '--usePlaywright', dest='usePlaywright', required=False, type=str2bool, default=False, help="If true, playwright is installed for the execution.")
+    parser.add_argument('--auto-configure-cpu-architecture-explicitly', '--autoConfigureCpuArchExplicitly', dest='autoConfigureCpuArchExplicitly', required=False, type=str2bool, default=False, help=CLI_FLAG_AUTO_CPU_ARCH_HELP)
+    parser.add_argument('--port-publishing', '--portPublishing', dest='portPublishing', help="This is a comma separated list of `host-port:container-port`, that describes the port forwarding on the host.")
+    parser.add_argument('--execute-via-ssh-at', '--executeViaSshAt', dest='executeViaSshAt', help="Execute the given command at an remote server via SSH. The format is `[user]@[address/network name]`.")
+    parser.add_argument('--flat-folders', '--flatFolders', dest='flatFolders', required=False, type=str2bool, default=False, help="If this is set to true, the `~/.local/state/$executionName` is not mapped to `~/.local/state/$executionName/.local/state/$executionName` via containers.")
+    parsedArgs = parser.parse_args()
