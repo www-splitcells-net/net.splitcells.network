@@ -12,7 +12,7 @@ Thereby, one could even store the generated scripts and execute these without us
 which makes the hole thing more portable as well
 
 The processing and string templating are separated as much as possible
-by writing to any variable or attribute only once.
+by writing to any variable or attribute only once except for the configuration.
 These variables are only used as an argument for other variables or
 as variables in template strings.
 
@@ -39,13 +39,16 @@ __copyright__ = "Copyright 2024"
 __license__ = "EPL-2.0 OR GPL-2.0-or-later"
 
 import argparse
+from datetime import datetime
 import logging
 import os
 import platform
+import random
 import shutil
 import subprocess
 import sys
 
+from string import Template
 from pathlib import Path
 
 PODMAN_FLAGS_CONFIG_FILE = Path.home().joinpath(".config/net.splitcells.network.worker/execute.podman.flags")
@@ -167,6 +170,25 @@ CLI_FLAG_AUTO_CPU_ARCH_HELP = """If set to false, the command's backend automati
 If set to true, the CPU architecture will be determined by this command and the determined architecture is propagated to the commands backend explicitly.
 This is useful, because some tools have not a good CPU auto detection (i.e. Podman on RISC-V cannot find the fitting images based on the CPU arch automatically)."""
 
+DEFAULT_NETWORK_PULL_SCRIPT = """# Preparing Execution via Network Log Pull
+if ssh -q $(executeViaSshAt) "sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'"
+then
+  cd ../net.splitcells.network.log
+  git config remote.$(executeViaSshAt).url >&- || git remote add $(executeViaSshAt) $(executeViaSshAt):/home/$(username)/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+  git remote set-url $(executeViaSshAt) $(executeViaSshAt):/home/$(username)/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+  git remote set-url --push $(executeViaSshAt) $(executeViaSshAt):/home/$(username)/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+  git pull $(executeViaSshAt) master
+  cd ../net.splitcells.network
+fi"""
+
+DEFAULT_CLOSING_PULL_NETWORK_LOG_SCRIPT = """# Closing Execution via Network Log Pull
+cd ../net.splitcells.network.log
+git config remote.$(executeViaSshAt).url >&- || git remote add $(executeViaSshAt) $(executeViaSshAt):/home/$(username)/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+git remote set-url $(executeViaSshAt) $(executeViaSshAt):/home/$(username)/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+git remote set-url --push $(executeViaSshAt) $(executeViaSshAt):/home/$(username)/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+git pull $(executeViaSshAt) master
+"""
+
 class WorkerExecution:
     was_executed = False
     remote_execution_script = ""
@@ -179,18 +201,86 @@ class WorkerExecution:
             raise Exception("A WorkerExecution instance cannot be executed twice.")
         self.was_executed = True
         if config.executeViaSshAt is None:
-            self.executeRemotelyViaSsh(config)
-        else:
             self.executeLocally(config)
+        else:
+            self.executeRemotelyViaSsh(config)
     def executeRemotelyViaSsh(self, config):
+        username = config.executeViaSshAt.split("@")[0]
+        preparingNetworkLogPullScript = None;
+        closingPullNetworkLogScript = None;
+        if config.pullNetworkLog:
+            preparingNetworkLogPullScript = DEFAULT_NETWORK_PULL_SCRIPT
+        else:
+            preparingNetworkLogPullScript = ""
+        if config.isDaemon:
+            daemonName = TEMPORARY_FILE_PREFIX + config.name() + "-" + datetime.now().strftime('%Y-%m-%d-%H-%M-%S') + "-" + random.randint(1, 999_999_999);
+            daemonFolder = "~/.config/systemd/user";
+            daemonFile = daemonFolder + "/" + daemonName;
+            self.remote_execution_script = ("# Set up Systemd service remotely\n"
+                + "ssh " + config.executeViaSshAt + " /bin/sh << EOF\n"
+                + "  set -e\n"
+                + "  mkdir -p " + daemonFolder + "\n"
+                + "  cat > " + daemonFile + " <<SERVICE_EOL\n"
+                + "[Unit]\n"
+                + "Description=Execute " + daemonName + "\n"
+                + "\n"
+                + "[Service]\n"
+                + "Type=oneshot\n"
+                + "StandardOutput=journal\n"
+                + "ExecStart=/usr/bin/date\n"
+                + "SERVICE_EOL\n"
+                + "\nEOF")
+        else: # Else is not a daemon.
+        # TODO The method for generating the remote script is an hack.
+            arguments = ""
+            parsedVars = vars(parsedArgs)
+            for key in parsedVars:
+                if key != 'executeViaSshAt' and parsedVars[key] is not None:
+                    arguments += " --" + key + "='" + str(parsedVars[key]).replace("\'", "\\\'").replace("\"", "\\\"").replace("\n", "") + "'"
+            self.remote_execution_script = ("# Execute Main Task Remotely\n"
+                + "ssh " + config.executeViaSshAt + " /bin/sh << EOF\n"
+                + "  set -e\n"
+                + "  if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then\n"
+                + "    mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/\n"
+                + "    cd ~/.local/state/net.splitcells.network.worker/repos/public/\n"
+                + "    git clone https://codeberg.org/splitcells-net/net.splitcells.network.git\n"
+                + "  fi\n"
+                + "  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network \\\n  && bin/worker.execute \\\n"
+                + "    " + arguments + "\nEOF")
+        if config.pullNetworkLog:
+            closingPullNetworkLogScript = DEFAULT_CLOSING_PULL_NETWORK_LOG_SCRIPT
+        else:
+            closingPullNetworkLogScript = ""
+        self.remote_execution_script = self.remoteExecutionScript = (self.formatDocument(self.formatSection(preparingNetworkLogPullScript)
+            + self.formatSection(self.remote_execution_script)
+            + self.formatSection(closingPullNetworkLogScript)))
+        self.remote_execution_script = Template(self.remote_execution_script).safe_substitute(
+            executeViaSshAt = config.executeViaSshAt,
+            username = username,
+            name = config.name)
+        if config.dryRun:
+            logging.info("Generated script: \n" + self.remoteExecutionScript)
         return
+    def formatDocument(self, arg):
+        """Ensure, that the document ends with a single new line symbol."""
+        if arg.endswith("\n\n"):
+            return arg[:len(arg) - 1]
+        return arg
+    def formatSection(self, arg):
+        """Ensure, that the section ends with an empty line, if any section is present."""
+        if arg.strip() == "":
+            return ""
+        if arg.endswith("\n"):
+            return arg + "\n"
+        return arg + "\n\n"
     def executeLocally(self, config):
         return
 def str2bool(arg):
     # The stringification of the truth boolean is `True` in Python 3 and therefore this capitalization is supported as well.
     return arg == 'true' or arg == 'True'
 if __name__ == '__main__':
-    # TODO Is the following really needed? If not remove the comment, and the hyphenless flag names. For each argument flag, there is an alternative name without hyphens ('-'), so these can easily be printed out and reused for this program. See `executeViaSshAt`.
+    logging.basicConfig(level=logging.INFO)
+    # If not remove the comment, and the hyphenless flag names. For each argument flag, there is an alternative name without hyphens ('-'), so these can easily be printed out and reused for this program. See `executeViaSshAt`.
     parser = argparse.ArgumentParser(description=PROGRAMS_DESCRIPTION)
     parser.add_argument('--name', dest='name', required=False, help="This is the name of the task being executed.")
     parser.add_argument('--bootstrap-remote', dest='bootstrapRemote', required=False, help="This is the ssh address for bootstrapping in the form of `username@host`. If this is set, other parameters are set automatically as well, in order to bootstrap the Network repos on a remote server in a standardized way.")
@@ -214,6 +304,7 @@ if __name__ == '__main__':
     parser.add_argument('--execute-via-ssh-at', '--executeViaSshAt', dest='executeViaSshAt', help="Execute the given command at an remote server via SSH. The format is `[user]@[address/network name]`.")
     parser.add_argument('--flat-folders', '--flatFolders', dest='flatFolders', required=False, type=str2bool, default=False, help="If this is set to true, the `~/.local/state/$executionName` is not mapped to `~/.local/state/$executionName/.local/state/$executionName` via containers.")
     parsedArgs = parser.parse_args()
+    workerExecution = WorkerExecution()
     if parsedArgs.bootstrapRemote is not None:
         parsedArgs.name = "net.splitcells.network.worker"
         parsedArgs.executeViaSshAt = parsedArgs.bootstrapRemote
@@ -227,3 +318,4 @@ if __name__ == '__main__':
     else:
         logging.error("Exactly one of the arguments --name, --test-remote or --bootstrap-remote has to be set, in order to execute this program.");
         exit(1)
+    workerExecution.execute(parsedArgs)
