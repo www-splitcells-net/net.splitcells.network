@@ -271,6 +271,9 @@ class WorkerExecution:
             + self.formatSection(closingPullNetworkLogScript)))
         if self.config.dryRun:
             logging.info("Generated script: \n" + self.remote_execution_script)
+        else:
+            logging.info("Executing script: \n" + self.remote_execution_script)
+            subprocess.call(self.remote_execution_script, shell='True')
         return
     def applyTemplate(self, string):
         return Template(string).safe_substitute(
