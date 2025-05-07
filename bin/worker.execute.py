@@ -154,7 +154,7 @@ podman tag $(executionName):latest codeberg.org/splitcells-net/$(executionName):
 podman push codeberg.org/splitcells-net/$(executionName):latest
 """
 
-PROGRAMS_DESCRIPTION = """Executes a given program as isolated as possible with all program files being persisted at `$HOME/.local/state/$executionName/` and user input being located at `$HOME/Documents`.
+PROGRAMS_DESCRIPTION = """Executes a given program as isolated as possible with all program files being persisted at `$HOME/.local/state/${executionName}/` and user input being located at `$HOME/Documents`.
 Executions with different names have different persisted file locations and are therefore isolated more clearly, whereas executions with the same name are assumed to share data.
 This is the CLI interface to the Splitcells Network Worker.
 Exactly one of arguments --name, --test-remote or --bootstrap-remote has to be set,
@@ -326,16 +326,16 @@ class WorkerExecution:
         if required_argument_count > 1:
             raise Exception("Exactly one of `--command`, `--executable-path` or `--class-for-execution` needs to be set, but " + required_argument_count + " were actually set.")
         if self.config.flatFolders:
-            self.docker_file = self.docker_file.replace("VOLUME /root/.local/", "VOLUME /root/.local/state/$executionName/.local/")
-            self.docker_file = self.docker_file.replace("VOLUME /root/Documents/", "VOLUME /root/.local/state/$executionName/Documents/")
-            self.docker_file = self.docker_file.replace("VOLUME /root/repos/", "VOLUME /root/.local/state/$executionName/repos/")
+            self.docker_file = self.docker_file.replace("VOLUME /root/.local/", "VOLUME /root/.local/state/${executionName}/.local/")
+            self.docker_file = self.docker_file.replace("VOLUME /root/Documents/", "VOLUME /root/.local/state/${executionName}/Documents/")
+            self.docker_file = self.docker_file.replace("VOLUME /root/repos/", "VOLUME /root/.local/state/${executionName}/repos/")
             # .ssh and .m2 does not have to be replaced, as these are used for environment configuration of tools inside the container.
         if parsedArgs.usePlaywright:
             self.docker_file = self.docker_file.replace('$ContainerSetupCommand', 'RUN cd /root/opt/$NAME_FOR_EXECUTION/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"\n')
         else:
             self.docker_file = self.docker_file.replace('$ContainerSetupCommand', '\n')
         self.docker_file = self.docker_file.replace('$NAME_FOR_EXECUTION', self.config.name)
-        self.docker_file = self.docker_file.replace('$executionName', self.config.name)
+        self.docker_file = self.docker_file.replace('${executionName}', self.config.name)
         file = 'target/Dockerfile-' + self.config.name
         if os.path.exists(file):
             os.remove(file)
@@ -354,9 +354,9 @@ class WorkerExecution:
         else:
             self.local_execution_script += EXECUTE_VIA_PODMAN_TEMPLATE
         if self.config.flatFolders:
-            self.local_execution_script = self.local_execution_script.replace("-v $HOME/.local/state/$executionName/Documents:/root/Documents ", "-v $HOME/.local/state/$executionName/Documents:/root/.local/state/$executionName/Documents ")
-            self.local_execution_script = self.local_execution_script.replace("-v $HOME/.local/state/$executionName/repos:/root/repos ", "-v $HOME/.local/state/$executionName/repos:/root/.local/state/$executionName/repos ")
-            self.local_execution_script = self.local_execution_script.replace("-v $HOME/.local/state/$executionName/.local:/root/.local ", "-v $HOME/.local/state/$executionName/.local:/root/.local/state/$executionName/.local ")
+            self.local_execution_script = self.local_execution_script.replace("-v $HOME/.local/state/${executionName}/Documents:/root/Documents ", "-v $HOME/.local/state/${executionName}/Documents:/root/.local/state/${executionName}/Documents ")
+            self.local_execution_script = self.local_execution_script.replace("-v $HOME/.local/state/${executionName}/repos:/root/repos ", "-v $HOME/.local/state/${executionName}/repos:/root/.local/state/${executionName}/repos ")
+            self.local_execution_script = self.local_execution_script.replace("-v $HOME/.local/state/${executionName}/.local:/root/.local ", "-v $HOME/.local/state/${executionName}/.local:/root/.local/state/${executionName}/.local ")
             # .ssh and .m2 does not have to be replaced, as these are used for environment configuration of tools inside the container.
         if self.config.command is not None:
             # TODO This does not seem to be valid or used anymore.
@@ -377,12 +377,12 @@ class WorkerExecution:
             self.local_execution_script = self.local_execution_script.replace("\nset -x\n", "\n\n")
         if self.config.useHostDocuments:
             # TODO This replacement is done in a dirty way. Use a template variable instead.
-            self.local_execution_script = self.local_execution_script.replace("-v $HOME/.local/state/$executionName/Documents:/root/Documents \\", "-v $HOME/Documents:/root/Documents \\")
+            self.local_execution_script = self.local_execution_script.replace("-v $HOME/.local/state/${executionName}/Documents:/root/Documents \\", "-v $HOME/Documents:/root/Documents \\")
         if PODMAN_FLAGS_CONFIG_FILE.is_file():
             self.local_execution_script = self.local_execution_script.replace('$additionalArguments \\', (configFileForExecutePodmanFlags.read_text() + '\\').replace('\n', ''))
         else:
             self.local_execution_script = self.local_execution_script.replace('$additionalArguments \\', '\\')
-        self.local_execution_script = self.local_execution_script.replace('$executionName', self.config.name)
+        self.local_execution_script = self.local_execution_script.replace('${executionName}', self.config.name)
         # Execute program.
         if parsedArgs.dryRun:
             logging.error("Generating script: " + self.local_execution_script);
@@ -400,8 +400,8 @@ def str2bool(arg):
     # The stringification of the truth boolean is `True` in Python 3 and therefore this capitalization is supported as well.
     return arg == 'true' or arg == 'True'
 if __name__ == '__main__':
+    # As there is no build process for Python unit tests are executed every time, to make sure, that the script works correctly.
     unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestWorkerExecution))
-    unittest.main() # As there is no build process for Python unit tests are executed every time, to make sure, that the script works correctly.
     logging.basicConfig(level=logging.INFO)
     # If not remove the comment, and the hyphenless flag names. For each argument flag, there is an alternative name without hyphens ('-'), so these can easily be printed out and reused for this program. See `executeViaSshAt`.
     parser = argparse.ArgumentParser(description=PROGRAMS_DESCRIPTION)
@@ -425,7 +425,7 @@ if __name__ == '__main__':
     parser.add_argument('--auto-configure-cpu-architecture-explicitly', '--autoConfigureCpuArchExplicitly', dest='autoConfigureCpuArchExplicitly', required=False, type=str2bool, default=True, help=CLI_FLAG_AUTO_CPU_ARCH_HELP)
     parser.add_argument('--port-publishing', '--portPublishing', dest='portPublishing', help="This is a comma separated list of `host-port:container-port`, that describes the port forwarding on the host.")
     parser.add_argument('--execute-via-ssh-at', '--executeViaSshAt', dest='executeViaSshAt', help="Execute the given command at an remote server via SSH. The format is `[user]@[address/network name]`.")
-    parser.add_argument('--flat-folders', '--flatFolders', dest='flatFolders', required=False, type=str2bool, default=False, help="If this is set to true, the `~/.local/state/$executionName` is not mapped to `~/.local/state/$executionName/.local/state/$executionName` via containers.")
+    parser.add_argument('--flat-folders', '--flatFolders', dest='flatFolders', required=False, type=str2bool, default=False, help="If this is set to true, the `~/.local/state/${executionName}` is not mapped to `~/.local/state/${executionName}/.local/state/${executionName}` via containers.")
     parsedArgs = parser.parse_args()
     workerExecution = WorkerExecution()
     if parsedArgs.bootstrapRemote is not None:
