@@ -231,6 +231,7 @@ class WorkerExecution:
     daemonName = ""
     daemonFile = ""
     configParser = None
+    additional_podman_args = ""
     def execute(self, configParser, config):
         self.configParser = configParser
         self.config = config
@@ -272,7 +273,8 @@ class WorkerExecution:
         if self.config.dryRun:
             logging.info("Generated script: \n" + self.remote_execution_script)
         else:
-            logging.info("Executing script: \n" + self.remote_execution_script)
+            if parsedArgs.verbose:
+                logging.info("Executing script: \n" + self.remote_execution_script)
             subprocess.call(self.remote_execution_script, shell='True')
         return
     def applyTemplate(self, string):
@@ -297,7 +299,99 @@ class WorkerExecution:
             return arg + "\n"
         return arg + "\n\n"
     def executeLocally(self):
-        return
+        """ TODO Use [${...}] based variable substitution instead of complex string replacements. """
+        if self.config.isDaemon:
+            raise Exception("Running a service as a daemon is not implemented yet.")
+        if not os.path.exists('./target'):
+            os.mkdir('./target')
+        # TODO Consoldiate Dockerfile template extensions, as every case can be solved via a dedicated shell script, that is the entrypoint of the Dockerfile.
+        required_argument_count = 0
+        self.docker_file = DOCKERFILE_SERVICE_TEMPLATE
+        if self.config.command is not None:
+            ++required_argument_count
+            self.docker_file += "ENTRYPOINT " + self.config.command + "\n"
+        if self.config.executablePath is not None:
+            ++required_argument_count
+            self.program_name = "program-" + self.config.name
+            shutil.copyfile(parsedArgs.executablePath, "./target/" + self.program_name)
+            self.docker_file += "ADD ./" + self.program_name + " /root/program\n"
+            self.docker_file += 'ENTRYPOINT /root/program'
+        if self.config.classForExecution is not None:
+            ++required_argument_count
+            self.docker_file += JAVA_CLASS_EXECUTION_TEMPLATE
+            self.docker_file += self.docker_file.replace('$CLASS_FOR_EXECUTION', self.config.classForExecution)
+        if required_argument_count == 0:
+            raise Exception("Either `--command`, `--executable-path` or `--class-for-execution` needs to be set.")
+        if required_argument_count > 1:
+            raise Exception("Exactly one of `--command`, `--executable-path` or `--class-for-execution` needs to be set, but " + required_argument_count + " were actually set.")
+        if self.config.flatFolders:
+            self.docker_file = self.docker_file.replace("VOLUME /root/.local/", "VOLUME /root/.local/state/$executionName/.local/")
+            self.docker_file = self.docker_file.replace("VOLUME /root/Documents/", "VOLUME /root/.local/state/$executionName/Documents/")
+            self.docker_file = self.docker_file.replace("VOLUME /root/repos/", "VOLUME /root/.local/state/$executionName/repos/")
+            # .ssh and .m2 does not have to be replaced, as these are used for environment configuration of tools inside the container.
+        if parsedArgs.usePlaywright:
+            self.docker_file = self.docker_file.replace('$ContainerSetupCommand', 'RUN cd /root/opt/$NAME_FOR_EXECUTION/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"\n')
+        else:
+            self.docker_file = self.docker_file.replace('$ContainerSetupCommand', '\n')
+        self.docker_file = self.docker_file.replace('$NAME_FOR_EXECUTION', self.config.name)
+        self.docker_file = self.docker_file.replace('$executionName', self.config.name)
+        file = 'target/Dockerfile-' + self.config.name
+        if os.path.exists(file):
+            os.remove(file)
+        with open(file, 'w') as file_to_write:
+            file_to_write.write(self.docker_file)
+        with open('target/net.splitcells.network.worker.pom.xml', 'w') as pom_file_to_write:
+            pom_file_to_write.write(CONTAINER_POM)
+        if self.config.onlyExecuteImage:
+            self.local_execution_script = PREPARE_EXECUTION_WITHOUT_BUILD_TEMPLATE
+        else:
+            self.local_execution_script = PREPARE_EXECUTION_TEMPLATE
+        if self.config.publishExecutionImage:
+            self.local_execution_script += PUBLISH_VIA_PODMAN_TEMPLATE
+        elif self.config.onlyBuildImage:
+            pass # TODO This is not implemented yet.
+        else:
+            self.local_execution_script += EXECUTE_VIA_PODMAN_TEMPLATE
+        if self.config.flatFolders:
+            self.local_execution_script = self.local_execution_script.replace("-v $HOME/.local/state/$executionName/Documents:/root/Documents ", "-v $HOME/.local/state/$executionName/Documents:/root/.local/state/$executionName/Documents ")
+            self.local_execution_script = self.local_execution_script.replace("-v $HOME/.local/state/$executionName/repos:/root/repos ", "-v $HOME/.local/state/$executionName/repos:/root/.local/state/$executionName/repos ")
+            self.local_execution_script = self.local_execution_script.replace("-v $HOME/.local/state/$executionName/.local:/root/.local ", "-v $HOME/.local/state/$executionName/.local:/root/.local/state/$executionName/.local ")
+            # .ssh and .m2 does not have to be replaced, as these are used for environment configuration of tools inside the container.
+        if self.config.command is not None:
+            # TODO This does not seem to be valid or used anymore.
+            self.local_execution_script = executionScript.replace('"$executionCommand"', "'" + self.config.command.replace("'", "'\\''") + "'")
+        if self.config.portPublishing is not None:
+            for portMapping in self.config.portPublishing.split(','):
+                self.additional_podman_args += ' --publish ' + portMapping
+        self.local_execution_script = self.local_execution_script.replace('"$podmanParameters"', self.additional_podman_args)
+        if self.config.autoConfigureCpuArchExplicitly:
+            self.local_execution_script = self.local_execution_script.replace('\n    --arch string \\\n', '\n    --arch ' + platform.uname().machine + ' \\\n')
+        elif self.config.cpuArchitecture is None:
+            self.local_execution_script = self.local_execution_script.replace('\n    --arch string \\\n', '\n')
+        else:
+            self.local_execution_script = self.local_execution_script.replace('\n    --arch string \\\n', '\n    --arch ' + self.config.cpuArchitecture + ' \\\n')
+        if self.config.verbose:
+            self.local_execution_script = self.local_execution_script.replace('--log-level=info', '--log-level=debug')
+        else:
+            self.local_execution_script = self.local_execution_script.replace("\nset -x\n", "\n\n")
+        if self.config.useHostDocuments:
+            # TODO This replacement is done in a dirty way. Use a template variable instead.
+            self.local_execution_script = self.local_execution_script.replace("-v $HOME/.local/state/$executionName/Documents:/root/Documents \\", "-v $HOME/Documents:/root/Documents \\")
+        if PODMAN_FLAGS_CONFIG_FILE.is_file():
+            self.local_execution_script = self.local_execution_script.replace('$additionalArguments \\', (configFileForExecutePodmanFlags.read_text() + '\\').replace('\n', ''))
+        else:
+            self.local_execution_script = self.local_execution_script.replace('$additionalArguments \\', '\\')
+        self.local_execution_script = self.local_execution_script.replace('$executionName', self.config.name)
+        # Execute program.
+        if parsedArgs.dryRun:
+            logging.error("Generating script: " + self.local_execution_script);
+            exit(0)
+        if parsedArgs.verbose:
+            logging.info("Executing script: " + self.local_execution_script);
+        returnCode = subprocess.call(executionScript, shell='True')
+        if returnCode != 0:
+            logging.error("Could not execute given command.");
+        exit(returnCode)
 def str2bool(arg):
     # The stringification of the truth boolean is `True` in Python 3 and therefore this capitalization is supported as well.
     return arg == 'true' or arg == 'True'
