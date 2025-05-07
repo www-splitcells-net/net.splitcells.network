@@ -25,10 +25,10 @@ TODO Support executing as systemd service. Create a user service for that.
 TODO Currently, there is not distinction between the name of the thing being executed and its namespace.
      This will probably create problems in the future, where you have multiple containers with the same namespace,
      but with different commands.
-TODO IDEA Currently, everything is stored in `$HOME/.local/state/$(executionName)/*`.
+TODO IDEA Currently, everything is stored in `${HOME}/.local/state/$(executionName)/*`.
      If more strict file isolation is required, in order to prevent file accidents,
      a namespace could be used, that is implemented as a hidden parent folder for the execution folder:
-     `$HOME/.local/state/.$namespace/$(executionName)/*`.
+     `${HOME}/.local/state/.$namespace/$(executionName)/*`.
      See `repo.process` for inspiration.
      Of course, different users could be used instead.
 """
@@ -104,10 +104,10 @@ set -x
 executionName="$(executionName)"
 executionCommand="$executionCommand"
 # Prepare file system.
-mkdir -p $HOME/.local/state/$(executionName)/.m2/
-mkdir -p $HOME/.local/state/$(executionName)/.ssh/
-mkdir -p $HOME/.local/state/$(executionName)/.local/dumps
-mkdir -p $HOME/.local/state/$(executionName)/Documents/
+mkdir -p ${HOME}/.local/state/$(executionName)/.m2/
+mkdir -p ${HOME}/.local/state/$(executionName)/.ssh/
+mkdir -p ${HOME}/.local/state/$(executionName)/.local/dumps
+mkdir -p ${HOME}/.local/state/$(executionName)/Documents/
 mkdir -p ./target/
 test -f target/program-$(executionName) && chmod +x target/program-$(executionName) # This file does not exist, when '--executable-path' is not set.
 podman build -f "target/Dockerfile-$(executionName)" \
@@ -125,10 +125,10 @@ executionName="$(executionName)"
 # TODO executionCommand is currently not used.
 executionCommand="$executionCommand"
 # Prepare file system.
-mkdir -p $HOME/.local/state/$(executionName)/.m2/
-mkdir -p $HOME/.local/state/$(executionName)/.ssh/
-mkdir -p $HOME/.local/state/$(executionName)/.local/
-mkdir -p $HOME/.local/state/$(executionName)/Documents/
+mkdir -p ${HOME}/.local/state/$(executionName)/.m2/
+mkdir -p ${HOME}/.local/state/$(executionName)/.ssh/
+mkdir -p ${HOME}/.local/state/$(executionName)/.local/
+mkdir -p ${HOME}/.local/state/$(executionName)/Documents/
 mkdir -p ./target/
 test -f target/program-$(executionName) && chmod +x target/program-$(executionName) # This file does not exist, when '--executable-path' is not set.
 """
@@ -139,10 +139,10 @@ podman run --name "$(executionName)" \
   --network slirp4netns:allow_host_loopback=true \
   ${additionalArguments} \
   --rm \
-  -v $HOME/.local/state/$(executionName)/Documents:/root/Documents \
-  -v $HOME/.local/state/$(executionName)/.ssh:/root/.ssh \
-  -v $HOME/.local/state/$(executionName)/.m2:/root/.m2 \
-  -v $HOME/.local/state/$(executionName)/.local:/root/.local/state/$(executionName)/.local \
+  -v ${HOME}/.local/state/$(executionName)/Documents:/root/Documents \
+  -v ${HOME}/.local/state/$(executionName)/.ssh:/root/.ssh \
+  -v ${HOME}/.local/state/$(executionName)/.m2:/root/.m2 \
+  -v ${HOME}/.local/state/$(executionName)/.local:/root/.local/state/$(executionName)/.local \
   "$podmanParameters" \
   "localhost/$(executionName)"
   #
@@ -154,7 +154,7 @@ podman tag $(executionName):latest codeberg.org/splitcells-net/$(executionName):
 podman push codeberg.org/splitcells-net/$(executionName):latest
 """
 
-PROGRAMS_DESCRIPTION = """Executes a given program as isolated as possible with all program files being persisted at `$HOME/.local/state/${executionName}/` and user input being located at `$HOME/Documents`.
+PROGRAMS_DESCRIPTION = """Executes a given program as isolated as possible with all program files being persisted at `${HOME}/.local/state/${executionName}/` and user input being located at `${HOME}/Documents`.
 Executions with different names have different persisted file locations and are therefore isolated more clearly, whereas executions with the same name are assumed to share data.
 This is the CLI interface to the Splitcells Network Worker.
 Exactly one of arguments --name, --test-remote or --bootstrap-remote has to be set,
@@ -354,9 +354,9 @@ class WorkerExecution:
         else:
             self.local_execution_script += EXECUTE_VIA_PODMAN_TEMPLATE
         if self.config.flatFolders:
-            self.local_execution_script = self.local_execution_script.replace("-v $HOME/.local/state/${executionName}/Documents:/root/Documents ", "-v $HOME/.local/state/${executionName}/Documents:/root/.local/state/${executionName}/Documents ")
-            self.local_execution_script = self.local_execution_script.replace("-v $HOME/.local/state/${executionName}/repos:/root/repos ", "-v $HOME/.local/state/${executionName}/repos:/root/.local/state/${executionName}/repos ")
-            self.local_execution_script = self.local_execution_script.replace("-v $HOME/.local/state/${executionName}/.local:/root/.local ", "-v $HOME/.local/state/${executionName}/.local:/root/.local/state/${executionName}/.local ")
+            self.local_execution_script = self.local_execution_script.replace("-v ${HOME}/.local/state/${executionName}/Documents:/root/Documents ", "-v ${HOME}/.local/state/${executionName}/Documents:/root/.local/state/${executionName}/Documents ")
+            self.local_execution_script = self.local_execution_script.replace("-v ${HOME}/.local/state/${executionName}/repos:/root/repos ", "-v ${HOME}/.local/state/${executionName}/repos:/root/.local/state/${executionName}/repos ")
+            self.local_execution_script = self.local_execution_script.replace("-v ${HOME}/.local/state/${executionName}/.local:/root/.local ", "-v ${HOME}/.local/state/${executionName}/.local:/root/.local/state/${executionName}/.local ")
             # .ssh and .m2 does not have to be replaced, as these are used for environment configuration of tools inside the container.
         if self.config.command is not None:
             # TODO This does not seem to be valid or used anymore.
@@ -377,7 +377,7 @@ class WorkerExecution:
             self.local_execution_script = self.local_execution_script.replace("\nset -x\n", "\n\n")
         if self.config.useHostDocuments:
             # TODO This replacement is done in a dirty way. Use a template variable instead.
-            self.local_execution_script = self.local_execution_script.replace("-v $HOME/.local/state/${executionName}/Documents:/root/Documents \\", "-v $HOME/Documents:/root/Documents \\")
+            self.local_execution_script = self.local_execution_script.replace("-v ${HOME}/.local/state/${executionName}/Documents:/root/Documents \\", "-v ${HOME}/Documents:/root/Documents \\")
         if PODMAN_FLAGS_CONFIG_FILE.is_file():
             self.local_execution_script = self.local_execution_script.replace('${additionalArguments} \\', (configFileForExecutePodmanFlags.read_text() + '\\').replace('\n', ''))
         else:
