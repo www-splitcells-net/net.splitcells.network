@@ -389,10 +389,10 @@ class WorkerExecution:
             exit(0)
         if parsedArgs.verbose:
             logging.info("Executing script: " + self.local_execution_script);
-        returnCode = subprocess.call(executionScript, shell='True')
-        if returnCode != 0:
+        return_code = subprocess.call(self.local_execution_script, shell='True')
+        if return_code != 0:
             logging.error("Could not execute given command.");
-        exit(returnCode)
+        exit(return_code)
 class TestWorkerExecution(unittest.TestCase):
     def test_bootstrap_remote(self):
         pass
@@ -441,7 +441,4 @@ if __name__ == '__main__':
     else:
         logging.error("Exactly one of the arguments --name, --test-remote or --bootstrap-remote has to be set, in order to execute this program.");
         exit(1)
-    workerExecution.execute(parser, parsedArgs)
-    workerExecution.execute(parser, parsedArgs)
-    workerExecution.execute(parser, parsedArgs)
     workerExecution.execute(parser, parsedArgs)
