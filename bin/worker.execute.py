@@ -113,7 +113,7 @@ test -f target/program-$(executionName) && chmod +x target/program-$(executionNa
 podman build -f "target/Dockerfile-$(executionName)" \
     --tag "localhost/$(executionName)"  \
     --arch string \
-    $additionalArguments \
+    ${additionalArguments} \
     --log-level=warn # `--log-level=warn` is podman's default.
     # Logging is used, in order to better understand build runtime performance.
 """
@@ -137,7 +137,7 @@ EXECUTE_VIA_PODMAN_TEMPLATE = """
 set -x
 podman run --name "$(executionName)" \
   --network slirp4netns:allow_host_loopback=true \
-  $additionalArguments \
+  ${additionalArguments} \
   --rm \
   -v $HOME/.local/state/$(executionName)/Documents:/root/Documents \
   -v $HOME/.local/state/$(executionName)/.ssh:/root/.ssh \
@@ -379,9 +379,9 @@ class WorkerExecution:
             # TODO This replacement is done in a dirty way. Use a template variable instead.
             self.local_execution_script = self.local_execution_script.replace("-v $HOME/.local/state/${executionName}/Documents:/root/Documents \\", "-v $HOME/Documents:/root/Documents \\")
         if PODMAN_FLAGS_CONFIG_FILE.is_file():
-            self.local_execution_script = self.local_execution_script.replace('$additionalArguments \\', (configFileForExecutePodmanFlags.read_text() + '\\').replace('\n', ''))
+            self.local_execution_script = self.local_execution_script.replace('${additionalArguments} \\', (configFileForExecutePodmanFlags.read_text() + '\\').replace('\n', ''))
         else:
-            self.local_execution_script = self.local_execution_script.replace('$additionalArguments \\', '\\')
+            self.local_execution_script = self.local_execution_script.replace('${additionalArguments} \\', '\\')
         self.local_execution_script = self.local_execution_script.replace('${executionName}', self.config.name)
         # Execute program.
         if parsedArgs.dryRun:
