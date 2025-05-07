@@ -25,6 +25,14 @@
     </chapter>
     <chapter>
         <title>Testing, Runtime Checks and Assertions</title>
+        <paragraph>Avoid test configurations by default.
+            The default configuration should be one, that connects with as few as possible external resources.
+            In the best case, there are none and such a config is ideal for testing,
+            as most of the time nothing needs to be configured for a test.
+            When the program is deployed into production,
+            one hopefully just needs to configure the external resources and their access.
+            This approach will probably lead to minimal configuration costs.
+        </paragraph>
         <paragraph>It should be possible to execute the tests programmatically inside the program.
             An appropriate main method should be provided, so the tests can be executed as a program.
             This ensures that tests are nothing special and therefore independent of the build system.
