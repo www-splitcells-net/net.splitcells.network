@@ -47,6 +47,7 @@ import random
 import shutil
 import subprocess
 import sys
+import unittest
 
 from string import Template
 from pathlib import Path
@@ -392,10 +393,15 @@ class WorkerExecution:
         if returnCode != 0:
             logging.error("Could not execute given command.");
         exit(returnCode)
+class TestWorkerExecution(unittest.TestCase):
+    def test_bootstrap_remote(self):
+        pass
 def str2bool(arg):
     # The stringification of the truth boolean is `True` in Python 3 and therefore this capitalization is supported as well.
     return arg == 'true' or arg == 'True'
 if __name__ == '__main__':
+    unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestWorkerExecution))
+    unittest.main() # As there is no build process for Python unit tests are executed every time, to make sure, that the script works correctly.
     logging.basicConfig(level=logging.INFO)
     # If not remove the comment, and the hyphenless flag names. For each argument flag, there is an alternative name without hyphens ('-'), so these can easily be printed out and reused for this program. See `executeViaSshAt`.
     parser = argparse.ArgumentParser(description=PROGRAMS_DESCRIPTION)
