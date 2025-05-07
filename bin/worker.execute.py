@@ -379,7 +379,7 @@ class WorkerExecution:
             # TODO This replacement is done in a dirty way. Use a template variable instead.
             self.local_execution_script = self.local_execution_script.replace("-v ${HOME}/.local/state/${executionName}/Documents:/root/Documents \\", "-v ${HOME}/Documents:/root/Documents \\")
         if PODMAN_FLAGS_CONFIG_FILE.is_file():
-            self.local_execution_script = self.local_execution_script.replace('${additionalArguments} \\', (configFileForExecutePodmanFlags.read_text() + '\\').replace('\n', ''))
+            self.local_execution_script = self.local_execution_script.replace('${additionalArguments} \\', (PODMAN_FLAGS_CONFIG_FILE.read_text() + '\\').replace('\n', ''))
         else:
             self.local_execution_script = self.local_execution_script.replace('${additionalArguments} \\', '\\')
         self.local_execution_script = self.local_execution_script.replace('${executionName}', self.config.name)
@@ -441,4 +441,7 @@ if __name__ == '__main__':
     else:
         logging.error("Exactly one of the arguments --name, --test-remote or --bootstrap-remote has to be set, in order to execute this program.");
         exit(1)
+    workerExecution.execute(parser, parsedArgs)
+    workerExecution.execute(parser, parsedArgs)
+    workerExecution.execute(parser, parsedArgs)
     workerExecution.execute(parser, parsedArgs)
