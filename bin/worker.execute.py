@@ -62,10 +62,10 @@ FROM docker.io/eclipse-temurin:21-jdk-noble
 RUN apt-get clean
 RUN apt-get update # This fixes install errors. It is unknown why this is the case.
 RUN apt-get install --yes maven git python3 pip
-ADD net.splitcells.network.worker.pom.xml /root/opt/$NAME_FOR_EXECUTION/pom.xml
+ADD net.splitcells.network.worker.pom.xml /root/opt/${NAME_FOR_EXECUTION}/pom.xml
 # RUN pip install --break-system-packages playwright
 # RUN playwright install --with-deps firefox # Install all OS dependencies, that are required for Playwright. Otherwise, Playwright cannot be used in Java.
-# RUN cd /root/opt/$NAME_FOR_EXECUTION/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"
+# RUN cd /root/opt/${NAME_FOR_EXECUTION}/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"
 $ContainerSetupCommand
 VOLUME /root/.local/
 VOLUME /root/Documents/
@@ -92,10 +92,10 @@ CONTAINER_POM = """
 """
 
 JAVA_CLASS_EXECUTION_TEMPLATE = """
-COPY deployable-jars/* /root/opt/$NAME_FOR_EXECUTION/jars/
-WORKDIR /root/opt/$NAME_FOR_EXECUTION/
+COPY deployable-jars/* /root/opt/${NAME_FOR_EXECUTION}/jars/
+WORKDIR /root/opt/${NAME_FOR_EXECUTION}/
 ENTRYPOINT ["/opt/java/openjdk/bin/java"]
-CMD ["-XX:ErrorFile=/root/.local/state/$NAME_FOR_EXECUTION/.local/dumps/hs_err_pid_%p.log", "-cp", "./jars/*", "$CLASS_FOR_EXECUTION"]
+CMD ["-XX:ErrorFile=/root/.local/state/${NAME_FOR_EXECUTION}/.local/dumps/hs_err_pid_%p.log", "-cp", "./jars/*", "$CLASS_FOR_EXECUTION"]
 """
 
 PREPARE_EXECUTION_TEMPLATE = """
@@ -331,10 +331,10 @@ class WorkerExecution:
             self.docker_file = self.docker_file.replace("VOLUME /root/repos/", "VOLUME /root/.local/state/${executionName}/repos/")
             # .ssh and .m2 does not have to be replaced, as these are used for environment configuration of tools inside the container.
         if parsedArgs.usePlaywright:
-            self.docker_file = self.docker_file.replace('$ContainerSetupCommand', 'RUN cd /root/opt/$NAME_FOR_EXECUTION/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"\n')
+            self.docker_file = self.docker_file.replace('$ContainerSetupCommand', 'RUN cd /root/opt/${NAME_FOR_EXECUTION}/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"\n')
         else:
             self.docker_file = self.docker_file.replace('$ContainerSetupCommand', '\n')
-        self.docker_file = self.docker_file.replace('$NAME_FOR_EXECUTION', self.config.name)
+        self.docker_file = self.docker_file.replace('${NAME_FOR_EXECUTION}', self.config.name)
         self.docker_file = self.docker_file.replace('${executionName}', self.config.name)
         file = 'target/Dockerfile-' + self.config.name
         if os.path.exists(file):
