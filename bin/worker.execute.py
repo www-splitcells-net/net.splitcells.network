@@ -435,7 +435,7 @@ def parse_worker_execution_arguments(arguments):
         parsedArgs.name = "net.splitcells.network.worker"
         parsedArgs.executeViaSshAt = parsedArgs.bootstrapRemote
         parsedArgs.command = "cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap"
-        parsedArgs.pullNetworkLog = True
+        # parsedArgs.pullNetworkLog is not set to true, as this repo might not exist on the remote yet.
     elif parsedArgs.testRemote is not None:
         parsedArgs.name = "net.splitcells.network.worker"
         parsedArgs.executeViaSshAt = parsedArgs.testRemote
@@ -449,8 +449,7 @@ class TestWorkerExecution(unittest.TestCase):
     maxDiff = None
     def test_bootstrap_remote(self):
         test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--dry-run=true'])
-        self.assertEqual(test_subject.remote_execution_script, """
-# Execute Main Task Remotely
+        self.assertEqual(test_subject.remote_execution_script, """# Execute Main Task Remotely
 ssh user@address /bin/sh << EOF
   set -e
   if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then
@@ -463,8 +462,8 @@ ssh user@address /bin/sh << EOF
     --bootstrapRemote='user@address'\\
     --command='cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'\\
     --dry-run='true'\\
-    --name='net.splitcells.network.worker'\\
-    --pullNetworkLog='true'
+    --name='net.splitcells.network.worker'
+
 EOF
 """)
 if __name__ == '__main__':
