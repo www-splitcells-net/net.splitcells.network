@@ -262,7 +262,12 @@ class WorkerExecution:
             for key in parsedVars:
                 self.remote_networker_arguments + "\n"
                 if key != 'executeViaSshAt' and parsedVars[key] is not None and self.configParser.get_default(key) != parsedVars[key]:
-                    self.remote_networker_arguments += "    --" + key.replace("_", "-") + "='" + str(parsedVars[key]).replace("\'", "\\\'").replace("\"", "\\\"").replace("\n", "") + "'\n"
+                    value_string = ""
+                    if type(parsedVars[key]) == bool:
+                        value_string = str(parsedVars[key]).lower()
+                    else:
+                        value_string = str(parsedVars[key]).replace("\'", "\\\'").replace("\"", "\\\"").replace("\n", "")
+                    self.remote_networker_arguments += "    --" + key.replace("_", "-") + "='" + value_string + "'\n"
             self.remote_execution_script_template = self.applyTemplate(EXECUTE_MAIN_TASK_REMOTELY)
         if self.config.pullNetworkLog:
             closingPullNetworkLogScript = DEFAULT_CLOSING_PULL_NETWORK_LOG_SCRIPT
