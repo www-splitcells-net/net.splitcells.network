@@ -435,14 +435,39 @@ def parse_worker_execution_arguments(arguments):
     else:
         raise Exception("Exactly one of the arguments --name, --test-remote or --bootstrap-remote has to be set, in order to execute this program.");
     workerExecution.execute(parser, parsedArgs)
+    return workerExecution
 class TestWorkerExecution(unittest.TestCase):
+    maxDiff = None
     def test_bootstrap_remote(self):
-        parse_worker_execution_arguments(['--dry-run=true'])
-        pass
+        test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--dry-run=true'])
+        self.assertEqual(test_subject.remote_execution_script, """
+# Execute Main Task Remotely
+ssh user@address /bin/sh << EOF
+  set -e
+  if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then
+    mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/
+    cd ~/.local/state/net.splitcells.network.worker/repos/public/
+    git clone https://codeberg.org/splitcells-net/net.splitcells.network.git
+  fi
+  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network \\
+  && bin/worker.execute \\
+    --name='net.splitcells.network.worker'\\
+    --flat-folders='true'\\
+    --command='cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'\\
+    --use-host-documents='false'\\
+    --publish-execution-image='false'\\
+    --verbose='false'\\
+    --only-build-image='false'\\
+    --only-execute-image='false'\\
+    --dry-run='true'\\
+    --use-playwright='false'\\
+    --auto-configure-cpu-architecture-explicitly='true'
+EOF
+""")
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO) # TODO Move this after testing, when the tests are ready to go.
     # As there is no build process for Python unit tests are executed every time, to make sure, that the script works correctly.
     test_result = unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestWorkerExecution))
     if not test_result.wasSuccessful():
         raise Exception("The self test was not successful.")
-    logging.basicConfig(level=logging.INFO)
     parse_worker_execution_arguments(sys.argv[1:])
