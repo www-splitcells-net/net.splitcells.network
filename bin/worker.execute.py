@@ -441,6 +441,8 @@ class TestWorkerExecution(unittest.TestCase):
         pass
 if __name__ == '__main__':
     # As there is no build process for Python unit tests are executed every time, to make sure, that the script works correctly.
-    unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestWorkerExecution))
+    test_result = unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestWorkerExecution))
+    if not test_result.wasSuccessful():
+        raise Exception("The self test was not successful.")
     logging.basicConfig(level=logging.INFO)
     parse_worker_execution_arguments(sys.argv[1:])
