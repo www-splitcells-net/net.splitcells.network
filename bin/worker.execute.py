@@ -393,13 +393,10 @@ class WorkerExecution:
         if return_code != 0:
             logging.error("Could not execute given command.");
         exit(return_code)
-class TestWorkerExecution(unittest.TestCase):
-    def test_bootstrap_remote(self):
-        pass
 def str2bool(arg):
     # The stringification of the truth boolean is `True` in Python 3 and therefore this capitalization is supported as well.
     return arg == 'true' or arg == 'True'
-def parse_worker_execution_arguments():
+def parse_worker_execution_arguments(arguments):
     # If not remove the comment, and the hyphenless flag names. For each argument flag, there is an alternative name without hyphens ('-'), so these can easily be printed out and reused for this program. See `executeViaSshAt`.
     parser = argparse.ArgumentParser(description=PROGRAMS_DESCRIPTION)
     parser.add_argument('--name', dest='name', required=False, help="This is the name of the task being executed.")
@@ -423,7 +420,7 @@ def parse_worker_execution_arguments():
     parser.add_argument('--port-publishing', '--portPublishing', dest='portPublishing', help="This is a comma separated list of `host-port:container-port`, that describes the port forwarding on the host.")
     parser.add_argument('--execute-via-ssh-at', '--executeViaSshAt', dest='executeViaSshAt', help="Execute the given command at an remote server via SSH. The format is `[user]@[address/network name]`.")
     parser.add_argument('--flat-folders', '--flatFolders', dest='flatFolders', required=False, type=str2bool, default=False, help="If this is set to true, the `~/.local/state/${executionName}` is not mapped to `~/.local/state/${executionName}/.local/state/${executionName}` via containers.")
-    parsedArgs = parser.parse_args()
+    parsedArgs = parser.parse_args(arguments)
     workerExecution = WorkerExecution()
     if parsedArgs.bootstrapRemote is not None:
         parsedArgs.name = "net.splitcells.network.worker"
@@ -436,11 +433,14 @@ def parse_worker_execution_arguments():
         parsedArgs.command = "cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.test"
         parsedArgs.pullNetworkLog = True
     else:
-        logging.error("Exactly one of the arguments --name, --test-remote or --bootstrap-remote has to be set, in order to execute this program.");
-        exit(1)
+        raise Exception("Exactly one of the arguments --name, --test-remote or --bootstrap-remote has to be set, in order to execute this program.");
     workerExecution.execute(parser, parsedArgs)
+class TestWorkerExecution(unittest.TestCase):
+    def test_bootstrap_remote(self):
+        parse_worker_execution_arguments(['--dry-run=true'])
+        pass
 if __name__ == '__main__':
     # As there is no build process for Python unit tests are executed every time, to make sure, that the script works correctly.
     unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestWorkerExecution))
     logging.basicConfig(level=logging.INFO)
-    parse_worker_execution_arguments()
+    parse_worker_execution_arguments(sys.argv[1:])
