@@ -399,10 +399,7 @@ class TestWorkerExecution(unittest.TestCase):
 def str2bool(arg):
     # The stringification of the truth boolean is `True` in Python 3 and therefore this capitalization is supported as well.
     return arg == 'true' or arg == 'True'
-if __name__ == '__main__':
-    # As there is no build process for Python unit tests are executed every time, to make sure, that the script works correctly.
-    unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestWorkerExecution))
-    logging.basicConfig(level=logging.INFO)
+def parse_worker_execution_arguments():
     # If not remove the comment, and the hyphenless flag names. For each argument flag, there is an alternative name without hyphens ('-'), so these can easily be printed out and reused for this program. See `executeViaSshAt`.
     parser = argparse.ArgumentParser(description=PROGRAMS_DESCRIPTION)
     parser.add_argument('--name', dest='name', required=False, help="This is the name of the task being executed.")
@@ -442,3 +439,8 @@ if __name__ == '__main__':
         logging.error("Exactly one of the arguments --name, --test-remote or --bootstrap-remote has to be set, in order to execute this program.");
         exit(1)
     workerExecution.execute(parser, parsedArgs)
+if __name__ == '__main__':
+    # As there is no build process for Python unit tests are executed every time, to make sure, that the script works correctly.
+    unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestWorkerExecution))
+    logging.basicConfig(level=logging.INFO)
+    parse_worker_execution_arguments()
