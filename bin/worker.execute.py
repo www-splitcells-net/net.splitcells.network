@@ -259,15 +259,19 @@ class WorkerExecution:
         else: # Else is not a daemon.
         # TODO The method for generating the remote script is an hack.
             parsedVars = vars(self.config)
-            for key in parsedVars:
+            parsedKeys = list(filter(lambda key: key != 'executeViaSshAt' and parsedVars[key] is not None and self.configParser.get_default(key) != parsedVars[key], sorted(list(parsedVars.keys()))))
+            for i, key in enumerate(parsedKeys):
                 self.remote_networker_arguments + "\n"
-                if key != 'executeViaSshAt' and parsedVars[key] is not None and self.configParser.get_default(key) != parsedVars[key]:
-                    value_string = ""
-                    if type(parsedVars[key]) == bool:
-                        value_string = str(parsedVars[key]).lower()
-                    else:
-                        value_string = str(parsedVars[key]).replace("\'", "\\\'").replace("\"", "\\\"").replace("\n", "")
-                    self.remote_networker_arguments += "    --" + key.replace("_", "-") + "='" + value_string + "'\n"
+                value_string = ""
+                if type(parsedVars[key]) == bool:
+                    value_string = str(parsedVars[key]).lower()
+                else:
+                    value_string = str(parsedVars[key]).replace("\'", "\\\'").replace("\"", "\\\"").replace("\n", "")
+                self.remote_networker_arguments += "    --" + key.replace("_", "-") + "='" + value_string + "'"
+                if i != len(parsedKeys) - 1:
+                    self.remote_networker_arguments += "\\\n"
+                else:
+                    self.remote_networker_arguments += "\n"
             self.remote_execution_script_template = self.applyTemplate(EXECUTE_MAIN_TASK_REMOTELY)
         if self.config.pullNetworkLog:
             closingPullNetworkLogScript = DEFAULT_CLOSING_PULL_NETWORK_LOG_SCRIPT
@@ -454,19 +458,13 @@ ssh user@address /bin/sh << EOF
     cd ~/.local/state/net.splitcells.network.worker/repos/public/
     git clone https://codeberg.org/splitcells-net/net.splitcells.network.git
   fi
-  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network \\
-  && bin/worker.execute \\
-    --name='net.splitcells.network.worker'\\
-    --flat-folders='true'\\
+  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
+  bin/worker.execute \\
+    --bootstrapRemote='user@address'\\
     --command='cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'\\
-    --use-host-documents='false'\\
-    --publish-execution-image='false'\\
-    --verbose='false'\\
-    --only-build-image='false'\\
-    --only-execute-image='false'\\
     --dry-run='true'\\
-    --use-playwright='false'\\
-    --auto-configure-cpu-architecture-explicitly='true'
+    --name='net.splitcells.network.worker'\\
+    --pullNetworkLog='true'
 EOF
 """)
 if __name__ == '__main__':
