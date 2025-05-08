@@ -258,7 +258,7 @@ class WorkerExecution:
             self.remote_execution_script_template = self.applyTemplate(SET_UP_SYSTEMD_SERVICE_REMOTELY)
         else: # Else is not a daemon.
         # TODO The method for generating the remote script is an hack.
-            parsedVars = vars(parsedArgs)
+            parsedVars = vars(self.config)
             for key in parsedVars:
                 self.remote_networker_arguments + "\n"
                 if key != 'executeViaSshAt' and parsedVars[key] is not None and self.configParser.get_default(key) != parsedVars[key]:
