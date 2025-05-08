@@ -191,7 +191,7 @@ git pull ${executeViaSshAt} master
 """
 
 EXECUTE_MAIN_TASK_REMOTELY = """# Execute Main Task Remotely
-ssh ${executeViaSshAt} + " /bin/sh << EOF
+ssh ${executeViaSshAt} /bin/sh << EOF
   set -e
   if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then
     mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/
