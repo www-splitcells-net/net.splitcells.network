@@ -262,7 +262,7 @@ class WorkerExecution:
             for key in parsedVars:
                 self.remote_networker_arguments + "\n"
                 if key != 'executeViaSshAt' and parsedVars[key] is not None and self.configParser.get_default(key) != parsedVars[key]:
-                    self.remote_networker_arguments += "    --" + key + "='" + str(parsedVars[key]).replace("\'", "\\\'").replace("\"", "\\\"").replace("\n", "") + "'\n"
+                    self.remote_networker_arguments += "    --" + key.replace("_", "-") + "='" + str(parsedVars[key]).replace("\'", "\\\'").replace("\"", "\\\"").replace("\n", "") + "'\n"
             self.remote_execution_script_template = self.applyTemplate(EXECUTE_MAIN_TASK_REMOTELY)
         if self.config.pullNetworkLog:
             closingPullNetworkLogScript = DEFAULT_CLOSING_PULL_NETWORK_LOG_SCRIPT
@@ -271,7 +271,7 @@ class WorkerExecution:
         self.remote_execution_script = self.applyTemplate(self.formatDocument(self.formatSection(preparingNetworkLogPullScript)
             + self.formatSection(self.remote_execution_script_template)
             + self.formatSection(closingPullNetworkLogScript)))
-        if self.config.dryRun:
+        if self.config.dry_run:
             logging.info("Generated script: \n" + self.remote_execution_script)
         else:
             if parsedArgs.verbose:
@@ -384,7 +384,7 @@ class WorkerExecution:
             self.local_execution_script = self.local_execution_script.replace('${additionalArguments} \\', '\\')
         self.local_execution_script = self.local_execution_script.replace('${executionName}', self.config.name)
         # Execute program.
-        if parsedArgs.dryRun:
+        if parsedArgs.dry_run:
             logging.error("Generating script: " + self.local_execution_script);
             exit(0)
         if parsedArgs.verbose:
@@ -413,7 +413,7 @@ def parse_worker_execution_arguments(arguments):
     parser.add_argument('--only-build-image', '--onlyBuildImage', dest='onlyBuildImage', required=False, type=str2bool, default=False, help="If set to true, the created image is not executed.")
     parser.add_argument('--only-execute-image', '--onlyExecuteImage', dest='onlyExecuteImage', required=False, type=str2bool, default=False, help="If set to true, the previously created image is executed without building it.")
     parser.add_argument('--cpu-architecture', '--cpuArchitecture', dest='cpuArchitecture', help="Set the cpu architecture for the execution.")
-    parser.add_argument('--dry-run', '--dryRun', dest='dryRun', required=False, type=str2bool, default=False, help="If true, commands are only prepared and no commands are executed.")
+    parser.add_argument('--dry-run', dest='dry_run', required=False, type=str2bool, default=False, help="If true, commands are only prepared and no commands are executed.")
     parser.add_argument('--is-daemon', '--isDaemon', dest='isDaemon', required=False, type=str2bool, default=False, help="If this is true, the process is executed in the background.")
     parser.add_argument('--use-playwright', '--usePlaywright', dest='usePlaywright', required=False, type=str2bool, default=False, help="If true, playwright is installed for the execution.")
     parser.add_argument('--auto-configure-cpu-architecture-explicitly', '--autoConfigureCpuArchExplicitly', dest='autoConfigureCpuArchExplicitly', required=False, type=str2bool, default=True, help=CLI_FLAG_AUTO_CPU_ARCH_HELP)
