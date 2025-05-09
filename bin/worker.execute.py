@@ -252,7 +252,7 @@ class WorkerExecution:
         else:
             preparingNetworkLogPullScript = ""
         if self.config.isDaemon:
-            self.daemonName = TEMPORARY_FILE_PREFIX + self.config.name() + "-" + datetime.now().strftime('%Y-%m-%d-%H-%M-%S') + "-" + random.randint(1, 999_999_999);
+            self.daemonName = TEMPORARY_FILE_PREFIX + self.config.name + "-" + datetime.now().strftime('%Y-%m-%d-%H-%M-%S') + "-" + str(random.randint(1, 999_999_999))
             self.daemonFolder = "~/.config/systemd/user";
             self.daemonFile = self.daemonFolder + "/" + self.daemonName;
             self.remote_execution_script_template = self.applyTemplate(SET_UP_SYSTEMD_SERVICE_REMOTELY)
@@ -463,6 +463,24 @@ ssh user@address /bin/sh << EOF
     --command='cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'\\
     --dry-run='true'\\
     --name='net.splitcells.network.worker'
+
+EOF
+""")
+    def test_bootstrap_remote_via_daemon(self):
+        test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--is-daemon=true', '--dry-run=true'])
+        self.assertEqual(test_subject.remote_execution_script, """# Set up Systemd service remotely
+ssh user@address /bin/sh << EOF
+  set -e
+  mkdir -p ~/.config/systemd/user
+  cat > ~/.config/systemd/user/forced-daemon-name <<SERVICE_EOL
+[Unit]
+Description=Execute forced-daemon-name
+
+[Service]
+Type=oneshot
+StandardOutput=journal
+ExecStart=/usr/bin/date
+SERVICE_EOL
 
 EOF
 """)
