@@ -244,7 +244,7 @@ class WorkerExecution:
         else:
             self.executeRemotelyViaSsh()
     def executeRemotelyViaSsh(self):
-        username = self.config.executeViaSshAt.split("@")[0]
+        self.username = self.config.executeViaSshAt.split("@")[0]
         preparingNetworkLogPullScript = None;
         closingPullNetworkLogScript = None;
         if self.config.pullNetworkLog:
