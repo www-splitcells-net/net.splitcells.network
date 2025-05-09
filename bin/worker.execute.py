@@ -252,7 +252,10 @@ class WorkerExecution:
         else:
             preparingNetworkLogPullScript = ""
         if self.config.isDaemon:
-            self.daemonName = TEMPORARY_FILE_PREFIX + self.config.name + "-" + datetime.now().strftime('%Y-%m-%d-%H-%M-%S') + "-" + str(random.randint(1, 999_999_999))
+            if self.config.forcedDaemonName is None:
+                self.daemonName = TEMPORARY_FILE_PREFIX + self.config.name + "-" + datetime.now().strftime('%Y-%m-%d-%H-%M-%S') + "-" + str(random.randint(1, 999_999_999))
+            else:
+                self.daemonName = self.config.forcedDaemonName
             self.daemonFolder = "~/.config/systemd/user";
             self.daemonFile = self.daemonFolder + "/" + self.daemonName;
             self.remote_execution_script_template = self.applyTemplate(SET_UP_SYSTEMD_SERVICE_REMOTELY)
@@ -423,7 +426,8 @@ def parse_worker_execution_arguments(arguments):
     parser.add_argument('--only-execute-image', '--onlyExecuteImage', dest='onlyExecuteImage', required=False, type=str2bool, default=False, help="If set to true, the previously created image is executed without building it.")
     parser.add_argument('--cpu-architecture', '--cpuArchitecture', dest='cpuArchitecture', help="Set the cpu architecture for the execution.")
     parser.add_argument('--dry-run', dest='dry_run', required=False, type=str2bool, default=False, help="If true, commands are only prepared and no commands are executed.")
-    parser.add_argument('--is-daemon', '--isDaemon', dest='isDaemon', required=False, type=str2bool, default=False, help="If this is true, the process is executed in the background.")
+    parser.add_argument('--is-daemon', '--isDaemon', dest='isDaemon', required=False, type=str2bool, default=False, help="If this is true, the process is executed as systemd user service in the background.")
+    parser.add_argument('--forced-daemon-name', dest='forcedDaemonName', required=False, help="This is the name of the systemd user service name. This flag is mainly used for unit tests.")
     parser.add_argument('--use-playwright', '--usePlaywright', dest='usePlaywright', required=False, type=str2bool, default=False, help="If true, playwright is installed for the execution.")
     parser.add_argument('--auto-configure-cpu-architecture-explicitly', '--autoConfigureCpuArchExplicitly', dest='autoConfigureCpuArchExplicitly', required=False, type=str2bool, default=True, help=CLI_FLAG_AUTO_CPU_ARCH_HELP)
     parser.add_argument('--port-publishing', '--portPublishing', dest='portPublishing', help="This is a comma separated list of `host-port:container-port`, that describes the port forwarding on the host.")
@@ -467,7 +471,7 @@ ssh user@address /bin/sh << EOF
 EOF
 """)
     def test_bootstrap_remote_via_daemon(self):
-        test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--is-daemon=true', '--dry-run=true'])
+        test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--is-daemon=true', '--forced-daemon-name=forced-daemon-name', '--dry-run=true'])
         self.assertEqual(test_subject.remote_execution_script, """# Set up Systemd service remotely
 ssh user@address /bin/sh << EOF
   set -e
