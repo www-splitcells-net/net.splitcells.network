@@ -440,12 +440,14 @@ def parse_worker_execution_arguments(arguments):
         parsedArgs.name = "net.splitcells.network.worker"
         parsedArgs.executeViaSshAt = parsedArgs.bootstrapRemote
         parsedArgs.command = "cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap"
+        parsedArgs.bootstrapRemote = None
         # parsedArgs.pullNetworkLog is not set to true, as this repo might not exist on the remote yet.
     elif parsedArgs.testRemote is not None:
         parsedArgs.name = "net.splitcells.network.worker"
         parsedArgs.executeViaSshAt = parsedArgs.testRemote
         parsedArgs.command = "cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.test"
         parsedArgs.pullNetworkLog = True
+        parsedArgs.testRemote = None
     else:
         raise Exception("Exactly one of the arguments --name, --test-remote or --bootstrap-remote has to be set, in order to execute this program.");
     workerExecution.execute(parser, parsedArgs)
@@ -464,7 +466,6 @@ ssh user@address /bin/sh << EOF
   fi
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
   bin/worker.execute \\
-    --bootstrapRemote='user@address'\\
     --command='cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'\\
     --dry-run='true'\\
     --name='net.splitcells.network.worker'
