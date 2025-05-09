@@ -286,7 +286,7 @@ class WorkerExecution:
         if self.config.dry_run:
             logging.info("Generated script: \n" + self.remote_execution_script)
         else:
-            if parsedArgs.verbose:
+            if self.config.verbose:
                 logging.info("Executing script: \n" + self.remote_execution_script)
             subprocess.call(self.remote_execution_script, shell='True')
         return
