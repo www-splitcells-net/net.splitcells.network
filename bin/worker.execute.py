@@ -202,12 +202,12 @@ ssh ${executeViaSshAt} /bin/sh << EOF
   bin/worker.execute \\\n${remoteNetworkerArguments}
 EOF"""
 
-SET_UP_SYSTEMD_SERVICE_REMOTELY = """# Set up Systemd service remotely\n"
-ssh " + ${executeViaSshAt} + " /bin/sh << EOF\n"
-  set -e\n"
-  mkdir -p " + ${daemonFolder} + "\n"
-  cat > " + ${daemonFile} + " <<SERVICE_EOL\n"
-[Unit]\n"
+SET_UP_SYSTEMD_SERVICE_REMOTELY = """# Set up Systemd service remotely
+ssh ${executeViaSshAt} /bin/sh << EOF
+  set -e
+  mkdir -p ${daemonFolder}
+  cat > ${daemonFile} <<SERVICE_EOL
+[Unit]
 Description=Execute ${daemonName}
 
 [Service]
@@ -481,7 +481,6 @@ Type=oneshot
 StandardOutput=journal
 ExecStart=/usr/bin/date
 SERVICE_EOL
-
 EOF
 """)
 if __name__ == '__main__':
