@@ -199,7 +199,7 @@ ssh ${execute_via_ssh_at} /bin/sh << EOF
     git clone https://codeberg.org/splitcells-net/net.splitcells.network.git
   fi
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
-  bin/worker.execute \\\n${remoteNetworkerArguments}
+  ${bin_worker_execute} \\\n${remoteNetworkerArguments}
 EOF"""
 
 SET_UP_SYSTEMD_SERVICE_REMOTELY = """# Set up Systemd service remotely
@@ -233,18 +233,25 @@ class WorkerExecution:
     daemonFile = ""
     configParser = None
     additional_podman_args = ""
+    bin_worker_execute = None
     def execute(self, configParser, config):
         self.configParser = configParser
         self.config = config
         if self.was_executed:
             raise Exception("A WorkerExecution instance cannot be executed twice.")
         self.was_executed = True
+        if self.config.backwards_compatible:
+            self.bin_worker_execute = "bin/worker.execute.py"
+        else:
+            self.bin_worker_execute = "bin/worker.execute"
         if config.execute_via_ssh_at is None:
             self.executeLocally()
         else:
             self.executeRemotelyViaSsh()
-    def filterArgumentsForRemoteScript(self, parsedVars):
-        return
+    def filterArgumentsForRemoteScript(self, parsedVars, key):
+        return parsedVars[key] is not None \
+            and self.configParser.get_default(key) != parsedVars[key] \
+            and key != 'execute_via_ssh_at'
     def executeRemotelyViaSsh(self):
         self.username = self.config.execute_via_ssh_at.split("@")[0]
         preparingNetworkLogPullScript = None;
@@ -264,7 +271,7 @@ class WorkerExecution:
         else: # Else is not a daemon.
         # TODO The method for generating the remote script is an hack.
             parsedVars = vars(self.config)
-            parsedKeys = list(filter(lambda key: key != 'execute_via_ssh_at' and parsedVars[key] is not None and self.configParser.get_default(key) != parsedVars[key], sorted(list(parsedVars.keys()))))
+            parsedKeys = list(filter(lambda key: self.filterArgumentsForRemoteScript(parsedVars, key), sorted(list(parsedVars.keys()))))
             for i, key in enumerate(parsedKeys):
                 self.remote_networker_arguments + "\n"
                 value_string = ""
@@ -300,7 +307,8 @@ class WorkerExecution:
             remoteNetworkerArguments = self.remote_networker_arguments,
             daemonFolder = self.daemonFolder,
             daemonName = self.daemonName,
-            daemonFile = self.daemonFile)
+            daemonFile = self.daemonFile,
+            bin_worker_execute = self.bin_worker_execute)
     def formatDocument(self, arg):
         """Ensure, that the document ends with a single new line symbol."""
         if arg.endswith("\n\n"):
@@ -457,7 +465,7 @@ def parse_worker_execution_arguments(arguments):
 class TestWorkerExecution(unittest.TestCase):
     maxDiff = None
     def test_bootstrap_remote(self):
-        test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--dry-run=true'])
+        test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--dry-run=true', '--backwards-compatible=False'])
         self.assertEqual(test_subject.remote_execution_script, """# Execute Main Task Remotely
 ssh user@address /bin/sh << EOF
   set -e
@@ -475,7 +483,7 @@ ssh user@address /bin/sh << EOF
 EOF
 """)
     def test_bootstrap_remote_via_daemon(self):
-        test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--is-daemon=true', '--forced-daemon-name=forced-daemon-name', '--dry-run=true'])
+        test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--is-daemon=true', '--forced-daemon-name=forced-daemon-name', '--dry-run=true', '--backwards-compatible=False'])
         self.assertEqual(test_subject.remote_execution_script, """# Set up Systemd service remotely
 ssh user@address /bin/sh << EOF
   set -e
