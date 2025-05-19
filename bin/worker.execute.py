@@ -469,7 +469,7 @@ def parse_worker_execution_arguments(arguments):
         if parsedArgs.name is None:
             parsedArgs.name = "net.splitcells.network.worker"
         parsedArgs.execute_via_ssh_at = parsedArgs.build_remote
-        parsedArgs.command = "cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.build;" \
+        parsedArgs.command = "cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.build && " \
             + 'cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.martins.avots.distro && ../net.splitcells.network/bin/worker.execute --name="net.splitcells.martins.avots.distro" --class-for-execution="net.splitcells.martins.avots.distro.LiveDistro" --only-build-image=true --use-playwright=true'
         parsedArgs.build_remote = None
     else:
