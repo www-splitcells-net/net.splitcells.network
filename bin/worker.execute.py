@@ -508,6 +508,7 @@ ssh user@address /bin/sh << EOF
   bin/worker.execute \\
     --command='cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'\\
     --dry-run='true'\\
+    --flat-folders='true'\\
     --name='net.splitcells.network.worker'
 
 EOF
