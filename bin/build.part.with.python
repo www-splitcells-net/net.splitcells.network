@@ -3,5 +3,6 @@
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 set -e
 chmod +x ./bin/*
+. ~/bin/net.splitcells.shell.commands.managed/command.managed.export.bin # This assumes, that the project is already installed and available in the PATH of the current shell.
 cd projects/net.splitcells.shell
     ./bin/test.routine
