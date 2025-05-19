@@ -18,8 +18,9 @@ target/
 .pydevproject
 
 .vagrant/
-# Log files created by Java crash dumps.
+# Log files created by Java crash dumps. Folders ending with `.log` are not ignored.
 *.log
+!*.log/
 
 # This dependency file is placed in the source code, so that it is available in developer mode for the webserver.
 projects/net.splitcells.website.content.default/src/main/resources/html/net/splitcells/website/js/jquery.js
