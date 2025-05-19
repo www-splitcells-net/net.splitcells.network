@@ -457,20 +457,20 @@ def parse_worker_execution_arguments(arguments):
         if parsedArgs.name is None:
             parsedArgs.name = "net.splitcells.network.worker"
         parsedArgs.execute_via_ssh_at = parsedArgs.bootstrap_remote
-        parsedArgs.command = "cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap"
+        parsedArgs.command = "cd ~/.local/state/" + parsedArgs.name + "/repos/public/net.splitcells.network && bin/worker.bootstrap"
         parsedArgs.bootstrap_remote = None
     elif parsedArgs.test_remote is not None:
         if parsedArgs.name is None:
             parsedArgs.name = "net.splitcells.network.worker"
         parsedArgs.execute_via_ssh_at = parsedArgs.test_remote
-        parsedArgs.command = "cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.test"
+        parsedArgs.command = "cd ~/.local/state/" + parsedArgs.name + "/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.test"
         parsedArgs.test_remote = None
     elif parsedArgs.build_remote is not None:
         if parsedArgs.name is None:
             parsedArgs.name = "net.splitcells.network.worker"
         parsedArgs.execute_via_ssh_at = parsedArgs.build_remote
-        parsedArgs.command = "cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.build && " \
-            + 'cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.martins.avots.distro && ../net.splitcells.network/bin/worker.execute --name="net.splitcells.martins.avots.distro" --class-for-execution="net.splitcells.martins.avots.distro.LiveDistro" --only-build-image=true --use-playwright=true'
+        parsedArgs.command = "cd ~/.local/state/" + parsedArgs.name + "/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.build && " \
+            + 'cd ~/.local/state/" + parsedArgs.name + "/repos/public/net.splitcells.martins.avots.distro && ../net.splitcells.network/bin/worker.execute --name="net.splitcells.martins.avots.distro" --class-for-execution="net.splitcells.martins.avots.distro.LiveDistro" --only-build-image=true --use-playwright=true'
         parsedArgs.build_remote = None
     else:
         raise Exception("Exactly one of the arguments --name, --test-remote or --bootstrap-remote has to be set, in order to execute this program.");
