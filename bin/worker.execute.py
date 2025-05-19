@@ -172,26 +172,26 @@ If set to true, the CPU architecture will be determined by this command and the 
 This is useful, because some tools have not a good CPU auto detection (i.e. Podman on RISC-V cannot find the fitting images based on the CPU arch automatically)."""
 
 DEFAULT_NETWORK_PULL_SCRIPT = """# Preparing Execution via Network Log Pull
-if ssh -q ${executeViaSshAt} "sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'"
+if ssh -q ${execute_via_ssh_at} "sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'"
 then
   cd ../net.splitcells.network.log
-  git config remote.${executeViaSshAt}.url >&- || git remote add ${executeViaSshAt} ${executeViaSshAt}:/home/${username}/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
-  git remote set-url ${executeViaSshAt} ${executeViaSshAt}:/home/${username}/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
-  git remote set-url --push ${executeViaSshAt} ${executeViaSshAt}:/home/${username}/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
-  git pull ${executeViaSshAt} master
+  git config remote.${execute_via_ssh_at}.url >&- || git remote add ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+  git remote set-url ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+  git remote set-url --push ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+  git pull ${execute_via_ssh_at} master
   cd ../net.splitcells.network
 fi"""
 
 DEFAULT_CLOSING_PULL_NETWORK_LOG_SCRIPT = """# Closing Execution via Network Log Pull
 cd ../net.splitcells.network.log
-git config remote.${executeViaSshAt}.url >&- || git remote add ${executeViaSshAt} ${executeViaSshAt}:/home/${username}/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
-git remote set-url ${executeViaSshAt} ${executeViaSshAt}:/home/${username}/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
-git remote set-url --push ${executeViaSshAt} ${executeViaSshAt}:/home/${username}/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
-git pull ${executeViaSshAt} master
+git config remote.${execute_via_ssh_at}.url >&- || git remote add ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+git remote set-url ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+git remote set-url --push ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+git pull ${execute_via_ssh_at} master
 """
 
 EXECUTE_MAIN_TASK_REMOTELY = """# Execute Main Task Remotely
-ssh ${executeViaSshAt} /bin/sh << EOF
+ssh ${execute_via_ssh_at} /bin/sh << EOF
   set -e
   if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then
     mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/
@@ -203,7 +203,7 @@ ssh ${executeViaSshAt} /bin/sh << EOF
 EOF"""
 
 SET_UP_SYSTEMD_SERVICE_REMOTELY = """# Set up Systemd service remotely
-ssh ${executeViaSshAt} /bin/sh << EOF
+ssh ${execute_via_ssh_at} /bin/sh << EOF
   set -e
   mkdir -p ${daemonFolder}
   cat > ${daemonFile} <<SERVICE_EOL
@@ -239,30 +239,32 @@ class WorkerExecution:
         if self.was_executed:
             raise Exception("A WorkerExecution instance cannot be executed twice.")
         self.was_executed = True
-        if config.executeViaSshAt is None:
+        if config.execute_via_ssh_at is None:
             self.executeLocally()
         else:
             self.executeRemotelyViaSsh()
+    def filterArgumentsForRemoteScript(self, parsedVars):
+        return
     def executeRemotelyViaSsh(self):
-        self.username = self.config.executeViaSshAt.split("@")[0]
+        self.username = self.config.execute_via_ssh_at.split("@")[0]
         preparingNetworkLogPullScript = None;
-        closingPullNetworkLogScript = None;
-        if self.config.pullNetworkLog:
+        closingpull_network_logScript = None;
+        if self.config.pull_network_log:
             preparingNetworkLogPullScript = DEFAULT_NETWORK_PULL_SCRIPT
         else:
             preparingNetworkLogPullScript = ""
-        if self.config.isDaemon:
-            if self.config.forcedDaemonName is None:
+        if self.config.is_daemon:
+            if self.config.forced_daemon_name is None:
                 self.daemonName = TEMPORARY_FILE_PREFIX + self.config.name + "-" + datetime.now().strftime('%Y-%m-%d-%H-%M-%S') + "-" + str(random.randint(1, 999_999_999))
             else:
-                self.daemonName = self.config.forcedDaemonName
+                self.daemonName = self.config.forced_daemon_name
             self.daemonFolder = "~/.config/systemd/user";
             self.daemonFile = self.daemonFolder + "/" + self.daemonName;
             self.remote_execution_script_template = self.applyTemplate(SET_UP_SYSTEMD_SERVICE_REMOTELY)
         else: # Else is not a daemon.
         # TODO The method for generating the remote script is an hack.
             parsedVars = vars(self.config)
-            parsedKeys = list(filter(lambda key: key != 'executeViaSshAt' and parsedVars[key] is not None and self.configParser.get_default(key) != parsedVars[key], sorted(list(parsedVars.keys()))))
+            parsedKeys = list(filter(lambda key: key != 'execute_via_ssh_at' and parsedVars[key] is not None and self.configParser.get_default(key) != parsedVars[key], sorted(list(parsedVars.keys()))))
             for i, key in enumerate(parsedKeys):
                 self.remote_networker_arguments + "\n"
                 value_string = ""
@@ -276,7 +278,7 @@ class WorkerExecution:
                 else:
                     self.remote_networker_arguments += "\n"
             self.remote_execution_script_template = self.applyTemplate(EXECUTE_MAIN_TASK_REMOTELY)
-        if self.config.pullNetworkLog:
+        if self.config.pull_network_log:
             closingPullNetworkLogScript = DEFAULT_CLOSING_PULL_NETWORK_LOG_SCRIPT
         else:
             closingPullNetworkLogScript = ""
@@ -292,7 +294,7 @@ class WorkerExecution:
         return
     def applyTemplate(self, string):
         return Template(string).safe_substitute(
-            executeViaSshAt = self.config.executeViaSshAt,
+            execute_via_ssh_at = self.config.execute_via_ssh_at,
             username = self.username,
             name = self.config.name,
             remoteNetworkerArguments = self.remote_networker_arguments,
@@ -313,7 +315,7 @@ class WorkerExecution:
         return arg + "\n\n"
     def executeLocally(self):
         """ TODO Use [${...}] based variable substitution instead of complex string replacements. """
-        if self.config.isDaemon:
+        if self.config.is_daemon:
             raise Exception("Running a service as a daemon is not implemented yet.")
         if not os.path.exists('./target'):
             os.mkdir('./target')
@@ -323,26 +325,26 @@ class WorkerExecution:
         if self.config.command is not None:
             ++required_argument_count
             self.docker_file += "ENTRYPOINT " + self.config.command + "\n"
-        if self.config.executablePath is not None:
+        if self.config.executable_path is not None:
             ++required_argument_count
             self.program_name = "program-" + self.config.name
-            shutil.copyfile(parsedArgs.executablePath, "./target/" + self.program_name)
+            shutil.copyfile(parsedArgs.executable_path, "./target/" + self.program_name)
             self.docker_file += "ADD ./" + self.program_name + " /root/program\n"
             self.docker_file += 'ENTRYPOINT /root/program'
-        if self.config.classForExecution is not None:
+        if self.config.class_for_execution is not None:
             ++required_argument_count
             self.docker_file += JAVA_CLASS_EXECUTION_TEMPLATE
-            self.docker_file += self.docker_file.replace('$CLASS_FOR_EXECUTION', self.config.classForExecution)
+            self.docker_file += self.docker_file.replace('$CLASS_FOR_EXECUTION', self.config.class_for_execution)
         if required_argument_count == 0:
             raise Exception("Either `--command`, `--executable-path` or `--class-for-execution` needs to be set.")
         if required_argument_count > 1:
             raise Exception("Exactly one of `--command`, `--executable-path` or `--class-for-execution` needs to be set, but " + required_argument_count + " were actually set.")
-        if self.config.flatFolders:
+        if self.config.flat_folders:
             self.docker_file = self.docker_file.replace("VOLUME /root/.local/", "VOLUME /root/.local/state/${executionName}/.local/")
             self.docker_file = self.docker_file.replace("VOLUME /root/Documents/", "VOLUME /root/.local/state/${executionName}/Documents/")
             self.docker_file = self.docker_file.replace("VOLUME /root/repos/", "VOLUME /root/.local/state/${executionName}/repos/")
             # .ssh and .m2 does not have to be replaced, as these are used for environment configuration of tools inside the container.
-        if parsedArgs.usePlaywright:
+        if parsedArgs.use_playwright:
             self.docker_file = self.docker_file.replace('$ContainerSetupCommand', 'RUN cd /root/opt/${NAME_FOR_EXECUTION}/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"\n')
         else:
             self.docker_file = self.docker_file.replace('$ContainerSetupCommand', '\n')
@@ -355,17 +357,17 @@ class WorkerExecution:
             file_to_write.write(self.docker_file)
         with open('target/net.splitcells.network.worker.pom.xml', 'w') as pom_file_to_write:
             pom_file_to_write.write(CONTAINER_POM)
-        if self.config.onlyExecuteImage:
+        if self.config.only_execute_image:
             self.local_execution_script = PREPARE_EXECUTION_WITHOUT_BUILD_TEMPLATE
         else:
             self.local_execution_script = PREPARE_EXECUTION_TEMPLATE
-        if self.config.publishExecutionImage:
+        if self.config.publish_execution_image:
             self.local_execution_script += PUBLISH_VIA_PODMAN_TEMPLATE
-        elif self.config.onlyBuildImage:
+        elif self.config.only_build_image:
             pass # TODO This is not implemented yet.
         else:
             self.local_execution_script += EXECUTE_VIA_PODMAN_TEMPLATE
-        if self.config.flatFolders:
+        if self.config.flat_folders:
             self.local_execution_script = self.local_execution_script.replace("-v ${HOME}/.local/state/${executionName}/Documents:/root/Documents ", "-v ${HOME}/.local/state/${executionName}/Documents:/root/.local/state/${executionName}/Documents ")
             self.local_execution_script = self.local_execution_script.replace("-v ${HOME}/.local/state/${executionName}/repos:/root/repos ", "-v ${HOME}/.local/state/${executionName}/repos:/root/.local/state/${executionName}/repos ")
             self.local_execution_script = self.local_execution_script.replace("-v ${HOME}/.local/state/${executionName}/.local:/root/.local ", "-v ${HOME}/.local/state/${executionName}/.local:/root/.local/state/${executionName}/.local ")
@@ -373,21 +375,21 @@ class WorkerExecution:
         if self.config.command is not None:
             # TODO This does not seem to be valid or used anymore.
             self.local_execution_script = executionScript.replace('"$executionCommand"', "'" + self.config.command.replace("'", "'\\''") + "'")
-        if self.config.portPublishing is not None:
-            for portMapping in self.config.portPublishing.split(','):
+        if self.config.port_publishing is not None:
+            for portMapping in self.config.port_publishing.split(','):
                 self.additional_podman_args += ' --publish ' + portMapping
         self.local_execution_script = self.local_execution_script.replace('"$podmanParameters"', self.additional_podman_args)
-        if self.config.autoConfigureCpuArchExplicitly:
+        if self.config.auto_configure_cpuArch_explicitly:
             self.local_execution_script = self.local_execution_script.replace('\n    --arch string \\\n', '\n    --arch ' + platform.uname().machine + ' \\\n')
-        elif self.config.cpuArchitecture is None:
+        elif self.config.cpu_architecture is None:
             self.local_execution_script = self.local_execution_script.replace('\n    --arch string \\\n', '\n')
         else:
-            self.local_execution_script = self.local_execution_script.replace('\n    --arch string \\\n', '\n    --arch ' + self.config.cpuArchitecture + ' \\\n')
+            self.local_execution_script = self.local_execution_script.replace('\n    --arch string \\\n', '\n    --arch ' + self.config.cpu_architecture + ' \\\n')
         if self.config.verbose:
             self.local_execution_script = self.local_execution_script.replace('--log-level=info', '--log-level=debug')
         else:
             self.local_execution_script = self.local_execution_script.replace("\nset -x\n", "\n\n")
-        if self.config.useHostDocuments:
+        if self.config.use_host_documents:
             # TODO This replacement is done in a dirty way. Use a template variable instead.
             self.local_execution_script = self.local_execution_script.replace("-v ${HOME}/.local/state/${executionName}/Documents:/root/Documents \\", "-v ${HOME}/Documents:/root/Documents \\")
         if PODMAN_FLAGS_CONFIG_FILE.is_file():
@@ -409,45 +411,45 @@ def str2bool(arg):
     # The stringification of the truth boolean is `True` in Python 3 and therefore this capitalization is supported as well.
     return arg == 'true' or arg == 'True'
 def parse_worker_execution_arguments(arguments):
-    # If not remove the comment, and the hyphenless flag names. For each argument flag, there is an alternative name without hyphens ('-'), so these can easily be printed out and reused for this program. See `executeViaSshAt`.
+    # If not remove the comment, and the hyphenless flag names. For each argument flag, there is an alternative name without hyphens ('-'), so these can easily be printed out and reused for this program. See `execute_via_ssh_at`.
     parser = argparse.ArgumentParser(description=PROGRAMS_DESCRIPTION)
     parser.add_argument('--name', dest='name', required=False, help="This is the name of the task being executed.")
-    parser.add_argument('--bootstrap-remote', dest='bootstrapRemote', required=False, help="This is the ssh address for bootstrapping in the form of `username@host`. If this is set, other parameters are set automatically as well, in order to bootstrap the Network repos on a remote server in a standardized way.")
-    parser.add_argument('--test-remote', dest='testRemote', required=False, help="This is the ssh address for testing in the form of `username@host`. If this is set, other parameters are set automatically as well, in order to test the Network repos on a remote server in a standardized way.")
-    parser.add_argument('--pull-network-log', dest='pullNetworkLog', required=False, type=str2bool, default=False, help="If set to true, the repo `net.splitcells.network.log` will be pulled from the remote.")
+    parser.add_argument('--bootstrap-remote', dest='bootstrap_remote', required=False, help="This is the ssh address for bootstrapping in the form of `username@host`. If this is set, other parameters are set automatically as well, in order to bootstrap the Network repos on a remote server in a standardized way.")
+    parser.add_argument('--test-remote', dest='test_remote', required=False, help="This is the ssh address for testing in the form of `username@host`. If this is set, other parameters are set automatically as well, in order to test the Network repos on a remote server in a standardized way.")
+    parser.add_argument('--pull-network-log', dest='pull_network_log', required=False, type=str2bool, default=False, help="If set to true, the repo `net.splitcells.network.log` will be pulled from the remote.")
     parser.add_argument('--command', required=False, dest='command', help=CLI_FLAG_COMMAND_HELP)
-    parser.add_argument('--executable-path', '--executablePath', dest='executablePath', help="Executes the given executable file. Only set this option or --command.")
-    parser.add_argument('--class-for-execution', '--classForExecution', dest='classForExecution', help="This Java class is executed.")
+    parser.add_argument('--executable-path', '--executable_path', dest='executable_path', help="Executes the given executable file. Only set this option or --command.")
+    parser.add_argument('--class-for-execution', '--class_for_execution', dest='class_for_execution', help="This Java class is executed.")
     # TODO --use-host-documents is probably not needed anymore, as there is not a concrete use case for this at the moment.
-    parser.add_argument('--use-host-documents', '--useHostDocuments', dest='useHostDocuments', required=False, type=str2bool, default=False, help="Determines whether to mount `~/Documents` or not. This should be avoided, in order to avoid file dependencies to the host system, which makes the execution more portable.")
-    parser.add_argument('--publish-execution-image', '--publishExecutionImage', dest='publishExecutionImage', required=False, type=str2bool, default=False, help="If set to true, the given command is not executed, but a container image is published instead.")
+    parser.add_argument('--use-host-documents', '--use_host_documents', dest='use_host_documents', required=False, type=str2bool, default=False, help="Determines whether to mount `~/Documents` or not. This should be avoided, in order to avoid file dependencies to the host system, which makes the execution more portable.")
+    parser.add_argument('--publish-execution-image', '--publish_execution_image', dest='publish_execution_image', required=False, type=str2bool, default=False, help="If set to true, the given command is not executed, but a container image is published instead.")
     parser.add_argument('--verbose', dest='verbose', required=False, type=str2bool, default=False, help="If set to true, the output is verbose.")
-    parser.add_argument('--only-build-image', '--onlyBuildImage', dest='onlyBuildImage', required=False, type=str2bool, default=False, help="If set to true, the created image is not executed.")
-    parser.add_argument('--only-execute-image', '--onlyExecuteImage', dest='onlyExecuteImage', required=False, type=str2bool, default=False, help="If set to true, the previously created image is executed without building it.")
-    parser.add_argument('--cpu-architecture', '--cpuArchitecture', dest='cpuArchitecture', help="Set the cpu architecture for the execution.")
+    parser.add_argument('--only-build-image', '--only_build_image', dest='only_build_image', required=False, type=str2bool, default=False, help="If set to true, the created image is not executed.")
+    parser.add_argument('--only-execute-image', '--only_execute_image', dest='only_execute_image', required=False, type=str2bool, default=False, help="If set to true, the previously created image is executed without building it.")
+    parser.add_argument('--cpu-architecture', '--cpu_architecture', dest='cpu_architecture', help="Set the cpu architecture for the execution.")
     parser.add_argument('--dry-run', dest='dry_run', required=False, type=str2bool, default=False, help="If true, commands are only prepared and no commands are executed.")
-    parser.add_argument('--is-daemon', '--isDaemon', dest='isDaemon', required=False, type=str2bool, default=False, help="If this is true, the process is executed as systemd user service in the background.")
-    parser.add_argument('--forced-daemon-name', dest='forcedDaemonName', required=False, help="This is the name of the systemd user service name. This flag is mainly used for unit tests.")
-    parser.add_argument('--use-playwright', '--usePlaywright', dest='usePlaywright', required=False, type=str2bool, default=False, help="If true, playwright is installed for the execution.")
-    parser.add_argument('--auto-configure-cpu-architecture-explicitly', '--autoConfigureCpuArchExplicitly', dest='autoConfigureCpuArchExplicitly', required=False, type=str2bool, default=True, help=CLI_FLAG_AUTO_CPU_ARCH_HELP)
-    parser.add_argument('--port-publishing', '--portPublishing', dest='portPublishing', help="This is a comma separated list of `host-port:container-port`, that describes the port forwarding on the host.")
-    parser.add_argument('--execute-via-ssh-at', '--executeViaSshAt', dest='executeViaSshAt', help="Execute the given command at an remote server via SSH. The format is `[user]@[address/network name]`.")
-    parser.add_argument('--flat-folders', '--flatFolders', dest='flatFolders', required=False, type=str2bool, default=False, help="If this is set to true, the `~/.local/state/${executionName}` is not mapped to `~/.local/state/${executionName}/.local/state/${executionName}` via containers.")
-    parser.add_argument('--backwards-compatible', dest='backwardsCompatible', required=False, type=str2bool, default=False, help="If set to true, the the remote script is compatible to the previous implementation.")
+    parser.add_argument('--is-daemon', '--is_daemon', dest='is_daemon', required=False, type=str2bool, default=False, help="If this is true, the process is executed as systemd user service in the background.")
+    parser.add_argument('--forced-daemon-name', dest='forced_daemon_name', required=False, help="This is the name of the systemd user service name. This flag is mainly used for unit tests.")
+    parser.add_argument('--use-playwright', '--use_playwright', dest='use_playwright', required=False, type=str2bool, default=False, help="If true, playwright is installed for the execution.")
+    parser.add_argument('--auto-configure-cpu-architecture-explicitly', '--auto_configure_cpuArch_explicitly', dest='auto_configure_cpuArch_explicitly', required=False, type=str2bool, default=True, help=CLI_FLAG_AUTO_CPU_ARCH_HELP)
+    parser.add_argument('--port-publishing', '--port_publishing', dest='port_publishing', help="This is a comma separated list of `host-port:container-port`, that describes the port forwarding on the host.")
+    parser.add_argument('--execute-via-ssh-at', '--execute_via_ssh_at', dest='execute_via_ssh_at', help="Execute the given command at an remote server via SSH. The format is `[user]@[address/network name]`.")
+    parser.add_argument('--flat-folders', '--flat_folders', dest='flat_folders', required=False, type=str2bool, default=False, help="If this is set to true, the `~/.local/state/${executionName}` is not mapped to `~/.local/state/${executionName}/.local/state/${executionName}` via containers.")
+    parser.add_argument('--backwards-compatible', dest='backwards_compatible', required=False, type=str2bool, default=False, help="If set to true, the the remote script is compatible to the previous implementation.")
     parsedArgs = parser.parse_args(arguments)
     workerExecution = WorkerExecution()
-    if parsedArgs.bootstrapRemote is not None:
+    if parsedArgs.bootstrap_remote is not None:
         parsedArgs.name = "net.splitcells.network.worker"
-        parsedArgs.executeViaSshAt = parsedArgs.bootstrapRemote
+        parsedArgs.execute_via_ssh_at = parsedArgs.bootstrap_remote
         parsedArgs.command = "cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap"
-        parsedArgs.bootstrapRemote = None
-        # parsedArgs.pullNetworkLog is not set to true, as this repo might not exist on the remote yet.
-    elif parsedArgs.testRemote is not None:
+        parsedArgs.bootstrap_remote = None
+        # parsedArgs.pull_network_log is not set to true, as this repo might not exist on the remote yet.
+    elif parsedArgs.test_remote is not None:
         parsedArgs.name = "net.splitcells.network.worker"
-        parsedArgs.executeViaSshAt = parsedArgs.testRemote
+        parsedArgs.execute_via_ssh_at = parsedArgs.test_remote
         parsedArgs.command = "cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.test"
-        parsedArgs.pullNetworkLog = True
-        parsedArgs.testRemote = None
+        parsedArgs.pull_network_log = True
+        parsedArgs.test_remote = None
     else:
         raise Exception("Exactly one of the arguments --name, --test-remote or --bootstrap-remote has to be set, in order to execute this program.");
     workerExecution.execute(parser, parsedArgs)
