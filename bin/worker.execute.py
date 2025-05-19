@@ -448,7 +448,9 @@ def parse_worker_execution_arguments(arguments):
     parser.add_argument('--backwards-compatible', dest='backwards_compatible', required=False, type=str2bool, default=False, help="If set to true, the the remote script is compatible to the previous implementation.")
     parsedArgs = parser.parse_args(arguments)
     workerExecution = WorkerExecution()
-    if parsedArgs.bootstrap_remote is not None:
+    if parsedArgs.command is not None:
+        pass
+    elif parsedArgs.bootstrap_remote is not None:
         parsedArgs.name = "net.splitcells.network.worker"
         parsedArgs.execute_via_ssh_at = parsedArgs.bootstrap_remote
         parsedArgs.command = "cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap"
