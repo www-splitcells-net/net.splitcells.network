@@ -249,7 +249,7 @@ class WorkerExecution:
         else:
             self.executeRemotelyViaSsh()
     def filterArgumentsForRemoteScript(self, parsedVars, key):
-        if self.config.flat_folders:
+        if key == 'flat_folders' and self.config.flat_folders:
             return True
         if self.config.backwards_compatible:
             if key in ['pull_network_log', 'backwards_compatible']:
