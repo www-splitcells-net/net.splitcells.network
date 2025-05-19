@@ -459,13 +459,11 @@ def parse_worker_execution_arguments(arguments):
         parsedArgs.execute_via_ssh_at = parsedArgs.bootstrap_remote
         parsedArgs.command = "cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap"
         parsedArgs.bootstrap_remote = None
-        # parsedArgs.pull_network_log is not set to true, as this repo might not exist on the remote yet.
     elif parsedArgs.test_remote is not None:
         if parsedArgs.name is None:
             parsedArgs.name = "net.splitcells.network.worker"
         parsedArgs.execute_via_ssh_at = parsedArgs.test_remote
         parsedArgs.command = "cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.test"
-        parsedArgs.pull_network_log = True
         parsedArgs.test_remote = None
     elif parsedArgs.build_remote is not None:
         if parsedArgs.name is None:
@@ -473,7 +471,6 @@ def parse_worker_execution_arguments(arguments):
         parsedArgs.execute_via_ssh_at = parsedArgs.build_remote
         parsedArgs.command = "cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.build;" \
             + 'cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.martins.avots.distro && ../net.splitcells.network/bin/worker.execute --name="net.splitcells.martins.avots.distro" --class-for-execution="net.splitcells.martins.avots.distro.LiveDistro" --only-build-image=true --use-playwright=true'
-        parsedArgs.pull_network_log = True
         parsedArgs.build_remote = None
     else:
         raise Exception("Exactly one of the arguments --name, --test-remote or --bootstrap-remote has to be set, in order to execute this program.");
@@ -483,7 +480,18 @@ class TestWorkerExecution(unittest.TestCase):
     maxDiff = None
     def test_bootstrap_remote(self):
         test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--dry-run=true', '--backwards-compatible=True'])
-        self.assertEqual(test_subject.remote_execution_script, """# Execute Main Task Remotely
+        self.assertEqual(test_subject.remote_execution_script, """# Preparing Execution via Network Log Pull
+if ssh -q user@address "sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'"
+then
+  cd ../net.splitcells.network.log
+  git config remote.user@address.url >&- || git remote add user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+  git remote set-url user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+  git remote set-url --push user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+  git pull user@address master
+  cd ../net.splitcells.network
+fi
+
+# Execute Main Task Remotely
 ssh user@address /bin/sh << EOF
   set -e
   if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then
@@ -498,10 +506,28 @@ ssh user@address /bin/sh << EOF
     --name='net.splitcells.network.worker'
 
 EOF
+
+# Closing Execution via Network Log Pull
+cd ../net.splitcells.network.log
+git config remote.user@address.url >&- || git remote add user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+git remote set-url user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+git remote set-url --push user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+git pull user@address master
 """)
     def test_bootstrap_remote_via_daemon(self):
         test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--is-daemon=true', '--daemon-name=daemon-name', '--dry-run=true', '--backwards-compatible=True'])
-        self.assertEqual(test_subject.remote_execution_script, """# Set up Systemd service remotely
+        self.assertEqual(test_subject.remote_execution_script, """# Preparing Execution via Network Log Pull
+if ssh -q user@address "sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'"
+then
+  cd ../net.splitcells.network.log
+  git config remote.user@address.url >&- || git remote add user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+  git remote set-url user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+  git remote set-url --push user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+  git pull user@address master
+  cd ../net.splitcells.network
+fi
+
+# Set up Systemd service remotely
 ssh user@address /bin/sh << EOF
   set -e
   mkdir -p ~/.config/systemd/user
@@ -515,6 +541,13 @@ StandardOutput=journal
 ExecStart=/usr/bin/date
 SERVICE_EOL
 EOF
+
+# Closing Execution via Network Log Pull
+cd ../net.splitcells.network.log
+git config remote.user@address.url >&- || git remote add user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+git remote set-url user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+git remote set-url --push user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+git pull user@address master
 """)
 if __name__ == '__main__':
     # As there is no build process for Python unit tests are executed every time, to make sure, that the script works correctly.
