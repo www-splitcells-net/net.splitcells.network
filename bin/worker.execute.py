@@ -346,7 +346,7 @@ class WorkerExecution:
             self.docker_file += JAVA_CLASS_EXECUTION_TEMPLATE
             self.docker_file += self.docker_file.replace('$CLASS_FOR_EXECUTION', self.config.class_for_execution)
         if required_argument_count == 0:
-            raise Exception("Either `--command`, `--executable-path` or `--class-for-execution` needs to be set.")
+            raise Exception("Either `--command`, `--executable-path` or `--class-for-execution` needs to be set:" + str(self.config))
         if required_argument_count > 1:
             raise Exception("Exactly one of `--command`, `--executable-path` or `--class-for-execution` needs to be set, but " + required_argument_count + " were actually set.")
         if self.config.flat_folders:
