@@ -249,6 +249,8 @@ class WorkerExecution:
         else:
             self.executeRemotelyViaSsh()
     def filterArgumentsForRemoteScript(self, parsedVars, key):
+        if self.config.flat_folders:
+            return True
         if self.config.backwards_compatible:
             if key in ['pull_network_log', 'backwards_compatible']:
                 return False
@@ -447,7 +449,7 @@ def parse_worker_execution_arguments(arguments):
     parser.add_argument('--auto-configure-cpu-architecture-explicitly', '--auto_configure_cpuArch_explicitly', dest='auto_configure_cpuArch_explicitly', required=False, type=str2bool, default=True, help=CLI_FLAG_AUTO_CPU_ARCH_HELP)
     parser.add_argument('--port-publishing', '--port_publishing', dest='port_publishing', help="This is a comma separated list of `host-port:container-port`, that describes the port forwarding on the host.")
     parser.add_argument('--execute-via-ssh-at', '--execute_via_ssh_at', dest='execute_via_ssh_at', help="Execute the given command at an remote server via SSH. The format is `[user]@[address/network name]`.")
-    parser.add_argument('--flat-folders', '--flat_folders', dest='flat_folders', required=False, type=str2bool, default=False, help="If this is set to true, the `~/.local/state/${executionName}` is not mapped to `~/.local/state/${executionName}/.local/state/${executionName}` via containers.")
+    parser.add_argument('--flat-folders', '--flat_folders', dest='flat_folders', required=False, type=str2bool, default=True, help="If this is set to true, the `~/.local/state/${executionName}` is not mapped to `~/.local/state/${executionName}/.local/state/${executionName}` via containers.")
     parser.add_argument('--backwards-compatible', dest='backwards_compatible', required=False, type=str2bool, default=True, help="If set to true, the the remote script is compatible to the previous implementation.")
     parsedArgs = parser.parse_args(arguments)
     workerExecution = WorkerExecution()
