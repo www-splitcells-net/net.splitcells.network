@@ -4,5 +4,6 @@
 set -e
 chmod +x ./bin/*
 . ~/bin/net.splitcells.shell.commands.managed/command.managed.export.bin # This assumes, that the project is already installed and available in the PATH of the current shell.
+echo $PATH
 cd projects/net.splitcells.shell
     ./bin/test.routine
