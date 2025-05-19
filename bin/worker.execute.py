@@ -450,15 +450,18 @@ def parse_worker_execution_arguments(arguments):
     parsedArgs = parser.parse_args(arguments)
     workerExecution = WorkerExecution()
     if parsedArgs.command is not None:
-        pass
+        if parsedArgs.name is None:
+            parsedArgs.name = "net.splitcells.network.worker"
     elif parsedArgs.bootstrap_remote is not None:
-        parsedArgs.name = "net.splitcells.network.worker"
+        if parsedArgs.name is None:
+            parsedArgs.name = "net.splitcells.network.worker"
         parsedArgs.execute_via_ssh_at = parsedArgs.bootstrap_remote
         parsedArgs.command = "cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap"
         parsedArgs.bootstrap_remote = None
         # parsedArgs.pull_network_log is not set to true, as this repo might not exist on the remote yet.
     elif parsedArgs.test_remote is not None:
-        parsedArgs.name = "net.splitcells.network.worker"
+        if parsedArgs.name is None:
+            parsedArgs.name = "net.splitcells.network.worker"
         parsedArgs.execute_via_ssh_at = parsedArgs.test_remote
         parsedArgs.command = "cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.test"
         parsedArgs.pull_network_log = True
