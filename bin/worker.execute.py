@@ -241,9 +241,9 @@ class WorkerExecution:
             raise Exception("A WorkerExecution instance cannot be executed twice.")
         self.was_executed = True
         if self.config.backwards_compatible:
-            self.bin_worker_execute = "bin/worker.execute.py"
-        else:
             self.bin_worker_execute = "bin/worker.execute"
+        else:
+            self.bin_worker_execute = "bin/worker.execute.py"
         if config.execute_via_ssh_at is None:
             self.executeLocally()
         else:
@@ -467,7 +467,7 @@ def parse_worker_execution_arguments(arguments):
 class TestWorkerExecution(unittest.TestCase):
     maxDiff = None
     def test_bootstrap_remote(self):
-        test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--dry-run=true', '--backwards-compatible=False'])
+        test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--dry-run=true', '--backwards-compatible=True'])
         self.assertEqual(test_subject.remote_execution_script, """# Execute Main Task Remotely
 ssh user@address /bin/sh << EOF
   set -e
@@ -478,6 +478,7 @@ ssh user@address /bin/sh << EOF
   fi
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
   bin/worker.execute \\
+    --backwards-compatible='true'\\
     --command='cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'\\
     --dry-run='true'\\
     --name='net.splitcells.network.worker'
@@ -485,7 +486,7 @@ ssh user@address /bin/sh << EOF
 EOF
 """)
     def test_bootstrap_remote_via_daemon(self):
-        test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--is-daemon=true', '--forced-daemon-name=forced-daemon-name', '--dry-run=true', '--backwards-compatible=False'])
+        test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--is-daemon=true', '--forced-daemon-name=forced-daemon-name', '--dry-run=true', '--backwards-compatible=True'])
         self.assertEqual(test_subject.remote_execution_script, """# Set up Systemd service remotely
 ssh user@address /bin/sh << EOF
   set -e
