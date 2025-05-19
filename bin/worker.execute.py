@@ -172,33 +172,33 @@ If set to true, the CPU architecture will be determined by this command and the 
 This is useful, because some tools have not a good CPU auto detection (i.e. Podman on RISC-V cannot find the fitting images based on the CPU arch automatically)."""
 
 DEFAULT_NETWORK_PULL_SCRIPT = """# Preparing Execution via Network Log Pull
-if ssh -q ${execute_via_ssh_at} "sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'"
+if ssh -q ${execute_via_ssh_at} "sh -c '[ -d ~/.local/state/${executionName}/repos/public/net.splitcells.network.log ]'"
 then
   cd ../net.splitcells.network.log
-  git config remote.${execute_via_ssh_at}.url >&- || git remote add ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
-  git remote set-url ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
-  git remote set-url --push ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+  git config remote.${execute_via_ssh_at}.url >&- || git remote add ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/${executionName}/repos/public/net.splitcells.network.log
+  git remote set-url ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/${executionName}/repos/public/net.splitcells.network.log
+  git remote set-url --push ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/${executionName}/repos/public/net.splitcells.network.log
   git pull ${execute_via_ssh_at} master
   cd ../net.splitcells.network
 fi"""
 
 DEFAULT_CLOSING_PULL_NETWORK_LOG_SCRIPT = """# Closing Execution via Network Log Pull
 cd ../net.splitcells.network.log
-git config remote.${execute_via_ssh_at}.url >&- || git remote add ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
-git remote set-url ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
-git remote set-url --push ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+git config remote.${execute_via_ssh_at}.url >&- || git remote add ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/${executionName}/repos/public/net.splitcells.network.log
+git remote set-url ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/${executionName}/repos/public/net.splitcells.network.log
+git remote set-url --push ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/${executionName}/repos/public/net.splitcells.network.log
 git pull ${execute_via_ssh_at} master
 """
 
 EXECUTE_MAIN_TASK_REMOTELY = """# Execute Main Task Remotely
 ssh ${execute_via_ssh_at} /bin/sh << EOF
   set -e
-  if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then
-    mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/
-    cd ~/.local/state/net.splitcells.network.worker/repos/public/
+  if [ ! -d ~/.local/state/${executionName}/repos/public/net.splitcells.network ]; then
+    mkdir -p ~/.local/state/${executionName}/repos/public/
+    cd ~/.local/state/${executionName}/repos/public/
     git clone https://codeberg.org/splitcells-net/net.splitcells.network.git
   fi
-  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
+  cd ~/.local/state/${executionName}/repos/public/net.splitcells.network
   ${bin_worker_execute} \\\n${remoteNetworkerArguments}
 EOF"""
 
@@ -311,7 +311,8 @@ class WorkerExecution:
             daemonFolder = self.daemonFolder,
             daemonName = self.daemonName,
             daemonFile = self.daemonFile,
-            bin_worker_execute = self.bin_worker_execute)
+            bin_worker_execute = self.bin_worker_execute,
+            executionName = self.config.name)
     def formatDocument(self, arg):
         """Ensure, that the document ends with a single new line symbol."""
         if arg.endswith("\n\n"):
