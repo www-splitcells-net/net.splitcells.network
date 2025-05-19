@@ -264,10 +264,10 @@ class WorkerExecution:
         else:
             preparingNetworkLogPullScript = ""
         if self.config.is_daemon:
-            if self.config.forced_daemon_name is None:
+            if self.config.daemon_name is None:
                 self.daemonName = TEMPORARY_FILE_PREFIX + self.config.name + "-" + datetime.now().strftime('%Y-%m-%d-%H-%M-%S') + "-" + str(random.randint(1, 999_999_999))
             else:
-                self.daemonName = self.config.forced_daemon_name
+                self.daemonName = self.config.daemon_name
             self.daemonFolder = "~/.config/systemd/user";
             self.daemonFile = self.daemonFolder + "/" + self.daemonName;
             self.remote_execution_script_template = self.applyTemplate(SET_UP_SYSTEMD_SERVICE_REMOTELY)
@@ -441,7 +441,7 @@ def parse_worker_execution_arguments(arguments):
     parser.add_argument('--cpu-architecture', '--cpu_architecture', dest='cpu_architecture', help="Set the cpu architecture for the execution.")
     parser.add_argument('--dry-run', dest='dry_run', required=False, type=str2bool, default=False, help="If true, commands are only prepared and no commands are executed.")
     parser.add_argument('--is-daemon', '--is_daemon', dest='is_daemon', required=False, type=str2bool, default=False, help="If this is true, the process is executed as systemd user service in the background.")
-    parser.add_argument('--forced-daemon-name', dest='forced_daemon_name', required=False, help="This is the name of the systemd user service name. This flag is mainly used for unit tests.")
+    parser.add_argument('--daemon-name', dest='daemon_name', required=False, help="This is the name of the systemd user service name. This flag is mainly used for unit tests or to ensure, that exactly one daemon instance exists at any given time.")
     parser.add_argument('--use-playwright', '--use_playwright', dest='use_playwright', required=False, type=str2bool, default=False, help="If true, playwright is installed for the execution.")
     parser.add_argument('--auto-configure-cpu-architecture-explicitly', '--auto_configure_cpuArch_explicitly', dest='auto_configure_cpuArch_explicitly', required=False, type=str2bool, default=True, help=CLI_FLAG_AUTO_CPU_ARCH_HELP)
     parser.add_argument('--port-publishing', '--port_publishing', dest='port_publishing', help="This is a comma separated list of `host-port:container-port`, that describes the port forwarding on the host.")
@@ -500,14 +500,14 @@ ssh user@address /bin/sh << EOF
 EOF
 """)
     def test_bootstrap_remote_via_daemon(self):
-        test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--is-daemon=true', '--forced-daemon-name=forced-daemon-name', '--dry-run=true', '--backwards-compatible=True'])
+        test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--is-daemon=true', '--daemon-name=daemon-name', '--dry-run=true', '--backwards-compatible=True'])
         self.assertEqual(test_subject.remote_execution_script, """# Set up Systemd service remotely
 ssh user@address /bin/sh << EOF
   set -e
   mkdir -p ~/.config/systemd/user
-  cat > ~/.config/systemd/user/forced-daemon-name <<SERVICE_EOL
+  cat > ~/.config/systemd/user/daemon-name <<SERVICE_EOL
 [Unit]
-Description=Execute forced-daemon-name
+Description=Execute daemon-name
 
 [Service]
 Type=oneshot
