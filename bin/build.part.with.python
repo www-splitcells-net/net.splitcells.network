@@ -2,8 +2,9 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 set -e
-chmod +x ./bin/*
+chmod +x ~/bin/*
 . ~/bin/net.splitcells.shell.commands.managed/command.managed.export.bin # This assumes, that the project is already installed and available in the PATH of the current shell.
 echo $PATH
+ls ~/bin/net.splitcells.shell.commands.managed
 cd projects/net.splitcells.shell
     ./bin/test.routine
