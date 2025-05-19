@@ -508,9 +508,9 @@ SERVICE_EOL
 EOF
 """)
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO) # TODO Move this after testing, when the tests are ready to go.
     # As there is no build process for Python unit tests are executed every time, to make sure, that the script works correctly.
     test_result = unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestWorkerExecution))
     if not test_result.wasSuccessful():
-        raise Exception("The self test was not successful.")
+        logging.basicConfig(level=logging.INFO)
+        raise Exception("The self test was not successful: " + str(unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestWorkerExecution))))
     parse_worker_execution_arguments(sys.argv[1:])
