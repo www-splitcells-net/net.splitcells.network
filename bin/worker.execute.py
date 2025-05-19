@@ -249,6 +249,8 @@ class WorkerExecution:
         else:
             self.executeRemotelyViaSsh()
     def filterArgumentsForRemoteScript(self, parsedVars, key):
+        if self.config.backwards_compatible and key == 'pull_network_log':
+            return False
         return parsedVars[key] is not None \
             and self.configParser.get_default(key) != parsedVars[key] \
             and key != 'execute_via_ssh_at'
