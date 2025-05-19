@@ -427,6 +427,7 @@ def parse_worker_execution_arguments(arguments):
     parser.add_argument('--name', dest='name', required=False, help="This is the name of the task being executed.")
     parser.add_argument('--bootstrap-remote', dest='bootstrap_remote', required=False, help="This is the ssh address for bootstrapping in the form of `username@host`. If this is set, other parameters are set automatically as well, in order to bootstrap the Network repos on a remote server in a standardized way.")
     parser.add_argument('--test-remote', dest='test_remote', required=False, help="This is the ssh address for testing in the form of `username@host`. If this is set, other parameters are set automatically as well, in order to test the Network repos on a remote server in a standardized way.")
+    parser.add_argument('--build-remote', dest='build_remote', required=False, help="This is the ssh address for building the Splitcells Network project in the form of `username@host`. If this is set, other parameters are set automatically as well, in order to build the Network repos on a remote server in a standardized way.")
     parser.add_argument('--pull-network-log', dest='pull_network_log', required=False, type=str2bool, default=False, help="If set to true, the repo `net.splitcells.network.log` will be pulled from the remote.")
     parser.add_argument('--command', required=False, dest='command', help=CLI_FLAG_COMMAND_HELP)
     parser.add_argument('--executable-path', '--executable_path', dest='executable_path', help="Executes the given executable file. Only set this option or --command.")
@@ -466,6 +467,13 @@ def parse_worker_execution_arguments(arguments):
         parsedArgs.command = "cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.test"
         parsedArgs.pull_network_log = True
         parsedArgs.test_remote = None
+    elif parsedArgs.build_remote is not None:
+        if parsedArgs.name is None:
+            parsedArgs.name = "net.splitcells.network.worker"
+        parsedArgs.execute_via_ssh_at = parsedArgs.build_remote
+        parsedArgs.command = "cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.build"
+        parsedArgs.pull_network_log = True
+        parsedArgs.build_remote = None
     else:
         raise Exception("Exactly one of the arguments --name, --test-remote or --bootstrap-remote has to be set, in order to execute this program.");
     workerExecution.execute(parser, parsedArgs)
