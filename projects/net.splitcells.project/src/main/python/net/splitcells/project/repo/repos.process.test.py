@@ -53,7 +53,6 @@ if __name__ == '__main__':
     print("expected_results: " + str(expected_results))
     print("output: " + str(output))
     for i in range(1, len(expected_results)):
-        # `contains` is needed in case the peer repos are not present.
         element_is_valid = expected_results[i] in output[i]
         if not element_is_valid:
             logging.error('Invalid repo: ' + expected_results[i] + ", " + output[i])
