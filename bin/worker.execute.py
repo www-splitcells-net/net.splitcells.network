@@ -249,9 +249,9 @@ class WorkerExecution:
         else:
             self.executeRemotelyViaSsh()
     def filterArgumentsForRemoteScript(self, parsedVars, key):
-        if key == 'flat_folders' and self.config.flat_folders:
-            return True
         if self.config.backwards_compatible:
+            if key == 'flat_folders' and self.config.flat_folders:
+                return True
             if key in ['pull_network_log', 'backwards_compatible']:
                 return False
         return parsedVars[key] is not None \
