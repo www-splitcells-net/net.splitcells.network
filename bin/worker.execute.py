@@ -414,7 +414,7 @@ class WorkerExecution:
             exit(0)
         if parsedArgs.verbose:
             logging.info("Executing script: " + self.local_execution_script);
-        return_code = subprocess.call(self.local_execution_script, shell='True')
+        return_code = subprocess.call(self.local_execution_script, shell='False') # The systems default shell is not used, because Fish and Bash are not compatible to each other in the slightest.
         if return_code != 0:
             logging.error("Could not execute given command.");
         exit(return_code)
