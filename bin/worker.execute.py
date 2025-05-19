@@ -249,8 +249,9 @@ class WorkerExecution:
         else:
             self.executeRemotelyViaSsh()
     def filterArgumentsForRemoteScript(self, parsedVars, key):
-        if self.config.backwards_compatible and key == 'pull_network_log':
-            return False
+        if self.config.backwards_compatible:
+            if key in ['pull_network_log', 'backwards_compatible']:
+                return False
         return parsedVars[key] is not None \
             and self.configParser.get_default(key) != parsedVars[key] \
             and key != 'execute_via_ssh_at'
@@ -480,7 +481,6 @@ ssh user@address /bin/sh << EOF
   fi
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
   bin/worker.execute \\
-    --backwards-compatible='true'\\
     --command='cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'\\
     --dry-run='true'\\
     --name='net.splitcells.network.worker'
