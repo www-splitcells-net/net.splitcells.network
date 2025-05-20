@@ -557,8 +557,9 @@ git pull user@address master
 """)
 if __name__ == '__main__':
     # As there is no build process for Python unit tests are executed every time, to make sure, that the script works correctly.
+    # During this test info logging is disabled, which is disabled by default in Python.
     test_result = unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestWorkerExecution))
+    logging.getLogger().setLevel(logging.INFO)
     if not test_result.wasSuccessful():
-        logging.basicConfig(level=logging.INFO)
         raise Exception("The self test was not successful: " + str(unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestWorkerExecution))))
     parse_worker_execution_arguments(sys.argv[1:])
