@@ -430,6 +430,7 @@ def parse_worker_execution_arguments(arguments):
     # If not remove the comment, and the hyphenless flag names. For each argument flag, there is an alternative name without hyphens ('-'), so these can easily be printed out and reused for this program. See `execute_via_ssh_at`.
     parser = argparse.ArgumentParser(description=PROGRAMS_DESCRIPTION)
     parser.add_argument('--name', dest='name', required=False, help="This is the name of the task being executed.")
+    parser.add_argument('--bootstrap', dest='bootstrap', required=False, type=str2bool, default=False, help="If set to true, the source code of the Splitcells Network project is set up at this current computer.")
     parser.add_argument('--bootstrap-remote', dest='bootstrap_remote', required=False, help="This is the ssh address for bootstrapping in the form of `username@host`. If this is set, other parameters are set automatically as well, in order to bootstrap the Network repos on a remote server in a standardized way.")
     parser.add_argument('--test-remote', dest='test_remote', required=False, help="This is the ssh address for testing in the form of `username@host`. If this is set, other parameters are set automatically as well, in order to test the Network repos on a remote server in a standardized way.")
     parser.add_argument('--build-remote', dest='build_remote', required=False, help="This is the ssh address for building the Splitcells Network project in the form of `username@host`. If this is set, other parameters are set automatically as well, in order to build the Network repos on a remote server in a standardized way.")
@@ -479,8 +480,10 @@ def parse_worker_execution_arguments(arguments):
             + parsedArgs.name
             + '/repos/public/net.splitcells.martins.avots.distro && ../net.splitcells.network/bin/worker.execute --name="net.splitcells.martins.avots.distro" --class-for-execution="net.splitcells.martins.avots.distro.LiveDistro" --only-build-image=true --use-playwright=true')
         parsedArgs.build_remote = None
+    elif parsedArgs.executable_path is not None:
+        pass
     else:
-        raise Exception("Exactly one of the arguments --name, --test-remote or --bootstrap-remote has to be set, in order to execute this program.");
+        raise Exception("Exactly one of the arguments --name, --executable-path, --test-remote or --bootstrap-remote has to be set, in order to execute this program.");
     workerExecution.execute(parser, parsedArgs)
     return workerExecution
 class TestWorkerExecution(unittest.TestCase):
