@@ -112,10 +112,10 @@ mkdir -p ${HOME}/.local/state/${executionName}/.local/dumps
 mkdir -p ${HOME}/.local/state/${executionName}/Documents/
 mkdir -p ./target/
 test -f target/program-${executionName} && chmod +x target/program-${executionName} # This file does not exist, when '--executable-path' is not set.
-podman build -f "target/Dockerfile-${executionName}" \
-    --tag "localhost/${executionName}"  \
-    --arch string \
-    ${additionalArguments} \
+podman build -f "target/Dockerfile-${executionName}" \\
+    --tag "localhost/${executionName}"  \\
+    --arch string \\
+    ${additionalArguments} \\
     --log-level=warn # `--log-level=warn` is podman's default.
     # Logging is used, in order to better understand build runtime performance.
 """
