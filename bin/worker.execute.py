@@ -360,7 +360,7 @@ class WorkerExecution:
             self.docker_file = self.docker_file.replace("VOLUME /root/Documents/", "VOLUME /root/.local/state/${executionName}/Documents/")
             self.docker_file = self.docker_file.replace("VOLUME /root/repos/", "VOLUME /root/.local/state/${executionName}/repos/")
             # .ssh and .m2 does not have to be replaced, as these are used for environment configuration of tools inside the container.
-        if parsedArgs.use_playwright:
+        if self.config.use_playwright:
             self.docker_file = self.docker_file.replace('$ContainerSetupCommand', 'RUN cd /root/opt/${NAME_FOR_EXECUTION}/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"\n')
         else:
             self.docker_file = self.docker_file.replace('$ContainerSetupCommand', '\n')
@@ -414,10 +414,10 @@ class WorkerExecution:
             self.local_execution_script = self.local_execution_script.replace('${additionalArguments} \\', '\\')
         self.local_execution_script = self.local_execution_script.replace('${executionName}', self.config.name)
         # Execute program.
-        if parsedArgs.dry_run:
+        if self.config.dry_run:
             logging.error("Generating script: " + self.local_execution_script)
             exit(0)
-        if parsedArgs.verbose:
+        if self.config.verbose:
             logging.info("Executing script: " + self.local_execution_script)
         return_code = subprocess.call(self.local_execution_script, shell='False') # The systems default shell is not used, because Fish and Bash are not compatible to each other in the slightest.
         if return_code != 0:
