@@ -70,6 +70,7 @@ ADD net.splitcells.network.worker.pom.xml /root/opt/${NAME_FOR_EXECUTION}/pom.xm
 # RUN cd /root/opt/${NAME_FOR_EXECUTION}/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"
 $ContainerSetupCommand
 VOLUME /root/.local/
+VOLUME /root/bin/
 VOLUME /root/Documents/
 VOLUME /root/.ssh/
 VOLUME /root/.m2/
@@ -112,6 +113,7 @@ mkdir -p ${HOME}/.local/state/${executionName}/.ssh/
 mkdir -p ${HOME}/.local/state/${executionName}/.local/dumps
 mkdir -p ${HOME}/.local/state/${executionName}/Documents/
 mkdir -p ${HOME}/.local/state/${executionName}/repos/
+mkdir -p ${HOME}/.local/state/${executionName}/bin/
 mkdir -p ./target/
 test -f target/program-${executionName} && chmod +x target/program-${executionName} # This file does not exist, when '--executable-path' is not set.
 podman build -f "target/Dockerfile-${executionName}" \\
@@ -134,6 +136,7 @@ mkdir -p ${HOME}/.local/state/${executionName}/.ssh/
 mkdir -p ${HOME}/.local/state/${executionName}/.local/
 mkdir -p ${HOME}/.local/state/${executionName}/Documents/
 mkdir -p ${HOME}/.local/state/${executionName}/repos/
+mkdir -p ${HOME}/.local/state/${executionName}/bin/
 mkdir -p ./target/
 test -f target/program-${executionName} && chmod +x target/program-${executionName} # This file does not exist, when '--executable-path' is not set.
 """
@@ -149,6 +152,7 @@ podman run --name "${executionName}" \\
   -v ${HOME}/.local/state/${executionName}/.m2:/root/.m2 \\
   -v ${HOME}/.local/state/${executionName}/.local:/root/.local/state/${executionName}/.local \\
   -v ${HOME}/.local/state/${executionName}/repos:/root/.local/state/${executionName}/repos \\
+  -v ${HOME}/.local/state/${executionName}/bin:/root/bin \\
   "$podmanParameters" \\
   "localhost/${executionName}"
   #
@@ -512,6 +516,7 @@ mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.ssh/
 mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.local/dumps
 mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/Documents/
 mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/repos/
+mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/bin/
 mkdir -p ./target/
 test -f target/program-net.splitcells.martins.avots.distro && chmod +x target/program-net.splitcells.martins.avots.distro # This file does not exist, when '--executable-path' is not set.
 podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
@@ -531,6 +536,7 @@ podman run --name "net.splitcells.martins.avots.distro" \\
   -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/.m2:/root/.m2 \\
   -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/.local:/root/.local/state/net.splitcells.martins.avots.distro/.local \\
   -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/repos:/root/.local/state/net.splitcells.martins.avots.distro/repos \\
+  -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/bin:/root/bin \\
    \\
   "localhost/net.splitcells.martins.avots.distro"
   #
