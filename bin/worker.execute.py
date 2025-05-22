@@ -497,6 +497,44 @@ def parse_worker_execution_arguments(arguments):
     return workerExecution
 class TestWorkerExecution(unittest.TestCase):
     maxDiff = None
+    def test_bootstrap(self):
+        test_subject = parse_worker_execution_arguments(['--name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap', '--dry-run=true', '--backwards-compatible=True'])
+        self.assertEqual(test_subject.local_execution_script, """set -e
+set -x
+executionName="net.splitcells.martins.avots.distro"
+executionCommand="$executionCommand"
+# Prepare file system.
+mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.m2/
+mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.ssh/
+mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.local/dumps
+mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/Documents/
+mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/repos/
+mkdir -p ./target/
+test -f target/program-net.splitcells.martins.avots.distro && chmod +x target/program-net.splitcells.martins.avots.distro # This file does not exist, when '--executable-path' is not set.
+podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
+    --tag "localhost/net.splitcells.martins.avots.distro"  \\
+    --arch x86_64 \\
+    \\
+    --log-level=warn # `--log-level=warn` is podman's default.
+    # Logging is used, in order to better understand build runtime performance.
+
+set -x
+podman run --name "net.splitcells.martins.avots.distro" \\
+  --network slirp4netns:allow_host_loopback=true \\
+  \\
+  --rm \\
+  -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/Documents:/root/.local/state/net.splitcells.martins.avots.distro/Documents \\
+  -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/.ssh:/root/.ssh \\
+  -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/.m2:/root/.m2 \\
+  -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/.local:/root/.local/state/net.splitcells.martins.avots.distro/.local \\
+  -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/repos:/root/.local/state/net.splitcells.martins.avots.distro/repos \\
+   \\
+  "localhost/net.splitcells.martins.avots.distro"
+  #
+  # allow_host_loopback is required, so that the software in the container can connect to the host.
+
+
+""")
     def test_bootstrap_remote(self):
         test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--dry-run=true', '--backwards-compatible=True'])
         self.assertEqual(test_subject.remote_execution_script, """# Preparing Execution via Network Log Pull
