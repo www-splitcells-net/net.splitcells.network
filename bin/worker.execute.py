@@ -425,7 +425,7 @@ class WorkerExecution:
         # Execute program.
         if self.config.dry_run:
             logging.error("Generating script: " + self.local_execution_script)
-            exit(0)
+            return
         if self.config.verbose:
             logging.info("Executing script: " + self.local_execution_script)
         return_code = subprocess.call(self.local_execution_script, shell='False') # The systems default shell is not used, because Fish and Bash are not compatible to each other in the slightest.
