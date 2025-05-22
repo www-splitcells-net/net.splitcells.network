@@ -497,8 +497,10 @@ def parse_worker_execution_arguments(arguments):
         parsedArgs.build_remote = None
     elif parsedArgs.executable_path is not None:
         pass
+    elif parsedArgs.class_for_execution is not None:
+        pass
     else:
-        raise Exception("Exactly one of the arguments --name, --executable-path, --test-remote or --bootstrap-remote has to be set, in order to execute this program.");
+        raise Exception("Exactly one of the arguments --name, --executable-path, --test-remote, --class-for-execution or --bootstrap-remote has to be set, in order to execute this program.");
     workerExecution.execute(parser, parsedArgs)
     return workerExecution
 class TestWorkerExecution(unittest.TestCase):
