@@ -96,7 +96,7 @@ CONTAINER_POM = """
 """
 
 JAVA_CLASS_EXECUTION_TEMPLATE = """
-COPY deployable-jars/* /root/opt/${NAME_FOR_EXECUTION}/jars/
+COPY target/${NAME_FOR_EXECUTION}/deployable-jars/* /root/opt/${NAME_FOR_EXECUTION}/jars/
 WORKDIR /root/opt/${NAME_FOR_EXECUTION}/
 ENTRYPOINT ["/opt/java/openjdk/bin/java"]
 CMD ["-XX:ErrorFile=/root/.local/state/${NAME_FOR_EXECUTION}/.local/dumps/hs_err_pid_%p.log", "-cp", "./jars/*", "$CLASS_FOR_EXECUTION"]
@@ -324,6 +324,7 @@ class WorkerExecution:
             daemonName = self.daemonName,
             daemonFile = self.daemonFile,
             bin_worker_execute = self.bin_worker_execute,
+            HOME_FOLDER = str(Path.home()),
             executionName = self.config.name)
     def formatDocument(self, arg):
         """Ensure, that the document ends with a single new line symbol."""
@@ -363,8 +364,14 @@ class WorkerExecution:
             self.docker_file += 'ENTRYPOINT /root/program'
         if self.config.class_for_execution is not None:
             required_argument_count += 1
-            self.docker_file += JAVA_CLASS_EXECUTION_TEMPLATE
+            self.docker_file += self.applyTemplate(JAVA_CLASS_EXECUTION_TEMPLATE)
             self.docker_file += self.docker_file.replace('$CLASS_FOR_EXECUTION', self.config.class_for_execution)
+            self.deployable_jars = Path(Path.home().joinpath('.local/state/' + self.config.name + '/repos/public/net.splitcells.network/target/deployable-jars/'))
+            self.deployable_jars.mkdir(parents=True, exist_ok=True)
+            print(str(self.deployable_jars))
+            shutil.copytree(str(Path.home().joinpath('.local/state/' + self.config.name + "/repos/public/" + self.config.name + "/target/deployable-jars/"))
+                , str(self.deployable_jars)
+                , dirs_exist_ok=True)
         if required_argument_count == 0:
             raise Exception("Either `--command`, `--executable-path` or `--class-for-execution` needs to be set:" + str(self.config))
         if required_argument_count > 1:
