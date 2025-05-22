@@ -350,6 +350,8 @@ class WorkerExecution:
             self.program_name = "program-" + self.config.name
             self.local_executable = ("#!/usr/bin/env sh\n"
                     + "export NET_SPLITCELLS_NETWORK_WORKER_NAME=" + self.config.name + "\n"
+                    + "mkdir -p ~/.local/state/" + self.config.name + "/repos/public/net.splitcells.network\n"
+                    + "cd ~/.local/state/" + self.config.name + "/repos/public/net.splitcells.network\n"
                     + Path(self.config.executable_path).read_text())
             with open("./target/" + self.program_name, 'w') as executable_file:
                 executable_file.write(self.local_executable)
