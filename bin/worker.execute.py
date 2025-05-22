@@ -96,7 +96,7 @@ CONTAINER_POM = """
 """
 
 JAVA_CLASS_EXECUTION_TEMPLATE = """
-COPY target/${NAME_FOR_EXECUTION}/deployable-jars/* /root/opt/${NAME_FOR_EXECUTION}/jars/
+COPY ${NAME_FOR_EXECUTION}/deployable-jars/* /root/opt/${NAME_FOR_EXECUTION}/jars/
 WORKDIR /root/opt/${NAME_FOR_EXECUTION}/
 ENTRYPOINT ["/opt/java/openjdk/bin/java"]
 CMD ["-XX:ErrorFile=/root/.local/state/${NAME_FOR_EXECUTION}/.local/dumps/hs_err_pid_%p.log", "-cp", "./jars/*", "$CLASS_FOR_EXECUTION"]
@@ -366,9 +366,8 @@ class WorkerExecution:
             required_argument_count += 1
             self.docker_file += self.applyTemplate(JAVA_CLASS_EXECUTION_TEMPLATE)
             self.docker_file += self.docker_file.replace('$CLASS_FOR_EXECUTION', self.config.class_for_execution)
-            self.deployable_jars = Path(Path.home().joinpath('.local/state/' + self.config.name + '/repos/public/net.splitcells.network/target/deployable-jars/'))
+            self.deployable_jars = Path(Path.home().joinpath('.local/state/' + self.config.name + '/repos/public/net.splitcells.network/target/' + self.config.name + '/deployable-jars/'))
             self.deployable_jars.mkdir(parents=True, exist_ok=True)
-            print(str(self.deployable_jars))
             shutil.copytree(str(Path.home().joinpath('.local/state/' + self.config.name + "/repos/public/" + self.config.name + "/target/deployable-jars/"))
                 , str(self.deployable_jars)
                 , dirs_exist_ok=True)
