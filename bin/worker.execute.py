@@ -73,6 +73,7 @@ VOLUME /root/.local/
 VOLUME /root/Documents/
 VOLUME /root/.ssh/
 VOLUME /root/.m2/
+VOLUME /root/repos/
 """
 
 CONTAINER_POM = """
@@ -110,6 +111,7 @@ mkdir -p ${HOME}/.local/state/${executionName}/.m2/
 mkdir -p ${HOME}/.local/state/${executionName}/.ssh/
 mkdir -p ${HOME}/.local/state/${executionName}/.local/dumps
 mkdir -p ${HOME}/.local/state/${executionName}/Documents/
+mkdir -p ${HOME}/.local/state/${executionName}/repos/
 mkdir -p ./target/
 test -f target/program-${executionName} && chmod +x target/program-${executionName} # This file does not exist, when '--executable-path' is not set.
 podman build -f "target/Dockerfile-${executionName}" \\
@@ -131,6 +133,7 @@ mkdir -p ${HOME}/.local/state/${executionName}/.m2/
 mkdir -p ${HOME}/.local/state/${executionName}/.ssh/
 mkdir -p ${HOME}/.local/state/${executionName}/.local/
 mkdir -p ${HOME}/.local/state/${executionName}/Documents/
+mkdir -p ${HOME}/.local/state/${executionName}/repos/
 mkdir -p ./target/
 test -f target/program-${executionName} && chmod +x target/program-${executionName} # This file does not exist, when '--executable-path' is not set.
 """
@@ -145,6 +148,7 @@ podman run --name "${executionName}" \\
   -v ${HOME}/.local/state/${executionName}/.ssh:/root/.ssh \\
   -v ${HOME}/.local/state/${executionName}/.m2:/root/.m2 \\
   -v ${HOME}/.local/state/${executionName}/.local:/root/.local/state/${executionName}/.local \\
+  -v ${HOME}/.local/state/${executionName}/repos:/root/.local/state/${executionName}/repos \\
   "$podmanParameters" \\
   "localhost/${executionName}"
   #
