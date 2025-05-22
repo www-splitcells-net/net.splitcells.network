@@ -137,15 +137,15 @@ test -f target/program-$(executionName) && chmod +x target/program-$(executionNa
 
 EXECUTE_VIA_PODMAN_TEMPLATE = """
 set -x
-podman run --name "$(executionName)" \
-  --network slirp4netns:allow_host_loopback=true \
-  ${additionalArguments} \
-  --rm \
-  -v ${HOME}/.local/state/$(executionName)/Documents:/root/Documents \
-  -v ${HOME}/.local/state/$(executionName)/.ssh:/root/.ssh \
-  -v ${HOME}/.local/state/$(executionName)/.m2:/root/.m2 \
-  -v ${HOME}/.local/state/$(executionName)/.local:/root/.local/state/$(executionName)/.local \
-  "$podmanParameters" \
+podman run --name "$(executionName)" \\
+  --network slirp4netns:allow_host_loopback=true \\
+  ${additionalArguments} \\
+  --rm \\
+  -v ${HOME}/.local/state/$(executionName)/Documents:/root/Documents \\
+  -v ${HOME}/.local/state/$(executionName)/.ssh:/root/.ssh \\
+  -v ${HOME}/.local/state/$(executionName)/.m2:/root/.m2 \\
+  -v ${HOME}/.local/state/$(executionName)/.local:/root/.local/state/$(executionName)/.local \\
+  "$podmanParameters" \\
   "localhost/$(executionName)"
   #
   # allow_host_loopback is required, so that the software in the container can connect to the host.
