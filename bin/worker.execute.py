@@ -339,16 +339,16 @@ class WorkerExecution:
         required_argument_count = 0
         self.docker_file = DOCKERFILE_SERVICE_TEMPLATE
         if self.config.command is not None:
-            ++required_argument_count
+            required_argument_count += 1
             self.docker_file += "ENTRYPOINT " + self.config.command + "\n"
         if self.config.executable_path is not None:
-            ++required_argument_count
+            required_argument_count += 1
             self.program_name = "program-" + self.config.name
-            shutil.copyfile(parsedArgs.executable_path, "./target/" + self.program_name)
+            shutil.copyfile(self.config.executable_path, "./target/" + self.program_name)
             self.docker_file += "ADD ./" + self.program_name + " /root/program\n"
             self.docker_file += 'ENTRYPOINT /root/program'
         if self.config.class_for_execution is not None:
-            ++required_argument_count
+            required_argument_count += 1
             self.docker_file += JAVA_CLASS_EXECUTION_TEMPLATE
             self.docker_file += self.docker_file.replace('$CLASS_FOR_EXECUTION', self.config.class_for_execution)
         if required_argument_count == 0:
