@@ -27,10 +27,10 @@ TODO Support executing as systemd service. Create a user service for that.
 TODO Currently, there is not distinction between the name of the thing being executed and its namespace.
      This will probably create problems in the future, where you have multiple containers with the same namespace,
      but with different commands.
-TODO IDEA Currently, everything is stored in `${HOME}/.local/state/$(executionName)/*`.
+TODO IDEA Currently, everything is stored in `${HOME}/.local/state/${executionName}/*`.
      If more strict file isolation is required, in order to prevent file accidents,
      a namespace could be used, that is implemented as a hidden parent folder for the execution folder:
-     `${HOME}/.local/state/.$namespace/$(executionName)/*`.
+     `${HOME}/.local/state/.$namespace/${executionName}/*`.
      See `repo.process` for inspiration.
      Of course, different users could be used instead.
 """
@@ -103,17 +103,17 @@ CMD ["-XX:ErrorFile=/root/.local/state/${NAME_FOR_EXECUTION}/.local/dumps/hs_err
 PREPARE_EXECUTION_TEMPLATE = """
 set -e
 set -x
-executionName="$(executionName)"
+executionName="${executionName}"
 executionCommand="$executionCommand"
 # Prepare file system.
-mkdir -p ${HOME}/.local/state/$(executionName)/.m2/
-mkdir -p ${HOME}/.local/state/$(executionName)/.ssh/
-mkdir -p ${HOME}/.local/state/$(executionName)/.local/dumps
-mkdir -p ${HOME}/.local/state/$(executionName)/Documents/
+mkdir -p ${HOME}/.local/state/${executionName}/.m2/
+mkdir -p ${HOME}/.local/state/${executionName}/.ssh/
+mkdir -p ${HOME}/.local/state/${executionName}/.local/dumps
+mkdir -p ${HOME}/.local/state/${executionName}/Documents/
 mkdir -p ./target/
-test -f target/program-$(executionName) && chmod +x target/program-$(executionName) # This file does not exist, when '--executable-path' is not set.
-podman build -f "target/Dockerfile-$(executionName)" \
-    --tag "localhost/$(executionName)"  \
+test -f target/program-${executionName} && chmod +x target/program-${executionName} # This file does not exist, when '--executable-path' is not set.
+podman build -f "target/Dockerfile-${executionName}" \
+    --tag "localhost/${executionName}"  \
     --arch string \
     ${additionalArguments} \
     --log-level=warn # `--log-level=warn` is podman's default.
@@ -123,37 +123,37 @@ podman build -f "target/Dockerfile-$(executionName)" \
 PREPARE_EXECUTION_WITHOUT_BUILD_TEMPLATE = """
 set -e
 set -x
-executionName="$(executionName)"
+executionName="${executionName}"
 # TODO executionCommand is currently not used.
 executionCommand="$executionCommand"
 # Prepare file system.
-mkdir -p ${HOME}/.local/state/$(executionName)/.m2/
-mkdir -p ${HOME}/.local/state/$(executionName)/.ssh/
-mkdir -p ${HOME}/.local/state/$(executionName)/.local/
-mkdir -p ${HOME}/.local/state/$(executionName)/Documents/
+mkdir -p ${HOME}/.local/state/${executionName}/.m2/
+mkdir -p ${HOME}/.local/state/${executionName}/.ssh/
+mkdir -p ${HOME}/.local/state/${executionName}/.local/
+mkdir -p ${HOME}/.local/state/${executionName}/Documents/
 mkdir -p ./target/
-test -f target/program-$(executionName) && chmod +x target/program-$(executionName) # This file does not exist, when '--executable-path' is not set.
+test -f target/program-${executionName} && chmod +x target/program-${executionName} # This file does not exist, when '--executable-path' is not set.
 """
 
 EXECUTE_VIA_PODMAN_TEMPLATE = """
 set -x
-podman run --name "$(executionName)" \\
+podman run --name "${executionName}" \\
   --network slirp4netns:allow_host_loopback=true \\
   ${additionalArguments} \\
   --rm \\
-  -v ${HOME}/.local/state/$(executionName)/Documents:/root/Documents \\
-  -v ${HOME}/.local/state/$(executionName)/.ssh:/root/.ssh \\
-  -v ${HOME}/.local/state/$(executionName)/.m2:/root/.m2 \\
-  -v ${HOME}/.local/state/$(executionName)/.local:/root/.local/state/$(executionName)/.local \\
+  -v ${HOME}/.local/state/${executionName}/Documents:/root/Documents \\
+  -v ${HOME}/.local/state/${executionName}/.ssh:/root/.ssh \\
+  -v ${HOME}/.local/state/${executionName}/.m2:/root/.m2 \\
+  -v ${HOME}/.local/state/${executionName}/.local:/root/.local/state/${executionName}/.local \\
   "$podmanParameters" \\
-  "localhost/$(executionName)"
+  "localhost/${executionName}"
   #
   # allow_host_loopback is required, so that the software in the container can connect to the host.
 """
 
 PUBLISH_VIA_PODMAN_TEMPLATE = """
-podman tag $(executionName):latest codeberg.org/splitcells-net/$(executionName):latest
-podman push codeberg.org/splitcells-net/$(executionName):latest
+podman tag ${executionName}:latest codeberg.org/splitcells-net/${executionName}:latest
+podman push codeberg.org/splitcells-net/${executionName}:latest
 """
 
 PROGRAMS_DESCRIPTION = """Executes a given program as isolated as possible with all program files being persisted at `${HOME}/.local/state/${executionName}/` and user input being located at `${HOME}/Documents`.
@@ -413,6 +413,7 @@ class WorkerExecution:
         else:
             self.local_execution_script = self.local_execution_script.replace('${additionalArguments} \\', '\\')
         self.local_execution_script = self.local_execution_script.replace('${executionName}', self.config.name)
+        self.local_execution_script = self.applyTemplate(self.local_execution_script);
         # Execute program.
         if self.config.dry_run:
             logging.error("Generating script: " + self.local_execution_script)
