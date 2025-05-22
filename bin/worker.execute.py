@@ -499,8 +499,9 @@ class TestWorkerExecution(unittest.TestCase):
     maxDiff = None
     def test_bootstrap(self):
         test_subject = parse_worker_execution_arguments(['--name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap', '--dry-run=true', '--backwards-compatible=True'])
-        self.assertEqual(test_subject.local_execution_script, """set -e
-set -x
+        self.assertEqual(test_subject.local_execution_script, """
+set -e
+
 executionName="net.splitcells.martins.avots.distro"
 executionCommand="$executionCommand"
 # Prepare file system.
@@ -518,7 +519,7 @@ podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
     --log-level=warn # `--log-level=warn` is podman's default.
     # Logging is used, in order to better understand build runtime performance.
 
-set -x
+
 podman run --name "net.splitcells.martins.avots.distro" \\
   --network slirp4netns:allow_host_loopback=true \\
   \\
@@ -532,8 +533,6 @@ podman run --name "net.splitcells.martins.avots.distro" \\
   "localhost/net.splitcells.martins.avots.distro"
   #
   # allow_host_loopback is required, so that the software in the container can connect to the host.
-
-
 """)
     def test_bootstrap_remote(self):
         test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--dry-run=true', '--backwards-compatible=True'])
