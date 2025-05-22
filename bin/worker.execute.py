@@ -348,7 +348,11 @@ class WorkerExecution:
         if self.config.executable_path is not None:
             required_argument_count += 1
             self.program_name = "program-" + self.config.name
-            shutil.copyfile(self.config.executable_path, "./target/" + self.program_name)
+            self.local_executable = ("#!/usr/bin/env sh\n"
+                    + "export NET_SPLITCELLS_NETWORK_WORKER_NAME=" + self.config.name + "\n"
+                    + Path(self.config.executable_path).read_text())
+            with open("./target/" + self.program_name, 'w') as executable_file:
+                executable_file.write(self.local_executable)
             self.docker_file += "ADD ./" + self.program_name + " /root/program\n"
             self.docker_file += 'ENTRYPOINT /root/program'
         if self.config.class_for_execution is not None:
