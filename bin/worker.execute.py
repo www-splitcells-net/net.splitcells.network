@@ -511,6 +511,29 @@ def parse_worker_execution_arguments(arguments):
     return workerExecution
 class TestWorkerExecution(unittest.TestCase):
     maxDiff = None
+    def test_only_build_image(self):
+        test_subject = parse_worker_execution_arguments(['--name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap', '--dry-run=true', '--backwards-compatible=True', '--only-build-image=true'])
+        self.assertEqual(test_subject.local_execution_script, """
+set -e
+
+executionName="net.splitcells.martins.avots.distro"
+executionCommand="$executionCommand"
+# Prepare file system.
+mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.m2/
+mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.ssh/
+mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.local/dumps
+mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/Documents/
+mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/repos/
+mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/bin/
+mkdir -p ./target/
+test -f target/program-net.splitcells.martins.avots.distro && chmod +x target/program-net.splitcells.martins.avots.distro # This file does not exist, when '--executable-path' is not set.
+podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
+    --tag "localhost/net.splitcells.martins.avots.distro"  \\
+    --arch x86_64 \\
+    \\
+    --log-level=warn # `--log-level=warn` is podman's default.
+    # Logging is used, in order to better understand build runtime performance.
+""")
     def test_bootstrap(self):
         test_subject = parse_worker_execution_arguments(['--name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap', '--dry-run=true', '--backwards-compatible=True'])
         self.assertEqual(test_subject.local_execution_script, """
