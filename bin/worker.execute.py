@@ -227,6 +227,20 @@ ExecStart=/usr/bin/date
 SERVICE_EOL
 EOF"""
 
+SET_UP_SYSTEMD_SERVICE_LOCALLY = """# Set up Systemd service locally
+set -e
+mkdir -p ${daemonFolder}
+
+cat > ${daemonFile} <<SERVICE_EOL
+[Unit]
+Description=Execute ${daemonName}
+
+[Service]
+Type=oneshot
+StandardOutput=journal
+ExecStart=/usr/bin/date
+SERVICE_EOL"""
+
 class WorkerExecution:
     was_executed = False
     remote_execution_script_template = ""
