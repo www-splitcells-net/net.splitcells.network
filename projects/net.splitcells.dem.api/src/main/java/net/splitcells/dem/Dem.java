@@ -143,11 +143,17 @@ public class Dem {
     }
 
     /**
-     * Defines and executes a program.
-     * <p>
-     * TODO Support stacking instead of {@link #CURRENT}.
-     * <p>
-     * TODO Support cactus stacking instead of {@link #CURRENT}.
+     * <p>Defines and executes a program.</p>
+     * <p>Note that the thread executing the process handles all {@link Throwable},
+     * because some programs are using {@link Thread#getThreadGroup()} and {@link ThreadGroup#},
+     * in order to interpret any {@link Thread} with an uncaught exception,
+     * as a program failure.
+     * This can cause unwanted problems for program integration for example via shell scripts.
+     * See https://github.com/mojohaus/exec-maven-plugin/blob/d97517868b0fc7a70abee9eb36d43fca6451766d/src/main/java/org/codehaus/mojo/exec/ExecJavaMojo.java#L351
+     * where Maven exec:java can cause exit code != 0,
+     * if any thread has uncaught exceptions.</p>
+     * <p>TODO Support stacking instead of {@link #CURRENT}.</p>
+     * <p>TODO Support cactus stacking instead of {@link #CURRENT}.</p>
      */
     public static ProcessResult process(Runnable program, Consumer<Environment> configurator) {
         ProcessResult processResult = processResult();
@@ -169,16 +175,6 @@ public class Dem {
                                     .withProperty("Stack Trace", throwableToString(t))
                             , LogLevel.ERROR);
                     processResult.hasError(true);
-                    /** Note that thread should handle all exceptions,
-                     * because some are using {@link Thread#getThreadGroup()} and {@link ThreadGroup#},
-                     * in order to interpret any {@link Thread} with an uncaught exception,
-                     * as a program failure.
-                     * This can cause unwanted problems for program integration for example via shell scripts.
-                     *
-                     * @see https://github.com/mojohaus/exec-maven-plugin/blob/d97517868b0fc7a70abee9eb36d43fca6451766d/src/main/java/org/codehaus/mojo/exec/ExecJavaMojo.java#L351
-                     * where Maven exec:java can cause exit code != 0,
-                     * if any thread has uncaught exceptions.
-                     */
                 } finally {
                     logs().append("Stopping `" + configValue(ProgramName.class) + "`.");
                     processEnvironment.config().withConfigValue(EndTime.class, Optional.of(ZonedDateTime.now()));
