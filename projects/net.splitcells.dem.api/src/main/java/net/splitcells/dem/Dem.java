@@ -143,9 +143,12 @@ public class Dem {
     }
 
     /**
-     * <p>Defines and executes a program.</p>
+     * <p>Defines and executes a program.
+     * Any throwable of the program is also logged to {@link System#err},
+     * as in some deployments it is unreasonably hard to distinguish between
+     * the program crashing or the program not even start.</p>
      * <p>Note that the thread executing the process handles all {@link Throwable},
-     * because some programs are using {@link Thread#getThreadGroup()} and {@link ThreadGroup#},
+     * because some programs are using {@link Thread#getThreadGroup()} and {@link ThreadGroup},
      * in order to interpret any {@link Thread} with an uncaught exception,
      * as a program failure.
      * This can cause unwanted problems for program integration for example via shell scripts.
@@ -175,6 +178,7 @@ public class Dem {
                                     .withProperty("Stack Trace", throwableToString(t))
                             , LogLevel.ERROR);
                     processResult.hasError(true);
+                    t.printStackTrace();
                 } finally {
                     logs().append("Stopping `" + configValue(ProgramName.class) + "`.");
                     processEnvironment.config().withConfigValue(EndTime.class, Optional.of(ZonedDateTime.now()));
