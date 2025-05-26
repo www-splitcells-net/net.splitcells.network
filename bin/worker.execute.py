@@ -110,7 +110,7 @@ executionCommand="$executionCommand"
 # Prepare file system.
 mkdir -p ${HOME}/.local/state/${executionName}/.m2/
 mkdir -p ${HOME}/.local/state/${executionName}/.ssh/
-mkdir -p ${HOME}/.local/state/${executionName}/.local/dumps
+mkdir -p ${HOME}/.local/state/${executionName}/.local/dumps/
 mkdir -p ${HOME}/.local/state/${executionName}/Documents/
 mkdir -p ${HOME}/.local/state/${executionName}/repos/
 mkdir -p ${HOME}/.local/state/${executionName}/bin/
@@ -133,7 +133,7 @@ executionCommand="$executionCommand"
 # Prepare file system.
 mkdir -p ${HOME}/.local/state/${executionName}/.m2/
 mkdir -p ${HOME}/.local/state/${executionName}/.ssh/
-mkdir -p ${HOME}/.local/state/${executionName}/.local/
+mkdir -p ${HOME}/.local/state/${executionName}/.local/dumps/
 mkdir -p ${HOME}/.local/state/${executionName}/Documents/
 mkdir -p ${HOME}/.local/state/${executionName}/repos/
 mkdir -p ${HOME}/.local/state/${executionName}/bin/
@@ -536,7 +536,7 @@ executionCommand="$executionCommand"
 # Prepare file system.
 mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.m2/
 mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.ssh/
-mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.local/dumps
+mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.local/dumps/
 mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/Documents/
 mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/repos/
 mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/bin/
@@ -549,6 +549,40 @@ podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
     --log-level=warn # `--log-level=warn` is podman's default.
     # Logging is used, in order to better understand build runtime performance.
 """)
+    def test_only_execute_image(self):
+        test_subject = parse_worker_execution_arguments(['--name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap', '--dry-run=true', '--backwards-compatible=True', '--only-execute-image=true'])
+        self.assertEqual(test_subject.local_execution_script, """
+set -e
+
+executionName="net.splitcells.martins.avots.distro"
+# TODO executionCommand is currently not used.
+executionCommand="$executionCommand"
+# Prepare file system.
+mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.m2/
+mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.ssh/
+mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.local/dumps/
+mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/Documents/
+mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/repos/
+mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/bin/
+mkdir -p ./target/
+test -f target/program-net.splitcells.martins.avots.distro && chmod +x target/program-net.splitcells.martins.avots.distro # This file does not exist, when '--executable-path' is not set.
+
+
+podman run --name "net.splitcells.martins.avots.distro" \\
+  --network slirp4netns:allow_host_loopback=true \\
+  \\
+  --rm \\
+  -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/Documents:/root/.local/state/net.splitcells.martins.avots.distro/Documents \\
+  -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/.ssh:/root/.ssh \\
+  -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/.m2:/root/.m2 \\
+  -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/.local:/root/.local/state/net.splitcells.martins.avots.distro/.local \\
+  -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/repos:/root/.local/state/net.splitcells.martins.avots.distro/repos \\
+  -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/bin:/root/bin \\
+   \\
+  "localhost/net.splitcells.martins.avots.distro"
+  #
+  # allow_host_loopback is required, so that the software in the container can connect to the host.
+""")
     def test_bootstrap(self):
         test_subject = parse_worker_execution_arguments(['--name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap', '--dry-run=true', '--backwards-compatible=True'])
         self.assertEqual(test_subject.local_execution_script, """
@@ -559,7 +593,7 @@ executionCommand="$executionCommand"
 # Prepare file system.
 mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.m2/
 mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.ssh/
-mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.local/dumps
+mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.local/dumps/
 mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/Documents/
 mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/repos/
 mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/bin/
