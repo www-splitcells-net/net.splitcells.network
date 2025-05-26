@@ -106,7 +106,6 @@ PREPARE_EXECUTION_TEMPLATE = """
 set -e
 set -x
 executionName="${executionName}"
-executionCommand="$executionCommand"
 # Prepare file system.
 mkdir -p ${HOME}/.local/state/${executionName}/.m2/
 mkdir -p ${HOME}/.local/state/${executionName}/.ssh/
@@ -128,8 +127,6 @@ PREPARE_EXECUTION_WITHOUT_BUILD_TEMPLATE = """
 set -e
 set -x
 executionName="${executionName}"
-# TODO executionCommand is currently not used.
-executionCommand="$executionCommand"
 # Prepare file system.
 mkdir -p ${HOME}/.local/state/${executionName}/.m2/
 mkdir -p ${HOME}/.local/state/${executionName}/.ssh/
@@ -532,7 +529,6 @@ class TestWorkerExecution(unittest.TestCase):
 set -e
 
 executionName="net.splitcells.martins.avots.distro"
-executionCommand="$executionCommand"
 # Prepare file system.
 mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.m2/
 mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.ssh/
@@ -555,8 +551,6 @@ podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
 set -e
 
 executionName="net.splitcells.martins.avots.distro"
-# TODO executionCommand is currently not used.
-executionCommand="$executionCommand"
 # Prepare file system.
 mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.m2/
 mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.ssh/
@@ -589,7 +583,6 @@ podman run --name "net.splitcells.martins.avots.distro" \\
 set -e
 
 executionName="net.splitcells.martins.avots.distro"
-executionCommand="$executionCommand"
 # Prepare file system.
 mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.m2/
 mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.ssh/
