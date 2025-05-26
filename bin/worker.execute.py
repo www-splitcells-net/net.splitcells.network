@@ -105,7 +105,6 @@ CMD ["-XX:ErrorFile=/root/.local/state/${NAME_FOR_EXECUTION}/.local/dumps/hs_err
 PREPARE_EXECUTION_TEMPLATE = """
 set -e
 set -x
-executionName="${executionName}"
 # Prepare file system.
 mkdir -p ${HOME}/.local/state/${executionName}/.m2/
 mkdir -p ${HOME}/.local/state/${executionName}/.ssh/
@@ -126,7 +125,6 @@ podman build -f "target/Dockerfile-${executionName}" \\
 PREPARE_EXECUTION_WITHOUT_BUILD_TEMPLATE = """
 set -e
 set -x
-executionName="${executionName}"
 # Prepare file system.
 mkdir -p ${HOME}/.local/state/${executionName}/.m2/
 mkdir -p ${HOME}/.local/state/${executionName}/.ssh/
@@ -528,7 +526,6 @@ class TestWorkerExecution(unittest.TestCase):
         self.assertEqual(test_subject.local_execution_script, """
 set -e
 
-executionName="net.splitcells.martins.avots.distro"
 # Prepare file system.
 mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.m2/
 mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.ssh/
@@ -550,7 +547,6 @@ podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
         self.assertEqual(test_subject.local_execution_script, """
 set -e
 
-executionName="net.splitcells.martins.avots.distro"
 # Prepare file system.
 mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.m2/
 mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.ssh/
@@ -582,7 +578,6 @@ podman run --name "net.splitcells.martins.avots.distro" \\
         self.assertEqual(test_subject.local_execution_script, """
 set -e
 
-executionName="net.splitcells.martins.avots.distro"
 # Prepare file system.
 mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.m2/
 mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.ssh/
