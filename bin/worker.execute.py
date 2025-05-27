@@ -203,6 +203,11 @@ ssh ${execute_via_ssh_at} /bin/sh << EOF
     cd ~/.local/state/${executionName}/repos/public/
     git clone https://codeberg.org/splitcells-net/net.splitcells.network.git
   fi
+  if [ ! -d ~/.local/state/${executionName}/repos/public/net.splitcells.network.hub ]; then
+    mkdir -p ~/.local/state/${executionName}/repos/public/
+    cd ~/.local/state/${executionName}/repos/public/
+    git clone https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
+  fi
   cd ~/.local/state/${executionName}/repos/public/net.splitcells.network
   ${bin_worker_execute} \\\n${remoteNetworkerArguments}
 EOF"""
@@ -630,6 +635,11 @@ ssh user@address /bin/sh << EOF
     mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/
     cd ~/.local/state/net.splitcells.network.worker/repos/public/
     git clone https://codeberg.org/splitcells-net/net.splitcells.network.git
+  fi
+  if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.hub ]; then
+    mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/
+    cd ~/.local/state/net.splitcells.network.worker/repos/public/
+    git clone https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
   fi
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
   bin/worker.execute \\
