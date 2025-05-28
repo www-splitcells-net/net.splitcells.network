@@ -422,7 +422,7 @@ class WorkerExecution:
             # .ssh and .m2 does not have to be replaced, as these are used for environment configuration of tools inside the container.
         if self.config.command is not None:
             # TODO This does not seem to be valid or used anymore.
-            self.local_execution_script = executionScript.replace('"$executionCommand"', "'" + self.config.command.replace("'", "'\\''") + "'")
+            self.local_execution_script = self.local_execution_script.replace('"$executionCommand"', "'" + self.config.command.replace("'", "'\\''") + "'")
         if self.config.port_publishing is not None:
             for portMapping in self.config.port_publishing.split(','):
                 self.additional_podman_args += ' --publish ' + portMapping
