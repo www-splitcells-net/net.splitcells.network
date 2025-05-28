@@ -27,10 +27,10 @@ TODO Support executing as systemd service. Create a user service for that.
 TODO Currently, there is not distinction between the name of the thing being executed and its namespace.
      This will probably create problems in the future, where you have multiple containers with the same namespace,
      but with different commands.
-TODO IDEA Currently, everything is stored in `${HOME}/.local/state/${executionName}/*`.
+TODO IDEA Currently, everything is stored in `${HOME}/.local/state/${programName}/*`.
      If more strict file isolation is required, in order to prevent file accidents,
      a namespace could be used, that is implemented as a hidden parent folder for the execution folder:
-     `${HOME}/.local/state/.$namespace/${executionName}/*`.
+     `${HOME}/.local/state/.$namespace/${programName}/*`.
      See `repo.process` for inspiration.
      Of course, different users could be used instead.
 """
@@ -106,16 +106,16 @@ PREPARE_EXECUTION_TEMPLATE = """
 set -e
 set -x
 # Prepare file system.
-mkdir -p ${HOME}/.local/state/${executionName}/.m2/
-mkdir -p ${HOME}/.local/state/${executionName}/.ssh/
-mkdir -p ${HOME}/.local/state/${executionName}/.local/dumps/
-mkdir -p ${HOME}/.local/state/${executionName}/Documents/
-mkdir -p ${HOME}/.local/state/${executionName}/repos/
-mkdir -p ${HOME}/.local/state/${executionName}/bin/
+mkdir -p ${HOME}/.local/state/${programName}/.m2/
+mkdir -p ${HOME}/.local/state/${programName}/.ssh/
+mkdir -p ${HOME}/.local/state/${programName}/.local/dumps/
+mkdir -p ${HOME}/.local/state/${programName}/Documents/
+mkdir -p ${HOME}/.local/state/${programName}/repos/
+mkdir -p ${HOME}/.local/state/${programName}/bin/
 mkdir -p ./target/
-test -f target/program-${executionName} && chmod +x target/program-${executionName} # This file does not exist, when '--executable-path' is not set.
-podman build -f "target/Dockerfile-${executionName}" \\
-    --tag "localhost/${executionName}"  \\
+test -f target/program-${programName} && chmod +x target/program-${programName} # This file does not exist, when '--executable-path' is not set.
+podman build -f "target/Dockerfile-${programName}" \\
+    --tag "localhost/${programName}"  \\
     --arch string \\
     ${additionalArguments} \\
     --log-level=warn # `--log-level=warn` is podman's default.
@@ -126,43 +126,43 @@ PREPARE_EXECUTION_WITHOUT_BUILD_TEMPLATE = """
 set -e
 set -x
 # Prepare file system.
-mkdir -p ${HOME}/.local/state/${executionName}/.m2/
-mkdir -p ${HOME}/.local/state/${executionName}/.ssh/
-mkdir -p ${HOME}/.local/state/${executionName}/.local/dumps/
-mkdir -p ${HOME}/.local/state/${executionName}/Documents/
-mkdir -p ${HOME}/.local/state/${executionName}/repos/
-mkdir -p ${HOME}/.local/state/${executionName}/bin/
+mkdir -p ${HOME}/.local/state/${programName}/.m2/
+mkdir -p ${HOME}/.local/state/${programName}/.ssh/
+mkdir -p ${HOME}/.local/state/${programName}/.local/dumps/
+mkdir -p ${HOME}/.local/state/${programName}/Documents/
+mkdir -p ${HOME}/.local/state/${programName}/repos/
+mkdir -p ${HOME}/.local/state/${programName}/bin/
 mkdir -p ./target/
-test -f target/program-${executionName} && chmod +x target/program-${executionName} # This file does not exist, when '--executable-path' is not set.
+test -f target/program-${programName} && chmod +x target/program-${programName} # This file does not exist, when '--executable-path' is not set.
 """
 
 EXECUTE_VIA_PODMAN_TEMPLATE = """
 set -x
-podman run --name "${executionName}" \\
+podman run --program-name "${programName}" \\
   --network slirp4netns:allow_host_loopback=true \\
   ${additionalArguments} \\
   --rm \\
-  -v ${HOME}/.local/state/${executionName}/Documents:/root/Documents \\
-  -v ${HOME}/.local/state/${executionName}/.ssh:/root/.ssh \\
-  -v ${HOME}/.local/state/${executionName}/.m2:/root/.m2 \\
-  -v ${HOME}/.local/state/${executionName}/.local:/root/.local/state/${executionName}/.local \\
-  -v ${HOME}/.local/state/${executionName}/repos:/root/.local/state/${executionName}/repos \\
-  -v ${HOME}/.local/state/${executionName}/bin:/root/bin \\
+  -v ${HOME}/.local/state/${programName}/Documents:/root/Documents \\
+  -v ${HOME}/.local/state/${programName}/.ssh:/root/.ssh \\
+  -v ${HOME}/.local/state/${programName}/.m2:/root/.m2 \\
+  -v ${HOME}/.local/state/${programName}/.local:/root/.local/state/${programName}/.local \\
+  -v ${HOME}/.local/state/${programName}/repos:/root/.local/state/${programName}/repos \\
+  -v ${HOME}/.local/state/${programName}/bin:/root/bin \\
   "$podmanParameters" \\
-  "localhost/${executionName}"
+  "localhost/${programName}"
   #
   # allow_host_loopback is required, so that the software in the container can connect to the host.
 """
 
 PUBLISH_VIA_PODMAN_TEMPLATE = """
-podman tag ${executionName}:latest codeberg.org/splitcells-net/${executionName}:latest
-podman push codeberg.org/splitcells-net/${executionName}:latest
+podman tag ${programName}:latest codeberg.org/splitcells-net/${programName}:latest
+podman push codeberg.org/splitcells-net/${programName}:latest
 """
 
-PROGRAMS_DESCRIPTION = """Executes a given program as isolated as possible with all program files being persisted at `${HOME}/.local/state/${executionName}/` and user input being located at `${HOME}/Documents`.
+PROGRAMS_DESCRIPTION = """Executes a given program as isolated as possible with all program files being persisted at `${HOME}/.local/state/${programName}/` and user input being located at `${HOME}/Documents`.
 Executions with different names have different persisted file locations and are therefore isolated more clearly, whereas executions with the same name are assumed to share data.
 This is the CLI interface to the Splitcells Network Worker.
-Exactly one of arguments --name, --test-remote or --bootstrap-remote has to be set,
+Exactly one of arguments --program-name, --test-remote or --bootstrap-remote has to be set,
 in order to execute this program.
 """
 
@@ -177,38 +177,38 @@ If set to true, the CPU architecture will be determined by this command and the 
 This is useful, because some tools have not a good CPU auto detection (i.e. Podman on RISC-V cannot find the fitting images based on the CPU arch automatically)."""
 
 DEFAULT_NETWORK_PULL_SCRIPT = """# Preparing Execution via Network Log Pull
-if ssh -q ${execute_via_ssh_at} "sh -c '[ -d ~/.local/state/${executionName}/repos/public/net.splitcells.network.log ]'"
+if ssh -q ${execute_via_ssh_at} "sh -c '[ -d ~/.local/state/${programName}/repos/public/net.splitcells.network.log ]'"
 then
   cd ../net.splitcells.network.log
-  git config remote.${execute_via_ssh_at}.url >&- || git remote add ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/${executionName}/repos/public/net.splitcells.network.log
-  git remote set-url ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/${executionName}/repos/public/net.splitcells.network.log
-  git remote set-url --push ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/${executionName}/repos/public/net.splitcells.network.log
+  git config remote.${execute_via_ssh_at}.url >&- || git remote add ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/${programName}/repos/public/net.splitcells.network.log
+  git remote set-url ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/${programName}/repos/public/net.splitcells.network.log
+  git remote set-url --push ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/${programName}/repos/public/net.splitcells.network.log
   git pull ${execute_via_ssh_at} master
   cd ../net.splitcells.network
 fi"""
 
 DEFAULT_CLOSING_PULL_NETWORK_LOG_SCRIPT = """# Closing Execution via Network Log Pull
 cd ../net.splitcells.network.log
-git config remote.${execute_via_ssh_at}.url >&- || git remote add ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/${executionName}/repos/public/net.splitcells.network.log
-git remote set-url ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/${executionName}/repos/public/net.splitcells.network.log
-git remote set-url --push ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/${executionName}/repos/public/net.splitcells.network.log
+git config remote.${execute_via_ssh_at}.url >&- || git remote add ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/${programName}/repos/public/net.splitcells.network.log
+git remote set-url ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/${programName}/repos/public/net.splitcells.network.log
+git remote set-url --push ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${username}/.local/state/${programName}/repos/public/net.splitcells.network.log
 git pull ${execute_via_ssh_at} master
 """
 
 EXECUTE_MAIN_TASK_REMOTELY = """# Execute Main Task Remotely
 ssh ${execute_via_ssh_at} /bin/sh << EOF
   set -e
-  if [ ! -d ~/.local/state/${executionName}/repos/public/net.splitcells.network ]; then
-    mkdir -p ~/.local/state/${executionName}/repos/public/
-    cd ~/.local/state/${executionName}/repos/public/
+  if [ ! -d ~/.local/state/${programName}/repos/public/net.splitcells.network ]; then
+    mkdir -p ~/.local/state/${programName}/repos/public/
+    cd ~/.local/state/${programName}/repos/public/
     git clone https://codeberg.org/splitcells-net/net.splitcells.network.git
   fi
-  if [ ! -d ~/.local/state/${executionName}/repos/public/net.splitcells.network.hub ]; then
-    mkdir -p ~/.local/state/${executionName}/repos/public/
-    cd ~/.local/state/${executionName}/repos/public/
+  if [ ! -d ~/.local/state/${programName}/repos/public/net.splitcells.network.hub ]; then
+    mkdir -p ~/.local/state/${programName}/repos/public/
+    cd ~/.local/state/${programName}/repos/public/
     git clone https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
   fi
-  cd ~/.local/state/${executionName}/repos/public/net.splitcells.network
+  cd ~/.local/state/${programName}/repos/public/net.splitcells.network
   ${bin_worker_execute} \\\n${remoteNetworkerArguments}
 EOF"""
 
@@ -288,7 +288,7 @@ class WorkerExecution:
             preparingNetworkLogPullScript = ""
         if self.config.is_daemon:
             if self.config.daemon_name is None:
-                self.daemonName = TEMPORARY_FILE_PREFIX + self.config.name + "-" + datetime.now().strftime('%Y-%m-%d-%H-%M-%S') + "-" + str(random.randint(1, 999_999_999))
+                self.daemonName = TEMPORARY_FILE_PREFIX + self.config.program_name + "-" + datetime.now().strftime('%Y-%m-%d-%H-%M-%S') + "-" + str(random.randint(1, 999_999_999))
             else:
                 self.daemonName = self.config.daemon_name
             self.daemonFolder = "~/.config/systemd/user";
@@ -329,14 +329,14 @@ class WorkerExecution:
         return Template(string).safe_substitute(
             execute_via_ssh_at = self.config.execute_via_ssh_at,
             username = self.username,
-            name = self.config.name,
+            name = self.config.program_name,
             remoteNetworkerArguments = self.remote_networker_arguments,
             daemonFolder = self.daemonFolder,
             daemonName = self.daemonName,
             daemonFile = self.daemonFile,
             bin_worker_execute = self.bin_worker_execute,
             HOME_FOLDER = str(Path.home()),
-            executionName = self.config.name)
+            programName = self.config.program_name)
     def formatDocument(self, arg):
         """Ensure, that the document ends with a single new line symbol."""
         if arg.endswith("\n\n"):
@@ -363,11 +363,11 @@ class WorkerExecution:
             self.docker_file += "ENTRYPOINT " + self.config.command + "\n"
         if self.config.executable_path is not None:
             required_argument_count += 1
-            self.program_name = "program-" + self.config.name
+            self.program_name = "program-" + self.config.program_name
             self.local_executable = ("#!/usr/bin/env sh\n"
-                    + "export NET_SPLITCELLS_NETWORK_WORKER_NAME=" + self.config.name + "\n"
-                    + "mkdir -p ~/.local/state/" + self.config.name + "/repos/public/net.splitcells.network\n"
-                    + "cd ~/.local/state/" + self.config.name + "/repos/public/net.splitcells.network\n"
+                    + "export NET_SPLITCELLS_NETWORK_WORKER_NAME=" + self.config.program_name + "\n"
+                    + "mkdir -p ~/.local/state/" + self.config.program_name + "/repos/public/net.splitcells.network\n"
+                    + "cd ~/.local/state/" + self.config.program_name + "/repos/public/net.splitcells.network\n"
                     + Path(self.config.executable_path).read_text())
             with open("./target/" + self.program_name, 'w') as executable_file:
                 executable_file.write(self.local_executable)
@@ -378,9 +378,9 @@ class WorkerExecution:
             self.docker_file += self.applyTemplate(JAVA_CLASS_EXECUTION_TEMPLATE)
             self.docker_file += self.docker_file.replace('$CLASS_FOR_EXECUTION', self.config.class_for_execution)
             if not self.config.dry_run:
-                self.deployable_jars = Path(Path.home().joinpath('.local/state/' + self.config.name + '/repos/public/net.splitcells.network/target/' + self.config.name + '/deployable-jars/'))
+                self.deployable_jars = Path(Path.home().joinpath('.local/state/' + self.config.program_name + '/repos/public/net.splitcells.network/target/' + self.config.program_name + '/deployable-jars/'))
                 self.deployable_jars.mkdir(parents=True, exist_ok=True)
-                shutil.copytree(str(Path.home().joinpath('.local/state/' + self.config.name + "/repos/public/" + self.config.name + "/target/deployable-jars/"))
+                shutil.copytree(str(Path.home().joinpath('.local/state/' + self.config.program_name + "/repos/public/" + self.config.program_name + "/target/deployable-jars/"))
                     , str(self.deployable_jars)
                     , dirs_exist_ok=True)
         if required_argument_count == 0:
@@ -388,17 +388,17 @@ class WorkerExecution:
         if required_argument_count > 1:
             raise Exception("Exactly one of `--command`, `--executable-path` or `--class-for-execution` needs to be set, but " + required_argument_count + " were actually set.")
         if self.config.flat_folders:
-            self.docker_file = self.docker_file.replace("VOLUME /root/.local/", "VOLUME /root/.local/state/${executionName}/.local/")
-            self.docker_file = self.docker_file.replace("VOLUME /root/Documents/", "VOLUME /root/.local/state/${executionName}/Documents/")
-            self.docker_file = self.docker_file.replace("VOLUME /root/repos/", "VOLUME /root/.local/state/${executionName}/repos/")
+            self.docker_file = self.docker_file.replace("VOLUME /root/.local/", "VOLUME /root/.local/state/${programName}/.local/")
+            self.docker_file = self.docker_file.replace("VOLUME /root/Documents/", "VOLUME /root/.local/state/${programName}/Documents/")
+            self.docker_file = self.docker_file.replace("VOLUME /root/repos/", "VOLUME /root/.local/state/${programName}/repos/")
             # .ssh and .m2 does not have to be replaced, as these are used for environment configuration of tools inside the container.
         if self.config.use_playwright:
             self.docker_file = self.docker_file.replace('$ContainerSetupCommand', 'RUN cd /root/opt/${NAME_FOR_EXECUTION}/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"\n')
         else:
             self.docker_file = self.docker_file.replace('$ContainerSetupCommand', '\n')
-        self.docker_file = self.docker_file.replace('${NAME_FOR_EXECUTION}', self.config.name)
-        self.docker_file = self.docker_file.replace('${executionName}', self.config.name)
-        file = 'target/Dockerfile-' + self.config.name
+        self.docker_file = self.docker_file.replace('${NAME_FOR_EXECUTION}', self.config.program_name)
+        self.docker_file = self.docker_file.replace('${programName}', self.config.program_name)
+        file = 'target/Dockerfile-' + self.config.program_name
         if os.path.exists(file):
             os.remove(file)
         with open(file, 'w') as file_to_write:
@@ -416,9 +416,9 @@ class WorkerExecution:
         else:
             self.local_execution_script += EXECUTE_VIA_PODMAN_TEMPLATE
         if self.config.flat_folders:
-            self.local_execution_script = self.local_execution_script.replace("-v ${HOME}/.local/state/${executionName}/Documents:/root/Documents ", "-v ${HOME}/.local/state/${executionName}/Documents:/root/.local/state/${executionName}/Documents ")
-            self.local_execution_script = self.local_execution_script.replace("-v ${HOME}/.local/state/${executionName}/repos:/root/repos ", "-v ${HOME}/.local/state/${executionName}/repos:/root/.local/state/${executionName}/repos ")
-            self.local_execution_script = self.local_execution_script.replace("-v ${HOME}/.local/state/${executionName}/.local:/root/.local ", "-v ${HOME}/.local/state/${executionName}/.local:/root/.local/state/${executionName}/.local ")
+            self.local_execution_script = self.local_execution_script.replace("-v ${HOME}/.local/state/${programName}/Documents:/root/Documents ", "-v ${HOME}/.local/state/${programName}/Documents:/root/.local/state/${programName}/Documents ")
+            self.local_execution_script = self.local_execution_script.replace("-v ${HOME}/.local/state/${programName}/repos:/root/repos ", "-v ${HOME}/.local/state/${programName}/repos:/root/.local/state/${programName}/repos ")
+            self.local_execution_script = self.local_execution_script.replace("-v ${HOME}/.local/state/${programName}/.local:/root/.local ", "-v ${HOME}/.local/state/${programName}/.local:/root/.local/state/${programName}/.local ")
             # .ssh and .m2 does not have to be replaced, as these are used for environment configuration of tools inside the container.
         if self.config.command is not None:
             # TODO This does not seem to be valid or used anymore.
@@ -439,12 +439,12 @@ class WorkerExecution:
             self.local_execution_script = self.local_execution_script.replace("\nset -x\n", "\n\n")
         if self.config.use_host_documents:
             # TODO This replacement is done in a dirty way. Use a template variable instead.
-            self.local_execution_script = self.local_execution_script.replace("-v ${HOME}/.local/state/${executionName}/Documents:/root/Documents \\", "-v ${HOME}/Documents:/root/Documents \\")
+            self.local_execution_script = self.local_execution_script.replace("-v ${HOME}/.local/state/${programName}/Documents:/root/Documents \\", "-v ${HOME}/Documents:/root/Documents \\")
         if PODMAN_FLAGS_CONFIG_FILE.is_file():
             self.local_execution_script = self.local_execution_script.replace('${additionalArguments} \\', (PODMAN_FLAGS_CONFIG_FILE.read_text() + '\\').replace('\n', ''))
         else:
             self.local_execution_script = self.local_execution_script.replace('${additionalArguments} \\', '\\')
-        self.local_execution_script = self.local_execution_script.replace('${executionName}', self.config.name)
+        self.local_execution_script = self.local_execution_script.replace('${programName}', self.config.program_name)
         self.local_execution_script = self.applyTemplate(self.local_execution_script);
         # Execute program.
         if self.config.dry_run:
@@ -462,7 +462,7 @@ def str2bool(arg):
 def parse_worker_execution_arguments(arguments):
     # If not remove the comment, and the hyphenless flag names. For each argument flag, there is an alternative name without hyphens ('-'), so these can easily be printed out and reused for this program. See `execute_via_ssh_at`.
     parser = argparse.ArgumentParser(description=PROGRAMS_DESCRIPTION)
-    parser.add_argument('--name', dest='name', required=False, help="This is the name of the task being executed.")
+    parser.add_argument('--program-name', dest='program_name', required=False, help="This is the name of the program for which something is being executed.")
     parser.add_argument('--bootstrap', dest='bootstrap', required=False, type=str2bool, default=False, help="If set to true, the source code of the Splitcells Network project is set up at this current computer.")
     parser.add_argument('--bootstrap-remote', dest='bootstrap_remote', required=False, help="This is the ssh address for bootstrapping in the form of `username@host`. If this is set, other parameters are set automatically as well, in order to bootstrap the Network repos on a remote server in a standardized way.")
     parser.add_argument('--test-remote', dest='test_remote', required=False, help="This is the ssh address for testing in the form of `username@host`. If this is set, other parameters are set automatically as well, in order to test the Network repos on a remote server in a standardized way.")
@@ -485,46 +485,46 @@ def parse_worker_execution_arguments(arguments):
     parser.add_argument('--auto-configure-cpu-architecture-explicitly', '--auto_configure_cpuArch_explicitly', dest='auto_configure_cpuArch_explicitly', required=False, type=str2bool, default=True, help=CLI_FLAG_AUTO_CPU_ARCH_HELP)
     parser.add_argument('--port-publishing', '--port_publishing', dest='port_publishing', help="This is a comma separated list of `host-port:container-port`, that describes the port forwarding on the host.")
     parser.add_argument('--execute-via-ssh-at', '--execute_via_ssh_at', dest='execute_via_ssh_at', help="Execute the given command at an remote server via SSH. The format is `[user]@[address/network name]`.")
-    parser.add_argument('--flat-folders', '--flat_folders', dest='flat_folders', required=False, type=str2bool, default=True, help="If this is set to true, the `~/.local/state/${executionName}` is not mapped to `~/.local/state/${executionName}/.local/state/${executionName}` via containers.")
+    parser.add_argument('--flat-folders', '--flat_folders', dest='flat_folders', required=False, type=str2bool, default=True, help="If this is set to true, the `~/.local/state/${programName}` is not mapped to `~/.local/state/${programName}/.local/state/${programName}` via containers.")
     parser.add_argument('--backwards-compatible', dest='backwards_compatible', required=False, type=str2bool, default=True, help="If set to true, the the remote script is compatible to the previous implementation.")
     parsedArgs = parser.parse_args(arguments)
     workerExecution = WorkerExecution()
     if parsedArgs.command is not None:
-        if parsedArgs.name is None:
-            parsedArgs.name = "net.splitcells.network.worker"
+        if parsedArgs.program_name is None:
+            parsedArgs.program_name = "net.splitcells.network.worker"
     elif parsedArgs.bootstrap_remote is not None:
-        if parsedArgs.name is None:
-            parsedArgs.name = "net.splitcells.network.worker"
+        if parsedArgs.program_name is None:
+            parsedArgs.program_name = "net.splitcells.network.worker"
         parsedArgs.execute_via_ssh_at = parsedArgs.bootstrap_remote
-        parsedArgs.command = "export NET_SPLITCELLS_NETWORK_WORKER_NAME=" + parsedArgs.name + " && cd ~/.local/state/" + parsedArgs.name + "/repos/public/net.splitcells.network && bin/worker.bootstrap.py"
+        parsedArgs.command = "export NET_SPLITCELLS_NETWORK_WORKER_NAME=" + parsedArgs.program_name + " && cd ~/.local/state/" + parsedArgs.program_name + "/repos/public/net.splitcells.network && bin/worker.bootstrap"
         parsedArgs.bootstrap_remote = None
     elif parsedArgs.test_remote is not None:
-        if parsedArgs.name is None:
-            parsedArgs.name = "net.splitcells.network.worker"
+        if parsedArgs.program_name is None:
+            parsedArgs.program_name = "net.splitcells.network.worker"
         parsedArgs.execute_via_ssh_at = parsedArgs.test_remote
-        parsedArgs.command = "cd ~/.local/state/" + parsedArgs.name + "/repos/public/net.splitcells.network && bin/worker.bootstrap.py && bin/repos.test"
+        parsedArgs.command = "cd ~/.local/state/" + parsedArgs.program_name + "/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.test"
         parsedArgs.test_remote = None
     elif parsedArgs.build_remote is not None:
-        if parsedArgs.name is None:
-            parsedArgs.name = "net.splitcells.network.worker"
+        if parsedArgs.program_name is None:
+            parsedArgs.program_name = "net.splitcells.network.worker"
         parsedArgs.execute_via_ssh_at = parsedArgs.build_remote
-        parsedArgs.command = ("cd ~/.local/state/" + parsedArgs.name + "/repos/public/net.splitcells.network && bin/worker.bootstrap.py && bin/repos.build && "
+        parsedArgs.command = ("cd ~/.local/state/" + parsedArgs.program_name + "/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.build && "
             + 'cd ~/.local/state/'
-            + parsedArgs.name
-            + '/repos/public/net.splitcells.martins.avots.distro && ../net.splitcells.network/bin/worker.execute.py --name="net.splitcells.martins.avots.distro" --class-for-execution="net.splitcells.martins.avots.distro.LiveDistro" --only-build-image=true --use-playwright=true')
+            + parsedArgs.program_name
+            + '/repos/public/net.splitcells.martins.avots.distro && ../net.splitcells.network/bin/worker.execute.py --program-name="net.splitcells.martins.avots.distro" --class-for-execution="net.splitcells.martins.avots.distro.LiveDistro" --only-build-image=true --use-playwright=true')
         parsedArgs.build_remote = None
     elif parsedArgs.executable_path is not None:
         pass
     elif parsedArgs.class_for_execution is not None:
         pass
     else:
-        raise Exception("Exactly one of the arguments --name, --executable-path, --test-remote, --class-for-execution or --bootstrap-remote has to be set, in order to execute this program.");
+        raise Exception("Exactly one of the arguments --program-name, --executable-path, --test-remote, --class-for-execution or --bootstrap-remote has to be set, in order to execute this program.");
     workerExecution.execute(parser, parsedArgs)
     return workerExecution
 class TestWorkerExecution(unittest.TestCase):
     maxDiff = None
     def test_only_build_image(self):
-        test_subject = parse_worker_execution_arguments(['--name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap.py', '--dry-run=true', '--backwards-compatible=True', '--only-build-image=true'])
+        test_subject = parse_worker_execution_arguments(['--program-name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap', '--dry-run=true', '--backwards-compatible=True', '--only-build-image=true'])
         self.assertEqual(test_subject.local_execution_script, """
 set -e
 
@@ -545,7 +545,7 @@ podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
     # Logging is used, in order to better understand build runtime performance.
 """)
     def test_only_execute_image(self):
-        test_subject = parse_worker_execution_arguments(['--name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap.py', '--dry-run=true', '--backwards-compatible=True', '--only-execute-image=true'])
+        test_subject = parse_worker_execution_arguments(['--program-name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap', '--dry-run=true', '--backwards-compatible=True', '--only-execute-image=true'])
         self.assertEqual(test_subject.local_execution_script, """
 set -e
 
@@ -560,7 +560,7 @@ mkdir -p ./target/
 test -f target/program-net.splitcells.martins.avots.distro && chmod +x target/program-net.splitcells.martins.avots.distro # This file does not exist, when '--executable-path' is not set.
 
 
-podman run --name "net.splitcells.martins.avots.distro" \\
+podman run --program-name "net.splitcells.martins.avots.distro" \\
   --network slirp4netns:allow_host_loopback=true \\
   \\
   --rm \\
@@ -576,7 +576,7 @@ podman run --name "net.splitcells.martins.avots.distro" \\
   # allow_host_loopback is required, so that the software in the container can connect to the host.
 """)
     def test_bootstrap(self):
-        test_subject = parse_worker_execution_arguments(['--name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap.py', '--dry-run=true', '--backwards-compatible=True'])
+        test_subject = parse_worker_execution_arguments(['--program-name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap', '--dry-run=true', '--backwards-compatible=True'])
         self.assertEqual(test_subject.local_execution_script, """
 set -e
 
@@ -597,7 +597,7 @@ podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
     # Logging is used, in order to better understand build runtime performance.
 
 
-podman run --name "net.splitcells.martins.avots.distro" \\
+podman run --program-name "net.splitcells.martins.avots.distro" \\
   --network slirp4netns:allow_host_loopback=true \\
   \\
   --rm \\
@@ -640,10 +640,10 @@ ssh user@address /bin/sh << EOF
   fi
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
   bin/worker.execute.py \\
-    --command='export NET_SPLITCELLS_NETWORK_WORKER_NAME=net.splitcells.network.worker && cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap.py'\\
+    --command='export NET_SPLITCELLS_NETWORK_WORKER_NAME=net.splitcells.network.worker && cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'\\
     --dry-run='true'\\
     --flat-folders='true'\\
-    --name='net.splitcells.network.worker'
+    --program-name='net.splitcells.network.worker'
 
 EOF
 
