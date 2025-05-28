@@ -502,13 +502,13 @@ def parse_worker_execution_arguments(arguments):
         if parsedArgs.name is None:
             parsedArgs.name = "net.splitcells.network.worker"
         parsedArgs.execute_via_ssh_at = parsedArgs.test_remote
-        parsedArgs.command = "cd ~/.local/state/" + parsedArgs.name + "/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.test"
+        parsedArgs.command = "cd ~/.local/state/" + parsedArgs.name + "/repos/public/net.splitcells.network && bin/worker.bootstrap.py && bin/repos.test"
         parsedArgs.test_remote = None
     elif parsedArgs.build_remote is not None:
         if parsedArgs.name is None:
             parsedArgs.name = "net.splitcells.network.worker"
         parsedArgs.execute_via_ssh_at = parsedArgs.build_remote
-        parsedArgs.command = ("cd ~/.local/state/" + parsedArgs.name + "/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.build && "
+        parsedArgs.command = ("cd ~/.local/state/" + parsedArgs.name + "/repos/public/net.splitcells.network && bin/worker.bootstrap.py && bin/repos.build && "
             + 'cd ~/.local/state/'
             + parsedArgs.name
             + '/repos/public/net.splitcells.martins.avots.distro && ../net.splitcells.network/bin/worker.execute.py --name="net.splitcells.martins.avots.distro" --class-for-execution="net.splitcells.martins.avots.distro.LiveDistro" --only-build-image=true --use-playwright=true')
@@ -524,7 +524,7 @@ def parse_worker_execution_arguments(arguments):
 class TestWorkerExecution(unittest.TestCase):
     maxDiff = None
     def test_only_build_image(self):
-        test_subject = parse_worker_execution_arguments(['--name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap', '--dry-run=true', '--backwards-compatible=True', '--only-build-image=true'])
+        test_subject = parse_worker_execution_arguments(['--name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap.py', '--dry-run=true', '--backwards-compatible=True', '--only-build-image=true'])
         self.assertEqual(test_subject.local_execution_script, """
 set -e
 
@@ -545,7 +545,7 @@ podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
     # Logging is used, in order to better understand build runtime performance.
 """)
     def test_only_execute_image(self):
-        test_subject = parse_worker_execution_arguments(['--name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap', '--dry-run=true', '--backwards-compatible=True', '--only-execute-image=true'])
+        test_subject = parse_worker_execution_arguments(['--name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap.py', '--dry-run=true', '--backwards-compatible=True', '--only-execute-image=true'])
         self.assertEqual(test_subject.local_execution_script, """
 set -e
 
@@ -576,7 +576,7 @@ podman run --name "net.splitcells.martins.avots.distro" \\
   # allow_host_loopback is required, so that the software in the container can connect to the host.
 """)
     def test_bootstrap(self):
-        test_subject = parse_worker_execution_arguments(['--name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap', '--dry-run=true', '--backwards-compatible=True'])
+        test_subject = parse_worker_execution_arguments(['--name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap.py', '--dry-run=true', '--backwards-compatible=True'])
         self.assertEqual(test_subject.local_execution_script, """
 set -e
 
@@ -640,7 +640,7 @@ ssh user@address /bin/sh << EOF
   fi
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
   bin/worker.execute.py \\
-    --command='export NET_SPLITCELLS_NETWORK_WORKER_NAME=net.splitcells.network.worker && cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'\\
+    --command='export NET_SPLITCELLS_NETWORK_WORKER_NAME=net.splitcells.network.worker && cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap.py'\\
     --dry-run='true'\\
     --flat-folders='true'\\
     --name='net.splitcells.network.worker'
