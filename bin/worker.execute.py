@@ -264,10 +264,7 @@ class WorkerExecution:
         if self.was_executed:
             raise Exception("A WorkerExecution instance cannot be executed twice.")
         self.was_executed = True
-        if self.config.backwards_compatible:
-            self.bin_worker_execute = "bin/worker.execute"
-        else:
-            self.bin_worker_execute = "bin/worker.execute.py"
+        self.bin_worker_execute = "bin/worker.execute.py"
         if config.execute_via_ssh_at is None:
             self.executeLocally()
         else:
@@ -514,7 +511,7 @@ def parse_worker_execution_arguments(arguments):
         parsedArgs.command = ("cd ~/.local/state/" + parsedArgs.name + "/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.build && "
             + 'cd ~/.local/state/'
             + parsedArgs.name
-            + '/repos/public/net.splitcells.martins.avots.distro && ../net.splitcells.network/bin/worker.execute --name="net.splitcells.martins.avots.distro" --class-for-execution="net.splitcells.martins.avots.distro.LiveDistro" --only-build-image=true --use-playwright=true')
+            + '/repos/public/net.splitcells.martins.avots.distro && ../net.splitcells.network/bin/worker.execute.py --name="net.splitcells.martins.avots.distro" --class-for-execution="net.splitcells.martins.avots.distro.LiveDistro" --only-build-image=true --use-playwright=true')
         parsedArgs.build_remote = None
     elif parsedArgs.executable_path is not None:
         pass
@@ -642,7 +639,7 @@ ssh user@address /bin/sh << EOF
     git clone https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
   fi
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
-  bin/worker.execute \\
+  bin/worker.execute.py \\
     --command='export NET_SPLITCELLS_NETWORK_WORKER_NAME=net.splitcells.network.worker && cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'\\
     --dry-run='true'\\
     --flat-folders='true'\\
