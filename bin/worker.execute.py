@@ -496,7 +496,7 @@ def parse_worker_execution_arguments(arguments):
         if parsedArgs.name is None:
             parsedArgs.name = "net.splitcells.network.worker"
         parsedArgs.execute_via_ssh_at = parsedArgs.bootstrap_remote
-        parsedArgs.command = "export NET_SPLITCELLS_NETWORK_WORKER_NAME=" + parsedArgs.name + " && cd ~/.local/state/" + parsedArgs.name + "/repos/public/net.splitcells.network && bin/worker.bootstrap"
+        parsedArgs.command = "export NET_SPLITCELLS_NETWORK_WORKER_NAME=" + parsedArgs.name + " && cd ~/.local/state/" + parsedArgs.name + "/repos/public/net.splitcells.network && bin/worker.bootstrap.py"
         parsedArgs.bootstrap_remote = None
     elif parsedArgs.test_remote is not None:
         if parsedArgs.name is None:
