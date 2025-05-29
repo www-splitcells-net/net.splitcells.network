@@ -290,7 +290,7 @@ class WorkerExecution:
             preparingNetworkLogPullScript = ""
         if self.config.is_daemon:
             self.daemonFolder = "~/.config/systemd/user";
-            self.daemonFile = self.daemonFolder + "/" + self.config.execution_name;
+            self.daemonFile = self.daemonFolder + "/" + self.config.execution_name + ".service";
             self.remote_execution_script_template = self.applyTemplate(SET_UP_SYSTEMD_SERVICE_REMOTELY)
         else: # Else is not a daemon.
         # TODO The method for generating the remote script is an hack.
@@ -676,7 +676,7 @@ fi
 ssh user@address /bin/sh << EOF
   set -e
   mkdir -p ~/.config/systemd/user
-  cat > ~/.config/systemd/user/net.splitcells.network.worker.boostrap.daemon <<SERVICE_EOL
+  cat > ~/.config/systemd/user/net.splitcells.network.worker.boostrap.daemon.service <<SERVICE_EOL
 [Unit]
 Description=Execute net.splitcells.network.worker.boostrap.daemon
 
