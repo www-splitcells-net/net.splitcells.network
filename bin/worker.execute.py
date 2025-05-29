@@ -222,7 +222,7 @@ ssh ${execute_via_ssh_at} /bin/sh << EOF
   mkdir -p ${daemonFolder}
   cat > ${daemonFile} <<SERVICE_EOL
 [Unit]
-Description=Execute ${daemonName}
+Description=Execute ${executionName}
 
 [Service]
 Type=oneshot
@@ -236,7 +236,7 @@ mkdir -p ${daemonFolder}
 
 cat > ${daemonFile} <<SERVICE_EOL
 [Unit]
-Description=Execute ${daemonName}
+Description=Execute ${executionName}
 
 [Service]
 Type=oneshot
@@ -290,12 +290,8 @@ class WorkerExecution:
         else:
             preparingNetworkLogPullScript = ""
         if self.config.is_daemon:
-            if self.config.daemon_name is None:
-                self.daemonName = TEMPORARY_FILE_PREFIX + self.config.program_name + "-" + datetime.now().strftime('%Y-%m-%d-%H-%M-%S') + "-" + str(random.randint(1, 999_999_999))
-            else:
-                self.daemonName = self.config.daemon_name
             self.daemonFolder = "~/.config/systemd/user";
-            self.daemonFile = self.daemonFolder + "/" + self.daemonName;
+            self.daemonFile = self.daemonFolder + "/" + self.config.execution_name;
             self.remote_execution_script_template = self.applyTemplate(SET_UP_SYSTEMD_SERVICE_REMOTELY)
         else: # Else is not a daemon.
         # TODO The method for generating the remote script is an hack.
@@ -665,7 +661,7 @@ git remote set-url --push user@address user@address:/home/user/.local/state/net.
 git pull user@address master
 """)
     def test_bootstrap_remote_via_daemon(self):
-        test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--is-daemon=true', '--daemon-name=daemon-name', '--dry-run=true', '--backwards-compatible=True'])
+        test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--is-daemon=true', '--dry-run=true', '--backwards-compatible=True'])
         self.assertEqual(test_subject.remote_execution_script, """# Preparing Execution via Network Log Pull
 if ssh -q user@address "sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'"
 then
@@ -681,9 +677,9 @@ fi
 ssh user@address /bin/sh << EOF
   set -e
   mkdir -p ~/.config/systemd/user
-  cat > ~/.config/systemd/user/daemon-name <<SERVICE_EOL
+  cat > ~/.config/systemd/user/net.splitcells.network.worker.boostrap.daemon <<SERVICE_EOL
 [Unit]
-Description=Execute daemon-name
+Description=Execute net.splitcells.network.worker.boostrap.daemon
 
 [Service]
 Type=oneshot
