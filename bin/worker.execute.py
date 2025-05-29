@@ -195,6 +195,7 @@ git remote set-url --push ${execute_via_ssh_at} ${execute_via_ssh_at}:/home/${us
 git pull ${execute_via_ssh_at} master
 """
 
+# The `net.splitcells.network && git pull` etc. ensures, that changes to bin/worker.execute etc. are available as fast as possible.
 EXECUTE_MAIN_TASK_REMOTELY = """# Execute Main Task Remotely
 ssh ${execute_via_ssh_at} /bin/sh << EOF
   set -e
@@ -208,7 +209,7 @@ ssh ${execute_via_ssh_at} /bin/sh << EOF
     cd ~/.local/state/${programName}/repos/public/
     git clone https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
   fi
-  cd ~/.local/state/${programName}/repos/public/net.splitcells.network && git pull # The pull ensures, that changes to bin/worker.execute etc. are available as fast as possible.
+  cd ~/.local/state/${programName}/repos/public/net.splitcells.network && git pull
   cd ~/.local/state/${programName}/repos/public/net.splitcells.network.hub && git pull
   cd ~/.local/state/${programName}/repos/public/net.splitcells.network
   ${bin_worker_execute} \\\n${remoteNetworkerArguments}
