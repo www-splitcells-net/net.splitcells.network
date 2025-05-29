@@ -401,7 +401,7 @@ class WorkerExecution:
             self.docker_file = self.docker_file.replace('$ContainerSetupCommand', '\n')
         self.docker_file = self.docker_file.replace('${NAME_FOR_EXECUTION}', self.config.program_name)
         self.docker_file = self.docker_file.replace('${programName}', self.config.program_name)
-        file = 'target/Dockerfile-' + self.config.program_name
+        file = 'target/Dockerfile-' + self.config.execution_name
         if os.path.exists(file):
             os.remove(file)
         with open(file, 'w') as file_to_write:
