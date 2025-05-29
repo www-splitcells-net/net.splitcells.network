@@ -491,24 +491,19 @@ def parse_worker_execution_arguments(arguments):
     parser.add_argument('--backwards-compatible', dest='backwards_compatible', required=False, type=str2bool, default=True, help="If set to true, the the remote script is compatible to the previous implementation.")
     parsedArgs = parser.parse_args(arguments)
     workerExecution = WorkerExecution()
+    if parsedArgs.program_name is None:
+        parsedArgs.program_name = "net.splitcells.network.worker"
     if parsedArgs.command is not None:
-        if parsedArgs.program_name is None:
-            parsedArgs.program_name = "net.splitcells.network.worker"
+        pass
     elif parsedArgs.bootstrap_remote is not None:
-        if parsedArgs.program_name is None:
-            parsedArgs.program_name = "net.splitcells.network.worker"
         parsedArgs.execute_via_ssh_at = parsedArgs.bootstrap_remote
         parsedArgs.command = "export NET_SPLITCELLS_NETWORK_WORKER_NAME=" + parsedArgs.program_name + " && cd ~/.local/state/" + parsedArgs.program_name + "/repos/public/net.splitcells.network && bin/worker.bootstrap"
         parsedArgs.bootstrap_remote = None
     elif parsedArgs.test_remote is not None:
-        if parsedArgs.program_name is None:
-            parsedArgs.program_name = "net.splitcells.network.worker"
         parsedArgs.execute_via_ssh_at = parsedArgs.test_remote
         parsedArgs.command = "cd ~/.local/state/" + parsedArgs.program_name + "/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.test"
         parsedArgs.test_remote = None
     elif parsedArgs.build_remote is not None:
-        if parsedArgs.program_name is None:
-            parsedArgs.program_name = "net.splitcells.network.worker"
         parsedArgs.execute_via_ssh_at = parsedArgs.build_remote
         parsedArgs.command = ("cd ~/.local/state/" + parsedArgs.program_name + "/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.build && "
             + 'cd ~/.local/state/'
