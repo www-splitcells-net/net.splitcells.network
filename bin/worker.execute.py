@@ -208,6 +208,8 @@ ssh ${execute_via_ssh_at} /bin/sh << EOF
     cd ~/.local/state/${programName}/repos/public/
     git clone https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
   fi
+  cd ~/.local/state/${programName}/repos/public/net.splitcells.network && git pull # The pull ensures, that changes to `bin/network.execute` etc. are available as fast as possible.
+  cd ~/.local/state/${programName}/repos/public/net.splitcells.network.hub && git pull
   cd ~/.local/state/${programName}/repos/public/net.splitcells.network
   ${bin_worker_execute} \\\n${remoteNetworkerArguments}
 EOF"""
@@ -647,6 +649,8 @@ ssh user@address /bin/sh << EOF
     cd ~/.local/state/net.splitcells.network.worker/repos/public/
     git clone https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
   fi
+  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && git pull # The pull ensures, that changes to `bin/network.execute` etc. are available as fast as possible.
+  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.hub && git pull
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
   bin/worker.execute.py \\
     --command='export NET_SPLITCELLS_NETWORK_WORKER_NAME=net.splitcells.network.worker && cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'\\
