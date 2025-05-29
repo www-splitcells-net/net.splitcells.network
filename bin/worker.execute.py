@@ -136,9 +136,8 @@ mkdir -p ./target/
 test -f target/program-${programName} && chmod +x target/program-${programName} # This file does not exist, when '--executable-path' is not set.
 """
 
-EXECUTE_VIA_PODMAN_TEMPLATE = """
-set -x
-podman run --name "${executionName}" \\
+# allow_host_loopback is required, so that the software in the container can connect to the host.
+PODMAN_COMMAND_TEMPLATE = """podman run --name "${executionName}" \\
   --network slirp4netns:allow_host_loopback=true \\
   ${additionalArguments} \\
   --rm \\
@@ -150,9 +149,11 @@ podman run --name "${executionName}" \\
   -v ${HOME}/.local/state/${programName}/bin:/root/bin \\
   "$podmanParameters" \\
   "localhost/${executionName}"
-  #
-  # allow_host_loopback is required, so that the software in the container can connect to the host.
 """
+
+EXECUTE_VIA_PODMAN_TEMPLATE = """
+set -x
+""" + PODMAN_COMMAND_TEMPLATE
 
 PUBLISH_VIA_PODMAN_TEMPLATE = """
 podman tag ${programName}:latest codeberg.org/splitcells-net/${programName}:latest
@@ -226,8 +227,7 @@ Description=Execute ${daemonName}
 [Service]
 Type=oneshot
 StandardOutput=journal
-ExecStart=/usr/bin/date
-SERVICE_EOL
+ExecStart=""" + PODMAN_COMMAND_TEMPLATE + """SERVICE_EOL
 EOF"""
 
 SET_UP_SYSTEMD_SERVICE_LOCALLY = """# Set up Systemd service locally
@@ -528,6 +528,8 @@ def parse_worker_execution_arguments(arguments):
         parsedArgs.execution_name = parsedArgs.program_name
     if parsedArgs.program_name is None and parsedArgs.execution_name is None:
         raise Exception("Either the --program-name or the --execution-name has to be given.")
+    if parsedArgs.is_daemon:
+        parsedArgs.execution_name = parsedArgs.execution_name + ".daemon"
     workerExecution.execute(parser, parsedArgs)
     return workerExecution
 class TestWorkerExecution(unittest.TestCase):
@@ -581,8 +583,6 @@ podman run --name "net.splitcells.martins.avots.distro" \\
   -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/bin:/root/bin \\
    \\
   "localhost/net.splitcells.martins.avots.distro"
-  #
-  # allow_host_loopback is required, so that the software in the container can connect to the host.
 """)
     def test_bootstrap(self):
         test_subject = parse_worker_execution_arguments(['--program-name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap', '--dry-run=true', '--backwards-compatible=True'])
@@ -618,8 +618,6 @@ podman run --name "net.splitcells.martins.avots.distro" \\
   -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/bin:/root/bin \\
    \\
   "localhost/net.splitcells.martins.avots.distro"
-  #
-  # allow_host_loopback is required, so that the software in the container can connect to the host.
 """)
     def test_bootstrap_remote(self):
         test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--dry-run=true', '--backwards-compatible=True'])
@@ -647,7 +645,7 @@ ssh user@address /bin/sh << EOF
     cd ~/.local/state/net.splitcells.network.worker/repos/public/
     git clone https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
   fi
-  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && git pull # The pull ensures, that changes to bin/worker.execute etc. are available as fast as possible.
+  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && git pull
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.hub && git pull
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
   bin/worker.execute.py \\
@@ -690,7 +688,18 @@ Description=Execute daemon-name
 [Service]
 Type=oneshot
 StandardOutput=journal
-ExecStart=/usr/bin/date
+ExecStart=podman run --name "net.splitcells.network.worker.boostrap.daemon" \\
+  --network slirp4netns:allow_host_loopback=true \\
+  ${additionalArguments} \\
+  --rm \\
+  -v ${HOME}/.local/state/net.splitcells.network.worker/Documents:/root/Documents \\
+  -v ${HOME}/.local/state/net.splitcells.network.worker/.ssh:/root/.ssh \\
+  -v ${HOME}/.local/state/net.splitcells.network.worker/.m2:/root/.m2 \\
+  -v ${HOME}/.local/state/net.splitcells.network.worker/.local:/root/.local/state/net.splitcells.network.worker/.local \\
+  -v ${HOME}/.local/state/net.splitcells.network.worker/repos:/root/.local/state/net.splitcells.network.worker/repos \\
+  -v ${HOME}/.local/state/net.splitcells.network.worker/bin:/root/bin \\
+  "$podmanParameters" \\
+  "localhost/net.splitcells.network.worker.boostrap.daemon"
 SERVICE_EOL
 EOF
 
