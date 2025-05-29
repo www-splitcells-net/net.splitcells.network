@@ -495,8 +495,6 @@ def parse_worker_execution_arguments(arguments):
     workerExecution = WorkerExecution()
     if parsedArgs.program_name is None:
             parsedArgs.program_name = parsedArgs.execution_name
-    if parsedArgs.execution_name is None:
-        parsedArgs.execution_name = parsedArgs.program_name
     if parsedArgs.program_name is None:
         parsedArgs.program_name = "net.splitcells.network.worker"
     if parsedArgs.command is not None:
@@ -528,6 +526,8 @@ def parse_worker_execution_arguments(arguments):
         pass
     else:
         raise Exception("Exactly one of the arguments --program-name, --executable-path, --test-remote, --class-for-execution or --bootstrap-remote has to be set, in order to execute this program.");
+    if parsedArgs.execution_name is None:
+        parsedArgs.execution_name = parsedArgs.program_name
     if parsedArgs.program_name is None and parsedArgs.execution_name is None:
         raise Exception("Either the --program-name or the --execution-name has to be given.")
     workerExecution.execute(parser, parsedArgs)
