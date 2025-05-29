@@ -491,6 +491,8 @@ def parse_worker_execution_arguments(arguments):
     parser.add_argument('--backwards-compatible', dest='backwards_compatible', required=False, type=str2bool, default=True, help="If set to true, the the remote script is compatible to the previous implementation.")
     parsedArgs = parser.parse_args(arguments)
     workerExecution = WorkerExecution()
+    if parsedArgs.program_name is None and parsedArgs.execution_name is None:
+        raise Exception("Either the --program-name or the --execution-name has to be given.")
     if parsedArgs.program_name is None:
         parsedArgs.program_name = "net.splitcells.network.worker"
     if parsedArgs.command is not None:
@@ -499,10 +501,14 @@ def parse_worker_execution_arguments(arguments):
         parsedArgs.execute_via_ssh_at = parsedArgs.bootstrap_remote
         parsedArgs.command = "export NET_SPLITCELLS_NETWORK_WORKER_NAME=" + parsedArgs.program_name + " && cd ~/.local/state/" + parsedArgs.program_name + "/repos/public/net.splitcells.network && bin/worker.bootstrap"
         parsedArgs.bootstrap_remote = None
+        if parsedArgs.execution_name is None:
+            parsedArgs.execution_name = parsedArgs.program_name + '.boostrap'
     elif parsedArgs.test_remote is not None:
         parsedArgs.execute_via_ssh_at = parsedArgs.test_remote
         parsedArgs.command = "cd ~/.local/state/" + parsedArgs.program_name + "/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.test"
         parsedArgs.test_remote = None
+        if parsedArgs.execution_name is None:
+            parsedArgs.execution_name = parsedArgs.program_name + '.test.remote'
     elif parsedArgs.build_remote is not None:
         parsedArgs.execute_via_ssh_at = parsedArgs.build_remote
         parsedArgs.command = ("cd ~/.local/state/" + parsedArgs.program_name + "/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.build && "
@@ -510,14 +516,14 @@ def parse_worker_execution_arguments(arguments):
             + parsedArgs.program_name
             + '/repos/public/net.splitcells.martins.avots.distro && ../net.splitcells.network/bin/worker.execute.py --program-name="net.splitcells.martins.avots.distro" --class-for-execution="net.splitcells.martins.avots.distro.LiveDistro" --only-build-image=true --use-playwright=true')
         parsedArgs.build_remote = None
+        if parsedArgs.execution_name is None:
+            parsedArgs.execution_name = parsedArgs.program_name + '.build.remote'
     elif parsedArgs.executable_path is not None:
         pass
     elif parsedArgs.class_for_execution is not None:
         pass
     else:
         raise Exception("Exactly one of the arguments --program-name, --executable-path, --test-remote, --class-for-execution or --bootstrap-remote has to be set, in order to execute this program.");
-    if parsedArgs.program_name is None and parsedArgs.execution_name is None:
-        raise Exception("Either the --program-name or the --execution-name has to be given.")
     if parsedArgs.program_name is None:
         parsedArgs.program_name = parsedArgs.execution_name
     if parsedArgs.execution_name is None:
