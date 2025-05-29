@@ -341,7 +341,6 @@ class WorkerExecution:
             , daemonName = self.daemonName
             , daemonFile = self.daemonFile
             , bin_worker_execute = self.bin_worker_execute
-            , HOME_FOLDER = str(Path.home())
             , programName = self.config.program_name
             , podmanParameters = self.additional_podman_args
             , executionName = self.config.execution_name
