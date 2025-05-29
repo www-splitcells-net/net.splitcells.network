@@ -491,8 +491,10 @@ def parse_worker_execution_arguments(arguments):
     parser.add_argument('--backwards-compatible', dest='backwards_compatible', required=False, type=str2bool, default=True, help="If set to true, the the remote script is compatible to the previous implementation.")
     parsedArgs = parser.parse_args(arguments)
     workerExecution = WorkerExecution()
-    if parsedArgs.program_name is None and parsedArgs.execution_name is None:
-        raise Exception("Either the --program-name or the --execution-name has to be given.")
+    if parsedArgs.program_name is None:
+            parsedArgs.program_name = parsedArgs.execution_name
+    if parsedArgs.execution_name is None:
+        parsedArgs.execution_name = parsedArgs.program_name
     if parsedArgs.program_name is None:
         parsedArgs.program_name = "net.splitcells.network.worker"
     if parsedArgs.command is not None:
@@ -524,10 +526,8 @@ def parse_worker_execution_arguments(arguments):
         pass
     else:
         raise Exception("Exactly one of the arguments --program-name, --executable-path, --test-remote, --class-for-execution or --bootstrap-remote has to be set, in order to execute this program.");
-    if parsedArgs.program_name is None:
-        parsedArgs.program_name = parsedArgs.execution_name
-    if parsedArgs.execution_name is None:
-        parsedArgs.execution_name = parsedArgs.program_name
+    if parsedArgs.program_name is None and parsedArgs.execution_name is None:
+        raise Exception("Either the --program-name or the --execution-name has to be given.")
     workerExecution.execute(parser, parsedArgs)
     return workerExecution
 class TestWorkerExecution(unittest.TestCase):
@@ -651,7 +651,7 @@ ssh user@address /bin/sh << EOF
   bin/worker.execute.py \\
     --command='export NET_SPLITCELLS_NETWORK_WORKER_NAME=net.splitcells.network.worker && cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'\\
     --dry-run='true'\\
-    --execution-name='net.splitcells.network.worker'\\
+    --execution-name='net.splitcells.network.worker.boostrap'\\
     --flat-folders='true'\\
     --program-name='net.splitcells.network.worker'
 
