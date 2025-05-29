@@ -16,14 +16,14 @@ by writing to any variable or attribute only once except for the configuration.
 These variables are only used as an argument for other variables or
 as variables in template strings.
 
+TODO A lot less should be done in the executeRemotelyViaSsh.
+     For instance, the systemd unit file should be done via executeLocally.
 TODO Create test for all `worker.execute` flags.
 TODO Create option to delete things like `.m2`, `repos` and `net.splitcells.shell.commands.managed`,
      so it can be made sure, that bootstrapping actually works.
 TODO Use string's substitute method, instead of string's replace.
 TODO Use as few string templates as possible.
      In an ideal case a global one is enough, as templating is much more simple than
-TODO A lot less should be done in the executeRemotelyViaSsh.
-     For instance, the systemd unit file should be done via executeLocally.
 TODO Support deployment to Docker and Kubernetes.
 TODO Support executing as systemd service. Create a user service for that.
 TODO Currently, there is not distinction between the name of the thing being executed and its namespace.
@@ -291,6 +291,10 @@ class WorkerExecution:
             and self.configParser.get_default(key) != parsedVars[key] \
             and key != 'execute_via_ssh_at'
     def executeRemotelyViaSsh(self):
+        """This command should have no actual execution commands,
+        but instead should only synchronize with the remote and generate appropriate `bin/worker.execute.py` commands,
+        in order to delegate the actual execution commands.
+        This makes `worker.execute.py` simplier."""
         self.username = self.config.execute_via_ssh_at.split("@")[0]
         preparingNetworkLogPullScript = None;
         closingpull_network_logScript = None;
