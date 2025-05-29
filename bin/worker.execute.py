@@ -220,7 +220,7 @@ EOF"""
 
 SET_UP_SYSTEMD_SERVICE_REMOTELY = """# Set up Systemd service remotely
 ssh ${execute_via_ssh_at} /bin/sh << EOF
-  set -e
+  """ + PREPARE_EXECUTION_TEMPLATE.replace("\n", "\n  ") + """
   mkdir -p ${daemonFolder}
   cat > ${daemonFile} <<SERVICE_EOL
 [Unit]
@@ -676,7 +676,25 @@ fi
 
 # Set up Systemd service remotely
 ssh user@address /bin/sh << EOF
+  
   set -e
+  set -x
+  # Prepare file system.
+  mkdir -p ${HOME}/.local/state/net.splitcells.network.worker/.m2/
+  mkdir -p ${HOME}/.local/state/net.splitcells.network.worker/.ssh/
+  mkdir -p ${HOME}/.local/state/net.splitcells.network.worker/.local/dumps/
+  mkdir -p ${HOME}/.local/state/net.splitcells.network.worker/Documents/
+  mkdir -p ${HOME}/.local/state/net.splitcells.network.worker/repos/
+  mkdir -p ${HOME}/.local/state/net.splitcells.network.worker/bin/
+  mkdir -p ./target/
+  test -f target/program-net.splitcells.network.worker && chmod +x target/program-net.splitcells.network.worker # This file does not exist, when '--executable-path' is not set.
+  podman build -f "target/Dockerfile-net.splitcells.network.worker.boostrap.daemon" \\
+      --tag "localhost/net.splitcells.network.worker.boostrap.daemon"  \\
+      --arch string \\
+      ${additionalArguments} \\
+      --log-level=warn # `--log-level=warn` is podman's default.
+      # Logging is used, in order to better understand build runtime performance.
+  
   mkdir -p ~/.config/systemd/user
   cat > ~/.config/systemd/user/net.splitcells.network.worker.boostrap.daemon.service <<SERVICE_EOL
 [Unit]
