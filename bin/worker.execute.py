@@ -119,7 +119,7 @@ test -f target/program-${programName} && chmod +x target/program-${programName} 
 podman build -f "target/Dockerfile-${executionName}" \\
     --tag "localhost/${executionName}"  \\
     --arch string \\
-    ${additionalArguments} \\
+    ${additionalArguments}\\
     --log-level=warn # `--log-level=warn` is podman's default.
     # Logging is used, in order to better understand build runtime performance.
 """
@@ -141,7 +141,7 @@ test -f target/program-${programName} && chmod +x target/program-${programName} 
 # allow_host_loopback is required, so that the software in the container can connect to the host.
 PODMAN_COMMAND_TEMPLATE = """podman run --name "${executionName}" \\
   --network slirp4netns:allow_host_loopback=true \\
-  ${additionalArguments} \\
+  ${additionalArguments}\\
   --rm \\
   -v ${HOME}/.local/state/${programName}/Documents:/root/Documents \\
   -v ${HOME}/.local/state/${programName}/.ssh:/root/.ssh \\
@@ -149,7 +149,7 @@ PODMAN_COMMAND_TEMPLATE = """podman run --name "${executionName}" \\
   -v ${HOME}/.local/state/${programName}/.local:/root/.local/state/${programName}/.local \\
   -v ${HOME}/.local/state/${programName}/repos:/root/.local/state/${programName}/repos \\
   -v ${HOME}/.local/state/${programName}/bin:/root/bin \\
-  ${podmanParameters} \\
+  ${podmanParameters}\\
   "localhost/${executionName}"
 """
 
@@ -262,6 +262,7 @@ class WorkerExecution:
     configParser = None
     additional_podman_args = ""
     bin_worker_execute = None
+    additionalArguments = ""
     def execute(self, configParser, config):
         self.configParser = configParser
         self.config = config
@@ -273,6 +274,11 @@ class WorkerExecution:
             self.executeLocally()
         else:
             self.executeRemotelyViaSsh()
+        if PODMAN_FLAGS_CONFIG_FILE.is_file():
+            self.additionalArguments = (PODMAN_FLAGS_CONFIG_FILE.read_text() + '\\').replace('\n', '')
+        else:
+            self.additionalArguments = ''
+            self.local_execution_script = self.local_execution_script.replace('${additionalArguments} \\', '\\')
     def filterArgumentsForRemoteScript(self, parsedVars, key):
         if self.config.backwards_compatible:
             if key == 'flat_folders' and self.config.flat_folders:
@@ -338,7 +344,8 @@ class WorkerExecution:
             , HOME_FOLDER = str(Path.home())
             , programName = self.config.program_name
             , podmanParameters = self.additional_podman_args
-            , executionName = self.config.execution_name)
+            , executionName = self.config.execution_name
+            , additionalArguments = self.additionalArguments)
     def formatDocument(self, arg):
         """Ensure, that the document ends with a single new line symbol."""
         if arg.endswith("\n\n"):
@@ -441,10 +448,6 @@ class WorkerExecution:
         if self.config.use_host_documents:
             # TODO This replacement is done in a dirty way. Use a template variable instead.
             self.local_execution_script = self.local_execution_script.replace("-v ${HOME}/.local/state/${programName}/Documents:/root/Documents \\", "-v ${HOME}/Documents:/root/Documents \\")
-        if PODMAN_FLAGS_CONFIG_FILE.is_file():
-            self.local_execution_script = self.local_execution_script.replace('${additionalArguments} \\', (PODMAN_FLAGS_CONFIG_FILE.read_text() + '\\').replace('\n', ''))
-        else:
-            self.local_execution_script = self.local_execution_script.replace('${additionalArguments} \\', '\\')
         self.local_execution_script = self.local_execution_script.replace('${programName}', self.config.program_name)
         self.local_execution_script = self.applyTemplate(self.local_execution_script);
         # Execute program.
@@ -578,7 +581,7 @@ podman run --name "net.splitcells.martins.avots.distro" \\
   -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/.local:/root/.local/state/net.splitcells.martins.avots.distro/.local \\
   -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/repos:/root/.local/state/net.splitcells.martins.avots.distro/repos \\
   -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/bin:/root/bin \\
-   \\
+  \\
   "localhost/net.splitcells.martins.avots.distro"
 """)
     def test_bootstrap(self):
@@ -613,7 +616,7 @@ podman run --name "net.splitcells.martins.avots.distro" \\
   -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/.local:/root/.local/state/net.splitcells.martins.avots.distro/.local \\
   -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/repos:/root/.local/state/net.splitcells.martins.avots.distro/repos \\
   -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/bin:/root/bin \\
-   \\
+  \\
   "localhost/net.splitcells.martins.avots.distro"
 """)
     def test_bootstrap_remote(self):
@@ -691,7 +694,7 @@ ssh user@address /bin/sh << EOF
   podman build -f "target/Dockerfile-net.splitcells.network.worker.boostrap.daemon" \\
       --tag "localhost/net.splitcells.network.worker.boostrap.daemon"  \\
       --arch string \\
-      ${additionalArguments} \\
+      \\
       --log-level=warn # `--log-level=warn` is podman's default.
       # Logging is used, in order to better understand build runtime performance.
   
@@ -705,7 +708,7 @@ Type=oneshot
 StandardOutput=journal
 ExecStart=podman run --name "net.splitcells.network.worker.boostrap.daemon" \\
   --network slirp4netns:allow_host_loopback=true \\
-  ${additionalArguments} \\
+  \\
   --rm \\
   -v ${HOME}/.local/state/net.splitcells.network.worker/Documents:/root/Documents \\
   -v ${HOME}/.local/state/net.splitcells.network.worker/.ssh:/root/.ssh \\
@@ -713,7 +716,7 @@ ExecStart=podman run --name "net.splitcells.network.worker.boostrap.daemon" \\
   -v ${HOME}/.local/state/net.splitcells.network.worker/.local:/root/.local/state/net.splitcells.network.worker/.local \\
   -v ${HOME}/.local/state/net.splitcells.network.worker/repos:/root/.local/state/net.splitcells.network.worker/repos \\
   -v ${HOME}/.local/state/net.splitcells.network.worker/bin:/root/bin \\
-   \\
+  \\
   "localhost/net.splitcells.network.worker.boostrap.daemon"
 SERVICE_EOL
 EOF
