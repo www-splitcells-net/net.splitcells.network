@@ -29,10 +29,10 @@ TODO Support executing as systemd service. Create a user service for that.
 TODO Currently, there is not distinction between the name of the thing being executed and its namespace.
      This will probably create problems in the future, where you have multiple containers with the same namespace,
      but with different commands.
-TODO IDEA Currently, everything is stored in `${HOME}/.local/state/${programName}/*`.
+TODO IDEA Currently, everything is stored in `~/.local/state/${programName}/*`.
      If more strict file isolation is required, in order to prevent file accidents,
      a namespace could be used, that is implemented as a hidden parent folder for the execution folder:
-     `${HOME}/.local/state/.$namespace/${programName}/*`.
+     `~/.local/state/.$namespace/${programName}/*`.
      See `repo.process` for inspiration.
      Of course, different users could be used instead.
 """
@@ -110,12 +110,12 @@ PREPARE_EXECUTION_TEMPLATE = """
 set -e
 set -x
 # Prepare file system.
-mkdir -p ${HOME}/.local/state/${programName}/.m2/
-mkdir -p ${HOME}/.local/state/${programName}/.ssh/
-mkdir -p ${HOME}/.local/state/${programName}/.local/dumps/
-mkdir -p ${HOME}/.local/state/${programName}/Documents/
-mkdir -p ${HOME}/.local/state/${programName}/repos/
-mkdir -p ${HOME}/.local/state/${programName}/bin/
+mkdir -p ~/.local/state/${programName}/.m2/
+mkdir -p ~/.local/state/${programName}/.ssh/
+mkdir -p ~/.local/state/${programName}/.local/dumps/
+mkdir -p ~/.local/state/${programName}/Documents/
+mkdir -p ~/.local/state/${programName}/repos/
+mkdir -p ~/.local/state/${programName}/bin/
 mkdir -p ./target/
 test -f target/program-${programName} && chmod +x target/program-${programName} # This file does not exist, when '--executable-path' is not set.
 podman build -f "target/Dockerfile-${executionName}" \\
@@ -129,12 +129,12 @@ PREPARE_EXECUTION_WITHOUT_BUILD_TEMPLATE = """
 set -e
 set -x
 # Prepare file system.
-mkdir -p ${HOME}/.local/state/${programName}/.m2/
-mkdir -p ${HOME}/.local/state/${programName}/.ssh/
-mkdir -p ${HOME}/.local/state/${programName}/.local/dumps/
-mkdir -p ${HOME}/.local/state/${programName}/Documents/
-mkdir -p ${HOME}/.local/state/${programName}/repos/
-mkdir -p ${HOME}/.local/state/${programName}/bin/
+mkdir -p ~/.local/state/${programName}/.m2/
+mkdir -p ~/.local/state/${programName}/.ssh/
+mkdir -p ~/.local/state/${programName}/.local/dumps/
+mkdir -p ~/.local/state/${programName}/Documents/
+mkdir -p ~/.local/state/${programName}/repos/
+mkdir -p ~/.local/state/${programName}/bin/
 mkdir -p ./target/
 test -f target/program-${programName} && chmod +x target/program-${programName} # This file does not exist, when '--executable-path' is not set.
 """
@@ -144,12 +144,12 @@ PODMAN_COMMAND_TEMPLATE = """podman run --name "${executionName}" \\
   --network slirp4netns:allow_host_loopback=true \\
   ${additionalArguments}\\
   --rm \\
-  -v ${HOME}/.local/state/${programName}/Documents:/root/Documents \\
-  -v ${HOME}/.local/state/${programName}/.ssh:/root/.ssh \\
-  -v ${HOME}/.local/state/${programName}/.m2:/root/.m2 \\
-  -v ${HOME}/.local/state/${programName}/.local:/root/.local/state/${programName}/.local \\
-  -v ${HOME}/.local/state/${programName}/repos:/root/.local/state/${programName}/repos \\
-  -v ${HOME}/.local/state/${programName}/bin:/root/bin \\
+  -v ~/.local/state/${programName}/Documents:/root/Documents \\
+  -v ~/.local/state/${programName}/.ssh:/root/.ssh \\
+  -v ~/.local/state/${programName}/.m2:/root/.m2 \\
+  -v ~/.local/state/${programName}/.local:/root/.local/state/${programName}/.local \\
+  -v ~/.local/state/${programName}/repos:/root/.local/state/${programName}/repos \\
+  -v ~/.local/state/${programName}/bin:/root/bin \\
   ${podmanParameters}\\
   "localhost/${executionName}"
 """
@@ -163,7 +163,7 @@ podman tag ${programName}:latest codeberg.org/splitcells-net/${programName}:late
 podman push codeberg.org/splitcells-net/${programName}:latest
 """
 
-PROGRAMS_DESCRIPTION = """Executes a given program as isolated as possible with all program files being persisted at `${HOME}/.local/state/${programName}/` and user input being located at `${HOME}/Documents`.
+PROGRAMS_DESCRIPTION = """Executes a given program as isolated as possible with all program files being persisted at `~/.local/state/${programName}/` and user input being located at `~/Documents`.
 Executions with different names have different persisted file locations and are therefore isolated more clearly, whereas executions with the same name are assumed to share data.
 This is the CLI interface to the Splitcells Network Worker.
 Exactly one of arguments --program-name, --test-remote or --bootstrap-remote has to be set,
@@ -425,9 +425,9 @@ class WorkerExecution:
         else:
             self.local_execution_script += EXECUTE_VIA_PODMAN_TEMPLATE
         if self.config.flat_folders:
-            self.local_execution_script = self.local_execution_script.replace("-v ${HOME}/.local/state/${programName}/Documents:/root/Documents ", "-v ${HOME}/.local/state/${programName}/Documents:/root/.local/state/${programName}/Documents ")
-            self.local_execution_script = self.local_execution_script.replace("-v ${HOME}/.local/state/${programName}/repos:/root/repos ", "-v ${HOME}/.local/state/${programName}/repos:/root/.local/state/${programName}/repos ")
-            self.local_execution_script = self.local_execution_script.replace("-v ${HOME}/.local/state/${programName}/.local:/root/.local ", "-v ${HOME}/.local/state/${programName}/.local:/root/.local/state/${programName}/.local ")
+            self.local_execution_script = self.local_execution_script.replace("-v ~/.local/state/${programName}/Documents:/root/Documents ", "-v ~/.local/state/${programName}/Documents:/root/.local/state/${programName}/Documents ")
+            self.local_execution_script = self.local_execution_script.replace("-v ~/.local/state/${programName}/repos:/root/repos ", "-v ~/.local/state/${programName}/repos:/root/.local/state/${programName}/repos ")
+            self.local_execution_script = self.local_execution_script.replace("-v ~/.local/state/${programName}/.local:/root/.local ", "-v ~/.local/state/${programName}/.local:/root/.local/state/${programName}/.local ")
             # .ssh and .m2 does not have to be replaced, as these are used for environment configuration of tools inside the container.
         if self.config.command is not None:
             # TODO This does not seem to be valid or used anymore.
@@ -447,7 +447,7 @@ class WorkerExecution:
             self.local_execution_script = self.local_execution_script.replace("\nset -x\n", "\n\n")
         if self.config.use_host_documents:
             # TODO This replacement is done in a dirty way. Use a template variable instead.
-            self.local_execution_script = self.local_execution_script.replace("-v ${HOME}/.local/state/${programName}/Documents:/root/Documents \\", "-v ${HOME}/Documents:/root/Documents \\")
+            self.local_execution_script = self.local_execution_script.replace("-v ~/.local/state/${programName}/Documents:/root/Documents \\", "-v ~/Documents:/root/Documents \\")
         self.local_execution_script = self.local_execution_script.replace('${programName}', self.config.program_name)
         self.local_execution_script = self.applyTemplate(self.local_execution_script);
         # Execute program.
@@ -540,12 +540,12 @@ class TestWorkerExecution(unittest.TestCase):
 set -e
 
 # Prepare file system.
-mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.m2/
-mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.ssh/
-mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.local/dumps/
-mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/Documents/
-mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/repos/
-mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/bin/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.m2/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.ssh/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.local/dumps/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/Documents/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/repos/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/bin/
 mkdir -p ./target/
 test -f target/program-net.splitcells.martins.avots.distro && chmod +x target/program-net.splitcells.martins.avots.distro # This file does not exist, when '--executable-path' is not set.
 podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
@@ -560,12 +560,12 @@ podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
 set -e
 
 # Prepare file system.
-mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.m2/
-mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.ssh/
-mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.local/dumps/
-mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/Documents/
-mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/repos/
-mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/bin/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.m2/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.ssh/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.local/dumps/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/Documents/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/repos/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/bin/
 mkdir -p ./target/
 test -f target/program-net.splitcells.martins.avots.distro && chmod +x target/program-net.splitcells.martins.avots.distro # This file does not exist, when '--executable-path' is not set.
 
@@ -574,12 +574,12 @@ podman run --name "net.splitcells.martins.avots.distro" \\
   --network slirp4netns:allow_host_loopback=true \\
   \\
   --rm \\
-  -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/Documents:/root/.local/state/net.splitcells.martins.avots.distro/Documents \\
-  -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/.ssh:/root/.ssh \\
-  -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/.m2:/root/.m2 \\
-  -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/.local:/root/.local/state/net.splitcells.martins.avots.distro/.local \\
-  -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/repos:/root/.local/state/net.splitcells.martins.avots.distro/repos \\
-  -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/bin:/root/bin \\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/Documents:/root/.local/state/net.splitcells.martins.avots.distro/Documents \\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/.ssh:/root/.ssh \\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/.m2:/root/.m2 \\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/.local:/root/.local/state/net.splitcells.martins.avots.distro/.local \\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/repos:/root/.local/state/net.splitcells.martins.avots.distro/repos \\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/bin:/root/bin \\
   \\
   "localhost/net.splitcells.martins.avots.distro"
 """)
@@ -589,12 +589,12 @@ podman run --name "net.splitcells.martins.avots.distro" \\
 set -e
 
 # Prepare file system.
-mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.m2/
-mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.ssh/
-mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/.local/dumps/
-mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/Documents/
-mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/repos/
-mkdir -p ${HOME}/.local/state/net.splitcells.martins.avots.distro/bin/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.m2/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.ssh/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.local/dumps/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/Documents/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/repos/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/bin/
 mkdir -p ./target/
 test -f target/program-net.splitcells.martins.avots.distro && chmod +x target/program-net.splitcells.martins.avots.distro # This file does not exist, when '--executable-path' is not set.
 podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
@@ -608,12 +608,12 @@ podman run --name "net.splitcells.martins.avots.distro" \\
   --network slirp4netns:allow_host_loopback=true \\
   \\
   --rm \\
-  -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/Documents:/root/.local/state/net.splitcells.martins.avots.distro/Documents \\
-  -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/.ssh:/root/.ssh \\
-  -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/.m2:/root/.m2 \\
-  -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/.local:/root/.local/state/net.splitcells.martins.avots.distro/.local \\
-  -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/repos:/root/.local/state/net.splitcells.martins.avots.distro/repos \\
-  -v ${HOME}/.local/state/net.splitcells.martins.avots.distro/bin:/root/bin \\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/Documents:/root/.local/state/net.splitcells.martins.avots.distro/Documents \\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/.ssh:/root/.ssh \\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/.m2:/root/.m2 \\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/.local:/root/.local/state/net.splitcells.martins.avots.distro/.local \\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/repos:/root/.local/state/net.splitcells.martins.avots.distro/repos \\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/bin:/root/bin \\
   \\
   "localhost/net.splitcells.martins.avots.distro"
 """)
@@ -681,12 +681,12 @@ ssh user@address /bin/sh << EOF
   set -e
   set -x
   # Prepare file system.
-  mkdir -p ${HOME}/.local/state/net.splitcells.network.worker/.m2/
-  mkdir -p ${HOME}/.local/state/net.splitcells.network.worker/.ssh/
-  mkdir -p ${HOME}/.local/state/net.splitcells.network.worker/.local/dumps/
-  mkdir -p ${HOME}/.local/state/net.splitcells.network.worker/Documents/
-  mkdir -p ${HOME}/.local/state/net.splitcells.network.worker/repos/
-  mkdir -p ${HOME}/.local/state/net.splitcells.network.worker/bin/
+  mkdir -p ~/.local/state/net.splitcells.network.worker/.m2/
+  mkdir -p ~/.local/state/net.splitcells.network.worker/.ssh/
+  mkdir -p ~/.local/state/net.splitcells.network.worker/.local/dumps/
+  mkdir -p ~/.local/state/net.splitcells.network.worker/Documents/
+  mkdir -p ~/.local/state/net.splitcells.network.worker/repos/
+  mkdir -p ~/.local/state/net.splitcells.network.worker/bin/
   mkdir -p ./target/
   test -f target/program-net.splitcells.network.worker && chmod +x target/program-net.splitcells.network.worker # This file does not exist, when '--executable-path' is not set.
   podman build -f "target/Dockerfile-net.splitcells.network.worker.boostrap.daemon" \\
@@ -707,12 +707,12 @@ ExecStart=podman run --name "net.splitcells.network.worker.boostrap.daemon" \\
   --network slirp4netns:allow_host_loopback=true \\
   \\
   --rm \\
-  -v ${HOME}/.local/state/net.splitcells.network.worker/Documents:/root/Documents \\
-  -v ${HOME}/.local/state/net.splitcells.network.worker/.ssh:/root/.ssh \\
-  -v ${HOME}/.local/state/net.splitcells.network.worker/.m2:/root/.m2 \\
-  -v ${HOME}/.local/state/net.splitcells.network.worker/.local:/root/.local/state/net.splitcells.network.worker/.local \\
-  -v ${HOME}/.local/state/net.splitcells.network.worker/repos:/root/.local/state/net.splitcells.network.worker/repos \\
-  -v ${HOME}/.local/state/net.splitcells.network.worker/bin:/root/bin \\
+  -v ~/.local/state/net.splitcells.network.worker/Documents:/root/Documents \\
+  -v ~/.local/state/net.splitcells.network.worker/.ssh:/root/.ssh \\
+  -v ~/.local/state/net.splitcells.network.worker/.m2:/root/.m2 \\
+  -v ~/.local/state/net.splitcells.network.worker/.local:/root/.local/state/net.splitcells.network.worker/.local \\
+  -v ~/.local/state/net.splitcells.network.worker/repos:/root/.local/state/net.splitcells.network.worker/repos \\
+  -v ~/.local/state/net.splitcells.network.worker/bin:/root/bin \\
   \\
   "localhost/net.splitcells.network.worker.boostrap.daemon"
 SERVICE_EOL
