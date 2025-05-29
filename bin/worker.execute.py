@@ -20,7 +20,7 @@ TODO Create test for all `worker.execute` flags.
 TODO Create option to delete things like `.m2`, `repos` and `net.splitcells.shell.commands.managed`,
      so it can be made sure, that bootstrapping actually works.
 TODO Use string's substitute method, instead of string's replace.
-TODO Use as view string templates as possible.
+TODO Use as few string templates as possible.
      In an ideal case a global one is enough, as templating is much more simple than
 TODO Support deployment to Docker and Kubernetes.
 TODO Support executing as systemd service. Create a user service for that.
