@@ -649,7 +649,7 @@ ssh user@address /bin/sh << EOF
     cd ~/.local/state/net.splitcells.network.worker/repos/public/
     git clone https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
   fi
-  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && git pull # The pull ensures, that changes to `bin/network.execute` etc. are available as fast as possible.
+  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && git pull # The pull ensures, that changes to bin/worker.execute etc. are available as fast as possible.
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.hub && git pull
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
   bin/worker.execute.py \\
