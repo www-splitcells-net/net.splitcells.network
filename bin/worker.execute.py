@@ -138,7 +138,7 @@ test -f target/program-${programName} && chmod +x target/program-${programName} 
 
 EXECUTE_VIA_PODMAN_TEMPLATE = """
 set -x
-podman run --program-name "${programName}" \\
+podman run --name "${executionName}" \\
   --network slirp4netns:allow_host_loopback=true \\
   ${additionalArguments} \\
   --rm \\
@@ -336,7 +336,8 @@ class WorkerExecution:
             daemonFile = self.daemonFile,
             bin_worker_execute = self.bin_worker_execute,
             HOME_FOLDER = str(Path.home()),
-            programName = self.config.program_name)
+            programName = self.config.program_name,
+            executionName = self.config.execution_name)
     def formatDocument(self, arg):
         """Ensure, that the document ends with a single new line symbol."""
         if arg.endswith("\n\n"):
@@ -520,6 +521,12 @@ def parse_worker_execution_arguments(arguments):
         pass
     else:
         raise Exception("Exactly one of the arguments --program-name, --executable-path, --test-remote, --class-for-execution or --bootstrap-remote has to be set, in order to execute this program.");
+    if parsedArgs.program_name is None and parsedArgs.execution_name is None:
+        raise Exception("Either the --program-name or the --execution-name has to be given.")
+    if parsedArgs.program_name is None:
+        parsedArgs.program_name = parsedArgs.execution_name
+    if parsedArgs.execution_name is None:
+        parsedArgs.execution_name = parsedArgs.program_name
     workerExecution.execute(parser, parsedArgs)
     return workerExecution
 class TestWorkerExecution(unittest.TestCase):
@@ -561,7 +568,7 @@ mkdir -p ./target/
 test -f target/program-net.splitcells.martins.avots.distro && chmod +x target/program-net.splitcells.martins.avots.distro # This file does not exist, when '--executable-path' is not set.
 
 
-podman run --program-name "net.splitcells.martins.avots.distro" \\
+podman run --name "net.splitcells.martins.avots.distro" \\
   --network slirp4netns:allow_host_loopback=true \\
   \\
   --rm \\
@@ -598,7 +605,7 @@ podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
     # Logging is used, in order to better understand build runtime performance.
 
 
-podman run --program-name "net.splitcells.martins.avots.distro" \\
+podman run --name "net.splitcells.martins.avots.distro" \\
   --network slirp4netns:allow_host_loopback=true \\
   \\
   --rm \\
@@ -643,6 +650,7 @@ ssh user@address /bin/sh << EOF
   bin/worker.execute.py \\
     --command='export NET_SPLITCELLS_NETWORK_WORKER_NAME=net.splitcells.network.worker && cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap.py'\\
     --dry-run='true'\\
+    --execution-name='net.splitcells.network.worker'\\
     --flat-folders='true'\\
     --program-name='net.splitcells.network.worker'
 
