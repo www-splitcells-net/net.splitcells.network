@@ -118,6 +118,7 @@ mkdir -p ~/.local/state/${programName}/repos/
 mkdir -p ~/.local/state/${programName}/bin/
 mkdir -p ./target/
 test -f target/program-${programName} && chmod +x target/program-${programName} # This file does not exist, when '--executable-path' is not set.
+cd ~/.local/state/${programName}/repos/public/net.splitcells.network
 podman build -f "target/Dockerfile-${executionName}" \\
     --tag "localhost/${executionName}"  \\
     --arch string \\
@@ -548,6 +549,7 @@ mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/repos/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/bin/
 mkdir -p ./target/
 test -f target/program-net.splitcells.martins.avots.distro && chmod +x target/program-net.splitcells.martins.avots.distro # This file does not exist, when '--executable-path' is not set.
+cd ~/.local/state/net.splitcells.martins.avots.distro/repos/public/net.splitcells.network
 podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
     --tag "localhost/net.splitcells.martins.avots.distro"  \\
     --arch x86_64 \\
@@ -597,6 +599,7 @@ mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/repos/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/bin/
 mkdir -p ./target/
 test -f target/program-net.splitcells.martins.avots.distro && chmod +x target/program-net.splitcells.martins.avots.distro # This file does not exist, when '--executable-path' is not set.
+cd ~/.local/state/net.splitcells.martins.avots.distro/repos/public/net.splitcells.network
 podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
     --tag "localhost/net.splitcells.martins.avots.distro"  \\
     --arch x86_64 \\
@@ -689,6 +692,7 @@ ssh user@address /bin/sh << EOF
   mkdir -p ~/.local/state/net.splitcells.network.worker/bin/
   mkdir -p ./target/
   test -f target/program-net.splitcells.network.worker && chmod +x target/program-net.splitcells.network.worker # This file does not exist, when '--executable-path' is not set.
+  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
   podman build -f "target/Dockerfile-net.splitcells.network.worker.boostrap.daemon" \\
       --tag "localhost/net.splitcells.network.worker.boostrap.daemon"  \\
       --arch string \\
