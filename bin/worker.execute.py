@@ -114,8 +114,8 @@ mkdir -p ${HOME}/.local/state/${programName}/repos/
 mkdir -p ${HOME}/.local/state/${programName}/bin/
 mkdir -p ./target/
 test -f target/program-${programName} && chmod +x target/program-${programName} # This file does not exist, when '--executable-path' is not set.
-podman build -f "target/Dockerfile-${programName}" \\
-    --tag "localhost/${programName}"  \\
+podman build -f "target/Dockerfile-${executionName}" \\
+    --tag "localhost/${executionName}"  \\
     --arch string \\
     ${additionalArguments} \\
     --log-level=warn # `--log-level=warn` is podman's default.
@@ -149,7 +149,7 @@ podman run --name "${executionName}" \\
   -v ${HOME}/.local/state/${programName}/repos:/root/.local/state/${programName}/repos \\
   -v ${HOME}/.local/state/${programName}/bin:/root/bin \\
   "$podmanParameters" \\
-  "localhost/${programName}"
+  "localhost/${executionName}"
   #
   # allow_host_loopback is required, so that the software in the container can connect to the host.
 """
