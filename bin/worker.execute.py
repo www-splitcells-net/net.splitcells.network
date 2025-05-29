@@ -241,8 +241,7 @@ Description=Execute ${executionName}
 [Service]
 Type=oneshot
 StandardOutput=journal
-ExecStart=/usr/bin/date
-SERVICE_EOL"""
+ExecStart=""" + PODMAN_COMMAND_TEMPLATE + """SERVICE_EOL"""
 
 class WorkerExecution:
     was_executed = False
