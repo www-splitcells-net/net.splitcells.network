@@ -498,7 +498,7 @@ def parse_worker_execution_arguments(arguments):
         if parsedArgs.program_name is None:
             parsedArgs.program_name = "net.splitcells.network.worker"
         parsedArgs.execute_via_ssh_at = parsedArgs.bootstrap_remote
-        parsedArgs.command = "export NET_SPLITCELLS_NETWORK_WORKER_NAME=" + parsedArgs.program_name + " && cd ~/.local/state/" + parsedArgs.program_name + "/repos/public/net.splitcells.network && bin/worker.bootstrap.py"
+        parsedArgs.command = "export NET_SPLITCELLS_NETWORK_WORKER_NAME=" + parsedArgs.program_name + " && cd ~/.local/state/" + parsedArgs.program_name + "/repos/public/net.splitcells.network && bin/worker.bootstrap"
         parsedArgs.bootstrap_remote = None
     elif parsedArgs.test_remote is not None:
         if parsedArgs.program_name is None:
@@ -648,7 +648,7 @@ ssh user@address /bin/sh << EOF
   fi
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
   bin/worker.execute.py \\
-    --command='export NET_SPLITCELLS_NETWORK_WORKER_NAME=net.splitcells.network.worker && cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap.py'\\
+    --command='export NET_SPLITCELLS_NETWORK_WORKER_NAME=net.splitcells.network.worker && cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'\\
     --dry-run='true'\\
     --execution-name='net.splitcells.network.worker'\\
     --flat-folders='true'\\
