@@ -208,7 +208,7 @@ ssh ${execute_via_ssh_at} /bin/sh << EOF
     cd ~/.local/state/${programName}/repos/public/
     git clone https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
   fi
-  cd ~/.local/state/${programName}/repos/public/net.splitcells.network && git pull # The pull ensures, that changes to `bin/network.execute` etc. are available as fast as possible.
+  cd ~/.local/state/${programName}/repos/public/net.splitcells.network && git pull # The pull ensures, that changes to bin/worker.execute etc. are available as fast as possible.
   cd ~/.local/state/${programName}/repos/public/net.splitcells.network.hub && git pull
   cd ~/.local/state/${programName}/repos/public/net.splitcells.network
   ${bin_worker_execute} \\\n${remoteNetworkerArguments}
