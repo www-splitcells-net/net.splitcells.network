@@ -22,6 +22,8 @@ TODO Create option to delete things like `.m2`, `repos` and `net.splitcells.shel
 TODO Use string's substitute method, instead of string's replace.
 TODO Use as few string templates as possible.
      In an ideal case a global one is enough, as templating is much more simple than
+TODO A lot less should be done in the executeRemotelyViaSsh.
+     For instance, the systemd unit file should be done via executeLocally.
 TODO Support deployment to Docker and Kubernetes.
 TODO Support executing as systemd service. Create a user service for that.
 TODO Currently, there is not distinction between the name of the thing being executed and its namespace.
@@ -147,7 +149,7 @@ PODMAN_COMMAND_TEMPLATE = """podman run --name "${executionName}" \\
   -v ${HOME}/.local/state/${programName}/.local:/root/.local/state/${programName}/.local \\
   -v ${HOME}/.local/state/${programName}/repos:/root/.local/state/${programName}/repos \\
   -v ${HOME}/.local/state/${programName}/bin:/root/bin \\
-  "$podmanParameters" \\
+  ${podmanParameters} \\
   "localhost/${executionName}"
 """
 
@@ -335,6 +337,7 @@ class WorkerExecution:
             , bin_worker_execute = self.bin_worker_execute
             , HOME_FOLDER = str(Path.home())
             , programName = self.config.program_name
+            , podmanParameters = self.additional_podman_args
             , executionName = self.config.execution_name)
     def formatDocument(self, arg):
         """Ensure, that the document ends with a single new line symbol."""
@@ -425,7 +428,6 @@ class WorkerExecution:
         if self.config.port_publishing is not None:
             for portMapping in self.config.port_publishing.split(','):
                 self.additional_podman_args += ' --publish ' + portMapping
-        self.local_execution_script = self.local_execution_script.replace('"$podmanParameters"', self.additional_podman_args)
         if self.config.auto_configure_cpuArch_explicitly:
             self.local_execution_script = self.local_execution_script.replace('\n    --arch string \\\n', '\n    --arch ' + platform.uname().machine + ' \\\n')
         elif self.config.cpu_architecture is None:
@@ -693,7 +695,7 @@ ExecStart=podman run --name "net.splitcells.network.worker.boostrap.daemon" \\
   -v ${HOME}/.local/state/net.splitcells.network.worker/.local:/root/.local/state/net.splitcells.network.worker/.local \\
   -v ${HOME}/.local/state/net.splitcells.network.worker/repos:/root/.local/state/net.splitcells.network.worker/repos \\
   -v ${HOME}/.local/state/net.splitcells.network.worker/bin:/root/bin \\
-  "$podmanParameters" \\
+   \\
   "localhost/net.splitcells.network.worker.boostrap.daemon"
 SERVICE_EOL
 EOF
