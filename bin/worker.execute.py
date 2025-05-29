@@ -327,17 +327,17 @@ class WorkerExecution:
         return
     def applyTemplate(self, string):
         return Template(string).safe_substitute(
-            execute_via_ssh_at = self.config.execute_via_ssh_at,
-            username = self.username,
-            name = self.config.program_name,
-            remoteNetworkerArguments = self.remote_networker_arguments,
-            daemonFolder = self.daemonFolder,
-            daemonName = self.daemonName,
-            daemonFile = self.daemonFile,
-            bin_worker_execute = self.bin_worker_execute,
-            HOME_FOLDER = str(Path.home()),
-            programName = self.config.program_name,
-            executionName = self.config.execution_name)
+            execute_via_ssh_at = self.config.execute_via_ssh_at
+            , username = self.username
+            , name = self.config.program_name
+            , remoteNetworkerArguments = self.remote_networker_arguments
+            , daemonFolder = self.daemonFolder
+            , daemonName = self.daemonName
+            , daemonFile = self.daemonFile
+            , bin_worker_execute = self.bin_worker_execute
+            , HOME_FOLDER = str(Path.home())
+            , programName = self.config.program_name
+            , executionName = self.config.execution_name)
     def formatDocument(self, arg):
         """Ensure, that the document ends with a single new line symbol."""
         if arg.endswith("\n\n"):
