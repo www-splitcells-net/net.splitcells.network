@@ -104,6 +104,8 @@ ENTRYPOINT ["/opt/java/openjdk/bin/java"]
 CMD ["-XX:ErrorFile=/root/.local/state/${NAME_FOR_EXECUTION}/.local/dumps/hs_err_pid_%p.log", "-cp", "./jars/*", "$CLASS_FOR_EXECUTION"]
 """
 
+# `--log-level=warn` is podman's default.
+# Logging is used, in order to better understand build runtime performance.
 PREPARE_EXECUTION_TEMPLATE = """
 set -e
 set -x
@@ -120,8 +122,7 @@ podman build -f "target/Dockerfile-${executionName}" \\
     --tag "localhost/${executionName}"  \\
     --arch string \\
     ${additionalArguments}\\
-    --log-level=warn # `--log-level=warn` is podman's default.
-    # Logging is used, in order to better understand build runtime performance.
+    --log-level=warn
 """
 
 PREPARE_EXECUTION_WITHOUT_BUILD_TEMPLATE = """
@@ -551,8 +552,7 @@ podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
     --tag "localhost/net.splitcells.martins.avots.distro"  \\
     --arch x86_64 \\
     \\
-    --log-level=warn # `--log-level=warn` is podman's default.
-    # Logging is used, in order to better understand build runtime performance.
+    --log-level=warn
 """)
     def test_only_execute_image(self):
         test_subject = parse_worker_execution_arguments(['--program-name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap', '--dry-run=true', '--backwards-compatible=True', '--only-execute-image=true'])
@@ -601,8 +601,7 @@ podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
     --tag "localhost/net.splitcells.martins.avots.distro"  \\
     --arch x86_64 \\
     \\
-    --log-level=warn # `--log-level=warn` is podman's default.
-    # Logging is used, in order to better understand build runtime performance.
+    --log-level=warn
 
 
 podman run --name "net.splitcells.martins.avots.distro" \\
@@ -694,8 +693,7 @@ ssh user@address /bin/sh << EOF
       --tag "localhost/net.splitcells.network.worker.boostrap.daemon"  \\
       --arch string \\
       \\
-      --log-level=warn # `--log-level=warn` is podman's default.
-      # Logging is used, in order to better understand build runtime performance.
+      --log-level=warn
   
   mkdir -p ~/.config/systemd/user
   cat > ~/.config/systemd/user/net.splitcells.network.worker.boostrap.daemon.service <<SERVICE_EOL
