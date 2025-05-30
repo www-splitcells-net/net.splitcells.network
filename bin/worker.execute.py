@@ -220,24 +220,8 @@ ssh ${execute_via_ssh_at} /bin/sh << EOF
   ${bin_worker_execute} \\\n${remoteNetworkerArguments}
 EOF"""
 
-SET_UP_SYSTEMD_SERVICE_REMOTELY = """# Set up Systemd service remotely
-ssh ${execute_via_ssh_at} /bin/sh << EOF
-  """ + PREPARE_EXECUTION_TEMPLATE.replace("\n", "\n  ") + """
-  mkdir -p ${daemonFolder}
-  cat > ${daemonFile} <<SERVICE_EOL
-[Unit]
-Description=Execute ${executionName}
-
-[Service]
-Type=oneshot
-StandardOutput=journal
-ExecStart=""" + PODMAN_COMMAND_TEMPLATE + """SERVICE_EOL
-EOF"""
-
-SET_UP_SYSTEMD_SERVICE_LOCALLY = """# Set up Systemd service locally
-set -e
+SET_UP_SYSTEMD_SERVICE = """# Set up Systemd service
 mkdir -p ${daemonFolder}
-
 cat > ${daemonFile} <<SERVICE_EOL
 [Unit]
 Description=Execute ${executionName}
@@ -245,7 +229,8 @@ Description=Execute ${executionName}
 [Service]
 Type=oneshot
 StandardOutput=journal
-ExecStart=""" + PODMAN_COMMAND_TEMPLATE + """SERVICE_EOL"""
+ExecStart=""" + PODMAN_COMMAND_TEMPLATE + """SERVICE_EOL
+"""
 
 class WorkerExecution:
     was_executed = False
@@ -360,8 +345,6 @@ class WorkerExecution:
         return arg + "\n\n"
     def executeLocally(self):
         """ TODO Use [${...}] based variable substitution instead of complex string replacements. """
-        if self.config.is_daemon:
-            raise Exception("Running a service as a daemon is not implemented yet.")
         if not os.path.exists('./target'):
             os.mkdir('./target')
         # TODO Consoldiate Dockerfile template extensions, as every case can be solved via a dedicated shell script, that is the entrypoint of the Dockerfile.
@@ -422,6 +405,10 @@ class WorkerExecution:
             self.local_execution_script += PUBLISH_VIA_PODMAN_TEMPLATE
         elif self.config.only_build_image:
             pass # TODO This is not implemented yet.
+        elif self.config.is_daemon:
+            self.daemonFolder = "~/.config/systemd/user";
+            self.daemonFile = self.daemonFolder + "/" + self.config.execution_name + ".service";
+            self.local_execution_script += self.applyTemplate("\n" + SET_UP_SYSTEMD_SERVICE)
         else:
             self.local_execution_script += EXECUTE_VIA_PODMAN_TEMPLATE
         if self.config.flat_folders:
@@ -709,6 +696,55 @@ git config remote.user@address.url >&- || git remote add user@address user@addre
 git remote set-url user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
 git remote set-url --push user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
 git pull user@address master
+""")
+    def test_bootstrap_via_daemon(self):
+        test_subject = parse_worker_execution_arguments(["--command='export NET_SPLITCELLS_NETWORK_WORKER_NAME=net.splitcells.network.worker && cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'"
+                                                            , '--dry-run=true'
+                                                            , "--execution-name='net.splitcells.network.worker.boostrap.daemon'"
+                                                            , "--flat-folders='true'"
+                                                            , '--is-daemon=true'#
+                                                            , "--program-name='net.splitcells.network.worker'"])
+        self.assertEqual(test_subject.local_execution_script, """
+set -e
+
+# Prepare file system.
+mkdir -p ~/.local/state/'net.splitcells.network.worker'/.m2/
+mkdir -p ~/.local/state/'net.splitcells.network.worker'/.ssh/
+mkdir -p ~/.local/state/'net.splitcells.network.worker'/.local/dumps/
+mkdir -p ~/.local/state/'net.splitcells.network.worker'/Documents/
+mkdir -p ~/.local/state/'net.splitcells.network.worker'/repos/
+mkdir -p ~/.local/state/'net.splitcells.network.worker'/bin/
+mkdir -p ./target/
+test -f target/program-'net.splitcells.network.worker' && chmod +x target/program-'net.splitcells.network.worker' # This file does not exist, when '--executable-path' is not set.
+cd ~/.local/state/'net.splitcells.network.worker'/repos/public/net.splitcells.network
+podman build -f "target/Dockerfile-'net.splitcells.network.worker.boostrap.daemon'.daemon" \\
+    --tag "localhost/'net.splitcells.network.worker.boostrap.daemon'.daemon"  \\
+    --arch x86_64 \\
+    \\
+    --log-level=warn
+
+# Set up Systemd service
+mkdir -p ~/.config/systemd/user
+cat > ~/.config/systemd/user/'net.splitcells.network.worker.boostrap.daemon'.daemon.service <<SERVICE_EOL
+[Unit]
+Description=Execute 'net.splitcells.network.worker.boostrap.daemon'.daemon
+
+[Service]
+Type=oneshot
+StandardOutput=journal
+ExecStart=podman run --name "'net.splitcells.network.worker.boostrap.daemon'.daemon" \\
+  --network slirp4netns:allow_host_loopback=true \\
+  \\
+  --rm \\
+  -v ~/.local/state/'net.splitcells.network.worker'/Documents:/root/Documents \\
+  -v ~/.local/state/'net.splitcells.network.worker'/.ssh:/root/.ssh \\
+  -v ~/.local/state/'net.splitcells.network.worker'/.m2:/root/.m2 \\
+  -v ~/.local/state/'net.splitcells.network.worker'/.local:/root/.local/state/'net.splitcells.network.worker'/.local \\
+  -v ~/.local/state/'net.splitcells.network.worker'/repos:/root/.local/state/'net.splitcells.network.worker'/repos \\
+  -v ~/.local/state/'net.splitcells.network.worker'/bin:/root/bin \\
+  \\
+  "localhost/'net.splitcells.network.worker.boostrap.daemon'.daemon"
+SERVICE_EOL
 """)
 if __name__ == '__main__':
     # As there is no build process for Python unit tests are executed every time, to make sure, that the script works correctly.
