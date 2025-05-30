@@ -515,7 +515,7 @@ def parse_worker_execution_arguments(arguments):
         parsedArgs.execution_name = parsedArgs.program_name
     if parsedArgs.program_name is None and parsedArgs.execution_name is None:
         raise Exception("Either the --program-name or the --execution-name has to be given.")
-    if parsedArgs.is_daemon:
+    if parsedArgs.is_daemon and parsedArgs.execute_via_ssh_at is not None:
         parsedArgs.execution_name = parsedArgs.execution_name + ".daemon"
     workerExecution.execute(parser, parsedArgs)
     return workerExecution
@@ -717,22 +717,22 @@ mkdir -p ~/.local/state/'net.splitcells.network.worker'/bin/
 mkdir -p ./target/
 test -f target/program-'net.splitcells.network.worker' && chmod +x target/program-'net.splitcells.network.worker' # This file does not exist, when '--executable-path' is not set.
 cd ~/.local/state/'net.splitcells.network.worker'/repos/public/net.splitcells.network
-podman build -f "target/Dockerfile-'net.splitcells.network.worker.boostrap.daemon'.daemon" \\
-    --tag "localhost/'net.splitcells.network.worker.boostrap.daemon'.daemon"  \\
+podman build -f "target/Dockerfile-'net.splitcells.network.worker.boostrap.daemon'" \\
+    --tag "localhost/'net.splitcells.network.worker.boostrap.daemon'"  \\
     --arch x86_64 \\
     \\
     --log-level=warn
 
 # Set up Systemd service
 mkdir -p ~/.config/systemd/user
-cat > ~/.config/systemd/user/'net.splitcells.network.worker.boostrap.daemon'.daemon.service <<SERVICE_EOL
+cat > ~/.config/systemd/user/'net.splitcells.network.worker.boostrap.daemon'.service <<SERVICE_EOL
 [Unit]
-Description=Execute 'net.splitcells.network.worker.boostrap.daemon'.daemon
+Description=Execute 'net.splitcells.network.worker.boostrap.daemon'
 
 [Service]
 Type=oneshot
 StandardOutput=journal
-ExecStart=podman run --name "'net.splitcells.network.worker.boostrap.daemon'.daemon" \\
+ExecStart=podman run --name "'net.splitcells.network.worker.boostrap.daemon'" \\
   --network slirp4netns:allow_host_loopback=true \\
   \\
   --rm \\
@@ -743,7 +743,7 @@ ExecStart=podman run --name "'net.splitcells.network.worker.boostrap.daemon'.dae
   -v ~/.local/state/'net.splitcells.network.worker'/repos:/root/.local/state/'net.splitcells.network.worker'/repos \\
   -v ~/.local/state/'net.splitcells.network.worker'/bin:/root/bin \\
   \\
-  "localhost/'net.splitcells.network.worker.boostrap.daemon'.daemon"
+  "localhost/'net.splitcells.network.worker.boostrap.daemon'"
 SERVICE_EOL
 """)
 if __name__ == '__main__':
