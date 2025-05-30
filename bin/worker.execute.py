@@ -302,27 +302,22 @@ class WorkerExecution:
             preparingNetworkLogPullScript = DEFAULT_NETWORK_PULL_SCRIPT
         else:
             preparingNetworkLogPullScript = ""
-        if self.config.is_daemon:
-            self.daemonFolder = "~/.config/systemd/user";
-            self.daemonFile = self.daemonFolder + "/" + self.config.execution_name + ".service";
-            self.remote_execution_script_template = self.applyTemplate(SET_UP_SYSTEMD_SERVICE_REMOTELY)
-        else: # Else is not a daemon.
         # TODO The method for generating the remote script is an hack.
-            parsedVars = vars(self.config)
-            parsedKeys = list(filter(lambda key: self.filterArgumentsForRemoteScript(parsedVars, key), sorted(list(parsedVars.keys()))))
-            for i, key in enumerate(parsedKeys):
-                self.remote_networker_arguments + "\n"
-                value_string = ""
-                if type(parsedVars[key]) == bool:
-                    value_string = str(parsedVars[key]).lower()
-                else:
-                    value_string = str(parsedVars[key]).replace("\'", "\\\'").replace("\"", "\\\"").replace("\n", "")
-                self.remote_networker_arguments += "    --" + key.replace("_", "-") + "='" + value_string + "'"
-                if i != len(parsedKeys) - 1:
-                    self.remote_networker_arguments += "\\\n"
-                else:
-                    self.remote_networker_arguments += "\n"
-            self.remote_execution_script_template = self.applyTemplate(EXECUTE_MAIN_TASK_REMOTELY)
+        parsedVars = vars(self.config)
+        parsedKeys = list(filter(lambda key: self.filterArgumentsForRemoteScript(parsedVars, key), sorted(list(parsedVars.keys()))))
+        for i, key in enumerate(parsedKeys):
+            self.remote_networker_arguments + "\n"
+            value_string = ""
+            if type(parsedVars[key]) == bool:
+                value_string = str(parsedVars[key]).lower()
+            else:
+                value_string = str(parsedVars[key]).replace("\'", "\\\'").replace("\"", "\\\"").replace("\n", "")
+            self.remote_networker_arguments += "    --" + key.replace("_", "-") + "='" + value_string + "'"
+            if i != len(parsedKeys) - 1:
+                self.remote_networker_arguments += "\\\n"
+            else:
+                self.remote_networker_arguments += "\n"
+        self.remote_execution_script_template = self.applyTemplate(EXECUTE_MAIN_TASK_REMOTELY)
         if self.config.pull_network_log:
             closingPullNetworkLogScript = DEFAULT_CLOSING_PULL_NETWORK_LOG_SCRIPT
         else:
@@ -682,48 +677,30 @@ then
   cd ../net.splitcells.network
 fi
 
-# Set up Systemd service remotely
+# Execute Main Task Remotely
 ssh user@address /bin/sh << EOF
-  
   set -e
-  set -x
-  # Prepare file system.
-  mkdir -p ~/.local/state/net.splitcells.network.worker/.m2/
-  mkdir -p ~/.local/state/net.splitcells.network.worker/.ssh/
-  mkdir -p ~/.local/state/net.splitcells.network.worker/.local/dumps/
-  mkdir -p ~/.local/state/net.splitcells.network.worker/Documents/
-  mkdir -p ~/.local/state/net.splitcells.network.worker/repos/
-  mkdir -p ~/.local/state/net.splitcells.network.worker/bin/
-  mkdir -p ./target/
-  test -f target/program-net.splitcells.network.worker && chmod +x target/program-net.splitcells.network.worker # This file does not exist, when '--executable-path' is not set.
+  if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then
+    mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/
+    cd ~/.local/state/net.splitcells.network.worker/repos/public/
+    git clone https://codeberg.org/splitcells-net/net.splitcells.network.git
+  fi
+  if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.hub ]; then
+    mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/
+    cd ~/.local/state/net.splitcells.network.worker/repos/public/
+    git clone https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
+  fi
+  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && git pull
+  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.hub && git pull
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
-  podman build -f "target/Dockerfile-net.splitcells.network.worker.boostrap.daemon" \\
-      --tag "localhost/net.splitcells.network.worker.boostrap.daemon"  \\
-      --arch string \\
-      \\
-      --log-level=warn
-  
-  mkdir -p ~/.config/systemd/user
-  cat > ~/.config/systemd/user/net.splitcells.network.worker.boostrap.daemon.service <<SERVICE_EOL
-[Unit]
-Description=Execute net.splitcells.network.worker.boostrap.daemon
+  bin/worker.execute.py \\
+    --command='export NET_SPLITCELLS_NETWORK_WORKER_NAME=net.splitcells.network.worker && cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'\\
+    --dry-run='true'\\
+    --execution-name='net.splitcells.network.worker.boostrap.daemon'\\
+    --flat-folders='true'\\
+    --is-daemon='true'\\
+    --program-name='net.splitcells.network.worker'
 
-[Service]
-Type=oneshot
-StandardOutput=journal
-ExecStart=podman run --name "net.splitcells.network.worker.boostrap.daemon" \\
-  --network slirp4netns:allow_host_loopback=true \\
-  \\
-  --rm \\
-  -v ~/.local/state/net.splitcells.network.worker/Documents:/root/Documents \\
-  -v ~/.local/state/net.splitcells.network.worker/.ssh:/root/.ssh \\
-  -v ~/.local/state/net.splitcells.network.worker/.m2:/root/.m2 \\
-  -v ~/.local/state/net.splitcells.network.worker/.local:/root/.local/state/net.splitcells.network.worker/.local \\
-  -v ~/.local/state/net.splitcells.network.worker/repos:/root/.local/state/net.splitcells.network.worker/repos \\
-  -v ~/.local/state/net.splitcells.network.worker/bin:/root/bin \\
-  \\
-  "localhost/net.splitcells.network.worker.boostrap.daemon"
-SERVICE_EOL
 EOF
 
 # Closing Execution via Network Log Pull
