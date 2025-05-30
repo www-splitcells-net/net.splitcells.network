@@ -230,6 +230,7 @@ Description=Execute ${executionName}
 Type=oneshot
 StandardOutput=journal
 ExecStart=""" + PODMAN_COMMAND_TEMPLATE + """SERVICE_EOL
+systemctl --user daemon-reload
 """
 
 class WorkerExecution:
@@ -745,6 +746,7 @@ ExecStart=podman run --name "'net.splitcells.network.worker.boostrap.daemon'" \\
   \\
   "localhost/'net.splitcells.network.worker.boostrap.daemon'"
 SERVICE_EOL
+systemctl --user daemon-reload
 """)
 if __name__ == '__main__':
     # As there is no build process for Python unit tests are executed every time, to make sure, that the script works correctly.
