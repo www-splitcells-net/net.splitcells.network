@@ -96,6 +96,7 @@
         </paragraph>
         <paragraph>In order to contain the cost of maintaining features,
             create a hostile environment in regard to errors.
+            The most famous way of establishing this is providing and executing automated tests for everything.
             The hostile environment's job is to detect any errors with little regard of its significance,
             to exploit them and to massively increase the cost and damage of doing things wrong.
             Such environments have to make it easy to fix the found errors,
