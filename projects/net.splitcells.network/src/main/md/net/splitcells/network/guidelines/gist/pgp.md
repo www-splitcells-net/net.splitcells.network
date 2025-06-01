@@ -1,5 +1,14 @@
 # PGP Gist Guidelines
 
+**TOOD This document may be obsolete. Consider using SSH keys for commit signing in git instead, as PGP is too complicated.
+SSH also seem to be integrated better into external tools than PGP.
+When or if PGP is deprecated, do not delete this document and move it instead to a location,
+that serves as an archive.
+This document is than used, in order to note the project's understanding of PGP.
+In other words, this document is one documented argument why PGP might or might not be used.** 
+
+## Intro
+
 These guidelines only show the most relevant parts for this project regarding
 PGP usage.
 
@@ -48,6 +57,7 @@ Keyring managers may ask for passwords during this process.
 * [Protecting Code Integrity With PGP](https://github.com/lfit/itpol/blob/master/protecting-code-integrity.md)
 * [keys.openpgp.org Usage Guide](https://keys.openpgp.org/about/usage)
 * [Kernel Maintainer PGP guide](https://www.kernel.org/doc/html/latest/process/maintainer-pgp-guide.html)
+* Consider signing tags instead of commits, as tags allow multiple people to indirectly sign a commit without chaning the commit.
 
 ----
 * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
