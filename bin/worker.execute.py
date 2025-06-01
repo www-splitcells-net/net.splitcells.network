@@ -409,7 +409,7 @@ class WorkerExecution:
         elif self.config.is_daemon:
             self.daemonFolder = "~/.config/systemd/user";
             self.daemonFile = self.daemonFolder + "/" + self.config.execution_name + ".service";
-            self.local_execution_script += self.applyTemplate("\n" + SET_UP_SYSTEMD_SERVICE)
+            self.local_execution_script += self.applyTemplate("\n" + SET_UP_SYSTEMD_SERVICE.replace("~/", "%h/"))
         else:
             self.local_execution_script += EXECUTE_VIA_PODMAN_TEMPLATE
         if self.config.flat_folders:
@@ -737,12 +737,12 @@ ExecStart=podman run --name "'net.splitcells.network.worker.boostrap.daemon'" \\
   --network slirp4netns:allow_host_loopback=true \\
   \\
   --rm \\
-  -v ~/.local/state/'net.splitcells.network.worker'/Documents:/root/Documents \\
-  -v ~/.local/state/'net.splitcells.network.worker'/.ssh:/root/.ssh \\
-  -v ~/.local/state/'net.splitcells.network.worker'/.m2:/root/.m2 \\
-  -v ~/.local/state/'net.splitcells.network.worker'/.local:/root/.local/state/'net.splitcells.network.worker'/.local \\
-  -v ~/.local/state/'net.splitcells.network.worker'/repos:/root/.local/state/'net.splitcells.network.worker'/repos \\
-  -v ~/.local/state/'net.splitcells.network.worker'/bin:/root/bin \\
+  -v %h/.local/state/'net.splitcells.network.worker'/Documents:/root/Documents \\
+  -v %h/.local/state/'net.splitcells.network.worker'/.ssh:/root/.ssh \\
+  -v %h/.local/state/'net.splitcells.network.worker'/.m2:/root/.m2 \\
+  -v %h/.local/state/'net.splitcells.network.worker'/.local:/root/.local/state/'net.splitcells.network.worker'/.local \\
+  -v %h/.local/state/'net.splitcells.network.worker'/repos:/root/.local/state/'net.splitcells.network.worker'/repos \\
+  -v %h/.local/state/'net.splitcells.network.worker'/bin:/root/bin \\
   \\
   "localhost/'net.splitcells.network.worker.boostrap.daemon'"
 SERVICE_EOL
