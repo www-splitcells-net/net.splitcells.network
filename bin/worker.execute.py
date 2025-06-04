@@ -701,50 +701,50 @@ git pull user@address master
     def test_bootstrap_via_daemon(self):
         test_subject = parse_worker_execution_arguments(["--command='export NET_SPLITCELLS_NETWORK_WORKER_NAME=net.splitcells.network.worker && cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'"
                                                             , '--dry-run=true'
-                                                            , "--execution-name='net.splitcells.network.worker.boostrap.daemon'"
-                                                            , "--flat-folders='true'"
+                                                            , "--execution-name=net.splitcells.network.worker.boostrap.daemon"
+                                                            , "--flat-folders=true"
                                                             , '--is-daemon=true'#
-                                                            , "--program-name='net.splitcells.network.worker'"])
+                                                            , "--program-name=net.splitcells.network.worker"])
         self.assertEqual(test_subject.local_execution_script, """
 set -e
 
 # Prepare file system.
-mkdir -p ~/.local/state/'net.splitcells.network.worker'/.m2/
-mkdir -p ~/.local/state/'net.splitcells.network.worker'/.ssh/
-mkdir -p ~/.local/state/'net.splitcells.network.worker'/.local/dumps/
-mkdir -p ~/.local/state/'net.splitcells.network.worker'/Documents/
-mkdir -p ~/.local/state/'net.splitcells.network.worker'/repos/
-mkdir -p ~/.local/state/'net.splitcells.network.worker'/bin/
+mkdir -p ~/.local/state/net.splitcells.network.worker/.m2/
+mkdir -p ~/.local/state/net.splitcells.network.worker/.ssh/
+mkdir -p ~/.local/state/net.splitcells.network.worker/.local/dumps/
+mkdir -p ~/.local/state/net.splitcells.network.worker/Documents/
+mkdir -p ~/.local/state/net.splitcells.network.worker/repos/
+mkdir -p ~/.local/state/net.splitcells.network.worker/bin/
 mkdir -p ./target/
-test -f target/program-'net.splitcells.network.worker' && chmod +x target/program-'net.splitcells.network.worker' # This file does not exist, when '--executable-path' is not set.
-cd ~/.local/state/'net.splitcells.network.worker'/repos/public/net.splitcells.network
-podman build -f "target/Dockerfile-'net.splitcells.network.worker.boostrap.daemon'" \\
-    --tag "localhost/'net.splitcells.network.worker.boostrap.daemon'"  \\
+test -f target/program-net.splitcells.network.worker && chmod +x target/program-net.splitcells.network.worker # This file does not exist, when '--executable-path' is not set.
+cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
+podman build -f "target/Dockerfile-net.splitcells.network.worker.boostrap.daemon" \\
+    --tag "localhost/net.splitcells.network.worker.boostrap.daemon"  \\
     --arch x86_64 \\
     \\
     --log-level=warn
 
 # Set up Systemd service
 mkdir -p ~/.config/systemd/user
-cat > ~/.config/systemd/user/'net.splitcells.network.worker.boostrap.daemon'.service <<SERVICE_EOL
+cat > ~/.config/systemd/user/net.splitcells.network.worker.boostrap.daemon.service <<SERVICE_EOL
 [Unit]
-Description=Execute 'net.splitcells.network.worker.boostrap.daemon'
+Description=Execute net.splitcells.network.worker.boostrap.daemon
 
 [Service]
 Type=oneshot
 StandardOutput=journal
-ExecStart=podman run --name "'net.splitcells.network.worker.boostrap.daemon'" \\
+ExecStart=podman run --name "net.splitcells.network.worker.boostrap.daemon" \\
   --network slirp4netns:allow_host_loopback=true \\
   \\
   --rm \\
-  -v %h/.local/state/'net.splitcells.network.worker'/Documents:/root/Documents \\
-  -v %h/.local/state/'net.splitcells.network.worker'/.ssh:/root/.ssh \\
-  -v %h/.local/state/'net.splitcells.network.worker'/.m2:/root/.m2 \\
-  -v %h/.local/state/'net.splitcells.network.worker'/.local:/root/.local/state/'net.splitcells.network.worker'/.local \\
-  -v %h/.local/state/'net.splitcells.network.worker'/repos:/root/.local/state/'net.splitcells.network.worker'/repos \\
-  -v %h/.local/state/'net.splitcells.network.worker'/bin:/root/bin \\
+  -v %h/.local/state/net.splitcells.network.worker/Documents:/root/Documents \\
+  -v %h/.local/state/net.splitcells.network.worker/.ssh:/root/.ssh \\
+  -v %h/.local/state/net.splitcells.network.worker/.m2:/root/.m2 \\
+  -v %h/.local/state/net.splitcells.network.worker/.local:/root/.local/state/net.splitcells.network.worker/.local \\
+  -v %h/.local/state/net.splitcells.network.worker/repos:/root/.local/state/net.splitcells.network.worker/repos \\
+  -v %h/.local/state/net.splitcells.network.worker/bin:/root/bin \\
   \\
-  "localhost/'net.splitcells.network.worker.boostrap.daemon'"
+  "localhost/net.splitcells.network.worker.boostrap.daemon"
 SERVICE_EOL
 systemctl --user daemon-reload
 """)
