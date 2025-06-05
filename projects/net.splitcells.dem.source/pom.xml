@@ -98,6 +98,22 @@
                                     <outputDirectory>target/antlr4/net/splitcells/dem/source/den/no/code</outputDirectory>
                                 </configuration>
                             </execution>
+                            <execution>
+                                <id>antlr4-generate-geal-grammar</id>
+                                <goals>
+                                    <goal>antlr4</goal>
+                                </goals>
+                                <configuration>
+                                    <sourceDirectory>src/main/antlr4/net/splitcells/dem/source/geal</sourceDirectory>
+                                    <includes>
+                                        <include>GealLexer.g4</include>
+                                        <include>GealParser.g4</include>
+                                    </includes>
+                                    <visitor>true</visitor>
+                                    <listener>true</listener>
+                                    <outputDirectory>target/antlr4/net/splitcells/dem/source/geal</outputDirectory>
+                                </configuration>
+                            </execution>
                         </executions>
                     </plugin>
                     <plugin>
