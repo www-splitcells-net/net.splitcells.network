@@ -385,6 +385,12 @@ class WorkerExecution:
             self.docker_file = self.docker_file.replace("VOLUME /root/Documents/", "VOLUME /root/.local/state/${programName}/Documents/")
             self.docker_file = self.docker_file.replace("VOLUME /root/repos/", "VOLUME /root/.local/state/${programName}/repos/")
             # .ssh and .m2 does not have to be replaced, as these are used for environment configuration of tools inside the container.
+        if self.config.port_publishing is not None:
+            for index, portMapping in enumerate(self.config.port_publishing.split(',')):
+                if index != 0:
+                    self.additional_podman_args += " "
+                self.additional_podman_args += '--publish ' + portMapping
+            self.additional_podman_args += " "
         if self.config.use_playwright:
             self.docker_file = self.docker_file.replace('$ContainerSetupCommand', 'RUN cd /root/opt/${NAME_FOR_EXECUTION}/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"\n')
         else:
@@ -420,9 +426,6 @@ class WorkerExecution:
         if self.config.command is not None:
             # TODO This does not seem to be valid or used anymore.
             self.local_execution_script = self.local_execution_script.replace('"$executionCommand"', "'" + self.config.command.replace("'", "'\\''") + "'")
-        if self.config.port_publishing is not None:
-            for portMapping in self.config.port_publishing.split(','):
-                self.additional_podman_args += ' --publish ' + portMapping
         if self.config.auto_configure_cpuArch_explicitly:
             self.local_execution_script = self.local_execution_script.replace('\n    --arch string \\\n', '\n    --arch ' + platform.uname().machine + ' \\\n')
         elif self.config.cpu_architecture is None:
@@ -703,6 +706,7 @@ git pull user@address master
                                                             , '--dry-run=true'
                                                             , "--execution-name=net.splitcells.network.worker.boostrap.daemon"
                                                             , "--flat-folders=true"
+                                                            , "--port-publishing=8080:8080"
                                                             , '--is-daemon=true'#
                                                             , "--program-name=net.splitcells.network.worker"])
         self.assertEqual(test_subject.local_execution_script, """
@@ -743,7 +747,7 @@ ExecStart=podman run --name "net.splitcells.network.worker.boostrap.daemon" \\
   -v %h/.local/state/net.splitcells.network.worker/.local:/root/.local/state/net.splitcells.network.worker/.local \\
   -v %h/.local/state/net.splitcells.network.worker/repos:/root/.local/state/net.splitcells.network.worker/repos \\
   -v %h/.local/state/net.splitcells.network.worker/bin:/root/bin \\
-  \\
+  --publish 8080:8080 \\
   "localhost/net.splitcells.network.worker.boostrap.daemon"
 SERVICE_EOL
 systemctl --user daemon-reload
