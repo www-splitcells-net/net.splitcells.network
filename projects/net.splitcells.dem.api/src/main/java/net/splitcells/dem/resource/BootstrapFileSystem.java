@@ -41,6 +41,6 @@ import static net.splitcells.dem.Dem.configValue;
 public class BootstrapFileSystem implements Option<FileSystem> {
     @Override
     public FileSystem defaultValue() {
-        return FileSystems.fileSystemOnLocalHost(Paths.userHome(".local", "state", configValue(ProgramName.class)));
+        return FileSystems.fileSystemOnLocalHost(Paths.userHome(".local", "state", configValue(ProgramName.class).toLowerCase()));
     }
 }
