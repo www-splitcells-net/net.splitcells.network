@@ -25,6 +25,10 @@ expression
     | String
     ;
 function_call: Name function_call_arguments?;
+/* Function calls with round brackets and no arguments are not supported,
+ * as these have conceptionally the same meaning as read access to an object field.
+ * Therefore, round brackets with no arguments are considered noise and thereby avoided.
+ */
 function_call_arguments
     : Brace_round_open expression function_call_arguments_next* Brace_round_closed
     ;
