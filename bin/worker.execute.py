@@ -228,6 +228,7 @@ ssh ${execute_via_ssh_at} /bin/sh << EOF
   ${bin_worker_execute} \\\n${remoteNetworkerArguments}
 EOF"""
 
+# The type simple is used, so that restarting the service is not an endlessly blocking operation.
 SET_UP_SYSTEMD_SERVICE = """# Set up Systemd service
 mkdir -p ${daemonFolder}
 cat > ${daemonFile} <<SERVICE_EOL
@@ -235,7 +236,7 @@ cat > ${daemonFile} <<SERVICE_EOL
 Description=Execute ${executionName}
 
 [Service]
-Type=oneshot
+Type=simple
 StandardOutput=journal
 ExecStart=""" + PODMAN_COMMAND_TEMPLATE + """SERVICE_EOL
 systemctl --user daemon-reload
@@ -765,7 +766,7 @@ cat > ~/.config/systemd/user/net.splitcells.network.worker.boostrap.daemon.servi
 Description=Execute net.splitcells.network.worker.boostrap.daemon
 
 [Service]
-Type=oneshot
+Type=simple
 StandardOutput=journal
 ExecStart=podman run --name "net.splitcells.network.worker.boostrap.daemon" \\
   --network slirp4netns:allow_host_loopback=true \\
