@@ -24,6 +24,8 @@ TODO Create option to delete things like `.m2`, `repos` and `net.splitcells.shel
 TODO Use string's substitute method, instead of string's replace.
 TODO Use as few string templates as possible.
      In an ideal case a global one is enough, as templating is much more simple than
+TODO Only mount the program's state folder and not its sub folders one by one,
+     in order to simplify state folder adjustments and the Python code.
 TODO Support deployment to Docker and Kubernetes.
 TODO Support executing as systemd service. Create a user service for that.
 TODO Currently, there is not distinction between the name of the thing being executed and its namespace.
