@@ -375,7 +375,7 @@ class WorkerExecution:
             if not self.config.dry_run:
                 self.deployable_jars = Path(Path.home().joinpath('.local/state/' + self.config.program_name + '/repos/public/net.splitcells.network/target/' + self.config.program_name + '/deployable-jars/'))
                 self.deployable_jars.mkdir(parents=True, exist_ok=True)
-                shutil.copytree(str(Path.home().joinpath('.local/state/' + self.config.program_name + "/repos/public/" + self.config.program_name + "/target/deployable-jars/"))
+                shutil.copytree(str(Path.home().joinpath('.local/state/' + self.config.program_name + "/repos/public/" + self.config.source_repo + "/target/deployable-jars/"))
                     , str(self.deployable_jars)
                     , dirs_exist_ok=True)
         if required_argument_count == 0:
@@ -469,7 +469,8 @@ def parse_worker_execution_arguments(arguments):
     parser.add_argument('--pull-network-log', dest='pull_network_log', required=False, type=str2bool, default=True, help="If set to true, the repo `net.splitcells.network.log` will be pulled from the remote.")
     parser.add_argument('--command', required=False, dest='command', help=CLI_FLAG_COMMAND_HELP)
     parser.add_argument('--executable-path', '--executable_path', dest='executable_path', help="Executes the given executable file. Only set this option or --command.")
-    parser.add_argument('--class-for-execution', '--class_for_execution', dest='class_for_execution', help="This Java class is executed.")
+    parser.add_argument('--class-for-execution', '--class_for_execution', dest='class_for_execution', help="This Java class is executed. If this flag is given, --source-repo also has to be set.")
+    parser.add_argument('--source-repo', dest='source_repo', help="Determines from which repo, the build jars are copied. If this flag is given, --class-for-execution also has to be set.")
     # TODO --use-host-documents is probably not needed anymore, as there is not a concrete use case for this at the moment.
     parser.add_argument('--use-host-documents', '--use_host_documents', dest='use_host_documents', required=False, type=str2bool, default=False, help="Determines whether to mount `~/Documents` or not. This should be avoided, in order to avoid file dependencies to the host system, which makes the execution more portable.")
     parser.add_argument('--publish-execution-image', '--publish_execution_image', dest='publish_execution_image', required=False, type=str2bool, default=False, help="If set to true, the given command is not executed, but a container image is published instead.")
@@ -488,6 +489,12 @@ def parse_worker_execution_arguments(arguments):
     parser.add_argument('--backwards-compatible', dest='backwards_compatible', required=False, type=str2bool, default=True, help="If set to true, the the remote script is compatible to the previous implementation.")
     parsedArgs = parser.parse_args(arguments)
     workerExecution = WorkerExecution()
+    if parsedArgs.source_repo is not None:
+        if parsedArgs.class_for_execution is None:
+            raise Exception("--source-repo is set, but --class-for-execution is not set.")
+    if parsedArgs.class_for_execution is not None:
+        if parsedArgs.source_repo is None:
+            raise Exception("--class-for-execution is set, but --source-repo is not set.")
     if parsedArgs.program_name is None:
             parsedArgs.program_name = parsedArgs.execution_name
     if parsedArgs.program_name is None:
