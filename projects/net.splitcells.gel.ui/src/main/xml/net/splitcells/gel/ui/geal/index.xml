@@ -14,6 +14,9 @@
         Geal seem to also stand for
         <link url="https://www.collinsdictionary.com/dictionary/english/geal">to congeal or stiffen</link>,
         which is quite fitting for a constraint language.
+        An optimizer of a constraint problem takes the problem's variables with given value ranges and
+        restrict the value ranges until a viable solution is found,
+        which kind of is a stiffening of the value ranges metaphorical speaking.
         Previously, the name Den was considered, which stands Discovery based Perspective Network,
         as this is a generic programming language,
         but the name was already used for an XML namespace in this project.
