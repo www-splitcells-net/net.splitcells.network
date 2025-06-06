@@ -29,6 +29,9 @@ function_call_arguments
     : Brace_round_open expression function_call_arguments_next* Brace_round_closed
     ;
 function_call_arguments_next: Comma expression;
+/* The dot is never avoided even when the function calls have round brackets,
+ * as the dot helps to align function calls in chains.
+ */
 function_call_chain: expression (Dot function_call)*;
 statement
     : variable_definition Semicolon
