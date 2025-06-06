@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns="http://splitcells.net/sew.xsd" xmlns:d="http://splitcells.net/den.xsd">
+    <!--
+        SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+        SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+    -->
+    <meta>
+        <title>The Generic Allocator Language - Geal</title>
+    </meta>
+    <paragraph>Geal is a minimal programming language for arbitrary program code
+        with the main goal to describe programs for the Generic Allocator and therefore was named after it.
+        The name Geal comes from using the first 2 letters for every word of the Generic Allocator,
+        but Geal's full name is the Generic Allocator Language.
+        Geal seem to also stand for
+        <link url="https://www.collinsdictionary.com/dictionary/english/geal">to congeal or stiffen</link>,
+        which is quite fitting for a constraint language.
+        Previously, the name Den was considered, which stands Discovery based Perspective Network,
+        as this is a generic programming language,
+        but the name was already used for an XML namespace in this project.
+    </paragraph>
+</article>

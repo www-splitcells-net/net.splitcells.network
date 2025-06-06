@@ -2,14 +2,7 @@ parser grammar GealParser;
 /* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  *
- * This is a grammar for the minimal programming language called Geal,
- * that describes arbitrary program code.
- * It was initially created only for the Generic Allocator and therefore was named after it.
- * The name Geal comes from using the first 2 letters for every word of the Generic Allocator,
- * but Geal's full name is the Generic Allocator Language.
- * Geal seem to also stand for `to congeal`, which is quite fitting for an constraint language.
- * Previously, the name Den was considered, which stands Discovery based Perspective Network,
- * but the name was already used for an XML namespace in this project.l.
+ * This is a grammar for the minimal programming language called Geal, that describes arbitrary program code.
  */
 @header {
     package net.splitcells.dem.source.geal;
