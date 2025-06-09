@@ -112,6 +112,7 @@
             This is not required, but comes handy, in order to reason,
             why static getters or constructors do not use the same get prefix.
             <quote>@Accessors(chain=true)</quote> is therefore not used.
+            Setter prefixes are required in order to differentiate getters and withers.
         </paragraph>
         <paragraph>
             <quote>@EqualsAndHashCode</quote>
