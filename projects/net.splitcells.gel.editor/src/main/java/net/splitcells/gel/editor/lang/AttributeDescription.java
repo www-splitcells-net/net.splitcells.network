@@ -23,6 +23,10 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.gel.editor.SolutionEditor.AFFECTED_CONTENT;
 
+/**
+ * @deprecated Use {@link net.splitcells.gel.editor.lang.geal.SourceUnit} instead.
+ */
+@Deprecated
 public class AttributeDescription implements SourceCodeQuotation {
     public static Result<AttributeDescription, Tree> parseAttributeDescription(String name, String type, SourceCodeQuote sourceCodeQuote) {
         final Result<AttributeDescription, Tree> attribute = result();

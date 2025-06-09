@@ -19,6 +19,10 @@ import java.util.Optional;
 
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
+/**
+ * @deprecated Use {@link net.splitcells.gel.editor.lang.geal.SourceUnit} instead.
+ */
+@Deprecated
 public enum PrimitiveType {
     INTEGER("integer"), STRING("string");
     private final String id;

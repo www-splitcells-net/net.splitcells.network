@@ -19,6 +19,10 @@ import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.order.Comparison;
 import net.splitcells.dem.data.order.Ordering;
 
+/**
+ * @deprecated Use {@link net.splitcells.gel.editor.lang.geal.SourceUnit} instead.
+ */
+@Deprecated
 public final class ReferenceDescription<T> implements ArgumentDescription, SourceCodeQuotation {
 
     public static <R> Comparison<ReferenceDescription<R>> equalMeaning() {

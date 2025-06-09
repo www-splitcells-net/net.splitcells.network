@@ -15,6 +15,10 @@
  */
 package net.splitcells.gel.editor.lang;
 
+/**
+ * @deprecated Use {@link net.splitcells.gel.editor.lang.geal.SourceUnit} instead.
+ */
+@Deprecated
 public final class StringDescription implements ArgumentDescription, SourceCodeQuotation {
     public static StringDescription stringDescription(String value, SourceCodeQuote sourceCodeQuote) {
         return new StringDescription(value, sourceCodeQuote);

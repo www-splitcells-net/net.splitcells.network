@@ -53,6 +53,13 @@ public class Editor implements Discoverable {
         return name;
     }
 
+    /**
+     *
+     * @param solutionDescription
+     * @return
+     * @deprecated Use {@link net.splitcells.gel.editor.lang.geal.SourceUnit} instead.
+     */
+    @Deprecated
     public Result<SolutionEditor, Tree> solutionEditor(SolutionDescription solutionDescription) {
         final var solutionEditor = SolutionEditor.solutionEditor(this, solutionDescription);
         return solutionEditor.parse(solutionDescription);

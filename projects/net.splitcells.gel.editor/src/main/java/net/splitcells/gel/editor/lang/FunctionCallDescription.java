@@ -20,6 +20,10 @@ import net.splitcells.dem.data.set.list.List;
 
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 
+/**
+ * @deprecated Use {@link net.splitcells.gel.editor.lang.geal.SourceUnit} instead.
+ */
+@Deprecated
 public final class FunctionCallDescription implements ArgumentDescription, SourceCodeQuotation {
 
     public static FunctionCallDescription functionCallDescription(String functionName, SourceCodeQuote sourceCodeQuote, ArgumentDescription... arguments) {

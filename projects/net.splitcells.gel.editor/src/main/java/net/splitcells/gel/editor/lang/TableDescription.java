@@ -20,6 +20,10 @@ import net.splitcells.dem.data.set.list.ListView;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 
+/**
+ * @deprecated Use {@link net.splitcells.gel.editor.lang.geal.SourceUnit} instead.
+ */
+@Deprecated
 public class TableDescription implements SourceCodeQuotation {
     public static TableDescription tableDescription(String name, List<ReferenceDescription<AttributeDescription>> header, SourceCodeQuote sourceCodeQuote) {
         return new TableDescription(name, header, sourceCodeQuote);

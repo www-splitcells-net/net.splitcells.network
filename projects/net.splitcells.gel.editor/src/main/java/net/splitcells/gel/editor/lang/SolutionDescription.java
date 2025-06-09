@@ -23,6 +23,10 @@ import net.splitcells.gel.data.view.attribute.Attribute;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 
+/**
+ * @deprecated Use {@link net.splitcells.gel.editor.lang.geal.SourceUnit} instead.
+ */
+@Deprecated
 public class SolutionDescription implements SourceCodeQuotation {
     public static SolutionDescription solutionDescription(String name
             , List<AttributeDescription> attributes

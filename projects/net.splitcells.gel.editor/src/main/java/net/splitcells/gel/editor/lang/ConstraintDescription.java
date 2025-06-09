@@ -20,6 +20,10 @@ import net.splitcells.dem.data.set.list.List;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 
+/**
+ * @deprecated Use {@link net.splitcells.gel.editor.lang.geal.SourceUnit} instead.
+ */
+@Deprecated
 public class ConstraintDescription implements SourceCodeQuotation {
     public static ConstraintDescription constraintDescription(FunctionCallDescription definition, SourceCodeQuote sourceCodeQuote) {
         return new ConstraintDescription(definition, list(), sourceCodeQuote);
