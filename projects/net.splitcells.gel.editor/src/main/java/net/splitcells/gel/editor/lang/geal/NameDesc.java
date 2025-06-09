@@ -16,7 +16,6 @@
 package net.splitcells.gel.editor.lang.geal;
 
 import lombok.Getter;
-import net.splitcells.gel.editor.lang.SourceCodeQuotation;
 import net.splitcells.gel.editor.lang.SourceCodeQuote;
 
 import java.util.regex.Pattern;
@@ -24,7 +23,7 @@ import java.util.regex.Pattern;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
-public class NameDesc implements SourceCodeQuotation {
+public final class NameDesc implements ExpressionDesc {
     public static NameDesc nameDesc(String value, SourceCodeQuote sourceCodeQuote) {
         return new NameDesc(value, sourceCodeQuote);
     }

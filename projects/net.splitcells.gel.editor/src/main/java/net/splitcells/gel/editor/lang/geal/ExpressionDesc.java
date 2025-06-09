@@ -15,20 +15,10 @@
  */
 package net.splitcells.gel.editor.lang.geal;
 
-import lombok.Getter;
-import net.splitcells.gel.editor.lang.SourceCodeQuote;
+import net.splitcells.gel.editor.lang.SourceCodeQuotation;
 
-public final class IntegerDesc implements ExpressionDesc {
-
-    public static IntegerDesc integerDesc(int value, SourceCodeQuote sourceCodeQuote) {
-        return new IntegerDesc(value, sourceCodeQuote);
-    }
-
-    private IntegerDesc(int argValue, SourceCodeQuote argSourceCodeQuote) {
-        value = argValue;
-        sourceCodeQuote = argSourceCodeQuote;
-    }
-
-    private @Getter final int value;
-    private @Getter final SourceCodeQuote sourceCodeQuote;
+public sealed interface ExpressionDesc extends SourceCodeQuotation permits FunctionCallDesc
+        , IntegerDesc
+        , NameDesc
+        , StringDesc {
 }

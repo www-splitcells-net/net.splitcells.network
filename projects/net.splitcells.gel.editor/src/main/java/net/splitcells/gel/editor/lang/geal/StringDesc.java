@@ -16,10 +16,9 @@
 package net.splitcells.gel.editor.lang.geal;
 
 import lombok.Getter;
-import net.splitcells.gel.editor.lang.SourceCodeQuotation;
 import net.splitcells.gel.editor.lang.SourceCodeQuote;
 
-public class StringDesc implements SourceCodeQuotation {
+public final class StringDesc implements ExpressionDesc {
     public static StringDesc stringDesc(String value, SourceCodeQuote sourceCodeQuote) {
         return new StringDesc(value, sourceCodeQuote);
     }

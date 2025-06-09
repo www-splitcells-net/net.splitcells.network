@@ -16,19 +16,21 @@
 package net.splitcells.gel.editor.lang.geal;
 
 import lombok.Getter;
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.editor.lang.SourceCodeQuote;
 
-public final class IntegerDesc implements ExpressionDesc {
-
-    public static IntegerDesc integerDesc(int value, SourceCodeQuote sourceCodeQuote) {
-        return new IntegerDesc(value, sourceCodeQuote);
+public final class FunctionCallDesc implements ExpressionDesc {
+    public static FunctionCallDesc functionCallDesc(NameDesc name, List<ExpressionDesc> arguments, SourceCodeQuote sourceCodeQuote) {
+        return new FunctionCallDesc(name, arguments, sourceCodeQuote);
     }
 
-    private IntegerDesc(int argValue, SourceCodeQuote argSourceCodeQuote) {
-        value = argValue;
+    private @Getter final NameDesc name;
+    private @Getter final List<ExpressionDesc> arguments;
+    private @Getter final SourceCodeQuote sourceCodeQuote;
+
+    private FunctionCallDesc(NameDesc argName, List<ExpressionDesc> argArguments, SourceCodeQuote argSourceCodeQuote) {
+        name = argName;
+        arguments = argArguments;
         sourceCodeQuote = argSourceCodeQuote;
     }
-
-    private @Getter final int value;
-    private @Getter final SourceCodeQuote sourceCodeQuote;
 }
