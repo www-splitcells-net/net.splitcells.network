@@ -40,6 +40,7 @@ import static net.splitcells.gel.editor.lang.TableDescription.tableDescription;
 import static net.splitcells.gel.editor.SolutionEditor.solutionEditor;
 import static net.splitcells.gel.editor.lang.geal.FunctionCallChainDesc.functionCallChainDesc;
 import static net.splitcells.gel.editor.lang.geal.FunctionCallDesc.functionCallDesc;
+import static net.splitcells.gel.editor.lang.geal.IntegerDesc.integerDesc;
 import static net.splitcells.gel.editor.lang.geal.NameDesc.nameDesc;
 import static net.splitcells.gel.editor.lang.geal.SourceUnit.sourceUnit;
 import static net.splitcells.gel.editor.lang.geal.VariableDefinitionDesc.variableDefinitionDesc;
@@ -140,7 +141,14 @@ public class EditorTest {
                                         , nameDesc("date")
                                         , nameDesc("shift")
                                         , nameDesc("roomNumber"))))
-        ));
+                , variableDefinitionDesc(nameDesc(CONSTRAINT_FUNCTION)
+                        , functionCallChainDesc(functionCallDesc(nameDesc(TABLE_FUNCTION))
+                                , list(functionCallDesc(nameDesc(FOR_EACH_NAME), list(nameDesc("observer")))
+                                        , functionCallDesc(nameDesc(FOR_ALL_COMBINATIONS_OF)
+                                                , list(nameDesc("date"), nameDesc("shift")))
+                                        , functionCallDesc(nameDesc(THEN_NAME)
+                                                , list(functionCallDesc(nameDesc(HAS_SIZE_NAME)
+                                                        , list(integerDesc(1))))))))));
         testSubject.parse(testData);
     }
 }
