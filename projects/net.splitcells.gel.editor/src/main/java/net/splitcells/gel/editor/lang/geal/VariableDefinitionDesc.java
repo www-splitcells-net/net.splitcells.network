@@ -19,23 +19,28 @@ import lombok.Getter;
 import net.splitcells.gel.editor.lang.SourceCodeQuote;
 
 import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuote;
+import static net.splitcells.gel.editor.lang.geal.FunctionCallChainDesc.functionCallChainDesc;
 
 public final class VariableDefinitionDesc implements StatementDesc {
     public static VariableDefinitionDesc variableDefinitionDesc(NameDesc name, ExpressionDesc expression) {
-        return variableDefinitionDesc(name, expression, emptySourceCodeQuote());
+        return variableDefinitionDesc(name, functionCallChainDesc(expression), emptySourceCodeQuote());
     }
 
-    public static VariableDefinitionDesc variableDefinitionDesc(NameDesc name, ExpressionDesc expression, SourceCodeQuote quote) {
-        return new VariableDefinitionDesc(name, expression, quote);
+    public static VariableDefinitionDesc variableDefinitionDesc(NameDesc name, FunctionCallChainDesc functionCallChain) {
+        return variableDefinitionDesc(name, functionCallChain, emptySourceCodeQuote());
+    }
+
+    public static VariableDefinitionDesc variableDefinitionDesc(NameDesc name, FunctionCallChainDesc functionCallChain, SourceCodeQuote quote) {
+        return new VariableDefinitionDesc(name, functionCallChain, quote);
     }
 
     private @Getter final NameDesc name;
-    private @Getter final ExpressionDesc expression;
+    private @Getter final FunctionCallChainDesc functionCallChain;
     private @Getter final SourceCodeQuote sourceCodeQuote;
 
-    private VariableDefinitionDesc(NameDesc argName, ExpressionDesc argExpression, SourceCodeQuote quote) {
+    private VariableDefinitionDesc(NameDesc argName, FunctionCallChainDesc argFunctionCallChain, SourceCodeQuote quote) {
         name = argName;
-        expression = argExpression;
+        functionCallChain = argFunctionCallChain;
         sourceCodeQuote = quote;
     }
 }
