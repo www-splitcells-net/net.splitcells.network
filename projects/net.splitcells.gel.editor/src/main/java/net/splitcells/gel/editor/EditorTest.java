@@ -26,8 +26,7 @@ import static net.splitcells.gel.constraint.type.ForAlls.FOR_EACH_NAME;
 import static net.splitcells.gel.constraint.type.Then.THEN_NAME;
 import static net.splitcells.gel.data.view.attribute.AttributeI.*;
 import static net.splitcells.gel.editor.Editor.editor;
-import static net.splitcells.gel.editor.EditorParser.INTEGER_TYPE;
-import static net.splitcells.gel.editor.EditorParser.STRING_TYPE;
+import static net.splitcells.gel.editor.EditorParser.*;
 import static net.splitcells.gel.editor.lang.AttributeDescription.attributeDescription;
 import static net.splitcells.gel.editor.lang.ConstraintDescription.constraintDescription;
 import static net.splitcells.gel.editor.lang.FunctionCallDescription.functionCallDescription;
@@ -39,6 +38,7 @@ import static net.splitcells.gel.editor.lang.SolutionDescription.solutionDescrip
 import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuote;
 import static net.splitcells.gel.editor.lang.TableDescription.tableDescription;
 import static net.splitcells.gel.editor.SolutionEditor.solutionEditor;
+import static net.splitcells.gel.editor.lang.geal.FunctionCallChainDesc.functionCallChainDesc;
 import static net.splitcells.gel.editor.lang.geal.FunctionCallDesc.functionCallDesc;
 import static net.splitcells.gel.editor.lang.geal.NameDesc.nameDesc;
 import static net.splitcells.gel.editor.lang.geal.SourceUnit.sourceUnit;
@@ -128,6 +128,18 @@ public class EditorTest {
                 , variableDefinitionDesc(nameDesc("roomNumber")
                         , functionCallDesc(nameDesc("attribute")
                                 , list(nameDesc(INTEGER_TYPE))))
+                , variableDefinitionDesc(nameDesc("demands")
+                        , functionCallDesc(nameDesc(TABLE_FUNCTION)
+                                , list(nameDesc("exams")
+                                        , nameDesc("student")
+                                        , nameDesc("examiner")
+                                        , nameDesc("observer"))))
+                , variableDefinitionDesc(nameDesc("supplies")
+                        , functionCallDesc(nameDesc(TABLE_FUNCTION)
+                                , list(nameDesc("time slots")
+                                        , nameDesc("date")
+                                        , nameDesc("shift")
+                                        , nameDesc("roomNumber"))))
         ));
         testSubject.parse(testData);
     }
