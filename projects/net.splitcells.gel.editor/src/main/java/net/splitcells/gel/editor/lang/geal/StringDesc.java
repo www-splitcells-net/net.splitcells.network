@@ -24,7 +24,7 @@ public class StringDesc implements SourceCodeQuotation {
         return new StringDesc(value, sourceCodeQuote);
     }
 
-    private final String value;
+    private @Getter final String value;
     private @Getter final SourceCodeQuote sourceCodeQuote;
 
     private StringDesc(String argValue, SourceCodeQuote argSourceCodeQuote) {

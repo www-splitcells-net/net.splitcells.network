@@ -30,7 +30,7 @@ public class NameDesc implements SourceCodeQuotation {
     }
 
     private static final Pattern PATTERN = Pattern.compile("[a-zA-Z]+[a-zA-Z0-9]*");
-    private final String value;
+    private @Getter final String value;
     private @Getter final SourceCodeQuote sourceCodeQuote;
 
     private NameDesc(String argValue, SourceCodeQuote argSourceCodeQuote) {
