@@ -20,6 +20,8 @@ import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 public class EditorParser {
     public static final String STRING_TYPE = "String";
     public static final String INTEGER_TYPE = "Integer";
+    public static final String TABLE_FUNCTION = "table";
+
     private EditorParser() {
         throw constructorIllegal();
     }
