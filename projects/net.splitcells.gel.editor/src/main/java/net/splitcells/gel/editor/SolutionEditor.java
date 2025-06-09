@@ -55,6 +55,7 @@ import static net.splitcells.gel.rating.rater.lib.MinimalDistance.MINIMAL_DISTAN
 import static net.splitcells.gel.rating.rater.lib.MinimalDistance.has_minimal_distance_of;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 
+@Deprecated
 public class SolutionEditor implements Discoverable {
     public static final String AFFECTED_CONTENT = "affected content";
     public static final String AFFECTED_CONTEXT = "affected context";
