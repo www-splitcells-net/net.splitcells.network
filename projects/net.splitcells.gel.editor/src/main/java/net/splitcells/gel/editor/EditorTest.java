@@ -26,6 +26,8 @@ import static net.splitcells.gel.constraint.type.ForAlls.FOR_EACH_NAME;
 import static net.splitcells.gel.constraint.type.Then.THEN_NAME;
 import static net.splitcells.gel.data.view.attribute.AttributeI.*;
 import static net.splitcells.gel.editor.Editor.editor;
+import static net.splitcells.gel.editor.EditorParser.INTEGER_TYPE;
+import static net.splitcells.gel.editor.EditorParser.STRING_TYPE;
 import static net.splitcells.gel.editor.lang.AttributeDescription.attributeDescription;
 import static net.splitcells.gel.editor.lang.ConstraintDescription.constraintDescription;
 import static net.splitcells.gel.editor.lang.FunctionCallDescription.functionCallDescription;
@@ -37,7 +39,10 @@ import static net.splitcells.gel.editor.lang.SolutionDescription.solutionDescrip
 import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuote;
 import static net.splitcells.gel.editor.lang.TableDescription.tableDescription;
 import static net.splitcells.gel.editor.SolutionEditor.solutionEditor;
+import static net.splitcells.gel.editor.lang.geal.FunctionCallDesc.functionCallDesc;
+import static net.splitcells.gel.editor.lang.geal.NameDesc.nameDesc;
 import static net.splitcells.gel.editor.lang.geal.SourceUnit.sourceUnit;
+import static net.splitcells.gel.editor.lang.geal.VariableDefinitionDesc.variableDefinitionDesc;
 import static net.splitcells.gel.rating.rater.lib.HasSize.HAS_SIZE_NAME;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 
@@ -104,7 +109,26 @@ public class EditorTest {
     @UnitTest
     public void testGeal() {
         final var testSubject = editor("test-subject", EXPLICIT_NO_CONTEXT);
-        final var testData = sourceUnit(list(), emptySourceCodeQuote());
+        final var testData = sourceUnit(list(
+                variableDefinitionDesc(nameDesc("student")
+                        , functionCallDesc(nameDesc("attribute")
+                                , list(nameDesc(STRING_TYPE))))
+                , variableDefinitionDesc(nameDesc("examiner")
+                        , functionCallDesc(nameDesc("attribute")
+                                , list(nameDesc(STRING_TYPE))))
+                , variableDefinitionDesc(nameDesc("observer")
+                        , functionCallDesc(nameDesc("attribute")
+                                , list(nameDesc(STRING_TYPE))))
+                , variableDefinitionDesc(nameDesc("date")
+                        , functionCallDesc(nameDesc("attribute")
+                                , list(nameDesc(INTEGER_TYPE))))
+                , variableDefinitionDesc(nameDesc("shift")
+                        , functionCallDesc(nameDesc("attribute")
+                                , list(nameDesc(INTEGER_TYPE))))
+                , variableDefinitionDesc(nameDesc("roomNumber")
+                        , functionCallDesc(nameDesc("attribute")
+                                , list(nameDesc(INTEGER_TYPE))))
+        ));
         testSubject.parse(testData);
     }
 }
