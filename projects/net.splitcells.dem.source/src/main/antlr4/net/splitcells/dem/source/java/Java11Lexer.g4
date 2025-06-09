@@ -79,7 +79,7 @@ lexer grammar Java11Lexer;
     		| 'import java.util.Collection;'
     		| 'import lombok.Getter;'
     		| 'import lombok.Setter;'
-    		| 'import lombok.experimental.Accessors;'
+    		| 'import lombok.experimental.Accessors;' /* TODO Remove Accessors. See Java guidelines. */
     		| 'import lombok.experimental.Delegate'
     		| 'import lombok.EqualsAndHashCode'
     		| 'import lombok.Data'
