@@ -44,6 +44,7 @@ public class Editor implements Discoverable {
     private @Getter final Map<String, Attribute<?>> attributes = map();
     private @Getter final Map<String, Table> tables = map();
     private @Getter final Map<String, Solution> solution = map();
+    private @Getter final Map<Table, TableFormatting> tableFormatting = map();
 
     private Editor(String argName, Discoverable argParent) {
         name = argName;
