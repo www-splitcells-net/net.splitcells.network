@@ -37,7 +37,6 @@ public class Editor implements Discoverable {
 
     private final String name;
     private final Discoverable parent;
-    private final Map<String, SolutionEditor> solutions = map();
 
     private Editor(String argName, Discoverable argParent) {
         name = argName;
@@ -61,7 +60,6 @@ public class Editor implements Discoverable {
      */
     @Deprecated
     public Result<SolutionEditor, Tree> solutionEditor(SolutionDescription solutionDescription) {
-        final var solutionEditor = SolutionEditor.solutionEditor(this, solutionDescription);
-        return solutionEditor.parse(solutionDescription);
+        return SolutionEditor.solutionEditor(this, solutionDescription).parse(solutionDescription);
     }
 }
