@@ -353,6 +353,7 @@ statement_switch
     ;
 statement_switch_case_by_type
     : Keyword_case type_declaration name Arrow Brace_curly_open statement* Brace_curly_closed
+    | Keyword_case type_declaration name Arrow statement
     | Keyword_default Arrow Brace_curly_open statement* Brace_curly_closed
     ;
 statement_switch_case_by_value
