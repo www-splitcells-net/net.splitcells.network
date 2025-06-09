@@ -17,7 +17,7 @@ package net.splitcells.gel.ui.editor.code;
 
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.testing.Result;
-import net.splitcells.gel.editor.solution.SolutionEditor;
+import net.splitcells.gel.editor.SolutionEditor;
 import net.splitcells.website.server.processor.Request;
 
 import java.util.function.Function;

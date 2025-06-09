@@ -19,7 +19,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.testing.Result;
-import net.splitcells.gel.editor.solution.SolutionEditor;
+import net.splitcells.gel.editor.SolutionEditor;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;

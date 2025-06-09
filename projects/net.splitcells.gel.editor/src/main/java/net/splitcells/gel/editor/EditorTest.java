@@ -15,9 +15,6 @@
  */
 package net.splitcells.gel.editor;
 
-import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.data.set.map.Maps;
-import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.editor.lang.*;
 
@@ -39,7 +36,7 @@ import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescr
 import static net.splitcells.gel.editor.lang.SolutionDescription.solutionDescription;
 import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuote;
 import static net.splitcells.gel.editor.lang.TableDescription.tableDescription;
-import static net.splitcells.gel.editor.solution.SolutionEditor.solutionEditor;
+import static net.splitcells.gel.editor.SolutionEditor.solutionEditor;
 import static net.splitcells.gel.rating.rater.lib.HasSize.HAS_SIZE_NAME;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 

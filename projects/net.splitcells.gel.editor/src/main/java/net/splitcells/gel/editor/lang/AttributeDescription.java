@@ -18,12 +18,10 @@ package net.splitcells.gel.editor.lang;
 import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.testing.Result;
-import net.splitcells.gel.data.view.attribute.Attribute;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Result.result;
-import static net.splitcells.gel.data.view.attribute.AttributeI.*;
-import static net.splitcells.gel.editor.solution.SolutionEditor.AFFECTED_CONTENT;
+import static net.splitcells.gel.editor.SolutionEditor.AFFECTED_CONTENT;
 
 public class AttributeDescription implements SourceCodeQuotation {
     public static Result<AttributeDescription, Tree> parseAttributeDescription(String name, String type, SourceCodeQuote sourceCodeQuote) {

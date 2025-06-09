@@ -24,15 +24,12 @@ import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.editor.lang.ArgumentDescription;
 import net.splitcells.gel.editor.lang.ConstraintDescription;
 import net.splitcells.gel.editor.lang.FunctionCallDescription;
-import net.splitcells.gel.editor.lang.SourceCodeQuote;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.source.SourceUtils.getLine;
-import static net.splitcells.dem.source.SourceUtils.root;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.editor.lang.ConstraintDescription.constraintDescription;
@@ -40,7 +37,7 @@ import static net.splitcells.gel.editor.lang.FunctionCallDescription.functionCal
 import static net.splitcells.gel.editor.lang.IntegerDescription.integerDescription;
 import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescription;
 import static net.splitcells.gel.editor.lang.SourceCodeQuote.sourceCodeQuote;
-import static net.splitcells.gel.editor.solution.SolutionEditor.AFFECTED_CONTENT;
+import static net.splitcells.gel.editor.SolutionEditor.AFFECTED_CONTENT;
 
 /**
  * IDEA Logically this code should be inside {@link CodeEditorLangParser},

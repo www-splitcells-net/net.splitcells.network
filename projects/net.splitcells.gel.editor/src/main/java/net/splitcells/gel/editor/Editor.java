@@ -21,7 +21,6 @@ import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.editor.lang.SolutionDescription;
-import net.splitcells.gel.editor.solution.SolutionEditor;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
 
