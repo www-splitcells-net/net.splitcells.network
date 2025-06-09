@@ -49,7 +49,7 @@ public class TableDescription implements SourceCodeQuotation {
     }
 
     @Override
-    public SourceCodeQuote sourceCodeQuote() {
+    public SourceCodeQuote getSourceCodeQuote() {
         return sourceCodeQuote;
     }
 }

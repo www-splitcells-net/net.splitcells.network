@@ -58,14 +58,14 @@ public class ConstraintDescription implements SourceCodeQuotation {
     }
 
     @Override
-    public SourceCodeQuote sourceCodeQuote() {
+    public SourceCodeQuote getSourceCodeQuote() {
         return sourceCodeQuote;
     }
 
     @Override
     public boolean equals(Object arg) {
         if (arg instanceof ConstraintDescription other) {
-            return definition.equals(other.definition()) && children.equals(other.children()) && sourceCodeQuote.equals(other.sourceCodeQuote());
+            return definition.equals(other.definition()) && children.equals(other.children()) && sourceCodeQuote.equals(other.getSourceCodeQuote());
         }
         return false;
     }

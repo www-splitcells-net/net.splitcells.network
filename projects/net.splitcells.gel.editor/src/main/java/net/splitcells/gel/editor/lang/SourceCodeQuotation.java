@@ -16,5 +16,5 @@
 package net.splitcells.gel.editor.lang;
 
 public interface SourceCodeQuotation {
-    SourceCodeQuote sourceCodeQuote();
+    SourceCodeQuote getSourceCodeQuote();
 }

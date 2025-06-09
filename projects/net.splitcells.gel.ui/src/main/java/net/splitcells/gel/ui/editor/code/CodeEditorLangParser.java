@@ -151,7 +151,7 @@ public class CodeEditorLangParser extends DenParserBaseVisitor<Result<SolutionDe
             );
             attributes.withAppended(demandAttributes);
             demands = Optional.of(tableDescription("demands"
-                    , demandAttributes.mapped(da -> referenceDescription(da.name(), AttributeDescription.class, da.sourceCodeQuote())), sourceCodeQuote(ctx)));
+                    , demandAttributes.mapped(da -> referenceDescription(da.name(), AttributeDescription.class, da.getSourceCodeQuote())), sourceCodeQuote(ctx)));
         } else if (ctxName.equals("supplies")) {
             if (supplies.isPresent()) {
                 result.withErrorMessage(tree("Supplies are not allowed to be defined multiple times."));
@@ -181,7 +181,7 @@ public class CodeEditorLangParser extends DenParserBaseVisitor<Result<SolutionDe
             });
             attributes.withAppended(supplyAttributes);
             supplies = Optional.of(tableDescription("supplies"
-                    , supplyAttributes.mapped(sa -> referenceDescription(sa.name(), AttributeDescription.class, sa.sourceCodeQuote()))
+                    , supplyAttributes.mapped(sa -> referenceDescription(sa.name(), AttributeDescription.class, sa.getSourceCodeQuote()))
                     , sourceCodeQuote(ctx)));
         }
         return null;

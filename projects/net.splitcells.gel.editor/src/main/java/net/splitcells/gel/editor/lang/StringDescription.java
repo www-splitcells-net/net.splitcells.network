@@ -38,7 +38,7 @@ public final class StringDescription implements ArgumentDescription, SourceCodeQ
     }
 
     @Override
-    public SourceCodeQuote sourceCodeQuote() {
+    public SourceCodeQuote getSourceCodeQuote() {
         return sourceCodeQuote;
     }
 }

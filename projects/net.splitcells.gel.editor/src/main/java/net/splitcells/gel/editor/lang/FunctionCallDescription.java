@@ -17,7 +17,6 @@ package net.splitcells.gel.editor.lang;
 
 import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
 
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 
@@ -55,14 +54,14 @@ public final class FunctionCallDescription implements ArgumentDescription, Sourc
     }
 
     @Override
-    public SourceCodeQuote sourceCodeQuote() {
+    public SourceCodeQuote getSourceCodeQuote() {
         return sourceCodeQuote;
     }
 
     @Override
     public boolean equals(Object arg) {
         if (arg instanceof FunctionCallDescription other) {
-            return functionName.equals(other.functionName()) && arguments.equals(other.arguments()) && sourceCodeQuote.equals(other.sourceCodeQuote());
+            return functionName.equals(other.functionName()) && arguments.equals(other.arguments()) && sourceCodeQuote.equals(other.getSourceCodeQuote());
         }
         return false;
     }

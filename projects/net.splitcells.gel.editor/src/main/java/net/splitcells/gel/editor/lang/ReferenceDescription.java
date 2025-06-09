@@ -58,7 +58,7 @@ public final class ReferenceDescription<T> implements ArgumentDescription, Sourc
     @Override
     public boolean equals(Object arg) {
         if (arg instanceof ReferenceDescription<?> other) {
-            return name.equals(other.name()) && clazz.equals(other.clazz()) && sourceCodeQuote.equals(other.sourceCodeQuote());
+            return name.equals(other.name()) && clazz.equals(other.clazz()) && sourceCodeQuote.equals(other.getSourceCodeQuote());
         }
         return false;
     }
@@ -74,7 +74,7 @@ public final class ReferenceDescription<T> implements ArgumentDescription, Sourc
     }
 
     @Override
-    public SourceCodeQuote sourceCodeQuote() {
+    public SourceCodeQuote getSourceCodeQuote() {
         return sourceCodeQuote;
     }
 }

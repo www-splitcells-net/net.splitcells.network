@@ -105,7 +105,7 @@ public class SolutionDescription implements SourceCodeQuotation {
     }
 
     @Override
-    public SourceCodeQuote sourceCodeQuote() {
+    public SourceCodeQuote getSourceCodeQuote() {
         return sourceCodeQuote;
     }
 
@@ -118,7 +118,7 @@ public class SolutionDescription implements SourceCodeQuotation {
                     && constraints.equals(other.constraints())
                     && columnAttributesForOutputFormat.equals(other.columnAttributesForOutputFormat())
                     && rowAttributesForOutputFormat.equals(other.rowAttributesForOutputFormat())
-                    && sourceCodeQuote.equals(other.sourceCodeQuote());
+                    && sourceCodeQuote.equals(other.getSourceCodeQuote());
         }
         return false;
     }

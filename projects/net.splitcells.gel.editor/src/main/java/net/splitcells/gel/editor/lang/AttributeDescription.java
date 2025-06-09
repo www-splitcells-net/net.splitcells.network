@@ -62,7 +62,7 @@ public class AttributeDescription implements SourceCodeQuotation {
     @Override
     public boolean equals(Object arg) {
         if (arg instanceof AttributeDescription other) {
-            return name.equals(other.name()) && primitiveType.equals(other.primitiveType()) && sourceCodeQuote.equals(other.sourceCodeQuote());
+            return name.equals(other.name()) && primitiveType.equals(other.primitiveType()) && sourceCodeQuote.equals(other.getSourceCodeQuote());
         }
         return false;
     }
@@ -73,7 +73,7 @@ public class AttributeDescription implements SourceCodeQuotation {
     }
 
     @Override
-    public SourceCodeQuote sourceCodeQuote() {
+    public SourceCodeQuote getSourceCodeQuote() {
         return sourceCodeQuote;
     }
 

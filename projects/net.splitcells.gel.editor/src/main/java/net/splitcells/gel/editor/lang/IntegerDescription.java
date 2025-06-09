@@ -40,14 +40,14 @@ public final class IntegerDescription implements ArgumentDescription, SourceCode
     }
 
     @Override
-    public SourceCodeQuote sourceCodeQuote() {
+    public SourceCodeQuote getSourceCodeQuote() {
         return sourceCodeQuote;
     }
 
     @Override
     public boolean equals(Object arg) {
         if (arg instanceof IntegerDescription other) {
-            return value == other.value() && sourceCodeQuote.equals(other.sourceCodeQuote());
+            return value == other.value() && sourceCodeQuote.equals(other.getSourceCodeQuote());
         }
         return false;
     }
