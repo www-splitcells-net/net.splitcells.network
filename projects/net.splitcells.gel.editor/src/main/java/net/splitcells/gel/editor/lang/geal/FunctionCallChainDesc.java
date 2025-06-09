@@ -27,9 +27,9 @@ public class FunctionCallChainDesc implements SourceCodeQuotation {
         return new FunctionCallChainDesc(expression, functionCalls, quote);
     }
 
-    private final @Getter ExpressionDesc expression;
-    private final @Getter List<FunctionCallDesc> functionCalls;
-    private final @Getter SourceCodeQuote sourceCodeQuote;
+    private @Getter final ExpressionDesc expression;
+    private @Getter final List<FunctionCallDesc> functionCalls;
+    private @Getter final SourceCodeQuote sourceCodeQuote;
 
     private FunctionCallChainDesc(ExpressionDesc argExpression, List<FunctionCallDesc> argFunctionCalls
             , SourceCodeQuote quote) {
