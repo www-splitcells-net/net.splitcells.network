@@ -22,8 +22,13 @@ import java.util.regex.Pattern;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuote;
 
 public final class NameDesc implements ExpressionDesc {
+    public static NameDesc nameDesc(String value) {
+        return new NameDesc(value, emptySourceCodeQuote());
+    }
+
     public static NameDesc nameDesc(String value, SourceCodeQuote sourceCodeQuote) {
         return new NameDesc(value, sourceCodeQuote);
     }

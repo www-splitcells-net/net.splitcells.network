@@ -19,7 +19,13 @@ import lombok.Getter;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.editor.lang.SourceCodeQuote;
 
+import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuote;
+
 public final class FunctionCallDesc implements ExpressionDesc {
+    public static FunctionCallDesc functionCallDesc(NameDesc name, List<ExpressionDesc> arguments) {
+        return functionCallDesc(name, arguments, emptySourceCodeQuote());
+    }
+
     public static FunctionCallDesc functionCallDesc(NameDesc name, List<ExpressionDesc> arguments, SourceCodeQuote sourceCodeQuote) {
         return new FunctionCallDesc(name, arguments, sourceCodeQuote);
     }

@@ -20,7 +20,14 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.editor.lang.SourceCodeQuotation;
 import net.splitcells.gel.editor.lang.SourceCodeQuote;
 
+import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuote;
+
 public final class FunctionCallChainDesc implements StatementDesc {
+    public static FunctionCallChainDesc functionCallChainDesc(ExpressionDesc expression
+            , List<FunctionCallDesc> functionCalls) {
+        return functionCallChainDesc(expression, functionCalls, emptySourceCodeQuote());
+    }
+
     public static FunctionCallChainDesc functionCallChainDesc(ExpressionDesc expression
             , List<FunctionCallDesc> functionCalls
             , SourceCodeQuote quote) {

@@ -18,7 +18,13 @@ package net.splitcells.gel.editor.lang.geal;
 import lombok.Getter;
 import net.splitcells.gel.editor.lang.SourceCodeQuote;
 
+import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuote;
+
 public final class StringDesc implements ExpressionDesc {
+    public static StringDesc stringDesc(String value) {
+        return new StringDesc(value, emptySourceCodeQuote());
+    }
+
     public static StringDesc stringDesc(String value, SourceCodeQuote sourceCodeQuote) {
         return new StringDesc(value, sourceCodeQuote);
     }

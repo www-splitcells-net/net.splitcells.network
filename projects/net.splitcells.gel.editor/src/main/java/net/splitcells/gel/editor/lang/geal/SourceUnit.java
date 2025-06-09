@@ -20,7 +20,13 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.editor.lang.SourceCodeQuotation;
 import net.splitcells.gel.editor.lang.SourceCodeQuote;
 
+import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuote;
+
 public class SourceUnit implements SourceCodeQuotation {
+    public static SourceUnit sourceUnit(List<StatementDesc> statements) {
+        return new SourceUnit(statements, emptySourceCodeQuote());
+    }
+
     public static SourceUnit sourceUnit(List<StatementDesc> statements, SourceCodeQuote quote) {
         return new SourceUnit(statements, quote);
     }
