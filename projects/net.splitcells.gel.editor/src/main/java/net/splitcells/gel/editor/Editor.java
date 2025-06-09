@@ -18,12 +18,14 @@ package net.splitcells.gel.editor;
 import lombok.Getter;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.lang.SolutionDescription;
+import net.splitcells.gel.editor.lang.geal.SourceUnit;
 import net.splitcells.gel.solution.Solution;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -65,5 +67,10 @@ public class Editor implements Discoverable {
     @Deprecated
     public Result<SolutionEditor, Tree> solutionEditor(SolutionDescription solutionDescription) {
         return SolutionEditor.solutionEditor(this, solutionDescription).parse(solutionDescription);
+    }
+
+    @ReturnsThis
+    public Editor parse(SourceUnit sourceUnit) {
+        return this;
     }
 }

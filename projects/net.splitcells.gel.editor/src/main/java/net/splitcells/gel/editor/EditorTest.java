@@ -37,6 +37,7 @@ import static net.splitcells.gel.editor.lang.SolutionDescription.solutionDescrip
 import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuote;
 import static net.splitcells.gel.editor.lang.TableDescription.tableDescription;
 import static net.splitcells.gel.editor.SolutionEditor.solutionEditor;
+import static net.splitcells.gel.editor.lang.geal.SourceUnit.sourceUnit;
 import static net.splitcells.gel.rating.rater.lib.HasSize.HAS_SIZE_NAME;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 
@@ -98,5 +99,12 @@ public class EditorTest {
                 .forAll(solution.attributeByName("observer"))
                 .forAllCombinationsOf(solution.attributeByName("date"), solution.attributeByName("shift"))
                 .then(hasSize(1));
+    }
+
+    @UnitTest
+    public void testGeal() {
+        final var testSubject = editor("test-subject", EXPLICIT_NO_CONTEXT);
+        final var testData = sourceUnit(list(), emptySourceCodeQuote());
+        testSubject.parse(testData);
     }
 }
