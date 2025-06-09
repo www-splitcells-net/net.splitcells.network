@@ -15,12 +15,16 @@
  */
 package net.splitcells.gel.editor;
 
+import lombok.Getter;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.testing.Result;
+import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.lang.SolutionDescription;
+import net.splitcells.gel.solution.Solution;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
 
@@ -35,8 +39,11 @@ public class Editor implements Discoverable {
         return new Editor(name, parent);
     }
 
-    private final String name;
+    private @Getter final String name;
     private final Discoverable parent;
+    private @Getter final Map<String, Attribute<?>> attributes = map();
+    private @Getter final Map<String, Table> tables = map();
+    private @Getter final Map<String, Solution> solution = map();
 
     private Editor(String argName, Discoverable argParent) {
         name = argName;
@@ -46,10 +53,6 @@ public class Editor implements Discoverable {
     @Override
     public List<String> path() {
         return parent.path().withAppended(name);
-    }
-
-    public String name() {
-        return name;
     }
 
     /**
