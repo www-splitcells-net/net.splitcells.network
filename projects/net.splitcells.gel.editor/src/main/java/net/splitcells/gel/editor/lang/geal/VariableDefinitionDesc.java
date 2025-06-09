@@ -28,7 +28,7 @@ public class VariableDefinitionDesc implements SourceCodeQuotation {
     private @Getter final ExpressionDesc expression;
     private @Getter final SourceCodeQuote sourceCodeQuote;
 
-    private VariableDefinitionDesc(NameDesc argName, ExpressionDesc argExpression, SourceCodeQuotation quote) {
+    private VariableDefinitionDesc(NameDesc argName, ExpressionDesc argExpression, SourceCodeQuote quote) {
         name = argName;
         expression = argExpression;
         sourceCodeQuote = quote;
