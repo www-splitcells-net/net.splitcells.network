@@ -20,7 +20,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.editor.lang.SourceCodeQuotation;
 import net.splitcells.gel.editor.lang.SourceCodeQuote;
 
-public class FunctionCallChainDesc implements SourceCodeQuotation {
+public final class FunctionCallChainDesc implements StatementDesc {
     public static FunctionCallChainDesc functionCallChainDesc(ExpressionDesc expression
             , List<FunctionCallDesc> functionCalls
             , SourceCodeQuote quote) {

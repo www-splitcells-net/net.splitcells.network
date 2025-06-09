@@ -15,21 +15,7 @@
  */
 package net.splitcells.gel.editor.lang.geal;
 
-import lombok.Getter;
-import net.splitcells.gel.editor.lang.SourceCodeQuote;
+import net.splitcells.gel.editor.lang.SourceCodeQuotation;
 
-public final class VariableDefinitionDesc implements StatementDesc {
-    public static VariableDefinitionDesc variableDefinitionDesc(NameDesc name, ExpressionDesc expression, SourceCodeQuote quote) {
-        return new VariableDefinitionDesc(name, expression, quote);
-    }
-
-    private @Getter final NameDesc name;
-    private @Getter final ExpressionDesc expression;
-    private @Getter final SourceCodeQuote sourceCodeQuote;
-
-    private VariableDefinitionDesc(NameDesc argName, ExpressionDesc argExpression, SourceCodeQuote quote) {
-        name = argName;
-        expression = argExpression;
-        sourceCodeQuote = quote;
-    }
+public sealed interface StatementDesc extends SourceCodeQuotation permits VariableDefinitionDesc, FunctionCallChainDesc {
 }
