@@ -43,6 +43,7 @@ import static net.splitcells.gel.editor.lang.geal.FunctionCallDesc.functionCallD
 import static net.splitcells.gel.editor.lang.geal.IntegerDesc.integerDesc;
 import static net.splitcells.gel.editor.lang.geal.NameDesc.nameDesc;
 import static net.splitcells.gel.editor.lang.geal.SourceUnit.sourceUnit;
+import static net.splitcells.gel.editor.lang.geal.StringDesc.stringDesc;
 import static net.splitcells.gel.editor.lang.geal.VariableDefinitionDesc.variableDefinitionDesc;
 import static net.splitcells.gel.rating.rater.lib.HasSize.HAS_SIZE_NAME;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
@@ -131,13 +132,13 @@ public class EditorTest {
                                 , list(nameDesc(INTEGER_TYPE))))
                 , variableDefinitionDesc(nameDesc("demands")
                         , functionCallDesc(nameDesc(TABLE_FUNCTION)
-                                , list(nameDesc("exams")
+                                , list(stringDesc("exams")
                                         , nameDesc("student")
                                         , nameDesc("examiner")
                                         , nameDesc("observer"))))
                 , variableDefinitionDesc(nameDesc("supplies")
                         , functionCallDesc(nameDesc(TABLE_FUNCTION)
-                                , list(nameDesc("time slots")
+                                , list(stringDesc("time slots")
                                         , nameDesc("date")
                                         , nameDesc("shift")
                                         , nameDesc("roomNumber"))))
