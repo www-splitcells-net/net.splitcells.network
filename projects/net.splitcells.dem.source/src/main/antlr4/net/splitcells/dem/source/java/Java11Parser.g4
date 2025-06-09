@@ -133,7 +133,7 @@ enum_constructor
     ;
 enum_definition
 	/* TODO Create own enum grammar destinct from class. */
-    : javadoc? Keyword_public? Keyword_enum
+    : javadoc? annotation* Keyword_public? Keyword_enum
     	name
     	(Keyword_implements type_declaration)?
         Brace_curly_open enum_values enum_members*
