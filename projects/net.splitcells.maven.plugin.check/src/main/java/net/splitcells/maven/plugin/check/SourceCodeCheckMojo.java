@@ -30,6 +30,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
@@ -65,6 +67,7 @@ public class SourceCodeCheckMojo extends AbstractMojo {
                 } else {
                     final var rootPath = Path.of(sourceRoot.toString());
                     if (isDirectory(rootPath)) {
+                        List<Throwable> errors = new ArrayList<>();
                         try (final var walk = Files.walk(rootPath)) {
                             // Collect is done, because the parallel Stream of walk itself is not as good as a dedicated parallel processing.
                             final var files = walk.parallel().toList();
@@ -72,12 +75,20 @@ public class SourceCodeCheckMojo extends AbstractMojo {
                                 try (final var executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())) {
                                     files.stream().filter(Files::isRegularFile).forEach(f -> {
                                         executor.submit(() -> {
-                                            checkJavaSourceCodeFile(f);
+                                            try {
+                                                checkJavaSourceCodeFile(f);
+                                            } catch (Throwable th) {
+                                                errors.add(th);
+                                                th.printStackTrace();
+                                            }
                                         });
                                     });
                                     try {
                                         executor.shutdown();
                                         executor.awaitTermination(1, TimeUnit.MINUTES);
+                                        if (!errors.isEmpty()) {
+                                            throw new MojoExecutionException("The source code syntax is invalid. See logging of throwable for the errors.");
+                                        }
                                     } catch (InterruptedException e) {
                                         Thread.currentThread().interrupt();
                                         throw new RuntimeException("Source code checking takes too much time.", e);
