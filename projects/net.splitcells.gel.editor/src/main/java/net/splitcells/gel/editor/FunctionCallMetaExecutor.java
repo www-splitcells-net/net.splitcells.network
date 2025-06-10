@@ -25,22 +25,22 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
-public class FunctionCallExecutorImpl implements FunctionCallExecutor {
-    public static FunctionCallExecutorImpl functionCallExecutor(Editor context
+public class FunctionCallMetaExecutor implements FunctionCallExecutor {
+    public static FunctionCallMetaExecutor functionCallExecutor(Editor context
             , Optional<Object> subject) {
-        return new FunctionCallExecutorImpl(context, subject);
+        return new FunctionCallMetaExecutor(context, subject);
     }
 
     private final Editor context;
     private final Optional<Object> subject;
     private final List<FunctionCallExecutor> executors = list();
 
-    private FunctionCallExecutorImpl(Editor argContext, Optional<Object> argSubject) {
+    private FunctionCallMetaExecutor(Editor argContext, Optional<Object> argSubject) {
         context = argContext;
         subject = argSubject;
     }
 
-    public FunctionCallExecutorImpl registerExecutor(FunctionCallExecutor executor) {
+    public FunctionCallMetaExecutor registerExecutor(FunctionCallExecutor executor) {
         executors.add(executor);
         return this;
     }
@@ -51,7 +51,7 @@ public class FunctionCallExecutorImpl implements FunctionCallExecutor {
     }
 
     @Override
-    public FunctionCallExecutorImpl execute(FunctionCallDesc functionCall) {
+    public FunctionCallMetaExecutor execute(FunctionCallDesc functionCall) {
         final var fittingExecutor = executors.stream()
                 .filter(e -> e.supports(functionCall))
                 .findFirst();
