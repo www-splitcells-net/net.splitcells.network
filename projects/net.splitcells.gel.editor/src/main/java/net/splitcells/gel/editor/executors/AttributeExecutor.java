@@ -18,6 +18,8 @@ package net.splitcells.gel.editor.executors;
 import lombok.Getter;
 import lombok.Setter;
 import net.splitcells.gel.editor.Editor;
+import net.splitcells.gel.editor.EditorParser;
+import net.splitcells.gel.editor.EditorTest;
 import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
 import net.splitcells.gel.editor.lang.geal.NameDesc;
 
@@ -28,7 +30,7 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.NotImplementedYet.throwNotImplementedYet;
-import static net.splitcells.gel.editor.EditorParser.ATTRIBUTE_FUNCTION;
+import static net.splitcells.gel.editor.EditorParser.*;
 
 public class AttributeExecutor implements FunctionCallExecutor {
     public static AttributeExecutor attributeExecutor() {
@@ -62,6 +64,13 @@ public class AttributeExecutor implements FunctionCallExecutor {
             }
             default ->
                     throw execException("The first argument has to be a name, but " + first.getClass() + " was given.");
+        }
+        if (firstName.getValue().equals(INTEGER_TYPE)) {
+            
+        } else if (firstName.getValue().equals(STRING_TYPE)) {
+
+        } else {
+            throw execException("The first argument has to be a reference to the integer or the string type, but " + firstName.getValue() + " was given.");
         }
         throw notImplementedYet();
     }
