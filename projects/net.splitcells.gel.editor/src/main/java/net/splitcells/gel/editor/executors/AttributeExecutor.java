@@ -23,7 +23,10 @@ import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.atom.Bools.require;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.dem.utils.NotImplementedYet.throwNotImplementedYet;
 import static net.splitcells.gel.editor.EditorParser.ATTRIBUTE_FUNCTION;
 
 public class AttributeExecutor implements FunctionCallExecutor {
@@ -47,7 +50,10 @@ public class AttributeExecutor implements FunctionCallExecutor {
     @Override
     public FunctionCallMetaExecutor execute(FunctionCallDesc functionCall) {
         require(supports(functionCall));
-        return null;
+        if (functionCall.getArguments().size() != 2) {
+            throw execException("The attribute function requires exactly 2 arguments, but " + functionCall.getArguments().size() + " where given.");
+        }
+        throw notImplementedYet();
     }
 
     @Override
