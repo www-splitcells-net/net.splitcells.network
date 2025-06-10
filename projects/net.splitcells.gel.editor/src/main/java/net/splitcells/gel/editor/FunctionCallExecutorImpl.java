@@ -17,6 +17,26 @@ package net.splitcells.gel.editor;
 
 import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
 
-public interface FunctionCallExecutor {
-    FunctionCallExecutorImpl execute(FunctionCallDesc functionCall);
+import java.util.Optional;
+
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+
+public class FunctionCallExecutorImpl implements FunctionCallExecutor {
+    public static FunctionCallExecutorImpl functionCallExecutor(Editor context
+            , Optional<Object> subject) {
+        return new FunctionCallExecutorImpl(context, subject);
+    }
+
+    private final Editor context;
+    private final Optional<Object> subject;
+
+    private FunctionCallExecutorImpl(Editor argContext, Optional<Object> argSubject) {
+        context = argContext;
+        subject = argSubject;
+    }
+
+    @Override
+    public FunctionCallExecutorImpl execute(FunctionCallDesc functionCall) {
+        throw notImplementedYet();
+    }
 }
