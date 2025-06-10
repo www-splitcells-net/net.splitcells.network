@@ -52,9 +52,13 @@ public class FunctionCallExecutorImpl implements FunctionCallExecutor {
 
     @Override
     public FunctionCallExecutorImpl execute(FunctionCallDesc functionCall) {
-        if (!supports(functionCall)) {
-            throw execException(tree("Unsupported function call.").withProperty("function call", functionCall.getSourceCodeQuote().toString()));
+        final var fittingExecutor = executors.stream()
+                .filter(e -> e.supports(functionCall))
+                .findFirst();
+        if (fittingExecutor.isEmpty()) {
+            throw execException(tree("Unsupported function call.")
+                    .withProperty("function call", functionCall.getSourceCodeQuote().toString()));
         }
-        throw notImplementedYet();
+        return fittingExecutor.get().execute(functionCall);
     }
 }
