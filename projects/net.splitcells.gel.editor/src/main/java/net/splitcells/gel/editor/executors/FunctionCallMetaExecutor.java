@@ -60,7 +60,7 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
             throw execException(tree("Unsupported function call.")
                     .withProperty("function call", functionCall.getSourceCodeQuote().toString()));
         }
-        return fittingExecutor.get().setSubject(subject).setContext(context).execute(functionCall);
+        return fittingExecutor.get().setSubject(result).setContext(context).execute(functionCall);
     }
 
     @Override
