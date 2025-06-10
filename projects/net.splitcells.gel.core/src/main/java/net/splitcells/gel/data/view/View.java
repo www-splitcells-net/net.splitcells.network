@@ -20,7 +20,6 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.lang.CsvDocument.csvDocument;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
@@ -43,7 +42,6 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.ConnectingConstructor;
 import net.splitcells.dem.utils.ExecutionException;
@@ -556,7 +554,7 @@ public interface View extends Discoverable, Domable, Identifiable {
                 if (currentCellValue.isEmpty()) {
                     nextCellValue = "x";
                 } else {
-                    logs().appendWarning(tree("This code block should not be triggered as every cell should only have values of one line."));
+                    logs().warn(tree("This code block should not be triggered as every cell should only have values of one line."));
                     nextCellValue = currentCellValue + ";x";
                 }
                 reformattedTable.get(row).set(column, nextCellValue);
@@ -567,7 +565,7 @@ public interface View extends Discoverable, Domable, Identifiable {
                     if (currentCellValue.isEmpty()) {
                         nextCellValue = "" + line.value(unusedAttributes.get(u));
                     } else {
-                        logs().appendWarning(tree("This code block should not be triggered as every cell should only have values of one line."));
+                        logs().warn(tree("This code block should not be triggered as every cell should only have values of one line."));
                         nextCellValue = currentCellValue + "; " + line.value(unusedAttributes.get(u));
                     }
                     reformattedTable.get(row).set(column + u, nextCellValue);

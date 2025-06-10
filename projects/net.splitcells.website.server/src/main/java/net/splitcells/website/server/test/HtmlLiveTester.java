@@ -49,7 +49,7 @@ public class HtmlLiveTester implements ResourceOption<Service> {
                         configValue(HtmlLiveTest.class).run();
                         logs().append("Successfully completing UI test thread " + testId + ".", LogLevel.DEBUG);
                     } catch (Throwable t) {
-                        logs().appendWarning("Aborting UI test thread " + testId + " on error.", t);
+                        logs().warn("Aborting UI test thread " + testId + " on error.", t);
                         Dem.sleepAtLeast(10_000);
                     } finally {
                         executeTest(testId);

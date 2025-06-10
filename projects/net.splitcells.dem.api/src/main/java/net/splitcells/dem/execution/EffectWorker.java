@@ -63,7 +63,7 @@ public class EffectWorker<Subject> implements ExplicitEffect<Subject> {
                      * TODO Sometimes {@link Logs#logs()} does not work. Maybe logging is currently not thread safe?
                      */
                     th.printStackTrace();
-                    logs().appendError(th);
+                    logs().fail(th);
                 }
             }
         });

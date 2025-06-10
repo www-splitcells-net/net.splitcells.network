@@ -63,7 +63,7 @@ public class TreeI implements Tree {
 	@Override
 	public String toString() {
 		if (WARNING) {
-			logs().appendUnimplementedWarning(TreeI.class);
+			logs().warnUnimplementedPart(TreeI.class);
 		}
 		return toXmlString();
 	}

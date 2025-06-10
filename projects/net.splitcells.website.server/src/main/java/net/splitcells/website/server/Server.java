@@ -40,11 +40,9 @@ import net.splitcells.dem.execution.Processing;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.communication.log.LogLevel;
-import net.splitcells.dem.resource.communication.log.Logs;
 import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.website.Formats;
 import net.splitcells.website.server.config.PasswordAuthenticationEnabled;
-import net.splitcells.website.server.notify.NotificationQueue;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
@@ -244,7 +242,7 @@ public class Server {
                                 .setMaxEventLoopExecuteTimeUnit(SECONDS)
                                 .setMaxEventLoopExecuteTime(60L)
                                 .setBlockedThreadCheckInterval(60_000L))
-                        .exceptionHandler(t -> logs().appendError(t));
+                        .exceptionHandler(t -> logs().fail(t));
                 // TODO Use own worker pool/executor provided by Dem.
                 final var deploymentOptions = new DeploymentOptions()
                         .setWorkerPoolName(Server.class.getName())
@@ -364,7 +362,7 @@ public class Server {
                                                             }
                                                         }, user);
                                                     } catch (Exception e) {
-                                                        logs().appendError(e);
+                                                        logs().fail(e);
                                                         throw new RuntimeException(e);
                                                     }
                                                 }, config.isSingleThreaded()
@@ -376,14 +374,14 @@ public class Server {
                                 // Avoid stack trace for error, that is present on the client and not this program.
                                 logs().append(tree("Could not establish SSL connection.").withProperty("reason", sslHandshakeException.getMessage()), ERROR);
                             } else {
-                                logs().appendError(e.failure());
+                                logs().fail(e.failure());
                             }
                         });
                         vertx.createHttpServer(webServerOptions)
                                 .requestHandler(router)
                                 .exceptionHandler(th ->
                                         // TODO Avoid logging stack traces for connection issues. Filter appropriate stack traces. When filtering is added, at least log the type of filtered exceptions and not just the message.
-                                        logs().appendError(tree("An error occurred at the HTTP server.").with(th)))
+                                        logs().fail(tree("An error occurred at the HTTP server.").with(th)))
                                 .listen(result -> {
                                     if (result.failed()) {
                                         startPromise.fail(result.cause());
@@ -441,7 +439,7 @@ public class Server {
             return;
         }
         if (result.failed()) {
-            logs().appendError(ExecutionException.execException(tree("Could not process form:")
+            logs().fail(ExecutionException.execException(tree("Could not process form:")
                             .withProperty("path", routingContext.request().path())
                     , result.cause()));
             response.setStatusCode(500);
@@ -520,7 +518,7 @@ public class Server {
                                 }
                             }, result -> {
                                 if (result.failed()) {
-                                    logs().appendError(result.cause());
+                                    logs().fail(result.cause());
                                     response.setStatusCode(500);
                                     response.end();
                                 } else {
@@ -529,7 +527,7 @@ public class Server {
                             });
                         });
                         router.errorHandler(500, e -> {
-                            logs().appendError(e.failure());
+                            logs().fail(e.failure());
                         });
                         final var server = vertx.createHttpServer(webServerOptions);//
                         server.requestHandler(router);//

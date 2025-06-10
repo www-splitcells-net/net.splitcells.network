@@ -62,7 +62,7 @@ public class FundamentalWorldRules implements Rater {
 
     @Override
     public RatingEvent ratingAfterAddition(View lines, Line addition, List<Constraint> children, View lineProcessing) {
-        logs().appendUnimplementedWarning(getClass());
+        logs().warnUnimplementedPart(getClass());
         final var ratingEvent = ratingEvent();
         final var localRating = localRating().withRating(noCost())
                 .withPropagationTo(children)

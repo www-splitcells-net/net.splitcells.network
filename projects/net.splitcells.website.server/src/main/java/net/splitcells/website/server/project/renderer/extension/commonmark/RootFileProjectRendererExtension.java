@@ -53,7 +53,7 @@ public class RootFileProjectRendererExtension implements ProjectRendererExtensio
         final var readmePath = Path.of(rootFile + ".md");
         if (path.endsWith(rootFile + ".html")) {
             if (!path.startsWith(projectRenderer.resourceRootPath2().toString().replace('\\', '/').substring(1))) {
-                logs().appendWarning(tree("Matching project's root path is not a prefix of the requested path.")
+                logs().warn(tree("Matching project's root path is not a prefix of the requested path.")
                         .withProperty("requested path", path)
                         .withProperty("matching project's root path", projectRenderer.resourceRootPath2().toString()));
             }

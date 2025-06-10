@@ -5,6 +5,10 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2025-06-10\#37** Shorten log methods:
+    1. Rename `Log#appendWarning` to `Log#warn`.
+    2. Rename `Log#appendError` to `Log#fail`.
+    3. Rename `Log#appendUnimplementedWarning` to `Log#warnUnimplementedPart`.
 * **2025-03-08\#32**
     1. Rename `MapF*` to `MapFactory*`.
     2. Remove `ClassesRelated#callerClass`.

@@ -170,7 +170,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
 
     @Override
     public Service httpServer() {
-        logs().appendWarning(tree("`ProjectsRenderer#httpServer()` should not be used anymore. Use `Server#serveToHttpAt()` instead, because multi threading is not supported for `ProjectsRenderer#httpServer()`."));
+        logs().warn(tree("`ProjectsRenderer#httpServer()` should not be used anymore. Use `Server#serveToHttpAt()` instead, because multi threading is not supported for `ProjectsRenderer#httpServer()`."));
         build();
         return Server.serveToHttpAt(() -> this, config);
     }
@@ -275,7 +275,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
             return renderResponse(Optional.empty());
         }
         if (responses.size() > 1) {
-            logs().appendWarning(tree("Multiple matches for one requests. Choosing first one as final response.")
+            logs().warn(tree("Multiple matches for one requests. Choosing first one as final response.")
                     .withProperty("trail", request.trail().unixPathString()));
         }
         return responses.get(0);
@@ -345,7 +345,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
         try {
             renderingValidator.validate(renderingResult, this, requestedPath);
         } catch (Throwable th) {
-            logs().appendWarning(tree("Could not validate rendering result:")
+            logs().warn(tree("Could not validate rendering result:")
                             .withProperty("rendering result", renderingResult.toString())
                             .withProperty("requested path", requestedPath.toString())
                     , th);

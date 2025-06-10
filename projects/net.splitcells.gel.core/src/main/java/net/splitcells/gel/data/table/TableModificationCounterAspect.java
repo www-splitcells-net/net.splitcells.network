@@ -48,7 +48,7 @@ public class TableModificationCounterAspect implements Table {
                         .counters()
                         .get(table.path());
                 if (counter == null) {
-                    logs().appendError(ExecutionException.execException(tree("Could not find counter")
+                    logs().fail(ExecutionException.execException(tree("Could not find counter")
                             .withProperty("database", table.path().toString())));
                     return "";
                 }

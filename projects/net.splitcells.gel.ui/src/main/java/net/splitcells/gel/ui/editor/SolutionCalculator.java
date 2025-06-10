@@ -146,7 +146,7 @@ public class SolutionCalculator implements Processor<Tree, Tree> {
                 formUpdate.withProperty(ERRORS, errorReport.toCommonMarkString());
             }
         } catch (Throwable t) {
-            logs().appendError(t);
+            logs().fail(t);
             formUpdate.withProperty(ERRORS, tree("The program had an internal error and therefore a solution could not be calculated."));
         }
         if (formUpdate.namedChildren(ERRORS).isEmpty()) {

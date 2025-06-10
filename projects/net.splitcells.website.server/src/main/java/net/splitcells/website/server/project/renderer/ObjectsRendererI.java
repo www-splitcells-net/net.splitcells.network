@@ -77,7 +77,7 @@ public class ObjectsRendererI implements ProjectRenderer {
                         + "."
                         + ++i));
             } while (objects.containsKey(alternativePath.orElseThrow()));
-            logs().appendWarning(tree("Discoverable path is already registered. Using alternative path for rendering instead.")
+            logs().warn(tree("Discoverable path is already registered. Using alternative path for rendering instead.")
                             .withProperty("object", object.toString())
                             .withProperty("path", path.toString())
                             .withProperty("alternative path", alternativePath.orElseThrow().toString())
@@ -104,7 +104,7 @@ public class ObjectsRendererI implements ProjectRenderer {
                         + "."
                         + ++i));
             } while (csvRenderers.containsKey(alternativePath.orElseThrow()));
-            logs().appendWarning(tree("Discoverable path is already registered. Using alternative path for rendering instead.")
+            logs().warn(tree("Discoverable path is already registered. Using alternative path for rendering instead.")
                             .withProperty("object", object.toString())
                             .withProperty("path", path.toString())
                             .withProperty("alternative path", alternativePath.orElseThrow().toString())

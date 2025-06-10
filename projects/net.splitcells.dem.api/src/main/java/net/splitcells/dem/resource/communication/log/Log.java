@@ -61,7 +61,7 @@ public interface Log extends AppendableList<LogMessage<Tree>> {
      */
     @ReturnsThis
     @JavaLegacyBody
-    default Log appendUnimplementedWarning(Class<?> clazz) {
+    default Log warnUnimplementedPart(Class<?> clazz) {
         logs().append("Unimplemented program part for class "
                         + clazz
                         + " at:\n"
@@ -78,7 +78,7 @@ public interface Log extends AppendableList<LogMessage<Tree>> {
         return append(logMessage(tree, NO_CONTEXT, logLevel));
     }
 
-    default Log appendError(Tree tree) {
+    default Log fail(Tree tree) {
         return append(logMessage(tree, NO_CONTEXT, ERROR));
     }
 
@@ -95,7 +95,7 @@ public interface Log extends AppendableList<LogMessage<Tree>> {
     }
 
     @JavaLegacyBody
-    default Log appendError(Throwable throwable) {
+    default Log fail(Throwable throwable) {
         try {
             final var error = tree("error");
             if (throwable.getMessage() != null) {
@@ -131,7 +131,7 @@ public interface Log extends AppendableList<LogMessage<Tree>> {
      * @param throwable
      * @return
      */
-    default Log appendWarning(Throwable throwable) {
+    default Log warn(Throwable throwable) {
         final var warning = tree("warning");
         warning.withProperty("message", throwable.getMessage());
         warning.withProperty("stack-trace", throwableToString(throwable));
@@ -144,7 +144,7 @@ public interface Log extends AppendableList<LogMessage<Tree>> {
      * @param warning
      * @return
      */
-    default Log appendWarning(Tree warning) {
+    default Log warn(Tree warning) {
         final var exception = ExecutionException.execException("warning");
         final var message = tree("warning");
         message.withProperty("message", message);
@@ -157,11 +157,11 @@ public interface Log extends AppendableList<LogMessage<Tree>> {
     }
 
 
-    default Log appendWarning(String message, Throwable throwable) {
-        return appendWarning(tree(message), throwable);
+    default Log warn(String message, Throwable throwable) {
+        return warn(tree(message), throwable);
     }
 
-    default Log appendWarning(Tree message, Throwable throwable) {
+    default Log warn(Tree message, Throwable throwable) {
         final var throwablePerspective = tree("throwable");
         throwablePerspective.withProperty("message", throwable.getMessage());
         throwablePerspective.withProperty("stack-trace", throwableToString(throwable));

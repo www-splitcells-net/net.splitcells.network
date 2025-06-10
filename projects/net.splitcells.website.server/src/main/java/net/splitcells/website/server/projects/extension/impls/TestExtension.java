@@ -24,7 +24,6 @@ import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.RenderRequest;
 import net.splitcells.website.server.projects.RenderResponse;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
-import net.splitcells.website.server.projects.extension.impls.ProjectPathsRequest;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -76,7 +75,7 @@ public class TestExtension implements ProjectsRendererExtension {
             }
             return renderResponse(errorReport(projectsRenderer));
         } catch (Throwable th) {
-            logs().appendError(th);
+            logs().fail(th);
             return renderResponse(errorReport(projectsRenderer));
         }
     }

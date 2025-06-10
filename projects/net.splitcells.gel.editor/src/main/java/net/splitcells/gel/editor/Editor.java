@@ -31,6 +31,8 @@ import net.splitcells.gel.editor.lang.geal.VariableDefinitionDesc;
 import net.splitcells.gel.solution.Solution;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
  * There is no distinction, between a things name and their variable name.
@@ -84,6 +86,11 @@ public class Editor implements Discoverable {
 
     @ReturnsThis
     public Editor parse(VariableDefinitionDesc variableDefinition) {
+        if (variableDefinition.getFunctionCallChain().getFunctionCalls().isEmpty()) {
+
+        } else {
+            logs().warn("Only variable definitions with without function call chains are supported.");
+        }
         return this;
     }
 

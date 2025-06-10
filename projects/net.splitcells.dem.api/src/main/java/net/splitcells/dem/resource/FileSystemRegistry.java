@@ -41,7 +41,7 @@ public class FileSystemRegistry<Key> implements Service {
     public FileSystemRegistry<Key> withFileSystemView(Key key, FileSystemView fileSystemView) {
         if (DISABLED_FUNCTIONALITY && content.containsKey(key)) {
             // TODO Remove this code, when it is clear, that it is really not needed.
-            logs().appendWarning(tree("Ignoring file system registration, as it is already present.")
+            logs().warn(tree("Ignoring file system registration, as it is already present.")
                     .withProperty("key", key.toString())
                     .withProperty("old value", content.get(key).toString())
                     .withProperty("new value", fileSystemView.toString()));

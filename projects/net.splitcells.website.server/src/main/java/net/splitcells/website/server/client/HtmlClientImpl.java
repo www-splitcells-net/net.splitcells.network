@@ -16,10 +16,8 @@
 package net.splitcells.website.server.client;
 
 import com.microsoft.playwright.*;
-import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.website.server.Config;
 import net.splitcells.website.server.ServerConfig;
 import net.splitcells.website.server.config.InternalPublicPort;
 import net.splitcells.website.server.config.PublicDomain;
@@ -179,7 +177,7 @@ public class HtmlClientImpl implements HtmlClient {
     @Override
     public void close() {
         synchronized (playwrightSynchronizer) {
-            logs().appendWarning(execException("Closing HTML clients is implemented, but is not actually expected to be used in production."));
+            logs().warn(execException("Closing HTML clients is implemented, but is not actually expected to be used in production."));
             openTabs.forEach(Page::close);
             openTabs.removeAll();
             tabContexts.forEach(BrowserContext::close);

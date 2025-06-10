@@ -32,7 +32,7 @@ public interface RaterBasedOnLineGroupLambda {
 
     default Proposal propose(Proposal proposal) {
         if (StaticFlags.WARNING) {
-            logs().appendUnimplementedWarning(getClass());
+            logs().warnUnimplementedPart(getClass());
         }
         return proposal;
     }

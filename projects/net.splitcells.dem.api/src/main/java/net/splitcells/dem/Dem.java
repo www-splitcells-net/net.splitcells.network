@@ -118,7 +118,7 @@ public class Dem {
              * TODO Sometimes {@link Logs#logs()} does not work. Maybe logging is currently not thread safe?
              */
             throwable.printStackTrace();
-            logs().appendError(throwable);
+            logs().fail(throwable);
         });
         thread.start();
     }
@@ -305,7 +305,7 @@ public class Dem {
          * even if {@link Dem} is not initialized or working correctly.
          */
         exception.printStackTrace();
-        logs().appendError(exception);
+        logs().fail(exception);
         System.exit(exitCode);
     }
 

@@ -40,7 +40,7 @@ public class FileSystemVoid implements FileSystem {
 
     private void warnUsage() {
         if (!isUsageWarned) {
-            logs().appendUnimplementedWarning(FileSystemVoid.class);
+            logs().warnUnimplementedPart(FileSystemVoid.class);
             isUsageWarned = true;
         }
     }

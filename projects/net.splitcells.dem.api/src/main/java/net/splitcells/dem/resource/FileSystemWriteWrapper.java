@@ -35,7 +35,7 @@ public class FileSystemWriteWrapper implements FileSystem {
 
     private void warnUsage() {
         if (!isUsageWarned) {
-            logs().appendUnimplementedWarning(FileSystemWriteWrapper.class);
+            logs().warnUnimplementedPart(FileSystemWriteWrapper.class);
             isUsageWarned = true;
         }
     }

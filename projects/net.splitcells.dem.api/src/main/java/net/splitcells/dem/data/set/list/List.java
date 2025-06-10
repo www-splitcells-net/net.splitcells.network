@@ -97,7 +97,7 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
         try {
             clear();
         } catch (UnsupportedOperationException e) {
-            logs().appendWarning("Could not clear list natively. Using fallback instead.", e);
+            logs().warn("Could not clear list natively. Using fallback instead.", e);
             while (hasElements()) {
                 removeAt(0);
             }

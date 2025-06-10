@@ -15,7 +15,6 @@
  */
 package net.splitcells.dem.object;
 
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.resource.Trail;
@@ -99,7 +98,7 @@ public class Discoveries implements Discovery {
                             .withProperty("Parent value", value.map(Object::toString).orElse("empty"))
                             .withProperty("Parent path", path.unixPathString()));
                 } else {
-                    logs().appendWarning(tree("Duplicate path")
+                    logs().warn(tree("Duplicate path")
                             .withProperty("relative path index", "")
                             .withProperty("relative path", "" + listWithValuesOf(relativePath)));
                     int i = 0;

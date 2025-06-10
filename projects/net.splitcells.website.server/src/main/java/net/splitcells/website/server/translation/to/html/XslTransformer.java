@@ -15,9 +15,7 @@
  */
 package net.splitcells.website.server.translation.to.html;
 
-import net.sf.saxon.Configuration;
 import net.sf.saxon.TransformerFactoryImpl;
-import net.sf.saxon.lib.FeatureKeys;
 import net.sf.saxon.lib.Logger;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
@@ -32,7 +30,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import static net.sf.saxon.lib.Logger.WARNING;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 
 /**
@@ -54,17 +51,17 @@ public class XslTransformer {
 
             @Override
             public void warning(TransformerException exception) throws TransformerException {
-                logs().appendWarning("XML transformation warning", exception);
+                logs().warn("XML transformation warning", exception);
             }
 
             @Override
             public void error(TransformerException exception) throws TransformerException {
-                logs().appendWarning("XML transformation error", exception);
+                logs().warn("XML transformation error", exception);
             }
 
             @Override
             public void fatalError(TransformerException exception) throws TransformerException {
-                logs().appendWarning("Fatal error XML transformation", exception);
+                logs().warn("Fatal error XML transformation", exception);
             }
         };
     }
