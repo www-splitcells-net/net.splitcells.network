@@ -152,6 +152,10 @@ public interface Log extends AppendableList<LogMessage<Tree>> {
         return append(logMessage(warning, NO_CONTEXT, LogLevel.CRITICAL));
     }
 
+    default Log warn(String warning) {
+        return append(logMessage(tree(warning), NO_CONTEXT, LogLevel.WARNING));
+    }
+
 
     default Log appendWarning(String message, Throwable throwable) {
         return appendWarning(tree(message), throwable);
