@@ -64,7 +64,7 @@ public class AttributeCallRunner implements FunctionCallRunner {
         }
         final var second = functionCall.getArguments().get(1);
         final NameDesc secondName;
-        switch (first) {
+        switch (second) {
             case NameDesc n -> secondName = n;
             default ->
                     throw execException("The second argument has to be a name, but " + first.getClass() + " was given.");
