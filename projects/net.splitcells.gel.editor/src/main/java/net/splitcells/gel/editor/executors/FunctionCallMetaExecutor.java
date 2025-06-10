@@ -36,12 +36,12 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
     private @Setter Optional<Editor> context = Optional.empty();
     private @Setter Optional<Object> subject = Optional.empty();
     private @Getter Optional<Object> result = Optional.empty();
-    private final List<FunctionCallExecutor> executors = list();
+    private final List<FunctionCallRunner> executors = list();
 
     private FunctionCallMetaExecutor() {
     }
 
-    public FunctionCallMetaExecutor registerExecutor(FunctionCallExecutor executor) {
+    public FunctionCallMetaExecutor registerExecutor(FunctionCallRunner executor) {
         executors.add(executor);
         return this;
     }
@@ -60,7 +60,11 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
             throw execException(tree("Unsupported function call.")
                     .withProperty("function call", functionCall.getSourceCodeQuote().toString()));
         }
-        return fittingExecutor.get().setSubject(result).setContext(context).execute(functionCall);
+        final var run = fittingExecutor.get().setSubject(result).setContext(context).execute(functionCall);
+        final var nextExecutor = functionCallExecutor();
+        nextExecutor.setContext(context);
+        nextExecutor.setSubject(run.getResult());
+        return nextExecutor;
     }
 
     @Override

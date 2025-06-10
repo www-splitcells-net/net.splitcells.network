@@ -17,11 +17,7 @@ package net.splitcells.gel.editor.executors;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.splitcells.gel.data.view.attribute.Attribute;
-import net.splitcells.gel.data.view.attribute.AttributeI;
 import net.splitcells.gel.editor.Editor;
-import net.splitcells.gel.editor.EditorParser;
-import net.splitcells.gel.editor.EditorTest;
 import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
 import net.splitcells.gel.editor.lang.geal.NameDesc;
 
@@ -31,21 +27,20 @@ import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
-import static net.splitcells.dem.utils.NotImplementedYet.throwNotImplementedYet;
 import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
 import static net.splitcells.gel.data.view.attribute.AttributeI.stringAttribute;
 import static net.splitcells.gel.editor.EditorParser.*;
 
-public class AttributeExecutor implements FunctionCallExecutor {
-    public static AttributeExecutor attributeExecutor() {
-        return new AttributeExecutor();
+public class AttributeCallRunner implements FunctionCallRunner {
+    public static AttributeCallRunner attributeExecutor() {
+        return new AttributeCallRunner();
     }
 
     private @Setter Optional<Editor> context = Optional.empty();
     private @Setter Optional<Object> subject = Optional.empty();
     private @Getter Optional<Object> result = Optional.empty();
 
-    private AttributeExecutor() {
+    private AttributeCallRunner() {
 
     }
 
@@ -55,7 +50,7 @@ public class AttributeExecutor implements FunctionCallExecutor {
     }
 
     @Override
-    public FunctionCallMetaExecutor execute(FunctionCallDesc functionCall) {
+    public FunctionCallRunner execute(FunctionCallDesc functionCall) {
         require(supports(functionCall));
         if (functionCall.getArguments().size() != 2) {
             throw execException("The attribute function requires exactly 2 arguments, but " + functionCall.getArguments().size() + " where given.");
@@ -85,13 +80,13 @@ public class AttributeExecutor implements FunctionCallExecutor {
     }
 
     @Override
-    public FunctionCallExecutor setSubject(Optional<Object> argSubject) {
+    public FunctionCallRunner setSubject(Optional<Object> argSubject) {
         subject = argSubject;
         return this;
     }
 
     @Override
-    public FunctionCallExecutor setContext(Optional<Editor> argContext) {
+    public FunctionCallRunner setContext(Optional<Editor> argContext) {
         context = argContext;
         return this;
     }
