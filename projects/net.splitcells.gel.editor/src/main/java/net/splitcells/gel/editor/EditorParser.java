@@ -22,6 +22,7 @@ public class EditorParser {
     public static final String INTEGER_TYPE = "Integer";
     public static final String TABLE_FUNCTION = "table";
     public static final String CONSTRAINT_FUNCTION = "constraint";
+    public static final String ATTRIBUTE_FUNCTION = "attribute";
 
     private EditorParser() {
         throw constructorIllegal();
