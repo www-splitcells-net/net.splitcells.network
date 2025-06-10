@@ -18,17 +18,22 @@ package net.splitcells.dem.utils;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
 public final class NotImplementedYet extends RuntimeException {
-    
+
     public static final String TODO_NOT_IMPLEMENTED_YET = "TODO-Not-implemented-yet";
 
+    public static void throwNotImplementedYet() {
+        throw new NotImplementedYet();
+    }
+
+    @Deprecated
     public static NotImplementedYet notImplementedYet() {
         return new NotImplementedYet();
     }
-    
+
     public static NotImplementedYet notImplementedYet(String message) {
         return new NotImplementedYet(message);
     }
-    
+
     private NotImplementedYet() {
 
     }

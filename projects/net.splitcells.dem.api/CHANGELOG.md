@@ -85,6 +85,9 @@
      This also makes it possible to use the name `Resource` for an interface
      of resource like things.
 ### Minor Changes
+* **2025-06-10 \#37** Prefer implicit throw via `NotImplementedYet#throwNotImplementedYet`,
+  instead of explicit `throw #notImplementedYet()`,
+  in order to simplify code and allow more centralised error handling.
 * **2025-03-16 \#59**
     1. Define UserHomeFileSystem option, that provides access to `~/`.
     2. Define delete methods for file systems.
