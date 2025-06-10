@@ -19,6 +19,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
+import net.splitcells.gel.editor.lang.geal.NameDesc;
 
 import java.util.Optional;
 
@@ -52,6 +53,15 @@ public class AttributeExecutor implements FunctionCallExecutor {
         require(supports(functionCall));
         if (functionCall.getArguments().size() != 2) {
             throw execException("The attribute function requires exactly 2 arguments, but " + functionCall.getArguments().size() + " where given.");
+        }
+        final var first = functionCall.getArguments().get(0);
+        final NameDesc firstName;
+        switch (first) {
+            case NameDesc n -> {
+                firstName = n;
+            }
+            default ->
+                    throw execException("The first argument has to be a name, but " + first.getClass() + " was given.");
         }
         throw notImplementedYet();
     }
