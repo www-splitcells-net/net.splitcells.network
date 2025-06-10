@@ -25,7 +25,9 @@ import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.lang.SolutionDescription;
+import net.splitcells.gel.editor.lang.geal.FunctionCallChainDesc;
 import net.splitcells.gel.editor.lang.geal.SourceUnit;
+import net.splitcells.gel.editor.lang.geal.VariableDefinitionDesc;
 import net.splitcells.gel.solution.Solution;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -71,6 +73,22 @@ public class Editor implements Discoverable {
 
     @ReturnsThis
     public Editor parse(SourceUnit sourceUnit) {
+        sourceUnit.getStatements().forEach(s -> {
+            switch (s) {
+                case VariableDefinitionDesc vd -> parse(vd);
+                case FunctionCallChainDesc fcc -> parse(fcc);
+            }
+        });
+        return this;
+    }
+
+    @ReturnsThis
+    public Editor parse(VariableDefinitionDesc variableDefinition) {
+        return this;
+    }
+
+    @ReturnsThis
+    public Editor parse(FunctionCallChainDesc functionCallChain) {
         return this;
     }
 }
