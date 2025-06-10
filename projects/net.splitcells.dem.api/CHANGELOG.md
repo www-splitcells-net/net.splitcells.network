@@ -5,6 +5,7 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2025-06-10\#37** Log warnings during test execution by default.
 * **2025-06-10\#37** Shorten log methods:
     1. Rename `Log#appendWarning` to `Log#warn`.
     2. Rename `Log#appendError` to `Log#fail`.

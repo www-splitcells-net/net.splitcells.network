@@ -41,6 +41,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.environment.config.StaticFlags.logStaticFlags;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.communication.log.LogLevel.UNKNOWN_ERROR;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
@@ -240,13 +241,20 @@ public class Dem {
         return rVal;
     }
 
+    /**
+     * During builds, every warning is logged as this is something, that should be fixed by the developer.
+     * In other words, everything should be logged, that should be reacted to by the test user,
+     * which is a developer by default.
+     *
+     * @param dem
+     */
     private static void configureByEnvironment(Environment dem) {
         if ("true".equals(System.getProperty("net.splitcells.mode.build"))) {
             dem
                     .config()
                     .withConfigValue
                             (MessageFilter.class
-                                    , logMessage -> logMessage.priority().greaterThanOrEqual(UNKNOWN_ERROR));
+                                    , logMessage -> logMessage.priority().greaterThanOrEqual(INFO));
         }
     }
 
