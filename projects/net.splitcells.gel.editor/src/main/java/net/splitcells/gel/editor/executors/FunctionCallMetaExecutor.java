@@ -15,6 +15,8 @@
  */
 package net.splitcells.gel.editor.executors;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
@@ -27,18 +29,16 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public class FunctionCallMetaExecutor implements FunctionCallExecutor {
-    public static FunctionCallMetaExecutor functionCallExecutor(Editor context
-            , Optional<Object> subject) {
-        return new FunctionCallMetaExecutor(context, subject);
+    public static FunctionCallMetaExecutor functionCallExecutor() {
+        return new FunctionCallMetaExecutor();
     }
 
-    private final Editor context;
-    private final Optional<Object> subject;
+    private @Setter Optional<Editor> context = Optional.empty();
+    private @Setter Optional<Object> subject = Optional.empty();
+    private @Getter Optional<Object> result = Optional.empty();
     private final List<FunctionCallExecutor> executors = list();
 
-    private FunctionCallMetaExecutor(Editor argContext, Optional<Object> argSubject) {
-        context = argContext;
-        subject = argSubject;
+    private FunctionCallMetaExecutor() {
     }
 
     public FunctionCallMetaExecutor registerExecutor(FunctionCallExecutor executor) {
@@ -60,6 +60,18 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
             throw execException(tree("Unsupported function call.")
                     .withProperty("function call", functionCall.getSourceCodeQuote().toString()));
         }
-        return fittingExecutor.get().execute(functionCall);
+        return fittingExecutor.get().setSubject(subject).setContext(context).execute(functionCall);
+    }
+
+    @Override
+    public FunctionCallExecutor setSubject(Optional<Object> argSubject) {
+        subject = argSubject;
+        return this;
+    }
+
+    @Override
+    public FunctionCallExecutor setContext(Optional<Editor> argContext) {
+        context = argContext;
+        return this;
     }
 }
