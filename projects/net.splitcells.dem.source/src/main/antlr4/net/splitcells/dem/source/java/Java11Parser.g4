@@ -24,6 +24,8 @@ parser grammar Java11Parser;
  * Implicit tokens are not used, because they have caused many cryptic errors in the past.
  * The author of this does not understand how implicit tokens really work in ANLTR4.
  *
+ * Empty blocks like `if ([...]) {}` are allowed, as these can be part of valid, but incomplete code,
+ * that is in development.
  */
 @header {
     package net.splitcells.dem.source.java;
@@ -324,7 +326,7 @@ statement
     | Keyword_try Brace_round_open variable_declaration Brace_round_closed Brace_curly_open statement+ Brace_curly_closed statement_catch?
             statement_finally?
     | Keyword_if Brace_round_open expression Brace_round_closed
-    	Brace_curly_open statement+ Brace_curly_closed statement_if_else?
+    	Brace_curly_open statement* Brace_curly_closed statement_if_else?
     | Keyword_if Brace_round_open expression Brace_round_closed statement
     | javadoc
     | Keyword_throw expression Semicolon
@@ -368,9 +370,9 @@ statement_body
     : Brace_curly_open statement* Brace_curly_closed
     ;
 statement_if_else
-	: Keyword_else Brace_curly_open statement+ Brace_curly_closed
+	: Keyword_else Brace_curly_open statement* Brace_curly_closed
 	| Keyword_else_if Brace_round_open expression Brace_round_closed
-		Brace_curly_open statement+ Brace_curly_closed statement_if_else?
+		Brace_curly_open statement* Brace_curly_closed statement_if_else?
 	;
 statement_catch
     : Keyword_catch Brace_round_open name name
