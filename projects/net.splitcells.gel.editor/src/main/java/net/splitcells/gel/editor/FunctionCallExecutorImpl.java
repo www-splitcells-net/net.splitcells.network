@@ -15,10 +15,14 @@
  */
 package net.splitcells.gel.editor;
 
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public class FunctionCallExecutorImpl implements FunctionCallExecutor {
@@ -29,14 +33,28 @@ public class FunctionCallExecutorImpl implements FunctionCallExecutor {
 
     private final Editor context;
     private final Optional<Object> subject;
+    private final List<FunctionCallExecutor> executors = list();
 
     private FunctionCallExecutorImpl(Editor argContext, Optional<Object> argSubject) {
         context = argContext;
         subject = argSubject;
     }
 
+    public FunctionCallExecutorImpl registerExecutor(FunctionCallExecutor executor) {
+        executors.add(executor);
+        return this;
+    }
+
+    @Override
+    public boolean supports(FunctionCallDesc functionCall) {
+        return executors.stream().map(e -> e.supports(functionCall)).anyMatch(s -> s);
+    }
+
     @Override
     public FunctionCallExecutorImpl execute(FunctionCallDesc functionCall) {
+        if (!supports(functionCall)) {
+            throw execException(tree("Unsupported function call.").withProperty("function call", functionCall.getSourceCodeQuote().toString()));
+        }
         throw notImplementedYet();
     }
 }

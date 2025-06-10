@@ -18,5 +18,7 @@ package net.splitcells.gel.editor;
 import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
 
 public interface FunctionCallExecutor {
+    boolean supports(FunctionCallDesc functionCall);
+
     FunctionCallExecutorImpl execute(FunctionCallDesc functionCall);
 }
