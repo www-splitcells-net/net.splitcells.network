@@ -26,13 +26,19 @@ import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.lang.SolutionDescription;
 import net.splitcells.gel.editor.lang.geal.FunctionCallChainDesc;
+import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
 import net.splitcells.gel.editor.lang.geal.SourceUnit;
 import net.splitcells.gel.editor.lang.geal.VariableDefinitionDesc;
 import net.splitcells.gel.solution.Solution;
 
+import java.util.Optional;
+
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.dem.utils.NotImplementedYet.throwNotImplementedYet;
+import static net.splitcells.gel.editor.executors.FunctionCallMetaExecutor.functionCallExecutor;
 
 /**
  * There is no distinction, between a things name and their variable name.
@@ -86,8 +92,24 @@ public class Editor implements Discoverable {
 
     @ReturnsThis
     public Editor parse(VariableDefinitionDesc variableDefinition) {
+        final var functionCallExecutor = functionCallExecutor();
+        functionCallExecutor.setContext(Optional.of(this));
         if (variableDefinition.getFunctionCallChain().getFunctionCalls().isEmpty()) {
-
+            if (variableDefinition.getFunctionCallChain().getExpression() instanceof FunctionCallDesc functionCall) {
+                final var name = variableDefinition.getName().getValue();
+                if (attributes.hasKey(name)) {
+                    throw execException(tree("Name is already present").withProperty("name", name)
+                            .withProperty("attribute variables", attributes.toString()));
+                }
+                if (functionCallExecutor.supports(functionCall)) {
+                    final var newObject = functionCallExecutor.execute(functionCall).getSubject().orElseThrow();
+                    if (newObject instanceof Attribute<?> attribute) {
+                        attributes.put(name, attribute);
+                    } else {
+                        throwNotImplementedYet();
+                    }
+                }
+            }
         } else {
             logs().warn("Only variable definitions with without function call chains are supported.");
         }
