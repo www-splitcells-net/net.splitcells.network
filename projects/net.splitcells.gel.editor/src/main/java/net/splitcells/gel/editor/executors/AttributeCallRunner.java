@@ -50,6 +50,12 @@ public class AttributeCallRunner implements FunctionCallRunner {
         return functionCall.getName().getValue().equals(ATTRIBUTE_FUNCTION);
     }
 
+    /**
+     *
+     * @param functionCall The second argument is a {@link StringDesc} instead of an {@link NameDesc} as it is not a variable reference and
+     *                     because the attribute's name is used for the UI, where using whitespace can make a lot of sense for users.
+     * @return
+     */
     @Override
     public FunctionCallRunner execute(FunctionCallDesc functionCall) {
         require(supports(functionCall));
