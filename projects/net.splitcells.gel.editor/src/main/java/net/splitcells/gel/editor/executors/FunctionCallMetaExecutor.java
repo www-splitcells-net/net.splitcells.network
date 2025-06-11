@@ -35,7 +35,7 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
     }
 
     private @Setter Optional<Editor> context = Optional.empty();
-    private @Setter Optional<Object> subject = Optional.empty();
+    private @Getter @Setter Optional<Object> subject = Optional.empty();
     private @Getter Optional<Object> result = Optional.empty();
     private final List<FunctionCallRunner> executors = list();
 

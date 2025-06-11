@@ -25,7 +25,10 @@ public interface FunctionCallExecutor {
 
     FunctionCallExecutor execute(FunctionCallDesc functionCall);
 
+    Optional<Object> getSubject();
+
     FunctionCallExecutor setSubject(Optional<Object> subject);
+
 
     FunctionCallExecutor setContext(Optional<Editor> context);
 
