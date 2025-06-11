@@ -32,7 +32,7 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.stringAttribute;
 import static net.splitcells.gel.editor.EditorParser.*;
 
 public class AttributeCallRunner implements FunctionCallRunner {
-    public static AttributeCallRunner attributeExecutor() {
+    public static AttributeCallRunner attributeCallRunner() {
         return new AttributeCallRunner();
     }
 
