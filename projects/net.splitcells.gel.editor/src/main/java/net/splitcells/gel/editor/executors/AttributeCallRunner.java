@@ -20,6 +20,7 @@ import lombok.Setter;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
 import net.splitcells.gel.editor.lang.geal.NameDesc;
+import net.splitcells.gel.editor.lang.geal.StringDesc;
 
 import java.util.Optional;
 
@@ -63,11 +64,11 @@ public class AttributeCallRunner implements FunctionCallRunner {
                     throw execException("The first argument has to be a name, but " + first.getClass() + " was given.");
         }
         final var second = functionCall.getArguments().get(1);
-        final NameDesc secondName;
+        final StringDesc secondName;
         switch (second) {
-            case NameDesc n -> secondName = n;
+            case StringDesc n -> secondName = n;
             default ->
-                    throw execException("The second argument has to be a name, but " + first.getClass() + " was given.");
+                    throw execException("The second argument has to be a string, but " + first.getClass() + " was given.");
         }
         if (firstName.getValue().equals(INTEGER_TYPE)) {
             result = Optional.of(integerAttribute(secondName.getValue()));
