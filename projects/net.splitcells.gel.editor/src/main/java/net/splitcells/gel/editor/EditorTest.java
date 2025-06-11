@@ -151,5 +151,11 @@ public class EditorTest {
                                                 , list(functionCallDesc(nameDesc(HAS_SIZE_NAME)
                                                         , list(integerDesc(1))))))))));
         testSubject.parse(testData);
+        testSubject.getAttributes().requirePresence("student", stringAttribute("student"), CONTENT_COMPARISON)
+                .requirePresence("examiner", stringAttribute("examiner"), CONTENT_COMPARISON)
+                .requirePresence("observer", stringAttribute("observer"), CONTENT_COMPARISON)
+                .requirePresence("date", integerAttribute("date"), CONTENT_COMPARISON)
+                .requirePresence("shift", integerAttribute("shift"), CONTENT_COMPARISON)
+                .requirePresence("roomNumber", integerAttribute("roomNumber"), CONTENT_COMPARISON);
     }
 }
