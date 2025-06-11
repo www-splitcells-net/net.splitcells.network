@@ -22,6 +22,8 @@ import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.data.atom.Bools.require;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.editor.EditorParser.TABLE_FUNCTION;
 
@@ -46,5 +48,17 @@ public class TableCallRunner implements FunctionCallRunner {
     @Override
     public FunctionCallRunner execute(FunctionCallDesc functionCall) {
         throw notImplementedYet();
+    }
+
+    @Override
+    public FunctionCallRunner setSubject(Optional<Object> argSubject) {
+        subject = argSubject;
+        return this;
+    }
+
+    @Override
+    public FunctionCallRunner setContext(Optional<Editor> argContext) {
+        context = argContext;
+        return this;
     }
 }
