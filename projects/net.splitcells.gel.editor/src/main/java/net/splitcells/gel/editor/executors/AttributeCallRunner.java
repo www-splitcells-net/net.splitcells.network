@@ -76,7 +76,7 @@ public class AttributeCallRunner implements FunctionCallRunner {
         } else {
             throw execException("The first argument has to be a reference to the integer or the string type, but " + firstName.getValue() + " was given.");
         }
-        throw notImplementedYet();
+        return this;
     }
 
     @Override
