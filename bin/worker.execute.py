@@ -595,7 +595,7 @@ podman run --name "net.splitcells.martins.avots.distro" \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/.local:/root/.local/state/net.splitcells.martins.avots.distro/.local \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/repos:/root/.local/state/net.splitcells.martins.avots.distro/repos \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/config:/root/.local/state/net.splitcells.martins.avots.distro/config \\
-  -v ~/.local/state/net.splitcells.martins.avots.distro/config:/root/.local/state/net.splitcells.martins.avots.distro/logs \\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/logs:/root/.local/state/net.splitcells.martins.avots.distro/logs \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/bin:/root/bin \\
   \\
   "localhost/net.splitcells.martins.avots.distro"
@@ -634,7 +634,7 @@ podman run --name "net.splitcells.martins.avots.distro" \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/.local:/root/.local/state/net.splitcells.martins.avots.distro/.local \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/repos:/root/.local/state/net.splitcells.martins.avots.distro/repos \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/config:/root/.local/state/net.splitcells.martins.avots.distro/config \\
-  -v ~/.local/state/net.splitcells.martins.avots.distro/config:/root/.local/state/net.splitcells.martins.avots.distro/logs \\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/logs:/root/.local/state/net.splitcells.martins.avots.distro/logs \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/bin:/root/bin \\
   \\
   "localhost/net.splitcells.martins.avots.distro"
@@ -778,7 +778,7 @@ ExecStart=podman run --name "net.splitcells.network.worker.boostrap.daemon" \\
   -v %h/.local/state/net.splitcells.network.worker/.local:/root/.local/state/net.splitcells.network.worker/.local \\
   -v %h/.local/state/net.splitcells.network.worker/repos:/root/.local/state/net.splitcells.network.worker/repos \\
   -v %h/.local/state/net.splitcells.network.worker/config:/root/.local/state/net.splitcells.network.worker/config \\
-  -v %h/.local/state/net.splitcells.network.worker/config:/root/.local/state/net.splitcells.network.worker/logs \\
+  -v %h/.local/state/net.splitcells.network.worker/logs:/root/.local/state/net.splitcells.network.worker/logs \\
   -v %h/.local/state/net.splitcells.network.worker/bin:/root/bin \\
   --publish 8080:8080 \\
   "localhost/net.splitcells.network.worker.boostrap.daemon"
