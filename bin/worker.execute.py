@@ -157,7 +157,7 @@ PODMAN_COMMAND_TEMPLATE = """podman run --name "${executionName}" \\
   -v ~/.local/state/${programName}/.local:/root/.local/state/${programName}/.local \\
   -v ~/.local/state/${programName}/repos:/root/.local/state/${programName}/repos \\
   -v ~/.local/state/${programName}/config:/root/.local/state/${programName}/config \\
-  -v ~/.local/state/${programName}/config:/root/.local/state/${programName}/logs \\
+  -v ~/.local/state/${programName}/logs:/root/.local/state/${programName}/logs \\
   -v ~/.local/state/${programName}/bin:/root/bin \\
   ${podmanParameters}\\
   "localhost/${executionName}"
