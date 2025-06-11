@@ -47,6 +47,10 @@ public class TableCallRunner implements FunctionCallRunner {
 
     @Override
     public FunctionCallRunner execute(FunctionCallDesc functionCall) {
+        require(supports(functionCall));
+        if (functionCall.getArguments().size() < 3) {
+            throw execException("The table function requires at least 2 arguments, but " + functionCall.getArguments().size() + " were given.");
+        }
         throw notImplementedYet();
     }
 
