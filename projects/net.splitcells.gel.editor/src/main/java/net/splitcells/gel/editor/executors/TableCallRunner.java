@@ -23,6 +23,7 @@ import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
 import java.util.Optional;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.gel.editor.EditorParser.TABLE_FUNCTION;
 
 public class TableCallRunner implements FunctionCallRunner {
     public static TableCallRunner tableCallRunner() {
@@ -39,7 +40,7 @@ public class TableCallRunner implements FunctionCallRunner {
 
     @Override
     public boolean supports(FunctionCallDesc functionCall) {
-        return false;
+        return functionCall.getName().getValue().equals(TABLE_FUNCTION);
     }
 
     @Override
