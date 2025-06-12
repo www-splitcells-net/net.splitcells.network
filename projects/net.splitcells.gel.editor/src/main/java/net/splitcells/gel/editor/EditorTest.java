@@ -142,8 +142,8 @@ public class EditorTest {
                                         , nameDesc("date")
                                         , nameDesc("shift")
                                         , nameDesc("roomNumber"))))
-                , variableDefinitionDesc(nameDesc(CONSTRAINT_FUNCTION)
-                        , functionCallChainDesc(functionCallDesc(nameDesc(TABLE_FUNCTION))
+                , variableDefinitionDesc(nameDesc("rules")
+                        , functionCallChainDesc(functionCallDesc(nameDesc(CONSTRAINT_FUNCTION))
                                 , list(functionCallDesc(nameDesc(FOR_EACH_NAME), list(nameDesc("observer")))
                                         , functionCallDesc(nameDesc(FOR_ALL_COMBINATIONS_OF)
                                                 , list(nameDesc("date"), nameDesc("shift")))
@@ -154,7 +154,8 @@ public class EditorTest {
                         , functionCallDesc(nameDesc(SOLUTION_FUNCTION)
                                 , list(stringDesc("Colloquium Plan")
                                         , nameDesc("demands")
-                                        , nameDesc("supplies"))))
+                                        , nameDesc("supplies")
+                                        , nameDesc("rules"))))
         ));
         testSubject.parse(testData);
         testSubject.getAttributes().requirePresence("student", stringAttribute("student"), CONTENT_COMPARISON)
