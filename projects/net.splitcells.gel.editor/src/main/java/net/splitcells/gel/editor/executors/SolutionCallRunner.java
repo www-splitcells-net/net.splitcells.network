@@ -17,6 +17,7 @@ package net.splitcells.gel.editor.executors;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.editor.Editor;
@@ -52,34 +53,41 @@ public class SolutionCallRunner implements FunctionCallRunner {
 
     @Override
     public FunctionCallRunner execute(FunctionCallDesc functionCall) {
-        if (functionCall.getArguments().size() != 3) {
-            throw execException("The solution function requires at exactly 3 arguments, but " + functionCall.getArguments().size() + " were given.");
+        if (functionCall.getArguments().size() != 4) {
+            throw execException("The solution function requires at exactly 4 arguments, but " + functionCall.getArguments().size() + " were given.");
         }
         final var first = functionCall.getArguments().get(0);
         final String solutionName;
         switch (first) {
             case StringDesc n -> solutionName = n.getValue();
             default ->
-                    throw execException("The first argument has to be the solution name represented by a string, but is a " + first.getClass() + " was given.");
+                    throw execException("The 1st argument has to be the solution name represented by a string, but is a " + first.getClass() + " was given.");
         }
         final var second = functionCall.getArguments().get(1);
         final Table demands;
         switch (second) {
             case NameDesc n -> demands = context.orElseThrow().getTables().get(n.getValue());
             default ->
-                    throw execException("The second argument has to be the demand table represented by a variable name, but a " + second.getClass() + " was given instead.");
+                    throw execException("The 2nd argument has to be the demand table represented by a variable name, but a " + second.getClass() + " was given instead.");
         }
         final var third = functionCall.getArguments().get(2);
         final Table supplies;
         switch (third) {
             case NameDesc n -> supplies = context.orElseThrow().getTables().get(n.getValue());
             default ->
-                    throw execException("The third argument has to be the supply table represented by a variable name, but a " + second.getClass() + " was given instead.");
+                    throw execException("The 3rd argument has to be the supply table represented by a variable name, but a " + second.getClass() + " was given instead.");
+        }
+        final var forth = functionCall.getArguments().get(3);
+        final Constraint constraint;
+        switch (forth) {
+            case NameDesc n -> constraint = context.orElseThrow().getConstraints().get(n.getValue());
+            default ->
+                    throw execException("The 4th argument has to be the constraint represented by a variable name, but a " + second.getClass() + " was given instead.");
         }
         result = Optional.of(defineProblem(solutionName)
                 .withDemands(demands)
                 .withSupplies(supplies)
-                .withConstraint(Query::forAll)
+                .withConstraint(constraint)
                 .toProblem()
                 .asSolution());
         return this;
