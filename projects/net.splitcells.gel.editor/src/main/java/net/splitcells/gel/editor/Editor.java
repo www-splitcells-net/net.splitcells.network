@@ -22,6 +22,7 @@ import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.testing.Result;
+import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.lang.SolutionDescription;
@@ -56,6 +57,7 @@ public class Editor implements Discoverable {
     private @Getter final Map<String, Attribute<?>> attributes = map();
     private @Getter final Map<String, Table> tables = map();
     private @Getter final Map<String, Solution> solutions = map();
+    private @Getter final Map<String, Constraint> constraints = map();
     private @Getter final Map<Table, TableFormatting> tableFormatting = map();
 
     private Editor(String argName, Discoverable argParent) {
@@ -115,7 +117,27 @@ public class Editor implements Discoverable {
                 }
             }
         } else {
-            logs().warn("Only variable definitions with without function call chains are supported.");
+            if (variableDefinition.getFunctionCallChain().getExpression() instanceof FunctionCallDesc functionCall) {
+                final var name = variableDefinition.getName().getValue();
+                if (attributes.hasKey(name)) {
+                    throw execException(tree("Name is already present").withProperty("name", name)
+                            .withProperty("attribute variables", attributes.toString()));
+                }
+                if (functionCallExecutor.supports(functionCall)) {
+                    final var newObject = functionCallExecutor.execute(functionCall).getSubject().orElseThrow();
+                    if (newObject instanceof Attribute<?> attribute) {
+                        attributes.put(name, attribute);
+                    } else if (newObject instanceof Solution solution) {
+                        solutions.put(name, solution);
+                    } else if (newObject instanceof Table table) {
+                        tables.put(name, table);
+                    } else if (newObject instanceof Constraint constraint) {
+                        constraints.put(name, constraint);
+                    } else {
+                        throwNotImplementedYet();
+                    }
+                }
+            }
         }
         return this;
     }
