@@ -157,5 +157,15 @@ public class EditorTest {
                 .requirePresence("date", integerAttribute("date"), CONTENT_COMPARISON)
                 .requirePresence("shift", integerAttribute("shift"), CONTENT_COMPARISON)
                 .requirePresence("roomNumber", integerAttribute("roomNumber"), CONTENT_COMPARISON);
+        testSubject.getTables().get("demands").headerView2().requireEquality(list(
+                        stringAttribute("student")
+                        , stringAttribute("examiner")
+                        , stringAttribute("observer"))
+                , CONTENT_COMPARISON);
+        testSubject.getTables().get("supplies").headerView2().requireEquality(list(
+                        integerAttribute("date")
+                        , integerAttribute("shift")
+                        , integerAttribute("roomNumber"))
+                , CONTENT_COMPARISON);
     }
 }
