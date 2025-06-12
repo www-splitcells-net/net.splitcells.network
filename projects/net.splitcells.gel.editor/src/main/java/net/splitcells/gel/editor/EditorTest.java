@@ -149,7 +149,13 @@ public class EditorTest {
                                                 , list(nameDesc("date"), nameDesc("shift")))
                                         , functionCallDesc(nameDesc(THEN_NAME)
                                                 , list(functionCallDesc(nameDesc(HAS_SIZE_NAME)
-                                                        , list(integerDesc(1))))))))));
+                                                        , list(integerDesc(1))))))))
+                , variableDefinitionDesc(nameDesc("solution")
+                        , functionCallDesc(nameDesc(SOLUTION_FUNCTION)
+                                , list(stringDesc("Colloquium Plan")
+                                        , nameDesc("demands")
+                                        , nameDesc("supplies"))))
+        ));
         testSubject.parse(testData);
         testSubject.getAttributes().requirePresence("student", stringAttribute("student"), CONTENT_COMPARISON)
                 .requirePresence("examiner", stringAttribute("examiner"), CONTENT_COMPARISON)
@@ -164,6 +170,14 @@ public class EditorTest {
                 , CONTENT_COMPARISON);
         testSubject.getTables().get("supplies").headerView2().requireEquality(list(
                         integerAttribute("date")
+                        , integerAttribute("shift")
+                        , integerAttribute("roomNumber"))
+                , CONTENT_COMPARISON);
+        testSubject.getSolutions().get("solution").headerView2().requireEquality(list(
+                        stringAttribute("student")
+                        , stringAttribute("examiner")
+                        , stringAttribute("observer")
+                        , integerAttribute("date")
                         , integerAttribute("shift")
                         , integerAttribute("roomNumber"))
                 , CONTENT_COMPARISON);
