@@ -23,6 +23,7 @@ import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
 import java.util.Optional;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.gel.editor.EditorParser.SOLUTION_FUNCTION;
 
 public class SolutionCallRunner implements FunctionCallRunner {
     public static SolutionCallRunner solutionCallRunner() {
@@ -39,7 +40,7 @@ public class SolutionCallRunner implements FunctionCallRunner {
 
     @Override
     public boolean supports(FunctionCallDesc functionCall) {
-        throw notImplementedYet();
+        return functionCall.getName().getValue().equals(SOLUTION_FUNCTION);
     }
 
     @Override
