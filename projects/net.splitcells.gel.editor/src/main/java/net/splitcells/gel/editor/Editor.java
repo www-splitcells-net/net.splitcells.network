@@ -55,7 +55,7 @@ public class Editor implements Discoverable {
     private final Discoverable parent;
     private @Getter final Map<String, Attribute<?>> attributes = map();
     private @Getter final Map<String, Table> tables = map();
-    private @Getter final Map<String, Solution> solution = map();
+    private @Getter final Map<String, Solution> solutions = map();
     private @Getter final Map<Table, TableFormatting> tableFormatting = map();
 
     private Editor(String argName, Discoverable argParent) {
@@ -107,6 +107,8 @@ public class Editor implements Discoverable {
                         attributes.put(name, attribute);
                     } else if (newObject instanceof Table table) {
                         tables.put(name, table);
+                    } else if (newObject instanceof Solution solution) {
+                        solutions.put(name, solution);
                     } else {
                         throwNotImplementedYet();
                     }
