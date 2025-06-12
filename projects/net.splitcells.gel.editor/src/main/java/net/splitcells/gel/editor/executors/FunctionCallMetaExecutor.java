@@ -28,10 +28,13 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.editor.executors.AttributeCallRunner.attributeCallRunner;
+import static net.splitcells.gel.editor.executors.TableCallRunner.tableCallRunner;
 
 public class FunctionCallMetaExecutor implements FunctionCallExecutor {
     public static FunctionCallMetaExecutor functionCallExecutor() {
-        return new FunctionCallMetaExecutor().registerExecutor(attributeCallRunner());
+        return new FunctionCallMetaExecutor()
+                .registerExecutor(attributeCallRunner())
+                .registerExecutor(tableCallRunner());
     }
 
     private @Setter Optional<Editor> context = Optional.empty();
