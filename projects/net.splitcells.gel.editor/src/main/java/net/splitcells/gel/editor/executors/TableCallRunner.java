@@ -17,14 +17,20 @@ package net.splitcells.gel.editor.executors;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
+import net.splitcells.gel.editor.lang.geal.NameDesc;
 
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 import static net.splitcells.dem.data.atom.Bools.require;
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.editor.EditorParser.TABLE_FUNCTION;
 
 public class TableCallRunner implements FunctionCallRunner {
@@ -51,7 +57,25 @@ public class TableCallRunner implements FunctionCallRunner {
         if (functionCall.getArguments().size() < 3) {
             throw execException("The table function requires at least 2 arguments, but " + functionCall.getArguments().size() + " were given.");
         }
-        throw notImplementedYet();
+        final var first = functionCall.getArguments().get(0);
+        final String tableName;
+        switch (first) {
+            case NameDesc n -> tableName = n.getValue();
+            default ->
+                    throw execException("The first argument has to be the table name, but is a " + first.getClass() + " was given.");
+        }
+        final List<Attribute<?>> attributes = list();
+        IntStream.range(1, functionCall.getArguments().size()).forEach(i -> {
+            final Attribute<?> att;
+            switch (functionCall.getArguments().get(i)) {
+                case NameDesc n -> attributes.add(context.orElseThrow().getAttributes().get(n.getValue()));
+                default -> throw execException("Argument after the first one has to be the attribute names, but is a "
+                        + functionCall.getArguments().get(i).getClass()
+                        + " was given.");
+            }
+        });
+        result = Optional.of(table(tableName, context.orElseThrow(), attributes));
+        return this;
     }
 
     @Override
