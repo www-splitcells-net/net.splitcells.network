@@ -105,10 +105,10 @@ public class Editor implements Discoverable {
                     final var newObject = functionCallExecutor.execute(functionCall).getSubject().orElseThrow();
                     if (newObject instanceof Attribute<?> attribute) {
                         attributes.put(name, attribute);
-                    } else if (newObject instanceof Table table) {
-                        tables.put(name, table);
                     } else if (newObject instanceof Solution solution) {
                         solutions.put(name, solution);
+                    } else if (newObject instanceof Table table) {
+                        tables.put(name, table);
                     } else {
                         throwNotImplementedYet();
                     }
