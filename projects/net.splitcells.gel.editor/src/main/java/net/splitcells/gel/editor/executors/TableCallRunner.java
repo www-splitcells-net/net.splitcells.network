@@ -22,6 +22,7 @@ import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
 import net.splitcells.gel.editor.lang.geal.NameDesc;
+import net.splitcells.gel.editor.lang.geal.StringDesc;
 
 import java.util.Optional;
 import java.util.stream.IntStream;
@@ -60,9 +61,9 @@ public class TableCallRunner implements FunctionCallRunner {
         final var first = functionCall.getArguments().get(0);
         final String tableName;
         switch (first) {
-            case NameDesc n -> tableName = n.getValue();
+            case StringDesc n -> tableName = n.getValue();
             default ->
-                    throw execException("The first argument has to be the table name, but is a " + first.getClass() + " was given.");
+                    throw execException("The first argument has to be the table name represented by a string, but is a " + first.getClass() + " was given.");
         }
         final List<Attribute<?>> attributes = list();
         IntStream.range(1, functionCall.getArguments().size()).forEach(i -> {
