@@ -15,22 +15,10 @@
  */
 package net.splitcells.gel.editor.executors;
 
-import net.splitcells.dem.lang.annotations.ReturnsThis;
-import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
 
-import java.util.Optional;
+public interface BaseCallRunnerParser {
+    boolean supports(BaseCallRunner base, FunctionCallDesc functionCall);
 
-public interface FunctionCallRunner {
-
-    boolean supports(FunctionCallDesc functionCall);
-
-    @ReturnsThis
-    FunctionCallRunner execute(FunctionCallDesc functionCall);
-
-    FunctionCallRunner setSubject(Optional<Object> subject);
-
-    FunctionCallRunner setContext(Optional<Editor> context);
-
-    Optional<Object> getResult();
+    void execute(BaseCallRunner base, FunctionCallDesc functionCall);
 }
