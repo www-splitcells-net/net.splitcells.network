@@ -99,8 +99,23 @@ public class Editor implements Discoverable {
         if (variableDefinition.getFunctionCallChain().getExpression() instanceof FunctionCallDesc functionCall) {
             final var name = variableDefinition.getName().getValue();
             if (attributes.hasKey(name)) {
-                throw execException(tree("Name is already present").withProperty("name", name)
+                throw execException(tree("The attribute variable \" + name + \" with the same name is already defined.").withProperty("name", name)
                         .withProperty("attribute variables", attributes.toString()));
+            }
+            if (tables.hasKey(name)) {
+                throw execException(tree("The table variable " + name + " with the same name is already defined.")
+                        .withProperty("name", name)
+                        .withProperty("table variables", tables.toString()));
+            }
+            if (solutions.hasKey(name)) {
+                throw execException(tree("The solution variable " + name + " with the same name is already defined.")
+                        .withProperty("name", name)
+                        .withProperty("solutions variables", solutions.toString()));
+            }
+            if (constraints.hasKey(name)) {
+                throw execException(tree("The constraint variable " + name + " with the same name is already defined.")
+                        .withProperty("name", name)
+                        .withProperty("table variables", constraints.toString()));
             }
             if (functionCallExecutor.supports(functionCall)) {
                 final var newObject = functionCallExecutor.execute(functionCall).getSubject().orElseThrow();
