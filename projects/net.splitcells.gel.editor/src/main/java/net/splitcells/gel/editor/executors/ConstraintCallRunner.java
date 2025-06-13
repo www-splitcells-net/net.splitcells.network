@@ -23,6 +23,7 @@ import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.gel.editor.EditorParser.CONSTRAINT_FUNCTION;
 
 public class ConstraintCallRunner implements FunctionCallRunner {
@@ -46,6 +47,7 @@ public class ConstraintCallRunner implements FunctionCallRunner {
 
     @Override
     public FunctionCallRunner execute(FunctionCallDesc functionCall) {
+        require(supports(functionCall));
         this.result = Optional.of(ForAlls.forAll());
         return this;
     }
