@@ -40,7 +40,8 @@ public class ConstraintCallRunner implements FunctionCallRunner {
 
     @Override
     public boolean supports(FunctionCallDesc functionCall) {
-        return functionCall.getName().getValue().equals(CONSTRAINT_FUNCTION);
+        return functionCall.getName().getValue().equals(CONSTRAINT_FUNCTION)
+                && functionCall.getArguments().isEmpty();
     }
 
     @Override
