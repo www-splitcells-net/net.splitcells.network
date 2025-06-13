@@ -96,46 +96,24 @@ public class Editor implements Discoverable {
     public Editor parse(VariableDefinitionDesc variableDefinition) {
         final var functionCallExecutor = functionCallExecutor();
         functionCallExecutor.setContext(Optional.of(this));
-        if (variableDefinition.getFunctionCallChain().getFunctionCalls().isEmpty()) {
-            if (variableDefinition.getFunctionCallChain().getExpression() instanceof FunctionCallDesc functionCall) {
-                final var name = variableDefinition.getName().getValue();
-                if (attributes.hasKey(name)) {
-                    throw execException(tree("Name is already present").withProperty("name", name)
-                            .withProperty("attribute variables", attributes.toString()));
-                }
-                if (functionCallExecutor.supports(functionCall)) {
-                    final var newObject = functionCallExecutor.execute(functionCall).getSubject().orElseThrow();
-                    if (newObject instanceof Attribute<?> attribute) {
-                        attributes.put(name, attribute);
-                    } else if (newObject instanceof Solution solution) {
-                        solutions.put(name, solution);
-                    } else if (newObject instanceof Table table) {
-                        tables.put(name, table);
-                    } else {
-                        throwNotImplementedYet();
-                    }
-                }
+        if (variableDefinition.getFunctionCallChain().getExpression() instanceof FunctionCallDesc functionCall) {
+            final var name = variableDefinition.getName().getValue();
+            if (attributes.hasKey(name)) {
+                throw execException(tree("Name is already present").withProperty("name", name)
+                        .withProperty("attribute variables", attributes.toString()));
             }
-        } else {
-            if (variableDefinition.getFunctionCallChain().getExpression() instanceof FunctionCallDesc functionCall) {
-                final var name = variableDefinition.getName().getValue();
-                if (attributes.hasKey(name)) {
-                    throw execException(tree("Name is already present").withProperty("name", name)
-                            .withProperty("attribute variables", attributes.toString()));
-                }
-                if (functionCallExecutor.supports(functionCall)) {
-                    final var newObject = functionCallExecutor.execute(functionCall).getSubject().orElseThrow();
-                    if (newObject instanceof Attribute<?> attribute) {
-                        attributes.put(name, attribute);
-                    } else if (newObject instanceof Solution solution) {
-                        solutions.put(name, solution);
-                    } else if (newObject instanceof Table table) {
-                        tables.put(name, table);
-                    } else if (newObject instanceof Constraint constraint) {
-                        constraints.put(name, constraint);
-                    } else {
-                        throwNotImplementedYet();
-                    }
+            if (functionCallExecutor.supports(functionCall)) {
+                final var newObject = functionCallExecutor.execute(functionCall).getSubject().orElseThrow();
+                if (newObject instanceof Attribute<?> attribute) {
+                    attributes.put(name, attribute);
+                } else if (newObject instanceof Solution solution) {
+                    solutions.put(name, solution);
+                } else if (newObject instanceof Table table) {
+                    tables.put(name, table);
+                } else if (newObject instanceof Constraint constraint) {
+                    constraints.put(name, constraint);
+                } else {
+                    throwNotImplementedYet();
                 }
             }
         }
