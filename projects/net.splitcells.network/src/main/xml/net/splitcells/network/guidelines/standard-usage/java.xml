@@ -102,7 +102,7 @@
             Since Lombok 1.18.22 val is implemented by replacing it with <quote>final var</quote>.
             This should be a lot faster regarding the compile time.
         </paragraph>
-        <paragraph><quote>@Setter</quote> and <quote>@Getter</quote> is used to create getters and setters,
+        <paragraph><quote>@Accessors(chain=true)</quote>,<quote>@Setter</quote> and <quote>@Getter</quote> is used to create getters and setters,
             in order to minimize boilerplate code and to focus on definitions.
             This also makes it easy to see,
             when only some getters or setters are overwritten with custom implementations.
@@ -111,7 +111,8 @@
             The get prefix is used in order to differentiate between static and not static methods
             This is not required, but comes handy, in order to reason,
             why static getters or constructors do not use the same get prefix.
-            <quote>@Accessors(chain=true)</quote> is therefore not used.
+            <quote>@Accessors(fluent=true)</quote>
+            is therefore not used.
             Setter prefixes are required in order to differentiate getters and withers.
         </paragraph>
         <paragraph>
