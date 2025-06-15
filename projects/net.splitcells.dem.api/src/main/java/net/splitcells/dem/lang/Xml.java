@@ -209,7 +209,7 @@ public final class Xml {
 
     @Deprecated
     public static Element elementWithChildren(String name, NameSpace nameSpace, Collection<Node> nodes) {
-        final var element = elementWithChildren(name, nameSpace);
+        final var element = ROOT_DOCUMENT.createElement(nameSpace.prefixedName(name));
         nodes.forEach(node -> element.appendChild(node));
         return element;
     }
