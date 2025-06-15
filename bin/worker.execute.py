@@ -73,12 +73,12 @@ ADD net.splitcells.network.worker.pom.xml /root/opt/${NAME_FOR_EXECUTION}/pom.xm
 # RUN playwright install --with-deps firefox # Install all OS dependencies, that are required for Playwright. Otherwise, Playwright cannot be used in Java.
 # RUN cd /root/opt/${NAME_FOR_EXECUTION}/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"
 $ContainerSetupCommand
-VOLUME /root/.local/
+VOLUME /root/.local/state/${programName}/.local/
 VOLUME /root/bin/
-VOLUME /root/Documents/
+VOLUME /root/.local/state/${programName}/Documents/
 VOLUME /root/.ssh/
 VOLUME /root/.m2/
-VOLUME /root/repos/
+VOLUME /root/.local/state/${programName}/repos/
 """
 
 CONTAINER_POM = """
@@ -151,7 +151,7 @@ PODMAN_COMMAND_TEMPLATE = """podman run --name "${executionName}" \\
   --network slirp4netns:allow_host_loopback=true \\
   ${additionalArguments}\\
   --rm \\
-  -v ~/.local/state/${programName}/Documents:/root/Documents \\
+  -v ~/.local/state/${programName}/Documents:/root/.local/state/${programName}/Documents \\
   -v ~/.local/state/${programName}/.ssh:/root/.ssh \\
   -v ~/.local/state/${programName}/.m2:/root/.m2 \\
   -v ~/.local/state/${programName}/.local:/root/.local/state/${programName}/.local \\
@@ -279,8 +279,6 @@ class WorkerExecution:
             self.local_execution_script = self.local_execution_script.replace('${additionalArguments} \\', '\\')
     def filterArgumentsForRemoteScript(self, parsedVars, key):
         if self.config.backwards_compatible:
-            if key == 'flat_folders' and self.config.flat_folders:
-                return True
             if key in ['pull_network_log', 'backwards_compatible']:
                 return False
         return parsedVars[key] is not None \
@@ -391,11 +389,6 @@ class WorkerExecution:
             raise Exception("Either `--command`, `--executable-path` or `--class-for-execution` needs to be set:" + str(self.config))
         if required_argument_count > 1:
             raise Exception("Exactly one of `--command`, `--executable-path` or `--class-for-execution` needs to be set, but " + required_argument_count + " were actually set.")
-        if self.config.flat_folders:
-            self.docker_file = self.docker_file.replace("VOLUME /root/.local/", "VOLUME /root/.local/state/${programName}/.local/")
-            self.docker_file = self.docker_file.replace("VOLUME /root/Documents/", "VOLUME /root/.local/state/${programName}/Documents/")
-            self.docker_file = self.docker_file.replace("VOLUME /root/repos/", "VOLUME /root/.local/state/${programName}/repos/")
-            # .ssh and .m2 does not have to be replaced, as these are used for environment configuration of tools inside the container.
         if self.config.port_publishing is not None:
             for index, portMapping in enumerate(self.config.port_publishing.split(',')):
                 if index != 0:
@@ -430,11 +423,6 @@ class WorkerExecution:
             self.local_execution_script += self.applyTemplate("\n" + SET_UP_SYSTEMD_SERVICE.replace("~/", "%h/"))
         else:
             self.local_execution_script += EXECUTE_VIA_PODMAN_TEMPLATE
-        if self.config.flat_folders:
-            self.local_execution_script = self.local_execution_script.replace("-v ~/.local/state/${programName}/Documents:/root/Documents ", "-v ~/.local/state/${programName}/Documents:/root/.local/state/${programName}/Documents ")
-            self.local_execution_script = self.local_execution_script.replace("-v ~/.local/state/${programName}/repos:/root/repos ", "-v ~/.local/state/${programName}/repos:/root/.local/state/${programName}/repos ")
-            self.local_execution_script = self.local_execution_script.replace("-v ~/.local/state/${programName}/.local:/root/.local ", "-v ~/.local/state/${programName}/.local:/root/.local/state/${programName}/.local ")
-            # .ssh and .m2 does not have to be replaced, as these are used for environment configuration of tools inside the container.
         if self.config.command is not None:
             # TODO This does not seem to be valid or used anymore.
             self.local_execution_script = self.local_execution_script.replace('"$executionCommand"', "'" + self.config.command.replace("'", "'\\''") + "'")
@@ -494,7 +482,6 @@ def parse_worker_execution_arguments(arguments):
     parser.add_argument('--auto-configure-cpu-architecture-explicitly', '--auto_configure_cpuArch_explicitly', dest='auto_configure_cpuArch_explicitly', required=False, type=str2bool, default=True, help=CLI_FLAG_AUTO_CPU_ARCH_HELP)
     parser.add_argument('--port-publishing', '--port_publishing', dest='port_publishing', help="This is a comma separated list of `host-port:container-port`, that describes the port forwarding on the host.")
     parser.add_argument('--execute-via-ssh-at', '--execute_via_ssh_at', dest='execute_via_ssh_at', help="Execute the given command at an remote server via SSH. The format is `[user]@[address/network name]`.")
-    parser.add_argument('--flat-folders', '--flat_folders', dest='flat_folders', required=False, type=str2bool, default=True, help="If this is set to true, the `~/.local/state/${programName}` is not mapped to `~/.local/state/${programName}/.local/state/${programName}` via containers.")
     parser.add_argument('--backwards-compatible', dest='backwards_compatible', required=False, type=str2bool, default=True, help="If set to true, the the remote script is compatible to the previous implementation.")
     parsedArgs = parser.parse_args(arguments)
     workerExecution = WorkerExecution()
@@ -672,7 +659,6 @@ ssh user@address /bin/sh << EOF
     --command='export NET_SPLITCELLS_NETWORK_WORKER_NAME=net.splitcells.network.worker && cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'\\
     --dry-run='true'\\
     --execution-name='net.splitcells.network.worker.boostrap'\\
-    --flat-folders='true'\\
     --program-name='net.splitcells.network.worker'
 
 EOF
@@ -717,7 +703,6 @@ ssh user@address /bin/sh << EOF
     --command='export NET_SPLITCELLS_NETWORK_WORKER_NAME=net.splitcells.network.worker && cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'\\
     --dry-run='true'\\
     --execution-name='net.splitcells.network.worker.boostrap.daemon'\\
-    --flat-folders='true'\\
     --is-daemon='true'\\
     --program-name='net.splitcells.network.worker'
 
@@ -734,7 +719,6 @@ git pull user@address master
         test_subject = parse_worker_execution_arguments(["--command='export NET_SPLITCELLS_NETWORK_WORKER_NAME=net.splitcells.network.worker && cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'"
                                                             , '--dry-run=true'
                                                             , "--execution-name=net.splitcells.network.worker.boostrap.daemon"
-                                                            , "--flat-folders=true"
                                                             , "--port-publishing=8080:8080"
                                                             , '--is-daemon=true'#
                                                             , "--program-name=net.splitcells.network.worker"])
@@ -772,7 +756,7 @@ ExecStart=podman run --name "net.splitcells.network.worker.boostrap.daemon" \\
   --network slirp4netns:allow_host_loopback=true \\
   \\
   --rm \\
-  -v %h/.local/state/net.splitcells.network.worker/Documents:/root/Documents \\
+  -v %h/.local/state/net.splitcells.network.worker/Documents:/root/.local/state/net.splitcells.network.worker/Documents \\
   -v %h/.local/state/net.splitcells.network.worker/.ssh:/root/.ssh \\
   -v %h/.local/state/net.splitcells.network.worker/.m2:/root/.m2 \\
   -v %h/.local/state/net.splitcells.network.worker/.local:/root/.local/state/net.splitcells.network.worker/.local \\
