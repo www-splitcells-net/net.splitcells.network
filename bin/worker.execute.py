@@ -278,12 +278,9 @@ class WorkerExecution:
             self.additionalArguments = ''
             self.local_execution_script = self.local_execution_script.replace('${additionalArguments} \\', '\\')
     def filterArgumentsForRemoteScript(self, parsedVars, key):
-        if self.config.backwards_compatible:
-            if key in ['pull_network_log', 'backwards_compatible']:
-                return False
-        return parsedVars[key] is not None \
-            and self.configParser.get_default(key) != parsedVars[key] \
-            and key != 'execute_via_ssh_at'
+        if key in ['execute_via_ssh_at', 'pull_network_log']:
+            return False
+        return parsedVars[key] is not None and self.configParser.get_default(key) != parsedVars[key]
     def executeRemotelyViaSsh(self):
         """This command should have no actual execution commands,
         but instead should only synchronize with the remote and generate appropriate `bin/worker.execute.py` commands,
@@ -482,7 +479,6 @@ def parse_worker_execution_arguments(arguments):
     parser.add_argument('--auto-configure-cpu-architecture-explicitly', '--auto_configure_cpuArch_explicitly', dest='auto_configure_cpuArch_explicitly', required=False, type=str2bool, default=True, help=CLI_FLAG_AUTO_CPU_ARCH_HELP)
     parser.add_argument('--port-publishing', '--port_publishing', dest='port_publishing', help="This is a comma separated list of `host-port:container-port`, that describes the port forwarding on the host.")
     parser.add_argument('--execute-via-ssh-at', '--execute_via_ssh_at', dest='execute_via_ssh_at', help="Execute the given command at an remote server via SSH. The format is `[user]@[address/network name]`.")
-    parser.add_argument('--backwards-compatible', dest='backwards_compatible', required=False, type=str2bool, default=True, help="If set to true, the the remote script is compatible to the previous implementation.")
     parsedArgs = parser.parse_args(arguments)
     workerExecution = WorkerExecution()
     if parsedArgs.source_repo is not None:
@@ -532,7 +528,7 @@ def parse_worker_execution_arguments(arguments):
 class TestWorkerExecution(unittest.TestCase):
     maxDiff = None
     def test_only_build_image(self):
-        test_subject = parse_worker_execution_arguments(['--program-name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap', '--dry-run=true', '--backwards-compatible=True', '--only-build-image=true'])
+        test_subject = parse_worker_execution_arguments(['--program-name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap', '--dry-run=true', '--only-build-image=true'])
         self.assertEqual(test_subject.local_execution_script, """
 set -e
 
@@ -555,7 +551,7 @@ podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
     --log-level=warn
 """)
     def test_only_execute_image(self):
-        test_subject = parse_worker_execution_arguments(['--program-name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap', '--dry-run=true', '--backwards-compatible=True', '--only-execute-image=true'])
+        test_subject = parse_worker_execution_arguments(['--program-name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap', '--dry-run=true', '--only-execute-image=true'])
         self.assertEqual(test_subject.local_execution_script, """
 set -e
 
@@ -588,7 +584,7 @@ podman run --name "net.splitcells.martins.avots.distro" \\
   "localhost/net.splitcells.martins.avots.distro"
 """)
     def test_bootstrap(self):
-        test_subject = parse_worker_execution_arguments(['--program-name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap', '--dry-run=true', '--backwards-compatible=True'])
+        test_subject = parse_worker_execution_arguments(['--program-name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap', '--dry-run=true'])
         self.assertEqual(test_subject.local_execution_script, """
 set -e
 
@@ -627,7 +623,7 @@ podman run --name "net.splitcells.martins.avots.distro" \\
   "localhost/net.splitcells.martins.avots.distro"
 """)
     def test_bootstrap_remote(self):
-        test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--dry-run=true', '--backwards-compatible=True'])
+        test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--dry-run=true'])
         self.assertEqual(test_subject.remote_execution_script, """# Preparing Execution via Network Log Pull
 if ssh -q user@address "sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'"
 then
@@ -671,7 +667,7 @@ git remote set-url --push user@address user@address:/home/user/.local/state/net.
 git pull user@address master
 """)
     def test_bootstrap_remote_via_daemon(self):
-        test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--is-daemon=true', '--dry-run=true', '--backwards-compatible=True'])
+        test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--is-daemon=true', '--dry-run=true'])
         self.assertEqual(test_subject.remote_execution_script, """# Preparing Execution via Network Log Pull
 if ssh -q user@address "sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'"
 then
