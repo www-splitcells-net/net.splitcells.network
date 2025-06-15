@@ -52,13 +52,13 @@ public class Editor implements Discoverable {
         return new Editor(name, parent);
     }
 
-    private @Getter final String name;
-    private final Discoverable parent;
-    private @Getter final Map<String, Attribute<?>> attributes = map();
-    private @Getter final Map<String, Table> tables = map();
-    private @Getter final Map<String, Solution> solutions = map();
-    private @Getter final Map<String, Constraint> constraints = map();
-    private @Getter final Map<Table, TableFormatting> tableFormatting = map();
+    @Getter private final String name;
+    @Getter private final Discoverable parent;
+    @Getter private final Map<String, Attribute<?>> attributes = map();
+    @Getter private final Map<String, Table> tables = map();
+    @Getter private final Map<String, Solution> solutions = map();
+    @Getter private final Map<String, Constraint> constraints = map();
+    @Getter private final Map<Table, TableFormatting> tableFormatting = map();
 
     private Editor(String argName, Discoverable argParent) {
         name = argName;
