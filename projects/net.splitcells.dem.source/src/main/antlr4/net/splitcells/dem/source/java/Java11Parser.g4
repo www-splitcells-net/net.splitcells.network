@@ -123,9 +123,9 @@ class_member_method_definition
     ;
 class_member_method_definition_throws : Keyword_throws name;
 class_member_value_declaration
-    : javadoc? annotation* modifier_visibility? annotation* Keyword_static? Keyword_final?
+    : javadoc? annotation* modifier_visibility? Keyword_static? Keyword_final?
         type_declaration? name Equals statement
-    | javadoc? annotation* modifier_visibility? annotation* Keyword_static? Keyword_final?
+    | javadoc? annotation* modifier_visibility? Keyword_static? Keyword_final?
               type_declaration? name Semicolon
     ;
 enum_constructor
