@@ -35,6 +35,6 @@ public final class IntegerDesc implements ExpressionDesc {
         sourceCodeQuote = argSourceCodeQuote;
     }
 
-    private @Getter final int value;
-    private @Getter final SourceCodeQuote sourceCodeQuote;
+    @Getter private final int value;
+    @Getter private final SourceCodeQuote sourceCodeQuote;
 }

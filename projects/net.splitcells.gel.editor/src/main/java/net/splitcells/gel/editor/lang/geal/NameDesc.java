@@ -34,8 +34,8 @@ public final class NameDesc implements ExpressionDesc {
     }
 
     private static final Pattern PATTERN = Pattern.compile("[a-zA-Z]+[a-zA-Z0-9]*");
-    private @Getter final String value;
-    private @Getter final SourceCodeQuote sourceCodeQuote;
+    @Getter private final String value;
+    @Getter private final SourceCodeQuote sourceCodeQuote;
 
     private NameDesc(String argValue, SourceCodeQuote argSourceCodeQuote) {
         if (!PATTERN.matcher(argValue).matches()) {

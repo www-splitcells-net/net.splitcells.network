@@ -39,9 +39,9 @@ public final class FunctionCallChainDesc implements StatementDesc {
         return new FunctionCallChainDesc(expression, functionCalls, quote);
     }
 
-    private @Getter final ExpressionDesc expression;
-    private @Getter final List<FunctionCallDesc> functionCalls;
-    private @Getter final SourceCodeQuote sourceCodeQuote;
+    @Getter private final ExpressionDesc expression;
+    @Getter private final List<FunctionCallDesc> functionCalls;
+    @Getter private final SourceCodeQuote sourceCodeQuote;
 
     private FunctionCallChainDesc(ExpressionDesc argExpression, List<FunctionCallDesc> argFunctionCalls
             , SourceCodeQuote quote) {

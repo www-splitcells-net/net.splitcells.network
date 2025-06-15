@@ -26,8 +26,8 @@ public class TableFormatting {
         return new TableFormatting();
     }
 
-    private @Getter final List<Attribute<?>> columnAttributes = list();
-    private @Getter final List<Attribute<?>> rowAttributes = list();
+    @Getter private final List<Attribute<?>> columnAttributes = list();
+    @Getter private final List<Attribute<?>> rowAttributes = list();
 
     private TableFormatting() {
     }

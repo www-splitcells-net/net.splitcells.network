@@ -35,9 +35,9 @@ public final class FunctionCallDesc implements ExpressionDesc {
         return new FunctionCallDesc(name, arguments, sourceCodeQuote);
     }
 
-    private @Getter final NameDesc name;
-    private @Getter final List<ExpressionDesc> arguments;
-    private @Getter final SourceCodeQuote sourceCodeQuote;
+    @Getter private final NameDesc name;
+    @Getter private final List<ExpressionDesc> arguments;
+    @Getter private final SourceCodeQuote sourceCodeQuote;
 
     private FunctionCallDesc(NameDesc argName, List<ExpressionDesc> argArguments, SourceCodeQuote argSourceCodeQuote) {
         name = argName;

@@ -31,8 +31,8 @@ public class SourceUnit implements SourceCodeQuotation {
         return new SourceUnit(statements, quote);
     }
 
-    private @Getter final List<StatementDesc> statements;
-    private @Getter final SourceCodeQuote sourceCodeQuote;
+    @Getter private final List<StatementDesc> statements;
+    @Getter private final SourceCodeQuote sourceCodeQuote;
 
     private SourceUnit(List<StatementDesc> argStatements, SourceCodeQuote quote) {
         statements = argStatements;

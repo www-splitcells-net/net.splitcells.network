@@ -34,9 +34,9 @@ public final class VariableDefinitionDesc implements StatementDesc {
         return new VariableDefinitionDesc(name, functionCallChain, quote);
     }
 
-    private @Getter final NameDesc name;
-    private @Getter final FunctionCallChainDesc functionCallChain;
-    private @Getter final SourceCodeQuote sourceCodeQuote;
+    @Getter private final NameDesc name;
+    @Getter private final FunctionCallChainDesc functionCallChain;
+    @Getter private final SourceCodeQuote sourceCodeQuote;
 
     private VariableDefinitionDesc(NameDesc argName, FunctionCallChainDesc argFunctionCallChain, SourceCodeQuote quote) {
         name = argName;

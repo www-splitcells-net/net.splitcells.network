@@ -29,8 +29,8 @@ public final class StringDesc implements ExpressionDesc {
         return new StringDesc(value, sourceCodeQuote);
     }
 
-    private @Getter final String value;
-    private @Getter final SourceCodeQuote sourceCodeQuote;
+    @Getter private final String value;
+    @Getter private final SourceCodeQuote sourceCodeQuote;
 
     private StringDesc(String argValue, SourceCodeQuote argSourceCodeQuote) {
         value = argValue;

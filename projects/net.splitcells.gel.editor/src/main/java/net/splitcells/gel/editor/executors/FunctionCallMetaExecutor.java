@@ -43,9 +43,9 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
                 .registerExecutor(forEachCallRunner());
     }
 
-    private @Setter Optional<Editor> context = Optional.empty();
-    private @Getter @Setter Optional<Object> subject = Optional.empty();
-    private @Getter Optional<Object> result = Optional.empty();
+    @Setter private Optional<Editor> context = Optional.empty();
+    @Getter @Setter private Optional<Object> subject = Optional.empty();
+    @Getter private Optional<Object> result = Optional.empty();
     private final List<FunctionCallRunner> executors = list();
 
     private FunctionCallMetaExecutor() {

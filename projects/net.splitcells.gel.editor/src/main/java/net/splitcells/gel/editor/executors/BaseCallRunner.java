@@ -33,9 +33,9 @@ public class BaseCallRunner implements FunctionCallRunner {
     }
 
     private final BaseCallRunnerParser parser;
-    private @Setter @Getter Optional<Editor> context = Optional.empty();
-    private @Setter @Getter Optional<Object> subject = Optional.empty();
-    private @Setter @Getter Optional<Object> result = Optional.empty();
+    @Setter @Getter private Optional<Editor> context = Optional.empty();
+    @Setter @Getter private Optional<Object> subject = Optional.empty();
+    @Setter @Getter private Optional<Object> result = Optional.empty();
 
     private BaseCallRunner(BaseCallRunnerParser argParser) {
         parser = argParser;
