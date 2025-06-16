@@ -25,6 +25,7 @@ import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
+import net.splitcells.gel.editor.executors.FunctionCallMetaExecutor;
 import net.splitcells.gel.editor.lang.SolutionDescription;
 import net.splitcells.gel.editor.lang.geal.FunctionCallChainDesc;
 import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
@@ -118,7 +119,11 @@ public class Editor implements Discoverable {
                         .withProperty("table variables", constraints.toString()));
             }
             if (functionCallExecutor.supports(functionCall)) {
-                final var newObject = functionCallExecutor.execute(functionCall).getSubject().orElseThrow();
+                var childExecutor = functionCallExecutor.execute(functionCall);
+                final var newObject = childExecutor.getSubject().orElseThrow();
+                for (var nextCall : variableDefinition.getFunctionCallChain().getFunctionCalls()) {
+                    childExecutor = childExecutor.execute(nextCall);
+                }
                 if (newObject instanceof Attribute<?> attribute) {
                     attributes.put(name, attribute);
                 } else if (newObject instanceof Solution solution) {
