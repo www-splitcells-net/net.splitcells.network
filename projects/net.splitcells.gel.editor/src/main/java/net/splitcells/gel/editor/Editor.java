@@ -130,6 +130,8 @@ public class Editor implements Discoverable {
                 } else {
                     throwNotImplementedYet();
                 }
+            } else {
+                throwNotImplementedYet();
             }
         }
         return this;
