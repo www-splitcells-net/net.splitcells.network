@@ -64,13 +64,16 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
     @Override
     public FunctionCallMetaExecutor execute(FunctionCallDesc functionCall) {
         final var fittingExecutor = executors.stream()
-                .filter(e -> e.supports(functionCall))
+                .filter(e -> {
+                    e.setSubject(subject).setContext(context);
+                    return e.supports(functionCall);
+                })
                 .findFirst();
         if (fittingExecutor.isEmpty()) {
             throw execException(tree("Unsupported function call.")
                     .withProperty("function call", functionCall.getSourceCodeQuote().toString()));
         }
-        final var run = fittingExecutor.get().setSubject(result).setContext(context).execute(functionCall);
+        final var run = fittingExecutor.get().execute(functionCall);
         final var nextExecutor = functionCallExecutor();
         nextExecutor.setContext(context);
         nextExecutor.setSubject(run.getResult());
