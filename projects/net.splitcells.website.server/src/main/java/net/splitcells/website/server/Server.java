@@ -209,7 +209,9 @@ public class Server {
      * Especially, because the HTTP protocol is a special case compared to TCP, UDP, FTP and co.
      * At the time of writing 25-04-2025 Jetty already supports HTTP/3 in the base project,
      * whereas in Netty HTTP/3 support seems to be an experimental incubator project.
-     * Therefore, Jetty should be the prefered option.</p>
+     * Therefore, Jetty should be the preferred option.
+     * Consider removing the need for a logging framework implementation except a interface based logging framework,
+     * in order to minimize the config.</p>
      * <p>TODO IDEA Every HTTP login should be indicated in HTTP protocol as valid,
      * in order to make attacks harder.
      * It is unclear, if something like this is useful for normal deployments.</p>
