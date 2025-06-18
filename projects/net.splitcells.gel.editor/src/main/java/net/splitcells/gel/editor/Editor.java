@@ -27,10 +27,7 @@ import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.executors.FunctionCallMetaExecutor;
 import net.splitcells.gel.editor.lang.SolutionDescription;
-import net.splitcells.gel.editor.lang.geal.FunctionCallChainDesc;
-import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
-import net.splitcells.gel.editor.lang.geal.SourceUnit;
-import net.splitcells.gel.editor.lang.geal.VariableDefinitionDesc;
+import net.splitcells.gel.editor.lang.geal.*;
 import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
@@ -39,6 +36,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.NotImplementedYet.throwNotImplementedYet;
 import static net.splitcells.gel.editor.executors.FunctionCallMetaExecutor.functionCallExecutor;
 
@@ -82,6 +80,18 @@ public class Editor implements Discoverable {
         return SolutionEditor.solutionEditor(this, solutionDescription).parse(solutionDescription);
     }
 
+    public Object resolve(NameDesc name) {
+        if (attributes.hasKey(name.getValue())) {
+            return attributes.get(name.getValue());
+        } else if (tables.hasKey(name.getValue())) {
+            return tables.get(name.getValue());
+        } else if (solutions.hasKey(name.getValue())) {
+            return solutions.get(name.getValue());
+        } else {
+            throw notImplementedYet();
+        }
+    }
+
     @ReturnsThis
     public Editor parse(SourceUnit sourceUnit) {
         sourceUnit.getStatements().forEach(s -> {
@@ -97,47 +107,60 @@ public class Editor implements Discoverable {
     public Editor parse(VariableDefinitionDesc variableDefinition) {
         final var functionCallExecutor = functionCallExecutor();
         functionCallExecutor.setContext(Optional.of(this));
+        final var name = variableDefinition.getName().getValue();
+        if (attributes.hasKey(name)) {
+            throw execException(tree("The attribute variable \" + name + \" with the same name is already defined.").withProperty("name", name)
+                    .withProperty("attribute variables", attributes.toString()));
+        }
+        if (tables.hasKey(name)) {
+            throw execException(tree("The table variable " + name + " with the same name is already defined.")
+                    .withProperty("name", name)
+                    .withProperty("table variables", tables.toString()));
+        }
+        if (solutions.hasKey(name)) {
+            throw execException(tree("The solution variable " + name + " with the same name is already defined.")
+                    .withProperty("name", name)
+                    .withProperty("solutions variables", solutions.toString()));
+        }
+        if (constraints.hasKey(name)) {
+            throw execException(tree("The constraint variable " + name + " with the same name is already defined.")
+                    .withProperty("name", name)
+                    .withProperty("table variables", constraints.toString()));
+        }
+        final Object newObject;
+        FunctionCallMetaExecutor childExecutor;
         if (variableDefinition.getFunctionCallChain().getExpression() instanceof FunctionCallDesc functionCall) {
-            final var name = variableDefinition.getName().getValue();
-            if (attributes.hasKey(name)) {
-                throw execException(tree("The attribute variable \" + name + \" with the same name is already defined.").withProperty("name", name)
-                        .withProperty("attribute variables", attributes.toString()));
-            }
-            if (tables.hasKey(name)) {
-                throw execException(tree("The table variable " + name + " with the same name is already defined.")
-                        .withProperty("name", name)
-                        .withProperty("table variables", tables.toString()));
-            }
-            if (solutions.hasKey(name)) {
-                throw execException(tree("The solution variable " + name + " with the same name is already defined.")
-                        .withProperty("name", name)
-                        .withProperty("solutions variables", solutions.toString()));
-            }
-            if (constraints.hasKey(name)) {
-                throw execException(tree("The constraint variable " + name + " with the same name is already defined.")
-                        .withProperty("name", name)
-                        .withProperty("table variables", constraints.toString()));
-            }
             if (functionCallExecutor.supports(functionCall)) {
-                var childExecutor = functionCallExecutor.execute(functionCall);
-                final var newObject = childExecutor.getSubject().orElseThrow();
-                for (var nextCall : variableDefinition.getFunctionCallChain().getFunctionCalls()) {
-                    childExecutor = childExecutor.execute(nextCall);
-                }
-                if (newObject instanceof Attribute<?> attribute) {
-                    attributes.put(name, attribute);
-                } else if (newObject instanceof Solution solution) {
-                    solutions.put(name, solution);
-                } else if (newObject instanceof Table table) {
-                    tables.put(name, table);
-                } else if (newObject instanceof Constraint constraint) {
-                    constraints.put(name, constraint);
-                } else {
-                    throwNotImplementedYet();
-                }
+                childExecutor = functionCallExecutor.execute(functionCall);
+                newObject = childExecutor.getSubject().orElseThrow();
             } else {
-                throwNotImplementedYet();
+                throw notImplementedYet();
             }
+        } else if (variableDefinition.getFunctionCallChain().getExpression() instanceof NameDesc reference) {
+            newObject = resolve(reference);
+            childExecutor = functionCallExecutor;
+        } else if (variableDefinition.getFunctionCallChain().getExpression() instanceof IntegerDesc integer) {
+            newObject = integer.getValue();
+            childExecutor = functionCallExecutor;
+        } else if (variableDefinition.getFunctionCallChain().getExpression() instanceof StringDesc string) {
+            newObject = string.getValue();
+            childExecutor = functionCallExecutor;
+        } else {
+            throw notImplementedYet();
+        }
+        for (var nextCall : variableDefinition.getFunctionCallChain().getFunctionCalls()) {
+            childExecutor = childExecutor.execute(nextCall);
+        }
+        if (newObject instanceof Attribute<?> attribute) {
+            attributes.put(name, attribute);
+        } else if (newObject instanceof Solution solution) {
+            solutions.put(name, solution);
+        } else if (newObject instanceof Table table) {
+            tables.put(name, table);
+        } else if (newObject instanceof Constraint constraint) {
+            constraints.put(name, constraint);
+        } else {
+            throwNotImplementedYet();
         }
         return this;
     }
