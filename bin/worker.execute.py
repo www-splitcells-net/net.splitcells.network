@@ -238,7 +238,10 @@ Description=Execute ${executionName}
 [Service]
 Type=simple
 StandardOutput=journal
-ExecStart=""" + PODMAN_COMMAND_TEMPLATE + """SERVICE_EOL
+ExecStart=""" + PODMAN_COMMAND_TEMPLATE + """
+[Install]
+WantedBy=default.target
+SERVICE_EOL
 systemctl --user daemon-reload
 systemctl --user restart ${programName}.daemon
 """
@@ -762,6 +765,9 @@ ExecStart=podman run --name "net.splitcells.network.worker.boostrap.daemon" \\
   -v %h/.local/state/net.splitcells.network.worker/bin:/root/bin \\
   --publish 8080:8080 \\
   "localhost/net.splitcells.network.worker.boostrap.daemon"
+
+[Install]
+WantedBy=default.target
 SERVICE_EOL
 systemctl --user daemon-reload
 systemctl --user restart net.splitcells.network.worker.daemon
