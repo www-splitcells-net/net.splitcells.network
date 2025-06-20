@@ -143,6 +143,7 @@ public class Editor implements Discoverable {
     @ReturnsThis
     public Editor parse(FunctionCallChainDesc functionCallChain) {
         logs().warnUnimplementedPart(Editor.class);
+        parseObject(functionCallChain);
         return this;
     }
 
