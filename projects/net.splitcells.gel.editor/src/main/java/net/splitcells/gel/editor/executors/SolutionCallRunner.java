@@ -19,6 +19,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
+import net.splitcells.gel.constraint.type.ForAlls;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
@@ -29,6 +30,7 @@ import java.util.Optional;
 
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.editor.EditorParser.SOLUTION_FUNCTION;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.Solutions.solution;
@@ -77,17 +79,10 @@ public class SolutionCallRunner implements FunctionCallRunner {
             default ->
                     throw execException("The 3rd argument has to be the supply table represented by a variable name, but a " + second.getClass() + " was given instead.");
         }
-        final var forth = functionCall.getArguments().get(3);
-        final Constraint constraint;
-        switch (forth) {
-            case NameDesc n -> constraint = context.orElseThrow().getConstraints().get(n.getValue());
-            default ->
-                    throw execException("The 4th argument has to be the constraint represented by a variable name, but a " + second.getClass() + " was given instead.");
-        }
         result = Optional.of(defineProblem(solutionName)
                 .withDemands(demands)
                 .withSupplies(supplies)
-                .withConstraint(constraint)
+                .withConstraint(forAll())
                 .toProblem()
                 .asSolution());
         return this;
