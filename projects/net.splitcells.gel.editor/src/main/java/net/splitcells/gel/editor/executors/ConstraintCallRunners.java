@@ -24,6 +24,8 @@ import net.splitcells.gel.solution.Solution;
 import java.util.Optional;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.gel.constraint.type.ForAlls.FOR_ALL_COMBINATIONS_OF;
 import static net.splitcells.gel.constraint.type.ForAlls.FOR_EACH_NAME;
 import static net.splitcells.gel.editor.EditorParser.CONSTRAINT_FUNCTION;
 import static net.splitcells.gel.editor.executors.BaseCallRunner.baseCallRunner;
@@ -51,8 +53,7 @@ public class ConstraintCallRunners {
             @Override
             public boolean supports(BaseCallRunner base, FunctionCallDesc functionCall) {
                 return base.getSubject().isPresent()
-                        && (base.getSubject().orElseThrow() instanceof Constraint
-                        || base.getSubject().orElseThrow() instanceof Solution)
+                        && base.getSubject().orElseThrow() instanceof Solution
                         && functionCall.getName().getValue().equals(FOR_EACH_NAME)
                         && functionCall.getArguments().size() == 1
                         && functionCall.getArguments().get(0) instanceof NameDesc;
@@ -64,8 +65,8 @@ public class ConstraintCallRunners {
                 final var forAll = ForAlls.forEach(base.getContext().get().getAttributes().get(groupingAttribute.getValue()));
                 if (base.getSubject().orElseThrow() instanceof Solution solution) {
                     solution.constraint().withChildren(forAll);
-                } else if (base.getSubject().orElseThrow() instanceof Constraint parent) {
-                    parent.withChildren(forAll);
+                } else {
+                    throw notImplementedYet();
                 }
                 base.setResult(Optional.of(forAll));
             }
