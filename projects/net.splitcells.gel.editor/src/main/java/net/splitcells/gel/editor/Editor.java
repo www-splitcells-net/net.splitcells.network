@@ -105,8 +105,6 @@ public class Editor implements Discoverable {
 
     @ReturnsThis
     public Editor parse(VariableDefinitionDesc variableDefinition) {
-        final var functionCallExecutor = functionCallExecutor();
-        functionCallExecutor.setContext(Optional.of(this));
         final var name = variableDefinition.getName().getValue();
         if (attributes.hasKey(name)) {
             throw execException(tree("The attribute variable \" + name + \" with the same name is already defined.").withProperty("name", name)
@@ -127,37 +125,14 @@ public class Editor implements Discoverable {
                     .withProperty("name", name)
                     .withProperty("table variables", constraints.toString()));
         }
-        final Object newObject;
-        FunctionCallMetaExecutor childExecutor;
-        if (variableDefinition.getFunctionCallChain().getExpression() instanceof FunctionCallDesc functionCall) {
-            if (functionCallExecutor.supports(functionCall)) {
-                childExecutor = functionCallExecutor.execute(functionCall);
-                newObject = childExecutor.getSubject().orElseThrow();
-            } else {
-                throw notImplementedYet();
-            }
-        } else if (variableDefinition.getFunctionCallChain().getExpression() instanceof NameDesc reference) {
-            newObject = resolve(reference);
-            childExecutor = functionCallExecutor;
-        } else if (variableDefinition.getFunctionCallChain().getExpression() instanceof IntegerDesc integer) {
-            newObject = integer.getValue();
-            childExecutor = functionCallExecutor;
-        } else if (variableDefinition.getFunctionCallChain().getExpression() instanceof StringDesc string) {
-            newObject = string.getValue();
-            childExecutor = functionCallExecutor;
-        } else {
-            throw notImplementedYet();
-        }
-        for (var nextCall : variableDefinition.getFunctionCallChain().getFunctionCalls()) {
-            childExecutor = childExecutor.execute(nextCall);
-        }
-        if (newObject instanceof Attribute<?> attribute) {
+        final var parsedObject = parseObject(variableDefinition.getFunctionCallChain());
+        if (parsedObject instanceof Attribute<?> attribute) {
             attributes.put(name, attribute);
-        } else if (newObject instanceof Solution solution) {
+        } else if (parsedObject instanceof Solution solution) {
             solutions.put(name, solution);
-        } else if (newObject instanceof Table table) {
+        } else if (parsedObject instanceof Table table) {
             tables.put(name, table);
-        } else if (newObject instanceof Constraint constraint) {
+        } else if (parsedObject instanceof Constraint constraint) {
             constraints.put(name, constraint);
         } else {
             throwNotImplementedYet();
@@ -167,6 +142,37 @@ public class Editor implements Discoverable {
 
     @ReturnsThis
     public Editor parse(FunctionCallChainDesc functionCallChain) {
+        logs().warnUnimplementedPart(Editor.class);
         return this;
+    }
+
+    public Object parseObject(FunctionCallChainDesc functionCallChain) {
+        final Object parsedObject;
+        final var functionCallExecutor = functionCallExecutor();
+        functionCallExecutor.setContext(Optional.of(this));
+        FunctionCallMetaExecutor childExecutor;
+        if (functionCallChain.getExpression() instanceof FunctionCallDesc functionCall) {
+            if (functionCallExecutor.supports(functionCall)) {
+                childExecutor = functionCallExecutor.execute(functionCall);
+                parsedObject = childExecutor.getSubject().orElseThrow();
+            } else {
+                throw notImplementedYet();
+            }
+        } else if (functionCallChain.getExpression() instanceof NameDesc reference) {
+            parsedObject = resolve(reference);
+            childExecutor = functionCallExecutor;
+        } else if (functionCallChain.getExpression() instanceof IntegerDesc integer) {
+            parsedObject = integer.getValue();
+            childExecutor = functionCallExecutor;
+        } else if (functionCallChain.getExpression() instanceof StringDesc string) {
+            parsedObject = string.getValue();
+            childExecutor = functionCallExecutor;
+        } else {
+            throw notImplementedYet();
+        }
+        for (var nextCall : functionCallChain.getFunctionCalls()) {
+            childExecutor = childExecutor.execute(nextCall);
+        }
+        return parsedObject;
     }
 }
