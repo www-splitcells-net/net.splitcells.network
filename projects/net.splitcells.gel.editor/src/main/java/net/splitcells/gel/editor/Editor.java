@@ -159,12 +159,15 @@ public class Editor implements Discoverable {
                 throw notImplementedYet();
             }
         } else if (functionCallChain.getExpression() instanceof NameDesc reference) {
+            functionCallExecutor.setSubject(Optional.of(resolve(reference)));
             parsedObject = resolve(reference);
             childExecutor = functionCallExecutor;
         } else if (functionCallChain.getExpression() instanceof IntegerDesc integer) {
+            functionCallExecutor.setSubject(Optional.of(integer.getValue()));
             parsedObject = integer.getValue();
             childExecutor = functionCallExecutor;
         } else if (functionCallChain.getExpression() instanceof StringDesc string) {
+            functionCallExecutor.setSubject(Optional.of(string.getValue()));
             parsedObject = string.getValue();
             childExecutor = functionCallExecutor;
         } else {
