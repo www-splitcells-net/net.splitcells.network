@@ -58,13 +58,22 @@ public interface Log extends AppendableList<LogMessage<Tree>> {
      * @param clazz Points to the class with missing implementation.
      *              This is useful for default implementations.
      * @return this
+     * @deprecated Use {@link #warnUnimplementedPart()} instead, as the class contains no relevant info.
      */
     @ReturnsThis
     @JavaLegacyBody
+    @Deprecated
     default Log warnUnimplementedPart(Class<?> clazz) {
         logs().append("Unimplemented program part for class "
                         + clazz
                         + " at:\n"
+                        + throwableToString(ExecutionException.execException("no-message"))
+                , LogLevel.WARNING);
+        return this;
+    }
+
+    default Log warnUnimplementedPart() {
+        logs().append("Unimplemented program part at:\n"
                         + throwableToString(ExecutionException.execException("no-message"))
                 , LogLevel.WARNING);
         return this;
