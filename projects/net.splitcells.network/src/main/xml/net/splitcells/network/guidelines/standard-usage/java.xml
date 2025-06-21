@@ -44,6 +44,15 @@
         </paragraph>
     </chapter>
     <chapter>
+        <title>Wildcard Generics</title>
+        <paragraph>When wildcards are used, the form <quote>T&lt;? extends Object&gt;</quote> should be used,
+            in order to make all wildcards to each other as compatible and convertible as possible.
+            Note, that for nested types, nested wild card extensions are required,
+            as otherwise these are not compatible to each other and looks like the following:
+            <quote>A&lt;? extends B&lt;? extends Object&gt;&gt;</quote>
+        </paragraph>
+    </chapter>
+    <chapter>
         <title>Identifiers</title>
         <paragraph>Readability is preferred over compactness, but compactness is still important.
         </paragraph>
