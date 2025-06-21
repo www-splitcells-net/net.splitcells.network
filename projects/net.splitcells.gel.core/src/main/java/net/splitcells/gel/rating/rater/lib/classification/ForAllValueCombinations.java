@@ -19,6 +19,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
@@ -46,7 +47,7 @@ public class ForAllValueCombinations implements Rater {
         return new ForAllValueCombinations(listWithValuesOf(attributes));
     }
 
-    public static ForAllValueCombinations forAllValueCombinations(final List<Attribute<?>> attributes) {
+    public static ForAllValueCombinations forAllValueCombinations(final List<? extends Attribute<?>> attributes) {
         return new ForAllValueCombinations(attributes);
     }
 
@@ -57,7 +58,7 @@ public class ForAllValueCombinations implements Rater {
     private final List<Attribute<?>> attributes = list();
     private final List<Discoverable> contexts = list();
 
-    private ForAllValueCombinations(final List<Attribute<?>> attributes) {
+    private ForAllValueCombinations(final List<? extends Attribute<?>> attributes) {
         this.attributes.addAll(attributes);
     }
 

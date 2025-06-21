@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.constraint.type;
 
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -74,6 +75,10 @@ public class ForAlls {
      * @return
      */
     public static Constraint forAllCombinationsOf(final Attribute<?>... arguments) {
+        return ForAllFactory.instance().forAllCombinations(arguments);
+    }
+
+    public static Constraint forAllCombinationsOf(List<? extends Attribute<? extends Object>> arguments) {
         return ForAllFactory.instance().forAllCombinations(arguments);
     }
 
