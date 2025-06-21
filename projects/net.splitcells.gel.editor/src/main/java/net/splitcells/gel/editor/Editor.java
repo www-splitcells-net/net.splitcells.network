@@ -117,35 +117,35 @@ public class Editor implements Discoverable {
 
     @ReturnsThis
     public Editor parse(VariableDefinitionDesc variableDefinition) {
-        final var name = variableDefinition.getName().getValue();
-        if (attributes.hasKey(name)) {
-            throw execException(tree("The attribute variable \" + name + \" with the same name is already defined.").withProperty("name", name)
+        final var varName = variableDefinition.getName().getValue();
+        if (attributes.hasKey(varName)) {
+            throw execException(tree("The attribute variable \" + name + \" with the same name is already defined.").withProperty("name", varName)
                     .withProperty("attribute variables", attributes.toString()));
         }
-        if (tables.hasKey(name)) {
-            throw execException(tree("The table variable " + name + " with the same name is already defined.")
-                    .withProperty("name", name)
+        if (tables.hasKey(varName)) {
+            throw execException(tree("The table variable " + varName + " with the same name is already defined.")
+                    .withProperty("name", varName)
                     .withProperty("table variables", tables.toString()));
         }
-        if (solutions.hasKey(name)) {
-            throw execException(tree("The solution variable " + name + " with the same name is already defined.")
-                    .withProperty("name", name)
+        if (solutions.hasKey(varName)) {
+            throw execException(tree("The solution variable " + varName + " with the same name is already defined.")
+                    .withProperty("name", varName)
                     .withProperty("solutions variables", solutions.toString()));
         }
-        if (constraints.hasKey(name)) {
-            throw execException(tree("The constraint variable " + name + " with the same name is already defined.")
-                    .withProperty("name", name)
+        if (constraints.hasKey(varName)) {
+            throw execException(tree("The constraint variable " + varName + " with the same name is already defined.")
+                    .withProperty("name", varName)
                     .withProperty("table variables", constraints.toString()));
         }
         final var parsedObject = parseObject(variableDefinition.getFunctionCallChain());
         if (parsedObject instanceof Attribute<?> attribute) {
-            attributes.put(name, attribute);
+            attributes.put(varName, attribute);
         } else if (parsedObject instanceof Solution solution) {
-            solutions.put(name, solution);
+            solutions.put(varName, solution);
         } else if (parsedObject instanceof Table table) {
-            tables.put(name, table);
+            tables.put(varName, table);
         } else if (parsedObject instanceof Constraint constraint) {
-            constraints.put(name, constraint);
+            constraints.put(varName, constraint);
         } else {
             throwNotImplementedYet();
         }
