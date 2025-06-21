@@ -80,13 +80,25 @@ public class Editor implements Discoverable {
         return SolutionEditor.solutionEditor(this, solutionDescription).parse(solutionDescription);
     }
 
-    public Object resolve(NameDesc name) {
+    public Object resolveRaw(NameDesc name) {
         if (attributes.hasKey(name.getValue())) {
             return attributes.get(name.getValue());
         } else if (tables.hasKey(name.getValue())) {
             return tables.get(name.getValue());
         } else if (solutions.hasKey(name.getValue())) {
             return solutions.get(name.getValue());
+        } else {
+            throw notImplementedYet();
+        }
+    }
+
+    public <T> T resolve(NameDesc name) {
+        if (attributes.hasKey(name.getValue())) {
+            return (T) attributes.get(name.getValue());
+        } else if (tables.hasKey(name.getValue())) {
+            return (T) tables.get(name.getValue());
+        } else if (solutions.hasKey(name.getValue())) {
+            return (T) solutions.get(name.getValue());
         } else {
             throw notImplementedYet();
         }
@@ -160,8 +172,8 @@ public class Editor implements Discoverable {
                 throw notImplementedYet();
             }
         } else if (functionCallChain.getExpression() instanceof NameDesc reference) {
-            functionCallExecutor.setSubject(Optional.of(resolve(reference)));
-            parsedObject = resolve(reference);
+            functionCallExecutor.setSubject(Optional.of(resolveRaw(reference)));
+            parsedObject = resolveRaw(reference);
             childExecutor = functionCallExecutor;
         } else if (functionCallChain.getExpression() instanceof IntegerDesc integer) {
             functionCallExecutor.setSubject(Optional.of(integer.getValue()));
