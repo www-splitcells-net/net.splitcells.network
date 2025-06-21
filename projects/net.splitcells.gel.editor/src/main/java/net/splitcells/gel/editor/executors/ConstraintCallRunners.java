@@ -17,6 +17,7 @@ package net.splitcells.gel.editor.executors;
 
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.type.ForAlls;
+import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
 import net.splitcells.gel.editor.lang.geal.NameDesc;
 import net.splitcells.gel.solution.Solution;
@@ -25,8 +26,7 @@ import java.util.Optional;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
-import static net.splitcells.gel.constraint.type.ForAlls.FOR_ALL_COMBINATIONS_OF;
-import static net.splitcells.gel.constraint.type.ForAlls.FOR_EACH_NAME;
+import static net.splitcells.gel.constraint.type.ForAlls.*;
 import static net.splitcells.gel.editor.EditorParser.CONSTRAINT_FUNCTION;
 import static net.splitcells.gel.editor.executors.BaseCallRunner.baseCallRunner;
 
@@ -63,6 +63,38 @@ public class ConstraintCallRunners {
             public void execute(BaseCallRunner base, FunctionCallDesc functionCall) {
                 final var groupingAttribute = (NameDesc) functionCall.getArguments().get(0);
                 final var forAll = ForAlls.forEach(base.getContext().get().getAttributes().get(groupingAttribute.getValue()));
+                if (base.getSubject().orElseThrow() instanceof Solution solution) {
+                    solution.constraint().withChildren(forAll);
+                } else {
+                    throw notImplementedYet();
+                }
+                base.setResult(Optional.of(forAll));
+            }
+        });
+    }
+
+    public static FunctionCallRunner forAllCombinationsCallRunner() {
+        return baseCallRunner(new BaseCallRunnerParser() {
+
+            @Override
+            public boolean supports(BaseCallRunner base, FunctionCallDesc functionCall) {
+                return base.getSubject().isPresent()
+                        && base.getSubject().orElseThrow() instanceof Solution
+                        && functionCall.getName().getValue().equals(FOR_ALL_COMBINATIONS_OF)
+                        && functionCall.getArguments().size() >= 1
+                        && functionCall.getArguments()
+                        .stream()
+                        .filter(n -> !(n instanceof NameDesc))
+                        .findAny()
+                        .isPresent();
+            }
+
+            @Override
+            public void execute(BaseCallRunner base, FunctionCallDesc functionCall) {
+                final var groupingAttributes = functionCall.getArguments().stream()
+                        .map(a -> base.getContext().orElseThrow().<Attribute<? extends Object>>resolve(((NameDesc) a)))
+                        .toList();
+                final var forAll = forAllCombinationsOf(groupingAttributes);
                 if (base.getSubject().orElseThrow() instanceof Solution solution) {
                     solution.constraint().withChildren(forAll);
                 } else {
