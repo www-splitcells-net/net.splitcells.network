@@ -477,7 +477,6 @@ def parse_worker_execution_arguments(arguments):
     parser.add_argument('--cpu-architecture', '--cpu_architecture', dest='cpu_architecture', help="Set the cpu architecture for the execution.")
     parser.add_argument('--dry-run', dest='dry_run', required=False, type=str2bool, default=False, help="If true, commands are only prepared and no commands are executed.")
     parser.add_argument('--is-daemon', '--is_daemon', dest='is_daemon', required=False, type=str2bool, default=False, help="If this is true, the process is executed as systemd user service in the background.")
-    parser.add_argument('--daemon-name', dest='daemon_name', required=False, help="This is the name of the systemd user service name. This flag is mainly used for unit tests or to ensure, that exactly one daemon instance exists at any given time.")
     parser.add_argument('--use-playwright', '--use_playwright', dest='use_playwright', required=False, type=str2bool, default=False, help="If true, playwright is installed for the execution.")
     parser.add_argument('--auto-configure-cpu-architecture-explicitly', '--auto_configure_cpuArch_explicitly', dest='auto_configure_cpuArch_explicitly', required=False, type=str2bool, default=True, help=CLI_FLAG_AUTO_CPU_ARCH_HELP)
     parser.add_argument('--port-publishing', '--port_publishing', dest='port_publishing', help="This is a comma separated list of `host-port:container-port`, that describes the port forwarding on the host.")
