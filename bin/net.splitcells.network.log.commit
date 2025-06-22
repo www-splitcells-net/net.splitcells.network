@@ -6,5 +6,4 @@ cd ../net.splitcells.network.log
 . /home/$(whoami)/bin/net.splitcells.shell.commands.managed/command.managed.export.bin
 export PATH="/home/$(whoami)/bin:$PATH"
 export PATH="/home/$(whoami)/bin/net.splitcells.shell.commands.managed:$PATH"
-export PATH="/home/$(whoami)/bin/net.splitcells.shell.commands.disabled:$PATH"
 repo.commit.all

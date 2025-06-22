@@ -24,5 +24,3 @@ if [ -z "$NET_SPLITCELLS_SHELL_PATH" ]; then
 else
   export PATH="$NET_SPLITCELLS_SHELL_PATH:$PATH"
 fi
-# TODO Remove concept of disabled command, as it adds complexity, that has no real use case.
-export PATH="$HOME/bin/net.splitcells.shell.commands.disabled:$PATH"
