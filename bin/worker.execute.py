@@ -243,6 +243,7 @@ ExecStart=""" + PODMAN_COMMAND_TEMPLATE + """
 WantedBy=default.target
 SERVICE_EOL
 systemctl --user daemon-reload
+systemctl --user enable ${programName}.daemon
 systemctl --user restart ${programName}.daemon
 """
 
@@ -769,6 +770,7 @@ ExecStart=podman run --name "net.splitcells.network.worker.boostrap.daemon" \\
 WantedBy=default.target
 SERVICE_EOL
 systemctl --user daemon-reload
+systemctl --user enable net.splitcells.network.worker.daemon
 systemctl --user restart net.splitcells.network.worker.daemon
 """)
 if __name__ == '__main__':
