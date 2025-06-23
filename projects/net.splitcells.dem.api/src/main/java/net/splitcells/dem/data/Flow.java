@@ -50,6 +50,11 @@ public interface Flow<T> extends java.util.stream.Stream<T> {
         return collect(Sets.toSetOfUniques());
     }
 
+    default boolean hasNoMatch(Predicate<? super T> predicate) {
+        return !anyMatch(predicate);
+    }
+
+
     @Override
     Flow<T> filter(Predicate<? super T> predicate);
 
