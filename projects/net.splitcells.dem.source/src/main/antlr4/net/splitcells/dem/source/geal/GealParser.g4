@@ -23,9 +23,9 @@ function_call: Name function_call_arguments?;
  * Therefore, round brackets with no arguments are considered noise and thereby avoided.
  */
 function_call_arguments
-    : Brace_round_open expression function_call_arguments_next* Brace_round_closed
+    : Brace_round_open function_call_chain function_call_arguments_next* Brace_round_closed
     ;
-function_call_arguments_next: Comma expression;
+function_call_arguments_next: Comma function_call_chain;
 /* The dot is never avoided even when the function calls have round brackets,
  * as the dot helps to align function calls in chains.
  */
