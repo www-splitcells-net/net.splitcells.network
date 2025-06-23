@@ -33,21 +33,6 @@ import static net.splitcells.gel.editor.EditorParser.CONSTRAINT_FUNCTION;
 import static net.splitcells.gel.editor.executors.BaseCallRunner.baseCallRunner;
 
 public class ConstraintCallRunners {
-    public static FunctionCallRunner constraintCallRunner() {
-        return baseCallRunner(new BaseCallRunnerParser() {
-
-            @Override
-            public boolean supports(BaseCallRunner base, FunctionCallDesc functionCall) {
-                return functionCall.getName().getValue().equals(CONSTRAINT_FUNCTION)
-                        && functionCall.getArguments().isEmpty();
-            }
-
-            @Override
-            public void execute(BaseCallRunner base, FunctionCallDesc functionCall) {
-                base.setResult(Optional.of(ForAlls.forAll()));
-            }
-        });
-    }
 
     public static FunctionCallRunner forEachCallRunner() {
         return baseCallRunner(new BaseCallRunnerParser() {

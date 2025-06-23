@@ -38,7 +38,6 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
                 .registerExecutor(attributeCallRunner())
                 .registerExecutor(tableCallRunner())
                 .registerExecutor(solutionCallRunner())
-                .registerExecutor(constraintCallRunner())
                 .registerExecutor(forEachCallRunner())
                 .registerExecutor(forAllCombinationsCallRunner());
     }
