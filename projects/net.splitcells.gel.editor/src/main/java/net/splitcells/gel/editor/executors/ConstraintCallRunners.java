@@ -18,12 +18,14 @@ package net.splitcells.gel.editor.executors;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.type.ForAlls;
 import net.splitcells.gel.data.view.attribute.Attribute;
+import net.splitcells.gel.editor.lang.geal.FunctionCallChainDesc;
 import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
 import net.splitcells.gel.editor.lang.geal.NameDesc;
 import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
 
+import static net.sf.saxon.expr.parser.Token.THEN;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.type.ForAlls.*;
@@ -105,6 +107,27 @@ public class ConstraintCallRunners {
                     throw notImplementedYet();
                 }
                 base.setResult(Optional.of(forAll));
+            }
+        });
+    }
+
+    public static FunctionCallRunner thenCallRunner() {
+        return baseCallRunner(new BaseCallRunnerParser() {
+
+            @Override
+            public boolean supports(BaseCallRunner base, FunctionCallDesc functionCall) {
+                return base.getSubject().isPresent()
+                        && (base.getSubject().orElseThrow() instanceof Solution
+                        || base.getSubject().orElseThrow() instanceof Constraint)
+                        && functionCall.getName().getValue().equals(THEN)
+                        && functionCall.getArguments().size() == 1
+                        && (functionCall.getArguments().get(0) instanceof NameDesc
+                        || functionCall.getArguments().get(0) instanceof FunctionCallDesc);
+            }
+
+            @Override
+            public void execute(BaseCallRunner base, FunctionCallDesc functionCall) {
+                throw notImplementedYet();
             }
         });
     }
