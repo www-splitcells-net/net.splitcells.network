@@ -181,5 +181,6 @@ public class EditorTest {
                         , integerAttribute("shift")
                         , integerAttribute("roomNumber"))
                 , CONTENT_COMPARISON);
+        testSubject.getSolutions().get("solution").constraint().readQuery().forAll(testSubject.getAttributes().get("observer"));
     }
 }
