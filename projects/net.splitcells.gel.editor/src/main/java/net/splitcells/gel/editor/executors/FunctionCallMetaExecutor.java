@@ -28,8 +28,7 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.editor.executors.AttributeCallRunner.attributeCallRunner;
-import static net.splitcells.gel.editor.executors.ConstraintCallRunners.constraintCallRunner;
-import static net.splitcells.gel.editor.executors.ConstraintCallRunners.forEachCallRunner;
+import static net.splitcells.gel.editor.executors.ConstraintCallRunners.*;
 import static net.splitcells.gel.editor.executors.SolutionCallRunner.solutionCallRunner;
 import static net.splitcells.gel.editor.executors.TableCallRunner.tableCallRunner;
 
@@ -40,7 +39,8 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
                 .registerExecutor(tableCallRunner())
                 .registerExecutor(solutionCallRunner())
                 .registerExecutor(constraintCallRunner())
-                .registerExecutor(forEachCallRunner());
+                .registerExecutor(forEachCallRunner())
+                .registerExecutor(forAllCombinationsCallRunner());
     }
 
     @Setter private Optional<Editor> context = Optional.empty();

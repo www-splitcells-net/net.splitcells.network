@@ -53,7 +53,8 @@ public class ConstraintCallRunners {
             @Override
             public boolean supports(BaseCallRunner base, FunctionCallDesc functionCall) {
                 return base.getSubject().isPresent()
-                        && base.getSubject().orElseThrow() instanceof Solution
+                        && (base.getSubject().orElseThrow() instanceof Solution
+                        || base.getSubject().orElseThrow() instanceof Constraint)
                         && functionCall.getName().getValue().equals(FOR_EACH_NAME)
                         && functionCall.getArguments().size() == 1
                         && functionCall.getArguments().get(0) instanceof NameDesc;
@@ -65,6 +66,8 @@ public class ConstraintCallRunners {
                 final var forAll = ForAlls.forEach(base.getContext().get().getAttributes().get(groupingAttribute.getValue()));
                 if (base.getSubject().orElseThrow() instanceof Solution solution) {
                     solution.constraint().withChildren(forAll);
+                } else if (base.getSubject().orElseThrow() instanceof Constraint constraint) {
+                    constraint.withChildren(forAll);
                 } else {
                     throw notImplementedYet();
                 }
@@ -79,14 +82,13 @@ public class ConstraintCallRunners {
             @Override
             public boolean supports(BaseCallRunner base, FunctionCallDesc functionCall) {
                 return base.getSubject().isPresent()
-                        && base.getSubject().orElseThrow() instanceof Solution
+                        && (base.getSubject().orElseThrow() instanceof Solution
+                        || base.getSubject().orElseThrow() instanceof Constraint)
                         && functionCall.getName().getValue().equals(FOR_ALL_COMBINATIONS_OF)
                         && functionCall.getArguments().size() >= 1
                         && functionCall.getArguments()
                         .stream()
-                        .filter(n -> !(n instanceof NameDesc))
-                        .findAny()
-                        .isPresent();
+                        .hasNoMatch(n -> !(n instanceof NameDesc));
             }
 
             @Override
@@ -97,6 +99,8 @@ public class ConstraintCallRunners {
                 final var forAll = forAllCombinationsOf(groupingAttributes);
                 if (base.getSubject().orElseThrow() instanceof Solution solution) {
                     solution.constraint().withChildren(forAll);
+                } else if (base.getSubject().orElseThrow() instanceof Constraint constraint) {
+                    constraint.withChildren(forAll);
                 } else {
                     throw notImplementedYet();
                 }
