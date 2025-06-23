@@ -58,21 +58,21 @@ public class SolutionCallRunner implements FunctionCallRunner {
         if (functionCall.getArguments().size() != 4) {
             throw execException("The solution function requires at exactly 4 arguments, but " + functionCall.getArguments().size() + " were given.");
         }
-        final var first = functionCall.getArguments().get(0);
+        final var first = functionCall.getArguments().get(0).getExpression();
         final String solutionName;
         switch (first) {
             case StringDesc n -> solutionName = n.getValue();
             default ->
                     throw execException("The 1st argument has to be the solution name represented by a string, but is a " + first.getClass() + " was given.");
         }
-        final var second = functionCall.getArguments().get(1);
+        final var second = functionCall.getArguments().get(1).getExpression();
         final Table demands;
         switch (second) {
             case NameDesc n -> demands = context.orElseThrow().getTables().get(n.getValue());
             default ->
                     throw execException("The 2nd argument has to be the demand table represented by a variable name, but a " + second.getClass() + " was given instead.");
         }
-        final var third = functionCall.getArguments().get(2);
+        final var third = functionCall.getArguments().get(2).getExpression();
         final Table supplies;
         switch (third) {
             case NameDesc n -> supplies = context.orElseThrow().getTables().get(n.getValue());

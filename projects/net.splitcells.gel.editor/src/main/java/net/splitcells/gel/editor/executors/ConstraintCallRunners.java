@@ -44,12 +44,12 @@ public class ConstraintCallRunners {
                         || base.getSubject().orElseThrow() instanceof Constraint)
                         && functionCall.getName().getValue().equals(FOR_EACH_NAME)
                         && functionCall.getArguments().size() == 1
-                        && functionCall.getArguments().get(0) instanceof NameDesc;
+                        && functionCall.getArguments().get(0).getExpression() instanceof NameDesc;
             }
 
             @Override
             public void execute(BaseCallRunner base, FunctionCallDesc functionCall) {
-                final var groupingAttribute = (NameDesc) functionCall.getArguments().get(0);
+                final var groupingAttribute = (NameDesc) functionCall.getArguments().get(0).getExpression();
                 final var forAll = ForAlls.forEach(base.getContext().get().getAttributes().get(groupingAttribute.getValue()));
                 if (base.getSubject().orElseThrow() instanceof Solution solution) {
                     solution.constraint().withChildren(forAll);
@@ -75,13 +75,13 @@ public class ConstraintCallRunners {
                         && functionCall.getArguments().size() >= 1
                         && functionCall.getArguments()
                         .stream()
-                        .hasNoMatch(n -> !(n instanceof NameDesc));
+                        .hasNoMatch(n -> !(n.getExpression() instanceof NameDesc));
             }
 
             @Override
             public void execute(BaseCallRunner base, FunctionCallDesc functionCall) {
                 final var groupingAttributes = functionCall.getArguments().stream()
-                        .map(a -> base.getContext().orElseThrow().<Attribute<? extends Object>>resolve(((NameDesc) a)))
+                        .map(a -> base.getContext().orElseThrow().<Attribute<? extends Object>>resolve(((NameDesc) a.getExpression())))
                         .toList();
                 final var forAll = forAllCombinationsOf(groupingAttributes);
                 if (base.getSubject().orElseThrow() instanceof Solution solution) {
@@ -106,8 +106,8 @@ public class ConstraintCallRunners {
                         || base.getSubject().orElseThrow() instanceof Constraint)
                         && functionCall.getName().getValue().equals(THEN)
                         && functionCall.getArguments().size() == 1
-                        && (functionCall.getArguments().get(0) instanceof NameDesc
-                        || functionCall.getArguments().get(0) instanceof FunctionCallDesc);
+                        && (functionCall.getArguments().get(0).getExpression() instanceof NameDesc
+                        || functionCall.getArguments().get(0).getExpression() instanceof FunctionCallDesc);
             }
 
             @Override

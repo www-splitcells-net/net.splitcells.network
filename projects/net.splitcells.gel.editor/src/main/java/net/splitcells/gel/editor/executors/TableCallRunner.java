@@ -58,7 +58,7 @@ public class TableCallRunner implements FunctionCallRunner {
         if (functionCall.getArguments().size() < 3) {
             throw execException("The table function requires at least 2 arguments, but " + functionCall.getArguments().size() + " were given.");
         }
-        final var first = functionCall.getArguments().get(0);
+        final var first = functionCall.getArguments().get(0).getExpression();
         final String tableName;
         switch (first) {
             case StringDesc n -> tableName = n.getValue();
@@ -68,7 +68,7 @@ public class TableCallRunner implements FunctionCallRunner {
         final List<Attribute<?>> attributes = list();
         IntStream.range(1, functionCall.getArguments().size()).forEach(i -> {
             final Attribute<?> att;
-            switch (functionCall.getArguments().get(i)) {
+            switch (functionCall.getArguments().get(i).getExpression()) {
                 case NameDesc n -> attributes.add(context.orElseThrow().getAttributes().get(n.getValue()));
                 default -> throw execException("Argument after the first one has to be the attribute names, but is a "
                         + functionCall.getArguments().get(i).getClass()

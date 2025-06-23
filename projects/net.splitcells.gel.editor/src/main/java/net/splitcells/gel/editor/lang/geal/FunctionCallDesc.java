@@ -21,25 +21,34 @@ import net.splitcells.gel.editor.lang.SourceCodeQuote;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuote;
+import static net.splitcells.gel.editor.lang.geal.FunctionCallChainDesc.functionCallChainDesc;
 
 public final class FunctionCallDesc implements ExpressionDesc {
     public static FunctionCallDesc functionCallDesc(NameDesc name) {
         return functionCallDesc(name, list(), emptySourceCodeQuote());
     }
 
-    public static FunctionCallDesc functionCallDesc(NameDesc name, List<ExpressionDesc> arguments) {
+    public static FunctionCallDesc functionCallDesc2(NameDesc name, List<ExpressionDesc> arguments) {
+        return functionCallDesc(name, arguments.mapped(e -> functionCallChainDesc(e)), emptySourceCodeQuote());
+    }
+
+    public static FunctionCallDesc functionCallDesc(NameDesc name, List<FunctionCallChainDesc> arguments) {
         return functionCallDesc(name, arguments, emptySourceCodeQuote());
     }
 
-    public static FunctionCallDesc functionCallDesc(NameDesc name, List<ExpressionDesc> arguments, SourceCodeQuote sourceCodeQuote) {
+    public static FunctionCallDesc functionCallDesc(NameDesc name, List<FunctionCallChainDesc> arguments, SourceCodeQuote sourceCodeQuote) {
         return new FunctionCallDesc(name, arguments, sourceCodeQuote);
     }
 
+    public static FunctionCallDesc functionCallDesc2(NameDesc name, List<ExpressionDesc> arguments, SourceCodeQuote sourceCodeQuote) {
+        return new FunctionCallDesc(name, arguments.mapped(e -> functionCallChainDesc(e)), sourceCodeQuote);
+    }
+
     @Getter private final NameDesc name;
-    @Getter private final List<ExpressionDesc> arguments;
+    @Getter private final List<FunctionCallChainDesc> arguments;
     @Getter private final SourceCodeQuote sourceCodeQuote;
 
-    private FunctionCallDesc(NameDesc argName, List<ExpressionDesc> argArguments, SourceCodeQuote argSourceCodeQuote) {
+    private FunctionCallDesc(NameDesc argName, List<FunctionCallChainDesc> argArguments, SourceCodeQuote argSourceCodeQuote) {
         name = argName;
         arguments = argArguments;
         sourceCodeQuote = argSourceCodeQuote;
