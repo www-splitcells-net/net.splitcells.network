@@ -25,7 +25,14 @@ public final class NotImplementedYet extends RuntimeException {
         throw new NotImplementedYet();
     }
 
-    @Deprecated
+    /**
+     * This method is needed, in order to combine it with a throw statement,
+     * which is helpful regarding variable scopes in function bodies,
+     * where this exception is used.
+     * Using {@link #throwNotImplementedYet()} is not possible in such situation.
+     *
+     * @return
+     */
     public static NotImplementedYet notImplementedYet() {
         return new NotImplementedYet();
     }
