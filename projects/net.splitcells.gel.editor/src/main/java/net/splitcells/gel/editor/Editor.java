@@ -28,6 +28,7 @@ import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.executors.FunctionCallMetaExecutor;
 import net.splitcells.gel.editor.lang.SolutionDescription;
 import net.splitcells.gel.editor.lang.geal.*;
+import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
@@ -54,6 +55,7 @@ public class Editor implements Discoverable {
     @Getter private final String name;
     @Getter private final Discoverable parent;
     @Getter private final Map<String, Attribute<?>> attributes = map();
+    @Getter private final Map<String, Rater> raters = map();
     @Getter private final Map<String, Table> tables = map();
     @Getter private final Map<String, Solution> solutions = map();
     @Getter private final Map<String, Constraint> constraints = map();
@@ -87,11 +89,14 @@ public class Editor implements Discoverable {
             return tables.get(name.getValue());
         } else if (solutions.hasKey(name.getValue())) {
             return solutions.get(name.getValue());
+        } else if (raters.hasKey(name.getValue())) {
+            return raters.get(name.getValue());
         } else {
             throw notImplementedYet();
         }
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T resolve(NameDesc name) {
         if (attributes.hasKey(name.getValue())) {
             return (T) attributes.get(name.getValue());
@@ -99,6 +104,8 @@ public class Editor implements Discoverable {
             return (T) tables.get(name.getValue());
         } else if (solutions.hasKey(name.getValue())) {
             return (T) solutions.get(name.getValue());
+        } else if (raters.hasKey(name.getValue())) {
+            return (T) raters.get(name.getValue());
         } else {
             throw notImplementedYet();
         }
@@ -137,6 +144,11 @@ public class Editor implements Discoverable {
                     .withProperty("name", varName)
                     .withProperty("table variables", constraints.toString()));
         }
+        if (raters.hasKey(varName)) {
+            throw execException(tree("The rater variable " + varName + " with the same name is already defined.")
+                    .withProperty("name", varName)
+                    .withProperty("table variables", raters.toString()));
+        }
         final var parsedObject = parseObject(variableDefinition.getFunctionCallChain());
         if (parsedObject instanceof Attribute<?> attribute) {
             attributes.put(varName, attribute);
@@ -146,6 +158,8 @@ public class Editor implements Discoverable {
             tables.put(varName, table);
         } else if (parsedObject instanceof Constraint constraint) {
             constraints.put(varName, constraint);
+        } else if (parsedObject instanceof Rater rater) {
+            raters.put(varName, rater);
         } else {
             throwNotImplementedYet();
         }
