@@ -33,7 +33,7 @@ public final class NameDesc implements ExpressionDesc {
         return new NameDesc(value, sourceCodeQuote);
     }
 
-    private static final Pattern PATTERN = Pattern.compile("[a-zA-Z]+[a-zA-Z0-9]*");
+    private static final Pattern PATTERN = Pattern.compile("[a-zA-Z]++[a-zA-Z0-9]*");
     @Getter private final String value;
     @Getter private final SourceCodeQuote sourceCodeQuote;
 
