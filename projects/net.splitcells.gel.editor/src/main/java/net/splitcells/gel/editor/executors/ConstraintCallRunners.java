@@ -16,12 +16,15 @@
 package net.splitcells.gel.editor.executors;
 
 import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.constraint.Query;
+import net.splitcells.gel.constraint.QueryI;
 import net.splitcells.gel.constraint.type.ForAlls;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.lang.geal.FunctionCallChainDesc;
 import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
 import net.splitcells.gel.editor.lang.geal.NameDesc;
 import net.splitcells.gel.editor.lang.geal.StringDesc;
+import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
@@ -30,6 +33,7 @@ import static net.sf.saxon.expr.parser.Token.THEN;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.constraint.type.ForAlls.*;
 import static net.splitcells.gel.editor.EditorParser.CONSTRAINT_FUNCTION;
 import static net.splitcells.gel.editor.executors.BaseCallRunner.baseCallRunner;
@@ -43,7 +47,7 @@ public class ConstraintCallRunners {
             public boolean supports(BaseCallRunner base, FunctionCallDesc functionCall) {
                 return base.getSubject().isPresent()
                         && (base.getSubject().orElseThrow() instanceof Solution
-                        || base.getSubject().orElseThrow() instanceof Constraint)
+                        || base.getSubject().orElseThrow() instanceof Query)
                         && functionCall.getName().getValue().equals(FOR_EACH_NAME)
                         && functionCall.getArguments().size() == 1
                         && functionCall.getArguments().get(0).getExpression() instanceof NameDesc;
@@ -51,16 +55,17 @@ public class ConstraintCallRunners {
 
             @Override
             public void execute(BaseCallRunner base, FunctionCallDesc functionCall) {
-                final var groupingAttribute = (NameDesc) functionCall.getArguments().get(0).getExpression();
-                final var forAll = ForAlls.forEach(base.getContext().get().getAttributes().get(groupingAttribute.getValue()));
+                final var groupingName = (NameDesc) functionCall.getArguments().get(0).getExpression();
+                final var groupingAttribute = base.getContext().get().getAttributes().get(groupingName.getValue());
+                final Query result;
                 if (base.getSubject().orElseThrow() instanceof Solution solution) {
-                    solution.constraint().withChildren(forAll);
-                } else if (base.getSubject().orElseThrow() instanceof Constraint constraint) {
-                    constraint.withChildren(forAll);
+                    result = query(solution.constraint()).forAll(groupingAttribute);
+                } else if (base.getSubject().orElseThrow() instanceof Query query) {
+                    result = query.forAll(groupingAttribute);
                 } else {
                     throw notImplementedYet();
                 }
-                base.setResult(Optional.of(forAll));
+                base.setResult(Optional.of(result));
             }
         });
     }
@@ -72,7 +77,7 @@ public class ConstraintCallRunners {
             public boolean supports(BaseCallRunner base, FunctionCallDesc functionCall) {
                 return base.getSubject().isPresent()
                         && (base.getSubject().orElseThrow() instanceof Solution
-                        || base.getSubject().orElseThrow() instanceof Constraint)
+                        || base.getSubject().orElseThrow() instanceof Query)
                         && functionCall.getName().getValue().equals(FOR_ALL_COMBINATIONS_OF)
                         && functionCall.getArguments().size() >= 1
                         && functionCall.getArguments()
@@ -85,15 +90,15 @@ public class ConstraintCallRunners {
                 final var groupingAttributes = functionCall.getArguments().stream()
                         .map(a -> base.getContext().orElseThrow().<Attribute<? extends Object>>resolve(((NameDesc) a.getExpression())))
                         .toList();
-                final var forAll = forAllCombinationsOf(groupingAttributes);
+                final Query result;
                 if (base.getSubject().orElseThrow() instanceof Solution solution) {
-                    solution.constraint().withChildren(forAll);
-                } else if (base.getSubject().orElseThrow() instanceof Constraint constraint) {
-                    constraint.withChildren(forAll);
+                    result = query(solution.constraint()).forAllCombinationsOf(groupingAttributes);
+                } else if (base.getSubject().orElseThrow() instanceof Query query) {
+                    result = query.forAllCombinationsOf(groupingAttributes);
                 } else {
                     throw notImplementedYet();
                 }
-                base.setResult(Optional.of(forAll));
+                base.setResult(Optional.of(result));
             }
         });
     }
@@ -105,7 +110,7 @@ public class ConstraintCallRunners {
             public boolean supports(BaseCallRunner base, FunctionCallDesc functionCall) {
                 return base.getSubject().isPresent()
                         && (base.getSubject().orElseThrow() instanceof Solution
-                        || base.getSubject().orElseThrow() instanceof Constraint)
+                        || base.getSubject().orElseThrow() instanceof Query)
                         && functionCall.getName().getValue().equals(THEN)
                         && functionCall.getArguments().size() == 1
                         && (functionCall.getArguments().get(0).getExpression() instanceof NameDesc
@@ -115,8 +120,9 @@ public class ConstraintCallRunners {
             @Override
             public void execute(BaseCallRunner base, FunctionCallDesc functionCall) {
                 final var argument = functionCall.getArguments().get(0).getExpression();
+                final Rater rater;
                 switch (argument) {
-                    case NameDesc n -> n.toString();
+                    case NameDesc n -> rater = base.getContext().get().resolve(n);
                     case FunctionCallDesc f -> f.toString();
                     default ->
                             throw execException("The argument has to be a rater reference by name or a function call returning a rater: " + argument);
