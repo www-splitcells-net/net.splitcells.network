@@ -21,12 +21,14 @@ import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.lang.geal.FunctionCallChainDesc;
 import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
 import net.splitcells.gel.editor.lang.geal.NameDesc;
+import net.splitcells.gel.editor.lang.geal.StringDesc;
 import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
 
 import static net.sf.saxon.expr.parser.Token.THEN;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.type.ForAlls.*;
 import static net.splitcells.gel.editor.EditorParser.CONSTRAINT_FUNCTION;
@@ -112,7 +114,13 @@ public class ConstraintCallRunners {
 
             @Override
             public void execute(BaseCallRunner base, FunctionCallDesc functionCall) {
-                throw notImplementedYet();
+                final var argument = functionCall.getArguments().get(0).getExpression();
+                switch (argument) {
+                    case NameDesc n -> n.toString();
+                    case FunctionCallDesc f -> f.toString();
+                    default ->
+                            throw execException("The argument has to be a rater reference by name or a function call returning a rater: " + argument);
+                }
             }
         });
     }
