@@ -57,15 +57,15 @@ public class ConstraintCallRunners {
             public void execute(BaseCallRunner base, FunctionCallDesc functionCall) {
                 final var groupingName = (NameDesc) functionCall.getArguments().get(0).getExpression();
                 final var groupingAttribute = base.getContext().get().getAttributes().get(groupingName.getValue());
-                final Query result;
+                final Query subject;
                 if (base.getSubject().orElseThrow() instanceof Solution solution) {
-                    result = query(solution.constraint()).forAll(groupingAttribute);
+                    subject = query(solution.constraint());
                 } else if (base.getSubject().orElseThrow() instanceof Query query) {
-                    result = query.forAll(groupingAttribute);
+                    subject = query;
                 } else {
                     throw notImplementedYet();
                 }
-                base.setResult(Optional.of(result));
+                base.setResult(Optional.of(subject.forAll(groupingAttribute)));
             }
         });
     }
@@ -90,15 +90,15 @@ public class ConstraintCallRunners {
                 final var groupingAttributes = functionCall.getArguments().stream()
                         .map(a -> base.getContext().orElseThrow().<Attribute<? extends Object>>resolve(((NameDesc) a.getExpression())))
                         .toList();
-                final Query result;
+                final Query subject;
                 if (base.getSubject().orElseThrow() instanceof Solution solution) {
-                    result = query(solution.constraint()).forAllCombinationsOf(groupingAttributes);
+                    subject = query(solution.constraint());
                 } else if (base.getSubject().orElseThrow() instanceof Query query) {
-                    result = query.forAllCombinationsOf(groupingAttributes);
+                    subject = query;
                 } else {
                     throw notImplementedYet();
                 }
-                base.setResult(Optional.of(result));
+                base.setResult(Optional.of(subject.forAllCombinationsOf(groupingAttributes)));
             }
         });
     }
@@ -119,14 +119,22 @@ public class ConstraintCallRunners {
 
             @Override
             public void execute(BaseCallRunner base, FunctionCallDesc functionCall) {
+                final Query subject;
+                switch (base.getSubject().orElseThrow()) {
+                    case Solution s -> subject = query(s.constraint());
+                    case Query q -> subject = q;
+                    default ->
+                            throw execException("Subject has to be a solution or a query: " + base.getSubject().orElseThrow());
+                }
                 final var argument = functionCall.getArguments().get(0).getExpression();
                 final Rater rater;
                 switch (argument) {
                     case NameDesc n -> rater = base.getContext().get().resolve(n);
-                    case FunctionCallDesc f -> f.toString();
+                    case FunctionCallDesc f -> rater = null;
                     default ->
                             throw execException("The argument has to be a rater reference by name or a function call returning a rater: " + argument);
                 }
+                base.setResult(Optional.of(subject.then(rater)));
             }
         });
     }
