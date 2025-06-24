@@ -324,7 +324,7 @@ public class QueryI implements Query, QueryEditor {
     }
 
     @Override
-    public Query forAllCombinationsOf(List<Attribute<? extends Object>> attributes) {
+    public Query forAllCombinationsOf(List<? extends Attribute<? extends Object>> attributes) {
         var resultBase
                 = currentConstraint.childrenView().stream()
                 .filter(child -> ForAll.class.equals(child.type()))

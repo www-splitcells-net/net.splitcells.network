@@ -65,7 +65,7 @@ public interface Query {
         return forAllCombinationsOf(listWithValuesOf(args));
     }
 
-    Query forAllCombinationsOf(List<Attribute<? extends Object>> args);
+    Query forAllCombinationsOf(List<? extends Attribute<? extends Object>> args);
 
 
     /**
