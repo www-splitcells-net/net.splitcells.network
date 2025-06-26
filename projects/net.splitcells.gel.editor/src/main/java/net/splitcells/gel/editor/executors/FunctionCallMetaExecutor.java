@@ -33,6 +33,13 @@ import static net.splitcells.gel.editor.executors.SolutionCallRunner.solutionCal
 import static net.splitcells.gel.editor.executors.TableCallRunner.tableCallRunner;
 
 public class FunctionCallMetaExecutor implements FunctionCallExecutor {
+    public static FunctionCallMetaExecutor child(FunctionCallRunner parent) {
+        final var child = functionCallMetaExecutor();
+        child.setContext(parent.getContext());
+        child.setSubject(parent.getResult());
+        return child;
+    }
+
     public static FunctionCallMetaExecutor functionCallMetaExecutor() {
         return new FunctionCallMetaExecutor()
                 .registerExecutor(attributeCallRunner())
@@ -73,9 +80,7 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
                     .withProperty("function call", functionCall.getSourceCodeQuote().toString()));
         }
         final var run = fittingExecutor.get().execute(functionCall);
-        final var nextExecutor = functionCallMetaExecutor();
-        nextExecutor.setContext(context);
-        nextExecutor.setSubject(run.getResult());
+        final var nextExecutor = child(run);
         return nextExecutor;
     }
 
