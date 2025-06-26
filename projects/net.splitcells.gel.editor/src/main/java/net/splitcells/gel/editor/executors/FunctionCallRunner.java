@@ -32,5 +32,7 @@ public interface FunctionCallRunner {
 
     FunctionCallRunner setContext(Optional<Editor> context);
 
+    Optional<Editor> getContext();
+
     Optional<Object> getResult();
 }

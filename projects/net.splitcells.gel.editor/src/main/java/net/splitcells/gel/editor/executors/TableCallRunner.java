@@ -39,7 +39,7 @@ public class TableCallRunner implements FunctionCallRunner {
         return new TableCallRunner();
     }
 
-    @Setter private Optional<Editor> context = Optional.empty();
+    @Getter @Setter private Optional<Editor> context = Optional.empty();
     @Setter private Optional<Object> subject = Optional.empty();
     @Getter private Optional<Object> result = Optional.empty();
 
