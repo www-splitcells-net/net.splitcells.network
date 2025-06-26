@@ -42,7 +42,7 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
                 .registerExecutor(forAllCombinationsCallRunner());
     }
 
-    @Setter private Optional<Editor> context = Optional.empty();
+    @Getter @Setter private Optional<Editor> context = Optional.empty();
     @Getter @Setter private Optional<Object> subject = Optional.empty();
     @Getter private Optional<Object> result = Optional.empty();
     private final List<FunctionCallRunner> executors = list();
