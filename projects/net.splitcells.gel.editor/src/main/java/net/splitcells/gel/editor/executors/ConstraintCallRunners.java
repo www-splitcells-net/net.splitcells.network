@@ -126,14 +126,14 @@ public class ConstraintCallRunners {
                     default ->
                             throw execException("Subject has to be a solution or a query: " + base.getSubject().orElseThrow());
                 }
-                final var argument = functionCall.getArguments().get(0).getExpression();
+                final var rawRater = base.getContext().orElseThrow().parse(functionCall.getArguments().get(0));
                 final Rater rater;
-                switch (argument) {
-                    case NameDesc n -> rater = base.getContext().get().resolve(n);
-                    case FunctionCallDesc f -> rater = null;
+                switch (rawRater) {
+                    case Rater r -> rater = null;
                     default ->
-                            throw execException("The argument has to be a rater reference by name or a function call returning a rater: " + argument);
+                            throw execException("The argument of the then constraint requires exactly one argument, that has to be a rater. Instead the following was returned" + rawRater);
                 }
+
                 base.setResult(Optional.of(subject.then(rater)));
             }
         });
