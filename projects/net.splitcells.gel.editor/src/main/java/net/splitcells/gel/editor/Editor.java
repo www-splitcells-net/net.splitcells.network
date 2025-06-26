@@ -39,7 +39,7 @@ import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.NotImplementedYet.throwNotImplementedYet;
-import static net.splitcells.gel.editor.executors.FunctionCallMetaExecutor.functionCallExecutor;
+import static net.splitcells.gel.editor.executors.FunctionCallMetaExecutor.functionCallMetaExecutor;
 
 /**
  * There is no distinction, between a things name and their variable name.
@@ -175,7 +175,7 @@ public class Editor implements Discoverable {
 
     public Object parseObject(FunctionCallChainDesc functionCallChain) {
         final Object parsedObject;
-        final var functionCallExecutor = functionCallExecutor();
+        final var functionCallExecutor = functionCallMetaExecutor();
         functionCallExecutor.setContext(Optional.of(this));
         FunctionCallMetaExecutor childExecutor;
         if (functionCallChain.getExpression() instanceof FunctionCallDesc functionCall) {
