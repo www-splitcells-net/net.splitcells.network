@@ -16,6 +16,8 @@ by writing to any variable or attribute only once except for the configuration.
 These variables are only used as an argument for other variables or
 as variables in template strings.
 
+TODO Add test coverage and consider checking minimum coverage percentage.
+TODO Use only applyTemplate for any String replacement.
 TODO A lot less should be done in the executeRemotelyViaSsh.
      For instance, the systemd unit file should be done via executeLocally.
 TODO Create test for all `worker.execute` flags.
