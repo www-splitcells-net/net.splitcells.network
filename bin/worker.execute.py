@@ -842,6 +842,63 @@ systemctl --user daemon-reload
 systemctl --user enable net.splitcells.network.worker.daemon
 systemctl --user restart net.splitcells.network.worker.daemon
 """)
+    def test_remote_deployment(self):
+        test_subject = parse_worker_execution_arguments(["--program-name=net.splitcells.martins.avots.distro.livedistro"
+                                                         , "--source-repo=net.splitcells.martins.avots.distro"
+                                                         , "--execute-via-ssh-at=martins-avots@live.splitcells.net"
+                                                         , "--class-for-execution=net.splitcells.martins.avots.distro.LiveDistro"
+                                                         , "--is-daemon=true"
+                                                         , "--port-publishing=8443:8443,8080:8080"
+                                                         , "--use-playwright=true"
+                                                         , "--verbose=true"
+                                                         , "--dry-run=true"])
+        self.assertEqual(test_subject.remote_execution_script, """# Preparing Execution via Network Log Pull
+if ssh -q martins-avots@live.splitcells.net "sh -c '[ -d ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network.log ]'"
+then
+  cd ../net.splitcells.network.log
+  git config remote.martins-avots@live.splitcells.net.url >&- || git remote add martins-avots@live.splitcells.net martins-avots@live.splitcells.net:/home/martins-avots/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network.log
+  git remote set-url martins-avots@live.splitcells.net martins-avots@live.splitcells.net:/home/martins-avots/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network.log
+  git remote set-url --push martins-avots@live.splitcells.net martins-avots@live.splitcells.net:/home/martins-avots/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network.log
+  git pull martins-avots@live.splitcells.net master
+  cd ../net.splitcells.network
+fi
+
+# Execute Main Task Remotely
+ssh martins-avots@live.splitcells.net /bin/sh << EOF
+  set -e
+  if [ ! -d ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network ]; then
+    mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/
+    cd ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/
+    git clone https://codeberg.org/splitcells-net/net.splitcells.network.git
+  fi
+  if [ ! -d ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network.hub ]; then
+    mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/
+    cd ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/
+    git clone https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
+  fi
+  cd ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network && git pull
+  cd ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network.hub && git pull
+  cd ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network
+  bin/worker.execute.py \\
+    --class-for-execution='net.splitcells.martins.avots.distro.LiveDistro'\\
+    --dry-run='true'\\
+    --execution-name='net.splitcells.martins.avots.distro.livedistro.daemon'\\
+    --is-daemon='true'\\
+    --port-publishing='8443:8443,8080:8080'\\
+    --program-name='net.splitcells.martins.avots.distro.livedistro'\\
+    --source-repo='net.splitcells.martins.avots.distro'\\
+    --use-playwright='true'\\
+    --verbose='true'
+
+EOF
+
+# Closing Execution via Network Log Pull
+cd ../net.splitcells.network.log
+git config remote.martins-avots@live.splitcells.net.url >&- || git remote add martins-avots@live.splitcells.net martins-avots@live.splitcells.net:/home/martins-avots/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network.log
+git remote set-url martins-avots@live.splitcells.net martins-avots@live.splitcells.net:/home/martins-avots/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network.log
+git remote set-url --push martins-avots@live.splitcells.net martins-avots@live.splitcells.net:/home/martins-avots/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network.log
+git pull martins-avots@live.splitcells.net master
+""")
 if __name__ == '__main__':
     # As there is no build process for Python unit tests are executed every time, to make sure, that the script works correctly.
     # During this test info logging is disabled, which is disabled by default in Python.
