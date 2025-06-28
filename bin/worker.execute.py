@@ -901,6 +901,7 @@ git pull martins-avots@live.splitcells.net master
                                                          , "--cpu-architecture=arm64"
                                                          , "--port-publishing=8443:8443,8080:8080"
                                                          , "--use-playwright=true"
+                                                         , "--auto-configure-cpu-architecture-explicitly=true"
                                                          , "--verbose=true"
                                                          , "--dry-run=true"])
         self.assertEqual(test_subject.docker_file, """
