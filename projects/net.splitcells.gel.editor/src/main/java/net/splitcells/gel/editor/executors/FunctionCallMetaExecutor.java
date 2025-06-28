@@ -49,6 +49,10 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
                 .registerExecutor(forAllCombinationsCallRunner());
     }
 
+    /**
+     * TODO Make {@link #context} and {@link #subject} immutable
+     * Make only the result attributes mutable.
+     */
     @Getter @Setter private Optional<Editor> context = Optional.empty();
     @Getter @Setter private Optional<Object> subject = Optional.empty();
     @Getter private Optional<Object> result = Optional.empty();
