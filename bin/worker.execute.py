@@ -668,6 +668,50 @@ git remote set-url user@address user@address:/home/user/.local/state/net.splitce
 git remote set-url --push user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
 git pull user@address master
 """)
+    def test_test_remote(self):
+        test_subject = parse_worker_execution_arguments(['--test-remote=user@address', '--dry-run=true'])
+        self.assertEqual(test_subject.remote_execution_script, """# Preparing Execution via Network Log Pull
+if ssh -q user@address "sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'"
+then
+  cd ../net.splitcells.network.log
+  git config remote.user@address.url >&- || git remote add user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+  git remote set-url user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+  git remote set-url --push user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+  git pull user@address master
+  cd ../net.splitcells.network
+fi
+
+# Execute Main Task Remotely
+ssh user@address /bin/sh << EOF
+  set -e
+  if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then
+    mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/
+    cd ~/.local/state/net.splitcells.network.worker/repos/public/
+    git clone https://codeberg.org/splitcells-net/net.splitcells.network.git
+  fi
+  if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.hub ]; then
+    mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/
+    cd ~/.local/state/net.splitcells.network.worker/repos/public/
+    git clone https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
+  fi
+  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && git pull
+  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.hub && git pull
+  cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
+  bin/worker.execute.py \\
+    --command='cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.test'\\
+    --dry-run='true'\\
+    --execution-name='net.splitcells.network.worker.test.remote'\\
+    --program-name='net.splitcells.network.worker'
+
+EOF
+
+# Closing Execution via Network Log Pull
+cd ../net.splitcells.network.log
+git config remote.user@address.url >&- || git remote add user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+git remote set-url user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+git remote set-url --push user@address user@address:/home/user/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log
+git pull user@address master
+""")
     def test_bootstrap_remote_via_daemon(self):
         test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--is-daemon=true', '--dry-run=true'])
         self.assertEqual(test_subject.remote_execution_script, """# Preparing Execution via Network Log Pull
