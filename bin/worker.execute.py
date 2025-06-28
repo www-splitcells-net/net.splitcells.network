@@ -436,9 +436,6 @@ class WorkerExecution:
             self.local_execution_script = self.local_execution_script.replace('--log-level=info', '--log-level=debug')
         else:
             self.local_execution_script = self.local_execution_script.replace("\nset -x\n", "\n\n")
-        if self.config.use_host_documents:
-            # TODO This replacement is done in a dirty way. Use a template variable instead.
-            self.local_execution_script = self.local_execution_script.replace("-v ~/.local/state/${programName}/Documents:/root/Documents \\", "-v ~/Documents:/root/Documents \\")
         self.local_execution_script = self.local_execution_script.replace('${programName}', self.config.program_name)
         self.local_execution_script = self.applyTemplate(self.local_execution_script)
         # Execute program.
@@ -468,8 +465,6 @@ def parse_worker_execution_arguments(arguments):
     parser.add_argument('--executable-path', dest='executable_path', help="Executes the given executable file. Only set this option or --command.")
     parser.add_argument('--class-for-execution', dest='class_for_execution', help="This Java class is executed. If this flag is given, --source-repo also has to be set.")
     parser.add_argument('--source-repo', dest='source_repo', help="Determines from which repo, the build jars are copied. If this flag is given, --class-for-execution also has to be set.")
-    # TODO --use-host-documents is probably not needed anymore, as there is not a concrete use case for this at the moment.
-    parser.add_argument('--use-host-documents', dest='use_host_documents', required=False, type=str2bool, default=False, help="Determines whether to mount `~/Documents` or not. This should be avoided, in order to avoid file dependencies to the host system, which makes the execution more portable.")
     parser.add_argument('--publish-execution-image', dest='publish_execution_image', required=False, type=str2bool, default=False, help="If set to true, the given command is not executed, but a container image is published instead.")
     parser.add_argument('--verbose', dest='verbose', required=False, type=str2bool, default=False, help="If set to true, the output is verbose.")
     parser.add_argument('--only-build-image', dest='only_build_image', required=False, type=str2bool, default=False, help="If set to true, the created image is not executed.")
