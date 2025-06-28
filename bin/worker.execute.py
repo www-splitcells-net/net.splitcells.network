@@ -378,7 +378,7 @@ class WorkerExecution:
         if self.config.class_for_execution is not None:
             required_argument_count += 1
             self.docker_file += self.applyTemplate(JAVA_CLASS_EXECUTION_TEMPLATE)
-            self.docker_file += self.docker_file.replace('$CLASS_FOR_EXECUTION', self.config.class_for_execution)
+            self.docker_file = self.docker_file.replace('$CLASS_FOR_EXECUTION', self.config.class_for_execution)
             if not self.config.dry_run:
                 self.deployable_jars = Path(Path.home().joinpath('.local/state/' + self.config.program_name + '/repos/public/net.splitcells.network/target/' + self.config.program_name + '/deployable-jars/'))
                 self.deployable_jars.mkdir(parents=True, exist_ok=True)
