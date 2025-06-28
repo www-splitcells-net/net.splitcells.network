@@ -13,10 +13,11 @@ Commit can be signed-off according to the Developer Certificate of Origin via
 
 # Notes
 
-Interesting software: 
+Interesting Software, Notes and Convention: 
 * [GRM - Git Repository Manager](https://github.com/hakoerber/git-repo-manager)
 * [B4 for distributed development workflow in Git](https://b4.docs.kernel.org/en/latest/)
 * [Jujutsu (jj) - a meta version control system](https://github.com/jj-vcs)
+* [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
 
 ----
 * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
