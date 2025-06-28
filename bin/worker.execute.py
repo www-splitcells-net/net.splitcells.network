@@ -418,8 +418,8 @@ class WorkerExecution:
         elif self.config.only_build_image:
             pass # TODO This is not implemented yet.
         elif self.config.is_daemon:
-            self.daemonFolder = "~/.config/systemd/user";
-            self.daemonFile = self.daemonFolder + "/" + self.config.execution_name + ".service";
+            self.daemonFolder = "~/.config/systemd/user"
+            self.daemonFile = self.daemonFolder + "/" + self.config.execution_name + ".service"
             self.local_execution_script += self.applyTemplate("\n" + SET_UP_SYSTEMD_SERVICE.replace("~/", "%h/"))
         else:
             self.local_execution_script += EXECUTE_VIA_PODMAN_TEMPLATE
