@@ -18,8 +18,6 @@ as variables in template strings.
 
 TODO Add test coverage and consider checking minimum coverage percentage.
 TODO Use only applyTemplate for any String replacement.
-TODO A lot less should be done in the executeRemotelyViaSsh.
-     For instance, the systemd unit file should be done via executeLocally.
 TODO Create test for all `worker.execute` flags.
 TODO Create option to delete things like `.m2`, `repos` and `net.splitcells.shell.commands.managed`,
      so it can be made sure, that bootstrapping actually works.
