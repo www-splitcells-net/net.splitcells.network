@@ -440,7 +440,7 @@ class WorkerExecution:
             # TODO This replacement is done in a dirty way. Use a template variable instead.
             self.local_execution_script = self.local_execution_script.replace("-v ~/.local/state/${programName}/Documents:/root/Documents \\", "-v ~/Documents:/root/Documents \\")
         self.local_execution_script = self.local_execution_script.replace('${programName}', self.config.program_name)
-        self.local_execution_script = self.applyTemplate(self.local_execution_script);
+        self.local_execution_script = self.applyTemplate(self.local_execution_script)
         # Execute program.
         if self.config.dry_run:
             logging.error("Generating script: " + self.local_execution_script)
