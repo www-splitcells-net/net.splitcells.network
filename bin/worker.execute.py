@@ -70,7 +70,6 @@ RUN apt-get install --yes maven git python3 pip
 ADD net.splitcells.network.worker.pom.xml /root/opt/${NAME_FOR_EXECUTION}/pom.xml
 # RUN pip install --break-system-packages playwright
 # RUN playwright install --with-deps firefox # Install all OS dependencies, that are required for Playwright. Otherwise, Playwright cannot be used in Java.
-# RUN cd /root/opt/${NAME_FOR_EXECUTION}/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"
 $ContainerSetupCommand
 VOLUME /root/.local/state/${programName}/.local/
 VOLUME /root/bin/
@@ -912,7 +911,6 @@ RUN apt-get install --yes maven git python3 pip
 ADD net.splitcells.network.worker.pom.xml /root/opt/net.splitcells.martins.avots.distro.livedistro/pom.xml
 # RUN pip install --break-system-packages playwright
 # RUN playwright install --with-deps firefox # Install all OS dependencies, that are required for Playwright. Otherwise, Playwright cannot be used in Java.
-# RUN cd /root/opt/net.splitcells.martins.avots.distro.livedistro/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"
 RUN cd /root/opt/net.splitcells.martins.avots.distro.livedistro/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"
 
 VOLUME /root/.local/state/net.splitcells.martins.avots.distro.livedistro/.local/
@@ -997,7 +995,6 @@ RUN apt-get install --yes maven git python3 pip
 ADD net.splitcells.network.worker.pom.xml /root/opt/net.splitcells.martins.avots.distro.livedistro/pom.xml
 # RUN pip install --break-system-packages playwright
 # RUN playwright install --with-deps firefox # Install all OS dependencies, that are required for Playwright. Otherwise, Playwright cannot be used in Java.
-# RUN cd /root/opt/net.splitcells.martins.avots.distro.livedistro/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"
 RUN cd /root/opt/net.splitcells.martins.avots.distro.livedistro/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"
 
 VOLUME /root/.local/state/net.splitcells.martins.avots.distro.livedistro/.local/
