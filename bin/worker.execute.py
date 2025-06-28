@@ -899,6 +899,90 @@ git remote set-url martins-avots@live.splitcells.net martins-avots@live.splitcel
 git remote set-url --push martins-avots@live.splitcells.net martins-avots@live.splitcells.net:/home/martins-avots/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network.log
 git pull martins-avots@live.splitcells.net master
 """)
+    def test_local_deployment(self):
+        test_subject = parse_worker_execution_arguments(["--program-name=net.splitcells.martins.avots.distro.livedistro"
+                                                         , "--source-repo=net.splitcells.martins.avots.distro"
+                                                         , "--class-for-execution=net.splitcells.martins.avots.distro.LiveDistro"
+                                                         , "--is-daemon=true"
+                                                         , "--port-publishing=8443:8443,8080:8080"
+                                                         , "--use-playwright=true"
+                                                         , "--verbose=true"
+                                                         , "--dry-run=true"])
+        self.assertEqual(test_subject.docker_file, """
+FROM docker.io/eclipse-temurin:21-jdk-noble
+RUN apt-get clean
+RUN apt-get update # This fixes install errors. It is unknown why this is the case.
+RUN apt-get install --yes maven git python3 pip
+ADD net.splitcells.network.worker.pom.xml /root/opt/net.splitcells.martins.avots.distro.livedistro/pom.xml
+# RUN pip install --break-system-packages playwright
+# RUN playwright install --with-deps firefox # Install all OS dependencies, that are required for Playwright. Otherwise, Playwright cannot be used in Java.
+# RUN cd /root/opt/net.splitcells.martins.avots.distro.livedistro/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"
+RUN cd /root/opt/net.splitcells.martins.avots.distro.livedistro/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"
+
+VOLUME /root/.local/state/net.splitcells.martins.avots.distro.livedistro/.local/
+VOLUME /root/bin/
+VOLUME /root/.local/state/net.splitcells.martins.avots.distro.livedistro/Documents/
+VOLUME /root/.ssh/
+VOLUME /root/.m2/
+VOLUME /root/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/
+
+COPY net.splitcells.martins.avots.distro.livedistro/deployable-jars/* /root/opt/net.splitcells.martins.avots.distro.livedistro/jars/
+WORKDIR /root/opt/net.splitcells.martins.avots.distro.livedistro/
+ENTRYPOINT ["/opt/java/openjdk/bin/java"]
+CMD ["-XX:ErrorFile=/root/.local/state/net.splitcells.martins.avots.distro.livedistro/.local/dumps/hs_err_pid_%p.log", "-cp", "./jars/*", "net.splitcells.martins.avots.distro.LiveDistro"]
+""")
+        self.assertEqual(test_subject.local_execution_script, """
+set -e
+set -x
+# Prepare file system.
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/.m2/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/.ssh/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/.local/dumps/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/Documents/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/bin/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/config/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/logs/
+mkdir -p ./target/
+test -f target/program-net.splitcells.martins.avots.distro.livedistro && chmod +x target/program-net.splitcells.martins.avots.distro.livedistro # This file does not exist, when '--executable-path' is not set.
+cd ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network
+podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro.livedistro" \\
+    --tag "localhost/net.splitcells.martins.avots.distro.livedistro"  \\
+    --arch x86_64 \\
+    \\
+    --log-level=warn
+
+# Set up Systemd service
+mkdir -p ~/.config/systemd/user
+cat > ~/.config/systemd/user/net.splitcells.martins.avots.distro.livedistro.service <<SERVICE_EOL
+[Unit]
+Description=Execute net.splitcells.martins.avots.distro.livedistro
+
+[Service]
+Type=simple
+StandardOutput=journal
+ExecStart=podman run --name "net.splitcells.martins.avots.distro.livedistro" \\
+  --network slirp4netns:allow_host_loopback=true \\
+  \\
+  --rm \\
+  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/Documents:/root/.local/state/net.splitcells.martins.avots.distro.livedistro/Documents \\
+  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/.ssh:/root/.ssh \\
+  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/.m2:/root/.m2 \\
+  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/.local:/root/.local/state/net.splitcells.martins.avots.distro.livedistro/.local \\
+  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/repos:/root/.local/state/net.splitcells.martins.avots.distro.livedistro/repos \\
+  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/config:/root/.local/state/net.splitcells.martins.avots.distro.livedistro/config \\
+  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/logs:/root/.local/state/net.splitcells.martins.avots.distro.livedistro/logs \\
+  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/bin:/root/bin \\
+  --publish 8443:8443 --publish 8080:8080 \\
+  "localhost/net.splitcells.martins.avots.distro.livedistro"
+
+[Install]
+WantedBy=default.target
+SERVICE_EOL
+systemctl --user daemon-reload
+systemctl --user enable net.splitcells.martins.avots.distro.livedistro.daemon
+systemctl --user restart net.splitcells.martins.avots.distro.livedistro.daemon
+""")
 if __name__ == '__main__':
     # As there is no build process for Python unit tests are executed every time, to make sure, that the script works correctly.
     # During this test info logging is disabled, which is disabled by default in Python.
