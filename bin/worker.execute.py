@@ -18,7 +18,6 @@ as variables in template strings.
 
 TODO Add test coverage and consider checking minimum coverage percentage.
 TODO Use only applyTemplate for any String replacement.
-TODO Create test for all `worker.execute` flags.
 TODO Create option to delete things like `.m2`, `repos` and `net.splitcells.shell.commands.managed`,
      so it can be made sure, that bootstrapping actually works.
 TODO Use string's substitute method, instead of string's replace.
