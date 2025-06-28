@@ -426,12 +426,12 @@ class WorkerExecution:
         if self.config.command is not None:
             # TODO This does not seem to be valid or used anymore.
             self.local_execution_script = self.local_execution_script.replace('"$executionCommand"', "'" + self.config.command.replace("'", "'\\''") + "'")
-        if self.config.auto_configure_cpuArch_explicitly:
-            self.local_execution_script = self.local_execution_script.replace('\n    --arch string \\\n', '\n    --arch ' + platform.uname().machine + ' \\\n')
+        if self.config.auto_configure_cpuArch_explicitly and self.config.cpu_architecture is not None:
+            self.local_execution_script = self.local_execution_script.replace(' --arch string ', ' --arch ' + platform.uname().machine + ' ')
         elif self.config.cpu_architecture is None:
-            self.local_execution_script = self.local_execution_script.replace('\n    --arch string \\\n', '\n')
+            self.local_execution_script = self.local_execution_script.replace(' --arch string ', ' ')
         else:
-            self.local_execution_script = self.local_execution_script.replace('\n    --arch string \\\n', '\n    --arch ' + self.config.cpu_architecture + ' \\\n')
+            self.local_execution_script = self.local_execution_script.replace(' --arch string ', ' --arch ' + self.config.cpu_architecture + ' ')
         if self.config.verbose:
             self.local_execution_script = self.local_execution_script.replace('--log-level=info', '--log-level=debug')
         else:
@@ -543,7 +543,7 @@ test -f target/program-net.splitcells.martins.avots.distro && chmod +x target/pr
 cd ~/.local/state/net.splitcells.martins.avots.distro/repos/public/net.splitcells.network
 podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
     --tag "localhost/net.splitcells.martins.avots.distro"  \\
-    --arch x86_64 \\
+    \\
     \\
     --log-level=warn
 """)
@@ -599,7 +599,7 @@ test -f target/program-net.splitcells.martins.avots.distro && chmod +x target/pr
 cd ~/.local/state/net.splitcells.martins.avots.distro/repos/public/net.splitcells.network
 podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
     --tag "localhost/net.splitcells.martins.avots.distro"  \\
-    --arch x86_64 \\
+    \\
     \\
     --log-level=warn
 
@@ -802,7 +802,7 @@ test -f target/program-net.splitcells.network.worker && chmod +x target/program-
 cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
 podman build -f "target/Dockerfile-net.splitcells.network.worker.boostrap.daemon" \\
     --tag "localhost/net.splitcells.network.worker.boostrap.daemon"  \\
-    --arch x86_64 \\
+    \\
     \\
     --log-level=warn
 
@@ -899,6 +899,7 @@ git pull martins-avots@live.splitcells.net master
                                                          , "--source-repo=net.splitcells.martins.avots.distro"
                                                          , "--class-for-execution=net.splitcells.martins.avots.distro.LiveDistro"
                                                          , "--is-daemon=true"
+                                                         , "--cpu-architecture=arm64"
                                                          , "--port-publishing=8443:8443,8080:8080"
                                                          , "--use-playwright=true"
                                                          , "--verbose=true"
@@ -1028,7 +1029,7 @@ test -f target/program-net.splitcells.martins.avots.distro.livedistro && chmod +
 cd ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network
 podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro.livedistro" \\
     --tag "localhost/net.splitcells.martins.avots.distro.livedistro"  \\
-    --arch x86_64 \\
+    \\
     \\
     --log-level=warn
 
