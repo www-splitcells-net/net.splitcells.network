@@ -1,6 +1,8 @@
 #!/usr/bin/env sh
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+
+# Sets up the the repos and software environment at the current shell.
 set -e
 # Configure
   if [ -z "$NET_SPLITCELLS_NETWORK_WORKER_NAME" ]; then
