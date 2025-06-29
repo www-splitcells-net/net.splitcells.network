@@ -3,6 +3,14 @@
 SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
+Provides a command line interface via Python for the Splitcells Network Worker.
+Bootstrapping steps are implemented in this script,
+in order for the boostrapping to only rely on sh, Python 3, podman and
+the major service manager of operation systems like systemD.
+Keep this as minimal as possible and
+consider moving functionality too a pure Java based implementation,
+that are not required for bootstrapping.
+
 sh is used explicitly instead of the default shell, because on many servers custom shells like fish are used,
 that have different shell syntaxes, but provide good UI features for users.
 
