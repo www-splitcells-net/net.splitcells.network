@@ -16,6 +16,10 @@ by writing to any variable or attribute only once except for the configuration.
 These variables are only used as an argument for other variables or
 as variables in template strings.
 
+Use this implementation only, as long this is used to deploy something from the ground up.
+For instance, the moment that releases (stored in i.e. m2 Maven repos) are deployed,
+a Java based implementation should be considered.
+
 TODO Add test coverage and consider checking minimum coverage percentage.
 TODO Use only applyTemplate for any String replacement.
 TODO Create option to delete things like `.m2`, `repos` and `net.splitcells.shell.commands.managed`,
