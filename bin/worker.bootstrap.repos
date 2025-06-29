@@ -13,4 +13,4 @@ set -e
   test -d net.splitcells.network.hub || git clone --depth 1 https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
 # Pull all repos.
   cd ~/.local/state/$NET_SPLITCELLS_NETWORK_WORKER_NAME/repos/public/net.splitcells.network
-  bin/worker.repos.pull
+  bin/repos.pull
