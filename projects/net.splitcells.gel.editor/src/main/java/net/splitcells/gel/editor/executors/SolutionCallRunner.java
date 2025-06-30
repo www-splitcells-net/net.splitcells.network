@@ -56,6 +56,9 @@ public class SolutionCallRunner implements FunctionCallRunner {
 
     @Override
     public FunctionCallRun execute(FunctionCallDesc functionCall) {
+        final var run = functionCallRun(subject, context);
+        if (!supports(functionCall)) {
+            return run;
         if (functionCall.getArguments().size() != 4) {
             throw execException("The solution function requires at exactly 4 arguments, but " + functionCall.getArguments().size() + " were given.");
         }

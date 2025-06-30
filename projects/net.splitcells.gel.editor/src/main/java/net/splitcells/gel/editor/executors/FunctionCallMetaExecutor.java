@@ -76,22 +76,17 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
 
     @Override
     public boolean supports(FunctionCallDesc functionCall) {
-        return executors.stream().map(e -> e.supports(functionCall)).anyMatch(s -> s);
+        return execute(functionCall).getResult().isPresent();
     }
 
     @Override
     public FunctionCallRun execute(FunctionCallDesc functionCall) {
         final var run = functionCallRun(subject, context);
-        final var fittingExecutor = executors.stream()
-                .filter(e -> {
-                    e.setSubject(subject).setContext(context);
-                    return e.supports(functionCall);
-                })
+        final var fittingRun = executors.stream()
+                .map(e -> e.setSubject(subject).setContext(context).execute(functionCall))
+                .filter(e -> e.getResult().isPresent())
                 .findFirst();
-        if (fittingExecutor.isEmpty()) {
-            return run;
-        }
-        return fittingExecutor.get().execute(functionCall);
+        return fittingRun.orElse(run);
     }
 
     @Override

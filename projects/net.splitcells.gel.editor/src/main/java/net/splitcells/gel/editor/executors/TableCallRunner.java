@@ -55,7 +55,10 @@ public class TableCallRunner implements FunctionCallRunner {
 
     @Override
     public FunctionCallRun execute(FunctionCallDesc functionCall) {
-        require(supports(functionCall));
+        final var run = functionCallRun(subject, context);
+        if (!supports(functionCall)) {
+            return run;
+        }
         if (functionCall.getArguments().size() < 3) {
             throw execException("The table function requires at least 2 arguments, but " + functionCall.getArguments().size() + " were given.");
         }
@@ -77,7 +80,7 @@ public class TableCallRunner implements FunctionCallRunner {
             }
         });
         result = Optional.of(table(tableName, context.orElseThrow(), attributes));
-        return functionCallRun(subject, context).setResult(result);
+        return run.setResult(result);
     }
 
     @Override
