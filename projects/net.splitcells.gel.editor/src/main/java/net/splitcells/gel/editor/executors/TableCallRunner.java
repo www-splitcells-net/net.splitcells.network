@@ -33,6 +33,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.editor.EditorParser.TABLE_FUNCTION;
+import static net.splitcells.gel.editor.executors.FunctionCallRun.functionCallRun;
 
 public class TableCallRunner implements FunctionCallRunner {
     public static TableCallRunner tableCallRunner() {
@@ -53,7 +54,7 @@ public class TableCallRunner implements FunctionCallRunner {
     }
 
     @Override
-    public FunctionCallRunner execute(FunctionCallDesc functionCall) {
+    public FunctionCallRun execute(FunctionCallDesc functionCall) {
         require(supports(functionCall));
         if (functionCall.getArguments().size() < 3) {
             throw execException("The table function requires at least 2 arguments, but " + functionCall.getArguments().size() + " were given.");
@@ -76,7 +77,7 @@ public class TableCallRunner implements FunctionCallRunner {
             }
         });
         result = Optional.of(table(tableName, context.orElseThrow(), attributes));
-        return this;
+        return functionCallRun(subject, context).setResult(result);
     }
 
     @Override

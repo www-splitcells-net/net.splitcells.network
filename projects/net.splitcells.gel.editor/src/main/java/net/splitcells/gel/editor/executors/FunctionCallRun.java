@@ -15,24 +15,28 @@
  */
 package net.splitcells.gel.editor.executors;
 
-import net.splitcells.dem.lang.annotations.ReturnsThis;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import net.splitcells.gel.editor.Editor;
-import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
 
 import java.util.Optional;
 
-public interface FunctionCallRunner {
+@Accessors(chain = true)
+public class FunctionCallRun {
 
-    boolean supports(FunctionCallDesc functionCall);
+    public static FunctionCallRun functionCallRun(Optional<Object> argSubject, Optional<Editor> argContext) {
+        return new FunctionCallRun(argSubject, argContext);
+    }
 
-    @ReturnsThis
-    FunctionCallRun execute(FunctionCallDesc functionCall);
+    @Setter @Getter private final Optional<Object> subject;
 
-    FunctionCallRunner setSubject(Optional<Object> subject);
+    @Setter @Getter private final Optional<Editor> context;
 
-    FunctionCallRunner setContext(Optional<Editor> context);
+    @Setter @Getter private Optional<Object> result;
 
-    Optional<Editor> getContext();
-
-    Optional<Object> getResult();
+    private FunctionCallRun(Optional<Object> argSubject, Optional<Editor> argContext) {
+        subject = argSubject;
+        context = argContext;
+    }
 }

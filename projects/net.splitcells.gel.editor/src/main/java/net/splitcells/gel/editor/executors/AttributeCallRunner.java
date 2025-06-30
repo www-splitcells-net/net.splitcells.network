@@ -31,6 +31,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
 import static net.splitcells.gel.data.view.attribute.AttributeI.stringAttribute;
 import static net.splitcells.gel.editor.EditorParser.*;
+import static net.splitcells.gel.editor.executors.FunctionCallRun.functionCallRun;
 
 public class AttributeCallRunner implements FunctionCallRunner {
     public static AttributeCallRunner attributeCallRunner() {
@@ -57,7 +58,7 @@ public class AttributeCallRunner implements FunctionCallRunner {
      * @return
      */
     @Override
-    public FunctionCallRunner execute(FunctionCallDesc functionCall) {
+    public FunctionCallRun execute(FunctionCallDesc functionCall) {
         require(supports(functionCall));
         if (functionCall.getArguments().size() != 2) {
             throw execException("The attribute function requires exactly 2 arguments, but " + functionCall.getArguments().size() + " were given.");
@@ -83,7 +84,7 @@ public class AttributeCallRunner implements FunctionCallRunner {
         } else {
             throw execException("The first argument has to be a reference to the integer or the string type, but " + firstName.getValue() + " was given.");
         }
-        return this;
+        return functionCallRun(subject, context).setResult(result);
     }
 
     @Override

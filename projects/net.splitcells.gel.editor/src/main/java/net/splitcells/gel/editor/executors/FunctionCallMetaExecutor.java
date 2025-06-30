@@ -40,6 +40,13 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
         return child;
     }
 
+    public static FunctionCallMetaExecutor child(FunctionCallRun parent) {
+        final var child = functionCallMetaExecutor();
+        child.setContext(parent.getContext());
+        child.setSubject(parent.getResult());
+        return child;
+    }
+
     public static FunctionCallMetaExecutor functionCallMetaExecutor() {
         return new FunctionCallMetaExecutor()
                 .registerExecutor(attributeCallRunner())

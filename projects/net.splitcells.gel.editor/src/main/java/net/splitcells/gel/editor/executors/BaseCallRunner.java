@@ -24,6 +24,7 @@ import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.atom.Bools.require;
+import static net.splitcells.gel.editor.executors.FunctionCallRun.functionCallRun;
 
 @Accessors(chain = true)
 public class BaseCallRunner implements FunctionCallRunner {
@@ -47,9 +48,9 @@ public class BaseCallRunner implements FunctionCallRunner {
     }
 
     @Override
-    public FunctionCallRunner execute(FunctionCallDesc functionCall) {
+    public FunctionCallRun execute(FunctionCallDesc functionCall) {
         require(parser.supports(this, functionCall));
         parser.execute(this, functionCall);
-        return this;
+        return functionCallRun(subject, context).setResult(result);
     }
 }

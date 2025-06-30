@@ -32,6 +32,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.editor.EditorParser.SOLUTION_FUNCTION;
+import static net.splitcells.gel.editor.executors.FunctionCallRun.functionCallRun;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.Solutions.solution;
 
@@ -54,7 +55,7 @@ public class SolutionCallRunner implements FunctionCallRunner {
     }
 
     @Override
-    public FunctionCallRunner execute(FunctionCallDesc functionCall) {
+    public FunctionCallRun execute(FunctionCallDesc functionCall) {
         if (functionCall.getArguments().size() != 4) {
             throw execException("The solution function requires at exactly 4 arguments, but " + functionCall.getArguments().size() + " were given.");
         }
@@ -85,7 +86,7 @@ public class SolutionCallRunner implements FunctionCallRunner {
                 .withConstraint(forAll())
                 .toProblem()
                 .asSolution());
-        return this;
+        return functionCallRun(subject, context).setResult(result);
     }
 
     @Override
