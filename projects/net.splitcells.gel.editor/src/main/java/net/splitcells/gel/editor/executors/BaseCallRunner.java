@@ -49,8 +49,11 @@ public class BaseCallRunner implements FunctionCallRunner {
 
     @Override
     public FunctionCallRun execute(FunctionCallDesc functionCall) {
-        require(parser.supports(this, functionCall));
+        final var run = functionCallRun(subject, context);
+        if (!parser.supports(this, functionCall)) {
+            return run;
+        }
         parser.execute(this, functionCall);
-        return functionCallRun(subject, context).setResult(result);
+        return run.setResult(result);
     }
 }

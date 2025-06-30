@@ -26,6 +26,7 @@ import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.executors.FunctionCallMetaExecutor;
+import net.splitcells.gel.editor.executors.FunctionCallRun;
 import net.splitcells.gel.editor.lang.SolutionDescription;
 import net.splitcells.gel.editor.lang.geal.*;
 import net.splitcells.gel.rating.rater.framework.Rater;
@@ -40,6 +41,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.NotImplementedYet.throwNotImplementedYet;
 import static net.splitcells.gel.editor.executors.FunctionCallMetaExecutor.functionCallMetaExecutor;
+import static net.splitcells.gel.editor.executors.FunctionCallRun.functionCallRun;
 
 /**
  * There is no distinction, between a things name and their variable name.
@@ -177,31 +179,31 @@ public class Editor implements Discoverable {
         final Object parsedObject;
         final var functionCallExecutor = functionCallMetaExecutor();
         functionCallExecutor.setContext(Optional.of(this));
-        FunctionCallMetaExecutor childExecutor;
+        FunctionCallRun childExecutor;
         if (functionCallChain.getExpression() instanceof FunctionCallDesc functionCall) {
             if (functionCallExecutor.supports(functionCall)) {
                 childExecutor = functionCallExecutor.execute(functionCall);
-                parsedObject = childExecutor.getSubject().orElseThrow();
+                parsedObject = childExecutor.getResult().orElseThrow();
             } else {
                 throw notImplementedYet();
             }
         } else if (functionCallChain.getExpression() instanceof NameDesc reference) {
             functionCallExecutor.setSubject(Optional.of(resolveRaw(reference)));
             parsedObject = resolveRaw(reference);
-            childExecutor = functionCallExecutor;
+            childExecutor = functionCallRun(Optional.of(parsedObject), Optional.of(this));
         } else if (functionCallChain.getExpression() instanceof IntegerDesc integer) {
             functionCallExecutor.setSubject(Optional.of(integer.getValue()));
             parsedObject = integer.getValue();
-            childExecutor = functionCallExecutor;
+            childExecutor = functionCallRun(Optional.of(parsedObject), Optional.of(this));
         } else if (functionCallChain.getExpression() instanceof StringDesc string) {
             functionCallExecutor.setSubject(Optional.of(string.getValue()));
             parsedObject = string.getValue();
-            childExecutor = functionCallExecutor;
+            childExecutor = functionCallRun(Optional.of(parsedObject), Optional.of(this));
         } else {
             throw notImplementedYet();
         }
         for (var nextCall : functionCallChain.getFunctionCalls()) {
-            childExecutor = childExecutor.execute(nextCall);
+            childExecutor = FunctionCallMetaExecutor.child(childExecutor).setSubject(Optional.of(parsedObject)).execute(nextCall);
         }
         return parsedObject;
     }

@@ -25,6 +25,13 @@ import java.util.Optional;
 @Accessors(chain = true)
 public class FunctionCallRun {
 
+    /**
+     *
+     * @param argSubject
+     * @param argContext TODO Make context a required argument.
+     * @return
+     */
+    @Deprecated
     public static FunctionCallRun functionCallRun(Optional<Object> argSubject, Optional<Editor> argContext) {
         return new FunctionCallRun(argSubject, argContext);
     }

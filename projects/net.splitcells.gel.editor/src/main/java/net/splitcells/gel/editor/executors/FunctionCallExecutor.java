@@ -23,7 +23,7 @@ import java.util.Optional;
 public interface FunctionCallExecutor {
     boolean supports(FunctionCallDesc functionCall);
 
-    FunctionCallExecutor execute(FunctionCallDesc functionCall);
+    FunctionCallRun execute(FunctionCallDesc functionCall);
 
     Optional<Object> getSubject();
 

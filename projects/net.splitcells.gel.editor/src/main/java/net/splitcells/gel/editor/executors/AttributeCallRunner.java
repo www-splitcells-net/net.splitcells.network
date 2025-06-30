@@ -59,7 +59,10 @@ public class AttributeCallRunner implements FunctionCallRunner {
      */
     @Override
     public FunctionCallRun execute(FunctionCallDesc functionCall) {
-        require(supports(functionCall));
+        final var run = functionCallRun(subject, context);
+        if (!supports(functionCall)) {
+            return run;
+        }
         if (functionCall.getArguments().size() != 2) {
             throw execException("The attribute function requires exactly 2 arguments, but " + functionCall.getArguments().size() + " were given.");
         }
@@ -84,7 +87,7 @@ public class AttributeCallRunner implements FunctionCallRunner {
         } else {
             throw execException("The first argument has to be a reference to the integer or the string type, but " + firstName.getValue() + " was given.");
         }
-        return functionCallRun(subject, context).setResult(result);
+        return run.setResult(result);
     }
 
     @Override

@@ -29,6 +29,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.editor.executors.AttributeCallRunner.attributeCallRunner;
 import static net.splitcells.gel.editor.executors.ConstraintCallRunners.*;
+import static net.splitcells.gel.editor.executors.FunctionCallRun.functionCallRun;
 import static net.splitcells.gel.editor.executors.SolutionCallRunner.solutionCallRunner;
 import static net.splitcells.gel.editor.executors.TableCallRunner.tableCallRunner;
 
@@ -79,7 +80,8 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
     }
 
     @Override
-    public FunctionCallMetaExecutor execute(FunctionCallDesc functionCall) {
+    public FunctionCallRun execute(FunctionCallDesc functionCall) {
+        final var run = functionCallRun(subject, context);
         final var fittingExecutor = executors.stream()
                 .filter(e -> {
                     e.setSubject(subject).setContext(context);
@@ -87,12 +89,9 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
                 })
                 .findFirst();
         if (fittingExecutor.isEmpty()) {
-            throw execException(tree("Unsupported function call.")
-                    .withProperty("function call", functionCall.getSourceCodeQuote().toString()));
+            return run;
         }
-        final var run = fittingExecutor.get().execute(functionCall);
-        final var nextExecutor = child(run);
-        return nextExecutor;
+        return fittingExecutor.get().execute(functionCall);
     }
 
     @Override
