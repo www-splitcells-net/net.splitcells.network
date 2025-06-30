@@ -36,9 +36,9 @@ public class FunctionCallRun {
         return new FunctionCallRun(argSubject, argContext);
     }
 
-    @Setter @Getter private final Optional<Object> subject;
+    @Getter private final Optional<Object> subject;
 
-    @Setter @Getter private final Optional<Editor> context;
+    @Getter private final Optional<Editor> context;
 
     @Setter @Getter private Optional<Object> result;
 
