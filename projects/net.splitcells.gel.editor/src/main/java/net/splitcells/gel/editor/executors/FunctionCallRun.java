@@ -40,7 +40,7 @@ public class FunctionCallRun {
 
     @Getter private final Optional<Editor> context;
 
-    @Setter @Getter private Optional<Object> result;
+    @Setter @Getter private Optional<Object> result = Optional.empty();
 
     private FunctionCallRun(Optional<Object> argSubject, Optional<Editor> argContext) {
         subject = argSubject;
