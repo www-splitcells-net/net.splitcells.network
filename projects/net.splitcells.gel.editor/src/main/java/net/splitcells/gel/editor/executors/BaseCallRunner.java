@@ -47,8 +47,10 @@ public class BaseCallRunner implements FunctionCallRunner {
     }
 
     @Override
-    public FunctionCallRun execute(FunctionCallDesc functionCall) {
-        final var run = functionCallRun(subject, context);
+    public FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> argSubject, Editor argContext) {
+        subject = argSubject;
+        context = Optional.of(argContext);
+        final var run = functionCallRun(argSubject, argContext);
         if (!parser.supports(this, functionCall)) {
             return run;
         }

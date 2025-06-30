@@ -54,7 +54,7 @@ public class SolutionCallRunner implements FunctionCallRunner {
     }
 
     @Override
-    public FunctionCallRun execute(FunctionCallDesc functionCall) {
+    public FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
         final var run = functionCallRun(subject, context);
         if (!supports(functionCall)) {
             return run;
@@ -72,14 +72,14 @@ public class SolutionCallRunner implements FunctionCallRunner {
         final var second = functionCall.getArguments().get(1).getExpression();
         final Table demands;
         switch (second) {
-            case NameDesc n -> demands = context.orElseThrow().getTables().get(n.getValue());
+            case NameDesc n -> demands = context.getTables().get(n.getValue());
             default ->
                     throw execException("The 2nd argument has to be the demand table represented by a variable name, but a " + second.getClass() + " was given instead.");
         }
         final var third = functionCall.getArguments().get(2).getExpression();
         final Table supplies;
         switch (third) {
-            case NameDesc n -> supplies = context.orElseThrow().getTables().get(n.getValue());
+            case NameDesc n -> supplies = context.getTables().get(n.getValue());
             default ->
                     throw execException("The 3rd argument has to be the supply table represented by a variable name, but a " + second.getClass() + " was given instead.");
         }

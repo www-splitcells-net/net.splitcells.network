@@ -81,12 +81,15 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
 
     @Override
     public FunctionCallRun execute(FunctionCallDesc functionCall) {
-        final var run = functionCallRun(subject, context);
         final var fittingRun = executors.stream()
-                .map(e -> e.setSubject(subject).setContext(context).execute(functionCall))
+                .map(e -> e.execute(functionCall, subject, context.orElseThrow()))
                 .filter(e -> e.getResult().isPresent())
                 .findFirst();
-        return fittingRun.orElse(run);
+        if (fittingRun.isEmpty()) {
+            throw execException(tree("Unknown function call description.")
+                    .withProperty("source code description", functionCall.getSourceCodeQuote().quote()));
+        }
+        return fittingRun.get();
     }
 
     @Override

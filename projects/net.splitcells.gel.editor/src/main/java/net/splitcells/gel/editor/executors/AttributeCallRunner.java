@@ -57,7 +57,7 @@ public class AttributeCallRunner implements FunctionCallRunner {
      * @return
      */
     @Override
-    public FunctionCallRun execute(FunctionCallDesc functionCall) {
+    public FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
         final var run = functionCallRun(subject, context);
         if (!supports(functionCall)) {
             return run;

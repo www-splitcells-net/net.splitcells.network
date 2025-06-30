@@ -23,8 +23,7 @@ import java.util.Optional;
 
 public interface FunctionCallRunner {
 
-    @ReturnsThis
-    FunctionCallRun execute(FunctionCallDesc functionCall);
+    FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context);
 
     FunctionCallRunner setSubject(Optional<Object> subject);
 

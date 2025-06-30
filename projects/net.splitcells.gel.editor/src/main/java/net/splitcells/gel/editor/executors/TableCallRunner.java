@@ -53,7 +53,7 @@ public class TableCallRunner implements FunctionCallRunner {
     }
 
     @Override
-    public FunctionCallRun execute(FunctionCallDesc functionCall) {
+    public FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
         final var run = functionCallRun(subject, context);
         if (!supports(functionCall)) {
             return run;
@@ -72,13 +72,13 @@ public class TableCallRunner implements FunctionCallRunner {
         IntStream.range(1, functionCall.getArguments().size()).forEach(i -> {
             final Attribute<?> att;
             switch (functionCall.getArguments().get(i).getExpression()) {
-                case NameDesc n -> attributes.add(context.orElseThrow().getAttributes().get(n.getValue()));
+                case NameDesc n -> attributes.add(context.getAttributes().get(n.getValue()));
                 default -> throw execException("Argument after the first one has to be the attribute names, but is a "
                         + functionCall.getArguments().get(i).getClass()
                         + " was given.");
             }
         });
-        result = Optional.of(table(tableName, context.orElseThrow(), attributes));
+        result = Optional.of(table(tableName, context, attributes));
         return run.setResult(result);
     }
 

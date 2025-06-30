@@ -36,6 +36,11 @@ public class FunctionCallRun {
         return new FunctionCallRun(argSubject, argContext);
     }
 
+    @Deprecated
+    public static FunctionCallRun functionCallRun(Optional<Object> argSubject, Editor argContext) {
+        return new FunctionCallRun(argSubject, Optional.of(argContext));
+    }
+
     @Getter private final Optional<Object> subject;
 
     @Getter private final Optional<Editor> context;
