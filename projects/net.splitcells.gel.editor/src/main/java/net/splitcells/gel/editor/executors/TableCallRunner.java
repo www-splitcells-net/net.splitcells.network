@@ -48,8 +48,7 @@ public class TableCallRunner implements FunctionCallRunner {
 
     }
 
-    @Override
-    public boolean supports(FunctionCallDesc functionCall) {
+    private boolean supports(FunctionCallDesc functionCall) {
         return functionCall.getName().getValue().equals(TABLE_FUNCTION);
     }
 

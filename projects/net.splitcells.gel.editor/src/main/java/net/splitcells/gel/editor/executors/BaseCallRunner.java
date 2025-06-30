@@ -42,8 +42,7 @@ public class BaseCallRunner implements FunctionCallRunner {
         parser = argParser;
     }
 
-    @Override
-    public boolean supports(FunctionCallDesc functionCall) {
+    private boolean supports(FunctionCallDesc functionCall) {
         return parser.supports(this, functionCall);
     }
 

@@ -23,8 +23,6 @@ import java.util.Optional;
 
 public interface FunctionCallRunner {
 
-    boolean supports(FunctionCallDesc functionCall);
-
     @ReturnsThis
     FunctionCallRun execute(FunctionCallDesc functionCall);
 

@@ -49,8 +49,7 @@ public class SolutionCallRunner implements FunctionCallRunner {
 
     }
 
-    @Override
-    public boolean supports(FunctionCallDesc functionCall) {
+    private boolean supports(FunctionCallDesc functionCall) {
         return functionCall.getName().getValue().equals(SOLUTION_FUNCTION);
     }
 
@@ -59,6 +58,7 @@ public class SolutionCallRunner implements FunctionCallRunner {
         final var run = functionCallRun(subject, context);
         if (!supports(functionCall)) {
             return run;
+        }
         if (functionCall.getArguments().size() != 4) {
             throw execException("The solution function requires at exactly 4 arguments, but " + functionCall.getArguments().size() + " were given.");
         }

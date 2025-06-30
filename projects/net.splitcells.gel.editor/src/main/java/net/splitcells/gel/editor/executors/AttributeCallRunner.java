@@ -46,8 +46,7 @@ public class AttributeCallRunner implements FunctionCallRunner {
 
     }
 
-    @Override
-    public boolean supports(FunctionCallDesc functionCall) {
+    private boolean supports(FunctionCallDesc functionCall) {
         return functionCall.getName().getValue().equals(ATTRIBUTE_FUNCTION);
     }
 
