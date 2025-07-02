@@ -53,4 +53,9 @@ public final class FunctionCallDesc implements ExpressionDesc {
         arguments = argArguments;
         sourceCodeQuote = argSourceCodeQuote;
     }
+
+    @Override
+    public String toString() {
+        return name.getValue();
+    }
 }
