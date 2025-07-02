@@ -178,32 +178,25 @@ public class Editor implements Discoverable {
     public Object parseObject(FunctionCallChainDesc functionCallChain) {
         final Object parsedObject;
         final var functionCallExecutor = functionCallMetaExecutor();
-        functionCallExecutor.setContext(Optional.of(this));
         FunctionCallRun childExecutor;
         if (functionCallChain.getExpression() instanceof FunctionCallDesc functionCall) {
-            if (functionCallExecutor.supports(functionCall)) {
-                childExecutor = functionCallExecutor.execute(functionCall);
-                parsedObject = childExecutor.getResult().orElseThrow();
-            } else {
-                throw notImplementedYet();
-            }
+            childExecutor = functionCallExecutor.execute(functionCall, Optional.empty(), this);
+            parsedObject = childExecutor.getResult().orElseThrow();
         } else if (functionCallChain.getExpression() instanceof NameDesc reference) {
-            functionCallExecutor.setSubject(Optional.of(resolveRaw(reference)));
             parsedObject = resolveRaw(reference);
             childExecutor = functionCallRun(Optional.of(parsedObject), Optional.of(this));
         } else if (functionCallChain.getExpression() instanceof IntegerDesc integer) {
-            functionCallExecutor.setSubject(Optional.of(integer.getValue()));
             parsedObject = integer.getValue();
             childExecutor = functionCallRun(Optional.of(parsedObject), Optional.of(this));
         } else if (functionCallChain.getExpression() instanceof StringDesc string) {
-            functionCallExecutor.setSubject(Optional.of(string.getValue()));
             parsedObject = string.getValue();
             childExecutor = functionCallRun(Optional.of(parsedObject), Optional.of(this));
         } else {
             throw notImplementedYet();
         }
+        Optional<Object> subject = Optional.of(parsedObject);
         for (var nextCall : functionCallChain.getFunctionCalls()) {
-            childExecutor = FunctionCallMetaExecutor.child(childExecutor).setSubject(Optional.of(parsedObject)).execute(nextCall);
+            childExecutor = FunctionCallMetaExecutor.child(childExecutor).execute(nextCall, subject, this);
         }
         return parsedObject;
     }

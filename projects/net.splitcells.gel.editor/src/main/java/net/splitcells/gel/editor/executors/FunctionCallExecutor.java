@@ -21,16 +21,6 @@ import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
 import java.util.Optional;
 
 public interface FunctionCallExecutor {
-    boolean supports(FunctionCallDesc functionCall);
 
-    FunctionCallRun execute(FunctionCallDesc functionCall);
-
-    Optional<Object> getSubject();
-
-    FunctionCallExecutor setSubject(Optional<Object> subject);
-
-
-    FunctionCallExecutor setContext(Optional<Editor> context);
-
-    Optional<Object> getResult();
+    FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context);
 }

@@ -41,8 +41,6 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
 
     public static FunctionCallMetaExecutor child(FunctionCallRun parent) {
         final var child = functionCallMetaExecutor();
-        child.setContext(parent.getContext());
-        child.setSubject(parent.getResult());
         return child;
     }
 
@@ -55,13 +53,6 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
                 .registerExecutor(forAllCombinationsCallRunner());
     }
 
-    /**
-     * TODO Make {@link #context} and {@link #subject} immutable
-     * Make only the result attributes mutable.
-     */
-    @Getter @Setter private Optional<Editor> context = Optional.empty();
-    @Getter @Setter private Optional<Object> subject = Optional.empty();
-    @Getter private Optional<Object> result = Optional.empty();
     private final List<FunctionCallRunner> executors = list();
 
     private FunctionCallMetaExecutor() {
@@ -73,14 +64,9 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
     }
 
     @Override
-    public boolean supports(FunctionCallDesc functionCall) {
-        return execute(functionCall).getResult().isPresent();
-    }
-
-    @Override
-    public FunctionCallRun execute(FunctionCallDesc functionCall) {
+    public FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
         final var fittingRun = executors.stream()
-                .map(e -> e.execute(functionCall, subject, context.orElseThrow()))
+                .map(e -> e.execute(functionCall, subject, context))
                 .filter(e -> e.getResult().isPresent())
                 .findFirst();
         if (fittingRun.isEmpty()) {
@@ -90,15 +76,4 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
         return fittingRun.get();
     }
 
-    @Override
-    public FunctionCallExecutor setSubject(Optional<Object> argSubject) {
-        subject = argSubject;
-        return this;
-    }
-
-    @Override
-    public FunctionCallExecutor setContext(Optional<Editor> argContext) {
-        context = argContext;
-        return this;
-    }
 }
