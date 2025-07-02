@@ -178,25 +178,26 @@ public class Editor implements Discoverable {
     public Object parseObject(FunctionCallChainDesc functionCallChain) {
         final Object parsedObject;
         final var functionCallExecutor = functionCallMetaExecutor();
-        FunctionCallRun childExecutor;
+        FunctionCallRun chainLinkRun;
         if (functionCallChain.getExpression() instanceof FunctionCallDesc functionCall) {
-            childExecutor = functionCallExecutor.execute(functionCall, Optional.empty(), this);
-            parsedObject = childExecutor.getResult().orElseThrow();
+            chainLinkRun = functionCallExecutor.execute(functionCall, Optional.empty(), this);
+            parsedObject = chainLinkRun.getResult().orElseThrow();
         } else if (functionCallChain.getExpression() instanceof NameDesc reference) {
             parsedObject = resolveRaw(reference);
-            childExecutor = functionCallRun(Optional.of(parsedObject), Optional.of(this));
+            chainLinkRun = functionCallRun(Optional.of(parsedObject), Optional.of(this));
         } else if (functionCallChain.getExpression() instanceof IntegerDesc integer) {
             parsedObject = integer.getValue();
-            childExecutor = functionCallRun(Optional.of(parsedObject), Optional.of(this));
+            chainLinkRun = functionCallRun(Optional.of(parsedObject), Optional.of(this));
         } else if (functionCallChain.getExpression() instanceof StringDesc string) {
             parsedObject = string.getValue();
-            childExecutor = functionCallRun(Optional.of(parsedObject), Optional.of(this));
+            chainLinkRun = functionCallRun(Optional.of(parsedObject), Optional.of(this));
         } else {
             throw notImplementedYet();
         }
         Optional<Object> subject = Optional.of(parsedObject);
         for (var nextCall : functionCallChain.getFunctionCalls()) {
-            childExecutor = FunctionCallMetaExecutor.child(childExecutor).execute(nextCall, subject, this);
+            chainLinkRun = FunctionCallMetaExecutor.child(chainLinkRun).execute(nextCall, subject, this);
+            subject = chainLinkRun.getResult();
         }
         return parsedObject;
     }
