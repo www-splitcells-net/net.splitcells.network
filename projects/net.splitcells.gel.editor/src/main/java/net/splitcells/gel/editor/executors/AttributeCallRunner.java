@@ -38,10 +38,6 @@ public class AttributeCallRunner implements FunctionCallRunner {
         return new AttributeCallRunner();
     }
 
-    @Getter @Setter private Optional<Editor> context = Optional.empty();
-    @Setter private Optional<Object> subject = Optional.empty();
-    @Getter private Optional<Object> result = Optional.empty();
-
     private AttributeCallRunner() {
 
     }
@@ -79,6 +75,7 @@ public class AttributeCallRunner implements FunctionCallRunner {
             default ->
                     throw execException("The second argument has to be a string, but " + first.getClass() + " was given.");
         }
+        final Optional<Object> result;
         if (firstName.getValue().equals(INTEGER_TYPE)) {
             result = Optional.of(integerAttribute(secondName.getValue()));
         } else if (firstName.getValue().equals(STRING_TYPE)) {
@@ -87,17 +84,5 @@ public class AttributeCallRunner implements FunctionCallRunner {
             throw execException("The first argument has to be a reference to the integer or the string type, but " + firstName.getValue() + " was given.");
         }
         return run.setResult(result);
-    }
-
-    @Override
-    public FunctionCallRunner setSubject(Optional<Object> argSubject) {
-        subject = argSubject;
-        return this;
-    }
-
-    @Override
-    public FunctionCallRunner setContext(Optional<Editor> argContext) {
-        context = argContext;
-        return this;
     }
 }

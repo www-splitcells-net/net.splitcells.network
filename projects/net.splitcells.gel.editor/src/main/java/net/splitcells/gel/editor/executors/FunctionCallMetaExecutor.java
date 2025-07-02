@@ -36,8 +36,6 @@ import static net.splitcells.gel.editor.executors.TableCallRunner.tableCallRunne
 public class FunctionCallMetaExecutor implements FunctionCallExecutor {
     public static FunctionCallMetaExecutor child(FunctionCallRunner parent) {
         final var child = functionCallMetaExecutor();
-        child.setContext(parent.getContext());
-        child.setSubject(parent.getResult());
         return child;
     }
 

@@ -41,10 +41,6 @@ public class SolutionCallRunner implements FunctionCallRunner {
         return new SolutionCallRunner();
     }
 
-    @Getter @Setter private Optional<Editor> context = Optional.empty();
-    @Setter private Optional<Object> subject = Optional.empty();
-    @Getter private Optional<Object> result = Optional.empty();
-
     private SolutionCallRunner() {
 
     }
@@ -83,7 +79,7 @@ public class SolutionCallRunner implements FunctionCallRunner {
             default ->
                     throw execException("The 3rd argument has to be the supply table represented by a variable name, but a " + second.getClass() + " was given instead.");
         }
-        result = Optional.of(defineProblem(solutionName)
+        final Optional<Object> result = Optional.of(defineProblem(solutionName)
                 .withDemands(demands)
                 .withSupplies(supplies)
                 .withConstraint(forAll())
@@ -92,15 +88,4 @@ public class SolutionCallRunner implements FunctionCallRunner {
         return functionCallRun(subject, context).setResult(result);
     }
 
-    @Override
-    public FunctionCallRunner setSubject(Optional<Object> argSubject) {
-        subject = argSubject;
-        return this;
-    }
-
-    @Override
-    public FunctionCallRunner setContext(Optional<Editor> argContext) {
-        context = argContext;
-        return this;
-    }
 }

@@ -40,10 +40,6 @@ public class TableCallRunner implements FunctionCallRunner {
         return new TableCallRunner();
     }
 
-    @Getter @Setter private Optional<Editor> context = Optional.empty();
-    @Setter private Optional<Object> subject = Optional.empty();
-    @Getter private Optional<Object> result = Optional.empty();
-
     private TableCallRunner() {
 
     }
@@ -78,19 +74,7 @@ public class TableCallRunner implements FunctionCallRunner {
                         + " was given.");
             }
         });
-        result = Optional.of(table(tableName, context, attributes));
-        return run.setResult(result);
+        return run.setResult(Optional.of(table(tableName, context, attributes)));
     }
 
-    @Override
-    public FunctionCallRunner setSubject(Optional<Object> argSubject) {
-        subject = argSubject;
-        return this;
-    }
-
-    @Override
-    public FunctionCallRunner setContext(Optional<Editor> argContext) {
-        context = argContext;
-        return this;
-    }
 }

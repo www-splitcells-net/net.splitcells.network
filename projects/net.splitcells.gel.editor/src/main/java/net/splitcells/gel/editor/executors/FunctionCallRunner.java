@@ -25,11 +25,4 @@ public interface FunctionCallRunner {
 
     FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context);
 
-    FunctionCallRunner setSubject(Optional<Object> subject);
-
-    FunctionCallRunner setContext(Optional<Editor> context);
-
-    Optional<Editor> getContext();
-
-    Optional<Object> getResult();
 }
