@@ -152,7 +152,8 @@ public class EditorTest {
                 , functionCallChainDesc(nameDesc("solution")
                         , list(functionCallDesc2(nameDesc(FOR_EACH_NAME), list(nameDesc("observer")))
                                 , functionCallDesc2(nameDesc(FOR_ALL_COMBINATIONS_OF)
-                                        , list(nameDesc("date"), nameDesc("shift")))))
+                                        , list(nameDesc("date"), nameDesc("shift")))
+                        ))
         ));
         /*, functionCallDesc(nameDesc(FOR_ALL_COMBINATIONS_OF)
                                                 , list(nameDesc("date"), nameDesc("shift")))
