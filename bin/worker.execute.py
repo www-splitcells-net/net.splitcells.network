@@ -27,6 +27,11 @@ as variables in template strings.
 Use this implementation only, as long this is used to deploy something from the ground up.
 For instance, the moment that releases (stored in i.e. m2 Maven repos) are deployed,
 a Java based implementation should be considered.
+It would be a good idea, if such a Worker Execution based on Java reimplements bootstrapping tasks in such a way,
+that it generates and executes fully fledged and ready to go shells scripts.
+Such shells scripts should than be easily uploadable/deployable on remote servers as well without any changes.
+In other words, these generated bootstrap script should not have any required reference to an existing Network Worker Execution and
+only require basic dependencies like sh and Podman.
 
 TODO Add test coverage and consider checking minimum coverage percentage.
 TODO Use only applyTemplate for any String replacement.
