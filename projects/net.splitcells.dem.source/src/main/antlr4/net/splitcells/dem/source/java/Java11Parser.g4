@@ -224,7 +224,7 @@ interface_definition
         name
         interface_extension?
         interface_permits
-        Brace_curly_open Brace_curly_closed
+        Brace_curly_open interface_definition_member* Brace_curly_closed
     ;
 interface_permits: Keyword_permits name (Comma name)*;
 interface_extension
