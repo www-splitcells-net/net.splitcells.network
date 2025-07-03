@@ -17,8 +17,19 @@ package net.splitcells.gel.editor.lang.geal;
 
 import net.splitcells.gel.editor.lang.SourceCodeQuotation;
 
+import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.ExecutionException.execException;
+
 public sealed interface ExpressionDesc extends SourceCodeQuotation permits FunctionCallDesc
         , IntegerDesc
         , NameDesc
         , StringDesc {
+    default <T extends ExpressionDesc> T to(Class<T> clazz) {
+        if (this.getClass().isAssignableFrom(clazz)) {
+            return (T) this;
+        }
+        throw execException(tree("Incompatible types.")
+                .withProperty("this type", getClass().toString())
+                .withProperty("given type", clazz.toString()));
+    }
 }

@@ -29,12 +29,12 @@ import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
 
-import static net.sf.saxon.expr.parser.Token.THEN;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.constraint.type.ForAlls.*;
+import static net.splitcells.gel.constraint.type.Then.THEN_NAME;
 import static net.splitcells.gel.editor.EditorParser.CONSTRAINT_FUNCTION;
 import static net.splitcells.gel.editor.executors.BaseCallRunner.baseCallRunner;
 
@@ -111,7 +111,7 @@ public class ConstraintCallRunners {
                 return base.getSubject().isPresent()
                         && (base.getSubject().orElseThrow() instanceof Solution
                         || base.getSubject().orElseThrow() instanceof Query)
-                        && functionCall.getName().getValue().equals(THEN)
+                        && functionCall.getName().getValue().equals(THEN_NAME)
                         && functionCall.getArguments().size() == 1
                         && (functionCall.getArguments().get(0).getExpression() instanceof NameDesc
                         || functionCall.getArguments().get(0).getExpression() instanceof FunctionCallDesc);
@@ -126,15 +126,12 @@ public class ConstraintCallRunners {
                     default ->
                             throw execException("Subject has to be a solution or a query: " + base.getSubject().orElseThrow());
                 }
-                final var rawRater = base.getContext().orElseThrow().parse(functionCall.getArguments().get(0));
-                final Rater rater;
+                final var rawRater = base.getContext().orElseThrow().parseObject(functionCall.getArguments().get(0));
                 switch (rawRater) {
-                    case Rater r -> rater = null;
+                    case Rater r -> base.setResult(Optional.of(subject.then(r)));
                     default ->
                             throw execException("The argument of the then constraint requires exactly one argument, that has to be a rater. Instead the following was returned" + rawRater);
                 }
-
-                base.setResult(Optional.of(subject.then(rater)));
             }
         });
     }

@@ -153,13 +153,11 @@ public class EditorTest {
                         , list(functionCallDesc2(nameDesc(FOR_EACH_NAME), list(nameDesc("observer")))
                                 , functionCallDesc2(nameDesc(FOR_ALL_COMBINATIONS_OF)
                                         , list(nameDesc("date"), nameDesc("shift")))
+                                , functionCallDesc2(nameDesc(THEN_NAME)
+                                        , list(functionCallDesc2(nameDesc(HAS_SIZE_NAME)
+                                                , list(integerDesc(1)))))
                         ))
         ));
-        /*, functionCallDesc(nameDesc(FOR_ALL_COMBINATIONS_OF)
-                                                , list(nameDesc("date"), nameDesc("shift")))
-                                        , functionCallDesc(nameDesc(THEN_NAME)
-                                                , list(functionCallDesc(nameDesc(HAS_SIZE_NAME)
-                                                        , list(integerDesc(1)))))*/
         testSubject.parse(testData);
         testSubject.getAttributes().requirePresence("student", stringAttribute("student"), CONTENT_COMPARISON)
                 .requirePresence("examiner", stringAttribute("examiner"), CONTENT_COMPARISON)
@@ -189,6 +187,7 @@ public class EditorTest {
                 .constraint()
                 .readQuery()
                 .forAll(testSubject.getAttributes().get("observer"))
-                .forAllCombinationsOf(testSubject.getAttributes().get("date"), testSubject.getAttributes().get("shift"));
+                .forAllCombinationsOf(testSubject.getAttributes().get("date"), testSubject.getAttributes().get("shift"))
+                .then(hasSize(1));
     }
 }
