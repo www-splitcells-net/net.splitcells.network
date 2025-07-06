@@ -7,11 +7,11 @@
 set -e
 bin/worker.execute.py \
   --bootstrap-remote="$1" \
-  --auto-configure-cpu-architecture-explicitly=true
+  --auto-configure-cpu-architecture-explicitly=true \
   --verbose=true
 bin/worker.execute.py \
   --build-remote="$1" \
-  --auto-configure-cpu-architecture-explicitly=true
+  --auto-configure-cpu-architecture-explicitly=true \
   --verbose=true
 bin/worker.execute \
   --execute-via-ssh-at="$1" \
