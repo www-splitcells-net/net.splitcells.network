@@ -476,6 +476,7 @@ def parse_worker_execution_arguments(arguments):
     parser.add_argument('--execution-name', dest='execution_name', required=False, help="This is the name of the execution, which is executed for a program. Every call needs this argument. It is used to identify i.e. the container, that executes the given commands.")
     parser.add_argument('--bootstrap', dest='bootstrap', required=False, type=str2bool, default=False, help="If set to true, the source code of the Splitcells Network project is set up at this current computer.")
     parser.add_argument('--bootstrap-remote', dest='bootstrap_remote', required=False, help="This is the ssh address for bootstrapping in the form of `username@host`. If this is set, other parameters are set automatically as well, in order to bootstrap the Network repos on a remote server in a standardized way.")
+    parser.add_argument('--bootstrap-locally', dest='bootstrap_locally', required=False, type=str2bool, default=False, help="If set to true, the software is bootstrapped on the current computer at `~/.local/state/[program-name]`.")
     parser.add_argument('--test-remote', dest='test_remote', required=False, help="This is the ssh address for testing in the form of `username@host`. If this is set, other parameters are set automatically as well, in order to test the Network repos on a remote server in a standardized way.")
     parser.add_argument('--build-remote', dest='build_remote', required=False, help="This is the ssh address for building the Splitcells Network project in the form of `username@host`. If this is set, other parameters are set automatically as well, in order to build the Network repos on a remote server in a standardized way.")
     parser.add_argument('--pull-network-log', dest='pull_network_log', required=False, type=str2bool, default=True, help="If set to true, the repo `net.splitcells.network.log` will be pulled from the remote.")
@@ -512,6 +513,10 @@ def parse_worker_execution_arguments(arguments):
         parsedArgs.execute_via_ssh_at = parsedArgs.bootstrap_remote
         parsedArgs.command = "export NET_SPLITCELLS_NETWORK_WORKER_NAME=" + parsedArgs.program_name + " && cd ~/.local/state/" + parsedArgs.program_name + "/repos/public/net.splitcells.network && bin/worker.bootstrap"
         parsedArgs.bootstrap_remote = None
+        if parsedArgs.execution_name is None:
+            parsedArgs.execution_name = parsedArgs.program_name + '.boostrap'
+    elif parsedArgs.bootstrap_locally is not None and parsedArgs.bootstrap_locally:
+        parsedArgs.command = "export NET_SPLITCELLS_NETWORK_WORKER_NAME=" + parsedArgs.program_name + " && cd ~/.local/state/" + parsedArgs.program_name + "/repos/public/net.splitcells.network && bin/worker.bootstrap"
         if parsedArgs.execution_name is None:
             parsedArgs.execution_name = parsedArgs.program_name + '.boostrap'
     elif parsedArgs.test_remote is not None:
