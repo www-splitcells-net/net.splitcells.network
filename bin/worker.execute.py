@@ -53,6 +53,8 @@ TODO IDEA Currently, everything is stored in `~/.local/state/${programName}/*`.
      `~/.local/state/.$namespace/${programName}/*`.
      See `repo.process` for inspiration.
      Of course, different users could be used instead.
+TODO --bootstrap-remote and --bootstrap-locally should be the same boolean parameter.
+     The remoteness should be determined via --execute-via-ssh-at instead.
 """
 
 __author__ = "Mārtiņš Avots"
