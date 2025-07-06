@@ -442,7 +442,7 @@ class WorkerExecution:
         if self.config.command is not None:
             # TODO This does not seem to be valid or used anymore.
             self.local_execution_script = self.local_execution_script.replace('"$executionCommand"', "'" + self.config.command.replace("'", "'\\''") + "'")
-        if self.config.auto_configure_cpuArch_explicitly and self.config.cpu_architecture is None:
+        if self.config.auto_configure_cpu_architecture_explicitly and self.config.cpu_architecture is None:
             self.local_execution_script = self.local_execution_script.replace(' --arch string ', ' --arch ' + platform.uname().machine + ' ')
         elif self.config.cpu_architecture is None:
             self.local_execution_script = self.local_execution_script.replace(' --arch string ', ' ')
@@ -489,7 +489,7 @@ def parse_worker_execution_arguments(arguments):
     parser.add_argument('--dry-run', dest='dry_run', required=False, type=str2bool, default=False, help="If true, commands are only prepared and no commands are executed.")
     parser.add_argument('--is-daemon', dest='is_daemon', required=False, type=str2bool, default=False, help="If this is true, the process is executed as systemd user service in the background.")
     parser.add_argument('--use-playwright', dest='use_playwright', required=False, type=str2bool, default=False, help="If true, playwright is installed for the execution.")
-    parser.add_argument('--auto-configure-cpu-architecture-explicitly', dest='auto_configure_cpuArch_explicitly', required=False, type=str2bool, default=False, help=CLI_FLAG_AUTO_CPU_ARCH_HELP)
+    parser.add_argument('--auto-configure-cpu-architecture-explicitly', dest='auto_configure_cpu_architecture_explicitly', required=False, type=str2bool, default=False, help=CLI_FLAG_AUTO_CPU_ARCH_HELP)
     parser.add_argument('--port-publishing', dest='port_publishing', help="This is a comma separated list of `host-port:container-port`, that describes the port forwarding on the host.")
     parser.add_argument('--execute-via-ssh-at', dest='execute_via_ssh_at', help="Execute the given command at an remote server via SSH. The format is `[user]@[address/network name]`.")
     parsedArgs = parser.parse_args(arguments)
