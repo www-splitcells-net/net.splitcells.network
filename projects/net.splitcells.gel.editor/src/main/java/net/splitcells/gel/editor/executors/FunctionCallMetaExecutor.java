@@ -29,6 +29,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.editor.executors.AttributeCallRunner.attributeCallRunner;
 import static net.splitcells.gel.editor.executors.ConstraintCallRunners.*;
+import static net.splitcells.gel.editor.executors.ForAllCombsCallRunner.forAllCombsCallRunner;
 import static net.splitcells.gel.editor.executors.ForEachCallRunner.forEachCallRunner;
 import static net.splitcells.gel.editor.executors.FunctionCallRun.functionCallRun;
 import static net.splitcells.gel.editor.executors.RaterCallRunners.hasSizeCallRunner;
@@ -52,7 +53,7 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
                 .registerExecutor(tableCallRunner())
                 .registerExecutor(solutionCallRunner())
                 .registerExecutor(forEachCallRunner())
-                .registerExecutor(forAllCombinationsCallRunner())
+                .registerExecutor(forAllCombsCallRunner())
                 .registerExecutor(thenCallRunner())
                 .registerExecutor(hasSizeCallRunner());
     }

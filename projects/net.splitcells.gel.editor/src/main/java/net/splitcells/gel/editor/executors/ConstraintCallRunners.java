@@ -40,39 +40,6 @@ import static net.splitcells.gel.editor.executors.BaseCallRunner.baseCallRunner;
 
 public class ConstraintCallRunners {
 
-    public static FunctionCallRunner forAllCombinationsCallRunner() {
-        return baseCallRunner(new BaseCallRunnerParser() {
-
-            @Override
-            public boolean supports(BaseCallRunner base, FunctionCallDesc functionCall) {
-                return base.getSubject().isPresent()
-                        && (base.getSubject().orElseThrow() instanceof Solution
-                        || base.getSubject().orElseThrow() instanceof Query)
-                        && functionCall.getName().getValue().equals(FOR_ALL_COMBINATIONS_OF)
-                        && functionCall.getArguments().size() >= 1
-                        && functionCall.getArguments()
-                        .stream()
-                        .hasNoMatch(n -> !(n.getExpression() instanceof NameDesc));
-            }
-
-            @Override
-            public void execute(BaseCallRunner base, FunctionCallDesc functionCall) {
-                final var groupingAttributes = functionCall.getArguments().stream()
-                        .map(a -> base.getContext().orElseThrow().<Attribute<? extends Object>>resolve(((NameDesc) a.getExpression())))
-                        .toList();
-                final Query subject;
-                if (base.getSubject().orElseThrow() instanceof Solution solution) {
-                    subject = query(solution.constraint());
-                } else if (base.getSubject().orElseThrow() instanceof Query query) {
-                    subject = query;
-                } else {
-                    throw notImplementedYet();
-                }
-                base.setResult(Optional.of(subject.forAllCombinationsOf(groupingAttributes)));
-            }
-        });
-    }
-
     public static FunctionCallRunner thenCallRunner() {
         return baseCallRunner(new BaseCallRunnerParser() {
 
