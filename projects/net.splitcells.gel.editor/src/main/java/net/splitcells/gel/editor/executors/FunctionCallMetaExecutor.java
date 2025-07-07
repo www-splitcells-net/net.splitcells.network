@@ -31,7 +31,7 @@ import static net.splitcells.gel.editor.executors.AttributeCallRunner.attributeC
 import static net.splitcells.gel.editor.executors.ForAllCombsCallRunner.forAllCombsCallRunner;
 import static net.splitcells.gel.editor.executors.ForEachCallRunner.forEachCallRunner;
 import static net.splitcells.gel.editor.executors.FunctionCallRun.functionCallRun;
-import static net.splitcells.gel.editor.executors.RaterCallRunners.hasSizeCallRunner;
+import static net.splitcells.gel.editor.executors.HasSizeCallRunner.hasSizeCallRunner;
 import static net.splitcells.gel.editor.executors.SolutionCallRunner.solutionCallRunner;
 import static net.splitcells.gel.editor.executors.TableCallRunner.tableCallRunner;
 import static net.splitcells.gel.editor.executors.ThenCallRunner.thenCallRunner;
