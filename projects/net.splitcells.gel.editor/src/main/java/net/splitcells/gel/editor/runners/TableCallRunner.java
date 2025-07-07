@@ -13,10 +13,8 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.editor.executors;
+package net.splitcells.gel.editor.runners;
 
-import lombok.Getter;
-import lombok.Setter;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
@@ -27,13 +25,12 @@ import net.splitcells.gel.editor.lang.geal.StringDesc;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.editor.EditorParser.TABLE_FUNCTION;
-import static net.splitcells.gel.editor.executors.FunctionCallRun.functionCallRun;
+import static net.splitcells.gel.editor.runners.FunctionCallRun.functionCallRun;
 
 public class TableCallRunner implements FunctionCallRunner {
     public static TableCallRunner tableCallRunner() {

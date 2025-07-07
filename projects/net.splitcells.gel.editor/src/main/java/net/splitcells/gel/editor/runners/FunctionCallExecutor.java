@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.editor.executors;
+package net.splitcells.gel.editor.runners;
 
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;

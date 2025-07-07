@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.editor.executors;
+package net.splitcells.gel.editor.runners;
 
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -27,7 +27,7 @@ import java.util.Optional;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.constraint.type.ForAlls.FOR_ALL_COMBINATIONS_OF;
-import static net.splitcells.gel.editor.executors.FunctionCallRun.functionCallRun;
+import static net.splitcells.gel.editor.runners.FunctionCallRun.functionCallRun;
 
 public class ForAllCombsCallRunner implements FunctionCallRunner {
     public static ForAllCombsCallRunner forAllCombsCallRunner() {

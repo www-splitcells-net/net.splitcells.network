@@ -13,27 +13,28 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.editor.executors;
+package net.splitcells.gel.editor.runners;
 
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
 import net.splitcells.gel.editor.lang.geal.NameDesc;
+import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
 
-import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.constraint.QueryI.query;
-import static net.splitcells.gel.constraint.type.ForAlls.FOR_EACH_NAME;
-import static net.splitcells.gel.editor.executors.FunctionCallRun.functionCallRun;
+import static net.splitcells.gel.constraint.type.Then.THEN_NAME;
+import static net.splitcells.gel.editor.runners.FunctionCallRun.functionCallRun;
 
-public class ForEachCallRunner implements FunctionCallRunner {
-    public static ForEachCallRunner forEachCallRunner() {
-        return new ForEachCallRunner();
+public class ThenCallRunner implements FunctionCallRunner {
+    public static ThenCallRunner thenCallRunner() {
+        return new ThenCallRunner();
     }
 
-    private ForEachCallRunner() {
+    private ThenCallRunner() {
 
     }
 
@@ -41,9 +42,10 @@ public class ForEachCallRunner implements FunctionCallRunner {
         return subject.isPresent()
                 && (subject.orElseThrow() instanceof Solution
                 || subject.orElseThrow() instanceof Query)
-                && functionCall.getName().getValue().equals(FOR_EACH_NAME)
+                && functionCall.getName().getValue().equals(THEN_NAME)
                 && functionCall.getArguments().size() == 1
-                && functionCall.getArguments().get(0).getExpression() instanceof NameDesc;
+                && (functionCall.getArguments().get(0).getExpression() instanceof NameDesc
+                || functionCall.getArguments().get(0).getExpression() instanceof FunctionCallDesc);
     }
 
     @Override
@@ -52,17 +54,19 @@ public class ForEachCallRunner implements FunctionCallRunner {
         if (!supports(functionCall, subject, context)) {
             return run;
         }
-        final var groupingName = (NameDesc) functionCall.getArguments().get(0).getExpression();
-        final var groupingAttribute = context.getAttributes().get(groupingName.getValue());
         final Query subjectVal;
-        if (subject.orElseThrow() instanceof Solution solution) {
-            subjectVal = query(solution.constraint());
-        } else if (subject.orElseThrow() instanceof Query query) {
-            subjectVal = query;
-        } else {
-            throw notImplementedYet();
+        switch (subject.orElseThrow()) {
+            case Solution s -> subjectVal = query(s.constraint());
+            case Query q -> subjectVal = q;
+            default ->
+                    throw execException("Subject has to be a solution or a query: " + subject.orElseThrow());
         }
-        run.setResult(Optional.of(subjectVal.forAll(groupingAttribute)));
+        final var rawRater = context.parseObject(functionCall.getArguments().get(0));
+        switch (rawRater) {
+            case Rater r -> run.setResult(Optional.of(subjectVal.then(r)));
+            default ->
+                    throw execException("The argument of the then constraint requires exactly one argument, that has to be a rater. Instead the following was returned" + rawRater);
+        }
         return run;
     }
 }

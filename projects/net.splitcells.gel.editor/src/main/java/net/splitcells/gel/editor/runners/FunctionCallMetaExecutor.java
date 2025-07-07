@@ -13,10 +13,8 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.editor.executors;
+package net.splitcells.gel.editor.runners;
 
-import lombok.Getter;
-import lombok.Setter;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.lang.geal.FunctionCallDesc;
@@ -27,14 +25,14 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
-import static net.splitcells.gel.editor.executors.AttributeCallRunner.attributeCallRunner;
-import static net.splitcells.gel.editor.executors.ForAllCombsCallRunner.forAllCombsCallRunner;
-import static net.splitcells.gel.editor.executors.ForEachCallRunner.forEachCallRunner;
-import static net.splitcells.gel.editor.executors.FunctionCallRun.functionCallRun;
-import static net.splitcells.gel.editor.executors.HasSizeCallRunner.hasSizeCallRunner;
-import static net.splitcells.gel.editor.executors.SolutionCallRunner.solutionCallRunner;
-import static net.splitcells.gel.editor.executors.TableCallRunner.tableCallRunner;
-import static net.splitcells.gel.editor.executors.ThenCallRunner.thenCallRunner;
+import static net.splitcells.gel.editor.runners.AttributeCallRunner.attributeCallRunner;
+import static net.splitcells.gel.editor.runners.ForAllCombsCallRunner.forAllCombsCallRunner;
+import static net.splitcells.gel.editor.runners.ForEachCallRunner.forEachCallRunner;
+import static net.splitcells.gel.editor.runners.FunctionCallRun.functionCallRun;
+import static net.splitcells.gel.editor.runners.HasSizeCallRunner.hasSizeCallRunner;
+import static net.splitcells.gel.editor.runners.SolutionCallRunner.solutionCallRunner;
+import static net.splitcells.gel.editor.runners.TableCallRunner.tableCallRunner;
+import static net.splitcells.gel.editor.runners.ThenCallRunner.thenCallRunner;
 
 public class FunctionCallMetaExecutor implements FunctionCallExecutor {
     public static FunctionCallMetaExecutor child(FunctionCallRunner parent) {

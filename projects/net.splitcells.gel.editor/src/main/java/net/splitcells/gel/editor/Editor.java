@@ -25,8 +25,8 @@ import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
-import net.splitcells.gel.editor.executors.FunctionCallMetaExecutor;
-import net.splitcells.gel.editor.executors.FunctionCallRun;
+import net.splitcells.gel.editor.runners.FunctionCallMetaExecutor;
+import net.splitcells.gel.editor.runners.FunctionCallRun;
 import net.splitcells.gel.editor.lang.SolutionDescription;
 import net.splitcells.gel.editor.lang.geal.*;
 import net.splitcells.gel.rating.rater.framework.Rater;
@@ -39,9 +39,8 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
-import static net.splitcells.dem.utils.NotImplementedYet.throwNotImplementedYet;
-import static net.splitcells.gel.editor.executors.FunctionCallMetaExecutor.functionCallMetaExecutor;
-import static net.splitcells.gel.editor.executors.FunctionCallRun.functionCallRun;
+import static net.splitcells.gel.editor.runners.FunctionCallMetaExecutor.functionCallMetaExecutor;
+import static net.splitcells.gel.editor.runners.FunctionCallRun.functionCallRun;
 
 /**
  * There is no distinction, between a things name and their variable name.
