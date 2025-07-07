@@ -150,13 +150,24 @@ public class EditorTest {
                                         , nameDesc("supplies")
                                         , nameDesc("rules"))))
                 , functionCallChainDesc(nameDesc("solution")
-                        , list(functionCallDesc2(nameDesc(FOR_EACH_NAME), list(nameDesc("observer")))
+                        , list(functionCallDesc2(nameDesc(FOR_EACH_NAME), list(nameDesc("examiner")))
                                 , functionCallDesc2(nameDesc(FOR_ALL_COMBINATIONS_OF)
                                         , list(nameDesc("date"), nameDesc("shift")))
                                 , functionCallDesc2(nameDesc(THEN_NAME)
                                         , list(functionCallDesc2(nameDesc(HAS_SIZE_NAME)
-                                                , list(integerDesc(1)))))
-                        ))
+                                                , list(integerDesc(1)))))))
+                , functionCallChainDesc(nameDesc("solution")
+                        , list(functionCallDesc2(nameDesc(FOR_EACH_NAME), list(nameDesc("student")))
+                                , functionCallDesc2(nameDesc(FOR_ALL_COMBINATIONS_OF)
+                                        , list(nameDesc("date"), nameDesc("shift")))
+                                , functionCallDesc2(nameDesc(THEN_NAME)
+                                        , list(functionCallDesc2(nameDesc(HAS_SIZE_NAME)
+                                                , list(integerDesc(1)))))))
+                , functionCallChainDesc(nameDesc("solution")
+                        , list(functionCallDesc2(nameDesc(FOR_EACH_NAME), list(nameDesc("student")))
+                                , functionCallDesc2(nameDesc(THEN_NAME)
+                                        , list(functionCallDesc2(nameDesc(HAS_SIZE_NAME)
+                                                , list(integerDesc(2)))))))
         ));
         testSubject.parse(testData);
         testSubject.getAttributes().requirePresence("student", stringAttribute("student"), CONTENT_COMPARISON)
@@ -186,8 +197,21 @@ public class EditorTest {
         testSubject.getSolutions().get("solution")
                 .constraint()
                 .readQuery()
-                .forAll(testSubject.getAttributes().get("observer"))
+                .forAll(testSubject.getAttributes().get("examiner"))
                 .forAllCombinationsOf(testSubject.getAttributes().get("date"), testSubject.getAttributes().get("shift"))
                 .then(hasSize(1));
+        // The following tests, whether proper constraint trees are supported.
+        testSubject.getSolutions().get("solution")
+                .constraint()
+                .readQuery()
+                .forAll(testSubject.getAttributes().get("student"))
+                .forAllCombinationsOf(testSubject.getAttributes().get("date"), testSubject.getAttributes().get("shift"))
+                .then(hasSize(1));
+        // The following tests, whether constraint sharing is working.
+        testSubject.getSolutions().get("solution")
+                .constraint()
+                .readQuery()
+                .forAll(testSubject.getAttributes().get("student"))
+                .then(hasSize(2));
     }
 }
