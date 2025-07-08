@@ -18,9 +18,10 @@ package net.splitcells.gel.editor.lang;
 import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.order.Comparison;
 import net.splitcells.dem.data.order.Ordering;
+import net.splitcells.gel.editor.geal.SourceUnit;
 
 /**
- * @deprecated Use {@link net.splitcells.gel.editor.lang.geal.SourceUnit} instead.
+ * @deprecated Use {@link SourceUnit} instead.
  */
 @Deprecated
 public final class ReferenceDescription<T> implements ArgumentDescription, SourceCodeQuotation {

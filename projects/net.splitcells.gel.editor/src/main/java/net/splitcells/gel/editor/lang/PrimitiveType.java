@@ -15,12 +15,14 @@
  */
 package net.splitcells.gel.editor.lang;
 
+import net.splitcells.gel.editor.geal.SourceUnit;
+
 import java.util.Optional;
 
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
- * @deprecated Use {@link net.splitcells.gel.editor.lang.geal.SourceUnit} instead.
+ * @deprecated Use {@link SourceUnit} instead.
  */
 @Deprecated
 public enum PrimitiveType {

@@ -38,14 +38,14 @@ import static net.splitcells.gel.editor.lang.SolutionDescription.solutionDescrip
 import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuote;
 import static net.splitcells.gel.editor.lang.TableDescription.tableDescription;
 import static net.splitcells.gel.editor.SolutionEditor.solutionEditor;
-import static net.splitcells.gel.editor.lang.geal.FunctionCallChainDesc.functionCallChainDesc;
-import static net.splitcells.gel.editor.lang.geal.FunctionCallDesc.functionCallDesc;
-import static net.splitcells.gel.editor.lang.geal.FunctionCallDesc.functionCallDesc2;
-import static net.splitcells.gel.editor.lang.geal.IntegerDesc.integerDesc;
-import static net.splitcells.gel.editor.lang.geal.NameDesc.nameDesc;
-import static net.splitcells.gel.editor.lang.geal.SourceUnit.sourceUnit;
-import static net.splitcells.gel.editor.lang.geal.StringDesc.stringDesc;
-import static net.splitcells.gel.editor.lang.geal.VariableDefinitionDesc.variableDefinitionDesc;
+import static net.splitcells.gel.editor.geal.FunctionCallChainDesc.functionCallChainDesc;
+import static net.splitcells.gel.editor.geal.FunctionCallDesc.functionCallDesc;
+import static net.splitcells.gel.editor.geal.FunctionCallDesc.functionCallDesc2;
+import static net.splitcells.gel.editor.geal.IntegerDesc.integerDesc;
+import static net.splitcells.gel.editor.geal.NameDesc.nameDesc;
+import static net.splitcells.gel.editor.geal.SourceUnit.sourceUnit;
+import static net.splitcells.gel.editor.geal.StringDesc.stringDesc;
+import static net.splitcells.gel.editor.geal.VariableDefinitionDesc.variableDefinitionDesc;
 import static net.splitcells.gel.rating.rater.lib.HasSize.HAS_SIZE_NAME;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 

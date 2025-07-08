@@ -18,13 +18,14 @@ package net.splitcells.gel.editor.lang;
 import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.testing.Result;
+import net.splitcells.gel.editor.geal.SourceUnit;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.gel.editor.SolutionEditor.AFFECTED_CONTENT;
 
 /**
- * @deprecated Use {@link net.splitcells.gel.editor.lang.geal.SourceUnit} instead.
+ * @deprecated Use {@link SourceUnit} instead.
  */
 @Deprecated
 public class AttributeDescription implements SourceCodeQuotation {

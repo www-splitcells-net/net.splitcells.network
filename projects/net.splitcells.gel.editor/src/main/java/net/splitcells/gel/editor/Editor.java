@@ -25,10 +25,10 @@ import net.splitcells.dem.testing.Result;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
-import net.splitcells.gel.editor.runners.FunctionCallMetaExecutor;
-import net.splitcells.gel.editor.runners.FunctionCallRun;
+import net.splitcells.gel.editor.geal.*;
+import net.splitcells.gel.editor.geal.runners.FunctionCallMetaExecutor;
+import net.splitcells.gel.editor.geal.runners.FunctionCallRun;
 import net.splitcells.gel.editor.lang.SolutionDescription;
-import net.splitcells.gel.editor.lang.geal.*;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.solution.Solution;
 
@@ -39,8 +39,8 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
-import static net.splitcells.gel.editor.runners.FunctionCallMetaExecutor.functionCallMetaExecutor;
-import static net.splitcells.gel.editor.runners.FunctionCallRun.functionCallRun;
+import static net.splitcells.gel.editor.geal.runners.FunctionCallMetaExecutor.functionCallMetaExecutor;
+import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 
 /**
  * There is no distinction, between a things name and their variable name.
@@ -76,7 +76,7 @@ public class Editor implements Discoverable {
      *
      * @param solutionDescription
      * @return
-     * @deprecated Use {@link net.splitcells.gel.editor.lang.geal.SourceUnit} instead.
+     * @deprecated Use {@link SourceUnit} instead.
      */
     @Deprecated
     public Result<SolutionEditor, Tree> solutionEditor(SolutionDescription solutionDescription) {

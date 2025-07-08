@@ -17,11 +17,12 @@ package net.splitcells.gel.editor.lang;
 
 import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.gel.editor.geal.SourceUnit;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 
 /**
- * @deprecated Use {@link net.splitcells.gel.editor.lang.geal.SourceUnit} instead.
+ * @deprecated Use {@link SourceUnit} instead.
  */
 @Deprecated
 public class ConstraintDescription implements SourceCodeQuotation {

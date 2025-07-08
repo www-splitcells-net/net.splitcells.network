@@ -19,12 +19,13 @@ import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.gel.data.view.attribute.Attribute;
+import net.splitcells.gel.editor.geal.SourceUnit;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 
 /**
- * @deprecated Use {@link net.splitcells.gel.editor.lang.geal.SourceUnit} instead.
+ * @deprecated Use {@link SourceUnit} instead.
  */
 @Deprecated
 public class SolutionDescription implements SourceCodeQuotation {

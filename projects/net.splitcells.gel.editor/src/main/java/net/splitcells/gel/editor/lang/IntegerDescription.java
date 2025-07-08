@@ -16,9 +16,10 @@
 package net.splitcells.gel.editor.lang;
 
 import net.splitcells.dem.data.atom.Thing;
+import net.splitcells.gel.editor.geal.SourceUnit;
 
 /**
- * @deprecated Use {@link net.splitcells.gel.editor.lang.geal.SourceUnit} instead.
+ * @deprecated Use {@link SourceUnit} instead.
  */
 @Deprecated
 public final class IntegerDescription implements ArgumentDescription, SourceCodeQuotation {

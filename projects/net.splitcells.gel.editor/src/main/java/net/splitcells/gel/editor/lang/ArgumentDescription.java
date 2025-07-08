@@ -15,8 +15,10 @@
  */
 package net.splitcells.gel.editor.lang;
 
+import net.splitcells.gel.editor.geal.SourceUnit;
+
 /**
- * @deprecated Use {@link net.splitcells.gel.editor.lang.geal.SourceUnit} instead.
+ * @deprecated Use {@link SourceUnit} instead.
  */
 @Deprecated
 public sealed interface ArgumentDescription extends SourceCodeQuotation permits FunctionCallDescription
