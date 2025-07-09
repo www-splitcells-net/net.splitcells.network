@@ -110,7 +110,7 @@ public class EditorTest {
     }
 
     @UnitTest
-    public void testGeal() {
+    public void testGealInterpretation() {
         final var testSubject = editor("test-subject", EXPLICIT_NO_CONTEXT);
         final var testData = sourceUnit(list(
                 variableDefinitionDesc(nameDesc("student")
@@ -213,5 +213,11 @@ public class EditorTest {
                 .readQuery()
                 .forAll(testSubject.getAttributes().get("student"))
                 .then(hasSize(2));
+    }
+
+    @UnitTest
+    public void testGealParsing() {
+        final var testData = """
+                """;
     }
 }
