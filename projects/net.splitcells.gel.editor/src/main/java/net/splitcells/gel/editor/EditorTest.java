@@ -218,6 +218,7 @@ public class EditorTest {
     @UnitTest
     public void testGealParsing() {
         final var testData = """
+                student=attribute('String', 'student');
                 """;
     }
 }
