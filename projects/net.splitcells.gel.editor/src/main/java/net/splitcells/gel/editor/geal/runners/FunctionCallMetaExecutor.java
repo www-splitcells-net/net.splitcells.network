@@ -17,7 +17,7 @@ package net.splitcells.gel.editor.geal.runners;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.editor.Editor;
-import net.splitcells.gel.editor.geal.FunctionCallDesc;
+import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 
 import java.util.Optional;
 

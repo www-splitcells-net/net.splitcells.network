@@ -18,7 +18,7 @@ package net.splitcells.gel.editor.lang;
 import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.testing.Result;
-import net.splitcells.gel.editor.geal.SourceUnit;
+import net.splitcells.gel.editor.geal.lang.SourceUnit;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Result.result;

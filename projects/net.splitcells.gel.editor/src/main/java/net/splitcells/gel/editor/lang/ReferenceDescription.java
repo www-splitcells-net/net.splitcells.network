@@ -18,7 +18,7 @@ package net.splitcells.gel.editor.lang;
 import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.order.Comparison;
 import net.splitcells.dem.data.order.Ordering;
-import net.splitcells.gel.editor.geal.SourceUnit;
+import net.splitcells.gel.editor.geal.lang.SourceUnit;
 
 /**
  * @deprecated Use {@link SourceUnit} instead.

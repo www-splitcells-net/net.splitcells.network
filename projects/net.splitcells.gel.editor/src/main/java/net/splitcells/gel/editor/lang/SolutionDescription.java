@@ -19,7 +19,7 @@ import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.gel.data.view.attribute.Attribute;
-import net.splitcells.gel.editor.geal.SourceUnit;
+import net.splitcells.gel.editor.geal.lang.SourceUnit;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
