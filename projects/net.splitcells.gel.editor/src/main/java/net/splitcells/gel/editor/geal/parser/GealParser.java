@@ -15,12 +15,9 @@
  */
 package net.splitcells.gel.editor.geal.parser;
 
-import net.splitcells.dem.lang.tree.Tree;
-import net.splitcells.dem.testing.Result;
-import net.splitcells.gel.editor.lang.SolutionDescription;
+import net.splitcells.gel.editor.geal.lang.SourceCode;
 
-public class EditorParser extends net.splitcells.dem.source.geal.GealParserBaseVisitor<Object> {
-    private EditorParser() {
-
+public class GealParser extends net.splitcells.dem.source.geal.GealParserBaseVisitor<SourceCode> {
+    private GealParser() {
     }
 }
