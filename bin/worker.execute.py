@@ -373,8 +373,11 @@ class WorkerExecution:
         return arg + "\n\n"
     def executeLocally(self):
         """ TODO Use [${...}] based variable substitution instead of complex string replacements. """
-        if not os.path.exists('./target'):
-            os.mkdir('./target')
+        workerFolder = Path.home().joinpath('.local/state/' + self.config.program_name + "/repos/public/net.splitcells.network/")
+        targetFolder = workerFolder.joinpath('target/')
+        print(targetFolder)
+        if not os.path.exists(targetFolder):
+            os.makedirs(targetFolder)
         # TODO Consoldiate Dockerfile template extensions, as every case can be solved via a dedicated shell script, that is the entrypoint of the Dockerfile.
         required_argument_count = 0
         self.docker_file = DOCKERFILE_SERVICE_TEMPLATE
@@ -390,7 +393,7 @@ class WorkerExecution:
                     + "cd ~/.local/state/" + self.config.program_name + "/repos/public/net.splitcells.network\n"
                     + Path(self.config.executable_path).read_text())
             if not self.config.dry_run:
-                with open("./target/" + self.program_name, 'w') as executable_file:
+                with open(targetFolder.joinpath(self.program_name), 'w') as executable_file:
                     executable_file.write(self.local_executable)
             self.docker_file += "ADD ./" + self.program_name + " /root/program\n"
             self.docker_file += 'ENTRYPOINT /root/program'
@@ -421,12 +424,12 @@ class WorkerExecution:
         self.docker_file = self.docker_file.replace('${NAME_FOR_EXECUTION}', self.config.program_name)
         self.docker_file = self.docker_file.replace('${programName}', self.config.program_name)
         if not self.config.dry_run:
-            file = 'target/Dockerfile-' + self.config.execution_name
+            file = targetFolder.joinpath('Dockerfile-' + self.config.execution_name)
             if os.path.exists(file):
                 os.remove(file)
             with open(file, 'w') as file_to_write:
                 file_to_write.write(self.docker_file)
-            with open('target/net.splitcells.network.worker.pom.xml', 'w') as pom_file_to_write:
+            with open(targetFolder.joinpath('net.splitcells.network.worker.pom.xml'), 'w') as pom_file_to_write:
                 pom_file_to_write.write(CONTAINER_POM)
         if self.config.only_execute_image:
             self.local_execution_script = PREPARE_EXECUTION_WITHOUT_BUILD_TEMPLATE
