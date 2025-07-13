@@ -458,7 +458,7 @@ class WorkerExecution:
         self.local_execution_script = self.applyTemplate(self.local_execution_script)
         # Execute program.
         if self.config.dry_run:
-            logging.error("Generating script: " + self.local_execution_script)
+            logging.info("Generating script: " + self.local_execution_script)
             return
         if self.config.verbose:
             logging.info("Executing script: " + self.local_execution_script)
