@@ -1063,6 +1063,66 @@ podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro.livedistr
 podman tag net.splitcells.martins.avots.distro.livedistro:latest codeberg.org/splitcells-net/net.splitcells.martins.avots.distro.livedistro:latest
 podman push codeberg.org/splitcells-net/net.splitcells.martins.avots.distro.livedistro:latest
 """)
+    def test_boostrap_container_locally(self):
+        test_subject = parse_worker_execution_arguments(["--executable-path=bin/worker.bootstrap"
+                                                         , "--auto-configure-cpu-architecture-explicitly=true"
+                                                         , "--verbose=true"
+                                                         , "--dry-run=true"])
+        self.assertEqual(test_subject.docker_file, """
+FROM docker.io/eclipse-temurin:21-jdk-noble
+RUN apt-get clean
+RUN apt-get update # This fixes install errors. It is unknown why this is the case.
+RUN apt-get install --yes maven git python3 pip
+ADD net.splitcells.network.worker.pom.xml /root/opt/net.splitcells.network.worker/pom.xml
+# RUN pip install --break-system-packages playwright
+# RUN playwright install --with-deps firefox # Install all OS dependencies, that are required for Playwright. Otherwise, Playwright cannot be used in Java.
+
+
+VOLUME /root/.local/state/net.splitcells.network.worker/.local/
+VOLUME /root/bin/
+VOLUME /root/.local/state/net.splitcells.network.worker/Documents/
+VOLUME /root/.ssh/
+VOLUME /root/.m2/
+VOLUME /root/.local/state/net.splitcells.network.worker/repos/
+ADD ./program-net.splitcells.network.worker /root/program
+ENTRYPOINT /root/program""")
+        self.assertEqual(test_subject.local_execution_script, """
+set -e
+set -x
+# Prepare file system.
+mkdir -p ~/.local/state/net.splitcells.network.worker/.m2/
+mkdir -p ~/.local/state/net.splitcells.network.worker/.ssh/
+mkdir -p ~/.local/state/net.splitcells.network.worker/.local/dumps/
+mkdir -p ~/.local/state/net.splitcells.network.worker/Documents/
+mkdir -p ~/.local/state/net.splitcells.network.worker/repos/
+mkdir -p ~/.local/state/net.splitcells.network.worker/bin/
+mkdir -p ~/.local/state/net.splitcells.network.worker/config/
+mkdir -p ~/.local/state/net.splitcells.network.worker/logs/
+mkdir -p ./target/
+cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
+test -f target/program-net.splitcells.network.worker && chmod +x target/program-net.splitcells.network.worker # This file does not exist, when '--executable-path' is not set.
+podman build -f "target/Dockerfile-net.splitcells.network.worker" \\
+    --tag "localhost/net.splitcells.network.worker"  \\
+    --arch x86_64 \\
+    \\
+    --log-level=warn
+
+set -x
+podman run --name "net.splitcells.network.worker" \\
+  --network slirp4netns:allow_host_loopback=true \\
+  \\
+  --rm \\
+  -v ~/.local/state/net.splitcells.network.worker/Documents:/root/.local/state/net.splitcells.network.worker/Documents \\
+  -v ~/.local/state/net.splitcells.network.worker/.ssh:/root/.ssh \\
+  -v ~/.local/state/net.splitcells.network.worker/.m2:/root/.m2 \\
+  -v ~/.local/state/net.splitcells.network.worker/.local:/root/.local/state/net.splitcells.network.worker/.local \\
+  -v ~/.local/state/net.splitcells.network.worker/repos:/root/.local/state/net.splitcells.network.worker/repos \\
+  -v ~/.local/state/net.splitcells.network.worker/config:/root/.local/state/net.splitcells.network.worker/config \\
+  -v ~/.local/state/net.splitcells.network.worker/logs:/root/.local/state/net.splitcells.network.worker/logs \\
+  -v ~/.local/state/net.splitcells.network.worker/bin:/root/bin \\
+  \\
+  "localhost/net.splitcells.network.worker"
+""")
 if __name__ == '__main__':
     # As there is no build process for Python unit tests are executed every time, to make sure, that the script works correctly.
     # During this test info logging is disabled, which is disabled by default in Python.
