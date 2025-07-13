@@ -6,7 +6,7 @@ SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 Provides a command line interface via Python for the Splitcells Network Worker.
 All files are stored at `cd ~/.local/state/${programName}/`, even though it can be started from any other Network repo.
 Bootstrapping steps are implemented in this script,
-in order for the boostrapping to only rely on sh, Python 3, podman and
+in order for the bootstrapping to only rely on sh, Python 3, podman and
 the major service manager of operation systems like systemD.
 Keep this as minimal as possible and
 consider moving functionality too a pure Java based implementation,
