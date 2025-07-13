@@ -3,6 +3,9 @@
 SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
+TODO Repo process should only create one shell script, instead of doing everything interactively.
+     This makes it easier to test, debug and understand things.
+     See the project's Python guidelines.
 TODO Repo process, repair or copy do only output debug message if a sub repo is unknown.
 TODO Always use dedicated remotes, as its otherwise harder to work on such repos by hand.
 TODO Use a config object instead of arguments, in order to simplify code.
