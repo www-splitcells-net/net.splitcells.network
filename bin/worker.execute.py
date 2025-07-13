@@ -34,6 +34,7 @@ Such shells scripts should than be easily uploadable/deployable on remote server
 In other words, these generated bootstrap script should not have any required reference to an existing Network Worker Execution and
 only require basic dependencies like sh and Podman.
 
+TODO Move every file write to a dedicated save method, which is easier to control for the --dry-run flag.
 TODO Add test coverage and consider checking minimum coverage percentage.
 TODO Use only applyTemplate for any String replacement.
 TODO Create option to delete things like `.m2`, `repos` and `net.splitcells.shell.commands.managed`,
