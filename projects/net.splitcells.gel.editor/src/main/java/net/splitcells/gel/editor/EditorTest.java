@@ -27,6 +27,7 @@ import static net.splitcells.gel.constraint.type.Then.THEN_NAME;
 import static net.splitcells.gel.data.view.attribute.AttributeI.*;
 import static net.splitcells.gel.editor.Editor.editor;
 import static net.splitcells.gel.editor.EditorParser.*;
+import static net.splitcells.gel.editor.geal.parser.SourceCodeParser.parseGealSourceCode;
 import static net.splitcells.gel.editor.lang.AttributeDescription.attributeDescription;
 import static net.splitcells.gel.editor.lang.ConstraintDescription.constraintDescription;
 import static net.splitcells.gel.editor.lang.FunctionCallDescription.functionCallDescription;
@@ -220,5 +221,6 @@ public class EditorTest {
         final var testData = """
                 student=attribute('String', 'student');
                 """;
+        parseGealSourceCode(testData);
     }
 }
