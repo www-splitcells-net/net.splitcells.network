@@ -15,9 +15,17 @@
  */
 package net.splitcells.gel.editor.geal.parser;
 
-import net.splitcells.gel.editor.geal.lang.SourceCode;
+import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.source.geal.GealParser;
+import net.splitcells.gel.editor.geal.lang.StatementDesc;
 
-public class GealParser extends net.splitcells.dem.source.geal.GealParserBaseVisitor<SourceCode> {
-    private GealParser() {
+@JavaLegacyArtifact
+public class StatementParser extends net.splitcells.dem.source.geal.GealParserBaseVisitor<StatementDesc> {
+    private StatementParser() {
+    }
+
+    @Override
+    public StatementDesc visitStatement(GealParser.StatementContext ctx) {
+        return visitChildren(ctx);
     }
 }
