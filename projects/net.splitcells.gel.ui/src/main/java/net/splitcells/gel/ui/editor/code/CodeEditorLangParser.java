@@ -27,6 +27,7 @@ import org.antlr.v4.runtime.misc.ParseCancellationException;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.AntlrUtils.baseErrorListener;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Result.result;
 import static net.splitcells.gel.data.table.Tables.table;
@@ -46,27 +47,7 @@ public class CodeEditorLangParser extends DenParserBaseVisitor<Result<SolutionDe
         final var lexer = new net.splitcells.dem.source.den.DenLexer(CharStreams.fromString(arg));
         final var parser = new net.splitcells.dem.source.den.DenParser(new CommonTokenStream(lexer));
         final List<Tree> parsingErrors = list();
-        parser.addErrorListener(new BaseErrorListener() {
-            // Ensures, that error messages are not hidden.
-            @Override
-            public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e)
-                    throws ParseCancellationException {
-                if (offendingSymbol instanceof CommonToken token) {
-                    parsingErrors.add(tree("Could not parse problem definition:")
-                            .withProperty("line", "" + line)
-                            .withProperty("column", "" + charPositionInLine)
-                            .withProperty("invalid text", "`" + token.toString(recognizer) + "`")
-                            .withProperty("invalid token", "`" + token.getText() + "`")
-                            .withProperty("error", msg));
-                } else {
-                    parsingErrors.add(tree("Could not parse problem definition:")
-                            .withProperty("line", "" + line)
-                            .withProperty("column", "" + charPositionInLine)
-                            .withProperty("invalid text", "`" + offendingSymbol.toString() + "`")
-                            .withProperty("error", msg));
-                }
-            }
-        });
+        parser.addErrorListener(baseErrorListener(parsingErrors));
         final var parsedEditor = new CodeEditorLangParser().visitSource_unit(parser.source_unit());
         parsedEditor.errorMessages().withAppended(parsingErrors);
         return parsedEditor;
