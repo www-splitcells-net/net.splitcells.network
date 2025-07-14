@@ -16,11 +16,13 @@
 package net.splitcells.gel.editor.geal.parser;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.source.geal.GealLexer;
 import net.splitcells.dem.source.geal.GealParser;
 import net.splitcells.gel.editor.geal.lang.SourceCode;
+import net.splitcells.gel.editor.geal.lang.StatementDesc;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
@@ -69,6 +71,7 @@ public class SourceCodeParser extends net.splitcells.dem.source.geal.GealParserB
 
     @Override
     public SourceCode visitSource_unit(GealParser.Source_unitContext ctx) {
-        return visitChildren(ctx);
+        final List<StatementDesc> statements = list();
+        return SourceCode.sourceCode(statements);
     }
 }
