@@ -16,35 +16,34 @@
 package net.splitcells.gel.editor.geal.parser;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.source.geal.GealLexer;
 import net.splitcells.dem.source.geal.GealParser;
-import net.splitcells.gel.editor.geal.lang.SourceCode;
-import net.splitcells.gel.editor.geal.lang.StatementDesc;
-import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.misc.ParseCancellationException;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.AntlrUtils.baseErrorListener;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
-import static net.splitcells.gel.editor.geal.parser.GealAntlrUtils.gealParser;
 
-@JavaLegacyArtifact
-public class SourceCodeParser extends net.splitcells.dem.source.geal.GealParserBaseVisitor<SourceCode> {
+public class GealAntlrUtils {
 
-    public static SourceCode parseGealSourceCode(String arg) {
-        return new SourceCodeParser().visitSource_unit(gealParser(arg).source_unit());
+    public static GealParser gealParser(String arg) {
+        final var lexer = new GealLexer(CharStreams.fromString(arg));
+        final var parser = new net.splitcells.dem.source.geal.GealParser(new CommonTokenStream(lexer));
+        final List<Tree> parsingErrors = list();
+        parser.addErrorListener(baseErrorListener(parsingErrors));
+        if (parsingErrors.hasElements()) {
+            final var errorReport = tree("Parsing Error Report");
+            parsingErrors.forEach(errorReport::withChild);
+            throw execException(errorReport);
+        }
+        return parser;
     }
 
-    private SourceCodeParser() {
-    }
-
-    @Override
-    public SourceCode visitSource_unit(GealParser.Source_unitContext ctx) {
-        final List<StatementDesc> statements = list();
-        return SourceCode.sourceCode(statements);
+    private GealAntlrUtils() {
+        throw constructorIllegal();
     }
 }
