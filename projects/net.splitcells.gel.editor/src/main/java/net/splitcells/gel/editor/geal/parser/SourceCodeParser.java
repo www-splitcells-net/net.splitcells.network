@@ -30,7 +30,9 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.AntlrUtils.baseErrorListener;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.gel.editor.geal.lang.SourceCode.sourceCode;
 import static net.splitcells.gel.editor.geal.parser.GealAntlrUtils.gealParser;
+import static net.splitcells.gel.editor.geal.parser.StatementParser.parseStatement;
 
 @JavaLegacyArtifact
 public class SourceCodeParser extends net.splitcells.dem.source.geal.GealParserBaseVisitor<SourceCode> {
@@ -45,6 +47,9 @@ public class SourceCodeParser extends net.splitcells.dem.source.geal.GealParserB
     @Override
     public SourceCode visitSource_unit(GealParser.Source_unitContext ctx) {
         final List<StatementDesc> statements = list();
-        return SourceCode.sourceCode(statements);
+        ctx.statement().forEach(s -> {
+            statements.add(parseStatement(s));
+        });
+        return sourceCode(statements);
     }
 }

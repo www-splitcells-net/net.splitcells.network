@@ -21,6 +21,11 @@ import net.splitcells.gel.editor.geal.lang.StatementDesc;
 
 @JavaLegacyArtifact
 public class StatementParser extends net.splitcells.dem.source.geal.GealParserBaseVisitor<StatementDesc> {
+
+    public static StatementDesc parseStatement(GealParser.StatementContext statementContext) {
+        return new StatementParser().visitStatement(statementContext);
+    }
+
     private StatementParser() {
     }
 
