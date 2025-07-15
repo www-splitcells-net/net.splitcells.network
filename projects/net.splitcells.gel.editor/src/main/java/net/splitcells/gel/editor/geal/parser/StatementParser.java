@@ -17,7 +17,13 @@ package net.splitcells.gel.editor.geal.parser;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.source.geal.GealParser;
+import net.splitcells.gel.editor.geal.lang.FunctionCallChainDesc;
 import net.splitcells.gel.editor.geal.lang.StatementDesc;
+import net.splitcells.gel.editor.geal.lang.VariableDefinitionDesc;
+
+import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.gel.editor.geal.parser.VariableDefinitionParser.parseVariableDefinition;
 
 @JavaLegacyArtifact
 public class StatementParser extends net.splitcells.dem.source.geal.GealParserBaseVisitor<StatementDesc> {
@@ -31,6 +37,10 @@ public class StatementParser extends net.splitcells.dem.source.geal.GealParserBa
 
     @Override
     public StatementDesc visitStatement(GealParser.StatementContext ctx) {
-        return visitChildren(ctx);
+        if (ctx.variable_definition() != null) {
+            return parseVariableDefinition(ctx.variable_definition());
+        } else {
+            throw execException(tree("The content type of statement is unknown.").withProperty("statement", ctx.getText()));
+        }
     }
 }
