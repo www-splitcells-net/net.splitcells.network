@@ -34,4 +34,4 @@ statement
     : variable_definition Semicolon
     | function_call_chain Semicolon
     ;
-variable_definition: Name Equals expression;
+variable_definition: Name Equals function_call_chain;
