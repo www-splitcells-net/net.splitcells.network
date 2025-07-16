@@ -63,6 +63,12 @@ public class SolutionCallRunner implements FunctionCallRunner {
         final Table demands;
         switch (second) {
             case NameDesc n -> demands = context.getTables().get(n.getValue());
+            case FunctionCallDesc n -> {
+                if (n.getArguments().hasElements()) {
+                    throw notImplementedYet();
+                }
+                demands = context.getTables().get(n.getName().getValue());
+            }
             default ->
                     throw execException("The 2nd argument has to be the demand table represented by a variable name, but a " + second.getClass() + " was given instead.");
         }
@@ -70,6 +76,12 @@ public class SolutionCallRunner implements FunctionCallRunner {
         final Table supplies;
         switch (third) {
             case NameDesc n -> supplies = context.getTables().get(n.getValue());
+            case FunctionCallDesc n -> {
+                if (n.getArguments().hasElements()) {
+                    throw notImplementedYet();
+                }
+                supplies = context.getTables().get(n.getName().getValue());
+            }
             default ->
                     throw execException("The 3rd argument has to be the supply table represented by a variable name, but a " + second.getClass() + " was given instead.");
         }
