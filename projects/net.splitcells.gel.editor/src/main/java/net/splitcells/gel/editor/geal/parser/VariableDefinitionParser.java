@@ -17,8 +17,15 @@ package net.splitcells.gel.editor.geal.parser;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.source.geal.GealParser;
+import net.splitcells.gel.editor.geal.lang.NameDesc;
 import net.splitcells.gel.editor.geal.lang.StatementDesc;
 import net.splitcells.gel.editor.geal.lang.VariableDefinitionDesc;
+import net.splitcells.gel.editor.lang.SourceCodeQuote;
+
+import static net.splitcells.gel.editor.geal.lang.NameDesc.nameDesc;
+import static net.splitcells.gel.editor.geal.lang.VariableDefinitionDesc.variableDefinitionDesc;
+import static net.splitcells.gel.editor.geal.parser.FunctionCallChainParser.parseFunctionCallChain;
+import static net.splitcells.gel.editor.lang.SourceCodeQuote.sourceCodeQuote;
 
 @JavaLegacyArtifact
 public class VariableDefinitionParser extends net.splitcells.dem.source.geal.GealParserBaseVisitor<VariableDefinitionDesc> {
@@ -28,5 +35,11 @@ public class VariableDefinitionParser extends net.splitcells.dem.source.geal.Gea
 
     private VariableDefinitionParser() {
 
+    }
+
+    @Override
+    public VariableDefinitionDesc visitVariable_definition(GealParser.Variable_definitionContext ctx) {
+        return variableDefinitionDesc(nameDesc(ctx.Name().getText(), sourceCodeQuote(ctx.Name()))
+                , parseFunctionCallChain(ctx.function_call_chain()));
     }
 }

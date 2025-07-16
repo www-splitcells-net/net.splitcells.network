@@ -19,7 +19,7 @@ import net.splitcells.dem.source.geal.GealParser;
 import net.splitcells.gel.editor.geal.lang.FunctionCallChainDesc;
 
 public class FunctionCallChainParser extends net.splitcells.dem.source.geal.GealParserBaseVisitor<FunctionCallChainDesc> {
-    public FunctionCallChainDesc parseFunctionCallChain(GealParser.Function_call_chainContext arg) {
+    public static FunctionCallChainDesc parseFunctionCallChain(GealParser.Function_call_chainContext arg) {
         return new FunctionCallChainParser().visitFunction_call_chain(arg);
     }
 
