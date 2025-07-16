@@ -15,8 +15,15 @@
  */
 package net.splitcells.gel.editor.geal.parser;
 
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.source.geal.GealParser;
 import net.splitcells.gel.editor.geal.lang.FunctionCallChainDesc;
+import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
+
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.gel.editor.geal.lang.FunctionCallChainDesc.functionCallChainDesc;
+import static net.splitcells.gel.editor.geal.parser.ExpressionParser.parseExpression;
+import static net.splitcells.gel.editor.geal.parser.FunctionCallParser.parseFunctionCall;
 
 public class FunctionCallChainParser extends net.splitcells.dem.source.geal.GealParserBaseVisitor<FunctionCallChainDesc> {
     public static FunctionCallChainDesc parseFunctionCallChain(GealParser.Function_call_chainContext arg) {
@@ -29,6 +36,11 @@ public class FunctionCallChainParser extends net.splitcells.dem.source.geal.Geal
 
     @Override
     public FunctionCallChainDesc visitFunction_call_chain(GealParser.Function_call_chainContext ctx) {
-        return visitChildren(ctx);
+        final var expression = parseExpression(ctx.expression());
+        final List<FunctionCallDesc> chain = list();
+        if (ctx.function_call() != null) {
+            ctx.function_call().forEach(f -> chain.add(parseFunctionCall(f)));
+        }
+        return functionCallChainDesc(expression, chain);
     }
 }
