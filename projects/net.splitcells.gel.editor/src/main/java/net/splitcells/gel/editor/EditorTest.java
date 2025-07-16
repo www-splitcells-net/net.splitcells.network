@@ -218,6 +218,7 @@ public class EditorTest {
 
     @UnitTest
     public void testGealParsing() {
+        final var testSubject = editor("test-subject", EXPLICIT_NO_CONTEXT);
         final var testData = """
                 student    = attribute('String', 'student');
                 examiner   = attribute('String', 'examiner');
@@ -237,6 +238,49 @@ public class EditorTest {
                 solution   .forEach(student)
                            .then(hasSize(2))
                 """;
-        parseGealSourceCode(testData);
+        testSubject.parse(parseGealSourceCode(testData));
+        testSubject.getAttributes().requirePresence("student", stringAttribute("student"), CONTENT_COMPARISON)
+                .requirePresence("examiner", stringAttribute("examiner"), CONTENT_COMPARISON)
+                .requirePresence("observer", stringAttribute("observer"), CONTENT_COMPARISON)
+                .requirePresence("date", integerAttribute("date"), CONTENT_COMPARISON)
+                .requirePresence("shift", integerAttribute("shift"), CONTENT_COMPARISON)
+                .requirePresence("roomNumber", integerAttribute("roomNumber"), CONTENT_COMPARISON);
+        testSubject.getTables().get("demands").headerView2().requireEquality(list(
+                        stringAttribute("student")
+                        , stringAttribute("examiner")
+                        , stringAttribute("observer"))
+                , CONTENT_COMPARISON);
+        testSubject.getTables().get("supplies").headerView2().requireEquality(list(
+                        integerAttribute("date")
+                        , integerAttribute("shift")
+                        , integerAttribute("roomNumber"))
+                , CONTENT_COMPARISON);
+        testSubject.getSolutions().get("solution").headerView2().requireEquality(list(
+                        stringAttribute("student")
+                        , stringAttribute("examiner")
+                        , stringAttribute("observer")
+                        , integerAttribute("date")
+                        , integerAttribute("shift")
+                        , integerAttribute("roomNumber"))
+                , CONTENT_COMPARISON);
+        testSubject.getSolutions().get("solution")
+                .constraint()
+                .readQuery()
+                .forAll(testSubject.getAttributes().get("examiner"))
+                .forAllCombinationsOf(testSubject.getAttributes().get("date"), testSubject.getAttributes().get("shift"))
+                .then(hasSize(1));
+        // The following tests, whether proper constraint trees are supported.
+        testSubject.getSolutions().get("solution")
+                .constraint()
+                .readQuery()
+                .forAll(testSubject.getAttributes().get("student"))
+                .forAllCombinationsOf(testSubject.getAttributes().get("date"), testSubject.getAttributes().get("shift"))
+                .then(hasSize(1));
+        // The following tests, whether constraint sharing is working.
+        testSubject.getSolutions().get("solution")
+                .constraint()
+                .readQuery()
+                .forAll(testSubject.getAttributes().get("student"))
+                .then(hasSize(2));
     }
 }
