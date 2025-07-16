@@ -27,7 +27,7 @@ import static net.splitcells.gel.constraint.type.Then.THEN_NAME;
 import static net.splitcells.gel.data.view.attribute.AttributeI.*;
 import static net.splitcells.gel.editor.Editor.editor;
 import static net.splitcells.gel.editor.EditorParser.*;
-import static net.splitcells.gel.editor.geal.parser.SourceCodeParser.parseGealSourceCode;
+import static net.splitcells.gel.editor.geal.parser.SourceUnitParser.parseGealSourceUnit;
 import static net.splitcells.gel.editor.lang.AttributeDescription.attributeDescription;
 import static net.splitcells.gel.editor.lang.ConstraintDescription.constraintDescription;
 import static net.splitcells.gel.editor.lang.FunctionCallDescription.functionCallDescription;
@@ -220,12 +220,12 @@ public class EditorTest {
     public void testGealParsing() {
         final var testSubject = editor("test-subject", EXPLICIT_NO_CONTEXT);
         final var testData = """
-                student    = attribute('String', 'student');
-                examiner   = attribute('String', 'examiner');
-                observer   = attribute('String', 'observer');
-                date       = attribute('Integer', 'date');
-                shift      = attribute('Integer', 'shift');
-                roomNumber = attribute('String', 'room number');
+                student    = attribute(String, 'student');
+                examiner   = attribute(String, 'examiner');
+                observer   = attribute(String, 'observer');
+                date       = attribute(Integer, 'date');
+                shift      = attribute(Integer, 'shift');
+                roomNumber = attribute(String, 'room number');
                 demands    = table('exams', student, examiner, observer);
                 supplies   = table('time slots', date, shift, roomNumber);
                 solution   = solution('Colloquium Plan', demands, supplies, rules);
