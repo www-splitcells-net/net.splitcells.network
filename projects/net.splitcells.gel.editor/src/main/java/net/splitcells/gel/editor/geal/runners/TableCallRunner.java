@@ -18,6 +18,7 @@ package net.splitcells.gel.editor.geal.runners;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
+import net.splitcells.gel.editor.geal.lang.FunctionCallChainDesc;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 import net.splitcells.gel.editor.geal.lang.NameDesc;
 import net.splitcells.gel.editor.geal.lang.StringDesc;
@@ -66,6 +67,12 @@ public class TableCallRunner implements FunctionCallRunner {
             final Attribute<?> att;
             switch (functionCall.getArguments().get(i).getExpression()) {
                 case NameDesc n -> attributes.add(context.getAttributes().get(n.getValue()));
+                case FunctionCallDesc n -> {
+                    if (n.getArguments().hasElements()) {
+                        throw notImplementedYet();
+                    }
+                    attributes.add(context.getAttributes().get(n.getName().getValue()));
+                }
                 default -> throw execException("Argument after the first one has to be the attribute names, but is a "
                         + functionCall.getArguments().get(i).getClass()
                         + " was given.");
