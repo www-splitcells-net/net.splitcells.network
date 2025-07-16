@@ -23,6 +23,7 @@ import net.splitcells.gel.editor.geal.lang.VariableDefinitionDesc;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.gel.editor.geal.parser.FunctionCallChainParser.parseFunctionCallChain;
 import static net.splitcells.gel.editor.geal.parser.VariableDefinitionParser.parseVariableDefinition;
 
 @JavaLegacyArtifact
@@ -39,6 +40,8 @@ public class StatementParser extends net.splitcells.dem.source.geal.GealParserBa
     public StatementDesc visitStatement(GealParser.StatementContext ctx) {
         if (ctx.variable_definition() != null) {
             return parseVariableDefinition(ctx.variable_definition());
+        } else if (ctx.function_call_chain() != null) {
+            return parseFunctionCallChain(ctx.function_call_chain());
         } else {
             throw execException(tree("The content type of statement is unknown.").withProperty("statement", ctx.getText()));
         }
