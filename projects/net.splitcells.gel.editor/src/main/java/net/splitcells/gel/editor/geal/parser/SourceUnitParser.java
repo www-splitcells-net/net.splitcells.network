@@ -16,40 +16,34 @@
 package net.splitcells.gel.editor.geal.parser;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.lang.tree.Tree;
-import net.splitcells.dem.source.geal.GealLexer;
 import net.splitcells.dem.source.geal.GealParser;
-import net.splitcells.gel.editor.geal.lang.SourceCode;
+import net.splitcells.gel.editor.geal.lang.SourceUnit;
 import net.splitcells.gel.editor.geal.lang.StatementDesc;
-import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.misc.ParseCancellationException;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.lang.AntlrUtils.baseErrorListener;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
-import static net.splitcells.gel.editor.geal.lang.SourceCode.sourceCode;
+import static net.splitcells.gel.editor.geal.lang.SourceUnit.sourceUnit;
 import static net.splitcells.gel.editor.geal.parser.GealAntlrUtils.gealParser;
 import static net.splitcells.gel.editor.geal.parser.StatementParser.parseStatement;
 
 @JavaLegacyArtifact
-public class SourceCodeParser extends net.splitcells.dem.source.geal.GealParserBaseVisitor<SourceCode> {
+public class SourceUnitParser extends net.splitcells.dem.source.geal.GealParserBaseVisitor<SourceUnit> {
 
-    public static SourceCode parseGealSourceCode(String arg) {
-        return new SourceCodeParser().visitSource_unit(gealParser(arg).source_unit());
+    public static SourceUnit parseGealSourceUnit(String arg) {
+        return new SourceUnitParser().visitSource_unit(gealParser(arg).source_unit());
     }
 
-    private SourceCodeParser() {
+    private SourceUnitParser() {
     }
 
     @Override
-    public SourceCode visitSource_unit(GealParser.Source_unitContext ctx) {
+    public SourceUnit visitSource_unit(GealParser.Source_unitContext ctx) {
         final List<StatementDesc> statements = list();
         ctx.statement().forEach(s -> {
             statements.add(parseStatement(s));
         });
-        return sourceCode(statements);
+        return sourceUnit(statements);
     }
 }
