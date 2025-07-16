@@ -71,7 +71,7 @@ public class AttributeCallRunner implements FunctionCallRunner {
         switch (second) {
             case StringDesc n -> secondName = n;
             default ->
-                    throw execException("The second argument has to be a string, but " + first.getClass() + " was given.");
+                    throw execException("The second argument has to be a string, but " + second.getClass() + " was given.");
         }
         final Optional<Object> result;
         if (firstName.getValue().equals(INTEGER_TYPE)) {
