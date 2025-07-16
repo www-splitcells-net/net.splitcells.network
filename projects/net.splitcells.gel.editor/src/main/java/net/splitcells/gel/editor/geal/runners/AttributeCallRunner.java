@@ -62,7 +62,12 @@ public class AttributeCallRunner implements FunctionCallRunner {
         final NameDesc firstName;
         switch (first) {
             case NameDesc n -> firstName = n;
-            case FunctionCallDesc n -> firstName = NameDesc.nameDesc(n.getName().getValue(), n.getSourceCodeQuote());
+            case FunctionCallDesc n -> {
+                if (n.getArguments().hasElements()) {
+                    throw notImplementedYet();
+                }
+                firstName = NameDesc.nameDesc(n.getName().getValue(), n.getSourceCodeQuote());
+            }
             default ->
                     throw execException("The first argument has to be a name, but " + first.getClass() + " was given.");
         }
