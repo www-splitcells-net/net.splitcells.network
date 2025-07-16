@@ -35,7 +35,7 @@ import static net.splitcells.gel.editor.geal.parser.FunctionCallChainParser.pars
 import static net.splitcells.gel.editor.lang.SourceCodeQuote.sourceCodeQuote;
 
 public class ExpressionParser extends net.splitcells.dem.source.geal.GealParserBaseVisitor<ExpressionDesc> {
-    public ExpressionDesc parseExpression(GealParser.ExpressionContext arg) {
+    public static ExpressionDesc parseExpression(GealParser.ExpressionContext arg) {
         return new ExpressionParser().visitExpression(arg);
     }
 
