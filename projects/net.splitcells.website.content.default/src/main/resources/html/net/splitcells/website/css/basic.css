@@ -533,6 +533,7 @@ article h3 {
 	}
 p:not(.NonStandard) {
 	font-family: var(--text-flowing-font);
+	text-align: justify;
 	}
 article {
 	width: 100%;
