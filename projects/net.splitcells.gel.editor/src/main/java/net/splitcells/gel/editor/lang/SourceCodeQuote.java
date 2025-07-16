@@ -18,6 +18,7 @@ package net.splitcells.gel.editor.lang;
 import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
 import static net.splitcells.dem.source.SourceUtils.root;
 
@@ -29,6 +30,10 @@ public class SourceCodeQuote {
 
     public static SourceCodeQuote sourceCodeQuote(ParserRuleContext arg) {
         return new SourceCodeQuote(arg.getText(), root(arg).getText(), arg.getStart().getLine());
+    }
+
+    public static SourceCodeQuote sourceCodeQuote(TerminalNode arg) {
+        return new SourceCodeQuote(arg.getText(), arg.getText(), arg.getSymbol().getLine());
     }
 
     public static SourceCodeQuote sourceCodeQuote(String quote, String document, int quoteLine) {
