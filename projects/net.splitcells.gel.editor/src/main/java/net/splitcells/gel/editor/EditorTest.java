@@ -219,7 +219,23 @@ public class EditorTest {
     @UnitTest
     public void testGealParsing() {
         final var testData = """
-                student=attribute('String', 'student');
+                student    = attribute('String', 'student');
+                examiner   = attribute('String', 'examiner');
+                observer   = attribute('String', 'observer');
+                date       = attribute('Integer', 'date');
+                shift      = attribute('Integer', 'shift');
+                roomNumber = attribute('String', 'room number');
+                demands    = table('exams', student, examiner, observer);
+                supplies   = table('time slots', date, shift, roomNumber);
+                solution   = solution('Colloquium Plan', demands, supplies, rules);
+                solution   .forEach(examiner)
+                           .forAllCombinationsOf(date, shift)
+                           .then(hasSize(1))
+                solution   .forEach(student)
+                           .forAllCombinationsOf(date, shift)
+                           .then(hasSize(1))
+                solution   .forEach(student)
+                           .then(hasSize(2))
                 """;
         parseGealSourceCode(testData);
     }
