@@ -20,6 +20,7 @@ import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 import net.splitcells.gel.editor.geal.lang.NameDesc;
 import net.splitcells.gel.editor.geal.lang.StringDesc;
+import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
 
@@ -46,6 +47,9 @@ public class SolutionCallRunner implements FunctionCallRunner {
     @Override
     public FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
         final var run = functionCallRun(subject, context);
+        if (functionCall.getArguments().isEmpty()) {
+            return run.setResult(Optional.of(context.<Solution>resolve(functionCall.getName())));
+        }
         if (!supports(functionCall)) {
             return run;
         }
