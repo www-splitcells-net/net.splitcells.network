@@ -215,6 +215,7 @@ public class EditorTest {
                 .then(hasSize(2));
     }
 
+    @UnitTest
     public void testGealParsing() {
         final var testSubject = editor("test-subject", EXPLICIT_NO_CONTEXT);
         final var testData = """
@@ -223,7 +224,7 @@ public class EditorTest {
                 observer   = attribute(String, 'observer');
                 date       = attribute(Integer, 'date');
                 shift      = attribute(Integer, 'shift');
-                roomNumber = attribute(String, 'room number');
+                roomNumber = attribute(Integer, 'room number');
                 demands    = table('exams', student, examiner, observer);
                 supplies   = table('time slots', date, shift, roomNumber);
                 solution   = solution('Colloquium Plan', demands, supplies, rules);
@@ -242,7 +243,7 @@ public class EditorTest {
                 .requirePresence("observer", stringAttribute("observer"), CONTENT_COMPARISON)
                 .requirePresence("date", integerAttribute("date"), CONTENT_COMPARISON)
                 .requirePresence("shift", integerAttribute("shift"), CONTENT_COMPARISON)
-                .requirePresence("roomNumber", integerAttribute("roomNumber"), CONTENT_COMPARISON);
+                .requirePresence("roomNumber", integerAttribute("room number"), CONTENT_COMPARISON);
         testSubject.getTables().get("demands").headerView2().requireEquality(list(
                         stringAttribute("student")
                         , stringAttribute("examiner")
@@ -251,7 +252,7 @@ public class EditorTest {
         testSubject.getTables().get("supplies").headerView2().requireEquality(list(
                         integerAttribute("date")
                         , integerAttribute("shift")
-                        , integerAttribute("roomNumber"))
+                        , integerAttribute("room number"))
                 , CONTENT_COMPARISON);
         testSubject.getSolutions().get("solution").headerView2().requireEquality(list(
                         stringAttribute("student")
@@ -259,7 +260,7 @@ public class EditorTest {
                         , stringAttribute("observer")
                         , integerAttribute("date")
                         , integerAttribute("shift")
-                        , integerAttribute("roomNumber"))
+                        , integerAttribute("room number"))
                 , CONTENT_COMPARISON);
         testSubject.getSolutions().get("solution")
                 .constraint()
