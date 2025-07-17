@@ -44,8 +44,7 @@ public class ThenCallRunner implements FunctionCallRunner {
                 || subject.orElseThrow() instanceof Query)
                 && functionCall.getName().getValue().equals(THEN_NAME)
                 && functionCall.getArguments().size() == 1
-                && (functionCall.getArguments().get(0).getExpression() instanceof NameDesc
-                || functionCall.getArguments().get(0).getExpression() instanceof FunctionCallDesc);
+                && functionCall.getArguments().get(0).getExpression() instanceof FunctionCallDesc;
     }
 
     @Override

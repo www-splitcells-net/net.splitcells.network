@@ -43,7 +43,7 @@ public class ForEachCallRunner implements FunctionCallRunner {
                 || subject.orElseThrow() instanceof Query)
                 && functionCall.getName().getValue().equals(FOR_EACH_NAME)
                 && functionCall.getArguments().size() == 1
-                && functionCall.getArguments().get(0).getExpression() instanceof NameDesc;
+                && functionCall.getArguments().get(0).getExpression() instanceof FunctionCallDesc;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class ForEachCallRunner implements FunctionCallRunner {
         if (!supports(functionCall, subject, context)) {
             return run;
         }
-        final var groupingName = (NameDesc) functionCall.getArguments().get(0).getExpression();
+        final var groupingName = ((FunctionCallDesc) functionCall.getArguments().get(0).getExpression()).getName();
         final var groupingAttribute = context.getAttributes().get(groupingName.getValue());
         final Query subjectVal;
         if (subject.orElseThrow() instanceof Solution solution) {

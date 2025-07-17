@@ -66,7 +66,6 @@ public class TableCallRunner implements FunctionCallRunner {
         IntStream.range(1, functionCall.getArguments().size()).forEach(i -> {
             final Attribute<?> att;
             switch (functionCall.getArguments().get(i).getExpression()) {
-                case NameDesc n -> attributes.add(context.getAttributes().get(n.getValue()));
                 case FunctionCallDesc n -> {
                     if (n.getArguments().hasElements()) {
                         throw notImplementedYet();

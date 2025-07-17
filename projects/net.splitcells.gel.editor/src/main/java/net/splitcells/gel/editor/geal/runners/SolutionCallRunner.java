@@ -66,7 +66,6 @@ public class SolutionCallRunner implements FunctionCallRunner {
         final var second = functionCall.getArguments().get(1).getExpression();
         final Table demands;
         switch (second) {
-            case NameDesc n -> demands = context.getTables().get(n.getValue());
             case FunctionCallDesc n -> {
                 if (n.getArguments().hasElements()) {
                     throw notImplementedYet();
@@ -79,7 +78,6 @@ public class SolutionCallRunner implements FunctionCallRunner {
         final var third = functionCall.getArguments().get(2).getExpression();
         final Table supplies;
         switch (third) {
-            case NameDesc n -> supplies = context.getTables().get(n.getValue());
             case FunctionCallDesc n -> {
                 if (n.getArguments().hasElements()) {
                     throw notImplementedYet();

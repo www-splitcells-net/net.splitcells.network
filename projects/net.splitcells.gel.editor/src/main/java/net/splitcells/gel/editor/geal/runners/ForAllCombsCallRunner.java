@@ -46,7 +46,7 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
                 && functionCall.getArguments().size() >= 1
                 && functionCall.getArguments()
                 .stream()
-                .hasNoMatch(n -> !(n.getExpression() instanceof NameDesc));
+                .hasNoMatch(n -> !(n.getExpression() instanceof FunctionCallDesc));
     }
 
     @Override
@@ -56,7 +56,7 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
             return run;
         }
         final var groupingAttributes = functionCall.getArguments().stream()
-                .map(a -> context.<Attribute<? extends Object>>resolve(((NameDesc) a.getExpression())))
+                .map(a -> context.<Attribute<? extends Object>>resolve(((FunctionCallDesc) a.getExpression()).getName()))
                 .toList();
         final Query subjectVal;
         if (subject.orElseThrow() instanceof Solution solution) {

@@ -61,7 +61,6 @@ public class AttributeCallRunner implements FunctionCallRunner {
         final var first = functionCall.getArguments().get(0).getExpression();
         final NameDesc firstName;
         switch (first) {
-            case NameDesc n -> firstName = n;
             case FunctionCallDesc n -> {
                 if (n.getArguments().hasElements()) {
                     throw notImplementedYet();
