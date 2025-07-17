@@ -14,7 +14,6 @@ source_unit: statement*;
 expression
     : function_call
     | Integer
-    | Name
     | String
     ;
 function_call: Name function_call_arguments?;
