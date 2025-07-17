@@ -27,6 +27,7 @@ import static net.splitcells.gel.constraint.type.Then.THEN_NAME;
 import static net.splitcells.gel.data.view.attribute.AttributeI.*;
 import static net.splitcells.gel.editor.Editor.editor;
 import static net.splitcells.gel.editor.EditorParser.*;
+import static net.splitcells.gel.editor.geal.lang.FunctionCallDesc.*;
 import static net.splitcells.gel.editor.geal.parser.SourceUnitParser.parseGealSourceUnit;
 import static net.splitcells.gel.editor.lang.AttributeDescription.attributeDescription;
 import static net.splitcells.gel.editor.lang.ConstraintDescription.constraintDescription;
@@ -40,8 +41,6 @@ import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuot
 import static net.splitcells.gel.editor.lang.TableDescription.tableDescription;
 import static net.splitcells.gel.editor.SolutionEditor.solutionEditor;
 import static net.splitcells.gel.editor.geal.lang.FunctionCallChainDesc.functionCallChainDesc;
-import static net.splitcells.gel.editor.geal.lang.FunctionCallDesc.functionCallDesc;
-import static net.splitcells.gel.editor.geal.lang.FunctionCallDesc.functionCallDesc2;
 import static net.splitcells.gel.editor.geal.lang.IntegerDesc.integerDesc;
 import static net.splitcells.gel.editor.geal.lang.NameDesc.nameDesc;
 import static net.splitcells.gel.editor.geal.lang.SourceUnit.sourceUnit;
@@ -110,61 +109,62 @@ public class EditorTest {
                 .then(hasSize(1));
     }
 
+    @UnitTest
     public void testGealInterpretation() {
         final var testSubject = editor("test-subject", EXPLICIT_NO_CONTEXT);
         final var testData = sourceUnit(list(
                 variableDefinitionDesc(nameDesc("student")
                         , functionCallDesc2(nameDesc("attribute")
-                                , list(nameDesc(STRING_TYPE), stringDesc("student"))))
+                                , list(functionCallDesc3(STRING_TYPE), stringDesc("student"))))
                 , variableDefinitionDesc(nameDesc("examiner")
                         , functionCallDesc2(nameDesc("attribute")
-                                , list(nameDesc(STRING_TYPE), stringDesc("examiner"))))
+                                , list(functionCallDesc3(STRING_TYPE), stringDesc("examiner"))))
                 , variableDefinitionDesc(nameDesc("observer")
                         , functionCallDesc2(nameDesc("attribute")
-                                , list(nameDesc(STRING_TYPE), stringDesc("observer"))))
+                                , list(functionCallDesc3(STRING_TYPE), stringDesc("observer"))))
                 , variableDefinitionDesc(nameDesc("date")
                         , functionCallDesc2(nameDesc("attribute")
-                                , list(nameDesc(INTEGER_TYPE), stringDesc("date"))))
+                                , list(functionCallDesc3(INTEGER_TYPE), stringDesc("date"))))
                 , variableDefinitionDesc(nameDesc("shift")
                         , functionCallDesc2(nameDesc("attribute")
-                                , list(nameDesc(INTEGER_TYPE), stringDesc("shift"))))
+                                , list(functionCallDesc3(INTEGER_TYPE), stringDesc("shift"))))
                 , variableDefinitionDesc(nameDesc("roomNumber")
                         , functionCallDesc2(nameDesc("attribute")
-                                , list(nameDesc(INTEGER_TYPE), stringDesc("roomNumber"))))
+                                , list(functionCallDesc3(INTEGER_TYPE), stringDesc("roomNumber"))))
                 , variableDefinitionDesc(nameDesc("demands")
                         , functionCallDesc2(nameDesc(TABLE_FUNCTION)
                                 , list(stringDesc("exams")
-                                        , nameDesc("student")
-                                        , nameDesc("examiner")
-                                        , nameDesc("observer"))))
+                                        , functionCallDesc3("student")
+                                        , functionCallDesc3("examiner")
+                                        , functionCallDesc3("observer"))))
                 , variableDefinitionDesc(nameDesc("supplies")
                         , functionCallDesc2(nameDesc(TABLE_FUNCTION)
                                 , list(stringDesc("time slots")
-                                        , nameDesc("date")
-                                        , nameDesc("shift")
-                                        , nameDesc("roomNumber"))))
+                                        , functionCallDesc3("date")
+                                        , functionCallDesc3("shift")
+                                        , functionCallDesc3("roomNumber"))))
                 , variableDefinitionDesc(nameDesc("solution")
                         , functionCallDesc2(nameDesc(SOLUTION_FUNCTION)
                                 , list(stringDesc("Colloquium Plan")
-                                        , nameDesc("demands")
-                                        , nameDesc("supplies")
-                                        , nameDesc("rules"))))
+                                        , functionCallDesc3("demands")
+                                        , functionCallDesc3("supplies")
+                                        , functionCallDesc3("rules"))))
                 , functionCallChainDesc(nameDesc("solution")
-                        , list(functionCallDesc2(nameDesc(FOR_EACH_NAME), list(nameDesc("examiner")))
+                        , list(functionCallDesc2(nameDesc(FOR_EACH_NAME), list(functionCallDesc3("examiner")))
                                 , functionCallDesc2(nameDesc(FOR_ALL_COMBINATIONS_OF)
-                                        , list(nameDesc("date"), nameDesc("shift")))
+                                        , list(functionCallDesc3("date"), functionCallDesc3("shift")))
                                 , functionCallDesc2(nameDesc(THEN_NAME)
                                         , list(functionCallDesc2(nameDesc(HAS_SIZE_NAME)
                                                 , list(integerDesc(1)))))))
                 , functionCallChainDesc(nameDesc("solution")
-                        , list(functionCallDesc2(nameDesc(FOR_EACH_NAME), list(nameDesc("student")))
+                        , list(functionCallDesc2(nameDesc(FOR_EACH_NAME), list(functionCallDesc3("student")))
                                 , functionCallDesc2(nameDesc(FOR_ALL_COMBINATIONS_OF)
-                                        , list(nameDesc("date"), nameDesc("shift")))
+                                        , list(functionCallDesc3("date"), functionCallDesc3("shift")))
                                 , functionCallDesc2(nameDesc(THEN_NAME)
                                         , list(functionCallDesc2(nameDesc(HAS_SIZE_NAME)
                                                 , list(integerDesc(1)))))))
                 , functionCallChainDesc(nameDesc("solution")
-                        , list(functionCallDesc2(nameDesc(FOR_EACH_NAME), list(nameDesc("student")))
+                        , list(functionCallDesc2(nameDesc(FOR_EACH_NAME), list(functionCallDesc3("student")))
                                 , functionCallDesc2(nameDesc(THEN_NAME)
                                         , list(functionCallDesc2(nameDesc(HAS_SIZE_NAME)
                                                 , list(integerDesc(2)))))))

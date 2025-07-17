@@ -20,10 +20,15 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.editor.lang.SourceCodeQuote;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.gel.editor.geal.lang.NameDesc.nameDesc;
 import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuote;
 import static net.splitcells.gel.editor.geal.lang.FunctionCallChainDesc.functionCallChainDesc;
 
 public final class FunctionCallDesc implements ExpressionDesc {
+    public static FunctionCallDesc functionCallDesc3(String name) {
+        return functionCallDesc(nameDesc(name), list(), emptySourceCodeQuote());
+    }
+
     public static FunctionCallDesc functionCallDesc(NameDesc name) {
         return functionCallDesc(name, list(), emptySourceCodeQuote());
     }
