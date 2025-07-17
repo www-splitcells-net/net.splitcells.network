@@ -47,7 +47,8 @@ public class ExpressionParser extends net.splitcells.dem.source.geal.GealParserB
         } else if (ctx.Integer() != null) {
             return integerDesc(parseInt(ctx.Integer().getText()), sourceCodeQuote(ctx.Integer()));
         } else if (ctx.String() != null) {
-            return stringDesc(ctx.String().getText(), sourceCodeQuote(ctx.String()));
+            final var text = ctx.String().getText();
+            return stringDesc(text.substring(1, text.length() - 1), sourceCodeQuote(ctx.String()));
         } else {
             throw execException(tree("Given an unknown expression type.")
                     .withProperty("Expression", ctx.getText()));
