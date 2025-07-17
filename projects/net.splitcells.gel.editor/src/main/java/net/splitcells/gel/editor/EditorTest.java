@@ -110,7 +110,6 @@ public class EditorTest {
                 .then(hasSize(1));
     }
 
-    @UnitTest
     public void testGealInterpretation() {
         final var testSubject = editor("test-subject", EXPLICIT_NO_CONTEXT);
         final var testData = sourceUnit(list(
@@ -216,7 +215,6 @@ public class EditorTest {
                 .then(hasSize(2));
     }
 
-    @UnitTest
     public void testGealParsing() {
         final var testSubject = editor("test-subject", EXPLICIT_NO_CONTEXT);
         final var testData = """
@@ -238,10 +236,7 @@ public class EditorTest {
                 solution   .forEach(student)
                            .then(hasSize(2))
                 """;
-        // TODO testSubject.parse(parseGealSourceUnit(testData));
-        if (true) {
-            return;
-        }
+        testSubject.parse(parseGealSourceUnit(testData));
         testSubject.getAttributes().requirePresence("student", stringAttribute("student"), CONTENT_COMPARISON)
                 .requirePresence("examiner", stringAttribute("examiner"), CONTENT_COMPARISON)
                 .requirePresence("observer", stringAttribute("observer"), CONTENT_COMPARISON)
