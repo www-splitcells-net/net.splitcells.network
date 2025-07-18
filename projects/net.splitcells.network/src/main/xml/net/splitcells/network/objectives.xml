@@ -46,8 +46,7 @@
             </item>
             <item>The <link post="/net/splitcells/gel/ui/objectives">Gel UI</link> provides a code editor, in order to use the software's functionality without special tooling.
             </item>
-            <item>The <link post="/net/splitcells/symbiosis/perspective/guidelines/perspectives.html">Discovery Trees</link> provide an overarching semantic inventory system. (
-                This has no dedicated project yet and is part of the Symbiosis project.
+            <item>The Discovery Trees provide an overarching semantic inventory system.
                 This should probably be a subproject of the Network project.
                 Also, see `src/main/java/net/splitcells/dem/object/Discoverable.java` and `net.splitcells.shell` for info regarding existing implementations.)
             </item>
