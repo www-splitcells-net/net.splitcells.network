@@ -35,6 +35,9 @@ public class DataCallRunner implements FunctionCallRunner {
     @Override
     public FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
         final var run = functionCallRun(subject, context);
+        if (!functionCall.getName().getValue().equals("data")) {
+            return run;
+        }
         if (functionCall.getArguments().size() != 1) {
             return run;
         }
