@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.editor;
 
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.editor.lang.*;
@@ -320,10 +321,16 @@ public class EditorTest {
                 """;
         final var suppliesCsv = """
                 date,shift,room number
-                1,2,3
+                4,5,6
                 """;
         testSubject.getData().put("demands.csv", toBytes(demandsCsv));
         testSubject.getData().put("supplies.csv", toBytes(suppliesCsv));
         testSubject.parse(parseGealSourceUnit(testData));
+        final var demands = testSubject.getTables().get("demands").orderedLines();
+        demands.requireSizeOf(1);
+        demands.get(0).values().requireEquals(list("1", "2", "3"));
+        final var supplies = testSubject.getTables().get("supplies").orderedLines();
+        supplies.requireSizeOf(1);
+        supplies.get(0).values().requireEquals(list(4, 5, 6));
     }
 }
