@@ -36,7 +36,6 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallMetaExecutor.functionCallMetaExecutor;
@@ -61,6 +60,7 @@ public class Editor implements Discoverable {
     @Getter private final Map<String, Solution> solutions = map();
     @Getter private final Map<String, Constraint> constraints = map();
     @Getter private final Map<Table, TableFormatting> tableFormatting = map();
+    @Getter private final Map<String, byte[]> data = map();
 
     private Editor(String argName, Discoverable argParent) {
         name = argName;
