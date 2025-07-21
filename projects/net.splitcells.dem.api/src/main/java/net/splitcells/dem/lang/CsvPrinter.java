@@ -26,10 +26,10 @@ import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
 @JavaLegacyArtifact
-public class CsvDocument implements AutoCloseable {
+public class CsvPrinter implements AutoCloseable {
 
-    public static CsvDocument csvDocument(List<String> header) {
-        return new CsvDocument(header);
+    public static CsvPrinter csvDocument(List<String> header) {
+        return new CsvPrinter(header);
     }
 
     public static String toCsvString(List<List<String>> content) {
@@ -41,7 +41,7 @@ public class CsvDocument implements AutoCloseable {
     private final StringBuilder result = new StringBuilder();
     private final CSVPrinter printer;
 
-    private CsvDocument(List<String> header) {
+    private CsvPrinter(List<String> header) {
         try {
             printer = new CSVPrinter(result, CSVFormat.RFC4180.withHeader(header.toArray(new String[header.size()])));
         } catch (IOException e) {

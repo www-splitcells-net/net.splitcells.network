@@ -20,7 +20,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.lang.CsvDocument.csvDocument;
+import static net.splitcells.dem.lang.CsvPrinter.csvDocument;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;

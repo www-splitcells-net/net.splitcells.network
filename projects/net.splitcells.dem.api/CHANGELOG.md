@@ -5,6 +5,7 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2025-07-21\#37** Rename CsvDocument to CsvPrinter, as it is otherwise misleading.
 * **2025-06-10\#37** Log warnings during test execution by default.
 * **2025-06-10\#37** Shorten log methods:
     1. Rename `Log#appendWarning` to `Log#warn`.
