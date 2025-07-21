@@ -166,6 +166,7 @@ expression
     | prefix_operator expression
     | Keyword_new type_declaration call_arguments
         	Brace_curly_open class_member* Brace_curly_closed access?
+    | Keyword_new type_declaration Brackets_open expression Brackets_closed access?
     | Keyword_new type_declaration call_arguments access?
     | function_call access?
     | name access?
