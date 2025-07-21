@@ -28,6 +28,7 @@ import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.lang.CsvDocument.csvDocument;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -66,7 +67,7 @@ public interface Table extends View {
      * Create a new {@link Line} with the given values and places it at the given location.
      *
      * @param lineValues The value of the new {@link Line}.
-     * @param index The location of the new {@link Line}.
+     * @param index      The location of the new {@link Line}.
      * @return Returns the newly added {@link Line}.
      */
     Line addTranslated(ListView<Object> lineValues, int index);
@@ -156,6 +157,19 @@ public interface Table extends View {
                 .filter(line -> line != null)
                 .forEach(line -> dom.withChild(line.toTree()));
         return dom;
+    }
+
+    default Table withAddedCsv(String csvFile) {
+        csvDocument(csvFile, headerView().stream().map(h -> h.name()).toArray(i -> new String[i]))
+                .process(row -> {
+                    final ListView<Object> rawValues = list();
+                    headerView().forEach(attribute -> {
+                        final var rawValue = row.value(attribute.name());
+                        rawValues.add(attribute.deserializeValue(rawValue));
+                    });
+                    addTranslated(rawValues);
+                });
+        return this;
     }
 
     default Table withAddSimplifiedCsv(String csvFile) {
