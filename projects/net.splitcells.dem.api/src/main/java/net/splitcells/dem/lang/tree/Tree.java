@@ -228,6 +228,14 @@ public interface Tree extends TreeView, Convertible {
         return children().get(index);
     }
 
+    /**
+     *
+     * @return Assumes, that the this {@link Tree} is a named variable with content and nothing else.
+     */
+    default String content() {
+        return children().get(0).name();
+    }
+
     default Tree withChildren(Tree... argChildren) {
         Stream.of(argChildren).forEach(children()::add);
         return this;
