@@ -12,16 +12,24 @@
     <meta>
         <title>Geal Editor</title>
         <pseudo-full-screen-by-default>true</pseudo-full-screen-by-default>
+        <commands>
+            <command id="net-splitcells-gel-ui-editor-geal-form-data-query"
+                     method="net_splitcells_gel_ui_editor_geal_form_data_query">Data Query
+            </command>
+        </commands>
     </meta>
     <notification>
         <only-for-general-public>true</only-for-general-public>
         <default-content>net/splitcells/website/server/form-notification-content-default</default-content>
         <accept-notification>I agree, with the terms of service for using this server.</accept-notification>
     </notification>
-    <form-editor id="net-splitcells-gel-ui-editor-geal-form">
-
+    <form-editor id="net-splitcells-gel-ui-editor-geal-form"
+                 action="/net/splitcells/gel/ui/editor/geal/editor-data-query.form">
+        <library path="net/splitcells/gel/ui/editor/geal/lib"/>
         <text-area id="net-splitcells-gel-ui-editor-geal-form-problem-definition"
                    name="Definition"
                    main-tab="true"/>
+        <text-area id="net-splitcells-gel-ui-editor-geal-form-data-fields"
+                   name="Data Query"/>
     </form-editor>
 </article>
