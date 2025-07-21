@@ -29,7 +29,7 @@ import java.util.function.Function;
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.lang.CsvDocument.toCsvString;
+import static net.splitcells.dem.lang.CsvPrinter.toCsvString;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.Result.result;
