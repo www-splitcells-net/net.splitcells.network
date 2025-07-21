@@ -20,12 +20,14 @@ import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 
 public class DataCallRunner implements FunctionCallRunner {
     public static DataCallRunner dataCallRunner() {
         return new DataCallRunner();
     }
+
     private DataCallRunner() {
 
     }
@@ -33,6 +35,15 @@ public class DataCallRunner implements FunctionCallRunner {
     @Override
     public FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
         final var run = functionCallRun(subject, context);
+        if (functionCall.getArguments().size() != 1) {
+            return run;
+        }
+        final var firstArg = context.parseObject(functionCall.getArguments().get(0));
+        if (firstArg instanceof String dataName) {
+            run.setResult(Optional.of(context.getData().get(dataName)));
+        } else {
+            throw execException();
+        }
         return run;
     }
 }
