@@ -38,6 +38,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.gel.editor.geal.parser.SourceUnitParser.parseGealSourceUnit;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallMetaExecutor.functionCallMetaExecutor;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 
@@ -110,6 +111,12 @@ public class Editor implements Discoverable {
         } else {
             throw notImplementedYet();
         }
+    }
+
+    @ReturnsThis
+    public Editor parse(String sourceUnit) {
+        parse(parseGealSourceUnit(sourceUnit));
+        return this;
     }
 
     @ReturnsThis
