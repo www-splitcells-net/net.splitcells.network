@@ -1,0 +1,22 @@
+student    = attribute(String,  'student');
+examiner   = attribute(String,  'examiner');
+observer   = attribute(String,  'observer');
+date       = attribute(Integer, 'date');
+shift      = attribute(Integer, 'shift');
+roomNumber = attribute(Integer, 'room number');
+
+demands    = table('exams', student, examiner, observer);
+demands    . importCsv(data('demands.csv'));
+
+supplies   = table('time slots', date, shift, roomNumber);
+supplies   . importCsv(data('supplies.csv'));
+
+solution   = solution('Colloquium Plan', demands, supplies, rules);
+solution   . forEach(examiner)
+           . forAllCombinationsOf(date, shift)
+           . then(hasSize(1))
+solution   . forEach(student)
+           . forAllCombinationsOf(date, shift)
+           . then(hasSize(1))
+solution   . forEach(student)
+           . then(hasSize(2))

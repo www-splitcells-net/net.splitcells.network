@@ -28,7 +28,8 @@
         <library path="net/splitcells/gel/ui/editor/geal/lib"/>
         <text-area id="net-splitcells-gel-ui-editor-geal-form-problem-definition"
                    name="Definition"
-                   main-tab="true"/>
+                   main-tab="true"
+                   initial-content-at="/net/splitcells/gel/ui/editor/geal/examples/colloquium-planning.txt"/>
         <text-area id="net-splitcells-gel-ui-editor-geal-form-data-fields"
                    name="Data Query"/>
     </form-editor>
