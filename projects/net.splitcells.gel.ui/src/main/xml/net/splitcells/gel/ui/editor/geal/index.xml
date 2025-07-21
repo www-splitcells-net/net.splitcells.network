@@ -13,8 +13,8 @@
         <title>Geal Editor</title>
         <pseudo-full-screen-by-default>true</pseudo-full-screen-by-default>
         <commands>
-            <command id="net-splitcells-gel-ui-editor-geal-form-data-query"
-                     method="net_splitcells_gel_ui_editor_geal_form_data_query">Data Query
+            <command id="net-splitcells-gel-ui-editor-geal-form-submit"
+                     method="net_splitcells_gel_ui_editor_geal_form_submit">Calculate solution
             </command>
         </commands>
     </meta>
@@ -24,7 +24,7 @@
         <accept-notification>I agree, with the terms of service for using this server.</accept-notification>
     </notification>
     <form-editor id="net-splitcells-gel-ui-editor-geal-form"
-                 action="/net/splitcells/gel/ui/editor/geal/editor-data-query.form">
+                 action="/net/splitcells/gel/ui/editor/geal/form">
         <library path="net/splitcells/gel/ui/editor/geal/lib"/>
         <text-area id="net-splitcells-gel-ui-editor-geal-form-problem-definition"
                    name="Definition"

@@ -34,7 +34,7 @@ public class EditorDataQuery implements Processor<Tree, Tree> {
     public static final String FORM_UPDATE = "net-splitcells-websiter-server-form-update";
     public static final String DATA_FIELDS = "net-splitcells-gel-ui-editor-geal-form-data-fields";
 
-    public static final Trail PATH = Trail.trail("net/splitcells/gel/ui/editor/geal/editor-data-query.form");
+    public static final Trail PATH = Trail.trail("net/splitcells/gel/ui/editor/geal/form");
 
     public static EditorDataQuery editorDataQuery() {
         return new EditorDataQuery();
