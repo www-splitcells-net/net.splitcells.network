@@ -219,14 +219,16 @@ public class EditorTest {
     public void testGealParsing() {
         final var testSubject = editor("test-subject", EXPLICIT_NO_CONTEXT);
         final var testData = """
-                student    = attribute(String, 'student');
-                examiner   = attribute(String, 'examiner');
-                observer   = attribute(String, 'observer');
+                student    = attribute(String,  'student');
+                examiner   = attribute(String,  'examiner');
+                observer   = attribute(String,  'observer');
                 date       = attribute(Integer, 'date');
                 shift      = attribute(Integer, 'shift');
                 roomNumber = attribute(Integer, 'room number');
+                
                 demands    = table('exams', student, examiner, observer);
                 supplies   = table('time slots', date, shift, roomNumber);
+                
                 solution   = solution('Colloquium Plan', demands, supplies, rules);
                 solution   .forEach(examiner)
                            .forAllCombinationsOf(date, shift)
