@@ -31,6 +31,7 @@ import static net.splitcells.gel.editor.geal.runners.ForAllCombsCallRunner.forAl
 import static net.splitcells.gel.editor.geal.runners.ForEachCallRunner.forEachCallRunner;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 import static net.splitcells.gel.editor.geal.runners.HasSizeCallRunner.hasSizeCallRunner;
+import static net.splitcells.gel.editor.geal.runners.ImportCsvRunner.importCsvRunner;
 import static net.splitcells.gel.editor.geal.runners.SolutionCallRunner.solutionCallRunner;
 import static net.splitcells.gel.editor.geal.runners.TableCallRunner.tableCallRunner;
 import static net.splitcells.gel.editor.geal.runners.ThenCallRunner.thenCallRunner;
@@ -55,7 +56,8 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
                 .registerExecutor(forAllCombsCallRunner())
                 .registerExecutor(thenCallRunner())
                 .registerExecutor(hasSizeCallRunner())
-                .registerExecutor(dataCallRunner());
+                .registerExecutor(dataCallRunner())
+                .registerExecutor(importCsvRunner());
     }
 
     private final List<FunctionCallRunner> executors = list();
