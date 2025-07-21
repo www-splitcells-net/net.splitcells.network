@@ -20,5 +20,8 @@
     </notification>
     <form-editor id="net-splitcells-gel-ui-editor-geal-form">
 
+        <text-area id="net-splitcells-gel-ui-editor-geal-form-problem-definition"
+                   name="Definition"
+                   main-tab="true"/>
     </form-editor>
 </article>
