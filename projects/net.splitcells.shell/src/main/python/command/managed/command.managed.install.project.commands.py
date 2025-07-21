@@ -35,7 +35,7 @@ class Command:
         for projectCommand in self.binFolder.rglob("*"):
             self._installProjectCommand(projectCommand.name, self._projectCommandContent('./bin/' + projectCommand.name + ' $@'))
         self._installDefaultCommand('repo.gui')
-        self._installDefaultCustomCommand('build', 'mvn clean install')
+        self._installDefaultCustomCommand('mci', 'mci')
         self._installDefaultCustomCommand('shell', '$SHELL')
     def _installDefaultCustomCommand(self, name, command):
         binFile = self.binFolder.joinpath(name)
