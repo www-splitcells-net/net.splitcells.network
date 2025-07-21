@@ -43,7 +43,7 @@ public class DataCallRunner implements FunctionCallRunner {
         }
         final var firstArg = context.parseObject(functionCall.getArguments().get(0));
         if (firstArg instanceof String dataName) {
-            run.setResult(Optional.of(context.getData().get(dataName)));
+            run.setResult(Optional.of(context.loadData(dataName)));
         } else {
             throw execException();
         }

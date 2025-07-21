@@ -48,10 +48,10 @@ public class EditorDataQuery implements Processor<Tree, Tree> {
     public Response<Tree> process(Request<Tree> request) {
         final var problemDefinition = request.data().namedChildren(PROBLEM_DEFINITION);
         if (problemDefinition.size() == 1) {
-            final var editor = editor("editor-data-query", EXPLICIT_NO_CONTEXT);
+            final var editor = editor("editor-data-query", EXPLICIT_NO_CONTEXT).setQueryMode(true);
             editor.parse(problemDefinition.get(0).content());
             final var formUpdate = tree(FORM_UPDATE);
-            formUpdate.withProperty(DATA_FIELDS, editor.getData().keySet().stream().reduce("", (a, b) -> a + "," + b));
+            formUpdate.withProperty(DATA_FIELDS, editor.dataKeys().stream().reduce((a, b) -> a + "," + b).orElse(""));
             return response(formUpdate);
         } else if (problemDefinition.size() > 1) {
             throw execException();

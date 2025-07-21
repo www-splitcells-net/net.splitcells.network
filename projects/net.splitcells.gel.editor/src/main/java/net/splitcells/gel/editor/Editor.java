@@ -16,6 +16,9 @@
 package net.splitcells.gel.editor;
 
 import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
@@ -48,12 +51,14 @@ import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCal
  * as having multiple ids for one thing will cause problems.
  * Otherwise, error messages and debugging can get hard to understand.
  */
+@Accessors(chain = true)
 public class Editor implements Discoverable {
     public static Editor editor(String name, Discoverable parent) {
         return new Editor(name, parent);
     }
 
     @Getter private final String name;
+    @Getter @Setter private boolean isQueryMode = false;
     @Getter private final Discoverable parent;
     @Getter private final Map<String, Attribute<?>> attributes = map();
     @Getter private final Map<String, Rater> raters = map();
@@ -61,7 +66,7 @@ public class Editor implements Discoverable {
     @Getter private final Map<String, Solution> solutions = map();
     @Getter private final Map<String, Constraint> constraints = map();
     @Getter private final Map<Table, TableFormatting> tableFormatting = map();
-    @Getter private final Map<String, byte[]> data = map();
+    private final Map<String, byte[]> data = map();
 
     private Editor(String argName, Discoverable argParent) {
         name = argName;
@@ -96,6 +101,27 @@ public class Editor implements Discoverable {
         } else {
             throw notImplementedYet();
         }
+    }
+
+    public byte[] loadData(String name) {
+        if (isQueryMode) {
+            return data.getOptionally(name).orElseGet(() -> {
+                final var newValue = new byte[0];
+                data.put(name, newValue);
+                return newValue;
+            });
+        }
+        return data.getOptionally(name).orElseThrow();
+    }
+
+    public Set<String> dataKeys() {
+        return data.keySet2();
+    }
+
+    @ReturnsThis
+    public Editor saveData(String name, byte[] content) {
+        data.put(name, content);
+        return this;
     }
 
     @SuppressWarnings("unchecked")

@@ -323,8 +323,8 @@ public class EditorTest {
                 date,shift,room number
                 4,5,6
                 """;
-        testSubject.getData().put("demands.csv", toBytes(demandsCsv));
-        testSubject.getData().put("supplies.csv", toBytes(suppliesCsv));
+        testSubject.saveData("demands.csv", toBytes(demandsCsv));
+        testSubject.saveData("supplies.csv", toBytes(suppliesCsv));
         testSubject.parse(parseGealSourceUnit(testData));
         final var demands = testSubject.getTables().get("demands").orderedLines();
         demands.requireSizeOf(1);
