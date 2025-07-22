@@ -151,6 +151,13 @@ function net_splitcells_webserver_form_submit_config() {
     };
     return config;
 }
+/* Submits a HTML form's action.
+ * The request is sent as multipart/form-data and contains the form's inputs.
+ * The response is a JSON dictionary containing the key `net-splitcells-websiter-server-form-update`.
+ * The key is a dictionary, that contains the new values for every input.
+ * A not existing field can be in the response.
+ * In this case, that server requests the creation of a new form input.
+ */
 function net_splitcells_webserver_form_submit(config) {
     var submitButton = document.getElementById(config['submit-button-id']);
     var preSubmitButtonText = submitButton.innerHTML;
