@@ -58,7 +58,6 @@ public class Editor implements Discoverable {
     }
 
     @Getter private final String name;
-    @Getter @Setter private boolean isQueryMode = false;
     @Getter private final Discoverable parent;
     @Getter private final Map<String, Attribute<?>> attributes = map();
     @Getter private final Map<String, Rater> raters = map();
@@ -104,14 +103,11 @@ public class Editor implements Discoverable {
     }
 
     public byte[] loadData(String name) {
-        if (isQueryMode) {
-            return data.getOptionally(name).orElseGet(() -> {
-                final var newValue = new byte[0];
-                data.put(name, newValue);
-                return newValue;
-            });
-        }
-        return data.getOptionally(name).orElseThrow();
+        return data.getOptionally(name).orElseGet(() -> {
+            final var newValue = new byte[0];
+            data.put(name, newValue);
+            return newValue;
+        });
     }
 
     public Set<String> dataKeys() {
