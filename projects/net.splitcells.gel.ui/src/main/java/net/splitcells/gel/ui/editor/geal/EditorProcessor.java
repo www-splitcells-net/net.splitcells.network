@@ -25,10 +25,9 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.editor.Editor.editor;
-import static net.splitcells.website.server.processor.Response.emptyResponse;
 import static net.splitcells.website.server.processor.Response.response;
 
-public class EditorDataQuery implements Processor<Tree, Tree> {
+public class EditorProcessor implements Processor<Tree, Tree> {
 
     public static final String PROBLEM_DEFINITION = "net-splitcells-gel-ui-editor-geal-form-problem-definition";
     public static final String FORM_UPDATE = "net-splitcells-websiter-server-form-update";
@@ -36,11 +35,11 @@ public class EditorDataQuery implements Processor<Tree, Tree> {
 
     public static final Trail PATH = Trail.trail("net/splitcells/gel/ui/editor/geal/form");
 
-    public static EditorDataQuery editorDataQuery() {
-        return new EditorDataQuery();
+    public static EditorProcessor editorProcessor() {
+        return new EditorProcessor();
     }
 
-    private EditorDataQuery() {
+    private EditorProcessor() {
 
     }
 
