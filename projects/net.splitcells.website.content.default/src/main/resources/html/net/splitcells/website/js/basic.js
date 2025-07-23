@@ -169,6 +169,7 @@ function net_splitcells_webserver_form_submit(config) {
     const form = document.getElementById(config['form-id']);
     const request  = new XMLHttpRequest();
     const data = new FormData(form);
+    const tabBar = form.querySelector('.net-splitcells-website-form-editor-tab-bar');
     request.onload = function() {
         console.log('Response to "' + config['form-id'] + '":' + this.responseText);
         let responseObject = JSON.parse(this.responseText);
@@ -176,6 +177,12 @@ function net_splitcells_webserver_form_submit(config) {
             for (const [key, value] of Object.entries(responseObject['net-splitcells-websiter-server-form-update'])) {
                 if (document.getElementById(key) === null) {
                     console.log('Could not find form field for update: ' + key);
+                    const newTabButton = document.createElement("div");
+                    newTabButton.innerHTML = key;
+                    newTabButton.className = 'net-splitcells-button net-splitcells-action-button '
+                        + key + '-button '
+                        + config['form-id'] + '-tab-button';
+                    tabBar.appendChild(newTabButton);
                     continue;
                 }
                 document.getElementById(key).value = value; // value is used by form elements like textarea.
