@@ -217,6 +217,7 @@ function net_splitcells_webserver_form_submit(config) {
                     newTabEditor.className = 'net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor';
                     newTabEditor.setAttribute('net-splitcells-syncs-to', key);
                     newTabContent.appendChild(newTabEditor);
+                    
                     continue;
                 }
                 const formInput = document.getElementById(key);
