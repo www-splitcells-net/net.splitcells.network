@@ -217,9 +217,6 @@ function net_splitcells_webserver_form_submit(config) {
                             errorButtons[i].classList.add('net-splitcells-action-button-state-has-error');
                         }
                     }
-                }
-                if (formInput.getAttribute('content-types') === undefined || formInput.getAttribute('content-types') === null) {
-                } else {
                     if (formInput.getAttribute('content-types').includes(' result-output ')) {
                         if (value === null || value === undefined || value === '') {
                             let errorButtons = document.getElementsByClassName(key + '-tab-button');
