@@ -151,6 +151,18 @@ function net_splitcells_webserver_form_submit_config() {
     };
     return config;
 }
+function net_splitcells_webserver_form_tab_select(formId, inputId) {
+    unshowByCssClass(inputId);
+    var inputButtons = document.getElementsByClassName(formId + '-tab-button');
+    for (var i = 0; i < inputButtons.length; i++) {
+        inputButtons[i].classList.remove('net-splitcells-tab-button-selected');
+    }
+    showById(inputId + '-tab-content');
+    var inputTabButtons = document.getElementsByClassName(inputId + '-tab-button');
+    for (var i = 0; i < inputTabButtons.length; i++) {
+        inputTabButtons[i].classList.add('net-splitcells-tab-button-selected');
+    }
+}
 /* Submits a HTML form's action.
  * The request is sent as multipart/form-data and contains the form's inputs.
  * The response is a JSON dictionary containing the key `net-splitcells-websiter-server-form-update`.
@@ -182,8 +194,11 @@ function net_splitcells_webserver_form_submit(config) {
                     const newTabButton = document.createElement("div");
                     newTabButton.innerHTML = key;
                     newTabButton.className = 'net-splitcells-button net-splitcells-action-button '
-                        + key + '-button '
+                        + key + '-tab-button '
                         + config['form-id'] + '-tab-button';
+                    newTabButton.onclick = function() {
+                        net_splitcells_webserver_form_tab_select(config['form-id'], key);
+                    };
                     tabBar.appendChild(newTabButton);
 
                     const newTabContent = document.createElement('div');
