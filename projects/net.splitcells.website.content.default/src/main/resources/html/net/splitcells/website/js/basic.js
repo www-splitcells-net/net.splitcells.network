@@ -206,6 +206,8 @@ function net_splitcells_webserver_form_submit(config) {
                     newTabContent.innerHTML = value;
                     newTabContent.id = key + '-tab-content';
                     newTabContent.className = 'net-splitcells-website-form-editor-tab ' + formId;
+                    newTabContent.style.display = 'none';
+                    newTabContent.style.visibility = 'hidden';
                     tabHolder.appendChild(newTabContent);
 
                     const newTabInput = document.createElement('textarea');
@@ -217,7 +219,7 @@ function net_splitcells_webserver_form_submit(config) {
                     newTabEditor.className = 'net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor';
                     newTabEditor.setAttribute('net-splitcells-syncs-to', key);
                     newTabContent.appendChild(newTabEditor);
-                    
+
                     continue;
                 }
                 const formInput = document.getElementById(key);
