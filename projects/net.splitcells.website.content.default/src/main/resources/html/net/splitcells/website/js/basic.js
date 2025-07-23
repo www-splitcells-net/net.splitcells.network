@@ -171,7 +171,7 @@ function net_splitcells_webserver_form_submit(config) {
     const data = new FormData(form);
     request.onload = function() {
         console.log('Response to "' + config['form-id'] + '":' + this.responseText);
-        var responseObject = JSON.parse(this.responseText);
+        let responseObject = JSON.parse(this.responseText);
         if ('net-splitcells-websiter-server-form-update' in responseObject) {
             for (const [key, value] of Object.entries(responseObject['net-splitcells-websiter-server-form-update'])) {
                 if (document.getElementById(key) === null) {
@@ -184,14 +184,14 @@ function net_splitcells_webserver_form_submit(config) {
                 } else {
                     if (document.getElementById(key).getAttribute('content-types').includes(' error-output ')) {
                         if (value === null || value === undefined || value === '') {
-                            var errorButtons = document.getElementsByClassName(key + '-tab-button');
-                            for (var i = 0; i < errorButtons.length; i++) {
+                            let errorButtons = document.getElementsByClassName(key + '-tab-button');
+                            for (let i = 0; i < errorButtons.length; i++) {
                                 errorButtons[i].classList.remove('net-splitcells-action-button-state-has-error');
                             }
                             continue;
                         }
-                        var errorButtons = document.getElementsByClassName(key + '-tab-button');
-                        for (var i = 0; i < errorButtons.length; i++) {
+                        let errorButtons = document.getElementsByClassName(key + '-tab-button');
+                        for (let = 0; i < errorButtons.length; i++) {
                             errorButtons[i].classList.add('net-splitcells-action-button-state-has-error');
                         }
                     }
@@ -200,14 +200,14 @@ function net_splitcells_webserver_form_submit(config) {
                 } else {
                     if (document.getElementById(key).getAttribute('content-types').includes(' result-output ')) {
                         if (value === null || value === undefined || value === '') {
-                            var errorButtons = document.getElementsByClassName(key + '-tab-button');
-                            for (var i = 0; i < errorButtons.length; i++) {
+                            let errorButtons = document.getElementsByClassName(key + '-tab-button');
+                            for (let i = 0; i < errorButtons.length; i++) {
                                 errorButtons[i].classList.remove('net-splitcells-action-button-state-has-update');
                             }
                             continue;
                         }
-                        var errorButtons = document.getElementsByClassName(key + '-tab-button');
-                        for (var i = 0; i < errorButtons.length; i++) {
+                        let errorButtons = document.getElementsByClassName(key + '-tab-button');
+                        for (let i = 0; i < errorButtons.length; i++) {
                             errorButtons[i].classList.add('net-splitcells-action-button-state-has-update');
                         }
                     }
