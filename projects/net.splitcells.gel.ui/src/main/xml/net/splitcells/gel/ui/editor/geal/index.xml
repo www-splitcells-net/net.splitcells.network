@@ -30,7 +30,5 @@
                    name="Definition"
                    main-tab="true"
                    initial-content-at="/net/splitcells/gel/ui/editor/geal/examples/colloquium-planning.txt"/>
-        <text-area id="net-splitcells-gel-ui-editor-geal-form-data-fields"
-                   name="Data Query"/>
     </form-editor>
 </article>
