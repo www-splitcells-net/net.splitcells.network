@@ -172,19 +172,20 @@ function net_splitcells_webserver_form_tab_select(formId, inputId) {
  */
 function net_splitcells_webserver_form_submit(config) {
     const submitButton = document.getElementById(config['submit-button-id']);
+    const formId = config['form-id'];
     const preSubmitButtonText = submitButton.innerHTML;
     const onClickCode = submitButton.onclick;
     submitButton.onclick = null;
     submitButton.innerHTML = "Executing...";
     submitButton.classList.add("net-splitcells-button-activity");
     submitButton.classList.remove("net-splitcells-action-button");
-    const form = document.getElementById(config['form-id']);
+    const form = document.getElementById(formId);
     const request  = new XMLHttpRequest();
     const data = new FormData(form);
     const tabBar = form.querySelector('.net-splitcells-website-form-editor-tab-bar');
     const tabHolder = form.querySelector('.net-splitcells-website-form-editor-tab-holder');
     request.onload = function() {
-        console.log('Response to "' + config['form-id'] + '":' + this.responseText);
+        console.log('Response to "' + formId + '":' + this.responseText);
         let responseObject = JSON.parse(this.responseText);
         if ('net-splitcells-websiter-server-form-update' in responseObject) {
             for (const [key, value] of Object.entries(responseObject['net-splitcells-websiter-server-form-update'])) {
@@ -195,16 +196,16 @@ function net_splitcells_webserver_form_submit(config) {
                     newTabButton.innerHTML = key;
                     newTabButton.className = 'net-splitcells-button net-splitcells-action-button '
                         + key + '-tab-button '
-                        + config['form-id'] + '-tab-button';
+                        + formId + '-tab-button';
                     newTabButton.onclick = function() {
-                        net_splitcells_webserver_form_tab_select(config['form-id'], key);
+                        net_splitcells_webserver_form_tab_select(formId, key);
                     };
                     tabBar.appendChild(newTabButton);
 
                     const newTabContent = document.createElement('div');
                     newTabContent.innerHTML = value;
                     newTabContent.id = key + '-tab-content';
-                    newTabContent.className = 'net-splitcells-website-form-editor-tab';
+                    newTabContent.className = 'net-splitcells-website-form-editor-tab ' + formId;
                     tabHolder.appendChild(newTabContent);
 
                     const newTabInput = document.createElement('textarea');
@@ -212,6 +213,10 @@ function net_splitcells_webserver_form_submit(config) {
                     newTabInput.className = 'net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor-backend';
                     newTabContent.appendChild(newTabInput);
 
+                    const newTabEditor = document.createElement('div');
+                    newTabEditor.className = 'net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor';
+                    newTabEditor.setAttribute('net-splitcells-syncs-to', key);
+                    newTabContent.appendChild(newTabEditor);
                     continue;
                 }
                 const formInput = document.getElementById(key);
