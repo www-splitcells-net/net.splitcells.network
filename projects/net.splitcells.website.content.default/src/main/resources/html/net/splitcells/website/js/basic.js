@@ -170,6 +170,7 @@ function net_splitcells_webserver_form_submit(config) {
     const request  = new XMLHttpRequest();
     const data = new FormData(form);
     const tabBar = form.querySelector('.net-splitcells-website-form-editor-tab-bar');
+    const tabHolder = form.querySelector('.net-splitcells-website-form-editor-tab-holder');
     request.onload = function() {
         console.log('Response to "' + config['form-id'] + '":' + this.responseText);
         let responseObject = JSON.parse(this.responseText);
@@ -177,19 +178,33 @@ function net_splitcells_webserver_form_submit(config) {
             for (const [key, value] of Object.entries(responseObject['net-splitcells-websiter-server-form-update'])) {
                 if (document.getElementById(key) === null) {
                     console.log('Could not find form field for update: ' + key);
+
                     const newTabButton = document.createElement("div");
                     newTabButton.innerHTML = key;
                     newTabButton.className = 'net-splitcells-button net-splitcells-action-button '
                         + key + '-button '
                         + config['form-id'] + '-tab-button';
                     tabBar.appendChild(newTabButton);
+
+                    const newTabContent = document.createElement('div');
+                    newTabContent.innerHTML = value;
+                    newTabContent.id = key + '-tab-content';
+                    newTabContent.className = 'net-splitcells-website-form-editor-tab';
+                    tabHolder.appendChild(newTabContent);
+
+                    const newTabInput = document.createElement('textarea');
+                    newTabInput.id = key;
+                    newTabInput.className = 'net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor-backend';
+                    newTabContent.appendChild(newTabInput);
+
                     continue;
                 }
-                document.getElementById(key).value = value; // value is used by form elements like textarea.
-                document.getElementById(key).innerHTML = value; // innerHTML is used by div elements inside forms.
-                if (document.getElementById(key).getAttribute('content-types') === undefined) {
+                const formInput = document.getElementById(key);
+                formInput.value = value; // value is used by form elements like textarea.
+                formInput.innerHTML = value; // innerHTML is used by div elements inside forms.
+                if (formInput.getAttribute('content-types') === undefined || formInput.getAttribute('content-types') === null) {
                 } else {
-                    if (document.getElementById(key).getAttribute('content-types').includes(' error-output ')) {
+                    if (formInput.getAttribute('content-types').includes(' error-output ')) {
                         if (value === null || value === undefined || value === '') {
                             let errorButtons = document.getElementsByClassName(key + '-tab-button');
                             for (let i = 0; i < errorButtons.length; i++) {
@@ -203,9 +218,9 @@ function net_splitcells_webserver_form_submit(config) {
                         }
                     }
                 }
-                if (document.getElementById(key).getAttribute('content-types') === undefined) {
+                if (formInput.getAttribute('content-types') === undefined || formInput.getAttribute('content-types') === null) {
                 } else {
-                    if (document.getElementById(key).getAttribute('content-types').includes(' result-output ')) {
+                    if (formInput.getAttribute('content-types').includes(' result-output ')) {
                         if (value === null || value === undefined || value === '') {
                             let errorButtons = document.getElementsByClassName(key + '-tab-button');
                             for (let i = 0; i < errorButtons.length; i++) {
