@@ -159,16 +159,16 @@ function net_splitcells_webserver_form_submit_config() {
  * In this case, that server requests the creation of a new form input.
  */
 function net_splitcells_webserver_form_submit(config) {
-    var submitButton = document.getElementById(config['submit-button-id']);
-    var preSubmitButtonText = submitButton.innerHTML;
-    var onClickCode = submitButton.onclick;
+    const submitButton = document.getElementById(config['submit-button-id']);
+    const preSubmitButtonText = submitButton.innerHTML;
+    const onClickCode = submitButton.onclick;
     submitButton.onclick = null;
     submitButton.innerHTML = "Executing...";
     submitButton.classList.add("net-splitcells-button-activity");
     submitButton.classList.remove("net-splitcells-action-button");
-    var form = document.getElementById(config['form-id']);
-    var request  = new XMLHttpRequest();
-    var data = new FormData(form);
+    const form = document.getElementById(config['form-id']);
+    const request  = new XMLHttpRequest();
+    const data = new FormData(form);
     request.onload = function() {
         console.log('Response to "' + config['form-id'] + '":' + this.responseText);
         var responseObject = JSON.parse(this.responseText);
