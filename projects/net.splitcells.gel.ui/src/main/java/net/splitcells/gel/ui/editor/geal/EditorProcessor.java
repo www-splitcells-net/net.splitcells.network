@@ -50,6 +50,10 @@ public class EditorProcessor implements Processor<Tree, Tree> {
             editor.parse(problemDefinition.get(0).content());
             final var formUpdate = tree(FORM_UPDATE);
             editor.dataKeys().stream().forEach(d -> formUpdate.withProperty(d, ""));
+            editor.getTables().entrySet().forEach(
+                    e -> formUpdate.withProperty(e.getKey(), e.getValue().toCSV()));
+            editor.getSolutions().entrySet().forEach(
+                    e -> formUpdate.withProperty(e.getKey(), e.getValue().toCSV()));
             return response(formUpdate);
         } else if (problemDefinition.size() > 1) {
             throw execException();
