@@ -49,6 +49,9 @@ public class EditorProcessor implements Processor<Tree, Tree> {
             final var editor = editor("editor-data-query", EXPLICIT_NO_CONTEXT);
             editor.parse(problemDefinition.get(0).content());
             final var formUpdate = tree(FORM_UPDATE);
+            if (editor.getSolutions().size() == 1) {
+                editor.getSolutions().values().iterator().next().optimize();
+            }
             editor.dataKeys().stream().forEach(d -> formUpdate.withProperty(d, ""));
             editor.getTables().entrySet().forEach(
                     e -> formUpdate.withProperty(e.getKey(), e.getValue().toCSV()));
