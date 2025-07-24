@@ -13,8 +13,8 @@ supplies   . importCsv(data('supplies.csv'));
 
 solution   = solution('Colloquium Plan', demands, supplies, rules);
 solution   . forAllCombinationsOf(examiner, date, shift)
-           . then(hasSize(1))
+           . then(hasSize(1));
 solution   . forAllCombinationsOf(student, date, shift)
-           . then(hasSize(1))
+           . then(hasSize(1));
 solution   . forEach(student)
-           . then(hasSize(2))
+           . then(hasSize(2));
