@@ -9,11 +9,11 @@
 * Releases are done every time an important ticket is completed.
 ## [Unreleased]
 ### Major Changes
-* **2025-06-05 \#49** Reimplement `bin/worker.execute`, in order to:
+* **2025-06-05 \#49** Reimplement `bin/worker.execute` as `bin/worker.execute.py`, in order to:
     1. Add automatic tests.
     2. Deploy remotely without extra scripts via just `bin/worker.execute` (for command dispatch) and the `bin/bootstrap.*` (initial build commands).
     3. Deploy persistent user systemd service remotely without extra scripts.
-    4. Simplify code.
+    4. Simplify code by generating bash scripts.
     5. Find out, that a Java implementation of `bin/worker.execute`,
       currently would not be a net benefit by remove Python 3 from the software stack.
 * **2024-03-26 \#252** [Provide scheduling tool for schools in general.](https://splitcells.net/net/splitcells/network/community/features/done/2023-10-02-provide-scheduling-tool-for-schools-in-general.html)
