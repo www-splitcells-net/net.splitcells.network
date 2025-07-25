@@ -3,6 +3,8 @@
 SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
+# Introduction
+
 Provides a command line interface via Python for the Splitcells Network Worker.
 All files are stored at `cd ~/.local/state/${programName}/`, even though it can be started from any other Network repo.
 Bootstrapping steps are implemented in this script,
@@ -11,6 +13,8 @@ the major service manager of operation systems like systemD.
 Keep this as minimal as possible and
 consider moving functionality too a pure Java based implementation,
 that are not required for bootstrapping.
+
+# Implementation Details
 
 sh is used explicitly instead of the default shell, because on many servers custom shells like fish are used,
 that have different shell syntaxes, but provide good UI features for users.
@@ -25,6 +29,8 @@ by writing to any variable or attribute only once except for the configuration.
 These variables are only used as an argument for other variables or
 as variables in template strings.
 
+# Use cases
+
 Use this implementation only, as long this is used to deploy something from the ground up.
 For instance, the moment that releases (stored in i.e. m2 Maven repos) are deployed,
 a Java based implementation should be considered.
@@ -33,6 +39,8 @@ that it generates and executes fully fledged and ready to go shells scripts.
 Such shells scripts should than be easily uploadable/deployable on remote servers as well without any changes.
 In other words, these generated bootstrap script should not have any required reference to an existing Network Worker Execution and
 only require basic dependencies like sh and Podman.
+
+# Tasks
 
 TODO Move every file write to a dedicated save method, which is easier to control for the --dry-run flag.
 TODO Add test coverage and consider checking minimum coverage percentage.
