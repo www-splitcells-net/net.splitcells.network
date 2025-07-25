@@ -16,6 +16,7 @@
     4. Simplify code by generating bash scripts.
     5. Find out, that a Java implementation of `bin/worker.execute`,
       currently would not be a net benefit by remove Python 3 from the software stack.
+    6. In the future this script may support
 * **2024-03-26 \#252** [Provide scheduling tool for schools in general.](https://splitcells.net/net/splitcells/network/community/features/done/2023-10-02-provide-scheduling-tool-for-schools-in-general.html)
 * **2023-09-15** Migrate articles of `net.splitcells.network.blog` to `net.splitcells.network.community` and
   delete the project `net.splitcells.network.blog`,

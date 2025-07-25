@@ -91,6 +91,8 @@ TODO IDEA Currently, everything is stored in `~/.local/state/${programName}/*`.
      Of course, different users could be used instead.
 TODO --bootstrap-remote and --bootstrap-locally should be the same boolean parameter.
      The remoteness should be determined via --execute-via-ssh-at instead.
+IDEA Generate a shell script, that can be executed on other computers,
+     so that Python 3 is not required on the target computer for bootstrapping or deploying the software.
 """
 
 __author__ = "Mārtiņš Avots"
