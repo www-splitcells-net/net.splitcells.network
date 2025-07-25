@@ -25,6 +25,11 @@ Such shells scripts should than be easily uploadable/deployable on remote server
 In other words, these generated bootstrap script should not have any required reference to an existing Network Worker Execution and
 only require basic dependencies like sh and Podman.
 
+# Support
+
+`journalctl --follow --unit [execution name].daemon.service` can be used, in order to follow the log of the service in real time.
+`systemctl status [execution name].daemon.service` can be used, in order to check the state of the deployment.
+
 # Implementation Details
 
 sh is used explicitly instead of the default shell, because on many servers custom shells like fish are used,
