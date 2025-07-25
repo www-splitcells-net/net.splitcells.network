@@ -45,6 +45,25 @@ by writing to any variable or attribute only once except for the configuration.
 These variables are only used as an argument for other variables or
 as variables in template strings.
 
+# Implementation History
+
+There was too much time spent on implementing this script and its previous version.
+There is one reason for that:
+at the core the execution/deployment script is more or less a bash script template with parameters in principle
+or at least a bash script generator.
+
+Historically speaking it was not treated as such and was more implemented as a parameterized flow of interactive commands.
+Such interactive flows are harder to develop and to debug and caused a lot of development costs.
+Today, there is a much bigger focus on generating a script of commands instead.
+
+Bash was not used directly in the past, because of its bad argument parsing and
+combined with bad planning for the future caused the situation.
+Even things like `repos.process.py` is affected by the same problem.
+
+This problem was noticed, when the command `bin/repos.pull` was implemented.
+As the parameter are very few in count and simple to use,
+it became obvious how to quickly develop such a deployment script by creating shell command templates.
+
 # Tasks
 
 TODO Move every file write to a dedicated save method, which is easier to control for the --dry-run flag.
