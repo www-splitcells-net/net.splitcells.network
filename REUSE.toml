@@ -77,6 +77,12 @@ SPDX-FileCopyrightText = "Contributors To The `net.splitcells.*` Projects"
 SPDX-License-Identifier = "EPL-2.0 OR GPL-2.0-or-later"
 
 [[annotations]]
+path = "projects/net.splitcells.gel.ui/src/main/resources/html/net/splitcells/gel/ui/editor/geal/examples/colloquium-planning.txt"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Contributors To The `net.splitcells.*` Projects"
+SPDX-License-Identifier = "EPL-2.0 OR GPL-2.0-or-later"
+
+[[annotations]]
 path = "projects/net.splitcells.dem.source/README.md"
 precedence = "aggregate"
 SPDX-FileCopyrightText = "Contributors To The `net.splitcells.*` Projects"
