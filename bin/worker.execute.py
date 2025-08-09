@@ -25,7 +25,7 @@ a Java based implementation should be considered.
 It would be a good idea, if such a Worker Execution based on Java reimplements bootstrapping tasks in such a way,
 that it generates and executes fully fledged and ready to go shells scripts.
 Such shells scripts should than be easily uploadable/deployable on remote servers as well without any changes.
-In other words, these generated bootstrap script should not have any required reference to an existing Network Worker Execution and
+In other words, these generated bootstrap scripts should not have any required reference to an existing Network Worker Execution and
 only require basic dependencies like sh and Podman.
 
 # Support
@@ -41,7 +41,7 @@ that have different shell syntaxes, but provide good UI features for users.
 The implementation tries to create one single script for the shell execution,
 in order to simplify the overview and ease the understanding of the shell commands.
 Thereby, one could even store the generated scripts and execute these without using Python at all,
-which makes the hole thing more portable as well
+which makes the hole thing more portable as well.
 
 The processing and string templating are separated as much as possible
 by writing to any variable or attribute only once except for the configuration.
