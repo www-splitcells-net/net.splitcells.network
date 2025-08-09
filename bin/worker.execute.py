@@ -4,7 +4,7 @@ SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
 BREAKING THE BACKWARDS COMPATIBILITY OF THIS SCRIPT IS NOT ACCEPTABLE!
-OTHERWISE, DEPLOYMENT ARE BROKEN!
+OTHERWISE, DEPLOYMENTS ARE BROKEN!
 
 # Introduction
 
