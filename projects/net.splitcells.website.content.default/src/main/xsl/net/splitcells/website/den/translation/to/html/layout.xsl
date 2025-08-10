@@ -933,9 +933,7 @@ request.send();]]>
                 <s:license>standard</s:license>
                 <s:publication_date/>
                 <s:content>
-                    <xsl:call-template name="den-ast">
-                        <xsl:with-param name="den-document" select="."/>
-                    </xsl:call-template>
+                    <xsl:apply-templates select="./node()"/>
                 </s:content>
             </s:layout.config>
         </xsl:variable>
