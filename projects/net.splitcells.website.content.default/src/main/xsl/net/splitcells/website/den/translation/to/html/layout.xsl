@@ -584,8 +584,12 @@ request.send();]]>
                                                     </xsl:attribute>
                                                 </a>
                                                 <!-- The Menu link has no use in the desktop view, as the link and the menu are at the top of the site in this case. -->
-                                                <a class="net-splitcells-button-inline minimal-only" href="#net-splitcells-detailed-menu">Menu</a>
-                                                <a class="net-splitcells-button-inline" href="#net-splitcells-website-file-browser">Explore!</a>
+                                                <a class="net-splitcells-button-inline minimal-only"
+                                                   href="#net-splitcells-detailed-menu">Menu
+                                                </a>
+                                                <a class="net-splitcells-button-inline"
+                                                   href="#net-splitcells-website-file-browser">Explore!
+                                                </a>
                                                 <div class="net-splitcells-error-status-indicator net-splitcells-button-inline"
                                                      style="visibility: hidden; display: none;">Error
                                                 </div>
@@ -593,7 +597,8 @@ request.send();]]>
                                                         select="$net-splitcells-website-server-config-window-menu"/>
                                                 <div class="net-splitcells-space-filler"></div>
                                                 <xsl:choose>
-                                                    <xsl:when test="./s:content/s:meta/s:full-screen-by-default/node() = 'true'">
+                                                    <xsl:when
+                                                            test="./s:content/s:meta/s:full-screen-by-default/node() = 'true'">
                                                         <div class="net-splitcells-action-button net-splitcells-button-inline page-column-0-full-screen net-splitcells-minimal-not"
                                                              style="visibility: hidden; display: none;"
                                                              onclick="javascript: fullScreenEnable();
@@ -706,11 +711,13 @@ request.send();]]>
                                                         </div>
                                                     </div>
                                                     <div class="net-splitcells-structural-guide"/>
-                                                    <div id="net-splitcells-website-file-browser" class="net-splitcells-component-priority-2 splitcells-net-window-menu-line-2">
+                                                    <div id="net-splitcells-website-file-browser"
+                                                         class="net-splitcells-component-priority-2 splitcells-net-window-menu-line-2">
                                                         <xsl:choose>
                                                             <xsl:when test="./s:content/s:meta/s:description-title">
                                                                 <div class="splitcells-net-line-title">
-                                                                    <xsl:copy-of select="./s:content/s:meta/s:description-title/node()"/>
+                                                                    <xsl:copy-of
+                                                                            select="./s:content/s:meta/s:description-title/node()"/>
                                                                 </div>
                                                             </xsl:when>
                                                             <xsl:otherwise>
@@ -725,7 +732,8 @@ request.send();]]>
                                     </div>
                                 </xsl:if>
                             </div>
-                            <div id="net-splitcells-detailed-menu" class="menu Left_shadow TextCell Layout net-splitcells-component-priority-4">
+                            <div id="net-splitcells-detailed-menu"
+                                 class="menu Left_shadow TextCell Layout net-splitcells-component-priority-4">
                                 <div class="Left_shadow net-splitcells-component-priority-0 splitcells-net-title-logo splitcells-net-window-menu">
                                     <div class="splitcells-net-window-menu-line-1">
                                         <a class="net-splitcells-button-inline net-splitcells-main-button-project-logo">
@@ -756,7 +764,8 @@ request.send();]]>
                                                 <xsl:choose>
                                                     <xsl:when test="./@target-id">
                                                         <xsl:variable name="onClick">
-                                                            <xsl:value-of select="concat('javascript: ', ./@method, '(document.getElementById(&quot;')"/>
+                                                            <xsl:value-of
+                                                                    select="concat('javascript: ', ./@method, '(document.getElementById(&quot;')"/>
                                                             <xsl:value-of select="./@target-id"/>
                                                             <xsl:value-of select="'&quot;))'"/>
                                                         </xsl:variable>
@@ -770,7 +779,8 @@ request.send();]]>
                                                     </xsl:when>
                                                     <xsl:otherwise>
                                                         <div class="net-splitcells-button net-splitcells-action-button net-splitcells-action-text-button">
-                                                            <xsl:attribute name="onclick" select="concat('javascript: ', ./@method, '()')"/>
+                                                            <xsl:attribute name="onclick"
+                                                                           select="concat('javascript: ', ./@method, '()')"/>
                                                             <xsl:if test="./@id">
                                                                 <xsl:attribute name="id" select="./@id"/>
                                                             </xsl:if>
@@ -789,7 +799,8 @@ request.send();]]>
                                         content of this
                                         html file is licensed under the
                                         <a href="/net/splitcells/network/legal/licenses/EPL-2.0.html">EPL-2.0</a>
-                                        OR <a href="/net/splitcells/network/legal/licenses/GPL-2.0-or-later.html">GPL-2.0-or-later</a>.
+                                        OR <a href="/net/splitcells/network/legal/licenses/GPL-2.0-or-later.html">
+                                            GPL-2.0-or-later</a>.
                                     </p>
                                     <p>Files and other contents, which are linked to by this
                                         HTML file, have their own rulings.
