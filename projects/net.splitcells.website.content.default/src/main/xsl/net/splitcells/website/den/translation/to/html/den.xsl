@@ -20,6 +20,7 @@
         SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
         TODO Rename den to tree.
+        TODO Rename perspective mode to tree.
     -->
     <xsl:template match="text()" mode="perspective">
         <div class="perspective">
