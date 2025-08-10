@@ -29,21 +29,21 @@
         </div>
     </xsl:template>
     <xsl:template match="node()" mode="perspective">
-        <xsl:call-template name="den-ast">
-            <xsl:with-param name="den-document" select="."/>
+        <xsl:call-template name="tree">
+            <xsl:with-param name="tree" select="."/>
         </xsl:call-template>
     </xsl:template>
     <xsl:template match="d:*">
         <xsl:apply-templates select="." mode="perspective"/>
     </xsl:template>
     <xsl:template match="d:*" mode="perspective">
-        <xsl:call-template name="den-ast">
-            <xsl:with-param name="den-document" select="."/>
+        <xsl:call-template name="tree">
+            <xsl:with-param name="tree" select="."/>
         </xsl:call-template>
     </xsl:template>
     <xsl:template match="n:*" mode="perspective">
-        <xsl:call-template name="den-ast">
-            <xsl:with-param name="den-document" select="."/>
+        <xsl:call-template name="tree">
+            <xsl:with-param name="tree" select="."/>
         </xsl:call-template>
     </xsl:template>
     <xsl:template name="s:path-of">
@@ -186,118 +186,42 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:function>
-    <!-- TODO
-    <xsl:template name="den-ast">
-        <xsl:param name="den-document"/>
+    <xsl:template name="tree">
+        <xsl:param name="tree"/>
         <ol>
-            <xsl:apply-templates select="$den-document/node()" mode="den-ast-node"/>
-        </ol>
-    </xsl:template>
-    <xsl:template match="*" mode="den-ast-node">
-        <li class="table-of-content">
-                <xsl:value-of select="./text()"/>
-            <xsl:if test=".//s:chapter">
-                <ol class="table-of-content">
-                    <xsl:apply-templates select="./node()" mode="content.outline"/>
-                </ol>
-            </xsl:if>
-        </li>
-    </xsl:template>
-    -->
-    <xsl:template name="den-ast">
-        <xsl:param name="den-document"/>
-        <xsl:param name="is-root">
-            <xsl:text>true</xsl:text>
-        </xsl:param>
-        <xsl:message terminate="false">
-            den-ast template is deprecated, as its styling result is not acceptable.
-            Use styling similar to nested lists instead.
-        </xsl:message>
-        <xsl:variable name="den-document-id" select="generate-id()"/>
-        <xsl:variable name="den-document-hide-current-note-id" select="concat($den-document-id, 'hide-current-node')"/>
-        <xsl:variable name="content">
-            <xsl:variable name="perspective-namespace">
-                <xsl:if test="name($den-document) != 'n:val'">
-                    <xsl:value-of select="name($den-document)"/>
-                </xsl:if>
-            </xsl:variable>
-            <div class="perspective-name">
-                <div class="perspective-namespace">
-                    <xsl:copy-of select="$perspective-namespace"/>
-                </div>
-                <xsl:variable name="perspective-value">
-                    <xsl:choose>
-                        <xsl:when test="$den-document/@xl:href">
-                            <a>
-                                <xsl:attribute name="href" select="$den-document/@xl:href"/>
-                                <xsl:choose>
-                                    <xsl:when test="normalize-space($den-document/@name) = ''">
-                                        <xsl:value-of select="$den-document/@xl:href"/>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:value-of select="$den-document/@name"/>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                            </a>
-                        </xsl:when>
-                        <xsl:when test="$den-document/@name">
-                            <xsl:value-of select="$den-document/@name"/>
-                        </xsl:when>
-                        <xsl:otherwise/>
-                    </xsl:choose>
-                </xsl:variable>
-                <div class="perspective-word">
-                    <xsl:copy-of select="$perspective-value"/>
-                </div>
-            </div>
+            <li>
+                <xsl:value-of select="local-name($tree)"/>
+            </li>
+            <!-- TODO Strictly speaking this form of list nesting is not correct,
+            as any child element of an ol, has to be an li.
+            Unfortunately, the current CSS relies on that, so this has to be adjusted as well. -->
             <ol>
-                <xsl:for-each select="$den-document/node()">
+                <xsl:for-each select="$tree/node()">
                     <xsl:choose>
                         <xsl:when test="self::text()">
                             <xsl:if test="normalize-space(.) != ''">
-                                <xsl:choose>
-                                    <xsl:when test="true() = s:can-show-text-as-line(.)">
-                                        <li>
-                                            <p>
-                                                <xsl:for-each select="tokenize(., '\n\n')">
-                                                    <xsl:value-of select="normalize-space(.)"/>
-                                                </xsl:for-each>
-                                            </p>
-                                        </li>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <li>
-                                            <p>
-                                                <xsl:value-of select="."/>
-                                            </p>
-                                        </li>
-                                    </xsl:otherwise>
-                                </xsl:choose>
+                                <li>
+                                    <xsl:choose>
+                                        <xsl:when test="true() = s:can-show-text-as-line(.)">
+                                            <xsl:for-each select="tokenize(., '\n\n')">
+                                                <xsl:value-of select="normalize-space(.)"/>
+                                            </xsl:for-each>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:value-of select="."/>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </li>
                             </xsl:if>
                         </xsl:when>
                         <xsl:otherwise>
-                            <!--xsl:apply-templates select="."
-                                                 mode="perspective"/-->
-                            <xsl:call-template name="den-ast">
-                                <xsl:with-param name="den-document" select="."/>
-                                <xsl:with-param name="is-root" select="'false'"/>
+                            <xsl:call-template name="tree">
+                                <xsl:with-param name="tree" select="."/>
                             </xsl:call-template>
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:for-each>
             </ol>
-        </xsl:variable>
-        <xsl:choose>
-            <xsl:when test="$is-root = 'true'">
-                <ol>
-                    <xsl:copy-of select="$content"/>
-                </ol>
-            </xsl:when>
-            <xsl:otherwise>
-                <li>
-                    <xsl:copy-of select="$content"/>
-                </li>
-            </xsl:otherwise>
-        </xsl:choose>
+        </ol>
     </xsl:template>
 </xsl:stylesheet>
