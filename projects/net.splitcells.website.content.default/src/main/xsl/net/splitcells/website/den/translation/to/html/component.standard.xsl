@@ -253,7 +253,8 @@
             </xsl:if>
         </xsl:variable>
         <div>
-            <xsl:attribute name="class" select="concat('net-splitcells-button net-splitcells-action-button ', @id, '-tab-button ', @form-id, '-tab-button ', $selectionStyle)"/>
+            <xsl:attribute name="class"
+                           select="concat('net-splitcells-button net-splitcells-action-button ', @id, '-tab-button ', @form-id, '-tab-button ', $selectionStyle)"/>
             <xsl:attribute name="onclick"><![CDATA[javascript:
 unshowByCssClass(']]><xsl:value-of select="./@form-id"/><![CDATA[');
 var anyTabButtons = document.getElementsByClassName(]]>
@@ -279,7 +280,8 @@ for (var i = 0; i < tabButtons.length; i++) {
             </xsl:if>
         </xsl:variable>
         <div>
-            <xsl:attribute name="class" select="concat('net-splitcells-button net-splitcells-action-button ', @id, '-tab-button ', @form-id, '-tab-button ', $selectionStyle)"/>
+            <xsl:attribute name="class"
+                           select="concat('net-splitcells-button net-splitcells-action-button ', @id, '-tab-button ', @form-id, '-tab-button ', $selectionStyle)"/>
             <xsl:attribute name="onclick"><![CDATA[javascript:
 unshowByCssClass(']]><xsl:value-of select="./@form-id"/><![CDATA[');
 var anyTabButtons = document.getElementsByClassName(']]>
@@ -312,7 +314,8 @@ for (var i = 0; i < tabButtons.length; i++) {
                         <xsl:attribute name="id" select="concat(./@id, '-as-csv-output')"/>
                         No data present yet.
                     </div>
-                    <textarea class="net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor-backend">
+                    <textarea
+                            class="net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor-backend">
                         <xsl:attribute name="id" select="./@id"/>
                         <xsl:attribute name="name" select="./@id"/>
                         <xsl:attribute name="content-types" select="@content-types"/>
@@ -324,7 +327,8 @@ for (var i = 0; i < tabButtons.length; i++) {
                         <xsl:attribute name="net-splitcells-syncs-to" select="./@id"/>
                         <xsl:apply-templates select="./text()"/>
                     </div>
-                    <textarea class="net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor-backend">
+                    <textarea
+                            class="net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor-backend">
                         <xsl:attribute name="id" select="./@id"/>
                         <xsl:attribute name="name" select="./@id"/>
                         <xsl:attribute name="content-types" select="@content-types"/>
@@ -361,8 +365,9 @@ document.addEventListener('DOMContentLoaded', function(){
                         <xsl:attribute name="net-splitcells-syncs-to" select="./@id"/>
                         <xsl:apply-templates select="./node()"/>
                     </div>
-                    <textarea class="net-splitcells-component-priority-0 net-splitcells-webserver-form-no-code-editor-backend"
-                              style="display: none; visibility: hidden;">
+                    <textarea
+                            class="net-splitcells-component-priority-0 net-splitcells-webserver-form-no-code-editor-backend"
+                            style="display: none; visibility: hidden;">
                         <xsl:attribute name="id" select="./@id"/>
                         <xsl:attribute name="name" select="./@id"/>
                         <xsl:attribute name="content-types" select="@content-types"/>
@@ -570,11 +575,14 @@ document.addEventListener('DOMContentLoaded', function(){
                     <xsl:choose>
                         <xsl:when test="./s:default-content">
                             <xsl:choose>
-                                <xsl:when test="doc-available(concat('/net.splitcells.website.server/source-code/', ./s:default-content/node(), '-customization.xml'))">
-                                    <xsl:apply-templates select="document(concat('/net.splitcells.website.server/source-code/', ./s:default-content/node(), '-customization.xml'))"/>
+                                <xsl:when
+                                        test="doc-available(concat('/net.splitcells.website.server/source-code/', ./s:default-content/node(), '-customization.xml'))">
+                                    <xsl:apply-templates
+                                            select="document(concat('/net.splitcells.website.server/source-code/', ./s:default-content/node(), '-customization.xml'))"/>
                                 </xsl:when>
                                 <xsl:otherwise>
-                                    <xsl:apply-templates select="document(concat('/net.splitcells.website.server/source-code/', ./s:default-content/node(), '.xml'))"/>
+                                    <xsl:apply-templates
+                                            select="document(concat('/net.splitcells.website.server/source-code/', ./s:default-content/node(), '.xml'))"/>
                                 </xsl:otherwise>
                             </xsl:choose>
                         </xsl:when>
@@ -584,7 +592,8 @@ document.addEventListener('DOMContentLoaded', function(){
                     </xsl:choose>
                     <xsl:if test="./s:accept-notification">
                         <div class="net-splitcells-website-pop-up-confirmation-button net-splitcells-button net-splitcells-action-button net-splitcells-component-priority-0">
-                            <xsl:attribute name="onclick" select="concat('unshowElement(document.getElementById(', $quote, generate-id(.), $quote, '))')"/>
+                            <xsl:attribute name="onclick"
+                                           select="concat('unshowElement(document.getElementById(', $quote, generate-id(.), $quote, '))')"/>
                             <xsl:value-of select="./s:accept-notification"/>
                         </div>
                     </xsl:if>
@@ -638,80 +647,80 @@ document.addEventListener('DOMContentLoaded', function(){
                             <xsl:apply-templates select="./s:title/node()"/>
                         </a>
 
-                            <div class="net-splitcells-action-button">
+                        <div class="net-splitcells-action-button">
+                            <xsl:choose>
+                                <xsl:when test="$priority!='none'">
+                                    <xsl:attribute name="class"
+                                                   select="concat('net-splitcells-action-button net-splitcells-component-priority-', $priority)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:attribute name="class" select="'net-splitcells-action-button'"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                            <a href="#topElement">↑</a>
+                        </div>
+                        <div>
+                            <xsl:choose>
+                                <xsl:when test="$priority!='none'">
+                                    <xsl:attribute name="class"
+                                                   select="concat('net-splitcells-action-button net-splitcells-component-priority-', $priority)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:attribute name="class" select="'net-splitcells-action-button'"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                            <xsl:attribute name="id" select="concat($id, '-button-hide')"/>
+                            <xsl:attribute name="style">
                                 <xsl:choose>
-                                    <xsl:when test="$priority!='none'">
-                                        <xsl:attribute name="class"
-                                                       select="concat('net-splitcells-action-button net-splitcells-component-priority-', $priority)"/>
+                                    <xsl:when test="./@minimized='true'">display: none; visibility: hidden;
                                     </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:attribute name="class" select="'net-splitcells-action-button'"/>
-                                    </xsl:otherwise>
+                                    <xsl:otherwise></xsl:otherwise>
                                 </xsl:choose>
-                                <a href="#topElement">↑</a>
-                            </div>
-                            <div>
+                            </xsl:attribute>
+                            <xsl:attribute name="onclick">
+                                <xsl:text>unshowById('</xsl:text>
+                                <xsl:value-of select="$id"/>
+                                <xsl:text>-body');</xsl:text>
+                                <xsl:text>showById('</xsl:text>
+                                <xsl:value-of select="$id"/>
+                                <xsl:text>-button-show');</xsl:text>
+                                <xsl:text>unshowById('</xsl:text>
+                                <xsl:value-of select="$id"/>
+                                <xsl:text>-button-hide');</xsl:text>
+                            </xsl:attribute>
+                            -
+                        </div>
+                        <div>
+                            <xsl:choose>
+                                <xsl:when test="$priority!='none'">
+                                    <xsl:attribute name="class"
+                                                   select="concat('net-splitcells-action-button net-splitcells-component-priority-', $priority)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:attribute name="class" select="'net-splitcells-action-button'"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                            <xsl:attribute name="id" select="concat($id, '-button-show')"/>
+                            <xsl:attribute name="style">
+                                <xsl:text>float: right;</xsl:text>
                                 <xsl:choose>
-                                    <xsl:when test="$priority!='none'">
-                                        <xsl:attribute name="class"
-                                                       select="concat('net-splitcells-action-button net-splitcells-component-priority-', $priority)"/>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:attribute name="class" select="'net-splitcells-action-button'"/>
-                                    </xsl:otherwise>
+                                    <xsl:when test="./@minimized='true'"></xsl:when>
+                                    <xsl:otherwise>display: none; visibility: hidden;</xsl:otherwise>
                                 </xsl:choose>
-                                <xsl:attribute name="id" select="concat($id, '-button-hide')"/>
-                                <xsl:attribute name="style">
-                                    <xsl:choose>
-                                        <xsl:when test="./@minimized='true'">display: none; visibility: hidden;
-                                        </xsl:when>
-                                        <xsl:otherwise></xsl:otherwise>
-                                    </xsl:choose>
-                                </xsl:attribute>
-                                <xsl:attribute name="onclick">
-                                    <xsl:text>unshowById('</xsl:text>
-                                    <xsl:value-of select="$id"/>
-                                    <xsl:text>-body');</xsl:text>
-                                    <xsl:text>showById('</xsl:text>
-                                    <xsl:value-of select="$id"/>
-                                    <xsl:text>-button-show');</xsl:text>
-                                    <xsl:text>unshowById('</xsl:text>
-                                    <xsl:value-of select="$id"/>
-                                    <xsl:text>-button-hide');</xsl:text>
-                                </xsl:attribute>
-                                -
-                            </div>
-                            <div>
-                                <xsl:choose>
-                                    <xsl:when test="$priority!='none'">
-                                        <xsl:attribute name="class"
-                                                       select="concat('net-splitcells-action-button net-splitcells-component-priority-', $priority)"/>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:attribute name="class" select="'net-splitcells-action-button'"/>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                                <xsl:attribute name="id" select="concat($id, '-button-show')"/>
-                                <xsl:attribute name="style">
-                                    <xsl:text>float: right;</xsl:text>
-                                    <xsl:choose>
-                                        <xsl:when test="./@minimized='true'"></xsl:when>
-                                        <xsl:otherwise>display: none; visibility: hidden;</xsl:otherwise>
-                                    </xsl:choose>
-                                </xsl:attribute>
-                                <xsl:attribute name="onclick">
-                                    <xsl:text>showById('</xsl:text>
-                                    <xsl:value-of select="$id"/>
-                                    <xsl:text>-body');</xsl:text>
-                                    <xsl:text>unshowById('</xsl:text>
-                                    <xsl:value-of select="$id"/>
-                                    <xsl:text>-button-show');</xsl:text>
-                                    <xsl:text>showById('</xsl:text>
-                                    <xsl:value-of select="$id"/>
-                                    <xsl:text>-button-hide');</xsl:text>
-                                </xsl:attribute>
-                                +
-                            </div>
+                            </xsl:attribute>
+                            <xsl:attribute name="onclick">
+                                <xsl:text>showById('</xsl:text>
+                                <xsl:value-of select="$id"/>
+                                <xsl:text>-body');</xsl:text>
+                                <xsl:text>unshowById('</xsl:text>
+                                <xsl:value-of select="$id"/>
+                                <xsl:text>-button-show');</xsl:text>
+                                <xsl:text>showById('</xsl:text>
+                                <xsl:value-of select="$id"/>
+                                <xsl:text>-button-hide');</xsl:text>
+                            </xsl:attribute>
+                            +
+                        </div>
 
                     </div>
                     <div>
@@ -1291,18 +1300,52 @@ document.addEventListener('DOMContentLoaded', function(){
         <xsl:text>&#032;</xsl:text>
     </xsl:template>
     <xsl:template match="d:toDo">
-        <div class="premature">
-            <xsl:call-template name="den-ast">
-                <xsl:with-param name="den-document" select="."/>
-            </xsl:call-template>
-        </div>
+        <xsl:call-template name="todo">
+            <xsl:with-param name="todo" select="."/>
+        </xsl:call-template>
     </xsl:template>
     <xsl:template match="d:todo">
-        <div class="premature">
-            <xsl:call-template name="den-ast">
-                <xsl:with-param name="den-document" select="."/>
-            </xsl:call-template>
-        </div>
+        <xsl:call-template name="todo">
+            <xsl:with-param name="todo" select="."/>
+        </xsl:call-template>
+    </xsl:template>
+    <xsl:template name="todo">
+        <xsl:param name="todo"/>
+        <ol class="premature">
+            <li>
+                <xsl:value-of select="local-name($todo)"/>
+            </li>
+            <!-- TODO Strictly speaking this form of list nesting is not correct,
+            as any child element of an ol, has to be an li.
+            Unfortunately, the current CSS relies on that, so this has to be adjusted as well. -->
+            <ol>
+                <xsl:for-each select="$todo/node()">
+                    <xsl:choose>
+                        <xsl:when test="self::text()">
+                            <xsl:if test="normalize-space(.) != ''">
+                                <li>
+                                    <xsl:choose>
+                                        <xsl:when test="true() = s:can-show-text-as-line(.)">
+                                            <xsl:for-each select="tokenize(., '\n\n')">
+                                                <xsl:value-of select="normalize-space(.)"/>
+                                            </xsl:for-each>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:value-of select="."/>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </li>
+                            </xsl:if>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:call-template name="todo">
+                                <xsl:with-param name="todo" select="."/>
+                            </xsl:call-template>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:for-each>
+            </ol>
+        </ol>
     </xsl:template>
     <xsl:template match="s:site_domain">
         <xsl:value-of select="$site_domain"/>
