@@ -18,7 +18,6 @@ package net.splitcells.gel.editor.geal.runners;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
-import net.splitcells.gel.editor.geal.lang.NameDesc;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.solution.Solution;
 
@@ -60,7 +59,7 @@ public class ThenCallRunner implements FunctionCallRunner {
             default ->
                     throw execException("Subject has to be a solution or a query: " + subject.orElseThrow());
         }
-        final var rawRater = context.parseObject(functionCall.getArguments().get(0));
+        final var rawRater = context.parse(functionCall.getArguments().get(0));
         switch (rawRater) {
             case Rater r -> run.setResult(Optional.of(subjectVal.then(r)));
             default ->

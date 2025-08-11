@@ -47,7 +47,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
         final var problemDefinition = request.data().namedChildren(PROBLEM_DEFINITION);
         if (problemDefinition.size() == 1) {
             final var editor = editor("editor-data-query", EXPLICIT_NO_CONTEXT);
-            editor.parse(problemDefinition.get(0).content());
+            editor.interpret(problemDefinition.get(0).content());
             final var formUpdate = tree(FORM_UPDATE);
             if (editor.getSolutions().size() == 1) {
                 editor.getSolutions().values().iterator().next().optimize();

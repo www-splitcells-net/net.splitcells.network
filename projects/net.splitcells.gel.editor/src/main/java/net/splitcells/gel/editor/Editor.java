@@ -16,7 +16,6 @@
 package net.splitcells.gel.editor;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
@@ -136,24 +135,24 @@ public class Editor implements Discoverable {
     }
 
     @ReturnsThis
-    public Editor parse(String sourceUnit) {
-        parse(parseGealSourceUnit(sourceUnit));
+    public Editor interpret(String sourceUnit) {
+        interpret(parseGealSourceUnit(sourceUnit));
         return this;
     }
 
     @ReturnsThis
-    public Editor parse(SourceUnit sourceUnit) {
+    public Editor interpret(SourceUnit sourceUnit) {
         sourceUnit.getStatements().forEach(s -> {
             switch (s) {
-                case VariableDefinitionDesc vd -> parse(vd);
-                case FunctionCallChainDesc fcc -> parse(fcc);
+                case VariableDefinitionDesc vd -> interpret(vd);
+                case FunctionCallChainDesc fcc -> interpret(fcc);
             }
         });
         return this;
     }
 
     @ReturnsThis
-    public Editor parse(VariableDefinitionDesc variableDefinition) {
+    public Editor interpret(VariableDefinitionDesc variableDefinition) {
         final var varName = variableDefinition.getName().getValue();
         if (attributes.hasKey(varName)) {
             throw execException(tree("The attribute variable \" + name + \" with the same name is already defined.").withProperty("name", varName)
@@ -179,7 +178,7 @@ public class Editor implements Discoverable {
                     .withProperty("name", varName)
                     .withProperty("table variables", raters.toString()));
         }
-        final var parsedObject = parseObject(variableDefinition.getFunctionCallChain());
+        final var parsedObject = parse(variableDefinition.getFunctionCallChain());
         if (parsedObject instanceof Attribute<?> attribute) {
             attributes.put(varName, attribute);
         } else if (parsedObject instanceof Solution solution) {
@@ -197,12 +196,12 @@ public class Editor implements Discoverable {
     }
 
     @ReturnsThis
-    public Editor parse(FunctionCallChainDesc functionCallChain) {
-        parseObject(functionCallChain);
+    public Editor interpret(FunctionCallChainDesc functionCallChain) {
+        parse(functionCallChain);
         return this;
     }
 
-    public Object parseObject(FunctionCallChainDesc functionCallChain) {
+    public Object parse(FunctionCallChainDesc functionCallChain) {
         final Object parsedObject;
         final var functionCallExecutor = functionCallMetaExecutor();
         FunctionCallRun chainLinkRun;

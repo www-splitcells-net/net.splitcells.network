@@ -19,7 +19,6 @@ import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
-import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
 
@@ -50,7 +49,7 @@ public class ImportCsvRunner implements FunctionCallRunner {
         if (functionCall.getArguments().size() != 1) {
             return run;
         }
-        final var firstArg = context.parseObject(functionCall.getArguments().get(0));
+        final var firstArg = context.parse(functionCall.getArguments().get(0));
         if (firstArg instanceof byte[] data) {
             tableSubject.withAddedCsv(StringUtils.parseString(data));
             run.setResult(Optional.of(tableSubject));

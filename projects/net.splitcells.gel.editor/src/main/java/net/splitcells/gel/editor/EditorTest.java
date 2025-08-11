@@ -15,9 +15,7 @@
  */
 package net.splitcells.gel.editor;
 
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.testing.annotations.UnitTest;
-import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.editor.lang.*;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -172,7 +170,7 @@ public class EditorTest {
                                         , list(functionCallDesc2(nameDesc(HAS_SIZE_NAME)
                                                 , list(integerDesc(2)))))))
         ));
-        testSubject.parse(testData);
+        testSubject.interpret(testData);
         testSubject.getAttributes().requirePresence("student", stringAttribute("student"), CONTENT_COMPARISON)
                 .requirePresence("examiner", stringAttribute("examiner"), CONTENT_COMPARISON)
                 .requirePresence("observer", stringAttribute("observer"), CONTENT_COMPARISON)
@@ -242,7 +240,7 @@ public class EditorTest {
                 solution   .forEach(student)
                            .then(hasSize(2))
                 """;
-        testSubject.parse(parseGealSourceUnit(testData));
+        testSubject.interpret(parseGealSourceUnit(testData));
         testSubject.getAttributes().requirePresence("student", stringAttribute("student"), CONTENT_COMPARISON)
                 .requirePresence("examiner", stringAttribute("examiner"), CONTENT_COMPARISON)
                 .requirePresence("observer", stringAttribute("observer"), CONTENT_COMPARISON)
@@ -325,7 +323,7 @@ public class EditorTest {
                 """;
         testSubject.saveData("demands.csv", toBytes(demandsCsv));
         testSubject.saveData("supplies.csv", toBytes(suppliesCsv));
-        testSubject.parse(parseGealSourceUnit(testData));
+        testSubject.interpret(parseGealSourceUnit(testData));
         final var demands = testSubject.getTables().get("demands").orderedLines();
         demands.requireSizeOf(1);
         demands.get(0).values().requireEquals(list("1", "2", "3"));
