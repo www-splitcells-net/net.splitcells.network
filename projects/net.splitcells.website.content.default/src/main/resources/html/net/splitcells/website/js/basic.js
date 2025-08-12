@@ -203,7 +203,6 @@ function net_splitcells_webserver_form_submit(config) {
                     tabBar.appendChild(newTabButton);
 
                     const newTabContent = document.createElement('div');
-                    newTabContent.innerHTML = value;
                     newTabContent.id = key + '-tab-content';
                     newTabContent.className = 'net-splitcells-website-form-editor-tab ' + formId;
                     newTabContent.style.display = 'none';
@@ -213,6 +212,7 @@ function net_splitcells_webserver_form_submit(config) {
                     const newTabInput = document.createElement('textarea');
                     newTabInput.id = key;
                     newTabInput.className = 'net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor-backend';
+                    newTabInput.value = value;
                     newTabContent.appendChild(newTabInput);
 
                     const newTabEditor = document.createElement('div');
