@@ -189,7 +189,7 @@ function net_splitcells_webserver_form_submit(config) {
         let responseObject = JSON.parse(this.responseText);
         if ('net-splitcells-websiter-server-form-update' in responseObject) {
             for (const [key, value] of Object.entries(responseObject['net-splitcells-websiter-server-form-update'])) {
-                if (document.getElementById(key) === null) {
+                if (document.querySelector('*[name="' + key + '"]') === null) {
                     console.log('Could not find form field for update: ' + key);
 
                     const newTabButton = document.createElement("div");
@@ -211,8 +211,10 @@ function net_splitcells_webserver_form_submit(config) {
 
                     const newTabInput = document.createElement('textarea');
                     newTabInput.id = key;
+                    newTabInput.name = key;
                     newTabInput.className = 'net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor-backend';
                     newTabInput.value = value;
+                    newTabInput.innerHTML = value;
                     newTabContent.appendChild(newTabInput);
 
                     const newTabEditor = document.createElement('div');
@@ -222,7 +224,7 @@ function net_splitcells_webserver_form_submit(config) {
 
                     continue;
                 }
-                const formInput = document.getElementById(key);
+                const formInput = document.querySelector('*[name="' + key + '"]');
                 formInput.value = value; // value is used by form elements like textarea.
                 formInput.innerHTML = value; // innerHTML is used by div elements inside forms.
                 if (formInput.getAttribute('content-types') === undefined || formInput.getAttribute('content-types') === null) {
