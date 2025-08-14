@@ -18,6 +18,7 @@ package net.splitcells.gel.editor.geal.runners;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.editor.Editor;
+import net.splitcells.gel.editor.EditorData;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 
 import java.util.Optional;
@@ -50,8 +51,8 @@ public class ImportCsvRunner implements FunctionCallRunner {
             return run;
         }
         final var firstArg = context.parse(functionCall.getArguments().get(0));
-        if (firstArg instanceof byte[] data) {
-            tableSubject.withAddedCsv(StringUtils.parseString(data));
+        if (firstArg instanceof EditorData data) {
+            tableSubject.withAddedCsv(StringUtils.parseString(data.getContent()));
             run.setResult(Optional.of(tableSubject));
         } else {
             throw execException();

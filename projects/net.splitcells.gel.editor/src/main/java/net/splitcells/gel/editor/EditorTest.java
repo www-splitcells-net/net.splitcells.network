@@ -17,6 +17,7 @@ package net.splitcells.gel.editor;
 
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.editor.lang.*;
+import net.splitcells.website.Formats;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -27,6 +28,7 @@ import static net.splitcells.gel.constraint.type.ForAlls.FOR_EACH_NAME;
 import static net.splitcells.gel.constraint.type.Then.THEN_NAME;
 import static net.splitcells.gel.data.view.attribute.AttributeI.*;
 import static net.splitcells.gel.editor.Editor.editor;
+import static net.splitcells.gel.editor.EditorData.editorData;
 import static net.splitcells.gel.editor.EditorParser.*;
 import static net.splitcells.gel.editor.geal.lang.FunctionCallDesc.*;
 import static net.splitcells.gel.editor.geal.parser.SourceUnitParser.parseGealSourceUnit;
@@ -49,6 +51,7 @@ import static net.splitcells.gel.editor.geal.lang.StringDesc.stringDesc;
 import static net.splitcells.gel.editor.geal.lang.VariableDefinitionDesc.variableDefinitionDesc;
 import static net.splitcells.gel.rating.rater.lib.HasSize.HAS_SIZE_NAME;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
+import static net.splitcells.website.Formats.CSV;
 
 public class EditorTest {
     @UnitTest
@@ -321,8 +324,8 @@ public class EditorTest {
                 date,shift,room number
                 4,5,6
                 """;
-        testSubject.saveData("demands.csv", toBytes(demandsCsv));
-        testSubject.saveData("supplies.csv", toBytes(suppliesCsv));
+        testSubject.saveData("demands.csv", editorData(CSV, toBytes(demandsCsv)));
+        testSubject.saveData("supplies.csv", editorData(CSV, toBytes(suppliesCsv)));
         testSubject.interpret(parseGealSourceUnit(testData));
         final var demands = testSubject.getTables().get("demands").orderedLines();
         demands.requireSizeOf(1);

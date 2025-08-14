@@ -17,11 +17,13 @@ package net.splitcells.gel.editor.geal.runners;
 
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
+import net.splitcells.website.Formats;
 
 import java.util.Optional;
 
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
+import static net.splitcells.website.Formats.CSV;
 
 public class DataCallRunner implements FunctionCallRunner {
     public static DataCallRunner dataCallRunner() {
@@ -43,7 +45,7 @@ public class DataCallRunner implements FunctionCallRunner {
         }
         final var firstArg = context.parse(functionCall.getArguments().get(0));
         if (firstArg instanceof String dataName) {
-            run.setResult(Optional.of(context.loadData(dataName)));
+            run.setResult(Optional.of(context.loadData(CSV, dataName)));
         } else {
             throw execException();
         }

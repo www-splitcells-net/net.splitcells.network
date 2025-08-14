@@ -33,6 +33,7 @@ import net.splitcells.gel.editor.geal.runners.FunctionCallRun;
 import net.splitcells.gel.editor.lang.SolutionDescription;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.solution.Solution;
+import net.splitcells.website.Formats;
 
 import java.util.Optional;
 
@@ -40,6 +41,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.gel.editor.EditorData.editorData;
 import static net.splitcells.gel.editor.geal.parser.SourceUnitParser.parseGealSourceUnit;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallMetaExecutor.functionCallMetaExecutor;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
@@ -56,15 +58,23 @@ public class Editor implements Discoverable {
         return new Editor(name, parent);
     }
 
-    @Getter private final String name;
-    @Getter private final Discoverable parent;
-    @Getter private final Map<String, Attribute<?>> attributes = map();
-    @Getter private final Map<String, Rater> raters = map();
-    @Getter private final Map<String, Table> tables = map();
-    @Getter private final Map<String, Solution> solutions = map();
-    @Getter private final Map<String, Constraint> constraints = map();
-    @Getter private final Map<Table, TableFormatting> tableFormatting = map();
-    private final Map<String, byte[]> data = map();
+    @Getter
+    private final String name;
+    @Getter
+    private final Discoverable parent;
+    @Getter
+    private final Map<String, Attribute<?>> attributes = map();
+    @Getter
+    private final Map<String, Rater> raters = map();
+    @Getter
+    private final Map<String, Table> tables = map();
+    @Getter
+    private final Map<String, Solution> solutions = map();
+    @Getter
+    private final Map<String, Constraint> constraints = map();
+    @Getter
+    private final Map<Table, TableFormatting> tableFormatting = map();
+    private final Map<String, EditorData> data = map();
 
     private Editor(String argName, Discoverable argParent) {
         name = argName;
@@ -101,9 +111,9 @@ public class Editor implements Discoverable {
         }
     }
 
-    public byte[] loadData(String name) {
+    public EditorData loadData(Formats format, String name) {
         return data.getOptionally(name).orElseGet(() -> {
-            final var newValue = new byte[0];
+            final var newValue = editorData(format, new byte[0]);
             data.put(name, newValue);
             return newValue;
         });
@@ -114,7 +124,7 @@ public class Editor implements Discoverable {
     }
 
     @ReturnsThis
-    public Editor saveData(String name, byte[] content) {
+    public Editor saveData(String name, EditorData content) {
         data.put(name, content);
         return this;
     }
