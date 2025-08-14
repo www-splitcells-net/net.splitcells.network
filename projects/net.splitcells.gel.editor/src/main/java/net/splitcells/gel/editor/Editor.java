@@ -58,22 +58,14 @@ public class Editor implements Discoverable {
         return new Editor(name, parent);
     }
 
-    @Getter
-    private final String name;
-    @Getter
-    private final Discoverable parent;
-    @Getter
-    private final Map<String, Attribute<?>> attributes = map();
-    @Getter
-    private final Map<String, Rater> raters = map();
-    @Getter
-    private final Map<String, Table> tables = map();
-    @Getter
-    private final Map<String, Solution> solutions = map();
-    @Getter
-    private final Map<String, Constraint> constraints = map();
-    @Getter
-    private final Map<Table, TableFormatting> tableFormatting = map();
+    @Getter private final String name;
+    @Getter private final Discoverable parent;
+    @Getter private final Map<String, Attribute<?>> attributes = map();
+    @Getter private final Map<String, Rater> raters = map();
+    @Getter private final Map<String, Table> tables = map();
+    @Getter private final Map<String, Solution> solutions = map();
+    @Getter private final Map<String, Constraint> constraints = map();
+    @Getter private final Map<Table, TableFormatting> tableFormatting = map();
     private final Map<String, EditorData> data = map();
 
     private Editor(String argName, Discoverable argParent) {
