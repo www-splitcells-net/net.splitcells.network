@@ -17,7 +17,6 @@ package net.splitcells.gel.editor;
 
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.editor.lang.*;
-import net.splitcells.website.Formats;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -51,7 +50,7 @@ import static net.splitcells.gel.editor.geal.lang.StringDesc.stringDesc;
 import static net.splitcells.gel.editor.geal.lang.VariableDefinitionDesc.variableDefinitionDesc;
 import static net.splitcells.gel.rating.rater.lib.HasSize.HAS_SIZE_NAME;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
-import static net.splitcells.website.Formats.CSV;
+import static net.splitcells.website.Format.CSV;
 
 public class EditorTest {
     @UnitTest

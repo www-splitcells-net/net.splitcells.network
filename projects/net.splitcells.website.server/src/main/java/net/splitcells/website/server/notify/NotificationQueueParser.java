@@ -16,16 +16,12 @@
 package net.splitcells.website.server.notify;
 
 import lombok.val;
-import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.lang.Xml;
-import net.splitcells.dem.utils.StringUtils;
-import net.splitcells.dem.utils.TimeUtils;
 import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.RenderRequest;
 
 import java.nio.file.Path;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
@@ -35,7 +31,7 @@ import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_C
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.StringUtils.parseString;
 import static net.splitcells.dem.utils.TimeUtils.parseZonedDate;
-import static net.splitcells.website.Formats.HTML;
+import static net.splitcells.website.Format.HTML;
 import static net.splitcells.website.server.notify.Notification.notification;
 import static net.splitcells.website.server.notify.NotificationQueue.notificationQueue;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.NotificationParser.parseNotificationsFromChangelog;

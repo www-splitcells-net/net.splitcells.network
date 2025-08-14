@@ -7,6 +7,8 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
 
 ## [Unreleased]
 ### Major Changes
+* **2025-08-14: \#37** Rename `net.splitcells.website.Formats` to `net.splitcells.website.Format`,
+  in order to make the enum's name consistent with its values.
 * **2024-11-05: \#37** Add basic security system:
     1. Define and implement authorization.
     2. Define and implement authentication.

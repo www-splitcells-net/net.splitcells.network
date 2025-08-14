@@ -15,7 +15,7 @@
  */
 package net.splitcells.website.server.processor;
 
-import net.splitcells.website.Formats;
+import net.splitcells.website.Format;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 
@@ -32,7 +32,7 @@ public class BinaryMessage {
         return new BinaryMessage(content, format);
     }
 
-    public static BinaryMessage binaryMessage(byte[] content, Formats format) {
+    public static BinaryMessage binaryMessage(byte[] content, Format format) {
         return new BinaryMessage(content, format.mimeTypes());
     }
 

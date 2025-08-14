@@ -20,7 +20,7 @@ import net.splitcells.dem.resource.ContentType;
 /**
  * TODO REMOVE This is a duplicate of {@link ContentType}.
  */
-public enum Formats {
+public enum Format {
     HTML("text/html")
     , CSS("text/css")
     , CSV("text/csv")
@@ -31,7 +31,7 @@ public enum Formats {
 
     private final String mimeTypes;
 
-    Formats(String mimeTypes) {
+    Format(String mimeTypes) {
         this.mimeTypes = mimeTypes;
     }
 

@@ -19,7 +19,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.testing.IdentifiedNameGenerator;
 import net.splitcells.dem.utils.StringUtils;
-import net.splitcells.website.Formats;
+import net.splitcells.website.Format;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.projects.ProjectsRendererI;
@@ -51,7 +51,7 @@ public class ColloquiumPlanningDemandsTestData implements ProjectsRendererExtens
     @Override
     public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         if (PATH.equals(path)) {
-            return Optional.of(binaryMessage(StringUtils.toBytes(testData()), Formats.TEXT_PLAIN));
+            return Optional.of(binaryMessage(StringUtils.toBytes(testData()), Format.TEXT_PLAIN));
         }
         return Optional.empty();
     }

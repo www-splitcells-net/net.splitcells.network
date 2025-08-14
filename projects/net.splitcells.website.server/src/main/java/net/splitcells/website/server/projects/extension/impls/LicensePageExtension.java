@@ -16,11 +16,9 @@
 package net.splitcells.website.server.projects.extension.impls;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.lang.tree.XmlConfig;
 import net.splitcells.dem.resource.Trail;
-import net.splitcells.website.Formats;
+import net.splitcells.website.Format;
 import net.splitcells.website.server.processor.BinaryMessage;
-import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.RenderRequest;
@@ -57,7 +55,7 @@ public class LicensePageExtension implements ProjectsRendererExtension {
                     .renderRawXml(licensePage.toXmlString(xmlConfig().withPrintNameSpaceAttributeAtTop(true))
                             , projectsRenderer.config())
                     .orElseThrow();
-            return renderResponse(BinaryMessage.binaryMessage(licenseRendering, Formats.HTML));
+            return renderResponse(BinaryMessage.binaryMessage(licenseRendering, Format.HTML));
         }
         return renderResponse(Optional.empty());
     }

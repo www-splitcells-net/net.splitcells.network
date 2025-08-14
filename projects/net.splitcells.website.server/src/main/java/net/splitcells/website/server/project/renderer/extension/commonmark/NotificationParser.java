@@ -17,7 +17,7 @@ package net.splitcells.website.server.project.renderer.extension.commonmark;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.website.Formats;
+import net.splitcells.website.Format;
 import net.splitcells.website.server.notify.Notification;
 import net.splitcells.website.server.project.ProjectRenderer;
 import org.commonmark.node.AbstractVisitor;
@@ -115,7 +115,7 @@ public class NotificationParser extends AbstractVisitor {
                 if (DATE_PREFIX.matcher(content.replace("\n", "")).matches()) {
                     content = "<strong>" + content.substring(18);
                 }
-                parsedNotifications.add(notification(dateTime, Formats.HTML, content)
+                parsedNotifications.add(notification(dateTime, Format.HTML, content)
                         .withLink(Optional.of(changelogPath))
                         .withTags(tags));
             }

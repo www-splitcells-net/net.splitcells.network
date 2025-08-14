@@ -18,14 +18,10 @@ package net.splitcells.website.server.projects.extension.impls;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.namespace.NameSpace;
-import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.utils.StringUtils;
-import net.splitcells.website.Formats;
-import net.splitcells.website.server.Config;
-import net.splitcells.website.server.processor.BinaryMessage;
-import net.splitcells.website.server.project.LayoutConfig;
+import net.splitcells.website.Format;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.RenderRequest;
@@ -41,7 +37,6 @@ import static net.splitcells.dem.lang.namespace.NameSpaces.JSON;
 import static net.splitcells.dem.lang.tree.Tree.*;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.Trail.trail;
-import static net.splitcells.dem.utils.StringUtils.stringBuilder;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.projects.RenderResponse.renderResponse;
 
@@ -66,7 +61,7 @@ public class LayoutFancyTreeExtension implements ProjectsRendererExtension {
         if (PATH.equals(request.trail()) && projectsRenderer.config().layout().isPresent()) {
             final var layout = tree("layout");
             projectsRenderer.projectsPaths().forEach(p -> layout.extendWith(list(p.toString().split("/"))));
-            return renderResponse(Optional.of(binaryMessage(StringUtils.toBytes(asFancyTreeJson(layout)), Formats.JSON)));
+            return renderResponse(Optional.of(binaryMessage(StringUtils.toBytes(asFancyTreeJson(layout)), Format.JSON)));
         }
         return renderResponse(Optional.empty());
     }

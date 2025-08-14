@@ -16,13 +16,9 @@
 package net.splitcells.website.server.notify;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.object.DeepCloneable;
-import net.splitcells.dem.testing.Assertions;
-import net.splitcells.website.Formats;
+import net.splitcells.website.Format;
 
-import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
@@ -34,23 +30,23 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
-import static net.splitcells.website.Formats.HTML;
+import static net.splitcells.website.Format.HTML;
 
 public class Notification implements DeepCloneable {
     private static final DateTimeFormatter NOTIFICATION_DATE = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    public static Notification notification(ZonedDateTime time, Formats format, String content) {
+    public static Notification notification(ZonedDateTime time, Format format, String content) {
         return new Notification(time, format, content);
     }
 
     private ZonedDateTime time;
-    private final Formats format;
+    private final Format format;
     private final String content;
     private Optional<String> title = Optional.empty();
     private Optional<String> link = Optional.empty();
     private final List<String> tags = list();
 
-    private Notification(ZonedDateTime argTime, Formats argFormat, String argContent) {
+    private Notification(ZonedDateTime argTime, Format argFormat, String argContent) {
         time = argTime;
         format = argFormat;
         content = argContent;
@@ -65,7 +61,7 @@ public class Notification implements DeepCloneable {
         return this;
     }
 
-    public Formats format() {
+    public Format format() {
         return format;
     }
 

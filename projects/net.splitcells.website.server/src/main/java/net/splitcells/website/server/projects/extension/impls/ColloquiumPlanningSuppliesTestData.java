@@ -16,10 +16,8 @@
 package net.splitcells.website.server.projects.extension.impls;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.testing.IdentifiedNameGenerator;
 import net.splitcells.dem.utils.StringUtils;
-import net.splitcells.website.Formats;
+import net.splitcells.website.Format;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.projects.ProjectsRendererI;
@@ -29,7 +27,6 @@ import net.splitcells.website.server.projects.extension.ProjectsRendererExtensio
 import java.nio.file.Path;
 import java.util.Optional;
 
-import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.MathUtils.modulus;
@@ -52,7 +49,7 @@ public class ColloquiumPlanningSuppliesTestData implements ProjectsRendererExten
     public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         if (PATH.equals(path)) {
 
-            return Optional.of(binaryMessage(StringUtils.toBytes(testData()), Formats.TEXT_PLAIN));
+            return Optional.of(binaryMessage(StringUtils.toBytes(testData()), Format.TEXT_PLAIN));
         }
         return Optional.empty();
     }

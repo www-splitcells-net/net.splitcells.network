@@ -33,7 +33,7 @@ import net.splitcells.gel.editor.geal.runners.FunctionCallRun;
 import net.splitcells.gel.editor.lang.SolutionDescription;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.solution.Solution;
-import net.splitcells.website.Formats;
+import net.splitcells.website.Format;
 
 import java.util.Optional;
 
@@ -111,7 +111,7 @@ public class Editor implements Discoverable {
         }
     }
 
-    public EditorData loadData(Formats format, String name) {
+    public EditorData loadData(Format format, String name) {
         return data.getOptionally(name).orElseGet(() -> {
             final var newValue = editorData(format, new byte[0]);
             data.put(name, newValue);

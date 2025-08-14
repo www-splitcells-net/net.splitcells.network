@@ -18,23 +18,23 @@ package net.splitcells.gel.editor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import net.splitcells.website.Formats;
+import net.splitcells.website.Format;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
 
 @Accessors(chain = true)
 public class EditorData {
-    public static EditorData editorData(Formats format, byte[] content) {
+    public static EditorData editorData(Format format, byte[] content) {
         return new EditorData(format, content);
     }
     @Getter
     @Setter
-    private Formats format;
+    private Format format;
     @Getter
     @Setter
     private byte[] content;
 
-    private EditorData(Formats argFormat, byte[] argContent) {
+    private EditorData(Format argFormat, byte[] argContent) {
         format = argFormat;
         content = argContent;
     }

@@ -36,7 +36,7 @@ import static net.splitcells.dem.lang.tree.Tree.subtree;
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
 import static net.splitcells.dem.resource.Paths.removeFileSuffix;
 import static net.splitcells.dem.utils.StreamUtils.emptyStream;
-import static net.splitcells.website.Formats.XML;
+import static net.splitcells.website.Format.XML;
 import static net.splitcells.website.server.project.LayoutConfig.layoutConfig;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.project.renderer.PageMetaData.pageMetaData;

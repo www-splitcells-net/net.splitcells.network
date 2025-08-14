@@ -18,7 +18,7 @@ package net.splitcells.website.server.project.validator;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.host.HostName;
 import net.splitcells.dem.utils.CommonFunctions;
-import net.splitcells.website.Formats;
+import net.splitcells.website.Format;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.processor.BinaryMessage;
 
@@ -62,7 +62,7 @@ public class RenderingValidatorForHtmlLinks implements RenderingValidator {
         if (content.isEmpty()) {
             return true;
         }
-        if (!Formats.HTML.mimeTypes().equals(content.get().getFormat())) {
+        if (!Format.HTML.mimeTypes().equals(content.get().getFormat())) {
             return true;
         }
         final var paths = projectsRendererI.projectsPaths();

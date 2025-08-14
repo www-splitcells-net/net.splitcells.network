@@ -16,14 +16,12 @@
 package net.splitcells.website.server.notify;
 
 import net.splitcells.dem.testing.annotations.UnitTest;
-import net.splitcells.website.Formats;
 
-import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.website.Formats.COMMON_MARK;
+import static net.splitcells.website.Format.COMMON_MARK;
 import static net.splitcells.website.server.notify.Notification.notification;
 import static net.splitcells.website.server.notify.NotificationQueue.notificationQueue;
 

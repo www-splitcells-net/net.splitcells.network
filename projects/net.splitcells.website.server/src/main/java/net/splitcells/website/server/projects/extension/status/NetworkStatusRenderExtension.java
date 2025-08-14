@@ -21,8 +21,7 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.host.HostName;
-import net.splitcells.dem.utils.StringUtils;
-import net.splitcells.website.Formats;
+import net.splitcells.website.Format;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.validator.RenderingValidatorForHtmlLinks;
@@ -140,10 +139,10 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                     });
             logLevels.sort(naturalComparator());
             if (logLevels.isEmpty()) {
-                return Optional.of(binaryMessage(getBytes(INFO.name(), ContentType.UTF_8), Formats.TEXT_PLAIN.mimeTypes()));
+                return Optional.of(binaryMessage(getBytes(INFO.name(), ContentType.UTF_8), Format.TEXT_PLAIN.mimeTypes()));
             }
             final var statusLevel = logLevels.get(0);
-            return Optional.of(binaryMessage(getBytes(statusLevel.name(), ContentType.UTF_8), Formats.TEXT_PLAIN.mimeTypes()));
+            return Optional.of(binaryMessage(getBytes(statusLevel.name(), ContentType.UTF_8), Format.TEXT_PLAIN.mimeTypes()));
         }
         return Optional.empty();
     }

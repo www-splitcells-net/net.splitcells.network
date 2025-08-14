@@ -25,7 +25,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
-import static net.splitcells.website.Formats.CSS;
+import static net.splitcells.website.Format.CSS;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 /**

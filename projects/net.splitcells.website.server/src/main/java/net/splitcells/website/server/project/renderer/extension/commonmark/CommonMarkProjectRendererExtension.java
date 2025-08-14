@@ -19,7 +19,6 @@ import lombok.val;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.utils.StringUtils;
-import net.splitcells.website.Formats;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.PageMetaData;
@@ -32,7 +31,7 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
-import static net.splitcells.website.Formats.COMMON_MARK;
+import static net.splitcells.website.Format.COMMON_MARK;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.project.renderer.PageMetaData.pageMetaData;
 

@@ -41,7 +41,7 @@ import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.utils.ExecutionException;
-import net.splitcells.website.Formats;
+import net.splitcells.website.Format;
 import net.splitcells.website.server.config.PasswordAuthenticationEnabled;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
@@ -327,7 +327,7 @@ public class Server {
                                                             , LogLevel.DEBUG);
                                                     final var binaryResponse = binaryProcessor
                                                             .process(binaryRequest);
-                                                    response.putHeader("content-type", Formats.JSON.mimeTypes());
+                                                    response.putHeader("content-type", Format.JSON.mimeTypes());
                                                     if (binaryResponse.hasData()) {
                                                         promise.complete(toBytes(binaryResponse.data().createToJsonPrintable()
                                                                 .toJsonString()));

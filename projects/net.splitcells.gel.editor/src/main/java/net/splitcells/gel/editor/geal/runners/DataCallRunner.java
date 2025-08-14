@@ -17,13 +17,12 @@ package net.splitcells.gel.editor.geal.runners;
 
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
-import net.splitcells.website.Formats;
 
 import java.util.Optional;
 
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
-import static net.splitcells.website.Formats.CSV;
+import static net.splitcells.website.Format.CSV;
 
 public class DataCallRunner implements FunctionCallRunner {
     public static DataCallRunner dataCallRunner() {
