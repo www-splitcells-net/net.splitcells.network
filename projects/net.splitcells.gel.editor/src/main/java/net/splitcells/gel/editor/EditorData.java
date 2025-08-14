@@ -27,12 +27,9 @@ public class EditorData {
     public static EditorData editorData(Format format, byte[] content) {
         return new EditorData(format, content);
     }
-    @Getter
-    @Setter
-    private Format format;
-    @Getter
-    @Setter
-    private byte[] content;
+
+    @Getter @Setter private Format format;
+    @Getter @Setter private byte[] content;
 
     private EditorData(Format argFormat, byte[] argContent) {
         format = argFormat;
