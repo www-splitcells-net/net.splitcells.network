@@ -119,6 +119,10 @@ public class Editor implements Discoverable {
         });
     }
 
+    public EditorData loadData(String dataKey) {
+        return data.get(dataKey);
+    }
+
     public Set<String> dataKeys() {
         return data.keySet2();
     }
