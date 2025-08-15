@@ -188,7 +188,7 @@ function net_splitcells_webserver_form_submit(config) {
         console.log('Response to "' + formId + '":' + this.responseText);
         let responseObject = JSON.parse(this.responseText);
         if ('net-splitcells-websiter-server-form-update' in responseObject) {
-            for (const [key, value] of Object.entries(responseObject['net-splitcells-websiter-server-form-update'])) {
+            for (const [key, value] of Object.entries(responseObject['net-splitcells-websiter-server-form-update']['data-values'])) {
                 if (document.querySelector('*[name="' + key + '"]') === null) {
                     console.log('Could not find form field for update: ' + key);
 

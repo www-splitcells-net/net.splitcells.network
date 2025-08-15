@@ -35,7 +35,8 @@ public class EditorProcessor implements Processor<Tree, Tree> {
 
     public static final String PROBLEM_DEFINITION = "net-splitcells-gel-ui-editor-geal-form-problem-definition";
     public static final String FORM_UPDATE = "net-splitcells-websiter-server-form-update";
-    public static final String DATA_MAP = "net-splitcells-websiter-server-form-data-map";
+    public static final String DATA_MAP = "data-map";
+    public static final String DATA_VALUES = "data-values";
 
     public static final Trail PATH = Trail.trail("net/splitcells/gel/ui/editor/geal/form");
 
@@ -56,20 +57,22 @@ public class EditorProcessor implements Processor<Tree, Tree> {
             final var formUpdate = tree(FORM_UPDATE);
             final var dataMap = tree(DATA_MAP);
             formUpdate.withChild(dataMap);
+            final var dataValues = tree(DATA_VALUES);
+            formUpdate.withChild(dataValues);
             if (editor.getSolutions().size() == 1) {
                 editor.getSolutions().values().iterator().next().optimize();
             }
             editor.dataKeys().stream().forEach(d -> {
                 final var data = editor.loadData(d);
-                formUpdate.withProperty(d, parseString(data.getContent()));
+                dataValues.withProperty(d, parseString(data.getContent()));
                 dataMap.withProperty(d, data.getFormat().mimeTypes());
             });
             editor.getTables().entrySet().forEach(e -> {
-                formUpdate.withProperty(e.getKey(), e.getValue().toCSV());
+                dataValues.withProperty(e.getKey(), e.getValue().toCSV());
                 dataMap.withProperty(e.getKey(), CSV.mimeTypes());
             });
             editor.getSolutions().entrySet().forEach(e -> {
-                formUpdate.withProperty(e.getKey(), e.getValue().toCSV());
+                dataValues.withProperty(e.getKey(), e.getValue().toCSV());
                 dataMap.withProperty(e.getKey(), CSV.mimeTypes());
             });
             return response(formUpdate);
