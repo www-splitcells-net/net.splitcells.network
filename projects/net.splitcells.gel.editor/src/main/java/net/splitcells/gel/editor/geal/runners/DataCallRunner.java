@@ -23,6 +23,7 @@ import java.util.Optional;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 import static net.splitcells.website.Format.CSV;
+import static net.splitcells.website.Format.TEXT_PLAIN;
 
 public class DataCallRunner implements FunctionCallRunner {
     public static DataCallRunner dataCallRunner() {
@@ -44,7 +45,7 @@ public class DataCallRunner implements FunctionCallRunner {
         }
         final var firstArg = context.parse(functionCall.getArguments().get(0));
         if (firstArg instanceof String dataName) {
-            run.setResult(Optional.of(context.loadData(CSV, dataName)));
+            run.setResult(Optional.of(context.loadData(TEXT_PLAIN, dataName)));
         } else {
             throw execException();
         }
