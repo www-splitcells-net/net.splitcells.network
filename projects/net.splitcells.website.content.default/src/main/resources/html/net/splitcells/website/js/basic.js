@@ -212,7 +212,7 @@ function net_splitcells_webserver_form_submit(config) {
                     newTabContent.style.visibility = 'hidden';
                     tabHolder.appendChild(newTabContent);
 
-                    if (dataTypes[key] === 'text/csv') {
+                    if (dataTypes[key] === 'text/plain') {
                         const newTabInput = document.createElement('textarea');
                         newTabInput.id = key;
                         newTabInput.name = key;
