@@ -188,7 +188,9 @@ function net_splitcells_webserver_form_submit(config) {
         console.log('Response to "' + formId + '":' + this.responseText);
         let responseObject = JSON.parse(this.responseText);
         if ('net-splitcells-websiter-server-form-update' in responseObject) {
-            for (const [key, value] of Object.entries(responseObject['net-splitcells-websiter-server-form-update']['data-values'])) {
+            const formUpdate = responseObject['net-splitcells-websiter-server-form-update'];
+            const dataMap = formUpdate['data-map'];
+            for (const [key, value] of Object.entries(formUpdate['data-values'])) {
                 if (document.querySelector('*[name="' + key + '"]') === null) {
                     console.log('Could not find form field for update: ' + key);
 
@@ -209,18 +211,22 @@ function net_splitcells_webserver_form_submit(config) {
                     newTabContent.style.visibility = 'hidden';
                     tabHolder.appendChild(newTabContent);
 
-                    const newTabInput = document.createElement('textarea');
-                    newTabInput.id = key;
-                    newTabInput.name = key;
-                    newTabInput.className = 'net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor-backend';
-                    newTabInput.value = value;
-                    newTabInput.innerHTML = value;
-                    newTabContent.appendChild(newTabInput);
+                    if (dataMap[key] === 'text/csv') {
+                        const newTabInput = document.createElement('textarea');
+                        newTabInput.id = key;
+                        newTabInput.name = key;
+                        newTabInput.className = 'net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor-backend';
+                        newTabInput.value = value;
+                        newTabInput.innerHTML = value;
+                        newTabContent.appendChild(newTabInput);
 
-                    const newTabEditor = document.createElement('div');
-                    newTabEditor.className = 'net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor';
-                    newTabEditor.setAttribute('net-splitcells-syncs-to', key);
-                    newTabContent.appendChild(newTabEditor);
+                        const newTabEditor = document.createElement('div');
+                        newTabEditor.className = 'net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor';
+                        newTabEditor.setAttribute('net-splitcells-syncs-to', key);
+                        newTabContent.appendChild(newTabEditor);
+                    } else {
+                        console.warn('Unknown data type ' + dataMap[key] + ' for form field update ' + dataMap[key] + '.');
+                    }
 
                     continue;
                 }
