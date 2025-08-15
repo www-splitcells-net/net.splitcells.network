@@ -239,10 +239,24 @@ function net_splitcells_webserver_form_submit(config) {
                         newTabEditor.setAttribute('net-splitcells-syncs-to', key);
                         newTabContent.appendChild(newTabEditor);
 
-                        new Tabulator(newTabEditor
-                                , {data: value
+                        const tabEditorBackend = new Tabulator(newTabEditor
+                                , {data: prepareCsvForTabulator(newTabInput.value)
                                 , importFormat: 'csv'
                                 , autoColumns: true });
+                        var observer = new MutationObserver(
+                            function(mutations, observer) {
+                                for (const m of mutations) {
+                                    if (m.type === 'attributes' || m.type === 'characterData') {
+                                        tabEditorBackend.setData(prepareCsvForTabulator(newTabInput.value));
+                                        break;
+                                    }
+                                 };
+                            }
+                        );
+                        observer.observe(newTabInput, {
+                            attributes: true,
+                            characterData: true
+                        });
                     } else {
                         console.warn('Unknown data type ' + dataTypes[key] + ' for form field update ' + key + '.');
                     }
@@ -291,6 +305,16 @@ function net_splitcells_webserver_form_submit(config) {
     }
     request.open("post", form.action);
     request.send(data);
+}
+/* If the CSV data only contains the header line,
+ * a new line symbol is required,
+ * so that Tabulator can parse the CSV's header.
+ */
+function prepareCsvForTabulator(csv) {
+    if (csv.includes("\n")) {
+        return csv;
+    }
+    return csv + "\n";
 }
 function downloadStringAsFile(string, filename) {
     // The element does not have to be added to the document, in order to be used.
