@@ -192,7 +192,7 @@ function net_splitcells_webserver_form_submit(config) {
             const dataMap = formUpdate['data-map'];
             for (const [key, value] of Object.entries(formUpdate['data-values'])) {
                 if (document.querySelector('*[name="' + key + '"]') === null) {
-                    console.log('Could not find form field for update: ' + key);
+                    console.log('Inserting new form field for update: ' + key);
 
                     const newTabButton = document.createElement("div");
                     newTabButton.innerHTML = key;
