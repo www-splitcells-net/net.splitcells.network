@@ -189,8 +189,9 @@ function net_splitcells_webserver_form_submit(config) {
         let responseObject = JSON.parse(this.responseText);
         if ('net-splitcells-websiter-server-form-update' in responseObject) {
             const formUpdate = responseObject['net-splitcells-websiter-server-form-update'];
-            const dataMap = formUpdate['data-map'];
-            for (const [key, value] of Object.entries(formUpdate['data-values'])) {
+            const dataValues = formUpdate['data-values'];
+            const dataTypes = formUpdate['data-types'];
+            for (const [key, value] of Object.entries(dataValues)) {
                 if (document.querySelector('*[name="' + key + '"]') === null) {
                     console.log('Inserting new form field for update: ' + key);
 
@@ -211,7 +212,7 @@ function net_splitcells_webserver_form_submit(config) {
                     newTabContent.style.visibility = 'hidden';
                     tabHolder.appendChild(newTabContent);
 
-                    if (dataMap[key] === 'text/csv') {
+                    if (dataTypes[key] === 'text/csv') {
                         const newTabInput = document.createElement('textarea');
                         newTabInput.id = key;
                         newTabInput.name = key;
@@ -225,7 +226,7 @@ function net_splitcells_webserver_form_submit(config) {
                         newTabEditor.setAttribute('net-splitcells-syncs-to', key);
                         newTabContent.appendChild(newTabEditor);
                     } else {
-                        console.warn('Unknown data type ' + dataMap[key] + ' for form field update ' + dataMap[key] + '.');
+                        console.warn('Unknown data type ' + dataTypes[key] + ' for form field update ' + key + '.');
                     }
 
                     continue;
