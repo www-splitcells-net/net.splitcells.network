@@ -246,16 +246,15 @@ function net_splitcells_webserver_form_submit(config) {
                         var observer = new MutationObserver(
                             function(mutations, observer) {
                                 for (const m of mutations) {
-                                    if (m.type === 'attributes' || m.type === 'characterData') {
-                                        tabEditorBackend.setData(prepareCsvForTabulator(newTabInput.value));
-                                        break;
-                                    }
+                                    tabEditorBackend.setData(prepareCsvForTabulator(newTabInput.value));
                                  };
                             }
                         );
                         observer.observe(newTabInput, {
                             attributes: true,
-                            characterData: true
+                            characterData: true,
+                            subtree: true,
+                            childList: true
                         });
                     } else {
                         console.warn('Unknown data type ' + dataTypes[key] + ' for form field update ' + key + '.');
