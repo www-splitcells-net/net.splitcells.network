@@ -1137,10 +1137,11 @@
         </profile>
         <profile>
             <id>report</id>
-            <!-- Generate all reports via "mvn site". -->
+            <!-- Generate all reports via "mvn site".
+            This is disabled by default, as these require extraordinary CPU resources.-->
             <activation>
                 <property>
-                    <name>!report_disabled</name>
+                    <name>report_enabled</name>
                 </property>
             </activation>
             <build>
