@@ -41,6 +41,7 @@
         <module>projects/net.splitcells.website.content.minimal</module>
         <module>projects/net.splitcells.sep</module>
         <module>projects/net.splitcells.network</module>
+        <module>projects/net.splitcells.network.worker</module>
         <module>projects/net.splitcells.network.worker.via.java</module>
         <module>projects/net.splitcells.cin</module>
         <module>projects/net.splitcells.network.system</module>
@@ -54,8 +55,8 @@
                 </property>
             </activation>
             <dependencies>
-                <!-- These dependencies are needed as,
-                     report-aggregate of jacoco-maven-plugin will not add these projects to the repo.
+                <!-- These dependencies are needed,
+                     as report-aggregate of jacoco-maven-plugin will only add all direct dependencies to the aggregate report.
                      The aggregate JaCoCo report shows the projects in the same order as the following dependencies. -->
                 <dependency>
                     <groupId>net.splitcells</groupId>
@@ -79,12 +80,27 @@
                 </dependency>
                 <dependency>
                     <groupId>net.splitcells</groupId>
+                    <artifactId>gel.core</artifactId>
+                    <version>${revision}</version>
+                </dependency>
+                <dependency>
+                    <groupId>net.splitcells</groupId>
                     <artifactId>gel.doc</artifactId>
                     <version>${revision}</version>
                 </dependency>
                 <dependency>
                     <groupId>net.splitcells</groupId>
+                    <artifactId>gel.editor</artifactId>
+                    <version>${revision}</version>
+                </dependency>
+                <dependency>
+                    <groupId>net.splitcells</groupId>
                     <artifactId>gel.ext</artifactId>
+                    <version>${revision}</version>
+                </dependency>
+                <dependency>
+                    <groupId>net.splitcells</groupId>
+                    <artifactId>gel.quickstart</artifactId>
                     <version>${revision}</version>
                 </dependency>
                 <dependency>
@@ -95,6 +111,16 @@
                 <dependency>
                     <groupId>net.splitcells</groupId>
                     <artifactId>network</artifactId>
+                    <version>${revision}</version>
+                </dependency>
+                <dependency>
+                    <groupId>net.splitcells</groupId>
+                    <artifactId>network.worker</artifactId>
+                    <version>${revision}</version>
+                </dependency>
+                <dependency>
+                    <groupId>net.splitcells</groupId>
+                    <artifactId>network.worker.via.java</artifactId>
                     <version>${revision}</version>
                 </dependency>
                 <dependency>
@@ -110,6 +136,11 @@
                 <dependency>
                     <groupId>net.splitcells</groupId>
                     <artifactId>shell.lib</artifactId>
+                    <version>${revision}</version>
+                </dependency>
+                <dependency>
+                    <groupId>net.splitcells</groupId>
+                    <artifactId>system</artifactId>
                     <version>${revision}</version>
                 </dependency>
                 <dependency>
