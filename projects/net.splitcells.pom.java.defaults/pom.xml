@@ -1160,7 +1160,7 @@
                     <plugin>
                         <groupId>com.github.spotbugs</groupId>
                         <artifactId>spotbugs-maven-plugin</artifactId>
-                        <version>4.2.0</version>
+                        <version>4.9.3.2</version>
                     </plugin>
                     <plugin>
                         <!-- Prevent ClassNotFoundException inside "org.apache.maven.plugins:maven-site-plugin" during "mvn site". -->
