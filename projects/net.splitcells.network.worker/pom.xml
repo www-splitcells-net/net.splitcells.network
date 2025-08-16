@@ -6,11 +6,10 @@
     -->
     <modelVersion>4.0.0</modelVersion>
     <artifactId>network.worker</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <parent>
         <groupId>net.splitcells</groupId>
         <artifactId>pom-java-defaults</artifactId>
         <version>${revision}</version>
-        <relativePath>../net.splitcells.network/projects/net.splitcells.pom.java.defaults/pom.xml</relativePath>
+        <relativePath>../net.splitcells.pom.java.defaults/pom.xml</relativePath>
     </parent>
 </project>
