@@ -305,15 +305,29 @@ function net_splitcells_webserver_form_submit(config) {
     request.open("post", form.action);
     request.send(data);
 }
+function count(str, char) {
+    let counter = 0;
+    let i = 0;
+    for( i; i < this.length; i++) {
+        if (str[i] = char) {
+            counter++;
+        }
+    }
+    return counter;
+};
+
 /* If the CSV data only contains the header line,
- * a new line symbol is required,
- * so that Tabulator can parse the CSV's header.
+ * an empty line at the end is required.
+ * In other words, empty tables are represented by tables with one line containing only empty fields.
  */
 function prepareCsvForTabulator(csv) {
-    if (csv.includes("\n")) {
-        return csv;
+    let newLines = count(csv, "\n");
+    if (newLines = 0) {
+        return csv + "\n" + "\n";
+    } else if (newLines = 1) {
+        return csv + "\n";
     }
-    return csv + "\n";
+    return csv;
 }
 function downloadStringAsFile(string, filename) {
     // The element does not have to be added to the document, in order to be used.
