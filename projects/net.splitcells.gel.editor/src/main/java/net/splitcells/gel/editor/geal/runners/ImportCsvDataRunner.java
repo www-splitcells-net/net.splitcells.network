@@ -28,6 +28,12 @@ import static net.splitcells.dem.utils.StringUtils.parseString;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 import static net.splitcells.website.Format.TEXT_PLAIN;
 
+/**
+ * In the past the CSV import and the data loading was done via 2 distinct commands.
+ * This was moved into one, in order to provide sane default CSV content for the given data name,
+ * when no CSV content is set yet.
+ * By default, the data contains the header of the subject's table.
+ */
 public class ImportCsvDataRunner implements FunctionCallRunner {
     public static ImportCsvDataRunner importCsvDataRunner() {
         return new ImportCsvDataRunner();
