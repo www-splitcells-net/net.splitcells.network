@@ -51,3 +51,7 @@ jobs:
           mvn -B clean install -Dtest_codecov=1 org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=www-splitcells-net_net.splitcells.network -Dsonar.test.exclusions=src/main/java/** -Dsonar.organization=www-splitcells-net -Dsonar.host.url=https://sonarcloud.io # `-Dsonar.inclusions=src/main/**,bin/*` does not seem to work.
           bash -c 'bash <(curl -s https://codecov.io/bash)'
       - uses: actions/checkout@master
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        env:
+            CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
