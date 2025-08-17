@@ -18,20 +18,22 @@ package net.splitcells.gel.editor.geal.runners;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.editor.Editor;
-import net.splitcells.gel.editor.EditorData;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
+import net.splitcells.gel.editor.geal.lang.StringDesc;
 
 import java.util.Optional;
 
 import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.dem.utils.StringUtils.parseString;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
+import static net.splitcells.website.Format.TEXT_PLAIN;
 
-public class ImportCsvRunner implements FunctionCallRunner {
-    public static ImportCsvRunner importCsvRunner() {
-        return new ImportCsvRunner();
+public class ImportCsvDataRunner implements FunctionCallRunner {
+    public static ImportCsvDataRunner importCsvDataRunner() {
+        return new ImportCsvDataRunner();
     }
 
-    private ImportCsvRunner() {
+    private ImportCsvDataRunner() {
 
     }
 
@@ -44,15 +46,19 @@ public class ImportCsvRunner implements FunctionCallRunner {
         } else {
             return run;
         }
-        if (!functionCall.getName().getValue().equals("importCsv")) {
+        if (!functionCall.getName().getValue().equals("importCsvData")) {
             return run;
         }
         if (functionCall.getArguments().size() != 1) {
             return run;
         }
         final var firstArg = context.parse(functionCall.getArguments().get(0));
-        if (firstArg instanceof EditorData data) {
-            tableSubject.withAddedCsv(StringUtils.parseString(data.getContent()));
+        if (firstArg instanceof String dataName) {
+            final var csvData = context.loadData(TEXT_PLAIN, dataName);
+            if (csvData.getContent().length == 0) {
+                csvData.setContent(StringUtils.toBytes(tableSubject.simplifiedHeaderCsv()));
+            }
+            tableSubject.withAddedCsv(parseString(csvData.getContent()));
             run.setResult(Optional.of(tableSubject));
         } else {
             throw execException();

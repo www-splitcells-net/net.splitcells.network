@@ -26,12 +26,11 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.editor.geal.runners.AttributeCallRunner.attributeCallRunner;
-import static net.splitcells.gel.editor.geal.runners.DataCallRunner.dataCallRunner;
 import static net.splitcells.gel.editor.geal.runners.ForAllCombsCallRunner.forAllCombsCallRunner;
 import static net.splitcells.gel.editor.geal.runners.ForEachCallRunner.forEachCallRunner;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 import static net.splitcells.gel.editor.geal.runners.HasSizeCallRunner.hasSizeCallRunner;
-import static net.splitcells.gel.editor.geal.runners.ImportCsvRunner.importCsvRunner;
+import static net.splitcells.gel.editor.geal.runners.ImportCsvDataRunner.importCsvDataRunner;
 import static net.splitcells.gel.editor.geal.runners.SolutionCallRunner.solutionCallRunner;
 import static net.splitcells.gel.editor.geal.runners.TableCallRunner.tableCallRunner;
 import static net.splitcells.gel.editor.geal.runners.ThenCallRunner.thenCallRunner;
@@ -56,8 +55,7 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
                 .registerExecutor(forAllCombsCallRunner())
                 .registerExecutor(thenCallRunner())
                 .registerExecutor(hasSizeCallRunner())
-                .registerExecutor(dataCallRunner())
-                .registerExecutor(importCsvRunner());
+                .registerExecutor(importCsvDataRunner());
     }
 
     private final List<FunctionCallRunner> executors = list();

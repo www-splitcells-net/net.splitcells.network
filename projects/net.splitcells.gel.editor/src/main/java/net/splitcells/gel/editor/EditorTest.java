@@ -300,10 +300,10 @@ public class EditorTest {
                 roomNumber = attribute(Integer, 'room number');
                 
                 demands    = table('exams', student, examiner, observer);
-                demands    . importCsv(data('demands.csv'))
+                demands    . importCsvData('demands.csv')
                 
                 supplies   = table('time slots', date, shift, roomNumber);
-                supplies   . importCsv(data('supplies.csv'))
+                supplies   . importCsvData('supplies.csv')
                 
                 solution   = solution('Colloquium Plan', demands, supplies, rules);
                 solution   . forEach(examiner)
