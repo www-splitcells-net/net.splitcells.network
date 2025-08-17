@@ -84,6 +84,10 @@ public interface View extends Discoverable, Domable, Identifiable {
      */
     List<Attribute<Object>> headerView();
 
+    default String simplifiedHeaderCsv() {
+        return headerView().stream().map(h -> h.name()).reduce("", (a, b) -> a + "," + b);
+    }
+
     /**
      * TODO This method should return a {@link ListView}.
      *
