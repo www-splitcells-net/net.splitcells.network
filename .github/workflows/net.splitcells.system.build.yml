@@ -52,6 +52,6 @@ jobs:
           bash -c 'bash <(curl -s https://codecov.io/bash)'
       - uses: actions/checkout@master
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v5.4.3
         env:
-            CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
