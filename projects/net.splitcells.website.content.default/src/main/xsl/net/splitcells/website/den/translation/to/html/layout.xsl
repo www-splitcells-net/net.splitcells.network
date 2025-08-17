@@ -735,6 +735,7 @@ request.send();]]>
                             <div id="net-splitcells-detailed-menu"
                                  class="menu Left_shadow TextCell Layout net-splitcells-component-priority-4">
                                 <div class="Left_shadow net-splitcells-component-priority-0 splitcells-net-title-logo splitcells-net-window-menu">
+                                    <div class="net-splitcells-structural-guide minimal-only"></div>
                                     <div class="splitcells-net-window-menu-line-1">
                                         <a class="net-splitcells-button-inline net-splitcells-main-button-project-logo">
                                             <xsl:attribute name="href">
