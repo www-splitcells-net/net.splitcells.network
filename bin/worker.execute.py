@@ -149,7 +149,7 @@ CONTAINER_POM = """
         <dependency>
             <groupId>com.microsoft.playwright</groupId>
             <artifactId>playwright</artifactId>
-            <version>1.45.0</version>
+            <version>${playwrightVersion}</version>
         </dependency>
     </dependencies>
 </project>
@@ -321,6 +321,7 @@ class WorkerExecution:
     additional_podman_args = ""
     bin_worker_execute = None
     additionalArguments = ""
+    playwrightVersion = "1.45.0"
     def execute(self, configParser, config):
         self.configParser = configParser
         self.config = config
@@ -396,7 +397,8 @@ class WorkerExecution:
             , programName = self.config.program_name
             , podmanParameters = self.additional_podman_args
             , executionName = self.config.execution_name
-            , additionalArguments = self.additionalArguments)
+            , additionalArguments = self.additionalArguments
+            , playwrightVersion = self.playwrightVersion)
     def formatDocument(self, arg):
         """Ensure, that the document ends with a single new line symbol."""
         if arg.endswith("\n\n"):
