@@ -12,6 +12,8 @@
   This can be used in order to add new functionality to such elements.
   If such an element is interactable or changeable, the replacer is responsible to track the element's content and
   to update the alternative representation accordingly.
+- An element with the CSS class cm-editor contains an instance of CodeMirror rendering aka. a text editor.
+  Limit styles applied to children to such elements via the `not(.cm-editor) > targetElementName` selector.
 */
 /* - TODO Split CSS in CSS without classes and CSS with specifics for this website.
  * - TODO Split up CSS into multiple files, where each file is responsible for one somewhat big functionality,
@@ -106,7 +108,7 @@ ol {
 ol ol {
     padding-left: 1.75em;
     }
-span {
+not(.cm-editor) > span {
     /* Inline elements are assumed to contain flowing text by default. */
     font-family: var(--text-flowing-font);
     }
