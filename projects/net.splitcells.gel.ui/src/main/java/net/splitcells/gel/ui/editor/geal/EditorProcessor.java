@@ -17,6 +17,9 @@ package net.splitcells.gel.ui.editor.geal;
 
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.Trail;
+import net.splitcells.dem.utils.StringUtils;
+import net.splitcells.gel.editor.EditorData;
+import net.splitcells.website.Format;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
@@ -25,7 +28,9 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.parseString;
+import static net.splitcells.dem.utils.StringUtils.toBytes;
 import static net.splitcells.gel.editor.Editor.editor;
+import static net.splitcells.gel.editor.EditorData.editorData;
 import static net.splitcells.website.Format.CSV;
 import static net.splitcells.website.server.processor.Response.response;
 
@@ -48,9 +53,18 @@ public class EditorProcessor implements Processor<Tree, Tree> {
 
     @Override
     public Response<Tree> process(Request<Tree> request) {
+        final var editor = editor("editor-data-query", EXPLICIT_NO_CONTEXT);
         final var problemDefinition = request.data().namedChildren(PROBLEM_DEFINITION);
+        final var inputValues = request.data().namedChildren(DATA_VALUES);
+        if (inputValues.hasElements()) {
+            final var inputTypes = request.data().namedChild(DATA_TYPES);
+            inputValues.get(0).children().forEach(c -> {
+                final var format = Format.parse(inputTypes.namedChild(c.name()).name());
+                final var content = toBytes(c.child(0).name());
+                editor.saveData(c.name(), editorData(format, content));
+            });
+        }
         if (problemDefinition.size() == 1) {
-            final var editor = editor("editor-data-query", EXPLICIT_NO_CONTEXT);
             editor.interpret(problemDefinition.get(0).content());
             final var formUpdate = tree(FORM_UPDATE);
             final var dataTypes = tree(DATA_TYPES);
