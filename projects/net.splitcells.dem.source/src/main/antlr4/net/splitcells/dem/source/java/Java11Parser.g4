@@ -362,7 +362,9 @@ statement_switch_case_by_type
     ;
 statement_switch_case_by_value
     : Keyword_default Arrow statement
+    | Keyword_default Keysymbol_colon statement
     | Keyword_case String (Comma String)* Arrow statement
+    | Keyword_case String (Comma String)* Keysymbol_colon statement
     ;
 statement_for
     : Keyword_for Brace_round_open variable_declaration (Equals expression)? Semicolon expression Semicolon expression Brace_round_closed statement_body
