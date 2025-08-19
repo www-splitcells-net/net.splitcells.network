@@ -194,16 +194,28 @@ function net_splitcells_webserver_form_submit(config) {
             for (const [key, value] of Object.entries(dataValues)) {
                 if (document.querySelector('*[name="' + key + '"]') === null) {
                     console.log('Inserting new form field for update: ' + key);
-
-                    const newTabButton = document.createElement("div");
-                    newTabButton.innerHTML = key;
-                    newTabButton.className = 'net-splitcells-button net-splitcells-action-button '
-                        + key + '-tab-button '
-                        + formId + '-tab-button';
-                    newTabButton.onclick = function() {
-                        net_splitcells_webserver_form_tab_select(formId, key);
-                    };
-                    tabBar.appendChild(newTabButton);
+                    {
+                        const newTabButton = document.createElement("div");
+                        newTabButton.innerHTML = key;
+                        newTabButton.className = 'net-splitcells-button net-splitcells-action-button '
+                            + key + '-tab-button '
+                            + formId + '-tab-button';
+                        newTabButton.onclick = function() {
+                            net_splitcells_webserver_form_tab_select(formId, key);
+                        };
+                        tabBar.appendChild(newTabButton);
+                    }
+                    document.querySelectorAll('.net-splitcells-website-menu-dynamic').forEach( (menu) => {
+                        const newTabButton = document.createElement("div");
+                        newTabButton.innerHTML = key;
+                        newTabButton.className = 'net-splitcells-button net-splitcells-action-button '
+                            + key + '-tab-button '
+                            + formId + '-tab-button';
+                        newTabButton.onclick = function() {
+                            net_splitcells_webserver_form_tab_select(formId, key);
+                        };
+                        menu.appendChild(newTabButton);
+                    });
 
                     const newTabContent = document.createElement('div');
                     newTabContent.id = key + '-tab-content';
