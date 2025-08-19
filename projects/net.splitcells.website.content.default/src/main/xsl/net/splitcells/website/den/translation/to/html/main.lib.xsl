@@ -19,6 +19,7 @@
     <xsl:include href="article.select.xsl"/>
     <xsl:include href="component.standard.xsl"/>
     <xsl:include href="component.todo.xsl"/>
+    <xsl:include href="component.editor.xsl"/>
     <xsl:include href="content.outline.xsl"/>
     <xsl:include href="feeds.xsl"/>
     <xsl:include href="den.xsl"/>

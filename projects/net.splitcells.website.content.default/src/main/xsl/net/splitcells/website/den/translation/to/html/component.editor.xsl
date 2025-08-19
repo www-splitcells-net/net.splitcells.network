@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="2.0"
+                xmlns:s="http://splitcells.net/sew.xsd"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:x="http://www.w3.org/1999/xhtml"
+                xmlns:d="http://splitcells.net/den.xsd"
+                xmlns:p="http://splitcells.net/private.xsd"
+                xmlns:m="http://www.w3.org/1998/Math/MathML"
+                xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <!--
+        SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+        SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+    -->
+    <xsl:template match="*" mode="net-splitcells-gel-editor">
+        <xsl:apply-templates mode="net-splitcells-gel-editor"/>
+    </xsl:template>
+</xsl:stylesheet>
