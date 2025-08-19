@@ -792,6 +792,7 @@ request.send();]]>
                                             </xsl:for-each>
                                         </section>
                                     </xsl:if>
+                                    <section class="net-splitcells-website-menu-dynamic net-splitcells-component-priority-1"></section>
                                     <xsl:apply-templates mode="net-splitcells-website-menu"
                                                          select="$net-splitcells-website-server-config-menu-detailed">
                                     </xsl:apply-templates>
