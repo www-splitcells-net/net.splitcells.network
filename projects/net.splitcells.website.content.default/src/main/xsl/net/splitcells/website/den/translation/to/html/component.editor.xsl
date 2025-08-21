@@ -16,13 +16,13 @@
         <xsl:apply-templates select="./*" mode="net-splitcells-gel-editor"/>
     </xsl:template>
     <xsl:template match="s:form-editor" mode="net-splitcells-gel-editor">
-        <xsl:apply-templates select="./*" mode="net-splitcells-gel-editor"/>
-    </xsl:template>
-    <xsl:template match="s:text-area" mode="net-splitcells-gel-editor">
         <xsl:variable name="quote">'</xsl:variable>
-        <div class="net-splitcells-button net-splitcells-action-button demands.csv-tab-button net-splitcells-gel-ui-editor-geal-form-tab-button">
-            <xsl:attribute name="onclick" select="concat('net_splitcells_webserver_form_tab_select(null, ', $quote, @name, $quote, ');')"/>
-            <xsl:value-of select="@name"/>
-        </div>
+        <xsl:variable name="form-id" select="@id"/>
+        <xsl:for-each select="descendant::s:text-area">
+            <div class="net-splitcells-button net-splitcells-action-button demands.csv-tab-button net-splitcells-gel-ui-editor-geal-form-tab-button">
+                <xsl:attribute name="onclick" select="concat('net_splitcells_webserver_form_tab_select(', $quote, $form-id, $quote, ', ', $quote, @name, $quote, ');')"/>
+                <xsl:value-of select="@name"/>
+            </div>
+        </xsl:for-each>
     </xsl:template>
 </xsl:stylesheet>
