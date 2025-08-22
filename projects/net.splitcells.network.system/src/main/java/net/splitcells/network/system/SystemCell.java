@@ -49,6 +49,7 @@ import java.util.function.Function;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.Dem.serve;
+import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.gel.ui.editor.SolutionCalculator.solutionCalculator;
 import static net.splitcells.gel.ui.editor.geal.EditorProcessor.editorProcessor;
 import static net.splitcells.gel.ui.editor.code.CodeSolutionCalculatorTest.TEST_OPTIMIZATION_GUI;
@@ -193,6 +194,20 @@ public class SystemCell implements Cell {
                 .withAdditionalProcessor(SolutionCalculator.PATH, solutionCalculator())
                 .withAdditionalProcessor(EditorProcessor.PATH, editorProcessor())
                 .withAdditionalProjectsRendererExtension(performanceReport())
+                .withLicensePage(trail("/net/splitcells/network/LICENSE"))
+                .withLicensePage(trail("/net/splitcells/network/NOTICE"))
+                .withLicensePage(trail("/net/splitcells/network/legal/Developer_Certificate_of_Origin.v1.1"))
+                .withLicensePage(trail("/net/splitcells/network/legal/licenses/Apache-2.0"))
+                .withLicensePage(trail("/net/splitcells/network/legal/licenses/BSD-2-Clause"))
+                .withLicensePage(trail("/net/splitcells/network/legal/licenses/BSD-3-Clause"))
+                .withLicensePage(trail("/net/splitcells/network/legal/licenses/CC-BY-SA-4.0"))
+                .withLicensePage(trail("/net/splitcells/network/legal/licenses/EPL-2.0"))
+                .withLicensePage(trail("/net/splitcells/network/legal/licenses/GPL-2.0-or-later-WITH-Classpath-exception-2.0"))
+                .withLicensePage(trail("/net/splitcells/network/legal/licenses/GPL-2.0-or-later"))
+                .withLicensePage(trail("/net/splitcells/network/legal/licenses/ISC"))
+                .withLicensePage(trail("/net/splitcells/network/legal/licenses/LGPL-2.1-or-later"))
+                .withLicensePage(trail("/net/splitcells/network/legal/licenses/MIT"))
+                .withLicensePage(trail("/net/splitcells/network/legal/licenses/MPL-2.0"))
                 ;
     }
 
