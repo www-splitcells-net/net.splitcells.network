@@ -46,7 +46,7 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
                 && functionCall.getArguments().size() >= 1
                 && functionCall.getArguments()
                 .stream()
-                .hasNoMatch(n -> !(n.getExpression() instanceof FunctionCallDesc));
+                .noneMatch(n -> !(n.getExpression() instanceof FunctionCallDesc));
     }
 
     @Override
