@@ -15,6 +15,8 @@
  */
 package net.splitcells.website.server;
 
+import lombok.Getter;
+import lombok.experimental.Accessors;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
@@ -43,6 +45,7 @@ import static net.splitcells.website.server.processor.BinaryMessage.binaryMessag
  * This would also make serialization easier.
  * Maybe create a serialization mini framework for that?
  */
+@Accessors(chain = true)
 public class Config {
     public static Config create() {
         return new Config();
@@ -251,6 +254,11 @@ public class Config {
      * The thread safety of the resources used by the {@link ProjectsRenderer} are to be ensured by the caller.
      */
     private boolean isMultiThreaded = false;
+
+    /**
+     * This is the list of pages, that contain all relevant licensing info of the hosted website.
+     */
+    @Getter private List<Trail> licensePages = list();
 
     private Config() {
     }
@@ -566,6 +574,11 @@ public class Config {
 
     public Config withFrontMenuCommonMarkDescription(String arg) {
         frontMenuDescription = arg;
+        return this;
+    }
+
+    public Config withLicensePage(Trail page) {
+        licensePages.add(page);
         return this;
     }
 }
