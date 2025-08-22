@@ -49,6 +49,7 @@ import java.util.function.Function;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.Dem.serve;
+import static net.splitcells.dem.lang.TrailLink.trailLink;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.gel.ui.editor.SolutionCalculator.solutionCalculator;
 import static net.splitcells.gel.ui.editor.geal.EditorProcessor.editorProcessor;
@@ -194,20 +195,20 @@ public class SystemCell implements Cell {
                 .withAdditionalProcessor(SolutionCalculator.PATH, solutionCalculator())
                 .withAdditionalProcessor(EditorProcessor.PATH, editorProcessor())
                 .withAdditionalProjectsRendererExtension(performanceReport())
-                .withLicensePage(trail("/net/splitcells/network/LICENSE"))
-                .withLicensePage(trail("/net/splitcells/network/NOTICE"))
-                .withLicensePage(trail("/net/splitcells/network/legal/Developer_Certificate_of_Origin.v1.1"))
-                .withLicensePage(trail("/net/splitcells/network/legal/licenses/Apache-2.0"))
-                .withLicensePage(trail("/net/splitcells/network/legal/licenses/BSD-2-Clause"))
-                .withLicensePage(trail("/net/splitcells/network/legal/licenses/BSD-3-Clause"))
-                .withLicensePage(trail("/net/splitcells/network/legal/licenses/CC-BY-SA-4.0"))
-                .withLicensePage(trail("/net/splitcells/network/legal/licenses/EPL-2.0"))
-                .withLicensePage(trail("/net/splitcells/network/legal/licenses/GPL-2.0-or-later-WITH-Classpath-exception-2.0"))
-                .withLicensePage(trail("/net/splitcells/network/legal/licenses/GPL-2.0-or-later"))
-                .withLicensePage(trail("/net/splitcells/network/legal/licenses/ISC"))
-                .withLicensePage(trail("/net/splitcells/network/legal/licenses/LGPL-2.1-or-later"))
-                .withLicensePage(trail("/net/splitcells/network/legal/licenses/MIT"))
-                .withLicensePage(trail("/net/splitcells/network/legal/licenses/MPL-2.0"))
+                .withLicensePage(trailLink("Licensing Info of The Core Project net.splitcells.network", "/net/splitcells/network/LICENSE"))
+                .withLicensePage(trailLink("Copyright Notice", "/net/splitcells/network/NOTICE"))
+                .withLicensePage(trailLink("Developer Certificate of Origin Version 1.1", "/net/splitcells/network/legal/Developer_Certificate_of_Origin.v1.1"))
+                .withLicensePage(trailLink("Apache License - Version 2.0, January 2004", "/net/splitcells/network/legal/licenses/Apache-2.0"))
+                .withLicensePage(trailLink("BSD 2 Clause License", "/net/splitcells/network/legal/licenses/BSD-2-Clause"))
+                .withLicensePage(trailLink("BSD 3 Clause License", "/net/splitcells/network/legal/licenses/BSD-3-Clause"))
+                .withLicensePage(trailLink("Attribution-ShareAlike 4.0 International License", "/net/splitcells/network/legal/licenses/CC-BY-SA-4.0"))
+                .withLicensePage(trailLink("Eclipse Public License - v 2.0", "/net/splitcells/network/legal/licenses/EPL-2.0"))
+                .withLicensePage(trailLink("GNU GENERAL PUBLIC LICENSE - Version 2, June 1991 with Classpath Exception", "/net/splitcells/network/legal/licenses/GPL-2.0-or-later-WITH-Classpath-exception-2.0"))
+                .withLicensePage(trailLink("GNU GENERAL PUBLIC LICENSE - Version 2, June 1991", "/net/splitcells/network/legal/licenses/GPL-2.0-or-later"))
+                .withLicensePage(trailLink("ISC License", "/net/splitcells/network/legal/licenses/ISC"))
+                .withLicensePage(trailLink("GNU LESSER GENERAL PUBLIC LICENSE - Version 2.1, February 1999", "/net/splitcells/network/legal/licenses/LGPL-2.1-or-later"))
+                .withLicensePage(trailLink("MIT License", "/net/splitcells/network/legal/licenses/MIT"))
+                .withLicensePage(trailLink("Mozilla Public License Version 2.0", "/net/splitcells/network/legal/licenses/MPL-2.0"))
                 ;
     }
 

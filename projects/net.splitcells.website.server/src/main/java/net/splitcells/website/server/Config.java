@@ -19,6 +19,7 @@ import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.TrailLink;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.Trail;
@@ -258,7 +259,7 @@ public class Config {
     /**
      * This is the list of pages, that contain all relevant licensing info of the hosted website.
      */
-    @Getter private List<Trail> licensePages = list();
+    @Getter private List<TrailLink> licensePages = list();
 
     private Config() {
     }
@@ -577,7 +578,7 @@ public class Config {
         return this;
     }
 
-    public Config withLicensePage(Trail page) {
+    public Config withLicensePage(TrailLink page) {
         licensePages.add(page);
         return this;
     }
