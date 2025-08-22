@@ -19,6 +19,7 @@ import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.environment.Cell;
 import net.splitcells.dem.lang.TrailLink;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.tree.Tree;
@@ -258,6 +259,8 @@ public class Config {
 
     /**
      * This is the list of pages, that contain all relevant licensing info of the hosted website.
+     *
+     * TODO IDEA Consider reading the values from all {@link Cell} of the current {@link Dem#config()} by default and as a base value.
      */
     @Getter private List<TrailLink> licensePages = list();
 
