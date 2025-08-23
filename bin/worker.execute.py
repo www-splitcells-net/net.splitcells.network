@@ -117,8 +117,8 @@ from pathlib import Path
 
 PODMAN_FLAGS_CONFIG_FILE = Path.home().joinpath(".config/net.splitcells.network.worker/execute.podman.flags")
 
-TEMPORARY_FILE_PREFIX = "temporary-"
 """This file name prefix is used, to make it easy to delete just temporary services of an user."""
+TEMPORARY_FILE_PREFIX = "temporary-"
 
 DOCKERFILE_SERVICE_TEMPLATE = """
 FROM docker.io/eclipse-temurin:21-jdk-noble
