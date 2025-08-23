@@ -116,6 +116,8 @@ from string import Template
 from pathlib import Path
 
 PODMAN_FLAGS_CONFIG_FILE = Path.home().joinpath(".config/net.splitcells.network.worker/execute.podman.flags")
+""" It is assumed, that the current folder is inside `net.splitcells.network` repo."""
+BOM_POM = Path("../net.splitcells.network.bom/pom.xml")
 
 """This file name prefix is used, to make it easy to delete just temporary services of an user."""
 TEMPORARY_FILE_PREFIX = "temporary-"
