@@ -123,6 +123,8 @@ BOM_POM = Path("../net.splitcells.network.bom/pom.xml")
 """This file name prefix is used, to make it easy to delete just temporary services of an user."""
 TEMPORARY_FILE_PREFIX = "temporary-"
 
+"""The Playwright cache is persisted, as downloading does sometimes not work.
+"""
 DOCKERFILE_SERVICE_TEMPLATE = """
 FROM docker.io/eclipse-temurin:21-jdk-noble
 RUN apt-get clean
@@ -138,7 +140,6 @@ VOLUME /root/.local/state/${programName}/Documents/
 VOLUME /root/.ssh/
 VOLUME /root/.m2/
 VOLUME /root/.local/state/${programName}/repos/
-# The Playwright cache is persisted, as downloading does sometimes not work.
 VOLUME /root/.cache/ms-playwright/
 """
 
