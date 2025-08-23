@@ -138,6 +138,8 @@ VOLUME /root/.local/state/${programName}/Documents/
 VOLUME /root/.ssh/
 VOLUME /root/.m2/
 VOLUME /root/.local/state/${programName}/repos/
+# The Playwright cache is persisted, as downloading does sometimes not work.
+VOLUME /root/.cache/ms-playwright/
 """
 
 CONTAINER_POM = """
@@ -179,6 +181,7 @@ mkdir -p ~/.local/state/${programName}/repos/
 mkdir -p ~/.local/state/${programName}/bin/
 mkdir -p ~/.local/state/${programName}/config/
 mkdir -p ~/.local/state/${programName}/logs/
+mkdir -p ~/.local/state/${programName}/.cache/ms-playwright/
 mkdir -p ./target/
 cd ~/.local/state/${programName}/repos/public/net.splitcells.network
 test -f target/program-${programName} && chmod +x target/program-${programName} # This file does not exist, when '--executable-path' is not set.
@@ -201,6 +204,7 @@ mkdir -p ~/.local/state/${programName}/repos/
 mkdir -p ~/.local/state/${programName}/bin/
 mkdir -p ~/.local/state/${programName}/config/
 mkdir -p ~/.local/state/${programName}/logs/
+mkdir -p ~/.local/state/${programName}/.cache/ms-playwright/
 mkdir -p ./target/
 test -f target/program-${programName} && chmod +x target/program-${programName} # This file does not exist, when '--executable-path' is not set.
 """
@@ -218,6 +222,7 @@ PODMAN_COMMAND_TEMPLATE = """podman run --name "${executionName}" \\
   -v ~/.local/state/${programName}/config:/root/.local/state/${programName}/config \\
   -v ~/.local/state/${programName}/logs:/root/.local/state/${programName}/logs \\
   -v ~/.local/state/${programName}/bin:/root/bin \\
+  -v ~/.local/state/${programName}/.cache/ms-playwright/:/root/.cache/ms-playwright/ \\
   ${podmanParameters}\\
   "localhost/${executionName}"
 """
@@ -610,6 +615,7 @@ mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/repos/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/bin/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/config/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/logs/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.cache/ms-playwright/
 mkdir -p ./target/
 cd ~/.local/state/net.splitcells.martins.avots.distro/repos/public/net.splitcells.network
 test -f target/program-net.splitcells.martins.avots.distro && chmod +x target/program-net.splitcells.martins.avots.distro # This file does not exist, when '--executable-path' is not set.
@@ -633,6 +639,7 @@ mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/repos/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/bin/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/config/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/logs/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.cache/ms-playwright/
 mkdir -p ./target/
 test -f target/program-net.splitcells.martins.avots.distro && chmod +x target/program-net.splitcells.martins.avots.distro # This file does not exist, when '--executable-path' is not set.
 
@@ -649,6 +656,7 @@ podman run --name "net.splitcells.martins.avots.distro" \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/config:/root/.local/state/net.splitcells.martins.avots.distro/config \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/logs:/root/.local/state/net.splitcells.martins.avots.distro/logs \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/bin:/root/bin \\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/.cache/ms-playwright/:/root/.cache/ms-playwright/ \\
   \\
   "localhost/net.splitcells.martins.avots.distro"
 """)
@@ -666,6 +674,7 @@ mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/repos/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/bin/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/config/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/logs/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.cache/ms-playwright/
 mkdir -p ./target/
 cd ~/.local/state/net.splitcells.martins.avots.distro/repos/public/net.splitcells.network
 test -f target/program-net.splitcells.martins.avots.distro && chmod +x target/program-net.splitcells.martins.avots.distro # This file does not exist, when '--executable-path' is not set.
@@ -688,6 +697,7 @@ podman run --name "net.splitcells.martins.avots.distro" \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/config:/root/.local/state/net.splitcells.martins.avots.distro/config \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/logs:/root/.local/state/net.splitcells.martins.avots.distro/logs \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/bin:/root/bin \\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/.cache/ms-playwright/:/root/.cache/ms-playwright/ \\
   \\
   "localhost/net.splitcells.martins.avots.distro"
 """)
@@ -869,6 +879,7 @@ mkdir -p ~/.local/state/net.splitcells.network.worker/repos/
 mkdir -p ~/.local/state/net.splitcells.network.worker/bin/
 mkdir -p ~/.local/state/net.splitcells.network.worker/config/
 mkdir -p ~/.local/state/net.splitcells.network.worker/logs/
+mkdir -p ~/.local/state/net.splitcells.network.worker/.cache/ms-playwright/
 mkdir -p ./target/
 cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
 test -f target/program-net.splitcells.network.worker && chmod +x target/program-net.splitcells.network.worker # This file does not exist, when '--executable-path' is not set.
@@ -899,6 +910,7 @@ ExecStart=podman run --name "net.splitcells.network.worker.boostrap.daemon" \\
   -v %h/.local/state/net.splitcells.network.worker/config:/root/.local/state/net.splitcells.network.worker/config \\
   -v %h/.local/state/net.splitcells.network.worker/logs:/root/.local/state/net.splitcells.network.worker/logs \\
   -v %h/.local/state/net.splitcells.network.worker/bin:/root/bin \\
+  -v %h/.local/state/net.splitcells.network.worker/.cache/ms-playwright/:/root/.cache/ms-playwright/ \\
   --publish 8080:8080 \\
   "localhost/net.splitcells.network.worker.boostrap.daemon"
 
@@ -993,6 +1005,7 @@ VOLUME /root/.local/state/net.splitcells.martins.avots.distro.livedistro/Documen
 VOLUME /root/.ssh/
 VOLUME /root/.m2/
 VOLUME /root/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/
+VOLUME /root/.cache/ms-playwright/
 
 COPY net.splitcells.martins.avots.distro.livedistro/deployable-jars/* /root/opt/net.splitcells.martins.avots.distro.livedistro/jars/
 WORKDIR /root/opt/net.splitcells.martins.avots.distro.livedistro/
@@ -1011,6 +1024,7 @@ mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/bin/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/config/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/logs/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/.cache/ms-playwright/
 mkdir -p ./target/
 cd ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network
 test -f target/program-net.splitcells.martins.avots.distro.livedistro && chmod +x target/program-net.splitcells.martins.avots.distro.livedistro # This file does not exist, when '--executable-path' is not set.
@@ -1041,6 +1055,7 @@ ExecStart=podman run --name "net.splitcells.martins.avots.distro.livedistro" \\
   -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/config:/root/.local/state/net.splitcells.martins.avots.distro.livedistro/config \\
   -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/logs:/root/.local/state/net.splitcells.martins.avots.distro.livedistro/logs \\
   -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/bin:/root/bin \\
+  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/.cache/ms-playwright/:/root/.cache/ms-playwright/ \\
   --publish 8443:8443 --publish 8080:8080 \\
   "localhost/net.splitcells.martins.avots.distro.livedistro"
 
@@ -1077,6 +1092,7 @@ VOLUME /root/.local/state/net.splitcells.martins.avots.distro.livedistro/Documen
 VOLUME /root/.ssh/
 VOLUME /root/.m2/
 VOLUME /root/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/
+VOLUME /root/.cache/ms-playwright/
 
 COPY net.splitcells.martins.avots.distro.livedistro/deployable-jars/* /root/opt/net.splitcells.martins.avots.distro.livedistro/jars/
 WORKDIR /root/opt/net.splitcells.martins.avots.distro.livedistro/
@@ -1095,6 +1111,7 @@ mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/bin/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/config/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/logs/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/.cache/ms-playwright/
 mkdir -p ./target/
 cd ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network
 test -f target/program-net.splitcells.martins.avots.distro.livedistro && chmod +x target/program-net.splitcells.martins.avots.distro.livedistro # This file does not exist, when '--executable-path' is not set.
@@ -1128,6 +1145,7 @@ VOLUME /root/.local/state/net.splitcells.network.worker/Documents/
 VOLUME /root/.ssh/
 VOLUME /root/.m2/
 VOLUME /root/.local/state/net.splitcells.network.worker/repos/
+VOLUME /root/.cache/ms-playwright/
 ADD ./program-net.splitcells.network.worker /root/program
 ENTRYPOINT /root/program""")
         self.assertEqual(test_subject.local_execution_script, """
@@ -1142,6 +1160,7 @@ mkdir -p ~/.local/state/net.splitcells.network.worker/repos/
 mkdir -p ~/.local/state/net.splitcells.network.worker/bin/
 mkdir -p ~/.local/state/net.splitcells.network.worker/config/
 mkdir -p ~/.local/state/net.splitcells.network.worker/logs/
+mkdir -p ~/.local/state/net.splitcells.network.worker/.cache/ms-playwright/
 mkdir -p ./target/
 cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
 test -f target/program-net.splitcells.network.worker && chmod +x target/program-net.splitcells.network.worker # This file does not exist, when '--executable-path' is not set.
@@ -1164,6 +1183,7 @@ podman run --name "net.splitcells.network.worker" \\
   -v ~/.local/state/net.splitcells.network.worker/config:/root/.local/state/net.splitcells.network.worker/config \\
   -v ~/.local/state/net.splitcells.network.worker/logs:/root/.local/state/net.splitcells.network.worker/logs \\
   -v ~/.local/state/net.splitcells.network.worker/bin:/root/bin \\
+  -v ~/.local/state/net.splitcells.network.worker/.cache/ms-playwright/:/root/.cache/ms-playwright/ \\
   \\
   "localhost/net.splitcells.network.worker"
 """)
