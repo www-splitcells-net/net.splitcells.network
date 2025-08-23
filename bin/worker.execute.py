@@ -106,6 +106,7 @@ from datetime import datetime
 import logging
 import os
 import platform
+import re
 import random
 import shutil
 import subprocess
@@ -466,6 +467,7 @@ class WorkerExecution:
         self.docker_file = self.docker_file.replace('${NAME_FOR_EXECUTION}', self.config.program_name)
         self.docker_file = self.docker_file.replace('${programName}', self.config.program_name)
         self.container_pom = self.applyTemplate(CONTAINER_POM)
+        self.playwrightVersion = re.compile(r'<dependency>\s*<groupId>com.microsoft.playwright</groupId>\s*<artifactId>playwright</artifactId>\s*<version>[0-9]+.[0-9]+.[0-9]+</version>\s*</dependency>', re.MULTILINE | re.DOTALL).findall(BOM_POM.read_text())[0]
         if not self.config.dry_run:
             file = targetFolder.joinpath('Dockerfile-' + self.config.execution_name)
             if os.path.exists(file):
