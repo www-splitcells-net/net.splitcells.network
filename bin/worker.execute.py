@@ -310,6 +310,7 @@ class WorkerExecution:
     local_execution_script = ""
     docker_file = ""
     docker_file_path = ""
+    container_pom = ""
     program_name = ""
     username = None
     config = None
@@ -463,6 +464,7 @@ class WorkerExecution:
             self.docker_file = self.docker_file.replace('$ContainerSetupCommand', '\n')
         self.docker_file = self.docker_file.replace('${NAME_FOR_EXECUTION}', self.config.program_name)
         self.docker_file = self.docker_file.replace('${programName}', self.config.program_name)
+        self.container_pom = self.applyTemplate(CONTAINER_POM)
         if not self.config.dry_run:
             file = targetFolder.joinpath('Dockerfile-' + self.config.execution_name)
             if os.path.exists(file):
@@ -470,7 +472,7 @@ class WorkerExecution:
             with open(file, 'w') as file_to_write:
                 file_to_write.write(self.docker_file)
             with open(targetFolder.joinpath('net.splitcells.network.worker.pom.xml'), 'w') as pom_file_to_write:
-                pom_file_to_write.write(CONTAINER_POM)
+                pom_file_to_write.write(self.container_pom)
         if self.config.only_execute_image:
             self.local_execution_script = PREPARE_EXECUTION_WITHOUT_BUILD_TEMPLATE
         else:
@@ -1161,6 +1163,23 @@ podman run --name "net.splitcells.network.worker" \\
   -v ~/.local/state/net.splitcells.network.worker/bin:/root/bin \\
   \\
   "localhost/net.splitcells.network.worker"
+""")
+        self.assertEqual(test_subject.container_pom, """
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.splitcells</groupId>
+    <artifactId>network.worker.container.pom</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>com.microsoft.playwright</groupId>
+            <artifactId>playwright</artifactId>
+            <version>1.45.0</version>
+        </dependency>
+    </dependencies>
+</project>
 """)
 if __name__ == '__main__':
     # As there is no build process for Python unit tests are executed every time, to make sure, that the script works correctly.
