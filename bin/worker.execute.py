@@ -416,7 +416,6 @@ class WorkerExecution:
         """ TODO Use [${...}] based variable substitution instead of complex string replacements. """
         workerFolder = Path.home().joinpath('.local/state/' + self.config.program_name + "/repos/public/net.splitcells.network/")
         targetFolder = workerFolder.joinpath('target/')
-        print(targetFolder)
         if not os.path.exists(targetFolder):
             os.makedirs(targetFolder)
         # TODO Consoldiate Dockerfile template extensions, as every case can be solved via a dedicated shell script, that is the entrypoint of the Dockerfile.
