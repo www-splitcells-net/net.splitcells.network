@@ -19,14 +19,14 @@ set -x
   if [ ! -d net.splitcells.network ]; then
     git clone --depth 1 ssh://git@codeberg.org/splitcells-net/net.splitcells.network.git
   else
-    cd net.splitcells.network.git
+    cd net.splitcells.network
     git pull
     cd ..
   fi
   if [ ! -d net.splitcells.network.hub ]; then
     git clone --depth 1 ssh://git@codeberg.org/splitcells-net/net.splitcells.network.hub.git
   else
-    cd net.splitcells.network.git.hub
+    cd net.splitcells.network.hub
     git pull
     cd ..
   fi
