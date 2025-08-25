@@ -18,7 +18,7 @@ jobs:
           mkdir -p ~/.ssh/
           echo "$SSH_CI_KEY_PRIVATE" > ~/.ssh/id_rsa
           chmod 700 ~/.ssh/id_rsa
-          ssh-keyscan codeberg.org >> ~/.ssh/known_hosts
+          ssh-keygen -F codeberg.org || ssh-keyscan codeberg.org >> ~/.ssh/known_hosts
           cd /workspace/splitcells-net/
           git clone --depth 1 ssh://git@codeberg.org/splitcells-net/net.splitcells.network.bom.base.git
           git clone --depth 1 ssh://git@codeberg.org/splitcells-net/net.splitcells.network.bom.git
