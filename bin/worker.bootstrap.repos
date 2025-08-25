@@ -9,8 +9,8 @@ set -e
 # Bootstrap minimal required repos.
   mkdir -p ~/.local/state/$NET_SPLITCELLS_NETWORK_WORKER_NAME/repos/public
   cd ~/.local/state/$NET_SPLITCELLS_NETWORK_WORKER_NAME/repos/public
-  test -d net.splitcells.network || git clone --depth 1 https://codeberg.org/splitcells-net/net.splitcells.network.git
-  test -d net.splitcells.network.hub || git clone --depth 1 https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
+  test -d net.splitcells.network || git clone --depth 1 ssh://git@codeberg.org/splitcells-net/net.splitcells.network.git
+  test -d net.splitcells.network.hub || git clone --depth 1 ssh://git@codeberg.org/splitcells-net/net.splitcells.network.hub.git
 # Pull all repos.
   cd ~/.local/state/$NET_SPLITCELLS_NETWORK_WORKER_NAME/repos/public/net.splitcells.network
   bin/repos.pull
