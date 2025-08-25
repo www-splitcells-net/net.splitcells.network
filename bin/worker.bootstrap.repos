@@ -9,8 +9,7 @@ set -e
 # Ensure, that SSH host verification works.
   mkdir -p ~/.ssh/
   touch ~/.ssh/known_hosts
-  ssh-keygen -R codeberg.org || echo
-  ssh-keyscan codeberg.org >> ~/.ssh/known_hosts
+  ssh-keygen -F codeberg.org || ssh-keyscan codeberg.org >> ~/.ssh/known_hosts
 # Bootstrap minimal required repos.
   mkdir -p ~/.local/state/$NET_SPLITCELLS_NETWORK_WORKER_NAME/repos/public
   cd ~/.local/state/$NET_SPLITCELLS_NETWORK_WORKER_NAME/repos/public
