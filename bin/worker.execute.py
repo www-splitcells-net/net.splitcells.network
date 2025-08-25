@@ -280,12 +280,12 @@ ssh ${execute_via_ssh_at} /bin/sh << EOF
   if [ ! -d ~/.local/state/${programName}/repos/public/net.splitcells.network ]; then
     mkdir -p ~/.local/state/${programName}/repos/public/
     cd ~/.local/state/${programName}/repos/public/
-    git clone https://codeberg.org/splitcells-net/net.splitcells.network.git
+    ssh://git@codeberg.org/splitcells-net/net.splitcells.network.git
   fi
   if [ ! -d ~/.local/state/${programName}/repos/public/net.splitcells.network.hub ]; then
     mkdir -p ~/.local/state/${programName}/repos/public/
     cd ~/.local/state/${programName}/repos/public/
-    git clone https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
+    ssh://git@codeberg.org/splitcells-net/net.splitcells.network.hub.git
   fi
   cd ~/.local/state/${programName}/repos/public/net.splitcells.network && git pull
   cd ~/.local/state/${programName}/repos/public/net.splitcells.network.hub && git pull
@@ -722,12 +722,12 @@ ssh user@address /bin/sh << EOF
   if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then
     mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/
     cd ~/.local/state/net.splitcells.network.worker/repos/public/
-    git clone https://codeberg.org/splitcells-net/net.splitcells.network.git
+    ssh://git@codeberg.org/splitcells-net/net.splitcells.network.git
   fi
   if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.hub ]; then
     mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/
     cd ~/.local/state/net.splitcells.network.worker/repos/public/
-    git clone https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
+    ssh://git@codeberg.org/splitcells-net/net.splitcells.network.hub.git
   fi
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && git pull
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.hub && git pull
@@ -766,12 +766,12 @@ ssh user@address /bin/sh << EOF
   if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then
     mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/
     cd ~/.local/state/net.splitcells.network.worker/repos/public/
-    git clone https://codeberg.org/splitcells-net/net.splitcells.network.git
+    ssh://git@codeberg.org/splitcells-net/net.splitcells.network.git
   fi
   if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.hub ]; then
     mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/
     cd ~/.local/state/net.splitcells.network.worker/repos/public/
-    git clone https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
+    ssh://git@codeberg.org/splitcells-net/net.splitcells.network.hub.git
   fi
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && git pull
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.hub && git pull
@@ -799,12 +799,12 @@ ssh user@address /bin/sh << EOF
   if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then
     mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/
     cd ~/.local/state/net.splitcells.network.worker/repos/public/
-    git clone https://codeberg.org/splitcells-net/net.splitcells.network.git
+    ssh://git@codeberg.org/splitcells-net/net.splitcells.network.git
   fi
   if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.hub ]; then
     mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/
     cd ~/.local/state/net.splitcells.network.worker/repos/public/
-    git clone https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
+    ssh://git@codeberg.org/splitcells-net/net.splitcells.network.hub.git
   fi
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && git pull
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.hub && git pull
@@ -836,12 +836,12 @@ ssh user@address /bin/sh << EOF
   if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then
     mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/
     cd ~/.local/state/net.splitcells.network.worker/repos/public/
-    git clone https://codeberg.org/splitcells-net/net.splitcells.network.git
+    ssh://git@codeberg.org/splitcells-net/net.splitcells.network.git
   fi
   if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.hub ]; then
     mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/
     cd ~/.local/state/net.splitcells.network.worker/repos/public/
-    git clone https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
+    ssh://git@codeberg.org/splitcells-net/net.splitcells.network.hub.git
   fi
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && git pull
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.hub && git pull
@@ -950,12 +950,12 @@ ssh martins-avots@live.splitcells.net /bin/sh << EOF
   if [ ! -d ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network ]; then
     mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/
     cd ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/
-    git clone https://codeberg.org/splitcells-net/net.splitcells.network.git
+    ssh://git@codeberg.org/splitcells-net/net.splitcells.network.git
   fi
   if [ ! -d ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network.hub ]; then
     mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/
     cd ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/
-    git clone https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
+    ssh://git@codeberg.org/splitcells-net/net.splitcells.network.hub.git
   fi
   cd ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network && git pull
   cd ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network.hub && git pull
