@@ -20,9 +20,9 @@ jobs:
           chmod 700 ~/.ssh/id_rsa
           ssh-keyscan codeberg.org >> ~/.ssh/known_hosts
           cd /workspace/splitcells-net/
-          git clone --depth 1 ssh://codeberg.org/splitcells-net/net.splitcells.network.bom.base.git
-          git clone --depth 1 ssh://codeberg.org/splitcells-net/net.splitcells.network.bom.git
-          git clone --depth 1 ssh://codeberg.org/splitcells-net/net.splitcells.network.git
+          git clone --depth 1 ssh://git@codeberg.org/splitcells-net/net.splitcells.network.bom.base.git
+          git clone --depth 1 ssh://git@codeberg.org/splitcells-net/net.splitcells.network.bom.git
+          git clone --depth 1 ssh://git@codeberg.org/splitcells-net/net.splitcells.network.git
       - name: Build
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
