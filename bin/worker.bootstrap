@@ -4,6 +4,7 @@
 
 # Sets up the the repos and software environment at the current shell.
 set -e
+set -x
 # Configure
   if [ -z "$NET_SPLITCELLS_NETWORK_WORKER_NAME" ]; then
     export NET_SPLITCELLS_NETWORK_WORKER_NAME="net.splitcells.network.worker"
