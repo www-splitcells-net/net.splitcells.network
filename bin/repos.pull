@@ -3,6 +3,9 @@
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 set -e
 [ ! -d "bin" ] && cd ..
+# Ensure, that SSH host verification works.
+  ssh-keygen -R codeberg.org
+  ssh-keyscan codeberg.org >> ~/.ssh/known_hosts
 git pull --ff-only # Ensure, that current repo is up to date.
 cd ..
   test -d net.splitcells.network.hub || git clone https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
