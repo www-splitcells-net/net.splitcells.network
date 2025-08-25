@@ -48,6 +48,8 @@ by writing to any variable or attribute only once except for the configuration.
 These variables are only used as an argument for other variables or
 as variables in template strings.
 
+All shell scripts contain `set -e && set -x`, as otherwise remote debugging becomes unnecessary hard.
+
 # Implementation History
 
 There was too much time spent on implementing this script and its previous version.
@@ -171,8 +173,6 @@ CMD ["-XX:ErrorFile=/root/.local/state/${NAME_FOR_EXECUTION}/.local/dumps/hs_err
 # `--log-level=warn` is podman's default.
 # Logging is used, in order to better understand build runtime performance.
 PREPARE_EXECUTION_TEMPLATE = """
-set -e
-set -x
 # Prepare file system.
 mkdir -p ~/.local/state/${programName}/.m2/
 mkdir -p ~/.local/state/${programName}/.ssh/
@@ -194,8 +194,6 @@ podman build -f "target/Dockerfile-${executionName}" \\
 """
 
 PREPARE_EXECUTION_WITHOUT_BUILD_TEMPLATE = """
-set -e
-set -x
 # Prepare file system.
 mkdir -p ~/.local/state/${programName}/.m2/
 mkdir -p ~/.local/state/${programName}/.ssh/
@@ -228,9 +226,7 @@ PODMAN_COMMAND_TEMPLATE = """podman run --name "${executionName}" \\
   "localhost/${executionName}"
 """
 
-EXECUTE_VIA_PODMAN_TEMPLATE = """
-set -x
-""" + PODMAN_COMMAND_TEMPLATE
+EXECUTE_VIA_PODMAN_TEMPLATE = """\n""" + PODMAN_COMMAND_TEMPLATE
 
 PUBLISH_VIA_PODMAN_TEMPLATE = """
 podman tag ${programName}:latest codeberg.org/splitcells-net/${programName}:latest
@@ -277,6 +273,7 @@ git pull ${execute_via_ssh_at} master
 EXECUTE_MAIN_TASK_REMOTELY = """# Execute Main Task Remotely
 ssh ${execute_via_ssh_at} /bin/sh << EOF
   set -e
+  set -x
   if [ ! -d ~/.local/state/${programName}/repos/public/net.splitcells.network ]; then
     mkdir -p ~/.local/state/${programName}/repos/public/
     cd ~/.local/state/${programName}/repos/public/
@@ -384,7 +381,7 @@ class WorkerExecution:
             closingPullNetworkLogScript = DEFAULT_CLOSING_PULL_NETWORK_LOG_SCRIPT
         else:
             closingPullNetworkLogScript = ""
-        self.remote_execution_script = self.applyTemplate(self.formatDocument(self.formatSection(preparingNetworkLogPullScript)
+        self.remote_execution_script = self.applyTemplate("set -e\nset -x\n" + self.formatDocument(self.formatSection(preparingNetworkLogPullScript)
             + self.formatSection(self.remote_execution_script_template)
             + self.formatSection(closingPullNetworkLogScript)))
         if self.config.dry_run:
@@ -437,6 +434,8 @@ class WorkerExecution:
             required_argument_count += 1
             self.program_name = "program-" + self.config.program_name
             self.local_executable = ("#!/usr/bin/env sh\n"
+                    + "set -e\n"
+                    + "set -x\n"
                     + "export NET_SPLITCELLS_NETWORK_WORKER_NAME=" + self.config.program_name + "\n"
                     + "mkdir -p ~/.local/state/" + self.config.program_name + "/repos/public/net.splitcells.network\n"
                     + "cd ~/.local/state/" + self.config.program_name + "/repos/public/net.splitcells.network\n"
@@ -483,10 +482,11 @@ class WorkerExecution:
                 file_to_write.write(self.docker_file)
             with open(targetFolder.joinpath('net.splitcells.network.worker.pom.xml'), 'w') as pom_file_to_write:
                 pom_file_to_write.write(self.container_pom)
+        self.local_execution_script = "set -e\nset -x\n"
         if self.config.only_execute_image:
-            self.local_execution_script = PREPARE_EXECUTION_WITHOUT_BUILD_TEMPLATE
+            self.local_execution_script += PREPARE_EXECUTION_WITHOUT_BUILD_TEMPLATE
         else:
-            self.local_execution_script = PREPARE_EXECUTION_TEMPLATE
+            self.local_execution_script += PREPARE_EXECUTION_TEMPLATE
         if self.config.publish_execution_image:
             self.local_execution_script += PUBLISH_VIA_PODMAN_TEMPLATE
         elif self.config.only_build_image:
@@ -508,8 +508,6 @@ class WorkerExecution:
             self.local_execution_script = self.local_execution_script.replace(' --arch string ', ' --arch ' + self.config.cpu_architecture + ' ')
         if self.config.verbose:
             self.local_execution_script = self.local_execution_script.replace('--log-level=info', '--log-level=debug')
-        else:
-            self.local_execution_script = self.local_execution_script.replace("\nset -x\n", "\n\n")
         self.local_execution_script = self.local_execution_script.replace('${programName}', self.config.program_name)
         self.local_execution_script = self.applyTemplate(self.local_execution_script)
         # Execute program.
@@ -605,8 +603,8 @@ class TestWorkerExecution(unittest.TestCase):
     maxDiff = None
     def test_only_build_image(self):
         test_subject = parse_worker_execution_arguments(['--program-name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap', '--dry-run=true', '--only-build-image=true'])
-        self.assertEqual(test_subject.local_execution_script, """
-set -e
+        self.assertEqual(test_subject.local_execution_script, """set -e
+set -x
 
 # Prepare file system.
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.m2/
@@ -629,8 +627,8 @@ podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
 """)
     def test_only_execute_image(self):
         test_subject = parse_worker_execution_arguments(['--program-name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap', '--dry-run=true', '--only-execute-image=true'])
-        self.assertEqual(test_subject.local_execution_script, """
-set -e
+        self.assertEqual(test_subject.local_execution_script, """set -e
+set -x
 
 # Prepare file system.
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.m2/
@@ -644,7 +642,6 @@ mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/logs/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.cache/ms-playwright/
 mkdir -p ./target/
 test -f target/program-net.splitcells.martins.avots.distro && chmod +x target/program-net.splitcells.martins.avots.distro # This file does not exist, when '--executable-path' is not set.
-
 
 podman run --name "net.splitcells.martins.avots.distro" \\
   --network slirp4netns:allow_host_loopback=true \\
@@ -664,8 +661,8 @@ podman run --name "net.splitcells.martins.avots.distro" \\
 """)
     def test_bootstrap(self):
         test_subject = parse_worker_execution_arguments(['--program-name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap', '--dry-run=true'])
-        self.assertEqual(test_subject.local_execution_script, """
-set -e
+        self.assertEqual(test_subject.local_execution_script, """set -e
+set -x
 
 # Prepare file system.
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.m2/
@@ -686,7 +683,6 @@ podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
     \\
     --log-level=warn
 
-
 podman run --name "net.splitcells.martins.avots.distro" \\
   --network slirp4netns:allow_host_loopback=true \\
   \\
@@ -705,7 +701,9 @@ podman run --name "net.splitcells.martins.avots.distro" \\
 """)
     def test_bootstrap_remote(self):
         test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--dry-run=true'])
-        self.assertEqual(test_subject.remote_execution_script, """# Preparing Execution via Network Log Pull
+        self.assertEqual(test_subject.remote_execution_script, """set -e
+set -x
+# Preparing Execution via Network Log Pull
 if ssh -q user@address "sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'"
 then
   cd ../net.splitcells.network.log
@@ -719,6 +717,7 @@ fi
 # Execute Main Task Remotely
 ssh user@address /bin/sh << EOF
   set -e
+  set -x
   if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then
     mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/
     cd ~/.local/state/net.splitcells.network.worker/repos/public/
@@ -749,7 +748,9 @@ git pull user@address master
 """)
     def test_test_remote(self):
         test_subject = parse_worker_execution_arguments(['--test-remote=user@address', '--dry-run=true'])
-        self.assertEqual(test_subject.remote_execution_script, """# Preparing Execution via Network Log Pull
+        self.assertEqual(test_subject.remote_execution_script, """set -e
+set -x
+# Preparing Execution via Network Log Pull
 if ssh -q user@address "sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'"
 then
   cd ../net.splitcells.network.log
@@ -763,6 +764,7 @@ fi
 # Execute Main Task Remotely
 ssh user@address /bin/sh << EOF
   set -e
+  set -x
   if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then
     mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/
     cd ~/.local/state/net.splitcells.network.worker/repos/public/
@@ -793,9 +795,12 @@ git pull user@address master
 """)
     def test_build_remote(self):
         test_subject = parse_worker_execution_arguments(['--build-remote=user@address', '--dry-run=true', '--pull-network-log=false'])
-        self.assertEqual(test_subject.remote_execution_script, """# Execute Main Task Remotely
+        self.assertEqual(test_subject.remote_execution_script, """set -e
+set -x
+# Execute Main Task Remotely
 ssh user@address /bin/sh << EOF
   set -e
+  set -x
   if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then
     mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/
     cd ~/.local/state/net.splitcells.network.worker/repos/public/
@@ -819,7 +824,9 @@ EOF
 """)
     def test_bootstrap_remote_via_daemon(self):
         test_subject = parse_worker_execution_arguments(['--bootstrap-remote=user@address', '--is-daemon=true', '--dry-run=true'])
-        self.assertEqual(test_subject.remote_execution_script, """# Preparing Execution via Network Log Pull
+        self.assertEqual(test_subject.remote_execution_script, """set -e
+set -x
+# Preparing Execution via Network Log Pull
 if ssh -q user@address "sh -c '[ -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.log ]'"
 then
   cd ../net.splitcells.network.log
@@ -833,6 +840,7 @@ fi
 # Execute Main Task Remotely
 ssh user@address /bin/sh << EOF
   set -e
+  set -x
   if [ ! -d ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network ]; then
     mkdir -p ~/.local/state/net.splitcells.network.worker/repos/public/
     cd ~/.local/state/net.splitcells.network.worker/repos/public/
@@ -869,8 +877,8 @@ git pull user@address master
                                                             , "--port-publishing=8080:8080"
                                                             , '--is-daemon=true'#
                                                             , "--program-name=net.splitcells.network.worker"])
-        self.assertEqual(test_subject.local_execution_script, """
-set -e
+        self.assertEqual(test_subject.local_execution_script, """set -e
+set -x
 
 # Prepare file system.
 mkdir -p ~/.local/state/net.splitcells.network.worker/.m2/
@@ -933,7 +941,9 @@ systemctl --user restart net.splitcells.network.worker.daemon
                                                          , "--use-playwright=true"
                                                          , "--verbose=true"
                                                          , "--dry-run=true"])
-        self.assertEqual(test_subject.remote_execution_script, """# Preparing Execution via Network Log Pull
+        self.assertEqual(test_subject.remote_execution_script, """set -e
+set -x
+# Preparing Execution via Network Log Pull
 if ssh -q martins-avots@live.splitcells.net "sh -c '[ -d ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network.log ]'"
 then
   cd ../net.splitcells.network.log
@@ -947,6 +957,7 @@ fi
 # Execute Main Task Remotely
 ssh martins-avots@live.splitcells.net /bin/sh << EOF
   set -e
+  set -x
   if [ ! -d ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network ]; then
     mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/
     cd ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/
@@ -1014,9 +1025,9 @@ WORKDIR /root/opt/net.splitcells.martins.avots.distro.livedistro/
 ENTRYPOINT ["/opt/java/openjdk/bin/java"]
 CMD ["-XX:ErrorFile=/root/.local/state/net.splitcells.martins.avots.distro.livedistro/.local/dumps/hs_err_pid_%p.log", "-cp", "./jars/*", "net.splitcells.martins.avots.distro.LiveDistro"]
 """)
-        self.assertEqual(test_subject.local_execution_script, """
-set -e
+        self.assertEqual(test_subject.local_execution_script, """set -e
 set -x
+
 # Prepare file system.
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/.m2/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/.ssh/
@@ -1101,9 +1112,9 @@ WORKDIR /root/opt/net.splitcells.martins.avots.distro.livedistro/
 ENTRYPOINT ["/opt/java/openjdk/bin/java"]
 CMD ["-XX:ErrorFile=/root/.local/state/net.splitcells.martins.avots.distro.livedistro/.local/dumps/hs_err_pid_%p.log", "-cp", "./jars/*", "net.splitcells.martins.avots.distro.LiveDistro"]
 """)
-        self.assertEqual(test_subject.local_execution_script, """
-set -e
+        self.assertEqual(test_subject.local_execution_script, """set -e
 set -x
+
 # Prepare file system.
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/.m2/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/.ssh/
@@ -1150,9 +1161,9 @@ VOLUME /root/.local/state/net.splitcells.network.worker/repos/
 VOLUME /root/.cache/ms-playwright/
 ADD ./program-net.splitcells.network.worker /root/program
 ENTRYPOINT /root/program""")
-        self.assertEqual(test_subject.local_execution_script, """
-set -e
+        self.assertEqual(test_subject.local_execution_script, """set -e
 set -x
+
 # Prepare file system.
 mkdir -p ~/.local/state/net.splitcells.network.worker/.m2/
 mkdir -p ~/.local/state/net.splitcells.network.worker/.ssh/
@@ -1172,7 +1183,6 @@ podman build -f "target/Dockerfile-net.splitcells.network.worker" \\
     \\
     --log-level=warn
 
-set -x
 podman run --name "net.splitcells.network.worker" \\
   --network slirp4netns:allow_host_loopback=true \\
   \\
