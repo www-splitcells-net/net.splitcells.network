@@ -4,6 +4,7 @@
 set -e
 [ ! -d "bin" ] && cd ..
 # Ensure, that SSH host verification works.
+  mkdir -p ~/.ssh/
   ssh-keygen -R codeberg.org
   ssh-keyscan codeberg.org >> ~/.ssh/known_hosts
 git pull --ff-only # Ensure, that current repo is up to date.

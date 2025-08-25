@@ -7,6 +7,7 @@ set -e
     export NET_SPLITCELLS_NETWORK_WORKER_NAME="net.splitcells.network.worker"
   fi
 # Ensure, that SSH host verification works.
+  mkdir -p ~/.ssh/
   ssh-keygen -R codeberg.org
   ssh-keyscan codeberg.org >> ~/.ssh/known_hosts
 # Bootstrap minimal required repos.
