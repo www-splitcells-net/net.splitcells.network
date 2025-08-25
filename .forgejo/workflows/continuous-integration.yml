@@ -10,9 +10,14 @@ jobs:
         # Maybe this could be fixed via `playwright.driver.tmpdir`. See https://github.com/microsoft/playwright-java/issues/728
     steps:
       - name: Setup Build
+        env:
+          SSH_CI_KEY_PRIVATE: ${{ secrets.SSH_CI_KEY_PRIVATE }}
         run: |
           apt update --fix-missing # $(pwd) = /workspace/splitcells-net/net.splitcells.network and --fix-missing is required on Codeberg. 
           apt install -y bash curl git python3 openjdk-21-jdk maven
+          mkdir -p ~/.ssh/
+          echo "$SSH_CI_KEY_PRIVATE" > ~/.ssh/id_rsa
+          chmod 700 ~/.ssh/id_rsa
           cd /workspace/splitcells-net/
           git clone --depth 1 ssh://codeberg.org/splitcells-net/net.splitcells.network.bom.base.git
           git clone --depth 1 ssh://codeberg.org/splitcells-net/net.splitcells.network.bom.git
