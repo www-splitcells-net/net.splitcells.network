@@ -71,7 +71,6 @@ it became obvious how to quickly develop such a deployment script by creating sh
 
 # Tasks
 
-TODO Move every file write to a dedicated save method, which is easier to control for the --dry-run flag.
 TODO Add test coverage and consider checking minimum coverage percentage.
 TODO Use only applyTemplate for any String replacement.
 TODO Create option to delete things like `.m2`, `repos` and `net.splitcells.shell.commands.managed`,
