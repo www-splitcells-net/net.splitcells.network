@@ -7,10 +7,7 @@ set -x
   if [ -z "$NET_SPLITCELLS_NETWORK_WORKER_NAME" ]; then
     export NET_SPLITCELLS_NETWORK_WORKER_NAME="net.splitcells.network.worker"
   fi
-# Ensure, that SSH host verification works.
-  mkdir -p ~/.ssh/
-  touch ~/.ssh/known_hosts
-  ssh-keygen -F codeberg.org || ssh-keyscan codeberg.org >> ~/.ssh/known_hosts
+  bin/user.ssh.setup
 # Bootstrap minimal required repos.
   mkdir -p ~/.local/state/$NET_SPLITCELLS_NETWORK_WORKER_NAME/repos/public
   cd ~/.local/state/$NET_SPLITCELLS_NETWORK_WORKER_NAME/repos/public

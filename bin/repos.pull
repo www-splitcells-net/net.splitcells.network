@@ -4,10 +4,7 @@
 set -e
 set -x
 [ ! -d "bin" ] && cd ..
-# Ensure, that SSH host verification works.
-  mkdir -p ~/.ssh/
-  touch ~/.ssh/known_hosts
-  ssh-keygen -F codeberg.org || ssh-keyscan codeberg.org >> ~/.ssh/known_hosts
+bin/user.ssh.setup
 git pull --ff-only # Ensure, that current repo is up to date.
 cd ..
   test -d net.splitcells.network.hub || git clone https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
