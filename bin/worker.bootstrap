@@ -16,14 +16,21 @@ set -x
 # Bootstrap minimal required repos.
   mkdir -p ~/.local/state/$NET_SPLITCELLS_NETWORK_WORKER_NAME/repos/public
   cd ~/.local/state/$NET_SPLITCELLS_NETWORK_WORKER_NAME/repos/public
-  test -d net.splitcells.network || git clone --depth 1 ssh://git@codeberg.org/splitcells-net/net.splitcells.network.git
-  test -d net.splitcells.network.hub || git clone --depth 1 ssh://git@codeberg.org/splitcells-net/net.splitcells.network.hub.git
-# Pull all repos.
-  cd ~/.local/state/$NET_SPLITCELLS_NETWORK_WORKER_NAME/repos/public/net.splitcells.network
-  . bin/worker.bootstrap.repos
+  if [ ! -d net.splitcells.network ]; then
+    git clone --depth 1 ssh://git@codeberg.org/splitcells-net/net.splitcells.network.git
+  else
+    cd net.splitcells.network.git
+    git pull
+    cd ..
+  fi
+  if [ ! -d net.splitcells.network.hub ]; then
+    git clone --depth 1 ssh://git@codeberg.org/splitcells-net/net.splitcells.network.hub.git
+  else
+    cd net.splitcells.network.git.hub
+    git pull
+    cd ..
+  fi
 # Restart bootstrapping.
-  # This split/duplication ensures, that updates of `worker.bootstrap.core`,
-  # that are pulled during the bootstrapping apply immediately and not starting with subsequent runs.
   cd ~/.local/state/$NET_SPLITCELLS_NETWORK_WORKER_NAME/repos/public/net.splitcells.network
   . bin/worker.bootstrap.repos
   . bin/worker.bootstrap.shell
