@@ -503,7 +503,6 @@ class WorkerExecution:
         else:
             self.local_execution_script += EXECUTE_VIA_PODMAN_TEMPLATE
         if self.config.command is not None:
-            # TODO This does not seem to be valid or used anymore.
             self.local_execution_script = self.local_execution_script.replace('"$executionCommand"', "'" + self.config.command.replace("'", "'\\''") + "'")
         if self.config.auto_configure_cpu_architecture_explicitly and self.config.cpu_architecture is None:
             self.local_execution_script = self.local_execution_script.replace(' --arch string ', ' --arch ' + platform.uname().machine + ' ')
@@ -567,7 +566,7 @@ def parse_worker_execution_arguments(arguments):
     if parsedArgs.program_name is None:
         parsedArgs.program_name = "net.splitcells.network.worker"
     if parsedArgs.command is not None:
-        pass
+        parsedArgs.command = "export NET_SPLITCELLS_NETWORK_WORKER_NAME=" + parsedArgs.program_name + "; " + parsedArgs.command
     elif parsedArgs.bootstrap_remote is not None:
         parsedArgs.execute_via_ssh_at = parsedArgs.bootstrap_remote
         parsedArgs.command = "export NET_SPLITCELLS_NETWORK_WORKER_NAME=" + parsedArgs.program_name + " && cd ~/.local/state/" + parsedArgs.program_name + "/repos/public/net.splitcells.network && bin/worker.bootstrap"
@@ -1153,6 +1152,71 @@ podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro.livedistr
 
 podman tag net.splitcells.martins.avots.distro.livedistro:latest codeberg.org/splitcells-net/net.splitcells.martins.avots.distro.livedistro:latest
 podman push codeberg.org/splitcells-net/net.splitcells.martins.avots.distro.livedistro:latest
+""")
+    def test_command(self):
+            test_subject = parse_worker_execution_arguments(["--command=echo 1"
+                                                             , "--auto-configure-cpu-architecture-explicitly=true"
+                                                             , "--verbose=true"
+                                                             , "--dry-run=true"])
+            self.assertEqual(test_subject.docker_file, """
+FROM docker.io/eclipse-temurin:21-jdk-noble
+RUN apt-get clean
+RUN apt-get update # This fixes install errors. It is unknown why this is the case.
+RUN apt-get install --yes maven git python3 pip
+ADD net.splitcells.network.worker.pom.xml /root/opt/net.splitcells.network.worker/pom.xml
+# RUN pip install --break-system-packages playwright
+# RUN playwright install --with-deps firefox # Install all OS dependencies, that are required for Playwright. Otherwise, Playwright cannot be used in Java.
+
+
+VOLUME /root/.local/state/net.splitcells.network.worker/.local/
+VOLUME /root/bin/
+VOLUME /root/.local/state/net.splitcells.network.worker/Documents/
+VOLUME /root/.ssh/
+VOLUME /root/.config/
+VOLUME /root/.m2/
+VOLUME /root/.local/state/net.splitcells.network.worker/repos/
+VOLUME /root/.cache/ms-playwright/
+ENTRYPOINT export NET_SPLITCELLS_NETWORK_WORKER_NAME=net.splitcells.network.worker; echo 1
+""")
+            self.assertEqual(test_subject.local_execution_script, """set -e
+set -x
+
+# Prepare file system.
+mkdir -p ~/.local/state/net.splitcells.network.worker/.m2/
+mkdir -p ~/.local/state/net.splitcells.network.worker/.ssh/
+mkdir -p ~/.local/state/net.splitcells.network.worker/.config/
+mkdir -p ~/.local/state/net.splitcells.network.worker/.local/dumps/
+mkdir -p ~/.local/state/net.splitcells.network.worker/Documents/
+mkdir -p ~/.local/state/net.splitcells.network.worker/repos/
+mkdir -p ~/.local/state/net.splitcells.network.worker/bin/
+mkdir -p ~/.local/state/net.splitcells.network.worker/config/
+mkdir -p ~/.local/state/net.splitcells.network.worker/logs/
+mkdir -p ~/.local/state/net.splitcells.network.worker/.cache/ms-playwright/
+mkdir -p ./target/
+cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
+test -f target/program-net.splitcells.network.worker && chmod +x target/program-net.splitcells.network.worker # This file does not exist, when '--executable-path' is not set.
+podman build -f "target/Dockerfile-net.splitcells.network.worker" \\
+    --tag "localhost/net.splitcells.network.worker"  \\
+    --arch x86_64 \\
+    \\
+    --log-level=warn
+
+podman run --name "net.splitcells.network.worker" \\
+  --network slirp4netns:allow_host_loopback=true \\
+  \\
+  --rm \\
+  -v ~/.local/state/net.splitcells.network.worker/Documents:/root/.local/state/net.splitcells.network.worker/Documents \\
+  -v ~/.local/state/net.splitcells.network.worker/.ssh:/root/.ssh \\
+  -v ~/.local/state/net.splitcells.network.worker/.config:/root/.config \\
+  -v ~/.local/state/net.splitcells.network.worker/.m2:/root/.m2 \\
+  -v ~/.local/state/net.splitcells.network.worker/.local:/root/.local/state/net.splitcells.network.worker/.local \\
+  -v ~/.local/state/net.splitcells.network.worker/repos:/root/.local/state/net.splitcells.network.worker/repos \\
+  -v ~/.local/state/net.splitcells.network.worker/config:/root/.local/state/net.splitcells.network.worker/config \\
+  -v ~/.local/state/net.splitcells.network.worker/logs:/root/.local/state/net.splitcells.network.worker/logs \\
+  -v ~/.local/state/net.splitcells.network.worker/bin:/root/bin \\
+  -v ~/.local/state/net.splitcells.network.worker/.cache/ms-playwright/:/root/.cache/ms-playwright/ \\
+  \\
+  "localhost/net.splitcells.network.worker"
 """)
     def test_boostrap_container_locally(self):
         test_subject = parse_worker_execution_arguments(["--executable-path=bin/worker.bootstrap"
