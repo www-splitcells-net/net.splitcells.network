@@ -1173,6 +1173,7 @@ VOLUME /root/.local/state/net.splitcells.network.worker/.local/
 VOLUME /root/bin/
 VOLUME /root/.local/state/net.splitcells.network.worker/Documents/
 VOLUME /root/.ssh/
+VOLUME /root/.config/
 VOLUME /root/.m2/
 VOLUME /root/.local/state/net.splitcells.network.worker/repos/
 VOLUME /root/.cache/ms-playwright/
