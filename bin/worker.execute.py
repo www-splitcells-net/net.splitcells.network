@@ -141,6 +141,7 @@ VOLUME /root/.local/state/${programName}/.local/
 VOLUME /root/bin/
 VOLUME /root/.local/state/${programName}/Documents/
 VOLUME /root/.ssh/
+VOLUME /root/.config/
 VOLUME /root/.m2/
 VOLUME /root/.local/state/${programName}/repos/
 VOLUME /root/.cache/ms-playwright/
@@ -177,6 +178,7 @@ PREPARE_EXECUTION_TEMPLATE = """
 # Prepare file system.
 mkdir -p ~/.local/state/${programName}/.m2/
 mkdir -p ~/.local/state/${programName}/.ssh/
+mkdir -p ~/.local/state/${programName}/.config/
 mkdir -p ~/.local/state/${programName}/.local/dumps/
 mkdir -p ~/.local/state/${programName}/Documents/
 mkdir -p ~/.local/state/${programName}/repos/
@@ -198,6 +200,7 @@ PREPARE_EXECUTION_WITHOUT_BUILD_TEMPLATE = """
 # Prepare file system.
 mkdir -p ~/.local/state/${programName}/.m2/
 mkdir -p ~/.local/state/${programName}/.ssh/
+mkdir -p ~/.local/state/${programName}/.config/
 mkdir -p ~/.local/state/${programName}/.local/dumps/
 mkdir -p ~/.local/state/${programName}/Documents/
 mkdir -p ~/.local/state/${programName}/repos/
@@ -216,6 +219,7 @@ PODMAN_COMMAND_TEMPLATE = """podman run --name "${executionName}" \\
   --rm \\
   -v ~/.local/state/${programName}/Documents:/root/.local/state/${programName}/Documents \\
   -v ~/.local/state/${programName}/.ssh:/root/.ssh \\
+  -v ~/.local/state/${programName}/.config:/root/.config \\
   -v ~/.local/state/${programName}/.m2:/root/.m2 \\
   -v ~/.local/state/${programName}/.local:/root/.local/state/${programName}/.local \\
   -v ~/.local/state/${programName}/repos:/root/.local/state/${programName}/repos \\
@@ -610,6 +614,7 @@ set -x
 # Prepare file system.
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.m2/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.ssh/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.config/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.local/dumps/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/Documents/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/repos/
@@ -634,6 +639,7 @@ set -x
 # Prepare file system.
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.m2/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.ssh/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.config/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.local/dumps/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/Documents/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/repos/
@@ -650,6 +656,7 @@ podman run --name "net.splitcells.martins.avots.distro" \\
   --rm \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/Documents:/root/.local/state/net.splitcells.martins.avots.distro/Documents \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/.ssh:/root/.ssh \\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/.config:/root/.config \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/.m2:/root/.m2 \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/.local:/root/.local/state/net.splitcells.martins.avots.distro/.local \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/repos:/root/.local/state/net.splitcells.martins.avots.distro/repos \\
@@ -668,6 +675,7 @@ set -x
 # Prepare file system.
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.m2/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.ssh/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.config/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.local/dumps/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/Documents/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/repos/
@@ -690,6 +698,7 @@ podman run --name "net.splitcells.martins.avots.distro" \\
   --rm \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/Documents:/root/.local/state/net.splitcells.martins.avots.distro/Documents \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/.ssh:/root/.ssh \\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/.config:/root/.config \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/.m2:/root/.m2 \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/.local:/root/.local/state/net.splitcells.martins.avots.distro/.local \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/repos:/root/.local/state/net.splitcells.martins.avots.distro/repos \\
@@ -884,6 +893,7 @@ set -x
 # Prepare file system.
 mkdir -p ~/.local/state/net.splitcells.network.worker/.m2/
 mkdir -p ~/.local/state/net.splitcells.network.worker/.ssh/
+mkdir -p ~/.local/state/net.splitcells.network.worker/.config/
 mkdir -p ~/.local/state/net.splitcells.network.worker/.local/dumps/
 mkdir -p ~/.local/state/net.splitcells.network.worker/Documents/
 mkdir -p ~/.local/state/net.splitcells.network.worker/repos/
@@ -915,6 +925,7 @@ ExecStart=podman run --name "net.splitcells.network.worker.boostrap.daemon" \\
   --rm \\
   -v %h/.local/state/net.splitcells.network.worker/Documents:/root/.local/state/net.splitcells.network.worker/Documents \\
   -v %h/.local/state/net.splitcells.network.worker/.ssh:/root/.ssh \\
+  -v %h/.local/state/net.splitcells.network.worker/.config:/root/.config \\
   -v %h/.local/state/net.splitcells.network.worker/.m2:/root/.m2 \\
   -v %h/.local/state/net.splitcells.network.worker/.local:/root/.local/state/net.splitcells.network.worker/.local \\
   -v %h/.local/state/net.splitcells.network.worker/repos:/root/.local/state/net.splitcells.network.worker/repos \\
@@ -1017,6 +1028,7 @@ VOLUME /root/.local/state/net.splitcells.martins.avots.distro.livedistro/.local/
 VOLUME /root/bin/
 VOLUME /root/.local/state/net.splitcells.martins.avots.distro.livedistro/Documents/
 VOLUME /root/.ssh/
+VOLUME /root/.config/
 VOLUME /root/.m2/
 VOLUME /root/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/
 VOLUME /root/.cache/ms-playwright/
@@ -1032,6 +1044,7 @@ set -x
 # Prepare file system.
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/.m2/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/.ssh/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/.config/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/.local/dumps/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/Documents/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/
@@ -1063,6 +1076,7 @@ ExecStart=podman run --name "net.splitcells.martins.avots.distro.livedistro" \\
   --rm \\
   -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/Documents:/root/.local/state/net.splitcells.martins.avots.distro.livedistro/Documents \\
   -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/.ssh:/root/.ssh \\
+  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/.config:/root/.config \\
   -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/.m2:/root/.m2 \\
   -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/.local:/root/.local/state/net.splitcells.martins.avots.distro.livedistro/.local \\
   -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/repos:/root/.local/state/net.splitcells.martins.avots.distro.livedistro/repos \\
@@ -1104,6 +1118,7 @@ VOLUME /root/.local/state/net.splitcells.martins.avots.distro.livedistro/.local/
 VOLUME /root/bin/
 VOLUME /root/.local/state/net.splitcells.martins.avots.distro.livedistro/Documents/
 VOLUME /root/.ssh/
+VOLUME /root/.config/
 VOLUME /root/.m2/
 VOLUME /root/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/
 VOLUME /root/.cache/ms-playwright/
@@ -1119,6 +1134,7 @@ set -x
 # Prepare file system.
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/.m2/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/.ssh/
+mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/.config/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/.local/dumps/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/Documents/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/
@@ -1168,6 +1184,7 @@ set -x
 # Prepare file system.
 mkdir -p ~/.local/state/net.splitcells.network.worker/.m2/
 mkdir -p ~/.local/state/net.splitcells.network.worker/.ssh/
+mkdir -p ~/.local/state/net.splitcells.network.worker/.config/
 mkdir -p ~/.local/state/net.splitcells.network.worker/.local/dumps/
 mkdir -p ~/.local/state/net.splitcells.network.worker/Documents/
 mkdir -p ~/.local/state/net.splitcells.network.worker/repos/
@@ -1190,6 +1207,7 @@ podman run --name "net.splitcells.network.worker" \\
   --rm \\
   -v ~/.local/state/net.splitcells.network.worker/Documents:/root/.local/state/net.splitcells.network.worker/Documents \\
   -v ~/.local/state/net.splitcells.network.worker/.ssh:/root/.ssh \\
+  -v ~/.local/state/net.splitcells.network.worker/.config:/root/.config \\
   -v ~/.local/state/net.splitcells.network.worker/.m2:/root/.m2 \\
   -v ~/.local/state/net.splitcells.network.worker/.local:/root/.local/state/net.splitcells.network.worker/.local \\
   -v ~/.local/state/net.splitcells.network.worker/repos:/root/.local/state/net.splitcells.network.worker/repos \\
