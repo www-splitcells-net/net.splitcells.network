@@ -11,4 +11,4 @@ cd ..
   sh -c "cd net.splitcells.network.hub && git clean -xfd && git reset --hard && git pull --ff-only"
   net.splitcells.network.hub/bin/net.splitcells.osi.repos.peers | xargs -i sh -c "test -d {} || git clone ssh://git@codeberg.org/splitcells-net/{}.git"
   # Do not parallelize git pulling via `-P 20` of xargs, because this will hit the rate limit on Coderberg.
-  net.splitcells.network.hub/bin/net.splitcells.osi.repos.peers | xargs -i sh -c "cd {} && git clean -xfd && git reset --hard && git pull --ff-only || echo Could not pull repo {}"
+  net.splitcells.network.hub/bin/net.splitcells.osi.repos.peers | xargs -i -P 20 sh -c "cd {} && git clean -xfd && git reset --hard && git pull --ff-only || echo Could not pull repo {}"
