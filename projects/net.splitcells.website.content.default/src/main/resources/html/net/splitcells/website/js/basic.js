@@ -169,6 +169,10 @@ function net_splitcells_webserver_form_tab_select(formId, inputId) {
  * The key is a dictionary, that contains the new values for every input.
  * A not existing field can be in the response.
  * In this case, that server requests the creation of a new form input.
+ *
+ * A forms input fields uses ids for working on them, as for every input form value there is only one defining element.
+ * A forms buttons use CSS classes as ids for working on them,
+ * as for every input field there can be multiple buttons with the same function.
  */
 function net_splitcells_webserver_form_submit(config) {
     const submitButton = document.getElementById(config['submit-button-id']);
