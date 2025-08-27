@@ -30,5 +30,11 @@
                    name="Definition"
                    main-tab="true"
                    initial-content-at="/net/splitcells/gel/ui/editor/geal/examples/colloquium-planning.txt"/>
+        <text-area id="net-splitcells-gel-ui-editor-geal-form-demands"
+                   name="demands.csv"
+                   initial-content-at="/net/splitcells/gel/ui/colloquium-planning-demands-test-data.csv"><![CDATA[]]></text-area>
+        <text-area id="net-splitcells-gel-ui-editor-geal-form-supplies"
+                   name="supplies.csv"
+                   initial-content-at="/net/splitcells/gel/ui/colloquium-planning-supplies-test-data.csv"><![CDATA[]]></text-area>
     </form-editor>
 </article>
