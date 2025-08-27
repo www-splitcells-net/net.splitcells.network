@@ -20,8 +20,8 @@
         <xsl:variable name="form-id" select="@id"/>
         <xsl:for-each select="descendant::s:text-area">
             <div>
-                <xsl:attribute name="onclick" select="concat('net_splitcells_webserver_form_tab_select(', $quote, $form-id, $quote, ', ', $quote, @id, $quote, ');')"/>
                 <xsl:attribute name="class" select="concat('net-splitcells-button net-splitcells-action-button net-splitcells-action-text-button ', $form-id, '-tab-button ', @name, '-tab-button')"/>
+                <xsl:attribute name="onclick" select="concat('net_splitcells_webserver_form_tab_select(', $quote, $form-id, $quote, ', ', $quote, @name, $quote, ');')"/>
                 <xsl:value-of select="@name"/>
             </div>
         </xsl:for-each>

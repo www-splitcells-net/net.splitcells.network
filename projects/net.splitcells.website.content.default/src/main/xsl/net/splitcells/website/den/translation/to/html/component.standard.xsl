@@ -303,7 +303,8 @@ for (var i = 0; i < tabButtons.length; i++) {
     <xsl:template match="s:library" mode="net-splitcells-website-form-editor-tab-content"></xsl:template>
     <xsl:template match="s:text-area" mode="net-splitcells-website-form-editor-tab-content">
         <div>
-            <xsl:attribute name="class" select="concat('net-splitcells-website-form-editor-tab ', @form-id)"/>
+            <xsl:variable name="quote">'</xsl:variable>
+            <xsl:attribute name="class" select="concat('net-splitcells-website-form-editor-tab ', @form-id, ' ', @name, '-tab-content')"/>
             <xsl:attribute name="id" select="concat(./@id, '-tab-content')"/>
             <xsl:if test="not(./@main-tab = 'true')">
                 <xsl:attribute name="style" select="'display: none; visibility: hidden;'"/>
