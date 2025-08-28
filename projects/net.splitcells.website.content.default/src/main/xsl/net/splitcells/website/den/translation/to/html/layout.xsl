@@ -566,6 +566,111 @@ request.send();]]>
                         </xsl:choose>
                     </head>
                     <body>
+                        <xsl:choose>
+                            <xsl:when test="document('/net/splitcells/website/server/config/js/background-files.xml')">
+                                <xsl:for-each
+                                        select="document('/net/splitcells/website/server/config/js/background-files.xml')/d:val/*">
+                                    <xsl:variable name="jsBackgroundFile">
+                                        <xsl:value-of select="."/>
+                                    </xsl:variable>
+                                    <xsl:element name="script">
+                                        <xsl:attribute name="type">
+                                            <xsl:value-of select="'text/javascript'"/>
+                                        </xsl:attribute>
+                                        <xsl:attribute name="charset">
+                                            <xsl:value-of select="'utf-8'"/>
+                                        </xsl:attribute>
+                                        <xsl:attribute name="src">
+                                            <xsl:value-of
+                                                    select="s:default-root-relative-url($jsBackgroundFile)"/>
+                                        </xsl:attribute>
+                                    </xsl:element>
+                                </xsl:for-each>
+                            </xsl:when>
+                        </xsl:choose>
+                        <xsl:if test="./s:redirect">
+                            <xsl:variable name="redirect.target">
+                                <xsl:call-template name="link.target">
+                                    <xsl:with-param name="linkNode" select="./s:redirect"/>
+                                </xsl:call-template>
+                            </xsl:variable>
+                            <xsl:element name="script">
+                                <xsl:attribute name="type">
+                                    <xsl:value-of select="'text/javascript'"/>
+                                </xsl:attribute>
+                                <xsl:value-of
+                                        select="concat('window.location.href=', $apostroph, $redirect.target, $apostroph)"/>
+                            </xsl:element>
+                        </xsl:if>
+                        <xsl:if test="./s:republication">
+                            <xsl:variable name="redirect.target">
+                                <xsl:call-template name="link.target">
+                                    <xsl:with-param name="linkNode" select="./s:republication"/>
+                                </xsl:call-template>
+                            </xsl:variable>
+                            <xsl:element name="script">
+                                <xsl:attribute name="type">
+                                    <xsl:value-of select="'text/javascript'"/>
+                                </xsl:attribute>
+                                <xsl:value-of
+                                        select="concat('window.location.href=', $apostroph, $redirect.target, $apostroph)"/>
+                            </xsl:element>
+                        </xsl:if>
+                        <script type="text/javascript">
+                            <xsl:if test="./s:content/s:meta/s:full-screen-by-default/node() = 'true'">
+                                unshowByCssClass('page-column-0-full-screen');
+                                unshowByCssClass('column_1');
+                                showByCssClass('page-column-0-windowed');
+                            </xsl:if>
+
+                            function enableStylesheet (node) {
+                            node.media =
+                            '';
+                            }
+
+                            function disableStylesheet (node) {
+                            node.media
+                            = 'none';
+                            }
+                            function fullScreenEnable() {
+                            document
+                            .querySelectorAll("link[href$='/css/layout.column.main.fullscreen.css']")
+                            .forEach(enableStylesheet);
+                            }
+                            function
+                            fullScreenDisable() {
+                            document
+                            .querySelectorAll("link[href$='/css/layout.column.main.fullscreen.css']")
+                            .forEach(disableStylesheet);
+                            }
+                            /*TODO
+                            document
+                            .querySelectorAll("link[href='/white/css/theme.white.yellow.variables.css']")
+                            .forEach(enableStylesheet);
+                            document
+                            .querySelectorAll("link[href='/white/css/theme.white.variables.css']")
+                            .forEach(disableStylesheet);*/
+                        </script>
+                        <script type="text/javascript">
+                            checkAvailibility('net-splitcells-website-log-error');
+                        </script>
+                        <!-- Integration of https://www.mathjax.org. TODO Use local copy in future. -->
+                        <script type="text/javascript">
+                            Window.MathJax = {
+                            tex: {
+                            inlineMath: [['$', '$'], ["\\(", "\\)"]],
+                            processEscapes: true,
+                            }
+                            }
+                        </script>
+                        <script id="MathJax-script" async=""
+                                src="/net/splitcells/website/js/math-jax/es5/tex-mml-chtml.js"></script>
+                        <script type="text/javascript" charset="utf-8">
+                            <xsl:attribute name="src">
+                                <xsl:value-of
+                                        select="s:default-root-relative-url('net/splitcells/website/js/status-render.js')"/>
+                            </xsl:attribute>
+                        </script>
                         <header class="Standard_p5 topLightShadow">
                             <!-- TODO Move window menu to header. -->
                         </header>
@@ -828,111 +933,6 @@ request.send();]]>
                             </div>
                         </main>
                         <footer class="Standard_p5 topLightShadow"/>
-                        <xsl:choose>
-                            <xsl:when test="document('/net/splitcells/website/server/config/js/background-files.xml')">
-                                <xsl:for-each
-                                        select="document('/net/splitcells/website/server/config/js/background-files.xml')/d:val/*">
-                                    <xsl:variable name="jsBackgroundFile">
-                                        <xsl:value-of select="."/>
-                                    </xsl:variable>
-                                    <xsl:element name="script">
-                                        <xsl:attribute name="type">
-                                            <xsl:value-of select="'text/javascript'"/>
-                                        </xsl:attribute>
-                                        <xsl:attribute name="charset">
-                                            <xsl:value-of select="'utf-8'"/>
-                                        </xsl:attribute>
-                                        <xsl:attribute name="src">
-                                            <xsl:value-of
-                                                    select="s:default-root-relative-url($jsBackgroundFile)"/>
-                                        </xsl:attribute>
-                                    </xsl:element>
-                                </xsl:for-each>
-                            </xsl:when>
-                        </xsl:choose>
-                        <xsl:if test="./s:redirect">
-                            <xsl:variable name="redirect.target">
-                                <xsl:call-template name="link.target">
-                                    <xsl:with-param name="linkNode" select="./s:redirect"/>
-                                </xsl:call-template>
-                            </xsl:variable>
-                            <xsl:element name="script">
-                                <xsl:attribute name="type">
-                                    <xsl:value-of select="'text/javascript'"/>
-                                </xsl:attribute>
-                                <xsl:value-of
-                                        select="concat('window.location.href=', $apostroph, $redirect.target, $apostroph)"/>
-                            </xsl:element>
-                        </xsl:if>
-                        <xsl:if test="./s:republication">
-                            <xsl:variable name="redirect.target">
-                                <xsl:call-template name="link.target">
-                                    <xsl:with-param name="linkNode" select="./s:republication"/>
-                                </xsl:call-template>
-                            </xsl:variable>
-                            <xsl:element name="script">
-                                <xsl:attribute name="type">
-                                    <xsl:value-of select="'text/javascript'"/>
-                                </xsl:attribute>
-                                <xsl:value-of
-                                        select="concat('window.location.href=', $apostroph, $redirect.target, $apostroph)"/>
-                            </xsl:element>
-                        </xsl:if>
-                        <script type="text/javascript">
-                            <xsl:if test="./s:content/s:meta/s:full-screen-by-default/node() = 'true'">
-                                unshowByCssClass('page-column-0-full-screen');
-                                unshowByCssClass('column_1');
-                                showByCssClass('page-column-0-windowed');
-                            </xsl:if>
-
-                            function enableStylesheet (node) {
-                            node.media =
-                            '';
-                            }
-
-                            function disableStylesheet (node) {
-                            node.media
-                            = 'none';
-                            }
-                            function fullScreenEnable() {
-                            document
-                            .querySelectorAll("link[href$='/css/layout.column.main.fullscreen.css']")
-                            .forEach(enableStylesheet);
-                            }
-                            function
-                            fullScreenDisable() {
-                            document
-                            .querySelectorAll("link[href$='/css/layout.column.main.fullscreen.css']")
-                            .forEach(disableStylesheet);
-                            }
-                            /*TODO
-                            document
-                            .querySelectorAll("link[href='/white/css/theme.white.yellow.variables.css']")
-                            .forEach(enableStylesheet);
-                            document
-                            .querySelectorAll("link[href='/white/css/theme.white.variables.css']")
-                            .forEach(disableStylesheet);*/
-                        </script>
-                        <script type="text/javascript">
-                            checkAvailibility('net-splitcells-website-log-error');
-                        </script>
-                        <!-- Integration of https://www.mathjax.org. TODO Use local copy in future. -->
-                        <script type="text/javascript">
-                            Window.MathJax = {
-                            tex: {
-                            inlineMath: [['$', '$'], ["\\(", "\\)"]],
-                            processEscapes: true,
-                            }
-                            }
-                        </script>
-                        <script id="MathJax-script" async=""
-                                src="/net/splitcells/website/js/math-jax/es5/tex-mml-chtml.js"></script>
-                        <script type="text/javascript" charset="utf-8">
-                            <xsl:attribute name="src">
-                                <xsl:value-of
-                                        select="s:default-root-relative-url('net/splitcells/website/js/status-render.js')"/>
-                            </xsl:attribute>
-                        </script>
                     </body>
                 </html>
             </xsl:otherwise>
