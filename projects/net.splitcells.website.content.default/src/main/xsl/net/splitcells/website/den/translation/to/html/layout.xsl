@@ -564,8 +564,10 @@ request.send();]]>
                                 </link>
                             </xsl:otherwise>
                         </xsl:choose>
-                    </head>
-                    <body>
+                        <!-- Javascript libraries are loaded, so these can be used by inline Javascript code or Javascript,
+                             that is injected into elements via Javascript.
+
+                             TODO Speed up page loading by using async and defer for Javascript in head. -->
                         <xsl:choose>
                             <xsl:when test="document('/net/splitcells/website/server/config/js/background-files.xml')">
                                 <xsl:for-each
@@ -671,6 +673,8 @@ request.send();]]>
                                         select="s:default-root-relative-url('net/splitcells/website/js/status-render.js')"/>
                             </xsl:attribute>
                         </script>
+                    </head>
+                    <body>
                         <header class="Standard_p5 topLightShadow">
                             <!-- TODO Move window menu to header. -->
                         </header>
