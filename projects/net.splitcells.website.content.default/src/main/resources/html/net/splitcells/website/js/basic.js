@@ -158,7 +158,7 @@ function net_splitcells_webserver_form_tab_select(formId, inputName) {
         inputButtons[i].classList.remove('net-splitcells-tab-button-selected');
     }
     showById(formId + '-' + inputName + '-tab-content');
-    var inputTabButtons = document.getElementsByClassName(inputName + '-tab-button');
+    var inputTabButtons = document.getElementsByClassName(formId + '-' + inputName + '-tab-button');
     for (var i = 0; i < inputTabButtons.length; i++) {
         inputTabButtons[i].classList.add('net-splitcells-tab-button-selected');
     }
