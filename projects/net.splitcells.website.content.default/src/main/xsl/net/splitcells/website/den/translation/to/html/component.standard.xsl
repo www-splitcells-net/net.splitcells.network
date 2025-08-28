@@ -403,18 +403,7 @@ document.addEventListener('DOMContentLoaded', function(){
                         </textarea>
                     </div>
                     <xsl:if test="./@initial-content-at">
-                        <!-- Listening on DOMContentLoaded is required, so that is ensured, that the textarea is available, before writing its default content. -->
-                        <script type="text/javascript"><![CDATA[
-document.addEventListener('DOMContentLoaded', function(){
-    var httpRequest = new XMLHttpRequest();
-    httpRequest.open("GET", "]]><xsl:value-of select="./@initial-content-at"/><![CDATA[", true);
-    function listener() {
-        document.getElementById(']]><xsl:value-of select="concat($form-id, '-', @name)"/><![CDATA[').innerHTML = this.responseText;
-    }
-    httpRequest.addEventListener("load", listener);
-    httpRequest.send(null);
-});]]>
-                        </script>
+                        <script type="text/javascript"><![CDATA[net_splitcells_webserver_form_input_set_initial_content(']]><xsl:value-of select="concat($form-id, '-', @name)"/><![CDATA[', ']]><xsl:value-of select="./@initial-content-at"/><![CDATA[');]]></script>
                     </xsl:if>
                 </xsl:for-each>
             </div>

@@ -163,6 +163,21 @@ function net_splitcells_webserver_form_tab_select(formId, inputName) {
         inputTabButtons[i].classList.add('net-splitcells-tab-button-selected');
     }
 }
+/* Listening on DOMContentLoaded is required,
+ * so that is ensured,
+ * that the textarea is available, before writing its default content.
+ */
+function net_splitcells_webserver_form_input_set_initial_content(inputId, source) {
+    document.addEventListener('DOMContentLoaded', function(){
+        var httpRequest = new XMLHttpRequest();
+        httpRequest.open("GET", source, true);
+        function listener() {
+            document.getElementById(inputId).innerHTML = this.responseText;
+        }
+        httpRequest.addEventListener("load", listener);
+        httpRequest.send(null);
+    });
+}
 /* Submits a HTML form's action.
  * The request is sent as multipart/form-data and contains the form's inputs.
  * The response is a JSON dictionary containing the key `net-splitcells-websiter-server-form-update`.
