@@ -152,7 +152,7 @@ function net_splitcells_webserver_form_submit_config() {
     return config;
 }
 function net_splitcells_webserver_form_tab_select(formId, inputName) {
-    unshowByCssClass(formId); // Hide the currently visible tab content.
+    unshowByCssClass(formId + '-tab-content'); // Hide the currently visible tab content.
     var inputButtons = document.getElementsByClassName(formId + '-tab-button');
     for (var i = 0; i < inputButtons.length; i++) {
         inputButtons[i].classList.remove('net-splitcells-tab-button-selected');

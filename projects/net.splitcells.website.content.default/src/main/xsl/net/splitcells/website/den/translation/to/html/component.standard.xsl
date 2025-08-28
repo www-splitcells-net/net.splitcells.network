@@ -438,7 +438,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 </xsl:for-each>
                 <xsl:for-each select="./s:text-area">
                     <div>
-                        <xsl:attribute name="class" select="concat('net-splitcells-website-form-editor-tab ', $form-id, '-', @name, '-tab-content')"/>
+                        <xsl:attribute name="class" select="concat('net-splitcells-website-form-editor-tab ', $form-id, '-', @name, '-tab-content ', $form-id, '-tab-content')"/>
                         <xsl:if test="not(./@main-tab = 'true')">
                             <xsl:attribute name="style" select="'display: none; visibility: hidden;'"/>
                         </xsl:if>
