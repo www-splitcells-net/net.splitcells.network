@@ -355,58 +355,6 @@ document.addEventListener('DOMContentLoaded', function(){
             <xsl:attribute name="action" select="./@action"/>
             <xsl:variable name="form-id" select="./@id"/>
             <xsl:variable name="quote">'</xsl:variable>
-            <div class="net-splitcells-website-form-editor-tab-bar">
-                <xsl:for-each select="./s:no-code-editor">
-                    <xsl:variable name="bar-button">
-                        <s:text-area>
-                            <xsl:attribute name="form-id" select="$form-id"/>
-                            <xsl:attribute name="name" select="./@name"/>
-                            <xsl:attribute name="id" select="./@id"/>
-                            <xsl:if test="./@main-tab">
-                                <xsl:attribute name="main-tab" select="./@main-tab"/>
-                            </xsl:if>
-                            <xsl:if test="./@initial-content-at">
-                                <xsl:attribute name="initial-content-at" select="./@initial-content-at"/>
-                            </xsl:if>
-                            <xsl:choose>
-                                <xsl:when test="@content-types">
-                                    <xsl:attribute name="content-types" select="@content-types"/>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:attribute name="content-types" select="' default '"/>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                            <xsl:copy-of select="./node()"/>
-                        </s:text-area>
-                    </xsl:variable>
-                    <xsl:apply-templates select="$bar-button" mode="net-splitcells-website-form-editor-tab-bar"/>
-                </xsl:for-each>
-                <xsl:for-each select="./s:text-area">
-                    <xsl:variable name="bar-button">
-                        <s:text-area>
-                            <xsl:attribute name="form-id" select="$form-id"/>
-                            <xsl:attribute name="name" select="./@name"/>
-                            <xsl:attribute name="id" select="./@id"/>
-                            <xsl:if test="./@main-tab">
-                                <xsl:attribute name="main-tab" select="./@main-tab"/>
-                            </xsl:if>
-                            <xsl:if test="./@initial-content-at">
-                                <xsl:attribute name="initial-content-at" select="./@initial-content-at"/>
-                            </xsl:if>
-                            <xsl:choose>
-                                <xsl:when test="@content-types">
-                                    <xsl:attribute name="content-types" select="@content-types"/>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:attribute name="content-types" select="' default '"/>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                            <xsl:copy-of select="./node()"/>
-                        </s:text-area>
-                    </xsl:variable>
-                    <xsl:apply-templates select="$bar-button" mode="net-splitcells-website-form-editor-tab-bar"/>
-                </xsl:for-each>
-            </div>
             <div class="net-splitcells-website-form-editor-tab-holder">
                 <xsl:for-each select="./s:no-code-editor">
                     <xsl:variable name="bar-button">
@@ -442,34 +390,17 @@ document.addEventListener('DOMContentLoaded', function(){
                         <xsl:if test="not(./@main-tab = 'true')">
                             <xsl:attribute name="style" select="'display: none; visibility: hidden;'"/>
                         </xsl:if>
-                        <xsl:choose>
-                            <xsl:when test="contains(@content-types, ' csv-output ')">
-                                <div>
-                                    <xsl:attribute name="id" select="concat(./@id, '-as-csv-output')"/>
-                                    No data present yet.
-                                </div>
-                                <textarea
-                                        class="net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor-backend">
-                                    <xsl:attribute name="id" select="concat(@form-id, '-', @name, '-tab-content')"/>
-                                    <xsl:attribute name="name" select="1"/>
-                                    <xsl:attribute name="content-types" select="@content-types"/>
-                                    <xsl:apply-templates select="./text()"/>
-                                </textarea>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <div class="net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor">
-                                    <xsl:attribute name="net-splitcells-syncs-to" select="concat($form-id, '-', @name)"/>
-                                    <xsl:apply-templates select="./text()"/>
-                                </div>
-                                <textarea
-                                        class="net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor-backend">
-                                    <xsl:attribute name="id" select="concat($form-id, '-', @name)"/>
-                                    <xsl:attribute name="name" select="@name"/>
-                                    <xsl:attribute name="content-types" select="@content-types"/>
-                                    <xsl:apply-templates select="./text()"/>
-                                </textarea>
-                            </xsl:otherwise>
-                        </xsl:choose>
+                        <div class="net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor">
+                            <xsl:attribute name="net-splitcells-syncs-to" select="concat($form-id, '-', @name)"/>
+                            <xsl:apply-templates select="./text()"/>
+                        </div>
+                        <textarea
+                                class="net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor-backend">
+                            <xsl:attribute name="id" select="concat($form-id, '-', @name)"/>
+                            <xsl:attribute name="name" select="@name"/>
+                            <xsl:attribute name="content-types" select="@content-types"/>
+                            <xsl:apply-templates select="./text()"/>
+                        </textarea>
                     </div>
                     <xsl:if test="./@initial-content-at">
                         <!-- Listening on DOMContentLoaded is required, so that is ensured, that the textarea is available, before writing its default content. -->
