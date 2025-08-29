@@ -201,7 +201,7 @@ function net_splitcells_webserver_form_submit(config) {
     const form = document.getElementById(formId);
     const request  = new XMLHttpRequest();
     const data = new FormData(form);
-    const tabBar = form.querySelector('.net-splitcells-website-form-editor-tab-bar');
+    const dynamicMenus = document.querySelectorAll('.net-splitcells-website-menu-dynamic');
     const tabHolder = form.querySelector('.net-splitcells-website-form-editor-tab-holder');
     request.onload = function() {
         console.log('Response to "' + formId + '":' + this.responseText);
@@ -213,22 +213,11 @@ function net_splitcells_webserver_form_submit(config) {
             for (const [key, value] of Object.entries(dataValues)) {
                 if (document.querySelector('*[name="' + key + '"]') === null) {
                     console.log('Inserting new form field for update: ' + key);
-                    {
+                    dynamicMenus.forEach( (menu) => {
                         const newTabButton = document.createElement("div");
                         newTabButton.innerHTML = key;
-                        newTabButton.className = 'net-splitcells-button net-splitcells-action-button '
-                            + key + '-tab-button '
-                            + formId + '-tab-button';
-                        newTabButton.onclick = function() {
-                            net_splitcells_webserver_form_tab_select(formId, key);
-                        };
-                        tabBar.appendChild(newTabButton);
-                    }
-                    document.querySelectorAll('.net-splitcells-website-menu-dynamic').forEach( (menu) => {
-                        const newTabButton = document.createElement("div");
-                        newTabButton.innerHTML = key;
-                        newTabButton.className = 'net-splitcells-button net-splitcells-action-button '
-                            + key + '-tab-button '
+                        newTabButton.className = 'net-splitcells-button net-splitcells-action-button net-splitcells-action-text-button '
+                            + formId + '-' + key + '-tab-button '
                             + formId + '-tab-button';
                         newTabButton.onclick = function() {
                             net_splitcells_webserver_form_tab_select(formId, key);
