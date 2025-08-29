@@ -89,6 +89,9 @@ public class EditorProcessor implements Processor<Tree, Tree> {
             });
             return response(formUpdate);
         } else if (problemDefinition.size() > 1) {
+            /* TODO An response is always required, as otherwise the client can get its input data lost,
+             * because of unstable code.
+             */
             throw execException();
         } else {
             throw execException();
