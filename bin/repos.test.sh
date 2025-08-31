@@ -6,5 +6,7 @@ export JAVA_VERSION=21 # This is required on FreeBSD, if an older Java version i
 cd ../net.splitcells.network.hub # TODO Move this into worker.boostrap, when it the live server is supported by the new worker.process.
   rm -rf ~/.m2/repository/net/splitcells/ # Our packages are deleted, as SNAPSHOT builds are often used, which can create a cache problems in the build.
   mvn clean install
+cd ../net.splitcells.network
+  bin/build.part.with.python
 cd ../net.splitcells.network/projects/net.splitcells.network.system
   mvn exec:java -Dexec.mainClass=net.splitcells.network.worker.via.java.Tester "-Dexec.args=$(hostname)"
