@@ -80,8 +80,7 @@ public class ObjectsRendererI implements ProjectRenderer {
             logs().warn(tree("Discoverable path is already registered. Using alternative path for rendering instead.")
                             .withProperty("object", object.toString())
                             .withProperty("path", path.toString())
-                            .withProperty("alternative path", alternativePath.orElseThrow().toString())
-                    , ExecutionException.execException("Discoverable path is already registered."));
+                            .withProperty("alternative path", alternativePath.orElseThrow().toString()));
             objects.put(alternativePath.orElseThrow(), object);
         } else {
             objects.put(path, object);
