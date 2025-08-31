@@ -88,87 +88,94 @@ public final class GelDev {
         });
     }
 
+    /**
+     * TODO {@link ObjectsRenderer} are causing too many error logs and are therefore disabled for now.
+     *
+     * @param env
+     */
     public static void configureForWebserver(Environment env) {
         env.config().withInitedOption(ServerService.class);
-        env.config().configValue(Tables.class)
-                .withConnector(database -> ObjectsRenderer.registerObject(new DiscoverableRenderer() {
-                    @Override
-                    public String render() {
-                        return database.toHtmlTable().toHtmlString();
-                    }
+        if (false) {
+            env.config().configValue(Tables.class)
+                    .withConnector(database -> ObjectsRenderer.registerObject(new DiscoverableRenderer() {
+                        @Override
+                        public String render() {
+                            return database.toHtmlTable().toHtmlString();
+                        }
 
-                    @Override
-                    public Optional<String> title() {
-                        return Optional.of(database.path().toString());
-                    }
+                        @Override
+                        public Optional<String> title() {
+                            return Optional.of(database.path().toString());
+                        }
 
-                    @Override
-                    public List<String> path() {
-                        return database.path();
-                    }
-                }));
-        env.config().configValue(Solutions.class)
-                .withConnector(solution -> ObjectsRenderer.registerObject(new DiscoverableRenderer() {
-                    @Override
-                    public String render() {
-                        return solution.toHtmlTable().toHtmlString();
-                    }
+                        @Override
+                        public List<String> path() {
+                            return database.path();
+                        }
+                    }));
+            env.config().configValue(Solutions.class)
+                    .withConnector(solution -> ObjectsRenderer.registerObject(new DiscoverableRenderer() {
+                        @Override
+                        public String render() {
+                            return solution.toHtmlTable().toHtmlString();
+                        }
 
-                    @Override
-                    public Optional<String> title() {
-                        return Optional.of(solution.path().toString());
-                    }
+                        @Override
+                        public Optional<String> title() {
+                            return Optional.of(solution.path().toString());
+                        }
 
-                    @Override
-                    public List<String> path() {
-                        return solution.path();
-                    }
-                }));
-        env.config().configValue(Solutions.class)
-                .withConnector(solution -> ObjectsRenderer.registerObject(new DiscoverableRenderer() {
-                    @Override
-                    public String render() {
-                        return solution.constraint().renderToHtml().toHtmlString();
-                    }
+                        @Override
+                        public List<String> path() {
+                            return solution.path();
+                        }
+                    }));
+            env.config().configValue(Solutions.class)
+                    .withConnector(solution -> ObjectsRenderer.registerObject(new DiscoverableRenderer() {
+                        @Override
+                        public String render() {
+                            return solution.constraint().renderToHtml().toHtmlString();
+                        }
 
-                    @Override
-                    public Optional<String> title() {
-                        return Optional.of(solution.path().toString());
-                    }
+                        @Override
+                        public Optional<String> title() {
+                            return Optional.of(solution.path().toString());
+                        }
 
-                    @Override
-                    public List<String> path() {
-                        return solution.path().withAppended("constraint");
-                    }
-                }));
-        env.config().configValue(Solutions.class)
-                .withConnector(solution -> ObjectsMediaRenderer.registerMediaObject(new DiscoverableMediaRenderer() {
-                    @Override
-                    public Optional<BinaryMessage> render(ProjectRenderer projectRenderer, Config config) {
-                        return Optional.of(binaryMessage(solution.toCSV().getBytes(), ContentType.CSV.codeName()));
-                    }
+                        @Override
+                        public List<String> path() {
+                            return solution.path().withAppended("constraint");
+                        }
+                    }));
+            env.config().configValue(Solutions.class)
+                    .withConnector(solution -> ObjectsMediaRenderer.registerMediaObject(new DiscoverableMediaRenderer() {
+                        @Override
+                        public Optional<BinaryMessage> render(ProjectRenderer projectRenderer, Config config) {
+                            return Optional.of(binaryMessage(solution.toCSV().getBytes(), ContentType.CSV.codeName()));
+                        }
 
-                    @Override
-                    public List<String> path() {
-                        final var path = solution.path().shallowCopy();
-                        return path.withAppended(path.removeAt(path.size() - 1) + ".csv");
-                    }
-                }));
-        env.config().configValue(LookupTables.class).withConnector(lookupTable -> ObjectsRenderer.registerObject(new DiscoverableRenderer() {
-            @Override
-            public String render() {
-                return lookupTable.toHtmlTable().toHtmlString();
-            }
+                        @Override
+                        public List<String> path() {
+                            final var path = solution.path().shallowCopy();
+                            return path.withAppended(path.removeAt(path.size() - 1) + ".csv");
+                        }
+                    }));
+            env.config().configValue(LookupTables.class).withConnector(lookupTable -> ObjectsRenderer.registerObject(new DiscoverableRenderer() {
+                @Override
+                public String render() {
+                    return lookupTable.toHtmlTable().toHtmlString();
+                }
 
-            @Override
-            public Optional<String> title() {
-                return Optional.of(lookupTable.path().toString());
-            }
+                @Override
+                public Optional<String> title() {
+                    return Optional.of(lookupTable.path().toString());
+                }
 
-            @Override
-            public List<String> path() {
-                return lookupTable.path();
-            }
-        }));
+                @Override
+                public List<String> path() {
+                    return lookupTable.path();
+                }
+            }));
+        }
     }
 }
