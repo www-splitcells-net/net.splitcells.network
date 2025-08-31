@@ -1156,7 +1156,6 @@ podman push codeberg.org/splitcells-net/net.splitcells.martins.avots.distro.live
 """)
     def test_command(self):
             test_subject = parse_worker_execution_arguments(["--command=echo 1"
-                                                             , "--auto-configure-cpu-architecture-explicitly=true"
                                                              , "--verbose=true"
                                                              , "--dry-run=true"])
             self.assertEqual(test_subject.docker_file, """
@@ -1198,7 +1197,7 @@ cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.netw
 test -f target/program-net.splitcells.network.worker && chmod +x target/program-net.splitcells.network.worker # This file does not exist, when '--executable-path' is not set.
 podman build -f "target/Dockerfile-net.splitcells.network.worker" \\
     --tag "localhost/net.splitcells.network.worker"  \\
-    --arch x86_64 \\
+    \\
     \\
     --log-level=warn
 
@@ -1221,7 +1220,6 @@ podman run --name "net.splitcells.network.worker" \\
 """)
     def test_boostrap_container_locally(self):
         test_subject = parse_worker_execution_arguments(["--executable-path=bin/worker.bootstrap"
-                                                         , "--auto-configure-cpu-architecture-explicitly=true"
                                                          , "--verbose=true"
                                                          , "--dry-run=true"])
         self.assertEqual(test_subject.docker_file, """
@@ -1263,7 +1261,7 @@ cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.netw
 test -f target/program-net.splitcells.network.worker && chmod +x target/program-net.splitcells.network.worker # This file does not exist, when '--executable-path' is not set.
 podman build -f "target/Dockerfile-net.splitcells.network.worker" \\
     --tag "localhost/net.splitcells.network.worker"  \\
-    --arch x86_64 \\
+    \\
     \\
     --log-level=warn
 
