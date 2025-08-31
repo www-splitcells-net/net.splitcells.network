@@ -4,5 +4,4 @@
 
 # TODO Test all bin commands here inside a container as well.
 
-bin/test.minimal
 bin/test.extensive
