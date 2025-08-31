@@ -473,7 +473,9 @@ class WorkerExecution:
         if self.config.use_playwright:
             self.docker_file = self.docker_file.replace('$ContainerSetupCommand', 'RUN cd /root/opt/${NAME_FOR_EXECUTION}/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"\n')
             if False: # Only get the Playwright Version, when a match is present.
-                self.playwrightVersion = re.compile(r'<dependency>\s*<groupId>com.microsoft.playwright</groupId>\s*<artifactId>playwright</artifactId>\s*<version>[0-9]+.[0-9]+.[0-9]+</version>\s*</dependency>', re.MULTILINE | re.DOTALL).findall(BOM_POM.read_text())[0]
+                playwrightDependencies = re.compile(r'<dependency>\s*<groupId>com.microsoft.playwright</groupId>\s*<artifactId>playwright</artifactId>\s*<version>[0-9]+.[0-9]+.[0-9]+</version>\s*</dependency>', re.MULTILINE | re.DOTALL).finditer(BOM_POM.read_text())
+                playwrightDependency = next(playwrightDependencies).group(0)
+                self.playwrightVersion = playwrightDependency
         else:
             self.docker_file = self.docker_file.replace('$ContainerSetupCommand', '\n')
         self.docker_file = self.docker_file.replace('${NAME_FOR_EXECUTION}', self.config.program_name)
