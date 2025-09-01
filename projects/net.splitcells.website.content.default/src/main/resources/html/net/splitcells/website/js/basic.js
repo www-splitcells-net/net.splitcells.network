@@ -227,7 +227,9 @@ function net_splitcells_webserver_form_submit(config) {
 
                     const newTabContent = document.createElement('div');
                     newTabContent.id = key + '-tab-content';
-                    newTabContent.className = 'net-splitcells-website-form-editor-tab ' + formId;
+                    newTabContent.className = 'net-splitcells-website-form-editor-tab '
+                        + formId + '-tab-content '
+                        + formId + '-' + key + '-tab-content';
                     newTabContent.style.display = 'none';
                     newTabContent.style.visibility = 'hidden';
                     tabHolder.appendChild(newTabContent);
