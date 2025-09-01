@@ -246,9 +246,10 @@ function net_splitcells_webserver_form_submit(config) {
 
                         const newTabEditor = document.createElement('div');
                         newTabEditor.className = 'net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor';
-                        newTabEditor.setAttribute('net-splitcells-syncs-to', key);
+                        newTabEditor.setAttribute('net-splitcells-syncs-to', formId + '-' + key);
                         newTabContent.appendChild(newTabEditor);
                     } else if (dataTypes[key] === 'text/csv') {
+                        // TODO This needs to be completely rechecked/redone.
                         const newTabInput = document.createElement('textarea');
                         newTabInput.id = key;
                         newTabInput.name = key;
