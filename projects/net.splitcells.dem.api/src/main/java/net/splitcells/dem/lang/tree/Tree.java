@@ -256,6 +256,17 @@ public interface Tree extends TreeView, Convertible {
         return this;
     }
 
+    /**
+     * This method makes it easy to create a {@link #child(int)} via one line.
+     *
+     * @param parent This {@link Tree#children()} is going to contain this.
+     * @return
+     */
+    default Tree withParent(Tree parent) {
+        parent.withChild(this);
+        return this;
+    }
+
     @Deprecated
     default Tree withValue(Tree arg) {
         children().add(arg);
@@ -322,7 +333,7 @@ public interface Tree extends TreeView, Convertible {
 
     default Tree withPath(Tree... path) {
         var current = this;
-        for (int i = 0; i < path.length; ++i) {
+        for (int i = 0 ; i < path.length ; ++i) {
             final var next = path[i];
             current.withChild(next);
             current = next;
