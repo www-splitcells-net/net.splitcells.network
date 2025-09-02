@@ -40,6 +40,9 @@ public class EditorProcessor implements Processor<Tree, Tree> {
     public static final String FORM_UPDATE = "net-splitcells-websiter-server-form-update";
     public static final String DATA_VALUES = "data-values";
     public static final String DATA_TYPES = "data-types";
+    public static final String RENDERING_TYPES = "rendering-types";
+    public static final String INTERACTIVE_TABLE = "interactive-table";
+    public static final String PLAIN_TEXT = "plain-text";
 
     public static final Trail PATH = Trail.trail("net/splitcells/gel/ui/editor/geal/form");
 
@@ -68,6 +71,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
             final var formUpdate = tree(FORM_UPDATE);
             final var dataTypes = tree(DATA_TYPES).withParent(formUpdate);
             final var dataValues = tree(DATA_VALUES).withParent(formUpdate);
+            final var renderingTypes = tree(RENDERING_TYPES).withParent(formUpdate);
             if (editor.getSolutions().size() == 1) {
                 editor.getSolutions().values().iterator().next().optimize();
             }
@@ -75,14 +79,18 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                 final var data = editor.loadData(d);
                 dataValues.withProperty(d, parseString(data.getContent()));
                 dataTypes.withProperty(d, data.getFormat().mimeTypes());
+                renderingTypes.withProperty(d, PLAIN_TEXT);
             });
             editor.getTables().entrySet().forEach(e -> {
                 dataValues.withProperty(e.getKey(), e.getValue().toCSV());
                 dataTypes.withProperty(e.getKey(), CSV.mimeTypes());
+                renderingTypes.withProperty(e.getKey(), INTERACTIVE_TABLE);
+
             });
             editor.getSolutions().entrySet().forEach(e -> {
                 dataValues.withProperty(e.getKey(), e.getValue().toCSV());
                 dataTypes.withProperty(e.getKey(), CSV.mimeTypes());
+                renderingTypes.withProperty(e.getKey(), INTERACTIVE_TABLE);
             });
             return response(formUpdate);
         } else if (problemDefinition.size() > 1) {
