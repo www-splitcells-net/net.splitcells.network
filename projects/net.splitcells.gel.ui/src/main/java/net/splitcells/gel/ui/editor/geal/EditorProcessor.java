@@ -66,10 +66,8 @@ public class EditorProcessor implements Processor<Tree, Tree> {
         if (problemDefinition.size() == 1) {
             editor.interpret(problemDefinition.get(0).content());
             final var formUpdate = tree(FORM_UPDATE);
-            final var dataTypes = tree(DATA_TYPES);
-            formUpdate.withChild(dataTypes);
-            final var dataValues = tree(DATA_VALUES);
-            formUpdate.withChild(dataValues);
+            final var dataTypes = tree(DATA_TYPES).withParent(formUpdate);
+            final var dataValues = tree(DATA_VALUES).withParent(formUpdate);
             if (editor.getSolutions().size() == 1) {
                 editor.getSolutions().values().iterator().next().optimize();
             }
