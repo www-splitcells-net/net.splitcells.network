@@ -19,8 +19,14 @@
         <xsl:variable name="quote">'</xsl:variable>
         <xsl:variable name="form-id" select="@id"/>
         <xsl:for-each select="descendant::s:text-area">
+            <xsl:variable name="class">
+                <xsl:value-of select="concat('net-splitcells-button net-splitcells-action-button net-splitcells-action-text-button ', $form-id, '-tab-button ', $form-id, '-', @name, '-tab-button')"/>
+                <xsl:if test="@main-tab = 'true'">
+                    <xsl:value-of select="' net-splitcells-tab-button-selected'"/>
+                </xsl:if>
+            </xsl:variable>
             <div>
-                <xsl:attribute name="class" select="concat('net-splitcells-button net-splitcells-action-button net-splitcells-action-text-button ', $form-id, '-tab-button ', $form-id, '-', @name, '-tab-button')"/>
+                <xsl:attribute name="class" select="$class"/>
                 <xsl:attribute name="onclick" select="concat('net_splitcells_webserver_form_tab_select(', $quote, $form-id, $quote, ', ', $quote, @name, $quote, ');')"/>
                 <xsl:value-of select="@name"/>
             </div>
