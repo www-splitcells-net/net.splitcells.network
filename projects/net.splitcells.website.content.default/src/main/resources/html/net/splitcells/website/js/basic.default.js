@@ -70,4 +70,6 @@ function removeMessage(argId) {
 	undisplay(argId);
 	hide(argId);
 	}
-removeMessage('noScriptMessage');
+document.addEventListener('DOMContentLoaded', function(){
+    removeMessage('noScriptMessage');
+});
