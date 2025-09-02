@@ -236,7 +236,7 @@ function net_splitcells_webserver_form_submit(config) {
                     if (dataTypes[key] === 'text/csv') {
                         // TODO Check rendering type.
                         const newTabInput = document.createElement('textarea');
-                        newTabInput.id = key;
+                        newTabInput.id = formId + '-' + key;
                         newTabInput.name = key;
                         newTabInput.className = 'net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor-backend';
                         newTabInput.value = value;
