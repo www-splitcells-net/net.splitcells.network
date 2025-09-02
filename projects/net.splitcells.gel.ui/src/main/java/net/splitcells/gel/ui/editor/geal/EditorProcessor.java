@@ -55,13 +55,12 @@ public class EditorProcessor implements Processor<Tree, Tree> {
     public Response<Tree> process(Request<Tree> request) {
         final var editor = editor("editor-data-query", EXPLICIT_NO_CONTEXT);
         final var problemDefinition = request.data().namedChildren(PROBLEM_DEFINITION);
-        final var inputValues = request.data().namedChildren(DATA_VALUES);
+        final var inputValues = request.data().children();
         if (inputValues.hasElements()) {
-            final var inputTypes = request.data().namedChild(DATA_TYPES);
-            inputValues.get(0).children().forEach(c -> {
-                final var format = Format.parse(inputTypes.namedChild(c.name()).name());
+            inputValues.forEach(c -> {
                 final var content = toBytes(c.child(0).name());
-                editor.saveData(c.name(), editorData(format, content));
+                // TODO Support multiple formats of data.
+                editor.saveData(c.name(), editorData(Format.TEXT_PLAIN, content));
             });
         }
         if (problemDefinition.size() == 1) {
