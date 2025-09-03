@@ -271,6 +271,10 @@ function net_splitcells_webserver_form_submit(config) {
                             function(mutations, observer) {
                                 for (const m of mutations) {
                                     tabEditorBackend.setData(prepareCsvForTabulator(newTabInput.value));
+                                    /* Without redraw(true) only the table header would be visible,
+                                     * but no rows would be visible.
+                                     */
+                                    tabEditorBackend.redraw(true);
                                  };
                             }
                         );
