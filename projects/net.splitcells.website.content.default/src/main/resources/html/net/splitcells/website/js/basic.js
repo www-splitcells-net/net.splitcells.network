@@ -162,6 +162,11 @@ function net_splitcells_webserver_form_tab_select(formId, inputName) {
     for (var i = 0; i < inputTabButtons.length; i++) {
         inputTabButtons[i].classList.add('net-splitcells-tab-button-selected');
     }
+    // Redraw related Tabulator, so it shows the current and not old or empty content.
+    var table = Tabulator.findTable("[net-splitcells-syncs-to=\"" + formId + "-" + inputName + "\"][class~=\"tabulator\"]");
+    if (table != false && table.length != 0) {
+        table[0].redraw(true);
+    }
 }
 /* Listening on DOMContentLoaded is required,
  * so that is ensured,
@@ -270,11 +275,15 @@ function net_splitcells_webserver_form_submit(config) {
                         var observer = new MutationObserver(
                             function(mutations, observer) {
                                 for (const m of mutations) {
-                                    tabEditorBackend.setData(prepareCsvForTabulator(newTabInput.value));
-                                    /* Without redraw(true) only the table header would be visible,
-                                     * but no rows would be visible.
+                                    /* A redraw of the table, does not have to be done.
+                                     * If the table is already visible (display is not hidden),
+                                     * it is going to be redrawn automatically.
+                                     * If the table is hidden, than the redraw needs to be triggered,
+                                     * when the table is made visible again.
+                                     * Redrawing invisible tables does not work,
+                                     * as size of the table needs to be known for the redrawing.
                                      */
-                                    tabEditorBackend.redraw(true);
+                                    tabEditorBackend.setData(prepareCsvForTabulator(newTabInput.value));
                                  };
                             }
                         );
