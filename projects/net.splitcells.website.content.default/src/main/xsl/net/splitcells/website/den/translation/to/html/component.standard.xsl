@@ -366,31 +366,6 @@ document.addEventListener('DOMContentLoaded', function(){
             <xsl:apply-templates select="./node()"/>
         </div>
     </xsl:template>
-    <xsl:template match="s:text-area">
-        <div class="net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor">
-            <xsl:attribute name="net-splitcells-syncs-to" select="./@id"/>
-            <xsl:apply-templates select="./text()"/>
-        </div>
-        <textarea class="net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor-backend">
-            <xsl:attribute name="id" select="./@id"/>
-            <xsl:attribute name="name" select="./@id"/>
-            <xsl:apply-templates select="./text()"/>
-        </textarea>
-        <xsl:if test="./@initial-content-at">
-            <!-- Listening on DOMContentLoaded is required, so that is ensured, that the textarea is available, before writing its default content. -->
-            <script type="text/javascript"><![CDATA[
-document.addEventListener('DOMContentLoaded', function(){
-    var httpRequest = new XMLHttpRequest();
-    httpRequest.open("GET", "]]><xsl:value-of select="./@initial-content-at"/><![CDATA[", true);
-    function listener() {
-        document.getElementById(']]><xsl:value-of select="./@id"/><![CDATA[').innerHTML = this.responseText;
-    }
-    httpRequest.addEventListener("load", listener);
-    httpRequest.send(null);
-});]]>
-            </script>
-        </xsl:if>
-    </xsl:template>
     <xsl:template match="s:rendering-target">
         <div>
             <xsl:attribute name="id" select="./@id"/>
