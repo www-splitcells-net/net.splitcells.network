@@ -65,8 +65,21 @@ public class Editor implements Discoverable {
     @Getter private final Map<String, Table> tables = map();
     @Getter private final Map<String, Solution> solutions = map();
     @Getter private final Map<String, Constraint> constraints = map();
-    @Getter private final Map<Table, TableFormatting> tableFormatting = map();
+    @Getter private final Map<String, TableFormatting> tableFormatting = map();
     private final Map<String, EditorData> data = map();
+
+    public String lookupTableLikeName(Table table) {
+        final var tableMatches = tables.entrySet().stream().filter(entry -> entry.getValue().equals(table))
+                .map(entry -> entry.getKey())
+                .toList();
+        if (!tableMatches.isEmpty()) {
+            return tableMatches.getFirst();
+        }
+        final var solutionMatches = solutions.entrySet().stream().filter(entry -> entry.getValue().equals(table))
+                .map(entry -> entry.getKey())
+                .toList();
+        return solutionMatches.getFirst();
+    }
 
     private Editor(String argName, Discoverable argParent) {
         name = argName;
