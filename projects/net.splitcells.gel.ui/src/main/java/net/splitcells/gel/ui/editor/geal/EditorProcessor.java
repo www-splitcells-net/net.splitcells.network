@@ -75,12 +75,6 @@ public class EditorProcessor implements Processor<Tree, Tree> {
             if (editor.getSolutions().size() == 1) {
                 editor.getSolutions().values().iterator().next().optimize();
             }
-            editor.dataKeys().stream().forEach(d -> {
-                final var data = editor.loadData(d);
-                dataValues.withProperty(d, parseString(data.getContent()));
-                dataTypes.withProperty(d, data.getFormat().mimeTypes());
-                renderingTypes.withProperty(d, PLAIN_TEXT);
-            });
             editor.getTables().entrySet().forEach(e -> {
                 dataValues.withProperty(e.getKey(), e.getValue().toCSV());
                 dataTypes.withProperty(e.getKey(), CSV.mimeTypes());
@@ -91,6 +85,14 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                 dataValues.withProperty(e.getKey(), e.getValue().toCSV());
                 dataTypes.withProperty(e.getKey(), CSV.mimeTypes());
                 renderingTypes.withProperty(e.getKey(), INTERACTIVE_TABLE);
+            });
+            editor.dataKeys().stream().forEach(d -> {
+                final var data = editor.loadData(d);
+                if (dataValues.namedChildren(d).isEmpty()) {
+                    dataValues.withProperty(d, parseString(data.getContent()));
+                    dataTypes.withProperty(d, data.getFormat().mimeTypes());
+                    renderingTypes.withProperty(d, PLAIN_TEXT);
+                }
             });
             return response(formUpdate);
         } else if (problemDefinition.size() > 1) {
