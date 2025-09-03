@@ -26,11 +26,6 @@
  *   Maybe enable this only on desktops?
  * - TODO Consider using a typewriter effect in order to lead the user to the next interactive step.
 */
-.net-splitcells-website-form-editor-tab-bar {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    }
 .net-splitcells-form-editor {
     width: 100%;
     height: 100%;

@@ -245,61 +245,6 @@
             </script>
         </xsl:for-each>
     </xsl:template>
-    <xsl:template match="s:library" mode="net-splitcells-website-form-editor-tab-bar"></xsl:template>
-    <xsl:template match="s:text-area" mode="net-splitcells-website-form-editor-tab-bar">
-        <xsl:variable name="selectionStyle">
-            <xsl:if test="@main-tab = 'true'">
-                <xsl:value-of select="'net-splitcells-tab-button-selected'"/>
-            </xsl:if>
-        </xsl:variable>
-        <div>
-            <xsl:attribute name="class"
-                           select="concat('net-splitcells-button net-splitcells-action-button ', @id, '-tab-button ', @form-id, '-tab-button ', $selectionStyle)"/>
-            <xsl:attribute name="onclick"><![CDATA[javascript:
-unshowByCssClass(']]><xsl:value-of select="./@form-id"/><![CDATA[');
-var anyTabButtons = document.getElementsByClassName(]]>
-                <xsl:value-of select="concat('&quot;', @form-id, '-tab-button', '&quot;')"/><![CDATA[);
-for (var i = 0; i < anyTabButtons.length; i++) {
-    anyTabButtons[i].classList.remove('net-splitcells-tab-button-selected');
-    }
-showById(']]><xsl:value-of select="./@id"/><![CDATA[-tab-content');
-var tabButtons = document.getElementsByClassName(']]><xsl:value-of select="@id"/><![CDATA[-tab-button');
-for (var i = 0; i < tabButtons.length; i++) {
-    tabButtons[i].classList.add('net-splitcells-tab-button-selected');
-    }
-]]>
-            </xsl:attribute>
-            <xsl:attribute name="content-types" select="@content-types"/>
-            <xsl:apply-templates select="@name"/>
-        </div>
-    </xsl:template>
-    <xsl:template match="s:no-code-editor" mode="net-splitcells-website-form-editor-tab-bar">
-        <xsl:variable name="selectionStyle">
-            <xsl:if test="@main-tab = 'true'">
-                <xsl:value-of select="'net-splitcells-tab-button-selected'"/>
-            </xsl:if>
-        </xsl:variable>
-        <div>
-            <xsl:attribute name="class"
-                           select="concat('net-splitcells-button net-splitcells-action-button ', @id, '-tab-button ', @form-id, '-tab-button ', $selectionStyle)"/>
-            <xsl:attribute name="onclick"><![CDATA[javascript:
-unshowByCssClass(']]><xsl:value-of select="./@form-id"/><![CDATA[');
-var anyTabButtons = document.getElementsByClassName(']]>
-                <xsl:value-of select="concat(@form-id, '-tab-button')"/><![CDATA[');
-for (var i = 0; i < anyTabButtons.length; i++) {
-    anyTabButtons[i].classList.remove('net-splitcells-tab-button-selected');
-    }
-showById(']]><xsl:value-of select="./@id"/><![CDATA[-tab-content');
-var tabButtons = document.getElementsByClassName(']]><xsl:value-of select="@id"/><![CDATA[-tab-button');
-for (var i = 0; i < tabButtons.length; i++) {
-    tabButtons[i].classList.add('net-splitcells-tab-button-selected');
-    }
-]]>
-            </xsl:attribute>
-            <xsl:attribute name="content-types" select="@content-types"/>
-            <xsl:apply-templates select="@name"/>
-        </div>
-    </xsl:template>
     <xsl:template match="s:library" mode="net-splitcells-website-form-editor-tab-content"></xsl:template>
     <xsl:template match="s:no-code-editor" mode="net-splitcells-website-form-editor-tab-content">
         <div>
