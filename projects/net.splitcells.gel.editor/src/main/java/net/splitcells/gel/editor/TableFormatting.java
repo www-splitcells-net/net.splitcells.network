@@ -16,18 +16,21 @@
 package net.splitcells.gel.editor;
 
 import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.view.attribute.Attribute;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 
+@Accessors(chain = true)
 public class TableFormatting {
     public static TableFormatting tableFormat() {
         return new TableFormatting();
     }
 
-    @Getter private final List<Attribute<?>> columnAttributes = list();
-    @Getter private final List<Attribute<?>> rowAttributes = list();
+    @Getter @Setter private List<Attribute<?>> columnAttributes = list();
+    @Getter @Setter private List<Attribute<?>> rowAttributes = list();
 
     private TableFormatting() {
     }
