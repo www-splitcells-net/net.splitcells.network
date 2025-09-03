@@ -251,7 +251,7 @@ function net_splitcells_webserver_form_submit(config) {
                     } else if (dataTypes[key] === 'text/csv' && renderingTypes[key] === 'interactive-table') {
                         // TODO This needs to be completely rechecked/redone.
                         const newTabInput = document.createElement('textarea');
-                        newTabInput.id = key;
+                        newTabInput.id = formId + '-' + key;
                         newTabInput.name = key;
                         newTabInput.className = 'net-splitcells-component-priority-0 net-splitcells-webserver-form-text-editor-backend';
                         newTabInput.value = value;
@@ -260,7 +260,7 @@ function net_splitcells_webserver_form_submit(config) {
 
                         const newTabEditor = document.createElement('div');
                         newTabEditor.className = 'net-splitcells-component-priority-0';
-                        newTabEditor.setAttribute('net-splitcells-syncs-to', key);
+                        newTabEditor.setAttribute('net-splitcells-syncs-to', formId + '-' + key);
                         newTabContent.appendChild(newTabEditor);
 
                         const tabEditorBackend = new Tabulator(newTabEditor
