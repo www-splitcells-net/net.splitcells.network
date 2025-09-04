@@ -64,7 +64,7 @@ public class NeedCheck {
         if (defiance.isEmpty()) {
             return;
         }
-        throw needException(defiance.get());
+        throw needException(defiance);
     }
 
     public static Optional<NeedException> runWithCheckedNeeds(Runnable run) {

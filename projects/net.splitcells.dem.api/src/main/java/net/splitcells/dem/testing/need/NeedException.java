@@ -17,20 +17,20 @@ package net.splitcells.dem.testing.need;
 
 import lombok.Getter;
 import lombok.experimental.Accessors;
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.communication.log.LogLevel;
+import net.splitcells.dem.resource.communication.log.LogMessage;
 
 @Accessors(chain = true)
 public class NeedException extends RuntimeException {
-    public static NeedException needException(LogLevel logLevel, Tree message) {
-        return new NeedException(logLevel, message);
+    public static NeedException needException(List<LogMessage<Tree>> messages) {
+        return new NeedException(messages);
     }
 
-    @Getter private final Tree message;
-    @Getter private final LogLevel logLevel;
+    @Getter private final List<LogMessage<Tree>> messages;
 
-    private NeedException(LogLevel argLogLevel, Tree argMessage) {
-        message = argMessage;
-        logLevel = argLogLevel;
+    private NeedException(List<LogMessage<Tree>> argMessages) {
+        messages = argMessages;
     }
 }
