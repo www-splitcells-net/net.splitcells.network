@@ -15,6 +15,12 @@
  */
 package net.splitcells.dem.testing.need;
 
+import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.utils.ExecutionException;
+
+import java.util.Optional;
+
+import static net.splitcells.dem.testing.need.NeedException.needException;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
@@ -53,6 +59,15 @@ public class NeedCheck {
         if (defiance.isEmpty()) {
             return;
         }
-        throw execException(defiance.get());
+        throw needException(defiance.get());
+    }
+
+    public static Optional<NeedException> runWithCheckedNeeds(Runnable run) {
+        try {
+            run.run();
+        } catch (NeedException e) {
+            return Optional.of(e);
+        }
+        return Optional.empty();
     }
 }
