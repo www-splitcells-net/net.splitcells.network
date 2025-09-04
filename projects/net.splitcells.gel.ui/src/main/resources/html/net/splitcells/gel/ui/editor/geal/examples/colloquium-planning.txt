@@ -18,3 +18,5 @@ solution   . forAllCombinationsOf(student, date, shift)
            . then(hasSize(1));
 solution   . forEach(student)
            . then(hasSize(2));
+solution   . columnAttributesForOutputFormat(roomNumber);
+solution   . rowAttributesForOutputFormat(date, shift);
