@@ -16,8 +16,6 @@
 package net.splitcells.dem.testing.need;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.lang.tree.Tree;
-import net.splitcells.dem.utils.ExecutionException;
 
 import java.util.Optional;
 
@@ -54,8 +52,8 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
  * In other words, only security sensitive code,
  * has to closely monitor, what is allowed to be returned or thrown as a message.</p>
  */
-public class NeedCheck {
-    private NeedCheck() {
+public class NeedsCheck {
+    private NeedsCheck() {
         throw constructorIllegal();
     }
 
