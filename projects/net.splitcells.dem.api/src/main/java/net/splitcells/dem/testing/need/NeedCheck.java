@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.testing.need;
 
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.utils.ExecutionException;
 
@@ -25,6 +26,10 @@ import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
+ * <p>Where possible, error checking should be done implicitly.
+ * For example, when you insert an element into a {@link Set},
+ * use {@link Set#add(Object)} instead of combining {@link Set#has(Object)} and {@link Set#ensureContains(Object)}.
+ * </p>
  * <p>This is assertion framework provides an API to assert constraints in code,
  * while minimizing the impact of the assertion code to the legibility of the main code.
  * This is done by splitting the code vertically, where the left side contains the code's main logic and
