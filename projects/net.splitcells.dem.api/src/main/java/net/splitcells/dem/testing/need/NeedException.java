@@ -18,16 +18,19 @@ package net.splitcells.dem.testing.need;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.resource.communication.log.LogLevel;
 
 @Accessors(chain = true)
 public class NeedException extends RuntimeException {
-    public static NeedException needException(Tree message) {
-        return new NeedException(message);
+    public static NeedException needException(LogLevel logLevel, Tree message) {
+        return new NeedException(logLevel, message);
     }
 
     @Getter private final Tree message;
+    @Getter private final LogLevel logLevel;
 
-    private NeedException(Tree argMessage) {
+    private NeedException(LogLevel argLogLevel, Tree argMessage) {
         message = argMessage;
+        logLevel = argLogLevel;
     }
 }
