@@ -28,7 +28,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
  * For example, when you insert an element into a {@link Set},
  * use {@link Set#add(Object)} instead of combining {@link Set#has(Object)} and {@link Set#ensureContains(Object)}.
  * </p>
- * <p>This is assertion framework provides an API to assert constraints in code,
+ * <p>This assertion framework provides an API to assert constraints in code,
  * while minimizing the impact of the assertion code to the legibility of the main code.
  * This is done by splitting the code vertically, where the left side contains the code's main logic and
  * the right side contains the assertion:</p>
