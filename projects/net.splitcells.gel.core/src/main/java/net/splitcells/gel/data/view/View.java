@@ -16,11 +16,13 @@
 package net.splitcells.gel.data.view;
 
 import static java.util.stream.IntStream.range;
+import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.CsvPrinter.csvDocument;
+import static net.splitcells.dem.lang.CsvPrinter.toCsvString;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
@@ -402,6 +404,17 @@ public interface View extends Discoverable, Domable, Identifiable {
                 .findFirst();
     }
 
+    default String toReformattedCsv(List<Attribute<? extends Object>> columnAttributes
+            , List<Attribute<? extends Object>> rowAttributes) {
+        final var reformattedSolution = toReformattedTable(columnAttributes, rowAttributes);
+        final List<List<String>> csvContent = list();
+        csvContent.addAll(rangeClosed(1, reformattedSolution.get(0).size())
+                .mapToObj(i -> "" + i)
+                .collect(toList()));
+        csvContent.addAll(reformattedSolution);
+        return toCsvString(csvContent);
+    }
+
     /**
      * <p>Normally a {@link View} is drawn just like {@link #orderedLines()} is containing its data.
      * Also, the program works in this format, this is not always the best way to visualize a {@link View}.</p>
@@ -451,7 +464,7 @@ public interface View extends Discoverable, Domable, Identifiable {
         final Map<Attribute<? extends Object>, Integer> attributeDistances = map();
         {
             int rowSum = 1;
-            for (int i = rowAttributes.size() - 1; i >= 0; --i) {
+            for (int i = rowAttributes.size() - 1 ; i >= 0 ; --i) {
                 attributeDistances.put(rowAttributes.get(i), rowSum);
                 rowSum *= sortedAttributeValues.get(rowAttributes.get(i)).size();
             }
@@ -463,7 +476,7 @@ public interface View extends Discoverable, Domable, Identifiable {
             } else {
                 columnSum = unusedAttributes.size();
             }
-            for (int i = columnAttributes.size() - 1; i >= 0; --i) {
+            for (int i = columnAttributes.size() - 1 ; i >= 0 ; --i) {
                 attributeDistances.put(columnAttributes.get(i), columnSum);
                 columnSum *= sortedAttributeValues.get(columnAttributes.get(i)).size();
             }
@@ -531,7 +544,7 @@ public interface View extends Discoverable, Domable, Identifiable {
             final int row;
             {
                 int tmpRow = firstAttributeRowIndex; // The first row is a header row.
-                for (int i = 0; i < rowAttributes.size(); ++i) {
+                for (int i = 0 ; i < rowAttributes.size() ; ++i) {
                     final var attribute = rowAttributes.get(i);
                     final var attributeDistance = attributeDistances.get(attribute);
                     final var attributeIndex = sortedAttributeValues.get(attribute).indexOf("" + line.value(attribute));
@@ -542,7 +555,7 @@ public interface View extends Discoverable, Domable, Identifiable {
             final int column;
             {
                 int tmpColumn = firstAttributeColumnIndex; // The first columns are used as row headers.
-                for (int i = 0; i < columnAttributes.size(); ++i) {
+                for (int i = 0 ; i < columnAttributes.size() ; ++i) {
                     final var attribute = columnAttributes.get(i);
                     final var attributeDistance = attributeDistances.get(attribute);
                     final var attributeIndex = sortedAttributeValues.get(attribute).indexOf("" + line.value(attribute));
