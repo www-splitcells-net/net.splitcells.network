@@ -79,12 +79,27 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                 dataValues.withProperty(e.getKey(), e.getValue().toCSV());
                 dataTypes.withProperty(e.getKey(), CSV.mimeTypes());
                 renderingTypes.withProperty(e.getKey(), INTERACTIVE_TABLE);
-
+                if (editor.getTableFormatting().hasKey(e.getKey())) {
+                    final var formatting = editor.getTableFormatting().get(e.getKey());
+                    final var formattingKey = e.getKey() + ".formatted";
+                    dataValues.withProperty(formattingKey, e.getValue()
+                            .toReformattedCsv(formatting.getColumnAttributes(), formatting.getRowAttributes()));
+                    dataTypes.withProperty(formattingKey, CSV.mimeTypes());
+                    renderingTypes.withProperty(formattingKey, INTERACTIVE_TABLE);
+                }
             });
             editor.getSolutions().entrySet().forEach(e -> {
                 dataValues.withProperty(e.getKey(), e.getValue().toCSV());
                 dataTypes.withProperty(e.getKey(), CSV.mimeTypes());
                 renderingTypes.withProperty(e.getKey(), INTERACTIVE_TABLE);
+                if (editor.getTableFormatting().hasKey(e.getKey())) {
+                    final var formatting = editor.getTableFormatting().get(e.getKey());
+                    final var formattingKey = e.getKey() + ".formatted";
+                    dataValues.withProperty(formattingKey, e.getValue()
+                            .toReformattedCsv(formatting.getColumnAttributes(), formatting.getRowAttributes()));
+                    dataTypes.withProperty(formattingKey, CSV.mimeTypes());
+                    renderingTypes.withProperty(formattingKey, INTERACTIVE_TABLE);
+                }
             });
             editor.dataKeys().stream().forEach(d -> {
                 final var data = editor.loadData(d);
