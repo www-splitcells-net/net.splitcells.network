@@ -74,10 +74,18 @@ public class OutputFormatCallRunner implements FunctionCallRunner {
             }
         });
         final var subjectKey = context.lookupTableLikeName(subjectVal);
-        if (context.getTableFormatting().hasKey(subjectKey)) {
-            context.getTableFormatting().get(subjectKey).setColumnAttributes(attributes);
-        } else {
-            context.getTableFormatting().put(subjectKey, tableFormat().setColumnAttributes(attributes));
+        if (functionCall.getName().getValue().equals(COLUMN_FORMAT)) {
+            if (context.getTableFormatting().hasKey(subjectKey)) {
+                context.getTableFormatting().get(subjectKey).setColumnAttributes(attributes);
+            } else {
+                context.getTableFormatting().put(subjectKey, tableFormat().setColumnAttributes(attributes));
+            }
+        } else if (functionCall.getName().getValue().equals(ROW_FORMAT)) {
+            if (context.getTableFormatting().hasKey(subjectKey)) {
+                context.getTableFormatting().get(subjectKey).setRowAttributes(attributes);
+            } else {
+                context.getTableFormatting().put(subjectKey, tableFormat().setRowAttributes(attributes));
+            }
         }
         return run;
     }
