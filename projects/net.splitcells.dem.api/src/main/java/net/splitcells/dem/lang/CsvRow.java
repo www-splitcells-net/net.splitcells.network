@@ -20,8 +20,8 @@ import org.apache.commons.csv.CSVRecord;
 
 @JavaLegacyArtifact
 public class CsvRow {
-    public static CsvRow csvRow(CSVRecord record) {
-        return new CsvRow(record);
+    public static CsvRow csvRow(CSVRecord argRecord) {
+        return new CsvRow(argRecord);
     }
 
     private final CSVRecord record;
