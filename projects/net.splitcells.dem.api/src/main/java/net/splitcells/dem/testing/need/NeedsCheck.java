@@ -30,6 +30,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
  * </p>
  * <p>This assertion framework provides an API to assert constraints in code,
  * while minimizing the impact of the assertion code to the legibility of the main code.
+ * It also abstracts away, technical details like {@link Exception} and allows to use different technologies in the future.
  * This is done by splitting the code vertically, where the left side contains the code's main logic and
  * the right side contains the assertion:</p>
  * <pre><code>
