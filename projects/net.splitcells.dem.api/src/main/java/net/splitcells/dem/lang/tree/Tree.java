@@ -67,6 +67,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * In other words the namespace may have an type encoded in it, that is described externally.
  * A perspective has a value, if it only contains exactly one value.
  * A perspective has children, if it contains multiple values.</p>
+ * <p>TODO Create a tempalating framework for {@link Tree},
+ * in order to make generating small and big {@link Tree} more readable.</p>
  */
 @SuppressWarnings("ALL")
 public interface Tree extends TreeView, Convertible {
