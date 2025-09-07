@@ -29,7 +29,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
-import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
+import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
 import static net.splitcells.dem.resource.Trail.trail;
@@ -51,6 +51,13 @@ public class LicensePageExtension implements ProjectsRendererExtension {
         if (PATH.equals(request.trail())) {
             final var licensePage = tree("article", SEW)
                     .withProperty("meta", SEW, tree("title", SEW).withText("License Page"));
+            final var licenseChapter = tree("chapter", SEW).withParent(licensePage);
+            licenseChapter.withProperty("title", SEW, "Licensing Documents");
+            final var licenseList = tree("list", SEW).withParent(licenseChapter);
+            projectsRenderer.config().getLicensePages().forEach(lp ->
+                    licenseList.withChild(tree("link", SEW)
+                            .withProperty("url", SEW, lp.getPath().unixPathString())
+                            .withProperty("name", SEW, lp.getName())));
             final var licenseRendering = projectsRenderer.projectRenderers().get(0)
                     .renderRawXml(licensePage.toXmlString(xmlConfig().withPrintNameSpaceAttributeAtTop(true))
                             , projectsRenderer.config())
