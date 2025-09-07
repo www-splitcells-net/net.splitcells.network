@@ -56,7 +56,7 @@ public class LicensePageExtension implements ProjectsRendererExtension {
             final var licenseList = tree("list", SEW).withParent(licenseChapter);
             projectsRenderer.config().getLicensePages().forEach(lp ->
                     licenseList.withChild(tree("link", SEW)
-                            .withProperty("url", SEW, lp.getPath().unixPathString())
+                            .withProperty("url", SEW, "/" + lp.getPath().unixPathString())
                             .withProperty("name", SEW, lp.getName())));
             final var licenseRendering = projectsRenderer.projectRenderers().get(0)
                     .renderRawXml(licensePage.toXmlString(xmlConfig().withPrintNameSpaceAttributeAtTop(true))
