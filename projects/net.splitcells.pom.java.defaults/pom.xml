@@ -137,6 +137,7 @@
                         <goals>
                             <goal>jar</goal>
                         </goals>
+                        <phase>site</phase>
                     </execution>
                 </executions>
                 <configuration>
