@@ -808,6 +808,14 @@ document.addEventListener('DOMContentLoaded', function(){
                     <xsl:value-of select="node()"/>
                 </a>
             </xsl:when>
+            <xsl:when test="./s:url">
+                <a>
+                    <xsl:attribute name="href">
+                        <xsl:value-of select="./s:url"/>
+                    </xsl:attribute>
+                    <xsl:value-of select="./s:name"/>
+                </a>
+            </xsl:when>
             <xsl:otherwise>
                 <xsl:element name="a">
                     <xsl:attribute name="href">
