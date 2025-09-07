@@ -60,15 +60,11 @@ import static net.splitcells.website.server.processor.Request.request;
 public class CodeSolutionCalculatorTest {
     public static final Runnable TEST_OPTIMIZATION_GUI = () -> {
         try (final var browser = htmlClient()) {
-            try (final var tab = browser.openTab("/net/splitcells/gel/ui/editor/code/index.html")) {
-                requireEquals("", tab.elementById("net-splitcells-gel-editor-form-errors").textContent());
-                requireEquals("", tab.elementById("net-splitcells-gel-editor-form-solution").textContent());
-                requireEquals("", tab.elementById("net-splitcells-gel-editor-form-solution-rating").textContent());
+            try (final var tab = browser.openTab("/net/splitcells/gel/ui/editor/geal/index.html")) {
                 tab.elementByClass("net-splitcells-website-pop-up-confirmation-button").click();
-                tab.elementById("net-splitcells-gel-ui-calculate-solution-form-submit-1").click();
-                waitUntilRequirementIsTrue(1000L * 60, () -> !tab.elementById("net-splitcells-gel-editor-form-solution").value().isEmpty());
-                requireEquals("", tab.elementById("net-splitcells-gel-editor-form-errors").textContent());
-                requireNonEmptyString(tab.elementById("net-splitcells-gel-editor-form-solution-rating").textContent());
+                tab.elementById("net-splitcells-gel-ui-editor-geal-form-submit").click();
+                waitUntilRequirementIsTrue(1000L * 60, () -> !tab.elementById("net-splitcells-gel-ui-editor-geal-form-solution").value().isEmpty());
+                requireNonEmptyString(tab.elementById("net-splitcells-gel-ui-editor-geal-form-solution.formatted").textContent());
             }
         }
     };
