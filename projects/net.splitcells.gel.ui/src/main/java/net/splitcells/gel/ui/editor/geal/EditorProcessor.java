@@ -157,7 +157,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                                 + m.getMessages().stream().map(l -> l.content().toCommonMarkString())
                                 .reduce("", (a, b) -> a + "\n" + b)
                                 + "\n"
-                                + throwableToString(m))
+                                + tree(throwableToString(m)).toCommonMarkString())
                 .reduce("", (a, b) -> a + "\n" + b));
         dataValues.withProperty(ERRORS, errorMessage.toString());
         return response(formUpdate);
