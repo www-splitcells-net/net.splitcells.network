@@ -16,8 +16,10 @@
 package net.splitcells.dem.testing.need;
 
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.testing.Result;
 
 import java.util.Optional;
+import java.util.function.Supplier;
 
 import static net.splitcells.dem.testing.need.NeedException.needException;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
@@ -73,5 +75,13 @@ public class NeedsCheck {
             return Optional.of(e);
         }
         return Optional.empty();
+    }
+
+    public static <T> Result<T, NeedException> runWithCheckedNeeds(Supplier<T> supplier) {
+        try {
+            return Result.<T, NeedException>result().withValue(supplier.get());
+        } catch (NeedException e) {
+            return Result.<T, NeedException>result().withErrorMessage(e);
+        }
     }
 }
