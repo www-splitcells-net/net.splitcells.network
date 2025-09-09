@@ -18,12 +18,24 @@ package net.splitcells.dem.testing.need;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.LogMessage;
 
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.resource.communication.log.LogMessageI.logMessage;
+
 @Accessors(chain = true)
 public class NeedException extends RuntimeException {
+    public static NeedException needErrorException(Tree... messages) {
+        return needException(listWithValuesOf(messages).stream().map(m -> logMessage(m, LogLevel.ERROR)).toList());
+    }
+
+    public static NeedException needException(LogMessage<Tree>... messages) {
+        return needException(listWithValuesOf(messages));
+    }
+
     public static NeedException needException(List<LogMessage<Tree>> messages) {
         return new NeedException(messages);
     }
