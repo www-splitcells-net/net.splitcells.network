@@ -30,8 +30,7 @@ import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT;
 import static net.splitcells.dem.testing.need.NeedException.needErrorException;
 import static net.splitcells.dem.testing.need.NeedException.needException;
 import static net.splitcells.dem.utils.ExecutionException.execException;
-import static net.splitcells.dem.utils.StringUtils.parseString;
-import static net.splitcells.dem.utils.StringUtils.toBytes;
+import static net.splitcells.dem.utils.StringUtils.*;
 import static net.splitcells.gel.editor.Editor.editor;
 import static net.splitcells.gel.editor.EditorData.editorData;
 import static net.splitcells.website.Format.COMMON_MARK;
@@ -145,10 +144,20 @@ public class EditorProcessor implements Processor<Tree, Tree> {
         final var dataTypes = tree(DATA_TYPES).withParent(formUpdate);
         dataTypes.withProperty(ERRORS, COMMON_MARK.mimeTypes());
         final var errorMessage = StringUtils.stringBuilder();
-        errorMessage.append("# Errors\n");
+        errorMessage.append("# Error Summary\n");
         errorMessage.append(endResponse.errorMessages().stream()
                 .flatMap(e -> e.getMessages().stream())
                 .map(l -> l.content().toCommonMarkString())
+                .reduce("", (a, b) -> a + "\n" + b)
+                + "\n");
+        errorMessage.append("# Error Details\n");
+        errorMessage.append(endResponse.errorMessages().stream()
+                .map(m ->
+                        "## Error\n"
+                                + m.getMessages().stream().map(l -> l.content().toCommonMarkString())
+                                .reduce("", (a, b) -> a + "\n" + b)
+                                + "\n"
+                                + throwableToString(m))
                 .reduce("", (a, b) -> a + "\n" + b));
         dataValues.withProperty(ERRORS, errorMessage.toString());
         return response(formUpdate);
