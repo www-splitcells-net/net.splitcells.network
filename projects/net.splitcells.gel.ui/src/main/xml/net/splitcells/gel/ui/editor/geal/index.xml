@@ -11,12 +11,30 @@
     -->
     <meta>
         <title>Geal Editor</title>
+        <description>
+            <paragraph>
+                Define and solve assignment problems.
+            </paragraph>
+            <paragraph>
+                This editor allows you to define one or more assignment problems and lets you solve them by the Generic Allocator.
+                Please, define the problem definition and enter the input data.
+                After executing the optimizer via the <quote>Calculate solution</quote> button,
+                the solution will be visible under the <quote>Solution</quote> tabs.
+            </paragraph>
+            <paragraph>The conceptional documentation<link post="net/splitcells/gel/index">is provided here</link>.
+            </paragraph>
+        </description>
         <pseudo-full-screen-by-default>true</pseudo-full-screen-by-default>
         <commands>
             <command id="net-splitcells-gel-ui-editor-geal-form-submit"
                      method="net_splitcells_gel_ui_editor_geal_form_submit">Calculate solution
             </command>
         </commands>
+        <d:toDo>
+            <d:toDo>Import supplies and demands from local file via Tabulator.</d:toDo>
+            <d:toDo>Edit supply and demand data via Tabulator for a better use experience.</d:toDo>
+            <d:toDo>Export and import data from Excel format.</d:toDo>
+        </d:toDo>
     </meta>
     <notification>
         <only-for-general-public>true</only-for-general-public>
@@ -27,14 +45,14 @@
                  action="/net/splitcells/gel/ui/editor/geal/form">
         <library path="net/splitcells/gel/ui/editor/geal/lib"/>
         <text-area
-                   name="definition"
-                   main-tab="true"
-                   initial-content-at="/net/splitcells/gel/ui/editor/geal/examples/colloquium-planning.txt"/>
+                name="definition"
+                main-tab="true"
+                initial-content-at="/net/splitcells/gel/ui/editor/geal/examples/colloquium-planning.txt"/>
         <text-area
-                   name="demands.csv"
-                   initial-content-at="/net/splitcells/gel/ui/colloquium-planning-demands-test-data.csv"><![CDATA[]]></text-area>
+                name="demands.csv"
+                initial-content-at="/net/splitcells/gel/ui/colloquium-planning-demands-test-data.csv"><![CDATA[]]></text-area>
         <text-area
-                   name="supplies.csv"
-                   initial-content-at="/net/splitcells/gel/ui/colloquium-planning-supplies-test-data.csv"><![CDATA[]]></text-area>
+                name="supplies.csv"
+                initial-content-at="/net/splitcells/gel/ui/colloquium-planning-supplies-test-data.csv"><![CDATA[]]></text-area>
     </form-editor>
 </article>
