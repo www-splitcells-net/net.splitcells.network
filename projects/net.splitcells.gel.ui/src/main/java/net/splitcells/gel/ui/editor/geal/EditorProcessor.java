@@ -72,7 +72,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
     public Response<Tree> process(Request<Tree> request) {
         final var endResponse = NeedsCheck.runWithCheckedNeeds(() -> {
             if (true) {
-                throw needErrorException(tree("test"));
+                throw needErrorException(tree("test"), tree("test1"));
             }
             final var editor = editor("editor-data-query", EXPLICIT_NO_CONTEXT);
             final var problemDefinition = request.data().namedChildren(PROBLEM_DEFINITION);
@@ -144,7 +144,11 @@ public class EditorProcessor implements Processor<Tree, Tree> {
         final var dataValues = tree(DATA_VALUES).withParent(formUpdate);
         final var dataTypes = tree(DATA_TYPES).withParent(formUpdate);
         dataTypes.withProperty(ERRORS, COMMON_MARK.mimeTypes());
-        dataValues.withProperty(ERRORS, "There was an error.");
+        final var errorMessage = endResponse.errorMessages().stream()
+                .flatMap(e -> e.getMessages().stream())
+                .map(l -> l.content().toCommonMarkString())
+                .reduce("", (a, b) -> a + "\n" + b);
+        dataValues.withProperty(ERRORS, errorMessage);
         return response(formUpdate);
     }
 }
