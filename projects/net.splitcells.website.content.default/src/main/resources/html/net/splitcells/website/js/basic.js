@@ -215,7 +215,12 @@ function net_splitcells_webserver_form_submit(config) {
             const formUpdate = responseObject['net-splitcells-websiter-server-form-update'];
             const dataValues = formUpdate['data-values'];
             const dataTypes = formUpdate['data-types'];
-            const renderingTypes = formUpdate['rendering-types'];
+            let renderingTypes;
+            if (formUpdate['rendering-types'] === undefined) {
+                renderingTypes = {};
+            } else {
+                renderingTypes = formUpdate['rendering-types'];
+            }
             for (const [key, value] of Object.entries(dataValues)) {
                 if (document.querySelector('*[name="' + key + '"]') === null) {
                     console.log('Inserting new form field for update: ' + key);
@@ -239,7 +244,7 @@ function net_splitcells_webserver_form_submit(config) {
                     newTabContent.style.visibility = 'hidden';
                     tabHolder.appendChild(newTabContent);
 
-                    if (dataTypes[key] === 'text/csv' && (renderingTypes[key] === undefined || renderingTypes[key] === 'plain-text')) {
+                    if ((dataTypes[key] === 'text/csv' || dataTypes[key] === 'text/markdown') && (renderingTypes[key] === undefined || renderingTypes[key] === 'plain-text')) {
                         // TODO Check rendering type.
                         const newTabInput = document.createElement('textarea');
                         newTabInput.id = formId + '-' + key;
