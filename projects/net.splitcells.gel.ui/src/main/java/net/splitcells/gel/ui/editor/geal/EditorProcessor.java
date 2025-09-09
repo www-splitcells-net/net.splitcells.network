@@ -55,6 +55,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
     }
 
     /**
+     * <p>TODO Use a domain object for the results and use serialization for generating the {@link Tree}.</p>
      * <p>TODO Additionally a random tests with probabilistic successes could be supported as well.
      * It should be stored in the network log, how often the test failed or succeeded yet.
      * Another job should check the ratio between failed tests and succeeded ones.</p>
