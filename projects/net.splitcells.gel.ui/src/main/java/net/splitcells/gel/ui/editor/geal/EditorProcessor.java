@@ -144,11 +144,13 @@ public class EditorProcessor implements Processor<Tree, Tree> {
         final var dataValues = tree(DATA_VALUES).withParent(formUpdate);
         final var dataTypes = tree(DATA_TYPES).withParent(formUpdate);
         dataTypes.withProperty(ERRORS, COMMON_MARK.mimeTypes());
-        final var errorMessage = endResponse.errorMessages().stream()
+        final var errorMessage = StringUtils.stringBuilder();
+        errorMessage.append("# Errors\n");
+        errorMessage.append(endResponse.errorMessages().stream()
                 .flatMap(e -> e.getMessages().stream())
                 .map(l -> l.content().toCommonMarkString())
-                .reduce("", (a, b) -> a + "\n" + b);
-        dataValues.withProperty(ERRORS, errorMessage);
+                .reduce("", (a, b) -> a + "\n" + b));
+        dataValues.withProperty(ERRORS, errorMessage.toString());
         return response(formUpdate);
     }
 }
