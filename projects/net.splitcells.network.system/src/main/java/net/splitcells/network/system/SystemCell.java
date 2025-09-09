@@ -25,7 +25,6 @@ import net.splitcells.gel.GelCoreFileSystem;
 import net.splitcells.gel.doc.GelDocFileSystem;
 import net.splitcells.gel.ext.GelExtFileSystem;
 import net.splitcells.gel.ui.GelUiFileSystem;
-import net.splitcells.gel.ui.editor.SolutionCalculator;
 import net.splitcells.gel.ui.editor.geal.EditorProcessor;
 import net.splitcells.network.NetworkFileSystem;
 import net.splitcells.network.worker.via.java.NetworkWorkerFileSystem;
@@ -51,9 +50,8 @@ import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.Dem.serve;
 import static net.splitcells.dem.lang.TrailLink.trailLink;
 import static net.splitcells.dem.resource.Trail.trail;
-import static net.splitcells.gel.ui.editor.SolutionCalculator.solutionCalculator;
 import static net.splitcells.gel.ui.editor.geal.EditorProcessor.editorProcessor;
-import static net.splitcells.gel.ui.editor.code.CodeSolutionCalculatorTest.TEST_OPTIMIZATION_GUI;
+import static net.splitcells.gel.ui.editor.geal.EditorProcessorTest.TEST_OPTIMIZATION_GUI;
 import static net.splitcells.network.system.PerformanceReport.performanceReport;
 import static net.splitcells.website.server.ProgramConfig.programConfig;
 import static net.splitcells.website.server.ProjectConfig.projectConfig;
@@ -192,7 +190,6 @@ public class SystemCell implements Cell {
                         , "/net/splitcells/gel/ui/editor/code/index")
                         .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/net.splitcells.gel.ui.logo.jpg"))
                         .withDescription(Optional.of("Define and solve assignment problems in text form.")))
-                .withAdditionalProcessor(SolutionCalculator.PATH, solutionCalculator())
                 .withAdditionalProcessor(EditorProcessor.PATH, editorProcessor())
                 .withAdditionalProjectsRendererExtension(performanceReport())
                 .withLicensePage(trailLink("Licensing Info of The Core Project net.splitcells.network", "/net/splitcells/network/LICENSE.html"))

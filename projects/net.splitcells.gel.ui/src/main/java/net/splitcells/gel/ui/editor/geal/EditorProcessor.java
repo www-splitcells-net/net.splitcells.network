@@ -54,6 +54,14 @@ public class EditorProcessor implements Processor<Tree, Tree> {
 
     }
 
+    /**
+     * <p>TODO Additionally a random tests with probabilistic successes could be supported as well.
+     * It should be stored in the network log, how often the test failed or succeeded yet.
+     * Another job should check the ratio between failed tests and succeeded ones.</p>
+     *
+     * @param request
+     * @return
+     */
     @Override
     public Response<Tree> process(Request<Tree> request) {
         final var editor = editor("editor-data-query", EXPLICIT_NO_CONTEXT);
