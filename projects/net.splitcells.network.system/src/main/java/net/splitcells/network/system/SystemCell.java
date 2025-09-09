@@ -187,7 +187,7 @@ public class SystemCell implements Cell {
                         .withLogoPath(Optional.of("net/splitcells/website/images/average.source.code.image.generator.filling.via.horizontal.100.percent.jpg"))
                         .withDescription(Optional.of("All User and Developer Relevant News in One Place at Your Finger Tips")))
                 .withAdditionalProgramConfig(programConfig("Generic Allocation Editor's Tough Love Edition"
-                        , "/net/splitcells/gel/ui/editor/code/index")
+                        , "/net/splitcells/gel/ui/editor/geal/index")
                         .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/net.splitcells.gel.ui.logo.jpg"))
                         .withDescription(Optional.of("Define and solve assignment problems in text form.")))
                 .withAdditionalProcessor(EditorProcessor.PATH, editorProcessor())
