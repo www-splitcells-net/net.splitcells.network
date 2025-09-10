@@ -16,11 +16,13 @@
 package net.splitcells.dem.testing.need;
 
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.testing.Result;
 
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import static net.splitcells.dem.testing.need.NeedException.needErrorException;
 import static net.splitcells.dem.testing.need.NeedException.needException;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
@@ -66,6 +68,17 @@ public class NeedsCheck {
             return;
         }
         throw needException(defiance);
+    }
+
+    /**
+     * Using this method instead of throwing the {@link Exception} directly,
+     * makes it possible to replace the underlying error report technology.
+     * For instance, one could use a static variable or a logging framework instead.
+     *
+     * @param messages
+     */
+    public static void reportErrorNeed(Tree... messages) {
+        throw needErrorException(messages);
     }
 
     public static Optional<NeedException> runWithCheckedNeeds(Runnable run) {

@@ -70,9 +70,6 @@ public class EditorProcessor implements Processor<Tree, Tree> {
     @Override
     public Response<Tree> process(Request<Tree> request) {
         final var endResponse = NeedsCheck.runWithCheckedNeeds(() -> {
-            if (true) {
-                throw needErrorException(tree("test"), tree("test1"));
-            }
             final var editor = editor("editor-data-query", EXPLICIT_NO_CONTEXT);
             final var problemDefinition = request.data().namedChildren(PROBLEM_DEFINITION);
             final var inputValues = request.data().children();

@@ -28,15 +28,15 @@ import static net.splitcells.dem.resource.communication.log.LogMessageI.logMessa
 
 @Accessors(chain = true)
 public class NeedException extends RuntimeException {
-    public static NeedException needErrorException(Tree... messages) {
+    protected static NeedException needErrorException(Tree... messages) {
         return needException(listWithValuesOf(messages).stream().map(m -> logMessage(m, LogLevel.ERROR)).toList());
     }
 
-    public static NeedException needException(LogMessage<Tree>... messages) {
+    protected static NeedException needException(LogMessage<Tree>... messages) {
         return needException(listWithValuesOf(messages));
     }
 
-    public static NeedException needException(List<LogMessage<Tree>> messages) {
+    protected static NeedException needException(List<LogMessage<Tree>> messages) {
         return new NeedException(messages);
     }
 
