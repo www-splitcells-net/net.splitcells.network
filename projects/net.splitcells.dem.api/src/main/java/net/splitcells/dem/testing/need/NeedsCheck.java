@@ -81,15 +81,6 @@ public class NeedsCheck {
         throw needErrorException(messages);
     }
 
-    public static Optional<NeedException> runWithCheckedNeeds(Runnable run) {
-        try {
-            run.run();
-        } catch (NeedException e) {
-            return Optional.of(e);
-        }
-        return Optional.empty();
-    }
-
     public static <T> Result<T, NeedException> runWithCheckedNeeds(Supplier<T> supplier) {
         try {
             return Result.<T, NeedException>result().withValue(supplier.get());
