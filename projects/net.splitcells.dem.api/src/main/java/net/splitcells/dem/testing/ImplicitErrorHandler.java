@@ -13,12 +13,12 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.dem.environment;
+package net.splitcells.dem.testing;
 
 import net.splitcells.dem.Dem;
 
 /**
- * <p>Define a single point of process start and its implicit error handling.</p>
+ * <p>Define a single point of implicit error handling.</p>
  * <p>It was considered to create a unified handler for any kind of exception, security, memory limit etc..
  * This way one could just define a single point of start and error handling,
  * without having to know what kind of handlers exist.
@@ -37,5 +37,5 @@ import net.splitcells.dem.Dem;
  * Therefore, injecting explicit error handling is considered hard.
  * See handling of errors for one specific user.</p>
  */
-public class Container {
+public class ImplicitErrorHandler {
 }
