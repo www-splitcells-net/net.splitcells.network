@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.testing.need;
 
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.testing.Result;
@@ -31,6 +32,8 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.throwableToString;
 
 /**
+ * <h1>Needs Check API</h1>
+ * <p>This API defines a single point of implicit error handling.</p>
  * <p>Where possible, error checking should be done implicitly.
  * For example, when you insert an element into a {@link Set},
  * use {@link Set#add(Object)} instead of combining {@link Set#has(Object)} and {@link Set#ensureContains(Object)}.
@@ -59,6 +62,26 @@ import static net.splitcells.dem.utils.StringUtils.throwableToString;
  * So, if there is an authentication error, no error info of any user is allowed to be returned or thrown.
  * In other words, only security sensitive code,
  * has to closely monitor, what is allowed to be returned or thrown as a message.</p>
+ * <h1>Concept</h1>
+ * <p>Define a single point of implicit error handling.</p>
+ * <p>It was considered to create a unified handler for any kind of exception, security, memory limit etc..
+ * This way one could just define a single point of start and error handling,
+ * without having to know what kind of handlers exist.
+ * Therefore, error handling and error frameworks could be injected into the centralized error handler.
+ * It is considered, that this is not possible for now,
+ * as there are 2 types of such handlers:</p>
+ * <p>Implicit ones, that work things like {@link Exception} and {@link Dem#config()}.
+ * There it is easy to inject this type of handling in any code present without changing it.
+ * The setup of such handlers is done implicitly as well without having to know what kind of handlers exist.
+ * This can be easily used for user error handling,
+ * where for example exceptions are used to abort and report the execution results.
+ * Only a single point of error handling is required with no arguments or any kind of no special setup.
+ * </p>
+ * <p>Explicit ones, need explicit arguments, that are provided by the caller.
+ * It is relatively hard to define a single point of any kind of error handling,
+ * without knowing what kind of error handling exists.
+ * Therefore, injecting explicit error handling is considered hard.
+ * See handling of errors for one specific user.</p>
  */
 public class NeedsCheck {
     private NeedsCheck() {
