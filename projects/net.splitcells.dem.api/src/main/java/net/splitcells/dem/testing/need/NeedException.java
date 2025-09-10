@@ -22,10 +22,16 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.LogMessage;
+import net.splitcells.dem.utils.ExecutionException;
 
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.resource.communication.log.LogMessageI.logMessage;
 
+/**
+ * This {@link RuntimeException} makes it easy, to pass error documents to the error handler,
+ * while supporting arbitrary reporting languages via {@link Tree}.
+ * Using this instead of {@link ExecutionException} also indicates, that this is an error suitable for users.
+ */
 @Accessors(chain = true)
 public class NeedException extends RuntimeException {
     protected static NeedException needErrorException(Tree... messages) {
