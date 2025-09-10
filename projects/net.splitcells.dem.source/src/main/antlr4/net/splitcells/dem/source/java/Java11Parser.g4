@@ -275,6 +275,7 @@ license_declaration
 modifier_visibility
     : Keyword_public
     | Keyword_private
+    | Keyword_protected
     ;
 name
     /* This is needed, because token fragments can currently only be used in tokens.

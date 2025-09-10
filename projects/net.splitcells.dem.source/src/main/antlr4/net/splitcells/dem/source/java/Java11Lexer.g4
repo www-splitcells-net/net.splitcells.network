@@ -138,6 +138,7 @@ lexer grammar Java11Lexer;
 	Keyword_percent: '%';
 	Keyword_permits: 'permits';
 	Keyword_private: 'private';
+	Keyword_protected: 'protected';
 	Keyword_public: 'public';
 	Keyword_return: 'return';
 	Keyword_static: 'static';
