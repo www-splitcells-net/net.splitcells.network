@@ -18,14 +18,17 @@ package net.splitcells.dem.testing.need;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.testing.Result;
+import net.splitcells.dem.utils.StringUtils;
 
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.need.NeedException.needErrorException;
 import static net.splitcells.dem.testing.need.NeedException.needException;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.dem.utils.StringUtils.throwableToString;
 
 /**
  * <p>Where possible, error checking should be done implicitly.
@@ -81,11 +84,23 @@ public class NeedsCheck {
         throw needErrorException(messages);
     }
 
-    public static <T> Result<T, NeedException> runWithCheckedNeeds(Supplier<T> supplier) {
+    public static <T> Result<T, String> runWithCheckedNeeds(Supplier<T> supplier) {
         try {
-            return Result.<T, NeedException>result().withValue(supplier.get());
+            return Result.<T, String>result().withValue(supplier.get());
         } catch (NeedException e) {
-            return Result.<T, NeedException>result().withErrorMessage(e);
+            return Result.<T, String>result().withErrorMessage(toCommonMark(e));
         }
+    }
+
+    private static String toCommonMark(NeedException arg) {
+        final var errorMessage = StringUtils.stringBuilder();
+        errorMessage.append("# Error Summary\n");
+        errorMessage.append(arg.getMessages().stream()
+                .map(l -> l.content().toCommonMarkString())
+                .reduce("", (a, b) -> a + "\n" + b)
+                + "\n");
+        errorMessage.append("# Stack Trace\n");
+        errorMessage.append(tree(throwableToString(arg)).toCommonMarkString());
+        return errorMessage.toString();
     }
 }
