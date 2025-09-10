@@ -31,6 +31,8 @@ import static net.splitcells.dem.resource.communication.log.LogMessageI.logMessa
  * This {@link RuntimeException} makes it easy, to pass error documents to the error handler,
  * while supporting arbitrary reporting languages via {@link Tree}.
  * Using this instead of {@link ExecutionException} also indicates, that this is an error suitable for users.
+ * {@link LogMessage} are used, as this is basically a user facing scoped log with abortion conditions and
+ * different severities of errors.
  */
 @Accessors(chain = true)
 public class NeedException extends RuntimeException {
