@@ -49,20 +49,6 @@
         <plugins>
             <plugin>
                 <groupId>net.splitcells</groupId>
-                <artifactId>check-maven-plugin</artifactId>
-                <version>${revision}</version>
-                <executions>
-                    <execution>
-                        <id>check</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>source-code-check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>net.splitcells</groupId>
                 <artifactId>resource-list-maven-plugin</artifactId>
                 <version>${revision}</version>
                 <executions>
@@ -1236,6 +1222,38 @@
                                     <!-- Only the reports of the direct dependencies are considered by this goal. -->
                                     <!-- If a test covers additional lines of another submodule, then these lines are added to the aggregate report as well. -->
                                     <goal>report-aggregate</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>source-code-check</id>
+            <!-- Generally, the source code is only checked in a daily workflow,
+                 as otherwise changes in the allowed Java grammar can be hard to migrate.
+                 Changing the Java grammar even for small things may require a lot of time or changes.
+                 In order to not discourage improving the grammar, it is done as an optional build step.
+                 Furthermore, this speeds up the build process for local software development.
+             -->
+            <activation>
+                <property>
+                    <name>source_code_check</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>net.splitcells</groupId>
+                        <artifactId>check-maven-plugin</artifactId>
+                        <version>${revision}</version>
+                        <executions>
+                            <execution>
+                                <id>check</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>source-code-check</goal>
                                 </goals>
                             </execution>
                         </executions>
