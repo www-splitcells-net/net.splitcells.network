@@ -82,6 +82,8 @@ import static net.splitcells.dem.utils.StringUtils.throwableToString;
  * without knowing what kind of error handling exists.
  * Therefore, injecting explicit error handling is considered hard.
  * See handling of errors for one specific user.</p>
+ * <h1>Implementation Notes</h1>
+ * <p>Injection of error handlers etc. is not implemented, as there is currently no need for that.</p>
  */
 public class NeedsCheck {
     private NeedsCheck() {
