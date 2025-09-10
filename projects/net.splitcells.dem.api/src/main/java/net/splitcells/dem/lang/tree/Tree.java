@@ -18,6 +18,7 @@ package net.splitcells.dem.lang.tree;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.namespace.NameSpace;
 import net.splitcells.dem.lang.namespace.NameSpaces;
@@ -36,6 +37,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.JsonConfig.jsonConfig;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
@@ -223,6 +225,9 @@ public interface Tree extends TreeView, Convertible {
     }
 
     default Tree namedChild(String name) {
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            namedChildren(name).requireSizeOf(1);
+        }
         return namedChildren(name).get(0);
     }
 
