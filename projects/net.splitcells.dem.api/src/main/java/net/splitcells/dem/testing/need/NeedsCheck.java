@@ -32,7 +32,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.throwableToString;
 
 /**
- * <h1>Needs Check API</h1>
+ * <h2>Needs Check API</h2>
  * <p>This API defines a single point of implicit error handling.</p>
  * <p>Where possible, error checking should be done implicitly.
  * For example, when you insert an element into a {@link Set},
@@ -62,7 +62,7 @@ import static net.splitcells.dem.utils.StringUtils.throwableToString;
  * So, if there is an authentication error, no error info of any user is allowed to be returned or thrown.
  * In other words, only security sensitive code,
  * has to closely monitor, what is allowed to be returned or thrown as a message.</p>
- * <h1>Concept</h1>
+ * <h2>Concept</h2>
  * <p>Define a single point of implicit error handling.</p>
  * <p>It was considered to create a unified handler for any kind of exception, security, memory limit etc..
  * This way one could just define a single point of start and error handling,
@@ -82,7 +82,7 @@ import static net.splitcells.dem.utils.StringUtils.throwableToString;
  * without knowing what kind of error handling exists.
  * Therefore, injecting explicit error handling is considered hard.
  * See handling of errors for one specific user.</p>
- * <h1>Implementation Notes</h1>
+ * <h2>Implementation Notes</h2>
  * <p>Injection of error handlers etc. is not implemented, as there is currently no need for that.</p>
  */
 public class NeedsCheck {
