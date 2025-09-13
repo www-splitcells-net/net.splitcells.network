@@ -112,7 +112,15 @@
                 </configuration>
             </plugin>
             <plugin>
-                <!-- CreateS Javadoc and ensures, that JavaDoc is always correct.
+                <!-- Prevent ClassNotFoundException inside "org.apache.maven.plugins:maven-site-plugin" during "mvn site". -->
+                <!-- This needs to be placed into each POM inheriting from this POM for "mvn site" to work without getting ClassNotFoundException. -->
+                <!-- See: https://stackoverflow.com/questions/51091539/maven-site-plugins-3-3-java-lang-classnotfoundexception-org-apache-maven-doxia/51108927#51108927 -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.21.0</version>
+            </plugin>
+            <plugin>
+                <!-- Creates Javadoc and ensures, that JavaDoc is always correct.
                 This is specially important for links to other classes, methods, etc. inside JavaDocs. -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -1124,25 +1132,13 @@
         </profile>
         <profile>
             <id>report</id>
-            <!-- Generate all reports via "mvn site".
+            <!-- Generate all additional reports to JavaDoc via "mvn site".
             This is disabled by default, as these require extraordinary CPU resources.-->
             <activation>
                 <property>
                     <name>report_enabled</name>
                 </property>
             </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <!-- Prevent ClassNotFoundException inside "org.apache.maven.plugins:maven-site-plugin" during "mvn site". -->
-                        <!-- This needs to be placed into each POM inheriting from this POM for "mvn site" to work without getting ClassNotFoundException. -->
-                        <!-- See: https://stackoverflow.com/questions/51091539/maven-site-plugins-3-3-java-lang-classnotfoundexception-org-apache-maven-doxia/51108927#51108927 -->
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-site-plugin</artifactId>
-                        <version>3.21.0</version>
-                    </plugin>
-                </plugins>
-            </build>
             <reporting>
                 <plugins>
                     <plugin>
