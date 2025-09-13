@@ -54,6 +54,16 @@ This reduces the portability of CommonMark converter implementations
 In other words, it is easier to convert a generic tree structure file format to CommonMark,
 than the other way around.
 
+NOTE: Currently, it seems, that a file format like CommonMark has many advantages over XML,
+in cases, where simple flowing text is used.
+When a tree structure without a schema is used, CommonMark is sometimes better than XML,
+because it is more compact und easier to write such structures in CommonMark by avoiding the concept of element or node names.
+See the task trees of a projects.
+In other words, CommonMark might be a good file format for simple documents,
+especially when simple documents are preferred over complex ones in general.
+For this a formal grammar for CommonMark or for a Markdown like format would have to be created,
+in order to ensure the portability of such documents.
+
 Limit the usage of CommonMark features as much as possible for complex documents.
 For documents only containing images, flowing text or nested lists CommonMark is suitable format,
 because of its simplicity and portability.
