@@ -33,7 +33,9 @@ import static net.splitcells.dem.utils.StringUtils.throwableToString;
 
 /**
  * <h2>Needs Check API</h2>
- * <p>This API defines a single point of implicit error handling.</p>
+ * <p>This API defines a single point of implicit error handling.
+ * Implicit means, that code causing the error, does not have to propagate the error by itself.
+ * It will be done by the environment.</p>
  * <p>Where possible, error checking should be done implicitly.
  * For example, when you insert an element into a {@link Set},
  * use {@link Set#add(Object)} instead of combining {@link Set#has(Object)} and {@link Set#ensureContains(Object)}.
