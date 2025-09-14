@@ -120,6 +120,13 @@
                 <version>3.21.0</version>
             </plugin>
             <plugin>
+                <!-- Prevent ClassNotFoundException inside "org.apache.maven.plugins:maven-site-plugin" during "mvn site". -->
+                <!-- See: https://stackoverflow.com/questions/51091539/maven-site-plugins-3-3-java-lang-classnotfoundexception-org-apache-maven-doxia/51108927#51108927 -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>3.0.0</version>
+            </plugin>
+            <plugin>
                 <!-- Creates Javadoc and ensures, that JavaDoc is always correct.
                 This is specially important for links to other classes, methods, etc. inside JavaDocs. -->
                 <groupId>org.apache.maven.plugins</groupId>
@@ -1145,13 +1152,6 @@
                         <groupId>com.github.spotbugs</groupId>
                         <artifactId>spotbugs-maven-plugin</artifactId>
                         <version>4.9.3.2</version>
-                    </plugin>
-                    <plugin>
-                        <!-- Prevent ClassNotFoundException inside "org.apache.maven.plugins:maven-site-plugin" during "mvn site". -->
-                        <!-- See: https://stackoverflow.com/questions/51091539/maven-site-plugins-3-3-java-lang-classnotfoundexception-org-apache-maven-doxia/51108927#51108927 -->
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-project-info-reports-plugin</artifactId>
-                        <version>3.0.0</version>
                     </plugin>
                     <!-- javancss-maven-plugin does not work. -->
                     <!-- net.sf:stat-scm does not work and therefore is not used. -->
