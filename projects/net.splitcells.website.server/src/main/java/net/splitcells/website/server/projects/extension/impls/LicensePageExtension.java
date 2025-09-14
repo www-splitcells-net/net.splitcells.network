@@ -51,6 +51,9 @@ public class LicensePageExtension implements ProjectsRendererExtension {
         if (PATH.equals(request.trail())) {
             final var licensePage = tree("article", SEW)
                     .withProperty("meta", SEW, tree("title", SEW).withText("License Page"));
+            final var description = tree("chapter", SEW).withParent(licensePage);
+            description.withProperty("title", SEW, "Licensing Documents");
+            description.withProperty("paragraph", SEW, "The user content stored by this software into a database, data storage or similar, is not considered by this licensing page. The licensing page only considers data, that is part of the program itself.");
             final var licenseChapter = tree("chapter", SEW).withParent(licensePage);
             licenseChapter.withProperty("title", SEW, "Licensing Documents");
             final var licenseList = tree("list", SEW).withParent(licenseChapter);
