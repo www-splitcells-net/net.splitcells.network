@@ -16,7 +16,9 @@
 package net.splitcells.dem.lang;
 
 import static java.util.stream.IntStream.range;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 public class CommonMarkUtils {
     private CommonMarkUtils() {
@@ -24,8 +26,20 @@ public class CommonMarkUtils {
     }
 
     public static String joinDocuments(String a, String b) {
-        final int newLinesAtEnd = newLinesAtEnd(a) + newLinesAtStart(b);
-        final var filler = range(0, newLinesAtEnd)
+        final int newLinesPresent = newLinesAtEnd(a) + newLinesAtStart(b);
+        final int missingNewLines;
+        if (newLinesPresent == 0) {
+            missingNewLines = 2;
+        } else if (newLinesPresent == 1) {
+            missingNewLines = 1;
+        } else if (newLinesPresent > 1) {
+            missingNewLines = 0;
+        } else {
+            throw execException(tree("")
+                    .withProperty("a", a)
+                    .withProperty("b", b));
+        }
+        final var filler = range(0, missingNewLines)
                 .mapToObj(i -> "\n")
                 .reduce((ia, ib) -> ia + ib)
                 .orElse("");
