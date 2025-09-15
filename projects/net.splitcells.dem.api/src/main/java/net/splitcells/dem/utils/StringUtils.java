@@ -38,6 +38,10 @@ public class StringUtils {
         return new StringBuilder();
     }
 
+    public static StringBuilder stringBuilder(String initialContent) {
+        return new StringBuilder(initialContent);
+    }
+
     public static String removePrefix(String prefix, String target) {
         if (target.startsWith(prefix)) {
             return target.substring(prefix.length());

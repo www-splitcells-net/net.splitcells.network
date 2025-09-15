@@ -54,7 +54,35 @@ public class CommonMarkUtils {
         return a + filler + b;
     }
 
-    protected static int newLinesAtEnd(String arg) {
+    /**
+     *
+     * @param a Into this object the content of b will be written, in order to create the joined document.
+     * @param b This is CommonMark to be added to a.
+     * @return This is the argument a.
+     */
+    public static StringBuilder joinDocuments(StringBuilder a, StringBuilder b) {
+        final int newLinesPresent = newLinesAtEnd(a) + newLinesAtStart(b);
+        final int missingNewLines;
+        if (newLinesPresent == 0) {
+            missingNewLines = 2;
+        } else if (newLinesPresent == 1) {
+            missingNewLines = 1;
+        } else if (newLinesPresent > 1) {
+            missingNewLines = 0;
+        } else {
+            throw execException(tree("")
+                    .withProperty("a", a.toString())
+                    .withProperty("b", b.toString()));
+        }
+        final var filler = range(0, missingNewLines)
+                .mapToObj(i -> "\n")
+                .reduce((ia, ib) -> ia + ib)
+                .orElse("");
+        a.append(filler);
+        a.append(b);
+        return a;
+    }
+
     protected static int newLinesAtEnd(CharSequence arg) {
         if (arg.length() == 0) {
             return 0;

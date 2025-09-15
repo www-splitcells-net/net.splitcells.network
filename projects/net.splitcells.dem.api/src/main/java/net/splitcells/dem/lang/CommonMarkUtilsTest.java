@@ -23,6 +23,7 @@ import net.splitcells.dem.utils.StringUtils;
 import static net.splitcells.dem.data.atom.Integers.requireEqualInts;
 import static net.splitcells.dem.lang.CommonMarkUtils.*;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
+import static net.splitcells.dem.utils.StringUtils.stringBuilder;
 
 public class CommonMarkUtilsTest {
     @UnitTest
@@ -49,11 +50,21 @@ public class CommonMarkUtilsTest {
 
     @UnitTest
     public void tesJoinDocuments() {
-        requireEquals(joinDocuments("1","2"), "1\n\n2");
-        requireEquals(joinDocuments("1\n","2"), "1\n\n2");
-        requireEquals(joinDocuments("1","\n2"), "1\n\n2");
-        requireEquals(joinDocuments("1\n\n","\n2"), "1\n\n\n2");
-        requireEquals(joinDocuments("1\n","\n\n2"), "1\n\n\n2");
-        requireEquals(joinDocuments("1\n","\n2"), "1\n\n2");
+        requireEquals(joinDocuments("1", "2"), "1\n\n2");
+        requireEquals(joinDocuments("1\n", "2"), "1\n\n2");
+        requireEquals(joinDocuments("1", "\n2"), "1\n\n2");
+        requireEquals(joinDocuments("1\n\n", "\n2"), "1\n\n\n2");
+        requireEquals(joinDocuments("1\n", "\n\n2"), "1\n\n\n2");
+        requireEquals(joinDocuments("1\n", "\n2"), "1\n\n2");
+    }
+
+    @UnitTest
+    public void tesJoinDocumentsForStringBuilder() {
+        requireEquals(joinDocuments(stringBuilder("1"), stringBuilder("2")).toString(), "1\n\n2");
+        requireEquals(joinDocuments(stringBuilder("1\n"), stringBuilder("2")).toString(), "1\n\n2");
+        requireEquals(joinDocuments(stringBuilder("1"), stringBuilder("\n2")).toString(), "1\n\n2");
+        requireEquals(joinDocuments(stringBuilder("1\n\n"), stringBuilder("\n2")).toString(), "1\n\n\n2");
+        requireEquals(joinDocuments(stringBuilder("1\n"), stringBuilder("\n\n2")).toString(), "1\n\n\n2");
+        requireEquals(joinDocuments(stringBuilder("1\n"), stringBuilder("\n2")).toString(), "1\n\n2");
     }
 }
