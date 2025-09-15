@@ -60,7 +60,7 @@ public class CommonMarkUtils {
      * @param b This is CommonMark to be added to a.
      * @return This is the argument a.
      */
-    public static StringBuilder joinDocuments(StringBuilder a, StringBuilder b) {
+    public static StringBuilder joinDocuments(StringBuilder a, CharSequence b) {
         final int newLinesPresent = newLinesAtEnd(a) + newLinesAtStart(b);
         final int missingNewLines;
         if (newLinesPresent == 0) {

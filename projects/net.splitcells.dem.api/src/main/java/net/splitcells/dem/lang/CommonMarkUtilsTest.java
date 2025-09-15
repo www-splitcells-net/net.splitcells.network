@@ -60,11 +60,11 @@ public class CommonMarkUtilsTest {
 
     @UnitTest
     public void tesJoinDocumentsForStringBuilder() {
-        requireEquals(joinDocuments(stringBuilder("1"), stringBuilder("2")).toString(), "1\n\n2");
-        requireEquals(joinDocuments(stringBuilder("1\n"), stringBuilder("2")).toString(), "1\n\n2");
-        requireEquals(joinDocuments(stringBuilder("1"), stringBuilder("\n2")).toString(), "1\n\n2");
-        requireEquals(joinDocuments(stringBuilder("1\n\n"), stringBuilder("\n2")).toString(), "1\n\n\n2");
-        requireEquals(joinDocuments(stringBuilder("1\n"), stringBuilder("\n\n2")).toString(), "1\n\n\n2");
-        requireEquals(joinDocuments(stringBuilder("1\n"), stringBuilder("\n2")).toString(), "1\n\n2");
+        requireEquals(joinDocuments(stringBuilder("1"), "2").toString(), "1\n\n2");
+        requireEquals(joinDocuments(stringBuilder("1\n"), "2").toString(), "1\n\n2");
+        requireEquals(joinDocuments(stringBuilder("1"), "\n2").toString(), "1\n\n2");
+        requireEquals(joinDocuments(stringBuilder("1\n\n"), "\n2").toString(), "1\n\n\n2");
+        requireEquals(joinDocuments(stringBuilder("1\n"), "\n\n2").toString(), "1\n\n\n2");
+        requireEquals(joinDocuments(stringBuilder("1\n"), "\n2").toString(), "1\n\n2");
     }
 }
