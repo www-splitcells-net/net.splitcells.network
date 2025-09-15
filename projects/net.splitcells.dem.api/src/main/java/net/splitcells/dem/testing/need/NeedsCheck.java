@@ -19,6 +19,7 @@ import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.testing.Result;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.dem.utils.StringUtils;
 
 import java.util.Optional;
@@ -116,6 +117,10 @@ public class NeedsCheck {
             return Result.<T, String>result().withValue(supplier.get());
         } catch (NeedException e) {
             return Result.<T, String>result().withErrorMessage(toCommonMark(e));
+        } catch (ExecutionException e) {
+            return Result.<T, String>result().withErrorMessage(toCommonMark(e));
+        } catch (Throwable t) {
+            return Result.<T, String>result().withErrorMessage(toCommonMark(t));
         }
     }
 
@@ -128,6 +133,50 @@ public class NeedsCheck {
                 + "\n");
         errorMessage.append("# Stack Trace\n");
         errorMessage.append(tree(throwableToString(arg)).toCommonMarkString());
+        return errorMessage.toString();
+    }
+
+    private static String toCommonMark(ExecutionException arg) {
+        return toCommonMark(arg, false);
+    }
+
+    private static String toCommonMark(ExecutionException arg, boolean isCause) {
+        final var errorMessage = StringUtils.stringBuilder();
+        if (isCause) {
+            errorMessage.append("# Causing Error Message\n");
+        } else {
+            errorMessage.append("# Error Message\n");
+        }
+        errorMessage.append(arg.getMessage() + "\n");
+        if (isCause) {
+            errorMessage.append("# Causing Stack Trace\n");
+        } else {
+            errorMessage.append("# Stack Trace\n");
+        }
+        errorMessage.append(tree(throwableToString(arg)).toCommonMarkString());
+        if (arg.getCause() != null) {
+            errorMessage.append(toCommonMark(arg.getCause(), true));
+        }
+        return errorMessage.toString();
+    }
+
+    private static String toCommonMark(Throwable arg) {
+        return toCommonMark(arg, false);
+    }
+
+    private static String toCommonMark(Throwable arg, boolean isCause) {
+        final var errorMessage = StringUtils.stringBuilder();
+        if (isCause) {
+            errorMessage.append("# Causing Error Message\n");
+        } else {
+            errorMessage.append("# Error Message\n");
+        }
+        errorMessage.append(arg.getMessage() + "\n");
+        errorMessage.append("# Causing Stack Trace\n");
+        errorMessage.append(tree(throwableToString(arg)).toCommonMarkString());
+        if (arg.getCause() != null) {
+            errorMessage.append(toCommonMark(arg.getCause(), true));
+        }
         return errorMessage.toString();
     }
 }
