@@ -25,6 +25,7 @@ import net.splitcells.dem.utils.StringUtils;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import static net.splitcells.dem.lang.CommonMarkUtils.joinDocuments;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.need.NeedException.needErrorException;
 import static net.splitcells.dem.testing.need.NeedException.needException;
@@ -127,12 +128,13 @@ public class NeedsCheck {
     private static String toCommonMark(NeedException arg) {
         final var errorMessage = StringUtils.stringBuilder();
         errorMessage.append("# Error Summary\n");
-        errorMessage.append(arg.getMessages().stream()
-                .map(l -> l.content().toCommonMarkString())
-                .reduce("", (a, b) -> a + "\n" + b)
-                + "\n");
-        errorMessage.append("# Stack Trace\n");
-        errorMessage.append(tree(throwableToString(arg)).toCommonMarkString());
+        joinDocuments(errorMessage
+                , arg.getMessages().stream()
+                        .map(l -> l.content().toCommonMarkString())
+                        .reduce("", (a, b) -> joinDocuments(a, b))
+                        + "\n");
+        joinDocuments(errorMessage, "# Stack Trace\n");
+        joinDocuments(errorMessage, tree(throwableToString(arg)).toCommonMarkString());
         return errorMessage.toString();
     }
 
@@ -147,15 +149,15 @@ public class NeedsCheck {
         } else {
             errorMessage.append("# Error Message\n");
         }
-        errorMessage.append(arg.getMessage() + "\n");
+        joinDocuments(errorMessage, arg.getMessage() + "\n");
         if (isCause) {
-            errorMessage.append("# Causing Stack Trace\n");
+            joinDocuments(errorMessage, "# Causing Stack Trace\n");
         } else {
-            errorMessage.append("# Stack Trace\n");
+            joinDocuments(errorMessage, "# Stack Trace\n");
         }
-        errorMessage.append(tree(throwableToString(arg)).toCommonMarkString());
+        joinDocuments(errorMessage, tree(throwableToString(arg)).toCommonMarkString());
         if (arg.getCause() != null) {
-            errorMessage.append(toCommonMark(arg.getCause(), true));
+            joinDocuments(errorMessage, toCommonMark(arg.getCause(), true));
         }
         return errorMessage.toString();
     }
@@ -171,11 +173,11 @@ public class NeedsCheck {
         } else {
             errorMessage.append("# Error Message\n");
         }
-        errorMessage.append(arg.getMessage() + "\n");
-        errorMessage.append("# Causing Stack Trace\n");
-        errorMessage.append(tree(throwableToString(arg)).toCommonMarkString());
+        joinDocuments(errorMessage, arg.getMessage() + "\n");
+        joinDocuments(errorMessage, "# Causing Stack Trace\n");
+        joinDocuments(errorMessage, tree(throwableToString(arg)).toCommonMarkString());
         if (arg.getCause() != null) {
-            errorMessage.append(toCommonMark(arg.getCause(), true));
+            joinDocuments(errorMessage, toCommonMark(arg.getCause(), true));
         }
         return errorMessage.toString();
     }
