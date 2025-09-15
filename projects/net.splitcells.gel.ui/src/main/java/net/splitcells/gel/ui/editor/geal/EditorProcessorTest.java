@@ -15,13 +15,20 @@
  */
 package net.splitcells.gel.ui.editor.geal;
 
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.testing.annotations.DisabledTest;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
+import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.ui.GelUiCell;
+import net.splitcells.website.server.processor.Request;
 
 import static net.splitcells.dem.Dem.process;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.testing.Assertions.waitUntilRequirementIsTrue;
 import static net.splitcells.dem.utils.StringUtils.requireNonEmptyString;
+import static net.splitcells.dem.utils.StringUtils.requirePrefixAbsence;
+import static net.splitcells.gel.ui.editor.geal.EditorProcessor.*;
 import static net.splitcells.website.server.client.HtmlClients.htmlClient;
 
 public class EditorProcessorTest {
@@ -40,5 +47,20 @@ public class EditorProcessorTest {
     @DisabledTest
     public void testOptimization() {
         process(EditorProcessorTest.TEST_OPTIMIZATION_GUI, GelUiCell.class).requireErrorFree();
+    }
+
+    @UnitTest
+    public void testErrorStartWithoutNewLines() {
+        final var testSubject = editorProcessor();
+        final var requestTree = tree("")
+                .withProperty(PROBLEM_DEFINITION, "unknownFunction();");
+        final var request = Request.<Tree>request(trail(), requestTree);
+        requirePrefixAbsence(testSubject
+                        .process(request)
+                        .data()
+                        .namedChild(DATA_VALUES)
+                        .namedChild(ERRORS)
+                        .valueName()
+                , "\n");
     }
 }

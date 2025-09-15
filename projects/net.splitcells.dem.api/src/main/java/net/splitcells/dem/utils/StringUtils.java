@@ -78,7 +78,7 @@ public class StringUtils {
 
     public static int countChar(String string, char character) {
         var count = 0;
-        for (int i = 0; i < string.length(); i++) {
+        for (int i = 0 ; i < string.length() ; i++) {
             if (string.charAt(i) == character) {
                 count++;
             }
@@ -118,6 +118,14 @@ public class StringUtils {
     public static void requireNonEmptyString(String arg) {
         if (arg.isEmpty()) {
             throw ExecutionException.execException("String should not be empty, but it is empty.");
+        }
+    }
+
+    public static void requirePrefixAbsence(String subject, String prefix) {
+        if (subject.startsWith(prefix)) {
+            throw execException(tree("Subject should not start with prefix, but does:")
+                    .withProperty("subject", subject)
+                    .withProperty("prefix", prefix));
         }
     }
 }
