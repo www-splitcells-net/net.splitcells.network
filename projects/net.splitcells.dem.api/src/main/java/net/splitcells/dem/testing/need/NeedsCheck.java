@@ -127,13 +127,13 @@ public class NeedsCheck {
 
     private static String toCommonMark(NeedException arg) {
         final var errorMessage = StringUtils.stringBuilder();
-        errorMessage.append("# Error Summary\n");
+        errorMessage.append("# Error Summary");
         joinDocuments(errorMessage
                 , arg.getMessages().stream()
                         .map(l -> l.content().toCommonMarkString())
                         .reduce("", (a, b) -> joinDocuments(a, b))
                         + "\n");
-        joinDocuments(errorMessage, "# Stack Trace\n");
+        joinDocuments(errorMessage, "# Stack Trace");
         joinDocuments(errorMessage, tree(throwableToString(arg)).toCommonMarkString());
         return errorMessage.toString();
     }
@@ -145,15 +145,15 @@ public class NeedsCheck {
     private static String toCommonMark(ExecutionException arg, boolean isCause) {
         final var errorMessage = StringUtils.stringBuilder();
         if (isCause) {
-            errorMessage.append("# Causing Error Message\n");
+            errorMessage.append("# Causing Error Message");
         } else {
-            errorMessage.append("# Error Message\n");
+            errorMessage.append("# Error Message");
         }
-        joinDocuments(errorMessage, arg.getMessage() + "\n");
+        joinDocuments(errorMessage, arg.getMessage());
         if (isCause) {
-            joinDocuments(errorMessage, "# Causing Stack Trace\n");
+            joinDocuments(errorMessage, "# Causing Stack Trace");
         } else {
-            joinDocuments(errorMessage, "# Stack Trace\n");
+            joinDocuments(errorMessage, "# Stack Trace");
         }
         joinDocuments(errorMessage, tree(throwableToString(arg)).toCommonMarkString());
         if (arg.getCause() != null) {
@@ -169,12 +169,12 @@ public class NeedsCheck {
     private static String toCommonMark(Throwable arg, boolean isCause) {
         final var errorMessage = StringUtils.stringBuilder();
         if (isCause) {
-            errorMessage.append("# Causing Error Message\n");
+            errorMessage.append("# Causing Error Message");
         } else {
-            errorMessage.append("# Error Message\n");
+            errorMessage.append("# Error Message");
         }
-        joinDocuments(errorMessage, arg.getMessage() + "\n");
-        joinDocuments(errorMessage, "# Causing Stack Trace\n");
+        joinDocuments(errorMessage, arg.getMessage());
+        joinDocuments(errorMessage, "# Causing Stack Trace");
         joinDocuments(errorMessage, tree(throwableToString(arg)).toCommonMarkString());
         if (arg.getCause() != null) {
             joinDocuments(errorMessage, toCommonMark(arg.getCause(), true));
