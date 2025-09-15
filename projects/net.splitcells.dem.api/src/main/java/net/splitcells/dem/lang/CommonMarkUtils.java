@@ -25,6 +25,14 @@ public class CommonMarkUtils {
         throw constructorIllegal();
     }
 
+    /**
+     * TODO IDEA Consider trimming new lines blocks bigger than 2 to new line blocks of length 2 at the end of a and start of a.
+     * This avoids too many new line symbols between the content of a and b.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
     public static String joinDocuments(String a, String b) {
         final int newLinesPresent = newLinesAtEnd(a) + newLinesAtStart(b);
         final int missingNewLines;
