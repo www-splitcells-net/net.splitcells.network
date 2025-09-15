@@ -16,11 +16,13 @@
 package net.splitcells.dem.lang;
 
 import net.splitcells.dem.data.atom.Integers;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
+import net.splitcells.dem.utils.StringUtils;
 
 import static net.splitcells.dem.data.atom.Integers.requireEqualInts;
-import static net.splitcells.dem.lang.CommonMarkUtils.newLinesAtEnd;
-import static net.splitcells.dem.lang.CommonMarkUtils.newLinesAtStart;
+import static net.splitcells.dem.lang.CommonMarkUtils.*;
+import static net.splitcells.dem.testing.Assertions.requireEquals;
 
 public class CommonMarkUtilsTest {
     @UnitTest
@@ -43,5 +45,10 @@ public class CommonMarkUtilsTest {
         requireEqualInts(newLinesAtStart("\n4\n"), 1);
         requireEqualInts(newLinesAtStart("\n\n5"), 2);
         requireEqualInts(newLinesAtStart("\n\n6\n"), 2);
+    }
+
+    @UnitTest
+    public void tesJoinDocuments() {
+        requireEquals(joinDocuments("1","2"), "1\n\n2");
     }
 }
