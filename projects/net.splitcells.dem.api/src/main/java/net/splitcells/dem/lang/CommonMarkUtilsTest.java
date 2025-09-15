@@ -50,5 +50,10 @@ public class CommonMarkUtilsTest {
     @UnitTest
     public void tesJoinDocuments() {
         requireEquals(joinDocuments("1","2"), "1\n\n2");
+        requireEquals(joinDocuments("1\n","2"), "1\n\n2");
+        requireEquals(joinDocuments("1","\n2"), "1\n\n2");
+        requireEquals(joinDocuments("1\n\n","\n2"), "1\n\n\n2");
+        requireEquals(joinDocuments("1\n","\n\n2"), "1\n\n\n2");
+        requireEquals(joinDocuments("1\n","\n2"), "1\n\n2");
     }
 }
