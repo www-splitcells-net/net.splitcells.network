@@ -52,8 +52,7 @@ public class EditorProcessorTest {
     @UnitTest
     public void testErrorStartWithoutNewLines() {
         final var testSubject = editorProcessor();
-        final var requestTree = tree("")
-                .withProperty(PROBLEM_DEFINITION, "unknownFunction();");
+        final var requestTree = tree("").withProperty(PROBLEM_DEFINITION, "unknownFunction();");
         final var request = Request.<Tree>request(trail(), requestTree);
         requirePrefixAbsence(testSubject
                         .process(request)
