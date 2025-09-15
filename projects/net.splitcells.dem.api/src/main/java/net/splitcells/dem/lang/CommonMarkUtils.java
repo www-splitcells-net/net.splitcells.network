@@ -55,6 +55,7 @@ public class CommonMarkUtils {
     }
 
     protected static int newLinesAtEnd(String arg) {
+    protected static int newLinesAtEnd(CharSequence arg) {
         if (arg.length() == 0) {
             return 0;
         }
@@ -69,7 +70,7 @@ public class CommonMarkUtils {
         return counter;
     }
 
-    protected static int newLinesAtStart(String arg) {
+    protected static int newLinesAtStart(CharSequence arg) {
         if (arg.length() == 0) {
             return 0;
         }
