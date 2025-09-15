@@ -15,10 +15,50 @@
  */
 package net.splitcells.dem.lang;
 
+import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 public class CommonMarkUtils {
     private CommonMarkUtils() {
         throw constructorIllegal();
+    }
+
+    public static String joinDocuments(String a, String b) {
+        final int newLinesAtEnd = newLinesAtEnd(a) + newLinesAtStart(b);
+        final var filler = range(0, newLinesAtEnd)
+                .mapToObj(i -> "\n")
+                .reduce((ia, ib) -> ia + ib)
+                .orElse("");
+        return a + filler + b;
+    }
+
+    private static int newLinesAtEnd(String arg) {
+        if (arg.length() == 0) {
+            return 0;
+        }
+        int counter = 0;
+        for (int i = arg.length() - 1 ; i >= 0 ; --i) {
+            if (arg.charAt(i) == '\n') {
+                ++counter;
+            } else {
+                break;
+            }
+        }
+        return counter;
+    }
+
+    private static int newLinesAtStart(String arg) {
+        if (arg.length() == 0) {
+            return 0;
+        }
+        int counter = 0;
+        for (int i = 0 ; i < arg.length() ; ++i) {
+            if (arg.charAt(i) == '\n') {
+                ++counter;
+            } else {
+                break;
+            }
+        }
+        return counter;
     }
 }
