@@ -25,6 +25,7 @@ import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
 
+import static net.splitcells.dem.lang.CommonMarkUtils.joinDocuments;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT;
 import static net.splitcells.dem.utils.ExecutionException.execException;
@@ -129,7 +130,11 @@ public class EditorProcessor implements Processor<Tree, Tree> {
         final var dataValues = tree(DATA_VALUES).withParent(formUpdate);
         final var dataTypes = tree(DATA_TYPES).withParent(formUpdate);
         dataTypes.withProperty(ERRORS, COMMON_MARK.mimeTypes());
-        dataValues.withProperty(ERRORS, endResponse.errorMessages().stream().reduce("", (a, b) -> a + "\n" + b));
+        dataValues.withProperty(ERRORS
+                , endResponse.errorMessages()
+                        .stream()
+                        .reduce((a, b) -> joinDocuments(a, b))
+                        .orElse(""));
         return response(formUpdate);
     }
 }
