@@ -32,7 +32,7 @@ public class CommonMarkUtils {
         return a + filler + b;
     }
 
-    private static int newLinesAtEnd(String arg) {
+    protected static int newLinesAtEnd(String arg) {
         if (arg.length() == 0) {
             return 0;
         }
@@ -47,7 +47,7 @@ public class CommonMarkUtils {
         return counter;
     }
 
-    private static int newLinesAtStart(String arg) {
+    protected static int newLinesAtStart(String arg) {
         if (arg.length() == 0) {
             return 0;
         }
