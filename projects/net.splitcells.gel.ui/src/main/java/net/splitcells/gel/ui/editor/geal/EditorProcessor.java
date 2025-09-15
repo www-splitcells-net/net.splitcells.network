@@ -28,6 +28,7 @@ import net.splitcells.website.server.processor.Response;
 import static net.splitcells.dem.lang.CommonMarkUtils.joinDocuments;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT;
+import static net.splitcells.dem.testing.need.NeedsCheck.runWithCheckedNeeds;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.*;
 import static net.splitcells.gel.editor.Editor.editor;
@@ -68,7 +69,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
      */
     @Override
     public Response<Tree> process(Request<Tree> request) {
-        final var endResponse = NeedsCheck.runWithCheckedNeeds(() -> {
+        final var endResponse = runWithCheckedNeeds(() -> {
             final var editor = editor("editor-data-query", EXPLICIT_NO_CONTEXT);
             final var problemDefinition = request.data().namedChild(PROBLEM_DEFINITION);
             final var inputValues = request.data().children();
