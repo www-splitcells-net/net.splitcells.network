@@ -35,7 +35,8 @@ import static net.splitcells.dem.utils.StringUtils.throwableToString;
 
 /**
  * <h2>Needs Check API</h2>
- * <p>This API defines a single point of implicit error handling.
+ * <p>This API defines a single point of implicit error handling,
+ * that provides user readable CommonMark error reports.
  * Implicit means, that code causing the error, does not have to propagate the error by itself.
  * It will be done by the environment.</p>
  * <p>Where possible, error checking should be done implicitly.
