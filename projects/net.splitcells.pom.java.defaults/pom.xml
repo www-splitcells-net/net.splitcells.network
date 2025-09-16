@@ -40,7 +40,8 @@
         <testSourceDirectory>src/main/java</testSourceDirectory>
         <extensions>
             <extension>
-                <!-- This is needed by maven-profiler-plugin. -->
+                <!-- This is needed by maven-profiler-plugin and is located here,
+                     as it cannot be moved into the fitting profile. -->
                 <groupId>fr.jcgay.maven</groupId>
                 <artifactId>maven-profiler</artifactId>
                 <version>3.2</version>
