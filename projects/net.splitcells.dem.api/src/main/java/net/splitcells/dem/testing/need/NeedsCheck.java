@@ -42,7 +42,9 @@ import static net.splitcells.dem.utils.StringUtils.throwableToString;
  * <p>Where possible, error checking should be done implicitly.
  * For example, when you insert an element into a {@link Set},
  * use {@link Set#add(Object)} instead of combining {@link Set#has(Object)} and {@link Set#ensureContains(Object)}.
- * </p>
+ * In other words, this API is not suitable as a replacement for restrictive methods,
+ * as the additional {@link Need} argument makes these harder to use,
+ * which is the diametrical to the goals of restrictive methods.</p>
  * <p>This assertion framework provides an API to assert constraints in code,
  * while minimizing the impact of the assertion code to the legibility of the main code.
  * It also abstracts away, technical details like {@link Exception} and allows to use different technologies in the future.
