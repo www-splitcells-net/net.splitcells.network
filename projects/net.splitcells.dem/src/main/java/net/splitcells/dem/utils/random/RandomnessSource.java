@@ -15,13 +15,12 @@
  */
 package net.splitcells.dem.utils.random;
 
-import net.splitcells.dem.utils.ConstructorIllegal;
-
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
+import static net.splitcells.dem.utils.random.BuilderRandomConfigurable.builderRandomConfigurable;
 
 public class RandomnessSource {
 
-    private static final BuilderRandomConfigurable factory = new BuilderRandomConfigurable();
+    private static final BuilderRandomConfigurable factory = builderRandomConfigurable();
 
     private RandomnessSource() {
         throw constructorIllegal();

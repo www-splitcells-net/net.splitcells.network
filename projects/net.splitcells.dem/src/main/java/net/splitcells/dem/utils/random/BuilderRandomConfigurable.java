@@ -26,7 +26,11 @@ public class BuilderRandomConfigurable implements RndSrcF {
 
     private RndSrcF builderRandom;
 
-    protected BuilderRandomConfigurable() {
+    public static BuilderRandomConfigurable builderRandomConfigurable() {
+        return new BuilderRandomConfigurable();
+    }
+
+    private BuilderRandomConfigurable() {
         if (environment().config().configValue(IsDeterministic.class).isEmpty()
                 || environment().config().configValue(IsDeterministic.class).orElseThrow().isTrue()) {
             deterministicBuilder(environment().config().configValue(DeterministicRootSourceSeed.class));
@@ -35,11 +39,11 @@ public class BuilderRandomConfigurable implements RndSrcF {
         }
     }
 
-    protected BuilderRandomConfigurable(Optional<Bool> deterministic) {
+    private BuilderRandomConfigurable(Optional<Bool> deterministic) {
         updateDeterminism(deterministic);
     }
 
-    protected BuilderRandomConfigurable(Long seed) {
+    private BuilderRandomConfigurable(Long seed) {
         deterministicBuilder(seed);
     }
 
