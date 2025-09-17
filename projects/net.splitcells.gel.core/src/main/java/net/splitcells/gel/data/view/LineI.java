@@ -37,7 +37,7 @@ public class LineI implements Line {
         return new LineI(context, index);
     }
 
-    protected LineI(View context, int line) {
+    private LineI(View context, int line) {
         this.context = context;
         this.index = line;
     }
