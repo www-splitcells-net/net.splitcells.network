@@ -25,6 +25,8 @@ import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.object.Convertible;
 import net.splitcells.dem.object.Merger;
 import net.splitcells.dem.resource.communication.Sender;
+import net.splitcells.dem.testing.need.Need;
+import net.splitcells.dem.testing.need.NeedsCheck;
 import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.dem.utils.StringUtils;
 
@@ -42,6 +44,7 @@ import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.JsonConfig.jsonConfig;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
+import static net.splitcells.dem.testing.need.NeedsCheck.checkNeed;
 import static net.splitcells.dem.utils.BinaryUtils.binaryOutputStream;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -222,6 +225,11 @@ public interface Tree extends TreeView, Convertible {
         return children().stream()
                 .filter(child -> name.equals(child.name()))
                 .collect(toList());
+    }
+
+    default Tree namedChild(String name, Need need) {
+        checkNeed(need, this);
+        return namedChild(name);
     }
 
     default Tree namedChild(String name) {

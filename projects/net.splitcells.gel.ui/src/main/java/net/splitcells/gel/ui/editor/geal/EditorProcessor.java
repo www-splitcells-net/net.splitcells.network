@@ -15,8 +15,12 @@
  */
 package net.splitcells.gel.ui.editor.geal;
 
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.Trail;
+import net.splitcells.dem.resource.communication.log.LogLevel;
+import net.splitcells.dem.resource.communication.log.LogMessage;
+import net.splitcells.dem.testing.need.Need;
 import net.splitcells.dem.testing.need.NeedsCheck;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.editor.EditorData;
@@ -25,9 +29,11 @@ import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.CommonMarkUtils.joinDocuments;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT;
+import static net.splitcells.dem.resource.communication.log.LogMessageI.logMessage;
 import static net.splitcells.dem.testing.need.NeedsCheck.runWithCheckedNeeds;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.*;
@@ -71,7 +77,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
     public Response<Tree> process(Request<Tree> request) {
         final var endResponse = runWithCheckedNeeds(() -> {
             final var editor = editor("editor-data-query", EXPLICIT_NO_CONTEXT);
-            final var problemDefinition = request.data().namedChild(PROBLEM_DEFINITION);
+            final var problemDefinition = request.data().namedChild(PROBLEM_DEFINITION, requireInput(PROBLEM_DEFINITION));
             final var inputValues = request.data().children();
             if (inputValues.hasElements()) {
                 inputValues.forEach(c -> {
@@ -138,5 +144,22 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                         .reduce((a, b) -> joinDocuments(a, b))
                         .orElse(""));
         return response(formUpdate);
+    }
+
+    public static Need<Tree> requireInput(String name) {
+        return arg -> {
+            List<LogMessage<Tree>> log = list();
+            final var namedChildren = arg.namedChildren(name);
+            if (namedChildren.isEmpty()) {
+                log.add(logMessage(tree("The submitted form does not have the field `" + name + "` even though one is required.")
+                                .withProperty("form", arg)
+                        , LogLevel.ERROR));
+            } else if (namedChildren.size() > 1) {
+                log.add(logMessage(tree("The submitted form have the field `" + name + "` multiple times, even though only one is allowed.")
+                                .withProperty("form", arg)
+                        , LogLevel.ERROR));
+            }
+            return log;
+        };
     }
 }
