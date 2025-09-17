@@ -109,7 +109,35 @@ public class ProjectRendererI implements ProjectRenderer {
     private Optional<FileStructureTransformer> transformer = Optional.empty();
     private Optional<ProjectsRenderer> projectsRenderer;
 
-    protected ProjectRendererI(String renderer, FileSystemView projectSrcFolder, FileSystemView xslLibs, FileSystemView resources, String resourceRootPath
+    public static ProjectRendererI projectRendererI(String renderer
+            , FileSystemView projectSrcFolder
+            , FileSystemView xslLibs
+            , FileSystemView resources
+            , String resourceRootPath
+            , boolean typedFolder
+            , boolean flatRepository
+            , SourceValidator sourceValidator
+            , FileSystemView projectFolder
+            , Config config
+            , Optional<ProjectsRenderer> projectsRendererArg) {
+        return new ProjectRendererI(renderer
+                , projectSrcFolder
+                , xslLibs
+                , resources
+                , resourceRootPath
+                , typedFolder
+                , flatRepository
+                , sourceValidator
+                , projectFolder
+                , config
+                , projectsRendererArg);
+    }
+
+    private ProjectRendererI(String renderer
+            , FileSystemView projectSrcFolder
+            , FileSystemView xslLibs
+            , FileSystemView resources
+            , String resourceRootPath
             , boolean typedFolder
             , boolean flatRepository
             , SourceValidator sourceValidator

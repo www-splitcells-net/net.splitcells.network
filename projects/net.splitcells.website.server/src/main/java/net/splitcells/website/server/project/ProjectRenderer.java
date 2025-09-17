@@ -28,6 +28,7 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.website.server.project.ProjectRendererI.projectRendererI;
 
 /**
  * Renders a folder, that is interpreted as a folder containing a project.
@@ -46,7 +47,7 @@ public interface ProjectRenderer extends Renderer {
             , boolean flatRepository
             , SourceValidator sourceValidator
             , Config config) {
-        return new ProjectRendererI(renderer
+        return projectRendererI(renderer
                 , projectFolder.subFileSystemView("src/main")
                 , xslLibs
                 , resources
@@ -67,7 +68,7 @@ public interface ProjectRenderer extends Renderer {
             , SourceValidator sourceValidator
             , Config config
             , ProjectsRenderer projectsRenderer) {
-        return new ProjectRendererI(renderer
+        return projectRendererI(renderer
                 , projectFolder.subFileSystemView("src/main")
                 , xslLibs
                 , resources
@@ -85,7 +86,7 @@ public interface ProjectRenderer extends Renderer {
             , String resourceRootPath
             , SourceValidator sourceValidator
             , Config config) {
-        return new ProjectRendererI(renderer
+        return projectRendererI(renderer
                 , projectFolder
                 , xslLibs
                 , resources
@@ -104,7 +105,7 @@ public interface ProjectRenderer extends Renderer {
             , SourceValidator sourceValidator
             , Config config
             , ProjectsRenderer projectsRenderer) {
-        return new ProjectRendererI(renderer
+        return projectRendererI(renderer
                 , projectFolder
                 , xslLibs
                 , resources
