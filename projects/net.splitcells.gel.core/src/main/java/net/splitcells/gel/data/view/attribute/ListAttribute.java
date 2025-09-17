@@ -36,7 +36,7 @@ public class ListAttribute<T> implements Attribute<List<T>> {
         return new ListAttribute<>(type, name);
     }
 
-    protected ListAttribute(Class<T> type, String name) {
+    private ListAttribute(Class<T> type, String name) {
         this.type = type;
         this.name = name;
     }
