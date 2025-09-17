@@ -21,18 +21,29 @@ import java.time.format.DateTimeFormatter;
 
 @Deprecated
 @JavaLegacyArtifact
-public class ReportEntryTimeKey extends ReportEntryKey<Long> {
+public class ReportEntryTimeKey {
 
     public static final ReportEntryTimeKey START_TIME = new ReportEntryTimeKey();
     public static final ReportEntryTimeKey END_TIME = new ReportEntryTimeKey();
     public static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ISO_ZONED_DATE_TIME;
 
-    protected ReportEntryTimeKey() {
-        super(Long.class);
+    private ReportEntryTimeKey() {
+        clazz = Long.class;
     }
 
     public String currentValue() {
         return "" + java.lang.System.nanoTime();
+    }
+
+    private final Class<Long> clazz;
+
+
+    public Class<Long> key() {
+        return clazz;
+    }
+
+    public String keyString() {
+        return clazz.getName();
     }
 
 }
