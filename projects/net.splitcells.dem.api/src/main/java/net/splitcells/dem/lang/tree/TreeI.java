@@ -36,7 +36,7 @@ public class TreeI implements Tree {
 	private final NameSpace nameSpace;
 	private final List<Tree> children = list();
 
-	protected TreeI(String value, NameSpace nameSpace) {
+	private TreeI(String value, NameSpace nameSpace) {
 		this.value = value;
 		this.nameSpace = nameSpace;
 	}
