@@ -64,11 +64,11 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
     private Constraint constraint;
     private Assignments assignments;
 
-    protected SolutionBuilder(String name) {
+    private SolutionBuilder(String name) {
         this.name = Optional.of(name);
     }
 
-    protected SolutionBuilder() {
+    private SolutionBuilder() {
     }
 
     @Deprecated
