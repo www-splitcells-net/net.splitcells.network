@@ -65,12 +65,12 @@ public class SimplifiedAnnealingProblem implements Solution {
                 , randomness);
     }
 
-    protected SimplifiedAnnealingProblem(Assignments assignments, Constraint originalConstraint
+    private SimplifiedAnnealingProblem(Assignments assignments, Constraint originalConstraint
             , Function<Integer, Double> temperatureFunction) {
         this(assignments, originalConstraint, temperatureFunction, randomness());
     }
 
-    protected SimplifiedAnnealingProblem(Assignments assignments, Constraint originalConstraint
+    private SimplifiedAnnealingProblem(Assignments assignments, Constraint originalConstraint
             , Function<Integer, Double> temperatureFunction
             , Randomness randomness) {
         originalSolution = derivedSolution(() -> list()

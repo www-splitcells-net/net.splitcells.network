@@ -41,7 +41,7 @@ public class Compliance implements Rating {
         return new Compliance(value);
     }
 
-    protected Compliance(boolean value) {
+    private Compliance(boolean value) {
         this.value = value;
     }
 

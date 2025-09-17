@@ -42,7 +42,7 @@ public class ConstantRater implements Rater {
     private final Rating rating;
     private final List<Discoverable> contexts = list();
 
-    protected ConstantRater(Rating rating) {
+    private ConstantRater(Rating rating) {
         this.rating = rating;
     }
 

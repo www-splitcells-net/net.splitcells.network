@@ -100,11 +100,11 @@ public class ConstraintGroupBasedOfflineRepair implements OfflineOptimization {
     private final SupplyOfflineSelector supplyOfflineSelector;
     private final boolean repairCompliants;
 
-    protected ConstraintGroupBasedOfflineRepair(GroupSelector groupSelector, SupplyOfflineSelector repairer) {
+    private ConstraintGroupBasedOfflineRepair(GroupSelector groupSelector, SupplyOfflineSelector repairer) {
         this(groupSelector, repairer, true);
     }
 
-    protected ConstraintGroupBasedOfflineRepair(GroupSelector groupSelector, SupplyOfflineSelector repairer, boolean repairCompliants) {
+    private ConstraintGroupBasedOfflineRepair(GroupSelector groupSelector, SupplyOfflineSelector repairer, boolean repairCompliants) {
         this.groupSelector = groupSelector;
         this.supplyOfflineSelector = repairer;
         this.repairCompliants = repairCompliants;

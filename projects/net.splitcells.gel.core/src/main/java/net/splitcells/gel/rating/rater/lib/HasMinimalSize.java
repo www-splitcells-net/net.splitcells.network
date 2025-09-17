@@ -45,7 +45,7 @@ public class HasMinimalSize implements Rater {
     private final int minimalSize;
     private final List<Discoverable> contexts = list();
 
-    protected HasMinimalSize(int minimalSize) {
+    private HasMinimalSize(int minimalSize) {
         this.minimalSize = minimalSize;
     }
 

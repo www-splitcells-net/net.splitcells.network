@@ -55,7 +55,7 @@ public class Optimality implements Rating {
 
     private double value;
 
-    protected Optimality(double value) {
+    private Optimality(double value) {
         assertThat(value).isBetween(0.0, 1.0);
         this.value = value;
     }

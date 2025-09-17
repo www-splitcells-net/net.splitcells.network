@@ -45,11 +45,11 @@ public class Profit implements Rating {
         return new Profit(value);
     }
 
-    protected Profit() {
+    public Profit() {
         this(0.0);
     }
 
-    protected Profit(double value) {
+    public Profit(double value) {
         this.value = value;
     }
 
