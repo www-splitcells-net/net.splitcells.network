@@ -48,6 +48,11 @@
         </paragraph>
         <chapter>
             <title>Implicit runtime error checks via restrictive methods are optional.</title>
+            <paragraph>The goal of restrictive methods,
+                is to encourage developers to use the restrictive methods over the more general methods
+                by making these easier to write.
+                These restrictive methods are less general, but are also less likely to be used incorrectly.
+            </paragraph>
             <paragraph>Methods like <quote>add</quote> of the Set interface signal and
                 assume a required state of the Set object and the arguments.
                 In case of <quote>add</quote>, the method requires,
@@ -72,7 +77,7 @@
                 the code causing the problem directly has undefined behaviour.
                 The actual behaviour depends on the environment and configuration.
                 In other words no code is allowed to rely on the fact,
-                that it will be informed about such errors.
+                that it will be informed about such errors, when these are incorrectly used.
             </paragraph>
             <paragraph>For instance, calling <quote>add</quote> on a Set,
                 in order to get an error, and than to act accordingly is not an alternative to calling
