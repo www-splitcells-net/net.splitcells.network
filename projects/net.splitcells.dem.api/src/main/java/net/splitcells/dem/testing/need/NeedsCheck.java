@@ -53,9 +53,9 @@ import static net.splitcells.dem.utils.StringUtils.throwableToString;
  * <pre><code>
  *     createCardDeck()
  *      .stream(isNotEmpty())
- *      .filter(card -> card.hasNumber(), cardDescriptionIsNotEmpty())
- *      .reduce(0, (a,b) -> a.getNumber() + b.getNumber(), numberIsBiggerThanZero())
- *      .orElseThrow(sumIsNotBiggerThan(364));
+ *      .filter(card -> card.hasNumber(), needCardDescriptionIsNotEmpty())
+ *      .reduce(0, (a,b) -> a.getNumber() + b.getNumber(), needNumberIsBiggerThanZero())
+ *      .orElseThrow(needSumIsNotBiggerThan(364));
  * </code></pre>
  * <p>For a function to support the {@link Need} API,
  * one has to provide 1 or more parameters of {@link Need} instances,
@@ -69,6 +69,10 @@ import static net.splitcells.dem.utils.StringUtils.throwableToString;
  * So, if there is an authentication error, no error info of any user is allowed to be returned or thrown.
  * In other words, only security sensitive code,
  * has to closely monitor, what is allowed to be returned or thrown as a message.</p>
+ * {@link Need} builders like `needCardDescriptionIsNotEmpty` should always start with the word `need`,
+ * just like classic `assert*` methods of Java libraries.
+ * This makes it easier to mentally filter out such code,
+ * when looking at the functionality of code while ignoring its error handling.
  * <h2>Concept</h2>
  * <p>Define a single point of implicit error handling.</p>
  * <p>It was considered to create a unified handler for any kind of exception, security, memory limit etc..
