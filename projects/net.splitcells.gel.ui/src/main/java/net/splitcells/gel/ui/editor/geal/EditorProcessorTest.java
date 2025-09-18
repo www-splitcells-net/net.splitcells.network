@@ -62,4 +62,16 @@ public class EditorProcessorTest {
                         .valueName()
                 , "\n");
     }
+
+    @UnitTest
+    public void testMissingProblemDefinition() {
+        final var testSubject = editorProcessor();
+        final var requestTree = tree("");
+        testSubject.process(Request.<Tree>request(trail(), requestTree))
+                .data()
+                .namedChild(DATA_VALUES)
+                .namedChild(ERRORS)
+                .children()
+                .requireSizeOf(1);
+    }
 }
