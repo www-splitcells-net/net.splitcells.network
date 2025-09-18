@@ -21,9 +21,6 @@ import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.LogMessage;
 import net.splitcells.dem.testing.need.Need;
-import net.splitcells.dem.testing.need.NeedsCheck;
-import net.splitcells.dem.utils.StringUtils;
-import net.splitcells.gel.editor.EditorData;
 import net.splitcells.website.Format;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
@@ -77,7 +74,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
     public Response<Tree> process(Request<Tree> request) {
         final var endResponse = runWithCheckedNeeds(() -> {
             final var editor = editor("editor-data-query", EXPLICIT_NO_CONTEXT);
-            final var problemDefinition = request.data().namedChild(PROBLEM_DEFINITION, requireInput(PROBLEM_DEFINITION));
+            final var problemDefinition = request.data().namedChild(PROBLEM_DEFINITION, needInput(PROBLEM_DEFINITION));
             final var inputValues = request.data().children();
             if (inputValues.hasElements()) {
                 inputValues.forEach(c -> {
@@ -146,7 +143,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
         return response(formUpdate);
     }
 
-    public static Need<Tree> requireInput(String name) {
+    public static Need<Tree> needInput(String name) {
         return arg -> {
             List<LogMessage<Tree>> log = list();
             final var namedChildren = arg.namedChildren(name);
