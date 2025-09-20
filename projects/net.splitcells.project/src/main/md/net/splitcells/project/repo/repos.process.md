@@ -24,13 +24,13 @@ Meta repo root
 ```
 The command repo process (`repos.process` is the name in the shell)
 provides a highly portable and simple way to process a set of repos as one repo.
-Its config files are simple,
-so that either complex programs can process such repos
-or people with nothing more than a shell and git can work on such repos.
 
+Its config files are simple,
+so that either complex programs can process these repos
+or people with nothing more than a shell and git can work on such repos.
 This is especially useful, when during an initial repo clone some software is not setup yet.
-The simplicity is also helpful for describing the setup procedure of complex development projects
-consisting of multiple git repos and without requiring additional tools to be installed during the setup.
+The simplicity is also helpful for the setup procedure of complex development projects
+consisting of multiple git repos and without requiring additional tools to be installed during the initial setup.
 
 Initially this tool was created to synchronize repos across multiple servers and computers.
 This is mainly done, by providing the `repos.process` program,
@@ -45,9 +45,21 @@ The repos are assumed to be organized in a tree structure.
 Therefore, the root repo (here called meta repo) contains the sub repos,
 but usually does not provide version control of the sub repos
 (for Git repos the subs are generally listed in `.gitignore`).
+If the meta repo requires version control for the sub repos,
+then Git's submodule system is probably more suitable for this at the moment.
 So the main difference between repo process and git's submodule is the fact,
-that repo process is usually not used to have an exact inventory of repos and their current commit.
-Instead repo process often manages the individual repos much more loosely.
+that repo process is usually not used to have an exact inventory of the repositories' commits,
+but makes it easier for repo process to synchronize repos and branches of independent projects across a cluster of computers compared to git's submodule.
+
+***NOTE***: after thinking and researching about git's submodule for a while,
+all functionality of repo process could have been done via git's submodules kind of easily as well.
+It would require wrapper scripts for git's submodules,
+as using git's submodules directly seems otherwise to be unnecessarily hard to use,
+but repo process required creating scripts as well.
+So, writing my own sub repo aka. submodule management from the ground up,
+may have been a big error caused by a misunderstanding of git submodules.
+The only advantage of repo process is the simplicity of the git commands, that are executed.
+Maybe rewriting the history of meta repos is harder compared to git submodules.
 
 By default, every meta repo has a list of all sub repos stored in a file under version control of the meta repo.
 
@@ -189,6 +201,16 @@ Unfortunately, these ways may have been overlooked.
 
 Here are some alternatives.
 Some of them are viable and some not:
+
+## Git Submodules
+
+As noted in the introduction now it seems I could have just used git submodules as well,
+provided I would use custom wrapper scripts for that,
+as the CLI is not that easy to use.
+These wrapper scripts could have been an alternative version of the currently used repo process scripts.
+Such wrappers could even have provided the same CLI interface.
+When repo process was created a misunderstanding lead to the belief,
+that switching and synchronizing multiple independent remotes for suche repos was not easily possible. 
 
 ## GRM — Git Repository Manager
 [This software](https://github.com/hakoerber/git-repo-manager)
