@@ -7,6 +7,18 @@
 * [There is an help page describing all flags](repos.process.help.md).
 * [Use cases](repos.process.examples.md).
 
+# NOTICE
+
+After thinking and researching about git's submodule for a while,
+all functionality of repo process could have been done via git's submodules kind of easily as well.
+It would require wrapper scripts for git's submodules,
+as using git's submodules directly seems otherwise to be unnecessarily hard to use,
+but repo process required creating scripts as well.
+So, writing my own sub repo aka. submodule management from the ground up,
+may have been a big error caused by a misunderstanding of git submodules.
+The only advantage of repo process is the simplicity of the git commands, that are executed.
+Maybe rewriting the history of meta repos is harder compared to git submodules.
+
 # Introduction
 > What is this?
  
@@ -50,16 +62,6 @@ then Git's submodule system is probably more suitable for this at the moment.
 So the main difference between repo process and git's submodule is the fact,
 that repo process is usually not used to have an exact inventory of the repositories' commits,
 but makes it easier for repo process to synchronize repos and branches of independent projects across a cluster of computers compared to git's submodule.
-
-***NOTE***: after thinking and researching about git's submodule for a while,
-all functionality of repo process could have been done via git's submodules kind of easily as well.
-It would require wrapper scripts for git's submodules,
-as using git's submodules directly seems otherwise to be unnecessarily hard to use,
-but repo process required creating scripts as well.
-So, writing my own sub repo aka. submodule management from the ground up,
-may have been a big error caused by a misunderstanding of git submodules.
-The only advantage of repo process is the simplicity of the git commands, that are executed.
-Maybe rewriting the history of meta repos is harder compared to git submodules.
 
 By default, every meta repo has a list of all sub repos stored in a file under version control of the meta repo.
 
