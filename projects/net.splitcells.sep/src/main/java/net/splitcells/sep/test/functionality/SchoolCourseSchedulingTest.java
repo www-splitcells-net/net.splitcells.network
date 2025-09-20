@@ -30,7 +30,6 @@ import net.splitcells.dem.testing.annotations.DisabledTest;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.GelDev;
-import net.splitcells.gel.GelEnv;
 import net.splitcells.gel.data.table.TableSynchronization;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -173,7 +172,7 @@ public class SchoolCourseSchedulingTest {
             network.withOptimization(STUDENT_ALLOCATION_FOR_COURSES, studentAllocationOptimization()
                     , (currentSolution, step) -> step <= 3 && !currentSolution.isOptimal());
             network.processAll(Solution::createStandardAnalysis);
-        }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
+        }, GelDev.standardDeveloperConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
                     .withConfigValue(IsEchoToFile.class, true)
@@ -238,7 +237,7 @@ public class SchoolCourseSchedulingTest {
                 network.withOptimization(STUDENT_ALLOCATION_FOR_COURSES, onlineLinearInitialization());
                 network.withOptimization(STUDENT_ALLOCATION_FOR_COURSES, studentAllocationOptimization()
                         , (currentSolution, step) -> step <= 3 && !currentSolution.isOptimal());
-            }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
+            }, GelDev.standardDeveloperConfigurator().andThen(env -> {
                 env.config()
                         .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
                         .withConfigValue(IsEchoToFile.class, true)

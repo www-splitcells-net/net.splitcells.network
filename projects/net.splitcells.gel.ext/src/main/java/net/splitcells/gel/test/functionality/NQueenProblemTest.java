@@ -26,7 +26,6 @@ import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.dem.testing.annotations.DisabledTest;
 import net.splitcells.gel.Gel;
 import net.splitcells.gel.GelDev;
-import net.splitcells.gel.GelEnv;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.problem.derived.SimplifiedAnnealingProblem;
@@ -102,7 +101,7 @@ public class NQueenProblemTest extends TestSuiteI {
             testSubject.optimizeWithMethod(ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(0)
                     , (currentSolution, step) -> !currentSolution.isOptimal());
             require(testSubject.isOptimal());
-        }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
+        }, GelDev.standardDeveloperConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()));
         }));
@@ -143,7 +142,7 @@ public class NQueenProblemTest extends TestSuiteI {
                     , testSubject.toFodsTableAnalysis());
             logs().append(testSubject.constraint().rating(), Optional.empty(), LogLevel.UNKNOWN_ERROR);
             testSubject.constraint().rating().requireEqualsTo(cost(0));
-        }, GelEnv.standardDeveloperConfigurator().andThen(env -> {
+        }, GelDev.standardDeveloperConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
                     .withConfigValue(IsEchoToFile.class, false)

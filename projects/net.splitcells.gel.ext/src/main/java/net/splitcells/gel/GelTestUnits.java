@@ -20,7 +20,7 @@ import net.splitcells.dem.resource.communication.log.MessageFilter;
 
 import static net.splitcells.dem.testing.Test.testUnits;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
-import static net.splitcells.gel.GelEnv.standardDeveloperConfigurator;
+import static net.splitcells.gel.GelDev.standardDeveloperConfigurator;
 
 public final class GelTestUnits {
     private GelTestUnits() {
@@ -28,7 +28,7 @@ public final class GelTestUnits {
     }
 
     public static void main(String... arg) {
-        GelEnv.process(() -> {
+        GelDev.process(() -> {
                     if (!testUnits()) {
                         System.out.println("Could not execute tests successfully.");
                         Dem.systemExit(1);

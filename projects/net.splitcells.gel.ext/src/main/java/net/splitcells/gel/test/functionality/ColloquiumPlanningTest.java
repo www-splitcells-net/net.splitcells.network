@@ -28,6 +28,7 @@ import net.splitcells.dem.testing.annotations.DisabledTest;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.dem.utils.random.DeterministicRootSourceSeed;
 import net.splitcells.dem.utils.random.Randomness;
+import net.splitcells.gel.GelDev;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
@@ -48,7 +49,6 @@ import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.MathUtils.intervalClosed;
 import static net.splitcells.dem.utils.MathUtils.modulus;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
-import static net.splitcells.gel.GelEnv.*;
 import static net.splitcells.gel.constraint.type.ForAlls.*;
 import static net.splitcells.gel.constraint.type.Then.then;
 import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
@@ -105,7 +105,7 @@ public class ColloquiumPlanningTest extends TestSuiteI {
             testSubject.optimizeWithFunction(ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(1), (currentSolution, step) ->
                     step <= 100 && !currentSolution.isOptimal());
             require(testSubject.isOptimal());
-        }, standardDeveloperConfigurator().andThen(env -> {
+        }, GelDev.standardDeveloperConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(MessageFilter.class, a -> false)
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
@@ -135,7 +135,7 @@ public class ColloquiumPlanningTest extends TestSuiteI {
                     .asSolution();
             testSubject.optimize(functionalHillClimber(400 * 177));
             bool(testSubject.isOptimal()).requireFalse();
-        }, standardDeveloperConfigurator().andThen(env -> {
+        }, GelDev.standardDeveloperConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(MessageFilter.class, a -> false)
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))

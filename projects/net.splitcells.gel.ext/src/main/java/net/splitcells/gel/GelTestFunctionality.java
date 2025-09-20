@@ -23,11 +23,11 @@ import net.splitcells.dem.resource.communication.log.MessageFilter;
 import java.util.Optional;
 
 import static net.splitcells.dem.testing.Test.testFunctionality;
-import static net.splitcells.gel.GelEnv.standardDeveloperConfigurator;
+import static net.splitcells.gel.GelDev.standardDeveloperConfigurator;
 
 public class GelTestFunctionality {
     public static void main(String... args) {
-        if (GelEnv.process(() -> {
+        if (GelDev.process(() -> {
                     if (!testFunctionality()) {
                         throw new RuntimeException();
                     }

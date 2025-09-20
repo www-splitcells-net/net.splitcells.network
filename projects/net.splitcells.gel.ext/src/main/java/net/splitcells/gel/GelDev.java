@@ -28,9 +28,13 @@ import net.splitcells.dem.resource.communication.log.IsEchoToFile;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.dem.utils.random.DeterministicRootSourceSeed;
+import net.splitcells.gel.data.table.TableMetaAspect;
 import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.lookup.LookupTables;
+import net.splitcells.gel.solution.SolutionAspect;
 import net.splitcells.gel.solution.Solutions;
+import net.splitcells.gel.solution.history.Histories;
+import net.splitcells.gel.solution.history.HistoryRefFactory;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.ServerService;
 import net.splitcells.website.server.project.ProjectRenderer;
@@ -46,7 +50,6 @@ import java.util.function.Consumer;
 import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
-import static net.splitcells.gel.GelEnv.process;
 import static net.splitcells.website.Projects.projectsRenderer;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
@@ -60,7 +63,7 @@ public final class GelDev {
     }
 
     public static void process(Runnable program) {
-        GelEnv.process(program, standardDeveloperConfigurator());
+        process(program, standardDeveloperConfigurator());
     }
 
     public static ProcessResult process(Runnable program, Consumer<Environment> configurator) {
@@ -76,14 +79,24 @@ public final class GelDev {
         };
     }
 
+    /**
+     * Uses a folder of the user in order to store files, in order to prevent unnecessary file changes
+     * in the project repo, if the user executes Gel with an IDE and default settings.
+     *
+     * @return
+     */
     public static Consumer<Environment> standardDeveloperConfigurator() {
-        return GelEnv.standardDeveloperConfigurator().andThen(env -> {
+        return standardDeveloperConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(MessageFilter.class
                             , a -> a.path().equals(list("debugging")) || a.priority().greaterThanOrEqual(LogLevel.INFO))
                     .withConfigValue(IsEchoToFile.class, true)
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
                     .withConfigValue(DeterministicRootSourceSeed.class, 1000L);
+            env.config()
+                    .withConfigValue(Histories.class, new HistoryRefFactory());
+            env.config().configValue(Tables.class).withAspect(TableMetaAspect::databaseIRef);
+            env.config().configValue(Solutions.class).withAspect(SolutionAspect::solutionAspect);
             configureForWebserver(env);
         });
     }

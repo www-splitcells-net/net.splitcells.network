@@ -25,7 +25,7 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Test.testIntegration;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
-import static net.splitcells.gel.GelEnv.standardDeveloperConfigurator;
+import static net.splitcells.gel.GelDev.standardDeveloperConfigurator;
 
 public final class GelTestIntegration {
     private GelTestIntegration() {
@@ -34,7 +34,7 @@ public final class GelTestIntegration {
 
     public static void main(String... arg) {
         testIntegration();
-        if (GelEnv.process(() -> {
+        if (GelDev.process(() -> {
                     if (!testIntegration()) {
                         throw new RuntimeException();
                     }

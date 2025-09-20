@@ -15,19 +15,6 @@
  */
 package net.splitcells.gel;
 
-import net.splitcells.dem.Dem;
-import net.splitcells.dem.ProcessResult;
-import net.splitcells.dem.environment.Environment;
-import net.splitcells.gel.data.table.TableMetaAspect;
-import net.splitcells.gel.data.table.Tables;
-import net.splitcells.gel.data.lookup.Lookups;
-import net.splitcells.gel.solution.SolutionAspect;
-import net.splitcells.gel.solution.Solutions;
-import net.splitcells.gel.solution.history.Histories;
-import net.splitcells.gel.solution.history.HistoryRefFactory;
-
-import java.util.function.Consumer;
-
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 public final class GelEnv {
@@ -35,35 +22,4 @@ public final class GelEnv {
         throw constructorIllegal();
     }
 
-    public static void process(Runnable program) {
-        process(program, standardDeveloperConfigurator());
-    }
-
-    public static ProcessResult process(Runnable program, Consumer<Environment> configurator) {
-        return Dem.process(() -> {
-            program.run();
-            try {
-                // Wait in order for log files to be written completely.
-                Thread.sleep(3_000L);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                throw new RuntimeException(e);
-            }
-        }, configurator);
-    }
-
-    /**
-     * Uses a folder of the user in order to store files, in order to prevent unnecessary file changes
-     * in the project repo, if the user executes Gel with an IDE and default settings.
-     *
-     * @return
-     */
-    public static Consumer<Environment> standardDeveloperConfigurator() {
-        return env -> {
-            env.config()
-                    .withConfigValue(Histories.class, new HistoryRefFactory());
-            env.config().configValue(Tables.class).withAspect(TableMetaAspect::databaseIRef);
-            env.config().configValue(Solutions.class).withAspect(SolutionAspect::solutionAspect);
-        };
-    }
 }
