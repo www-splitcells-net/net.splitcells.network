@@ -20,6 +20,7 @@ cd ../net.splitcells.network.hub # TODO Move this into worker.boostrap, when it 
   # TODO mvn clean install -Dreport_disabled=1
   # TODO mvn clean install -Dare-dependencies-up-to-date=true
 cd ../net.splitcells.network
+  . bin/worker.bootstrap
   bin/build.part.with.python
 cd ../net.splitcells.network/projects/net.splitcells.network.system
   # TODO mvn exec:java -Dexec.mainClass=net.splitcells.network.worker.via.java.Tester "-Dexec.args=$(hostname)"
