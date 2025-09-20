@@ -24,13 +24,13 @@ public class CsvRow {
         return new CsvRow(argRecord);
     }
 
-    private final CSVRecord record;
+    private final CSVRecord csvRecord;
 
     private CsvRow(CSVRecord argRecord) {
-        record = argRecord;
+        csvRecord = argRecord;
     }
 
     public String value(String attribute) {
-        return record.get(attribute);
+        return csvRecord.get(attribute);
     }
 }
