@@ -17,10 +17,8 @@ and software.
 Git has the submodule feature,
 which works somewhat similar,
 but has one main difference:
-a submodule is basically a link inside git to a commit of another git repo.
-In order to add a sub repo via a submodule to a repo,
-you therefore need an additional existing repo.
-
+a submodule is basically a link inside git to a commit of another git repo and
+the submodule tools does not seem to provide a mechanism itself to add completely new repos to a remote server.
 To my knowledge,
 there is no general protocol in Git in order to create new repos on remote
 servers.
@@ -31,7 +29,7 @@ in order to confirm the creation of such repos.
 
 In other words:
 SVN supports a way, where you can store all your data in one repository,
-which is split among projects.
+which is split among projects, without extra tooling on the remote server side.
 Each project has its own history and can be acted upon,
 just by using SVN without additional tooling.
 The downside being, that SVN's centralized nature makes it hard to unlock
