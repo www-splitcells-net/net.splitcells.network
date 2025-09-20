@@ -1301,6 +1301,28 @@ podman run --name "net.splitcells.network.worker" \\
     </dependencies>
 </project>
 """)
+    def test_playwright_parsing(self):
+        test_subject = parse_worker_execution_arguments(["--executable-path=bin/worker.bootstrap"
+                                                         , "--verbose=true"
+                                                         , "--dry-run=true"
+                                                         , "--use-playwright=true"])
+        self.assertRegex(test_subject.container_pom, """
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.splitcells</groupId>
+    <artifactId>network.worker.container.pom</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>com.microsoft.playwright</groupId>
+            <artifactId>playwright</artifactId>
+            <version>\\d+.\\d+.\\d+</version>
+        </dependency>
+    </dependencies>
+</project>
+""")
 if __name__ == '__main__':
     # As there is no build process for Python unit tests are executed every time, to make sure, that the script works correctly.
     # During this test info logging is disabled, which is disabled by default in Python.
