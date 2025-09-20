@@ -808,6 +808,7 @@ request.send();]]>
                                         <article class="Standard_p2 net-splitcells-component-priority-2">
                                             <xsl:if test="$column_1 != ''">
                                                 <div class="Right_shadow Standard_p2 splitcells-net-window-menu">
+                                                    <div class="net-splitcells-structural-guide net-splitcells-vertical-columns-only"></div>
                                                     <div class="Standard_p2 bottomLightShadow splitcells-net-line net-splitcells-minimal-not net-splitcells-component-priority-2">
                                                         <div class="net-splitcells-space-filler"></div>
                                                         <div class="net-splitcells-action-button net-splitcells-button-inline page-column-1-full-screen optional net-splitcells-minimal-not"
