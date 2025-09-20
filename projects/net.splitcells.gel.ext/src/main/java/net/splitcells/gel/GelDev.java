@@ -86,19 +86,18 @@ public final class GelDev {
      * @return
      */
     public static Consumer<Environment> standardDeveloperConfigurator() {
-        return standardDeveloperConfigurator().andThen(env -> {
+        return env -> {
             env.config()
                     .withConfigValue(MessageFilter.class
                             , a -> a.path().equals(list("debugging")) || a.priority().greaterThanOrEqual(LogLevel.INFO))
                     .withConfigValue(IsEchoToFile.class, true)
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
                     .withConfigValue(DeterministicRootSourceSeed.class, 1000L);
-            env.config()
-                    .withConfigValue(Histories.class, new HistoryRefFactory());
+            env.config().withConfigValue(Histories.class, new HistoryRefFactory());
             env.config().configValue(Tables.class).withAspect(TableMetaAspect::databaseIRef);
             env.config().configValue(Solutions.class).withAspect(SolutionAspect::solutionAspect);
             configureForWebserver(env);
-        });
+        };
     }
 
     /**
