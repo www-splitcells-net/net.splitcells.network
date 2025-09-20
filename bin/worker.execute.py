@@ -334,7 +334,6 @@ class WorkerExecution:
     bin_worker_execute = None
     additionalArguments = ""
     playwrightVersion = "1.45.0"
-    parse_playwright_version = True
     def execute(self, configParser, config):
         self.configParser = configParser
         self.config = config
@@ -473,7 +472,7 @@ class WorkerExecution:
             self.additional_podman_args += " "
         if self.config.use_playwright:
             self.docker_file = self.docker_file.replace('$ContainerSetupCommand', 'RUN cd /root/opt/${NAME_FOR_EXECUTION}/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"\n')
-            if self.parse_playwright_version:
+            if self.config.parse_playwright_version:
                 playwrightDependencies = re.compile(r'<dependency>\s*<groupId>com.microsoft.playwright</groupId>\s*<artifactId>playwright</artifactId>\s*<version>([0-9]+.[0-9]+.[0-9]+)</version>\s*</dependency>', re.MULTILINE | re.DOTALL).finditer(BOM_POM.read_text())
                 self.playwrightVersion = next(playwrightDependencies).group(1)
         else:
