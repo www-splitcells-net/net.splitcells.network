@@ -366,6 +366,14 @@ request.send();]]>
                             </s:paragraph>
                         </s:chapter>
                     </xsl:if>
+                    <xsl:if test="./s:content/s:meta/s:notes/node() != ''">
+                        <s:chapter>
+                            <s:title>Notes</s:title>
+                            <s:paragraph>
+                                <xsl:apply-templates select="./s:content/s:meta/s:notes/node()"/>
+                            </s:paragraph>
+                        </s:chapter>
+                    </xsl:if>
                     <xsl:if test="./s:content/s:meta/s:relevant-parent-pages">
                         <s:chapter>
                             <s:title>Parent Pages</s:title>
