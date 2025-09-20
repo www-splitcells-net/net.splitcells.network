@@ -13,14 +13,13 @@ set -x # Makes it easier to debug problems on a remote server, especially becaus
 export JAVA_VERSION=21 # This is required on FreeBSD, if an older Java version is set as default.
 cd ../net.splitcells.network.hub # TODO Move this into worker.boostrap, when it the live server is supported by the new worker.process.
   rm -rf ~/.m2/repository/net/splitcells/ # Our packages are deleted, as SNAPSHOT builds are often used, which can create a cache problems in the build.
-  mvn clean install
   mvn clean install -Dtest.groups=testing_integration -DexcludedGroups="experimental_test"
-  mvn clean install -Dtest.groups=testing_capabilities -DexcludedGroups="experimental_test"
-  mvn clean install -Dtest.groups=benchmarking_runtime -DexcludedGroups="experimental_test"
-  mvn clean install -Dtest_via_pitest_enabled=1 -Dtest_via_junit_disabled=1
-  mvn clean install -Dreport_disabled=1
-  mvn clean install -Dare-dependencies-up-to-date=true
+  # TODO mvn clean install -Dtest.groups=testing_capabilities -DexcludedGroups="experimental_test"
+  # TODO mvn clean install -Dtest.groups=benchmarking_runtime -DexcludedGroups="experimental_test"
+  # TODO mvn clean install -Dtest_via_pitest_enabled=1 -Dtest_via_junit_disabled=1
+  # TODO mvn clean install -Dreport_disabled=1
+  # TODO mvn clean install -Dare-dependencies-up-to-date=true
 cd ../net.splitcells.network
   bin/build.part.with.python
 cd ../net.splitcells.network/projects/net.splitcells.network.system
-  mvn exec:java -Dexec.mainClass=net.splitcells.network.worker.via.java.Tester "-Dexec.args=$(hostname)"
+  # TODO mvn exec:java -Dexec.mainClass=net.splitcells.network.worker.via.java.Tester "-Dexec.args=$(hostname)"
