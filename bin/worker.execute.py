@@ -334,7 +334,7 @@ class WorkerExecution:
     bin_worker_execute = None
     additionalArguments = ""
     playwrightVersion = "1.45.0"
-    parsePlaywrightVersion = True
+    parse_playwright_version = True
     def execute(self, configParser, config):
         self.configParser = configParser
         self.config = config
@@ -473,7 +473,7 @@ class WorkerExecution:
             self.additional_podman_args += " "
         if self.config.use_playwright:
             self.docker_file = self.docker_file.replace('$ContainerSetupCommand', 'RUN cd /root/opt/${NAME_FOR_EXECUTION}/ && mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"\n')
-            if self.parsePlaywrightVersion: # Only get the Playwright Version, when a match is present.
+            if self.parse_playwright_version:
                 playwrightDependencies = re.compile(r'<dependency>\s*<groupId>com.microsoft.playwright</groupId>\s*<artifactId>playwright</artifactId>\s*<version>([0-9]+.[0-9]+.[0-9]+)</version>\s*</dependency>', re.MULTILINE | re.DOTALL).finditer(BOM_POM.read_text())
                 self.playwrightVersion = next(playwrightDependencies).group(1)
         else:
@@ -552,6 +552,7 @@ def parse_worker_execution_arguments(arguments):
     parser.add_argument('--dry-run', dest='dry_run', required=False, type=str2bool, default=False, help="If true, commands are only prepared and no commands are executed.")
     parser.add_argument('--is-daemon', dest='is_daemon', required=False, type=str2bool, default=False, help="If this is true, the process is executed as systemd user service in the background.")
     parser.add_argument('--use-playwright', dest='use_playwright', required=False, type=str2bool, default=False, help="If true, playwright is installed for the execution.")
+    parser.add_argument('--parse-playwright-version', dest='parse_playwright_version', required=False, type=str2bool, default=True, help="If this is true, the used Playwright version is determined via `net.splitcells.network.bom/pom.xml`.")
     parser.add_argument('--auto-configure-cpu-architecture-explicitly', dest='auto_configure_cpu_architecture_explicitly', required=False, type=str2bool, default=False, help=CLI_FLAG_AUTO_CPU_ARCH_HELP)
     parser.add_argument('--port-publishing', dest='port_publishing', help="This is a comma separated list of `host-port:container-port`, that describes the port forwarding on the host.")
     parser.add_argument('--execute-via-ssh-at', dest='execute_via_ssh_at', help="Execute the given command at an remote server via SSH. The format is `[user]@[address/network name]`.")
