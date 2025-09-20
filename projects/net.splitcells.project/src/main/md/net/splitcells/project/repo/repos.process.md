@@ -10,7 +10,7 @@
 # Introduction
 > What is this?
  
-Illustration of an exemplary repo structure:
+Illustration of an exemplary meta repo structure:
 ```
 Meta repo root
 ├── Repo of organization Alpha
