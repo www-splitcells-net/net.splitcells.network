@@ -134,6 +134,11 @@ public class Editor implements Discoverable {
 
     @ReturnsThis
     public Editor saveData(String name, EditorData content) {
+        if (data.hasKey(name)) {
+            throw execException(tree("The data to be saved is already present.")
+                    .withProperty("Save name", name)
+                    .withProperty("Existing data", data.toString()));
+        }
         data.put(name, content);
         return this;
     }
