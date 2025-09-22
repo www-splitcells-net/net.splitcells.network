@@ -248,6 +248,9 @@ public interface Tree extends TreeView, Convertible {
      * @return Assumes, that the this {@link Tree} is a named variable with content and nothing else.
      */
     default String content() {
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            children().requireSizeOf(1);
+        }
         return children().get(0).name();
     }
 
