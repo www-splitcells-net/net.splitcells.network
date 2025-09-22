@@ -19,6 +19,7 @@ import net.splitcells.dem.testing.need.NeedsCheck;
 import net.splitcells.dem.utils.ExecutionException;
 
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * <h2>Error Reporting API</h2>
@@ -43,6 +44,14 @@ public class ErrorReporting {
     public static void runWithReportedErrors(Runnable runnable, ErrorReporter reporter) {
         try {
             runnable.run();
+        } catch (Throwable t) {
+            throw reporter.apply(t);
+        }
+    }
+
+    public static <T> T getWithReportedErrors(Supplier<T> runnable, ErrorReporter reporter) {
+        try {
+            return runnable.get();
         } catch (Throwable t) {
             throw reporter.apply(t);
         }
