@@ -281,7 +281,8 @@ public interface View extends Discoverable, Domable, Identifiable {
                         try {
                             printer.addLine(line);
                         } catch (Throwable e) {
-                            throw new RuntimeException(e);
+                            execException(tree("Could not render line for CSV rendering.")
+                                    .withProperty("line", line.toString()));
                         }
                     });
             return printer.toString();
