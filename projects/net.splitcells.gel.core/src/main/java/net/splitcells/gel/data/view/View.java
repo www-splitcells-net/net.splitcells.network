@@ -26,6 +26,7 @@ import static net.splitcells.dem.lang.CsvPrinter.toCsvString;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
+import static net.splitcells.dem.testing.reporting.ErrorReporting.getWithReportedErrors;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.MathUtils.floorToInt;
 import static net.splitcells.dem.utils.MathUtils.modulus;
@@ -46,6 +47,7 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.ConnectingConstructor;
+import net.splitcells.dem.testing.reporting.ErrorReporter;
 import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.data.table.Table;
@@ -269,6 +271,10 @@ public interface View extends Discoverable, Domable, Identifiable {
      */
     @Deprecated
     List<Line> rawLines();
+
+    default String toCSV(ErrorReporter reporter) {
+        return getWithReportedErrors(() -> toCSV(), reporter);
+    }
 
     default String toCSV() {
         final var header = headerView().stream()
