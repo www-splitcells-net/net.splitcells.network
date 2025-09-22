@@ -16,11 +16,13 @@
 package net.splitcells.dem.utils;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.testing.reporting.ErrorReporter;
 
 import java.nio.charset.StandardCharsets;
 import java.util.stream.IntStream;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.testing.reporting.ErrorReporting.getWithReportedErrors;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
@@ -62,6 +64,10 @@ public class StringUtils {
 
     public static byte[] toBytes(String arg) {
         return arg.getBytes(StandardCharsets.UTF_8);
+    }
+
+    public static String parseString(byte[] arg, ErrorReporter reporter) {
+        return getWithReportedErrors(() -> parseString(arg), reporter);
     }
 
     public static String parseString(byte[] arg) {

@@ -125,7 +125,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
             editor.dataKeys().stream().forEach(d -> {
                 final var data = editor.loadData(d, needDataForOutput(d));
                 if (dataValues.namedChildren(d).isEmpty()) {
-                    dataValues.withProperty(d, parseString(data.getContent()));
+                    dataValues.withProperty(d, parseString(data.getContent(), reportOutputParsing(d)));
                     dataTypes.withProperty(d, data.getFormat().mimeTypes());
                     renderingTypes.withProperty(d, PLAIN_TEXT);
                 }
@@ -145,6 +145,13 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                         .reduce((a, b) -> joinDocuments(a, b))
                         .orElse(""));
         return response(formUpdate);
+    }
+
+
+    public static ErrorReporter reportOutputParsing(String name) {
+        return t -> execException(tree("Could not parse output data as UTF-8.")
+                        .withProperty("name", name)
+                , t);
     }
 
     public static ErrorReporter reportInvalidCsvData(String name) {
