@@ -32,8 +32,8 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
 /**
- * <p>This Maven Plugin create a file, that list all resources of the jar to be built,
- * and add this file to the jars resources,
+ * <p>This Maven Plugin creates a file, that list all resources of the jar to be built,
+ * and adds this file to the jar's resources,
  * so that other Java code can list all jar resources in a portable way.
  * This file is located at "${project.build.directory}/classes/${project.groupId}.${project.artifactId}.resources.list.txt".</p>
  * <p>This goal should be executed in the compile phase.</p>
