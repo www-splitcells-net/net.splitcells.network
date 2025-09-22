@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.dem.testing;
+package net.splitcells.dem.testing.reporting;
 
 import net.splitcells.dem.testing.need.NeedsCheck;
 import net.splitcells.dem.utils.ExecutionException;
@@ -40,7 +40,7 @@ public class ErrorReporting {
 
     }
 
-    public static <T> void runWithReportedErrors(Runnable runnable, Function<Throwable, ExecutionException> reporter) {
+    public static void runWithReportedErrors(Runnable runnable, ErrorReporter reporter) {
         try {
             runnable.run();
         } catch (Throwable t) {
