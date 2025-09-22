@@ -88,6 +88,7 @@
      This also makes it possible to use the name `Resource` for an interface
      of resource like things.
 ### Minor Changes
+* **2025-09-22\#37** Define helper methods `hasKey`, `hasNotkey` and `value` for Map, in order to define more type safe access.
 * **2025-09-22\#37** Define Error Reporting API.
 * **2025-09-04\#37** Define Needs Check API.
 * **2025-06-10 \#37** Prefer implicit throw via `NotImplementedYet#throwNotImplementedYet`,

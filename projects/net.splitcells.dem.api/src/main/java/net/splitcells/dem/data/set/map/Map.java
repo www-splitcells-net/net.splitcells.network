@@ -21,6 +21,7 @@ import net.splitcells.dem.data.order.Ordering;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.testing.need.Need;
 import net.splitcells.dem.utils.ExecutionException;
 
 import java.util.Optional;
@@ -33,21 +34,31 @@ import static net.splitcells.dem.data.order.Ordering.EQUAL;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.testing.need.NeedsCheck.checkNeed;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
 @JavaLegacyArtifact
 public interface Map<Key, Value> extends java.util.Map<Key, Value> {
 
     /**
-     * @see #hasKey(Object)
      * @param key key whose presence in this map is to be tested
      * @return
+     * @see #hasKey(Object)
      */
     @Deprecated
     boolean containsKey(Object key);
 
     default boolean hasKey(Key key) {
         return containsKey(key);
+    }
+
+    default boolean hasNotKey(Key key) {
+        return !containsKey(key);
+    }
+
+    default Value value(Key key, Need<Map<Key, Value>> need) {
+        checkNeed(need, this);
+        return get(key);
     }
 
     default Optional<Value> getOptionally(Key key) {
