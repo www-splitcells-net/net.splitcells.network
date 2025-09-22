@@ -27,6 +27,7 @@ import net.splitcells.dem.object.Merger;
 import net.splitcells.dem.resource.communication.Sender;
 import net.splitcells.dem.testing.need.Need;
 import net.splitcells.dem.testing.need.NeedsCheck;
+import net.splitcells.dem.testing.reporting.ErrorReporter;
 import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.dem.utils.StringUtils;
 
@@ -45,6 +46,7 @@ import static net.splitcells.dem.lang.tree.JsonConfig.jsonConfig;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
 import static net.splitcells.dem.testing.need.NeedsCheck.checkNeed;
+import static net.splitcells.dem.testing.reporting.ErrorReporting.getWithReportedErrors;
 import static net.splitcells.dem.utils.BinaryUtils.binaryOutputStream;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -125,6 +127,10 @@ public interface Tree extends TreeView, Convertible {
 
     default Tree withProperty(String name, NameSpace nameSpace, Tree value) {
         return withValue(TreeI.tree(name, nameSpace).withValue(value));
+    }
+
+    default Tree withProperty(String name, String value, ErrorReporter reporter) {
+        return getWithReportedErrors(() -> withProperty(name, value), reporter);
     }
 
     default Tree withProperty(String name, String value) {

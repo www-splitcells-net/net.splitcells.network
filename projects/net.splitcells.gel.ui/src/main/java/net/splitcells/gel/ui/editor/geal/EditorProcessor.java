@@ -143,8 +143,15 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                 , endResponse.errorMessages()
                         .stream()
                         .reduce((a, b) -> joinDocuments(a, b))
-                        .orElse(""));
+                        .orElse("")
+                , reportReportFailure());
         return response(formUpdate);
+    }
+
+    public static ErrorReporter reportReportFailure() {
+        return t -> execException(tree(
+                        "The solution calculation caused an error, that could not be reported. Reporting the cause of the underlying error is therefore not possible.")
+                , t);
     }
 
 
