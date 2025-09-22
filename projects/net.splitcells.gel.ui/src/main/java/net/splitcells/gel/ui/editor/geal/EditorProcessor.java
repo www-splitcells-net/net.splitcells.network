@@ -21,6 +21,7 @@ import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.LogMessage;
 import net.splitcells.dem.testing.need.Need;
+import net.splitcells.dem.testing.reporting.ErrorReporter;
 import net.splitcells.website.Format;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
@@ -93,7 +94,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                 editor.getSolutions().values().iterator().next().optimize();
             }
             editor.getTables().entrySet().forEach(e -> {
-                dataValues.withProperty(e.getKey(), e.getValue().toCSV());
+                dataValues.withProperty(e.getKey(), e.getValue().toCSV(reportInvalidCsvData(e.getKey())));
                 dataTypes.withProperty(e.getKey(), CSV.mimeTypes());
                 renderingTypes.withProperty(e.getKey(), INTERACTIVE_TABLE);
                 if (editor.getTableFormatting().hasKey(e.getKey())) {
@@ -141,6 +142,12 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                         .reduce((a, b) -> joinDocuments(a, b))
                         .orElse(""));
         return response(formUpdate);
+    }
+
+    public static ErrorReporter reportInvalidCsvData(String name) {
+        return t -> execException(tree("Could not render output table to CSV.")
+                        .withProperty("name", name)
+                , t);
     }
 
     public static Need<Tree> needInput(String name) {
