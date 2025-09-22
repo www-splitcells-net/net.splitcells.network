@@ -24,6 +24,8 @@ import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.testing.Result;
+import net.splitcells.dem.testing.need.Need;
+import net.splitcells.dem.testing.need.NeedsCheck;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -39,6 +41,7 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.testing.need.NeedsCheck.checkNeed;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.editor.EditorData.editorData;
@@ -122,6 +125,11 @@ public class Editor implements Discoverable {
             data.put(name, newValue);
             return newValue;
         });
+    }
+
+    public EditorData loadData(String dataKey, Need<Map<String, EditorData>> need) {
+        checkNeed(need, data);
+        return loadData(dataKey);
     }
 
     public EditorData loadData(String dataKey) {

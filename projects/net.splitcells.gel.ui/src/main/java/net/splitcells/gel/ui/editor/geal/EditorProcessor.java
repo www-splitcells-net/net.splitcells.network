@@ -16,12 +16,15 @@
 package net.splitcells.gel.ui.editor.geal;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.LogMessage;
 import net.splitcells.dem.testing.need.Need;
 import net.splitcells.dem.testing.reporting.ErrorReporter;
+import net.splitcells.gel.editor.Editor;
+import net.splitcells.gel.editor.EditorData;
 import net.splitcells.website.Format;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
@@ -120,7 +123,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                 }
             });
             editor.dataKeys().stream().forEach(d -> {
-                final var data = editor.loadData(d);
+                final var data = editor.loadData(d, needDataForOutput(d));
                 if (dataValues.namedChildren(d).isEmpty()) {
                     dataValues.withProperty(d, parseString(data.getContent()));
                     dataTypes.withProperty(d, data.getFormat().mimeTypes());
@@ -148,6 +151,18 @@ public class EditorProcessor implements Processor<Tree, Tree> {
         return t -> execException(tree("Could not render output table to CSV.")
                         .withProperty("name", name)
                 , t);
+    }
+
+    public static Need<Map<String, EditorData>> needDataForOutput(String name) {
+        return editorData -> {
+            List<LogMessage<Tree>> log = list();
+            if (editorData.hasNotKey(name)) {
+                log.add(logMessage(tree("While loading the data for the output, one data field is missing.")
+                                .withProperty("Data name", name)
+                        , LogLevel.ERROR));
+            }
+            return log = list();
+        };
     }
 
     public static Need<Tree> needInput(String name) {
