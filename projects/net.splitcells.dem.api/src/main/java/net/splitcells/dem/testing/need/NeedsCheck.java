@@ -95,6 +95,12 @@ import static net.splitcells.dem.utils.StringUtils.throwableToString;
  * See handling of errors for one specific user.</p>
  * <h2>Implementation Notes</h2>
  * <p>Injection of error handlers etc. is not implemented, as there is currently no need for that.</p>
+ * <h2>Tasks</h2>
+ * <p>TODO One has to question if something like that, is really better than try-catch?
+ * Consider this, when this API is used a lot more and thereby experience is acquired.
+ * If this is removed in the future, you need to document the reasoning, so that the error is not done again.
+ * One advantage of this API, is the fact,
+ * that the code gets a bit more technology agnostic and thereby makes throw a tad bit more replaceable.</p>
  */
 public class NeedsCheck {
     private NeedsCheck() {

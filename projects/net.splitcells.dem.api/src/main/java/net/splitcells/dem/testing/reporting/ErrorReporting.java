@@ -35,6 +35,12 @@ import java.util.function.Supplier;
  *      .reduce(0, (a,b) -> a.getNumber() + b.getNumber(), reportNumberSumError())
  *      .get(reportMissingSum());
  * </code></pre>
+ * <h2>Tasks</h2>
+ * <p>TODO One has to question if something like that, is really better than try-catch?
+ * Consider this, when this API is used a lot more and thereby experience is acquired.
+ * If this is removed in the future, you need to document the reasoning, so that the error is not done again.
+ * One advantage of this API, is the fact,
+ * that the code gets a bit more technology agnostic and thereby makes throw a tad bit more replaceable.</p>
  */
 public class ErrorReporting {
     private ErrorReporting() {
