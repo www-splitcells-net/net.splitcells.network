@@ -11,6 +11,7 @@
 set -e
 set -x # Makes it easier to debug problems on a remote server, especially because of its long runtime.
 export JAVA_VERSION=21 # This is required on FreeBSD, if an older Java version is set as default.
+current=$(pwd)
 cd ../net.splitcells.network.hub # TODO Move this into worker.boostrap, when it the live server is supported by the new worker.process.
   rm -rf ~/.m2/repository/net/splitcells/ # Our packages are deleted, as SNAPSHOT builds are often used, which can create a cache problems in the build.
   mvn clean install -Dtest.groups=testing_integration -DexcludedGroups="experimental_test"
@@ -21,6 +22,7 @@ cd ../net.splitcells.network.hub # TODO Move this into worker.boostrap, when it 
   # TODO mvn clean install -Dare-dependencies-up-to-date=true
 cd ../net.splitcells.network
   . bin/worker.bootstrap
+  cd "$current"
   bin/build.part.with.python
 cd ../net.splitcells.network/projects/net.splitcells.network.system
   # TODO mvn exec:java -Dexec.mainClass=net.splitcells.network.worker.via.java.Tester "-Dexec.args=$(hostname)"
