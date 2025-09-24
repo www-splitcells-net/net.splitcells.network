@@ -78,10 +78,14 @@ public class Editor implements Discoverable {
         if (!tableMatches.isEmpty()) {
             return tableMatches.getFirst();
         }
-        final var solutionMatches = solutions.entrySet().stream().filter(entry -> entry.getValue().equals(table))
+        final var solutionMatch = solutions.entrySet().stream().filter(entry -> entry.getValue().equals(table))
                 .map(entry -> entry.getKey())
-                .toList();
-        return solutionMatches.getFirst();
+                .findFirst();
+        if (solutionMatch.isEmpty()) {
+            throw execException(tree("Could not find table name.")
+                    .withProperty("table", table.toSimplifiedCSV()));
+        }
+        return solutionMatch.get();
     }
 
     private Editor(String argName, Discoverable argParent) {
