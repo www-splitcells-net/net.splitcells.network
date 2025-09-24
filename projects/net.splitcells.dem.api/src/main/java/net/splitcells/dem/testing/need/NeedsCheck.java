@@ -206,7 +206,7 @@ public class NeedsCheck {
     private static String toCommonMark(TreesException arg, boolean isCause) {
         final var errorMessage = StringUtils.stringBuilder();
         if (isCause) {
-            errorMessage.append("# Causing Error Message");
+            errorMessage.append("# Causing Error Message\n");
         } else {
             errorMessage.append("# Error Message\n");
         }
