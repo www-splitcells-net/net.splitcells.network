@@ -252,7 +252,9 @@ public class Editor implements Discoverable {
             parsedObject = string.getValue();
             chainLinkRun = functionCallRun(Optional.of(parsedObject), Optional.of(this));
         } else {
-            throw notImplementedYet();
+            throw execException(tree(functionCallChain.getExpression().getClass().getName() + " is not supported as the base of expressions.")
+                    .withChild(tree("Affected function call chain")
+                            .withChildren(functionCallChain.getSourceCodeQuote().userReferenceTree())));
         }
         Optional<Object> subject = Optional.of(parsedObject);
         for (var nextCall : functionCallChain.getFunctionCalls()) {
