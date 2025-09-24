@@ -233,7 +233,7 @@ public interface Tree extends TreeView, Convertible {
                 .collect(toList());
     }
 
-    default Tree namedChild(String name, Need need) {
+    default Tree namedChild(String name, Need<Tree> need) {
         checkNeed(need, this);
         return namedChild(name);
     }
