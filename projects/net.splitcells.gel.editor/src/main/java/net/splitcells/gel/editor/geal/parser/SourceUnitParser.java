@@ -25,14 +25,14 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.editor.geal.lang.SourceUnit.sourceUnit;
-import static net.splitcells.gel.editor.geal.parser.GealAntlrUtils.gealParser;
+import static net.splitcells.gel.editor.geal.parser.GealAntlrUtils.parseSourceUnit;
 import static net.splitcells.gel.editor.geal.parser.StatementParser.parseStatement;
 
 @JavaLegacyArtifact
 public class SourceUnitParser extends net.splitcells.dem.source.geal.GealParserBaseVisitor<SourceUnit> {
 
     public static SourceUnit parseGealSourceUnit(String arg) {
-        return new SourceUnitParser().visitSource_unit(gealParser(arg).source_unit());
+        return new SourceUnitParser().visitSource_unit(parseSourceUnit(arg));
     }
 
     private SourceUnitParser() {

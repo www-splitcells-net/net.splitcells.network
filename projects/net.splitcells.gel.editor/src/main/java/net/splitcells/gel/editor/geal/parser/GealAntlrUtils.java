@@ -19,6 +19,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.source.geal.GealLexer;
 import net.splitcells.dem.source.geal.GealParser;
+import net.splitcells.dem.source.geal.GealParser.Source_unitContext;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -31,15 +32,16 @@ import static net.splitcells.dem.utils.TreesException.treesException;
 
 public class GealAntlrUtils {
 
-    public static GealParser gealParser(String arg) {
+    public static Source_unitContext parseSourceUnit(String arg) {
         final var lexer = new GealLexer(CharStreams.fromString(arg));
         final var parser = new net.splitcells.dem.source.geal.GealParser(new CommonTokenStream(lexer));
         final List<Tree> parsingErrors = list();
         parser.addErrorListener(baseErrorListener(parsingErrors));
+        final var sourceUnit = parser.source_unit();
         if (parsingErrors.hasElements()) {
             throw treesException(parsingErrors);
         }
-        return parser;
+        return sourceUnit;
     }
 
     private GealAntlrUtils() {
