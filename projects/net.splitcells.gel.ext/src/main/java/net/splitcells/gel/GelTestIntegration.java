@@ -19,13 +19,14 @@ import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
+import net.splitcells.gel.ext.GelExtCell;
 
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Test.testIntegration;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
-import static net.splitcells.gel.GelDev.standardDeveloperConfigurator;
+import static net.splitcells.gel.ext.GelExtCell.standardDeveloperConfigurator;
 
 public final class GelTestIntegration {
     private GelTestIntegration() {
@@ -34,7 +35,7 @@ public final class GelTestIntegration {
 
     public static void main(String... arg) {
         testIntegration();
-        if (GelDev.process(() -> {
+        if (GelExtCell.process(() -> {
                     if (!testIntegration()) {
                         throw new RuntimeException();
                     }

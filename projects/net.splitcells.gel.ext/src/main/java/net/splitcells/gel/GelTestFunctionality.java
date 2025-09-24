@@ -19,15 +19,16 @@ import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
+import net.splitcells.gel.ext.GelExtCell;
 
 import java.util.Optional;
 
 import static net.splitcells.dem.testing.Test.testFunctionality;
-import static net.splitcells.gel.GelDev.standardDeveloperConfigurator;
+import static net.splitcells.gel.ext.GelExtCell.standardDeveloperConfigurator;
 
 public class GelTestFunctionality {
     public static void main(String... args) {
-        if (GelDev.process(() -> {
+        if (GelExtCell.process(() -> {
                     if (!testFunctionality()) {
                         throw new RuntimeException();
                     }

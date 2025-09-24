@@ -25,8 +25,8 @@ import net.splitcells.dem.resource.communication.log.MessageFilter;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.dem.testing.annotations.DisabledTest;
 import net.splitcells.gel.Gel;
-import net.splitcells.gel.GelDev;
 import net.splitcells.gel.data.view.attribute.Attribute;
+import net.splitcells.gel.ext.GelExtCell;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.problem.derived.SimplifiedAnnealingProblem;
 import net.splitcells.gel.rating.rater.framework.Rater;
@@ -89,7 +89,7 @@ public class NQueenProblemTest extends TestSuiteI {
     @Tag(CAPABILITY_TEST)
     @Test
     public void test_8_queen_problem_with_repair() {
-        GelDev.process(() -> {
+        GelExtCell.process(() -> {
             final var testSubject = nQueenProblem(8, 8).asSolution();
             onlineLinearInitialization().optimize(testSubject);
             testSubject.optimizeWithMethod(ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(3)
@@ -101,7 +101,7 @@ public class NQueenProblemTest extends TestSuiteI {
             testSubject.optimizeWithMethod(ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(0)
                     , (currentSolution, step) -> !currentSolution.isOptimal());
             require(testSubject.isOptimal());
-        }, GelDev.standardDeveloperConfigurator().andThen(env -> {
+        }, GelExtCell.standardDeveloperConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()));
         }));
@@ -122,7 +122,7 @@ public class NQueenProblemTest extends TestSuiteI {
     @Tag(CAPABILITY_TEST)
     @Test
     public void test_8_queen_problem_with_annealing_hill_climber() {
-        GelDev.process(() -> {
+        GelExtCell.process(() -> {
             final var testSubject = nQueenProblem(8, 8).asSolution();
             // The temperature functions was determined by trial and error with universal allocation program's temperature functions.
             testSubject.optimize(offlineLinearInitialization());
@@ -142,7 +142,7 @@ public class NQueenProblemTest extends TestSuiteI {
                     , testSubject.toFodsTableAnalysis());
             logs().append(testSubject.constraint().rating(), Optional.empty(), LogLevel.UNKNOWN_ERROR);
             testSubject.constraint().rating().requireEqualsTo(cost(0));
-        }, GelDev.standardDeveloperConfigurator().andThen(env -> {
+        }, GelExtCell.standardDeveloperConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
                     .withConfigValue(IsEchoToFile.class, false)

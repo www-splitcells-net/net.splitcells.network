@@ -13,32 +13,33 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel;
+package net.splitcells.gel.ext;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.ProcessResult;
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.environment.Cell;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.Files;
-import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.IsEchoToFile;
+import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
 import net.splitcells.dem.resource.host.ProcessPath;
 import net.splitcells.dem.utils.random.DeterministicRootSourceSeed;
+import net.splitcells.gel.data.lookup.LookupTables;
 import net.splitcells.gel.data.table.TableMetaAspect;
 import net.splitcells.gel.data.table.Tables;
-import net.splitcells.gel.data.lookup.LookupTables;
 import net.splitcells.gel.solution.SolutionAspect;
 import net.splitcells.gel.solution.Solutions;
 import net.splitcells.gel.solution.history.Histories;
 import net.splitcells.gel.solution.history.HistoryRefFactory;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.ServerService;
-import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.processor.BinaryMessage;
+import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.project.renderer.DiscoverableMediaRenderer;
 import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 import net.splitcells.website.server.project.renderer.ObjectsMediaRenderer;
@@ -49,19 +50,9 @@ import java.util.function.Consumer;
 
 import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
-import static net.splitcells.website.Projects.projectsRenderer;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
-/**
- * @deprecated TODO Use {@link net.splitcells.dem.environment.Cell} API instead.
- */
-@Deprecated
-public final class GelDev {
-    private GelDev() {
-        throw constructorIllegal();
-    }
-
+public class GelExtCell implements Cell {
     public static void process(Runnable program) {
         process(program, standardDeveloperConfigurator());
     }
@@ -189,5 +180,19 @@ public final class GelDev {
                 }
             }));
         }
+    }
+
+    @Override
+    public String groupId() {
+        return "net.splitcells";
+    }
+
+    @Override
+    public String artifactId() {
+        return "gel.ext";
+    }
+    @Override
+    public void accept(Environment env) {
+
     }
 }

@@ -15,7 +15,7 @@
  */
 package net.splitcells.cin.deprecated;
 
-import net.splitcells.gel.GelDev;
+import net.splitcells.gel.ext.GelExtCell;
 import net.splitcells.gel.solution.SolutionView;
 
 import static net.splitcells.cin.deprecated.World.WORLD_HISTORY;
@@ -33,7 +33,7 @@ import static net.splitcells.sep.Network.network;
 
 public class WorldService {
     public static void main(String... args) {
-        GelDev.process(() -> {
+        GelExtCell.process(() -> {
             final var network = network();
             final var currentWorldHistory = worldHistory(WORLD_HISTORY, list(), list());
             reportRuntime(() -> {

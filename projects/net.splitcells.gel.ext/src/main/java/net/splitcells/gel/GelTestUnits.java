@@ -17,10 +17,11 @@ package net.splitcells.gel;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
+import net.splitcells.gel.ext.GelExtCell;
 
 import static net.splitcells.dem.testing.Test.testUnits;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
-import static net.splitcells.gel.GelDev.standardDeveloperConfigurator;
+import static net.splitcells.gel.ext.GelExtCell.standardDeveloperConfigurator;
 
 public final class GelTestUnits {
     private GelTestUnits() {
@@ -28,7 +29,7 @@ public final class GelTestUnits {
     }
 
     public static void main(String... arg) {
-        GelDev.process(() -> {
+        GelExtCell.process(() -> {
                     if (!testUnits()) {
                         System.out.println("Could not execute tests successfully.");
                         Dem.systemExit(1);

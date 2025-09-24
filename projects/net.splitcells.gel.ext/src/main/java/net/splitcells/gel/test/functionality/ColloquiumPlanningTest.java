@@ -28,9 +28,9 @@ import net.splitcells.dem.testing.annotations.DisabledTest;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.dem.utils.random.DeterministicRootSourceSeed;
 import net.splitcells.dem.utils.random.Randomness;
-import net.splitcells.gel.GelDev;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.view.attribute.Attribute;
+import net.splitcells.gel.ext.GelExtCell;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.Solution;
@@ -105,7 +105,7 @@ public class ColloquiumPlanningTest extends TestSuiteI {
             testSubject.optimizeWithFunction(ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(1), (currentSolution, step) ->
                     step <= 100 && !currentSolution.isOptimal());
             require(testSubject.isOptimal());
-        }, GelDev.standardDeveloperConfigurator().andThen(env -> {
+        }, GelExtCell.standardDeveloperConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(MessageFilter.class, a -> false)
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
@@ -135,7 +135,7 @@ public class ColloquiumPlanningTest extends TestSuiteI {
                     .asSolution();
             testSubject.optimize(functionalHillClimber(400 * 177));
             bool(testSubject.isOptimal()).requireFalse();
-        }, GelDev.standardDeveloperConfigurator().andThen(env -> {
+        }, GelExtCell.standardDeveloperConfigurator().andThen(env -> {
             env.config()
                     .withConfigValue(MessageFilter.class, a -> false)
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
