@@ -175,7 +175,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                                 .withProperty("Data name", name)
                         , LogLevel.ERROR));
             }
-            return log = list();
+            return log;
         };
     }
 
