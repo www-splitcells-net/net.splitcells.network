@@ -222,7 +222,9 @@ public class Editor implements Discoverable {
         } else if (parsedObject instanceof Rater rater) {
             raters.put(varName, rater);
         } else {
-            throw notImplementedYet(parsedObject.getClass().getName() + " is not supported for variables yet.");
+            throw execException(tree(parsedObject.getClass().getName() + " is not supported for variables.")
+                    .withChild(tree("Affected variable definition")
+                            .withChildren(variableDefinition.getSourceCodeQuote().userReferenceTree())));
         }
         return this;
     }
