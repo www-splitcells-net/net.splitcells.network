@@ -208,7 +208,7 @@ public class NeedsCheck {
         if (isCause) {
             errorMessage.append("# Causing Error Message");
         } else {
-            errorMessage.append("# Error Message");
+            errorMessage.append("# Error Message\n");
         }
         errorMessage.append(arg.getTrees().stream()
                 .map(Tree::toCommonMarkString)
