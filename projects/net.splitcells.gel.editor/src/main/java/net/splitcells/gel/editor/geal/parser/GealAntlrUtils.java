@@ -27,6 +27,7 @@ import static net.splitcells.dem.lang.AntlrUtils.baseErrorListener;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.dem.utils.TreesException.treesException;
 
 public class GealAntlrUtils {
 
@@ -36,9 +37,7 @@ public class GealAntlrUtils {
         final List<Tree> parsingErrors = list();
         parser.addErrorListener(baseErrorListener(parsingErrors));
         if (parsingErrors.hasElements()) {
-            final var errorReport = tree("Parsing Error Report");
-            parsingErrors.forEach(errorReport::withChild);
-            throw execException(errorReport);
+            throw treesException(parsingErrors);
         }
         return parser;
     }
