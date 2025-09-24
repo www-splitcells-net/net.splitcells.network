@@ -54,6 +54,11 @@ This reduces the portability of CommonMark converter implementations
 In other words, it is easier to convert a generic tree structure file format to CommonMark,
 than the other way around.
 
+IDEA: Consider a subset of CommonMark which also represent an XML structure via nested lists.
+This subset should avoid empty lines where possible, in order to make CommonMark text as compact as possible.
+The reason for that is, that CommonMark is feels easier to navigate and therefore nicer to read.
+Furthermore, XML automatic formatting are cumbersome to use and CommonMark can often be easy and efficiently to format by hand.
+
 NOTE: Currently, it seems, that a file format like CommonMark has many advantages over XML,
 in cases, where simple flowing text is used.
 When a tree structure without a schema is used, CommonMark is sometimes better than XML,
