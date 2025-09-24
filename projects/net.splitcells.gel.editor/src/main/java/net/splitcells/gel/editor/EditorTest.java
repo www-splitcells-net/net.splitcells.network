@@ -235,12 +235,12 @@ public class EditorTest {
                 solution   = solution('Colloquium Plan', demands, supplies, rules);
                 solution   .forEach(examiner)
                            .forAllCombinationsOf(date, shift)
-                           .then(hasSize(1))
+                           .then(hasSize(1));
                 solution   .forEach(student)
                            .forAllCombinationsOf(date, shift)
-                           .then(hasSize(1))
+                           .then(hasSize(1));
                 solution   .forEach(student)
-                           .then(hasSize(2))
+                           .then(hasSize(2));
                 """;
         testSubject.interpret(parseGealSourceUnit(testData));
         testSubject.getAttributes().requirePresence("student", stringAttribute("student"), CONTENT_COMPARISON)
@@ -300,20 +300,20 @@ public class EditorTest {
                 roomNumber = attribute(Integer, 'room number');
                 
                 demands    = table('exams', student, examiner, observer);
-                demands    . importCsvData('demands.csv')
+                demands    . importCsvData('demands.csv');
                 
                 supplies   = table('time slots', date, shift, roomNumber);
-                supplies   . importCsvData('supplies.csv')
+                supplies   . importCsvData('supplies.csv');
                 
                 solution   = solution('Colloquium Plan', demands, supplies, rules);
                 solution   . forEach(examiner)
                            . forAllCombinationsOf(date, shift)
-                           . then(hasSize(1))
+                           . then(hasSize(1));
                 solution   . forEach(student)
                            . forAllCombinationsOf(date, shift)
-                           . then(hasSize(1))
+                           . then(hasSize(1));
                 solution   . forEach(student)
-                           . then(hasSize(2))
+                           . then(hasSize(2));
                 """;
         final var demandsCsv = """
                 student,examiner,observer
