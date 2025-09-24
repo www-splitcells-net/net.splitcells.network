@@ -22,8 +22,9 @@ import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.tree.Tree;
 
 /**
- * Provides a way to throw multiple {@link Tree} as an error without having to define a root {@link Tree}.
- * This makes error messages, that are combined of multiple {@link Tree}, more compact.
+ * <p>Provides a way to throw multiple {@link Tree} as an error without having to define a root {@link Tree}.
+ * This makes error messages, that are combined of multiple {@link Tree}, more compact.</p>
+ * <p>The {@link #getMessage()} is never set.</p>
  */
 @JavaLegacyArtifact
 @Accessors(chain = true)
