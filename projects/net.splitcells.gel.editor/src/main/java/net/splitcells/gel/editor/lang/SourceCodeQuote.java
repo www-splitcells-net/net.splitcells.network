@@ -16,10 +16,14 @@
 package net.splitcells.gel.editor.lang;
 
 import net.splitcells.dem.data.atom.Thing;
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
+import net.splitcells.dem.lang.tree.Tree;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.source.SourceUtils.root;
 
 @JavaLegacy
@@ -85,5 +89,10 @@ public class SourceCodeQuote {
      */
     public String userReference() {
         return "quote: " + quote + ", quoteLine: " + quoteLine;
+    }
+
+    public List<Tree> userReferenceTree() {
+        return list(tree("quote").withText(quote)
+                , tree("quote line").withText("" + quoteLine));
     }
 }
