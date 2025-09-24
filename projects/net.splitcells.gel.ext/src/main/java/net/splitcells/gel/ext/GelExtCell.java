@@ -193,6 +193,6 @@ public class GelExtCell implements Cell {
     }
     @Override
     public void accept(Environment env) {
-
+        // Nothing needs to be done by default.
     }
 }
