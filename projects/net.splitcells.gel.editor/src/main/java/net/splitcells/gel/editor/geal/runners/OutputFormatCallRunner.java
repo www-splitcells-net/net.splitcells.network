@@ -87,7 +87,7 @@ public class OutputFormatCallRunner implements FunctionCallRunner {
             }
         } else if (functionCall.getName().getValue().equals(ROW_FORMAT)) {
             if (context.getTableFormatting().hasKey(subjectKey.get())) {
-                context.getTableFormatting().get(subjectKey).setRowAttributes(attributes);
+                context.getTableFormatting().get(subjectKey.get()).setRowAttributes(attributes);
             } else {
                 context.getTableFormatting().put(subjectKey.get(), tableFormat().setRowAttributes(attributes));
             }
