@@ -56,7 +56,8 @@ public class AttributeCallRunner implements FunctionCallRunner {
             return run;
         }
         if (functionCall.getArguments().size() != 2) {
-            throw execException("The attribute function requires exactly 2 arguments, but " + functionCall.getArguments().size() + " were given.");
+            throw execException(tree("The attribute function requires exactly 2 arguments, but " + functionCall.getArguments().size() + " were given.")
+                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
         }
         final var first = functionCall.getArguments().get(0).getExpression();
         final NameDesc firstName;
@@ -68,14 +69,16 @@ public class AttributeCallRunner implements FunctionCallRunner {
                 firstName = NameDesc.nameDesc(n.getName().getValue(), n.getSourceCodeQuote());
             }
             default ->
-                    throw execException("The first argument has to be a name, but " + first.getClass() + " was given.");
+                    throw execException(tree("The first argument has to be a name, but " + first.getClass() + " was given.")
+                            .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
         }
         final var second = functionCall.getArguments().get(1).getExpression();
         final StringDesc secondName;
         switch (second) {
             case StringDesc n -> secondName = n;
             default ->
-                    throw execException("The second argument has to be a string, but " + second.getClass() + " was given.");
+                    throw execException(tree("The second argument has to be a string, but " + second.getClass() + " was given.")
+                            .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
         }
         final Optional<Object> result;
         if (firstName.getValue().equals(INTEGER_TYPE)) {
@@ -83,7 +86,8 @@ public class AttributeCallRunner implements FunctionCallRunner {
         } else if (firstName.getValue().equals(STRING_TYPE)) {
             result = Optional.of(stringAttribute(secondName.getValue()));
         } else {
-            throw execException("The first argument has to be a reference to the integer or the string type, but " + firstName.getValue() + " was given.");
+            throw execException(tree("The first argument has to be a reference to the integer or the string type, but " + firstName.getValue() + " was given.")
+                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
         }
         return run.setResult(result);
     }
