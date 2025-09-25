@@ -25,7 +25,6 @@ import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.dem.testing.need.Need;
-import net.splitcells.dem.testing.need.NeedsCheck;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -109,18 +108,17 @@ public class Editor implements Discoverable {
         return SolutionEditor.solutionEditor(this, solutionDescription).parse(solutionDescription);
     }
 
-    public Object resolveRaw(NameDesc name) {
+    public Optional<Object> resolveRaw(NameDesc name) {
         if (attributes.hasKey(name.getValue())) {
-            return attributes.get(name.getValue());
+            return Optional.of(attributes.get(name.getValue()));
         } else if (tables.hasKey(name.getValue())) {
-            return tables.get(name.getValue());
+            return Optional.of(tables.get(name.getValue()));
         } else if (solutions.hasKey(name.getValue())) {
-            return solutions.get(name.getValue());
+            return Optional.of(solutions.get(name.getValue()));
         } else if (raters.hasKey(name.getValue())) {
-            return raters.get(name.getValue());
-        } else {
-            throw notImplementedYet();
+            return Optional.of(raters.get(name.getValue()));
         }
+        return Optional.empty();
     }
 
     public EditorData loadData(Format format, String name) {
@@ -228,7 +226,7 @@ public class Editor implements Discoverable {
         } else {
             throw execException(tree(parsedObject.getClass().getName() + " is not supported for variables.")
                     .withChild(tree("Affected variable definition")
-                            .withChildren(variableDefinition.getSourceCodeQuote().userReferenceTree())));
+                            .withChildren(variableDefinition.getSourceCodeQuote().userReferenceTrees())));
         }
         return this;
     }
@@ -247,8 +245,14 @@ public class Editor implements Discoverable {
             chainLinkRun = functionCallExecutor.execute(functionCall, Optional.empty(), this);
             parsedObject = chainLinkRun.getResult().orElseThrow();
         } else if (functionCallChain.getExpression() instanceof NameDesc reference) {
-            parsedObject = resolveRaw(reference);
-            chainLinkRun = functionCallRun(Optional.of(parsedObject), Optional.of(this));
+            final var lookup = resolveRaw(reference);
+            if (lookup.isEmpty()) {
+                throw execException(tree("Could not find object by name.")
+                        .withProperty("name", reference.getValue())
+                        .withChild(functionCallChain.getExpression().getSourceCodeQuote().userReferenceTree()));
+            }
+            parsedObject = lookup.get();
+            chainLinkRun = functionCallRun(lookup, Optional.of(this));
         } else if (functionCallChain.getExpression() instanceof IntegerDesc integer) {
             parsedObject = integer.getValue();
             chainLinkRun = functionCallRun(Optional.of(parsedObject), Optional.of(this));
@@ -258,7 +262,7 @@ public class Editor implements Discoverable {
         } else {
             throw execException(tree(functionCallChain.getExpression().getClass().getName() + " is not supported as the base of expressions.")
                     .withChild(tree("Affected function call chain")
-                            .withChildren(functionCallChain.getSourceCodeQuote().userReferenceTree())));
+                            .withChildren(functionCallChain.getSourceCodeQuote().userReferenceTrees())));
         }
         Optional<Object> subject = Optional.of(parsedObject);
         for (var nextCall : functionCallChain.getFunctionCalls()) {

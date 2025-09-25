@@ -91,7 +91,13 @@ public class SourceCodeQuote {
         return "quote: " + quote + ", quoteLine: " + quoteLine;
     }
 
-    public List<Tree> userReferenceTree() {
+    public Tree userReferenceTree() {
+        return tree("Source code quote")
+                .withProperty("quote", quote)
+                .withProperty("quote line", "" + quoteLine);
+    }
+
+    public List<Tree> userReferenceTrees() {
         return list(tree("quote").withText(quote)
                 , tree("quote line").withText("" + quoteLine));
     }
