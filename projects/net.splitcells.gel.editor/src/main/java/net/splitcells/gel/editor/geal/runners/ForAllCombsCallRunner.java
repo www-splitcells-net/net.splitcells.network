@@ -24,6 +24,8 @@ import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.constraint.type.ForAlls.FOR_ALL_COMBINATIONS_OF;
@@ -64,7 +66,9 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
         } else if (subject.orElseThrow() instanceof Query query) {
             subjectVal = query;
         } else {
-            throw notImplementedYet();
+            throw execException(tree("The function " + FOR_ALL_COMBINATIONS_OF + " requires a solution or query as a subjet, but "
+                    + subject.orElseThrow().getClass().getName() + " was given instead.")
+                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
         }
         run.setResult(Optional.of(subjectVal.forAllCombinationsOf(groupingAttributes)));
         return run;
