@@ -32,6 +32,7 @@ import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCal
 import static net.splitcells.gel.editor.geal.runners.HasSizeCallRunner.hasSizeCallRunner;
 import static net.splitcells.gel.editor.geal.runners.ImportCsvDataRunner.importCsvDataRunner;
 import static net.splitcells.gel.editor.geal.runners.OutputFormatCallRunner.outputFormatCallRunner;
+import static net.splitcells.gel.editor.geal.runners.VariableResolutionRunner.resolveRunner;
 import static net.splitcells.gel.editor.geal.runners.SolutionCallRunner.solutionCallRunner;
 import static net.splitcells.gel.editor.geal.runners.TableCallRunner.tableCallRunner;
 import static net.splitcells.gel.editor.geal.runners.ThenCallRunner.thenCallRunner;
@@ -58,6 +59,7 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
                 .registerExecutor(hasSizeCallRunner())
                 .registerExecutor(importCsvDataRunner())
                 .registerExecutor(outputFormatCallRunner())
+                .registerExecutor(resolveRunner())
                 ;
     }
 
