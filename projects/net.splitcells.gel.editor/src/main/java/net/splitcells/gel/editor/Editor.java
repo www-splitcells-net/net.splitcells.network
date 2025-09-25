@@ -71,12 +71,12 @@ public class Editor implements Discoverable {
     @Getter private final Map<String, TableFormatting> tableFormatting = map();
     private final Map<String, EditorData> data = map();
 
-    public String lookupTableLikeName(Table table) {
+    public Optional<String> lookupTableLikeName(Table table) {
         final var tableMatches = tables.entrySet().stream().filter(entry -> entry.getValue().equals(table))
                 .map(entry -> entry.getKey())
                 .toList();
         if (!tableMatches.isEmpty()) {
-            return tableMatches.getFirst();
+            return Optional.of(tableMatches.getFirst());
         }
         final var solutionMatch = solutions.entrySet().stream().filter(entry -> entry.getValue().equals(table))
                 .map(entry -> entry.getKey())
@@ -85,7 +85,7 @@ public class Editor implements Discoverable {
             throw execException(tree("Could not find table name.")
                     .withProperty("table", table.toSimplifiedCSV()));
         }
-        return solutionMatch.get();
+        return Optional.of(solutionMatch.get());
     }
 
     private Editor(String argName, Discoverable argParent) {

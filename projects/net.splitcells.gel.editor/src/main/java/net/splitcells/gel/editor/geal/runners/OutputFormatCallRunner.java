@@ -26,6 +26,7 @@ import net.splitcells.gel.solution.Solution;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.editor.TableFormatting.tableFormat;
@@ -74,17 +75,21 @@ public class OutputFormatCallRunner implements FunctionCallRunner {
             }
         });
         final var subjectKey = context.lookupTableLikeName(subjectVal);
+        if (subjectKey.isEmpty()) {
+            throw execException(tree("Could not lookup table for " + functionCall.getName().getValue() + ".")
+                    .withProperty("table", subjectVal.name()));
+        }
         if (functionCall.getName().getValue().equals(COLUMN_FORMAT)) {
-            if (context.getTableFormatting().hasKey(subjectKey)) {
+            if (context.getTableFormatting().hasKey(subjectKey.get())) {
                 context.getTableFormatting().get(subjectKey).setColumnAttributes(attributes);
             } else {
-                context.getTableFormatting().put(subjectKey, tableFormat().setColumnAttributes(attributes));
+                context.getTableFormatting().put(subjectKey.get(), tableFormat().setColumnAttributes(attributes));
             }
         } else if (functionCall.getName().getValue().equals(ROW_FORMAT)) {
-            if (context.getTableFormatting().hasKey(subjectKey)) {
+            if (context.getTableFormatting().hasKey(subjectKey.get())) {
                 context.getTableFormatting().get(subjectKey).setRowAttributes(attributes);
             } else {
-                context.getTableFormatting().put(subjectKey, tableFormat().setRowAttributes(attributes));
+                context.getTableFormatting().put(subjectKey.get(), tableFormat().setRowAttributes(attributes));
             }
         }
         return run;
