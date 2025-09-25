@@ -23,7 +23,7 @@ import java.util.Optional;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 
 public class VariableResolutionRunner implements FunctionCallRunner {
-    public static VariableResolutionRunner resolveRunner() {
+    public static VariableResolutionRunner variableResolutionRunner() {
         return new VariableResolutionRunner();
     }
 
