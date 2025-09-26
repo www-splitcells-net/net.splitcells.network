@@ -39,13 +39,11 @@ import static net.splitcells.gel.editor.geal.runners.ThenCallRunner.thenCallRunn
 
 public class FunctionCallMetaExecutor implements FunctionCallExecutor {
     public static FunctionCallMetaExecutor child(FunctionCallRunner parent) {
-        final var child = functionCallMetaExecutor();
-        return child;
+        return functionCallMetaExecutor();
     }
 
     public static FunctionCallMetaExecutor child(FunctionCallRun parent) {
-        final var child = functionCallMetaExecutor();
-        return child;
+        return functionCallMetaExecutor();
     }
 
     public static FunctionCallMetaExecutor functionCallMetaExecutor() {
