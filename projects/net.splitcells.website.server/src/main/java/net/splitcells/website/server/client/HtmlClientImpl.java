@@ -109,7 +109,11 @@ public class HtmlClientImpl implements HtmlClient {
                             @Override
                             public <T> Optional<T> evalIfExists(Function<Element, T> evaluation) {
                                 if (!locator.all().isEmpty()) {
-                                    return Optional.of(evaluation.apply(this));
+                                    try {
+                                        return Optional.of(evaluation.apply(this));
+                                    } catch (TimeoutError e) {
+                                        throw execException("This element does not actually exist in the browser. This is probably not a real network timeout.", e);
+                                    }
                                 }
                                 return Optional.empty();
                             }
@@ -117,21 +121,33 @@ public class HtmlClientImpl implements HtmlClient {
                             @Override
                             public void click() {
                                 synchronized (playwrightSynchronizer) {
-                                    locator.click();
+                                    try {
+                                        locator.click();
+                                    } catch (TimeoutError e) {
+                                        throw execException("This element does not actually exist in the browser. This is probably not a real network timeout.", e);
+                                    }
                                 }
                             }
 
                             @Override
                             public String textContent() {
                                 synchronized (playwrightSynchronizer) {
-                                    return locator.textContent();
+                                    try {
+                                        return locator.textContent();
+                                    } catch (TimeoutError e) {
+                                        throw execException("This element does not actually exist in the browser. This is probably not a real network timeout.", e);
+                                    }
                                 }
                             }
 
                             @Override
                             public String value() {
                                 synchronized (playwrightSynchronizer) {
-                                    return locator.inputValue();
+                                    try {
+                                        return locator.inputValue();
+                                    } catch (TimeoutError e) {
+                                        throw execException("This element does not actually exist in the browser. This is probably not a real network timeout.", e);
+                                    }
                                 }
                             }
                         };
@@ -153,7 +169,11 @@ public class HtmlClientImpl implements HtmlClient {
                             @Override
                             public <T> Optional<T> evalIfExists(Function<Element, T> evaluation) {
                                 if (!locator.all().isEmpty()) {
-                                    return Optional.of(evaluation.apply(this));
+                                    try {
+                                        return Optional.of(evaluation.apply(this));
+                                    } catch (TimeoutError e) {
+                                        throw execException("This element does not actually exist in the browser. This is probably not a real network timeout.", e);
+                                    }
                                 }
                                 return Optional.empty();
                             }
@@ -161,21 +181,34 @@ public class HtmlClientImpl implements HtmlClient {
                             @Override
                             public void click() {
                                 synchronized (playwrightSynchronizer) {
-                                    locator.click();
+                                    try {
+                                        locator.click();
+                                    } catch (TimeoutError e) {
+                                        throw execException("This element does not actually exist in the browser. This is probably not a real network timeout.", e);
+                                    }
                                 }
                             }
 
                             @Override
                             public String textContent() {
                                 synchronized (playwrightSynchronizer) {
-                                    return locator.textContent();
+                                    try {
+                                        return locator.textContent();
+                                    } catch (TimeoutError e) {
+                                        throw execException("This element does not actually exist in the browser. This is probably not a real network timeout.", e);
+                                    }
+
                                 }
                             }
 
                             @Override
                             public String value() {
                                 synchronized (playwrightSynchronizer) {
-                                    return locator.inputValue();
+                                    try {
+                                        return locator.inputValue();
+                                    } catch (TimeoutError e) {
+                                        throw execException("This element does not actually exist in the browser. This is probably not a real network timeout.", e);
+                                    }
                                 }
                             }
                         };
