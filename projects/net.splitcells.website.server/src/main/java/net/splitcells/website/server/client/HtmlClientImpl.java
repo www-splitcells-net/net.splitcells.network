@@ -24,6 +24,7 @@ import net.splitcells.website.server.config.PublicDomain;
 
 import java.util.Optional;
 import java.util.function.Function;
+
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
@@ -112,6 +113,7 @@ public class HtmlClientImpl implements HtmlClient {
                                 }
                                 return Optional.empty();
                             }
+
                             @Override
                             public void click() {
                                 synchronized (playwrightSynchronizer) {
@@ -141,7 +143,13 @@ public class HtmlClientImpl implements HtmlClient {
                     synchronized (playwrightSynchronizer) {
                         return new Element() {
 
-                            final Locator locator = page.locator("#" + id);
+                            /**
+                             * Dots have to be escaped, as otherwise this would be a search by an id,
+                             * which is before the dot,
+                             * and a CSS class, which is after the dot.
+                             */
+                            final Locator locator = page.locator("#" + id.replace(".", "\\."));
+
                             @Override
                             public <T> Optional<T> evalIfExists(Function<Element, T> evaluation) {
                                 if (!locator.all().isEmpty()) {
