@@ -15,7 +15,12 @@
  */
 package net.splitcells.website.server.client;
 
+import java.util.Optional;
+import java.util.function.Function;
+
 public interface Element {
+    <T> Optional<T> evalIfExists(Function<Element, T> evaluation);
+
     void click();
 
     String textContent();
