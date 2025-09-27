@@ -34,18 +34,24 @@ public interface Element {
 
     /**
      * This method only works, if the element actually exists.
+     * Calling this method, asserts the existence of this Browser element.
+     *
      * @see {@link #evalIfExists(Function)}
      */
     void click();
 
     /**
      * This method only works, if the element actually exists.
+     * Calling this method, asserts the existence of this Browser element.
+     *
      * @see {@link #evalIfExists(Function)}
      */
     String textContent();
 
     /**
      * This method only works, if the element actually exists.
+     * Calling this method, asserts the existence of this Browser element.
+     *
      * @see {@link #evalIfExists(Function)}
      */
     String value();
