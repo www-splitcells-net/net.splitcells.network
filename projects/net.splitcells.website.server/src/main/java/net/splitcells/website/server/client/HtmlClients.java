@@ -50,6 +50,10 @@ public class HtmlClients {
      * Also, only use one {@link HtmlClient} per thread.
      */
     public static HtmlClient htmlClient() {
+        if (true) {
+            // TODO Testing dedicated browsers.
+            return htmlClientImpl();
+        }
         try {
             final HtmlClient htmlClient;
             HTML_CLIENT_LOCK.acquireUninterruptibly();
