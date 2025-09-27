@@ -42,12 +42,19 @@ public class HtmlClients {
     /**
      * This method is thread safe.
      *
+     * TODO This method should probably be moved to {@link HtmlClientImpl},
+     * as it is Playwright specific.
+     * In this class the method htmlClient should link to the moved `HtmlClientImpl#htmlClient`.
+     *
      * @return Provides an instance of {@link HtmlClient} from a limited pool.
      * When the returned {@link HtmlClient#close()} is called,
      * the {@link HtmlClient} is given back to the pool automatically.
      * Use the returned {@link HtmlClient} only for a limited time,
      * as this may otherwise block other callers indefinitely.
      * Also, only use one {@link HtmlClient} per thread.
+     * All threads, share a single {@link HtmlClientImpl} instance,
+     * in order to minimize the probability of Playwright specific errors by minimizing the number of Playwright NodeJS based workers.
+     * Apart from the first one, every additional NodeJS based workers seems to create an unreasonable high probability of error.
      */
     public static HtmlClient htmlClient() {
         /* TODO if (true) {
