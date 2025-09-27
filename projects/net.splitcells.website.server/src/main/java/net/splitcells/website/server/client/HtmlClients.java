@@ -50,10 +50,10 @@ public class HtmlClients {
      * Also, only use one {@link HtmlClient} per thread.
      */
     public static HtmlClient htmlClient() {
-        if (true) {
+        /* TODO if (true) {
             // TODO Testing dedicated browsers.
             return htmlClientImpl();
-        }
+        }*/
         try {
             final HtmlClient htmlClient;
             HTML_CLIENT_LOCK.acquireUninterruptibly();
@@ -63,7 +63,7 @@ public class HtmlClients {
                 return htmlClient;
             }
             if (MAX_HTML_CLIENT_COUNT > USED_HTML_CLIENT.size()) {
-                htmlClient = htmlClientSharer(ROOT_CLIENT, sharer -> {
+                htmlClient = htmlClientSharer(htmlClientImpl(), sharer -> {
                     try {
                         HTML_CLIENT_LOCK.acquireUninterruptibly();
                         FREE_HTML_CLIENT.add(sharer);
