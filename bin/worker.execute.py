@@ -213,9 +213,8 @@ test -f target/program-${programName} && chmod +x target/program-${programName} 
 """
 
 # allow_host_loopback is required, so that the software in the container can connect to the host.
-# `--security-opt seccomp=unconfined` is required for NodeJS: https://github.com/nodejs/node/issues/43064#issuecomment-1973209378
+# `--security-opt seccomp=unconfined` is required for NodeJS, if many instances of it are spawned and closed again: https://github.com/nodejs/node/issues/43064#issuecomment-1973209378
 PODMAN_COMMAND_TEMPLATE = """podman run --name "${executionName}" \\
-  --security-opt seccomp=unconfined \\
   --network slirp4netns:allow_host_loopback=true \\
   ${additionalArguments}\\
   --rm \\
@@ -654,7 +653,6 @@ mkdir -p ./target/
 test -f target/program-net.splitcells.martins.avots.distro && chmod +x target/program-net.splitcells.martins.avots.distro # This file does not exist, when '--executable-path' is not set.
 
 podman run --name "net.splitcells.martins.avots.distro" \\
-  --security-opt seccomp=unconfined \\
   --network slirp4netns:allow_host_loopback=true \\
   \\
   --rm \\
@@ -697,7 +695,6 @@ podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
     --log-level=warn
 
 podman run --name "net.splitcells.martins.avots.distro" \\
-  --security-opt seccomp=unconfined \\
   --network slirp4netns:allow_host_loopback=true \\
   \\
   --rm \\
@@ -925,7 +922,6 @@ Description=Execute net.splitcells.network.worker.boostrap.daemon
 Type=simple
 StandardOutput=journal
 ExecStart=podman run --name "net.splitcells.network.worker.boostrap.daemon" \\
-  --security-opt seccomp=unconfined \\
   --network slirp4netns:allow_host_loopback=true \\
   \\
   --rm \\
@@ -1077,7 +1073,6 @@ Description=Execute net.splitcells.martins.avots.distro.livedistro
 Type=simple
 StandardOutput=journal
 ExecStart=podman run --name "net.splitcells.martins.avots.distro.livedistro" \\
-  --security-opt seccomp=unconfined \\
   --network slirp4netns:allow_host_loopback=true \\
   \\
   --rm \\
@@ -1209,7 +1204,6 @@ podman build -f "target/Dockerfile-net.splitcells.network.worker" \\
     --log-level=warn
 
 podman run --name "net.splitcells.network.worker" \\
-  --security-opt seccomp=unconfined \\
   --network slirp4netns:allow_host_loopback=true \\
   \\
   --rm \\
@@ -1274,7 +1268,6 @@ podman build -f "target/Dockerfile-net.splitcells.network.worker" \\
     --log-level=warn
 
 podman run --name "net.splitcells.network.worker" \\
-  --security-opt seccomp=unconfined \\
   --network slirp4netns:allow_host_loopback=true \\
   \\
   --rm \\
