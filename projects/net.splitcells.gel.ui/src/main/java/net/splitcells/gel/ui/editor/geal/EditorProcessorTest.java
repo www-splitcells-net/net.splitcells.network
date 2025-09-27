@@ -37,8 +37,13 @@ public class EditorProcessorTest {
             try (final var tab = browser.openTab("/net/splitcells/gel/ui/editor/geal/index.html")) {
                 tab.elementByClass("net-splitcells-website-pop-up-confirmation-button").click();
                 tab.elementById("net-splitcells-gel-ui-editor-geal-form-submit").click();
-                waitUntilRequirementIsTrue(1000L * 60, () -> !tab.elementById("net-splitcells-gel-ui-editor-geal-form-solution").value().isEmpty());
-                requireNonEmptyString(tab.elementById("net-splitcells-gel-ui-editor-geal-form-solution.formatted").textContent());
+                waitUntilRequirementIsTrue(1000L * 60, () -> tab
+                        .elementById("net-splitcells-gel-ui-editor-geal-form-solution")
+                        .evalIfExists(e -> !e.value().trim().isEmpty())
+                        .orElse(false));
+                requireNonEmptyString(tab
+                        .elementById("net-splitcells-gel-ui-editor-geal-form-solution.formatted")
+                        .textContent());
             }
         }
     };
