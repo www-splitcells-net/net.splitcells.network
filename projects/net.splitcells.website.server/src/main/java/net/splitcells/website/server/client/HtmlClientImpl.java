@@ -66,6 +66,8 @@ public class HtmlClientImpl implements HtmlClient {
                 + configValue(InternalPublicPort.class).map(port -> ":" + port).orElse(""));
     }
 
+    private static final Object PLAYWRIGHT_INIT_SYNCHRONIZER = new Object();
+
     private final Playwright playwright;
     private final Browser browser;
     private final Object playwrightSynchronizer = new Object();
@@ -83,7 +85,7 @@ public class HtmlClientImpl implements HtmlClient {
 
     private HtmlClientImpl(String addressArg) {
         address = addressArg;
-        synchronized (playwrightSynchronizer) {
+        synchronized (PLAYWRIGHT_INIT_SYNCHRONIZER) {
             playwright = Playwright.create();
             browser = playwright.firefox().launch();
         }
