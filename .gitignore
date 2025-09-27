@@ -18,6 +18,7 @@ target/
 .mvn/
 mvnw
 mvnw.cmd
+mvn
 ### Python
 .pydevproject
 
