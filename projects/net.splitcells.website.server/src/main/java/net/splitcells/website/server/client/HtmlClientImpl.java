@@ -223,8 +223,8 @@ public class HtmlClientImpl implements HtmlClient {
                 @Override
                 public void close() {
                     synchronized (playwrightSynchronizer) {
-                        // TODO context.close();
-                        // TODO page.close();
+                        context.close();
+                        page.close();
                         tabContexts.deleteIfPresent(context);
                         openTabs.deleteIfPresent(page);
                     }
