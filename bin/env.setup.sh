@@ -4,6 +4,8 @@
 
 # Execute this command via `. bin/env.setup.sh`, in order to setup the environment of the current shell.
 
+set +e
+set +x
 # Build BOMs first, as otherwise `mvn wrapper:wrapper` will not run, because the dependency BOM with the scope import cannot be read.
   cd ../net.splitcells.network.bom.base && mvn clean install
   cd ../net.splitcells.network.bom && mvn clean install
