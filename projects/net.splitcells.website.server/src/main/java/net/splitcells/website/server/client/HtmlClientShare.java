@@ -19,19 +19,17 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.website.server.test.HtmlLiveTester;
 
-import java.util.Optional;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 
 /**
  * <p>Provides access to a {@link HtmlClient} to one consumer.
- * {@link HtmlClientSharer} closes only the resources created by the consumer.
- * Create one dedicated {@link HtmlClientSharer} for each consumer,
+ * {@link HtmlClientShare} closes only the resources created by the consumer.
+ * Create one dedicated {@link HtmlClientShare} for each consumer,
  * in order to avoid concurrency errors.
  * It does not close the resources of the underlying {@link HtmlClient}
- * created by other consumers via other {@link HtmlClientSharer}.</p>
+ * created by other consumers via other {@link HtmlClientShare}.</p>
  * <p>This allows to share one {@link HtmlClient} to all consumers,
  * which is important,
  * when many {@link HtmlClient} are needed (i.e. {@link HtmlLiveTester}).
@@ -43,17 +41,17 @@ import static net.splitcells.dem.data.set.list.Lists.list;
  * <p>TODO There should be a way, to close the {@link #subject} of the sharer,
  * so that a complete orderly shutdown is possible.</p>
  */
-public class HtmlClientSharer implements HtmlClient {
+public class HtmlClientShare implements HtmlClient {
 
     public static HtmlClient htmlClientSharer(HtmlClient client, Consumer<HtmlClient> onClosing) {
-        return new HtmlClientSharer(client, onClosing);
+        return new HtmlClientShare(client, onClosing);
     }
 
     private final HtmlClient subject;
     private final List<Closeable> tabs = list();
     private final Consumer<HtmlClient> onClosing;
 
-    private HtmlClientSharer(HtmlClient client, Consumer<HtmlClient> argOnClosing) {
+    private HtmlClientShare(HtmlClient client, Consumer<HtmlClient> argOnClosing) {
         subject = client;
         onClosing = argOnClosing;
     }

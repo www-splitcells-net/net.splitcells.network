@@ -16,16 +16,13 @@
 package net.splitcells.website.server.client;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.queue.ThreadSafeQueue;
 import net.splitcells.dem.environment.resource.HostHardware;
 
 import java.util.concurrent.Semaphore;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.data.set.list.Lists.synchronizedList;
-import static net.splitcells.dem.data.set.queue.ThreadSafeQueue.threadSafeQueue;
 import static net.splitcells.website.server.client.HtmlClientImpl.htmlClientImpl;
-import static net.splitcells.website.server.client.HtmlClientSharer.htmlClientSharer;
+import static net.splitcells.website.server.client.HtmlClientShare.htmlClientSharer;
 
 public class HtmlClients {
     private static final List<HtmlClient> FREE_HTML_CLIENT = list();
