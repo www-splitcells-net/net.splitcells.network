@@ -22,7 +22,7 @@ import java.util.concurrent.Semaphore;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.website.server.client.HtmlClientImpl.htmlClientImpl;
-import static net.splitcells.website.server.client.HtmlClientShare.htmlClientSharer;
+import static net.splitcells.website.server.client.HtmlClientShare.htmlClientShare;
 
 public class HtmlClients {
     private static final List<HtmlClient> FREE_HTML_CLIENT = list();
@@ -65,7 +65,7 @@ public class HtmlClients {
                 return htmlClient;
             }
             if (MAX_HTML_CLIENT_COUNT > USED_HTML_CLIENT.size()) {
-                htmlClient = htmlClientSharer(htmlClientImpl(), sharer -> {
+                htmlClient = htmlClientShare(htmlClientImpl(), sharer -> {
                     try {
                         HTML_CLIENT_LOCK.acquireUninterruptibly();
                         FREE_HTML_CLIENT.add(sharer);

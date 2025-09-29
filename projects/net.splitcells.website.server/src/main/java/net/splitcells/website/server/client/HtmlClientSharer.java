@@ -23,7 +23,7 @@ import java.util.concurrent.Semaphore;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.website.server.client.HtmlClientImpl.htmlClientImpl;
-import static net.splitcells.website.server.client.HtmlClientShare.htmlClientSharer;
+import static net.splitcells.website.server.client.HtmlClientShare.htmlClientShare;
 
 public class HtmlClientSharer {
     private static final HtmlClientSharer SHARER = new HtmlClientSharer();
@@ -44,7 +44,7 @@ public class HtmlClientSharer {
                     usedClients.add(htmlClient);
                     return htmlClient;
                 } else if (maxClientCount > freeClients.size() + usedClients.size()) {
-                    val htmlClient = htmlClientSharer(htmlClientImpl(), this::giveBack);
+                    val htmlClient = htmlClientShare(htmlClientImpl(), this::giveBack);
                     usedClients.add(htmlClient);
                     return htmlClient;
                 }

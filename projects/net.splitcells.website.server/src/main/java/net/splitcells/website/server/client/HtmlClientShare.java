@@ -43,7 +43,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
  */
 public class HtmlClientShare implements HtmlClient {
 
-    public static HtmlClient htmlClientSharer(HtmlClient client, Consumer<HtmlClient> onClosing) {
+    public static HtmlClient htmlClientShare(HtmlClient client, Consumer<HtmlClient> onClosing) {
         return new HtmlClientShare(client, onClosing);
     }
 
