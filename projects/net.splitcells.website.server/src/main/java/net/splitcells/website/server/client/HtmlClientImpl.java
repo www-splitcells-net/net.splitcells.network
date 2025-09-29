@@ -223,8 +223,8 @@ public class HtmlClientImpl implements HtmlClient {
                 @Override
                 public void close() {
                     synchronized (playwrightSynchronizer) {
-                        context.close();
-                        page.close();
+                        // TODO context.close();
+                        // TODO page.close();
                         tabContexts.deleteIfPresent(context);
                         openTabs.deleteIfPresent(page);
                     }
@@ -237,12 +237,12 @@ public class HtmlClientImpl implements HtmlClient {
     public void close() {
         synchronized (playwrightSynchronizer) {
             logs().warn(execException("Closing HTML clients is implemented, but is not actually expected to be used in production."));
-            openTabs.forEach(Page::close);
+            // TODO openTabs.forEach(Page::close);
             openTabs.removeAll();
             tabContexts.forEach(BrowserContext::close);
             tabContexts.removeAll();
-            browser.close();
-            playwright.close();
+            // TODO browser.close();
+            // TODO playwright.close();
         }
     }
 
