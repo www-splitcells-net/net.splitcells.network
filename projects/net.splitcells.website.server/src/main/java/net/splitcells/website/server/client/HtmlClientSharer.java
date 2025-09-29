@@ -15,15 +15,48 @@
  */
 package net.splitcells.website.server.client;
 
-import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
+import lombok.val;
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.environment.resource.HostHardware;
+
+import java.util.concurrent.Semaphore;
+
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.website.server.client.HtmlClientImpl.htmlClientImpl;
+import static net.splitcells.website.server.client.HtmlClientShare.htmlClientSharer;
 
 public class HtmlClientSharer {
     private static final HtmlClientSharer SHARER = new HtmlClientSharer();
+
+    private final List<HtmlClient> freeClients = list();
+    private final List<HtmlClient> usedClients = list();
+    private static final Semaphore clientWait = new Semaphore(0);
+    private final int maxClientCount = HostHardware.cpuCoreCount();
 
     private HtmlClientSharer() {
     }
 
     public HtmlClient _htmlCLient() {
+        while (true) {
+            synchronized (this) {
+                if (freeClients.hasElements()) {
+                    val htmlClient = freeClients.remove(0);
+                    usedClients.add(htmlClient);
+                    return htmlClient;
+                } else if (maxClientCount > freeClients.size() + usedClients.size()) {
+                    val htmlClient = htmlClientSharer(htmlClientImpl(), this::giveBack);
+                    usedClients.add(htmlClient);
+                    return htmlClient;
+                }
+            }
+            clientWait.acquireUninterruptibly();
+        }
+    }
+
+    private synchronized HtmlClient giveBack(HtmlClient client) {
+        usedClients.delete(client);
+        freeClients.add(client);
+        clientWait.release();
         return null;
     }
 
