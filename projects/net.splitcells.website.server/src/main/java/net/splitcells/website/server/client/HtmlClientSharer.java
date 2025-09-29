@@ -18,11 +18,16 @@ package net.splitcells.website.server.client;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 public class HtmlClientSharer {
+    private static final HtmlClientSharer SHARER = new HtmlClientSharer();
+
     private HtmlClientSharer() {
-        throw constructorIllegal();
+    }
+
+    public HtmlClient _htmlCLient() {
+        return null;
     }
 
     public static HtmlClient htmlClient() {
-        return null;
+        return SHARER._htmlCLient();
     }
 }
