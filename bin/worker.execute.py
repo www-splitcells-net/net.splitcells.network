@@ -169,7 +169,7 @@ JAVA_CLASS_EXECUTION_TEMPLATE = """
 COPY ${NAME_FOR_EXECUTION}/deployable-jars/* /root/opt/${NAME_FOR_EXECUTION}/jars/
 WORKDIR /root/opt/${NAME_FOR_EXECUTION}/
 ENTRYPOINT ["/opt/java/openjdk/bin/java"]
-CMD ["-XX:ErrorFile=/root/.local/state/${NAME_FOR_EXECUTION}/.local/dumps/hs_err_pid_%p.log", "-cp", "./jars/*", "$CLASS_FOR_EXECUTION"]
+CMD ["-Xss10m", "-XX:ErrorFile=/root/.local/state/${NAME_FOR_EXECUTION}/.local/dumps/hs_err_pid_%p.log", "-cp", "./jars/*", "$CLASS_FOR_EXECUTION"]
 """
 
 # `--log-level=warn` is podman's default.
@@ -1043,7 +1043,7 @@ VOLUME /root/.cache/ms-playwright/
 COPY net.splitcells.martins.avots.distro.livedistro/deployable-jars/* /root/opt/net.splitcells.martins.avots.distro.livedistro/jars/
 WORKDIR /root/opt/net.splitcells.martins.avots.distro.livedistro/
 ENTRYPOINT ["/opt/java/openjdk/bin/java"]
-CMD ["-XX:ErrorFile=/root/.local/state/net.splitcells.martins.avots.distro.livedistro/.local/dumps/hs_err_pid_%p.log", "-cp", "./jars/*", "net.splitcells.martins.avots.distro.LiveDistro"]
+CMD ["-Xss10m", "-XX:ErrorFile=/root/.local/state/net.splitcells.martins.avots.distro.livedistro/.local/dumps/hs_err_pid_%p.log", "-cp", "./jars/*", "net.splitcells.martins.avots.distro.LiveDistro"]
 """)
         self.assertEqual(test_subject.local_execution_script, """set -e
 set -x
@@ -1134,7 +1134,7 @@ VOLUME /root/.cache/ms-playwright/
 COPY net.splitcells.martins.avots.distro.livedistro/deployable-jars/* /root/opt/net.splitcells.martins.avots.distro.livedistro/jars/
 WORKDIR /root/opt/net.splitcells.martins.avots.distro.livedistro/
 ENTRYPOINT ["/opt/java/openjdk/bin/java"]
-CMD ["-XX:ErrorFile=/root/.local/state/net.splitcells.martins.avots.distro.livedistro/.local/dumps/hs_err_pid_%p.log", "-cp", "./jars/*", "net.splitcells.martins.avots.distro.LiveDistro"]
+CMD ["-Xss10m", "-XX:ErrorFile=/root/.local/state/net.splitcells.martins.avots.distro.livedistro/.local/dumps/hs_err_pid_%p.log", "-cp", "./jars/*", "net.splitcells.martins.avots.distro.LiveDistro"]
 """)
         self.assertEqual(test_subject.local_execution_script, """set -e
 set -x
