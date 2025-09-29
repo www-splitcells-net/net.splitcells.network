@@ -53,6 +53,9 @@ public class HtmlClients {
      * Apart from the first one, every additional NodeJS based workers seems to create an unreasonable high probability of error.
      */
     public static HtmlClient htmlClient() {
+        if (true) {
+            return HtmlClientSharer.htmlClient();
+        }
         try {
             final HtmlClient htmlClient;
             HTML_CLIENT_LOCK.acquireUninterruptibly();
