@@ -25,6 +25,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.dem.utils.TreesException.treesException;
 import static net.splitcells.gel.editor.geal.runners.AttributeCallRunner.attributeCallRunner;
 import static net.splitcells.gel.editor.geal.runners.ForAllCombsCallRunner.forAllCombsCallRunner;
 import static net.splitcells.gel.editor.geal.runners.ForEachCallRunner.forEachCallRunner;
@@ -78,7 +79,7 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
                 .filter(e -> e.getResult().isPresent())
                 .findFirst();
         if (fittingRun.isEmpty()) {
-            throw execException(tree("Unknown function call description.")
+            throw treesException(tree("Unknown function call description.")
                     .withProperty("source code description", functionCall.getSourceCodeQuote().quote())
                     .withProperty("function call description", functionCall.toString()));
         }

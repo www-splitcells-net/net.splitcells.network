@@ -18,8 +18,11 @@ package net.splitcells.dem.utils;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.tree.Tree;
+
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 
 /**
  * <p>Provides a way to throw multiple {@link Tree} as an error without having to define a root {@link Tree}.
@@ -29,6 +32,11 @@ import net.splitcells.dem.lang.tree.Tree;
 @JavaLegacyArtifact
 @Accessors(chain = true)
 public class TreesException extends RuntimeException {
+
+
+    public static TreesException treesException(Tree... argTrees) {
+        return treesException(listWithValuesOf(argTrees));
+    }
 
     public static TreesException treesException(List<Tree> argTrees) {
         return new TreesException(argTrees);
