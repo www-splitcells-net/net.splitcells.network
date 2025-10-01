@@ -188,7 +188,7 @@ public class NeedsCheck {
         if (isCause) {
             errorMessage.append("# Causing Error Message");
         } else {
-            errorMessage.append("# Error Message");
+            errorMessage.append("# Internal Error Message");
         }
         joinDocuments(errorMessage, arg.getMessage());
         joinDocuments(errorMessage, "# Causing Stack Trace");
