@@ -150,8 +150,7 @@ public class EditorTest {
                         , functionCallDesc2(nameDesc(SOLUTION_FUNCTION)
                                 , list(stringDesc("Colloquium Plan")
                                         , functionCallDesc3("demands")
-                                        , functionCallDesc3("supplies")
-                                        , functionCallDesc3("rules"))))
+                                        , functionCallDesc3("supplies"))))
                 , functionCallChainDesc(nameDesc("solution")
                         , list(functionCallDesc2(nameDesc(FOR_EACH_NAME), list(functionCallDesc3("examiner")))
                                 , functionCallDesc2(nameDesc(FOR_ALL_COMBINATIONS_OF)
@@ -232,7 +231,7 @@ public class EditorTest {
                 demands    = table('exams', student, examiner, observer);
                 supplies   = table('time slots', date, shift, roomNumber);
                 
-                solution   = solution('Colloquium Plan', demands, supplies, rules);
+                solution   = solution('Colloquium Plan', demands, supplies);
                 solution   .forEach(examiner)
                            .forAllCombinationsOf(date, shift)
                            .then(hasSize(1));
@@ -305,7 +304,7 @@ public class EditorTest {
                 supplies   = table('time slots', date, shift, roomNumber);
                 supplies   . importCsvData('supplies.csv');
                 
-                solution   = solution('Colloquium Plan', demands, supplies, rules);
+                solution   = solution('Colloquium Plan', demands, supplies);
                 solution   . forEach(examiner)
                            . forAllCombinationsOf(date, shift)
                            . then(hasSize(1));
