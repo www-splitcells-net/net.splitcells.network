@@ -29,6 +29,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.constraint.QueryI.query;
+import static net.splitcells.gel.constraint.type.ForAlls.FOR_ALL_COMBINATIONS_OF;
 import static net.splitcells.gel.editor.TableFormatting.tableFormat;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 
@@ -45,11 +46,7 @@ public class OutputFormatCallRunner implements FunctionCallRunner {
     }
 
     private boolean supports(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
-        return subject.isPresent()
-                && subject.orElseThrow() instanceof Solution
-                && (functionCall.getName().getValue().equals(COLUMN_FORMAT) || functionCall.getName().getValue().equals(ROW_FORMAT))
-                && functionCall.getArguments().stream().map(arg -> arg.getExpression() instanceof FunctionCallDesc)
-                .reduce(true, (a, b) -> a && b);
+        return (functionCall.getName().getValue().equals(COLUMN_FORMAT) || functionCall.getName().getValue().equals(ROW_FORMAT));
     }
 
     @Override
@@ -59,25 +56,45 @@ public class OutputFormatCallRunner implements FunctionCallRunner {
             return run;
         }
         final Solution subjectVal;
+        if (subject.isEmpty()) {
+            throw execException(tree("The "
+                    + functionCall.getName().getValue()
+                    + " function requires a Solution as a subject, but no subject was given instead.")
+                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
+        }
         switch (subject.orElseThrow()) {
             case Solution s -> subjectVal = s;
-            default -> throw execException("Subject has to be a solution: " + subject.orElseThrow());
+            default -> throw execException(tree("The "
+                    + functionCall.getName().getValue()
+                    + " function requires a Solution as a subject, but "
+                    + subject.orElseThrow().getClass().getName()
+                    + " was given instead.")
+                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
         }
         final List<Attribute<?>> attributes = list();
-        functionCall.getArguments().forEach(arg -> {
+        functionCall.getArguments().forEachIndex((arg, i) -> {
             final var attribute = context.parse(arg);
             switch (attribute) {
                 case Attribute<?> a -> {
                     attributes.add(a);
                     run.setResult(Optional.of(subjectVal));
                 }
-                default -> throw execException("" + attribute);
+                default -> throw execException(tree("The "
+                        + functionCall.getName().getValue()
+                        + " function only supports attributes as arguments, but "
+                        + subject.orElseThrow().getClass().getName()
+                        + " was given as argument "
+                        + i
+                        + " instead.")
+                        .withProperty("Affected function call ", functionCall.getSourceCodeQuote().userReferenceTree())
+                        .withProperty("Affected argument", arg.getSourceCodeQuote().userReferenceTree()));
             }
         });
         final var subjectKey = context.lookupTableLikeName(subjectVal);
         if (subjectKey.isEmpty()) {
             throw execException(tree("Could not lookup table for " + functionCall.getName().getValue() + ".")
-                    .withProperty("table", subjectVal.name()));
+                    .withProperty("table", subjectVal.name())
+                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
         }
         if (functionCall.getName().getValue().equals(COLUMN_FORMAT)) {
             if (context.getTableFormatting().hasKey(subjectKey.get())) {

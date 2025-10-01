@@ -32,6 +32,7 @@ import net.splitcells.gel.editor.geal.lang.*;
 import net.splitcells.gel.editor.geal.runners.FunctionCallMetaExecutor;
 import net.splitcells.gel.editor.geal.runners.FunctionCallRun;
 import net.splitcells.gel.editor.lang.SolutionDescription;
+import net.splitcells.gel.editor.lang.SourceCodeQuotation;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.website.Format;
@@ -154,7 +155,7 @@ public class Editor implements Discoverable {
     }
 
     @SuppressWarnings("unchecked")
-    public <T> T resolve(NameDesc name) {
+    public <T> T resolve(NameDesc name, SourceCodeQuotation context) {
         if (attributes.hasKey(name.getValue())) {
             return (T) attributes.get(name.getValue());
         } else if (tables.hasKey(name.getValue())) {
@@ -164,7 +165,8 @@ public class Editor implements Discoverable {
         } else if (raters.hasKey(name.getValue())) {
             return (T) raters.get(name.getValue());
         } else {
-            throw notImplementedYet();
+            throw execException(tree("Could not resolve variable by name `" + name.getValue() + "`.")
+                    .withProperty("Context", context.getSourceCodeQuote().userReferenceTree()));
         }
     }
 

@@ -24,6 +24,7 @@ import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
@@ -48,7 +49,7 @@ public class SolutionCallRunner implements FunctionCallRunner {
     public FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
         final var run = functionCallRun(subject, context);
         if (functionCall.getArguments().isEmpty()) {
-            return run.setResult(Optional.of(context.<Solution>resolve(functionCall.getName())));
+            return run.setResult(Optional.of(context.<Solution>resolve(functionCall.getName(), functionCall)));
         }
         if (!supports(functionCall)) {
             return run;
@@ -61,8 +62,12 @@ public class SolutionCallRunner implements FunctionCallRunner {
         final String solutionName;
         switch (first) {
             case StringDesc n -> solutionName = n.getValue();
-            default ->
-                    throw execException("The 1st argument has to be the solution name represented by a string, but is a " + first.getClass() + " was given.");
+            default -> throw execException(tree("The 1st argument of the function "
+                    + SOLUTION_FUNCTION
+                    + " has to be the solution name represented by a string, but instead a "
+                    + first.getClass().getName()
+                    + " was given.")
+                    .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
         }
         final var second = functionCall.getArguments().get(1).getExpression();
         final Table demands;
@@ -73,8 +78,12 @@ public class SolutionCallRunner implements FunctionCallRunner {
                 }
                 demands = context.getTables().get(n.getName().getValue());
             }
-            default ->
-                    throw execException("The 2nd argument has to be the demand table represented by a variable name, but a " + second.getClass() + " was given instead.");
+            default -> throw execException(tree("The 2nd argument of the function "
+                    + SOLUTION_FUNCTION
+                    + " has to be the demand table represented by a variable name, but a "
+                    + second.getClass().getName()
+                    + " was given instead.")
+                    .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
         }
         final var third = functionCall.getArguments().get(2).getExpression();
         final Table supplies;
@@ -85,8 +94,12 @@ public class SolutionCallRunner implements FunctionCallRunner {
                 }
                 supplies = context.getTables().get(n.getName().getValue());
             }
-            default ->
-                    throw execException("The 3rd argument has to be the supply table represented by a variable name, but a " + second.getClass() + " was given instead.");
+            default -> throw execException(tree("The 3rd argument of the function "
+                    + SOLUTION_FUNCTION
+                    + " has to be the supply table represented by a variable name, but a "
+                    + second.getClass().getName()
+                    + " was given instead.")
+                    .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
         }
         final Optional<Object> result = Optional.of(defineProblem(solutionName)
                 .withDemands(demands)

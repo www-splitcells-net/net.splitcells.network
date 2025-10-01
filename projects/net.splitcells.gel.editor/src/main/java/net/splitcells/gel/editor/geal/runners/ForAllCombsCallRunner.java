@@ -41,14 +41,7 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
     }
 
     private boolean supports(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
-        return subject.isPresent()
-                && (subject.orElseThrow() instanceof Solution
-                || subject.orElseThrow() instanceof Query)
-                && functionCall.getName().getValue().equals(FOR_ALL_COMBINATIONS_OF)
-                && functionCall.getArguments().size() >= 1
-                && functionCall.getArguments()
-                .stream()
-                .noneMatch(n -> !(n.getExpression() instanceof FunctionCallDesc));
+        return functionCall.getName().getValue().equals(FOR_ALL_COMBINATIONS_OF);
     }
 
     @Override
@@ -57,8 +50,50 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
         if (!supports(functionCall, subject, context)) {
             return run;
         }
+        if (subject.isEmpty()) {
+            throw execException(tree("The "
+                    + FOR_ALL_COMBINATIONS_OF
+                    + " function requires a Solution or Query as a subject, but no was given.")
+                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
+        }
+        if (!(subject.orElseThrow() instanceof Solution) && !(subject.orElseThrow() instanceof Query)) {
+            throw execException(tree("The "
+                    + FOR_ALL_COMBINATIONS_OF
+                    + " function requires a Solution or Query as a subject, but "
+                    + subject.orElseThrow().getClass().getName()
+                    + " was given instead.")
+                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
+        }
+        if (!(functionCall.getArguments().size() >= 1)) {
+            throw execException(tree("The "
+                    + FOR_ALL_COMBINATIONS_OF
+                    + " function requires more than one argument, but " + functionCall.getArguments().size() + " were given instead.")
+                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
+        }
+        functionCall.getArguments().forEach(a -> {
+            if (!(a.getExpression() instanceof FunctionCallDesc)) {
+                throw execException(tree("The "
+                        + FOR_ALL_COMBINATIONS_OF
+                        + " function only supports function calls as arguments, but " + a.getExpression().getClass().getName()
+                        + " was given instead.")
+                        .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
+            }
+        });
         final var groupingAttributes = functionCall.getArguments().stream()
-                .map(a -> context.<Attribute<? extends Object>>resolve(((FunctionCallDesc) a.getExpression()).getName()))
+                .map(a -> {
+                    switch (a.getExpression()) {
+                        case FunctionCallDesc fcd -> {
+                            return context.<Attribute<? extends Object>>resolve((fcd).getName(), fcd);
+                        }
+                        default -> throw execException(tree("Only function calls are supported as argument for "
+                                + FOR_ALL_COMBINATIONS_OF
+                                + ", but "
+                                + a.getExpression().getClass().getName()
+                                + " else was given.")
+                                .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree())
+                                .withProperty("Affected argument", a.getSourceCodeQuote().userReferenceTree()));
+                    }
+                })
                 .toList();
         final Query subjectVal;
         if (subject.orElseThrow() instanceof Solution solution) {

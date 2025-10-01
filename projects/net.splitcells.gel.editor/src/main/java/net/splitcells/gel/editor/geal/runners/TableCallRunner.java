@@ -27,6 +27,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.data.table.Tables.table;
@@ -53,14 +54,16 @@ public class TableCallRunner implements FunctionCallRunner {
             return run;
         }
         if (functionCall.getArguments().size() < 3) {
-            throw execException("The table function requires at least 2 arguments, but " + functionCall.getArguments().size() + " were given.");
+            throw execException(tree("The table function requires at least 2 arguments, but " + functionCall.getArguments().size() + " were given instead.")
+                    .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
         }
         final var first = functionCall.getArguments().get(0).getExpression();
         final String tableName;
         switch (first) {
             case StringDesc n -> tableName = n.getValue();
             default ->
-                    throw execException("The first argument has to be the table name represented by a string, but is a " + first.getClass() + " was given.");
+                    throw execException(tree("The first argument of the table function has to be the table name represented by a string, but a " + first.getClass().getName() + " was given instead.")
+                            .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
         }
         final List<Attribute<?>> attributes = list();
         IntStream.range(1, functionCall.getArguments().size()).forEach(i -> {
@@ -68,13 +71,18 @@ public class TableCallRunner implements FunctionCallRunner {
             switch (functionCall.getArguments().get(i).getExpression()) {
                 case FunctionCallDesc n -> {
                     if (n.getArguments().hasElements()) {
-                        throw notImplementedYet();
+                        throw execException(tree("Starting with the second argument of the table function, the arguments have to be a reference to a table, but instead a function is called.")
+                                .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree())
+                                .withProperty("Incorrect argument", n.getSourceCodeQuote().userReferenceTree()));
                     }
                     attributes.add(context.getAttributes().get(n.getName().getValue()));
                 }
-                default -> throw execException("Argument after the first one has to be the attribute names, but is a "
-                        + functionCall.getArguments().get(i).getClass()
-                        + " was given.");
+                default ->
+                        throw execException(tree("The table function arguments after the first one has to be attribute names, but a "
+                                + functionCall.getArguments().get(i).getClass()
+                                + " was given instead.")
+                                .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree())
+                                .withProperty("Incorrect argument", functionCall.getArguments().get(i).getSourceCodeQuote().userReferenceTree()));
             }
         });
         return run.setResult(Optional.of(table(tableName, context, attributes)));

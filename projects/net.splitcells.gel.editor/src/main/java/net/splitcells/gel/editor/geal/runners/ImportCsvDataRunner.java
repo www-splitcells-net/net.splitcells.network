@@ -23,6 +23,7 @@ import net.splitcells.gel.editor.geal.lang.StringDesc;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.parseString;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
@@ -39,6 +40,8 @@ public class ImportCsvDataRunner implements FunctionCallRunner {
         return new ImportCsvDataRunner();
     }
 
+    private static final String IMPORT_CSV_DATA = "importCsvData";
+
     private ImportCsvDataRunner() {
 
     }
@@ -47,16 +50,26 @@ public class ImportCsvDataRunner implements FunctionCallRunner {
     public FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
         final var run = functionCallRun(subject, context);
         final Table tableSubject;
-        if (subject.orElseThrow() instanceof Table table) {
-            tableSubject = table;
-        } else {
-            return run;
-        }
         if (!functionCall.getName().getValue().equals("importCsvData")) {
             return run;
         }
+        if (subject.isEmpty()) {
+            throw execException(tree("The function " + IMPORT_CSV_DATA + " requires a table subject, but none was given instead.")
+                    .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
+        }
+        if (subject.orElseThrow() instanceof Table table) {
+            tableSubject = table;
+        } else {
+            throw execException(tree("The function " + IMPORT_CSV_DATA + " requires a table subject, but a "
+                    + subject.orElseThrow().getClass().getName()
+                    + " was given instead.")
+                    .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
+        }
         if (functionCall.getArguments().size() != 1) {
-            return run;
+            throw execException(tree("The function " + IMPORT_CSV_DATA + " requires exactly one argument, but "
+                    + functionCall.getArguments().size()
+                    + " were given instead.")
+                    .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
         }
         final var firstArg = context.parse(functionCall.getArguments().get(0));
         if (firstArg instanceof String dataName) {
@@ -67,7 +80,10 @@ public class ImportCsvDataRunner implements FunctionCallRunner {
             tableSubject.withAddedCsv(parseString(csvData.getContent()));
             run.setResult(Optional.of(tableSubject));
         } else {
-            throw execException();
+            throw execException(tree("The function " + IMPORT_CSV_DATA + " requires a String as the argument, but a "
+                    + firstArg.getClass().getName()
+                    + " was given instead.")
+                    .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
         }
         return run;
     }

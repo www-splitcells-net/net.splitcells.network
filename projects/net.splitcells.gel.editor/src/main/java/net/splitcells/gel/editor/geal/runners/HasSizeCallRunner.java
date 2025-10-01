@@ -21,6 +21,8 @@ import net.splitcells.gel.editor.geal.lang.IntegerDesc;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 import static net.splitcells.gel.rating.rater.lib.HasSize.HAS_SIZE_NAME;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
@@ -31,10 +33,7 @@ public class HasSizeCallRunner implements FunctionCallRunner {
     }
 
     private boolean supports(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
-        return subject.isEmpty()
-                && functionCall.getName().getValue().equals(HAS_SIZE_NAME)
-                && functionCall.getArguments().size() == 1
-                && functionCall.getArguments().get(0).getExpression() instanceof IntegerDesc;
+        return functionCall.getName().getValue().equals(HAS_SIZE_NAME);
     }
 
     @Override
@@ -42,6 +41,25 @@ public class HasSizeCallRunner implements FunctionCallRunner {
         final var run = functionCallRun(subject, context);
         if (!supports(functionCall, subject, context)) {
             return run;
+        }
+        if (subject.isPresent()) {
+            throw execException(tree("The "
+                    + HAS_SIZE_NAME
+                    + " function does not support subjects, but one was given.")
+                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
+        }
+        if (functionCall.getArguments().size() != 1) {
+            throw execException(tree("The "
+                    + HAS_SIZE_NAME
+                    + " function requires more exactly one argument, but " + functionCall.getArguments().size() + " were given instead.")
+                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
+        }
+        if (!(functionCall.getArguments().get(0).getExpression() instanceof IntegerDesc)) {
+            throw execException(tree("The "
+                    + HAS_SIZE_NAME
+                    + " functions first argument has to be an integer, but "
+                    + functionCall.getArguments().get(0).getExpression().getClass().getName() + " were given instead.")
+                    .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
         }
         final var targetSize = functionCall.getArguments().get(0).getExpression().to(IntegerDesc.class).getValue();
         run.setResult(Optional.of(hasSize(targetSize)));

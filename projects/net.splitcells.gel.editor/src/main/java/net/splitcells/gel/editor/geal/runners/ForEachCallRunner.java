@@ -23,6 +23,8 @@ import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.constraint.type.ForAlls.FOR_EACH_NAME;
@@ -52,7 +54,17 @@ public class ForEachCallRunner implements FunctionCallRunner {
         if (!supports(functionCall, subject, context)) {
             return run;
         }
-        final var groupingName = ((FunctionCallDesc) functionCall.getArguments().get(0).getExpression()).getName();
+        final NameDesc groupingName;
+        switch (functionCall.getArguments().get(0).getExpression()) {
+            case FunctionCallDesc fcd -> {
+                groupingName = fcd.getName();
+            }
+            default -> throw execException(tree("The first argument has to be a variable reference, but is "
+                    + functionCall.getArguments().get(0).getExpression().getClass()
+                    + ".")
+                    .withProperty("Affected argument", functionCall.getArguments().get(0).getExpression().getSourceCodeQuote().userReferenceTree())
+                    .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
+        }
         final var groupingAttribute = context.getAttributes().get(groupingName.getValue());
         final Query subjectVal;
         if (subject.orElseThrow() instanceof Solution solution) {

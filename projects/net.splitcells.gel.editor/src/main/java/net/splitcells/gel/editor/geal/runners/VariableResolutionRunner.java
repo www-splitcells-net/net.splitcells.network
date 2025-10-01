@@ -35,7 +35,7 @@ public class VariableResolutionRunner implements FunctionCallRunner {
     public FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
         final var run = functionCallRun(subject, context);
         if (functionCall.getArguments().isEmpty()) {
-            return run.setResult(context.resolve(functionCall.getName()));
+            return run.setResult(context.resolve(functionCall.getName(), functionCall));
         }
         return run;
     }
