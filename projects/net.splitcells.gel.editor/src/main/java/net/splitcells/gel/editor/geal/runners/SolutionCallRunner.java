@@ -53,8 +53,9 @@ public class SolutionCallRunner implements FunctionCallRunner {
         if (!supports(functionCall)) {
             return run;
         }
-        if (functionCall.getArguments().size() != 4) {
-            throw execException("The solution function requires at exactly 4 arguments, but " + functionCall.getArguments().size() + " were given.");
+        if (functionCall.getArguments().size() != 3) {
+            throw execException(tree("The solution function requires exactly 4 arguments, but " + functionCall.getArguments().size() + " were given.")
+                    .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
         }
         final var first = functionCall.getArguments().get(0).getExpression();
         final String solutionName;
