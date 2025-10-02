@@ -7,8 +7,10 @@
 set +e
 set +x
 # Build BOMs first, as otherwise `mvn wrapper:wrapper` will not run, because the dependency BOM with the scope import cannot be read.
-  cd ../net.splitcells.network.bom.base && mvn clean install
-  cd ../net.splitcells.network.bom && mvn clean install
+  cd ../net.splitcells.network.bom.base
+  mvn clean install
+  cd ../net.splitcells.network.bom
+  mvn clean install
 cd ../net.splitcells.network
   mvn wrapper:wrapper -Dmaven=3.9.9 # Sets up the Maven version, in order to avoid build problems regarding the site goal.
   export PATH="$(realpath ./):$PATH"
