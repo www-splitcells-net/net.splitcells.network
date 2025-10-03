@@ -19,6 +19,7 @@ import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 import net.splitcells.gel.editor.geal.lang.NameDesc;
 import net.splitcells.gel.editor.geal.lang.StringDesc;
+import net.splitcells.gel.editor.meta.Type;
 
 import java.util.Optional;
 
@@ -28,6 +29,8 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
 import static net.splitcells.gel.data.view.attribute.AttributeI.stringAttribute;
 import static net.splitcells.gel.editor.EditorParser.*;
+import static net.splitcells.gel.editor.geal.lang.NameDesc.nameDesc;
+import static net.splitcells.gel.editor.geal.lang.StringDesc.stringDesc;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 
 public class AttributeCallRunner implements FunctionCallRunner {
@@ -59,23 +62,20 @@ public class AttributeCallRunner implements FunctionCallRunner {
             throw execException(tree("The attribute function requires exactly 2 arguments, but " + functionCall.getArguments().size() + " were given.")
                     .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
         }
-        final var first = functionCall.getArguments().get(0).getExpression();
+        final var first = context.parse(functionCall.getArguments().get(0));
         final NameDesc firstName;
         switch (first) {
-            case FunctionCallDesc n -> {
-                if (n.getArguments().hasElements()) {
-                    throw notImplementedYet();
-                }
-                firstName = NameDesc.nameDesc(n.getName().getValue(), n.getSourceCodeQuote());
+            case Type n -> {
+                firstName = nameDesc(n.getName(), functionCall.getArguments().get(0).getSourceCodeQuote());
             }
             default ->
                     throw execException(tree("The first argument has to be a name, but " + first.getClass() + " was given.")
                             .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
         }
-        final var second = functionCall.getArguments().get(1).getExpression();
+        final var second = context.parse(functionCall.getArguments().get(1));
         final StringDesc secondName;
         switch (second) {
-            case StringDesc n -> secondName = n;
+            case String n -> secondName = stringDesc(n, functionCall.getArguments().get(1).getSourceCodeQuote());
             default ->
                     throw execException(tree("The second argument has to be a string, but " + second.getClass() + " was given.")
                             .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));

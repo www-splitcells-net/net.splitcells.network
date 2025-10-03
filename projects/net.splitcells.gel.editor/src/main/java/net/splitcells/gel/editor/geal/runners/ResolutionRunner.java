@@ -20,24 +20,33 @@ import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 
 import java.util.Optional;
 
+import static net.splitcells.gel.editor.EditorParser.INTEGER_TYPE;
+import static net.splitcells.gel.editor.EditorParser.STRING_TYPE;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
+import static net.splitcells.gel.editor.meta.Type.type;
 
-public class VariableResolutionRunner implements FunctionCallRunner {
-    public static VariableResolutionRunner variableResolutionRunner() {
-        return new VariableResolutionRunner();
+public class ResolutionRunner implements FunctionCallRunner {
+    public static ResolutionRunner resolutionRunner() {
+        return new ResolutionRunner();
     }
 
-    private VariableResolutionRunner() {
+    private ResolutionRunner() {
 
     }
 
     @Override
     public FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
         final var run = functionCallRun(subject, context);
+        final var name = functionCall.getName().getValue();
         if (functionCall.getArguments().isEmpty()) {
             final var resolution = context.resolveRaw(functionCall.getName());
             if (resolution.isPresent()) {
                 return run.setResult(resolution);
+            }
+            if (name.equals(STRING_TYPE)) {
+                run.setResult(Optional.of(type(STRING_TYPE)));
+            } else if (name.equals(INTEGER_TYPE)) {
+                run.setResult(Optional.of(type(INTEGER_TYPE)));
             }
         }
         return run;
