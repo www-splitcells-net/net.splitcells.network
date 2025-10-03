@@ -49,6 +49,7 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
 
     public static FunctionCallMetaExecutor functionCallMetaExecutor() {
         return new FunctionCallMetaExecutor()
+                .registerExecutor(variableResolutionRunner())
                 .registerExecutor(attributeCallRunner())
                 .registerExecutor(tableCallRunner())
                 .registerExecutor(solutionCallRunner())
@@ -58,7 +59,6 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
                 .registerExecutor(hasSizeCallRunner())
                 .registerExecutor(importCsvDataRunner())
                 .registerExecutor(outputFormatCallRunner())
-                .registerExecutor(variableResolutionRunner())
                 ;
     }
 
