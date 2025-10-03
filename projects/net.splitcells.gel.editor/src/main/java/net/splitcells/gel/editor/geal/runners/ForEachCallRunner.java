@@ -16,6 +16,7 @@
 package net.splitcells.gel.editor.geal.runners;
 
 import net.splitcells.gel.constraint.Query;
+import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 import net.splitcells.gel.editor.geal.lang.NameDesc;
@@ -54,25 +55,26 @@ public class ForEachCallRunner implements FunctionCallRunner {
         if (!supports(functionCall, subject, context)) {
             return run;
         }
-        final NameDesc groupingName;
-        switch (functionCall.getArguments().get(0).getExpression()) {
-            case FunctionCallDesc fcd -> {
-                groupingName = fcd.getName();
+        final Attribute<?> groupingAttribute;
+        switch (context.parse(functionCall.getArguments().get(0))) {
+            case Attribute<? extends Object> attribute -> {
+                groupingAttribute = attribute;
             }
             default -> throw execException(tree("The first argument has to be a variable reference, but is "
                     + functionCall.getArguments().get(0).getExpression().getClass()
                     + ".")
-                    .withProperty("Affected argument", functionCall.getArguments().get(0).getExpression().getSourceCodeQuote().userReferenceTree())
+                    .withProperty("Affected argument", functionCall.getArguments().get(0).getSourceCodeQuote().userReferenceTree())
                     .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
         }
-        final var groupingAttribute = context.getAttributes().get(groupingName.getValue());
         final Query subjectVal;
         if (subject.orElseThrow() instanceof Solution solution) {
             subjectVal = query(solution.constraint());
         } else if (subject.orElseThrow() instanceof Query query) {
             subjectVal = query;
         } else {
-            throw notImplementedYet();
+            throw execException(tree("The function " + FOR_EACH_NAME + " requires a solution or a query as the subject. Instead a "
+                    + subject.orElseThrow().getClass().getName() + " was given.")
+                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
         }
         run.setResult(Optional.of(subjectVal.forAll(groupingAttribute)));
         return run;
