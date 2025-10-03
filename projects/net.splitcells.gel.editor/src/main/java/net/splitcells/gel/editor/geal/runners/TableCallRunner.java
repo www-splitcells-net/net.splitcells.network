@@ -67,16 +67,8 @@ public class TableCallRunner implements FunctionCallRunner {
         }
         final List<Attribute<?>> attributes = list();
         IntStream.range(1, functionCall.getArguments().size()).forEach(i -> {
-            final Attribute<?> att;
-            switch (functionCall.getArguments().get(i).getExpression()) {
-                case FunctionCallDesc n -> {
-                    if (n.getArguments().hasElements()) {
-                        throw execException(tree("Starting with the second argument of the table function, the arguments have to be a reference to a table, but instead a function is called.")
-                                .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree())
-                                .withProperty("Incorrect argument", n.getSourceCodeQuote().userReferenceTree()));
-                    }
-                    attributes.add(context.getAttributes().get(n.getName().getValue()));
-                }
+            switch (context.parse(functionCall.getArguments().get(i))) {
+                case Attribute<? extends Object> attribute -> attributes.add(attribute);
                 default ->
                         throw execException(tree("The table function arguments after the first one has to be attribute names, but a "
                                 + functionCall.getArguments().get(i).getClass()
