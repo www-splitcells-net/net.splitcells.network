@@ -15,6 +15,7 @@ current=$(pwd)
 rm -rf ~/.m2/repository/net/splitcells/ # Our packages are deleted, as SNAPSHOT builds are often used, which can create a cache problems in the build.
 # Build BOMs first, as otherwise `mvn wrapper:wrapper` will not run, because the dependency BOM with the scope import cannot be read.
   pwd # TODO Remove this debug statement.
+  ls -al # TODO Remove this debug statement.
   cd ../net.splitcells.network.bom.base
   mvn clean install
   cd ../net.splitcells.network.bom
