@@ -15,23 +15,15 @@
  */
 package net.splitcells.gel.editor.geal.parser;
 
-import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.source.geal.GealParser;
 import net.splitcells.gel.editor.geal.lang.ExpressionDesc;
-import net.splitcells.gel.editor.geal.lang.FunctionCallChainDesc;
-import net.splitcells.gel.editor.geal.lang.IntegerDesc;
-import net.splitcells.gel.editor.lang.SourceCodeQuote;
 
 import static java.lang.Integer.parseInt;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
-import static net.splitcells.gel.editor.geal.lang.FunctionCallChainDesc.functionCallChainDesc;
-import static net.splitcells.gel.editor.geal.lang.FunctionCallDesc.functionCallDesc;
 import static net.splitcells.gel.editor.geal.lang.IntegerDesc.integerDesc;
-import static net.splitcells.gel.editor.geal.lang.NameDesc.nameDesc;
 import static net.splitcells.gel.editor.geal.lang.StringDesc.stringDesc;
-import static net.splitcells.gel.editor.geal.parser.FunctionCallChainParser.parseFunctionCallChain;
 import static net.splitcells.gel.editor.geal.parser.FunctionCallParser.parseFunctionCall;
 import static net.splitcells.gel.editor.lang.SourceCodeQuote.sourceCodeQuote;
 

@@ -22,7 +22,7 @@ import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuot
 
 public final class IntegerDesc implements ExpressionDesc {
 
-    public static IntegerDesc integerDesc(int value) {
+    public static IntegerDesc integerDescForTest(int value) {
         return integerDesc(value, emptySourceCodeQuote());
     }
 

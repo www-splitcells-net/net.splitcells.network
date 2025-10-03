@@ -16,6 +16,7 @@
 package net.splitcells.gel.editor;
 
 import net.splitcells.dem.testing.annotations.UnitTest;
+import net.splitcells.gel.editor.geal.lang.*;
 import net.splitcells.gel.editor.lang.*;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -42,11 +43,6 @@ import static net.splitcells.gel.editor.lang.SolutionDescription.solutionDescrip
 import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuote;
 import static net.splitcells.gel.editor.lang.TableDescription.tableDescription;
 import static net.splitcells.gel.editor.SolutionEditor.solutionEditor;
-import static net.splitcells.gel.editor.geal.lang.FunctionCallChainDesc.functionCallChainDesc;
-import static net.splitcells.gel.editor.geal.lang.IntegerDesc.integerDesc;
-import static net.splitcells.gel.editor.geal.lang.NameDesc.nameDesc;
-import static net.splitcells.gel.editor.geal.lang.SourceUnit.sourceUnit;
-import static net.splitcells.gel.editor.geal.lang.StringDesc.stringDesc;
 import static net.splitcells.gel.editor.geal.lang.VariableDefinitionDesc.variableDefinitionDesc;
 import static net.splitcells.gel.rating.rater.lib.HasSize.HAS_SIZE_NAME;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
@@ -115,61 +111,61 @@ public class EditorTest {
     @UnitTest
     public void testGealInterpretation() {
         final var testSubject = editor("test-subject", EXPLICIT_NO_CONTEXT);
-        final var testData = sourceUnit(list(
-                variableDefinitionDesc(nameDesc("student")
-                        , functionCallDesc2(nameDesc("attribute")
-                                , list(functionCallDesc3(STRING_TYPE), stringDesc("student"))))
-                , variableDefinitionDesc(nameDesc("examiner")
-                        , functionCallDesc2(nameDesc("attribute")
-                                , list(functionCallDesc3(STRING_TYPE), stringDesc("examiner"))))
-                , variableDefinitionDesc(nameDesc("observer")
-                        , functionCallDesc2(nameDesc("attribute")
-                                , list(functionCallDesc3(STRING_TYPE), stringDesc("observer"))))
-                , variableDefinitionDesc(nameDesc("date")
-                        , functionCallDesc2(nameDesc("attribute")
-                                , list(functionCallDesc3(INTEGER_TYPE), stringDesc("date"))))
-                , variableDefinitionDesc(nameDesc("shift")
-                        , functionCallDesc2(nameDesc("attribute")
-                                , list(functionCallDesc3(INTEGER_TYPE), stringDesc("shift"))))
-                , variableDefinitionDesc(nameDesc("roomNumber")
-                        , functionCallDesc2(nameDesc("attribute")
-                                , list(functionCallDesc3(INTEGER_TYPE), stringDesc("roomNumber"))))
-                , variableDefinitionDesc(nameDesc("demands")
-                        , functionCallDesc2(nameDesc(TABLE_FUNCTION)
-                                , list(stringDesc("exams")
-                                        , functionCallDesc3("student")
-                                        , functionCallDesc3("examiner")
-                                        , functionCallDesc3("observer"))))
-                , variableDefinitionDesc(nameDesc("supplies")
-                        , functionCallDesc2(nameDesc(TABLE_FUNCTION)
-                                , list(stringDesc("time slots")
-                                        , functionCallDesc3("date")
-                                        , functionCallDesc3("shift")
-                                        , functionCallDesc3("roomNumber"))))
-                , variableDefinitionDesc(nameDesc("solution")
-                        , functionCallDesc2(nameDesc(SOLUTION_FUNCTION)
-                                , list(stringDesc("Colloquium Plan")
-                                        , functionCallDesc3("demands")
-                                        , functionCallDesc3("supplies"))))
-                , functionCallChainDesc(nameDesc("solution")
-                        , list(functionCallDesc2(nameDesc(FOR_EACH_NAME), list(functionCallDesc3("examiner")))
-                                , functionCallDesc2(nameDesc(FOR_ALL_COMBINATIONS_OF)
-                                        , list(functionCallDesc3("date"), functionCallDesc3("shift")))
-                                , functionCallDesc2(nameDesc(THEN_NAME)
-                                        , list(functionCallDesc2(nameDesc(HAS_SIZE_NAME)
-                                                , list(integerDesc(1)))))))
-                , functionCallChainDesc(nameDesc("solution")
-                        , list(functionCallDesc2(nameDesc(FOR_EACH_NAME), list(functionCallDesc3("student")))
-                                , functionCallDesc2(nameDesc(FOR_ALL_COMBINATIONS_OF)
-                                        , list(functionCallDesc3("date"), functionCallDesc3("shift")))
-                                , functionCallDesc2(nameDesc(THEN_NAME)
-                                        , list(functionCallDesc2(nameDesc(HAS_SIZE_NAME)
-                                                , list(integerDesc(1)))))))
-                , functionCallChainDesc(nameDesc("solution")
-                        , list(functionCallDesc2(nameDesc(FOR_EACH_NAME), list(functionCallDesc3("student")))
-                                , functionCallDesc2(nameDesc(THEN_NAME)
-                                        , list(functionCallDesc2(nameDesc(HAS_SIZE_NAME)
-                                                , list(integerDesc(2)))))))
+        final var testData = SourceUnit.sourceUnitForTest(list(
+                variableDefinitionDesc(NameDesc.nameDescForTest("student")
+                        , FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest("attribute")
+                                , list(functionCallDescForTest(STRING_TYPE), StringDesc.stringDescForTest("student"))))
+                , variableDefinitionDesc(NameDesc.nameDescForTest("examiner")
+                        , FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest("attribute")
+                                , list(functionCallDescForTest(STRING_TYPE), StringDesc.stringDescForTest("examiner"))))
+                , variableDefinitionDesc(NameDesc.nameDescForTest("observer")
+                        , FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest("attribute")
+                                , list(functionCallDescForTest(STRING_TYPE), StringDesc.stringDescForTest("observer"))))
+                , variableDefinitionDesc(NameDesc.nameDescForTest("date")
+                        , FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest("attribute")
+                                , list(functionCallDescForTest(INTEGER_TYPE), StringDesc.stringDescForTest("date"))))
+                , variableDefinitionDesc(NameDesc.nameDescForTest("shift")
+                        , FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest("attribute")
+                                , list(functionCallDescForTest(INTEGER_TYPE), StringDesc.stringDescForTest("shift"))))
+                , variableDefinitionDesc(NameDesc.nameDescForTest("roomNumber")
+                        , FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest("attribute")
+                                , list(functionCallDescForTest(INTEGER_TYPE), StringDesc.stringDescForTest("roomNumber"))))
+                , variableDefinitionDesc(NameDesc.nameDescForTest("demands")
+                        , FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(TABLE_FUNCTION)
+                                , list(StringDesc.stringDescForTest("exams")
+                                        , functionCallDescForTest("student")
+                                        , functionCallDescForTest("examiner")
+                                        , functionCallDescForTest("observer"))))
+                , variableDefinitionDesc(NameDesc.nameDescForTest("supplies")
+                        , FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(TABLE_FUNCTION)
+                                , list(StringDesc.stringDescForTest("time slots")
+                                        , functionCallDescForTest("date")
+                                        , functionCallDescForTest("shift")
+                                        , functionCallDescForTest("roomNumber"))))
+                , variableDefinitionDesc(NameDesc.nameDescForTest("solution")
+                        , FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(SOLUTION_FUNCTION)
+                                , list(StringDesc.stringDescForTest("Colloquium Plan")
+                                        , functionCallDescForTest("demands")
+                                        , functionCallDescForTest("supplies"))))
+                , FunctionCallChainDesc.functionCallChainDescForTest(NameDesc.nameDescForTest("solution")
+                        , list(FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(FOR_EACH_NAME), list(functionCallDescForTest("examiner")))
+                                , FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(FOR_ALL_COMBINATIONS_OF)
+                                        , list(functionCallDescForTest("date"), functionCallDescForTest("shift")))
+                                , FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(THEN_NAME)
+                                        , list(FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(HAS_SIZE_NAME)
+                                                , list(IntegerDesc.integerDescForTest(1)))))))
+                , FunctionCallChainDesc.functionCallChainDescForTest(NameDesc.nameDescForTest("solution")
+                        , list(FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(FOR_EACH_NAME), list(functionCallDescForTest("student")))
+                                , FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(FOR_ALL_COMBINATIONS_OF)
+                                        , list(functionCallDescForTest("date"), functionCallDescForTest("shift")))
+                                , FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(THEN_NAME)
+                                        , list(FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(HAS_SIZE_NAME)
+                                                , list(IntegerDesc.integerDescForTest(1)))))))
+                , FunctionCallChainDesc.functionCallChainDescForTest(NameDesc.nameDescForTest("solution")
+                        , list(FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(FOR_EACH_NAME), list(functionCallDescForTest("student")))
+                                , FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(THEN_NAME)
+                                        , list(FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(HAS_SIZE_NAME)
+                                                , list(IntegerDesc.integerDescForTest(2)))))))
         ));
         testSubject.interpret(testData);
         testSubject.getAttributes().requirePresence("student", stringAttribute("student"), CONTENT_COMPARISON)

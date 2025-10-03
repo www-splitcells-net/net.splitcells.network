@@ -21,7 +21,6 @@ import net.splitcells.gel.editor.geal.lang.FunctionCallChainDesc;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.gel.editor.geal.lang.FunctionCallChainDesc.functionCallChainDesc;
 import static net.splitcells.gel.editor.geal.parser.ExpressionParser.parseExpression;
 import static net.splitcells.gel.editor.geal.parser.FunctionCallParser.parseFunctionCall;
 
@@ -41,6 +40,6 @@ public class FunctionCallChainParser extends net.splitcells.dem.source.geal.Geal
         if (ctx.function_call() != null) {
             ctx.function_call().forEach(f -> chain.add(parseFunctionCall(f)));
         }
-        return functionCallChainDesc(expression, chain);
+        return FunctionCallChainDesc.functionCallChainDescForTest(expression, chain);
     }
 }

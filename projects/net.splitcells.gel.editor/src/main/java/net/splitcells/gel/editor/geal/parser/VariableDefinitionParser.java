@@ -17,10 +17,7 @@ package net.splitcells.gel.editor.geal.parser;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.source.geal.GealParser;
-import net.splitcells.gel.editor.geal.lang.NameDesc;
-import net.splitcells.gel.editor.geal.lang.StatementDesc;
 import net.splitcells.gel.editor.geal.lang.VariableDefinitionDesc;
-import net.splitcells.gel.editor.lang.SourceCodeQuote;
 
 import static net.splitcells.gel.editor.geal.lang.NameDesc.nameDesc;
 import static net.splitcells.gel.editor.geal.lang.VariableDefinitionDesc.variableDefinitionDesc;

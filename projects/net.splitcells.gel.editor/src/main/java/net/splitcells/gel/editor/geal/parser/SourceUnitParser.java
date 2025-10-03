@@ -24,7 +24,6 @@ import net.splitcells.gel.editor.geal.lang.StatementDesc;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
-import static net.splitcells.gel.editor.geal.lang.SourceUnit.sourceUnit;
 import static net.splitcells.gel.editor.geal.parser.GealAntlrUtils.parseSourceUnit;
 import static net.splitcells.gel.editor.geal.parser.StatementParser.parseStatement;
 
@@ -44,6 +43,6 @@ public class SourceUnitParser extends net.splitcells.dem.source.geal.GealParserB
         ctx.statement().forEach(s -> {
             statements.add(parseStatement(s));
         });
-        return sourceUnit(statements);
+        return SourceUnit.sourceUnitForTest(statements);
     }
 }

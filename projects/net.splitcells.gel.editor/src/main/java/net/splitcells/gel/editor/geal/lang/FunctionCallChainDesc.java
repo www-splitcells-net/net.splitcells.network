@@ -23,11 +23,11 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuote;
 
 public final class FunctionCallChainDesc implements StatementDesc {
-    public static FunctionCallChainDesc functionCallChainDesc(ExpressionDesc expression) {
+    public static FunctionCallChainDesc functionCallChainDescForTest(ExpressionDesc expression) {
         return functionCallChainDesc(expression, list(), emptySourceCodeQuote());
     }
 
-    public static FunctionCallChainDesc functionCallChainDesc(ExpressionDesc expression
+    public static FunctionCallChainDesc functionCallChainDescForTest(ExpressionDesc expression
             , List<FunctionCallDesc> functionCalls) {
         return functionCallChainDesc(expression, functionCalls, emptySourceCodeQuote());
     }

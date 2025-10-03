@@ -23,7 +23,7 @@ import net.splitcells.gel.editor.lang.SourceCodeQuote;
 import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuote;
 
 public class SourceUnit implements SourceCodeQuotation {
-    public static SourceUnit sourceUnit(List<StatementDesc> statements) {
+    public static SourceUnit sourceUnitForTest(List<StatementDesc> statements) {
         return new SourceUnit(statements, emptySourceCodeQuote());
     }
 

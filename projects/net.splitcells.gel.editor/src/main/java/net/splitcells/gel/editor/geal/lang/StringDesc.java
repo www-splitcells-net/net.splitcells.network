@@ -21,7 +21,7 @@ import net.splitcells.gel.editor.lang.SourceCodeQuote;
 import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuote;
 
 public final class StringDesc implements ExpressionDesc {
-    public static StringDesc stringDesc(String value) {
+    public static StringDesc stringDescForTest(String value) {
         return new StringDesc(value, emptySourceCodeQuote());
     }
 

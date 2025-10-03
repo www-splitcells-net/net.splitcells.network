@@ -25,7 +25,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuote;
 
 public final class NameDesc implements ExpressionDesc {
-    public static NameDesc nameDesc(String value) {
+    public static NameDesc nameDescForTest(String value) {
         return new NameDesc(value, emptySourceCodeQuote());
     }
 

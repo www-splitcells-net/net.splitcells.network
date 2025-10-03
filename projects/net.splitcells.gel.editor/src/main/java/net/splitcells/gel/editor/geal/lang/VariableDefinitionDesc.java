@@ -19,11 +19,10 @@ import lombok.Getter;
 import net.splitcells.gel.editor.lang.SourceCodeQuote;
 
 import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuote;
-import static net.splitcells.gel.editor.geal.lang.FunctionCallChainDesc.functionCallChainDesc;
 
 public final class VariableDefinitionDesc implements StatementDesc {
     public static VariableDefinitionDesc variableDefinitionDesc(NameDesc name, ExpressionDesc expression) {
-        return variableDefinitionDesc(name, functionCallChainDesc(expression), emptySourceCodeQuote());
+        return variableDefinitionDesc(name, FunctionCallChainDesc.functionCallChainDescForTest(expression), emptySourceCodeQuote());
     }
 
     public static VariableDefinitionDesc variableDefinitionDesc(NameDesc name, FunctionCallChainDesc functionCallChain) {
