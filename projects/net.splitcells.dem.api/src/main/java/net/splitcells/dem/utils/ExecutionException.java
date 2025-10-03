@@ -15,8 +15,12 @@
  */
 package net.splitcells.dem.utils;
 
+import lombok.Getter;
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.tree.Tree;
+
+import static net.splitcells.dem.data.set.list.Lists.list;
 
 @JavaLegacyArtifact
 public class ExecutionException extends RuntimeException {
@@ -52,23 +56,29 @@ public class ExecutionException extends RuntimeException {
         return new ExecutionException(message, t);
     }
 
-    private ExecutionException(String message, Throwable t) {
-        super(message, t);
-    }
-
-    private ExecutionException() {
-        super();
-    }
-
     public static ExecutionException execException(Throwable t) {
         return new ExecutionException(t);
     }
 
+    @Getter private final List<Tree> trees;
+
+    private ExecutionException(String message, Throwable t) {
+        super(message, t);
+        trees = list();
+    }
+
+    private ExecutionException() {
+        super();
+        trees = list();
+    }
+
     private ExecutionException(String message) {
         super(message);
+        trees = list();
     }
 
     private ExecutionException(Throwable t) {
         super(t);
+        trees = list();
     }
 }
