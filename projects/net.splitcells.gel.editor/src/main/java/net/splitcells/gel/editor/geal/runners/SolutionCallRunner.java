@@ -58,10 +58,10 @@ public class SolutionCallRunner implements FunctionCallRunner {
             throw execException(tree("The solution function requires exactly 4 arguments, but " + functionCall.getArguments().size() + " were given.")
                     .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
         }
-        final var first = functionCall.getArguments().get(0).getExpression();
+        final var first = context.parse(functionCall.getArguments().get(0));
         final String solutionName;
         switch (first) {
-            case StringDesc n -> solutionName = n.getValue();
+            case String string -> solutionName = string;
             default -> throw execException(tree("The 1st argument of the function "
                     + SOLUTION_FUNCTION
                     + " has to be the solution name represented by a string, but instead a "
@@ -69,15 +69,10 @@ public class SolutionCallRunner implements FunctionCallRunner {
                     + " was given.")
                     .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
         }
-        final var second = functionCall.getArguments().get(1).getExpression();
+        final var second = context.parse(functionCall.getArguments().get(1));
         final Table demands;
         switch (second) {
-            case FunctionCallDesc n -> {
-                if (n.getArguments().hasElements()) {
-                    throw notImplementedYet();
-                }
-                demands = context.getTables().get(n.getName().getValue());
-            }
+            case Table n -> demands = n;
             default -> throw execException(tree("The 2nd argument of the function "
                     + SOLUTION_FUNCTION
                     + " has to be the demand table represented by a variable name, but a "
@@ -85,15 +80,10 @@ public class SolutionCallRunner implements FunctionCallRunner {
                     + " was given instead.")
                     .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
         }
-        final var third = functionCall.getArguments().get(2).getExpression();
+        final var third = context.parse(functionCall.getArguments().get(2));
         final Table supplies;
         switch (third) {
-            case FunctionCallDesc n -> {
-                if (n.getArguments().hasElements()) {
-                    throw notImplementedYet();
-                }
-                supplies = context.getTables().get(n.getName().getValue());
-            }
+            case Table n -> supplies = n;
             default -> throw execException(tree("The 3rd argument of the function "
                     + SOLUTION_FUNCTION
                     + " has to be the supply table represented by a variable name, but a "
