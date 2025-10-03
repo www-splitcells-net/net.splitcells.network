@@ -271,6 +271,6 @@ public class Editor implements Discoverable {
             chainLinkRun = FunctionCallMetaExecutor.child(chainLinkRun).execute(nextCall, subject, this);
             subject = chainLinkRun.getResult();
         }
-        return parsedObject;
+        return subject.orElseThrow();
     }
 }
