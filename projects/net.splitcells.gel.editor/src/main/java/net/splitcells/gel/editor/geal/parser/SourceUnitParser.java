@@ -20,12 +20,14 @@ import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.source.geal.GealParser;
 import net.splitcells.gel.editor.geal.lang.SourceUnit;
 import net.splitcells.gel.editor.geal.lang.StatementDesc;
+import net.splitcells.gel.editor.lang.SourceCodeQuote;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.editor.geal.parser.GealAntlrUtils.parseSourceUnit;
 import static net.splitcells.gel.editor.geal.parser.StatementParser.parseStatement;
+import static net.splitcells.gel.editor.lang.SourceCodeQuote.sourceCodeQuote;
 
 @JavaLegacyArtifact
 public class SourceUnitParser extends net.splitcells.dem.source.geal.GealParserBaseVisitor<SourceUnit> {
@@ -43,6 +45,6 @@ public class SourceUnitParser extends net.splitcells.dem.source.geal.GealParserB
         ctx.statement().forEach(s -> {
             statements.add(parseStatement(s));
         });
-        return SourceUnit.sourceUnitForTest(statements);
+        return SourceUnit.sourceUnit(statements, sourceCodeQuote(ctx));
     }
 }

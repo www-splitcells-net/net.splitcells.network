@@ -38,7 +38,7 @@ public class FunctionCallParser extends net.splitcells.dem.source.geal.GealParse
     public FunctionCallDesc visitFunction_call(GealParser.Function_callContext ctx) {
         final var name = nameDesc(ctx.Name().getText(), sourceCodeQuote(ctx.Name()));
         if (ctx.function_call_arguments() == null) {
-            return FunctionCallDesc.functionCallDescForTest(name);
+            return FunctionCallDesc.functionCallDesc(name, list(), sourceCodeQuote(ctx));
         } else {
             final List<FunctionCallChainDesc> arguments = list();
             arguments.add(parseFunctionCallChain(ctx.function_call_arguments().function_call_chain()));
@@ -46,7 +46,7 @@ public class FunctionCallParser extends net.splitcells.dem.source.geal.GealParse
             if (secondaryArgs != null) {
                 secondaryArgs.forEach(a -> arguments.add(parseFunctionCallChain(a.function_call_chain())));
             }
-            return FunctionCallDesc.functionCallDescForTest2(name, arguments);
+            return FunctionCallDesc.functionCallDesc(name, arguments, sourceCodeQuote(ctx));
         }
     }
 }
