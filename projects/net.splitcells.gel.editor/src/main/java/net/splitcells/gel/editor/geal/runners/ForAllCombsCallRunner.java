@@ -81,9 +81,9 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
         });
         final var groupingAttributes = functionCall.getArguments().stream()
                 .map(a -> {
-                    switch (a.getExpression()) {
-                        case FunctionCallDesc fcd -> {
-                            return context.<Attribute<? extends Object>>resolve((fcd).getName(), fcd);
+                    switch (context.parse(a)) {
+                        case Attribute<? extends Object> attribute -> {
+                            return attribute;
                         }
                         default -> throw execException(tree("Only function calls are supported as argument for "
                                 + FOR_ALL_COMBINATIONS_OF
@@ -93,6 +93,7 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
                                 .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree())
                                 .withProperty("Affected argument", a.getSourceCodeQuote().userReferenceTree()));
                     }
+
                 })
                 .toList();
         final Query subjectVal;
