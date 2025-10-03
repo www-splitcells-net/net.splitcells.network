@@ -16,11 +16,9 @@
 package net.splitcells.gel.editor.geal.runners;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
-import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
@@ -29,8 +27,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.constraint.QueryI.query;
-import static net.splitcells.gel.constraint.type.ForAlls.FOR_ALL_COMBINATIONS_OF;
-import static net.splitcells.gel.editor.TableFormatting.tableFormat;
+import static net.splitcells.gel.data.view.TableFormatting.tableFormat;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 
 public class OutputFormatCallRunner implements FunctionCallRunner {
