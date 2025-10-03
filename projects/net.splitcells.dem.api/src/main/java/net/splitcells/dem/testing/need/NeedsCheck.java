@@ -22,7 +22,6 @@ import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.dem.utils.StringUtils;
-import net.splitcells.dem.utils.TreesException;
 
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -133,8 +132,6 @@ public class NeedsCheck {
             return Result.<T, String>result().withValue(supplier.get());
         } catch (NeedException e) {
             return Result.<T, String>result().withErrorMessage(toCommonMark(e));
-        } catch (TreesException e) {
-            return Result.<T, String>result().withErrorMessage(toCommonMark(e));
         } catch (ExecutionException e) {
             return Result.<T, String>result().withErrorMessage(toCommonMark(e));
         } catch (Throwable t) {
@@ -166,7 +163,15 @@ public class NeedsCheck {
         } else {
             errorMessage.append("# Error Message");
         }
-        joinDocuments(errorMessage, arg.getMessage());
+        if (arg.getMessage() != null) {
+            joinDocuments(errorMessage, arg.getMessage());
+        }
+        if (arg.getMessages().hasElements()) {
+            joinDocuments(errorMessage, arg.getMessages().stream()
+                    .map(Tree::toCommonMarkString)
+                    .reduce(CommonMarkUtils::joinDocuments)
+                    .orElse(""));
+        }
         if (isCause) {
             joinDocuments(errorMessage, "# Causing Stack Trace");
         } else {
@@ -191,29 +196,6 @@ public class NeedsCheck {
             errorMessage.append("# Internal Error Message");
         }
         joinDocuments(errorMessage, arg.getMessage());
-        joinDocuments(errorMessage, "# Causing Stack Trace");
-        joinDocuments(errorMessage, tree(throwableToString(arg)).toCommonMarkString());
-        if (arg.getCause() != null) {
-            joinDocuments(errorMessage, toCommonMark(arg.getCause(), true));
-        }
-        return errorMessage.toString();
-    }
-
-    private static String toCommonMark(TreesException arg) {
-        return toCommonMark(arg, false);
-    }
-
-    private static String toCommonMark(TreesException arg, boolean isCause) {
-        final var errorMessage = StringUtils.stringBuilder();
-        if (isCause) {
-            errorMessage.append("# Causing Error Message\n");
-        } else {
-            errorMessage.append("# Error Message\n");
-        }
-        errorMessage.append(arg.getTrees().stream()
-                .map(Tree::toCommonMarkString)
-                .reduce(CommonMarkUtils::joinDocuments)
-                .orElse(""));
         joinDocuments(errorMessage, "# Causing Stack Trace");
         joinDocuments(errorMessage, tree(throwableToString(arg)).toCommonMarkString());
         if (arg.getCause() != null) {

@@ -21,9 +21,14 @@ import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.tree.Tree;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 
 @JavaLegacyArtifact
 public class ExecutionException extends RuntimeException {
+
+    public static ExecutionException execException(Tree... argTrees) {
+        return execException(listWithValuesOf(argTrees));
+    }
 
     public static ExecutionException unsupportedOperation() {
         return execException("Unsupported operation");
@@ -41,7 +46,11 @@ public class ExecutionException extends RuntimeException {
     }
 
     public static ExecutionException execException(Tree message) {
-        return new ExecutionException(message.toXmlString());
+        return new ExecutionException(listWithValuesOf(message));
+    }
+
+    public static ExecutionException execException(List<Tree> messages) {
+        return new ExecutionException(messages);
     }
 
     public static ExecutionException execException() {
@@ -49,7 +58,7 @@ public class ExecutionException extends RuntimeException {
     }
 
     public static ExecutionException execException(Tree message, Throwable t) {
-        return new ExecutionException(message.toXmlString(), t);
+        return new ExecutionException(listWithValuesOf(message), t);
     }
 
     public static ExecutionException execException(String message, Throwable t) {
@@ -60,25 +69,34 @@ public class ExecutionException extends RuntimeException {
         return new ExecutionException(t);
     }
 
-    @Getter private final List<Tree> trees;
+    @Getter private final List<Tree> messages;
+
+    private ExecutionException(List<Tree> argTrees, Throwable t) {
+        super(t);
+        messages = argTrees;
+    }
+
+    private ExecutionException(List<Tree> argTrees) {
+        messages = argTrees;
+    }
 
     private ExecutionException(String message, Throwable t) {
         super(message, t);
-        trees = list();
+        messages = list();
     }
 
     private ExecutionException() {
         super();
-        trees = list();
+        messages = list();
     }
 
     private ExecutionException(String message) {
         super(message);
-        trees = list();
+        messages = list();
     }
 
     private ExecutionException(Throwable t) {
         super(t);
-        trees = list();
+        messages = list();
     }
 }

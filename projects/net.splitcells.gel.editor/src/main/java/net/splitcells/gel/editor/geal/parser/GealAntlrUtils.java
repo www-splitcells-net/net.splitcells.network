@@ -18,8 +18,8 @@ package net.splitcells.gel.editor.geal.parser;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.source.geal.GealLexer;
-import net.splitcells.dem.source.geal.GealParser;
 import net.splitcells.dem.source.geal.GealParser.Source_unitContext;
+import net.splitcells.dem.utils.ExecutionException;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -28,7 +28,6 @@ import static net.splitcells.dem.lang.AntlrUtils.baseErrorListener;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
-import static net.splitcells.dem.utils.TreesException.treesException;
 
 public class GealAntlrUtils {
 
@@ -39,7 +38,7 @@ public class GealAntlrUtils {
         parser.addErrorListener(baseErrorListener(parsingErrors));
         final var sourceUnit = parser.source_unit();
         if (parsingErrors.hasElements()) {
-            throw treesException(parsingErrors);
+            throw ExecutionException.execException(parsingErrors);
         }
         return sourceUnit;
     }
