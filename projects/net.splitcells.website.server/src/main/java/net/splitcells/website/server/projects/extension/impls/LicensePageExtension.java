@@ -35,6 +35,9 @@ import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.website.server.projects.RenderResponse.renderResponse;
 
+/**
+ * Provides an overview of all licensing relevant info.
+ */
 public class LicensePageExtension implements ProjectsRendererExtension {
 
     public static final Trail PATH = trail("/net/splitcells/website/license-page.html");
