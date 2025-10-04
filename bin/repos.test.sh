@@ -17,6 +17,8 @@ rm -rf ~/.m2/repository/net/splitcells/ # Our packages are deleted, as SNAPSHOT 
   pwd # TODO Remove this debug statement.
   ls -al # TODO Remove this debug statement.
   cd ../net.splitcells.network.bom.base
+  pwd # TODO Remove this debug statement.
+  ls -al # TODO Remove this debug statement.
   mvn clean install
   cd ../net.splitcells.network.bom
   mvn clean install
