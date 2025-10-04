@@ -46,6 +46,12 @@ public class LicensePageExtension implements ProjectsRendererExtension {
         return new LicensePageExtension();
     }
 
+    private static final String INTRO_TEXT = """
+            Provides an overview of all licensing relevant info.
+            The user content stored by this software into a database, data storage or similar,
+            is not considered by this licensing page.
+            The licensing page only considers data, that is part of the program itself.""";
+
     private LicensePageExtension() {
     }
 
@@ -56,7 +62,7 @@ public class LicensePageExtension implements ProjectsRendererExtension {
                     .withProperty("meta", SEW, tree("title", SEW).withText("License Page"));
             final var description = tree("chapter", SEW).withParent(licensePage);
             description.withProperty("title", SEW, "Licensing Documents");
-            description.withProperty("paragraph", SEW, "The user content stored by this software into a database, data storage or similar, is not considered by this licensing page. The licensing page only considers data, that is part of the program itself.");
+            description.withProperty("paragraph", SEW, INTRO_TEXT);
             final var licenseChapter = tree("chapter", SEW).withParent(licensePage);
             licenseChapter.withProperty("title", SEW, "Licensing Documents");
             final var licenseList = tree("list", SEW).withParent(licenseChapter);
