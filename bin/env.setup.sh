@@ -14,5 +14,5 @@ set -x
 cd ../net.splitcells.network
   mvn wrapper:wrapper -Dmaven=3.9.9 # Sets up the Maven version, in order to avoid build problems regarding the site goal.
   export PATH="$(realpath ./):$PATH"
-  echo "cd '$(pwd)' && mvnw \$@" > mvn
+  echo "$(pwd)/mvnw \$@" > mvn
   chmod +x mvn
