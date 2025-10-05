@@ -72,6 +72,7 @@ import static net.splitcells.website.server.projects.extension.impls.LayoutTreeE
 import static net.splitcells.website.server.projects.extension.impls.LicensePageExtension.licensePageExtension;
 import static net.splitcells.website.server.projects.extension.impls.NewsExtension.newsExtension;
 import static net.splitcells.website.server.projects.extension.impls.NotificationExtension.notificationExtension;
+import static net.splitcells.website.server.projects.extension.impls.ResourceLicensingExtension.resourceLicensingExtension;
 import static net.splitcells.website.server.projects.extension.impls.TestExtension.testExtension;
 import static net.splitcells.website.server.projects.extension.impls.UserProfilePageExtension.userProfilePageExtension;
 import static net.splitcells.website.server.projects.extension.status.HostCpuUtilizationExtension.hostCpuUtilizationExtension;
@@ -217,6 +218,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
             , notificationExtension()
             , globalChangelogExtension()
             , newsExtension()
+            , resourceLicensingExtension()
     );
 
     private ProjectsRendererI(String name
