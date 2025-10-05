@@ -15,6 +15,7 @@
  */
 package net.splitcells.website.server.security.access;
 
+import net.splitcells.dem.Dem;
 import net.splitcells.website.server.security.authentication.Authenticator;
 import net.splitcells.website.server.security.authentication.Login;
 import net.splitcells.website.server.security.authentication.UserSession;
@@ -22,6 +23,14 @@ import net.splitcells.website.server.security.authentication.UserSession;
 import java.util.function.BiConsumer;
 
 /**
+ * TODO Consider using the {@link UserSession} that is stored at a new {@link Dem#config()}.
+ * In other words, for every user access a child {@link Dem} would have to be created,
+ * where {@link Dem#config()} is the same as the parent one,
+ * but contains the current {@link UserSession}.
+ * The advantage of this, is the fact, that a {@link UserSession} always exists and
+ * is harder to accidentally swap with other {@link UserSession},
+ * which causes access rights escalations.
+ *
  * @param <T> This is the type of object, whose access is controlled via {@link UserSession}.
  *            The instance of these themselves are responsible to only allow things,
  *            that the {@link UserSession} is allowed to do.
