@@ -50,7 +50,7 @@ public interface Environment extends EnvironmentV, Service {
      * @param clazz
      * @return
      * @param <T>
-     * @see #withCell(Class, Consumer) Works like this, but with an empty {@link Consumer}.
+     * @see #withCell(Class, Consumer)
      */
     default <T extends Cell> Environment withCell(Class<T> clazz) {
         return withCell(clazz, c -> {

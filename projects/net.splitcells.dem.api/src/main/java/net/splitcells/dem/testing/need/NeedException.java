@@ -34,7 +34,7 @@ import static net.splitcells.dem.resource.communication.log.LogMessageI.logMessa
  * {@link LogMessage} are used, as this is basically a user facing scoped log with abortion conditions and
  * different severities of errors.
  *
- * @Deprecated This is deprecated, as this {@link Exception} is only used for errors.
+ * @deprecated This is deprecated, as this {@link Exception} is only used for errors.
  * Therefore, using {@link LogMessage} does not make sense.
  * So, using {@link ExecutionException} is enough.
  */
