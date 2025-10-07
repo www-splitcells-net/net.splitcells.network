@@ -18,7 +18,6 @@
         <relativePath>../../../net.splitcells.network.bom/pom.xml</relativePath>
     </parent>
     <packaging>pom</packaging>
-    <name>splitcells.net ecosystem</name>
     <description>We provide an open source ecosystem centered around optimization and operations research.</description>
     <url>https://splitcells.net</url>
     <properties>
