@@ -20,6 +20,7 @@ $commandRepoRegister $(pwd)
 installer=./src/main/bash/command/managed/command.repositories.install.sh
 chmod +x $installer
 $installer
+src/main/python/command/managed/command.managed.install.project.commands.py
 
 echo
 	# We create a empty line in order to visually separate the execution output from the result output.
