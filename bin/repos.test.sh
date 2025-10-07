@@ -50,3 +50,4 @@ cd "$reposFolder/net.splitcells.network" # Creating reports is done last, so the
   which mvn # TODO Remove this debug statement.
   mvn --version # TODO Remove this debug statement.
   mvn verify site -Dtest_codecov=1 -Dsource_code_check=1 -Dtest.groups=testing_integration -DexcludedGroups="experimental_test"
+  bin/repos.verify
