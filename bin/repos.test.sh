@@ -11,6 +11,13 @@
 set -e
 set -x # Makes it easier to debug problems on a remote server, especially because of its long runtime.
 export JAVA_VERSION=21 # This is required on FreeBSD, if an older Java version is set as default.
+# TODO Remove these debug statements.
+  echo "$PATH"
+  ls -al
+  cat ./mvn
+  which mvn
+  mvn --version
+  ./mvn --version
 current=$(pwd)
 reposFolder="$(pwd)/../"
 rm -rf ~/.m2/repository/net/splitcells/ # Our packages are deleted, as SNAPSHOT builds are often used, which can create a cache problems in the build.
