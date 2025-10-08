@@ -39,7 +39,23 @@ cd "$reposFolder/net.splitcells.network.hub" # TODO Move this into worker.boostr
   # TODO mvn clean install -Dreport_disabled=1
   # TODO mvn clean install -Dare-dependencies-up-to-date=true
 cd "$reposFolder/net.splitcells.network"
+  # TODO Remove these debug statements:
+    echo Debugging worker.bootstrap start.
+    echo "$PATH"
+    ls -al
+    cat ./mvn
+    which mvn
+    mvn --version
+    ./mvn --version
   . bin/worker.bootstrap
+  # TODO Remove these debug statements:
+    echo Debugging worker.bootstrap end.
+    echo "$PATH"
+    ls -al
+    cat ./mvn
+    which mvn
+    mvn --version
+    ./mvn --version
   cd "$current"
   bin/build.part.with.python
 cd "$reposFolder/net.splitcells.network/projects/net.splitcells.network.system"
@@ -47,7 +63,13 @@ cd "$reposFolder/net.splitcells.network/projects/net.splitcells.network.system"
 cd "$reposFolder/net.splitcells.network" # Creating reports is done last, so the caller can use the reports.
   # Integration tests need to be enabled here as well, as verify does not only start the source code check, but also reruns the test and therefore the coverage.
   # The JaCoCo report is created only for the main report, as otherwise the Distro repo causes errors.
-  which mvn # TODO Remove this debug statement.
-  mvn --version # TODO Remove this debug statement.
+  # TODO Remove these debug statements:
+    echo Debugging code coverage start.
+    echo "$PATH"
+    ls -al
+    cat ./mvn
+    which mvn
+    mvn --version
+    ./mvn --version
   mvn verify site -Dtest_codecov=1 -Dsource_code_check=1 -Dtest.groups=testing_integration -DexcludedGroups="experimental_test"
   bin/repos.verify
