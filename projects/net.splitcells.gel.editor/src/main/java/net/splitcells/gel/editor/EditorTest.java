@@ -328,4 +328,46 @@ public class EditorTest {
         supplies.requireSizeOf(1);
         supplies.get(0).values().requireEquals(list(4, 5, 6));
     }
+
+    @UnitTest
+    public void testRatingReport() {
+        final var testSubject = editor("test-subject", EXPLICIT_NO_CONTEXT);
+        final var testData = """
+                student    = attribute(String,  'student');
+                date       = attribute(Integer, 'date');
+                shift      = attribute(Integer, 'shift');
+                roomNumber = attribute(Integer, 'room number');
+                
+                demands    = table('exams', student);
+                demands    . importCsvData('demands.csv');
+                
+                supplies   = table('time slots', date, shift, roomNumber);
+                supplies   . importCsvData('supplies.csv');
+                
+                solution   = solution('Colloquium Plan', demands, supplies);
+                solution   . forEach(student)
+                           . forEach(date)
+                           . forEach(shift)
+                           . then(hasSize(1));
+                """;
+        final var demandsCsv = """
+                student
+                1
+                1
+                1
+                1
+                """;
+        final var suppliesCsv = """
+                date,shift,room number
+                1,1,1
+                1,1,2
+                1,2,1
+                2,1,1
+                """;
+        testSubject.saveData("demands.csv", editorData(CSV, toBytes(demandsCsv)));
+        testSubject.saveData("supplies.csv", editorData(CSV, toBytes(suppliesCsv)));
+        testSubject.interpret(parseGealSourceUnit(testData));
+        testSubject.getTables().get("demands").orderedLines().requireSizeOf(4);
+        testSubject.getTables().get("supplies").orderedLines().requireSizeOf(4);
+    }
 }
