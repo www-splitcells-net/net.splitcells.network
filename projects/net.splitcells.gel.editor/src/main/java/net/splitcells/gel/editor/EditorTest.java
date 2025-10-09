@@ -336,12 +336,11 @@ public class EditorTest {
                 student    = attribute(String,  'student');
                 date       = attribute(Integer, 'date');
                 shift      = attribute(Integer, 'shift');
-                roomNumber = attribute(Integer, 'room number');
                 
                 demands    = table('exams', student);
                 demands    . importCsvData('demands.csv');
                 
-                supplies   = table('time slots', date, shift, roomNumber);
+                supplies   = table('time slots', date, shift);
                 supplies   . importCsvData('supplies.csv');
                 
                 solution   = solution('Colloquium Plan', demands, supplies);
@@ -354,20 +353,16 @@ public class EditorTest {
                 student
                 1
                 1
-                1
-                1
                 """;
         final var suppliesCsv = """
-                date,shift,room number
+                date,shift
                 1,1,1
-                1,1,2
-                1,2,1
-                2,1,1
+                1,1,1
                 """;
         testSubject.saveData("demands.csv", editorData(CSV, toBytes(demandsCsv)));
         testSubject.saveData("supplies.csv", editorData(CSV, toBytes(suppliesCsv)));
         testSubject.interpret(parseGealSourceUnit(testData));
-        testSubject.getTables().get("demands").orderedLines().requireSizeOf(4);
-        testSubject.getTables().get("supplies").orderedLines().requireSizeOf(4);
+        demands.orderedLines().requireSizeOf(2);
+        supplies.orderedLines().requireSizeOf(2);
     }
 }
