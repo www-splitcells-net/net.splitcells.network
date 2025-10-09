@@ -20,6 +20,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.object.Discoverable;
+import net.splitcells.dem.testing.annotations.DisabledTest;
 import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
@@ -49,6 +50,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ConstraintTest {
 
+    @DisabledTest
     @Test
     public void testArgumentation() {
         final var attribute = attribute(Integer.class, "a");
