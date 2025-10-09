@@ -23,9 +23,7 @@ import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.LogMessage;
 import net.splitcells.dem.testing.need.Need;
 import net.splitcells.dem.testing.reporting.ErrorReporter;
-import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.EditorData;
-import net.splitcells.website.Format;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
@@ -40,8 +38,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.*;
 import static net.splitcells.gel.editor.Editor.editor;
 import static net.splitcells.gel.editor.EditorData.editorData;
-import static net.splitcells.website.Format.COMMON_MARK;
-import static net.splitcells.website.Format.CSV;
+import static net.splitcells.website.Format.*;
 import static net.splitcells.website.server.processor.Response.response;
 
 public class EditorProcessor implements Processor<Tree, Tree> {
@@ -84,7 +81,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                 inputValues.forEach(c -> {
                     final var content = toBytes(c.child(0).name());
                     // TODO Support multiple formats of data.
-                    editor.saveData(c.name(), editorData(Format.TEXT_PLAIN, content));
+                    editor.saveData(c.name(), editorData(TEXT_PLAIN, content));
                 });
             }
             editor.interpret(problemDefinition.content());
@@ -113,6 +110,10 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                 dataValues.withProperty(e.getKey(), e.getValue().toCSV(reportInvalidCsvData(e.getKey())));
                 dataTypes.withProperty(e.getKey(), CSV.mimeTypes());
                 renderingTypes.withProperty(e.getKey(), INTERACTIVE_TABLE);
+                final var ratingDescriptionKey = e.getKey() + ".rating.description";
+                dataValues.withProperty(ratingDescriptionKey, e.getValue().constraint().commonMarkRatingReport());
+                dataTypes.withProperty(ratingDescriptionKey, COMMON_MARK.mimeTypes());
+                renderingTypes.withProperty(ratingDescriptionKey, PLAIN_TEXT);
                 if (editor.getTableFormatting().hasKey(e.getKey())) {
                     final var formatting = editor.getTableFormatting().get(e.getKey());
                     final var formattingKey = e.getKey() + ".formatted";
