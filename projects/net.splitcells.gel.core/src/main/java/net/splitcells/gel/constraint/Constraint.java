@@ -143,7 +143,9 @@ public interface Constraint extends TableSynchronization, ConstraintWriter, Disc
         joinDocuments(description, "## Description");
         joinDocuments(description, rating().descriptionForUser());
         joinDocuments(description, "## Argumentation");
-        joinDocuments(description, naturalArgumentation().map(na -> na.toCommonMarkString()).orElse("No Argumentation is available."));
+        joinDocuments(description, naturalArgumentation()
+                .map(Tree::toCommonMarkString)
+                .orElse("No Argumentation is available."));
         return description.toString();
     }
 
