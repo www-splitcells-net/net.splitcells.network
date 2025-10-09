@@ -20,6 +20,7 @@ import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.lang.CommonMarkUtils.joinDocuments;
 import static net.splitcells.dem.lang.namespace.NameSpaces.HTML;
 import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
@@ -42,6 +43,7 @@ import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.resource.host.ProcessPath;
+import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.data.table.TableSynchronization;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
@@ -133,6 +135,16 @@ public interface Constraint extends TableSynchronization, ConstraintWriter, Disc
      */
     default Optional<Tree> naturalArgumentation() {
         return naturalArgumentation(injectionGroup());
+    }
+
+    default String commonMarkRatingReport() {
+        final var description = StringUtils.stringBuilder();
+        joinDocuments(description, "# Constraint Rating Report");
+        joinDocuments(description, "## Description");
+        joinDocuments(description, rating().descriptionForUser());
+        joinDocuments(description, "## Argumentation");
+        joinDocuments(description, naturalArgumentation().map(na -> na.toCommonMarkString()).orElse("No Argumentation is available."));
+        return description.toString();
     }
 
     Optional<Tree> naturalArgumentation(GroupId group);
