@@ -52,10 +52,8 @@ cd "$reposFolder/net.splitcells.network"
     echo Debugging worker.bootstrap end.
     echo "$PATH"
     ls -al
-    cat ./mvn
     which mvn
     mvn --version
-    ./mvn --version
   cd "$current"
   bin/build.part.with.python
 cd "$reposFolder/net.splitcells.network/projects/net.splitcells.network.system"
