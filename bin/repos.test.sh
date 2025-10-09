@@ -52,7 +52,7 @@ cd "$reposFolder/net.splitcells.network"
     echo Debugging worker.bootstrap end.
     echo "$PATH"
     ls -al
-    which mvn
+    which -a mvn
     mvn --version
   cd "$current"
   bin/build.part.with.python
@@ -66,7 +66,7 @@ cd "$reposFolder/net.splitcells.network" # Creating reports is done last, so the
     echo "$PATH"
     ls -al
     cat ./mvn
-    which mvn
+    which -a mvn
     mvn --version
     ./mvn --version
   mvn verify site -Dtest_codecov=1 -Dsource_code_check=1 -Dtest.groups=testing_integration -DexcludedGroups="experimental_test"
