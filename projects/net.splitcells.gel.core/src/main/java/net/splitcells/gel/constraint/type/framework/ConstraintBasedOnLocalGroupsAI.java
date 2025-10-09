@@ -579,13 +579,16 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
                 .map(allocation -> allocation.value(LINE))
                 .map(line -> naturalArgumentation(line, group, AllocationSelector::selectLinesWithCost))
                 .filter(Optional::isPresent)
+                .map(Optional::get)
                 .collect(toList());
         if (naturalArgumentation.isEmpty()) {
             return Optional.empty();
         }
+        if (naturalArgumentation.size() == 1) {
+            return Optional.of(naturalArgumentation.get(0));
+        }
         final var localArgumentation = tree(EMPTY_STRING.value(), GEL);
-        naturalArgumentation
-                .forEach(naturalReasoning -> naturalReasoning.ifPresent(localArgumentation::withMerged));
+        naturalArgumentation.forEach(localArgumentation::withMerged);
         return Optional.of(localArgumentation);
     }
 
@@ -596,9 +599,9 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         if (localArgumentation.isEmpty() && childrenArgumentation.isEmpty()) {
             return Optional.empty();
         } else if (!localArgumentation.isEmpty()) {
-            return Optional.of(tree(EMPTY_STRING.value(), GEL)
-                    .withChild(tree(localArgumentation.get(), NameSpaces.STRING)
-                            .withMerged(childrenArgumentation)));
+            return Optional.of(tree(localArgumentation.get(), NameSpaces.STRING).withMerged(childrenArgumentation));
+        } else if (childrenArgumentation.size() == 1) {
+            return Optional.of(childrenArgumentation.get(0));
         } else {
             return Optional.of(tree(EMPTY_STRING.value(), GEL)
                     .withMerged(childrenArgumentation));
@@ -630,8 +633,8 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
                         -> routingResult
                         .propagation()
                         .naturalArgumentation(line, routingResult.group()))
-                .filter(e -> e.isPresent())
-                .map(e -> e.get())
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .collect(toList());
     }
 
