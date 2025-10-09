@@ -76,10 +76,12 @@ public class Assertions {
             if (b == null) {
                 return;
             }
-            throw ExecutionException.execException("Arguments are required to be equal, but are not: first argument: " + a + ", second argument: " + b);
+            // Assertj create a nice comparison report, also this report does not explicitly state, which is the first argument and which is the second.
+            org.assertj.core.api.Assertions.assertThat(a).isEqualTo(b);
         }
         if (!a.equals(b)) {
-            throw ExecutionException.execException("Arguments are required to be equal, but are not: first argument: " + a + ", second argument: " + b);
+            // Assertj create a nice comparison report, also this report does not explicitly state, which is the first argument and which is the second.
+            org.assertj.core.api.Assertions.assertThat(a).isEqualTo(b);
         }
     }
 
