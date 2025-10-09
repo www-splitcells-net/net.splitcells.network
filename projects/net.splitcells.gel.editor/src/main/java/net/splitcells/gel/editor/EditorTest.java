@@ -358,8 +358,8 @@ public class EditorTest {
                 """;
         final var suppliesCsv = """
                 date,shift
-                1,1,1
-                1,1,1
+                1,1
+                1,1
                 """;
         testSubject.saveData("demands.csv", editorData(CSV, toBytes(demandsCsv)));
         testSubject.saveData("supplies.csv", editorData(CSV, toBytes(suppliesCsv)));
