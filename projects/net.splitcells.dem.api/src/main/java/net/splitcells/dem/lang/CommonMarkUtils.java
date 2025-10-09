@@ -61,6 +61,10 @@ public class CommonMarkUtils {
      * @return This is the argument a.
      */
     public static StringBuilder joinDocuments(StringBuilder a, CharSequence b) {
+        if (a.isEmpty()) {
+            a.append(b);
+            return a;
+        }
         final int newLinesPresent = newLinesAtEnd(a) + newLinesAtStart(b);
         final int missingNewLines;
         if (newLinesPresent == 0) {
