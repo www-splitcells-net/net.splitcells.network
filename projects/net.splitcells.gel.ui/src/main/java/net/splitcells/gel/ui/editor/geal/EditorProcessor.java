@@ -110,7 +110,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                 dataValues.withProperty(e.getKey(), e.getValue().toCSV(reportInvalidCsvData(e.getKey())));
                 dataTypes.withProperty(e.getKey(), CSV.mimeTypes());
                 renderingTypes.withProperty(e.getKey(), INTERACTIVE_TABLE);
-                final var ratingDescriptionKey = e.getKey() + ".rating.description";
+                final var ratingDescriptionKey = e.getKey() + ".rating.report";
                 dataValues.withProperty(ratingDescriptionKey, e.getValue().constraint().commonMarkRatingReport());
                 dataTypes.withProperty(ratingDescriptionKey, COMMON_MARK.mimeTypes());
                 renderingTypes.withProperty(ratingDescriptionKey, PLAIN_TEXT);
