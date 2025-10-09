@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.editor;
 
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.editor.geal.lang.*;
 import net.splitcells.gel.editor.lang.*;
@@ -22,6 +23,7 @@ import net.splitcells.gel.editor.lang.*;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT;
+import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
 import static net.splitcells.gel.constraint.type.ForAlls.FOR_ALL_COMBINATIONS_OF;
 import static net.splitcells.gel.constraint.type.ForAlls.FOR_EACH_NAME;
@@ -362,7 +364,25 @@ public class EditorTest {
         testSubject.saveData("demands.csv", editorData(CSV, toBytes(demandsCsv)));
         testSubject.saveData("supplies.csv", editorData(CSV, toBytes(suppliesCsv)));
         testSubject.interpret(parseGealSourceUnit(testData));
+        final var demands = testSubject.getTables().get("demands");
+        final var supplies = testSubject.getTables().get("supplies");
+        final var solution = testSubject.getSolutions().get("solution");
         demands.orderedLines().requireSizeOf(2);
         supplies.orderedLines().requireSizeOf(2);
+        final var firstAlloc = solution.assign(demands.rawLine(0), supplies.rawLine(0));
+        requireEquals(solution.constraint().commonMarkRatingReport(),
+                """
+                        # Constraint Rating Report
+                        
+                        ## Description
+                        
+                        Cost of 0.0
+                        
+                        ## Argumentation
+                        
+                        No Argumentation is available.""");
+        final var duplicateShift = solution.assign(demands.rawLine(1), supplies.rawLine(1));
+        // TODO Implement this test fully.
+        System.out.println(solution.constraint().commonMarkRatingReport());
     }
 }
