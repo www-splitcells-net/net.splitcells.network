@@ -36,7 +36,7 @@ public interface Element {
      * This method only works, if the element actually exists.
      * Calling this method, asserts the existence of this Browser element.
      *
-     * @see {@link #evalIfExists(Function)}
+     * @see #evalIfExists(Function)
      */
     void click();
 
@@ -44,7 +44,7 @@ public interface Element {
      * This method only works, if the element actually exists.
      * Calling this method, asserts the existence of this Browser element.
      *
-     * @see {@link #evalIfExists(Function)}
+     * @see #evalIfExists(Function)
      */
     String textContent();
 
@@ -52,7 +52,7 @@ public interface Element {
      * This method only works, if the element actually exists.
      * Calling this method, asserts the existence of this Browser element.
      *
-     * @see {@link #evalIfExists(Function)}
+     * @see #evalIfExists(Function)
      */
     String value();
 }
