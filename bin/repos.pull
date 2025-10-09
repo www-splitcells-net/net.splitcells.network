@@ -1,6 +1,11 @@
 #!/usr/bin/env sh
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+
+# Resetting and cleaning the Git repo, should be done by the caller,
+# as the dirty state may be important for workflows like the daily CI at Codeberg,
+# where a Maven installation is downloaded on the fly.
+
 set -e
 set -x
 [ ! -d "bin" ] && cd ..
@@ -8,6 +13,6 @@ bin/user.ssh.setup
 git pull --ff-only # Ensure, that current repo is up to date.
 cd ..
   test -d net.splitcells.network.hub || git clone https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
-  sh -c "cd net.splitcells.network.hub && git clean -xfd && git reset --hard && git pull --ff-only"
+  sh -c "cd net.splitcells.network.hub && git pull --ff-only"
   net.splitcells.network.hub/bin/net.splitcells.osi.repos.peers | xargs -i sh -c "test -d {} || git clone ssh://git@codeberg.org/splitcells-net/{}.git"
-  net.splitcells.network.hub/bin/net.splitcells.osi.repos.peers | xargs -i -P 20 sh -c "cd {} && git clean -xfd && git reset --hard && git pull --ff-only || echo Could not pull repo {}"
+  net.splitcells.network.hub/bin/net.splitcells.osi.repos.peers | xargs -i -P 20 sh -c "cd {} && git pull --ff-only || echo Could not pull repo {}"
