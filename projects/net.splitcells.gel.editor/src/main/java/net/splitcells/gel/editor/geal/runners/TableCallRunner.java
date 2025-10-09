@@ -53,7 +53,7 @@ public class TableCallRunner implements FunctionCallRunner {
         if (!supports(functionCall)) {
             return run;
         }
-        if (functionCall.getArguments().size() < 3) {
+        if (functionCall.getArguments().size() < 2) {
             throw execException(tree("The table function requires at least 2 arguments, but " + functionCall.getArguments().size() + " were given instead.")
                     .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
         }
