@@ -382,6 +382,21 @@ public class EditorTest {
                         
                         No Argumentation is available.""");
         final var duplicateShift = solution.assign(demands.rawLine(1), supplies.rawLine(1));
+        requireEquals(solution.constraint().commonMarkRatingReport(),
+                """
+                        # Constraint Rating Report
+                        
+                        ## Description
+                        
+                        Cost of 1.0
+                        
+                        ## Argumentation
+                        
+                        * For all allocations:
+                            * For all student:
+                                * For all date:
+                                    * For all shift: Then size should be 1, but is 2
+                        """);
         // TODO Implement this test fully.
         System.out.println(solution.constraint().commonMarkRatingReport());
     }
