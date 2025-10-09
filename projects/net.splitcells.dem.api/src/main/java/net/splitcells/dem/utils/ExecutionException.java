@@ -17,11 +17,13 @@ package net.splitcells.dem.utils;
 
 import lombok.Getter;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.CommonMarkUtils;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.tree.Tree;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.lang.CommonMarkUtils.joinDocuments;
 
 @JavaLegacyArtifact
 public class ExecutionException extends RuntimeException {
@@ -98,5 +100,16 @@ public class ExecutionException extends RuntimeException {
     private ExecutionException(Throwable t) {
         super(t);
         messages = list();
+    }
+
+    @Override
+    public String getMessage() {
+        if (messages.isEmpty()) {
+            return super.getMessage();
+        }
+        return messages.stream()
+                .map(Tree::toCommonMarkString)
+                .reduce(CommonMarkUtils::joinDocuments)
+                .orElse("");
     }
 }
