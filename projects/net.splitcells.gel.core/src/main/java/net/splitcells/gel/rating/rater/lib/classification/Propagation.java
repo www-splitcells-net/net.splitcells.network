@@ -65,7 +65,7 @@ public class Propagation implements Rater {
 
     @Override
     public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
-        return "";
+        return "For all allocations";
     }
 
     @Override
