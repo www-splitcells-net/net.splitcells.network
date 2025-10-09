@@ -50,7 +50,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ConstraintTest {
 
-    @DisabledTest
     @Test
     public void testArgumentation() {
         final var attribute = attribute(Integer.class, "a");
@@ -73,12 +72,11 @@ public class ConstraintTest {
                 .asSolution();
         solution.optimize(offlineLinearInitialization());
         solution.constraint().naturalArgumentation().orElseThrow().requireEqualsTo(
-                tree("", GEL).withPath(tree("", GEL)
-                        , tree("", STRING)
-                        , tree("", GEL)
-                                .withChildren(tree("For all a", STRING).withPath(tree("", GEL)
-                                                , tree("Then size should be 4, but is 2", STRING))
-                                        , tree("Then size should be 2, but is 4", STRING))));
+                tree("For all allocations", STRING).withChildren(
+                        tree("For all a", STRING)
+                                .withChildren(tree("Then size should be 4, but is 2", STRING))
+                        , tree("Then size should be 2, but is 4", STRING)))
+        ;
     }
 
     @Test
