@@ -58,7 +58,7 @@ public class ResourceListMojo extends AbstractMojo {
             }
             final var fileSystemSeparator = FileSystems.getDefault().getSeparator();
             final var basePathStr = basePath.toAbsolutePath().toString().replace(fileSystemSeparator, "/");
-            getLog().info("Writing resource list file to `" + resourceListFile.toAbsolutePath() + "`. The content are the file paths relative to `" + basePath.toAbsolutePath() + "`.");
+            getLog().debug("Writing resource list file to `" + resourceListFile.toAbsolutePath() + "`. The content are the file paths relative to `" + basePath.toAbsolutePath() + "`.");
             final var resourceList = new StringBuilder();
             // "+1" makes the paths relative by removing the first slash.
             try (final var walk = java.nio.file.Files.walk(resourceFolder)) {
