@@ -42,12 +42,23 @@ import org.apache.maven.project.MavenProject;
 public class ResourceListMojo extends AbstractMojo {
     @Parameter(defaultValue = "${project}", required = true, readonly = true)
     private MavenProject project;
+    private Path basePath;
+    private Path resourceFolder;
+    private Path resourceListFile;
+    private String fileSystemSeparator = FileSystems.getDefault().getSeparator();
+    private String basePathStr;
 
     @Override
     public void execute() throws MojoExecutionException {
-        final var basePath = Path.of(project.getBuild().getDirectory(), "classes");
-        final var resourceFolder = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources");
-        final var resourceListFile = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources.list.txt");
+        basePath = Path.of(project.getBuild().getDirectory(), "classes");
+        resourceFolder = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources");
+        resourceListFile = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources.list.txt");
+        basePathStr = basePath.toAbsolutePath().toString().replace(fileSystemSeparator, "/");
+        createResourceFolder();
+        createResourceList();
+    }
+
+    private void createResourceFolder() throws MojoExecutionException {
         try {
             if (!Files.isDirectory(resourceFolder)) {
                 try {
@@ -56,8 +67,13 @@ public class ResourceListMojo extends AbstractMojo {
                     throw new RuntimeException(e);
                 }
             }
-            final var fileSystemSeparator = FileSystems.getDefault().getSeparator();
-            final var basePathStr = basePath.toAbsolutePath().toString().replace(fileSystemSeparator, "/");
+        } catch (Throwable t) {
+            throw new MojoExecutionException("Could not create resource folder: " + resourceListFile, t);
+        }
+    }
+
+    private void createResourceList() throws MojoExecutionException {
+        try {
             getLog().debug("Writing resource list file to `" + resourceListFile.toAbsolutePath() + "`. The content are the file paths relative to `" + basePath.toAbsolutePath() + "`.");
             final var resourceList = new StringBuilder();
             // "+1" makes the paths relative by removing the first slash.
@@ -78,8 +94,8 @@ public class ResourceListMojo extends AbstractMojo {
             try (final BufferedWriter resourceListWriter = new BufferedWriter(new FileWriter(resourceListFile.toFile()))) {
                 resourceListWriter.write(resourceList.toString());
             }
-        } catch (Throwable e) {
-            throw new MojoExecutionException("Could not create resource list file: " + resourceListFile, e);
+        } catch (Throwable t) {
+            throw new MojoExecutionException("Could not create resource list file: " + resourceListFile, t);
         }
     }
 }
