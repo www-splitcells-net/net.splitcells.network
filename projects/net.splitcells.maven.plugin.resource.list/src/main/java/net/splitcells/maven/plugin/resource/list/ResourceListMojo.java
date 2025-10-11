@@ -54,11 +54,6 @@ public class ResourceListMojo extends AbstractMojo {
         resourceFolder = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources");
         resourceListFile = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources.list.txt");
         basePathStr = basePath.toAbsolutePath().toString().replace(fileSystemSeparator, "/");
-        createResourceFolder();
-        createResourceList();
-    }
-
-    private void createResourceFolder() throws MojoExecutionException {
         try {
             if (!Files.isDirectory(resourceFolder)) {
                 try {
@@ -70,13 +65,12 @@ public class ResourceListMojo extends AbstractMojo {
         } catch (Throwable t) {
             throw new MojoExecutionException("Could not create resource folder: " + resourceListFile, t);
         }
-    }
-
-    private void createResourceList() throws MojoExecutionException {
         try {
             getLog().debug("Writing resource list file to `" + resourceListFile.toAbsolutePath() + "`. The content are the file paths relative to `" + basePath.toAbsolutePath() + "`.");
             final var resourceList = new StringBuilder();
-            // "+1" makes the paths relative by removing the first slash.
+            /* "+1" makes the paths relative by removing the first slash.
+             * Everything is done in one file loop, in order to minimize file access and therefore to speed up the process.
+             */
             try (final var walk = java.nio.file.Files.walk(resourceFolder)) {
                 walk.forEach(resource -> {
                     var resourceStr = resource
