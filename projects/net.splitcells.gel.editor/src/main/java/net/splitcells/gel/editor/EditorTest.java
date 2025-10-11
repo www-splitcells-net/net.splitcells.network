@@ -386,7 +386,7 @@ public class EditorTest {
                         
                         No Argumentation is available.""";
         requireEquals(solution.constraint().commonMarkRatingReport(), firstReport);
-        final var duplicatefirstShift = solution.assign(demands.rawLine(1), supplies.rawLine(1));
+        final var duplicateFirstShift = solution.assign(demands.rawLine(1), supplies.rawLine(1));
         // TODO A dedicated variable is used, as the Java11Parser has a bug regarding multi line strings as arguments.
         final var secondReport = """
                         # Constraint Rating Report
