@@ -374,8 +374,8 @@ public class EditorTest {
         demands.orderedLines().requireSizeOf(4);
         supplies.orderedLines().requireSizeOf(4);
         final var firstShift = solution.assign(demands.rawLine(0), supplies.rawLine(0));
-        requireEquals(solution.constraint().commonMarkRatingReport(),
-                """
+        // TODO A dedicated variable is used, as the Java11Parser has a bug regarding multi line strings as arguments.
+        final var firstReport = """
                         # Constraint Rating Report
                         
                         ## Description
@@ -384,10 +384,11 @@ public class EditorTest {
                         
                         ## Argumentation
                         
-                        No Argumentation is available.""");
+                        No Argumentation is available.""";
+        requireEquals(solution.constraint().commonMarkRatingReport(), firstReport);
         final var duplicatefirstShift = solution.assign(demands.rawLine(1), supplies.rawLine(1));
-        requireEquals(solution.constraint().commonMarkRatingReport(),
-                """
+        // TODO A dedicated variable is used, as the Java11Parser has a bug regarding multi line strings as arguments.
+        final var secondReport = """
                         # Constraint Rating Report
                         
                         ## Description
@@ -400,23 +401,10 @@ public class EditorTest {
                             * For all student:
                                 * For all date:
                                     * For all shift: Then size should be 1, but is 2
-                        """);
+                        """;
+        requireEquals(solution.constraint().commonMarkRatingReport(), secondReport);
         final var secondShift = solution.assign(demands.rawLine(2), supplies.rawLine(2));
-        requireEquals(solution.constraint().commonMarkRatingReport(),
-                """
-                        # Constraint Rating Report
-                        
-                        ## Description
-                        
-                        Cost of 1.0
-                        
-                        ## Argumentation
-                        
-                        * For all allocations:
-                            * For all student:
-                                * For all date:
-                                    * For all shift: Then size should be 1, but is 2
-                        """);
+        requireEquals(solution.constraint().commonMarkRatingReport(), secondReport);
         final var duplicateSecondShift = solution.assign(demands.rawLine(3), supplies.rawLine(3));
         // TODO Implement this test fully.
         System.out.println(solution.constraint().commonMarkRatingReport());
