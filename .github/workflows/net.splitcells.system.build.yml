@@ -28,6 +28,7 @@ jobs:
       - uses: actions/checkout@master
         with:
           repository: www-splitcells-net/net.splitcells.network.bom.base
+          path: net.splitcells.network.base
       - name: Build base BOM
         run: |
           cd $GITHUB_WORKSPACE
@@ -35,11 +36,14 @@ jobs:
       - uses: actions/checkout@main
         with:
           repository: www-splitcells-net/net.splitcells.network.bom
+          path: net.splitcells.network.bom
       - name: Build BOM
         run: |
           cd $GITHUB_WORKSPACE
           mvn install
       - uses: actions/checkout@main
+        with:
+          path: net.splitcells.network
       - name: Build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
