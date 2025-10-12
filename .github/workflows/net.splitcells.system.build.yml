@@ -49,8 +49,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          cd "$GITHUB_WORKSPACE"
-          echo $GITHUB_WORKSPACE
+          cd $GITHUB_WORKSPACE/net.splitcells.network
           # ". bin/env.setup.sh" is not used, as this causes problems in GitHub.
           mvn wrapper:wrapper -Dmaven=3.9.9
           export PATH="$(realpath ./):$PATH"
