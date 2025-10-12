@@ -86,18 +86,18 @@ public class ResourceListMojo extends AbstractMojo {
             // Everything is done in one file loop, in order to minimize file access and therefore to speed up the process.
             try (final var walk = java.nio.file.Files.walk(resourceFolder)) {
                 walk.forEach(resource -> {
+                    // Extend resource list.
+                    var resourcePath = resource
+                            .toAbsolutePath()
+                            .toString()
+                            .replace(fileSystemSeparator, "/")
+                            // "+1" makes the paths relative by removing the first slash.
+                            .substring(basePathStr.length() + 1);
                     {
-                        // Extend resource list.
-                        var resourceStr = resource
-                                .toAbsolutePath()
-                                .toString()
-                                .replace(fileSystemSeparator, "/")
-                                // "+1" makes the paths relative by removing the first slash.
-                                .substring(basePathStr.length() + 1);
                         if (Files.isDirectory(resource)) {
-                            resourceStr += "/";
+                            resourcePath += "/";
                         }
-                        resourceList.append(resourceStr);
+                        resourceList.append(resourcePath);
                         resourceList.append("\n");
                     }
                     if (Files.isRegularFile(resource)) {
