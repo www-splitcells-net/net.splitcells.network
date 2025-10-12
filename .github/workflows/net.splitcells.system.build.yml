@@ -29,9 +29,7 @@ jobs:
         with:
           repository: www-splitcells-net/net.splitcells.network.bom.base
           path: net.splitcells.network.bom.base
-      - name: Build base BOM
-        run: |
-          cd $GITHUB_WORKSPACE
+      - run: |
           mvn install
       - uses: actions/checkout@main
         with:
