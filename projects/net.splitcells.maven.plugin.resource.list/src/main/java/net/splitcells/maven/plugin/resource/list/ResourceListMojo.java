@@ -44,6 +44,7 @@ public class ResourceListMojo extends AbstractMojo {
     private MavenProject project;
     private Path basePath;
     private Path resourceFolder;
+    private Path metaFolder;
     private Path resourceListFile;
     private String fileSystemSeparator = FileSystems.getDefault().getSeparator();
     private String basePathStr;
@@ -52,12 +53,20 @@ public class ResourceListMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException {
         basePath = Path.of(project.getBuild().getDirectory(), "classes");
         resourceFolder = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources");
+        metaFolder = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources.meta");
         resourceListFile = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources.list.txt");
         basePathStr = basePath.toAbsolutePath().toString().replace(fileSystemSeparator, "/");
         try {
             if (!Files.isDirectory(resourceFolder)) {
                 try {
                     Files.createDirectories(resourceFolder);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (!Files.isDirectory(metaFolder)) {
+                try {
+                    Files.createDirectories(metaFolder);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
