@@ -30,7 +30,7 @@ jobs:
           repository: www-splitcells-net/net.splitcells.network.bom.base
           path: net.splitcells.network.bom.base
       - run: |
-          cd /home/runner/work/net.splitcells.network/net.splitcells.network.bom.base
+          cd $GITHUB_WORKSPACE/net.splitcells.network.bom.base
           mvn install
       - uses: actions/checkout@main
         with:
