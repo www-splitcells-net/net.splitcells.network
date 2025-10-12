@@ -38,7 +38,7 @@ jobs:
           path: net.splitcells.network.bom
       - name: Build BOM
         run: |
-          cd $GITHUB_WORKSPACE
+          cd $GITHUB_WORKSPACE/net.splitcells.network.bom
           mvn install
       - uses: actions/checkout@main
         with:
