@@ -16,20 +16,19 @@
 package net.splitcells.maven.plugin.resource.list;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 
-import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
+
+import static java.nio.file.Files.createDirectories;
 
 /**
  * <p>This Maven Plugin creates a file, that list all resources of the jar to be built,
@@ -44,7 +43,7 @@ public class ResourceListMojo extends AbstractMojo {
     private MavenProject project;
     private Path basePath;
     private Path resourceFolder;
-    private Path metaFolder;
+    private Path metaDataFolder;
     private Path resourceListFile;
     private String fileSystemSeparator = FileSystems.getDefault().getSeparator();
     private String basePathStr;
@@ -53,7 +52,7 @@ public class ResourceListMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException {
         basePath = Path.of(project.getBuild().getDirectory(), "classes");
         resourceFolder = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources");
-        metaFolder = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources.meta");
+        metaDataFolder = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources.meta");
         resourceListFile = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources.list.txt");
         basePathStr = basePath.toAbsolutePath().toString().replace(fileSystemSeparator, "/");
         try {
@@ -62,17 +61,17 @@ public class ResourceListMojo extends AbstractMojo {
             }
             if (!Files.isDirectory(resourceFolder)) {
                 try {
-                    Files.createDirectories(resourceFolder);
+                    createDirectories(resourceFolder);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }
-            if (Files.isRegularFile(metaFolder)) {
-                throw new MojoExecutionException("No file is allowed to use the same path as the meta resource folder: " + metaFolder);
+            if (Files.isRegularFile(metaDataFolder)) {
+                throw new MojoExecutionException("No file is allowed to use the same path as the meta resource folder: " + metaDataFolder);
             }
-            if (!Files.isDirectory(metaFolder)) {
+            if (!Files.isDirectory(metaDataFolder)) {
                 try {
-                    Files.createDirectories(metaFolder);
+                    createDirectories(metaDataFolder);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -86,14 +85,14 @@ public class ResourceListMojo extends AbstractMojo {
             // Everything is done in one file loop, in order to minimize file access and therefore to speed up the process.
             try (final var walk = java.nio.file.Files.walk(resourceFolder)) {
                 walk.forEach(resource -> {
-                    // Extend resource list.
-                    var resourcePath = resource
+                    final var absoluteResourcePath = resource
                             .toAbsolutePath()
                             .toString()
-                            .replace(fileSystemSeparator, "/")
-                            // "+1" makes the paths relative by removing the first slash.
-                            .substring(basePathStr.length() + 1);
+                            .replace(fileSystemSeparator, "/");
                     {
+                        // Extend resource list.
+                        // "+1" makes the paths relative by removing the first slash.
+                        var resourcePath = absoluteResourcePath.substring(basePathStr.length() + 1);
                         if (Files.isDirectory(resource)) {
                             resourcePath += "/";
                         }
@@ -107,6 +106,19 @@ public class ResourceListMojo extends AbstractMojo {
                             resourceContent = Files.readString(resource);
                         } catch (IOException e) {
                             throw new RuntimeException("Could not read resource file: " + resource, e);
+                        }
+                        var resourcePath = absoluteResourcePath.substring(resourceFolder.toString().replace(fileSystemSeparator, "/").length() + 1);
+                        final var metaFilePath = metaDataFolder.resolve(resourcePath);
+                        final var metaFileFolder = metaFilePath.getParent();
+                        try {
+                            createDirectories(metaFileFolder);
+                        } catch (IOException e) {
+                            throw new RuntimeException("Could not create folder for meta data file: " + metaFileFolder, e);
+                        }
+                        try (final BufferedWriter metaWriter = new BufferedWriter(new FileWriter(metaFilePath.toFile()))) {
+                            metaWriter.write("TODO");
+                        } catch (IOException e) {
+                            throw new RuntimeException("Could not write meta file: " + metaFilePath, e);
                         }
                     }
                 });
