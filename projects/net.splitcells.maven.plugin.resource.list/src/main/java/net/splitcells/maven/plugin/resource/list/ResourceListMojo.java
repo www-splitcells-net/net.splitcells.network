@@ -83,9 +83,7 @@ public class ResourceListMojo extends AbstractMojo {
         try {
             getLog().debug("Writing resource list file to `" + resourceListFile.toAbsolutePath() + "`. The content are the file paths relative to `" + basePath.toAbsolutePath() + "`.");
             final var resourceList = new StringBuilder();
-            /* "+1" makes the paths relative by removing the first slash.
-             * Everything is done in one file loop, in order to minimize file access and therefore to speed up the process.
-             */
+            // Everything is done in one file loop, in order to minimize file access and therefore to speed up the process.
             try (final var walk = java.nio.file.Files.walk(resourceFolder)) {
                 walk.forEach(resource -> {
                     {
@@ -94,6 +92,7 @@ public class ResourceListMojo extends AbstractMojo {
                                 .toAbsolutePath()
                                 .toString()
                                 .replace(fileSystemSeparator, "/")
+                                // "+1" makes the paths relative by removing the first slash.
                                 .substring(basePathStr.length() + 1);
                         if (Files.isDirectory(resource)) {
                             resourceStr += "/";
