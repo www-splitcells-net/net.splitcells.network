@@ -57,7 +57,7 @@ public class ResourceListMojo extends AbstractMojo {
         resourceListFile = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources.list.txt");
         basePathStr = basePath.toAbsolutePath().toString().replace(fileSystemSeparator, "/");
         try {
-            if (!Files.isRegularFile(resourceFolder)) {
+            if (Files.isRegularFile(resourceFolder)) {
                 throw new MojoExecutionException("No file is allowed to use the same path as the resource folder: " + resourceFolder);
             }
             if (!Files.isDirectory(resourceFolder)) {
@@ -67,7 +67,7 @@ public class ResourceListMojo extends AbstractMojo {
                     throw new RuntimeException(e);
                 }
             }
-            if (!Files.isRegularFile(metaFolder)) {
+            if (Files.isRegularFile(metaFolder)) {
                 throw new MojoExecutionException("No file is allowed to use the same path as the meta resource folder: " + metaFolder);
             }
             if (!Files.isDirectory(metaFolder)) {
@@ -88,16 +88,28 @@ public class ResourceListMojo extends AbstractMojo {
              */
             try (final var walk = java.nio.file.Files.walk(resourceFolder)) {
                 walk.forEach(resource -> {
-                    var resourceStr = resource
-                            .toAbsolutePath()
-                            .toString()
-                            .replace(fileSystemSeparator, "/")
-                            .substring(basePathStr.length() + 1);
-                    if (Files.isDirectory(resource)) {
-                        resourceStr += "/";
+                    {
+                        // Extend resource list.
+                        var resourceStr = resource
+                                .toAbsolutePath()
+                                .toString()
+                                .replace(fileSystemSeparator, "/")
+                                .substring(basePathStr.length() + 1);
+                        if (Files.isDirectory(resource)) {
+                            resourceStr += "/";
+                        }
+                        resourceList.append(resourceStr);
+                        resourceList.append("\n");
                     }
-                    resourceList.append(resourceStr);
-                    resourceList.append("\n");
+                    if (Files.isRegularFile(resource)) {
+                        // Create meta data.
+                        final String resourceContent;
+                        try {
+                            resourceContent = Files.readString(resource);
+                        } catch (IOException e) {
+                            throw new RuntimeException("Could not read resource file: " + resource, e);
+                        }
+                    }
                 });
             }
             try (final BufferedWriter resourceListWriter = new BufferedWriter(new FileWriter(resourceListFile.toFile()))) {
