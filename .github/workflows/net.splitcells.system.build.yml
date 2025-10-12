@@ -19,7 +19,7 @@ jobs:
         with:
           java-version: '21'
           java-package: 'jdk'
-      - name: Cache Maven packages
+      - name: Cache Maven packages.
         uses: actions/cache@v4
         with:
           path: ~/.m2
@@ -29,21 +29,22 @@ jobs:
         with:
           repository: www-splitcells-net/net.splitcells.network.bom.base
           path: net.splitcells.network.bom.base
-      - run: |
+      - name: Build base BOM.
+        run: |
           cd $GITHUB_WORKSPACE/net.splitcells.network.bom.base
           mvn install
       - uses: actions/checkout@main
         with:
           repository: www-splitcells-net/net.splitcells.network.bom
           path: net.splitcells.network.bom
-      - name: Build BOM
+      - name: Build BOM.
         run: |
           cd $GITHUB_WORKSPACE/net.splitcells.network.bom
           mvn install
       - uses: actions/checkout@main
         with:
           path: net.splitcells.network
-      - name: Build
+      - name: Build project.
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
