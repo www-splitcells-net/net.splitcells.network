@@ -57,12 +57,18 @@ public class ResourceListMojo extends AbstractMojo {
         resourceListFile = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources.list.txt");
         basePathStr = basePath.toAbsolutePath().toString().replace(fileSystemSeparator, "/");
         try {
+            if (!Files.isRegularFile(resourceFolder)) {
+                throw new MojoExecutionException("No file is allowed to use the same path as the resource folder: " + resourceFolder);
+            }
             if (!Files.isDirectory(resourceFolder)) {
                 try {
                     Files.createDirectories(resourceFolder);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+            }
+            if (!Files.isRegularFile(metaFolder)) {
+                throw new MojoExecutionException("No file is allowed to use the same path as the meta resource folder: " + metaFolder);
             }
             if (!Files.isDirectory(metaFolder)) {
                 try {
