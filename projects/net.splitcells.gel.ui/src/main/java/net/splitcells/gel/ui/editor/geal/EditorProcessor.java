@@ -107,7 +107,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                 }
             });
             editor.getSolutions().entrySet().forEach(e -> {
-                dataValues.withProperty(e.getKey(), e.getValue().toCSV(reportInvalidCsvData(e.getKey())));
+                dataValues.withProperty(e.getKey(), e.getValue().toSimplifiedCSV(reportInvalidCsvData(e.getKey())));
                 dataTypes.withProperty(e.getKey(), CSV.mimeTypes());
                 renderingTypes.withProperty(e.getKey(), INTERACTIVE_TABLE);
                 final var ratingDescriptionKey = e.getKey() + ".rating.report";

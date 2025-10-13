@@ -19,6 +19,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.Xml.attribute;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
+import static net.splitcells.dem.testing.reporting.ErrorReporting.getWithReportedErrors;
 import static net.splitcells.gel.proposal.Proposals.proposalsForConstraintTree;
 import static net.splitcells.gel.solution.OptimizationParameters.optimizationParameters;
 import static net.splitcells.gel.solution.optimization.DefaultOptimization.defaultOptimization;
@@ -28,6 +29,7 @@ import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
+import net.splitcells.dem.testing.reporting.ErrorReporter;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -341,6 +343,11 @@ public interface Solution extends Problem, SolutionView {
      */
     default void init() {
         constraint().init(this);
+    }
+
+
+    default String toSimplifiedCSV(ErrorReporter reporter) {
+        return getWithReportedErrors(this::toSimplifiedCSV, reporter);
     }
 
     @Override
