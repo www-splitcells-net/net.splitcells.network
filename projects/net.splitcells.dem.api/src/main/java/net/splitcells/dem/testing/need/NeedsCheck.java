@@ -163,14 +163,14 @@ public class NeedsCheck {
         } else {
             errorMessage.append("# Error Message");
         }
-        if (arg.getMessage() != null) {
-            joinDocuments(errorMessage, arg.getMessage());
-        }
+        // Avoid printing the error 2 times.
         if (arg.getMessages().hasElements()) {
             joinDocuments(errorMessage, arg.getMessages().stream()
                     .map(Tree::toCommonMarkString)
                     .reduce(CommonMarkUtils::joinDocuments)
                     .orElse(""));
+        } else if (arg.getMessage() != null) {
+            joinDocuments(errorMessage, arg.getMessage());
         }
         if (isCause) {
             joinDocuments(errorMessage, "# Causing Stack Trace");
