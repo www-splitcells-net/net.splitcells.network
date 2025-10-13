@@ -357,6 +357,7 @@ public interface Solution extends Problem, SolutionView {
                 .map(Attribute::name)
                 .reduce("", StringUtils::mergeSimplifiedCsvList)
                 + ",argumentation\n");
+
         unorderedLines().forEach(line -> simplifiedCsv.append(line.values().stream()
                 .map(Object::toString)
                 .reduce("", StringUtils::mergeSimplifiedCsvList)
@@ -378,7 +379,8 @@ public interface Solution extends Problem, SolutionView {
         return constraint().naturalArgumentation(allocation, constraint().injectionGroup())
                 .map(argumentation -> argumentation.toStringPaths()
                         .stream()
-                        .reduce("", (a, b) -> a + ". " + b)
+                        .reduce((a, b) -> a + ". " + b)
+                        .orElse("")
                         .replace(',', ' '));
     }
 }
