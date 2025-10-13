@@ -18,6 +18,7 @@ package net.splitcells.maven.plugin.resource.list;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.MalformedInputException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -103,7 +104,11 @@ public class ResourceListMojo extends AbstractMojo {
                         // Create meta data.
                         final String resourceContent;
                         try {
-                            resourceContent = Files.readString(resource);
+                            try {
+                                resourceContent = Files.readString(resource);
+                            } catch (MalformedInputException e) {
+                                // Only UTF-8 compatible files are considered.
+                            }
                         } catch (IOException e) {
                             throw new RuntimeException("Could not read resource file: " + resource, e);
                         }
