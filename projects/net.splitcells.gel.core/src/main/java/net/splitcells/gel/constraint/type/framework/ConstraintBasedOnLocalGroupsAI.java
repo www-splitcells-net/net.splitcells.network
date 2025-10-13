@@ -25,7 +25,7 @@ import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.environment.config.StaticFlags.TRACING;
-import static net.splitcells.dem.lang.namespace.NameSpaces.GEL;
+import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
@@ -587,7 +587,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         if (naturalArgumentation.size() == 1) {
             return Optional.of(naturalArgumentation.get(0));
         }
-        final var localArgumentation = tree(EMPTY_STRING.value(), GEL);
+        final var localArgumentation = tree(EMPTY_STRING.value(), STRING);
         naturalArgumentation.forEach(localArgumentation::withMerged);
         if (localArgumentation.children().size() == 1) {
             return Optional.of(localArgumentation.child(0));
@@ -606,7 +606,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         } else if (childrenArgumentation.size() == 1) {
             return Optional.of(childrenArgumentation.get(0));
         } else {
-            return Optional.of(tree(EMPTY_STRING.value(), GEL)
+            return Optional.of(tree(EMPTY_STRING.value(), STRING)
                     .withMerged(childrenArgumentation));
         }
     }

@@ -18,6 +18,7 @@ package net.splitcells.gel.constraint.type;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.dom.Domable;
+import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.object.Discoverable;
@@ -37,7 +38,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import static net.splitcells.dem.lang.namespace.NameSpaces.GEL;
+import static net.splitcells.dem.lang.namespace.NameSpaces.STRING;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
@@ -74,7 +75,7 @@ public final class Derivation implements Constraint {
     @Override
     public Optional<Tree> naturalArgumentation(GroupId group) {
         return derivationTarget.naturalArgumentation(group)
-                .map(argumentation -> TreeI.tree("Derived via " + derivationFunction + ".", GEL)
+                .map(argumentation -> TreeI.tree("Derived via " + derivationFunction + ".", STRING)
                         .withChild(argumentation));
     }
 
@@ -87,7 +88,7 @@ public final class Derivation implements Constraint {
     public Optional<Tree> naturalArgumentation
             (Line line, GroupId group, Predicate<AllocationRating> allocationSelector) {
         return derivationTarget.naturalArgumentation(line, group, allocationSelector)
-                .map(argumentation -> TreeI.tree("Derived via " + derivationFunction + ".", GEL)
+                .map(argumentation -> TreeI.tree("Derived via " + derivationFunction + ".", STRING)
                         .withChild(argumentation));
     }
 

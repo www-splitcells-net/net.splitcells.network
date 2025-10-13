@@ -45,7 +45,6 @@ public class NameSpaces {
      * Namespace in order to code XML syntax specifics into an {@link Tree}.
      */
     public static final NameSpace XML_SYNTAX = nameSpace("a", "http://splitcells.net/xml.xsd");
-    public static final NameSpace GEL = nameSpace("d", "http://splitcells.net/gel.xsd");
     public static final NameSpace SEW = nameSpace("s", "http://splitcells.net/sew.xsd");
 
     public static final NameSpace HTML = nameSpace("html", "http://www.w3.org/1999/xhtml");

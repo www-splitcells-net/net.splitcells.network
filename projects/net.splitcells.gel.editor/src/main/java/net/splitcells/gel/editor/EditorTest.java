@@ -398,9 +398,9 @@ public class EditorTest {
                         ## Argumentation
                         
                         * For all allocations:
-                            * For all student:
-                                * For all date:
-                                    * For all shift: Then size should be 1, but is 2
+                            * For all groups of student attribute values: where value is `1`:
+                                * For all groups of date attribute values: where value is `1`:
+                                    * For all groups of shift attribute values: where value is `1`: Then size should be 1, but is 2
                         """;
         requireEquals(solution.constraint().commonMarkRatingReport(), secondReport);
         final var secondShift = solution.assign(demands.rawLine(2), supplies.rawLine(2));
