@@ -130,8 +130,8 @@ public class ForAllValueCombinations implements Rater {
         return "combinations of "
                 + attributes
                 .stream()
-                .map(a -> a.name())
-                .reduce((a, b) -> a + " " + b)
+                .map(a -> a.name() + " = " + line.value(a))
+                .reduce((a, b) -> a + ", " + b)
                 .orElse("");
     }
 }
