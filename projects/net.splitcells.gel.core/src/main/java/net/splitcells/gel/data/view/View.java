@@ -272,10 +272,20 @@ public interface View extends Discoverable, Domable, Identifiable {
     @Deprecated
     List<Line> rawLines();
 
+    /**
+     * @deprecated Only return String matrices like {@link #toReformattedTable(List, List)},
+     * in order to make it portable.
+     */
+    @Deprecated
     default String toCSV(ErrorReporter reporter) {
         return getWithReportedErrors(() -> toCSV(), reporter);
     }
 
+    /**
+     * @deprecated Only return String matrices like {@link #toReformattedTable(List, List)},
+     * in order to make it portable.
+     */
+    @Deprecated
     default String toCSV() {
         final var header = headerView().stream()
                 .map(attribute -> attribute.name())
@@ -298,6 +308,11 @@ public interface View extends Discoverable, Domable, Identifiable {
         }
     }
 
+    /**
+     * @deprecated Only return String matrices like {@link #toReformattedTable(List, List)},
+     * in order to make it portable.
+     */
+    @Deprecated
     default String toSimplifiedCSV() {
         final var simplifiedCsv = new StringBuilder();
         simplifiedCsv.append(headerView().stream()
@@ -412,6 +427,10 @@ public interface View extends Discoverable, Domable, Identifiable {
                 .findFirst();
     }
 
+    /**
+     * @deprecated Only return String matrices like {@link #toReformattedTable(List, List)},
+     * in order to make it portable.
+     */
     default String toReformattedCsv(List<Attribute<? extends Object>> columnAttributes
             , List<Attribute<? extends Object>> rowAttributes) {
         final var reformattedSolution = toReformattedTable(columnAttributes, rowAttributes);

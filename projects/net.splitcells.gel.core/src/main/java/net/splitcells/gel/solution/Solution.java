@@ -346,10 +346,19 @@ public interface Solution extends Problem, SolutionView {
     }
 
 
+    /**
+     * @deprecated Only return String matrices like {@link #toReformattedTable(List, List)},
+     * in order to make it portable.
+     */
+    @Deprecated
     default String toSimplifiedCSV(ErrorReporter reporter) {
         return getWithReportedErrors(this::toSimplifiedCSV, reporter);
     }
 
+    /**
+     * @deprecated Only return String matrices like {@link #toReformattedTable(List, List)},
+     * in order to make it portable.
+     */
     @Override
     default String toSimplifiedCSV() {
         final var simplifiedCsv = new StringBuilder();
