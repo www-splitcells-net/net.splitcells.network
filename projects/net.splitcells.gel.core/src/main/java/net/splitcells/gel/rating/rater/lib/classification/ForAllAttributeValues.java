@@ -94,7 +94,7 @@ public class ForAllAttributeValues implements Rater {
 
     @Override
     public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
-        return attribute.name();
+        return "groups of " + attribute.name() + " attribute values: where value is `" + line.value(attribute) + "`";
     }
 
     @Override

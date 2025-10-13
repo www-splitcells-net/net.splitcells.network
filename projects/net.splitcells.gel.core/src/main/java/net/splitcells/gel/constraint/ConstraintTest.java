@@ -73,9 +73,12 @@ public class ConstraintTest {
         solution.optimize(offlineLinearInitialization());
         solution.constraint().naturalArgumentation().orElseThrow().requireEqualsTo(
                 tree("For all allocations", STRING).withChildren(
-                        tree("For all a", STRING)
+                        tree("For all groups of a attribute values: where value is `1`", STRING)
                                 .withChildren(tree("Then size should be 4, but is 2", STRING))
-                        , tree("Then size should be 2, but is 4", STRING)))
+                        , tree("Then size should be 2, but is 4", STRING)
+                        , tree("For all groups of a attribute values: where value is `3`", STRING)
+                                .withChildren(tree("Then size should be 4, but is 2", STRING))
+                ))
         ;
     }
 
