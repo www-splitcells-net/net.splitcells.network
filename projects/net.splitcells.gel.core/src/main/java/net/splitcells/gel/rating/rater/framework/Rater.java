@@ -143,10 +143,10 @@ public interface Rater extends PubliclyTyped<Rater>
     /**
      * Describes to the user in a natural way, how this is rating given {@link Line}.
      *
-     * @param line                 This is the {@link Line}, that needs to be described.
+     * @param line                 This is the {@link Line}, that needs to be described and is part of {@link Constraint#lines()}.
      * @param groupsLineProcessing This is part of the {@link Constraint#lineProcessing()}
      *                             for the incoming {@link GroupId} if the line.
-     * @param incomingGroup        This is the incoming {@link GroupId} if the line.
+     * @param incomingGroup        This is the incoming {@link GroupId} of the line.
      * @return Prefer using one complete sentence for the description,
      * that starts with lower case and does not end with a dot.
      */
