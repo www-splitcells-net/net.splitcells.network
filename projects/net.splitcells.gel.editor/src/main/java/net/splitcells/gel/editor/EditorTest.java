@@ -44,71 +44,12 @@ import static net.splitcells.gel.editor.lang.ReferenceDescription.referenceDescr
 import static net.splitcells.gel.editor.lang.SolutionDescription.solutionDescription;
 import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuote;
 import static net.splitcells.gel.editor.lang.TableDescription.tableDescription;
-import static net.splitcells.gel.editor.SolutionEditor.solutionEditor;
 import static net.splitcells.gel.editor.geal.lang.VariableDefinitionDesc.variableDefinitionDesc;
 import static net.splitcells.gel.rating.rater.lib.HasSize.HAS_SIZE_NAME;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.website.Format.CSV;
 
 public class EditorTest {
-    @UnitTest
-    public void testAllParsingBranches() {
-        final var testSubject = editor("test-subject", EXPLICIT_NO_CONTEXT);
-        final var colloquiumDescription = solutionDescription("colloquium-planning"
-                , list(attributeDescription("student", STRING, emptySourceCodeQuote())
-                        , attributeDescription("examiner", STRING, emptySourceCodeQuote())
-                        , attributeDescription("observer", STRING, emptySourceCodeQuote())
-                        , attributeDescription("date", INTEGER, emptySourceCodeQuote())
-                        , attributeDescription("shift", INTEGER, emptySourceCodeQuote())
-                        , attributeDescription("roomNumber", INTEGER, emptySourceCodeQuote()))
-                , tableDescription("exams"
-                        , list(referenceDescription("student", AttributeDescription.class, emptySourceCodeQuote())
-                                , referenceDescription("examiner", AttributeDescription.class, emptySourceCodeQuote())
-                                , referenceDescription("observer", AttributeDescription.class, emptySourceCodeQuote()))
-                        , emptySourceCodeQuote())
-                , tableDescription("exam slot"
-                        , list(referenceDescription("date", AttributeDescription.class, emptySourceCodeQuote())
-                                , referenceDescription("shift", AttributeDescription.class, emptySourceCodeQuote())
-                                , referenceDescription("roomNumber", AttributeDescription.class, emptySourceCodeQuote()))
-                        , emptySourceCodeQuote())
-                , list(constraintDescription(functionCallDescription(FOR_EACH_NAME
-                                , list(referenceDescription("observer", AttributeDescription.class, emptySourceCodeQuote()))
-                                , emptySourceCodeQuote())
-                        , list(constraintDescription(functionCallDescription(FOR_ALL_COMBINATIONS_OF
-                                        , list(referenceDescription("date", AttributeDescription.class, emptySourceCodeQuote())
-                                                , referenceDescription("shift", AttributeDescription.class, emptySourceCodeQuote())),
-                                        emptySourceCodeQuote())
-                                , list(constraintDescription(functionCallDescription(THEN_NAME
-                                                , list(functionCallDescription(HAS_SIZE_NAME, emptySourceCodeQuote(), integerDescription(1, emptySourceCodeQuote())))
-                                                , emptySourceCodeQuote())
-                                        , list()
-                                        , emptySourceCodeQuote())), emptySourceCodeQuote())), emptySourceCodeQuote()))
-                , emptySourceCodeQuote()
-        );
-        final var colloquium = solutionEditor(testSubject, colloquiumDescription);
-        colloquium.parse(colloquiumDescription).requireWorking();
-        colloquium.attributes().requirePresence("student", stringAttribute("student"), CONTENT_COMPARISON)
-                .requirePresence("examiner", stringAttribute("examiner"), CONTENT_COMPARISON)
-                .requirePresence("observer", stringAttribute("observer"), CONTENT_COMPARISON)
-                .requirePresence("date", integerAttribute("date"), CONTENT_COMPARISON)
-                .requirePresence("shift", integerAttribute("shift"), CONTENT_COMPARISON)
-                .requirePresence("roomNumber", integerAttribute("roomNumber"), CONTENT_COMPARISON);
-        colloquium.demands().orElseThrow().headerView2().requireEquality(list(
-                        stringAttribute("student")
-                        , stringAttribute("examiner")
-                        , stringAttribute("observer"))
-                , CONTENT_COMPARISON);
-        colloquium.supplies().orElseThrow().headerView2().requireEquality(list(
-                        integerAttribute("date")
-                        , integerAttribute("shift")
-                        , integerAttribute("roomNumber"))
-                , CONTENT_COMPARISON);
-        final var solution = colloquium.solution().orElseThrow();
-        solution.constraint().readQuery()
-                .forAll(solution.attributeByName("observer"))
-                .forAllCombinationsOf(solution.attributeByName("date"), solution.attributeByName("shift"))
-                .then(hasSize(1));
-    }
 
     @UnitTest
     public void testGealInterpretation() {

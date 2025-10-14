@@ -22,7 +22,6 @@ import net.splitcells.gel.editor.geal.lang.SourceUnit;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Result.result;
-import static net.splitcells.gel.editor.SolutionEditor.AFFECTED_CONTENT;
 
 /**
  * @deprecated Use {@link SourceUnit} instead.
@@ -36,7 +35,7 @@ public class AttributeDescription implements SourceCodeQuotation {
             return attribute.withErrorMessage(tree("Unknown attribute type.")
                     .withProperty("name", name)
                     .withProperty("type", type)
-                    .withProperty(AFFECTED_CONTENT, sourceCodeQuote.userReference()));
+                    .withProperty("affected content", sourceCodeQuote.userReference()));
         }
         return attribute.withValue(attributeDescription(name, primitiveType.get(), sourceCodeQuote));
     }

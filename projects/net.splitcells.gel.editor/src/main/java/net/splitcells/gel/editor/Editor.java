@@ -99,17 +99,6 @@ public class Editor implements Discoverable {
         return parent.path().withAppended(name);
     }
 
-    /**
-     *
-     * @param solutionDescription
-     * @return
-     * @deprecated Use {@link SourceUnit} instead.
-     */
-    @Deprecated
-    public Result<SolutionEditor, Tree> solutionEditor(SolutionDescription solutionDescription) {
-        return SolutionEditor.solutionEditor(this, solutionDescription).parse(solutionDescription);
-    }
-
     public Optional<Object> resolveRaw(NameDesc name) {
         if (attributes.hasKey(name.getValue())) {
             return Optional.of(attributes.get(name.getValue()));
