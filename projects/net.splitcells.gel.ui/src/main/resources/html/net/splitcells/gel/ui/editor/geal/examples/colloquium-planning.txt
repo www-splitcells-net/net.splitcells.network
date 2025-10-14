@@ -18,5 +18,9 @@ solution   . forAllCombinationsOf(student, date, shift)
            . then(hasSize(1));
 solution   . forEach(student)
            . then(hasSize(2));
+solution   . forEach(student)
+           . then(minimalDistance(date, 3));
+solution   . forEach(student)
+           . then(minimalDistance(date, 5));
 solution   . columnAttributesForOutputFormat(roomNumber);
 solution   . rowAttributesForOutputFormat(date, shift);
