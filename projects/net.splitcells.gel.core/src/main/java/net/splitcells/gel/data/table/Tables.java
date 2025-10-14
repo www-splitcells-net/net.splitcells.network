@@ -105,7 +105,7 @@ public class Tables extends ResourceOptionImpl<TableFactory> {
     public static Table table2(List<Attribute<Object>> attributes) {
         final List<Attribute<?>> convertedAttributes = attributes.mapped(a -> (Attribute<Object>) a);
         requireUniqueAttributes(convertedAttributes);
-        return environment().config().configValue(Tables.class).table();
+        return environment().config().configValue(Tables.class).table(convertedAttributes);
     }
 
     public static Table table2(String name, Discoverable parent, List<Attribute<Object>> attributes) {
