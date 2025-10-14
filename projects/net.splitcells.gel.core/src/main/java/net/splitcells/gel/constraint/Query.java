@@ -92,7 +92,4 @@ public interface Query {
     Set<GroupId> currentInjectionGroups();
 
     Query forAll(List<Rater> classifiers);
-
-
-    Result<Query, Tree> constraintResult(String type, List<Rater> raters, List<Attribute<? extends Object>> attributes);
 }

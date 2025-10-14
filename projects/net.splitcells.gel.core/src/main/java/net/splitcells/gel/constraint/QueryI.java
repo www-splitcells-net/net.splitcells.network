@@ -415,48 +415,4 @@ public class QueryI implements Query, QueryEditor {
         });
         return nextQueryPathElement(setOfUniques(), forAllCatcher);
     }
-
-    @Override
-    public Result<Query, Tree> constraintResult(String constraintType, List<Rater> raters, List<Attribute<? extends Object>> attributes) {
-        final Result<Query, Tree> constraint = result();
-        if (constraintType.equals(FOR_ALL_VALUE_COMBINATIONS_NAME)) {
-            if (raters.hasElements()) {
-                return constraint.withErrorMessage(tree("No raters are allowed for parsing of `" + FOR_ALL_VALUE_COMBINATIONS_NAME + "` constraint.")
-                        .withProperty("constraint type", constraintType)
-                        .withProperty("raters", raters.toString())
-                        .withProperty("attributes", attributes.toString()));
-            }
-            return constraint.withValue(forAllCombinationsOf(attributes));
-        } else if (constraintType.equals(FOR_ALL_NAME)) {
-            if (attributes.size() == 1 && raters.isEmpty()) {
-                return constraint.withValue(forAll(attributes.get(0)));
-            }
-            if (attributes.hasElements()) {
-                return constraint.withErrorMessage(tree("No attributes are allowed for parsing of `" + FOR_ALL_NAME + "` constraint.")
-                        .withProperty("constraint type", constraintType)
-                        .withProperty("raters", raters.toString())
-                        .withProperty("attributes", attributes.toString()));
-            }
-            return constraint.withValue(forAll(raters));
-        } else if (constraintType.equals(THEN_NAME)) {
-            if (raters.size() != 1) {
-                return constraint.withErrorMessage(tree("Invalid number of raters given for parsing a `" + THEN_NAME + "` constraint. A `" + THEN_NAME + "` constraint requires exactly one rater.")
-                        .withProperty("constraint type", constraintType)
-                        .withProperty("raters", raters.toString())
-                        .withProperty("attributes", attributes.toString()));
-            }
-            if (attributes.hasElements()) {
-                return constraint.withErrorMessage(tree("No attributes are not allowed for parsing of `" + THEN_NAME + "` constraint.")
-                        .withProperty("constraint type", constraintType)
-                        .withProperty("raters", raters.toString())
-                        .withProperty("attributes", attributes.toString()));
-            }
-            return constraint.withValue(then(raters.get(0)));
-        } else {
-            return constraint.withErrorMessage(tree("Unknown constraint type given for constraint parsing.")
-                    .withProperty("constraint type", constraintType)
-                    .withProperty("raters", raters.toString())
-                    .withProperty("attributes", attributes.toString()));
-        }
-    }
 }
