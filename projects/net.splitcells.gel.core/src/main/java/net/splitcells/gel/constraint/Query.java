@@ -93,7 +93,6 @@ public interface Query {
 
     Query forAll(List<Rater> classifiers);
 
-    Query parseConstraint(String constraintType, List<Rater> raters, List<Attribute<? extends Object>> attributes);
 
     Result<Query, Tree> constraintResult(String type, List<Rater> raters, List<Attribute<? extends Object>> attributes);
 }

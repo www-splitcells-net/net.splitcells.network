@@ -417,15 +417,6 @@ public class QueryI implements Query, QueryEditor {
     }
 
     @Override
-    public Query parseConstraint(String constraintType, List<Rater> raters, List<Attribute<? extends Object>> attributes) {
-        final var constraint = constraintResult(constraintType, raters, attributes);
-        if (constraint.errorMessages().hasElements()) {
-            throw ExecutionException.execException(tree("Could not construct constraints.").withChildren(constraint.errorMessages()));
-        }
-        return constraint.optionalValue().orElseThrow();
-    }
-
-    @Override
     public Result<Query, Tree> constraintResult(String constraintType, List<Rater> raters, List<Attribute<? extends Object>> attributes) {
         final Result<Query, Tree> constraint = result();
         if (constraintType.equals(FOR_ALL_VALUE_COMBINATIONS_NAME)) {
