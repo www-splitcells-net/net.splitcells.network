@@ -115,8 +115,9 @@ public class ResourceListMojo extends AbstractMojo {
                         } catch (IOException e) {
                             throw new RuntimeException("Could not create folder for meta data file: " + metaFileFolder, e);
                         }
+                        final var metaData = new MetaData();
                         try (final BufferedWriter metaWriter = new BufferedWriter(new FileWriter(metaFilePath.toFile()))) {
-                            metaWriter.write("TODO");
+                            metaWriter.write(metaData.toString());
                         } catch (IOException e) {
                             throw new RuntimeException("Could not write meta file: " + metaFilePath, e);
                         }
