@@ -57,9 +57,7 @@ public class ForEachCallRunner implements FunctionCallRunner {
         }
         final Attribute<?> groupingAttribute;
         switch (context.parse(functionCall.getArguments().get(0))) {
-            case Attribute<? extends Object> attribute -> {
-                groupingAttribute = attribute;
-            }
+            case Attribute<? extends Object> attribute -> groupingAttribute = attribute;
             default -> throw execException(tree("The first argument has to be a variable reference, but is "
                     + functionCall.getArguments().get(0).getExpression().getClass()
                     + ".")

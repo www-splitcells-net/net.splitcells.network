@@ -42,20 +42,15 @@ import static java.nio.file.Files.createDirectories;
 public class ResourceListMojo extends AbstractMojo {
     @Parameter(defaultValue = "${project}", required = true, readonly = true)
     private MavenProject project;
-    private Path basePath;
-    private Path resourceFolder;
-    private Path metaDataFolder;
-    private Path resourceListFile;
     private String fileSystemSeparator = FileSystems.getDefault().getSeparator();
-    private String basePathStr;
 
     @Override
     public void execute() throws MojoExecutionException {
-        basePath = Path.of(project.getBuild().getDirectory(), "classes");
-        resourceFolder = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources");
-        metaDataFolder = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources.meta");
-        resourceListFile = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources.list.txt");
-        basePathStr = basePath.toAbsolutePath().toString().replace(fileSystemSeparator, "/");
+        final Path basePath = Path.of(project.getBuild().getDirectory(), "classes");
+        final Path resourceFolder = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources");
+        final Path metaDataFolder = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources.meta");
+        final Path resourceListFile = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources.list.txt");
+        final String basePathStr = basePath.toAbsolutePath().toString().replace(fileSystemSeparator, "/");
         try {
             if (Files.isRegularFile(resourceFolder)) {
                 throw new MojoExecutionException("No file is allowed to use the same path as the resource folder: " + resourceFolder);

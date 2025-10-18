@@ -65,9 +65,7 @@ public class AttributeCallRunner implements FunctionCallRunner {
         final var first = context.parse(functionCall.getArguments().get(0));
         final NameDesc firstName;
         switch (first) {
-            case Type n -> {
-                firstName = nameDesc(n.getName(), functionCall.getArguments().get(0).getSourceCodeQuote());
-            }
+            case Type n -> firstName = nameDesc(n.getName(), functionCall.getArguments().get(0).getSourceCodeQuote());
             default ->
                     throw execException(tree("The first argument has to be a name, but " + first.getClass() + " was given.")
                             .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));

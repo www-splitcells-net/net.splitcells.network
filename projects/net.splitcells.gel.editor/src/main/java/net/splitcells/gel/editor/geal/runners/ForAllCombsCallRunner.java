@@ -64,7 +64,7 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
                     + " was given instead.")
                     .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
         }
-        if (!(functionCall.getArguments().size() >= 1)) {
+        if (functionCall.getArguments().size() != 1) {
             throw execException(tree("The "
                     + FOR_ALL_COMBINATIONS_OF
                     + " function requires more than one argument, but " + functionCall.getArguments().size() + " were given instead.")
