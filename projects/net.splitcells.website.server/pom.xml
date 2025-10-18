@@ -31,6 +31,7 @@
             <version>${revision}</version>
         </dependency>
         <dependency>
+            <!-- TODO TOFIX This should not be here. This is used, because there is no dependency injection for renderer extensions yet. -->
             <groupId>net.splitcells</groupId>
             <artifactId>network.worker.via.java</artifactId>
             <version>${revision}</version>
