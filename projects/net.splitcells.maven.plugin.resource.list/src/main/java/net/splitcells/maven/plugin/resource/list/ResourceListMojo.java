@@ -103,6 +103,7 @@ public class ResourceListMojo extends AbstractMojo {
                                 resourceContent = Files.readString(resource);
                             } catch (MalformedInputException e) {
                                 // Only UTF-8 compatible files are considered.
+                                return;
                             }
                         } catch (IOException e) {
                             throw new RuntimeException("Could not read resource file: " + resource, e);
@@ -116,6 +117,7 @@ public class ResourceListMojo extends AbstractMojo {
                             throw new RuntimeException("Could not create folder for meta data file: " + metaFileFolder, e);
                         }
                         final var metaData = new MetaData();
+                        metaData.parseMetaData(resourceContent);
                         try (final BufferedWriter metaWriter = new BufferedWriter(new FileWriter(metaFilePath.toFile()))) {
                             metaWriter.write(metaData.toString());
                         } catch (IOException e) {

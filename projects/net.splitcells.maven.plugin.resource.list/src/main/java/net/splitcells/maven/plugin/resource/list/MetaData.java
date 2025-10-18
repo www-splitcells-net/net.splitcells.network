@@ -15,9 +15,20 @@
  */
 package net.splitcells.maven.plugin.resource.list;
 
+import java.util.regex.Pattern;
+
 public class MetaData {
+    private static final Pattern SPX_LICENSE = Pattern.compile("(SPDX-License-Identifier: )([a-zA-Z0-9-. ]+)");
     String license;
     String copyrightText;
+
+    public MetaData parseMetaData(String fileContent) {
+        final var licenseMatch = SPX_LICENSE.matcher(fileContent);
+        if (licenseMatch.find()) {
+            license = licenseMatch.group(2);
+        }
+        return this;
+    }
 
     @Override
     public String toString() {
