@@ -37,6 +37,7 @@ import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_C
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.Files.readAsString;
 import static net.splitcells.dem.resource.Files.walk_recursively;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StringUtils.countChar;
@@ -89,13 +90,11 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
     private final String basePath;
     private final Class<?> clazz;
     private Set<String> resourceList;
-    private final boolean populatedResourceList;
 
-    private FileSystemViaClassResourcesImpl(Class<?> clazz, String basePath, Set<String> resourceListArg, boolean populatedResourceListArg) {
+    private FileSystemViaClassResourcesImpl(Class<?> clazz, String basePath, Set<String> resourceListArg) {
         this.clazz = clazz;
         this.basePath = basePath;
         this.resourceList = resourceListArg;
-        populatedResourceList = populatedResourceListArg;
     }
 
     private FileSystemViaClassResourcesImpl(Class<?> clazz, String basePath, String resourceListPath) {
@@ -103,21 +102,25 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
         this.basePath = basePath;
         resourceList = setOfUniques();
         final var resourceListContent = clazz.getResourceAsStream("/" + resourceListPath);
-        populatedResourceList = resourceListContent != null;
-        if (populatedResourceList) {
+        if (resourceListContent == null) {
+            // TODO TOFIX This only happens, because the `website.server` is dependent on the `network.worker.via.java`.
+            logs().warn(execException(tree("Could not provide a file system API for the given class.")
+                    .withProperty("Class", clazz.getName())
+                    .withProperty("Base Path", basePath)
+                    .withProperty("Resource List Path", resourceListPath)));
+        } else {
             for (final var resource : readAsString(resourceListContent).split("\n")) {
                 resourceList.add(normalize(resource));
             }
         }
-
     }
 
     /**
-     * @see {@link #requireValidResourcePath(String)}
      * @param path Path starts with `/`.
+     * @see {@link #requireValidResourcePath(String)}
      */
     private boolean isResourcePathValid(String path) {
-        if (populatedResourceList && ENFORCING_UNIT_CONSISTENCY) {
+        if (ENFORCING_UNIT_CONSISTENCY) {
             return resourceList.contains(path.substring(1));
         }
         return true;
@@ -132,18 +135,9 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
      * @param path Path starts with `/`.
      */
     private void requireValidResourcePath(String path) {
-        if (ENFORCING_UNIT_CONSISTENCY) {
-            if (populatedResourceList) {
-                if (!resourceList.contains(path.substring(1))) {
-                    throw ExecutionException.execException(tree("Unknown path requested.")
-                            .withProperty("requested path", path));
-                }
-            } else if (resourceList.hasElements()) {
-                throw ExecutionException.execException(tree(getClass().getName() + " is not consistent, because the resource list has elements even though it is not populated.")
-                        .withProperty("Is resource list populated?", "" + populatedResourceList)
-                        .withProperty("Resource List", resourceList.toString())
-                        .withProperty("Does resource exist natively?", "" + (clazz.getResourceAsStream(path) != null)));
-            }
+        if (!resourceList.contains(path.substring(1))) {
+            throw ExecutionException.execException(tree("Unknown path requested.")
+                    .withProperty("requested path", path));
         }
     }
 
@@ -207,24 +201,15 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
      */
     @Override
     public boolean isFile(Path path) {
-        if (populatedResourceList) {
-            final var pathStr = normalize(basePath + path);
-            for (final var r : resourceList) {
-                if (r.length() == pathStr.length() && r.equals(pathStr)) {
-                    return true;
-                } else if (r.length() == pathStr.length() + 1 && r.equals(pathStr + "/")) {
-                    return false;
-                }
+        final var pathStr = normalize(basePath + path);
+        for (final var r : resourceList) {
+            if (r.length() == pathStr.length() && r.equals(pathStr)) {
+                return true;
+            } else if (r.length() == pathStr.length() + 1 && r.equals(pathStr + "/")) {
+                return false;
             }
-            return false;
         }
-        final var pathStr = normalize("/" + basePath + path);
-        final var inputStream = clazz.getResourceAsStream(pathStr);
-        return inputStream != null
-                && Files.readAsString(inputStream).length() != 0
-                && walkRecursively(path)
-                .filter(p -> !path.toString().equals(p.toString()))
-                .count() == 0;
+        return false;
     }
 
     private String normalize(String path) {
@@ -272,104 +257,16 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
     @Override
     public Stream<Path> walkRecursively(Path path) {
         try {
-            if (populatedResourceList) {
-                final var pathStr = normalize(basePath + path.toString());
-                final var pathStrFolder = pathStr + "/";
-                final List<Path> walk = list();
-                for (final var resource : resourceList) {
-                    final var resourceStr = resource;
-                    if (resourceStr.startsWith(pathStrFolder) || resourceStr.equals(pathStr)) {
-                        walk.add(Path.of(resourceStr.substring(basePath.length())));
-                    }
+            final var pathStr = normalize(basePath + path.toString());
+            final var pathStrFolder = pathStr + "/";
+            final List<Path> walk = list();
+            for (final var resource : resourceList) {
+                final var resourceStr = resource;
+                if (resourceStr.startsWith(pathStrFolder) || resourceStr.equals(pathStr)) {
+                    walk.add(Path.of(resourceStr.substring(basePath.length())));
                 }
-                return walk.stream();
             }
-            final var resourcePath = clazz.getClassLoader().getResource(normalize((basePath + path + "/")));
-            if (resourcePath == null) {
-                return Stream.empty();
-            }
-            if ("jar".equals(resourcePath.getProtocol())) {
-                final var defaultProtocol = defaultProtocol();
-                if (!"file".equals(defaultProtocol)) {
-                    // Load resources from class loader via jars or something, that is not the file protocol.
-                    try {
-                        final var pathStr = basePath + path.toString();
-                        final var dirURL = clazz.getClassLoader().getResource("/" + pathStr);
-                        final var explenationCount = countChar(dirURL.getPath(), '!');
-                        if (explenationCount == 0) {
-                            throw ExecutionException.execException(tree("Cannot process jar path, as no explanation mark is present in the class loader path. This indicates, that the resource is not located inside a jar:")
-                                    .withProperty("clazz", clazz.toString())
-                                    .withProperty("path", path.toString())
-                                    .withProperty("pathStr", pathStr)
-                                    .withProperty("dirURL", dirURL.toString()));
-                        } else if (explenationCount == 1) {
-                            final var jarPath = dirURL.getPath().substring(5, dirURL.getPath().lastIndexOf("!"));
-                            // The jar is provided by the class loader, and thereby this jar is trusted.
-                            try (final var jarFile = new JarFile(URLDecoder.decode(jarPath, UTF_8))) {
-                                final var jarEntries = jarFile
-                                        .entries()
-                                        .asIterator();
-                                final List<Path> walk = list();
-                                while (jarEntries.hasNext()) {
-                                    walk.withAppended(Path.of((jarEntries.next().getRealName())));
-                                }
-                                /*
-                                 * If the resources are loaded from a jar, the `META-INF` folder is actively filtered afterwards,
-                                 * in order to avoid walking through it, even it is not request.
-                                 * For example, without this hack requesting `net/splitcells/` would result in getting
-                                 * `META-INF` and `META-INF/MANIFEST.MF` as well, even though it was not requested.
-                                 */
-                                return walk.stream().filter(w -> w.startsWith(pathStr))
-                                        .map(w -> Path.of(w.toString().substring(basePath.length())));
-                            }
-                        } else {
-                            throw notImplementedYet("Nested jars are not supported yet.");
-                        }
-                    } catch (Throwable e) {
-                        throw execException(e);
-                    }
-                } else {
-                    // TODO Document when this branch is active.
-                    // Loading resources from class loader via the file protocol.
-                    final var pathStrWithoutProtocols = resourcePath.toURI().toString().substring(9);
-                    final var jarPath = pathStrWithoutProtocols.substring(0, pathStrWithoutProtocols.indexOf("!"));
-                    // The jar is provided by the class loader, and thereby this jar is trusted.
-                    try (final var jarFile = new JarFile(URLDecoder.decode(jarPath, UTF_8))) {
-                        final var jarEntries = jarFile
-                                .entries()
-                                .asIterator();
-                        final List<Path> walk = list();
-                        while (jarEntries.hasNext()) {
-                            walk.withAppended(Path.of((jarEntries.next().getRealName())));
-                        }
-                        /*
-                         * If the resources are loaded from a jar, the `META-INF` folder is actively filtered afterwards,
-                         * in order to avoid walking through it, even it is not request.
-                         * For example, without this hack requesting `net/splitcells/` would result in getting
-                         * `META-INF` and `META-INF/MANIFEST.MF` as well, even though it was not requested.
-                         */
-                        return walk.stream().filter(w -> w.startsWith(normalize(basePath + path)))
-                                .map(w -> Path.of("./" + (w + "/")
-                                        .replace("//", "/")
-                                        .substring(basePath.length())));
-                    }
-                }
-            } else {
-                /* Assume that class loader has resources from target folder of Maven build at the current folder.
-                 * Checks if base path is present.
-                 */
-                final var resource = clazz.getClassLoader().getResource(basePath + "./");
-                if (resource == null) {
-                    return StreamUtils.emptyStream();
-                }
-                final var rootPathStr = Path.of(resource.toURI())
-                        .toString()
-                        .replace("test-classes", "classes")
-                        + "/";
-                final var startPath = Path.of(clazz.getClassLoader().getResource(basePath + path + "/").toURI());
-                return walk_recursively(startPath)
-                        .map(p -> Path.of(removePrefix(rootPathStr, p.toString() + "/")));
-            }
+            return walk.stream();
         } catch (Throwable e) {
             throw execException(e);
         }
@@ -390,7 +287,6 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
     public FileSystemView subFileSystemView(String path) {
         return new FileSystemViaClassResourcesImpl(clazz
                 , normalize(basePath + path + "/")
-                , resourceList
-                , populatedResourceList);
+                , resourceList);
     }
 }
