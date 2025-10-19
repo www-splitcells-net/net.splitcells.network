@@ -17,6 +17,7 @@ package net.splitcells.dem.environment;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.environment.config.ProgramRepresentative;
 import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.object.Discoverable;
@@ -55,7 +56,7 @@ import static net.splitcells.dem.utils.StreamUtils.stream;
  * The word unit was not used, in order to avoid confusion regarding unit tests.
  * The word cell was used, as it is also used in the project name ;)</p>
  */
-public interface Cell extends Consumer<Environment>, Discoverable, Option<Consumer<Environment>> {
+public interface Cell extends Consumer<Environment>, Discoverable, Option<Consumer<Environment>>, Runnable {
     default List<String> path() {
         return stream(getClass().getName().split("\\.")).collect(toList());
     }
@@ -83,5 +84,19 @@ public interface Cell extends Consumer<Environment>, Discoverable, Option<Consum
     @Override
     default Consumer<Environment> defaultValue() {
         return this;
+    }
+
+    /**
+     * TODO This is an hack.
+     * This method solely exist, so that {@link ProgramRepresentative} is correctly interpreted,
+     * during {@link Dem#serve(Class[])} by providing a {@link Runnable}.
+     * Maybe this is ok, as this provides a way to define a default {@link Cell} task after startup.
+     * Maybe it is not okay.
+     * {@link Dem#waitIndefinitely()} is used by default, as this is required for {@link Cell}s,
+     * that represent services.
+     */
+    @Override
+    default void run() {
+        Dem.waitIndefinitely();
     }
 }

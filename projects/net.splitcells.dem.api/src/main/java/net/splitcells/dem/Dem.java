@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem;
 
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.Cell;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.environment.EnvironmentI;
@@ -29,6 +30,7 @@ import net.splitcells.dem.resource.communication.log.Logs;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
 import net.splitcells.dem.utils.ExecutionException;
 
+import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.ZonedDateTime;
@@ -37,8 +39,7 @@ import java.util.concurrent.Semaphore;
 import java.util.function.Consumer;
 
 import static net.splitcells.dem.ProcessResult.processResult;
-import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.environment.config.StaticFlags.logStaticFlags;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
@@ -140,7 +141,16 @@ public class Dem {
      * @param cells This describes the program's configuration.
      */
     public static void serve(Class<? extends Cell>... cells) {
-        process(Dem::waitIndefinitely, cells);
+        final Runnable process;
+        try {
+            process = lastValueOf(cells).getConstructor().newInstance();
+        } catch (Throwable e) {
+            throw execException(tree("Could not create runnable for process.")
+                            .withProperty("cells", listWithValuesOf(cells).toString())
+                    , e);
+        }
+        process(process, cells);
+
     }
 
     /**
