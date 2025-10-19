@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.data.set.list;
 
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 
@@ -23,9 +24,17 @@ import java.util.Arrays;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 @JavaLegacyArtifact
 public final class Lists {
+
+    public static <T> T lastValueOf(T... arg) {
+        if (arg.length == 0) {
+            throw execException("Cannot get last element of array, because it is empty.");
+        }
+        return arg[arg.length - 1];
+    }
 
     @JavaLegacyBody
     public static <T> java.util.stream.Collector<T, ?, List<T>> toList() {
