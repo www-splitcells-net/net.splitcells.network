@@ -19,16 +19,24 @@ import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.utils.StringUtils;
+import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
+import net.splitcells.gel.editor.geal.lang.NameDesc;
+import net.splitcells.gel.editor.meta.Type;
 
 import static net.splitcells.dem.lang.CommonMarkUtils.joinDocuments;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.gel.editor.geal.lang.NameDesc.nameDesc;
 
+/**
+ * Extracts function call data from {@link FunctionCallDesc},
+ * while recording all types of function calls, in order to generate a complete function call documentation.
+ */
 @Accessors(chain = true)
 public class FunctionCallRecord implements Closeable {
-    public static FunctionCallRecord functionCallRecord(FunctionCallDoc argFunctionCallDoc, String argName, int argVariation) {
-        return new FunctionCallRecord(argFunctionCallDoc, argName, argVariation);
+    public static FunctionCallRecord functionCallRecord(Editor argContext, String argName, int argVariation) {
+        return new FunctionCallRecord(argContext, argName, argVariation);
     }
 
     @Getter private final String name;
@@ -42,12 +50,12 @@ public class FunctionCallRecord implements Closeable {
      * This is a CommonMark document.
      */
     private StringBuilder description = StringUtils.stringBuilder();
-    private final FunctionCallDoc functionCallDoc;
+    private final Editor context;
 
-    private FunctionCallRecord(FunctionCallDoc argFunctionCallDoc, String argName, int argVariation) {
+    private FunctionCallRecord(Editor argContext, String argName, int argVariation) {
         name = argName;
         variation = argVariation;
-        functionCallDoc = argFunctionCallDoc;
+        context = argContext;
     }
 
     public FunctionCallRecord addDescription(String addition) {
@@ -70,6 +78,6 @@ public class FunctionCallRecord implements Closeable {
 
     @Override
     public void close() {
-        functionCallDoc.addRecord(this);
+        context.addRecord(this);
     }
 }

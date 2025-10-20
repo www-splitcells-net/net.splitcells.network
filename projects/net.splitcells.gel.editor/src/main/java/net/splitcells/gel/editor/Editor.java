@@ -16,6 +16,7 @@
 package net.splitcells.gel.editor;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
@@ -27,7 +28,7 @@ import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.TableFormatting;
 import net.splitcells.gel.data.view.attribute.Attribute;
-import net.splitcells.gel.editor.geal.FunctionCallDoc;
+import net.splitcells.gel.editor.geal.FunctionCallRecord;
 import net.splitcells.gel.editor.geal.lang.*;
 import net.splitcells.gel.editor.geal.runners.FunctionCallMetaExecutor;
 import net.splitcells.gel.editor.geal.runners.FunctionCallRun;
@@ -38,6 +39,7 @@ import net.splitcells.website.Format;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.need.NeedsCheck.checkNeed;
@@ -68,7 +70,8 @@ public class Editor implements Discoverable {
     @Getter private final Map<String, Solution> solutions = map();
     @Getter private final Map<String, Constraint> constraints = map();
     @Getter private final Map<String, TableFormatting> tableFormatting = map();
-    @Getter private final FunctionCallDoc functionCallDoc = FunctionCallDoc.functionCallDoc();
+    private final List<FunctionCallRecord> functionCallRecords = list();
+    @Getter @Setter private boolean isRecording = false;
     private final Map<String, EditorData> data = map();
 
     public Optional<String> lookupTableLikeName(Table table) {
@@ -261,5 +264,24 @@ public class Editor implements Discoverable {
             subject = chainLinkRun.getResult();
         }
         return subject.orElseThrow();
+    }
+
+    public Editor addRecord(FunctionCallRecord record) {
+        if (isRecording) {
+            final var matches = functionCallRecords.stream()
+                    .filter(fcr -> fcr.getName().equals(record.getName()) && fcr.getVariation() == record.getVariation())
+                    .toList();
+            if (matches.hasElements()) {
+                throw execException(tree("Function call variation is recorded multiple times.")
+                        .withProperty("New record", record.toString())
+                        .withProperty("Existing matching records", matches.toString()));
+            }
+            functionCallRecords.add(record);
+        }
+        return this;
+    }
+
+    public FunctionCallRecord functionCallRecord(String name, int variation) {
+        return FunctionCallRecord.functionCallRecord(this, name, variation);
     }
 }

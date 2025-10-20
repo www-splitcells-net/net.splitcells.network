@@ -59,7 +59,7 @@ public class AttributeCallRunner implements FunctionCallRunner {
         if (!supports(functionCall)) {
             return run;
         }
-        try (val fcr = context.getFunctionCallDoc().functionCallRecord(ATTRIBUTE_FUNCTION, 1)) {
+        try (val fcr = context.functionCallRecord(ATTRIBUTE_FUNCTION, 1)) {
             fcr.requireArgumentCount(functionCall, 2);
         }
         final var first = context.parse(functionCall.getArguments().get(0));
