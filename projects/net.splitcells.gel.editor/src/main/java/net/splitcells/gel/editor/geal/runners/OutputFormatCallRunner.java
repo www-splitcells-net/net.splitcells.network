@@ -55,40 +55,11 @@ public class OutputFormatCallRunner implements FunctionCallRunner {
             return run;
         }
         try (val fcr = context.functionCallRecord(name, 1)) {
-            final Solution subjectVal;
-            if (subject.isEmpty()) {
-                throw execException(tree("The "
-                        + functionCall.getName().getValue()
-                        + " function requires a Solution as a subject, but no subject was given instead.")
-                        .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
-            }
-            switch (subject.orElseThrow()) {
-                case Solution s -> subjectVal = s;
-                default -> throw execException(tree("The "
-                        + functionCall.getName().getValue()
-                        + " function requires a Solution as a subject, but "
-                        + subject.orElseThrow().getClass().getName()
-                        + " was given instead.")
-                        .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
-            }
+            final Solution subjectVal = fcr.parseSubject(functionCall, Solution.class, subject);
+            run.setResult(Optional.of(subjectVal));
             final List<Attribute<?>> attributes = list();
-            functionCall.getArguments().forEachIndexed((arg, i) -> {
-                final var attribute = context.parse(arg);
-                switch (attribute) {
-                    case Attribute<?> a -> {
-                        attributes.add(a);
-                        run.setResult(Optional.of(subjectVal));
-                    }
-                    default -> throw execException(tree("The "
-                            + functionCall.getName().getValue()
-                            + " function only supports attributes as arguments, but "
-                            + subject.orElseThrow().getClass().getName()
-                            + " was given as argument "
-                            + i
-                            + " instead.")
-                            .withProperty("Affected function call ", functionCall.getSourceCodeQuote().userReferenceTree())
-                            .withProperty("Affected argument", arg.getSourceCodeQuote().userReferenceTree()));
-                }
+            functionCall.getArguments().forEachIndex(i -> {
+                attributes.add(fcr.parseAttributeArgument(functionCall, i));
             });
             final var subjectKey = context.lookupTableLikeName(subjectVal);
             if (subjectKey.isEmpty()) {
@@ -98,7 +69,7 @@ public class OutputFormatCallRunner implements FunctionCallRunner {
             }
             if (functionCall.getName().getValue().equals(COLUMN_FORMAT)) {
                 if (context.getTableFormatting().hasKey(subjectKey.get())) {
-                    context.getTableFormatting().get(subjectKey).setColumnAttributes(attributes);
+                    context.getTableFormatting().get(subjectKey.get()).setColumnAttributes(attributes);
                 } else {
                     context.getTableFormatting().put(subjectKey.get(), tableFormat().setColumnAttributes(attributes));
                 }
