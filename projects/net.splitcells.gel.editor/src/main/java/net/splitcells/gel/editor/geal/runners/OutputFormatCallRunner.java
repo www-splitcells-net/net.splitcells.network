@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.editor.geal.runners;
 
+import lombok.val;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
@@ -49,63 +50,66 @@ public class OutputFormatCallRunner implements FunctionCallRunner {
     @Override
     public FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
         final var run = functionCallRun(subject, context);
+        final var name = functionCall.getName().getValue();
         if (!supports(functionCall, subject, context)) {
             return run;
         }
-        final Solution subjectVal;
-        if (subject.isEmpty()) {
-            throw execException(tree("The "
-                    + functionCall.getName().getValue()
-                    + " function requires a Solution as a subject, but no subject was given instead.")
-                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
-        }
-        switch (subject.orElseThrow()) {
-            case Solution s -> subjectVal = s;
-            default -> throw execException(tree("The "
-                    + functionCall.getName().getValue()
-                    + " function requires a Solution as a subject, but "
-                    + subject.orElseThrow().getClass().getName()
-                    + " was given instead.")
-                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
-        }
-        final List<Attribute<?>> attributes = list();
-        functionCall.getArguments().forEachIndexed((arg, i) -> {
-            final var attribute = context.parse(arg);
-            switch (attribute) {
-                case Attribute<?> a -> {
-                    attributes.add(a);
-                    run.setResult(Optional.of(subjectVal));
-                }
+        try (val fcr = context.functionCallRecord(name, 1)) {
+            final Solution subjectVal;
+            if (subject.isEmpty()) {
+                throw execException(tree("The "
+                        + functionCall.getName().getValue()
+                        + " function requires a Solution as a subject, but no subject was given instead.")
+                        .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
+            }
+            switch (subject.orElseThrow()) {
+                case Solution s -> subjectVal = s;
                 default -> throw execException(tree("The "
                         + functionCall.getName().getValue()
-                        + " function only supports attributes as arguments, but "
+                        + " function requires a Solution as a subject, but "
                         + subject.orElseThrow().getClass().getName()
-                        + " was given as argument "
-                        + i
-                        + " instead.")
-                        .withProperty("Affected function call ", functionCall.getSourceCodeQuote().userReferenceTree())
-                        .withProperty("Affected argument", arg.getSourceCodeQuote().userReferenceTree()));
+                        + " was given instead.")
+                        .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
             }
-        });
-        final var subjectKey = context.lookupTableLikeName(subjectVal);
-        if (subjectKey.isEmpty()) {
-            throw execException(tree("Could not lookup table for " + functionCall.getName().getValue() + ".")
-                    .withProperty("table", subjectVal.name())
-                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
+            final List<Attribute<?>> attributes = list();
+            functionCall.getArguments().forEachIndexed((arg, i) -> {
+                final var attribute = context.parse(arg);
+                switch (attribute) {
+                    case Attribute<?> a -> {
+                        attributes.add(a);
+                        run.setResult(Optional.of(subjectVal));
+                    }
+                    default -> throw execException(tree("The "
+                            + functionCall.getName().getValue()
+                            + " function only supports attributes as arguments, but "
+                            + subject.orElseThrow().getClass().getName()
+                            + " was given as argument "
+                            + i
+                            + " instead.")
+                            .withProperty("Affected function call ", functionCall.getSourceCodeQuote().userReferenceTree())
+                            .withProperty("Affected argument", arg.getSourceCodeQuote().userReferenceTree()));
+                }
+            });
+            final var subjectKey = context.lookupTableLikeName(subjectVal);
+            if (subjectKey.isEmpty()) {
+                throw execException(tree("Could not lookup table for " + functionCall.getName().getValue() + ".")
+                        .withProperty("table", subjectVal.name())
+                        .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
+            }
+            if (functionCall.getName().getValue().equals(COLUMN_FORMAT)) {
+                if (context.getTableFormatting().hasKey(subjectKey.get())) {
+                    context.getTableFormatting().get(subjectKey).setColumnAttributes(attributes);
+                } else {
+                    context.getTableFormatting().put(subjectKey.get(), tableFormat().setColumnAttributes(attributes));
+                }
+            } else if (functionCall.getName().getValue().equals(ROW_FORMAT)) {
+                if (context.getTableFormatting().hasKey(subjectKey.get())) {
+                    context.getTableFormatting().get(subjectKey.get()).setRowAttributes(attributes);
+                } else {
+                    context.getTableFormatting().put(subjectKey.get(), tableFormat().setRowAttributes(attributes));
+                }
+            }
+            return run;
         }
-        if (functionCall.getName().getValue().equals(COLUMN_FORMAT)) {
-            if (context.getTableFormatting().hasKey(subjectKey.get())) {
-                context.getTableFormatting().get(subjectKey).setColumnAttributes(attributes);
-            } else {
-                context.getTableFormatting().put(subjectKey.get(), tableFormat().setColumnAttributes(attributes));
-            }
-        } else if (functionCall.getName().getValue().equals(ROW_FORMAT)) {
-            if (context.getTableFormatting().hasKey(subjectKey.get())) {
-                context.getTableFormatting().get(subjectKey.get()).setRowAttributes(attributes);
-            } else {
-                context.getTableFormatting().put(subjectKey.get(), tableFormat().setRowAttributes(attributes));
-            }
-        }
-        return run;
     }
 }

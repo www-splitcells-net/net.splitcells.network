@@ -176,19 +176,22 @@ public class FunctionCallRecord implements Closeable {
         return subjectVal;
     }
 
-    public Table parseTableSubject(FunctionCallDesc functionCall, Optional<Object> subject) {
+    public <T> T parseSubject(FunctionCallDesc functionCall, Class<? extends T> type, Optional<Object> subject) {
         if (subject.isEmpty()) {
-            throw execException(tree("The function " + name + " requires a table subject, but none was given instead.")
+            throw execException(tree("The function " + name + " requires a "
+                    + type.getName()
+                    + " subject, but none was given instead.")
                     .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
         }
-        if (subject.orElseThrow() instanceof Table table) {
-            return table;
-        } else {
-            throw execException(tree("The function " + name + " requires a table subject, but a "
-                    + subject.orElseThrow().getClass().getName()
-                    + " was given instead.")
-                    .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
+        if (type.isInstance(subject.orElseThrow())) {
+            return (T) subject.orElseThrow();
         }
+        throw execException(tree("The function " + name + " requires a "
+                + type.getName()
+                + " subject, but a "
+                + subject.orElseThrow().getClass().getName()
+                + " was given instead.")
+                .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
     }
 
     public Attribute<? extends Object> parseAttributeArgument(FunctionCallDesc functionCall, int argument) {

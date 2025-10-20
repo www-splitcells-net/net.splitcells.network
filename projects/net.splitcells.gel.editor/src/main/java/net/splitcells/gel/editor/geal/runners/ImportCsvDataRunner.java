@@ -55,7 +55,7 @@ public class ImportCsvDataRunner implements FunctionCallRunner {
             return run;
         }
         try (val fcr = context.functionCallRecord(IMPORT_CSV_DATA, 1)) {
-            final Table tableSubject = fcr.parseTableSubject(functionCall, subject);
+            final Table tableSubject = fcr.parseSubject(functionCall, Table.class, subject);
             fcr.requireArgumentCount(functionCall, 1);
             final var dataName = fcr.parseArgument(functionCall, String.class, 0);
             final var csvData = context.loadData(TEXT_PLAIN, dataName);
