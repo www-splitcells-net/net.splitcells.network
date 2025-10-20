@@ -16,6 +16,7 @@
 package net.splitcells.gel.editor.geal.runners;
 
 import lombok.val;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
@@ -25,6 +26,7 @@ import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -69,23 +71,9 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
                             .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
                 }
             });
-            final var groupingAttributes = functionCall.getArguments().stream()
-                    .map(a -> {
-                        switch (context.parse(a)) {
-                            case Attribute<? extends Object> attribute -> {
-                                return attribute;
-                            }
-                            default -> throw execException(tree("Only function calls are supported as argument for "
-                                    + FOR_ALL_COMBINATIONS_OF
-                                    + ", but "
-                                    + a.getExpression().getClass().getName()
-                                    + " else was given.")
-                                    .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree())
-                                    .withProperty("Affected argument", a.getSourceCodeQuote().userReferenceTree()));
-                        }
-
-                    })
-                    .toList();
+            final var groupingAttributes = functionCall.getArguments()
+                    .mapEachIndex(i -> fcr.parseAttribute(functionCall, i))
+                    .collect(toList());
             run.setResult(Optional.of(subjectVal.forAllCombinationsOf(groupingAttributes)));
             return run;
         }

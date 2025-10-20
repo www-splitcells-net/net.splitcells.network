@@ -21,7 +21,9 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.constraint.Query;
+import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
+import net.splitcells.gel.editor.geal.lang.FunctionCallChainDesc;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 import net.splitcells.gel.editor.geal.lang.NameDesc;
 import net.splitcells.gel.editor.geal.lang.StringDesc;
@@ -160,6 +162,24 @@ public class FunctionCallRecord implements Closeable {
                     .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
         }
         return subjectVal;
+    }
+
+    public Attribute<? extends Object> parseAttribute(FunctionCallDesc functionCall, int argument) {
+        final var a = functionCall.getArguments().get(argument);
+        final var parsed = context.parse(a);
+        switch (parsed) {
+            case Attribute<? extends Object> attribute -> {
+                return attribute;
+            }
+            default -> throw execException(tree("The argument "
+                    + argument
+                    + " of "
+                    + name
+                    + "has to be an attribute, but a "
+                    + parsed.getClass().getName()
+                    + " was given instead.")
+                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
+        }
     }
 
     @Override
