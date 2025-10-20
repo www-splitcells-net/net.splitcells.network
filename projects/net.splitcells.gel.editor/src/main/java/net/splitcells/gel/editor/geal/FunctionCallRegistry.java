@@ -19,6 +19,8 @@ import lombok.experimental.Accessors;
 import net.splitcells.dem.data.set.list.List;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 @Accessors(chain = true)
@@ -34,8 +36,13 @@ public class FunctionCallRegistry {
     }
 
     public FunctionCallRegistry addRecord(FunctionCallRecord record) {
-        if (true) {
-            throw notImplementedYet("Checking for duplicate records is not implemented yet.");
+        final var matches = functionCallRecords.stream()
+                .filter(fcr -> fcr.getName().equals(record.getName()) && fcr.getVariation() == record.getVariation())
+                .toList();
+        if (matches.hasElements()) {
+            throw execException(tree("Function call variation is recorded multiple times.")
+                    .withProperty("New record", record.toString())
+                    .withProperty("Existing matching records", matches.toString()));
         }
         functionCallRecords.add(record);
         return this;
