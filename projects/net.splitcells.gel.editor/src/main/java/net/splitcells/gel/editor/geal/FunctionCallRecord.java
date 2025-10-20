@@ -37,6 +37,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.editor.geal.lang.NameDesc.nameDesc;
 import static net.splitcells.gel.editor.geal.lang.StringDesc.stringDesc;
+import static net.splitcells.gel.rating.rater.lib.HasSize.HAS_SIZE_NAME;
 
 /**
  * Extracts function call data from {@link FunctionCallDesc},
@@ -224,6 +225,15 @@ public class FunctionCallRecord implements Closeable {
                 + parsed.getClass().getName()
                 + " is given instead.")
                 .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
+    }
+
+    public void requireSubjectAbsence(FunctionCallDesc functionCall, Optional<Object> subject) {
+        if (subject.isPresent()) {
+            throw execException(tree("The "
+                    + name
+                    + " function does not support subjects, but one was given.")
+                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
+        }
     }
 
     @Override

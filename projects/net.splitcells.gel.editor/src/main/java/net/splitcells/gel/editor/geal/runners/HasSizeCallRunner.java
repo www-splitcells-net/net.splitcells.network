@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.editor.geal.runners;
 
+import lombok.val;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 import net.splitcells.gel.editor.geal.lang.IntegerDesc;
@@ -26,6 +27,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 import static net.splitcells.gel.rating.rater.lib.HasSize.HAS_SIZE_NAME;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
+import static net.splitcells.gel.rating.rater.lib.MinimalDistance.MINIMAL_DISTANCE_NAME;
 
 public class HasSizeCallRunner implements FunctionCallRunner {
     public static HasSizeCallRunner hasSizeCallRunner() {
@@ -42,27 +44,24 @@ public class HasSizeCallRunner implements FunctionCallRunner {
         if (!supports(functionCall, subject, context)) {
             return run;
         }
-        if (subject.isPresent()) {
-            throw execException(tree("The "
-                    + HAS_SIZE_NAME
-                    + " function does not support subjects, but one was given.")
-                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
+        try (val fcr = context.functionCallRecord(HAS_SIZE_NAME, 1)) {
+            fcr.requireSubjectAbsence(functionCall, subject);
+            if (functionCall.getArguments().size() != 1) {
+                throw execException(tree("The "
+                        + HAS_SIZE_NAME
+                        + " function requires more exactly one argument, but " + functionCall.getArguments().size() + " were given instead.")
+                        .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
+            }
+            if (!(functionCall.getArguments().get(0).getExpression() instanceof IntegerDesc)) {
+                throw execException(tree("The "
+                        + HAS_SIZE_NAME
+                        + " functions first argument has to be an integer, but "
+                        + functionCall.getArguments().get(0).getExpression().getClass().getName() + " were given instead.")
+                        .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
+            }
+            final var targetSize = functionCall.getArguments().get(0).getExpression().to(IntegerDesc.class).getValue();
+            run.setResult(Optional.of(hasSize(targetSize)));
+            return run;
         }
-        if (functionCall.getArguments().size() != 1) {
-            throw execException(tree("The "
-                    + HAS_SIZE_NAME
-                    + " function requires more exactly one argument, but " + functionCall.getArguments().size() + " were given instead.")
-                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
-        }
-        if (!(functionCall.getArguments().get(0).getExpression() instanceof IntegerDesc)) {
-            throw execException(tree("The "
-                    + HAS_SIZE_NAME
-                    + " functions first argument has to be an integer, but "
-                    + functionCall.getArguments().get(0).getExpression().getClass().getName() + " were given instead.")
-                    .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
-        }
-        final var targetSize = functionCall.getArguments().get(0).getExpression().to(IntegerDesc.class).getValue();
-        run.setResult(Optional.of(hasSize(targetSize)));
-        return run;
     }
 }
