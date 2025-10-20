@@ -18,7 +18,10 @@ package net.splitcells.maven.plugin.resource.list;
 import java.util.regex.Pattern;
 
 public class MetaData {
-    private static final Pattern SPX_LICENSE = Pattern.compile("(SPDX-License-Identifier: )([a-zA-Z0-9-. ]+)");
+    /**
+     * The SPDX String is split, in order to avoid a bug in the REUSE license parser.
+     */
+    private static final Pattern SPX_LICENSE = Pattern.compile("(SPDX" + "-License-Identifier: )([a-zA-Z0-9-. ]+)");
     String license;
     String copyrightText;
 
