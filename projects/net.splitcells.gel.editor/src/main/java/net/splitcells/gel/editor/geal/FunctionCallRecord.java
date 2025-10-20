@@ -20,15 +20,21 @@ import lombok.experimental.Accessors;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.utils.StringUtils;
+import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 import net.splitcells.gel.editor.geal.lang.NameDesc;
 import net.splitcells.gel.editor.geal.lang.StringDesc;
 import net.splitcells.gel.editor.meta.Type;
+import net.splitcells.gel.solution.Solution;
+
+import java.util.Optional;
 
 import static net.splitcells.dem.lang.CommonMarkUtils.joinDocuments;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.gel.constraint.QueryI.query;
+import static net.splitcells.gel.constraint.type.ForAlls.FOR_ALL_COMBINATIONS_OF;
 import static net.splitcells.gel.editor.geal.lang.NameDesc.nameDesc;
 import static net.splitcells.gel.editor.geal.lang.StringDesc.stringDesc;
 
@@ -126,6 +132,34 @@ public class FunctionCallRecord implements Closeable {
                 + allowedTypeList
                 + ", but " + actualType.getValue() + " was given instead.")
                 .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
+    }
+
+    public Query parseQuerySubject(FunctionCallDesc functionCall, Optional<Object> subject) {
+        if (subject.isEmpty()) {
+            throw execException(tree("The "
+                    + name
+                    + " function requires a Solution or Query as a subject, but no was given.")
+                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
+        }
+        if (!(subject.orElseThrow() instanceof Solution) && !(subject.orElseThrow() instanceof Query)) {
+            throw execException(tree("The "
+                    + name
+                    + " function requires a Solution or Query as a subject, but "
+                    + subject.orElseThrow().getClass().getName()
+                    + " was given instead.")
+                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
+        }
+        final Query subjectVal;
+        if (subject.orElseThrow() instanceof Solution solution) {
+            subjectVal = query(solution.constraint());
+        } else if (subject.orElseThrow() instanceof Query query) {
+            subjectVal = query;
+        } else {
+            throw execException(tree("The function " + name + " requires a solution or query as a subject, but "
+                    + subject.orElseThrow().getClass().getName() + " was given instead.")
+                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
+        }
+        return subjectVal;
     }
 
     @Override

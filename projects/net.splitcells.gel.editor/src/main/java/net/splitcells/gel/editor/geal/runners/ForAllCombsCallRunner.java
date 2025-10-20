@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.editor.geal.runners;
 
+import lombok.val;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
@@ -29,6 +30,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.constraint.type.ForAlls.FOR_ALL_COMBINATIONS_OF;
+import static net.splitcells.gel.editor.EditorParser.ATTRIBUTE_FUNCTION;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 
 public class ForAllCombsCallRunner implements FunctionCallRunner {
@@ -50,63 +52,42 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
         if (!supports(functionCall, subject, context)) {
             return run;
         }
-        if (subject.isEmpty()) {
-            throw execException(tree("The "
-                    + FOR_ALL_COMBINATIONS_OF
-                    + " function requires a Solution or Query as a subject, but no was given.")
-                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
-        }
-        if (!(subject.orElseThrow() instanceof Solution) && !(subject.orElseThrow() instanceof Query)) {
-            throw execException(tree("The "
-                    + FOR_ALL_COMBINATIONS_OF
-                    + " function requires a Solution or Query as a subject, but "
-                    + subject.orElseThrow().getClass().getName()
-                    + " was given instead.")
-                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
-        }
-        if (functionCall.getArguments().size() < 2) {
-            throw execException(tree("The "
-                    + FOR_ALL_COMBINATIONS_OF
-                    + " function requires more than one argument, but " + functionCall.getArguments().size() + " were given instead.")
-                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
-        }
-        functionCall.getArguments().forEach(a -> {
-            if (!(a.getExpression() instanceof FunctionCallDesc)) {
+        try (val fcr = context.functionCallRecord(ATTRIBUTE_FUNCTION, 1)) {
+            final Query subjectVal = fcr.parseQuerySubject(functionCall, subject);
+            if (functionCall.getArguments().size() < 2) {
                 throw execException(tree("The "
                         + FOR_ALL_COMBINATIONS_OF
-                        + " function only supports function calls as arguments, but " + a.getExpression().getClass().getName()
-                        + " was given instead.")
+                        + " function requires more than one argument, but " + functionCall.getArguments().size() + " were given instead.")
                         .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
             }
-        });
-        final var groupingAttributes = functionCall.getArguments().stream()
-                .map(a -> {
-                    switch (context.parse(a)) {
-                        case Attribute<? extends Object> attribute -> {
-                            return attribute;
+            functionCall.getArguments().forEach(a -> {
+                if (!(a.getExpression() instanceof FunctionCallDesc)) {
+                    throw execException(tree("The "
+                            + FOR_ALL_COMBINATIONS_OF
+                            + " function only supports function calls as arguments, but " + a.getExpression().getClass().getName()
+                            + " was given instead.")
+                            .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
+                }
+            });
+            final var groupingAttributes = functionCall.getArguments().stream()
+                    .map(a -> {
+                        switch (context.parse(a)) {
+                            case Attribute<? extends Object> attribute -> {
+                                return attribute;
+                            }
+                            default -> throw execException(tree("Only function calls are supported as argument for "
+                                    + FOR_ALL_COMBINATIONS_OF
+                                    + ", but "
+                                    + a.getExpression().getClass().getName()
+                                    + " else was given.")
+                                    .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree())
+                                    .withProperty("Affected argument", a.getSourceCodeQuote().userReferenceTree()));
                         }
-                        default -> throw execException(tree("Only function calls are supported as argument for "
-                                + FOR_ALL_COMBINATIONS_OF
-                                + ", but "
-                                + a.getExpression().getClass().getName()
-                                + " else was given.")
-                                .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree())
-                                .withProperty("Affected argument", a.getSourceCodeQuote().userReferenceTree()));
-                    }
 
-                })
-                .toList();
-        final Query subjectVal;
-        if (subject.orElseThrow() instanceof Solution solution) {
-            subjectVal = query(solution.constraint());
-        } else if (subject.orElseThrow() instanceof Query query) {
-            subjectVal = query;
-        } else {
-            throw execException(tree("The function " + FOR_ALL_COMBINATIONS_OF + " requires a solution or query as a subjet, but "
-                    + subject.orElseThrow().getClass().getName() + " was given instead.")
-                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
+                    })
+                    .toList();
+            run.setResult(Optional.of(subjectVal.forAllCombinationsOf(groupingAttributes)));
+            return run;
         }
-        run.setResult(Optional.of(subjectVal.forAllCombinationsOf(groupingAttributes)));
-        return run;
     }
 }
