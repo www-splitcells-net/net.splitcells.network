@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.editor.geal.runners;
 
+import lombok.val;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
@@ -45,43 +46,15 @@ public class ThenCallRunner implements FunctionCallRunner {
 
     @Override
     public FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
-        final var run = functionCallRun(subject, context);
+        val run = functionCallRun(subject, context);
         if (!supports(functionCall, subject, context)) {
             return run;
         }
-        if (subject.isEmpty()) {
-            throw execException(tree("The "
-                    + THEN_NAME
-                    + " function requires a Solution or Query as a subject, but no was given.")
-                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
+        try (val fcr = context.functionCallRecord(THEN_NAME, 1)) {
+            val subjectVal = fcr.parseQuerySubject(functionCall, subject);
+            fcr.requireArgumentCount(functionCall, 1);
+            val rater = fcr.parseArgument(functionCall, Rater.class, 0);
+            return run.setResult(Optional.of(subjectVal.then(rater)));
         }
-        if (!(subject.orElseThrow() instanceof Solution) && !(subject.orElseThrow() instanceof Query)) {
-            throw execException(tree("The "
-                    + THEN_NAME
-                    + " function requires a Solution or Query as a subject, but "
-                    + subject.orElseThrow().getClass().getName()
-                    + " was given instead.")
-                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
-        }
-        if (functionCall.getArguments().size() != 1) {
-            throw execException(tree("The "
-                    + THEN_NAME
-                    + " function requires exactly one argument, but " + functionCall.getArguments().size() + " were given instead.")
-                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
-        }
-        final Query subjectVal;
-        switch (subject.orElseThrow()) {
-            case Solution s -> subjectVal = query(s.constraint());
-            case Query q -> subjectVal = q;
-            default -> throw execException("Subject has to be a solution or a query: " + subject.orElseThrow());
-        }
-        final var rawRater = context.parse(functionCall.getArguments().get(0));
-        switch (rawRater) {
-            case Rater r -> run.setResult(Optional.of(subjectVal.then(r)));
-            default ->
-                    throw execException(tree("The argument of the then constraint requires exactly one argument, that has to be a rater. Instead a " + rawRater.getClass().getName() + " was given instead.")
-                            .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
-        }
-        return run;
     }
 }
