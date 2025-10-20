@@ -39,6 +39,7 @@ import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.constraint.type.ForAlls.FOR_ALL_COMBINATIONS_OF;
 import static net.splitcells.gel.editor.geal.lang.NameDesc.nameDesc;
 import static net.splitcells.gel.editor.geal.lang.StringDesc.stringDesc;
+import static net.splitcells.gel.rating.rater.lib.MinimalDistance.MINIMAL_DISTANCE_NAME;
 
 /**
  * Extracts function call data from {@link FunctionCallDesc},
@@ -192,6 +193,23 @@ public class FunctionCallRecord implements Closeable {
                     + " was given instead.")
                     .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
         }
+    }
+
+    public <T> Attribute<T> parseAttribute(FunctionCallDesc functionCall, Class<? extends T> type, int argument) {
+        final Attribute<?> distanceAttribute = parseAttribute(functionCall, 0);
+        if (!Integer.class.equals(distanceAttribute.type())) {
+            throw execException(tree("The argument "
+                    + argument
+                    + " of "
+                    + name
+                    + " has to be an "
+                    + type.getName()
+                    + " attribute, but a "
+                    + distanceAttribute.type().getName()
+                    + " is given instead.")
+                    .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
+        }
+        return (Attribute<T>) distanceAttribute;
     }
 
     @Override

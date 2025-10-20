@@ -44,26 +44,7 @@ public class HasMinimalDistanceOfCallRunner implements FunctionCallRunner {
         }
         try (val fcr = context.functionCallRecord(MINIMAL_DISTANCE_NAME, 1)) {
             fcr.requireArgumentCount(functionCall, 2);
-            final var firstArg = context.parse(functionCall.getArguments().get(0));
-            final Attribute<?> distanceAttribute;
-            if (firstArg instanceof Attribute<?> convertedFirstArg) {
-                distanceAttribute = convertedFirstArg;
-            } else {
-                throw execException(tree("The first argument of "
-                        + MINIMAL_DISTANCE_NAME
-                        + " has to be an attribute, but a"
-                        + firstArg.getClass().getName()
-                        + " is given instead.")
-                        .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
-            }
-            if (!Integer.class.equals(distanceAttribute.type())) {
-                throw execException(tree("The first argument of "
-                        + MINIMAL_DISTANCE_NAME
-                        + " has to be an integer attribute, but a "
-                        + firstArg.getClass().getName()
-                        + " is given instead.")
-                        .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
-            }
+            val distanceAttribute = fcr.parseAttribute(functionCall, Integer.class, 0);
             final var secondArg = context.parse(functionCall.getArguments().get(1));
             final int minimalDistance;
             if (secondArg instanceof Integer convertedSecondArg) {
@@ -71,10 +52,10 @@ public class HasMinimalDistanceOfCallRunner implements FunctionCallRunner {
             } else {
                 throw execException(tree("The second argument of "
                         + MINIMAL_DISTANCE_NAME + " has to be an integer, but a"
-                        + firstArg.getClass().getName() + " is given instead.")
+                        + distanceAttribute.type().getName() + " is given instead.")
                         .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
             }
-            run.setResult(Optional.of(has_minimal_distance_of((Attribute<Integer>) distanceAttribute, minimalDistance)));
+            run.setResult(Optional.of(has_minimal_distance_of(distanceAttribute, minimalDistance)));
             return run;
         }
     }
