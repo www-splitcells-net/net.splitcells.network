@@ -16,7 +16,6 @@
 package net.splitcells.gel.editor.geal;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 import net.splitcells.dem.utils.StringUtils;
 
@@ -24,18 +23,25 @@ import static net.splitcells.dem.lang.CommonMarkUtils.joinDocuments;
 
 @Accessors(chain = true)
 public class FunctionCallRecord {
-    public static FunctionCallRecord functionCallRecord(String argName) {
-        return new FunctionCallRecord(argName);
+    public static FunctionCallRecord functionCallRecord(String argName, int argVariation) {
+        return new FunctionCallRecord(argName, argVariation);
     }
 
     @Getter private final String name;
+    /**
+     * {@link #name} + {@link #variation} is the id.
+     * A function with a name can have multiple variation,
+     * where each one has different arguments.
+     */
+    @Getter private final int variation;
     /**
      * This is a CommonMark document.
      */
     @Getter private StringBuilder description = StringUtils.stringBuilder();
 
-    private FunctionCallRecord(String argName) {
+    private FunctionCallRecord(String argName, int argVariation) {
         name = argName;
+        variation = argVariation;
     }
 
     public FunctionCallRecord addDescription(String addition) {
