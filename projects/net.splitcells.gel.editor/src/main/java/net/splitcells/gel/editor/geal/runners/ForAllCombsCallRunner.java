@@ -16,13 +16,9 @@
 package net.splitcells.gel.editor.geal.runners;
 
 import lombok.val;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.gel.constraint.Query;
-import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
-import net.splitcells.gel.editor.geal.lang.NameDesc;
-import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
 
@@ -32,7 +28,6 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.constraint.type.ForAlls.FOR_ALL_COMBINATIONS_OF;
-import static net.splitcells.gel.editor.EditorParser.ATTRIBUTE_FUNCTION;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 
 public class ForAllCombsCallRunner implements FunctionCallRunner {
@@ -58,7 +53,7 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
             final Query subjectVal = fcr.parseQuerySubject(functionCall, subject);
             fcr.requireArgumentMinimalCount(functionCall, 2);
             final var groupingAttributes = functionCall.getArguments()
-                    .mapEachIndex(i -> fcr.parseAttribute(functionCall, i))
+                    .mapEachIndex(i -> fcr.parseAttributeArgument(functionCall, i))
                     .collect(toList());
             run.setResult(Optional.of(subjectVal.forAllCombinationsOf(groupingAttributes)));
             return run;

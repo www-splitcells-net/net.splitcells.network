@@ -23,7 +23,6 @@ import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
-import net.splitcells.gel.editor.geal.lang.FunctionCallChainDesc;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 import net.splitcells.gel.editor.geal.lang.NameDesc;
 import net.splitcells.gel.editor.geal.lang.StringDesc;
@@ -36,10 +35,8 @@ import static net.splitcells.dem.lang.CommonMarkUtils.joinDocuments;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.constraint.QueryI.query;
-import static net.splitcells.gel.constraint.type.ForAlls.FOR_ALL_COMBINATIONS_OF;
 import static net.splitcells.gel.editor.geal.lang.NameDesc.nameDesc;
 import static net.splitcells.gel.editor.geal.lang.StringDesc.stringDesc;
-import static net.splitcells.gel.rating.rater.lib.MinimalDistance.MINIMAL_DISTANCE_NAME;
 
 /**
  * Extracts function call data from {@link FunctionCallDesc},
@@ -177,7 +174,7 @@ public class FunctionCallRecord implements Closeable {
         return subjectVal;
     }
 
-    public Attribute<? extends Object> parseAttribute(FunctionCallDesc functionCall, int argument) {
+    public Attribute<? extends Object> parseAttributeArgument(FunctionCallDesc functionCall, int argument) {
         final var a = functionCall.getArguments().get(argument);
         final var parsed = context.parse(a);
         switch (parsed) {
@@ -195,8 +192,8 @@ public class FunctionCallRecord implements Closeable {
         }
     }
 
-    public <T> Attribute<T> parseAttribute(FunctionCallDesc functionCall, Class<? extends T> type, int argument) {
-        final Attribute<?> distanceAttribute = parseAttribute(functionCall, 0);
+    public <T> Attribute<T> parseAttributeArgument(FunctionCallDesc functionCall, Class<? extends T> type, int argument) {
+        final Attribute<?> distanceAttribute = parseAttributeArgument(functionCall, 0);
         if (!Integer.class.equals(distanceAttribute.type())) {
             throw execException(tree("The argument "
                     + argument
@@ -210,6 +207,23 @@ public class FunctionCallRecord implements Closeable {
                     .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
         }
         return (Attribute<T>) distanceAttribute;
+    }
+
+    public <T> T parseArgument(FunctionCallDesc functionCall, Class<? extends T> type, int argument) {
+        final var parsed = context.parse(functionCall.getArguments().get(argument));
+        if (type.isInstance(parsed)) {
+            return (T) parsed;
+        }
+        throw execException(tree("The argument "
+                + argument
+                + " of "
+                + name
+                + " has to be a "
+                + type.getName()
+                + ", but a "
+                + parsed.getClass().getName()
+                + " is given instead.")
+                .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
     }
 
     @Override

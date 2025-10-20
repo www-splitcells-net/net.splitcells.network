@@ -16,18 +16,14 @@
 package net.splitcells.gel.editor.geal.runners;
 
 import lombok.val;
-import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
-import net.splitcells.gel.editor.geal.lang.IntegerDesc;
-import net.splitcells.gel.rating.rater.lib.MinimalDistance;
 
 import java.util.Optional;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
-import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
 import static net.splitcells.gel.rating.rater.lib.MinimalDistance.MINIMAL_DISTANCE_NAME;
 import static net.splitcells.gel.rating.rater.lib.MinimalDistance.has_minimal_distance_of;
 
@@ -44,17 +40,8 @@ public class HasMinimalDistanceOfCallRunner implements FunctionCallRunner {
         }
         try (val fcr = context.functionCallRecord(MINIMAL_DISTANCE_NAME, 1)) {
             fcr.requireArgumentCount(functionCall, 2);
-            val distanceAttribute = fcr.parseAttribute(functionCall, Integer.class, 0);
-            final var secondArg = context.parse(functionCall.getArguments().get(1));
-            final int minimalDistance;
-            if (secondArg instanceof Integer convertedSecondArg) {
-                minimalDistance = convertedSecondArg;
-            } else {
-                throw execException(tree("The second argument of "
-                        + MINIMAL_DISTANCE_NAME + " has to be an integer, but a"
-                        + distanceAttribute.type().getName() + " is given instead.")
-                        .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
-            }
+            val distanceAttribute = fcr.parseAttributeArgument(functionCall, Integer.class, 0);
+            final var minimalDistance = fcr.parseArgument(functionCall, Integer.class, 1);
             run.setResult(Optional.of(has_minimal_distance_of(distanceAttribute, minimalDistance)));
             return run;
         }
