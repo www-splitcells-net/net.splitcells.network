@@ -213,8 +213,8 @@ public class FunctionCallRecord implements Closeable {
     }
 
     public <T> Attribute<T> parseAttributeArgument(FunctionCallDesc functionCall, Class<? extends T> type, int argument) {
-        final Attribute<?> distanceAttribute = parseAttributeArgument(functionCall, 0);
-        if (!Integer.class.equals(distanceAttribute.type())) {
+        final Attribute<?> distanceAttribute = parseAttributeArgument(functionCall, argument);
+        if (!type.isAssignableFrom(distanceAttribute.type())) {
             throw execException(tree("The argument "
                     + argument
                     + " of "
