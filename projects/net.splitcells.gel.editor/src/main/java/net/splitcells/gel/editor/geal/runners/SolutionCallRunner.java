@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.editor.geal.runners;
 
+import lombok.val;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
@@ -54,50 +55,19 @@ public class SolutionCallRunner implements FunctionCallRunner {
         if (!supports(functionCall)) {
             return run;
         }
-        if (functionCall.getArguments().size() != 3) {
-            throw execException(tree("The solution function requires exactly 4 arguments, but " + functionCall.getArguments().size() + " were given.")
-                    .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
+        try (val fcr = context.functionCallRecord(SOLUTION_FUNCTION, 1)) {
+            fcr.requireArgumentCount(functionCall, 3);
+            val solutionName = fcr.parseArgument(functionCall, String.class, 0);
+            val demands = fcr.parseArgument(functionCall, Table.class, 1);
+            val supplies = fcr.parseArgument(functionCall, Table.class, 2);
+            final Optional<Object> result = Optional.of(defineProblem(solutionName)
+                    .withDemands(demands)
+                    .withSupplies(supplies)
+                    .withConstraint(forAll())
+                    .toProblem()
+                    .asSolution());
+            return functionCallRun(subject, context).setResult(result);
         }
-        final var first = context.parse(functionCall.getArguments().get(0));
-        final String solutionName;
-        switch (first) {
-            case String string -> solutionName = string;
-            default -> throw execException(tree("The 1st argument of the function "
-                    + SOLUTION_FUNCTION
-                    + " has to be the solution name represented by a string, but instead a "
-                    + first.getClass().getName()
-                    + " was given.")
-                    .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
-        }
-        final var second = context.parse(functionCall.getArguments().get(1));
-        final Table demands;
-        switch (second) {
-            case Table n -> demands = n;
-            default -> throw execException(tree("The 2nd argument of the function "
-                    + SOLUTION_FUNCTION
-                    + " has to be the demand table represented by a variable name, but a "
-                    + second.getClass().getName()
-                    + " was given instead.")
-                    .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
-        }
-        final var third = context.parse(functionCall.getArguments().get(2));
-        final Table supplies;
-        switch (third) {
-            case Table n -> supplies = n;
-            default -> throw execException(tree("The 3rd argument of the function "
-                    + SOLUTION_FUNCTION
-                    + " has to be the supply table represented by a variable name, but a "
-                    + second.getClass().getName()
-                    + " was given instead.")
-                    .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
-        }
-        final Optional<Object> result = Optional.of(defineProblem(solutionName)
-                .withDemands(demands)
-                .withSupplies(supplies)
-                .withConstraint(forAll())
-                .toProblem()
-                .asSolution());
-        return functionCallRun(subject, context).setResult(result);
     }
 
 }
