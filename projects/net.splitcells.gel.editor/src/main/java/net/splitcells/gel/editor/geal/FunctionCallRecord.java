@@ -21,6 +21,7 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.constraint.Query;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
@@ -173,6 +174,21 @@ public class FunctionCallRecord implements Closeable {
                     .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
         }
         return subjectVal;
+    }
+
+    public Table parseTableSubject(FunctionCallDesc functionCall, Optional<Object> subject) {
+        if (subject.isEmpty()) {
+            throw execException(tree("The function " + name + " requires a table subject, but none was given instead.")
+                    .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
+        }
+        if (subject.orElseThrow() instanceof Table table) {
+            return table;
+        } else {
+            throw execException(tree("The function " + name + " requires a table subject, but a "
+                    + subject.orElseThrow().getClass().getName()
+                    + " was given instead.")
+                    .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
+        }
     }
 
     public Attribute<? extends Object> parseAttributeArgument(FunctionCallDesc functionCall, int argument) {
