@@ -58,10 +58,7 @@ public class AttributeCallRunner implements FunctionCallRunner {
         if (!supports(functionCall)) {
             return run;
         }
-        if (functionCall.getArguments().size() != 2) {
-            throw execException(tree("The attribute function requires exactly 2 arguments, but " + functionCall.getArguments().size() + " were given.")
-                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
-        }
+        context.getFunctionCallDoc().requireArgumentCount(functionCall, 2);
         final var first = context.parse(functionCall.getArguments().get(0));
         final NameDesc firstName;
         switch (first) {

@@ -17,12 +17,17 @@ package net.splitcells.gel.editor.geal;
 
 import lombok.experimental.Accessors;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
+/**
+ * Extracts function call data from {@link FunctionCallDesc},
+ * while recording all types of function calls, in order to generate a complete function call documentation.
+ */
 @Accessors(chain = true)
 public class FunctionCallDoc {
     public static FunctionCallDoc functionCallDoc() {
@@ -35,7 +40,7 @@ public class FunctionCallDoc {
 
     }
 
-    public FunctionCallDoc addRecord(FunctionCallRecord record) {
+    private FunctionCallDoc addRecord(FunctionCallRecord record) {
         final var matches = functionCallRecords.stream()
                 .filter(fcr -> fcr.getName().equals(record.getName()) && fcr.getVariation() == record.getVariation())
                 .toList();
@@ -46,5 +51,18 @@ public class FunctionCallDoc {
         }
         functionCallRecords.add(record);
         return this;
+    }
+
+    public void requireArgumentCount(FunctionCallDesc functionCall, int requiredArgumentCount) {
+        if (functionCall.getArguments().size() != requiredArgumentCount) {
+            throw execException(tree("The "
+                    + functionCall.getName().getValue()
+                    + " function requires exactly "
+                    + requiredArgumentCount
+                    + " arguments, but "
+                    + functionCall.getArguments().size()
+                    + " were given.")
+                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
+        }
     }
 }
