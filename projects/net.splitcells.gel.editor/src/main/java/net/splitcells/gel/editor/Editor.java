@@ -29,6 +29,7 @@ import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.TableFormatting;
 import net.splitcells.gel.data.view.attribute.Attribute;
+import net.splitcells.gel.editor.geal.FunctionCallRegistry;
 import net.splitcells.gel.editor.geal.lang.*;
 import net.splitcells.gel.editor.geal.runners.FunctionCallMetaExecutor;
 import net.splitcells.gel.editor.geal.runners.FunctionCallRun;
@@ -70,6 +71,7 @@ public class Editor implements Discoverable {
     @Getter private final Map<String, Solution> solutions = map();
     @Getter private final Map<String, Constraint> constraints = map();
     @Getter private final Map<String, TableFormatting> tableFormatting = map();
+    @Getter private final FunctionCallRegistry functionCallRegistry = FunctionCallRegistry.functionCallRegistry();
     private final Map<String, EditorData> data = map();
 
     public Optional<String> lookupTableLikeName(Table table) {
