@@ -89,6 +89,18 @@ public class FunctionCallRecord implements Closeable {
         }
     }
 
+    public void requireArgumentMinimalCount(FunctionCallDesc functionCall, int requiredMinimum) {
+        if (functionCall.getArguments().size() < requiredMinimum) {
+            throw execException(tree("The "
+                    + name
+                    + " function requires at least "
+                    + requiredMinimum
+                    + " arguments, but "
+                    + functionCall.getArguments().size() + " were given instead.")
+                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
+        }
+    }
+
     public NameDesc parseArgumentAsType(FunctionCallDesc functionCall, int argument) {
         final var first = context.parse(functionCall.getArguments().get(argument));
         switch (first) {

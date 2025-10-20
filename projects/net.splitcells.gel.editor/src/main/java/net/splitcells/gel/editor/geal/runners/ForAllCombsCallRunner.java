@@ -56,12 +56,7 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
         }
         try (val fcr = context.functionCallRecord(ATTRIBUTE_FUNCTION, 1)) {
             final Query subjectVal = fcr.parseQuerySubject(functionCall, subject);
-            if (functionCall.getArguments().size() < 2) {
-                throw execException(tree("The "
-                        + FOR_ALL_COMBINATIONS_OF
-                        + " function requires more than one argument, but " + functionCall.getArguments().size() + " were given instead.")
-                        .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
-            }
+            fcr.requireArgumentMinimalCount(functionCall, 2);
             functionCall.getArguments().forEach(a -> {
                 if (!(a.getExpression() instanceof FunctionCallDesc)) {
                     throw execException(tree("The "
