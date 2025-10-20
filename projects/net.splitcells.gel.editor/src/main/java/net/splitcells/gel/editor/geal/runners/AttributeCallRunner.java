@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.editor.geal.runners;
 
+import lombok.val;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 import net.splitcells.gel.editor.geal.lang.NameDesc;
@@ -58,7 +59,9 @@ public class AttributeCallRunner implements FunctionCallRunner {
         if (!supports(functionCall)) {
             return run;
         }
-        context.getFunctionCallDoc().requireArgumentCount(functionCall, 2);
+        try (val fcr = context.getFunctionCallDoc().functionCallRecord(ATTRIBUTE_FUNCTION, 1)) {
+            fcr.requireArgumentCount(functionCall, 2);
+        }
         final var first = context.parse(functionCall.getArguments().get(0));
         final NameDesc firstName;
         switch (first) {

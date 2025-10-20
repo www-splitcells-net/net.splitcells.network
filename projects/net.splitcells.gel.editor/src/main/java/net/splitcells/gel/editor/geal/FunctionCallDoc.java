@@ -15,6 +15,8 @@
  */
 package net.splitcells.gel.editor.geal;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
@@ -35,34 +37,28 @@ public class FunctionCallDoc {
     }
 
     private final List<FunctionCallRecord> functionCallRecords = list();
+    @Getter @Setter private boolean isRecording = false;
 
     private FunctionCallDoc() {
 
     }
 
-    private FunctionCallDoc addRecord(FunctionCallRecord record) {
-        final var matches = functionCallRecords.stream()
-                .filter(fcr -> fcr.getName().equals(record.getName()) && fcr.getVariation() == record.getVariation())
-                .toList();
-        if (matches.hasElements()) {
-            throw execException(tree("Function call variation is recorded multiple times.")
-                    .withProperty("New record", record.toString())
-                    .withProperty("Existing matching records", matches.toString()));
+    public FunctionCallDoc addRecord(FunctionCallRecord record) {
+        if (isRecording) {
+            final var matches = functionCallRecords.stream()
+                    .filter(fcr -> fcr.getName().equals(record.getName()) && fcr.getVariation() == record.getVariation())
+                    .toList();
+            if (matches.hasElements()) {
+                throw execException(tree("Function call variation is recorded multiple times.")
+                        .withProperty("New record", record.toString())
+                        .withProperty("Existing matching records", matches.toString()));
+            }
+            functionCallRecords.add(record);
         }
-        functionCallRecords.add(record);
         return this;
     }
 
-    public void requireArgumentCount(FunctionCallDesc functionCall, int requiredArgumentCount) {
-        if (functionCall.getArguments().size() != requiredArgumentCount) {
-            throw execException(tree("The "
-                    + functionCall.getName().getValue()
-                    + " function requires exactly "
-                    + requiredArgumentCount
-                    + " arguments, but "
-                    + functionCall.getArguments().size()
-                    + " were given.")
-                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
-        }
+    public FunctionCallRecord functionCallRecord(String name, int variation) {
+        return FunctionCallRecord.functionCallRecord(this, name, variation);
     }
 }
