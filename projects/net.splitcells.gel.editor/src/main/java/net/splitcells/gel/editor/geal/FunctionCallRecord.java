@@ -32,6 +32,8 @@ import static net.splitcells.gel.editor.geal.lang.NameDesc.nameDesc;
 /**
  * Extracts function call data from {@link FunctionCallDesc},
  * while recording all types of function calls, in order to generate a complete function call documentation.
+ * Through the combination of value extraction and documentation recording in single methods,
+ * the parsing and its error messages are more standardized.
  */
 @Accessors(chain = true)
 public class FunctionCallRecord implements Closeable {
