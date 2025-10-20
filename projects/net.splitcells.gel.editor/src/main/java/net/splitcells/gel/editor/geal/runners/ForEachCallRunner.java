@@ -59,16 +59,7 @@ public class ForEachCallRunner implements FunctionCallRunner {
         }
         try (val fcr = context.functionCallRecord(FOR_EACH_NAME, 1)) {
             val groupingAttribute = fcr.parseAttribute(functionCall, 0);
-            final Query subjectVal;
-            if (subject.orElseThrow() instanceof Solution solution) {
-                subjectVal = query(solution.constraint());
-            } else if (subject.orElseThrow() instanceof Query query) {
-                subjectVal = query;
-            } else {
-                throw execException(tree("The function " + FOR_EACH_NAME + " requires a solution or a query as the subject. Instead a "
-                        + subject.orElseThrow().getClass().getName() + " was given.")
-                        .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
-            }
+            final Query subjectVal = fcr.parseQuerySubject(functionCall, subject);
             run.setResult(Optional.of(subjectVal.forAll(groupingAttribute)));
             return run;
         }
