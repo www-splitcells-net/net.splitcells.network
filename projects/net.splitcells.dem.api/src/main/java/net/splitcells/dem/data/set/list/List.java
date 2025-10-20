@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.data.set.list;
 
+import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.set.SetT;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
@@ -28,7 +29,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
@@ -40,11 +44,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 @JavaLegacyArtifact
 public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
 
-    default void forEachIndex(BiConsumer<T, Integer> consumer) {
+    default void forEachIndexed(BiConsumer<T, Integer> consumer) {
         IntStream.range(0, size()).forEach(i -> {
             consumer.accept(get(i), i);
         });
     }
+
+    default void forEachIndex(Consumer<Integer> consumer) {
+        IntStream.range(0, size()).forEach(consumer::accept);
+    }
+
+    default <R> Stream<R> mapEachIndex(Function<Integer, R> function) {
+        return IntStream.range(0, size()).mapToObj(function::apply);
+    }
+
 
     /**
      * This helper method makes it easier to distinguish {@code isEmpty} and {@code !isEmpty}.

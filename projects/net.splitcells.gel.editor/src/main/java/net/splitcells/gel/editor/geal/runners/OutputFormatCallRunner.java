@@ -69,7 +69,7 @@ public class OutputFormatCallRunner implements FunctionCallRunner {
                     .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
         }
         final List<Attribute<?>> attributes = list();
-        functionCall.getArguments().forEachIndex((arg, i) -> {
+        functionCall.getArguments().forEachIndexed((arg, i) -> {
             final var attribute = context.parse(arg);
             switch (attribute) {
                 case Attribute<?> a -> {

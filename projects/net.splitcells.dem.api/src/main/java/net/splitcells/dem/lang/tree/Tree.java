@@ -352,7 +352,7 @@ public interface Tree extends TreeView, Convertible {
                     .withProperty("this", toXmlString())
                     .withProperty("other", other.toXmlString()));
         }
-        children().forEachIndex((c, i) -> child(i).requireEqualsTo(other.child(i)));
+        children().forEachIndexed((c, i) -> child(i).requireEqualsTo(other.child(i)));
     }
 
     default Tree withPath(Tree... path) {
