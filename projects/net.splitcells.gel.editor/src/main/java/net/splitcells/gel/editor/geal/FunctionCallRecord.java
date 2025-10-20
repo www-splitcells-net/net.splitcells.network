@@ -37,7 +37,7 @@ public class FunctionCallRecord {
     /**
      * This is a CommonMark document.
      */
-    @Getter private StringBuilder description = StringUtils.stringBuilder();
+    private StringBuilder description = StringUtils.stringBuilder();
 
     private FunctionCallRecord(String argName, int argVariation) {
         name = argName;
