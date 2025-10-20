@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.editor.geal.runners;
 
+import lombok.val;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
@@ -31,6 +32,7 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.data.table.Tables.table;
+import static net.splitcells.gel.editor.EditorParser.SOLUTION_FUNCTION;
 import static net.splitcells.gel.editor.EditorParser.TABLE_FUNCTION;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 
@@ -53,31 +55,15 @@ public class TableCallRunner implements FunctionCallRunner {
         if (!supports(functionCall)) {
             return run;
         }
-        if (functionCall.getArguments().size() < 2) {
-            throw execException(tree("The table function requires at least 2 arguments, but " + functionCall.getArguments().size() + " were given instead.")
-                    .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
+        try (val fcr = context.functionCallRecord(TABLE_FUNCTION, 1)) {
+            fcr.requireArgumentMinimalCount(functionCall, 2);
+
+            final String tableName = fcr.parseArgument(functionCall, String.class, 0);
+            final List<Attribute<?>> attributes = list();
+            IntStream.range(1, functionCall.getArguments().size()).forEach(i ->
+                    attributes.add(fcr.parseAttributeArgument(functionCall, Object.class, i)));
+            return run.setResult(Optional.of(table(tableName, context, attributes)));
         }
-        final var first = functionCall.getArguments().get(0).getExpression();
-        final String tableName;
-        switch (first) {
-            case StringDesc n -> tableName = n.getValue();
-            default ->
-                    throw execException(tree("The first argument of the table function has to be the table name represented by a string, but a " + first.getClass().getName() + " was given instead.")
-                            .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
-        }
-        final List<Attribute<?>> attributes = list();
-        IntStream.range(1, functionCall.getArguments().size()).forEach(i -> {
-            switch (context.parse(functionCall.getArguments().get(i))) {
-                case Attribute<? extends Object> attribute -> attributes.add(attribute);
-                default ->
-                        throw execException(tree("The table function arguments after the first one has to be attribute names, but a "
-                                + functionCall.getArguments().get(i).getClass()
-                                + " was given instead.")
-                                .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree())
-                                .withProperty("Incorrect argument", functionCall.getArguments().get(i).getSourceCodeQuote().userReferenceTree()));
-            }
-        });
-        return run.setResult(Optional.of(table(tableName, context, attributes)));
     }
 
 }
