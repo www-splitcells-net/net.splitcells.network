@@ -20,7 +20,6 @@ import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 import net.splitcells.gel.editor.geal.lang.NameDesc;
 import net.splitcells.gel.editor.geal.lang.StringDesc;
-import net.splitcells.gel.editor.meta.Type;
 
 import java.util.Optional;
 
@@ -30,8 +29,6 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
 import static net.splitcells.gel.data.view.attribute.AttributeI.stringAttribute;
 import static net.splitcells.gel.editor.EditorParser.*;
-import static net.splitcells.gel.editor.geal.lang.NameDesc.nameDesc;
-import static net.splitcells.gel.editor.geal.lang.StringDesc.stringDesc;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 
 public class AttributeCallRunner implements FunctionCallRunner {
@@ -61,32 +58,18 @@ public class AttributeCallRunner implements FunctionCallRunner {
         }
         try (val fcr = context.functionCallRecord(ATTRIBUTE_FUNCTION, 1)) {
             fcr.requireArgumentCount(functionCall, 2);
+            final NameDesc firstName = fcr.parseArgumentAsType(functionCall, 0);
+            final StringDesc secondName = fcr.parseArgumentAsStringDesc(functionCall, 1);
+            final Optional<Object> result;
+            if (firstName.getValue().equals(INTEGER_TYPE)) {
+                result = Optional.of(integerAttribute(secondName.getValue()));
+            } else if (firstName.getValue().equals(STRING_TYPE)) {
+                result = Optional.of(stringAttribute(secondName.getValue()));
+            } else {
+                fcr.failBecauseOfInvalidType(functionCall, 1, firstName, "string", "integer");
+                return run;
+            }
+            return run.setResult(result);
         }
-        final var first = context.parse(functionCall.getArguments().get(0));
-        final NameDesc firstName;
-        switch (first) {
-            case Type n -> firstName = nameDesc(n.getName(), functionCall.getArguments().get(0).getSourceCodeQuote());
-            default ->
-                    throw execException(tree("The first argument has to be a name, but " + first.getClass() + " was given.")
-                            .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
-        }
-        final var second = context.parse(functionCall.getArguments().get(1));
-        final StringDesc secondName;
-        switch (second) {
-            case String n -> secondName = stringDesc(n, functionCall.getArguments().get(1).getSourceCodeQuote());
-            default ->
-                    throw execException(tree("The second argument has to be a string, but " + second.getClass() + " was given.")
-                            .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
-        }
-        final Optional<Object> result;
-        if (firstName.getValue().equals(INTEGER_TYPE)) {
-            result = Optional.of(integerAttribute(secondName.getValue()));
-        } else if (firstName.getValue().equals(STRING_TYPE)) {
-            result = Optional.of(stringAttribute(secondName.getValue()));
-        } else {
-            throw execException(tree("The first argument has to be a reference to the integer or the string type, but " + firstName.getValue() + " was given.")
-                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
-        }
-        return run.setResult(result);
     }
 }

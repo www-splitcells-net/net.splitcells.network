@@ -17,17 +17,20 @@ package net.splitcells.gel.editor.geal;
 
 import lombok.Getter;
 import lombok.experimental.Accessors;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 import net.splitcells.gel.editor.geal.lang.NameDesc;
+import net.splitcells.gel.editor.geal.lang.StringDesc;
 import net.splitcells.gel.editor.meta.Type;
 
 import static net.splitcells.dem.lang.CommonMarkUtils.joinDocuments;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.editor.geal.lang.NameDesc.nameDesc;
+import static net.splitcells.gel.editor.geal.lang.StringDesc.stringDesc;
 
 /**
  * Extracts function call data from {@link FunctionCallDesc},
@@ -76,6 +79,53 @@ public class FunctionCallRecord implements Closeable {
                     + " were given.")
                     .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
         }
+    }
+
+    public NameDesc parseArgumentAsType(FunctionCallDesc functionCall, int argument) {
+        final var first = context.parse(functionCall.getArguments().get(argument));
+        switch (first) {
+            case Type n -> {
+                return nameDesc(n.getName(), functionCall.getArguments().get(argument).getSourceCodeQuote());
+            }
+            default -> throw execException(tree("The argument "
+                    + argument
+                    + " of "
+                    + functionCall.getName().getValue()
+                    + "has to be a name, but "
+                    + first.getClass().getName()
+                    + " was given instead.")
+                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
+        }
+    }
+
+    public StringDesc parseArgumentAsStringDesc(FunctionCallDesc functionCall, int argument) {
+        final var first = context.parse(functionCall.getArguments().get(argument));
+        switch (first) {
+            case String n -> {
+                return stringDesc(n, functionCall.getArguments().get(argument).getSourceCodeQuote());
+            }
+            default -> throw execException(tree("The argument "
+                    + argument
+                    + " of "
+                    + functionCall.getName().getValue()
+                    + "has to be a string, but "
+                    + first.getClass().getName()
+                    + " was given instead.")
+                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
+        }
+    }
+
+    public void failBecauseOfInvalidType(FunctionCallDesc functionCall, int argument, NameDesc actualType, String... allowedTypes) {
+        final var allowedTypeList = Lists.list(allowedTypes).stream()
+                .map(at -> "the " + at + " type")
+                .reduce((a, b) -> a + " or " + b)
+                .orElseThrow();
+        throw execException(tree("The argument "
+                + argument
+                + " has to be a reference to "
+                + allowedTypeList
+                + ", but " + actualType.getValue() + " was given instead.")
+                .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
     }
 
     @Override
