@@ -24,18 +24,18 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 @Accessors(chain = true)
-public class FunctionCallRegistry {
-    public static FunctionCallRegistry functionCallRegistry() {
-        return new FunctionCallRegistry();
+public class FunctionCallDoc {
+    public static FunctionCallDoc functionCallDoc() {
+        return new FunctionCallDoc();
     }
 
     private final List<FunctionCallRecord> functionCallRecords = list();
 
-    private FunctionCallRegistry() {
+    private FunctionCallDoc() {
 
     }
 
-    public FunctionCallRegistry addRecord(FunctionCallRecord record) {
+    public FunctionCallDoc addRecord(FunctionCallRecord record) {
         final var matches = functionCallRecords.stream()
                 .filter(fcr -> fcr.getName().equals(record.getName()) && fcr.getVariation() == record.getVariation())
                 .toList();

@@ -21,19 +21,16 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
-import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.dem.testing.Result;
 import net.splitcells.dem.testing.need.Need;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.TableFormatting;
 import net.splitcells.gel.data.view.attribute.Attribute;
-import net.splitcells.gel.editor.geal.FunctionCallRegistry;
+import net.splitcells.gel.editor.geal.FunctionCallDoc;
 import net.splitcells.gel.editor.geal.lang.*;
 import net.splitcells.gel.editor.geal.runners.FunctionCallMetaExecutor;
 import net.splitcells.gel.editor.geal.runners.FunctionCallRun;
-import net.splitcells.gel.editor.lang.SolutionDescription;
 import net.splitcells.gel.editor.lang.SourceCodeQuotation;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.solution.Solution;
@@ -71,7 +68,7 @@ public class Editor implements Discoverable {
     @Getter private final Map<String, Solution> solutions = map();
     @Getter private final Map<String, Constraint> constraints = map();
     @Getter private final Map<String, TableFormatting> tableFormatting = map();
-    @Getter private final FunctionCallRegistry functionCallRegistry = FunctionCallRegistry.functionCallRegistry();
+    @Getter private final FunctionCallDoc functionCallDoc = FunctionCallDoc.functionCallDoc();
     private final Map<String, EditorData> data = map();
 
     public Optional<String> lookupTableLikeName(Table table) {
