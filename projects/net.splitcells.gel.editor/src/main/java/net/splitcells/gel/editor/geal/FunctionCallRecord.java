@@ -71,7 +71,7 @@ public class FunctionCallRecord implements Closeable {
     public void requireArgumentCount(FunctionCallDesc functionCall, int requiredArgumentCount) {
         if (functionCall.getArguments().size() != requiredArgumentCount) {
             throw execException(tree("The "
-                    + functionCall.getName().getValue()
+                    + name
                     + " function requires exactly "
                     + requiredArgumentCount
                     + " arguments, but "
@@ -90,7 +90,7 @@ public class FunctionCallRecord implements Closeable {
             default -> throw execException(tree("The argument "
                     + argument
                     + " of "
-                    + functionCall.getName().getValue()
+                    + name
                     + "has to be a name, but "
                     + first.getClass().getName()
                     + " was given instead.")
@@ -107,7 +107,7 @@ public class FunctionCallRecord implements Closeable {
             default -> throw execException(tree("The argument "
                     + argument
                     + " of "
-                    + functionCall.getName().getValue()
+                    + name
                     + "has to be a string, but "
                     + first.getClass().getName()
                     + " was given instead.")
