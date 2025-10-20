@@ -57,15 +57,6 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
         try (val fcr = context.functionCallRecord(ATTRIBUTE_FUNCTION, 1)) {
             final Query subjectVal = fcr.parseQuerySubject(functionCall, subject);
             fcr.requireArgumentMinimalCount(functionCall, 2);
-            functionCall.getArguments().forEach(a -> {
-                if (!(a.getExpression() instanceof FunctionCallDesc)) {
-                    throw execException(tree("The "
-                            + FOR_ALL_COMBINATIONS_OF
-                            + " function only supports function calls as arguments, but " + a.getExpression().getClass().getName()
-                            + " was given instead.")
-                            .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
-                }
-            });
             final var groupingAttributes = functionCall.getArguments()
                     .mapEachIndex(i -> fcr.parseAttribute(functionCall, i))
                     .collect(toList());
