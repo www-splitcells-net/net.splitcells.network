@@ -266,13 +266,13 @@ public class Editor implements Discoverable {
         return subject.orElseThrow();
     }
 
-    public Editor addRecord(FunctionCallRecord record) {
+    public Editor addRecord(FunctionCallRecord argRecord) {
         if (isRecording) {
             final var matches = functionCallRecords.stream()
-                    .filter(fcr -> fcr.getName().equals(record.getName()) && fcr.getVariation() == record.getVariation())
+                    .filter(fcr -> fcr.getName().equals(argRecord.getName()) && fcr.getVariation() == argRecord.getVariation())
                     .toList();
             if (matches.isEmpty()) {
-                functionCallRecords.add(record);
+                functionCallRecords.add(argRecord);
             }
         }
         return this;
