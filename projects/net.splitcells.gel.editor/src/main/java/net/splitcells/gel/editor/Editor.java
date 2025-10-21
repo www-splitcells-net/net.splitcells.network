@@ -271,12 +271,9 @@ public class Editor implements Discoverable {
             final var matches = functionCallRecords.stream()
                     .filter(fcr -> fcr.getName().equals(record.getName()) && fcr.getVariation() == record.getVariation())
                     .toList();
-            if (matches.hasElements()) {
-                throw execException(tree("Function call variation is recorded multiple times.")
-                        .withProperty("New record", record.toString())
-                        .withProperty("Existing matching records", matches.toString()));
+            if (matches.isEmpty()) {
+                functionCallRecords.add(record);
             }
-            functionCallRecords.add(record);
         }
         return this;
     }
