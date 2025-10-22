@@ -56,12 +56,12 @@ public class TableCallRunner implements FunctionCallRunner {
             return run;
         }
         try (val fcr = context.functionCallRecord(functionCall, TABLE_FUNCTION, 1)) {
-            fcr.requireArgumentMinimalCount(functionCall, 2);
+            fcr.requireArgumentMinimalCount( 2);
 
-            final String tableName = fcr.parseArgument(functionCall, String.class, 0);
+            final String tableName = fcr.parseArgument(String.class, 0);
             final List<Attribute<?>> attributes = list();
             IntStream.range(1, functionCall.getArguments().size()).forEach(i ->
-                    attributes.add(fcr.parseAttributeArgument(functionCall, Object.class, i)));
+                    attributes.add(fcr.parseAttributeArgument(Object.class, i)));
             return run.setResult(Optional.of(table(tableName, context, attributes)));
         }
     }

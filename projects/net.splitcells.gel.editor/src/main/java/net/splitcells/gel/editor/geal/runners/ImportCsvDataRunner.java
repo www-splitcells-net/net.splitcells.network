@@ -55,9 +55,9 @@ public class ImportCsvDataRunner implements FunctionCallRunner {
             return run;
         }
         try (val fcr = context.functionCallRecord(functionCall, IMPORT_CSV_DATA, 1)) {
-            final Table tableSubject = fcr.parseSubject(functionCall, Table.class, subject);
-            fcr.requireArgumentCount(functionCall, 1);
-            final var dataName = fcr.parseArgument(functionCall, String.class, 0);
+            final Table tableSubject = fcr.parseSubject(Table.class, subject);
+            fcr.requireArgumentCount(1);
+            final var dataName = fcr.parseArgument(String.class, 0);
             final var csvData = context.loadData(TEXT_PLAIN, dataName);
             if (csvData.getContent().length == 0) {
                 csvData.setContent(StringUtils.toBytes(tableSubject.simplifiedHeaderCsv()));

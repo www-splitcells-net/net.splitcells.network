@@ -50,10 +50,10 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
             return run;
         }
         try (val fcr = context.functionCallRecord(functionCall, FOR_ALL_COMBINATIONS_OF, 1)) {
-            final Query subjectVal = fcr.parseQuerySubject(functionCall, subject);
-            fcr.requireArgumentMinimalCount(functionCall, 2);
+            final Query subjectVal = fcr.parseQuerySubject(subject);
+            fcr.requireArgumentMinimalCount(2);
             final var groupingAttributes = functionCall.getArguments()
-                    .mapEachIndex(i -> fcr.parseAttributeArgument(functionCall, i))
+                    .mapEachIndex(i -> fcr.parseAttributeArgument(i))
                     .collect(toList());
             run.setResult(Optional.of(subjectVal.forAllCombinationsOf(groupingAttributes)));
             return run;

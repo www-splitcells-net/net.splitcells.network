@@ -56,10 +56,10 @@ public class SolutionCallRunner implements FunctionCallRunner {
             return run;
         }
         try (val fcr = context.functionCallRecord(functionCall, SOLUTION_FUNCTION, 1)) {
-            fcr.requireArgumentCount(functionCall, 3);
-            val solutionName = fcr.parseArgument(functionCall, String.class, 0);
-            val demands = fcr.parseArgument(functionCall, Table.class, 1);
-            val supplies = fcr.parseArgument(functionCall, Table.class, 2);
+            fcr.requireArgumentCount(3);
+            val solutionName = fcr.parseArgument(String.class, 0);
+            val demands = fcr.parseArgument(Table.class, 1);
+            val supplies = fcr.parseArgument(Table.class, 2);
             final Optional<Object> result = Optional.of(defineProblem(solutionName)
                     .withDemands(demands)
                     .withSupplies(supplies)

@@ -69,16 +69,16 @@ public class AttributeCallRunner implements FunctionCallRunner {
             return run;
         }
         try (val fcr = context.functionCallRecord(functionCall, ATTRIBUTE_FUNCTION, 1)) {
-            fcr.requireArgumentCount(functionCall, 2);
-            final NameDesc firstName = fcr.parseArgumentAsType(functionCall, 0);
-            final StringDesc secondName = fcr.parseArgumentAsStringDesc(functionCall, 1);
+            fcr.requireArgumentCount(2);
+            final NameDesc firstName = fcr.parseArgumentAsType(0);
+            final StringDesc secondName = fcr.parseArgumentAsStringDesc(1);
             final Optional<Object> result;
             if (firstName.getValue().equals(INTEGER_TYPE)) {
                 result = Optional.of(integerAttribute(secondName.getValue()));
             } else if (firstName.getValue().equals(STRING_TYPE)) {
                 result = Optional.of(stringAttribute(secondName.getValue()));
             } else {
-                fcr.failBecauseOfInvalidType(functionCall, 1, firstName, "string", "integer");
+                fcr.failBecauseOfInvalidType(1, firstName, "string", "integer");
                 return run;
             }
             return run.setResult(result);

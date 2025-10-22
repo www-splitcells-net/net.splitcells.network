@@ -55,11 +55,11 @@ public class OutputFormatCallRunner implements FunctionCallRunner {
             return run;
         }
         try (val fcr = context.functionCallRecord(functionCall, name, 1)) {
-            final Solution subjectVal = fcr.parseSubject(functionCall, Solution.class, subject);
+            final Solution subjectVal = fcr.parseSubject(Solution.class, subject);
             run.setResult(Optional.of(subjectVal));
             final List<Attribute<?>> attributes = list();
             functionCall.getArguments().forEachIndex(i -> {
-                attributes.add(fcr.parseAttributeArgument(functionCall, i));
+                attributes.add(fcr.parseAttributeArgument(i));
             });
             final var subjectKey = context.lookupTableLikeName(subjectVal);
             if (subjectKey.isEmpty()) {

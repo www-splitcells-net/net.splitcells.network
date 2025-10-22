@@ -48,8 +48,8 @@ import static net.splitcells.gel.rating.rater.lib.HasSize.HAS_SIZE_NAME;
  */
 @Accessors(chain = true)
 public class FunctionCallRecord implements Closeable {
-    public static FunctionCallRecord functionCallRecord(FunctionCallDesc argSubject, Editor argContext, String argName, int argVariation) {
-        return new FunctionCallRecord(argSubject, argContext, argName, argVariation);
+    public static FunctionCallRecord functionCallRecord(FunctionCallDesc argFunctionCall, Editor argContext, String argName, int argVariation) {
+        return new FunctionCallRecord(argFunctionCall, argContext, argName, argVariation);
     }
 
     @Getter private final String name;
@@ -64,13 +64,13 @@ public class FunctionCallRecord implements Closeable {
      */
     private StringBuilder description = StringUtils.stringBuilder();
     private final Editor context;
-    private final FunctionCallDesc subject;
+    private final FunctionCallDesc functionCall;
 
-    private FunctionCallRecord(FunctionCallDesc argSubject, Editor argContext, String argName, int argVariation) {
+    private FunctionCallRecord(FunctionCallDesc argFunctionCall, Editor argContext, String argName, int argVariation) {
         name = argName;
         variation = argVariation;
         context = argContext;
-        subject = argSubject;
+        functionCall = argFunctionCall;
     }
 
     public FunctionCallRecord addDescription(String addition) {
@@ -78,7 +78,7 @@ public class FunctionCallRecord implements Closeable {
         return this;
     }
 
-    public void requireArgumentCount(FunctionCallDesc functionCall, int requiredArgumentCount) {
+    public void requireArgumentCount(int requiredArgumentCount) {
         if (functionCall.getArguments().size() != requiredArgumentCount) {
             throw execException(tree("The "
                     + name
@@ -91,7 +91,7 @@ public class FunctionCallRecord implements Closeable {
         }
     }
 
-    public void requireArgumentMinimalCount(FunctionCallDesc functionCall, int requiredMinimum) {
+    public void requireArgumentMinimalCount(int requiredMinimum) {
         if (functionCall.getArguments().size() < requiredMinimum) {
             throw execException(tree("The "
                     + name
@@ -103,7 +103,7 @@ public class FunctionCallRecord implements Closeable {
         }
     }
 
-    public NameDesc parseArgumentAsType(FunctionCallDesc functionCall, int argument) {
+    public NameDesc parseArgumentAsType(int argument) {
         final var first = context.parse(functionCall.getArguments().get(argument));
         switch (first) {
             case Type n -> {
@@ -120,7 +120,7 @@ public class FunctionCallRecord implements Closeable {
         }
     }
 
-    public StringDesc parseArgumentAsStringDesc(FunctionCallDesc functionCall, int argument) {
+    public StringDesc parseArgumentAsStringDesc(int argument) {
         final var first = context.parse(functionCall.getArguments().get(argument));
         switch (first) {
             case String n -> {
@@ -137,7 +137,7 @@ public class FunctionCallRecord implements Closeable {
         }
     }
 
-    public void failBecauseOfInvalidType(FunctionCallDesc functionCall, int argument, NameDesc actualType, String... allowedTypes) {
+    public void failBecauseOfInvalidType(int argument, NameDesc actualType, String... allowedTypes) {
         final var allowedTypeList = Lists.list(allowedTypes).stream()
                 .map(at -> "the " + at + " type")
                 .reduce((a, b) -> a + " or " + b)
@@ -150,7 +150,7 @@ public class FunctionCallRecord implements Closeable {
                 .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
     }
 
-    public Query parseQuerySubject(FunctionCallDesc functionCall, Optional<Object> subject) {
+    public Query parseQuerySubject(Optional<Object> subject) {
         if (subject.isEmpty()) {
             throw execException(tree("The "
                     + name
@@ -178,7 +178,7 @@ public class FunctionCallRecord implements Closeable {
         return subjectVal;
     }
 
-    public <T> T parseSubject(FunctionCallDesc functionCall, Class<? extends T> type, Optional<Object> subject) {
+    public <T> T parseSubject(Class<? extends T> type, Optional<Object> subject) {
         if (subject.isEmpty()) {
             throw execException(tree("The function " + name + " requires a "
                     + type.getName()
@@ -196,7 +196,7 @@ public class FunctionCallRecord implements Closeable {
                 .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
     }
 
-    public Attribute<? extends Object> parseAttributeArgument(FunctionCallDesc functionCall, int argument) {
+    public Attribute<? extends Object> parseAttributeArgument(int argument) {
         final var a = functionCall.getArguments().get(argument);
         final var parsed = context.parse(a);
         switch (parsed) {
@@ -214,8 +214,8 @@ public class FunctionCallRecord implements Closeable {
         }
     }
 
-    public <T> Attribute<T> parseAttributeArgument(FunctionCallDesc functionCall, Class<? extends T> type, int argument) {
-        final Attribute<?> distanceAttribute = parseAttributeArgument(functionCall, argument);
+    public <T> Attribute<T> parseAttributeArgument(Class<? extends T> type, int argument) {
+        final Attribute<?> distanceAttribute = parseAttributeArgument(argument);
         if (!type.isAssignableFrom(distanceAttribute.type())) {
             throw execException(tree("The argument "
                     + argument
@@ -231,7 +231,7 @@ public class FunctionCallRecord implements Closeable {
         return (Attribute<T>) distanceAttribute;
     }
 
-    public <T> T parseArgument(FunctionCallDesc functionCall, Class<? extends T> type, int argument) {
+    public <T> T parseArgument(Class<? extends T> type, int argument) {
         final var parsed = context.parse(functionCall.getArguments().get(argument));
         if (type.isInstance(parsed)) {
             return (T) parsed;
@@ -248,7 +248,7 @@ public class FunctionCallRecord implements Closeable {
                 .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
     }
 
-    public void requireSubjectAbsence(FunctionCallDesc functionCall, Optional<Object> subject) {
+    public void requireSubjectAbsence(Optional<Object> subject) {
         if (subject.isPresent()) {
             throw execException(tree("The "
                     + name
