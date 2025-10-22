@@ -17,6 +17,7 @@ package net.splitcells.gel.editor.geal.runners;
 
 import lombok.val;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
@@ -30,6 +31,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.data.view.TableFormatting.tableFormat;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
+import static net.splitcells.gel.editor.geal.runners.FunctionCallRunnerParser.functionCallRunnerParser;
 
 public class OutputFormatCallRunner implements FunctionCallRunner {
     public static OutputFormatCallRunner outputFormatCallRunner() {
@@ -38,6 +40,18 @@ public class OutputFormatCallRunner implements FunctionCallRunner {
 
     private static final String COLUMN_FORMAT = "columnAttributesForOutputFormat";
     private static final String ROW_FORMAT = "rowAttributesForOutputFormat";
+
+    private static class Args {
+        Solution subjectVal;
+        List<Attribute<?>> attributes;
+    }
+
+    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(fcr -> {
+        val args = new Args();
+        args.subjectVal = fcr.parseSubject(Solution.class);
+        args.attributes = fcr.parseAttributeArguments();
+        return args;
+    });
 
     private OutputFormatCallRunner() {
 
@@ -54,33 +68,32 @@ public class OutputFormatCallRunner implements FunctionCallRunner {
         if (!supports(functionCall, subject, context)) {
             return run;
         }
-        try (val fcr = context.functionCallRecord(subject, functionCall, name, 1)) {
-            final Solution subjectVal = fcr.parseSubject(Solution.class);
-            run.setResult(Optional.of(subjectVal));
-            final List<Attribute<?>> attributes = list();
-            functionCall.getArguments().forEachIndex(i -> {
-                attributes.add(fcr.parseAttributeArgument(i));
-            });
-            final var subjectKey = context.lookupTableLikeName(subjectVal);
-            if (subjectKey.isEmpty()) {
-                throw execException(tree("Could not lookup table for " + functionCall.getName().getValue() + ".")
-                        .withProperty("table", subjectVal.name())
-                        .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
-            }
-            if (functionCall.getName().getValue().equals(COLUMN_FORMAT)) {
-                if (context.getTableFormatting().hasKey(subjectKey.get())) {
-                    context.getTableFormatting().get(subjectKey.get()).setColumnAttributes(attributes);
-                } else {
-                    context.getTableFormatting().put(subjectKey.get(), tableFormat().setColumnAttributes(attributes));
-                }
-            } else if (functionCall.getName().getValue().equals(ROW_FORMAT)) {
-                if (context.getTableFormatting().hasKey(subjectKey.get())) {
-                    context.getTableFormatting().get(subjectKey.get()).setRowAttributes(attributes);
-                } else {
-                    context.getTableFormatting().put(subjectKey.get(), tableFormat().setRowAttributes(attributes));
-                }
-            }
-            return run;
+        val args = PARSER.parse(subject, context, functionCall, 1);
+        run.setResult(Optional.of(args.subjectVal));
+        final var subjectKey = context.lookupTableLikeName(args.subjectVal);
+        if (subjectKey.isEmpty()) {
+            throw execException(tree("Could not lookup table for " + functionCall.getName().getValue() + ".")
+                    .withProperty("table", args.subjectVal.name())
+                    .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
         }
+        if (functionCall.getName().getValue().equals(COLUMN_FORMAT)) {
+            if (context.getTableFormatting().hasKey(subjectKey.get())) {
+                context.getTableFormatting().get(subjectKey.get()).setColumnAttributes(args.attributes);
+            } else {
+                context.getTableFormatting().put(subjectKey.get(), tableFormat().setColumnAttributes(args.attributes));
+            }
+        } else if (functionCall.getName().getValue().equals(ROW_FORMAT)) {
+            if (context.getTableFormatting().hasKey(subjectKey.get())) {
+                context.getTableFormatting().get(subjectKey.get()).setRowAttributes(args.attributes);
+            } else {
+                context.getTableFormatting().put(subjectKey.get(), tableFormat().setRowAttributes(args.attributes));
+            }
+        }
+        return run;
+    }
+
+    @Override
+    public List<FunctionCallRunnerParser<?>> parsers() {
+        return list(PARSER);
     }
 }
