@@ -16,7 +16,9 @@
 package net.splitcells.gel.editor.geal.runners;
 
 import lombok.val;
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.constraint.Query;
+import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 import net.splitcells.gel.rating.rater.framework.Rater;
@@ -24,17 +26,32 @@ import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.constraint.type.ForAlls.FOR_ALL_COMBINATIONS_OF;
 import static net.splitcells.gel.constraint.type.Then.THEN_NAME;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
+import static net.splitcells.gel.editor.geal.runners.FunctionCallRunnerParser.functionCallRunnerParser;
 
 public class ThenCallRunner implements FunctionCallRunner {
     public static ThenCallRunner thenCallRunner() {
         return new ThenCallRunner();
     }
+
+    private static class Args {
+        Query subjectVal;
+        Rater rater;
+    }
+
+    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(fcr -> {
+        val args = new Args();
+        args.subjectVal = fcr.parseQuerySubject();
+        fcr.requireArgumentCount(1);
+        args.rater = fcr.parseArgument(Rater.class, 0);
+        return args;
+    });
 
     private ThenCallRunner() {
 
@@ -50,11 +67,12 @@ public class ThenCallRunner implements FunctionCallRunner {
         if (!supports(functionCall, subject, context)) {
             return run;
         }
-        try (val fcr = context.functionCallRecord(subject, functionCall, THEN_NAME, 1)) {
-            val subjectVal = fcr.parseQuerySubject();
-            fcr.requireArgumentCount(1);
-            val rater = fcr.parseArgument(Rater.class, 0);
-            return run.setResult(Optional.of(subjectVal.then(rater)));
-        }
+        val args = PARSER.parse(subject, context, functionCall, 1);
+        return run.setResult(Optional.of(args.subjectVal.then(args.rater)));
+    }
+
+    @Override
+    public List<FunctionCallRunnerParser<?>> parsers() {
+        return list(PARSER);
     }
 }
