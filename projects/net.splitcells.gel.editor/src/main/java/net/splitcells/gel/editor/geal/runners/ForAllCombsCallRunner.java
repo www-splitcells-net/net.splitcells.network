@@ -25,6 +25,7 @@ import net.splitcells.gel.editor.geal.lang.NameDesc;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
@@ -45,12 +46,14 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
 
     private static class Args {
         List<Attribute<? extends Object>> groupingAttributes;
+        Query subjectVal;
     }
 
     private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(fcr -> {
         val args = new Args();
         fcr.requireArgumentMinimalCount(2);
         args.groupingAttributes = fcr.parseAttributeArguments();
+        args.subjectVal = fcr.parseQuerySubject();
         return args;
     });
 
@@ -64,15 +67,13 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
         if (!supports(functionCall, subject, context)) {
             return run;
         }
-        
-        try (val fcr = context.functionCallRecord(subject, functionCall, FOR_ALL_COMBINATIONS_OF, 1)) {
-            final Query subjectVal = fcr.parseQuerySubject();
-            fcr.requireArgumentMinimalCount(2);
-            final var groupingAttributes = functionCall.getArguments()
-                    .mapEachIndex(i -> fcr.parseAttributeArgument(i))
-                    .collect(toList());
-            run.setResult(Optional.of(subjectVal.forAllCombinationsOf(groupingAttributes)));
-            return run;
-        }
+        val args = PARSER.parse(subject, context, functionCall, 1);
+        run.setResult(Optional.of(args.subjectVal.forAllCombinationsOf(args.groupingAttributes)));
+        return run;
+    }
+
+    @Override
+    public List<FunctionCallRunnerParser<?>> parsers() {
+        return list(PARSER);
     }
 }
