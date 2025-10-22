@@ -278,7 +278,7 @@ public class Editor implements Discoverable {
         return this;
     }
 
-    public FunctionCallRecord functionCallRecord(FunctionCallDesc functionCall, String name, int variation) {
-        return FunctionCallRecord.functionCallRecord(functionCall, this, name, variation);
+    public FunctionCallRecord functionCallRecord(Optional<Object> subject, FunctionCallDesc functionCall, String name, int variation) {
+        return FunctionCallRecord.functionCallRecord(subject, functionCall, this, name, variation);
     }
 }

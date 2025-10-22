@@ -16,9 +16,12 @@
 package net.splitcells.gel.editor.geal.runners;
 
 import lombok.val;
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.constraint.Query;
+import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
+import net.splitcells.gel.editor.geal.lang.NameDesc;
 
 import java.util.Optional;
 
@@ -29,6 +32,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.constraint.type.ForAlls.FOR_ALL_COMBINATIONS_OF;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
+import static net.splitcells.gel.editor.geal.runners.FunctionCallRunnerParser.functionCallRunnerParser;
 
 public class ForAllCombsCallRunner implements FunctionCallRunner {
     public static ForAllCombsCallRunner forAllCombsCallRunner() {
@@ -38,6 +42,17 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
     private ForAllCombsCallRunner() {
 
     }
+
+    private static class Args {
+        List<Attribute<? extends Object>> groupingAttributes;
+    }
+
+    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(fcr -> {
+        val args = new Args();
+        fcr.requireArgumentMinimalCount(2);
+        args.groupingAttributes = fcr.parseAttributeArguments();
+        return args;
+    });
 
     private boolean supports(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
         return functionCall.getName().getValue().equals(FOR_ALL_COMBINATIONS_OF);
@@ -49,8 +64,9 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
         if (!supports(functionCall, subject, context)) {
             return run;
         }
-        try (val fcr = context.functionCallRecord(functionCall, FOR_ALL_COMBINATIONS_OF, 1)) {
-            final Query subjectVal = fcr.parseQuerySubject(subject);
+        
+        try (val fcr = context.functionCallRecord(subject, functionCall, FOR_ALL_COMBINATIONS_OF, 1)) {
+            final Query subjectVal = fcr.parseQuerySubject();
             fcr.requireArgumentMinimalCount(2);
             final var groupingAttributes = functionCall.getArguments()
                     .mapEachIndex(i -> fcr.parseAttributeArgument(i))

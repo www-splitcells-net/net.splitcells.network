@@ -18,11 +18,11 @@ package net.splitcells.gel.editor.geal;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import lombok.val;
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.constraint.Query;
-import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
@@ -34,13 +34,13 @@ import net.splitcells.gel.solution.Solution;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.CommonMarkUtils.joinDocuments;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.editor.geal.lang.NameDesc.nameDesc;
 import static net.splitcells.gel.editor.geal.lang.StringDesc.stringDesc;
-import static net.splitcells.gel.rating.rater.lib.HasSize.HAS_SIZE_NAME;
 
 /**
  * Extracts function call data from {@link FunctionCallDesc},
@@ -50,8 +50,8 @@ import static net.splitcells.gel.rating.rater.lib.HasSize.HAS_SIZE_NAME;
  */
 @Accessors(chain = true)
 public class FunctionCallRecord implements Closeable {
-    public static FunctionCallRecord functionCallRecord(FunctionCallDesc argFunctionCall, Editor argContext, String argName, int argVariation) {
-        return new FunctionCallRecord(argFunctionCall, argContext, argName, argVariation);
+    public static FunctionCallRecord functionCallRecord(Optional<Object> argSubject, FunctionCallDesc argFunctionCall, Editor argContext, String argName, int argVariation) {
+        return new FunctionCallRecord(argSubject, argFunctionCall, argContext, argName, argVariation);
     }
 
     @Getter private final String name;
@@ -67,12 +67,14 @@ public class FunctionCallRecord implements Closeable {
     private StringBuilder description = StringUtils.stringBuilder();
     private final Editor context;
     private final FunctionCallDesc functionCall;
+    private final Optional<Object> subject;
 
-    private FunctionCallRecord(FunctionCallDesc argFunctionCall, Editor argContext, String argName, int argVariation) {
+    private FunctionCallRecord(Optional<Object> argSubject, FunctionCallDesc argFunctionCall, Editor argContext, String argName, int argVariation) {
         name = argName;
         variation = argVariation;
         context = argContext;
         functionCall = argFunctionCall;
+        subject = argSubject;
     }
 
     public FunctionCallRecord addDescription(String addition) {
@@ -164,7 +166,7 @@ public class FunctionCallRecord implements Closeable {
                 .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
     }
 
-    public Query parseQuerySubject(Optional<Object> subject) {
+    public Query parseQuerySubject() {
         if (subject.isEmpty()) {
             throw execException(tree("The "
                     + name
@@ -208,6 +210,10 @@ public class FunctionCallRecord implements Closeable {
                 + subject.orElseThrow().getClass().getName()
                 + " was given instead.")
                 .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
+    }
+
+    public List<Attribute<? extends Object>> parseAttributeArguments() {
+        return functionCall.getArguments().streamIndexes().mapToObj(this::parseAttributeArgument).collect(toList());
     }
 
     public Attribute<? extends Object> parseAttributeArgument(int argument) {

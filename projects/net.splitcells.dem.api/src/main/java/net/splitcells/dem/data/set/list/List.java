@@ -15,7 +15,6 @@
  */
 package net.splitcells.dem.data.set.list;
 
-import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.set.SetT;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
@@ -48,6 +47,10 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
         IntStream.range(0, size()).forEach(i -> {
             consumer.accept(get(i), i);
         });
+    }
+
+    default IntStream streamIndexes() {
+        return IntStream.range(0, size());
     }
 
     default void forEachIndex(Consumer<Integer> consumer) {

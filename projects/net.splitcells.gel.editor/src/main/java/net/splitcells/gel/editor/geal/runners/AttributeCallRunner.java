@@ -16,6 +16,7 @@
 package net.splitcells.gel.editor.geal.runners;
 
 import lombok.val;
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.FunctionCallRecord;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
@@ -25,6 +26,7 @@ import net.splitcells.gel.editor.geal.lang.StringDesc;
 import java.util.Optional;
 import java.util.function.Function;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -73,7 +75,7 @@ public class AttributeCallRunner implements FunctionCallRunner {
         if (!supports(functionCall)) {
             return run;
         }
-        val args = PARSER.parse(context, functionCall, 1);
+        val args = PARSER.parse(subject, context, functionCall, 1);
         final Optional<Object> result;
         if (args.type.getValue().equals(INTEGER_TYPE)) {
             result = Optional.of(integerAttribute(args.name));
@@ -83,5 +85,10 @@ public class AttributeCallRunner implements FunctionCallRunner {
             throw execException();
         }
         return run.setResult(result);
+    }
+
+    @Override
+    public List<FunctionCallRunnerParser<?>> parsers() {
+        return list(PARSER);
     }
 }

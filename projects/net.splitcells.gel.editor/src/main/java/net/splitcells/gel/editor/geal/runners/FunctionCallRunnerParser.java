@@ -34,8 +34,8 @@ public class FunctionCallRunnerParser<T> {
         parser = argParser;
     }
 
-    public T parse(Editor context, FunctionCallDesc functionCall, int variation) {
-        try (val fcr = context.functionCallRecord(functionCall, functionCall.getName().getValue(), variation)) {
+    public T parse(Optional<Object> subject, Editor context, FunctionCallDesc functionCall, int variation) {
+        try (val fcr = context.functionCallRecord(subject, functionCall, functionCall.getName().getValue(), variation)) {
             return parser.apply(fcr);
         }
     }
