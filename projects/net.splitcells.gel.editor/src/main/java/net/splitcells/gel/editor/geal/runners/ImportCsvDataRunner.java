@@ -16,18 +16,24 @@
 package net.splitcells.gel.editor.geal.runners;
 
 import lombok.val;
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.utils.StringUtils;
+import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
+import net.splitcells.gel.editor.EditorData;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 import net.splitcells.gel.editor.geal.lang.StringDesc;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.parseString;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
+import static net.splitcells.gel.editor.geal.runners.FunctionCallRunnerParser.functionCallRunnerParser;
 import static net.splitcells.gel.rating.rater.lib.HasSize.HAS_SIZE_NAME;
 import static net.splitcells.website.Format.TEXT_PLAIN;
 
@@ -44,6 +50,19 @@ public class ImportCsvDataRunner implements FunctionCallRunner {
 
     private static final String IMPORT_CSV_DATA = "importCsvData";
 
+    private static class Args {
+        Table tableSubject;
+        String dataName;
+    }
+
+    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(fcr -> {
+        val args = new Args();
+        args.tableSubject = fcr.parseSubject(Table.class);
+        fcr.requireArgumentCount(1);
+        args.dataName = fcr.parseArgument(String.class, 0);
+        return args;
+    });
+
     private ImportCsvDataRunner() {
 
     }
@@ -54,17 +73,18 @@ public class ImportCsvDataRunner implements FunctionCallRunner {
         if (!functionCall.getName().getValue().equals("importCsvData")) {
             return run;
         }
-        try (val fcr = context.functionCallRecord(subject, functionCall, IMPORT_CSV_DATA, 1)) {
-            final Table tableSubject = fcr.parseSubject(Table.class, subject);
-            fcr.requireArgumentCount(1);
-            final var dataName = fcr.parseArgument(String.class, 0);
-            final var csvData = context.loadData(TEXT_PLAIN, dataName);
-            if (csvData.getContent().length == 0) {
-                csvData.setContent(StringUtils.toBytes(tableSubject.simplifiedHeaderCsv()));
-            }
-            tableSubject.withAddedCsv(parseString(csvData.getContent()));
-            run.setResult(Optional.of(tableSubject));
-            return run;
+        val args = PARSER.parse(subject, context, functionCall, 1);
+        final var csvData = context.loadData(TEXT_PLAIN, args.dataName);
+        if (csvData.getContent().length == 0) {
+            csvData.setContent(StringUtils.toBytes(args.tableSubject.simplifiedHeaderCsv()));
         }
+        args.tableSubject.withAddedCsv(parseString(csvData.getContent()));
+        run.setResult(Optional.of(args.tableSubject));
+        return run;
+    }
+
+    @Override
+    public List<FunctionCallRunnerParser<?>> parsers() {
+        return list(PARSER);
     }
 }

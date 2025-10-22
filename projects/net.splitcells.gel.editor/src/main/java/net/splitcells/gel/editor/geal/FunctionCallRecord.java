@@ -194,7 +194,7 @@ public class FunctionCallRecord implements Closeable {
         return subjectVal;
     }
 
-    public <T> T parseSubject(Class<? extends T> type, Optional<Object> subject) {
+    public <T> T parseSubject(Class<? extends T> type) {
         if (subject.isEmpty()) {
             throw execException(tree("The function " + name + " requires a "
                     + type.getName()

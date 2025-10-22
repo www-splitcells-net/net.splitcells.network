@@ -55,7 +55,7 @@ public class OutputFormatCallRunner implements FunctionCallRunner {
             return run;
         }
         try (val fcr = context.functionCallRecord(subject, functionCall, name, 1)) {
-            final Solution subjectVal = fcr.parseSubject(Solution.class, subject);
+            final Solution subjectVal = fcr.parseSubject(Solution.class);
             run.setResult(Optional.of(subjectVal));
             final List<Attribute<?>> attributes = list();
             functionCall.getArguments().forEachIndex(i -> {
