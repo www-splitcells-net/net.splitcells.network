@@ -17,11 +17,13 @@ package net.splitcells.gel.editor.geal.runners;
 
 import lombok.val;
 import net.splitcells.gel.editor.Editor;
+import net.splitcells.gel.editor.geal.FunctionCallRecord;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 import net.splitcells.gel.editor.geal.lang.NameDesc;
 import net.splitcells.gel.editor.geal.lang.StringDesc;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
@@ -43,6 +45,16 @@ public class AttributeCallRunner implements FunctionCallRunner {
     private boolean supports(FunctionCallDesc functionCall) {
         return functionCall.getName().getValue().equals(ATTRIBUTE_FUNCTION);
     }
+
+    private static class AttributeFunctionArgs {
+        String type;
+        String name;
+    }
+
+    private Function<FunctionCallRecord, AttributeFunctionArgs> parser = fcr -> {
+        val args = new AttributeFunctionArgs();
+        return args;
+    };
 
     /**
      *
