@@ -268,7 +268,7 @@ public class FunctionCallRecord implements Closeable {
                 .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
     }
 
-    public void requireSubjectAbsence(Optional<Object> subject) {
+    public void requireSubjectAbsence() {
         if (subject.isPresent()) {
             throw execException(tree("The "
                     + name
