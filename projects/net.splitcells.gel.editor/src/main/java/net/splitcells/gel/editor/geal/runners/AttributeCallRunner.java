@@ -32,6 +32,7 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute
 import static net.splitcells.gel.data.view.attribute.AttributeI.stringAttribute;
 import static net.splitcells.gel.editor.EditorParser.*;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
+import static net.splitcells.gel.editor.geal.runners.FunctionCallRunnerParser.functionCallRunnerParser;
 
 public class AttributeCallRunner implements FunctionCallRunner {
     public static AttributeCallRunner attributeCallRunner() {
@@ -51,13 +52,14 @@ public class AttributeCallRunner implements FunctionCallRunner {
         String name;
     }
 
-    private AttributeFunctionArgs parse(FunctionCallRecord fcr) {
+    private static final FunctionCallRunnerParser<AttributeFunctionArgs> PARSER = functionCallRunnerParser(fcr -> {
         val args = new AttributeFunctionArgs();
         fcr.requireArgumentCount(2);
         args.type = fcr.parseArgumentAsType(0, INTEGER_TYPE, STRING_TYPE);
         args.name = fcr.parseArgumentAsStringDesc(1).getValue();
         return args;
-    }
+    });
+
 
     /**
      *
@@ -67,22 +69,19 @@ public class AttributeCallRunner implements FunctionCallRunner {
      */
     @Override
     public FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
-        final var run = functionCallRun(subject, context);
+        val run = functionCallRun(subject, context);
         if (!supports(functionCall)) {
             return run;
         }
-        try (val fcr = context.functionCallRecord(functionCall, ATTRIBUTE_FUNCTION, 1)) {
-            final var args = parse(fcr);
-            final Optional<Object> result;
-            if (args.type.getValue().equals(INTEGER_TYPE)) {
-                result = Optional.of(integerAttribute(args.name));
-            } else if (args.type.getValue().equals(STRING_TYPE)) {
-                result = Optional.of(stringAttribute(args.name));
-            } else {
-                fcr.failBecauseOfInvalidType(1, args.type, "string", "integer");
-                return run;
-            }
-            return run.setResult(result);
+        val args = PARSER.parse(context, functionCall, 1);
+        final Optional<Object> result;
+        if (args.type.getValue().equals(INTEGER_TYPE)) {
+            result = Optional.of(integerAttribute(args.name));
+        } else if (args.type.getValue().equals(STRING_TYPE)) {
+            result = Optional.of(stringAttribute(args.name));
+        } else {
+            throw execException();
         }
+        return run.setResult(result);
     }
 }
