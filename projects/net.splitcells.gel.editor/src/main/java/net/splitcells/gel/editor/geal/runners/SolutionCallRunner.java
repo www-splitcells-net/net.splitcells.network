@@ -16,7 +16,10 @@
 package net.splitcells.gel.editor.geal.runners;
 
 import lombok.val;
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 import net.splitcells.gel.editor.geal.lang.NameDesc;
@@ -25,18 +28,35 @@ import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.editor.EditorParser.SOLUTION_FUNCTION;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
+import static net.splitcells.gel.editor.geal.runners.FunctionCallRunnerParser.functionCallRunnerParser;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 
 public class SolutionCallRunner implements FunctionCallRunner {
     public static SolutionCallRunner solutionCallRunner() {
         return new SolutionCallRunner();
     }
+
+    private static class Args {
+        String solutionName;
+        Table demands;
+        Table supplies;
+    }
+
+    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(fcr -> {
+        val args = new Args();
+        fcr.requireArgumentCount(3);
+        args.solutionName = fcr.parseArgument(String.class, 0);
+        args.demands = fcr.parseArgument(Table.class, 1);
+        args.supplies = fcr.parseArgument(Table.class, 2);
+        return args;
+    });
 
     private SolutionCallRunner() {
 
@@ -55,19 +75,18 @@ public class SolutionCallRunner implements FunctionCallRunner {
         if (!supports(functionCall)) {
             return run;
         }
-        try (val fcr = context.functionCallRecord(subject, functionCall, SOLUTION_FUNCTION, 1)) {
-            fcr.requireArgumentCount(3);
-            val solutionName = fcr.parseArgument(String.class, 0);
-            val demands = fcr.parseArgument(Table.class, 1);
-            val supplies = fcr.parseArgument(Table.class, 2);
-            final Optional<Object> result = Optional.of(defineProblem(solutionName)
-                    .withDemands(demands)
-                    .withSupplies(supplies)
-                    .withConstraint(forAll())
-                    .toProblem()
-                    .asSolution());
-            return functionCallRun(subject, context).setResult(result);
-        }
+        val args = PARSER.parse(subject, context, functionCall, 1);
+        final Optional<Object> result = Optional.of(defineProblem(args.solutionName)
+                .withDemands(args.demands)
+                .withSupplies(args.supplies)
+                .withConstraint(forAll())
+                .toProblem()
+                .asSolution());
+        return functionCallRun(subject, context).setResult(result);
     }
 
+    @Override
+    public List<FunctionCallRunnerParser<?>> parsers() {
+        return list(PARSER);
+    }
 }
