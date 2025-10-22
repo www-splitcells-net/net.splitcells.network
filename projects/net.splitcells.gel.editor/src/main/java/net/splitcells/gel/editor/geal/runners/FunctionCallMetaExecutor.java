@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.editor.geal.runners;
 
+import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.editor.Editor;
@@ -85,6 +86,10 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
                     .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
         }
         return fittingRun.get();
+    }
+
+    public Flow<FunctionCallRunnerParser<?>> parsers() {
+        return executors.stream().flatMap(e -> e.parsers().stream());
     }
 
 }

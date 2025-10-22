@@ -16,6 +16,7 @@
 package net.splitcells.gel.editor.geal.runners;
 
 import lombok.val;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.FunctionCallRecord;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
@@ -37,6 +38,12 @@ public class FunctionCallRunnerParser<T> {
     public T parse(Optional<Object> subject, Editor context, FunctionCallDesc functionCall, int variation) {
         try (val fcr = context.functionCallRecord(subject, functionCall, functionCall.getName().getValue(), variation)) {
             return parser.apply(fcr);
+        }
+    }
+
+    public Tree document(Editor context) {
+        try (val fcr = context.functionCallRecord(null, null, null, 1)) {
+            return null;
         }
     }
 }

@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.editor.geal.runners;
 
+import net.splitcells.dem.data.Flow;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 
@@ -23,4 +24,6 @@ import java.util.Optional;
 public interface FunctionCallExecutor {
 
     FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context);
+
+    Flow<FunctionCallRunnerParser<?>> parsers();
 }

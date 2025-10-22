@@ -51,7 +51,11 @@ import static net.splitcells.gel.editor.geal.lang.StringDesc.stringDesc;
 @Accessors(chain = true)
 public class FunctionCallRecord implements Closeable {
     public static FunctionCallRecord functionCallRecord(Optional<Object> argSubject, FunctionCallDesc argFunctionCall, Editor argContext, String argName, int argVariation) {
-        return new FunctionCallRecord(argSubject, argFunctionCall, argContext, argName, argVariation);
+        return new FunctionCallRecord(argSubject, argFunctionCall, argContext, argName, argVariation, false);
+    }
+
+    public static FunctionCallRecord functionCallRecord(Optional<Object> argSubject, FunctionCallDesc argFunctionCall, Editor argContext, String argName, int argVariation, boolean argIsRecording) {
+        return new FunctionCallRecord(argSubject, argFunctionCall, argContext, argName, argVariation, argIsRecording);
     }
 
     @Getter private final String name;
@@ -68,13 +72,15 @@ public class FunctionCallRecord implements Closeable {
     private final Editor context;
     private final FunctionCallDesc functionCall;
     private final Optional<Object> subject;
+    boolean isRecording;
 
-    private FunctionCallRecord(Optional<Object> argSubject, FunctionCallDesc argFunctionCall, Editor argContext, String argName, int argVariation) {
+    private FunctionCallRecord(Optional<Object> argSubject, FunctionCallDesc argFunctionCall, Editor argContext, String argName, int argVariation, boolean argIsRecording) {
         name = argName;
         variation = argVariation;
         context = argContext;
         functionCall = argFunctionCall;
         subject = argSubject;
+        isRecording = argIsRecording;
     }
 
     public FunctionCallRecord addDescription(String addition) {
@@ -83,6 +89,9 @@ public class FunctionCallRecord implements Closeable {
     }
 
     public void requireArgumentCount(int requiredArgumentCount) {
+        if (isRecording) {
+            return;
+        }
         if (functionCall.getArguments().size() != requiredArgumentCount) {
             throw execException(tree("The "
                     + name
@@ -96,6 +105,9 @@ public class FunctionCallRecord implements Closeable {
     }
 
     public void requireArgumentMinimalCount(int requiredMinimum) {
+        if (isRecording) {
+            return;
+        }
         if (functionCall.getArguments().size() < requiredMinimum) {
             throw execException(tree("The "
                     + name
@@ -108,6 +120,9 @@ public class FunctionCallRecord implements Closeable {
     }
 
     public NameDesc parseArgumentAsType(int argument, String... validValues) {
+        if (isRecording) {
+            return null;
+        }
         val argumentAsType = parseArgumentAsType(argument);
         val validValueList = listWithValuesOf(validValues);
         val anyMatch = validValueList.stream().anyMatch(v -> v.equals(argumentAsType.getValue()));
@@ -120,6 +135,9 @@ public class FunctionCallRecord implements Closeable {
     }
 
     public NameDesc parseArgumentAsType(int argument) {
+        if (isRecording) {
+            return null;
+        }
         final var first = context.parse(functionCall.getArguments().get(argument));
         switch (first) {
             case Type n -> {
@@ -137,6 +155,9 @@ public class FunctionCallRecord implements Closeable {
     }
 
     public StringDesc parseArgumentAsStringDesc(int argument) {
+        if (isRecording) {
+            return null;
+        }
         final var first = context.parse(functionCall.getArguments().get(argument));
         switch (first) {
             case String n -> {
@@ -154,6 +175,9 @@ public class FunctionCallRecord implements Closeable {
     }
 
     public void failBecauseOfInvalidType(int argument, NameDesc actualType, String... allowedTypes) {
+        if (isRecording) {
+            return;
+        }
         final var allowedTypeList = Lists.list(allowedTypes).stream()
                 .map(at -> "the " + at + " type")
                 .reduce((a, b) -> a + " or " + b)
@@ -167,6 +191,9 @@ public class FunctionCallRecord implements Closeable {
     }
 
     public Query parseQuerySubject() {
+        if (isRecording) {
+            return null;
+        }
         if (subject.isEmpty()) {
             throw execException(tree("The "
                     + name
@@ -195,6 +222,9 @@ public class FunctionCallRecord implements Closeable {
     }
 
     public <T> T parseSubject(Class<? extends T> type) {
+        if (isRecording) {
+            return null;
+        }
         if (subject.isEmpty()) {
             throw execException(tree("The function " + name + " requires a "
                     + type.getName()
@@ -213,16 +243,25 @@ public class FunctionCallRecord implements Closeable {
     }
 
     public List<Attribute<? extends Object>> parseAttributeArguments(int from) {
+        if (isRecording) {
+            return null;
+        }
         return functionCall.getArguments().streamIndexes()
                 .filter(i -> i >= from)
                 .mapToObj(this::parseAttributeArgument).collect(toList());
     }
 
     public List<Attribute<? extends Object>> parseAttributeArguments() {
+        if (isRecording) {
+            return null;
+        }
         return functionCall.getArguments().streamIndexes().mapToObj(this::parseAttributeArgument).collect(toList());
     }
 
     public Attribute<? extends Object> parseAttributeArgument(int argument) {
+        if (isRecording) {
+            return null;
+        }
         final var a = functionCall.getArguments().get(argument);
         final var parsed = context.parse(a);
         switch (parsed) {
@@ -241,6 +280,9 @@ public class FunctionCallRecord implements Closeable {
     }
 
     public <T> Attribute<T> parseAttributeArgument(Class<? extends T> type, int argument) {
+        if (isRecording) {
+            return null;
+        }
         final Attribute<?> distanceAttribute = parseAttributeArgument(argument);
         if (!type.isAssignableFrom(distanceAttribute.type())) {
             throw execException(tree("The argument "
@@ -258,6 +300,9 @@ public class FunctionCallRecord implements Closeable {
     }
 
     public <T> T parseArgument(Class<? extends T> type, int argument) {
+        if (isRecording) {
+            return null;
+        }
         final var parsed = context.parse(functionCall.getArguments().get(argument));
         if (type.isInstance(parsed)) {
             return (T) parsed;
@@ -275,6 +320,9 @@ public class FunctionCallRecord implements Closeable {
     }
 
     public void requireSubjectAbsence() {
+        if (isRecording) {
+            return;
+        }
         if (subject.isPresent()) {
             throw execException(tree("The "
                     + name
