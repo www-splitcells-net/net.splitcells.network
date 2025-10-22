@@ -55,7 +55,7 @@ public class TableCallRunner implements FunctionCallRunner {
         if (!supports(functionCall)) {
             return run;
         }
-        try (val fcr = context.functionCallRecord(TABLE_FUNCTION, 1)) {
+        try (val fcr = context.functionCallRecord(functionCall, TABLE_FUNCTION, 1)) {
             fcr.requireArgumentMinimalCount(functionCall, 2);
 
             final String tableName = fcr.parseArgument(functionCall, String.class, 0);

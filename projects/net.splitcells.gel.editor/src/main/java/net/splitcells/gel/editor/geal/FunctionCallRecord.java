@@ -48,8 +48,8 @@ import static net.splitcells.gel.rating.rater.lib.HasSize.HAS_SIZE_NAME;
  */
 @Accessors(chain = true)
 public class FunctionCallRecord implements Closeable {
-    public static FunctionCallRecord functionCallRecord(Editor argContext, String argName, int argVariation) {
-        return new FunctionCallRecord(argContext, argName, argVariation);
+    public static FunctionCallRecord functionCallRecord(FunctionCallDesc argSubject, Editor argContext, String argName, int argVariation) {
+        return new FunctionCallRecord(argSubject, argContext, argName, argVariation);
     }
 
     @Getter private final String name;
@@ -64,11 +64,13 @@ public class FunctionCallRecord implements Closeable {
      */
     private StringBuilder description = StringUtils.stringBuilder();
     private final Editor context;
+    private final FunctionCallDesc subject;
 
-    private FunctionCallRecord(Editor argContext, String argName, int argVariation) {
+    private FunctionCallRecord(FunctionCallDesc argSubject, Editor argContext, String argName, int argVariation) {
         name = argName;
         variation = argVariation;
         context = argContext;
+        subject = argSubject;
     }
 
     public FunctionCallRecord addDescription(String addition) {

@@ -54,7 +54,7 @@ public class OutputFormatCallRunner implements FunctionCallRunner {
         if (!supports(functionCall, subject, context)) {
             return run;
         }
-        try (val fcr = context.functionCallRecord(name, 1)) {
+        try (val fcr = context.functionCallRecord(functionCall, name, 1)) {
             final Solution subjectVal = fcr.parseSubject(functionCall, Solution.class, subject);
             run.setResult(Optional.of(subjectVal));
             final List<Attribute<?>> attributes = list();

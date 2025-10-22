@@ -68,7 +68,7 @@ public class AttributeCallRunner implements FunctionCallRunner {
         if (!supports(functionCall)) {
             return run;
         }
-        try (val fcr = context.functionCallRecord(ATTRIBUTE_FUNCTION, 1)) {
+        try (val fcr = context.functionCallRecord(functionCall, ATTRIBUTE_FUNCTION, 1)) {
             fcr.requireArgumentCount(functionCall, 2);
             final NameDesc firstName = fcr.parseArgumentAsType(functionCall, 0);
             final StringDesc secondName = fcr.parseArgumentAsStringDesc(functionCall, 1);

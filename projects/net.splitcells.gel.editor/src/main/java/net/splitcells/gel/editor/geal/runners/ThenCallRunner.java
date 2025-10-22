@@ -50,7 +50,7 @@ public class ThenCallRunner implements FunctionCallRunner {
         if (!supports(functionCall, subject, context)) {
             return run;
         }
-        try (val fcr = context.functionCallRecord(THEN_NAME, 1)) {
+        try (val fcr = context.functionCallRecord(functionCall, THEN_NAME, 1)) {
             val subjectVal = fcr.parseQuerySubject(functionCall, subject);
             fcr.requireArgumentCount(functionCall, 1);
             val rater = fcr.parseArgument(functionCall, Rater.class, 0);

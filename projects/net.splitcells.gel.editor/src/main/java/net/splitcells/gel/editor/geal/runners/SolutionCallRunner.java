@@ -55,7 +55,7 @@ public class SolutionCallRunner implements FunctionCallRunner {
         if (!supports(functionCall)) {
             return run;
         }
-        try (val fcr = context.functionCallRecord(SOLUTION_FUNCTION, 1)) {
+        try (val fcr = context.functionCallRecord(functionCall, SOLUTION_FUNCTION, 1)) {
             fcr.requireArgumentCount(functionCall, 3);
             val solutionName = fcr.parseArgument(functionCall, String.class, 0);
             val demands = fcr.parseArgument(functionCall, Table.class, 1);

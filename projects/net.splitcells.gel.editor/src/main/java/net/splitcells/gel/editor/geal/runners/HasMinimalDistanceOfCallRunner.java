@@ -38,7 +38,7 @@ public class HasMinimalDistanceOfCallRunner implements FunctionCallRunner {
         if (!functionCall.getName().getValue().equals(MINIMAL_DISTANCE_NAME)) {
             return run;
         }
-        try (val fcr = context.functionCallRecord(MINIMAL_DISTANCE_NAME, 1)) {
+        try (val fcr = context.functionCallRecord(functionCall, MINIMAL_DISTANCE_NAME, 1)) {
             fcr.requireArgumentCount(functionCall, 2);
             val distanceAttribute = fcr.parseAttributeArgument(functionCall, Integer.class, 0);
             final var minimalDistance = fcr.parseArgument(functionCall, Integer.class, 1);

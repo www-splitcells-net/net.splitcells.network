@@ -54,7 +54,7 @@ public class ForEachCallRunner implements FunctionCallRunner {
         if (!supports(functionCall, subject, context)) {
             return run;
         }
-        try (val fcr = context.functionCallRecord(FOR_EACH_NAME, 1)) {
+        try (val fcr = context.functionCallRecord(functionCall, FOR_EACH_NAME, 1)) {
             val groupingAttribute = fcr.parseAttributeArgument(functionCall, 0);
             final Query subjectVal = fcr.parseQuerySubject(functionCall, subject);
             run.setResult(Optional.of(subjectVal.forAll(groupingAttribute)));
