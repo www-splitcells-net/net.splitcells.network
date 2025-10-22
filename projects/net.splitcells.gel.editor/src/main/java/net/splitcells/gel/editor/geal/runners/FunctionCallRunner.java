@@ -36,7 +36,11 @@ public interface FunctionCallRunner {
      */
     FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context);
 
-    default List<FunctionCallRunnerParser<?>> parsers() {
-        return list();
-    }
+    /**
+     * This makes it possible for the {@link FunctionCallRunner}
+     * to create a documentation for function calls being supported to be run.
+     *
+     * @return
+     */
+    List<FunctionCallRunnerParser<?>> parsers();
 }

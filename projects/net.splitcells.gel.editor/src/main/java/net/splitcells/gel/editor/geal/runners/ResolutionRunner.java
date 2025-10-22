@@ -15,11 +15,13 @@
  */
 package net.splitcells.gel.editor.geal.runners;
 
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.editor.EditorParser.INTEGER_TYPE;
 import static net.splitcells.gel.editor.EditorParser.STRING_TYPE;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
@@ -50,5 +52,10 @@ public class ResolutionRunner implements FunctionCallRunner {
             }
         }
         return run;
+    }
+
+    @Override
+    public List<FunctionCallRunnerParser<?>> parsers() {
+        return list();
     }
 }
