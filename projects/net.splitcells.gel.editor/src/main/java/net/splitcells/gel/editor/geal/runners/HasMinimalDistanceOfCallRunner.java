@@ -16,14 +16,19 @@
 package net.splitcells.gel.editor.geal.runners;
 
 import lombok.val;
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.gel.constraint.Query;
+import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
+import static net.splitcells.gel.editor.geal.runners.FunctionCallRunnerParser.functionCallRunnerParser;
 import static net.splitcells.gel.rating.rater.lib.MinimalDistance.MINIMAL_DISTANCE_NAME;
 import static net.splitcells.gel.rating.rater.lib.MinimalDistance.has_minimal_distance_of;
 
@@ -32,18 +37,32 @@ public class HasMinimalDistanceOfCallRunner implements FunctionCallRunner {
         return new HasMinimalDistanceOfCallRunner();
     }
 
+    private static class Args {
+        Attribute<Integer> distanceAttribute;
+        int minimalDistance;
+    }
+
+    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(fcr -> {
+        val args = new Args();
+        fcr.requireArgumentCount(2);
+        args.distanceAttribute = fcr.parseAttributeArgument(Integer.class, 0);
+        args.minimalDistance = fcr.parseArgument(Integer.class, 1);
+        return args;
+    });
+
     @Override
     public FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
         final var run = functionCallRun(subject, context);
         if (!functionCall.getName().getValue().equals(MINIMAL_DISTANCE_NAME)) {
             return run;
         }
-        try (val fcr = context.functionCallRecord(subject, functionCall, MINIMAL_DISTANCE_NAME, 1)) {
-            fcr.requireArgumentCount(2);
-            val distanceAttribute = fcr.parseAttributeArgument(Integer.class, 0);
-            final var minimalDistance = fcr.parseArgument(Integer.class, 1);
-            run.setResult(Optional.of(has_minimal_distance_of(distanceAttribute, minimalDistance)));
-            return run;
-        }
+        val args = PARSER.parse(subject, context, functionCall, 1);
+        run.setResult(Optional.of(has_minimal_distance_of(args.distanceAttribute, args.minimalDistance)));
+        return run;
+    }
+
+    @Override
+    public List<FunctionCallRunnerParser<?>> parsers() {
+        return list(PARSER);
     }
 }
