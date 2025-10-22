@@ -17,6 +17,7 @@ package net.splitcells.gel.editor.geal.runners;
 
 import lombok.val;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallChainDesc;
@@ -35,11 +36,25 @@ import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.editor.EditorParser.SOLUTION_FUNCTION;
 import static net.splitcells.gel.editor.EditorParser.TABLE_FUNCTION;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
+import static net.splitcells.gel.editor.geal.runners.FunctionCallRunnerParser.functionCallRunnerParser;
 
 public class TableCallRunner implements FunctionCallRunner {
     public static TableCallRunner tableCallRunner() {
         return new TableCallRunner();
     }
+
+    private static class Args {
+        String tableName;
+        List<Attribute<?>> attributes;
+    }
+
+    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(fcr -> {
+        val args = new Args();
+        fcr.requireArgumentMinimalCount(2);
+        args.tableName = fcr.parseArgument(String.class, 0);
+        args.attributes = fcr.parseAttributeArguments(1);
+        return args;
+    });
 
     private TableCallRunner() {
 
@@ -55,15 +70,12 @@ public class TableCallRunner implements FunctionCallRunner {
         if (!supports(functionCall)) {
             return run;
         }
-        try (val fcr = context.functionCallRecord(subject, functionCall, TABLE_FUNCTION, 1)) {
-            fcr.requireArgumentMinimalCount( 2);
-
-            final String tableName = fcr.parseArgument(String.class, 0);
-            final List<Attribute<?>> attributes = list();
-            IntStream.range(1, functionCall.getArguments().size()).forEach(i ->
-                    attributes.add(fcr.parseAttributeArgument(Object.class, i)));
-            return run.setResult(Optional.of(table(tableName, context, attributes)));
-        }
+        val args = PARSER.parse(subject, context, functionCall, 1);
+        return run.setResult(Optional.of(table(args.tableName, context, args.attributes)));
     }
 
+    @Override
+    public List<FunctionCallRunnerParser<?>> parsers() {
+        return list(PARSER);
+    }
 }

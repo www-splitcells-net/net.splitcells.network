@@ -212,6 +212,12 @@ public class FunctionCallRecord implements Closeable {
                 .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
     }
 
+    public List<Attribute<? extends Object>> parseAttributeArguments(int from) {
+        return functionCall.getArguments().streamIndexes()
+                .filter(i -> i >= from)
+                .mapToObj(this::parseAttributeArgument).collect(toList());
+    }
+
     public List<Attribute<? extends Object>> parseAttributeArguments() {
         return functionCall.getArguments().streamIndexes().mapToObj(this::parseAttributeArgument).collect(toList());
     }
