@@ -16,24 +16,40 @@
 package net.splitcells.gel.editor.geal.runners;
 
 import lombok.val;
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.constraint.Query;
+import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.constraint.type.ForAlls.FOR_EACH_NAME;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
+import static net.splitcells.gel.editor.geal.runners.FunctionCallRunnerParser.functionCallRunnerParser;
 
 public class ForEachCallRunner implements FunctionCallRunner {
     public static ForEachCallRunner forEachCallRunner() {
         return new ForEachCallRunner();
     }
+
+    private static class Args {
+        Attribute<? extends Object> groupingAttribute;
+        Query subjectVal;
+    }
+
+    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(fcr -> {
+        val args = new Args();
+        args.groupingAttribute = fcr.parseAttributeArgument(0);
+        args.subjectVal = fcr.parseQuerySubject();
+        return args;
+    });
 
     private ForEachCallRunner() {
 
@@ -54,11 +70,13 @@ public class ForEachCallRunner implements FunctionCallRunner {
         if (!supports(functionCall, subject, context)) {
             return run;
         }
-        try (val fcr = context.functionCallRecord(subject, functionCall, FOR_EACH_NAME, 1)) {
-            val groupingAttribute = fcr.parseAttributeArgument(0);
-            final Query subjectVal = fcr.parseQuerySubject();
-            run.setResult(Optional.of(subjectVal.forAll(groupingAttribute)));
-            return run;
-        }
+        val args = PARSER.parse(subject, context, functionCall, 1);
+        run.setResult(Optional.of(args.subjectVal.forAll(args.groupingAttribute)));
+        return run;
+    }
+
+    @Override
+    public List<FunctionCallRunnerParser<?>> parsers() {
+        return list(PARSER);
     }
 }
