@@ -17,6 +17,7 @@ package net.splitcells.gel.editor.geal;
 
 import lombok.Getter;
 import lombok.experimental.Accessors;
+import lombok.val;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.utils.StringUtils;
@@ -32,6 +33,7 @@ import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.CommonMarkUtils.joinDocuments;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
@@ -101,6 +103,18 @@ public class FunctionCallRecord implements Closeable {
                     + functionCall.getArguments().size() + " were given instead.")
                     .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
         }
+    }
+
+    public NameDesc parseArgumentAsType(int argument, String... validValues) {
+        val argumentAsType = parseArgumentAsType(argument);
+        val validValueList = listWithValuesOf(validValues);
+        val anyMatch = validValueList.stream().anyMatch(v -> v.equals(argumentAsType.getValue()));
+        if (!anyMatch) {
+            throw execException(tree("The "
+                    + functionCall.getName().getValue()
+                    + " function call's " + argument + " argument only supports the following values: " + validValueList));
+        }
+        return argumentAsType;
     }
 
     public NameDesc parseArgumentAsType(int argument) {

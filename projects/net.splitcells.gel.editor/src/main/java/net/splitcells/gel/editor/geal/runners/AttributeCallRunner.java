@@ -47,14 +47,17 @@ public class AttributeCallRunner implements FunctionCallRunner {
     }
 
     private static class AttributeFunctionArgs {
-        String type;
+        NameDesc type;
         String name;
     }
 
-    private Function<FunctionCallRecord, AttributeFunctionArgs> parser = fcr -> {
+    private AttributeFunctionArgs parse(FunctionCallRecord fcr) {
         val args = new AttributeFunctionArgs();
+        fcr.requireArgumentCount(2);
+        args.type = fcr.parseArgumentAsType(0, INTEGER_TYPE, STRING_TYPE);
+        args.name = fcr.parseArgumentAsStringDesc(1).getValue();
         return args;
-    };
+    }
 
     /**
      *
@@ -69,16 +72,14 @@ public class AttributeCallRunner implements FunctionCallRunner {
             return run;
         }
         try (val fcr = context.functionCallRecord(functionCall, ATTRIBUTE_FUNCTION, 1)) {
-            fcr.requireArgumentCount(2);
-            final NameDesc firstName = fcr.parseArgumentAsType(0);
-            final StringDesc secondName = fcr.parseArgumentAsStringDesc(1);
+            final var args = parse(fcr);
             final Optional<Object> result;
-            if (firstName.getValue().equals(INTEGER_TYPE)) {
-                result = Optional.of(integerAttribute(secondName.getValue()));
-            } else if (firstName.getValue().equals(STRING_TYPE)) {
-                result = Optional.of(stringAttribute(secondName.getValue()));
+            if (args.type.getValue().equals(INTEGER_TYPE)) {
+                result = Optional.of(integerAttribute(args.name));
+            } else if (args.type.getValue().equals(STRING_TYPE)) {
+                result = Optional.of(stringAttribute(args.name));
             } else {
-                fcr.failBecauseOfInvalidType(1, firstName, "string", "integer");
+                fcr.failBecauseOfInvalidType(1, args.type, "string", "integer");
                 return run;
             }
             return run.setResult(result);
