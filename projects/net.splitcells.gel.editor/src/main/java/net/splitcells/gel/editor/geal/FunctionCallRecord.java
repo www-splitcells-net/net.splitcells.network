@@ -28,6 +28,7 @@ import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 import net.splitcells.gel.editor.geal.lang.NameDesc;
 import net.splitcells.gel.editor.geal.lang.StringDesc;
+import net.splitcells.gel.editor.lang.SourceCodeQuote;
 import net.splitcells.gel.editor.meta.Type;
 import net.splitcells.gel.solution.Solution;
 
@@ -41,6 +42,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.editor.geal.lang.NameDesc.nameDesc;
 import static net.splitcells.gel.editor.geal.lang.StringDesc.stringDesc;
+import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuote;
 
 /**
  * Extracts function call data from {@link FunctionCallDesc},
@@ -156,7 +158,7 @@ public class FunctionCallRecord implements Closeable {
 
     public StringDesc parseArgumentAsStringDesc(int argument) {
         if (isRecording) {
-            return null;
+            return stringDesc("", emptySourceCodeQuote());
         }
         final var first = context.parse(functionCall.getArguments().get(argument));
         switch (first) {
