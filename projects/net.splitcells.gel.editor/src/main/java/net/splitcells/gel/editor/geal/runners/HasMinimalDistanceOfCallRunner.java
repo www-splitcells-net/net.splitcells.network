@@ -39,7 +39,7 @@ public class HasMinimalDistanceOfCallRunner implements FunctionCallRunner {
 
     private static class Args {
         Attribute<Integer> distanceAttribute;
-        int minimalDistance;
+        Integer minimalDistance;
     }
 
     private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(fcr -> {
