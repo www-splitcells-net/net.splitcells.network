@@ -24,6 +24,8 @@ import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 import java.util.Optional;
 import java.util.function.Function;
 
+import static net.splitcells.dem.lang.tree.TreeI.tree;
+
 public class FunctionCallRunnerParser<T> {
     public static <R> FunctionCallRunnerParser<R> functionCallRunnerParser(Function<FunctionCallRecord, R> argParser
             , String argName
@@ -48,8 +50,9 @@ public class FunctionCallRunnerParser<T> {
     }
 
     public Tree document(Editor context) {
-            return null;
         try (val fcr = context.functionCallRecord(null, null, name, variation, true)) {
+            parser.apply(fcr);
+            return tree(fcr.getName());
         }
     }
 }
