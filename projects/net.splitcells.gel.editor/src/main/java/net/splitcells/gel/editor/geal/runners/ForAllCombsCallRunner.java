@@ -55,7 +55,7 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
         args.groupingAttributes = fcr.parseAttributeArguments();
         args.subjectVal = fcr.parseQuerySubject();
         return args;
-    });
+    }, FOR_ALL_COMBINATIONS_OF, 1);
 
     private boolean supports(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
         return functionCall.getName().getValue().equals(FOR_ALL_COMBINATIONS_OF);
@@ -67,7 +67,7 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
         if (!supports(functionCall, subject, context)) {
             return run;
         }
-        val args = PARSER.parse(subject, context, functionCall, 1);
+        val args = PARSER.parse(subject, context, functionCall);
         run.setResult(Optional.of(args.subjectVal.forAllCombinationsOf(args.groupingAttributes)));
         return run;
     }

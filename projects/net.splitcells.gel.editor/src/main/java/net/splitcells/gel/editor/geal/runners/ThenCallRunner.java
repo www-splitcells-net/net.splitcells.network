@@ -51,7 +51,7 @@ public class ThenCallRunner implements FunctionCallRunner {
         fcr.requireArgumentCount(1);
         args.rater = fcr.parseArgument(Rater.class, 0);
         return args;
-    });
+    }, THEN_NAME, 1);
 
     private ThenCallRunner() {
 
@@ -67,7 +67,7 @@ public class ThenCallRunner implements FunctionCallRunner {
         if (!supports(functionCall, subject, context)) {
             return run;
         }
-        val args = PARSER.parse(subject, context, functionCall, 1);
+        val args = PARSER.parse(subject, context, functionCall);
         return run.setResult(Optional.of(args.subjectVal.then(args.rater)));
     }
 

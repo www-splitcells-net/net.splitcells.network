@@ -54,7 +54,7 @@ public class TableCallRunner implements FunctionCallRunner {
         args.tableName = fcr.parseArgument(String.class, 0);
         args.attributes = fcr.parseAttributeArguments(1);
         return args;
-    });
+    }, TABLE_FUNCTION, 1);
 
     private TableCallRunner() {
 
@@ -70,7 +70,7 @@ public class TableCallRunner implements FunctionCallRunner {
         if (!supports(functionCall)) {
             return run;
         }
-        val args = PARSER.parse(subject, context, functionCall, 1);
+        val args = PARSER.parse(subject, context, functionCall);
         return run.setResult(Optional.of(table(args.tableName, context, args.attributes)));
     }
 

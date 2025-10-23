@@ -60,7 +60,7 @@ public class AttributeCallRunner implements FunctionCallRunner {
         args.type = fcr.parseArgumentAsType(0, INTEGER_TYPE, STRING_TYPE);
         args.name = fcr.parseArgumentAsStringDesc(1).getValue();
         return args;
-    });
+    }, ATTRIBUTE_FUNCTION, 1);
 
 
     /**
@@ -75,7 +75,7 @@ public class AttributeCallRunner implements FunctionCallRunner {
         if (!supports(functionCall)) {
             return run;
         }
-        val args = PARSER.parse(subject, context, functionCall, 1);
+        val args = PARSER.parse(subject, context, functionCall);
         final Optional<Object> result;
         if (args.type.getValue().equals(INTEGER_TYPE)) {
             result = Optional.of(integerAttribute(args.name));

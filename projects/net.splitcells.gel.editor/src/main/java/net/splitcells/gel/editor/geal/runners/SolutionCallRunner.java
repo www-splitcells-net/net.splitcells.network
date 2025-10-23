@@ -56,7 +56,7 @@ public class SolutionCallRunner implements FunctionCallRunner {
         args.demands = fcr.parseArgument(Table.class, 1);
         args.supplies = fcr.parseArgument(Table.class, 2);
         return args;
-    });
+    }, SOLUTION_FUNCTION, 1);
 
     private SolutionCallRunner() {
 
@@ -75,7 +75,7 @@ public class SolutionCallRunner implements FunctionCallRunner {
         if (!supports(functionCall)) {
             return run;
         }
-        val args = PARSER.parse(subject, context, functionCall, 1);
+        val args = PARSER.parse(subject, context, functionCall);
         final Optional<Object> result = Optional.of(defineProblem(args.solutionName)
                 .withDemands(args.demands)
                 .withSupplies(args.supplies)

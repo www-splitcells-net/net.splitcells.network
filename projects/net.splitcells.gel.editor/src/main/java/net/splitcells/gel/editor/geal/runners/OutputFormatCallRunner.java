@@ -17,7 +17,6 @@ package net.splitcells.gel.editor.geal.runners;
 
 import lombok.val;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
@@ -46,12 +45,19 @@ public class OutputFormatCallRunner implements FunctionCallRunner {
         List<Attribute<?>> attributes;
     }
 
-    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(fcr -> {
+    private static final FunctionCallRunnerParser<Args> COLUMN_PARSER = functionCallRunnerParser(fcr -> {
         val args = new Args();
         args.subjectVal = fcr.parseSubject(Solution.class);
         args.attributes = fcr.parseAttributeArguments();
         return args;
-    });
+    }, COLUMN_FORMAT, 1);
+
+    private static final FunctionCallRunnerParser<Args> ROW_PARSER = functionCallRunnerParser(fcr -> {
+        val args = new Args();
+        args.subjectVal = fcr.parseSubject(Solution.class);
+        args.attributes = fcr.parseAttributeArguments();
+        return args;
+    }, ROW_FORMAT, 1);
 
     private OutputFormatCallRunner() {
 
@@ -68,7 +74,7 @@ public class OutputFormatCallRunner implements FunctionCallRunner {
         if (!supports(functionCall, subject, context)) {
             return run;
         }
-        val args = PARSER.parse(subject, context, functionCall, 1);
+        val args = COLUMN_PARSER.parse(subject, context, functionCall);
         run.setResult(Optional.of(args.subjectVal));
         final var subjectKey = context.lookupTableLikeName(args.subjectVal);
         if (subjectKey.isEmpty()) {
@@ -94,6 +100,6 @@ public class OutputFormatCallRunner implements FunctionCallRunner {
 
     @Override
     public List<FunctionCallRunnerParser<?>> parsers() {
-        return list(PARSER);
+        return list(COLUMN_PARSER, ROW_PARSER);
     }
 }

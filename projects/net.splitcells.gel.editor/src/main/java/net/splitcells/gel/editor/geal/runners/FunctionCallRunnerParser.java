@@ -25,24 +25,30 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class FunctionCallRunnerParser<T> {
-    public static <R> FunctionCallRunnerParser<R> functionCallRunnerParser(Function<FunctionCallRecord, R> argParser) {
-        return new FunctionCallRunnerParser<>(argParser);
+    public static <R> FunctionCallRunnerParser<R> functionCallRunnerParser(Function<FunctionCallRecord, R> argParser
+            , String argName
+            , int argVariation) {
+        return new FunctionCallRunnerParser<>(argParser, argName, argVariation);
     }
 
     private final Function<FunctionCallRecord, T> parser;
+    private final String name;
+    private final int variation;
 
-    private FunctionCallRunnerParser(Function<FunctionCallRecord, T> argParser) {
+    private FunctionCallRunnerParser(Function<FunctionCallRecord, T> argParser, String argName, int argVariation) {
         parser = argParser;
+        name = argName;
+        variation = argVariation;
     }
 
-    public T parse(Optional<Object> subject, Editor context, FunctionCallDesc functionCall, int variation) {
-        try (val fcr = context.functionCallRecord(subject, functionCall, functionCall.getName().getValue(), variation)) {
+    public T parse(Optional<Object> subject, Editor context, FunctionCallDesc functionCall) {
+        try (val fcr = context.functionCallRecord(subject, functionCall, name, variation)) {
             return parser.apply(fcr);
         }
     }
 
     public Tree document(Editor context) {
-        try (val fcr = context.functionCallRecord(null, null, null, 1)) {
+        try (val fcr = context.functionCallRecord(null, null, name, variation)) {
             return null;
         }
     }

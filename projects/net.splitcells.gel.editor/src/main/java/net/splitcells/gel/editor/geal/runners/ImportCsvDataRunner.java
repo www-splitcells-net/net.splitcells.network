@@ -61,7 +61,7 @@ public class ImportCsvDataRunner implements FunctionCallRunner {
         fcr.requireArgumentCount(1);
         args.dataName = fcr.parseArgument(String.class, 0);
         return args;
-    });
+    }, IMPORT_CSV_DATA, 1);
 
     private ImportCsvDataRunner() {
 
@@ -70,10 +70,10 @@ public class ImportCsvDataRunner implements FunctionCallRunner {
     @Override
     public FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
         final var run = functionCallRun(subject, context);
-        if (!functionCall.getName().getValue().equals("importCsvData")) {
+        if (!functionCall.getName().getValue().equals(IMPORT_CSV_DATA)) {
             return run;
         }
-        val args = PARSER.parse(subject, context, functionCall, 1);
+        val args = PARSER.parse(subject, context, functionCall);
         final var csvData = context.loadData(TEXT_PLAIN, args.dataName);
         if (csvData.getContent().length == 0) {
             csvData.setContent(StringUtils.toBytes(args.tableSubject.simplifiedHeaderCsv()));

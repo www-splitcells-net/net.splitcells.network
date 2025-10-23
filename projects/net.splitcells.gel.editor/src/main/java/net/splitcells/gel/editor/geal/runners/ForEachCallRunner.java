@@ -49,7 +49,7 @@ public class ForEachCallRunner implements FunctionCallRunner {
         args.groupingAttribute = fcr.parseAttributeArgument(0);
         args.subjectVal = fcr.parseQuerySubject();
         return args;
-    });
+    }, FOR_EACH_NAME, 1);
 
     private ForEachCallRunner() {
 
@@ -70,7 +70,7 @@ public class ForEachCallRunner implements FunctionCallRunner {
         if (!supports(functionCall, subject, context)) {
             return run;
         }
-        val args = PARSER.parse(subject, context, functionCall, 1);
+        val args = PARSER.parse(subject, context, functionCall);
         run.setResult(Optional.of(args.subjectVal.forAll(args.groupingAttribute)));
         return run;
     }
