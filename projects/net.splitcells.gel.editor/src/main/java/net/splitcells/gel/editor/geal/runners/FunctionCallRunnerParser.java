@@ -48,8 +48,8 @@ public class FunctionCallRunnerParser<T> {
     }
 
     public Tree document(Editor context) {
-        try (val fcr = context.functionCallRecord(null, null, name, variation)) {
             return null;
+        try (val fcr = context.functionCallRecord(null, null, name, variation, true)) {
         }
     }
 }
