@@ -40,7 +40,7 @@ public class HasSizeCallRunner implements FunctionCallRunner {
     }
 
     private static class Args {
-        int targetSize;
+        Integer targetSize;
     }
 
     private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(fcr -> {
