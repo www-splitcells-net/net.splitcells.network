@@ -69,6 +69,9 @@ public class FunctionCallRunnerParser<T> {
                 fcr.argumentIndexes().forEach(i -> {
                     arguments.withChild(tree("item", SEW).withText(i + ": " + fcr.getArgumentTypes().get(i).getSimpleName()));
                 });
+                if (fcr.getOnlyAttributesAsArgumentsFrom() != -1) {
+                    arguments.withChild(tree("item", SEW).withText("Starting with index " + fcr.getOnlyAttributesAsArgumentsFrom() + " a arbitrary number of only attribute arguments are accepted."));
+                }
             }
             return functionCallDoc;
         }

@@ -80,6 +80,7 @@ public class FunctionCallRecord implements Closeable {
     @Getter Map<Integer, Class<?>> argumentTypes = map();
     @Getter Map<Integer, List<Class<?>>> argumentTypeArguments = map();
     @Getter Boolean onlyAttributesAsArgument = false;
+    @Getter int onlyAttributesAsArgumentsFrom = -1;
 
     private FunctionCallRecord(Optional<Object> argSubject, FunctionCallDesc argFunctionCall, Editor argContext, String argName, int argVariation, boolean argIsRecording) {
         name = argName;
@@ -254,6 +255,7 @@ public class FunctionCallRecord implements Closeable {
 
     public List<Attribute<? extends Object>> parseAttributeArguments(int from) {
         if (isRecording) {
+            onlyAttributesAsArgumentsFrom = from;
             return null;
         }
         return functionCall.getArguments().streamIndexes()
