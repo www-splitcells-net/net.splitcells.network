@@ -76,9 +76,10 @@ public class FunctionCallRecord implements Closeable {
     private final FunctionCallDesc functionCall;
     private final Optional<Object> subject;
     boolean isRecording;
-    @Getter Optional<Boolean> subjectAbsent = Optional.empty();
+    @Getter Boolean requireSubjectAbsent = false;
     @Getter Map<Integer, Class<?>> argumentTypes = map();
     @Getter Map<Integer, List<Class<?>>> argumentTypeArguments = map();
+    @Getter Boolean onlyAttributesAsArgument = false;
 
     private FunctionCallRecord(Optional<Object> argSubject, FunctionCallDesc argFunctionCall, Editor argContext, String argName, int argVariation, boolean argIsRecording) {
         name = argName;
@@ -262,6 +263,7 @@ public class FunctionCallRecord implements Closeable {
 
     public List<Attribute<? extends Object>> parseAttributeArguments() {
         if (isRecording) {
+            onlyAttributesAsArgument = true;
             return null;
         }
         return functionCall.getArguments().streamIndexes().mapToObj(this::parseAttributeArgument).collect(toList());
@@ -334,7 +336,7 @@ public class FunctionCallRecord implements Closeable {
 
     public void requireSubjectAbsence() {
         if (isRecording) {
-            subjectAbsent = Optional.of(true);
+            requireSubjectAbsent = true;
             return;
         }
         if (subject.isPresent()) {

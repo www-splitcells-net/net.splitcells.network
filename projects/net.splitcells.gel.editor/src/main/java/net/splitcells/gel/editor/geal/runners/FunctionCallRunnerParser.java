@@ -59,13 +59,17 @@ public class FunctionCallRunnerParser<T> {
             val functionCallDoc = tree("chapter", SEW);
             functionCallDoc.withChild(tree("title", SEW).withText(fcr.getName() + " " + fcr.getVariation()));
             val list = tree("list", SEW).withParent(functionCallDoc);
-            if (fcr.getSubjectAbsent().isPresent() && fcr.getSubjectAbsent().orElseThrow()) {
+            if (fcr.getRequireSubjectAbsent()) {
                 list.withChild(tree("item", SEW).withText("No Subject"));
             }
-            val arguments = tree("list", SEW).withParent(functionCallDoc);
-            fcr.argumentIndexes().forEach(i -> {
-                arguments.withChild(tree("item", SEW).withText(i + ": " + fcr.getArgumentTypes().get(i).getSimpleName()));
-            });
+            if (fcr.getOnlyAttributesAsArgument()) {
+                tree("list", SEW).withParent(functionCallDoc).withText("Only attribute references are allowed as arguments.");
+            } else {
+                val arguments = tree("list", SEW).withParent(functionCallDoc);
+                fcr.argumentIndexes().forEach(i -> {
+                    arguments.withChild(tree("item", SEW).withText(i + ": " + fcr.getArgumentTypes().get(i).getSimpleName()));
+                });
+            }
             return functionCallDoc;
         }
     }
