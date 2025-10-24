@@ -58,6 +58,10 @@ public class FunctionCallRunnerParser<T> {
             parser.apply(fcr);
             val functionCallDoc = tree("chapter", SEW);
             functionCallDoc.withChild(tree("title", SEW).withText(fcr.getName() + " " + fcr.getVariation()));
+            val list = tree("list", SEW).withParent(functionCallDoc);
+            if (fcr.getSubjectAbsent().isPresent() && fcr.getSubjectAbsent().orElseThrow()) {
+                list.withChild(tree("item", SEW).withText("No Subject"));
+            }
             return functionCallDoc;
         }
     }

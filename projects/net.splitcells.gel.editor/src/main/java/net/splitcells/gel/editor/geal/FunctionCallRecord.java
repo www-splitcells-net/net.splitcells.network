@@ -75,6 +75,7 @@ public class FunctionCallRecord implements Closeable {
     private final FunctionCallDesc functionCall;
     private final Optional<Object> subject;
     boolean isRecording;
+    @Getter Optional<Boolean> subjectAbsent = Optional.empty();
 
     private FunctionCallRecord(Optional<Object> argSubject, FunctionCallDesc argFunctionCall, Editor argContext, String argName, int argVariation, boolean argIsRecording) {
         name = argName;
@@ -323,6 +324,7 @@ public class FunctionCallRecord implements Closeable {
 
     public void requireSubjectAbsence() {
         if (isRecording) {
+            subjectAbsent = Optional.of(true);
             return;
         }
         if (subject.isPresent()) {
