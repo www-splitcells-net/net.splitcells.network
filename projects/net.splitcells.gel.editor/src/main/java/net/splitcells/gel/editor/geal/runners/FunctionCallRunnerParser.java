@@ -53,7 +53,9 @@ public class FunctionCallRunnerParser<T> {
     public Tree document(Editor context) {
         try (val fcr = context.functionCallRecord(null, null, name, variation, true)) {
             parser.apply(fcr);
-            return tree("chapter", SEW).withChild(tree("title", SEW).withText(fcr.getName()));
+            val functionCallDoc = tree("chapter", SEW);
+            functionCallDoc.withChild(tree("title", SEW).withText(fcr.getName()));
+            return functionCallDoc;
         }
     }
 }
