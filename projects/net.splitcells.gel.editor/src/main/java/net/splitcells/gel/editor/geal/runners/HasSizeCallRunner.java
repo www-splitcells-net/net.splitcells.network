@@ -43,13 +43,14 @@ public class HasSizeCallRunner implements FunctionCallRunner {
         Integer targetSize;
     }
 
-    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(fcr -> {
-        val args = new Args();
-        fcr.requireSubjectAbsence();
-        fcr.requireArgumentCount(1);
-        args.targetSize = fcr.parseArgument(Integer.class, 0);
-        return args;
-    }, HAS_SIZE_NAME, 1);
+    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(HAS_SIZE_NAME, 1
+            , fcr -> {
+                val args = new Args();
+                fcr.requireSubjectAbsence();
+                fcr.requireArgumentCount(1);
+                args.targetSize = fcr.parseArgument(Integer.class, 0);
+                return args;
+            });
 
     private HasSizeCallRunner() {
 

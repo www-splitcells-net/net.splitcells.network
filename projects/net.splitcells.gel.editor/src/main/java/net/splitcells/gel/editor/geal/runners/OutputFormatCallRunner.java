@@ -45,19 +45,21 @@ public class OutputFormatCallRunner implements FunctionCallRunner {
         List<Attribute<?>> attributes;
     }
 
-    private static final FunctionCallRunnerParser<Args> COLUMN_PARSER = functionCallRunnerParser(fcr -> {
-        val args = new Args();
-        args.subjectVal = fcr.parseSubject(Solution.class);
-        args.attributes = fcr.parseAttributeArguments();
-        return args;
-    }, COLUMN_FORMAT, 1);
+    private static final FunctionCallRunnerParser<Args> COLUMN_PARSER = functionCallRunnerParser(COLUMN_FORMAT, 1
+            , fcr -> {
+                val args = new Args();
+                args.subjectVal = fcr.parseSubject(Solution.class);
+                args.attributes = fcr.parseAttributeArguments();
+                return args;
+            });
 
-    private static final FunctionCallRunnerParser<Args> ROW_PARSER = functionCallRunnerParser(fcr -> {
-        val args = new Args();
-        args.subjectVal = fcr.parseSubject(Solution.class);
-        args.attributes = fcr.parseAttributeArguments();
-        return args;
-    }, ROW_FORMAT, 1);
+    private static final FunctionCallRunnerParser<Args> ROW_PARSER = functionCallRunnerParser(ROW_FORMAT, 1
+            , fcr -> {
+                val args = new Args();
+                args.subjectVal = fcr.parseSubject(Solution.class);
+                args.attributes = fcr.parseAttributeArguments();
+                return args;
+            });
 
     private OutputFormatCallRunner() {
 

@@ -49,13 +49,14 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
         Query subjectVal;
     }
 
-    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(fcr -> {
-        val args = new Args();
-        fcr.requireArgumentMinimalCount(2);
-        args.groupingAttributes = fcr.parseAttributeArguments();
-        args.subjectVal = fcr.parseQuerySubject();
-        return args;
-    }, FOR_ALL_COMBINATIONS_OF, 1);
+    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(FOR_ALL_COMBINATIONS_OF, 1
+            , fcr -> {
+                val args = new Args();
+                fcr.requireArgumentMinimalCount(2);
+                args.groupingAttributes = fcr.parseAttributeArguments();
+                args.subjectVal = fcr.parseQuerySubject();
+                return args;
+            });
 
     private boolean supports(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
         return functionCall.getName().getValue().equals(FOR_ALL_COMBINATIONS_OF);

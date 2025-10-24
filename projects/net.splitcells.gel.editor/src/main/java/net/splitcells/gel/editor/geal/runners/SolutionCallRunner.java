@@ -49,14 +49,15 @@ public class SolutionCallRunner implements FunctionCallRunner {
         Table supplies;
     }
 
-    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(fcr -> {
-        val args = new Args();
-        fcr.requireArgumentCount(3);
-        args.solutionName = fcr.parseArgument(String.class, 0);
-        args.demands = fcr.parseArgument(Table.class, 1);
-        args.supplies = fcr.parseArgument(Table.class, 2);
-        return args;
-    }, SOLUTION_FUNCTION, 1);
+    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(SOLUTION_FUNCTION, 1
+            , fcr -> {
+                val args = new Args();
+                fcr.requireArgumentCount(3);
+                args.solutionName = fcr.parseArgument(String.class, 0);
+                args.demands = fcr.parseArgument(Table.class, 1);
+                args.supplies = fcr.parseArgument(Table.class, 2);
+                return args;
+            });
 
     private SolutionCallRunner() {
 

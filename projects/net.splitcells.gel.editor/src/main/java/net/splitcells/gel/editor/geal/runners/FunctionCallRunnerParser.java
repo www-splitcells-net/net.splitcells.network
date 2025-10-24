@@ -27,17 +27,17 @@ import java.util.function.Function;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 
 public class FunctionCallRunnerParser<T> {
-    public static <R> FunctionCallRunnerParser<R> functionCallRunnerParser(Function<FunctionCallRecord, R> argParser
-            , String argName
-            , int argVariation) {
-        return new FunctionCallRunnerParser<>(argParser, argName, argVariation);
+    public static <R> FunctionCallRunnerParser<R> functionCallRunnerParser(String argName
+            , int argVariation
+            , Function<FunctionCallRecord, R> argParser) {
+        return new FunctionCallRunnerParser<>(argName, argVariation, argParser);
     }
 
     private final Function<FunctionCallRecord, T> parser;
     private final String name;
     private final int variation;
 
-    private FunctionCallRunnerParser(Function<FunctionCallRecord, T> argParser, String argName, int argVariation) {
+    private FunctionCallRunnerParser(String argName, int argVariation, Function<FunctionCallRecord, T> argParser) {
         parser = argParser;
         name = argName;
         variation = argVariation;

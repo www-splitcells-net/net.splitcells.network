@@ -48,13 +48,14 @@ public class TableCallRunner implements FunctionCallRunner {
         List<Attribute<?>> attributes;
     }
 
-    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(fcr -> {
-        val args = new Args();
-        fcr.requireArgumentMinimalCount(2);
-        args.tableName = fcr.parseArgument(String.class, 0);
-        args.attributes = fcr.parseAttributeArguments(1);
-        return args;
-    }, TABLE_FUNCTION, 1);
+    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(TABLE_FUNCTION, 1
+            , fcr -> {
+                val args = new Args();
+                fcr.requireArgumentMinimalCount(2);
+                args.tableName = fcr.parseArgument(String.class, 0);
+                args.attributes = fcr.parseAttributeArguments(1);
+                return args;
+            });
 
     private TableCallRunner() {
 

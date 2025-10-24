@@ -42,13 +42,14 @@ public class HasMinimalDistanceOfCallRunner implements FunctionCallRunner {
         Integer minimalDistance;
     }
 
-    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(fcr -> {
-        val args = new Args();
-        fcr.requireArgumentCount(2);
-        args.distanceAttribute = fcr.parseAttributeArgument(Integer.class, 0);
-        args.minimalDistance = fcr.parseArgument(Integer.class, 1);
-        return args;
-    }, MINIMAL_DISTANCE_NAME, 1);
+    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(MINIMAL_DISTANCE_NAME, 1
+            , fcr -> {
+                val args = new Args();
+                fcr.requireArgumentCount(2);
+                args.distanceAttribute = fcr.parseAttributeArgument(Integer.class, 0);
+                args.minimalDistance = fcr.parseArgument(Integer.class, 1);
+                return args;
+            });
 
     @Override
     public FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {

@@ -54,13 +54,14 @@ public class AttributeCallRunner implements FunctionCallRunner {
         String name;
     }
 
-    private static final FunctionCallRunnerParser<AttributeFunctionArgs> PARSER = functionCallRunnerParser(fcr -> {
-        val args = new AttributeFunctionArgs();
-        fcr.requireArgumentCount(2);
-        args.type = fcr.parseArgumentAsType(0, INTEGER_TYPE, STRING_TYPE);
-        args.name = fcr.parseArgumentAsStringDesc(1).getValue();
-        return args;
-    }, ATTRIBUTE_FUNCTION, 1);
+    private static final FunctionCallRunnerParser<AttributeFunctionArgs> PARSER = functionCallRunnerParser(ATTRIBUTE_FUNCTION, 1
+            , fcr -> {
+                val args = new AttributeFunctionArgs();
+                fcr.requireArgumentCount(2);
+                args.type = fcr.parseArgumentAsType(0, INTEGER_TYPE, STRING_TYPE);
+                args.name = fcr.parseArgumentAsStringDesc(1).getValue();
+                return args;
+            });
 
 
     /**

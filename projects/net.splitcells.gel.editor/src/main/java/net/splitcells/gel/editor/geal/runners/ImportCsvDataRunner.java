@@ -55,13 +55,14 @@ public class ImportCsvDataRunner implements FunctionCallRunner {
         String dataName;
     }
 
-    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(fcr -> {
-        val args = new Args();
-        args.tableSubject = fcr.parseSubject(Table.class);
-        fcr.requireArgumentCount(1);
-        args.dataName = fcr.parseArgument(String.class, 0);
-        return args;
-    }, IMPORT_CSV_DATA, 1);
+    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(IMPORT_CSV_DATA, 1
+            , fcr -> {
+                val args = new Args();
+                args.tableSubject = fcr.parseSubject(Table.class);
+                fcr.requireArgumentCount(1);
+                args.dataName = fcr.parseArgument(String.class, 0);
+                return args;
+            });
 
     private ImportCsvDataRunner() {
 

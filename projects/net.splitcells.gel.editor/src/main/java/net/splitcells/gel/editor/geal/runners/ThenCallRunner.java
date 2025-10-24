@@ -45,13 +45,14 @@ public class ThenCallRunner implements FunctionCallRunner {
         Rater rater;
     }
 
-    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(fcr -> {
-        val args = new Args();
-        args.subjectVal = fcr.parseQuerySubject();
-        fcr.requireArgumentCount(1);
-        args.rater = fcr.parseArgument(Rater.class, 0);
-        return args;
-    }, THEN_NAME, 1);
+    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(THEN_NAME, 1
+            , fcr -> {
+                val args = new Args();
+                args.subjectVal = fcr.parseQuerySubject();
+                fcr.requireArgumentCount(1);
+                args.rater = fcr.parseArgument(Rater.class, 0);
+                return args;
+            });
 
     private ThenCallRunner() {
 

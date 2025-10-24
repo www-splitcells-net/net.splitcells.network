@@ -44,12 +44,13 @@ public class ForEachCallRunner implements FunctionCallRunner {
         Query subjectVal;
     }
 
-    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(fcr -> {
-        val args = new Args();
-        args.groupingAttribute = fcr.parseAttributeArgument(0);
-        args.subjectVal = fcr.parseQuerySubject();
-        return args;
-    }, FOR_EACH_NAME, 1);
+    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(FOR_EACH_NAME, 1
+            , fcr -> {
+                val args = new Args();
+                args.groupingAttribute = fcr.parseAttributeArgument(0);
+                args.subjectVal = fcr.parseQuerySubject();
+                return args;
+            });
 
     private ForEachCallRunner() {
 
