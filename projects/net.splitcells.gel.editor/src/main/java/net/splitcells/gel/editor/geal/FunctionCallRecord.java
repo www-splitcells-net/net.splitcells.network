@@ -20,7 +20,6 @@ import lombok.experimental.Accessors;
 import lombok.val;
 import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.utils.StringUtils;
@@ -77,7 +76,7 @@ public class FunctionCallRecord implements Closeable {
     private final Optional<Object> subject;
     boolean isRecording;
     @Getter Boolean requireSubjectAbsent = false;
-    @Getter Optional<Class<?>> requiredSubjectType = Optional.empty();
+    @Getter List<Class<?>> requiredSubjectTypes = list();
     @Getter Map<Integer, Class<?>> argumentTypes = map();
     @Getter Map<Integer, List<Class<?>>> argumentTypeArguments = map();
     @Getter Boolean onlyAttributesAsArgument = false;
@@ -235,7 +234,7 @@ public class FunctionCallRecord implements Closeable {
 
     public <T> T parseSubject(Class<? extends T> type) {
         if (isRecording) {
-            requiredSubjectType = Optional.of(type);
+            requiredSubjectTypes.add(type);
             return null;
         }
         if (subject.isEmpty()) {
