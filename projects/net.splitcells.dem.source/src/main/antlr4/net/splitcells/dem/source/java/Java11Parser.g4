@@ -104,11 +104,21 @@ class_extension
 class_member
     : javadoc? Keysymbol_at Keyword_JavaLegacyBody (.)*? Brace_curly_open (.)*? Brace_curly_closed
     | class_constructor
+    | class_member_class_definition
     | class_member_method_definition
     | class_member_value_declaration
     | Comment_multiline
     | Line_comment
     | Brace_curly_open statement+ Brace_curly_closed
+    ;
+class_member_class_definition
+    : javadoc?
+      annotation*
+      Keyword_private? Keyword_public? Keyword_static Keyword_final?
+      Keyword_class
+      type_declaration
+      class_extension
+      Brace_curly_open class_member* Brace_curly_closed
     ;
 class_constructor
     : javadoc? annotation* Keyword_private name call_arguments statement_body
