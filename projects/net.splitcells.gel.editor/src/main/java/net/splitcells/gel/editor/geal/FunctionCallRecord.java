@@ -77,6 +77,7 @@ public class FunctionCallRecord implements Closeable {
     private final Optional<Object> subject;
     boolean isRecording;
     @Getter Boolean requireSubjectAbsent = false;
+    @Getter Optional<Class<?>> requiredSubjectType = Optional.empty();
     @Getter Map<Integer, Class<?>> argumentTypes = map();
     @Getter Map<Integer, List<Class<?>>> argumentTypeArguments = map();
     @Getter Boolean onlyAttributesAsArgument = false;
@@ -234,6 +235,7 @@ public class FunctionCallRecord implements Closeable {
 
     public <T> T parseSubject(Class<? extends T> type) {
         if (isRecording) {
+            requiredSubjectType = Optional.of(type);
             return null;
         }
         if (subject.isEmpty()) {

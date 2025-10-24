@@ -61,6 +61,8 @@ public class FunctionCallRunnerParser<T> {
             val list = tree("list", SEW).withParent(functionCallDoc);
             if (fcr.getRequireSubjectAbsent()) {
                 list.withChild(tree("item", SEW).withText("No Subject"));
+            } else if (fcr.getRequiredSubjectType().isPresent()) {
+                list.withChild(tree("item", SEW).withText("The subject has to be of type " + fcr.getRequiredSubjectType().orElseThrow().getSimpleName() + "."));
             }
             if (fcr.getOnlyAttributesAsArgument()) {
                 tree("list", SEW).withParent(functionCallDoc).withText("Only attribute references are allowed as arguments.");
