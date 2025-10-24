@@ -78,6 +78,7 @@ public class FunctionCallRecord implements Closeable {
     @Getter Boolean requireSubjectAbsent = false;
     @Getter List<Class<?>> requiredSubjectTypes = list();
     @Getter Map<Integer, Class<?>> argumentTypes = map();
+    @Getter Map<Integer, List<String>> argumentsValidNames = map();
     @Getter Map<Integer, List<Class<?>>> argumentTypeArguments = map();
     @Getter Boolean onlyAttributesAsArgument = false;
     @Getter int onlyAttributesAsArgumentsFrom = -1;
@@ -130,6 +131,7 @@ public class FunctionCallRecord implements Closeable {
     public NameDesc parseArgumentAsType(int argument, String... validValues) {
         if (isRecording) {
             argumentTypes.ensurePresence(argument, NameDesc.class);
+            argumentsValidNames.ensurePresence(argument, list(validValues));
             return null;
         }
         val argumentAsType = parseArgumentAsType(argument);
@@ -185,6 +187,7 @@ public class FunctionCallRecord implements Closeable {
         }
     }
 
+    @Deprecated
     public void failBecauseOfInvalidType(int argument, NameDesc actualType, String... allowedTypes) {
         if (isRecording) {
             return;

@@ -77,7 +77,22 @@ public class FunctionCallRunnerParser<T> {
             } else {
                 val arguments = tree("list", SEW).withParent(functionCallDoc);
                 fcr.argumentIndexes().forEach(i -> {
-                    arguments.withChild(tree("item", SEW).withText(i + ": " + fcr.getArgumentTypes().get(i).getSimpleName()));
+                    final String validValues;
+                    final String validValuesDesc;
+                    if (fcr.getArgumentsValidNames().hasKey(i)) {
+                        validValues = fcr.getArgumentsValidNames().get(i).stream().reduce((a, b) -> a + ", " + b).orElse("");
+                    } else {
+                        validValues = "";
+                    }
+                    if (!validValues.isEmpty()) {
+                        validValuesDesc = " : valid values = " + validValues;
+                    } else {
+                        validValuesDesc = "";
+                    }
+                    arguments.withChild(tree("item", SEW).withText(i
+                            + ": "
+                            + fcr.getArgumentTypes().get(i).getSimpleName()
+                            + validValuesDesc));
                 });
                 if (fcr.getOnlyAttributesAsArgumentsFrom() != -1) {
                     arguments.withChild(tree("item", SEW).withText("Starting with index " + fcr.getOnlyAttributesAsArgumentsFrom() + " a arbitrary number of only attribute arguments are accepted."));
