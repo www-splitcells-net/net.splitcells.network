@@ -64,6 +64,7 @@ public class FunctionCallDoc implements ProjectsRendererExtension {
         final List<Tree> doc = list();
         subject.parsers().forEach(p -> {
             System.out.println(p.document(editor).toXmlString(xmlConfig().withPrintNameSpaceAttributeAtTop(true)));
+            doc.add(p.document(editor));
         });
         return doc;
     }
