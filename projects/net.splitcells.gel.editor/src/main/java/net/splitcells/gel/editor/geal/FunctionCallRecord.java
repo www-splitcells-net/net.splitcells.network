@@ -18,8 +18,10 @@ package net.splitcells.gel.editor.geal;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import lombok.val;
+import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.constraint.Query;
@@ -28,7 +30,6 @@ import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 import net.splitcells.gel.editor.geal.lang.NameDesc;
 import net.splitcells.gel.editor.geal.lang.StringDesc;
-import net.splitcells.gel.editor.lang.SourceCodeQuote;
 import net.splitcells.gel.editor.meta.Type;
 import net.splitcells.gel.solution.Solution;
 
@@ -36,6 +37,7 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.CommonMarkUtils.joinDocuments;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
@@ -76,6 +78,7 @@ public class FunctionCallRecord implements Closeable {
     private final Optional<Object> subject;
     boolean isRecording;
     @Getter Optional<Boolean> subjectAbsent = Optional.empty();
+    @Getter Map<Integer, Class<?>> argumentTypes = map();
 
     private FunctionCallRecord(Optional<Object> argSubject, FunctionCallDesc argFunctionCall, Editor argContext, String argName, int argVariation, boolean argIsRecording) {
         name = argName;
@@ -304,6 +307,7 @@ public class FunctionCallRecord implements Closeable {
 
     public <T> T parseArgument(Class<? extends T> type, int argument) {
         if (isRecording) {
+            argumentTypes.put(argument, type);
             return null;
         }
         final var parsed = context.parse(functionCall.getArguments().get(argument));
@@ -338,5 +342,9 @@ public class FunctionCallRecord implements Closeable {
     @Override
     public void close() {
         context.addRecord(this);
+    }
+
+    public Flow<Integer> argumentIndexes() {
+        return this.getArgumentTypes().keySet2().stream().sorted();
     }
 }

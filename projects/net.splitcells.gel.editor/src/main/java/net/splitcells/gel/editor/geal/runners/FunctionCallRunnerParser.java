@@ -62,6 +62,10 @@ public class FunctionCallRunnerParser<T> {
             if (fcr.getSubjectAbsent().isPresent() && fcr.getSubjectAbsent().orElseThrow()) {
                 list.withChild(tree("item", SEW).withText("No Subject"));
             }
+            val arguments = tree("list", SEW).withParent(functionCallDoc);
+            fcr.argumentIndexes().forEach(i -> {
+                arguments.withChild(tree("item", SEW).withText(i + ": " + fcr.getArgumentTypes().get(i).getSimpleName()));
+            });
             return functionCallDoc;
         }
     }
