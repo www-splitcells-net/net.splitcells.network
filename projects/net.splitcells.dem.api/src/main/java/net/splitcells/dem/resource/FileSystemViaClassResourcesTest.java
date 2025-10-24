@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.resource;
 
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.TestSuiteI;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Tag;
@@ -30,8 +31,10 @@ import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.resource.FileSystemViaClassResourcesFactoryImpl._fileSystemViaClassResourcesFactoryImpl;
 import static net.splitcells.dem.resource.Files.readAsString;
+import static net.splitcells.dem.testing.Assertions.requireAbsenceOf;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
+import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
 import static net.splitcells.dem.utils.StreamUtils.concat;
 
 public class FileSystemViaClassResourcesTest extends TestSuiteI {
@@ -39,7 +42,7 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
     private static final String TEST_FILE_CONTENT = "This is a test file of the 20th of July 2023.";
     private static final String DEM_API_FOLDER = "src/main/resources/net/splitcells/dem/api";
 
-    @Tag(INTEGRATION_TEST)
+    @Tag(UNIT_TEST)
     @TestFactory
     public Stream<DynamicTest> testStdFactory() {
         return testFactory(_fileSystemViaClassResourcesFactoryImpl());
@@ -49,6 +52,7 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
         return concat(dynamicTests(this::testInputStream, factory)
                 , dynamicTests(this::testInputStreamForSubFileSystem, factory)
                 , dynamicTests(this::testReadString, factory)
+                , dynamicTests(this::testReadStringIfPresent, factory)
                 , dynamicTests(this::testReadStringForSubFileSystem, factory)
                 , dynamicTests(this::testExists, factory)
                 , dynamicTests(this::testExistsForSubFileSystem, factory)
@@ -84,6 +88,16 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
                 , TEST_FILE_CONTENT);
     }
 
+    public void testReadStringIfPresent(FileSystemViaClassResourcesFactoryApi factory) {
+        requireEquals(factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
+                                , MAVEN_GROUP_ID, DEM_API)
+                        .readStringIfPresent(Path.of(TEST_FILE_PATH)).orElseThrow()
+                , TEST_FILE_CONTENT);
+        requireAbsenceOf(factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
+                        , MAVEN_GROUP_ID, DEM_API)
+                .readStringIfPresent(Path.of("not existent file path")));
+    }
+
     public void testReadStringForSubFileSystem(FileSystemViaClassResourcesFactoryApi factory) {
         requireEquals(factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
                                 , MAVEN_GROUP_ID, DEM_API)
@@ -93,13 +107,12 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
     }
 
     public void testExists(FileSystemViaClassResourcesFactoryApi factory) {
-        require(factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class, "", "").exists());
-    }
-
-    public void testExistsForSubFileSystem(FileSystemViaClassResourcesFactoryApi factory) {
         require(factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
                         , MAVEN_GROUP_ID, DEM_API)
                 .exists());
+    }
+
+    public void testExistsForSubFileSystem(FileSystemViaClassResourcesFactoryApi factory) {
         require(factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
                         , MAVEN_GROUP_ID, DEM_API)
                 .subFileSystemView("src/main/resources/net/splitcells/")
@@ -131,7 +144,8 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
     }
 
     public void testWalkRecursively(FileSystemViaClassResourcesFactoryApi factory) {
-        final var rootPath = "src/main/resources/net/splitcells/dem/resource/FileSystemViaClassResourcesTest/testWalkRecursively/";
+        final var rootPath = "src/main/resources/net/splitcells/dem/resource/FileSystemViaClassResourcesTest" +
+                "/testWalkRecursively/";
         factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
                         , MAVEN_GROUP_ID, DEM_API)
                 .walkRecursively(rootPath)
@@ -145,7 +159,8 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
     }
 
     public void testWalkRecursivelyOnFile(FileSystemViaClassResourcesFactoryApi factory) {
-        final var rootPath = "src/main/resources/net/splitcells/dem/resource/FileSystemViaClassResourcesTest/testWalkRecursively/another-test.txt";
+        final var rootPath = "src/main/resources/net/splitcells/dem/resource/FileSystemViaClassResourcesTest" +
+                "/testWalkRecursively/another-test.txt";
         factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
                         , MAVEN_GROUP_ID, DEM_API)
                 .walkRecursively(rootPath)

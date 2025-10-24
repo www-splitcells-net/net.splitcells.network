@@ -40,9 +40,15 @@ public class Assertions {
         }
     }
 
+    public static <T> void requireAbsenceOf(Optional<T> arg) {
+        if (arg.isPresent()) {
+            throw ExecutionException.execException("Optional content is required to be absent, but is present instead.");
+        }
+    }
+
     public static <T> void requirePresenceOf(Optional<T> arg) {
         if (arg.isEmpty()) {
-            throw ExecutionException.execException("Optional content is required, but not present.");
+            throw ExecutionException.execException("Optional content is required, but is not present instead.");
         }
     }
 
@@ -76,17 +82,20 @@ public class Assertions {
             if (b == null) {
                 return;
             }
-            throw ExecutionException.execException("Arguments are required to be equal, but are not: first argument: " + a + ", second argument: " + b);
+            throw ExecutionException.execException("Arguments are required to be equal, but are not: first argument: "
+                    + a + ", second argument: " + b);
         }
         if (!a.equals(b)) {
-            // Assertj create a nice comparison report, also this report does not explicitly state, which is the first argument and which is the second.
+            // Assertj create a nice comparison report, also this report does not explicitly state, which is the
+            // first argument and which is the second.
             org.assertj.core.api.Assertions.assertThat(a).isEqualTo(b);
         }
     }
 
     public static <T> void requireDistinct(T a, T b) {
         if (a.equals(b)) {
-            throw ExecutionException.execException("Arguments are required to be equal, but are not: first argument: " + a + ", second argument: " + b);
+            throw ExecutionException.execException("Arguments are required to be equal, but are not: first argument: "
+                    + a + ", second argument: " + b);
         }
     }
 
@@ -125,7 +134,8 @@ public class Assertions {
             if (expectedExceptionType.isInstance(th)) {
                 return;
             }
-            throw ExecutionException.execException("Runnable should throw `" + expectedExceptionType + "` but did throw  `" + th.getClass() + "`.");
+            throw ExecutionException.execException("Runnable should throw `" + expectedExceptionType + "` but did " +
+                    "throw  `" + th.getClass() + "`.");
         }
         throw ExecutionException.execException("Runnable should throw `" + expectedExceptionType + "` but did not.");
     }
