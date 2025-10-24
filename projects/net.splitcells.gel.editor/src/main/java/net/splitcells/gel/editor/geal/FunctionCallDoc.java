@@ -41,15 +41,16 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
 import static net.splitcells.dem.resource.Trail.trail;
-import static net.splitcells.dem.utils.StringUtils.toBytes;
 import static net.splitcells.gel.editor.Editor.editor;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallMetaExecutor.functionCallMetaExecutor;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.projects.RenderResponse.renderResponse;
-import static net.splitcells.website.server.security.authorization.AdminRole.ADMIN_ROLE;
-import static net.splitcells.website.server.security.authorization.Authorization.missesRole;
 
 public class FunctionCallDoc implements ProjectsRendererExtension {
+
+    public static FunctionCallDoc functionCallDoc() {
+        return new FunctionCallDoc();
+    }
 
     private static final Trail PATH = trail("net/splitcells/gel/editor/geal/doc.html");
 
