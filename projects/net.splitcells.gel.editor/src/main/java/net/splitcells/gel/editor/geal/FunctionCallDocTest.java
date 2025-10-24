@@ -21,7 +21,6 @@ import net.splitcells.dem.testing.annotations.UnitTest;
 import static net.splitcells.gel.editor.geal.FunctionCallDoc.generateDoc;
 
 public class FunctionCallDocTest {
-    @DisabledTest
     @UnitTest
     public void testGenerateDoc() {
         generateDoc();

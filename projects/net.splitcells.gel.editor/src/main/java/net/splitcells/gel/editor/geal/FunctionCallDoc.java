@@ -17,9 +17,11 @@ package net.splitcells.gel.editor.geal;
 
 import lombok.val;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.lang.tree.XmlConfig;
 import net.splitcells.dem.object.Discoverable;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
 import static net.splitcells.gel.editor.Editor.editor;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallMetaExecutor.functionCallMetaExecutor;
 
@@ -33,7 +35,7 @@ public class FunctionCallDoc {
         val subject = functionCallMetaExecutor();
         val doc = tree("Geal Function Call Documentation");
         subject.parsers().forEach(p -> {
-            System.out.println(p.document(editor));
+            System.out.println(p.document(editor).toXmlString(xmlConfig().withPrintNameSpaceAttributeAtTop(true)));
         });
         return doc;
     }

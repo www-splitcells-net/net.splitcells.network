@@ -24,6 +24,7 @@ import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 import java.util.Optional;
 import java.util.function.Function;
 
+import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 
 public class FunctionCallRunnerParser<T> {
@@ -52,7 +53,7 @@ public class FunctionCallRunnerParser<T> {
     public Tree document(Editor context) {
         try (val fcr = context.functionCallRecord(null, null, name, variation, true)) {
             parser.apply(fcr);
-            return tree(fcr.getName());
+            return tree("chapter", SEW).withChild(tree("title", SEW).withText(fcr.getName()));
         }
     }
 }
