@@ -16,16 +16,29 @@
 package net.splitcells.gel.editor.geal;
 
 import lombok.val;
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.XmlConfig;
 import net.splitcells.dem.object.Discoverable;
+import net.splitcells.dem.resource.Trail;
+import net.splitcells.website.server.projects.ProjectsRendererI;
+import net.splitcells.website.server.projects.RenderRequest;
+import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
+import net.splitcells.website.server.projects.extension.impls.ProjectPathsRequest;
 
+import java.nio.file.Path;
+
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
+import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.gel.editor.Editor.editor;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallMetaExecutor.functionCallMetaExecutor;
 
-public class FunctionCallDoc {
+public class FunctionCallDoc implements ProjectsRendererExtension {
+
+    private static final Trail PATH = trail("net/splitcells/gel/editor/geal/doc.html");
+
     private FunctionCallDoc() {
 
     }
@@ -38,5 +51,18 @@ public class FunctionCallDoc {
             System.out.println(p.document(editor).toXmlString(xmlConfig().withPrintNameSpaceAttributeAtTop(true)));
         });
         return doc;
+    }
+
+    @Override public boolean requiresAuthentication(RenderRequest request) {
+        return false;
+    }
+
+    @Override public Set<Path> projectPaths(ProjectsRendererI projectsRenderer) {
+        return setOfUniques();
+    }
+
+    @Override
+    public Set<Path> projectPaths(ProjectPathsRequest request) {
+        return setOfUniques(Path.of(PATH.unixPathString()));
     }
 }
