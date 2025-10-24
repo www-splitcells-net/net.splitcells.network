@@ -90,7 +90,7 @@ public class FunctionCallRunnerParser<T> {
                         validValuesDesc = "";
                     }
                     arguments.withChild(tree("item", SEW).withText(i
-                            + ": "
+                            + ": type = "
                             + fcr.getArgumentTypes().get(i).getSimpleName()
                             + validValuesDesc));
                 });
