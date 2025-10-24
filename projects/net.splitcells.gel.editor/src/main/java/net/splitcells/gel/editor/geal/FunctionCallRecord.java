@@ -203,6 +203,7 @@ public class FunctionCallRecord implements Closeable {
 
     public Query parseQuerySubject() {
         if (isRecording) {
+            requiredSubjectTypes.addAll(Solution.class, Query.class);
             return null;
         }
         if (subject.isEmpty()) {
