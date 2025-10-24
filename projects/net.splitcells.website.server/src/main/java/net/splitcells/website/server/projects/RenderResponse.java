@@ -29,6 +29,10 @@ import java.util.Optional;
  */
 public class RenderResponse implements Response<Optional<BinaryMessage>> {
 
+    public static RenderResponse renderResponse() {
+        return new RenderResponse(Optional.empty());
+    }
+
     public static RenderResponse renderResponse(BinaryMessage data) {
         return new RenderResponse(Optional.of(data));
     }

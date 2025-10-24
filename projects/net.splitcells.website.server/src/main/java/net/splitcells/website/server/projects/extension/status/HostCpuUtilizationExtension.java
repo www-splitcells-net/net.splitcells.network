@@ -62,7 +62,7 @@ public class HostCpuUtilizationExtension implements ProjectsRendererExtension {
     @Override
     public RenderResponse render(RenderRequest request, ProjectsRenderer projectsRenderer) {
         if (!request.trail().equalContents(REPORT_PATH) && !request.trail().equalContents(CSV_PATH)) {
-            return renderResponse(Optional.empty());
+            return renderResponse();
         }
         if (missesRole(request.user(), ADMIN_ROLE)) {
             return projectsRenderer.renderMissingAccessRights(request);
