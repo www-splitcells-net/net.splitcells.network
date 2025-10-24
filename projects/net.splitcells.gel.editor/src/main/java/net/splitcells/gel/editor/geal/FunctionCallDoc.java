@@ -16,24 +16,38 @@
 package net.splitcells.gel.editor.geal;
 
 import lombok.val;
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.environment.resource.HostUtilizationRecordService;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.XmlConfig;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.Trail;
+import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.RenderRequest;
+import net.splitcells.website.server.projects.RenderResponse;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
 import net.splitcells.website.server.projects.extension.impls.ProjectPathsRequest;
 
 import java.nio.file.Path;
+import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
+import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
 import static net.splitcells.dem.resource.Trail.trail;
+import static net.splitcells.dem.utils.StringUtils.toBytes;
 import static net.splitcells.gel.editor.Editor.editor;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallMetaExecutor.functionCallMetaExecutor;
+import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
+import static net.splitcells.website.server.projects.RenderResponse.renderResponse;
+import static net.splitcells.website.server.security.authorization.AdminRole.ADMIN_ROLE;
+import static net.splitcells.website.server.security.authorization.Authorization.missesRole;
 
 public class FunctionCallDoc implements ProjectsRendererExtension {
 
@@ -43,15 +57,33 @@ public class FunctionCallDoc implements ProjectsRendererExtension {
 
     }
 
-    public static Tree generateDoc() {
+    public static List<Tree> generateDoc() {
         val editor = editor("Documentation Generation", Discoverable.EXPLICIT_NO_CONTEXT);
         val subject = functionCallMetaExecutor();
-        val doc = tree("Geal Function Call Documentation");
+        final List<Tree> doc = list();
         subject.parsers().forEach(p -> {
             System.out.println(p.document(editor).toXmlString(xmlConfig().withPrintNameSpaceAttributeAtTop(true)));
         });
         return doc;
     }
+
+    @Override
+    public RenderResponse render(RenderRequest request, ProjectsRenderer projectsRenderer) {
+        if (!request.trail().equalContents(PATH)) {
+            return renderResponse();
+        }
+        val article = tree("article", SEW)
+                .withChildren(tree("meta", SEW)
+                                .withChild(tree("path", SEW).withText(request.trail().unixPathString()))
+                                .withChild(tree("title", SEW).withText("Geal Function Call Documentation"))
+                        , tree("content", SEW).withChildren(generateDoc())
+                );
+        return renderResponse(Optional.of(binaryMessage(projectsRenderer.projectRenderers().get(0)
+                        .renderRawXml(article.toXmlStringWithAllNameSpaceDeclarationsAtTop(), projectsRenderer.config())
+                        .orElseThrow()
+                , HTML_TEXT.codeName())));
+    }
+
 
     @Override public boolean requiresAuthentication(RenderRequest request) {
         return false;
