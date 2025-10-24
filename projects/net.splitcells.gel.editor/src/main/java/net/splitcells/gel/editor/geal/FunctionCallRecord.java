@@ -82,6 +82,8 @@ public class FunctionCallRecord implements Closeable {
     @Getter Map<Integer, List<Class<?>>> argumentTypeArguments = map();
     @Getter Boolean onlyAttributesAsArgument = false;
     @Getter int onlyAttributesAsArgumentsFrom = -1;
+    @Getter int requiredArgumentCount = -1;
+    @Getter int requiredMinimalArgumentCount = -1;
 
     private FunctionCallRecord(Optional<Object> argSubject, FunctionCallDesc argFunctionCall, Editor argContext, String argName, int argVariation, boolean argIsRecording) {
         name = argName;
@@ -99,6 +101,7 @@ public class FunctionCallRecord implements Closeable {
 
     public void requireArgumentCount(int requiredArgumentCount) {
         if (isRecording) {
+            this.requiredArgumentCount = requiredArgumentCount;
             return;
         }
         if (functionCall.getArguments().size() != requiredArgumentCount) {
@@ -115,6 +118,7 @@ public class FunctionCallRecord implements Closeable {
 
     public void requireArgumentMinimalCount(int requiredMinimum) {
         if (isRecording) {
+            requiredMinimalArgumentCount = requiredMinimum;
             return;
         }
         if (functionCall.getArguments().size() < requiredMinimum) {

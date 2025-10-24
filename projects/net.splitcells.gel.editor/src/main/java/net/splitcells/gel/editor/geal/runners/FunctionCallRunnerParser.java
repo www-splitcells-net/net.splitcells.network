@@ -72,6 +72,12 @@ public class FunctionCallRunnerParser<T> {
                         .orElseThrow();
                 list.withChild(tree("item", SEW).withText("The subject has to be one of the following types: " + typesDescription));
             }
+            if (fcr.getRequiredArgumentCount() != -1) {
+                list.withChild(tree("item", SEW).withText("Exactly " + fcr.getRequiredArgumentCount() + " arguments have to be present."));
+            }
+            if (fcr.getRequiredMinimalArgumentCount() != -1) {
+                list.withChild(tree("item", SEW).withText("At least " + fcr.getRequiredMinimalArgumentCount() + " arguments have to be present."));
+            }
             if (fcr.getOnlyAttributesAsArgument()) {
                 tree("list", SEW).withParent(functionCallDoc).withText("Only attribute references are allowed as arguments.");
             } else {
