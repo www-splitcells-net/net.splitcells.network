@@ -16,7 +16,11 @@
 package net.splitcells.maven.plugin.resource.list;
 
 import lombok.val;
+import org.tomlj.Toml;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.regex.Pattern;
 
 public class MetaData {
@@ -28,7 +32,7 @@ public class MetaData {
     String license;
     String copyrightText;
 
-    public MetaData parseMetaData(String fileContent) {
+    public MetaData parseMetaData(Path projectPath, String fileContent) {
         val licenseMatch = SPX_LICENSE.matcher(fileContent);
         if (licenseMatch.find()) {
             license = licenseMatch.group(2);
@@ -36,6 +40,20 @@ public class MetaData {
         val copyrightMatch = SPX_COPYRIGHT_TEXT.matcher(fileContent);
         if (copyrightMatch.find()) {
             copyrightText = copyrightMatch.group(2);
+        }
+        if (license == null) {
+            val reuseToml = projectPath.resolve("REUSE.toml");
+            if (Files.exists(reuseToml)) {
+                try {
+                    val tomlParsing = Toml.parse(reuseToml);
+                    if (!tomlParsing.errors().isEmpty()) {
+                        throw new RuntimeException("The REUSE TOML file containing license data is not correct: " + reuseToml);
+                    }
+                    System.out.println(tomlParsing + " was successfully parsed.");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
         return this;
     }
