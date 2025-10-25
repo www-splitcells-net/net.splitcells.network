@@ -15,6 +15,8 @@
  */
 package net.splitcells.maven.plugin.resource.list;
 
+import lombok.val;
+
 import java.util.regex.Pattern;
 
 public class MetaData {
@@ -27,11 +29,11 @@ public class MetaData {
     String copyrightText;
 
     public MetaData parseMetaData(String fileContent) {
-        final var licenseMatch = SPX_LICENSE.matcher(fileContent);
+        val licenseMatch = SPX_LICENSE.matcher(fileContent);
         if (licenseMatch.find()) {
             license = licenseMatch.group(2);
         }
-        final var copyrightMatch = SPX_COPYRIGHT_TEXT.matcher(fileContent);
+        val copyrightMatch = SPX_COPYRIGHT_TEXT.matcher(fileContent);
         if (copyrightMatch.find()) {
             copyrightText = copyrightMatch.group(2);
         }
