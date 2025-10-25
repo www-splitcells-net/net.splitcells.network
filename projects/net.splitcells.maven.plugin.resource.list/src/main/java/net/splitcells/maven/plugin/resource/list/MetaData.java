@@ -22,6 +22,7 @@ public class MetaData {
      * The SPDX String is split, in order to avoid a bug in the REUSE license parser.
      */
     private static final Pattern SPX_LICENSE = Pattern.compile("(SPDX" + "-License-Identifier: )([a-zA-Z0-9-. ]+)");
+    private static final Pattern SPX_COPYRIGHT_TEXT = Pattern.compile("(SPDX" + "-FileCopyrightText: )([a-zA-Z0-9-. *`]+)");
     String license;
     String copyrightText;
 
@@ -29,6 +30,10 @@ public class MetaData {
         final var licenseMatch = SPX_LICENSE.matcher(fileContent);
         if (licenseMatch.find()) {
             license = licenseMatch.group(2);
+        }
+        final var copyrightMatch = SPX_COPYRIGHT_TEXT.matcher(fileContent);
+        if (copyrightMatch.find()) {
+            copyrightText = copyrightMatch.group(2);
         }
         return this;
     }
