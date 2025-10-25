@@ -41,6 +41,10 @@
             <version>3.8.1</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.tomlj</groupId>
+            <artifactId>tomlj</artifactId>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
