@@ -44,6 +44,20 @@ public class StringUtils {
         return new StringBuilder(initialContent);
     }
 
+    public static String intToOrdinal(int arg) {
+        if (arg <= 0) {
+            throw execException("Only positive numbers can be converted to an ordinal, which is not the case for the number " + arg + ".");
+        }
+        if (arg == 1) {
+            return "1st";
+        } else if (arg == 2) {
+            return "2nd";
+        } else if (arg == 3) {
+            return "3rd";
+        }
+        return arg + "th";
+    }
+
     public static String removePrefix(String prefix, String target) {
         if (target.startsWith(prefix)) {
             return target.substring(prefix.length());
@@ -84,7 +98,7 @@ public class StringUtils {
 
     public static int countChar(String string, char character) {
         var count = 0;
-        for (int i = 0 ; i < string.length() ; i++) {
+        for (int i = 0; i < string.length(); i++) {
             if (string.charAt(i) == character) {
                 count++;
             }

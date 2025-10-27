@@ -23,10 +23,20 @@ import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.atom.Integers.requireEqualInts;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
-import static net.splitcells.dem.utils.StringUtils.countChar;
-import static net.splitcells.dem.utils.StringUtils.multiple;
+import static net.splitcells.dem.utils.StringUtils.*;
 
 public class StringUtilsTest {
+
+    @Test
+    public void testIntToOrdinal() {
+        requireEquals(intToOrdinal(1), "1st");
+        requireEquals(intToOrdinal(2), "2nd");
+        requireEquals(intToOrdinal(3), "3rd");
+        requireEquals(intToOrdinal(4), "4th");
+        Assertions.requireThrow(() -> intToOrdinal(0));
+        Assertions.requireThrow(() -> intToOrdinal(-1));
+    }
+
     @Test
     public void testCountChar() {
         requireEqualInts(1, countChar("abcdefg", 'a'));
