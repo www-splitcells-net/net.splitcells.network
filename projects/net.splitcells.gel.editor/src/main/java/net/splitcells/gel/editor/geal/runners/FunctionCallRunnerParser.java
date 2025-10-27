@@ -27,6 +27,7 @@ import java.util.function.Function;
 
 import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.StringUtils.intToOrdinal;
 
 public class FunctionCallRunnerParser<T> {
     public static <R> FunctionCallRunnerParser<R> functionCallRunnerParser(String argName
@@ -58,8 +59,9 @@ public class FunctionCallRunnerParser<T> {
         try (val fcr = context.functionCallRecord(null, null, name, variation, true)) {
             parser.apply(fcr);
             val functionCallDoc = tree("chapter", SEW);
-            functionCallDoc.withChild(tree("title", SEW).withText(fcr.getName() + " " + fcr.getVariation()));
+            functionCallDoc.withChild(tree("title", SEW).withText(intToOrdinal(fcr.getVariation()) + " " + fcr.getName()));
             val list = tree("list", SEW).withParent(functionCallDoc);
+            list.withProperty("name", "Parameter Rules:");
             if (fcr.getRequireSubjectAbsent()) {
                 list.withChild(tree("item", SEW).withText("No Subject"));
             } else if (fcr.getRequiredSubjectTypes().size() == 1) {
@@ -83,6 +85,7 @@ public class FunctionCallRunnerParser<T> {
                 tree("list", SEW).withParent(functionCallDoc).withText("Only attribute references are allowed as arguments.");
             } else {
                 val arguments = tree("list", SEW).withParent(functionCallDoc);
+                arguments.withProperty("name", "Parameters:");
                 fcr.argumentIndexes().forEach(i -> {
                     final String validValues;
                     final String validValuesDesc;
