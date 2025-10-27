@@ -331,7 +331,8 @@ document.addEventListener('DOMContentLoaded', function(){
                 </xsl:for-each>
                 <xsl:for-each select="./s:text-area">
                     <div>
-                        <xsl:attribute name="class" select="concat('net-splitcells-website-form-editor-tab ', $form-id, '-', @name, '-tab-content ', $form-id, '-tab-content')"/>
+                        <xsl:attribute name="class"
+                                       select="concat('net-splitcells-website-form-editor-tab ', $form-id, '-', @name, '-tab-content ', $form-id, '-tab-content')"/>
                         <xsl:if test="not(./@main-tab = 'true')">
                             <xsl:attribute name="style" select="'display: none; visibility: hidden;'"/>
                         </xsl:if>
@@ -348,7 +349,11 @@ document.addEventListener('DOMContentLoaded', function(){
                         </textarea>
                     </div>
                     <xsl:if test="./@initial-content-at">
-                        <script type="text/javascript"><![CDATA[net_splitcells_webserver_form_input_set_initial_content(']]><xsl:value-of select="concat($form-id, '-', @name)"/><![CDATA[', ']]><xsl:value-of select="./@initial-content-at"/><![CDATA[');]]></script>
+                        <script type="text/javascript">
+                            <![CDATA[net_splitcells_webserver_form_input_set_initial_content(']]><xsl:value-of
+                                select="concat($form-id, '-', @name)"/><![CDATA[', ']]><xsl:value-of
+                                select="./@initial-content-at"/><![CDATA[');]]>
+                        </script>
                     </xsl:if>
                 </xsl:for-each>
             </div>
@@ -890,11 +895,18 @@ document.addEventListener('DOMContentLoaded', function(){
     </xsl:template>
     <xsl:template match="s:list">
         <ol>
-            <xsl:if test="./@name">
-                <div>
-                    <xsl:value-of select="./@name"/>
-                </div>
-            </xsl:if>
+            <xsl:choose>
+                <xsl:when test="./@name">
+                    <div>
+                        <xsl:value-of select="./@name"/>
+                    </div>
+                </xsl:when>
+                <xsl:when test="./s:name">
+                    <div>
+                        <xsl:value-of select="./@name"/>
+                    </div>
+                </xsl:when>
+            </xsl:choose>
             <xsl:apply-templates select="./node()" mode="list"/>
         </ol>
     </xsl:template>
