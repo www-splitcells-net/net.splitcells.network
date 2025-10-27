@@ -24,6 +24,7 @@ import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.XmlConfig;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.Trail;
+import net.splitcells.gel.editor.geal.runners.FunctionCallRunnerParser;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.RenderRequest;
@@ -34,6 +35,8 @@ import net.splitcells.website.server.projects.extension.impls.ProjectPathsReques
 import java.nio.file.Path;
 import java.util.Optional;
 
+import static net.splitcells.dem.data.order.Comparators.ASCENDING_STRINGS;
+import static net.splitcells.dem.data.order.Comparators.ascendingString;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
@@ -62,7 +65,7 @@ public class FunctionCallDoc implements ProjectsRendererExtension {
         val editor = editor("Documentation Generation", Discoverable.EXPLICIT_NO_CONTEXT);
         val subject = functionCallMetaExecutor();
         final List<Tree> doc = list();
-        subject.parsers().forEach(p -> {
+        subject.parsers().sorted(ascendingString(FunctionCallRunnerParser::getName)).forEach(p -> {
             System.out.println(p.document(editor).toXmlString(xmlConfig().withPrintNameSpaceAttributeAtTop(true)));
             doc.add(p.document(editor));
         });

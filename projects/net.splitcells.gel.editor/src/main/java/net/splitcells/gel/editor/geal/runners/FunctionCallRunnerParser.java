@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.editor.geal.runners;
 
+import lombok.Getter;
 import lombok.val;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.editor.Editor;
@@ -35,7 +36,7 @@ public class FunctionCallRunnerParser<T> {
     }
 
     private final Function<FunctionCallRecord, T> parser;
-    private final String name;
+    private @Getter final String name;
     /**
      * Functions with the same name, but different arguments have distinct variation ids.
      */
