@@ -55,17 +55,23 @@ public class FunctionCallRunnerParser<T> {
         }
     }
 
+    /**
+     * The word receiver is used instead of subject, as this the common terminology in OOP.
+     *
+     * @param context
+     * @return
+     */
     public Tree document(Editor context) {
         try (val fcr = context.functionCallRecord(null, null, name, variation, true)) {
             parser.apply(fcr);
             val functionCallDoc = tree("chapter", SEW);
             functionCallDoc.withChild(tree("title", SEW).withText(intToOrdinal(fcr.getVariation()) + " " + fcr.getName()));
             val list = tree("list", SEW).withParent(functionCallDoc);
-            list.withProperty("name", "Parameter Rules:");
+            list.withProperty("name", "Receiver Constraints:");
             if (fcr.getRequireSubjectAbsent()) {
-                list.withChild(tree("item", SEW).withText("No Subject"));
+                list.withChild(tree("item", SEW).withText("No Receiver"));
             } else if (fcr.getRequiredSubjectTypes().size() == 1) {
-                list.withChild(tree("item", SEW).withText("The subject has to be of type "
+                list.withChild(tree("item", SEW).withText("The receiver has to be of type "
                         + fcr.getRequiredSubjectTypes().get(0).getSimpleName() + "."));
             } else if (fcr.getRequiredSubjectTypes().hasElements()) {
                 val typesDescription = fcr.getRequiredSubjectTypes()
@@ -73,7 +79,7 @@ public class FunctionCallRunnerParser<T> {
                         .map(Class::getSimpleName)
                         .reduce((a, b) -> a + ", " + b)
                         .orElseThrow();
-                list.withChild(tree("item", SEW).withText("The subject has to be one of the following types: " + typesDescription));
+                list.withChild(tree("item", SEW).withText("The receiver has to be one of the following types: " + typesDescription));
             }
             if (fcr.getRequiredArgumentCount() != -1) {
                 list.withChild(tree("item", SEW).withText("Exactly " + fcr.getRequiredArgumentCount() + " arguments have to be present."));
