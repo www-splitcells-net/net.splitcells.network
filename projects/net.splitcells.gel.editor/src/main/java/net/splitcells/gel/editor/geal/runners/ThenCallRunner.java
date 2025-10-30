@@ -51,6 +51,12 @@ public class ThenCallRunner implements FunctionCallRunner {
                 args.subjectVal = fcr.parseQuerySubject();
                 fcr.requireArgumentCount(1);
                 args.rater = fcr.parseArgument(Rater.class, 0);
+                fcr.addDescription(tree("""
+                        Creates and returns a constraint node, that groups and rates incoming lines by the given rater.
+                        Lines with a none zero cost are not propagated to the child constraints.
+                        The constraint node is added to the receiver, which is the parent constraint.
+                        The rating of a given line in a then constraint node is the sum of the constraint node's rating and its children's rating.
+                        """));
                 return args;
             });
 
