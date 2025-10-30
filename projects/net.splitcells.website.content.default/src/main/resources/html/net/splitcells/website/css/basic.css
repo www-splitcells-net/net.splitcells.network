@@ -470,6 +470,7 @@ h4 {
     }
  .net-splitcells-heading-title {
     flex: 1;
+    align-content: center;
     }
 .heading {
     width: 100%;
