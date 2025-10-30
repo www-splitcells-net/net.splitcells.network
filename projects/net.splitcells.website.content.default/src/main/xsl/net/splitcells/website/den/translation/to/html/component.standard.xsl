@@ -925,6 +925,8 @@ document.addEventListener('DOMContentLoaded', function(){
             <xsl:apply-templates select="."/>
         </li>
     </xsl:template>
+    <xsl:template match="s:name" mode="list">
+    </xsl:template>
     <xsl:template match="s:post">
         <xsl:copy-of select="$site_instance_purl"/>
         <xsl:text>/</xsl:text>
