@@ -903,7 +903,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 </xsl:when>
                 <xsl:when test="./s:name">
                     <div>
-                        <xsl:value-of select="./@name"/>
+                        <xsl:value-of select="./s:name"/>
                     </div>
                 </xsl:when>
             </xsl:choose>
