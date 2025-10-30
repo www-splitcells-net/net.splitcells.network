@@ -29,6 +29,7 @@ import net.splitcells.gel.editor.geal.lang.StringDesc;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.parseString;
@@ -61,7 +62,7 @@ public class ImportCsvDataRunner implements FunctionCallRunner {
                 args.tableSubject = fcr.parseSubject(Table.class);
                 fcr.requireArgumentCount(1);
                 args.dataName = fcr.parseArgument(String.class, 0);
-                fcr.addDescription(tree("""
+                fcr.addDescription(tree("paragraph", SEW).withText("""
                         Reads the data of the field with the given name,
                         interprets it as a CSV file and adds the content to the receiver table.
                         """));

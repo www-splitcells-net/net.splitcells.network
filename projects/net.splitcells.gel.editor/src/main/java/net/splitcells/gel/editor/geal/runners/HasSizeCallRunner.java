@@ -26,6 +26,7 @@ import net.splitcells.gel.editor.geal.lang.IntegerDesc;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
@@ -49,7 +50,7 @@ public class HasSizeCallRunner implements FunctionCallRunner {
                 fcr.requireSubjectAbsence();
                 fcr.requireArgumentCount(1);
                 args.targetSize = fcr.parseArgument(Integer.class, 0);
-                fcr.addDescription(tree("Creates a rater, that requires a given line group to have at least as many " +
+                fcr.addDescription(tree("paragraph", SEW).withText("Creates a rater, that requires a given line group to have at least as many " +
                         "lines as the given argument."));
                 return args;
             });

@@ -27,6 +27,7 @@ import net.splitcells.gel.solution.Solution;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.constraint.QueryI.query;
@@ -51,7 +52,7 @@ public class ThenCallRunner implements FunctionCallRunner {
                 args.subjectVal = fcr.parseQuerySubject();
                 fcr.requireArgumentCount(1);
                 args.rater = fcr.parseArgument(Rater.class, 0);
-                fcr.addDescription(tree("""
+                fcr.addDescription(tree("paragraph", SEW).withText("""
                         Creates and returns a constraint node, that groups and rates incoming lines by the given rater.
                         Lines with a none zero cost are not propagated to the child constraints.
                         The constraint node is added to the receiver, which is the parent constraint.

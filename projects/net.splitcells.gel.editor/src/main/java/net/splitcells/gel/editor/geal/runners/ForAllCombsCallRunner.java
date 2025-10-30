@@ -27,6 +27,7 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -55,7 +56,7 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
                 fcr.requireArgumentMinimalCount(2);
                 args.groupingAttributes = fcr.parseAttributeArguments();
                 args.subjectVal = fcr.parseQuerySubject();
-                fcr.addDescription(tree("Creates and returns a constraint node, that groups incoming lines by the values of the given attributes. The constraint node is added to the receiver, which is the parent constraint."));
+                fcr.addDescription(tree("paragraph", SEW).withText("Creates and returns a constraint node, that groups incoming lines by the values of the given attributes. The constraint node is added to the receiver, which is the parent constraint."));
                 return args;
             });
 

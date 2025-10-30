@@ -29,6 +29,7 @@ import net.splitcells.gel.solution.Solution;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -56,7 +57,7 @@ public class SolutionCallRunner implements FunctionCallRunner {
                 args.solutionName = fcr.parseArgument(String.class, 0);
                 args.demands = fcr.parseArgument(Table.class, 1);
                 args.supplies = fcr.parseArgument(Table.class, 2);
-                fcr.addDescription(tree("""
+                fcr.addDescription(tree("paragraph", SEW).withText("""
                         Creates a assignment table with the given name, demand table and supply table.
                         It will be optimized according to the constraints added to it.
                         The columns of this table is the concatenation of demand and supply columns.

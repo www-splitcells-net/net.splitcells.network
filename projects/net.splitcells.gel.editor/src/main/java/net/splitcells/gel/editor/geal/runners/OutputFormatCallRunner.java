@@ -25,6 +25,7 @@ import net.splitcells.gel.solution.Solution;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.constraint.QueryI.query;
@@ -50,7 +51,7 @@ public class OutputFormatCallRunner implements FunctionCallRunner {
                 val args = new Args();
                 args.subjectVal = fcr.parseSubject(Solution.class);
                 args.attributes = fcr.parseAttributeArguments();
-                fcr.addDescription(tree("""
+                fcr.addDescription(tree("paragraph", SEW).withText("""
                         When this function is called the receiver solution, will be formatted according to this config function.
                         The formatted table columns group the lines via the given attributes.
                         """));

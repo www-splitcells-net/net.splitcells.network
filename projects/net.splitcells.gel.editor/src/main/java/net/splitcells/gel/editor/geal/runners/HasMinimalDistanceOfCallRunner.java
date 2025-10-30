@@ -25,6 +25,7 @@ import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
@@ -48,7 +49,7 @@ public class HasMinimalDistanceOfCallRunner implements FunctionCallRunner {
                 fcr.requireArgumentCount(2);
                 args.distanceAttribute = fcr.parseAttributeArgument(Integer.class, 0);
                 args.minimalDistance = fcr.parseArgument(Integer.class, 1);
-                fcr.addDescription(tree("""
+                fcr.addDescription(tree("paragraph", SEW).withText("""
                         Creates a rater, that requires every line of a group to have a distance bigger than the second argument.
                         The distance of two lines is the difference between the line values of the given attribute.
                         """));

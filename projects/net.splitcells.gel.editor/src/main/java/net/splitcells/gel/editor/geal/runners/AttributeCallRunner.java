@@ -27,6 +27,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -60,7 +61,7 @@ public class AttributeCallRunner implements FunctionCallRunner {
                 fcr.requireArgumentCount(2);
                 args.type = fcr.parseArgumentAsType(0, INTEGER_TYPE, STRING_TYPE);
                 args.name = fcr.parseArgumentAsStringDesc(1).getValue();
-                fcr.addDescription(tree("Returns an attribute, that defines the name and content type of a table's column."));
+                fcr.addDescription(tree("paragraph", SEW).withText("Returns an attribute, that defines the name and content type of a table's column."));
                 return args;
             });
 

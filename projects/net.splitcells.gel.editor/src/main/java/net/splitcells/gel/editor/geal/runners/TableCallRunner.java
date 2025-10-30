@@ -29,6 +29,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -54,7 +55,7 @@ public class TableCallRunner implements FunctionCallRunner {
                 fcr.requireArgumentMinimalCount(2);
                 args.tableName = fcr.parseArgument(String.class, 0);
                 args.attributes = fcr.parseAttributeArguments(1);
-                fcr.addDescription(tree("""
+                fcr.addDescription(tree("paragraph", SEW).withText("""
                         Returns a new table with the given name.
                         The columns are determined by the given attributes.
                         """));

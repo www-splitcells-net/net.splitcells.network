@@ -26,6 +26,7 @@ import net.splitcells.gel.solution.Solution;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -49,7 +50,7 @@ public class ForEachCallRunner implements FunctionCallRunner {
                 val args = new Args();
                 args.groupingAttribute = fcr.parseAttributeArgument(0);
                 args.subjectVal = fcr.parseQuerySubject();
-                fcr.addDescription(tree("""
+                fcr.addDescription(tree("paragraph", SEW).withText("""
                         Creates and returns a constraint node, that groups incoming lines by the values of the given attribute.
                         The constraint node is added to the receiver, which is the parent constraint.
                         """));
