@@ -92,4 +92,10 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
         return executors.stream().flatMap(e -> e.parsers().stream());
     }
 
+    public boolean hasFunctionCallNameVariations(String name) {
+        return 1 < executors.stream().flatMap(e -> e.parsers().stream())
+                .filter(p -> p.getName().equals(name))
+                .count();
+    }
+
 }
