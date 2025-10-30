@@ -95,7 +95,9 @@ public class FunctionCallRecord implements Closeable {
     }
 
     public FunctionCallRecord addDescription(String addition) {
-        joinDocuments(description, addition);
+        if (isRecording) {
+            joinDocuments(description, addition);
+        }
         return this;
     }
 
