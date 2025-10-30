@@ -60,6 +60,7 @@ public class AttributeCallRunner implements FunctionCallRunner {
                 fcr.requireArgumentCount(2);
                 args.type = fcr.parseArgumentAsType(0, INTEGER_TYPE, STRING_TYPE);
                 args.name = fcr.parseArgumentAsStringDesc(1).getValue();
+                fcr.addDescription(tree("Defines the name and content type of a table's column."));
                 return args;
             });
 
