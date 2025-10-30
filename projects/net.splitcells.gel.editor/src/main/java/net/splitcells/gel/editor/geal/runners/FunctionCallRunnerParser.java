@@ -68,7 +68,9 @@ public class FunctionCallRunnerParser<T> {
             parser.apply(fcr);
             val functionCallDoc = tree("chapter", SEW);
             if (config.isRenderVariation()) {
-                functionCallDoc.withChild(tree("title", SEW).withText(fcr.getName() + " the " + intToOrdinal(fcr.getVariation())));
+                functionCallDoc.withChild(tree("title", SEW).withText(fcr.getName()
+                        + " the "
+                        + intToOrdinal(fcr.getVariation())));
             } else {
                 functionCallDoc.withChild(tree("title", SEW).withText(fcr.getName()));
             }
@@ -84,7 +86,9 @@ public class FunctionCallRunnerParser<T> {
                         .map(Class::getSimpleName)
                         .reduce((a, b) -> a + ", " + b)
                         .orElseThrow();
-                receiverConstraints.add(tree("item", SEW).withText("The receiver has to be one of the following types: " + typesDescription));
+                receiverConstraints.add(tree("item", SEW).withText("The receiver has to be one of the following "
+                        + "types: "
+                        + typesDescription));
             }
             if (receiverConstraints.hasElements()) {
                 tree("list", SEW)
@@ -92,7 +96,8 @@ public class FunctionCallRunnerParser<T> {
                         .withProperty("name", SEW, "Receiver Constraints:")
                         .withChildren(receiverConstraints);
             } else {
-                tree("list", SEW).withParent(functionCallDoc).withProperty("name", SEW, "No Receiver Constraints.");
+                tree("list", SEW).withParent(functionCallDoc)
+                        .withProperty("name", SEW, "No Receiver Constraints.");
             }
             val arguments = tree("list", SEW).withParent(functionCallDoc);
             arguments.withProperty("name", SEW, parameterTitle(fcr));
@@ -100,7 +105,9 @@ public class FunctionCallRunnerParser<T> {
                 final String validValues;
                 final String validValuesDesc;
                 if (fcr.getArgumentsValidNames().hasKey(i)) {
-                    validValues = fcr.getArgumentsValidNames().get(i).stream().reduce((a, b) -> a + ", " + b).orElse("");
+                    validValues = fcr.getArgumentsValidNames().get(i).stream()
+                            .reduce((a, b) -> a + ", " + b)
+                            .orElse("");
                 } else {
                     validValues = "";
                 }
