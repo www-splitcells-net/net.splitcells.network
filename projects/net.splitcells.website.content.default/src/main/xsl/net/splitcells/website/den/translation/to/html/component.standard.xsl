@@ -457,6 +457,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 </xsl:variable>
                 <section>
                     <xsl:attribute name="id" select="$id"/>
+                    <xsl:attribute name="class" select="'chapter'"/>
                     <div class="heading">
                         <xsl:attribute name="id" select="./s:title/@id"/>
                         <a style="margin-right: .5em;" class="net-splitcells-heading-title">
