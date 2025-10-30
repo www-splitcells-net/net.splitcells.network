@@ -54,6 +54,10 @@ public class TableCallRunner implements FunctionCallRunner {
                 fcr.requireArgumentMinimalCount(2);
                 args.tableName = fcr.parseArgument(String.class, 0);
                 args.attributes = fcr.parseAttributeArguments(1);
+                fcr.addDescription(tree("""
+                        Returns a new table with the given name.
+                        The columns are determined by the given attributes.
+                        """));
                 return args;
             });
 

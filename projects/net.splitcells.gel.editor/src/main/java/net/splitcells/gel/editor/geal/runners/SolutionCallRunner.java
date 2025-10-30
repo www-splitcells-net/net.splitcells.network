@@ -59,6 +59,7 @@ public class SolutionCallRunner implements FunctionCallRunner {
                 fcr.addDescription(tree("""
                         Creates a assignment table with the given name, demand table and supply table.
                         It will be optimized according to the constraints added to it.
+                        The columns of this table is the concatenation of demand and supply columns.
                         """));
                 return args;
             });
