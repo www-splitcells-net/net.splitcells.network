@@ -21,6 +21,7 @@ import lombok.val;
 import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.constraint.Query;
@@ -70,7 +71,7 @@ public class FunctionCallRecord implements Closeable {
     /**
      * This is a CommonMark document.
      */
-    private StringBuilder description = StringUtils.stringBuilder();
+    @Getter private List<Tree> description = list();
     private final Editor context;
     private final FunctionCallDesc functionCall;
     private final Optional<Object> subject;
@@ -94,9 +95,9 @@ public class FunctionCallRecord implements Closeable {
         isRecording = argIsRecording;
     }
 
-    public FunctionCallRecord addDescription(String addition) {
+    public FunctionCallRecord addDescription(Tree addition) {
         if (isRecording) {
-            joinDocuments(description, addition);
+            description.add(addition);
         }
         return this;
     }

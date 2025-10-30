@@ -18,10 +18,12 @@ package net.splitcells.gel.editor.geal.runners;
 import lombok.Getter;
 import lombok.val;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.CommonMarkUtils;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.FunctionCallRecord;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
+import net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkIntegration;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -74,6 +76,9 @@ public class FunctionCallRunnerParser<T> {
             } else {
                 functionCallDoc.withChild(tree("title", SEW).withText(fcr.getName()));
             }
+            val signature = tree("chapter", SEW)
+                    .withChild(tree("title", SEW).withText("Signature"))
+                    .withParent(functionCallDoc);
             final List<Tree> receiverConstraints = list();
             if (fcr.getRequireSubjectAbsent()) {
                 receiverConstraints.add(tree("item", SEW).withText("No Receiver"));
@@ -92,14 +97,14 @@ public class FunctionCallRunnerParser<T> {
             }
             if (receiverConstraints.hasElements()) {
                 tree("list", SEW)
-                        .withParent(functionCallDoc)
+                        .withParent(signature)
                         .withProperty("name", SEW, "Receiver Constraints:")
                         .withChildren(receiverConstraints);
             } else {
-                tree("list", SEW).withParent(functionCallDoc)
+                tree("list", SEW).withParent(signature)
                         .withProperty("name", SEW, "No Receiver Constraints.");
             }
-            val arguments = tree("list", SEW).withParent(functionCallDoc);
+            val arguments = tree("list", SEW).withParent(signature);
             arguments.withProperty("name", SEW, parameterTitle(fcr));
             fcr.argumentIndexes().forEach(i -> {
                 final String validValues;
@@ -125,6 +130,12 @@ public class FunctionCallRunnerParser<T> {
                 arguments.withChild(tree("item", SEW).withText("Starting with index "
                         + fcr.getOnlyAttributesAsArgumentsFrom()
                         + " an arbitrary number of only attribute arguments are accepted."));
+            }
+            if (fcr.getDescription().hasElements()) {
+                tree("chapter", SEW)
+                        .withChild(tree("title", SEW).withText("Description"))
+                        .withChildren(fcr.getDescription())
+                        .withParent(functionCallDoc);
             }
             return functionCallDoc;
         }
