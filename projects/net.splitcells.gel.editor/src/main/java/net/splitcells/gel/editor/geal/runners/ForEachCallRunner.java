@@ -49,6 +49,10 @@ public class ForEachCallRunner implements FunctionCallRunner {
                 val args = new Args();
                 args.groupingAttribute = fcr.parseAttributeArgument(0);
                 args.subjectVal = fcr.parseQuerySubject();
+                fcr.addDescription(tree("""
+                        Creates and returns a constraint node, that groups incoming lines by the values of the given attribute.
+                        The constraint node is added to the subject, which is the parent constraint.
+                        """));
                 return args;
             });
 
