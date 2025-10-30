@@ -117,12 +117,12 @@ public class FunctionCallRunnerParser<T> {
                     validValues = "";
                 }
                 if (!validValues.isEmpty()) {
-                    validValuesDesc = " : valid values = " + validValues;
+                    validValuesDesc = " ; valid values = " + validValues;
                 } else {
                     validValuesDesc = "";
                 }
                 arguments.withChild(tree("item", SEW).withText(i
-                        + ": type = "
+                        + "; type = "
                         + fcr.getArgumentTypes().get(i).getSimpleName()
                         + validValuesDesc));
             });
