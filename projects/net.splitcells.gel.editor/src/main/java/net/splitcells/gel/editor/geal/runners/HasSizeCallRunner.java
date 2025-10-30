@@ -49,6 +49,8 @@ public class HasSizeCallRunner implements FunctionCallRunner {
                 fcr.requireSubjectAbsence();
                 fcr.requireArgumentCount(1);
                 args.targetSize = fcr.parseArgument(Integer.class, 0);
+                fcr.addDescription(tree("Creates a rater, that requires a given line group to have at least as many " +
+                        "lines as the given argument."));
                 return args;
             });
 
