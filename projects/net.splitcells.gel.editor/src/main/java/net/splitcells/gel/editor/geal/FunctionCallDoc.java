@@ -46,6 +46,7 @@ import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.gel.editor.Editor.editor;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallMetaExecutor.functionCallMetaExecutor;
+import static net.splitcells.gel.editor.geal.runners.ParserDocumentConfig.parserDocumentConfig;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.projects.RenderResponse.renderResponse;
 
@@ -66,8 +67,8 @@ public class FunctionCallDoc implements ProjectsRendererExtension {
         val subject = functionCallMetaExecutor();
         final List<Tree> doc = list();
         subject.parsers().sorted(ascendingString(FunctionCallRunnerParser::getName)).forEach(p -> {
-            System.out.println(p.document(editor).toXmlString(xmlConfig().withPrintNameSpaceAttributeAtTop(true)));
-            doc.add(p.document(editor));
+            doc.add(p.document(editor
+                    , parserDocumentConfig().setRenderVariation(subject.hasFunctionCallNameVariations(p.getName()))));
         });
         return doc;
     }
