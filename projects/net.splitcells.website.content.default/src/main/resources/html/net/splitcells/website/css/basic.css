@@ -504,11 +504,13 @@ article h3 {
 	margin-bottom: 2em;
 	}
 .chapter .chapter .heading {
-	font-size: 125%;
+	font-size: 112%;
 	font-weight: bold;
 	margin-left: .8em;
 	margin-top: 3em;
 	margin-bottom: 2em;
+	padding-top: .1em;
+	padding-bottom: .1em;
 	}
 .chapter .chapter .chapter .heading {
 	font-size: 125%;
