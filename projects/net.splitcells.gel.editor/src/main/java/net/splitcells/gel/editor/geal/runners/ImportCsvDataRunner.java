@@ -61,6 +61,10 @@ public class ImportCsvDataRunner implements FunctionCallRunner {
                 args.tableSubject = fcr.parseSubject(Table.class);
                 fcr.requireArgumentCount(1);
                 args.dataName = fcr.parseArgument(String.class, 0);
+                fcr.addDescription(tree("""
+                        Reads the data of the field with the given name,
+                        interprets it as a CSV file and adds the content to the receiver table.
+                        """));
                 return args;
             });
 
