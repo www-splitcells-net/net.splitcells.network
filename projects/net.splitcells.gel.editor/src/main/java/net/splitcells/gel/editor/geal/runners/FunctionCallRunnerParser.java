@@ -39,7 +39,7 @@ public class FunctionCallRunnerParser<T> {
     }
 
     private final Function<FunctionCallRecord, T> parser;
-    private @Getter final String name;
+    @Getter private final String name;
     /**
      * Functions with the same name, but different arguments have distinct variation ids.
      */
