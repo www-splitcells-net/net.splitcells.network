@@ -115,7 +115,9 @@ public class FunctionCallRunnerParser<T> {
                         + validValuesDesc));
             });
             if (fcr.getOnlyAttributesAsArgumentsFrom() != -1) {
-                arguments.withChild(tree("item", SEW).withText("Starting with index " + fcr.getOnlyAttributesAsArgumentsFrom() + " an arbitrary number of only attribute arguments are accepted."));
+                arguments.withChild(tree("item", SEW).withText("Starting with index "
+                        + fcr.getOnlyAttributesAsArgumentsFrom()
+                        + " an arbitrary number of only attribute arguments are accepted."));
             }
             return functionCallDoc;
         }
