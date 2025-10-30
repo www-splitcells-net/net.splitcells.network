@@ -55,7 +55,7 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
                 fcr.requireArgumentMinimalCount(2);
                 args.groupingAttributes = fcr.parseAttributeArguments();
                 args.subjectVal = fcr.parseQuerySubject();
-                fcr.addDescription(tree("Creates and returns a constraint node, that groups incoming lines by the values of the given attributes. The constraint node is added to the subject, which is the parent constraint."));
+                fcr.addDescription(tree("Creates and returns a constraint node, that groups incoming lines by the values of the given attributes. The constraint node is added to the receiver, which is the parent constraint."));
                 return args;
             });
 

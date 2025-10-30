@@ -51,7 +51,7 @@ public class ForEachCallRunner implements FunctionCallRunner {
                 args.subjectVal = fcr.parseQuerySubject();
                 fcr.addDescription(tree("""
                         Creates and returns a constraint node, that groups incoming lines by the values of the given attribute.
-                        The constraint node is added to the subject, which is the parent constraint.
+                        The constraint node is added to the receiver, which is the parent constraint.
                         """));
                 return args;
             });
