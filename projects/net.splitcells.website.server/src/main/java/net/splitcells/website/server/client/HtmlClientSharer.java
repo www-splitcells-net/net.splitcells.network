@@ -36,7 +36,7 @@ public class HtmlClientSharer {
     private HtmlClientSharer() {
     }
 
-    public HtmlClient _htmlCLient() {
+    private HtmlClient _htmlCLient() {
         while (true) {
             synchronized (this) {
                 if (freeClients.hasElements()) {
