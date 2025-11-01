@@ -86,6 +86,9 @@ public class HtmlClientImpl implements HtmlClient {
     private HtmlClientImpl(String addressArg) {
         address = addressArg;
         synchronized (PLAYWRIGHT_INIT_SYNCHRONIZER) {
+            /* Starting multiple Playwright instances at once, sometimes creates a threading issue,
+             * where some C code used by Playwright gets problems.
+             */
             playwright = Playwright.create();
             browser = playwright.firefox().launch();
         }
