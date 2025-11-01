@@ -31,7 +31,7 @@ import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
- * <p>The<a href="https://playwright.dev/python/docs/library#threading">Playwright library</a> is not thread safe.
+ * <p>The<a href="https://playwright.dev/python/docs/library#threading">Playwright library</a> <a href="https://github.com/microsoft/playwright-java/issues/1184">is not thread safe</a>.
  * Therefore, use 1 instance per thread.
  * Only creating 1 instance per program is even better,
  * as launching multiple ones often results in some broken ones,
