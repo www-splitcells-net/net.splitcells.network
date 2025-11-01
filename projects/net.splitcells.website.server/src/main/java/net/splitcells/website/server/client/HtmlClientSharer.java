@@ -25,6 +25,11 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.website.server.client.HtmlClientImpl.htmlClientImpl;
 import static net.splitcells.website.server.client.HtmlClientShare.htmlClientShare;
 
+/**
+ * Starting an instance of Playwright has always a real probability of creating a Playwright error,
+ * especially when this is done regularly.
+ * Minimizing the number of starts, while providing access for multiple parallel threads,fixes this issue.
+ */
 public class HtmlClientSharer {
     private static final HtmlClientSharer SHARER = new HtmlClientSharer();
 
