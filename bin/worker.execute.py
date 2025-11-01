@@ -219,7 +219,6 @@ test -f target/program-${programName} && chmod +x target/program-${programName} 
 PODMAN_COMMAND_TEMPLATE = """podman run --name "${executionName}" \\
   --pids-limit=-1 \\
   --network slirp4netns:allow_host_loopback=true \\
-  --security-opt seccomp=unconfined \\
   ${additionalArguments}\\
   --rm \\
   -v ~/.local/state/${programName}/Documents:/root/.local/state/${programName}/Documents \\
@@ -659,7 +658,6 @@ test -f target/program-net.splitcells.martins.avots.distro && chmod +x target/pr
 podman run --name "net.splitcells.martins.avots.distro" \\
   --pids-limit=-1 \\
   --network slirp4netns:allow_host_loopback=true \\
-  --security-opt seccomp=unconfined \\
   \\
   --rm \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/Documents:/root/.local/state/net.splitcells.martins.avots.distro/Documents \\
@@ -703,7 +701,6 @@ podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
 podman run --name "net.splitcells.martins.avots.distro" \\
   --pids-limit=-1 \\
   --network slirp4netns:allow_host_loopback=true \\
-  --security-opt seccomp=unconfined \\
   \\
   --rm \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/Documents:/root/.local/state/net.splitcells.martins.avots.distro/Documents \\
@@ -932,7 +929,6 @@ StandardOutput=journal
 ExecStart=podman run --name "net.splitcells.network.worker.boostrap.daemon" \\
   --pids-limit=-1 \\
   --network slirp4netns:allow_host_loopback=true \\
-  --security-opt seccomp=unconfined \\
   \\
   --rm \\
   -v %h/.local/state/net.splitcells.network.worker/Documents:/root/.local/state/net.splitcells.network.worker/Documents \\
@@ -1085,7 +1081,6 @@ StandardOutput=journal
 ExecStart=podman run --name "net.splitcells.martins.avots.distro.livedistro" \\
   --pids-limit=-1 \\
   --network slirp4netns:allow_host_loopback=true \\
-  --security-opt seccomp=unconfined \\
   \\
   --rm \\
   -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/Documents:/root/.local/state/net.splitcells.martins.avots.distro.livedistro/Documents \\
@@ -1218,7 +1213,6 @@ podman build -f "target/Dockerfile-net.splitcells.network.worker" \\
 podman run --name "net.splitcells.network.worker" \\
   --pids-limit=-1 \\
   --network slirp4netns:allow_host_loopback=true \\
-  --security-opt seccomp=unconfined \\
   \\
   --rm \\
   -v ~/.local/state/net.splitcells.network.worker/Documents:/root/.local/state/net.splitcells.network.worker/Documents \\
@@ -1284,7 +1278,6 @@ podman build -f "target/Dockerfile-net.splitcells.network.worker" \\
 podman run --name "net.splitcells.network.worker" \\
   --pids-limit=-1 \\
   --network slirp4netns:allow_host_loopback=true \\
-  --security-opt seccomp=unconfined \\
   \\
   --rm \\
   -v ~/.local/state/net.splitcells.network.worker/Documents:/root/.local/state/net.splitcells.network.worker/Documents \\
