@@ -36,7 +36,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
  * Only creating 1 instance per program is even better,
  * as launching multiple ones often results in some broken ones,
  * that litter the process tree.
- * For this to be reactive, it is probably important to never use handlers,
+ * For this to be reactive, it is probably important to never use <a href="https://playwright.dev/java/docs/handles">handlers</a>,
  * as these are probably not thread safe and would therefore require additional synchronization.
  * This synchronization during the execution of one handler would block all other {@link HtmlClientImpl} actions.</p>
  * <p>TODO Test Firefox and Chromium automatically in tests using a {@link HtmlClient}.</p>
