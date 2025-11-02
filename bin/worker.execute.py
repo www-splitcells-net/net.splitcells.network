@@ -213,8 +213,6 @@ test -f target/program-${programName} && chmod +x target/program-${programName} 
 """
 
 # allow_host_loopback is required, so that the software in the container can connect to the host.
-# `--security-opt seccomp=unconfined` is required for NodeJS, if many instances of it are spawned and closed again: https://github.com/nodejs/node/issues/43064#issuecomment-1973209378
-# `--security-opt seccomp=unconfined` is not used, as this also means, that too many NodeJS instances are used.
 #  --pids-limit=-1 is required, as the Podmans default of 2048 is too low, when many Playwright instances are created.
 PODMAN_COMMAND_TEMPLATE = """podman run --name "${executionName}" \\
   --pids-limit=-1 \\
