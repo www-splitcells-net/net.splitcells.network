@@ -13,11 +13,8 @@
         <title>Geal Editor</title>
         <description>
             <paragraph>
-                Define and solve assignment problems.
-            </paragraph>
-            <paragraph>
                 This editor allows you to define one or more assignment problems and lets you solve them by the Generic Allocator.
-                Please, define the problem definition and enter the input data.
+                Define the problem definition and enter the input data.
                 After executing the optimizer via the <quote>Calculate solution</quote> button,
                 the solution will be visible under the <quote>Solution</quote> tabs.
             </paragraph>
