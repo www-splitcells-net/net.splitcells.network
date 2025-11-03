@@ -104,8 +104,8 @@ public class FunctionCallRunnerParser<T> {
                 tree("list", SEW).withParent(signature)
                         .withProperty("name", SEW, "No Receiver Constraints.");
             }
-            val arguments = tree("list", SEW).withParent(signature);
-            arguments.withProperty("name", SEW, parameterTitle(fcr));
+            val parameters = tree("list", SEW).withParent(signature);
+            parameters.withProperty("name", SEW, parameterTitle(fcr));
             fcr.argumentIndexes().forEach(i -> {
                 final String validValues;
                 final String validValuesDesc;
@@ -121,13 +121,13 @@ public class FunctionCallRunnerParser<T> {
                 } else {
                     validValuesDesc = "";
                 }
-                arguments.withChild(tree("item", SEW).withText(i
+                parameters.withChild(tree("item", SEW).withText(i
                         + "; type = "
                         + fcr.getArgumentTypes().get(i).getSimpleName()
                         + validValuesDesc));
             });
             if (fcr.getOnlyAttributesAsArgumentsFrom() != -1) {
-                arguments.withChild(tree("item", SEW).withText("Starting with index "
+                parameters.withChild(tree("item", SEW).withText("Starting with index "
                         + fcr.getOnlyAttributesAsArgumentsFrom()
                         + " an arbitrary number of only attribute arguments are accepted."));
             }
