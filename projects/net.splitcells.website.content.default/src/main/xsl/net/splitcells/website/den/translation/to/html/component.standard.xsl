@@ -923,7 +923,29 @@ document.addEventListener('DOMContentLoaded', function(){
     </xsl:template>
     <xsl:template match="s:list" mode="list">
         <li>
-            <xsl:apply-templates select="."/>
+            <xsl:choose>
+                <xsl:when test="./@name">
+                    <span>
+                        <xsl:value-of select="./@name"/>
+                    </span>
+                    <ol>
+                        <xsl:apply-templates select="./node()" mode="list"/>
+                    </ol>
+                </xsl:when>
+                <xsl:when test="./s:name">
+                    <span>
+                        <xsl:value-of select="./s:name"/>
+                    </span>
+                    <ol>
+                        <xsl:apply-templates select="./node()" mode="list"/>
+                    </ol>
+                </xsl:when>
+                <xsl:otherwise>
+                    <ol>
+                        <xsl:apply-templates select="./node()" mode="list"/>
+                    </ol>
+                </xsl:otherwise>
+            </xsl:choose>
         </li>
     </xsl:template>
     <xsl:template match="s:name" mode="list">
