@@ -23,6 +23,7 @@ import net.splitcells.dem.environment.Cell;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.gel.GelCoreFileSystem;
 import net.splitcells.gel.doc.GelDocFileSystem;
+import net.splitcells.gel.editor.GelEditorFileSystem;
 import net.splitcells.gel.ext.GelExtFileSystem;
 import net.splitcells.gel.ui.GelUiFileSystem;
 import net.splitcells.gel.ui.editor.geal.EditorProcessor;
@@ -143,6 +144,8 @@ public class SystemCell implements Cell {
                         , configValue(GelCoreFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/gel/ext/"
                         , configValue(GelExtFileSystem.class)))
+                .withAdditionalProject(projectConfig("/net/splitcells/gel/editor/"
+                        , configValue(GelEditorFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/gel/ui/"
                         , configValue(GelUiFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/network/"
