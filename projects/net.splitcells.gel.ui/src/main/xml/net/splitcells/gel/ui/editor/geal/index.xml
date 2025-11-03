@@ -13,13 +13,17 @@
         <title>Geal Editor</title>
         <description>
             <paragraph>
-                This editor allows you to define one or more assignment problems and lets you solve them by the Generic Allocator.
+                This editor allows you to define one or more assignment problems and lets you solve them by the Generic
+                Allocator.
                 Define the problem definition and enter the input data.
                 After executing the optimizer via the <quote>Calculate solution</quote> button,
                 the solution will be visible under the <quote>Solution</quote> tabs.
             </paragraph>
-            <paragraph>The conceptional documentation<link post="net/splitcells/gel/index">is provided here</link>.
-            </paragraph>
+            <list>
+                <link post="net/splitcells/gel/editor/geal/index">Documentation of the Editor's Programming Language
+                </link>
+                <link post="net/splitcells/gel/index">Overarching Documentation</link>
+            </list>
         </description>
         <pseudo-full-screen-by-default>true</pseudo-full-screen-by-default>
         <commands>
@@ -47,9 +51,11 @@
                 initial-content-at="/net/splitcells/gel/ui/editor/geal/examples/colloquium-planning.txt"/>
         <text-area
                 name="demands.csv"
-                initial-content-at="/net/splitcells/gel/ui/colloquium-planning-demands-test-data.csv"><![CDATA[]]></text-area>
+                initial-content-at="/net/splitcells/gel/ui/colloquium-planning-demands-test-data.csv">
+            <![CDATA[]]></text-area>
         <text-area
                 name="supplies.csv"
-                initial-content-at="/net/splitcells/gel/ui/colloquium-planning-supplies-test-data.csv"><![CDATA[]]></text-area>
+                initial-content-at="/net/splitcells/gel/ui/colloquium-planning-supplies-test-data.csv">
+            <![CDATA[]]></text-area>
     </form-editor>
 </article>
