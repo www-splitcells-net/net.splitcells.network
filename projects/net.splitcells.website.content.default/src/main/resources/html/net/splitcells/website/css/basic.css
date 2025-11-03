@@ -116,6 +116,10 @@ li {
    margin-right: .1em;
    margin-bottom: .1em;
    }
+ol li span {
+     font-weight: bold;
+     font-family: var(--text-flowing-font);
+}
 ol li:last-child::before {
   border-left: .1em solid rgb(100,100,100);
 }
