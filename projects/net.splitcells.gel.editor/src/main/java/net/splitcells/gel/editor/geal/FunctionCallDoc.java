@@ -56,7 +56,7 @@ public class FunctionCallDoc implements ProjectsRendererExtension {
         return new FunctionCallDoc();
     }
 
-    private static final Trail PATH = trail("net/splitcells/gel/editor/geal/doc.html");
+    private static final Trail PATH = trail("net/splitcells/gel/editor/geal/function-call-doc.html");
 
     private FunctionCallDoc() {
 
