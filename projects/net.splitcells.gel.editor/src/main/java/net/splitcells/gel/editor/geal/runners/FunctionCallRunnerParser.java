@@ -107,24 +107,18 @@ public class FunctionCallRunnerParser<T> {
             val parameters = tree("list", SEW).withParent(signature);
             parameters.withProperty("name", SEW, parameterTitle(fcr));
             fcr.argumentIndexes().forEach(i -> {
-                final String validValues;
-                final String validValuesDesc;
+                val parameterItem = tree("list", SEW).withProperty("name", SEW, i + ":");
+                if (fcr.getArgumentNames().hasKey(i)) {
+                    parameterItem.withProperty("item", SEW, "name: " + fcr.getArgumentNames().get(i));
+                }
+                parameterItem.withProperty("item", SEW, "type: " + fcr.getArgumentTypes().get(i).getSimpleName());
                 if (fcr.getArgumentsValidNames().hasKey(i)) {
-                    validValues = fcr.getArgumentsValidNames().get(i).stream()
-                            .reduce((a, b) -> a + ", " + b)
-                            .orElse("");
-                } else {
-                    validValues = "";
+                    parameterItem.withProperty("item", SEW,
+                            "valid values:" + fcr.getArgumentsValidNames().get(i).stream()
+                                    .reduce((a, b) -> a + ", " + b)
+                                    .orElse(""));
                 }
-                if (!validValues.isEmpty()) {
-                    validValuesDesc = " ; valid values = " + validValues;
-                } else {
-                    validValuesDesc = "";
-                }
-                parameters.withChild(tree("item", SEW).withText(i
-                        + "; type = "
-                        + fcr.getArgumentTypes().get(i).getSimpleName()
-                        + validValuesDesc));
+                parameters.withChild(parameterItem);
             });
             if (fcr.getOnlyAttributesAsArgumentsFrom() != -1) {
                 parameters.withChild(tree("item", SEW).withText("Starting with index "
