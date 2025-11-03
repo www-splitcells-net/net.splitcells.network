@@ -39,6 +39,28 @@ subject.methodCall(1);
 subject.methodCall(1).methodCall(functionCall(2)).methodCall(3);
 ]]></code_block>
     </chapter>
-</article>
+    <chapter>
+        <title>Language Usage</title>
+        <paragraph>The goal of the language is to construct solution tables,
+            that will be submitted to the optimizer,
+            in order to find an optimal solution according to their constraints.
+            <link post="net/splitcells/gel/editor/geal/function-call-doc">A full list of supported functions are listed here.</link>
+        </paragraph>
+        <code_block><![CDATA[date       = attribute(Integer, 'date'       );
+roomNumber = attribute(Integer, 'room number');
+shift      = attribute(Integer, 'shift'      );
+student    = attribute(String , 'student'    );
 
-\ No newline at end of file
+demands    = table('exams', student);
+demands    . importCsvData('demands.csv');
+
+supplies   = table('time slots', date, shift, roomNumber);
+supplies   . importCsvData('supplies.csv');
+
+solution   = solution('Simplified Colloquium Plan', demands, supplies);
+solution   . forAllCombinationsOf(student, date, shift)
+           . then(hasSize(1));
+solution   . forAllCombinationsOf(date, shift, roomNumber)
+           . then(hasSize(1));]]></code_block>
+    </chapter>
+</article>
