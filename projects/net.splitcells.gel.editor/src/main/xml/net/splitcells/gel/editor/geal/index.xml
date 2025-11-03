@@ -19,8 +19,11 @@
     </paragraph>
     <chapter>
         <title>Basic Grammar</title>
-        <paragraph>The language basically consists of variable assignments, function calls, function call chains and
-            method calls:
+        <paragraph>The language basically consists of variable assignments,
+            function calls, function call chains and method calls.
+            Every action is a function call or a constant.
+            A reference to a variable is the same as a function call without arguments and
+            is implemented as such in the editor.
         </paragraph>
         <code_block><![CDATA[variableName = 'string';
 integerVariable = 1;
