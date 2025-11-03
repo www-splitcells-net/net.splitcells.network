@@ -54,9 +54,9 @@ public class SolutionCallRunner implements FunctionCallRunner {
             , fcr -> {
                 val args = new Args();
                 fcr.requireArgumentCount(3);
-                args.solutionName = fcr.parseArgument(String.class, 0);
-                args.demands = fcr.parseArgument(Table.class, 1);
-                args.supplies = fcr.parseArgument(Table.class, 2);
+                args.solutionName = fcr.parseArgument(String.class, 0, "solutionName");
+                args.demands = fcr.parseArgument(Table.class, 1, "demand");
+                args.supplies = fcr.parseArgument(Table.class, 2, "supply");
                 fcr.addDescription(tree("paragraph", SEW).withText("""
                         Creates a assignment table with the given name, demand table and supply table.
                         It will be optimized according to the constraints added to it.

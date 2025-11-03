@@ -59,8 +59,8 @@ public class AttributeCallRunner implements FunctionCallRunner {
             , fcr -> {
                 val args = new AttributeFunctionArgs();
                 fcr.requireArgumentCount(2);
-                args.type = fcr.parseArgumentAsType(0, INTEGER_TYPE, STRING_TYPE);
-                args.name = fcr.parseArgumentAsStringDesc(1).getValue();
+                args.type = fcr.parseArgumentAsType(0, "valueType", INTEGER_TYPE, STRING_TYPE);
+                args.name = fcr.parseArgumentAsStringDesc(1, "attributeName").getValue();
                 fcr.addDescription(tree("paragraph", SEW).withText("Returns an attribute, that defines the name and content type of a table's column."));
                 return args;
             });

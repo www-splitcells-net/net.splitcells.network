@@ -53,11 +53,13 @@ import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuot
  */
 @Accessors(chain = true)
 public class FunctionCallRecord implements Closeable {
-    public static FunctionCallRecord functionCallRecord(Optional<Object> argSubject, FunctionCallDesc argFunctionCall, Editor argContext, String argName, int argVariation) {
+    public static FunctionCallRecord functionCallRecord(Optional<Object> argSubject, FunctionCallDesc argFunctionCall
+            , Editor argContext, String argName, int argVariation) {
         return new FunctionCallRecord(argSubject, argFunctionCall, argContext, argName, argVariation, false);
     }
 
-    public static FunctionCallRecord functionCallRecord(Optional<Object> argSubject, FunctionCallDesc argFunctionCall, Editor argContext, String argName, int argVariation, boolean argIsRecording) {
+    public static FunctionCallRecord functionCallRecord(Optional<Object> argSubject, FunctionCallDesc argFunctionCall
+            , Editor argContext, String argName, int argVariation, boolean argIsRecording) {
         return new FunctionCallRecord(argSubject, argFunctionCall, argContext, argName, argVariation, argIsRecording);
     }
 
@@ -79,6 +81,7 @@ public class FunctionCallRecord implements Closeable {
     @Getter Boolean requireSubjectAbsent = false;
     @Getter List<Class<?>> requiredSubjectTypes = list();
     @Getter Map<Integer, Class<?>> argumentTypes = map();
+    @Getter Map<Integer, String> argumentNames = map();
     @Getter Map<Integer, List<String>> argumentsValidNames = map();
     @Getter Map<Integer, List<Class<?>>> argumentTypeArguments = map();
     @Getter Boolean onlyAttributesAsArgument = false;
@@ -86,7 +89,8 @@ public class FunctionCallRecord implements Closeable {
     @Getter int requiredArgumentCount = -1;
     @Getter int requiredMinimalArgumentCount = -1;
 
-    private FunctionCallRecord(Optional<Object> argSubject, FunctionCallDesc argFunctionCall, Editor argContext, String argName, int argVariation, boolean argIsRecording) {
+    private FunctionCallRecord(Optional<Object> argSubject, FunctionCallDesc argFunctionCall, Editor argContext,
+                               String argName, int argVariation, boolean argIsRecording) {
         name = argName;
         variation = argVariation;
         context = argContext;
@@ -135,37 +139,39 @@ public class FunctionCallRecord implements Closeable {
         }
     }
 
-    public NameDesc parseArgumentAsType(int argument, String... validValues) {
+    public NameDesc parseArgumentAsType(int parameter, String parameterName, String... validValues) {
         if (isRecording) {
-            argumentTypes.ensurePresence(argument, NameDesc.class);
-            argumentsValidNames.ensurePresence(argument, list(validValues));
+            argumentTypes.ensurePresence(parameter, NameDesc.class);
+            argumentsValidNames.ensurePresence(parameter, list(validValues));
+            argumentNames.ensurePresence(parameter, parameterName);
             return null;
         }
-        val argumentAsType = parseArgumentAsType(argument);
+        val argumentAsType = parseArgumentAsType(parameter, parameterName);
         val validValueList = listWithValuesOf(validValues);
         val anyMatch = validValueList.stream().anyMatch(v -> v.equals(argumentAsType.getValue()));
         if (!anyMatch) {
             throw execException(tree("The "
                     + functionCall.getName().getValue()
-                    + " function call's " + argument + " argument only supports the following values: " + validValueList));
+                    + " function call's " + parameter + " argument only supports the following values: " + validValueList));
         }
         return argumentAsType;
     }
 
-    public NameDesc parseArgumentAsType(int argument) {
+    public NameDesc parseArgumentAsType(int parameter, String parameterName) {
         if (isRecording) {
-            argumentTypes.ensurePresence(argument, NameDesc.class);
+            argumentTypes.ensurePresence(parameter, NameDesc.class);
+            argumentNames.ensurePresence(parameter, parameterName);
             return null;
         }
-        final var first = context.parse(functionCall.getArguments().get(argument));
+        final var first = context.parse(functionCall.getArguments().get(parameter));
         switch (first) {
             case Type n -> {
-                return nameDesc(n.getName(), functionCall.getArguments().get(argument).getSourceCodeQuote());
+                return nameDesc(n.getName(), functionCall.getArguments().get(parameter).getSourceCodeQuote());
             }
             default -> throw execException(tree("The argument "
-                    + argument
+                    + parameter
                     + " of "
-                    + name
+                    + parameterName
                     + "has to be a name, but "
                     + first.getClass().getName()
                     + " was given instead.")
@@ -173,42 +179,26 @@ public class FunctionCallRecord implements Closeable {
         }
     }
 
-    public StringDesc parseArgumentAsStringDesc(int argument) {
+    public StringDesc parseArgumentAsStringDesc(int parameter, String parameterName) {
         if (isRecording) {
-            argumentTypes.ensurePresence(argument, StringDesc.class);
+            argumentTypes.ensurePresence(parameter, StringDesc.class);
+            argumentNames.ensurePresence(parameter, parameterName);
             return stringDesc("", emptySourceCodeQuote());
         }
-        final var first = context.parse(functionCall.getArguments().get(argument));
+        final var first = context.parse(functionCall.getArguments().get(parameter));
         switch (first) {
             case String n -> {
-                return stringDesc(n, functionCall.getArguments().get(argument).getSourceCodeQuote());
+                return stringDesc(n, functionCall.getArguments().get(parameter).getSourceCodeQuote());
             }
             default -> throw execException(tree("The argument "
-                    + argument
+                    + parameter
                     + " of "
-                    + name
+                    + parameterName
                     + "has to be a string, but "
                     + first.getClass().getName()
                     + " was given instead.")
                     .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
         }
-    }
-
-    @Deprecated
-    public void failBecauseOfInvalidType(int argument, NameDesc actualType, String... allowedTypes) {
-        if (isRecording) {
-            return;
-        }
-        final var allowedTypeList = list(allowedTypes).stream()
-                .map(at -> "the " + at + " type")
-                .reduce((a, b) -> a + " or " + b)
-                .orElseThrow();
-        throw execException(tree("The argument "
-                + argument
-                + " has to be a reference to "
-                + allowedTypeList
-                + ", but " + actualType.getValue() + " was given instead.")
-                .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
     }
 
     public Query parseQuerySubject() {
@@ -265,39 +255,40 @@ public class FunctionCallRecord implements Closeable {
                 .withProperty("Affected function call", functionCall.getSourceCodeQuote().userReferenceTree()));
     }
 
-    public List<Attribute<? extends Object>> parseAttributeArguments(int from) {
+    public List<Attribute<? extends Object>> parseAttributeArguments(int from, String parameterName) {
         if (isRecording) {
             onlyAttributesAsArgumentsFrom = from;
             return null;
         }
         return functionCall.getArguments().streamIndexes()
                 .filter(i -> i >= from)
-                .mapToObj(this::parseAttributeArgument).collect(toList());
+                .mapToObj(i -> parseAttributeArgument(i, parameterName)).collect(toList());
     }
 
-    public List<Attribute<? extends Object>> parseAttributeArguments() {
+    public List<Attribute<? extends Object>> parseAttributeArguments(String name) {
         if (isRecording) {
             onlyAttributesAsArgument = true;
             return null;
         }
-        return functionCall.getArguments().streamIndexes().mapToObj(this::parseAttributeArgument).collect(toList());
+        return functionCall.getArguments().streamIndexes().mapToObj(i -> parseAttributeArgument(i, name)).collect(toList());
     }
 
-    public Attribute<? extends Object> parseAttributeArgument(int argument) {
+    public Attribute<? extends Object> parseAttributeArgument(int parameter, String parameterName) {
         if (isRecording) {
-            argumentTypes.ensurePresence(argument, Attribute.class);
+            argumentTypes.ensurePresence(parameter, Attribute.class);
+            argumentNames.ensurePresence(parameter, parameterName);
             return null;
         }
-        final var a = functionCall.getArguments().get(argument);
+        final var a = functionCall.getArguments().get(parameter);
         final var parsed = context.parse(a);
         switch (parsed) {
             case Attribute<? extends Object> attribute -> {
                 return attribute;
             }
             default -> throw execException(tree("The argument "
-                    + argument
+                    + parameter
                     + " of "
-                    + name
+                    + parameterName
                     + "has to be an attribute, but a "
                     + parsed.getClass().getName()
                     + " was given instead.")
@@ -305,18 +296,19 @@ public class FunctionCallRecord implements Closeable {
         }
     }
 
-    public <T> Attribute<T> parseAttributeArgument(Class<? extends T> type, int argument) {
+    public <T> Attribute<T> parseAttributeArgument(Class<? extends T> type, int parameter, String parameterName) {
         if (isRecording) {
-            argumentTypes.ensurePresence(argument, Attribute.class);
-            argumentTypeArguments.ensurePresence(argument, list(type));
+            argumentTypes.ensurePresence(parameter, Attribute.class);
+            argumentTypeArguments.ensurePresence(parameter, list(type));
+            argumentNames.ensurePresence(parameter, parameterName);
             return null;
         }
-        final Attribute<?> distanceAttribute = parseAttributeArgument(argument);
+        final Attribute<?> distanceAttribute = parseAttributeArgument(parameter, parameterName);
         if (!type.isAssignableFrom(distanceAttribute.type())) {
             throw execException(tree("The argument "
-                    + argument
+                    + parameter
                     + " of "
-                    + name
+                    + parameterName
                     + " has to be an "
                     + type.getName()
                     + " attribute, but a "
@@ -327,19 +319,20 @@ public class FunctionCallRecord implements Closeable {
         return (Attribute<T>) distanceAttribute;
     }
 
-    public <T> T parseArgument(Class<? extends T> type, int argument) {
+    public <T> T parseArgument(Class<? extends T> type, int parameter, String parameterName) {
         if (isRecording) {
-            argumentTypes.ensurePresence(argument, type);
+            argumentTypes.ensurePresence(parameter, type);
+            argumentNames.ensurePresence(parameter, parameterName);
             return null;
         }
-        final var parsed = context.parse(functionCall.getArguments().get(argument));
+        final var parsed = context.parse(functionCall.getArguments().get(parameter));
         if (type.isInstance(parsed)) {
             return (T) parsed;
         }
         throw execException(tree("The argument "
-                + argument
+                + parameter
                 + " of "
-                + name
+                + parameterName
                 + " has to be a "
                 + type.getName()
                 + ", but a "

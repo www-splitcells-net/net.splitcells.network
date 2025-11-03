@@ -61,7 +61,7 @@ public class ImportCsvDataRunner implements FunctionCallRunner {
                 val args = new Args();
                 args.tableSubject = fcr.parseSubject(Table.class);
                 fcr.requireArgumentCount(1);
-                args.dataName = fcr.parseArgument(String.class, 0);
+                args.dataName = fcr.parseArgument(String.class, 0, "dataName");
                 fcr.addDescription(tree("paragraph", SEW).withText("""
                         Reads the data of the field with the given name,
                         interprets it as a CSV file and adds the content to the receiver table.

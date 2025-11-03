@@ -49,7 +49,7 @@ public class HasSizeCallRunner implements FunctionCallRunner {
                 val args = new Args();
                 fcr.requireSubjectAbsence();
                 fcr.requireArgumentCount(1);
-                args.targetSize = fcr.parseArgument(Integer.class, 0);
+                args.targetSize = fcr.parseArgument(Integer.class, 0, "targetSize");
                 fcr.addDescription(tree("paragraph", SEW).withText("Creates a rater, that requires a given line group to have at least as many " +
                         "lines as the given argument."));
                 return args;

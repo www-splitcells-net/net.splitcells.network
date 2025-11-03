@@ -51,7 +51,7 @@ public class ThenCallRunner implements FunctionCallRunner {
                 val args = new Args();
                 args.subjectVal = fcr.parseQuerySubject();
                 fcr.requireArgumentCount(1);
-                args.rater = fcr.parseArgument(Rater.class, 0);
+                args.rater = fcr.parseArgument(Rater.class, 0, "rater");
                 fcr.addDescription(tree("paragraph", SEW).withText("""
                         Creates and returns a constraint node, that groups and rates incoming lines by the given rater.
                         Lines with a none zero cost are not propagated to the child constraints.

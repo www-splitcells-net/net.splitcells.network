@@ -50,7 +50,7 @@ public class OutputFormatCallRunner implements FunctionCallRunner {
             , fcr -> {
                 val args = new Args();
                 args.subjectVal = fcr.parseSubject(Solution.class);
-                args.attributes = fcr.parseAttributeArguments();
+                args.attributes = fcr.parseAttributeArguments("columnAttributes");
                 fcr.addDescription(tree("paragraph", SEW).withText("""
                         When this function is called the receiver solution, will be formatted according to this config function.
                         The formatted table columns group the lines via the given attributes.
@@ -62,7 +62,7 @@ public class OutputFormatCallRunner implements FunctionCallRunner {
             , fcr -> {
                 val args = new Args();
                 args.subjectVal = fcr.parseSubject(Solution.class);
-                args.attributes = fcr.parseAttributeArguments();
+                args.attributes = fcr.parseAttributeArguments("rowAttributes");
                 fcr.addDescription(tree("""
                         When this function is called the receiver solution, will be formatted according to this config function.
                         The formatted table rows group the lines via the given attributes.

@@ -48,7 +48,7 @@ public class ForEachCallRunner implements FunctionCallRunner {
     private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(FOR_EACH_NAME, 1
             , fcr -> {
                 val args = new Args();
-                args.groupingAttribute = fcr.parseAttributeArgument(0);
+                args.groupingAttribute = fcr.parseAttributeArgument(0, "groupingAttribute");
                 args.subjectVal = fcr.parseQuerySubject();
                 fcr.addDescription(tree("paragraph", SEW).withText("""
                         Creates and returns a constraint node, that groups incoming lines by the values of the given attribute.

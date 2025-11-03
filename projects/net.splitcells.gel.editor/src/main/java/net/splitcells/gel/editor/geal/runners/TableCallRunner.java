@@ -53,8 +53,8 @@ public class TableCallRunner implements FunctionCallRunner {
             , fcr -> {
                 val args = new Args();
                 fcr.requireArgumentMinimalCount(2);
-                args.tableName = fcr.parseArgument(String.class, 0);
-                args.attributes = fcr.parseAttributeArguments(1);
+                args.tableName = fcr.parseArgument(String.class, 0, "name");
+                args.attributes = fcr.parseAttributeArguments(1, "attributes");
                 fcr.addDescription(tree("paragraph", SEW).withText("""
                         Returns a new table with the given name.
                         The columns are determined by the given attributes.
