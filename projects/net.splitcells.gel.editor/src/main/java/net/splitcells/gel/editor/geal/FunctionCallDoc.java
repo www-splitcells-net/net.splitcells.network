@@ -96,7 +96,7 @@ public class FunctionCallDoc implements ProjectsRendererExtension {
     }
 
     @Override public Set<Path> projectPaths(ProjectsRendererI projectsRenderer) {
-        return setOfUniques();
+        return setOfUniques(Path.of(PATH.unixPathString()));
     }
 
     @Override
