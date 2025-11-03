@@ -17,4 +17,26 @@
         an optimizer of a constraint problem takes the problem's variables with given value ranges and
         restricts the value ranges until a viable solution is found.
     </paragraph>
+    <chapter>
+        <title>Basic Grammar</title>
+        <paragraph>The language basically consists of variable assignments, function calls, function call chains and
+            method calls:
+        </paragraph>
+        <code_block><![CDATA[variableName = 'string';
+integerVariable = 1;
+variableResolution = integerVariable;
+
+functionCallResult1 = noArgumentFunctionCall;
+functionCallResult2 = functionCall('argument A');
+functionCallResult3 = functionCall(1, 2, 3);
+functionCallResult4 = functionCall(nestedFunctionCall('argument B'));
+
+subject = functionCallChainStart('argument A')
+    .functionCallChainLink('argument B')
+    .functionCallChainEnd('argument C');
+
+subject.methodCall(1);
+subject.methodCall(1).methodCall(2).methodCall(3);
+]]></code_block>
+    </chapter>
 </article>
