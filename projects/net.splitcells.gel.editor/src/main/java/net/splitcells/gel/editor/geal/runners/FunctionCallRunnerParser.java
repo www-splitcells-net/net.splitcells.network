@@ -114,7 +114,7 @@ public class FunctionCallRunnerParser<T> {
                 parameterItem.withProperty("item", SEW, "type: " + fcr.getArgumentTypes().get(i).getSimpleName());
                 if (fcr.getArgumentsValidNames().hasKey(i)) {
                     parameterItem.withProperty("item", SEW,
-                            "valid values:" + fcr.getArgumentsValidNames().get(i).stream()
+                            "valid values: " + fcr.getArgumentsValidNames().get(i).stream()
                                     .reduce((a, b) -> a + ", " + b)
                                     .orElse(""));
                 }
