@@ -1,8 +1,8 @@
+assignedHalfYear  = attribute(Integer, 'Assigned Half Year' );
 assignedSport     = attribute(Integer, 'Assigned Sport'     );
 assignedSportType = attribute(String , 'Assigned Sport Type');
 chosenSport       = attribute(String , 'Chosen Sport'       );
 chosenSportType   = attribute(String , 'Chosen Sport Type'  );
-coursesHalfYear   = attribute(Integer, 'Course's Half Year' );
 isSecondaryChoice = attribute(Integer, 'Is Secondary Choice');
 isSportGraduate   = attribute(Integer, 'Is Sport Graduate'  );
 student           = attribute(String , 'Student'            );
@@ -10,3 +10,6 @@ student           = attribute(String , 'Student'            );
 studentChoices    = table('Student Choices', student, isSportGraduate, chosenSport, chosenSportType, isSecondaryChoice);
 availableCourses  = table('Available Courses', assignedSport, assignedSportType);
 courseAssignment  = solution('Assignment of Students to Courses', studentChoices, availableCourses);
+
+availableHalYears = table('Available Half Years', assignedHalfYear);
+courseScheduling  = solution('Course Scheduling', courseAssignment, availableHalYears);
