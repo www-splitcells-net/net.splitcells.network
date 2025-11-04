@@ -15,5 +15,15 @@
  */
 package net.splitcells.gel.editor.geal.examples;
 
+import net.splitcells.dem.testing.annotations.UnitTest;
+import net.splitcells.gel.editor.GelEditorFileSystem;
+
+import static net.splitcells.dem.Dem.configValue;
+
 public class SportsCoursePlanningTest {
+    @UnitTest
+    public void test() {
+        final var problemDefinition = configValue(GelEditorFileSystem.class)
+                .readString("src/main/resources/html/net/splitcells/gel/editor/geal/examples/sports-course-planning.txt");
+    }
 }
