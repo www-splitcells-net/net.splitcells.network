@@ -1,0 +1,8 @@
+assignedSport     = attribute(Integer, 'Assigned Sport'     );
+assignedSportType = attribute(String , 'Assigned Sport Type');
+chosenSport       = attribute(String , 'Chosen Sport'       );
+chosenSportType   = attribute(String , 'Chosen Sport Type'  );
+coursesHalfYear   = attribute(Integer, 'Course's Half Year' );
+isSecondaryChoice = attribute(Integer, 'Is Secondary Choice');
+isSportGraduate   = attribute(Integer, 'Is Sport Graduate'  );
+student           = attribute(String , 'Student'            );
