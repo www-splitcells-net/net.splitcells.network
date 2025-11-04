@@ -48,7 +48,7 @@
         <text-area
                 name="definition"
                 main-tab="true"
-                initial-content-at="/net/splitcells/gel/ui/editor/geal/examples/colloquium-planning.txt"/>
+                initial-content-at="/net/splitcells/gel/editor/geal/examples/colloquium-planning.txt"/>
         <text-area
                 name="demands.csv"
                 initial-content-at="/net/splitcells/gel/ui/colloquium-planning-demands-test-data.csv">
