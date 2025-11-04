@@ -72,7 +72,8 @@ public class EditorTest {
                                 , list(functionCallDescForTest(INTEGER_TYPE), StringDesc.stringDescForTest("shift"))))
                 , variableDefinitionDesc(NameDesc.nameDescForTest("roomNumber")
                         , FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest("attribute")
-                                , list(functionCallDescForTest(INTEGER_TYPE), StringDesc.stringDescForTest("roomNumber"))))
+                                , list(functionCallDescForTest(INTEGER_TYPE), StringDesc.stringDescForTest(
+                                        "roomNumber"))))
                 , variableDefinitionDesc(NameDesc.nameDescForTest("demands")
                         , FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(TABLE_FUNCTION)
                                 , list(StringDesc.stringDescForTest("exams")
@@ -91,23 +92,31 @@ public class EditorTest {
                                         , functionCallDescForTest("demands")
                                         , functionCallDescForTest("supplies"))))
                 , FunctionCallChainDesc.functionCallChainDescForTest(NameDesc.nameDescForTest("solution")
-                        , list(FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(FOR_EACH_NAME), list(functionCallDescForTest("examiner")))
-                                , FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(FOR_ALL_COMBINATIONS_OF)
+                        , list(FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(FOR_EACH_NAME),
+                                        list(functionCallDescForTest("examiner")))
+                                ,
+                                FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(FOR_ALL_COMBINATIONS_OF)
                                         , list(functionCallDescForTest("date"), functionCallDescForTest("shift")))
                                 , FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(THEN_NAME)
-                                        , list(FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(HAS_SIZE_NAME)
+                                        ,
+                                        list(FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(HAS_SIZE_NAME)
                                                 , list(IntegerDesc.integerDescForTest(1)))))))
                 , FunctionCallChainDesc.functionCallChainDescForTest(NameDesc.nameDescForTest("solution")
-                        , list(FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(FOR_EACH_NAME), list(functionCallDescForTest("student")))
-                                , FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(FOR_ALL_COMBINATIONS_OF)
+                        , list(FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(FOR_EACH_NAME),
+                                        list(functionCallDescForTest("student")))
+                                ,
+                                FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(FOR_ALL_COMBINATIONS_OF)
                                         , list(functionCallDescForTest("date"), functionCallDescForTest("shift")))
                                 , FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(THEN_NAME)
-                                        , list(FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(HAS_SIZE_NAME)
+                                        ,
+                                        list(FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(HAS_SIZE_NAME)
                                                 , list(IntegerDesc.integerDescForTest(1)))))))
                 , FunctionCallChainDesc.functionCallChainDescForTest(NameDesc.nameDescForTest("solution")
-                        , list(FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(FOR_EACH_NAME), list(functionCallDescForTest("student")))
+                        , list(FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(FOR_EACH_NAME),
+                                        list(functionCallDescForTest("student")))
                                 , FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(THEN_NAME)
-                                        , list(FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(HAS_SIZE_NAME)
+                                        ,
+                                        list(FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(HAS_SIZE_NAME)
                                                 , list(IntegerDesc.integerDescForTest(2)))))))
         ));
         testSubject.interpret(testData);
@@ -317,37 +326,52 @@ public class EditorTest {
         final var firstShift = solution.assign(demands.rawLine(0), supplies.rawLine(0));
         // TODO A dedicated variable is used, as the Java11Parser has a bug regarding multi line strings as arguments.
         final var firstReport = """
-                        # Constraint Rating Report
-                        
-                        ## Description
-                        
-                        Cost of 0.0
-                        
-                        ## Argumentation
-                        
-                        No Argumentation is available.""";
+                # Constraint Rating Report
+                
+                ## Description
+                
+                Cost of 0.0
+                
+                ## Argumentation
+                
+                No Argumentation is available.""";
         requireEquals(solution.constraint().commonMarkRatingReport(), firstReport);
         final var duplicateFirstShift = solution.assign(demands.rawLine(1), supplies.rawLine(1));
         // TODO A dedicated variable is used, as the Java11Parser has a bug regarding multi line strings as arguments.
         final var secondReport = """
-                        # Constraint Rating Report
-                        
-                        ## Description
-                        
-                        Cost of 1.0
-                        
-                        ## Argumentation
-                        
-                        * For all allocations:
-                            * For all groups of student attribute values: where value is `1`:
-                                * For all groups of date attribute values: where value is `1`:
-                                    * For all groups of shift attribute values: where value is `1`: Then size should be 1, but is 2
-                        """;
+                # Constraint Rating Report
+                
+                ## Description
+                
+                Cost of 1.0
+                
+                ## Argumentation
+                
+                * For all allocations:
+                    * For all groups of student attribute values: where value is `1`:
+                        * For all groups of date attribute values: where value is `1`:
+                            * For all groups of shift attribute values: where value is `1`: Then size should be 1, but is 2
+                """;
         requireEquals(solution.constraint().commonMarkRatingReport(), secondReport);
         final var secondShift = solution.assign(demands.rawLine(2), supplies.rawLine(2));
         requireEquals(solution.constraint().commonMarkRatingReport(), secondReport);
         final var duplicateSecondShift = solution.assign(demands.rawLine(3), supplies.rawLine(3));
-        // TODO Implement this test fully.
         System.out.println(solution.constraint().commonMarkRatingReport());
+        final var thirdReport = """
+                # Constraint Rating Report
+                
+                ## Description
+                
+                Cost of 2.0
+                
+                ## Argumentation
+                
+                * For all allocations:
+                    * For all groups of student attribute values: where value is `1`:
+                        * For all groups of date attribute values: where value is `1`:
+                            * For all groups of shift attribute values: where value is `1`: Then size should be 1, but is 2
+                            * For all groups of shift attribute values: where value is `2`: Then size should be 1, but is 2
+                """;
+        requireEquals(solution.constraint().commonMarkRatingReport(), thirdReport);
     }
 }
