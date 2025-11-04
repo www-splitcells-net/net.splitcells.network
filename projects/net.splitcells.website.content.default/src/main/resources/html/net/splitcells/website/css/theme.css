@@ -3,5 +3,6 @@
  */
 main {
     background-size: 100%;
-    background-image: linear-gradient(to bottom, var(--background-color-start), var(--background-color-end) 300em), url('/net/splitcells/website/images/white.background.blog.discovery.0.jpg');
+    /* `2.jpg` is used, as this has a higher quality. */
+    background-image: linear-gradient(to bottom, var(--background-color-start), var(--background-color-end) 300em), url('/net/splitcells/website/images/white.background.blog.discovery.2.jpg');
 	}
