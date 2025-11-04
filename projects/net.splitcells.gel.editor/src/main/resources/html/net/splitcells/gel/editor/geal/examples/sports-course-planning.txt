@@ -6,3 +6,7 @@ coursesHalfYear   = attribute(Integer, 'Course's Half Year' );
 isSecondaryChoice = attribute(Integer, 'Is Secondary Choice');
 isSportGraduate   = attribute(Integer, 'Is Sport Graduate'  );
 student           = attribute(String , 'Student'            );
+
+studentChoices    = table('Student Choices', student, isSportGraduate, chosenSport, chosenSportType, isSecondaryChoice);
+availableCourses  = table('Available Courses', assignedSport, assignedSportType);
+courseAssignment  = solution('Assignment of Students to Courses', studentChoices, availableCourses);
