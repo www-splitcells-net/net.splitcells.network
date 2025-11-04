@@ -22,6 +22,6 @@ import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystem
 
 public class GelEditorFileSystem implements Option<FileSystemView> {
     @Override public FileSystemView defaultValue() {
-        return fileSystemViaClassResources(GelEditorFileSystem.class, "net.splitcells", "gel.editr");
+        return fileSystemViaClassResources(GelEditorFileSystem.class, "net.splitcells", "gel.editor");
     }
 }
