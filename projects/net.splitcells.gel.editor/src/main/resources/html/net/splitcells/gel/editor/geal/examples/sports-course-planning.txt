@@ -1,5 +1,5 @@
 assignedHalfYear  = attribute(Integer, 'Assigned Half Year' );
-assignedSport     = attribute(Integer, 'Assigned Sport'     );
+assignedSport     = attribute(String , 'Assigned Sport'     );
 assignedSportType = attribute(String , 'Assigned Sport Type');
 chosenSport       = attribute(String , 'Chosen Sport'       );
 chosenSportType   = attribute(String , 'Chosen Sport Type'  );
