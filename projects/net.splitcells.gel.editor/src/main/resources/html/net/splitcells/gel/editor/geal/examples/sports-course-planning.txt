@@ -11,5 +11,5 @@ studentChoices    = table('Student Choices', student, isSportGraduate, chosenSpo
 availableCourses  = table('Available Courses', assignedSport, assignedSportType);
 courseAssignment  = solution('Assignment of Students to Courses', studentChoices, availableCourses);
 
-availableHalYears = table('Available Half Years', assignedHalfYear);
-courseScheduling  = solution('Course Scheduling', courseAssignment, availableHalYears);
+availableHalfYears = table('Available Half Years', assignedHalfYear);
+courseScheduling  = solution('Course Scheduling', courseAssignment, availableHalfYears);
