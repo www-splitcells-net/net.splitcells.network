@@ -1,3 +1,8 @@
+maxCoursesPerHalfYear = 5;
+maxCourseSize         = 28;
+minCourseSize         = 22;
+optCourseSize         = 24
+coursesPerStudent     = 4;
 assignedHalfYear  = attribute(Integer, 'Assigned Half Year' );
 assignedSport     = attribute(String , 'Assigned Sport'     );
 assignedSportType = attribute(String , 'Assigned Sport Type');
@@ -14,7 +19,7 @@ availableHalfYears = table('Available Half Years', assignedHalfYear);
 courseAssignment  = solution('Assignment of Students to Courses', studentChoices, availableCourses);
 courseAssignment  . ifNot(equals(assignedSport, 'Dummy Course'))
                   . forEach(student)
-                  . then(hasSize(4));
+                  . then(hasSize(coursesPerStudent));
 courseAssignment  . ifNot(equals(assignedSport, 'Dummy Course'))
                   . then (equals(chosenSportType, assignedSportType));
 courseAssignment  . ifNot(equals(assignedSport, 'Dummy Course'))
@@ -37,13 +42,13 @@ courseScheduling . ifNot(equals(assignedSport, 'Dummy Course'))
                  . then(hasSize(1));
 courseScheduling . ifNot(equals(assignedSport, 'Dummy Course'))
                  . forEach(assignedSport)
-                 . then(atLeast(22, size));
+                 . then(atLeast(minCourseSize, size));
 courseScheduling . ifNot(equals(assignedSport, 'Dummy Course'))
                  . forEach(assignedSport)
-                 . then(hasSize(24));
+                 . then(hasSize(optCourseSize));
 courseScheduling . ifNot(equals(assignedSport, 'Dummy Course'))
                  . forEach(assignedSport)
-                 . then(atMost(28, size));
+                 . then(atMost(maxCourseSize, size));
 courseScheduling . ifNot(equals(assignedSport, 'Dummy Course'))
                  . forEach(assignedHalfYear)
-                 . then(atMost(5, uniqueValueCount(assignedSport)));
+                 . then(atMost(maxCoursesPerHalfYear, uniqueValueCount(assignedSport)));
