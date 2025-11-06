@@ -1,7 +1,7 @@
 maxCoursesPerHalfYear = 5;
 maxCourseSize         = 28;
 minCourseSize         = 22;
-optCourseSize         = 24
+optCourseSize         = 24;
 coursesPerStudent     = 4;
 
 assignedHalfYear  = attribute(Integer, 'Assigned Half Year' );
