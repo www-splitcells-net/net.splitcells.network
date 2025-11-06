@@ -35,3 +35,12 @@ courseScheduling = solution('Course Scheduling', courseAssignment, availableHalf
 courseScheduling . ifNot(equals(assignedSport, 'Dummy Course'))
                  . forEach(student, availableHalfYears)
                  . then(hasSize(1));
+courseScheduling . ifNot(equals(assignedSport, 'Dummy Course'))
+                 . forEach(assignedSport)
+                 . then(atLeast(22, size));
+courseScheduling . ifNot(equals(assignedSport, 'Dummy Course'))
+                 . forEach(assignedSport)
+                 . then(hasSize(24));
+courseScheduling . ifNot(equals(assignedSport, 'Dummy Course'))
+                 . forEach(assignedSport)
+                 . then(atMost(28, size));
