@@ -20,5 +20,8 @@ courseAssignment  . ifNot(equals(assignedSport  , 'Dummy Course'))
 courseAssignment  . ifNot(equals(assignedSport    , 'Dummy Course'))
                   . if   (equals(assignedSportType, 'Team Sport'))
                   . then (atLeast(1, size()));
+courseAssignment  . ifNot(equals(assignedSport    , 'Dummy Course'))
+                  . if   (equals(assignedSportType, 'Individual Sport'))
+                  . then (atLeast(1, size()));
 
 courseScheduling  = solution('Course Scheduling', courseAssignment, availableHalfYears);
