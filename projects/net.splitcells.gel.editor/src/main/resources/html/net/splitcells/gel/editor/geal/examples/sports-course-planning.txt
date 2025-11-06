@@ -12,26 +12,26 @@ availableCourses   = table('Available Courses', assignedSport, assignedSportType
 availableHalfYears = table('Available Half Years', assignedHalfYear);
 
 courseAssignment  = solution('Assignment of Students to Courses', studentChoices, availableCourses);
-courseAssignment  . ifNot  (equals (assignedSport, 'Dummy Course'))
+courseAssignment  . ifNot(equals(assignedSport, 'Dummy Course'))
                   . forEach(student)
-                  . then   (hasSize(4));
-courseAssignment  . ifNot(equals(assignedSport  , 'Dummy Course'))
+                  . then(hasSize(4));
+courseAssignment  . ifNot(equals(assignedSport, 'Dummy Course'))
                   . then (equals(chosenSportType, assignedSportType));
-courseAssignment  . ifNot(equals(assignedSport    , 'Dummy Course'))
-                  . if   (equals(assignedSportType, 'Team Sport'))
-                  . then (atLeast(1, size));
-courseAssignment  . ifNot(equals(assignedSport    , 'Dummy Course'))
-                  . if   (equals(assignedSportType, 'Individual Sport'))
-                  . then (atLeast(1, size));
-courseAssignment  . ifNot  (equals (assignedSport  , 'Dummy Course'))
+courseAssignment  . ifNot(equals(assignedSport, 'Dummy Course'))
+                  . if(equals(assignedSportType, 'Team Sport'))
+                  . then(atLeast(1, size));
+courseAssignment  . ifNot(equals(assignedSport, 'Dummy Course'))
+                  . if(equals(assignedSportType, 'Individual Sport'))
+                  . then(atLeast(1, size));
+courseAssignment  . ifNot(equals(assignedSport, 'Dummy Course'))
                   . forEach(assignedSport)
-                  . then   (hasSize(1));
-courseAssignment  . ifNot  (equals (assignedSport, 'Dummy Course'))
+                  . then(hasSize(1));
+courseAssignment  . ifNot(equals(assignedSport, 'Dummy Course'))
                   . forEach(student)
-                  . if     (equals (chosenSport  , assignedSport));
-                  . then   (hasSize(0));
+                  . if(equals(chosenSport, assignedSport));
+                  . then(hasSize(0));
 
 courseScheduling = solution('Course Scheduling', courseAssignment, availableHalfYears);
-courseScheduling . ifNot  (equals (assignedSport, 'Dummy Course'))
+courseScheduling . ifNot(equals(assignedSport, 'Dummy Course'))
                  . forEach(student, availableHalfYears)
-                 . then   (hasSize(1));
+                 . then(hasSize(1));
