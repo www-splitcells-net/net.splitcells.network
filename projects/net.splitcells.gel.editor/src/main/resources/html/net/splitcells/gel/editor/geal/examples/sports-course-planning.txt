@@ -7,14 +7,15 @@ isSecondaryChoice = attribute(Integer, 'Is Secondary Choice');
 isSportGraduate   = attribute(Integer, 'Is Sport Graduate'  );
 student           = attribute(String , 'Student'            );
 
-studentChoices    = table('Student Choices', student, isSportGraduate, chosenSport, chosenSportType, isSecondaryChoice);
-availableCourses  = table('Available Courses', assignedSport, assignedSportType);
+studentChoices     = table('Student Choices', student, isSportGraduate, chosenSport, chosenSportType, isSecondaryChoice);
+availableCourses   = table('Available Courses', assignedSport, assignedSportType);
+availableHalfYears = table('Available Half Years', assignedHalfYear);
+
 courseAssignment  = solution('Assignment of Students to Courses', studentChoices, availableCourses);
 courseAssignment  . forEach(student)
-                  . ifNot(equals(assignedSport, 'Dummy Course'))
-                  . then(hasSize(4));
-courseAssignment  . ifNot(equals(assignedSport, 'Dummy Course'))
-                  . then(equals(chosenSportType, assignedSportType));
+                  . ifNot  (equals (assignedSport, 'Dummy Course'))
+                  . then   (hasSize(4));
+courseAssignment  . ifNot(equals(assignedSport  , 'Dummy Course'))
+                  . then (equals(chosenSportType, assignedSportType));
 
-availableHalfYears = table('Available Half Years', assignedHalfYear);
 courseScheduling  = solution('Course Scheduling', courseAssignment, availableHalfYears);
