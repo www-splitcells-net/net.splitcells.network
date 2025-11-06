@@ -42,13 +42,13 @@ courseScheduling . ifNot(equals(assignedSport, 'Dummy Course'))
                  . forEach(student, assignedHalfYear)
                  . then(hasSize(1));
 courseScheduling . ifNot(equals(assignedSport, 'Dummy Course'))
-                 . forEach(assignedSport)
+                 . forEach(assignedSport, assignedHalfYear)
                  . then(atLeast(minCourseSize, size));
 courseScheduling . ifNot(equals(assignedSport, 'Dummy Course'))
-                 . forEach(assignedSport)
+                 . forEach(assignedSport, assignedHalfYear)
                  . then(hasSize(optCourseSize));
 courseScheduling . ifNot(equals(assignedSport, 'Dummy Course'))
-                 . forEach(assignedSport)
+                 . forEach(assignedSport, assignedHalfYear)
                  . then(atMost(maxCourseSize, size));
 courseScheduling . ifNot(equals(assignedSport, 'Dummy Course'))
                  . forEach(assignedHalfYear)
