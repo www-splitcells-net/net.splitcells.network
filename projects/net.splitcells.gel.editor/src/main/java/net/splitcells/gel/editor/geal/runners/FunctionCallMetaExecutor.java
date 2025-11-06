@@ -83,6 +83,7 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
                 .findFirst();
         if (fittingRun.isEmpty()) {
             throw ExecutionException.execException(tree("Unknown function call description.")
+                    .withProperty("function name", functionCall.getName().getValue())
                     .withChild(functionCall.getSourceCodeQuote().userReferenceTree()));
         }
         return fittingRun.get();
