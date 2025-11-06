@@ -3,6 +3,7 @@ maxCourseSize         = 28;
 minCourseSize         = 22;
 optCourseSize         = 24
 coursesPerStudent     = 4;
+
 assignedHalfYear  = attribute(Integer, 'Assigned Half Year' );
 assignedSport     = attribute(String , 'Assigned Sport'     );
 assignedSportType = attribute(String , 'Assigned Sport Type');
@@ -33,7 +34,7 @@ courseAssignment  . ifNot(equals(assignedSport, 'Dummy Course'))
                   . then(hasSize(1));
 courseAssignment  . ifNot(equals(assignedSport, 'Dummy Course'))
                   . forEach(student)
-                  . if(equals(chosenSport, assignedSport));
+                  . ifNot(equals(chosenSport, assignedSport));
                   . then(hasSize(0));
 
 courseScheduling = solution('Course Scheduling', courseAssignment, availableHalfYears);
