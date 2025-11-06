@@ -10,6 +10,10 @@ student           = attribute(String , 'Student'            );
 studentChoices    = table('Student Choices', student, isSportGraduate, chosenSport, chosenSportType, isSecondaryChoice);
 availableCourses  = table('Available Courses', assignedSport, assignedSportType);
 courseAssignment  = solution('Assignment of Students to Courses', studentChoices, availableCourses);
+courseAssignment  . forEach(student)
+                  . ifNot(equals(assignedSport, 'Dummy Course'))
+                  . then(hasSize(4));
+                  . hasSize(4);
 
 availableHalfYears = table('Available Half Years', assignedHalfYear);
 courseScheduling  = solution('Course Scheduling', courseAssignment, availableHalfYears);
