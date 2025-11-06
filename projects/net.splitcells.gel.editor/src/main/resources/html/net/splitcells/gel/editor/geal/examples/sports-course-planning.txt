@@ -13,7 +13,8 @@ courseAssignment  = solution('Assignment of Students to Courses', studentChoices
 courseAssignment  . forEach(student)
                   . ifNot(equals(assignedSport, 'Dummy Course'))
                   . then(hasSize(4));
-                  . hasSize(4);
+courseAssignment  . ifNot(equals(assignedSport, 'Dummy Course'))
+                  . then(equals(chosenSportType, assignedSportType));
 
 availableHalfYears = table('Available Half Years', assignedHalfYear);
 courseScheduling  = solution('Course Scheduling', courseAssignment, availableHalfYears);
