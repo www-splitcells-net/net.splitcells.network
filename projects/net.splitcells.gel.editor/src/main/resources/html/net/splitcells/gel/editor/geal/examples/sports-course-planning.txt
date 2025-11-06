@@ -44,3 +44,6 @@ courseScheduling . ifNot(equals(assignedSport, 'Dummy Course'))
 courseScheduling . ifNot(equals(assignedSport, 'Dummy Course'))
                  . forEach(assignedSport)
                  . then(atMost(28, size));
+courseScheduling . ifNot(equals(assignedSport, 'Dummy Course'))
+                 . forEach(assignedHalfYear)
+                 . then(atMost(5, uniqueValueCount(assignedSport)));
