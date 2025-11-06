@@ -31,4 +31,7 @@ courseAssignment  . ifNot  (equals (assignedSport, 'Dummy Course'))
                   . if     (equals (chosenSport  , assignedSport));
                   . then   (hasSize(0));
 
-courseScheduling  = solution('Course Scheduling', courseAssignment, availableHalfYears);
+courseScheduling = solution('Course Scheduling', courseAssignment, availableHalfYears);
+courseScheduling . ifNot  (equals (assignedSport, 'Dummy Course'))
+                 . forEach(student, availableHalfYears)
+                 . then   (hasSize(1));
