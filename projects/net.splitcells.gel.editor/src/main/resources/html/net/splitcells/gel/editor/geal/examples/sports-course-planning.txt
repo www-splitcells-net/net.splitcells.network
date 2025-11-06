@@ -19,10 +19,10 @@ courseAssignment  . ifNot(equals(assignedSport  , 'Dummy Course'))
                   . then (equals(chosenSportType, assignedSportType));
 courseAssignment  . ifNot(equals(assignedSport    , 'Dummy Course'))
                   . if   (equals(assignedSportType, 'Team Sport'))
-                  . then (atLeast(1, size()));
+                  . then (atLeast(1, size));
 courseAssignment  . ifNot(equals(assignedSport    , 'Dummy Course'))
                   . if   (equals(assignedSportType, 'Individual Sport'))
-                  . then (atLeast(1, size()));
+                  . then (atLeast(1, size));
 courseAssignment  . ifNot  (equals (assignedSport  , 'Dummy Course'))
                   . forEach(assignedSport)
                   . then   (hasSize(1));
