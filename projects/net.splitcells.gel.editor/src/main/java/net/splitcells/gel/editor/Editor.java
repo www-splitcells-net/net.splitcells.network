@@ -70,6 +70,7 @@ public class Editor implements Discoverable {
     @Getter private final Map<String, Solution> solutions = map();
     @Getter private final Map<String, Constraint> constraints = map();
     @Getter private final Map<String, TableFormatting> tableFormatting = map();
+    @Getter private final Map<String, Integer> integerVariables = map();
     private final List<FunctionCallRecord> functionCallRecords = list();
     @Getter @Setter private boolean isRecording = false;
     private final Map<String, EditorData> data = map();
@@ -217,6 +218,8 @@ public class Editor implements Discoverable {
             constraints.put(varName, constraint);
         } else if (parsedObject instanceof Rater rater) {
             raters.put(varName, rater);
+        } else if (parsedObject instanceof Integer integer) {
+            integerVariables.put(varName, integer);
         } else {
             throw execException(tree(parsedObject.getClass().getName() + " is not supported for variables.")
                     .withChild(tree("Affected variable definition")
