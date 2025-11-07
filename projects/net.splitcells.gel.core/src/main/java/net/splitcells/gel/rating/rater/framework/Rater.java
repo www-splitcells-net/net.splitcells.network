@@ -73,19 +73,19 @@ public interface Rater extends PubliclyTyped<Rater>
      * if it was a view on the allocations.
      * </p>
      *
-     * @param linesOfGroup          The already present lines of the group after the addition.
-     *                       The {@link View#headerView()} of this is the same as of {@link Constraint#lines()}.
-     *                       In order to check, whether {@code addition} is equal to an element of {@code lines},
-     *                       one should not use {@link Line#equalsTo(Line)}, as both have different {@link Line#context()}.
-     *                       Compare their {@link Line#index()} instead.
-     * @param addition       The new {@link Line} of the {@code linesOfGroup} and {@link Constraint#lines()}.
-     * @param children       These are all sub {@link Constraint}s, to which the {@code linesOfGroup} can be propagated to.
-     *                       A classic implementation to propagate all complying lines to all {@code children}.
-     *                       See {@link Constraint#childrenView()}.
-     * @param lineProcessingOfGroup This is the {@link Constraint#lineProcessing()} of the incoming group before the addition.
+     * @param linesOfGroup                 The already present lines of the group after the addition.
+     *                                     The {@link View#headerView()} of this is the same as of {@link Constraint#lines()}.
+     *                                     In order to check, whether {@code addition} is equal to an element of {@code lines},
+     *                                     one should not use {@link Line#equalsTo(Line)}, as both have different {@link Line#context()}.
+     *                                     Compare their {@link Line#index()} instead.
+     * @param addition                     The new {@link Line} of the {@code linesOfGroup} and {@link Constraint#lines()}.
+     * @param children                     These are all sub {@link Constraint}s, to which the {@code linesOfGroup} can be propagated to.
+     *                                     A classic implementation to propagate all complying lines to all {@code children}.
+     *                                     See {@link Constraint#childrenView()}.
+     * @param lineProcessingBeforeAddition This is the {@link Constraint#lineProcessing()} of the incoming group before the addition.
      * @return
      */
-    RatingEvent ratingAfterAddition(View linesOfGroup, Line addition, List<Constraint> children, View lineProcessingOfGroup);
+    RatingEvent ratingAfterAddition(View linesOfGroup, Line addition, List<Constraint> children, View lineProcessingBeforeAddition);
 
     /**
      * <p>Calculate the required {@link Rating} update caused
@@ -95,10 +95,10 @@ public interface Rater extends PubliclyTyped<Rater>
      * <p>Nothing needs to be done here, if the {@link Rating} of one {@link Line} is not dependent on the rating of another line.
      * {@link RaterBasedOnLineValue} can be used for constructing such {@link Rater}s.</p>
      *
-     * @param lines          These are all {@link Constraint#lines()} of the incoming group present before the removal.
-     * @param removal        This is the line of {@link Constraint#lines()} and {@code linesOfGroup} that will be removed.
-     * @param children       These are the children {@link Constraint}s of the current {@link Constraint} node.
-     * @param lineProcessing This is the {@link Constraint#lineProcessing()} of the incoming group before the removal.
+     * @param lines                       These are all {@link Constraint#lines()} of the incoming group present before the removal.
+     * @param removal                     This is the line of {@link Constraint#lines()} and {@code linesOfGroup} that will be removed.
+     * @param children                    These are the children {@link Constraint}s of the current {@link Constraint} node.
+     * @param lineProcessingBeforeRemoval This is the {@link Constraint#lineProcessing()} of the incoming group before the removal.
      * @return The events needed to update the {@link Rating} of all lines.
      * A {@link Rating} update for the {@code removal} argument is not required,
      * because its {@link Rating} will be automatically removed from the {@link Constraint} during the actual removal.
