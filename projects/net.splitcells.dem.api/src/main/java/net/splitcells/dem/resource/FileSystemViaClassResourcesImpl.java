@@ -212,26 +212,28 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
 
     @Override
     public Stream<Path> walkRecursively() {
-        return walkRecursively(Path.of("/"));
+        return walkRecursively(Path.of("./"));
     }
 
     @Override
     public Stream<Path> walkRecursively(Path path) {
-        try {
-            final var pathStr = normalize(basePath + path.toString());
-            final var pathStrFolder = pathStr + "/";
-            final List<Path> walk = list();
-            for (final var resource : resourceList) {
-                final var resourceStr = resource;
-                if (resourceStr.startsWith(pathStrFolder) || resourceStr.equals(pathStr)) {
-                    walk.add(Path.of(resourceStr.substring(basePath.length())));
-                }
-            }
-            return walk.stream();
-        } catch (Throwable e) {
-            throw execException(e);
+        final var pathStr = normalize(basePath + path.toString());
+        final String pathStrFolder;
+        if (pathStr.endsWith("/.")) {
+            pathStrFolder = pathStr.substring(0, pathStr.length() - 2);
+        } else if (pathStr.endsWith("/")) {
+            pathStrFolder = pathStr;
+        } else {
+            pathStrFolder = pathStr + "/";
         }
-
+        final List<Path> walk = list();
+        for (final var resource : resourceList) {
+            final var resourceStr = resource;
+            if (resourceStr.startsWith(pathStrFolder) || resourceStr.equals(pathStr)) {
+                walk.add(Path.of(resourceStr.substring(basePath.length())));
+            }
+        }
+        return walk.stream();
     }
 
     @Override

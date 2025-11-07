@@ -38,6 +38,7 @@ import static net.splitcells.dem.utils.StreamUtils.concat;
 
 public class FileSystemViaClassResourcesTest extends TestSuiteI {
     private static final String TEST_FILE_PATH = "src/main/resources/net/splitcells/dem/api/test-file.txt";
+    private static final String NOT_EXISTING_FOLDER = "not/existing/folder";
     private static final String TEST_FILE_CONTENT = "This is a test file of the 20th of July 2023.";
     private static final String DEM_API_FOLDER = "src/main/resources/net/splitcells/dem/api";
 
@@ -87,7 +88,7 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
                 , TEST_FILE_CONTENT);
         requireThrow(() -> factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
                         , MAVEN_GROUP_ID, DEM_API)
-                .readString("long not existing file name."));
+                .readString(NOT_EXISTING_FOLDER));
     }
 
     public void testReadStringIfPresent(FileSystemViaClassResourcesFactoryApi factory) {
@@ -158,6 +159,18 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
                         , Path.of(rootPath + "1/2/3")
                         , Path.of(rootPath + "1/2/3/test.txt")
                 );
+        factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
+                        , MAVEN_GROUP_ID, DEM_API)
+                .walkRecursively()
+                .collect(toList())
+                .requireContentsOf(Path.of(rootPath)
+                        , Path.of(rootPath + "1")
+                        , Path.of(rootPath + "1/2")
+                        , Path.of(rootPath + "1/2/3")
+                        , Path.of(rootPath + "1/2/3/test.txt")
+                );
+        factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class, MAVEN_GROUP_ID, DEM_API)
+                .walkRecursively().collect(toList()).requireAnyContent();
     }
 
     public void testWalkRecursivelyOnFile(FileSystemViaClassResourcesFactoryApi factory) {
