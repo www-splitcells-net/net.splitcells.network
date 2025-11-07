@@ -15,15 +15,23 @@
  */
 package net.splitcells.gel.rating.rater.lib;
 
+import lombok.val;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
+import net.splitcells.gel.rating.framework.LocalRating;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import net.splitcells.gel.rating.type.Cost;
+
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
+import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
+import static net.splitcells.gel.rating.type.Cost.cost;
+import static net.splitcells.gel.rating.type.Cost.noCost;
 
 /**
  * Inverses a given {@link Rater}, so that only {@link Line}s with {@link Cost}s are propagated and
@@ -35,10 +43,10 @@ public class Not implements Rater {
         return new Not(argRater);
     }
 
-    private final Rater rater;
+    private final Rater base;
 
     private Not(Rater argRater) {
-        rater = argRater;
+        base = argRater;
     }
 
     @Override public RatingEvent ratingAfterAddition(View linesOfGroup
@@ -48,11 +56,33 @@ public class Not implements Rater {
         return null;
     }
 
+    private static RatingEvent invertRating(RatingEvent arg) {
+        val inversion = ratingEvent();
+        inversion.removal().addAll(arg.removal());
+        arg.additions()
+                .forEach((line, localRating) -> inversion.additions().put(line, invert(localRating)));
+        arg.complexAdditions().forEach((line, ratings) ->
+                ratings.forEach(rating -> inversion.extendComplexRating(line, invert(rating))));
+        return inversion;
+    }
+
+    private static LocalRating invert(LocalRating localRating) {
+        if (localRating.rating().equalz(noCost())) {
+            return localRating()
+                    .withRating(cost(1))
+                    .withResultingGroupId(localRating.resultingConstraintGroupId());
+        }
+        return localRating()
+                .withRating(noCost())
+                .withPropagationTo(localRating.propagateTo())
+                .withResultingGroupId(localRating.resultingConstraintGroupId());
+    }
+
     @Override public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
-        return "";
+        return "not " + base.toSimpleDescription(line, groupsLineProcessing, incomingGroup);
     }
 
     @Override public List<Domable> arguments() {
-        return null;
+        return list(base);
     }
 }
