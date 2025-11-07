@@ -31,8 +31,7 @@ import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.resource.FileSystemViaClassResourcesFactoryImpl._fileSystemViaClassResourcesFactoryImpl;
 import static net.splitcells.dem.resource.Files.readAsString;
-import static net.splitcells.dem.testing.Assertions.requireAbsenceOf;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
+import static net.splitcells.dem.testing.Assertions.*;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
 import static net.splitcells.dem.utils.StreamUtils.concat;
@@ -86,6 +85,9 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
                                 , MAVEN_GROUP_ID, DEM_API)
                         .readString(TEST_FILE_PATH)
                 , TEST_FILE_CONTENT);
+        requireThrow(() -> factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
+                        , MAVEN_GROUP_ID, DEM_API)
+                .readString("long not existing file name."));
     }
 
     public void testReadStringIfPresent(FileSystemViaClassResourcesFactoryApi factory) {
