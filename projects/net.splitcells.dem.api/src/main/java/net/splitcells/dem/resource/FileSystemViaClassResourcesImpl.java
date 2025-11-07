@@ -242,7 +242,7 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
             final var resourcePath = normalize("/" + basePath + path.toString());
             requireValidResourcePath(resourcePath);
             return clazz.getResourceAsStream(resourcePath).readAllBytes();
-        } catch (IOException e) {
+        } catch (Throwable e) {
             throw execException(e);
         }
     }

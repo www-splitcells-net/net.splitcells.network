@@ -210,5 +210,6 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
                 , MAVEN_GROUP_ID, DEM_API);
         requireEquals(new String(testSubject.readFileAsBytes(TEST_FILE_PATH))
                 , TEST_FILE_CONTENT);
+        requireThrow(() -> new String(testSubject.readFileAsBytes(NOT_EXISTING_FOLDER)));
     }
 }
