@@ -89,6 +89,7 @@
   2. Rename `SupplySelector` to `SupplyOfflineSelector`.
   3. Rename `SupplySelectors` to `SupplyOfflineSelectors`.
 ### Minor Changes
+* **2025-11-08 \#37** Create new Not Rater, that inverses a given Rater.
 * **2024-11-15 \#51**
     1. Define rating method after line removal instead of before for raters.
       This makes it possible to create simplified rater implementation.
