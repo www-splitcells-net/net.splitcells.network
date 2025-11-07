@@ -40,5 +40,15 @@ cd "$reposFolder/net.splitcells.network/projects/net.splitcells.network.system"
 cd "$reposFolder/net.splitcells.network" # Creating reports is done last, so the caller can use the reports.
   # Integration tests need to be enabled here as well, as verify does not only start the source code check, but also reruns the test and therefore the coverage.
   # The JaCoCo report is created only for the main report, as otherwise the Distro repo causes errors.
-  mvn verify site -Dtest_codecov=1 -Dsource_code_check=1 -Dtest.groups=testing_unit,testing_integration -DexcludedGroups="experimental_test"
+  # `-Dsonar.inclusions=src/main/**,bin/*` does not seem to work.`
+  mvn verify site \
+    org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+    -Dtest_codecov=1 \
+    -Dsource_code_check=1 \
+    -Dtest.groups=testing_unit,testing_integration \
+    -DexcludedGroups="experimental_test" \
+    -Dsonar.projectKey=www-splitcells-net_net.splitcells.network \
+    -Dsonar.test.exclusions=src/main/java/** \
+    -Dsonar.organization=www-splitcells-net \
+    -Dsonar.host.url=https://sonarcloud.io
   bin/repos.verify
