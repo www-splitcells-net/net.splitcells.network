@@ -79,7 +79,9 @@ public interface Cell extends Consumer<Environment>, Discoverable, Option<Consum
      * @param env The configuration that bootstraps this {@link Cell}.
      */
     @Override
-    void accept(Environment env);
+    default void accept(Environment env) {
+
+    }
 
     @Override
     default Consumer<Environment> defaultValue() {
