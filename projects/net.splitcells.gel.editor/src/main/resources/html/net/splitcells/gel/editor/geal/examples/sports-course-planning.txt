@@ -18,38 +18,38 @@ availableCourses   = table('Available Courses', assignedSport, assignedSportType
 availableHalfYears = table('Available Half Years', assignedHalfYear);
 
 courseAssignment  = solution('Assignment of Students to Courses', studentChoices, availableCourses);
-courseAssignment  . if(not(equals(assignedSport, 'Dummy Course')))
+courseAssignment  . forEach(not(equals(assignedSport, 'Dummy Course')))
                   . forEach(student)
                   . then(hasSize(coursesPerStudent));
-courseAssignment  . if(not(equals(assignedSport, 'Dummy Course')))
+courseAssignment  . forEach(not(equals(assignedSport, 'Dummy Course')))
                   . then (equals(chosenSportType, assignedSportType));
-courseAssignment  . if(not(equals(assignedSport, 'Dummy Course')))
-                  . if(equals(assignedSportType, 'Team Sport'))
+courseAssignment  . forEach(not(equals(assignedSport, 'Dummy Course')))
+                  . forEach(equals(assignedSportType, 'Team Sport'))
                   . then(atLeast(1, size));
-courseAssignment  . if(not(equals(assignedSport, 'Dummy Course')))
-                  . if(equals(assignedSportType, 'Individual Sport'))
+courseAssignment  . forEach(not(equals(assignedSport, 'Dummy Course')))
+                  . forEach(equals(assignedSportType, 'Individual Sport'))
                   . then(atLeast(1, size));
-courseAssignment  . if(not(equals(assignedSport, 'Dummy Course')))
+courseAssignment  . forEach(not(equals(assignedSport, 'Dummy Course')))
                   . forEach(assignedSport)
                   . then(hasSize(1));
-courseAssignment  . if(not(equals(assignedSport, 'Dummy Course')))
+courseAssignment  . forEach(not(equals(assignedSport, 'Dummy Course')))
                   . forEach(student)
-                  . if(not(equals(chosenSport, assignedSport)))
+                  . forEach(not(equals(chosenSport, assignedSport)))
                   . then(hasSize(0));
 
 courseScheduling = solution('Course Scheduling', courseAssignment, availableHalfYears);
-courseScheduling . if(not(equals(assignedSport, 'Dummy Course')))
+courseScheduling . forEach(not(equals(assignedSport, 'Dummy Course')))
                  . forEach(student, assignedHalfYear)
                  . then(hasSize(1));
-courseScheduling . if(not(equals(assignedSport, 'Dummy Course')))
+courseScheduling . forEach(not(equals(assignedSport, 'Dummy Course')))
                  . forEach(assignedSport, assignedHalfYear)
                  . then(atLeast(minCourseSize, size));
-courseScheduling . if(not(equals(assignedSport, 'Dummy Course')))
+courseScheduling . forEach(not(equals(assignedSport, 'Dummy Course')))
                  . forEach(assignedSport, assignedHalfYear)
                  . then(hasSize(optCourseSize));
-courseScheduling . if(not(equals(assignedSport, 'Dummy Course')))
+courseScheduling . forEach(not(equals(assignedSport, 'Dummy Course')))
                  . forEach(assignedSport, assignedHalfYear)
                  . then(atMost(maxCourseSize, size));
-courseScheduling . if(not(equals(assignedSport, 'Dummy Course')))
+courseScheduling . forEach(not(equals(assignedSport, 'Dummy Course')))
                  . forEach(assignedHalfYear)
                  . then(atMost(maxCoursesPerHalfYear, uniqueValueCount(assignedSport)));
