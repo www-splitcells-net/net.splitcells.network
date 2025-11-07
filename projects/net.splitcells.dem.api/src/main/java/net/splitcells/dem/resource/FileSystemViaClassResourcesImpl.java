@@ -215,31 +215,6 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
         return walkRecursively(Path.of("/"));
     }
 
-    /**
-     * Finds the resource protocol of the source code,
-     * in order to get more information about the protocols used for loading resources.
-     *
-     * @return The source code resource protocol of the {@link Class#getClassLoader()}
-     * of {@link FileSystemViaClassResourcesImpl}.
-     */
-    private String defaultProtocol() {
-        var testResource = FileSystemViaClassResourcesImpl.class.getClassLoader()
-                .getResource("net/");
-        if (testResource == null) {
-            testResource = FileSystemViaClassResourcesImpl.class.getClassLoader()
-                    .getResource("/net/");
-        }
-        if (testResource == null) {
-            throw ExecutionException.execException(tree("Could not test default protocol for resources of the class loader via the `net` source code package."));
-        }
-        final var resourceTestPath = testResource
-                .getProtocol();
-        if (resourceTestPath == null) {
-            throw ExecutionException.execException(tree("Could not determine default protocol for resources of the class loader."));
-        }
-        return resourceTestPath;
-    }
-
     @Override
     public Stream<Path> walkRecursively(Path path) {
         try {
