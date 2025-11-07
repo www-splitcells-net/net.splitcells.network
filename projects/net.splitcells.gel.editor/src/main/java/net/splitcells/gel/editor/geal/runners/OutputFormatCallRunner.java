@@ -81,7 +81,6 @@ public class OutputFormatCallRunner implements FunctionCallRunner {
     @Override
     public FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
         final var run = functionCallRun(subject, context);
-        final var name = functionCall.getName().getValue();
         if (!supports(functionCall, subject, context)) {
             return run;
         }
