@@ -41,7 +41,8 @@ cd "$reposFolder/net.splitcells.network" # Creating reports is done last, so the
   # Integration tests need to be enabled here as well, as verify does not only start the source code check, but also reruns the test and therefore the coverage.
   # The JaCoCo report is created only for the main report, as otherwise the Distro repo causes errors.
   # `-Dsonar.inclusions=src/main/**,bin/*` does not seem to work.`
-  mvn verify site \
+  # Enabling debugg logging via -X makes it easier to find reason for errors in daily CI.
+  mvn -X verify site \
     org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
     -Dtest_codecov=1 \
     -Dsource_code_check=1 \
