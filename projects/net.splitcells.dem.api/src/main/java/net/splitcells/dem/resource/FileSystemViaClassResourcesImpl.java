@@ -152,14 +152,7 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
     public String readString(Path path) {
         final var resourcePath = normalize("/" + basePath + path.toString());
         requireValidResourcePath(resourcePath);
-        try {
-            return readAsString(clazz.getResourceAsStream(resourcePath));
-        } catch (Throwable th) {
-            throw ExecutionException.execException(tree("Could not read file from class path resources:")
-                            .withProperty("path requested", path.toString())
-                            .withProperty("calculated resource path", resourcePath)
-                    , th);
-        }
+        return readAsString(clazz.getResourceAsStream(resourcePath));
     }
 
     @Override
