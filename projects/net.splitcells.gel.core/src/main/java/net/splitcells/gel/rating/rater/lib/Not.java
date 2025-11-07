@@ -25,6 +25,11 @@ import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import net.splitcells.gel.rating.type.Cost;
 
+/**
+ * Inverses a given {@link Rater}, so that only {@link Line}s with {@link Cost}s are propagated and
+ * do not cause any {@link Cost}.
+ * {@link Line}s with {@link Cost#noCost()} are not propagated, but cause constant {@link Cost}.
+ */
 public class Not implements Rater {
     public static Rater not(Rater argRater) {
         return new Not(argRater);
