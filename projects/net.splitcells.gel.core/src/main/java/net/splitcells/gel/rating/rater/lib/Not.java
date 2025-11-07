@@ -52,8 +52,8 @@ public class Not implements Rater {
     @Override public RatingEvent ratingAfterAddition(View linesOfGroup
             , Line addition
             , List<Constraint> children
-            , View lineProcessingOfGroup) {
-        return null;
+            , View lineProcessingBeforeAddition) {
+        return invertRating(base.ratingAfterAddition(linesOfGroup, addition, children, lineProcessingBeforeAddition));
     }
 
     @Override public RatingEvent rating_before_removal(View lines, Line removal, List<Constraint> children, View lineProcessingBeforeRemoval) {
