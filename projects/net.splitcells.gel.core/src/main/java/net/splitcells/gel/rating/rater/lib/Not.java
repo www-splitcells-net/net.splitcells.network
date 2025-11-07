@@ -74,6 +74,7 @@ public class Not implements Rater {
         if (localRating.rating().equalz(noCost())) {
             return localRating()
                     .withRating(cost(1))
+                    .withPropagationTo(list())
                     .withResultingGroupId(localRating.resultingConstraintGroupId());
         }
         return localRating()
