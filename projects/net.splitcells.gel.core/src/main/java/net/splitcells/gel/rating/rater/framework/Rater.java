@@ -104,9 +104,7 @@ public interface Rater extends PubliclyTyped<Rater>
      * because its {@link Rating} will be automatically removed from the {@link Constraint} during the actual removal.
      * The result should never contradict {@link #ratingAfterRemoval(View, List, View)}.
      */
-    default RatingEvent rating_before_removal(View lines, Line removal, List<Constraint> children, View lineProcessing) {
-        return ratingEvent();
-    }
+    RatingEvent rating_before_removal(View lines, Line removal, List<Constraint> children, View lineProcessingBeforeRemoval);
 
     /**
      * <p>This method combined with {@link #rating_before_removal(View, Line, List, View)} updates the {@link Rating} of all lines.

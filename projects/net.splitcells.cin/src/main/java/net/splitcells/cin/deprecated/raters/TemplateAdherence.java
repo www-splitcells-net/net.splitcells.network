@@ -24,8 +24,10 @@ import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
+import net.splitcells.gel.rating.rater.framework.RatingEventI;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 
 public class TemplateAdherence implements Rater {
 
@@ -51,6 +53,10 @@ public class TemplateAdherence implements Rater {
     @Override
     public RatingEvent ratingAfterAddition(View lines, Line addition, List<Constraint> children, View lineProcessing) {
         throw notImplementedYet();
+    }
+
+    @Override public RatingEvent rating_before_removal(View lines, Line removal, List<Constraint> children, View lineProcessingBeforeRemoval) {
+        return ratingEvent();
     }
 
     @Override

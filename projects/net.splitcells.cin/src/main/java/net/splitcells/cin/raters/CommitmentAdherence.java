@@ -95,6 +95,10 @@ public class CommitmentAdherence implements Rater {
                 .withRating(rating));
     }
 
+    @Override public RatingEvent rating_before_removal(View lines, Line removal, List<Constraint> children, View lineProcessingBeforeRemoval) {
+        return ratingEvent();
+    }
+
     @Override
     public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
         return "Lines are committed up to " + committedTime + " " + time.name() + ".";

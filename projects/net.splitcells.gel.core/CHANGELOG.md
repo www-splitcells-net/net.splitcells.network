@@ -5,6 +5,7 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2025-11-08 \#37** Require `Rater#rating_before_removal` to be implemented.
 * **2024-12-04 \#55**
   1. Rename `LookupComponents#lookup` to `LookupComponents#persistedLookup`.
   2. Define new `LookupComponents#lookup` methods, that returns a lookup,

@@ -56,6 +56,10 @@ public class Not implements Rater {
         return null;
     }
 
+    @Override public RatingEvent rating_before_removal(View lines, Line removal, List<Constraint> children, View lineProcessingBeforeRemoval) {
+        return invertRating(base.rating_before_removal(lines, removal, children, lineProcessingBeforeRemoval));
+    }
+
     private static RatingEvent invertRating(RatingEvent arg) {
         val inversion = ratingEvent();
         inversion.removal().addAll(arg.removal());

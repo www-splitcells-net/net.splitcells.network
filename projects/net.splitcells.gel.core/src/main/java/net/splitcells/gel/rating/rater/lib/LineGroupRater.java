@@ -27,6 +27,7 @@ import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 
 import static net.splitcells.gel.constraint.Constraint.LINE;
+import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 
 /**
  * <p>This {@link Rater} makes it easy to rate groups with interdependent {@link Line}s.
@@ -56,6 +57,10 @@ public class LineGroupRater implements Rater {
         lines.unorderedLinesStream().filter(l -> !l.equalsTo(addition))
                 .forEach(i -> ratingEvent.removal().add(i));
         return ratingEvent;
+    }
+
+    @Override public RatingEvent rating_before_removal(View lines, Line removal, List<Constraint> children, View lineProcessingBeforeRemoval) {
+        return ratingEvent();
     }
 
     @Override
