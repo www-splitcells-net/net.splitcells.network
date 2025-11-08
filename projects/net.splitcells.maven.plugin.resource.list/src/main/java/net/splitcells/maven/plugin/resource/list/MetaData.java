@@ -25,13 +25,12 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
-import java.util.stream.IntStream;
 
 import static java.util.stream.IntStream.range;
 
 public class MetaData {
 
-    public static List<MetaData> parseMetaDataFromReuse(AbstractMojo mojo, Path projectPath, String fileContent) {
+    public static List<MetaData> parseMetaDataFromReuse(AbstractMojo mojo, Path projectPath) {
         final List<MetaData> metaData = new ArrayList<>();
         var reuseToml = projectPath.resolve("REUSE.toml");
         var parentReuse = false;
@@ -65,8 +64,9 @@ public class MetaData {
     private static final Pattern SPX_COPYRIGHT_TEXT = Pattern.compile("(SPDX" + "-FileCopyrightText: )([a-zA-Z0-9-. *`]+)");
     String license;
     String copyrightText;
+    Path filePath;
 
-    public static MetaData parseMetaData(AbstractMojo mojo, Path projectPath, String fileContent) {
+    public static MetaData parseMetaData(String fileContent) {
         val metaData = new MetaData();
         val licenseMatch = SPX_LICENSE.matcher(fileContent);
         if (licenseMatch.find()) {

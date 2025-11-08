@@ -31,6 +31,7 @@ import org.apache.maven.project.MavenProject;
 
 import static java.nio.file.Files.createDirectories;
 import static net.splitcells.maven.plugin.resource.list.MetaData.parseMetaData;
+import static net.splitcells.maven.plugin.resource.list.MetaData.parseMetaDataFromReuse;
 
 /**
  * <p>This Maven Plugin creates a file, that list all resources of the jar to be built,
@@ -117,12 +118,12 @@ public class ResourceListMojo extends AbstractMojo {
                         } catch (IOException e) {
                             throw new RuntimeException("Could not create folder for meta data file: " + metaFileFolder, e);
                         }
-                        final var metaData = parseMetaData(this, project.getBasedir().toPath(), resourceContent);
-                        try (final BufferedWriter metaWriter = new BufferedWriter(new FileWriter(metaFilePath.toFile()))) {
+                        final var metaData = parseMetaData(resourceContent);
                             metaWriter.write(metaData.toString());
                         } catch (IOException e) {
                             throw new RuntimeException("Could not write meta file: " + metaFilePath, e);
                         }
+                        parseMetaDataFromReuse(this, project.getBasedir().toPath());
                     }
                 });
             }
