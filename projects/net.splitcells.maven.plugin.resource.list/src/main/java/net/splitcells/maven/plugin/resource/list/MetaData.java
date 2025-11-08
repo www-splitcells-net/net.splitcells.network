@@ -64,6 +64,9 @@ public class MetaData {
     private static final Pattern SPX_COPYRIGHT_TEXT = Pattern.compile("(SPDX" + "-FileCopyrightText: )([a-zA-Z0-9-. *`]+)");
     String license;
     String copyrightText;
+    /**
+     * This is the {@link Path} to the licensed file relative to this project's root folder.
+     */
     Path filePath;
 
     public static MetaData parseMetaData(String fileContent) {
