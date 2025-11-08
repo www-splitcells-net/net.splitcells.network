@@ -40,6 +40,11 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
  * as these are probably not thread safe and would therefore require additional synchronization.
  * This synchronization during the execution of one handler would block all other {@link HtmlClientImpl} actions.</p>
  * <p>TODO Test Firefox and Chromium automatically in tests using a {@link HtmlClient}.</p>
+ * <p>Starting multiple Playwright instances in parallel sometimes does seem to cause the following error.
+ * Therefore, it is prevented via monitors.
+ * Maybe this was caused by a low thread limit inside a Podman container instead.
+ * If this is the case, the synchronization of Playwright instance creation could be removed:
+ * `[62.986s][warning][os,thread] Failed to start thread "Unknown thread" - pthread_create failed (EAGAIN) for attributes: stacksize: 1024k, guardsize: 4k, detached.`</p>
  */
 @JavaLegacyArtifact
 public class HtmlClientImpl implements HtmlClient {
