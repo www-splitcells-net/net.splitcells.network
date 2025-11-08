@@ -4,6 +4,7 @@
 
 # Sets up the the repos and software environment inside a container.
 set -e
+set -x
 bin/worker.bootstrap.repos
 bin/worker.execute.py \
     --executable-path='bin/worker.bootstrap' \
