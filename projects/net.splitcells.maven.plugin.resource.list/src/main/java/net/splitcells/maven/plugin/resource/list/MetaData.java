@@ -57,18 +57,6 @@ public class MetaData {
         return metaData;
     }
 
-    /**
-     * The SPDX String is split, in order to avoid a bug in the REUSE license parser.
-     */
-    private static final Pattern SPX_LICENSE = Pattern.compile("(SPDX" + "-License-Identifier: )([a-zA-Z0-9-. ]+)");
-    private static final Pattern SPX_COPYRIGHT_TEXT = Pattern.compile("(SPDX" + "-FileCopyrightText: )([a-zA-Z0-9-. *`]+)");
-    String license;
-    String copyrightText;
-    /**
-     * This is the {@link Path} to the licensed file relative to this project's root folder.
-     */
-    Path filePath;
-
     public static MetaData parseMetaData(String fileContent) {
         val metaData = new MetaData();
         val licenseMatch = SPX_LICENSE.matcher(fileContent);
@@ -81,6 +69,18 @@ public class MetaData {
         }
         return metaData;
     }
+
+    /**
+     * The SPDX String is split, in order to avoid a bug in the REUSE license parser.
+     */
+    private static final Pattern SPX_LICENSE = Pattern.compile("(SPDX" + "-License-Identifier: )([a-zA-Z0-9-. ]+)");
+    private static final Pattern SPX_COPYRIGHT_TEXT = Pattern.compile("(SPDX" + "-FileCopyrightText: )([a-zA-Z0-9-. *`]+)");
+    String license;
+    String copyrightText;
+    /**
+     * This is the {@link Path} to the licensed file relative to this project's root folder.
+     */
+    Path filePath;
 
     @Override
     public String toString() {
