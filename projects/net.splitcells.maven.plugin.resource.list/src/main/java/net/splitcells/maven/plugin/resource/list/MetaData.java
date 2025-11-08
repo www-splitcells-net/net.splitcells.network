@@ -22,12 +22,42 @@ import org.tomlj.Toml;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
 import static java.util.stream.IntStream.range;
 
 public class MetaData {
+
+    public static List<MetaData> parseMetaDataFromReuse(AbstractMojo mojo, Path projectPath, String fileContent) {
+        final List<MetaData> metaData = new ArrayList<>();
+        var reuseToml = projectPath.resolve("REUSE.toml");
+        var parentReuse = false;
+        if (!Files.exists(reuseToml)) {
+            reuseToml = projectPath.resolve("../../REUSE.toml");
+            parentReuse = true;
+        }
+        if (Files.exists(reuseToml)) {
+            mojo.getLog().info("Found REUSE.toml at " + reuseToml);
+            try {
+                val tomlParsing = Toml.parse(reuseToml);
+                if (!tomlParsing.errors().isEmpty()) {
+                    throw new RuntimeException("The REUSE TOML file containing license data is not correct: " + reuseToml);
+                }
+                val annotations = tomlParsing.getArray("annotations");
+                range(0, annotations.size()).forEach(i -> {
+                    val table = annotations.getTable(i);
+                    mojo.getLog().info("Parsing path: " + table.getString("path"));
+                });
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return metaData;
+    }
+
     /**
      * The SPDX String is split, in order to avoid a bug in the REUSE license parser.
      */
@@ -36,40 +66,17 @@ public class MetaData {
     String license;
     String copyrightText;
 
-    public MetaData parseMetaData(AbstractMojo mojo, Path projectPath, String fileContent) {
+    public static MetaData parseMetaData(AbstractMojo mojo, Path projectPath, String fileContent) {
+        val metaData = new MetaData();
         val licenseMatch = SPX_LICENSE.matcher(fileContent);
         if (licenseMatch.find()) {
-            license = licenseMatch.group(2);
+            metaData.license = licenseMatch.group(2);
         }
         val copyrightMatch = SPX_COPYRIGHT_TEXT.matcher(fileContent);
         if (copyrightMatch.find()) {
-            copyrightText = copyrightMatch.group(2);
+            metaData.copyrightText = copyrightMatch.group(2);
         }
-        if (license == null) {
-            var reuseToml = projectPath.resolve("REUSE.toml");
-            var parentReuse = false;
-            if (!Files.exists(reuseToml)) {
-                reuseToml = projectPath.resolve("../../REUSE.toml");
-                parentReuse = true;
-            }
-            if (Files.exists(reuseToml)) {
-                mojo.getLog().info("Found REUSE.toml at " + reuseToml);
-                try {
-                    val tomlParsing = Toml.parse(reuseToml);
-                    if (!tomlParsing.errors().isEmpty()) {
-                        throw new RuntimeException("The REUSE TOML file containing license data is not correct: " + reuseToml);
-                    }
-                    val annotations = tomlParsing.getArray("annotations");
-                    range(0, annotations.size()).forEach(i -> {
-                        val table = annotations.getTable(i);
-                        mojo.getLog().info("Parsing path: " + table.getString("path"));
-                    });
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        return this;
+        return metaData;
     }
 
     @Override
