@@ -55,15 +55,20 @@ public class MetaData {
                     if (path == null) {
                         throw new RuntimeException("Path is missing for annotation: " + table);
                     }
+                    String filePathStr;
                     if (parentReuse) {
                         val slashCount = path.codePoints().filter(ch -> ch == '/').count();
                         if (slashCount < 2) {
                             return;
                         }
-                        metaData.filePath = Path.of(path.substring(path.indexOf("/", path.indexOf("/") + 1)));
+                        filePathStr = path.substring(path.indexOf("/", path.indexOf("/") + 1));
                     } else {
-                        metaData.filePath = Path.of(path);
+                        filePathStr = path;
                     }
+                    if (filePathStr.startsWith("/")) {
+                        filePathStr = filePathStr.substring(1);
+                    }
+                    metaData.filePath = Path.of(filePathStr);
                     mojo.getLog().info("Parsing path: " + metaData.filePath);
                     parsedMetaData.add(metaData);
                 });
