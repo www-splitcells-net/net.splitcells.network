@@ -33,10 +33,12 @@ public class MetaData {
     public static List<MetaData> parseMetaDataFromReuse(AbstractMojo mojo, Path projectPath) {
         final List<MetaData> parsedMetaData = new ArrayList<>();
         var reuseToml = projectPath.resolve("REUSE.toml");
-        var parentReuse = false;
+        final boolean parentReuse;
         if (!Files.exists(reuseToml)) {
             reuseToml = projectPath.resolve("../../REUSE.toml");
             parentReuse = true;
+        } else {
+            parentReuse = false;
         }
         if (Files.exists(reuseToml)) {
             mojo.getLog().info("Found REUSE.toml at " + reuseToml);
@@ -49,6 +51,15 @@ public class MetaData {
                 range(0, annotations.size()).forEach(i -> {
                     val metaData = new MetaData();
                     val table = annotations.getTable(i);
+                    val path = table.getString("path");
+                    if (path == null) {
+                        throw new RuntimeException("Path is missing for annotation: " + table);
+                    }
+                    if (parentReuse) {
+
+                    } else {
+                        metaData.filePath = Path.of(path);
+                    }
                     mojo.getLog().info("Parsing path: " + table.getString("path"));
                     parsedMetaData.add(metaData);
                 });
