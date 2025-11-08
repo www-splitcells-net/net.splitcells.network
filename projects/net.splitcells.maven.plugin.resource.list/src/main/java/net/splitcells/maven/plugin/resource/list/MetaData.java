@@ -16,12 +16,16 @@
 package net.splitcells.maven.plugin.resource.list;
 
 import lombok.val;
+import org.apache.maven.plugin.AbstractMojo;
 import org.tomlj.Toml;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.regex.Pattern;
+import java.util.stream.IntStream;
+
+import static java.util.stream.IntStream.range;
 
 public class MetaData {
     /**
@@ -32,7 +36,7 @@ public class MetaData {
     String license;
     String copyrightText;
 
-    public MetaData parseMetaData(Path projectPath, String fileContent) {
+    public MetaData parseMetaData(AbstractMojo mojo, Path projectPath, String fileContent) {
         val licenseMatch = SPX_LICENSE.matcher(fileContent);
         if (licenseMatch.find()) {
             license = licenseMatch.group(2);
@@ -42,14 +46,24 @@ public class MetaData {
             copyrightText = copyrightMatch.group(2);
         }
         if (license == null) {
-            val reuseToml = projectPath.resolve("REUSE.toml");
+            var reuseToml = projectPath.resolve("REUSE.toml");
+            var parentReuse = false;
+            if (!Files.exists(reuseToml)) {
+                reuseToml = projectPath.resolve("../../REUSE.toml");
+                parentReuse = true;
+            }
             if (Files.exists(reuseToml)) {
+                mojo.getLog().info("Found REUSE.toml at " + reuseToml);
                 try {
                     val tomlParsing = Toml.parse(reuseToml);
                     if (!tomlParsing.errors().isEmpty()) {
                         throw new RuntimeException("The REUSE TOML file containing license data is not correct: " + reuseToml);
                     }
-                    System.out.println(tomlParsing + " was successfully parsed.");
+                    val annotations = tomlParsing.getArray("annotations");
+                    range(0, annotations.size()).forEach(i -> {
+                        val table = annotations.getTable(i);
+                        mojo.getLog().info("Parsing path: " + table.getString("path"));
+                    });
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
