@@ -17,6 +17,7 @@
 # for things like reinstallations.
 # In other words, this command is used for bootstrapping a Shell project installation.
 
+set -e
 # TODO Remove explicit addition of `$HOME/bin` to PATH, as this is not part of the shell project.
 export PATH="$HOME/bin:$PATH"
 if [ -z "$NET_SPLITCELLS_SHELL_PATH" ]; then
