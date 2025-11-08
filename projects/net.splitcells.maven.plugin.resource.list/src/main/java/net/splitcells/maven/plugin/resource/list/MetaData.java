@@ -56,11 +56,15 @@ public class MetaData {
                         throw new RuntimeException("Path is missing for annotation: " + table);
                     }
                     if (parentReuse) {
-
+                        val slashCount = path.codePoints().filter(ch -> ch == '/').count();
+                        if (slashCount < 2) {
+                            return;
+                        }
+                        metaData.filePath = Path.of(path.substring(path.indexOf("/", path.indexOf("/") + 1)));
                     } else {
                         metaData.filePath = Path.of(path);
                     }
-                    mojo.getLog().info("Parsing path: " + table.getString("path"));
+                    mojo.getLog().info("Parsing path: " + metaData.filePath);
                     parsedMetaData.add(metaData);
                 });
             } catch (IOException e) {
