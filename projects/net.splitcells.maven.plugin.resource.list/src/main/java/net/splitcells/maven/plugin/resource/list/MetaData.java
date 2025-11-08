@@ -31,7 +31,7 @@ import static java.util.stream.IntStream.range;
 public class MetaData {
 
     public static List<MetaData> parseMetaDataFromReuse(AbstractMojo mojo, Path projectPath) {
-        final List<MetaData> metaData = new ArrayList<>();
+        final List<MetaData> parsedMetaData = new ArrayList<>();
         var reuseToml = projectPath.resolve("REUSE.toml");
         var parentReuse = false;
         if (!Files.exists(reuseToml)) {
@@ -47,14 +47,16 @@ public class MetaData {
                 }
                 val annotations = tomlParsing.getArray("annotations");
                 range(0, annotations.size()).forEach(i -> {
+                    val metaData = new MetaData();
                     val table = annotations.getTable(i);
                     mojo.getLog().info("Parsing path: " + table.getString("path"));
+                    parsedMetaData.add(metaData);
                 });
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
-        return metaData;
+        return parsedMetaData;
     }
 
     public static MetaData parseMetaData(String fileContent) {
