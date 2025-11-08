@@ -54,9 +54,9 @@ public class Config {
     }
 
     /**
-     * A SSL-Keystore is required for securing the web server.
-     * No SSL-Keystore is required by default, in order to easy minimal deployments.
+     * If true, a self-signed certificate is used for SSL encryption.
      */
+    @Deprecated
     private boolean isSecured = false;
 
     /**
