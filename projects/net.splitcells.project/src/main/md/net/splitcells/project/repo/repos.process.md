@@ -7,18 +7,6 @@
 * [Help page for parameters](repos.process.help.md)
 * [Use cases](repos.process.examples.md)
 
-# NOTICE
-
-After thinking and researching about git's submodule for a while,
-all functionality of repo process could have been done via git's submodules kind of easily as well.
-It would require wrapper scripts for git's submodules,
-as using git's submodules directly seems otherwise to be unnecessarily hard,
-but repo process required creating scripts as well.
-So, writing my own sub repo aka. submodule management from the ground up,
-may have been a big error caused by a misunderstanding of git submodules.
-The only advantage of repo process is the simplicity of the git commands, that are executed.
-Maybe rewriting the history of meta repos with the current scripts is easier compared to git submodules.
-
 # Introduction
 > What is this?
  
@@ -206,13 +194,23 @@ Some of them are viable and some not:
 
 ## Git Submodules
 
-As noted in the introduction now it seems I could have just used git submodules as well,
-provided I would use custom wrapper scripts for that,
-as the CLI is not that easy to use.
-These wrapper scripts could have been an alternative version of the currently used repo process scripts.
-Such wrappers could even have provided the same CLI interface.
-When repo process was created a misunderstanding lead to the belief,
-that switching and synchronizing multiple independent remotes for suche repos was not easily possible. 
+After thinking and researching about git's submodule for a while,
+all functionality of repo process could have been done via git's submodules kind of easily as well.
+It would require wrapper scripts for git's submodules,
+as using git's submodules directly seems otherwise to be unnecessarily hard,
+but repo process required creating scripts as well.
+So, writing my own sub repo aka. Not-Invented-Here submodule management from the ground up,
+may have been a big error caused by a misunderstanding of git submodules.
+
+The advantage of repo process is the simplicity of the git commands, that are executed.
+Git Submodules are harder to use and its error/status messages are also more complicated.
+Rewriting the history of meta repos with the current scripts may also easier compared to git submodules,
+as the repos are loosely coupled.
+
+Note that Git Submodules can also easily handle multiple remotes and changing the remotes,
+by using only relative file path as Submodule paths.
+
+In the end, one could argue, that its worth to avoid Git Submodules for simplicity.
 
 ## GRM — Git Repository Manager
 [This software](https://github.com/hakoerber/git-repo-manager)
@@ -231,6 +229,8 @@ because the output of the command is the concatenation of the config files for e
 ```
 repos.process --command='grm repos find local $(pwd) --format yaml' > ../config.yml
 ```
+
+GRM with some wrapper scripts, to establish and standardize tasks, could be considered a replacement for repo process.
 ## Javascript Project Meta
 The [Javascript project meta](https://github.com/mateodelnorte/meta)
 seems to be a similar tool.
