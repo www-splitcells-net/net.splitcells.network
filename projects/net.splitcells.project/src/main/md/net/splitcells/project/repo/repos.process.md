@@ -169,6 +169,8 @@ Keep in mind, that it could very well be the case,
 that the missing functionality could have been available in alternative software,
 by using them in creative ways.
 Unfortunately, these ways may have been overlooked.
+Even if some of them are viable, repo process could be considered a configuration generator for meta repo tools in the future and
+thereby prevent repo process from being made obsolete.
 
 1. Easy switching between different remotes.
 2. Easy way of nesting meta repos, so it's easily and safely possible to use this
