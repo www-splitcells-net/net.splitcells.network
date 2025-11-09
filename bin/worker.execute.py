@@ -240,12 +240,14 @@ podman tag ${programName}:latest codeberg.org/splitcells-net/${programName}:late
 podman push codeberg.org/splitcells-net/${programName}:latest
 """
 
+PROGRAM_S_MINIMAL_ARGUMENT = """
+"Exactly one of the arguments --command, --boostrap-remote, --bootstrap-locally, --test-remote, --build-remote, --executable-path or --class-for-execution, in order to execute this program."
+"""
+
 PROGRAMS_DESCRIPTION = """Executes a given program as isolated as possible with all program files being persisted at `~/.local/state/${programName}/` and user input being located at `~/Documents`.
 Executions with different names have different persisted file locations and are therefore isolated more clearly, whereas executions with the same name are assumed to share data.
 This is the CLI interface to the Splitcells Network Worker.
-Exactly one of arguments --program-name, --test-remote or --bootstrap-remote has to be set,
-in order to execute this program.
-"""
+""" + PROGRAM_S_MINIMAL_ARGUMENT
 
 CLI_FLAG_COMMAND_HELP = """This is the shell command, to execute the task.
 It consists of only one program call.
@@ -598,7 +600,7 @@ def parse_worker_execution_arguments(arguments):
     elif parsedArgs.class_for_execution is not None:
         pass
     else:
-        raise Exception("Exactly one of the arguments --program-name, --executable-path, --test-remote, --class-for-execution or --bootstrap-remote has to be set, in order to execute this program.");
+        raise Exception(PROGRAM_S_MINIMAL_ARGUMENT)
     if parsedArgs.execution_name is None:
         parsedArgs.execution_name = parsedArgs.program_name
     if parsedArgs.program_name is None and parsedArgs.execution_name is None:
