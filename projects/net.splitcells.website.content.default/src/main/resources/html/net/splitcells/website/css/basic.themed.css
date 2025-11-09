@@ -77,7 +77,7 @@ ol > ol {
     border-radius: var(--border-radius-for-actions);
     min-width: 1.5em;
     text-align: center;
-    line-height: 1.5em; // Some button
+    line-height: 1.5em;
 }
 .net-splitcells-action-text-button {
     text-align: left;
