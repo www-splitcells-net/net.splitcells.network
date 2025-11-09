@@ -1,8 +1,15 @@
 #!/usr/bin/env sh
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+
 set -e
+
 cd ../net.splitcells.network.bom
 mvn versions:update-parent
 mvn versions:use-next-releases
+
+cd ../net.splitcells.network.hub
+mvn clean install # Check if the project can be build, after the update.
+
+cd ../net.splitcells.network.bom
 git commit -sam "Updating dependencies #10"
