@@ -4,8 +4,8 @@
 ----
 # The Repo Process
 
-* [There is an help page describing all flags](repos.process.help.md).
-* [Use cases](repos.process.examples.md).
+* [Help page for parameters](repos.process.help.md)
+* [Use cases](repos.process.examples.md)
 
 # NOTICE
 
