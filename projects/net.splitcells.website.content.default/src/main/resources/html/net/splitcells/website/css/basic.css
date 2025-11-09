@@ -103,7 +103,7 @@ ol {
 ol ol {
     padding-left: 1.75em;
     }
-not(.cm-editor) > span {
+:not(.cm-editor) > span {
     /* Inline elements are assumed to contain flowing text by default. */
     font-family: var(--text-flowing-font);
     }
