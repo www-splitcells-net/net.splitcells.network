@@ -53,3 +53,4 @@ cd "$reposFolder/net.splitcells.network" # Creating reports is done last, so the
     -Dsonar.organization=www-splitcells-net \
     -Dsonar.host.url=https://sonarcloud.io
   bin/repos.verify
+  bin/repos.dependencies.update
