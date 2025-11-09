@@ -194,6 +194,16 @@ thereby prevent repo process from being made obsolete.
 Here are some alternatives.
 Some of them are viable and some not:
 
+## Simple Git wrapper scripts
+
+As the bootstrapping of the git repos shows even the simplest scripts can provide a lot of functionality.
+The only reason this was not done, was the fact, that bootstrapping scripts are repo specific.
+For instance the `net.splitcells.network` repo provides all commands for the public meta repo.
+Unfortunately, the author nests meta repos and the public meta repo is just a part of a bigger meta repo itself.
+Therefore, these scripts do not support all use cases.
+
+Implementing a generalized version, that supports arbitrary nesting failed (definitely no skill issues here).
+
 ## Git Submodules
 
 After thinking and researching about git's submodule for a while,
