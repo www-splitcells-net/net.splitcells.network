@@ -60,7 +60,13 @@ public interface Query {
 
     Query then(Rating rating);
 
+    /**
+     * @deprecated TODO Rename this for forEach, as its functionality is too similar, while the wording is pretty long.
+     * @param args
+     * @return
+     */
     @SuppressWarnings("unchecked")
+    @Deprecated
     default Query forAllCombinationsOf(Attribute<? extends Object>... args) {
         return forAllCombinationsOf(listWithValuesOf(args));
     }

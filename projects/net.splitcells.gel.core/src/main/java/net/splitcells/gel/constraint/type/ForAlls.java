@@ -26,6 +26,7 @@ import java.util.Optional;
 public class ForAlls {
 
     public static final String FOR_EACH_NAME = "forEach";
+    @Deprecated
     public static final String FOR_ALL_COMBINATIONS_OF = "forAllCombinationsOf";
 
     public static <T> Constraint forAllWithValue(Attribute<T> attribute, T value) {
