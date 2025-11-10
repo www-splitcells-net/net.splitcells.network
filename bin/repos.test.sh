@@ -42,12 +42,14 @@ cd "$reposFolder/net.splitcells.network" # Creating reports is done last, so the
   # The JaCoCo report is created only for the main report, as otherwise the Distro repo causes errors.
   # `-Dsonar.inclusions=src/main/**,bin/*` does not seem to work.`
   # Enabling debugg logging via -X makes it easier to find reason for errors in daily CI.
-  mvn -X verify site \
-    org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+  mvn verify site \
     -Dtest_codecov=1 \
     -Dsource_code_check=1 \
     -Dtest.groups=testing_unit,testing_integration \
-    -DexcludedGroups="experimental_test" \
+    -DexcludedGroups="experimental_test"
+  # Adding the following to the mvn verify command above did not work and broke authorization.
+  mvn -B clean install \
+    org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
     -Dsonar.projectKey=www-splitcells-net_net.splitcells.network \
     -Dsonar.test.exclusions=src/main/java/** \
     -Dsonar.organization=www-splitcells-net \
