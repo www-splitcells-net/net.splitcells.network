@@ -43,6 +43,7 @@ cd "$reposFolder/net.splitcells.network" # Creating reports is done last, so the
   # `-Dsonar.inclusions=src/main/**,bin/*` does not seem to work.`
   # Enabling debugg logging via -X makes it easier to find reason for errors in daily CI.
   # Adding the following to the mvn verify command did not work and broke authorization.
+  # The install step is required, according to SonarCloud doc https://docs.sonarsource.com/sonarqube-server/10.8/analyzing-source-code/scanners/sonarscanner-for-maven#analyzing
   mvn -B clean install \
     org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
     -Dsonar.projectKey=www-splitcells-net_net.splitcells.network \
