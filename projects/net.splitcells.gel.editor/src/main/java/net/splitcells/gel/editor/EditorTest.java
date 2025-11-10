@@ -95,7 +95,7 @@ public class EditorTest {
                         , list(FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(FOR_EACH_NAME),
                                         list(functionCallDescForTest("examiner")))
                                 ,
-                                FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(FOR_ALL_COMBINATIONS_OF)
+                                FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(FOR_EACH_NAME)
                                         , list(functionCallDescForTest("date"), functionCallDescForTest("shift")))
                                 , FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(THEN_NAME)
                                         ,
@@ -105,7 +105,7 @@ public class EditorTest {
                         , list(FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(FOR_EACH_NAME),
                                         list(functionCallDescForTest("student")))
                                 ,
-                                FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(FOR_ALL_COMBINATIONS_OF)
+                                FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(FOR_EACH_NAME)
                                         , list(functionCallDescForTest("date"), functionCallDescForTest("shift")))
                                 , FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest(THEN_NAME)
                                         ,
@@ -181,10 +181,10 @@ public class EditorTest {
                 
                 solution   = solution('Colloquium Plan', demands, supplies);
                 solution   .forEach(examiner)
-                           .forAllCombinationsOf(date, shift)
+                           .forEach(date, shift)
                            .then(hasSize(1));
                 solution   .forEach(student)
-                           .forAllCombinationsOf(date, shift)
+                           .forEach(date, shift)
                            .then(hasSize(1));
                 solution   .forEach(student)
                            .then(hasSize(2));
@@ -254,10 +254,10 @@ public class EditorTest {
                 
                 solution   = solution('Colloquium Plan', demands, supplies);
                 solution   . forEach(examiner)
-                           . forAllCombinationsOf(date, shift)
+                           . forEach(date, shift)
                            . then(hasSize(1));
                 solution   . forEach(student)
-                           . forAllCombinationsOf(date, shift)
+                           . forEach(date, shift)
                            . then(hasSize(1));
                 solution   . forEach(student)
                            . then(hasSize(2));

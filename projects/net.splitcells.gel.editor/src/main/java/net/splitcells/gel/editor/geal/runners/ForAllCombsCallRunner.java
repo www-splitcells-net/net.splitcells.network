@@ -33,6 +33,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.constraint.QueryI.query;
 import static net.splitcells.gel.constraint.type.ForAlls.FOR_ALL_COMBINATIONS_OF;
+import static net.splitcells.gel.constraint.type.ForAlls.FOR_EACH_NAME;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRunnerParser.functionCallRunnerParser;
 
@@ -50,7 +51,7 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
         Query subjectVal;
     }
 
-    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(FOR_ALL_COMBINATIONS_OF, 1
+    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(FOR_EACH_NAME, 1
             , fcr -> {
                 val args = new Args();
                 fcr.requireArgumentMinimalCount(2);
@@ -61,7 +62,7 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
             });
 
     private boolean supports(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
-        return functionCall.getName().getValue().equals(FOR_ALL_COMBINATIONS_OF);
+        return functionCall.getName().getValue().equals(FOR_EACH_NAME);
     }
 
     @Override
