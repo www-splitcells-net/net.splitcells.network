@@ -26,8 +26,6 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 public interface FunctionCallRunner {
 
     /**
-     * TODO In the future a {@link FunctionCallDesc} parser has to be used,
-     * that standardizes error messages and makes it possible to generate a function documentation via instances of this parser.
      *
      * @param functionCall
      * @param subject
