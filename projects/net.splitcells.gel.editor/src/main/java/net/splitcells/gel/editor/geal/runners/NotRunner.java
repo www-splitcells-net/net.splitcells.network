@@ -24,12 +24,15 @@ import net.splitcells.gel.rating.rater.framework.Rater;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRunnerParser.functionCallRunnerParser;
 
 public class NotRunner implements FunctionCallRunner {
     private FunctionCallRunner notRunner() {
         return new NotRunner();
     }
+
+    private static final String NOT_NAME = "not";
 
     private static class Args {
         Rater rater;
@@ -39,7 +42,7 @@ public class NotRunner implements FunctionCallRunner {
 
     }
 
-    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser("not"
+    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(NOT_NAME
             , 1
             , fcr -> {
                 val args = new Args();
@@ -50,7 +53,11 @@ public class NotRunner implements FunctionCallRunner {
             });
 
     @Override public FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
-        return null;
+        final var run = functionCallRun(subject, context);
+        if (!functionCall.getName().getValue().equals(NOT_NAME) || subject.isEmpty() || functionCall.getArguments().size() != 1) {
+            return run;
+        }
+        return run;
     }
 
     @Override public List<FunctionCallRunnerParser<?>> parsers() {
