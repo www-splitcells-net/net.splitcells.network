@@ -29,7 +29,7 @@ import static net.splitcells.gel.editor.geal.runners.FunctionCallRunnerParser.fu
 import static net.splitcells.gel.rating.rater.lib.Not.not;
 
 public class NotRunner implements FunctionCallRunner {
-    private FunctionCallRunner notRunner() {
+    public static FunctionCallRunner notRunner() {
         return new NotRunner();
     }
 
