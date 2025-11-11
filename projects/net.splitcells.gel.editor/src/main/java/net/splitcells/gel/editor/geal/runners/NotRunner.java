@@ -26,6 +26,7 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRunnerParser.functionCallRunnerParser;
+import static net.splitcells.gel.rating.rater.lib.Not.not;
 
 public class NotRunner implements FunctionCallRunner {
     private FunctionCallRunner notRunner() {
@@ -57,6 +58,8 @@ public class NotRunner implements FunctionCallRunner {
         if (!functionCall.getName().getValue().equals(NOT_NAME) || subject.isEmpty() || functionCall.getArguments().size() != 1) {
             return run;
         }
+        val args = PARSER.parse(subject, context, functionCall);
+        run.setResult(Optional.of(not(args.rater)));
         return run;
     }
 
