@@ -26,6 +26,9 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 public interface FunctionCallRunner {
 
     /**
+     * <p>TODO Use a single config object as an argument, to make arguments extendable.</p>
+     * <p>TODO Provide a parser utility object, that is used to detect,
+     * if the given {@link FunctionCallDesc} is supported by this.</p>
      *
      * @param functionCall
      * @param subject
