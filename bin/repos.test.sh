@@ -52,7 +52,8 @@ cd "$reposFolder/net.splitcells.network" # Creating reports is done last, so the
     -Dsonar.test.exclusions=src/main/java/** \
     -Dsonar.organization=www-splitcells-net \
     -Dsonar.host.url=https://sonarcloud.io
-  mvn verify site \
+  # Clean has to be executed, as otherwise the code coverage report will be missing for `repos.upload.reports.sh`.
+  mvn clean install site \
       -Dtest_codecov=1 \
       -Dsource_code_check=1 \
       -Dtest.groups=testing_unit,testing_integration \
