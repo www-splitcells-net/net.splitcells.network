@@ -100,7 +100,7 @@ public class Dem {
     public static void startPyroscope() {
         PyroscopeAgent.start(new Config.Builder()
                 .setApplicationName(configValue(ProgramName.class))
-                        .setServerAddress("http://localhost:3000") //
+                .setServerAddress("http://host.docker.internal:4040")
                 .setProfilingEvent(EventType.ITIMER)
                 .setFormat(Format.JFR)
                 .build());
