@@ -15,6 +15,10 @@
  */
 package net.splitcells.dem;
 
+import io.pyroscope.http.Format;
+import io.pyroscope.javaagent.EventType;
+import io.pyroscope.javaagent.PyroscopeAgent;
+import io.pyroscope.javaagent.config.Config;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.Cell;
 import net.splitcells.dem.environment.Environment;
@@ -91,6 +95,15 @@ public class Dem {
             Thread.currentThread().interrupt();
             throw new RuntimeException(e);
         }
+    }
+
+    public static void startPyroscope() {
+        PyroscopeAgent.start(new Config.Builder()
+                .setApplicationName(configValue(ProgramName.class))
+                        .setServerAddress("http://localhost:3000") //
+                .setProfilingEvent(EventType.ITIMER)
+                .setFormat(Format.JFR)
+                .build());
     }
 
     public static ProcessResult process(Runnable program) {
