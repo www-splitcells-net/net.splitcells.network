@@ -12,8 +12,12 @@ else
   echo "$NET_SPLITCELLS_MARTINS_AVOTS_WEBSITE_SFTP_PRIVATE_KEY" > ~/.ssh-website-upload/id_rsa
   chmod 700 ~/.ssh-website-upload/id_rsa # Otherwise, scp may not work.
   mkdir -p target/website-upload/public_html/net/splitcells/martins/avots/website/jacoco-aggregate # Using subdirectories, ensures, that scp does not get a problem with missing directories.
+  # TODO This is debug code.
+    pwd
+    ls -al
+    ls -al target/website-upload/public_html/net/splitcells/martins/avots/website/jacoco-aggregate
+    ls -al target/site/jacoco-aggregate/
   cp -r target/site/jacoco-aggregate/* target/website-upload/public_html/net/splitcells/martins/avots/website/jacoco-aggregate
-  ls -al target/website-upload/public_html/net/splitcells/martins/avots/website/jacoco-aggregate # TODO This is debug code.
   set -x
   set -e
   realpath target/website-upload/public_html/net/splitcells/martins/avots/website/jacoco-aggregate
