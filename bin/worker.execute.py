@@ -169,7 +169,7 @@ JAVA_CLASS_EXECUTION_TEMPLATE = """
 COPY ${NAME_FOR_EXECUTION}/deployable-jars/* /root/opt/${NAME_FOR_EXECUTION}/jars/
 WORKDIR /root/opt/${NAME_FOR_EXECUTION}/
 ENTRYPOINT ["/opt/java/openjdk/bin/java"]
-CMD ["-XX:ErrorFile=/root/.local/state/${NAME_FOR_EXECUTION}/.local/dumps/hs_err_pid_%p.log", "-cp", "./jars/*", "$CLASS_FOR_EXECUTION"]
+CMD ["-XX:ErrorFile=/root/.local/state/${NAME_FOR_EXECUTION}/.local/dumps/hs_err_pid_%p.log", "-javaagent:./jars/agent-2.1.2.jar", "-cp", "./jars/*", "$CLASS_FOR_EXECUTION"]
 """
 
 # `--log-level=warn` is podman's default.
