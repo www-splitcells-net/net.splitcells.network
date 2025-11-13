@@ -167,6 +167,7 @@ CONTAINER_POM = """
 
 JAVA_CLASS_EXECUTION_TEMPLATE = """
 COPY ${NAME_FOR_EXECUTION}/deployable-jars/* /root/opt/${NAME_FOR_EXECUTION}/jars/
+ENV PYROSCOPE_SERVER_ADDRESS="http://pyroscope-server:4040"
 WORKDIR /root/opt/${NAME_FOR_EXECUTION}/
 ENTRYPOINT ["/opt/java/openjdk/bin/java"]
 CMD ["-XX:ErrorFile=/root/.local/state/${NAME_FOR_EXECUTION}/.local/dumps/hs_err_pid_%p.log", "-javaagent:./jars/agent-2.1.2.jar", "-cp", "./jars/*", "$CLASS_FOR_EXECUTION"]
@@ -1042,6 +1043,7 @@ VOLUME /root/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/
 VOLUME /root/.cache/ms-playwright/
 
 COPY net.splitcells.martins.avots.distro.livedistro/deployable-jars/* /root/opt/net.splitcells.martins.avots.distro.livedistro/jars/
+ENV PYROSCOPE_SERVER_ADDRESS="http://pyroscope-server:4040"
 WORKDIR /root/opt/net.splitcells.martins.avots.distro.livedistro/
 ENTRYPOINT ["/opt/java/openjdk/bin/java"]
 CMD ["-XX:ErrorFile=/root/.local/state/net.splitcells.martins.avots.distro.livedistro/.local/dumps/hs_err_pid_%p.log", "-javaagent:./jars/agent-2.1.2.jar", "-cp", "./jars/*", "net.splitcells.martins.avots.distro.LiveDistro"]
@@ -1133,6 +1135,7 @@ VOLUME /root/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/
 VOLUME /root/.cache/ms-playwright/
 
 COPY net.splitcells.martins.avots.distro.livedistro/deployable-jars/* /root/opt/net.splitcells.martins.avots.distro.livedistro/jars/
+ENV PYROSCOPE_SERVER_ADDRESS="http://pyroscope-server:4040"
 WORKDIR /root/opt/net.splitcells.martins.avots.distro.livedistro/
 ENTRYPOINT ["/opt/java/openjdk/bin/java"]
 CMD ["-XX:ErrorFile=/root/.local/state/net.splitcells.martins.avots.distro.livedistro/.local/dumps/hs_err_pid_%p.log", "-javaagent:./jars/agent-2.1.2.jar", "-cp", "./jars/*", "net.splitcells.martins.avots.distro.LiveDistro"]
