@@ -1044,7 +1044,7 @@ VOLUME /root/.cache/ms-playwright/
 COPY net.splitcells.martins.avots.distro.livedistro/deployable-jars/* /root/opt/net.splitcells.martins.avots.distro.livedistro/jars/
 WORKDIR /root/opt/net.splitcells.martins.avots.distro.livedistro/
 ENTRYPOINT ["/opt/java/openjdk/bin/java"]
-CMD ["-XX:ErrorFile=/root/.local/state/net.splitcells.martins.avots.distro.livedistro/.local/dumps/hs_err_pid_%p.log", "-cp", "./jars/*", "net.splitcells.martins.avots.distro.LiveDistro"]
+CMD ["-XX:ErrorFile=/root/.local/state/net.splitcells.martins.avots.distro.livedistro/.local/dumps/hs_err_pid_%p.log", "-javaagent:./jars/agent-2.1.2.jar", "-cp", "./jars/*", "net.splitcells.martins.avots.distro.LiveDistro"]
 """)
         self.assertEqual(test_subject.local_execution_script, """set -e
 set -x
@@ -1135,7 +1135,7 @@ VOLUME /root/.cache/ms-playwright/
 COPY net.splitcells.martins.avots.distro.livedistro/deployable-jars/* /root/opt/net.splitcells.martins.avots.distro.livedistro/jars/
 WORKDIR /root/opt/net.splitcells.martins.avots.distro.livedistro/
 ENTRYPOINT ["/opt/java/openjdk/bin/java"]
-CMD ["-XX:ErrorFile=/root/.local/state/net.splitcells.martins.avots.distro.livedistro/.local/dumps/hs_err_pid_%p.log", "-cp", "./jars/*", "net.splitcells.martins.avots.distro.LiveDistro"]
+CMD ["-XX:ErrorFile=/root/.local/state/net.splitcells.martins.avots.distro.livedistro/.local/dumps/hs_err_pid_%p.log", "-javaagent:./jars/agent-2.1.2.jar", "-cp", "./jars/*", "net.splitcells.martins.avots.distro.LiveDistro"]
 """)
         self.assertEqual(test_subject.local_execution_script, """set -e
 set -x
