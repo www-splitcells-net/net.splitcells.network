@@ -33,7 +33,7 @@ public class PyroscopeService implements ResourceOption<Service> {
         return new Service() {
 
             @Override public void flush() {
-
+                // No flush operation is available and needed for Pyroscope.
             }
 
             @Override public void close() {
