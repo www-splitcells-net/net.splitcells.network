@@ -97,15 +97,6 @@ public class Dem {
         }
     }
 
-    public static void startPyroscope() {
-        PyroscopeAgent.start(new Config.Builder()
-                .setApplicationName(configValue(ProgramName.class))
-                .setServerAddress("http://host.docker.internal:4040")
-                .setProfilingEvent(EventType.ITIMER)
-                .setFormat(Format.JFR)
-                .build());
-    }
-
     public static ProcessResult process(Runnable program) {
         return process(program, m -> {
             // Default configured is not changed.
