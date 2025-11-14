@@ -213,9 +213,12 @@ test -f target/program-${programName} && chmod +x target/program-${programName} 
 """
 
 # allow_host_loopback is required, so that the software in the container can connect to the host.
-#  --pids-limit=-1 is required, as the Podmans default of 2048 is too low, when many Playwright instances are created.
+# --pids-limit=-1 is required, as the Podmans default of 2048 is too low, when many Playwright instances are created.
+# --add-host host.docker.internal:10.0.2.2 provides compatibility to Docker.
+# Furthermore, Podman does sometimes not seem to have a working DNS name for the host.
 PODMAN_COMMAND_TEMPLATE = """podman run --name "${executionName}" \\
   --pids-limit=-1 \\
+  --add-host host.docker.internal:10.0.2.2 \\
   --network slirp4netns:allow_host_loopback=true \\
   ${additionalArguments}\\
   --rm \\
@@ -657,6 +660,7 @@ test -f target/program-net.splitcells.martins.avots.distro && chmod +x target/pr
 
 podman run --name "net.splitcells.martins.avots.distro" \\
   --pids-limit=-1 \\
+  --add-host host.docker.internal:10.0.2.2 \\
   --network slirp4netns:allow_host_loopback=true \\
   \\
   --rm \\
@@ -700,6 +704,7 @@ podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
 
 podman run --name "net.splitcells.martins.avots.distro" \\
   --pids-limit=-1 \\
+  --add-host host.docker.internal:10.0.2.2 \\
   --network slirp4netns:allow_host_loopback=true \\
   \\
   --rm \\
@@ -928,6 +933,7 @@ Type=simple
 StandardOutput=journal
 ExecStart=podman run --name "net.splitcells.network.worker.boostrap.daemon" \\
   --pids-limit=-1 \\
+  --add-host host.docker.internal:10.0.2.2 \\
   --network slirp4netns:allow_host_loopback=true \\
   \\
   --rm \\
@@ -1080,6 +1086,7 @@ Type=simple
 StandardOutput=journal
 ExecStart=podman run --name "net.splitcells.martins.avots.distro.livedistro" \\
   --pids-limit=-1 \\
+  --add-host host.docker.internal:10.0.2.2 \\
   --network slirp4netns:allow_host_loopback=true \\
   \\
   --rm \\
@@ -1212,6 +1219,7 @@ podman build -f "target/Dockerfile-net.splitcells.network.worker" \\
 
 podman run --name "net.splitcells.network.worker" \\
   --pids-limit=-1 \\
+  --add-host host.docker.internal:10.0.2.2 \\
   --network slirp4netns:allow_host_loopback=true \\
   \\
   --rm \\
@@ -1277,6 +1285,7 @@ podman build -f "target/Dockerfile-net.splitcells.network.worker" \\
 
 podman run --name "net.splitcells.network.worker" \\
   --pids-limit=-1 \\
+  --add-host host.docker.internal:10.0.2.2 \\
   --network slirp4netns:allow_host_loopback=true \\
   \\
   --rm \\
