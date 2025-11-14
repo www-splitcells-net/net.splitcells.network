@@ -49,7 +49,6 @@ cd "$reposFolder/net.splitcells.network" # Creating reports is done last, so the
   mvn -B clean install \
     org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
     -Dsonar.projectKey=www-splitcells-net_net.splitcells.network \
-    -Dsonar.test.exclusions=src/main/java/** \
     -Dsonar.organization=www-splitcells-net \
     -Dsonar.host.url=https://sonarcloud.io
   # Clean has to be executed, as otherwise the code coverage report will be missing for `repos.upload.reports.sh`.
