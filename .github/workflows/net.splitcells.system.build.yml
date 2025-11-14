@@ -47,7 +47,6 @@ jobs:
       - name: Build project.
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           cd $GITHUB_WORKSPACE/net.splitcells.network
           # ". bin/env.setup.sh" is not used, as this causes problems in GitHub.
@@ -55,4 +54,4 @@ jobs:
           export PATH="$(realpath ./):$PATH"
           echo "$(pwd)/mvnw \$@" > mvn
           chmod +x mvn
-          mvn -B clean install org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=www-splitcells-net_net.splitcells.network -Dsonar.test.exclusions=src/main/java/** -Dsonar.organization=www-splitcells-net -Dsonar.host.url=https://sonarcloud.io # `-Dsonar.inclusions=src/main/**,bin/*` does not seem to work.
+          mvn -B clean install
