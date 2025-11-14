@@ -24,8 +24,6 @@ jobs:
           git clone --depth 1 ssh://git@codeberg.org/splitcells-net/net.splitcells.network.bom.git
           git clone --depth 1 ssh://git@codeberg.org/splitcells-net/net.splitcells.network.git
       - name: Build
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           cd /workspace/splitcells-net/net.splitcells.network.bom.base
           mvn clean install
@@ -33,4 +31,4 @@ jobs:
           mvn clean install
           cd /workspace/splitcells-net/net.splitcells.network
           . bin/env.setup.sh
-          mvn -B clean install org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=www-splitcells-net_net.splitcells.network -Dsonar.test.exclusions=src/main/java/** -Dsonar.organization=www-splitcells-net -Dsonar.host.url=https://sonarcloud.io # `-Dsonar.inclusions=src/main/**,bin/*` does not seem to work.
+          mvn -B clean install
