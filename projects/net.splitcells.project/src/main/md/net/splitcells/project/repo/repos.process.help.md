@@ -34,8 +34,8 @@ User home folder
     ├── main-repo
     │   ├── sub-repo-1
     │   └── sub-repo-2
-    │ peer-repo-1
-    └peer-repo-2
+    ├─peer-repo-1
+    └─peer-repo-2
 ```
 The meaning of the variables:
 * The variable `$subRepo` is used mainly to push a tree of git repos to another server.
