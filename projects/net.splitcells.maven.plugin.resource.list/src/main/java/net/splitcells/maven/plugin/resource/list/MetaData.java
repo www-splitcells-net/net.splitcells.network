@@ -76,7 +76,7 @@ public class MetaData {
                         filePathStr = filePathStr.substring(1);
                     }
                     metaData.filePath = Path.of(filePathStr);
-                    mojo.getLog().info("Parsing path: " + metaData.filePath);
+                    mojo.getLog().debug("Parsing path: " + metaData.filePath);
                     parsedMetaData.add(metaData);
                 });
             } catch (IOException e) {
