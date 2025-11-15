@@ -71,8 +71,8 @@ public class CommonMarkIntegration {
             final var headerSplit = arg.split(headerDelimiter);
             // Regex is not used in order to avoid catastrophic backtracking.
             if (headerSplit.length > 1 && headerSplit[1].contains("title: ")) {
-                    final var titleStart = headerSplit[1].split("title: ")[1];
-                    return Optional.of(titleStart.substring(0, titleStart.indexOf("\n")));
+                final var titleStart = headerSplit[1].split("title: ")[1];
+                return Optional.of(titleStart.substring(0, titleStart.indexOf("\n")));
             }
             if (headerSplit.length > 2) {
                 return extractTitleWithoutHeader(headerSplit[2]);
@@ -108,22 +108,9 @@ public class CommonMarkIntegration {
 
     public byte[] render(String arg, ProjectRenderer projectRenderer, String path, Config config
             , ProjectsRenderer projectsRenderer) {
-        final Optional<String> title;
-        if (arg.startsWith("#")) {
-            final var titleLine = arg.split("[\r\n]+")[0];
-            /** This is a dirty quick hack. Note that rendering the title via CommonMark library,
-             * would not fix the issue, as element symbols are escaped during title rendering via
-             * {@link projectRenderer}.
-             */
-            title = Optional.of(titleLine.replace("#", "")
-                    .replaceAll("\\[™\\]\\(.*\\)", "™")
-                    .trim());
-        } else {
-            title = Optional.empty();
-        }
         return projectRenderer
                 .renderHtmlBodyContent(renderBareHtml(arg, projectRenderer, path, config, projectsRenderer)
-                        , title
+                        , extractTitle(arg)
                         , Optional.of(path)
                         , config
                         , projectsRenderer)
