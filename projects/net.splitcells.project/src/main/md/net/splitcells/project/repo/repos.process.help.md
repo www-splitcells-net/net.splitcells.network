@@ -3,6 +3,7 @@
 * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 ----
 # The Repo Process Help
+> Generates and executes a set of commands over a set of repositories given a set of command patterns.
 ## Flags
 usage: repos.process
 * --command COMMAND
@@ -13,8 +14,6 @@ usage: repos.process
 * [--command-for-unknown COMMANDFORUNKNOWN]
 * [--command-for-current COMMANDFORCURRENT]
 * [--command-for-children COMMANDFORCHILDREN]
-## Summary
-Generates and executes a set of commands over a set of repositories given a set of command patterns.
 ## Settings via the environment
 Setting the environment variable `log_level` to `debug`, enables debug level logging.
 ## Default environment variables inside patterns
