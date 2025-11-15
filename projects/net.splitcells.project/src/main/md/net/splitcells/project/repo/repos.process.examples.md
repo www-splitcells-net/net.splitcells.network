@@ -15,7 +15,7 @@ for more detailed documentation.
 repos.push.at.all
 ```
 ## Synchronize Servers
-This uses some commands of the OSI project.
+This uses some commands of the Shell project.
 Note, that `repo.synchronize.with` downloads sub repos,
 that are present on the remote, but not present at the local meta repo.
 ```
