@@ -6,14 +6,14 @@
 > Generates and executes a set of commands over a set of repositories given a set of command patterns.
 ## Flags
 usage: repos.process
-* --command COMMAND
-* [-h]
-* [--relative-path RELATIVEPATH]
-* [--host HOST]
-* [--command-for-missing COMMANDFORMISSING]
-* [--command-for-unknown COMMANDFORUNKNOWN]
-* [--command-for-current COMMANDFORCURRENT]
-* [--command-for-children COMMANDFORCHILDREN]
+* `--command COMMAND`
+* `[-h]`
+* `[--relative-path RELATIVEPATH]`
+* `[--host HOST]`
+* `[--command-for-missing COMMANDFORMISSING]`
+* `[--command-for-unknown COMMANDFORUNKNOWN]`
+* `[--command-for-current COMMANDFORCURRENT]`
+* `[--command-for-children COMMANDFORCHILDREN]`
 ## Settings via the environment
 Setting the environment variable `log_level` to `debug`, enables debug level logging.
 ## Default environment variables inside patterns
