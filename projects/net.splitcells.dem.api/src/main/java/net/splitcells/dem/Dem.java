@@ -180,7 +180,12 @@ public class Dem {
          */
         Thread root = new Thread(() -> {
             try {
-                final var processEnvironment = initializeProcess(program.getClass(), configurator);
+                final var processEnvironment = initializeProcess(program.getClass(), env -> {
+                    if (program instanceof Cell programCell) {
+                        env.config().withConfigValue(ProgramName.class, programCell.programName());
+                    }
+                    configurator.accept(env);
+                });
                 processEnvironment.start();
                 try {
                     logs().append("Executing `" + configValue(ProgramName.class) + "`.");

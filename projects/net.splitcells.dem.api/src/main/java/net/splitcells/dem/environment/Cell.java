@@ -26,6 +26,7 @@ import java.util.function.Consumer;
 
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.utils.StreamUtils.stream;
+import static net.splitcells.dem.utils.reflection.ClassesRelated.simplifiedName;
 
 /**
  * <p>This interface provides a single point of entry for a Java module based on {@link Dem}.
@@ -59,6 +60,10 @@ import static net.splitcells.dem.utils.StreamUtils.stream;
 public interface Cell extends Consumer<Environment>, Discoverable, Option<Consumer<Environment>>, Runnable {
     default List<String> path() {
         return stream(getClass().getName().split("\\.")).collect(toList());
+    }
+
+    default String programName() {
+        return simplifiedName(getClass());
     }
 
     /**
