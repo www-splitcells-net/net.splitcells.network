@@ -10,9 +10,9 @@ in order to get a feeling,
 of the programs capabilities and scope.
 Look into the program's `--help` flag output via `repos.process --help`,
 for more detailed documentation.
-## Push to all servers.
+## Push all Git repos to all remote servers.
 ```
-repo.push.at.all
+repos.push.at.all
 ```
 ## Synchronize Servers
 This uses some commands of the OSI project.
