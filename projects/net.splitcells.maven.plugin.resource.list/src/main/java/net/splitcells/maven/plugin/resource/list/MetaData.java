@@ -30,7 +30,8 @@ import static java.util.stream.IntStream.range;
 
 public class MetaData {
 
-    public static List<MetaData> parseMetaDataFromReuse(AbstractMojo mojo, Path projectPath) {
+    public static List<MetaData> parseMetaDataFromReuse(ResourceListMojo mojo, Path projectPath) {
+        val projectName = mojo.project.getGroupId() + "." + mojo.project.getArtifactId();
         final List<MetaData> parsedMetaData = new ArrayList<>();
         var reuseToml = projectPath.resolve("REUSE.toml");
         final boolean parentReuse;
@@ -59,6 +60,12 @@ public class MetaData {
                     if (parentReuse) {
                         val slashCount = path.codePoints().filter(ch -> ch == '/').count();
                         if (slashCount < 2) {
+                            return;
+                        }
+                        val projectFolder = path.substring(0, path.indexOf("/", path.indexOf("/") + 1));
+                        val projectFolderName = projectFolder.substring(projectFolder.indexOf("/") + 1);
+                        if (!projectFolderName.equals(projectName)) {
+                            mojo.getLog().debug("Skipping path: " + path);
                             return;
                         }
                         filePathStr = path.substring(path.indexOf("/", path.indexOf("/") + 1));

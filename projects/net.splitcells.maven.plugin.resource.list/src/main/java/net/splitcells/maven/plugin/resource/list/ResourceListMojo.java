@@ -43,7 +43,7 @@ import static net.splitcells.maven.plugin.resource.list.MetaData.parseMetaDataFr
 @Mojo(name = "generate-resource-list")
 public class ResourceListMojo extends AbstractMojo {
     @Parameter(defaultValue = "${project}", required = true, readonly = true)
-    private MavenProject project;
+    protected MavenProject project;
     private String fileSystemSeparator = FileSystems.getDefault().getSeparator();
 
     @Override
