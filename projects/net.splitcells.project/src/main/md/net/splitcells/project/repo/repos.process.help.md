@@ -8,7 +8,7 @@
 usage: repos.process
 * `--command COMMAND`
 * `[-h]`
-* `[--relative-path RELATIVEPATH]`
+* `[--relative-path RELATIVEPATH]`: this is the path of the currently processed sub repo.
 * `[--host HOST]`
 * `[--command-for-missing COMMANDFORMISSING]`
 * `[--command-for-unknown COMMANDFORUNKNOWN]`
