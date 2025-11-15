@@ -15,7 +15,11 @@ else
   # TODO This is debug code.
     pwd
     ls -al
+    echo target
+    ls -al target
+    echo website/jacoco-aggregate
     ls -al target/website-upload/public_html/net/splitcells/martins/avots/website/jacoco-aggregate
+    echo site/jacoco-aggregate/
     ls -al target/site/jacoco-aggregate/
   cp -r target/site/jacoco-aggregate/* target/website-upload/public_html/net/splitcells/martins/avots/website/jacoco-aggregate
   set -x
