@@ -40,15 +40,13 @@ User home folder
 The meaning of the variables:
 * The variable `$subRepo` is used mainly to push a tree of git repos to another server.
   This is often useful, when the target SSH server is hosted by oneself and the repositories are nested.
-  `$subRepo` is replaced with a relative path from `--relative-path` to the next child repo folder,
-  that will be processed next.
+  `$subRepo` is replaced with `--relative-path + the name of the currently processed sub repo`.
   For example, given a relative-path of `~/Documents/main-repo` and the command `git clone ssh://user@remote/home/user/Documents/main-repo/$subRepo`,
   the following commands would be generated `git clone ssh://user@remote/home/user/Documents/main-repo`,
   `git clone ssh://user@remote/home/user/Documents/main-repo/sub-repo-1` and `git clone ssh://user@remote/home/user/Documents/main-repo/sub-repo-2`.
 * The variable `$peerRepo` is used mainly to push a single folder of git repos.
   This is often useful, when the target server is a public server, where a user often can only manage a single folder of git repos.
-  `$peerRepo` is replaced with the relative path from `--relative-path` to the next peer repo folder,
-  that will be processed next.
+  `$peerRepo` is replaced with the relative path from `--relative-path + /../ + the name of the currently processed peer repo`.
   For example, a relative-path of `~/Documents/main-repo` and the command `git clone ssh://user@remote/home/user/Documents/main-repo$peerRepo`,
   could generate the commands `git clone ssh://user@remote/home/user/Documents/main-repo`,
   `git clone ssh://user@remote/home/user/Documents/peer-repo-1` and `git clone ssh://user@remote/home/user/Documents/peer-repo-2`.
