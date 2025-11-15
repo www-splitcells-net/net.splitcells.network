@@ -14,3 +14,5 @@
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 flatpak install -y flathub com.jetbrains.IntelliJ-IDEA-Community
+# Allow Intellij to spawn a shell at the host environment, in order to make the user's shell environment available in the IDE
+flatpak override --user --talk-name=org.freedesktop.Flatpak com.jetbrains.IntelliJ-IDEA-Community
