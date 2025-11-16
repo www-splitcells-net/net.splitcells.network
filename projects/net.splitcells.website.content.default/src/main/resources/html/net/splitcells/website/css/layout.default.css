@@ -135,7 +135,7 @@ footer {
 @media (min-width: 53.25em) {
     .minimal-only {
         display: none;
-        visibility: hidden:
+        visibility: hidden;
         }
     main {
         display: flex;
