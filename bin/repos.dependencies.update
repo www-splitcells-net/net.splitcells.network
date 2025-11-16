@@ -12,4 +12,4 @@ cd ../net.splitcells.network.hub
 mvn clean install # Check if the project can be build, after the update.
 
 cd ../net.splitcells.network.bom
-git commit -sam "Updating dependencies #10"
+git commit -sam "Update Maven dependencies and plugins #10"
