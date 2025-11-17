@@ -55,7 +55,7 @@ public class NotRunner implements FunctionCallRunner {
 
     @Override public FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
         final var run = functionCallRun(subject, context);
-        if (!functionCall.getName().getValue().equals(NOT_NAME) || subject.isEmpty() || functionCall.getArguments().size() != 1) {
+        if (!functionCall.getName().getValue().equals(NOT_NAME) || subject.isPresent() || functionCall.getArguments().size() != 1) {
             return run;
         }
         val args = PARSER.parse(subject, context, functionCall);
