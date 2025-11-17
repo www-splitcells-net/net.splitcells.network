@@ -47,7 +47,7 @@ public class EqualsRunner implements FunctionCallRunner {
     @Override public FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
         val run = functionCallRun(subject, context);
         if (!functionCall.getName().getValue().equals(EQUALS_NAME)
-                || subject.isEmpty()
+                || subject.isPresent()
                 || functionCall.getArguments().size() != 2) {
             return run;
         }
