@@ -27,7 +27,7 @@ Additional legal notices and attributions of this project are located in the
 [NOTICE](./NOTICE.md) file.
 It also contains info about third-party content and dependencies
 (the licensing of such content should be indicated in the source file itself
-and is also stated in the [NOTICE](./NOTICE.md) file).
+and is also stated in the [NOTICE](./NOTICE.md) and [REUSE.toml](REUSE.toml) file).
 
 # EPL 2.0
 
