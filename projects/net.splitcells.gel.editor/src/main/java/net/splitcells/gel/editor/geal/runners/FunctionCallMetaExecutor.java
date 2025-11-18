@@ -30,7 +30,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.gel.editor.geal.runners.AttributeCallRunner.attributeCallRunner;
 import static net.splitcells.gel.editor.geal.runners.EqualsRunner.equalsRunner;
 import static net.splitcells.gel.editor.geal.runners.ForAllCombsCallRunner.forAllCombsCallRunner;
-import static net.splitcells.gel.editor.geal.runners.ForEachCallRunner.forEachCallRunner;
+import static net.splitcells.gel.editor.geal.runners.ForEachAttributeCallRunner.forEachAttributeCallRunner;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 import static net.splitcells.gel.editor.geal.runners.HasMinimalDistanceOfCallRunner.hasMinimalDistanceOfCallRunner;
 import static net.splitcells.gel.editor.geal.runners.HasSizeCallRunner.hasSizeCallRunner;
@@ -57,7 +57,7 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
                 .registerExecutor(attributeCallRunner())
                 .registerExecutor(tableCallRunner())
                 .registerExecutor(solutionCallRunner())
-                .registerExecutor(forEachCallRunner())
+                .registerExecutor(forEachAttributeCallRunner())
                 .registerExecutor(forAllCombsCallRunner())
                 .registerExecutor(thenCallRunner())
                 .registerExecutor(hasSizeCallRunner())

@@ -21,6 +21,7 @@ import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
+import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
@@ -35,20 +36,27 @@ import static net.splitcells.gel.constraint.type.ForAlls.FOR_EACH_NAME;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRunnerParser.functionCallRunnerParser;
 
-public class ForEachCallRunner implements FunctionCallRunner {
-    public static ForEachCallRunner forEachCallRunner() {
-        return new ForEachCallRunner();
+public class ForEachAttributeCallRunner implements FunctionCallRunner {
+    public static ForEachAttributeCallRunner forEachAttributeCallRunner() {
+        return new ForEachAttributeCallRunner();
     }
 
     private static class Args {
-        Attribute<? extends Object> groupingAttribute;
+        Optional<Attribute<? extends Object>> groupingAttribute;
+        Optional<Rater> groupingRater;
+        Optional<Object> invalid = Optional.empty();
         Query subjectVal;
     }
 
     private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(FOR_EACH_NAME, 1
             , fcr -> {
                 val args = new Args();
-                args.groupingAttribute = fcr.parseAttributeArgument(0, "groupingAttribute");
+                args.groupingAttribute = fcr.parseOptionalAttributeArgument(0, "groupingAttribute");
+                if (args.groupingAttribute.isPresent()) {
+                    args.groupingRater = Optional.empty();
+                } else {
+                    args.groupingRater = Optional.ofNullable(fcr.parseArgument(Rater.class, 0, "groupingRater"));
+                }
                 args.subjectVal = fcr.parseQuerySubject();
                 fcr.addDescription(tree("paragraph", SEW).withText("""
                         Creates and returns a constraint node, that groups incoming lines by the values of the given attribute.
@@ -57,7 +65,7 @@ public class ForEachCallRunner implements FunctionCallRunner {
                 return args;
             });
 
-    private ForEachCallRunner() {
+    private ForEachAttributeCallRunner() {
 
     }
 
@@ -66,8 +74,7 @@ public class ForEachCallRunner implements FunctionCallRunner {
                 && (subject.orElseThrow() instanceof Solution
                 || subject.orElseThrow() instanceof Query)
                 && functionCall.getName().getValue().equals(FOR_EACH_NAME)
-                && functionCall.getArguments().size() == 1
-                && functionCall.getArguments().get(0).getExpression() instanceof FunctionCallDesc;
+                && functionCall.getArguments().size() == 1;
     }
 
     @Override
@@ -77,7 +84,11 @@ public class ForEachCallRunner implements FunctionCallRunner {
             return run;
         }
         val args = PARSER.parse(subject, context, functionCall);
-        run.setResult(Optional.of(args.subjectVal.forAll(args.groupingAttribute)));
+        if (args.groupingAttribute.isPresent()) {
+            run.setResult(Optional.of(args.subjectVal.forAll(args.groupingAttribute.orElseThrow())));
+        } else {
+            run.setResult(Optional.of(args.subjectVal.forAll(args.groupingRater.orElseThrow())));
+        }
         return run;
     }
 

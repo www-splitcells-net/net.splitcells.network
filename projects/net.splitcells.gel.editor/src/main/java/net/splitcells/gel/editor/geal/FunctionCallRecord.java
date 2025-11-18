@@ -273,6 +273,24 @@ public class FunctionCallRecord implements Closeable {
         return functionCall.getArguments().streamIndexes().mapToObj(i -> parseAttributeArgument(i, name)).collect(toList());
     }
 
+    public Optional<Attribute<? extends Object>> parseOptionalAttributeArgument(int parameter, String parameterName) {
+        if (isRecording) {
+            argumentTypes.ensurePresence(parameter, Attribute.class);
+            argumentNames.ensurePresence(parameter, parameterName);
+            return null;
+        }
+        final var a = functionCall.getArguments().get(parameter);
+        final var parsed = context.parse(a);
+        switch (parsed) {
+            case Attribute<? extends Object> attribute -> {
+                return Optional.of(attribute);
+            }
+            default -> {
+                return Optional.empty();
+            }
+        }
+    }
+
     public Attribute<? extends Object> parseAttributeArgument(int parameter, String parameterName) {
         if (isRecording) {
             argumentTypes.ensurePresence(parameter, Attribute.class);
