@@ -111,6 +111,8 @@ public class Editor implements Discoverable {
             return Optional.of(solutions.get(name.getValue()));
         } else if (raters.hasKey(name.getValue())) {
             return Optional.of(raters.get(name.getValue()));
+        } else if (integerVariables.hasKey(name.getValue())) {
+            return Optional.of(integerVariables.get(name.getValue()));
         }
         return Optional.empty();
     }
