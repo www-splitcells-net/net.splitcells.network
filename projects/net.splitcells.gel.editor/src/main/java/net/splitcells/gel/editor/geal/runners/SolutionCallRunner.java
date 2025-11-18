@@ -70,7 +70,7 @@ public class SolutionCallRunner implements FunctionCallRunner {
     }
 
     private boolean supports(FunctionCallDesc functionCall) {
-        return functionCall.getName().getValue().equals(SOLUTION_FUNCTION);
+        return functionCall.getName().getValue().equals(SOLUTION_FUNCTION) && functionCall.getArguments().size() == 3;
     }
 
     @Override
