@@ -76,9 +76,6 @@ public class SolutionCallRunner implements FunctionCallRunner {
     @Override
     public FunctionCallRun execute(FunctionCallDesc functionCall, Optional<Object> subject, Editor context) {
         final var run = functionCallRun(subject, context);
-        if (functionCall.getArguments().isEmpty()) {
-            return run.setResult(Optional.of(context.<Solution>resolve(functionCall.getName(), functionCall)));
-        }
         if (!supports(functionCall)) {
             return run;
         }
