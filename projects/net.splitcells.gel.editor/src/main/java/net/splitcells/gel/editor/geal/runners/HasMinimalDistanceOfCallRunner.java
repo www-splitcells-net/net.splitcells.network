@@ -17,7 +17,6 @@ package net.splitcells.gel.editor.geal.runners;
 
 import lombok.val;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
@@ -31,7 +30,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRunnerParser.functionCallRunnerParser;
 import static net.splitcells.gel.rating.rater.lib.MinimalDistance.MINIMAL_DISTANCE_NAME;
-import static net.splitcells.gel.rating.rater.lib.MinimalDistance.has_minimal_distance_of;
+import static net.splitcells.gel.rating.rater.lib.MinimalDistance.hasMinimalDistanceOf;
 
 public class HasMinimalDistanceOfCallRunner implements FunctionCallRunner {
     public static HasMinimalDistanceOfCallRunner hasMinimalDistanceOfCallRunner() {
@@ -63,7 +62,7 @@ public class HasMinimalDistanceOfCallRunner implements FunctionCallRunner {
             return run;
         }
         val args = PARSER.parse(subject, context, functionCall);
-        run.setResult(Optional.of(has_minimal_distance_of(args.distanceAttribute, args.minimalDistance)));
+        run.setResult(Optional.of(hasMinimalDistanceOf(args.distanceAttribute, args.minimalDistance)));
         return run;
     }
 

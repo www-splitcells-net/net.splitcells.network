@@ -53,7 +53,7 @@ import static net.splitcells.gel.constraint.type.ForAlls.*;
 import static net.splitcells.gel.constraint.type.Then.then;
 import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
-import static net.splitcells.gel.rating.rater.lib.MinimalDistance.has_minimal_distance_of;
+import static net.splitcells.gel.rating.rater.lib.MinimalDistance.hasMinimalDistanceOf;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
@@ -270,8 +270,8 @@ public class ColloquiumPlanningTest extends TestSuiteI {
                                         , forEach(STUDENTS)
                                                 .withChildren(forAllCombinationsOf(DATE, SHIFT)
                                                                 .withChildren(then(hasSize(1)))
-                                                        , then(has_minimal_distance_of(DATE, 3.0))
-                                                        , then(has_minimal_distance_of(DATE, 5.0))
+                                                        , then(hasMinimalDistanceOf(DATE, 3.0))
+                                                        , then(hasMinimalDistanceOf(DATE, 5.0))
                                                 )
                                         , forAllCombinationsOf(DATE, SHIFT, ROOM_NUMBER)
                                                 .withChildren(then(hasSize(1)))
@@ -320,12 +320,12 @@ public class ColloquiumPlanningTest extends TestSuiteI {
                         .requireEqualsTo(cost(1));
                 testSubject.constraint().query()
                         .forAll(STUDENTS)
-                        .then(has_minimal_distance_of(DATE, 3.0))
+                        .then(hasMinimalDistanceOf(DATE, 3.0))
                         .rating()
                         .requireEqualsTo(cost(3));
                 testSubject.constraint().query()
                         .forAll(STUDENTS)
-                        .then(has_minimal_distance_of(DATE, 5.0))
+                        .then(hasMinimalDistanceOf(DATE, 5.0))
                         .rating()
                         .requireEqualsTo(cost(5));
             }
@@ -378,12 +378,12 @@ public class ColloquiumPlanningTest extends TestSuiteI {
                     .requireEqualsTo(cost(2));
             testSubject.constraint().query()
                     .forAll(STUDENTS)
-                    .then(has_minimal_distance_of(DATE, 3.0))
+                    .then(hasMinimalDistanceOf(DATE, 3.0))
                     .rating()
                     .requireEqualsTo(cost(26));
             testSubject.constraint().query()
                     .forAll(STUDENTS)
-                    .then(has_minimal_distance_of(DATE, 5.0))
+                    .then(hasMinimalDistanceOf(DATE, 5.0))
                     .rating()
                     .requireEqualsTo(cost(46));
             testSubject.constraint().query()
@@ -424,12 +424,12 @@ public class ColloquiumPlanningTest extends TestSuiteI {
         {
             testSubject.constraint().query()
                     .forAll(STUDENTS)
-                    .then(has_minimal_distance_of(DATE, 3.0))
+                    .then(hasMinimalDistanceOf(DATE, 3.0))
                     .rating()
                     .requireEqualsTo(cost(9));
             testSubject.constraint().query()
                     .forAll(STUDENTS)
-                    .then(has_minimal_distance_of(DATE, 5.0))
+                    .then(hasMinimalDistanceOf(DATE, 5.0))
                     .rating()
                     .requireEqualsTo(cost(15));
             testSubject.constraint().query()

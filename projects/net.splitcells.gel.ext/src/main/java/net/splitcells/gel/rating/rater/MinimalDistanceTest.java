@@ -26,7 +26,7 @@ import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.gel.constraint.type.Then.then;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
-import static net.splitcells.gel.rating.rater.lib.MinimalDistance.has_minimal_distance_of;
+import static net.splitcells.gel.rating.rater.lib.MinimalDistance.hasMinimalDistanceOf;
 import static net.splitcells.gel.rating.rater.lib.MinimalDistance.minimalDistance;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
@@ -51,7 +51,7 @@ public class MinimalDistanceTest {
                         , list(9)
                 ))
                 .withConstraint
-                        (then(has_minimal_distance_of(integer, 3.0)))
+                        (then(hasMinimalDistanceOf(integer, 3.0)))
                 .toProblem()
                 .asSolution();
         testSubject.optimize(offlineLinearInitialization());
