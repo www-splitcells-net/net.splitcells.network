@@ -23,7 +23,7 @@ public class MinSizeCallRunner implements FunctionCallRunner {
     private static final String MIN_SIZE_NAME = "hasMinimumSize";
 
     private static class Args {
-        int minimalSize;
+        Integer minimalSize;
     }
 
     private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(MIN_SIZE_NAME

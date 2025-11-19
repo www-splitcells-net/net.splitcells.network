@@ -24,7 +24,7 @@ public class MaxSizeCallRunner implements FunctionCallRunner {
     private static final String MAX_SIZE_NAME = "hasMaximumSize";
 
     private static class Args {
-        int maximalSize;
+        Integer maximalSize;
     }
 
     private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(MAX_SIZE_NAME
