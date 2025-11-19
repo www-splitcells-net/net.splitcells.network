@@ -277,7 +277,7 @@ public class FunctionCallRecord implements Closeable {
         if (isRecording) {
             argumentTypes.ensurePresence(parameter, Attribute.class);
             argumentNames.ensurePresence(parameter, parameterName);
-            return null;
+            return Optional.empty();
         }
         final var a = functionCall.getArguments().get(parameter);
         final var parsed = context.parse(a);
