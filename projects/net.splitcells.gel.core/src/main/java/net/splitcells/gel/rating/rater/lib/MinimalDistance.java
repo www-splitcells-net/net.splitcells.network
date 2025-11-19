@@ -61,7 +61,7 @@ public class MinimalDistance<T> implements Rater {
 
     public static final String MINIMAL_DISTANCE_NAME = "minimalDistance";
 
-    public static MinimalDistance<Integer> has_minimal_distance_of(Attribute<Integer> attribute, double minimumDistance) {
+    public static MinimalDistance<Integer> hasMinimalDistanceOf(Attribute<Integer> attribute, double minimumDistance) {
         return minimalDistance(attribute, minimumDistance, ASCENDING_INTEGERS, MathUtils::distance);
     }
 
