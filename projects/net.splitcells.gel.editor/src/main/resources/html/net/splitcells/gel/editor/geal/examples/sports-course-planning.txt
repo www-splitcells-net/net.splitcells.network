@@ -25,10 +25,10 @@ courseAssignment  . forEach(not(equals(assignedSport, 'Dummy Course')))
                   . then (equals(chosenSportType, assignedSportType));
 courseAssignment  . forEach(not(equals(assignedSport, 'Dummy Course')))
                   . forEach(equals(assignedSportType, 'Team Sport'))
-                  . then(atLeast(1, size));
+                  . then(hasMinimumSize(1));
 courseAssignment  . forEach(not(equals(assignedSport, 'Dummy Course')))
                   . forEach(equals(assignedSportType, 'Individual Sport'))
-                  . then(atLeast(1, size));
+                  . then(hasMinimumSize(1));
 courseAssignment  . forEach(not(equals(assignedSport, 'Dummy Course')))
                   . forEach(assignedSport)
                   . then(hasSize(1));
@@ -43,7 +43,7 @@ courseScheduling . forEach(not(equals(assignedSport, 'Dummy Course')))
                  . then(hasSize(1));
 courseScheduling . forEach(not(equals(assignedSport, 'Dummy Course')))
                  . forEach(assignedSport, assignedHalfYear)
-                 . then(atLeast(minCourseSize, size));
+                 . then(hasMinimumSize(minCourseSize));
 courseScheduling . forEach(not(equals(assignedSport, 'Dummy Course')))
                  . forEach(assignedSport, assignedHalfYear)
                  . then(hasSize(optCourseSize));
