@@ -31,6 +31,7 @@ import static net.splitcells.gel.common.Language.ARGUMENTATION;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.data.view.attribute.ListAttribute.listAttribute;
 import static net.splitcells.gel.rating.framework.MetaRating.neutral;
+import static net.splitcells.gel.rating.type.Cost.noCost;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -145,7 +146,12 @@ public interface Constraint extends TableSynchronization, ConstraintWriter, Disc
         joinDocuments(description, "## Argumentation");
         joinDocuments(description, naturalArgumentation()
                 .map(Tree::toCommonMarkString)
-                .orElse("No Argumentation is available."));
+                .orElseGet(() -> {
+                    if (rating().equalz(noCost())) {
+                        return "There is no argumentation, as there are no errors in the solution, that need reasoning.";
+                    }
+                    return "No Argumentation is available.";
+                }));
         return description.toString();
     }
 
