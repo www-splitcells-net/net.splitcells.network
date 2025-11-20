@@ -24,12 +24,6 @@ import static net.splitcells.gel.editor.Editor.editor;
 
 public class SportsCoursePlanningTest {
     @UnitTest
-    public void test() {
-        final var problemDefinition = configValue(GelEditorFileSystem.class)
-                .readString("src/main/resources/html/net/splitcells/gel/editor/geal/examples/sports-course-planning.txt");
-    }
-
-    @UnitTest
     public void testInterpretation() {
         final var problemDefinition = configValue(GelEditorFileSystem.class)
                 .readString("src/main/resources/html/net/splitcells/gel/editor/geal/examples/sports-course-planning.txt");
