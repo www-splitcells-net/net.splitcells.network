@@ -16,6 +16,7 @@
         <xsl:apply-templates select="./*" mode="net-splitcells-gel-editor"/>
     </xsl:template>
     <xsl:template match="s:form-editor" mode="net-splitcells-gel-editor">
+        <!-- TODO This should probably be done via JavaScript. -->
         <xsl:variable name="quote">'</xsl:variable>
         <xsl:variable name="form-id" select="@id"/>
         <xsl:for-each select="descendant::s:text-area">
