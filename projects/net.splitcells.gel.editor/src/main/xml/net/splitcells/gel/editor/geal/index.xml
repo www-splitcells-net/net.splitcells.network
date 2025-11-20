@@ -47,7 +47,7 @@ subject.methodCall(1).methodCall(functionCall(2)).methodCall(3);
         <paragraph>The goal of the language is to construct solution tables,
             that will be submitted to the optimizer,
             in order to find an optimal solution according to their constraints.
-            <link post="net/splitcells/gel/editor/geal/function-call-doc">A full list of supported functions are listed here.</link>
+            <link post="net/splitcells/gel/editor/geal/function-call-doc">A full list of supported functions is listed here.</link>
         </paragraph>
         <code_block><![CDATA[date       = attribute(Integer, 'date'       );
 roomNumber = attribute(Integer, 'room number');
