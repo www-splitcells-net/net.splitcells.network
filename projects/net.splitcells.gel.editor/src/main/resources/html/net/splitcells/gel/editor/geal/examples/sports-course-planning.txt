@@ -52,4 +52,4 @@ courseScheduling . forEach(not(equals(assignedSport, 'Dummy Course')))
                  . then(hasMaximumSize(maxCourseSize));
 courseScheduling . forEach(not(equals(assignedSport, 'Dummy Course')))
                  . forEach(assignedHalfYear)
-                 . then(atMost(maxCoursesPerHalfYear, uniqueValueCount(assignedSport)));
+                 . then(uniqueValueCountIsAtMost(maxCoursesPerHalfYear, assignedSport));
