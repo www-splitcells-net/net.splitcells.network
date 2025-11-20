@@ -48,7 +48,7 @@ public class UniqueValueCountIsAtMost implements GroupingRater {
                 .value(INCOMING_CONSTRAINT_GROUP);
         Rating rating;
         if (distinctValues.size() > maxCount) {
-            rating = cost((double) (distinctValues.size() - maxCount) / distinctValues.size());
+            rating = cost((double) (distinctValues.size() - maxCount) / lines.size());
         } else {
             rating = noCost();
         }
