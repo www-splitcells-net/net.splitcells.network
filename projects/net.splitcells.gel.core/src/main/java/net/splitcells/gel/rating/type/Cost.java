@@ -20,6 +20,8 @@ import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.order.Ordering.*;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.dem.utils.MathUtils.acceptable;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 import java.util.Optional;
@@ -165,5 +167,17 @@ public class Cost implements Rating {
     @Override
     public String descriptionForUser() {
         return "Cost of " + value;
+    }
+
+    @Override public void requireVerySimilar(Rating arg) {
+        if (arg instanceof Cost argCost) {
+            if (!acceptable(value, argCost.value)) {
+                throw execException(tree("Ratings should be very similar, but are not")
+                        .withProperty("this", toString())
+                        .withProperty("arg", arg.toString()));
+            }
+            return;
+        }
+        requireEqualsTo(arg);
     }
 }

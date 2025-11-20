@@ -45,4 +45,8 @@ public interface Rating extends PartiallyOrdered<Rating>, Domable, Base {
     default String descriptionForUser() {
         throw notImplementedYet();
     }
+
+    default void requireVerySimilar(Rating arg) {
+        requireEqualsTo(arg);
+    }
 }
