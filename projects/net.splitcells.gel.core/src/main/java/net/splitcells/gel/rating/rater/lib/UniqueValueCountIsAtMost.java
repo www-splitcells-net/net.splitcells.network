@@ -41,14 +41,13 @@ public class UniqueValueCountIsAtMost implements GroupingRater {
     }
 
     @Override public RatingEvent rating(View lines, List<Constraint> children) {
-        final Set<Object> distinctValues = setOfUniques();
-        distinctValues.addAll(lines.columnView(attribute).values());
+        val uniqueCount = numberOfUniqueValues(lines);
         val ratingEvent = ratingEvent();
         val incomingConstraintGroup = lines.unorderedLinesStream2().findFirst().orElseThrow()
                 .value(INCOMING_CONSTRAINT_GROUP);
         Rating rating;
-        if (distinctValues.size() > maxCount) {
-            rating = cost((double) (distinctValues.size() - maxCount) / lines.size());
+        if (uniqueCount > maxCount) {
+            rating = cost((double) (uniqueCount - maxCount) / lines.size());
         } else {
             rating = noCost();
         }
@@ -65,11 +64,11 @@ public class UniqueValueCountIsAtMost implements GroupingRater {
      * @return
      */
     private int numberOfUniqueValues(View groupsLineProcessing) {
-        final Set<Object> distinctValues = setOfUniques();
+        final Set<Object> uniqueValues = setOfUniques();
         groupsLineProcessing.columnView(LINE).values().stream()
                 .map(lp -> lp.value(attribute))
-                .forEach(distinctValues::add);
-        return distinctValues.size();
+                .forEach(uniqueValues::add);
+        return uniqueValues.size();
     }
 
     @Override public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {

@@ -92,6 +92,7 @@
 * **2025-11-20 \#37**
   1. Create HasMaximalSize rater.
   2. Create `Rater#requireVerySimilar` helper function, in order to better compare Costs' double values.
+  3. Create UniqueValueCountIsAtMost rater.
 * **2025-11-08 \#37** Create new Not Rater, that inverses a given Rater.
 * **2024-11-15 \#51**
     1. Define rating method after line removal instead of before for raters.
