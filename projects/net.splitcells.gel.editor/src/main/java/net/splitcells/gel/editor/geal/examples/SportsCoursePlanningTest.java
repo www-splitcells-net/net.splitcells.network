@@ -29,7 +29,7 @@ public class SportsCoursePlanningTest {
                 .readString("src/main/resources/html/net/splitcells/gel/editor/geal/examples/sports-course-planning.txt");
     }
 
-    //@UnitTest
+    @UnitTest
     public void testInterpretation() {
         final var problemDefinition = configValue(GelEditorFileSystem.class)
                 .readString("src/main/resources/html/net/splitcells/gel/editor/geal/examples/sports-course-planning.txt");
