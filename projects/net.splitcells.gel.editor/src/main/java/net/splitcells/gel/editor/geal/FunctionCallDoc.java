@@ -57,6 +57,11 @@ public class FunctionCallDoc implements ProjectsRendererExtension {
     }
 
     private static final Trail PATH = trail("net/splitcells/gel/editor/geal/function-call-doc.html");
+    private static final String INTRO = """
+            The receiver of a function is the subject of the function to which changes are applied (see OOP terminology).
+            A function with a receiver is called a method.
+            A function without a receiver is called a static function.
+            """;
 
     private FunctionCallDoc() {
 
@@ -82,7 +87,9 @@ public class FunctionCallDoc implements ProjectsRendererExtension {
                 .withChildren(tree("meta", SEW)
                                 .withChild(tree("path", SEW).withText(request.trail().unixPathString()))
                                 .withChild(tree("title", SEW).withText("Geal Function Call Documentation"))
-                        , tree("content", SEW).withChildren(generateDoc())
+                        , tree("content", SEW)
+                                .withChild(tree("paragraph", SEW).withText(INTRO))
+                                .withChildren(generateDoc())
                 );
         return renderResponse(Optional.of(binaryMessage(projectsRenderer.projectRenderers().get(0)
                         .renderRawXml(article.toXmlStringWithAllNameSpaceDeclarationsAtTop(), projectsRenderer.config())
