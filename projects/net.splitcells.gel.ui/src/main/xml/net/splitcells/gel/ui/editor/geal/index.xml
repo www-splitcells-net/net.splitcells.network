@@ -22,6 +22,7 @@
             <list>
                 <link post="net/splitcells/gel/editor/geal/index">Documentation of the Editor's Programming Language
                 </link>
+                <link post="net/splitcells/gel/editor/geal/function-call-doc">Function Documentation</link>
                 <link post="net/splitcells/gel/index">Overarching Documentation</link>
             </list>
         </description>
