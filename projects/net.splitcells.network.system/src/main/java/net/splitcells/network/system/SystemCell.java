@@ -121,7 +121,7 @@ public class SystemCell implements Cell {
      */
     @Deprecated
     public static Config config() {
-        return config(Config.create());
+        return config(configValue(ServerConfig.class));
     }
 
     /**
