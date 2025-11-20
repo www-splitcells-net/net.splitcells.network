@@ -37,8 +37,10 @@ public interface GroupingRater {
     /**
      * The {@link Rating} of an Event, has to be applied to all {@link Line}s of a group.
      *
-     * @param lines    The {@link Line} from {@link Constraint#lines()} of an incoming {@link GroupId}, that need to be rated.
-     * @param children This list contains every child {@link Constraint}, to which the incoming {@link Line} can be forwarded to.
+     * @param lines    The {@link Line} from {@link Constraint#lineProcessing()} of an incoming {@link GroupId},
+     *                 that need to be rated.
+     * @param children This list contains every child {@link Constraint},
+     *                 to which the incoming {@link Line} can be forwarded to.
      * @return return All lines need a {@link Rating}.
      */
     RatingEvent rating(View lines, List<Constraint> children);
