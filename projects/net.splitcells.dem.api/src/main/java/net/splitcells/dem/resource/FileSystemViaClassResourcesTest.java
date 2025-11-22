@@ -15,7 +15,6 @@
  */
 package net.splitcells.dem.resource;
 
-import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.TestSuiteI;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Tag;
@@ -63,7 +62,12 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
                 , dynamicTests(this::testWalkRecursivelyOnFile, factory)
                 , dynamicTests(this::testWalkRecursivelyForSubFileSystem, factory)
                 , dynamicTests(this::testSubFileSystemView, factory)
-                , dynamicTests(this::testReadFileAsBytes, factory));
+                , dynamicTests(this::testReadFileAsBytes, factory)
+                , dynamicTests(this::testInvalidConstruction, factory));
+    }
+
+    public void testInvalidConstruction(FileSystemViaClassResourcesFactoryApi factory) {
+        factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class, "invalid-group", "invalid-artifact");
     }
 
     public void testInputStream(FileSystemViaClassResourcesFactoryApi factory) {
