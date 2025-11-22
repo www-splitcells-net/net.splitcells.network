@@ -165,6 +165,16 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
                 );
         factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
                         , MAVEN_GROUP_ID, DEM_API)
+                .walkRecursively(Path.of(rootPath))
+                .collect(toList())
+                .requireContentsOf(Path.of(rootPath)
+                        , Path.of(rootPath + "1")
+                        , Path.of(rootPath + "1/2")
+                        , Path.of(rootPath + "1/2/3")
+                        , Path.of(rootPath + "1/2/3/test.txt")
+                );
+        factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
+                        , MAVEN_GROUP_ID, DEM_API)
                 .walkRecursively()
                 .collect(toList())
                 .requireContentsOf(Path.of(rootPath)
