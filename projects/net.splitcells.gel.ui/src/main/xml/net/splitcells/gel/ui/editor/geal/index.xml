@@ -31,6 +31,11 @@
             <command id="net-splitcells-gel-ui-editor-geal-form-submit"
                      method="net_splitcells_gel_ui_editor_geal_form_submit">Calculate solution
             </command>
+            <command-group name="Examples">
+                <command method="net_splitcells_gel_ui_editor_geal_form_load_sport_course_planning">Load Sport Course
+                    Planning
+                </command>
+            </command-group>
         </commands>
         <d:toDo>
             <d:toDo>Import supplies and demands from local file via Tabulator.</d:toDo>

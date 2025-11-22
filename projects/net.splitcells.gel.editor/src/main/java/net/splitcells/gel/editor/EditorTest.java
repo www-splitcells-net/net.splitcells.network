@@ -334,7 +334,7 @@ public class EditorTest {
                 
                 ## Argumentation
                 
-                No Argumentation is available.""";
+                There is no argumentation, as there are no errors in the solution, that need reasoning.""";
         requireEquals(solution.constraint().commonMarkRatingReport(), firstReport);
         final var duplicateFirstShift = solution.assign(demands.rawLine(1), supplies.rawLine(1));
         // TODO A dedicated variable is used, as the Java11Parser has a bug regarding multi line strings as arguments.
