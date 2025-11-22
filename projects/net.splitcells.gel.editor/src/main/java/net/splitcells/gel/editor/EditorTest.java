@@ -323,7 +323,7 @@ public class EditorTest {
         final var solution = testSubject.getSolutions().get("solution");
         demands.orderedLines().requireSizeOf(4);
         supplies.orderedLines().requireSizeOf(4);
-        final var firstShift = solution.assign(demands.rawLine(0), supplies.rawLine(0));
+        solution.assign(demands.rawLine(0), supplies.rawLine(0));
         // TODO A dedicated variable is used, as the Java11Parser has a bug regarding multi line strings as arguments.
         final var firstReport = """
                 # Constraint Rating Report
@@ -336,7 +336,7 @@ public class EditorTest {
                 
                 There is no argumentation, as there are no errors in the solution, that need reasoning.""";
         requireEquals(solution.constraint().commonMarkRatingReport(), firstReport);
-        final var duplicateFirstShift = solution.assign(demands.rawLine(1), supplies.rawLine(1));
+        solution.assign(demands.rawLine(1), supplies.rawLine(1));
         // TODO A dedicated variable is used, as the Java11Parser has a bug regarding multi line strings as arguments.
         final var secondReport = """
                 # Constraint Rating Report
@@ -353,10 +353,9 @@ public class EditorTest {
                             * For all groups of shift attribute values: where value is `1`: Then size should be 1, but is 2
                 """;
         requireEquals(solution.constraint().commonMarkRatingReport(), secondReport);
-        final var secondShift = solution.assign(demands.rawLine(2), supplies.rawLine(2));
+        solution.assign(demands.rawLine(2), supplies.rawLine(2));
         requireEquals(solution.constraint().commonMarkRatingReport(), secondReport);
-        final var duplicateSecondShift = solution.assign(demands.rawLine(3), supplies.rawLine(3));
-        System.out.println(solution.constraint().commonMarkRatingReport());
+        solution.assign(demands.rawLine(3), supplies.rawLine(3));
         final var thirdReport = """
                 # Constraint Rating Report
                 
