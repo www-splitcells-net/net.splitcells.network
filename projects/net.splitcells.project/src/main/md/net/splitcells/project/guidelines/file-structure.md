@@ -11,9 +11,9 @@ projects.
 Top Level Folder
 ├── bin
 │   ├── [Project Commands]
-│   ├── net.splitcells.osi.repos.children
-│   ├── net.splitcells.osi.repos.hosts
-│   ├── net.splitcells.osi.repos.peers
+│   ├── net.splitcells.repos.children
+│   ├── net.splitcells.repos.hosts
+│   ├── net.splitcells.repos.peers
 │   └── [...]
 ├── [.*]
 │   └── [...]
