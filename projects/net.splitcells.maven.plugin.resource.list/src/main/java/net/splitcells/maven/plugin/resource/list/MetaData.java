@@ -75,8 +75,8 @@ public class MetaData {
                         filePathStr = filePathStr.substring(1);
                     }
                     metaData.filePath = Path.of(filePathStr);
-                    mojo.getLog().debug("Parsing path: " + metaData.filePath);
                     val metaData = new MetaData(Path.of(filePathStr));
+                    mojo.getLog().debug("Parsing path: " + metaData);
                     parsedMetaData.add(metaData);
                 });
             } catch (IOException e) {
@@ -121,8 +121,11 @@ public class MetaData {
         filePath = argFilePath;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
+        return "filePath=" + filePath + ", license=" + license.orElse("No license info") + ", copyrightText=" + copyrightText.orElse("No copyright text");
+    }
+
+    public String toFileString() {
         return "license=" + license.orElse("No license info") + "\ncopyrightText=" + copyrightText.orElse("No copyright text");
     }
 }

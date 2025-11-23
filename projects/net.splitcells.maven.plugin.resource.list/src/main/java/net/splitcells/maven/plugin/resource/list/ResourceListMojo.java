@@ -120,7 +120,7 @@ public class ResourceListMojo extends AbstractMojo {
                         }
                         final var metaData = parseMetaData(metaFilePath, resourceContent);
                         try (final BufferedWriter metaWriter = new BufferedWriter(new FileWriter(metaData.filePath.toFile()))) {
-                            metaWriter.write(metaData.toString());
+                            metaWriter.write(metaData.toFileString());
                         } catch (IOException e) {
                             throw new RuntimeException("Could not write meta file: " + metaFilePath, e);
                         }
