@@ -157,7 +157,7 @@ footer {
            as otherwise the menu gets smaller. */
         min-width: 13em;
         max-width: 13em;
-        }}
+        }
     }
 @media (max-width: 53.25em) {
     /* Only the window menu and one additional column are visible at any height of the document. */
