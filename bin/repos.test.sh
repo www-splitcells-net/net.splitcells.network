@@ -13,7 +13,6 @@ set -x # Makes it easier to debug problems on a remote server, especially becaus
 export JAVA_VERSION=21 # This is required on FreeBSD, if an older Java version is set as default.
 current=$(pwd)
 reposFolder="$(pwd)/../"
-bin/repos.verify
 rm -rf ~/.m2/repository/net/splitcells/ # Our packages are deleted, as SNAPSHOT builds are often used, which can create a cache problems in the build.
 # Build BOMs first, as otherwise `mvn wrapper:wrapper` will not run, because the dependency BOM with the scope import cannot be read.
   pwd # TODO Remove this debug statement.
@@ -34,7 +33,7 @@ cd "$reposFolder/net.splitcells.network.hub" # TODO Move this into worker.boostr
   # TODO mvn clean install -Dare-dependencies-up-to-date=true
 cd "$reposFolder/net.splitcells.network"
   . bin/worker.bootstrap
-  cd "$current"
+  bin/repos.verify
   bin/build.part.with.python
 cd "$reposFolder/net.splitcells.network/projects/net.splitcells.network.system"
   # TODO mvn exec:java -Dexec.mainClass=net.splitcells.network.worker.via.java.Tester "-Dexec.args=$(hostname)"
