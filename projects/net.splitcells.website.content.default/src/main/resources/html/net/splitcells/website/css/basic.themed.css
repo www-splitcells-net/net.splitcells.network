@@ -235,8 +235,9 @@ main {
 	}
 .text_error {
 	color: var(--error-foreground-color-priority-1);
-	padding-left: 1em;
 	background-color: var(--error-background-color-priority-1);
+	padding: .5em;
+	padding-left: 1em;
 	font-weight: bold;
 	}
 .PresentationBox {
