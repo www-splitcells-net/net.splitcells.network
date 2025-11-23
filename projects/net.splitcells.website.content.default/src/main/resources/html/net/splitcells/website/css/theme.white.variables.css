@@ -71,12 +71,12 @@
 	--shadow-color-priority-5: rgba(0, 0, 0, 0.125);
 
 	--error-foreground-color-priority-0: #000000;
-	--error-foreground-color-priority-1: #fd686f;
+	--error-foreground-color-priority-1: #8B0000;
 
 	--update-background-color-priority-1: #50e297;
 	
 	--error-background-color-priority-0: #FFFFFF;
-	--error-background-color-priority-1: #F6F6F6;
+	--error-background-color-priority-1: #FA8072;
 
 	--foreground-color-activity: #000000;
 	--background-color-activity: #ff9900;
