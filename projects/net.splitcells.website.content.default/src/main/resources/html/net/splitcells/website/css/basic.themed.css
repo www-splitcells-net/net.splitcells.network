@@ -239,6 +239,7 @@ main {
 	padding: .5em;
 	padding-left: 1em;
 	font-weight: bold;
+	font-family: var(--text-flowing-font);
 	}
 .PresentationBox {
 	box-shadow: .15em .15em .1em 0em var(--shadow-color-priority-1);
