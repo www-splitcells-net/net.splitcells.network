@@ -196,7 +196,7 @@ expression_child
 	: access
 	| expression
 	;
-function_call: name call_arguments;
+function_call: name call_arguments inline_comment?;
 import_declaration
     : import_static_declaration
     | import_type_declaration
