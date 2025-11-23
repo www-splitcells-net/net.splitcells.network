@@ -60,9 +60,7 @@ public class GlobalChangelogExtension implements ProjectsRendererExtension {
     public RenderResponse render(RenderRequest request, ProjectsRenderer projectsRenderer) {
         if (PATH.equals(request.trail())) {
             return renderResponse(projectsRenderer.renderContent(
-                    parseNotificationQueue(request, projectsRenderer)
-                            .withSelectedTags(CHANGELOG)
-                            .toHtml()
+                    parseNotificationQueue(request, projectsRenderer).toHtml()
                     , layoutConfig(PATH.unixPathString()).withTitle("Global Changelog")));
         }
         return renderResponse(Optional.empty());
