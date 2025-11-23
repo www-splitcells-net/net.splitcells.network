@@ -5,6 +5,8 @@
 set -e
 
 cd ../net.splitcells.network.bom
+# These commands increase all dependencies by at most one version increment, if an update is available.
+# These leads to more tests, but on the other hand makes it easier to understand, which version exactly introduced a problem.
 mvn versions:update-parent
 mvn versions:use-next-releases
 
