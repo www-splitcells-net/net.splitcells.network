@@ -101,7 +101,7 @@ def process(relativePath, host, command, commandForMissing, commandForUnknown, c
 	subListPath=Path('./.net.splitcells.os.state.interface.repo/sub-repo-names')
 	if subListPath.is_file():
 		raise Exception('`./.net.splitcells.os.state.interface.repo/sub-repo-names` is present, but deprecated and unsupported.')
-	subListPath=Path('./bin/net.splitcells.osi.repos.children')
+	subListPath=Path('./bin/net.splitcells.repos.children')
 	if subListPath.is_file():
 		subListQuery = subprocess.run([subListPath], stdout=subprocess.PIPE)
 		subRepos = []
