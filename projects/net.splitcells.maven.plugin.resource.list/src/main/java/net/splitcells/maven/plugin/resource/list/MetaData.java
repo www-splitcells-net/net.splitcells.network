@@ -20,12 +20,15 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.tomlj.Toml;
 
 import java.io.IOException;
+import java.nio.charset.MalformedInputException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static java.nio.file.Files.createDirectories;
 import static java.util.stream.IntStream.range;
 
 public class MetaData {
@@ -74,8 +77,9 @@ public class MetaData {
                     if (filePathStr.startsWith("/")) {
                         filePathStr = filePathStr.substring(1);
                     }
-                    metaData.filePath = Path.of(filePathStr);
                     val metaData = new MetaData(Path.of(filePathStr));
+                    metaData.copyrightText = Optional.of(table.getString("SPDX-FileCopyrightText"));
+                    metaData.license = Optional.of(table.getString("SPDX-License-Identifier"));
                     mojo.getLog().debug("Parsing path: " + metaData);
                     parsedMetaData.add(metaData);
                 });
