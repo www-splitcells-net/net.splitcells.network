@@ -50,7 +50,6 @@ public class MetaData {
                 }
                 val annotations = tomlParsing.getArray("annotations");
                 range(0, annotations.size()).forEach(i -> {
-                    val metaData = new MetaData();
                     val table = annotations.getTable(i);
                     val path = table.getString("path");
                     if (path == null) {
@@ -77,6 +76,7 @@ public class MetaData {
                     }
                     metaData.filePath = Path.of(filePathStr);
                     mojo.getLog().debug("Parsing path: " + metaData.filePath);
+                    val metaData = new MetaData(Path.of(filePathStr));
                     parsedMetaData.add(metaData);
                 });
             } catch (IOException e) {
@@ -109,8 +109,11 @@ public class MetaData {
     /**
      * This is the {@link Path} to the licensed file relative to this project's root folder.
      */
-    Path filePath;
+    final Path filePath;
 
+    private MetaData(Path argFilePath) {
+        filePath = argFilePath;
+    }
     @Override
     public String toString() {
         return "license=" + license + "\ncopyrightText=" + copyrightText;
