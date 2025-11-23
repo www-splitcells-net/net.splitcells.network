@@ -86,15 +86,15 @@ public class MetaData {
         return parsedMetaData;
     }
 
-    public static MetaData parseMetaData(String fileContent) {
-        val metaData = new MetaData();
+    public static MetaData parseMetaData(Path filePath, String fileContent) {
+        val metaData = new MetaData(filePath);
         val licenseMatch = SPX_LICENSE.matcher(fileContent);
         if (licenseMatch.find()) {
-            metaData.license = licenseMatch.group(2);
+            metaData.license = Optional.of(licenseMatch.group(2));
         }
         val copyrightMatch = SPX_COPYRIGHT_TEXT.matcher(fileContent);
         if (copyrightMatch.find()) {
-            metaData.copyrightText = copyrightMatch.group(2);
+            metaData.copyrightText = Optional.of(copyrightMatch.group(2));
         }
         return metaData;
     }
@@ -104,8 +104,14 @@ public class MetaData {
      */
     private static final Pattern SPX_LICENSE = Pattern.compile("(SPDX" + "-License-Identifier: )([a-zA-Z0-9-. ]+)");
     private static final Pattern SPX_COPYRIGHT_TEXT = Pattern.compile("(SPDX" + "-FileCopyrightText: )([a-zA-Z0-9-. *`]+)");
-    String license;
-    String copyrightText;
+    /**
+     * This is the SPDX-License-Identifier of the file's license.
+     */
+    Optional<String> license = Optional.empty();
+    /**
+     * This is the SPDX-FileCopyrightText of the file's copyright text.
+     */
+    Optional<String> copyrightText = Optional.empty();
     /**
      * This is the {@link Path} to the licensed file relative to this project's root folder.
      */
@@ -114,8 +120,9 @@ public class MetaData {
     private MetaData(Path argFilePath) {
         filePath = argFilePath;
     }
+
     @Override
     public String toString() {
-        return "license=" + license + "\ncopyrightText=" + copyrightText;
+        return "license=" + license.orElse("No license info") + "\ncopyrightText=" + copyrightText.orElse("No copyright text");
     }
 }
