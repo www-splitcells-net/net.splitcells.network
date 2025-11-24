@@ -16,3 +16,4 @@ cd ../net.splitcells.network
   export PATH="$(realpath ./):$PATH"
   echo "$(pwd)/mvnw \$@" > mvn
   chmod +x mvn
+. ./projects/net.splitcells.shell/src/main/bash/command/managed/command.managed.export.bin.sh
