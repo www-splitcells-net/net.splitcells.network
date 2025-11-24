@@ -49,6 +49,8 @@ public class ServerService extends ResourceOptionImpl<Service> {
                 @Override
                 public void start() {
                     httpServer = projectsRenderer(Dem.configValue(ServerConfig.class)).httpServer();
+                    Server.serveToHttpAt(() -> projectsRenderer(Dem.configValue(ServerConfig.class))
+                            , Dem.configValue(ServerConfig.class));
                     httpServer.start();
                 }
 
