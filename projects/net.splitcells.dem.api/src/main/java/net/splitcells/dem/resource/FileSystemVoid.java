@@ -21,6 +21,7 @@ import java.util.stream.Stream;
 
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.BinaryUtils.emptyByteArray;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
@@ -33,6 +34,7 @@ public class FileSystemVoid implements FileSystem {
     }
 
     private boolean isUsageWarned = false;
+    private Throwable creation = execException();
 
     private FileSystemVoid() {
 
@@ -40,7 +42,7 @@ public class FileSystemVoid implements FileSystem {
 
     private void warnUsage() {
         if (!isUsageWarned) {
-            logs().warnUnimplementedPart(FileSystemVoid.class);
+            logs().warnUnimplementedPart(FileSystemVoid.class, creation);
             isUsageWarned = true;
         }
     }

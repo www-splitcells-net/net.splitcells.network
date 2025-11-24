@@ -72,6 +72,20 @@ public interface Log extends AppendableList<LogMessage<Tree>> {
         return this;
     }
 
+    /**
+     *
+     * @param clazz
+     * @param creation Provides the stacktrace, that points to the constructor call of {@code clazz}.
+     * @return
+     */
+    default Log warnUnimplementedPart(Class<?> clazz, Throwable creation) {
+        logs().append(tree("Unimplemented program part for class " + clazz + " at")
+                        .with("creation", creation)
+                        .with("current-execution", execException("current-execution"))
+                , LogLevel.WARNING);
+        return this;
+    }
+
     default Log warnUnimplementedPart() {
         logs().append("Unimplemented program part at:\n"
                         + throwableToString(ExecutionException.execException("no-message"))

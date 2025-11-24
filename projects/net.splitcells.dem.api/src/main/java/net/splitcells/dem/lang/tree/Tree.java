@@ -357,7 +357,7 @@ public interface Tree extends TreeView, Convertible {
 
     default Tree withPath(Tree... path) {
         var current = this;
-        for (int i = 0 ; i < path.length ; ++i) {
+        for (int i = 0; i < path.length; ++i) {
             final var next = path[i];
             current.withChild(next);
             current = next;
@@ -1190,7 +1190,11 @@ public interface Tree extends TreeView, Convertible {
     }
 
     default Tree with(Throwable throwable) {
-        final var throwableTree = tree("throwable")
+        return with("throwable", throwable);
+    }
+
+    default Tree with(String description, Throwable throwable) {
+        final var throwableTree = tree(description)
                 .withChild(tree("message").withChild(tree(throwable.getMessage())))
                 .withChild(tree("stack-trace").withChild(tree(throwableToString(throwable))));
         return withChild(throwableTree);

@@ -5,6 +5,7 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2025-11-24\#37** Log the creation of actually used FileSystemVoids.
 * **2025-10-20\#37** Rename `List#forEachIndex` to `List#forEachIndexed`.
 * **2025-07-21\#37** Rename CsvDocument to CsvPrinter, as it is otherwise misleading and create a new CsvDocument class,
   that supports reading CSV contents for now.
