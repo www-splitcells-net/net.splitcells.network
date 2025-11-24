@@ -1195,7 +1195,7 @@ public interface Tree extends TreeView, Convertible {
 
     default Tree with(String description, Throwable throwable) {
         final var throwableTree = tree(description)
-                .withChild(tree("message").withChild(tree(throwable.getMessage())))
+                .withChild(tree("message").withChild(tree(throwable.getMessage() + "")))
                 .withChild(tree("stack-trace").withChild(tree(throwableToString(throwable))));
         return withChild(throwableTree);
     }
