@@ -41,6 +41,8 @@
             <d:toDo>Import supplies and demands from local file via Tabulator.</d:toDo>
             <d:toDo>Edit supply and demand data via Tabulator for a better use experience.</d:toDo>
             <d:toDo>Export and import data from Excel format.</d:toDo>
+            <d:toDo>Newly created buttons should be made visible with an animation,
+                in order to get the user's attention and to signal new options.</d:toDo>
         </d:toDo>
     </meta>
     <notification>
