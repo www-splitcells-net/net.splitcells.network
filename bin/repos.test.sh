@@ -33,6 +33,9 @@ cd "$reposFolder/net.splitcells.network.hub" # TODO Move this into worker.boostr
   # TODO mvn clean install -Dare-dependencies-up-to-date=true
 cd "$reposFolder/net.splitcells.network"
   . bin/worker.bootstrap
+  # TODO Analyze daily CI problem.
+    echo $PATH
+    ls $(echo $PATH | tr ':' ' ')
   bin/repos.verify
   bin/build.part.with.python
 cd "$reposFolder/net.splitcells.network/projects/net.splitcells.network.system"
