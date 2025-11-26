@@ -65,11 +65,9 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
             final var metaData = pageMetaData(path);
             final var document = Xml.parse(projectRenderer.projectFileSystem().readString(xmlPath.get()));
             if (NameSpaces.SEW.uri().equals(document.getDocumentElement().getNamespaceURI())) {
-                final var metaElement = optionalDirectChildElementsByName
-                        (document.getDocumentElement(), "meta", NameSpaces.SEW);
+                final var metaElement = optionalDirectChildElementsByName(document.getDocumentElement(), "meta", NameSpaces.SEW);
                 if (metaElement.isPresent()) {
-                    final var titleElement = optionalDirectChildElementsByName
-                            (metaElement.get(), "title", NameSpaces.SEW);
+                    final var titleElement = optionalDirectChildElementsByName(metaElement.get(), "title", NameSpaces.SEW);
                     if (titleElement.isPresent()) {
                         metaData.withTitle(Optional.of(titleElement.get().getTextContent()));
                     }
