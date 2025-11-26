@@ -17,6 +17,11 @@
         <paragraph>There is currently no guarantee of backwards compatibility.
             Absolute backward compatibility creates a maintenance burden,
             that currently has no benefits.
+            Maven Central releases are not done because of this.
+            Furthermore, the build currently contains large binary files,
+            which probably are not suited for Maven Central.
+            So, Maven Central releases would therefore require some adaptations and thereby investment
+            with little benefits for now.
         </paragraph>
         <paragraph>We do not break backward compatibility just for fun.
             Many API changes are located and categorized in the changelogs of the corresponding project.
