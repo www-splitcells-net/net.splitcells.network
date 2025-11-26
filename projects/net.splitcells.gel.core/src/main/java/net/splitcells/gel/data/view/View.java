@@ -460,9 +460,6 @@ public interface View extends Discoverable, Domable, Identifiable {
      */
     default List<List<String>> toReformattedTable(List<Attribute<? extends Object>> columnAttributes
             , List<Attribute<? extends Object>> rowAttributes) {
-        if (orderedLines().isEmpty()) {
-            return list();
-        }
         final Map<Attribute<? extends Object>, List<String>> sortedAttributeValues = map();
         final var firstColumn = columnAttributes.get(0);
         concat(columnAttributes, rowAttributes).forEach(ca -> sortedAttributeValues
