@@ -35,7 +35,9 @@ cd "$reposFolder/net.splitcells.network"
   . bin/worker.bootstrap
   # TODO Analyze daily CI problem.
     echo $PATH
+    set +e
     ls $(echo $PATH | tr ':' ' ')
+    set -e
   bin/repos.verify
   bin/build.part.with.python
 cd "$reposFolder/net.splitcells.network/projects/net.splitcells.network.system"
