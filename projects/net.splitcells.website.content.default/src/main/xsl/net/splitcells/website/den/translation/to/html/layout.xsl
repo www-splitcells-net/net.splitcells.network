@@ -912,7 +912,7 @@ request.send();]]>
                                     </xsl:if>
                                     <section class="net-splitcells-website-menu-dynamic net-splitcells-component-priority-1">
                                         <!-- TODO This should probably be done via JavaScript. -->
-                                        <xsl:apply-templates mode="net-splitcells-gel-editor"/>
+                                        <xsl:apply-templates select="./s:content" mode="net-splitcells-gel-editor-menu"/>
                                     </section>
                                     <xsl:apply-templates mode="net-splitcells-website-menu"
                                                          select="$net-splitcells-website-server-config-menu-detailed">
