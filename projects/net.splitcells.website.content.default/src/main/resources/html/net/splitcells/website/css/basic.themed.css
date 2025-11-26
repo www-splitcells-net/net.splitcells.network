@@ -520,3 +520,15 @@ article img {
 .toc_chapter_10 {
 	box-shadow: .2em .2em .1em 0em var(--shadow-color-priority-4), .1em .1em .05em 0em var(--shadow-color-priority-4), -.2em -.2em .1em 0em var(--shadow-color-priority-4), -.1em -.1em .05em 0em var(--shadow-color-priority-4);
 }
+.net-splitcells-website-menu-sub {
+    margin-top: .2em;
+    margin-bottom: .2em;
+}
+.net-splitcells-website-menu-sub-title {
+    margin-left: .2em;
+    font-weight: bold;
+    color: var(--foreground-color-priority-2);
+}
+.net-splitcells-website-menu-sub :not(.net-splitcells-website-menu-sub-title) {
+    margin-left: 1em !important;
+}
