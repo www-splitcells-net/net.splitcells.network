@@ -235,7 +235,12 @@ function net_splitcells_webserver_form_submit(config) {
                         newTabButton.onclick = function() {
                             net_splitcells_webserver_form_tab_select(formId, key);
                         };
-                        menu.appendChild(newTabButton);
+                        const firstMenu = document.querySelector('.net-splitcells-website-menu-sub');
+                        if (firstMenu === null) {
+                            menu.appendChild(newTabButton);
+                        } else {
+                            menu.insertBefore(newTabButton, firstMenu);
+                        }
                     });
 
                     const newTabContent = document.createElement('div');
