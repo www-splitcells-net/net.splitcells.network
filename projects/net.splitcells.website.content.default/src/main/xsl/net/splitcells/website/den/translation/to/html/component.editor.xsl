@@ -12,25 +12,47 @@
         SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
         SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
     -->
-    <xsl:template match="*" mode="net-splitcells-gel-editor">
-        <xsl:apply-templates select="./*" mode="net-splitcells-gel-editor"/>
+    <xsl:template match="*" mode="net-splitcells-gel-editor-menu">
+        <xsl:apply-templates select="./*" mode="net-splitcells-gel-editor-menu"/>
     </xsl:template>
-    <xsl:template match="s:form-editor" mode="net-splitcells-gel-editor">
-        <!-- TODO This should probably be done via JavaScript. -->
-        <xsl:variable name="quote">'</xsl:variable>
-        <xsl:variable name="form-id" select="@id"/>
-        <xsl:for-each select="descendant::s:text-area">
-            <xsl:variable name="class">
-                <xsl:value-of select="concat('net-splitcells-button net-splitcells-action-button net-splitcells-action-text-button ', $form-id, '-tab-button ', $form-id, '-', @name, '-tab-button')"/>
-                <xsl:if test="@main-tab = 'true'">
-                    <xsl:value-of select="' net-splitcells-tab-button-selected'"/>
-                </xsl:if>
-            </xsl:variable>
-            <div>
-                <xsl:attribute name="class" select="$class"/>
-                <xsl:attribute name="onclick" select="concat('net_splitcells_webserver_form_tab_select(', $quote, $form-id, $quote, ', ', $quote, @name, $quote, ');')"/>
+    <xsl:template match="s:commands" mode="net-splitcells-gel-editor-menu">
+        <xsl:apply-templates mode="net-splitcells-gel-editor-menu"/>
+    </xsl:template>
+    <xsl:template match="s:command-group" mode="net-splitcells-gel-editor-menu">
+        <div class="net-splitcells-website-menu-sub">
+            <div class="net-splitcells-website-menu-sub-title">
                 <xsl:value-of select="@name"/>
             </div>
-        </xsl:for-each>
+            <xsl:apply-templates mode="net-splitcells-gel-editor-menu"/>
+        </div>
+    </xsl:template>
+    <xsl:template match="s:command" mode="net-splitcells-gel-editor-menu">
+        <xsl:choose>
+            <xsl:when test="./@target-id">
+                <xsl:variable name="onClick">
+                    <xsl:value-of
+                            select="concat('javascript: ', ./@method, '(document.getElementById(&quot;')"/>
+                    <xsl:value-of select="./@target-id"/>
+                    <xsl:value-of select="'&quot;))'"/>
+                </xsl:variable>
+                <div class="net-splitcells-button net-splitcells-action-button net-splitcells-action-text-button">
+                    <xsl:attribute name="onclick" select="$onClick"/>
+                    <xsl:if test="./@id">
+                        <xsl:attribute name="id" select="./@id"/>
+                    </xsl:if>
+                    <xsl:apply-templates select="./node()" mode="net-splitcells-gel-editor-menu"/>
+                </div>
+            </xsl:when>
+            <xsl:otherwise>
+                <div class="net-splitcells-button net-splitcells-action-button net-splitcells-action-text-button">
+                    <xsl:attribute name="onclick"
+                                   select="concat('javascript: ', ./@method, '()')"/>
+                    <xsl:if test="./@id">
+                        <xsl:attribute name="id" select="./@id"/>
+                    </xsl:if>
+                    <xsl:apply-templates select="./node()" mode="net-splitcells-gel-editor-menu"/>
+                </div>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 </xsl:stylesheet>
