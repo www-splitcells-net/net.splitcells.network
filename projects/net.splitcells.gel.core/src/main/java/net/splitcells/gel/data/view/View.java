@@ -434,6 +434,9 @@ public interface View extends Discoverable, Domable, Identifiable {
     default String toReformattedCsv(List<Attribute<? extends Object>> columnAttributes
             , List<Attribute<? extends Object>> rowAttributes) {
         final var reformattedSolution = toReformattedTable(columnAttributes, rowAttributes);
+        if (reformattedSolution.isEmpty()) {
+            return "";
+        }
         final List<List<String>> csvContent = list();
         csvContent.addAll(rangeClosed(1, reformattedSolution.get(0).size())
                 .mapToObj(i -> "" + i)
@@ -460,6 +463,9 @@ public interface View extends Discoverable, Domable, Identifiable {
      */
     default List<List<String>> toReformattedTable(List<Attribute<? extends Object>> columnAttributes
             , List<Attribute<? extends Object>> rowAttributes) {
+        if (orderedLines().isEmpty()) {
+            return list();
+        }
         final Map<Attribute<? extends Object>, List<String>> sortedAttributeValues = map();
         final var firstColumn = columnAttributes.get(0);
         concat(columnAttributes, rowAttributes).forEach(ca -> sortedAttributeValues
