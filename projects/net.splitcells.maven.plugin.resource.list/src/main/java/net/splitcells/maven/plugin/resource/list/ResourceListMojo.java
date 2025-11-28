@@ -22,7 +22,10 @@ import java.nio.charset.MalformedInputException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
+import lombok.val;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -53,6 +56,7 @@ public class ResourceListMojo extends AbstractMojo {
         final Path metaDataFolder = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources.meta");
         final Path resourceListFile = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources.list.txt");
         final String basePathStr = basePath.toAbsolutePath().toString().replace(fileSystemSeparator, "/");
+        final Map<Path, MetaData> inventory = new HashMap<>();
         try {
             if (Files.isRegularFile(resourceFolder)) {
                 throw new MojoExecutionException("No file is allowed to use the same path as the resource folder: " + resourceFolder);
@@ -118,7 +122,13 @@ public class ResourceListMojo extends AbstractMojo {
                         } catch (IOException e) {
                             throw new RuntimeException("Could not create folder for meta data file: " + metaFileFolder, e);
                         }
-                        final var metaData = parseMetaData(metaFilePath, resourceContent);
+                        val metaData = inventory.compute(metaFilePath, (filePath, oldMetaData) -> {
+                            if (oldMetaData == null) {
+                                return parseMetaData(new MetaData(metaFilePath), resourceContent);
+                            } else {
+                                return parseMetaData(oldMetaData, resourceContent);
+                            }
+                        });
                         try (final BufferedWriter metaWriter = new BufferedWriter(new FileWriter(metaData.filePath.toFile()))) {
                             metaWriter.write(metaData.toFileString());
                         } catch (IOException e) {

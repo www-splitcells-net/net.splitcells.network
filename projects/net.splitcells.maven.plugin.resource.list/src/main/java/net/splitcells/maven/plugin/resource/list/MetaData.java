@@ -90,14 +90,13 @@ public class MetaData {
         return parsedMetaData;
     }
 
-    public static MetaData parseMetaData(Path filePath, String fileContent) {
-        val metaData = new MetaData(filePath);
+    public static MetaData parseMetaData(MetaData metaData, String fileContent) {
         val licenseMatch = SPX_LICENSE.matcher(fileContent);
-        if (licenseMatch.find()) {
+        if (metaData.license.isEmpty() && licenseMatch.find()) {
             metaData.license = Optional.of(licenseMatch.group(2));
         }
         val copyrightMatch = SPX_COPYRIGHT_TEXT.matcher(fileContent);
-        if (copyrightMatch.find()) {
+        if (metaData.copyrightText.isEmpty() && copyrightMatch.find()) {
             metaData.copyrightText = Optional.of(copyrightMatch.group(2));
         }
         return metaData;
@@ -121,8 +120,17 @@ public class MetaData {
      */
     final Path filePath;
 
-    private MetaData(Path argFilePath) {
+    public MetaData(Path argFilePath) {
         filePath = argFilePath;
+    }
+
+    public void extendWith(MetaData metaData) {
+        if (license.isEmpty()) {
+            license = metaData.license;
+        }
+        if (copyrightText.isEmpty()) {
+            copyrightText = metaData.copyrightText;
+        }
     }
 
     @Override public String toString() {
