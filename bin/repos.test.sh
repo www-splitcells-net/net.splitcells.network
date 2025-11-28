@@ -33,12 +33,6 @@ cd "$reposFolder/net.splitcells.network.hub" # TODO Move this into worker.boostr
   # TODO mvn clean install -Dare-dependencies-up-to-date=true
 cd "$reposFolder/net.splitcells.network"
   . bin/worker.bootstrap
-  # TODO Analyze daily CI problem.
-    echo $PATH
-    set +e
-    ls $(echo $PATH | tr ':' ' ')
-    set -e
-  bin/repos.verify
   bin/build.part.with.python
 cd "$reposFolder/net.splitcells.network/projects/net.splitcells.network.system"
   # TODO mvn exec:java -Dexec.mainClass=net.splitcells.network.worker.via.java.Tester "-Dexec.args=$(hostname)"
@@ -63,3 +57,10 @@ cd "$reposFolder/net.splitcells.network" # Creating reports is done last, so the
       -Dsource_code_check=1 \
       -Dtest.groups=testing_unit,testing_integration \
       -DexcludedGroups="experimental_test"
+# TODO Analyze daily CI problem. Move this to `. bin/worker.bootstrap`, after this is fixed.
+  cd "$reposFolder/net.splitcells.network"
+  echo $PATH
+  set +e
+  ls $(echo $PATH | tr ':' ' ')
+  set -e
+  bin/repos.verify
