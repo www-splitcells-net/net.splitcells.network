@@ -124,13 +124,14 @@ public class MetaData {
         filePath = argFilePath;
     }
 
-    public void extendWith(MetaData metaData) {
-        if (license.isEmpty()) {
+    public MetaData extendWith(MetaData metaData) {
+        if (metaData.license.isPresent()) {
             license = metaData.license;
         }
-        if (copyrightText.isEmpty()) {
+        if (metaData.copyrightText.isPresent()) {
             copyrightText = metaData.copyrightText;
         }
+        return this;
     }
 
     @Override public String toString() {

@@ -125,16 +125,22 @@ public class ResourceListMojo extends AbstractMojo {
                         val metaData = inventory.compute(metaFilePath, (filePath, oldMetaData) -> {
                             if (oldMetaData == null) {
                                 return parseMetaData(new MetaData(metaFilePath), resourceContent);
-                            } else {
-                                return parseMetaData(oldMetaData, resourceContent);
                             }
+                            return parseMetaData(oldMetaData, resourceContent);
                         });
                         try (final BufferedWriter metaWriter = new BufferedWriter(new FileWriter(metaData.filePath.toFile()))) {
                             metaWriter.write(metaData.toFileString());
                         } catch (IOException e) {
                             throw new RuntimeException("Could not write meta file: " + metaFilePath, e);
                         }
-                        parseMetaDataFromReuse(this, project.getBasedir().toPath());
+                        parseMetaDataFromReuse(this, project.getBasedir().toPath()).forEach(reuseMeta -> {
+                            inventory.compute(reuseMeta.filePath, (filePath, oldMetaData) -> {
+                                if (oldMetaData == null) {
+                                    return reuseMeta;
+                                }
+                                return oldMetaData.extendWith(reuseMeta);
+                            });
+                        });
                     }
                 });
             }
