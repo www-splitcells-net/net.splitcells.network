@@ -16,11 +16,9 @@
 package net.splitcells.maven.plugin.resource.list;
 
 import lombok.val;
-import org.apache.maven.plugin.AbstractMojo;
 import org.tomlj.Toml;
 
 import java.io.IOException;
-import java.nio.charset.MalformedInputException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -28,7 +26,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import static java.nio.file.Files.createDirectories;
 import static java.util.stream.IntStream.range;
 
 public class MetaData {
@@ -124,7 +121,7 @@ public class MetaData {
         filePath = argFilePath;
     }
 
-    public MetaData extendWith(MetaData metaData) {
+    public MetaData replaceWith(MetaData metaData) {
         if (metaData.license.isPresent()) {
             license = metaData.license;
         }

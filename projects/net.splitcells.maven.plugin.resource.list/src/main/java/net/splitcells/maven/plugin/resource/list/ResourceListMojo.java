@@ -138,7 +138,7 @@ public class ResourceListMojo extends AbstractMojo {
                                 if (oldMetaData == null) {
                                     return reuseMeta;
                                 }
-                                return oldMetaData.extendWith(reuseMeta);
+                                return oldMetaData.replaceWith(reuseMeta);
                             });
                         });
                     }
