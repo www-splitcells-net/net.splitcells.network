@@ -42,19 +42,26 @@ public class UniqueValueCountIsAtMostTest {
                 }).toProblem()
                 .asSolution();
         testData.constraint().rating().requireEqualsTo(noCost());
-        val first = testData.assign(testData.demandsFree().orderedLine(0), testData.suppliesFree().orderedLine(0));
+        // first
+        testData.assign(testData.demandsFree().orderedLine(0), testData.suppliesFree().orderedLine(0));
         testData.constraint().rating().requireEqualsTo(noCost());
-        val second = testData.assign(testData.demandsFree().orderedLine(0), testData.suppliesFree().orderedLine(0));
+        // second
+        testData.assign(testData.demandsFree().orderedLine(0), testData.suppliesFree().orderedLine(0));
         testData.constraint().rating().requireEqualsTo(noCost());
-        val third = testData.assign(testData.demandsFree().orderedLine(0), testData.suppliesFree().orderedLine(0));
+        // third
+        testData.assign(testData.demandsFree().orderedLine(0), testData.suppliesFree().orderedLine(0));
         testData.constraint().rating().requireEqualsTo(noCost());
-        val fourth = testData.assign(testData.demandsFree().orderedLine(0), testData.suppliesFree().orderedLine(0));
+        // fourth
+        testData.assign(testData.demandsFree().orderedLine(0), testData.suppliesFree().orderedLine(0));
         testData.constraint().rating().requireEqualsTo(noCost());
-        val fifth = testData.assign(testData.demandsFree().orderedLine(0), testData.suppliesFree().orderedLine(0));
+        // fifth
+        testData.assign(testData.demandsFree().orderedLine(0), testData.suppliesFree().orderedLine(0));
         testData.constraint().rating().requireEqualsTo(noCost());
-        val sixth = testData.assign(testData.demandsFree().orderedLine(0), testData.suppliesFree().orderedLine(0));
+        // sixth
+        testData.assign(testData.demandsFree().orderedLine(0), testData.suppliesFree().orderedLine(0));
         testData.constraint().rating().requireVerySimilar(cost(1));
-        val seventh = testData.assign(testData.demandsFree().orderedLine(0), testData.suppliesFree().orderedLine(0));
+        // seventh
+        testData.assign(testData.demandsFree().orderedLine(0), testData.suppliesFree().orderedLine(0));
         testData.constraint().rating().requireVerySimilar(cost(1));
 
     }
