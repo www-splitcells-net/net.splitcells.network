@@ -100,7 +100,6 @@ public class NotificationQueueParser {
                             notification.deepClone(Notification.class)
                                     .withTime(startDate)
                                     .withTitle(toEndTitle(titleVar))));
-            notification.withTitle(toProposalTitle(titleVar));
             notificationQueue.withAdditionalNotification(notification);
         }
     }
