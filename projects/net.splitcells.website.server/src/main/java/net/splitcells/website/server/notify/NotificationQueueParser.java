@@ -42,6 +42,7 @@ import static net.splitcells.website.server.projects.extension.impls.ProjectPath
  */
 public class NotificationQueueParser {
     public static final String BLOG_ARTICLE = "blog article";
+    public static final String PROJECT_PROPOSAL = "project";
     public static final String PROJECT = "project";
     public static final String CHANGELOG = "changelog";
     private static final DateTimeFormatter NOTIFICATION_DATE = DateTimeFormatter.ofPattern("yyyy-MM-dd");

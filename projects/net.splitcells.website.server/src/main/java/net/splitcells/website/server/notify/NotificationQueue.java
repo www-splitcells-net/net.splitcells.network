@@ -69,6 +69,11 @@ public class NotificationQueue {
         return this;
     }
 
+    public NotificationQueue withoutTags(String... tags) {
+        notifications = notifications.stream().filter(n -> !hasAtLeastOneTag(n, tags)).toList();
+        return this;
+    }
+
     public String toHtml() {
         return "<ol xmlns=\"http://www.w3.org/1999/xhtml\">"
                 + notifications.reversed().stream()
