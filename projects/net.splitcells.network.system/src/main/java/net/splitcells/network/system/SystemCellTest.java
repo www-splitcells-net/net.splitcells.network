@@ -31,16 +31,16 @@ public class SystemCellTest {
 
     @IntegrationTest
     public void testServingWebsiteToFolder() {
-        SystemCell.projectsRenderer(SystemCell.config()).serveTo(Paths.get("target/test"));
+        process(() -> SystemCell.projectsRenderer(SystemCell.config()).serveTo(Paths.get("target/test"))
+                , SystemCell.class);
     }
 
     @UnitTest
     public void testInvalidPath() {
-        process(() -> {
-            SystemCell.projectsRenderer(SystemCell.config()).render(RenderRequest.renderRequest(
-                    Trail.trail("invalid-path")
-                    , Optional.empty()
-                    , ANONYMOUS_USER_SESSION));
-        }, SystemCell.class);
+        process(() -> SystemCell.projectsRenderer(SystemCell.config()).render(RenderRequest.renderRequest(
+                        Trail.trail("invalid-path")
+                        , Optional.empty()
+                        , ANONYMOUS_USER_SESSION))
+                , SystemCell.class);
     }
 }
