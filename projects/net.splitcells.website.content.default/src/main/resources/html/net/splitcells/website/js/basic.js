@@ -218,30 +218,18 @@ function net_splitcells_webserver_form_submit(config) {
             const dataValues = formUpdate['data-values'];
             const dataTypes = formUpdate['data-types'];
             let renderingTypes;
+            let isFieldNew = false;
             if (formUpdate['rendering-types'] === undefined) {
                 renderingTypes = {};
             } else {
                 renderingTypes = formUpdate['rendering-types'];
             }
             for (const [key, value] of Object.entries(dataValues)) {
+                // The cssKey allows it to be used in CSS queries, as dots have special meaning.
+                const cssKey= key.replaceAll('.', '-');
                 if (document.querySelector('*[name="' + key + '"]') === null) {
                     console.log('Inserting new form field for update: ' + key);
-                    dynamicMenus.forEach( (menu) => {
-                        const newTabButton = document.createElement("div");
-                        newTabButton.innerHTML = key;
-                        newTabButton.className = 'net-splitcells-button net-splitcells-action-button net-splitcells-action-text-button '
-                            + formId + '-' + key + '-tab-button '
-                            + formId + '-tab-button';
-                        newTabButton.onclick = function() {
-                            net_splitcells_webserver_form_tab_select(formId, key);
-                        };
-                        const firstMenu = document.querySelector('.net-splitcells-website-menu-sub');
-                        if (firstMenu === null) {
-                            menu.appendChild(newTabButton);
-                        } else {
-                            menu.insertBefore(newTabButton, firstMenu);
-                        }
-                    });
+                    isFieldNew = true;
 
                     const newTabContent = document.createElement('div');
                     newTabContent.className = 'net-splitcells-website-form-editor-tab '
@@ -310,7 +298,27 @@ function net_splitcells_webserver_form_submit(config) {
                     } else {
                         console.warn('Unknown data type ' + dataTypes[key] + ' for form field update ' + key + '.');
                     }
-
+                }
+                if (document.querySelector('.' + formId + '-' + cssKey + '-tab-button') === null) {
+                    console.log('Inserting new form field button for update: ' + key);
+                    dynamicMenus.forEach( (menu) => {
+                        const newTabButton = document.createElement("div");
+                        newTabButton.innerHTML = key;
+                        newTabButton.className = 'net-splitcells-button net-splitcells-action-button net-splitcells-action-text-button '
+                            + formId + '-' + cssKey + '-tab-button '
+                            + formId + '-tab-button';
+                        newTabButton.onclick = function() {
+                            net_splitcells_webserver_form_tab_select(formId, key);
+                        };
+                        const firstMenu = document.querySelector('.net-splitcells-website-menu-sub');
+                        if (firstMenu === null) {
+                            menu.appendChild(newTabButton);
+                        } else {
+                            menu.insertBefore(newTabButton, firstMenu);
+                        }
+                    });
+                }
+                if (isFieldNew) {
                     continue;
                 }
                 const formInput = document.querySelector('*[name="' + key + '"]');
