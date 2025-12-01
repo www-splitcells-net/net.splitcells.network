@@ -19,13 +19,13 @@
     width: 100%;
 }
 .net-splitcells-no-code-help-title {
-    bacgkround-color: var(--background-color-priority-1);
+    background-color: var(--background-color-priority-1);
     font-weight: normal;
     display: flex;
     flex-direction: row;
 }
 .net-splitcells-no-code-action-menu-title {
-    bacgkround-color: var(--background-color-priority-1);
+    background-color: var(--background-color-priority-1);
     font-weight: normal;
     display: flex;
     flex-direction: row;

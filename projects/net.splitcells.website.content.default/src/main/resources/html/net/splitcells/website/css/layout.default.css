@@ -271,7 +271,7 @@ footer {
 @media (min-width: 99em) {
     .net-splitcells-vertical-columns-only {
         display: none;
-        visibility: hidden:
+        visibility: hidden;
         }
 	.net-splitcells-content-column {
         display: flex;
