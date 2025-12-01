@@ -15,6 +15,7 @@
  */
 package net.splitcells.network.system;
 
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
@@ -23,6 +24,7 @@ import net.splitcells.website.server.projects.RenderRequest;
 import java.nio.file.Paths;
 import java.util.Optional;
 
+import static net.splitcells.dem.Dem.process;
 import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
 
 public class SystemCellTest {
@@ -34,9 +36,11 @@ public class SystemCellTest {
 
     @UnitTest
     public void testInvalidPath() {
-        SystemCell.projectsRenderer(SystemCell.config()).render(RenderRequest.renderRequest(
-                Trail.trail("invalid-path")
-                , Optional.empty()
-                , ANONYMOUS_USER_SESSION));
+        process(() -> {
+            SystemCell.projectsRenderer(SystemCell.config()).render(RenderRequest.renderRequest(
+                    Trail.trail("invalid-path")
+                    , Optional.empty()
+                    , ANONYMOUS_USER_SESSION));
+        }, SystemCell.class);
     }
 }
