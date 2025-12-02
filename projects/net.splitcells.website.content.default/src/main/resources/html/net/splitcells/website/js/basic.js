@@ -302,6 +302,22 @@ function net_splitcells_webserver_form_submit(config) {
                 if (document.querySelector('.' + formId + '-' + cssKey + '-tab-button') === null) {
                     console.log('Inserting new form field button for update: ' + key);
                     dynamicMenus.forEach( (menu) => {
+                        let dataMenu = menu.querySelector('.net-splitcells-website-menu-sub-name-Data');
+                        if (dataMenu === null) {
+                            dataMenu = document.createElement("div");
+                            dataMenu.classList.add('net-splitcells-website-menu-sub-name-Data');
+                            dataMenu.classList.add('net-splitcells-website-menu-sub');
+                            dataTitle = document.createElement("div");
+                            dataTitle.classList.add('net-splitcells-website-menu-sub-title');
+                            dataTitle.innerHTML = 'Data';
+                            dataMenu.append(dataTitle);
+                            const firstMenu2 = menu.querySelector('.net-splitcells-website-menu-sub');
+                            if (firstMenu2 === null) {
+                                menu.appendChild(dataMenu);
+                            } else {
+                                menu.insertBefore(dataMenu, firstMenu2);
+                            }
+                        }
                         const newTabButton = document.createElement("div");
                         newTabButton.innerHTML = key;
                         newTabButton.className = 'net-splitcells-button net-splitcells-action-button net-splitcells-action-text-button '
@@ -310,12 +326,7 @@ function net_splitcells_webserver_form_submit(config) {
                         newTabButton.onclick = function() {
                             net_splitcells_webserver_form_tab_select(formId, key);
                         };
-                        const firstMenu = menu.querySelector('.net-splitcells-website-menu-sub');
-                        if (firstMenu === null) {
-                            menu.appendChild(newTabButton);
-                        } else {
-                            menu.insertBefore(newTabButton, firstMenu);
-                        }
+                        dataMenu.appendChild(newTabButton);
                     });
                 }
                 if (isFieldNew) {
