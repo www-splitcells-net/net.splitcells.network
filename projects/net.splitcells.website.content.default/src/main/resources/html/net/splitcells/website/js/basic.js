@@ -329,10 +329,11 @@ function net_splitcells_webserver_form_submit(config) {
                         dataMenu.appendChild(newTabButton);
                         if (key === 'Definition') {
                             const firstMenu = menu.querySelector('.net-splitcells-website-menu-sub');
+                            const newTabButton2 = newTabButton.cloneNode();
                             if (firstMenu === null) {
-                                menu.appendChild(newTabButton);
+                                menu.appendChild(newTabButton2);
                             } else {
-                                menu.insertBefore(newTabButton, firstMenu);
+                                menu.insertBefore(newTabButton2, firstMenu);
                             }
                         }
                     });
