@@ -20,7 +20,7 @@
     </xsl:template>
     <xsl:template match="s:command-group" mode="net-splitcells-gel-editor-menu">
         <div>
-            <xsl:attribute name="class" select="concat('net-splitcells-website-menu-sub net-splitcells-website-menu-name-', @name)"/>
+            <xsl:attribute name="class" select="concat('net-splitcells-website-menu-sub net-splitcells-website-menu-name-', @name, ' net-splitcells-website-static')"/>
             <div class="net-splitcells-website-menu-sub-title">
                 <xsl:value-of select="@name"/>
             </div>
@@ -36,7 +36,7 @@
                     <xsl:value-of select="./@target-id"/>
                     <xsl:value-of select="'&quot;))'"/>
                 </xsl:variable>
-                <div class="net-splitcells-button net-splitcells-action-button net-splitcells-action-text-button">
+                <div class="net-splitcells-button net-splitcells-action-button net-splitcells-action-text-button net-splitcells-website-static">
                     <xsl:attribute name="onclick" select="$onClick"/>
                     <xsl:if test="./@id">
                         <xsl:attribute name="id" select="./@id"/>
@@ -45,7 +45,7 @@
                 </div>
             </xsl:when>
             <xsl:otherwise>
-                <div class="net-splitcells-button net-splitcells-action-button net-splitcells-action-text-button">
+                <div class="net-splitcells-button net-splitcells-action-button net-splitcells-action-text-button net-splitcells-website-static">
                     <xsl:attribute name="onclick"
                                    select="concat('javascript: ', ./@method, '()')"/>
                     <xsl:if test="./@id">
