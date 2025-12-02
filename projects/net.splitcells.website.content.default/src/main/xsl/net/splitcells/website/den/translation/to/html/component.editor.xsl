@@ -19,7 +19,8 @@
         <xsl:apply-templates mode="net-splitcells-gel-editor-menu"/>
     </xsl:template>
     <xsl:template match="s:command-group" mode="net-splitcells-gel-editor-menu">
-        <div class="net-splitcells-website-menu-sub">
+        <div>
+            <xsl:attribute name="class" select="concat('net-splitcells-website-menu-sub net-splitcells-website-menu-name-', @name)"/>
             <div class="net-splitcells-website-menu-sub-title">
                 <xsl:value-of select="@name"/>
             </div>
