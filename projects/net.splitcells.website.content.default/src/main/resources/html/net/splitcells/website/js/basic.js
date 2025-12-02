@@ -301,7 +301,7 @@ function net_splitcells_webserver_form_submit(config) {
                 }
                 if (document.querySelector('.' + formId + '-' + cssKey + '-tab-button') === null) {
                     console.log('Inserting new form field button for update: ' + key);
-                    dynamicMenus.forEach( (menu) => {
+                    dynamicMenus.forEach((menu) => {
                         let dataMenu = menu.querySelector('.net-splitcells-website-menu-sub-name-Data');
                         if (dataMenu === null) {
                             dataMenu = document.createElement("div");
