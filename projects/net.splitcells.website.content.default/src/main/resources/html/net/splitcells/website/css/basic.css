@@ -410,6 +410,8 @@ td.TextCell {
 	 */
 	line-height: 1.5em;
 	display: block;
+	/* This way the width of vertical menus is limited without allowing multi line menu elements. */
+	overflow-wrap: normal;
 	}
 .tree_name {
 	margin-top: .7em;
