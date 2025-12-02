@@ -311,11 +311,11 @@ function net_splitcells_webserver_form_submit(config) {
                             dataTitle.classList.add('net-splitcells-website-menu-sub-title');
                             dataTitle.innerHTML = 'Data';
                             dataMenu.append(dataTitle);
-                            const firstMenu2 = menu.querySelector('.net-splitcells-website-menu-sub');
-                            if (firstMenu2 === null) {
+                            const firstMenu = menu.querySelector('.net-splitcells-website-menu-sub');
+                            if (firstMenu === null) {
                                 menu.appendChild(dataMenu);
                             } else {
-                                menu.insertBefore(dataMenu, firstMenu2);
+                                menu.insertBefore(dataMenu, firstMenu);
                             }
                         }
                         const newTabButton = document.createElement("div");
@@ -327,6 +327,14 @@ function net_splitcells_webserver_form_submit(config) {
                             net_splitcells_webserver_form_tab_select(formId, key);
                         };
                         dataMenu.appendChild(newTabButton);
+                        if (key === 'Definition') {
+                            const firstMenu = menu.querySelector('.net-splitcells-website-menu-sub');
+                            if (firstMenu === null) {
+                                menu.appendChild(newTabButton);
+                            } else {
+                                menu.insertBefore(newTabButton, firstMenu);
+                            }
+                        }
                     });
                 }
                 if (isFieldNew) {
