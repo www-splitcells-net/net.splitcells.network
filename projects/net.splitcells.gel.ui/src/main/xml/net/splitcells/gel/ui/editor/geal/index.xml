@@ -54,7 +54,7 @@
                  action="/net/splitcells/gel/ui/editor/geal/form">
         <library path="net/splitcells/gel/ui/editor/geal/lib"/>
         <text-area
-                name="definition"
+                name="Definition"
                 main-tab="true"
                 initial-content-at="/net/splitcells/gel/editor/geal/examples/colloquium-planning.txt"/>
         <text-area
