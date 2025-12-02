@@ -185,6 +185,19 @@ function net_splitcells_webserver_form_input_set_initial_content(inputId, source
         httpRequest.send(null);
     });
 }
+/* Deletes any client side generated state in the form.
+ */
+function net_splitcells_webserver_form_reset() {
+    const dynamicMenus = document.querySelectorAll('.net-splitcells-website-menu-dynamic');
+    dynamicMenus.forEach((menu) => {
+        menu.querySelectorAll('.net-splitcells-website-menu-sub:not(.net-splitcells-website-static)').forEach((sub) => {
+            sub.remove();
+        });
+        menu.querySelectorAll('.net-splitcells-action-button:not(.net-splitcells-website-static)').forEach((button) => {
+            button.remove();
+        });
+    });
+}
 /* Submits a HTML form's action.
  * The request is sent as multipart/form-data and contains the form's inputs.
  * The response is a JSON dictionary containing the key `net-splitcells-websiter-server-form-update`.
