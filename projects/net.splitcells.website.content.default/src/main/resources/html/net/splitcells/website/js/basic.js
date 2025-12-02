@@ -185,6 +185,9 @@ function net_splitcells_webserver_form_input_set_initial_content(inputId, source
         httpRequest.send(null);
     });
 }
+function net_splitcells_webserver_form_load(loadPath) {
+    net_splitcells_webserver_form_reset();
+}
 /* Deletes any client side generated state in the form.
  */
 function net_splitcells_webserver_form_reset() {
