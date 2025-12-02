@@ -367,7 +367,14 @@ document.addEventListener('DOMContentLoaded', function(){
     <xsl:template match="s:form-submit-button">
         <div class="net-splitcells-button net-splitcells-action-button">
             <xsl:attribute name="id" select="./@id"/>
-            <xsl:attribute name="onclick" select="concat('javascript: ', ./@command, '()')"/>
+            <xsl:choose>
+                <xsl:when test="ends-with(@command, ')')">
+                    <xsl:attribute name="onclick" select="concat('javascript: ', ./@command)"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:attribute name="onclick" select="concat('javascript: ', ./@command, '()')"/>
+                </xsl:otherwise>
+            </xsl:choose>
             <xsl:apply-templates select="./node()"/>
         </div>
     </xsl:template>
