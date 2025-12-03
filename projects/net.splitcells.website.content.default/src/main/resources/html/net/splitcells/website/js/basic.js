@@ -191,6 +191,11 @@ function net_splitcells_webserver_form_load(config) {
     httpRequest.open("GET", config['load-path'], true);
     function listener() {
         console.log(this.responseText);
+        const dataTypes = {};
+        const dataValues = {};
+        const formUpdate = {'data-types' : dataTypes, 'data-values' : dataValues};
+        const response = {'net-splitcells-websiter-server-form-update' : formUpdate}
+        dataTypes['Definition'] = 'text/plain';
     }
     httpRequest.addEventListener("load", listener);
     httpRequest.send(null);
