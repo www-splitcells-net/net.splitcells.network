@@ -213,10 +213,12 @@ function net_splitcells_webserver_form_reset(config) {
             button.remove();
         });
     });
-    const form = document.getElementById(config['form-id']);
+    const formId = config['form-id'];
+    const form = document.getElementById(formId);
     form.querySelectorAll('.net-splitcells-website-form-editor-tab-holder').forEach((tabHolder) => {
         tabHolder.querySelectorAll('.net-splitcells-website-form-editor-tab').forEach((tab) => tab.remove());
     });
+    net_splitcells_webserver_form_tab_select(formId, 'Definition');
 }
 function net_splitcells_webserver_form_update(config, update) {
             const formId = config['form-id'];
