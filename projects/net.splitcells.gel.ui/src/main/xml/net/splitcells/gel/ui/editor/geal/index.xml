@@ -33,7 +33,7 @@
             </command>
             <command-group name="Examples">
                 <command method="net_splitcells_webserver_form_reset">Colloquium</command>
-                <command method="net_splitcells_webserver_form_load('net/splitcells/gel/editor/geal/examples/sports-course-planning.txt')">Sport Course</command>
+                <command method="net_splitcells_gel_ui_editor_geal_form_load('/net/splitcells/gel/editor/geal/examples/sports-course-planning.txt')">Sport Course</command>
             </command-group>
         </commands>
         <d:toDo>

@@ -8,3 +8,9 @@ function net_splitcells_gel_ui_editor_geal_form_submit() {
     config['on-submission-completion'] = () => {};
     net_splitcells_webserver_form_submit(config);
 }
+function net_splitcells_gel_ui_editor_geal_form_load(loadPath) {
+    var config = net_splitcells_webserver_form_submit_config();
+    config['form-id'] = 'net-splitcells-gel-ui-editor-geal-form';
+    config['load-path'] = loadPath;
+    net_splitcells_webserver_form_load(config);
+}

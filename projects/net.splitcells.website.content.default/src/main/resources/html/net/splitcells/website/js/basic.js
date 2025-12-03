@@ -185,12 +185,12 @@ function net_splitcells_webserver_form_input_set_initial_content(inputId, source
         httpRequest.send(null);
     });
 }
-function net_splitcells_webserver_form_load(loadPath) {
-    net_splitcells_webserver_form_reset();
+function net_splitcells_webserver_form_load(config) {
+    net_splitcells_webserver_form_reset(config);
 }
 /* Deletes any client side generated state in the form.
  */
-function net_splitcells_webserver_form_reset() {
+function net_splitcells_webserver_form_reset(config) {
     const dynamicMenus = document.querySelectorAll('.net-splitcells-website-menu-dynamic');
     dynamicMenus.forEach((menu) => {
         menu.querySelectorAll('.net-splitcells-website-menu-sub:not(.net-splitcells-website-static)').forEach((sub) => {
@@ -201,7 +201,6 @@ function net_splitcells_webserver_form_reset() {
         });
     });
     const form = document.getElementById(config['form-id']);
-    alert(form);
     form.querySelectorAll('.net-splitcells-website-form-editor-tab-holder').forEach((tabHolder) => {
         tabHolder.querySelectorAll('.net-splitcells-website-form-editor-tab').forEach((tab) => tab.remove());
     });
