@@ -200,6 +200,11 @@ function net_splitcells_webserver_form_reset() {
             button.remove();
         });
     });
+    const form = document.getElementById(config['form-id']);
+    alert(form);
+    form.querySelectorAll('.net-splitcells-website-form-editor-tab-holder').forEach((tabHolder) => {
+        tabHolder.querySelectorAll('.net-splitcells-website-form-editor-tab').forEach((tab) => tab.remove());
+    });
 }
 /* Submits a HTML form's action.
  * The request is sent as multipart/form-data and contains the form's inputs.
