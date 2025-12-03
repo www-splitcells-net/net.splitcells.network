@@ -187,6 +187,13 @@ function net_splitcells_webserver_form_input_set_initial_content(inputId, source
 }
 function net_splitcells_webserver_form_load(config) {
     net_splitcells_webserver_form_reset(config);
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.open("GET", config['load-path'], true);
+    function listener() {
+        console.log(this.responseText);
+    }
+    httpRequest.addEventListener("load", listener);
+    httpRequest.send(null);
 }
 /* Deletes any client side generated state in the form.
  */
