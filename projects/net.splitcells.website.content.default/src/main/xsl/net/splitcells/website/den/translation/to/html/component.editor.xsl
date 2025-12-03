@@ -46,8 +46,16 @@
             </xsl:when>
             <xsl:otherwise>
                 <div class="net-splitcells-button net-splitcells-action-button net-splitcells-action-text-button net-splitcells-website-static">
-                    <xsl:attribute name="onclick"
-                                   select="concat('javascript: ', ./@method, '()')"/>
+                    <xsl:choose>
+                        <xsl:when test="ends-with(@method, ')')">
+                            <xsl:attribute name="onclick"
+                                           select="concat('javascript: ', ./@method)"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="onclick"
+                                           select="concat('javascript: ', ./@method, '()')"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                     <xsl:if test="./@id">
                         <xsl:attribute name="id" select="./@id"/>
                     </xsl:if>
