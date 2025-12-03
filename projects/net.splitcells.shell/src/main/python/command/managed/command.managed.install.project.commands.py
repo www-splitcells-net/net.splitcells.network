@@ -35,6 +35,7 @@ class Command:
         for projectCommand in self.binFolder.rglob("*"):
             self._installProjectCommand(projectCommand.name, self._projectCommandContent('./bin/' + projectCommand.name + ' $@'))
         self._installDefaultCommand('repo.gui')
+        self._installDefaultCommand('repo.pull')
         self._installDefaultCustomCommand('mci', 'mci $@')
         self._installDefaultCustomCommand('mci.source.code.check', 'mci -Dsource_code_check=1 $@')
         self._installDefaultCustomCommand('shell', '$SHELL')
