@@ -191,11 +191,12 @@ function net_splitcells_webserver_form_load(config) {
     httpRequest.open("GET", config['load-path'], true);
     function listener() {
         console.log(this.responseText);
-        const dataTypes = {};
-        const dataValues = {};
-        const formUpdate = {'data-types' : dataTypes, 'data-values' : dataValues};
-        const response = {'net-splitcells-websiter-server-form-update' : formUpdate}
-        dataTypes['Definition'] = 'text/plain';
+        const dataTypes = {'Definition' : 'text/plain'};
+        const dataValues = {'Definition' : this.responseText};
+        const renderingTypes = {'Definition' : 'plain-text'};
+        const formUpdate = {'data-types' : dataTypes, 'data-values' : dataValues, 'rendering-types' : renderingTypes};
+        const update = {'net-splitcells-websiter-server-form-update' : formUpdate};
+        net_splitcells_webserver_form_update(config, update);
     }
     httpRequest.addEventListener("load", listener);
     httpRequest.send(null);
@@ -217,36 +218,12 @@ function net_splitcells_webserver_form_reset(config) {
         tabHolder.querySelectorAll('.net-splitcells-website-form-editor-tab').forEach((tab) => tab.remove());
     });
 }
-/* Submits a HTML form's action.
- * The request is sent as multipart/form-data and contains the form's inputs.
- * The response is a JSON dictionary containing the key `net-splitcells-websiter-server-form-update`.
- * The key is a dictionary, that contains the new values for every input.
- * A not existing field can be in the response.
- * In this case, that server requests the creation of a new form input.
- *
- * A forms input fields uses ids for working on them, as for every input form value there is only one defining element.
- * A forms buttons use CSS classes as ids for working on them,
- * as for every input field there can be multiple buttons with the same function.
- */
-function net_splitcells_webserver_form_submit(config) {
-    const submitButton = document.getElementById(config['submit-button-id']);
-    const formId = config['form-id'];
-    const preSubmitButtonText = submitButton.innerHTML;
-    const onClickCode = submitButton.onclick;
-    submitButton.onclick = null;
-    submitButton.innerHTML = "Executing...";
-    submitButton.classList.add("net-splitcells-button-activity");
-    submitButton.classList.remove("net-splitcells-action-button");
-    const form = document.getElementById(formId);
-    const request  = new XMLHttpRequest();
-    const data = new FormData(form);
-    const dynamicMenus = document.querySelectorAll('.net-splitcells-website-menu-dynamic');
-    const tabHolder = form.querySelector('.net-splitcells-website-form-editor-tab-holder');
-    request.onload = function() {
-        console.log('Response to "' + formId + '":' + this.responseText);
-        let responseObject = JSON.parse(this.responseText);
-        if ('net-splitcells-websiter-server-form-update' in responseObject) {
-            const formUpdate = responseObject['net-splitcells-websiter-server-form-update'];
+function net_splitcells_webserver_form_update(config, update) {
+            const formId = config['form-id'];
+            const form = document.getElementById(formId);
+            const formUpdate = update['net-splitcells-websiter-server-form-update'];
+            const tabHolder = form.querySelector('.net-splitcells-website-form-editor-tab-holder');
+            const dynamicMenus = document.querySelectorAll('.net-splitcells-website-menu-dynamic');
             const dataValues = formUpdate['data-values'];
             const dataTypes = formUpdate['data-types'];
             let renderingTypes;
@@ -406,6 +383,37 @@ function net_splitcells_webserver_form_submit(config) {
                     }
                 }
             }
+}
+/* Submits a HTML form's action.
+ * The request is sent as multipart/form-data and contains the form's inputs.
+ * The response is a JSON dictionary containing the key `net-splitcells-websiter-server-form-update`.
+ * The key is a dictionary, that contains the new values for every input.
+ * A not existing field can be in the response.
+ * In this case, that server requests the creation of a new form input.
+ *
+ * A forms input fields uses ids for working on them, as for every input form value there is only one defining element.
+ * A forms buttons use CSS classes as ids for working on them,
+ * as for every input field there can be multiple buttons with the same function.
+ */
+function net_splitcells_webserver_form_submit(config) {
+    const submitButton = document.getElementById(config['submit-button-id']);
+    const formId = config['form-id'];
+    const preSubmitButtonText = submitButton.innerHTML;
+    const onClickCode = submitButton.onclick;
+    submitButton.onclick = null;
+    submitButton.innerHTML = "Executing...";
+    submitButton.classList.add("net-splitcells-button-activity");
+    submitButton.classList.remove("net-splitcells-action-button");
+    const form = document.getElementById(formId);
+    const request  = new XMLHttpRequest();
+    const data = new FormData(form);
+    const dynamicMenus = document.querySelectorAll('.net-splitcells-website-menu-dynamic');
+    const tabHolder = form.querySelector('.net-splitcells-website-form-editor-tab-holder');
+    request.onload = function() {
+        console.log('Response to "' + formId + '":' + this.responseText);
+        let responseObject = JSON.parse(this.responseText);
+        if ('net-splitcells-websiter-server-form-update' in responseObject) {
+            net_splitcells_webserver_form_update(config, responseObject);
         }
         config['on-submission-completion']();
         submitButton.classList.remove("net-splitcells-button-activity");
