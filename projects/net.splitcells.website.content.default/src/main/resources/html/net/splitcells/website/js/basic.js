@@ -191,7 +191,7 @@ function net_splitcells_webserver_form_load(config) {
     httpRequest.open("GET", config['load-path'], true);
     function listener() {
         console.log(this.responseText);
-        const dataTypes = {'Definition' : 'text/plain'};
+        const dataTypes = {'Definition' : 'text/markdown'};
         const dataValues = {'Definition' : this.responseText};
         const renderingTypes = {'Definition' : 'plain-text'};
         const formUpdate = {'data-types' : dataTypes, 'data-values' : dataValues, 'rendering-types' : renderingTypes};
