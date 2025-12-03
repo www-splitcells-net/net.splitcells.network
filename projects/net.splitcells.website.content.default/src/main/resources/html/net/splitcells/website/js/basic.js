@@ -197,7 +197,7 @@ function net_splitcells_webserver_form_load(config) {
         const formUpdate = {'data-types' : dataTypes, 'data-values' : dataValues, 'rendering-types' : renderingTypes};
         const update = {'net-splitcells-websiter-server-form-update' : formUpdate};
         net_splitcells_webserver_form_update(config, update);
-        net_splitcells_webserver_form_tab_select(formId, 'Definition');
+        net_splitcells_webserver_form_tab_select(config['form-id'], 'Definition');
     }
     httpRequest.addEventListener("load", listener);
     httpRequest.send(null);
