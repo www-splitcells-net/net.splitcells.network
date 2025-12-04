@@ -25,6 +25,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
  * TODO REMOVE This is a duplicate of {@link ContentType}.
  */
 public enum Format {
+    BINARY("application/octet-stream"),
     HTML("text/html"),
     CSS("text/css"),
     CSV("text/csv"),
