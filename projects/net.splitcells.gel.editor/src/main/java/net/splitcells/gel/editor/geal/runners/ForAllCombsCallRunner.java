@@ -51,8 +51,11 @@ public class ForAllCombsCallRunner implements FunctionCallRunner {
         Query subjectVal;
     }
 
+    /**
+     * The variation is 2 as {@link ForEachAttributeCallRunner} is already using 1.
+     */
     private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(FOR_EACH_NAME
-            , 1
+            , 2
             , fcr -> {
                 val args = new Args();
                 fcr.requireArgumentMinimalCount(2);
