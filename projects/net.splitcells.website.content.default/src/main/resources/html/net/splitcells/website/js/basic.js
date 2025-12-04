@@ -195,7 +195,7 @@ function net_splitcells_webserver_form_load(config) {
         const dataValues = {'Definition' : this.responseText};
         const renderingTypes = {'Definition' : 'plain-text'};
         const formUpdate = {'data-types' : dataTypes, 'data-values' : dataValues, 'rendering-types' : renderingTypes};
-        const update = {'net-splitcells-websiter-server-form-update' : formUpdate};
+        const update = {'net-splitcells-website-server-form-update' : formUpdate};
         net_splitcells_webserver_form_update(config, update);
         net_splitcells_webserver_form_tab_select(config['form-id'], 'Definition');
     }
@@ -223,7 +223,7 @@ function net_splitcells_webserver_form_reset(config) {
 function net_splitcells_webserver_form_update(config, update) {
             const formId = config['form-id'];
             const form = document.getElementById(formId);
-            const formUpdate = update['net-splitcells-websiter-server-form-update'];
+            const formUpdate = update['net-splitcells-website-server-form-update'];
             const tabHolder = form.querySelector('.net-splitcells-website-form-editor-tab-holder');
             const dynamicMenus = document.querySelectorAll('.net-splitcells-website-menu-dynamic');
             const dataValues = formUpdate['data-values'];
@@ -388,7 +388,7 @@ function net_splitcells_webserver_form_update(config, update) {
 }
 /* Submits a HTML form's action.
  * The request is sent as multipart/form-data and contains the form's inputs.
- * The response is a JSON dictionary containing the key `net-splitcells-websiter-server-form-update`.
+ * The response is a JSON dictionary containing the key `net-splitcells-website-server-form-update`.
  * The key is a dictionary, that contains the new values for every input.
  * A not existing field can be in the response.
  * In this case, that server requests the creation of a new form input.
@@ -414,7 +414,7 @@ function net_splitcells_webserver_form_submit(config) {
     request.onload = function() {
         console.log('Response to "' + formId + '":' + this.responseText);
         let responseObject = JSON.parse(this.responseText);
-        if ('net-splitcells-websiter-server-form-update' in responseObject) {
+        if ('net-splitcells-website-server-form-update' in responseObject) {
             net_splitcells_webserver_form_update(config, responseObject);
         }
         config['on-submission-completion']();

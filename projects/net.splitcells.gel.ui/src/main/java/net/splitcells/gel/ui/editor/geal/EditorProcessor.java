@@ -44,7 +44,7 @@ import static net.splitcells.website.server.processor.Response.response;
 public class EditorProcessor implements Processor<Tree, Tree> {
 
     public static final String PROBLEM_DEFINITION = "Definition";
-    public static final String FORM_UPDATE = "net-splitcells-websiter-server-form-update";
+    public static final String FORM_UPDATE = "net-splitcells-website-server-form-update";
     public static final String DATA_VALUES = "data-values";
     public static final String DATA_TYPES = "data-types";
     public static final String RENDERING_TYPES = "rendering-types";
