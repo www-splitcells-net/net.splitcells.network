@@ -3,6 +3,9 @@
  */
 package net.splitcells.website.server.messages;
 
+/**
+ * States how a field in a form should be rendered.
+ */
 public enum RenderingType {
     PLAIN_TEXT("plain-text");
     private String name;
