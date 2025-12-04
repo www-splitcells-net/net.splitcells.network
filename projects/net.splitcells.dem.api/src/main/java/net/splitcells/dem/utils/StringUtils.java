@@ -19,6 +19,7 @@ import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.testing.reporting.ErrorReporter;
 
 import java.nio.charset.StandardCharsets;
+import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
@@ -147,5 +148,12 @@ public class StringUtils {
                     .withProperty("subject", subject)
                     .withProperty("prefix", prefix));
         }
+    }
+
+    public static void requireMatch(String arg, Pattern pattern) {
+        if (!arg.matches(arg))
+            throw execException(tree("String does not comply with regex pattern.")
+                    .withProperty("String", arg)
+                    .withProperty("Pattern", pattern.toString()));
     }
 }

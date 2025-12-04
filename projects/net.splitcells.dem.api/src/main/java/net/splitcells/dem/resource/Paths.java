@@ -27,6 +27,7 @@ import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_C
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.dem.utils.StringUtils.requireMatch;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -50,8 +51,8 @@ public final class Paths {
 
     public static Path path(String root, String... elements) {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assertThat(root).matches(PATH_ELEMENT_SYNTAX);
-            asList(elements).forEach(element -> assertThat(element).matches(PATH_ELEMENT_SYNTAX));
+            requireMatch(root, PATH_ELEMENT_SYNTAX);
+            asList(elements).forEach(element -> requireMatch(element, PATH_ELEMENT_SYNTAX));
         }
         return java.nio.file.Paths.get(root, elements);
     }
