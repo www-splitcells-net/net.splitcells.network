@@ -25,7 +25,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.editor.EditorParser.INTEGER_TYPE;
 import static net.splitcells.gel.editor.EditorParser.STRING_TYPE;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
-import static net.splitcells.gel.editor.meta.Type.type;
+import static net.splitcells.gel.editor.geal.Type.type;
 
 public class ResolutionRunner implements FunctionCallRunner {
     public static ResolutionRunner resolutionRunner() {

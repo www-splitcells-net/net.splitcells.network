@@ -23,14 +23,12 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.communication.Closeable;
-import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 import net.splitcells.gel.editor.geal.lang.NameDesc;
 import net.splitcells.gel.editor.geal.lang.StringDesc;
-import net.splitcells.gel.editor.meta.Type;
 import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
