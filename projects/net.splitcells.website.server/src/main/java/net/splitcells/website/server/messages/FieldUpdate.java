@@ -3,6 +3,8 @@
  */
 package net.splitcells.website.server.messages;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 import net.splitcells.website.Format;
 
@@ -22,13 +24,13 @@ public class FieldUpdate {
     /**
      * States how a field should be rendered.
      */
-    private RenderingType renderingTypes = PLAIN_TEXT;
+    private @Getter @Setter RenderingType renderingTypes = PLAIN_TEXT;
     /**
      * Contains the data of a field.
      */
-    private byte[] data = new byte[]{};
+    private @Getter @Setter byte[] data = new byte[]{};
     /**
      * States the format of a fields data value.
      */
-    private Format type = BINARY;
+    private @Getter @Setter Format type = BINARY;
 }
