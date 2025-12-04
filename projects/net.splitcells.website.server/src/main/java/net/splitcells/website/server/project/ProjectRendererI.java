@@ -25,19 +25,17 @@ import net.splitcells.dem.resource.FileSystemView;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.utils.ExecutionException;
+import net.splitcells.website.server.Config;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.PageMetaData;
-import net.splitcells.website.server.project.validator.SourceValidator;
-import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.renderer.extension.ProjectRendererExtensionMerger;
+import net.splitcells.website.server.project.validator.SourceValidator;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 
 import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
-import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.Xml.optionalDirectChildElementsByName;
 import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
@@ -47,7 +45,7 @@ import static net.splitcells.dem.resource.FileSystemVoid.fileSystemVoid;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
-import static net.splitcells.dem.utils.StreamUtils.concat;
+import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.project.FileStructureTransformer.fileStructureTransformer;
 import static net.splitcells.website.server.project.renderer.extension.CsvChartProjectRendererExtension.csvChartRenderer;
 import static net.splitcells.website.server.project.renderer.extension.CsvProjectRendererExtension.csvRenderer;
@@ -58,7 +56,6 @@ import static net.splitcells.website.server.project.renderer.extension.ProjectRe
 import static net.splitcells.website.server.project.renderer.extension.ResourceProjectRendererExtension.resourceRenderer;
 import static net.splitcells.website.server.project.renderer.extension.SvgProjectRendererExtension.svgRenderer;
 import static net.splitcells.website.server.project.renderer.extension.TextProjectRendererExtension.textExtension;
-import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.project.renderer.extension.XmlProjectRendererExtension.xmlRenderer;
 import static net.splitcells.website.server.project.renderer.extension.ZipProjectRendererExtension.zipRenderer;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkChangelogEventProjectRendererExtension.commonMarkChangelogEventRenderer;
@@ -423,7 +420,12 @@ public class ProjectRendererI implements ProjectRenderer {
         if (title.isPresent()) {
             final var titleElement = elementWithChildren(SEW, "title");
             metaElement.appendChild(titleElement);
-            titleElement.appendChild(Xml.textNode(title.get()));
+            // TODO This is an heuristic.
+            if (title.get().startsWith("<p>")) {
+                titleElement.appendChild(titleElement.getOwnerDocument().importNode(Xml.parse(title.get()).getFirstChild(), true));
+            } else {
+                titleElement.appendChild(Xml.textNode(title.get()));
+            }
         }
         if (path.isPresent()) {
             final var pathElement = elementWithChildren(SEW, "path");

@@ -15,6 +15,7 @@
  */
 package net.splitcells.website.server.project.renderer.extension.commonmark;
 
+import lombok.val;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.resource.Trail;
@@ -108,9 +109,10 @@ public class CommonMarkIntegration {
 
     public byte[] render(String arg, ProjectRenderer projectRenderer, String path, Config config
             , ProjectsRenderer projectsRenderer) {
+        val title = renderBareHtml(extractTitle(arg).orElse(""), projectRenderer, path, config, projectsRenderer);
         return projectRenderer
                 .renderHtmlBodyContent(renderBareHtml(arg, projectRenderer, path, config, projectsRenderer)
-                        , extractTitle(arg)
+                        , Optional.of(title)
                         , Optional.of(path)
                         , config
                         , projectsRenderer)
