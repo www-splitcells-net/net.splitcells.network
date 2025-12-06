@@ -28,7 +28,7 @@ public class FieldUpdate {
     /**
      * Contains the data of a field.
      */
-    @Getter @Setter private byte[] data = new byte[]{};
+    @Getter @Setter private byte[] data = new byte[0];
     /**
      * States the format of a fields data value.
      */
