@@ -322,6 +322,10 @@ package_name
 prefix_operator
 	: Keysymbol_not
 	;
+/* TODO It seems that reference should be just part of expression.
+ * The distinction between expression and reference does not seem to have a purpose.
+ * Furthermore, the term reference seems to be incorrect.
+ */
 reference
 	: expression
     | lambda
