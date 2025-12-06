@@ -27,7 +27,7 @@ public class FormUpdate {
     }
 
 
-    private @Getter @Setter Map<String, FieldUpdate> fields;
+    @Getter @Setter private Map<String, FieldUpdate> fields;
 
     private FormUpdate() {
 

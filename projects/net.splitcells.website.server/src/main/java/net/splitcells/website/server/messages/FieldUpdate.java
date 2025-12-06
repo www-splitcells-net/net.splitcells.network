@@ -24,13 +24,13 @@ public class FieldUpdate {
     /**
      * States how a field should be rendered.
      */
-    private @Getter @Setter RenderingType renderingTypes = PLAIN_TEXT;
+    @Getter @Setter private RenderingType renderingTypes = PLAIN_TEXT;
     /**
      * Contains the data of a field.
      */
-    private @Getter @Setter byte[] data = new byte[]{};
+    @Getter @Setter private byte[] data = new byte[]{};
     /**
      * States the format of a fields data value.
      */
-    private @Getter @Setter Format type = BINARY;
+    @Getter @Setter private Format type = BINARY;
 }
