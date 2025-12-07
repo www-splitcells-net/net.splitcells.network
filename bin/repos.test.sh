@@ -66,6 +66,16 @@ cd "$reposFolder/net.splitcells.network" # Creating reports is done last, so the
       -Dsource_code_check=1 \
       -Dtest.groups=testing_unit,testing_integration \
       -DexcludedGroups="experimental_test"
+  mvn -B clean install \
+    org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+    -Dsonar.projectKey=www-splitcells-net_net.splitcells.network \
+    -Dsonar.organization=www-splitcells-net \
+    -Dsonar.host.url=https://sonarcloud.io \
+    -Dsonar.test.exclusions=src/main/java/**
+    -Dtest_codecov=1 \
+    -Dsource_code_check=1 \
+    -Dtest.groups=testing_unit,testing_integration \
+    -DexcludedGroups="experimental_test"
 # TODO Analyze daily CI problem. Move this to `. bin/worker.bootstrap`, after this is fixed.
   cd "$reposFolder/net.splitcells.network"
   echo $PATH
