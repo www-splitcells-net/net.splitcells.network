@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.resource;
 
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.testing.TestSuiteI;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Tag;
@@ -28,6 +29,7 @@ import static net.splitcells.dem.DemApiFileSystem.DEM_API;
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.environment.config.StaticFlags.runWithEnforcingUnityConsistency;
 import static net.splitcells.dem.resource.FileSystemViaClassResourcesFactoryImpl._fileSystemViaClassResourcesFactoryImpl;
 import static net.splitcells.dem.resource.Files.readAsString;
 import static net.splitcells.dem.testing.Assertions.*;
@@ -52,6 +54,7 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
                 , dynamicTests(this::testInputStreamForSubFileSystem, factory)
                 , dynamicTests(this::testReadString, factory)
                 , dynamicTests(this::testReadStringIfPresent, factory)
+                , dynamicTests(this::testReadStringIfPresentWithoutUnitEnforcement, factory)
                 , dynamicTests(this::testReadStringForSubFileSystem, factory)
                 , dynamicTests(this::testExists, factory)
                 , dynamicTests(this::testExistsForSubFileSystem, factory)
@@ -103,6 +106,12 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
         requireAbsenceOf(factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
                         , MAVEN_GROUP_ID, DEM_API)
                 .readStringIfPresent(Path.of("not existent file path")));
+    }
+
+    public void testReadStringIfPresentWithoutUnitEnforcement(FileSystemViaClassResourcesFactoryApi factory) {
+        runWithEnforcingUnityConsistency(false, () -> {
+            testReadStringIfPresent(factory);
+        });
     }
 
     public void testReadStringForSubFileSystem(FileSystemViaClassResourcesFactoryApi factory) {
