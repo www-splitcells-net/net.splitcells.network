@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.environment.config;
 
+import lombok.val;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 
@@ -23,6 +24,7 @@ import java.util.Optional;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
  * <p>These static flags provide a simple and centrally controllable way,
@@ -51,9 +53,11 @@ public final class StaticFlags {
     public static final boolean DISABLED_FUNCTIONALITY = false;
     public static final String ENFORCING_UNIT_CONSISTENCY_KEY = "net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY";
     /**
-     *
+     * TODO Make this private and accessible via a function, in order to have most control.
+     * The idea is to change this value during a test, in order to get full unit test coverage.
      */
-    public static final boolean ENFORCING_UNIT_CONSISTENCY
+    @Deprecated
+    public static boolean ENFORCING_UNIT_CONSISTENCY
             = Boolean.parseBoolean(System.getProperty(ENFORCING_UNIT_CONSISTENCY_KEY, "true"));
     @Deprecated
     public static final boolean FUZZING = false;
@@ -115,6 +119,24 @@ public final class StaticFlags {
         warningIfNotMostPerformant().ifPresent(staticFlagsOverridden::withChild);
         if (staticFlagsOverridden.children().hasElements()) {
             logs().append(staticFlagsOverridden, LogLevel.WARNING);
+        }
+    }
+
+    /**
+     * Sets {@link #ENFORCING_UNIT_CONSISTENCY} during the execution of run to a given value.
+     * This is used, in order to test {@link #ENFORCING_UNIT_CONSISTENCY}.
+     *
+     * @param runValue
+     * @param run
+     */
+    public static void runWithEnforcingUnityConsistency(boolean runValue, Runnable run) {
+        try {
+            val oldValue = ENFORCING_UNIT_CONSISTENCY;
+            ENFORCING_UNIT_CONSISTENCY = runValue;
+            run.run();
+            ENFORCING_UNIT_CONSISTENCY = oldValue;
+        } catch (Exception e) {
+            throw execException(e);
         }
     }
 }
