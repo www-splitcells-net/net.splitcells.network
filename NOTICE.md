@@ -92,12 +92,6 @@ all licenses present.
 
 The licenses of the transitive dependencies are not listed here.
 
-SyntaxHighlighter
-
-* License: The MIT License
-* Source: https://github.com/syntaxhighlighter/syntaxhighlighter
-  SyntaxHighlighter
-
 md2gemini:
 * License: LGPL-2.1-or-later
 * [Source Code](https://github.com/makeworld-the-better-one/md2gemini)
@@ -413,4 +407,9 @@ Apache Commons CLI
 
 TomlJ
 * License: Apache-2.0
-* Webiste: https://github.com/tomlj/tomlj
+* Website: https://github.com/tomlj/tomlj
+
+highlight.js
+* License: BSD-3-Clause
+* Source Code: https://github.com/highlightjs/highlight.js
+* Website: https://highlightjs.org/
