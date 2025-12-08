@@ -38,8 +38,7 @@ table {
     width: 100%;
     table-layout: fixed;
     }
-code {
-	/* Code blocks are created by default CommonMark rendering. */
+p > code {
 	font-family: Palatino, Palatino Linotype, Palatino LT STD, Book Antiqua, Georgia, serif;
 	}
 li code::after,
@@ -103,8 +102,10 @@ ol {
 ol ol {
     padding-left: 1.75em;
     }
-:not(.cm-editor) > span {
-    /* Inline elements are assumed to contain flowing text by default. */
+:not(.cm-editor, code, span) > span {
+    /* Inline elements are assumed to contain flowing text by default.
+     * The not conditions try to filter out spans inside highlighted code blocks.
+     */
     font-family: var(--text-flowing-font);
     }
 li {
