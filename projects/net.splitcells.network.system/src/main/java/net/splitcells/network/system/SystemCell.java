@@ -170,6 +170,7 @@ public class SystemCell implements Cell {
                         .readString("src/main/xsl/net/splitcells/website/window-menu.xsl")))
                 .withAdditionalJsBackgroundFiles("net/splitcells/website/js/jquery.js")
                 .withAdditionalJsBackgroundFiles("net/splitcells/website/js/codemirror-editor-bundle.js")
+                .withAdditionalJsBackgroundFiles("net/splitcells/website/js/highlight.js")
                 .withAdditionalJsBackgroundFiles("net/splitcells/website/js/basic.js")
                 .withAdditionalJsBackgroundFiles("net/splitcells/website/js/basic.default.js")
                 .withAdditionalJsBackgroundFiles("net/splitcells/website/js/dragula.min.js")
@@ -182,6 +183,7 @@ public class SystemCell implements Cell {
                 .withAdditionalCssFile("net/splitcells/gel/ui/editor/nocode/style.css")
                 .withAdditionalCssFile("net/splitcells/website/css/tabulator.min.css")
                 .withAdditionalCssFile("net/splitcells/website/css/dragula.min.css")
+                .withAdditionalCssFile("net/splitcells/website/css/highlight.css")
                 .withAdditionalProgramConfig(programConfig("Splitcells Network Documentation"
                         , "/net/splitcells/network/hub/README")
                         .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/community.2016.12.11.chrom.0.dina4.jpg"))
