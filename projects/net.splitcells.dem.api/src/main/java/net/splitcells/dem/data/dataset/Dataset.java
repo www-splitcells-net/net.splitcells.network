@@ -7,6 +7,7 @@ import net.splitcells.dem.data.set.list.ListView;
 
 /**
  * TODO This code is experimental and not used.
+ * This is planned to be the new base API for statically typed tables.
  *
  * @param <T>
  */
