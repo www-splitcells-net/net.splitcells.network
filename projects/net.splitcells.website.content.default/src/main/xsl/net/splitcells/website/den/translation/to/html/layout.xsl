@@ -238,6 +238,8 @@ request.send();]]>
     <xsl:template match="s:layout.config">
         <xsl:choose>
             <xsl:when test="$generation.style='minimal'">
+                <!-- TODO Remove this. A minimal style should be done via parameterization of the default layout,
+                     which adds none minimal components.-->
                 <html>
                     <head>
                         <meta http-equiv="Content-Type" content="application/xhtml+xml;charset=UTF-8"/>
