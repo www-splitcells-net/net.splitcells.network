@@ -475,3 +475,5 @@ function uploadFileAsString(reactor) {
     }
     uploader.click();
 }
+// Initialize highlightjs.
+hljs.highlightAll();
