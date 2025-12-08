@@ -71,7 +71,7 @@ cd "$reposFolder/net.splitcells.network" # Creating reports is done last, so the
     -Dsonar.projectKey=www-splitcells-net_net.splitcells.network \
     -Dsonar.organization=www-splitcells-net \
     -Dsonar.host.url=https://sonarcloud.io \
-    -Dsonar.test.exclusions=src/main/java/**
+    -Dsonar.test.exclusions=src/main/java/** \
     -Dtest_codecov=1 \
     -Dsource_code_check=1 \
     -Dtest.groups=testing_unit,testing_integration \
