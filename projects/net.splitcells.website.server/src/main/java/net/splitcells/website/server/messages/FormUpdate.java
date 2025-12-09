@@ -11,6 +11,7 @@ import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.TreeI;
 
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
@@ -34,7 +35,7 @@ public class FormUpdate {
     }
 
     public Tree toTree() {
-        val tree = TreeI.tree("net-splitcells-website-server-form-update");
+        val tree = tree("net-splitcells-website-server-form-update");
         if (true) {
             throw notImplementedYet();
         }
