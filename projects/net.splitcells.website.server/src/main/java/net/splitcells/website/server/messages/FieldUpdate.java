@@ -8,6 +8,8 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import net.splitcells.website.Format;
 
+import java.util.Optional;
+
 import static net.splitcells.website.Format.BINARY;
 import static net.splitcells.website.server.messages.RenderingType.PLAIN_TEXT;
 
@@ -24,7 +26,7 @@ public class FieldUpdate {
     /**
      * States how a field should be rendered.
      */
-    @Getter @Setter private RenderingType renderingTypes = PLAIN_TEXT;
+    @Getter @Setter private Optional<RenderingType> renderingTypes = Optional.empty();
     /**
      * Contains the data of a field.
      */
