@@ -151,7 +151,7 @@ public class StringUtils {
     }
 
     public static void requireMatch(String arg, Pattern pattern) {
-        if (!arg.matches(arg))
+        if (!pattern.matcher(arg).matches())
             throw execException(tree("String does not comply with regex pattern.")
                     .withProperty("String", arg)
                     .withProperty("Pattern", pattern.toString()));
