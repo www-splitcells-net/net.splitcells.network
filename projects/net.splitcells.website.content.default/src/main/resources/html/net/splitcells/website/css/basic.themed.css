@@ -87,7 +87,7 @@ ol > ol {
 }
 .net-splitcells-action-button {
     background: linear-gradient(0deg, var(--background-color-priority-1) 0%, var(--background-color-priority-0) 60%);
-    border: 0.125em solid var(--background-color-priority-2);
+    border: 0.1em solid var(--background-color-priority-3);
     border-radius: var(--border-radius-for-actions);
     min-width: 1.5em;
     text-align: center;
@@ -99,9 +99,10 @@ ol > ol {
 .net-splitcells-action-text-button {
     text-align: left;
 }
+.net-splitcells-website-menu-dynamic .net-splitcells-action-button:hover,
 .net-splitcells-action-button:hover {
     background: linear-gradient(0deg, var(--background-color-priority-0) 0%, var(--background-color-structural-guide) 60%);
-    border: 0.125em solid var(--background-color-priority-2);
+    border: 0.1em solid var(--background-color-priority-2);
     border-radius: var(--border-radius-for-actions);
 }
 .net-splitcells-button-activity  {
