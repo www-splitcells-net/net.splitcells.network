@@ -84,6 +84,7 @@ ol > ol {
     background: linear-gradient(0deg, var(--background-color-priority-1) 0%, var(--background-color-priority-0) 60%);
     border: 0.1em solid var(--background-color-priority-3);
     text-align: left;
+}
 .net-splitcells-action-button {
     background: linear-gradient(0deg, var(--background-color-priority-1) 0%, var(--background-color-priority-0) 60%);
     border: 0.125em solid var(--background-color-priority-2);
@@ -91,6 +92,8 @@ ol > ol {
     min-width: 1.5em;
     text-align: center;
     line-height: 1.5em;
+    margin-left: 0.05em;
+    margin-right: 0.05em;
 }
 .net-splitcells-action-text-button {
     text-align: left;
