@@ -886,23 +886,32 @@ request.send();]]>
                                     <xsl:apply-templates mode="net-splitcells-website-menu"
                                                          select="$net-splitcells-website-server-config-menu-detailed">
                                     </xsl:apply-templates>
-                                    <h3>Metadata About This Document</h3>
-                                    <p>Unless otherwise noted, the
-                                        content of this
-                                        html file is licensed under the
-                                        <a href="/net/splitcells/network/legal/licenses/EPL-2.0.html">EPL-2.0</a>
-                                        OR <a href="/net/splitcells/network/legal/licenses/GPL-2.0-or-later.html">
-                                            GPL-2.0-or-later</a>.
-                                    </p>
-                                    <p>Files and other contents, which are linked to by this
-                                        HTML file, have their own rulings.
-                                    </p>
+                                    <xsl:variable name="MetaDataChapter">
+                                        <s:chapter>
+                                            <s:title>Metadata About This Document</s:title>
+                                            <s:paragraph>Unless otherwise noted, the
+                                                content of this
+                                                html file is licensed under the
+                                                <s:link url="/net/splitcells/network/legal/licenses/EPL-2.0.html">EPL-2.0</s:link>
+                                                OR <s:link url="/net/splitcells/network/legal/licenses/GPL-2.0-or-later.html">GPL-2.0-or-later</s:link>.
+                                            </s:paragraph>
+                                            <s:paragraph>Files and other contents, which are linked to by this
+                                                HTML file, have their own rulings.
+                                            </s:paragraph>
+                                        </s:chapter>
+                                    </xsl:variable>
+                                    <xsl:apply-templates select="$MetaDataChapter"/>
                                     <div class="net-splitcells-space-filler"></div>
-                                    <h3>Footer Functions</h3>
-                                    <a class="net-splitcells-button net-splitcells-component-priority-3"
-                                       href="#topElement">
-                                        back to top
-                                    </a>
+                                    <xsl:variable name="MetaDataChapter">
+                                        <s:chapter>
+                                            <s:title>Footer Functions</s:title>
+                                            <a class="net-splitcells-button net-splitcells-component-priority-3"
+                                               href="#topElement">
+                                                back to top
+                                            </a>
+                                        </s:chapter>
+                                    </xsl:variable>
+                                    <xsl:apply-templates select="$MetaDataChapter"/>
                                 </div>
                             </div>
                             <div class="net-splitcells-right-decoration-left-border"></div>
