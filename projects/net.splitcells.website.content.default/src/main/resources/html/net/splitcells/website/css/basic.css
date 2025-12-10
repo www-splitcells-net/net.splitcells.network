@@ -490,12 +490,21 @@ h4 {
 article {
     width: 100%;
     }
+article h1,
+article h2,
+article h3,
+article h4,
+.chapter .heading .net-splitcells-heading-title {
+    /* Only increase font size of the title and
+     * not its buttons etc. */
+    font-size: 125%;
+    font-weight: bold;
+    }
 article .heading,
 article h1,
 article h2,
 article h3,
 article h4 {
-	font-size: 125%;
 	font-weight: normal !important;
 	margin-top: 3em;
 	margin-bottom: 2em;
@@ -509,8 +518,6 @@ article h3 {
 	}
 .chapter .heading {
 	margin-left: .2em;
-	font-size: 125%;
-	font-weight: bold;
 	margin-top: 3em;
 	margin-bottom: 2em;
 	}
