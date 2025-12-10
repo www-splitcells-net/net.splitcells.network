@@ -38,9 +38,6 @@ public class FormUpdate {
 
     public Tree toTree() {
         val tree = tree("net-splitcells-website-server-form-update");
-        if (true) {
-            throw notImplementedYet();
-        }
         val dataValues = tree("data-values").withParent(tree);
         val dataTypes = tree("data-types").withParent(tree);
         val renderingTypes = tree("rendering-types").withParent(tree);
