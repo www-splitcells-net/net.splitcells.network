@@ -447,6 +447,9 @@ td.TextCell {
 	flex-direction: column;
 	padding-bottom: 1em;
 	order: 2;
+	/* TODO height 100% is not used, because it overflows at the website's footer.
+	 * The reason for that is unknown. */
+	height: 90%;
 	}
 .splitcells-net-line-title {
 	font-size: 2em;
