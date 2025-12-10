@@ -550,3 +550,10 @@ article img {
 .net-splitcells-website-menu-sub :not(.net-splitcells-website-menu-sub-title) {
     margin-left: 1em !important;
 }
+.net-splitcells-menu .chapter .heading,
+.net-splitcells-menu h3 {
+    box-shadow: 0em 0em .2em var(--shadow-color-priority-0);
+    margin-left: 0em;
+    padding-top: .25em;
+    padding-bottom: .25em;
+    }
