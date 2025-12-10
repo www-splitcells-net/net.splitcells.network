@@ -39,6 +39,11 @@ ol > ol {
         color: var(--foreground-color-activity-animation-start);
         }
     }
+.net-splitcells-component-priority-1 .net-splitcells-action-button {
+    background: linear-gradient(0deg, var(--background-color-priority-1) 0%, var(--background-color-priority-0) 60%);
+    border: 0.125em solid var(--background-color-priority-2);
+    border-radius: var(--border-radius-for-actions);
+    }
 .net-splitcells-component-priority-2 > .net-splitcells-action-button {
     background: linear-gradient(0deg, var(--background-color-priority-3) 0%, var(--background-color-priority-1) 60%);
     border: 0.125em solid var(--background-color-priority-3);
@@ -61,15 +66,24 @@ ol > ol {
 }
 .net-splitcells-component-priority-4 > .net-splitcells-action-button:hover {
     background: linear-gradient(0deg, var(--background-color-priority-5) 0%, var(--background-color-priority-2) 60%);
-    border: 0.125em solid var(--background-color-priority-5);
+    border: 0.1em solid var(--background-color-priority-5);
 }
+.net-splitcells-priority-4 .net-splitcells-action-button,
 .net-splitcells-action-button.net-splitcells-component-priority-4 {
+    /* Improve the visibility of low priority buttons without taking away the focus of top priority GUI elements.
+     * This is done by using higher priority colors and by minimizing the amount of the high priority colors. */
     background: linear-gradient(0deg, var(--background-color-priority-4) 0%, var(--background-color-priority-2) 60%);
-    border: 0.125em solid var(--background-color-priority-4);
+    border: 0.01em solid var(--background-color-priority-2);
     border-radius: var(--border-radius-for-actions);
     min-width: 1.5em;
     text-align: center;
 }
+.net-splitcells-website-menu-dynamic .net-splitcells-action-button {
+    /* Improve the visibility of low priority buttons without taking away the focus of top priority GUI elements.
+     * This is done by using high priority colors and by minimizing the amount of the high priority colors. */
+    background: linear-gradient(0deg, var(--background-color-priority-1) 0%, var(--background-color-priority-0) 60%);
+    border: 0.1em solid var(--background-color-priority-3);
+    text-align: left;
 .net-splitcells-action-button {
     background: linear-gradient(0deg, var(--background-color-priority-1) 0%, var(--background-color-priority-0) 60%);
     border: 0.125em solid var(--background-color-priority-2);
