@@ -15,8 +15,11 @@
  */
 package net.splitcells.dem.resource;
 
+import lombok.val;
 import net.splitcells.dem.environment.config.StaticFlags;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.TestSuiteI;
+import net.splitcells.dem.testing.annotations.UnitTest;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.TestFactory;
@@ -28,9 +31,11 @@ import static net.splitcells.dem.Dem.MAVEN_GROUP_ID;
 import static net.splitcells.dem.DemApiFileSystem.DEM_API;
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.environment.config.StaticFlags.runWithEnforcingUnityConsistency;
 import static net.splitcells.dem.resource.FileSystemViaClassResourcesFactoryImpl._fileSystemViaClassResourcesFactoryImpl;
+import static net.splitcells.dem.resource.FileSystemViaClassResourcesImpl._fileSystemViaClassResourcesImpl;
 import static net.splitcells.dem.resource.Files.readAsString;
 import static net.splitcells.dem.testing.Assertions.*;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
@@ -40,6 +45,7 @@ import static net.splitcells.dem.utils.StreamUtils.concat;
 public class FileSystemViaClassResourcesTest extends TestSuiteI {
     private static final String TEST_FILE_PATH = "src/main/resources/net/splitcells/dem/api/test-file.txt";
     private static final String NOT_EXISTING_FOLDER = "not/existing/folder";
+    private static final String NOT_EXISTING_FILE = "not/existing/file";
     private static final String TEST_FILE_CONTENT = "This is a test file of the 20th of July 2023.";
     private static final String DEM_API_FOLDER = "src/main/resources/net/splitcells/dem/api";
 
@@ -47,6 +53,13 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
     @TestFactory
     public Stream<DynamicTest> testStdFactory() {
         return testFactory(_fileSystemViaClassResourcesFactoryImpl());
+    }
+
+    @UnitTest
+    public void readStringIfPresentWithNotBackedString() {
+        requireEmpty(_fileSystemViaClassResourcesImpl(getClass(), MAVEN_GROUP_ID, DEM_API, setOfUniques(NOT_EXISTING_FILE))
+                .readStringIfPresent(Path.of(NOT_EXISTING_FILE)));
+
     }
 
     public Stream<DynamicTest> testFactory(FileSystemViaClassResourcesFactoryApi factory) {

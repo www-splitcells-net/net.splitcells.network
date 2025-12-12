@@ -84,12 +84,17 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
                 , resourceListPath(groupdId, artifactId));
     }
 
+    public static FileSystemView _fileSystemViaClassResourcesImpl(Class<?> clazz, String groupdId, String artifactId, Set<String> argResourceList) {
+        return new FileSystemViaClassResourcesImpl(clazz, resourceBasePath(groupdId, artifactId)
+                , argResourceList);
+    }
+
     /**
      * All files accessed via paths has {@link #basePath} as the prefix for these paths.
      */
     private final String basePath;
     private final Class<?> clazz;
-    private Set<String> resourceList;
+    private final Set<String> resourceList;
 
     private FileSystemViaClassResourcesImpl(Class<?> clazz, String basePath, Set<String> resourceListArg) {
         this.clazz = clazz;
