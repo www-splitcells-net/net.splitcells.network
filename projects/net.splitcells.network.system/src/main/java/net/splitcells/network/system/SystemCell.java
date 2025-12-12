@@ -52,7 +52,7 @@ import static net.splitcells.dem.Dem.serve;
 import static net.splitcells.dem.lang.TrailLink.trailLink;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.gel.editor.geal.FunctionCallDoc.functionCallDoc;
-import static net.splitcells.gel.ui.editor.geal.ColloquiumExample.colloquiumExample;
+import static net.splitcells.gel.ui.editor.geal.example.ColloquiumExample.colloquiumExample;
 import static net.splitcells.gel.ui.editor.geal.EditorProcessor.editorProcessor;
 import static net.splitcells.gel.ui.editor.geal.EditorProcessorTest.TEST_OPTIMIZATION_GUI;
 import static net.splitcells.network.system.PerformanceReport.performanceReport;
