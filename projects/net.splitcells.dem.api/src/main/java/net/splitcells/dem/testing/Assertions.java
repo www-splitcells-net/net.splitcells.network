@@ -36,7 +36,9 @@ public class Assertions {
 
     public static <T> void assertComplies(T subject, Predicate<T> constraint, String description) {
         if (constraint.test(subject)) {
-            throw ExecutionException.execException(description);
+            throw execException(description);
+        }
+    }
 
     public static <T> void requireEmpty(Optional<T> arg) {
         if (arg.isPresent()) {
@@ -47,38 +49,38 @@ public class Assertions {
 
     public static <T> void requireAbsenceOf(Optional<T> arg) {
         if (arg.isPresent()) {
-            throw ExecutionException.execException("Optional content is required to be absent, but is present instead.");
+            throw execException("Optional content is required to be absent, but is present instead.");
         }
     }
 
     public static <T> void requirePresenceOf(Optional<T> arg) {
         if (arg.isEmpty()) {
-            throw ExecutionException.execException("Optional content is required, but is not present instead.");
+            throw execException("Optional content is required, but is not present instead.");
         }
     }
 
     public static <T> T requireNotNull(T arg) {
         if (arg == null) {
-            throw ExecutionException.execException("The given variable is null, but should not be.");
+            throw execException("The given variable is null, but should not be.");
         }
         return arg;
     }
 
     public static <T> void requireNotNull(T arg, String message) {
         if (arg == null) {
-            throw ExecutionException.execException(message);
+            throw execException(message);
         }
     }
 
     public static <T> void requireNull(T arg, String message) {
         if (arg != null) {
-            throw ExecutionException.execException(message);
+            throw execException(message);
         }
     }
 
     public static <T> void requireNull(T arg) {
         if (arg != null) {
-            throw ExecutionException.execException("Argument is not allowed to be null, but is.");
+            throw execException("Argument is not allowed to be null, but is.");
         }
     }
 
@@ -87,7 +89,7 @@ public class Assertions {
             if (b == null) {
                 return;
             }
-            throw ExecutionException.execException("Arguments are required to be equal, but are not: first argument: "
+            throw execException("Arguments are required to be equal, but are not: first argument: "
                     + a + ", second argument: " + b);
         }
         if (!a.equals(b)) {
@@ -99,7 +101,7 @@ public class Assertions {
 
     public static <T> void requireDistinct(T a, T b) {
         if (a.equals(b)) {
-            throw ExecutionException.execException("Arguments are required to be equal, but are not: first argument: "
+            throw execException("Arguments are required to be equal, but are not: first argument: "
                     + a + ", second argument: " + b);
         }
     }
@@ -139,10 +141,10 @@ public class Assertions {
             if (expectedExceptionType.isInstance(th)) {
                 return;
             }
-            throw ExecutionException.execException("Runnable should throw `" + expectedExceptionType + "` but did " +
+            throw execException("Runnable should throw `" + expectedExceptionType + "` but did " +
                     "throw  `" + th.getClass() + "`.");
         }
-        throw ExecutionException.execException("Runnable should throw `" + expectedExceptionType + "` but did not.");
+        throw execException("Runnable should throw `" + expectedExceptionType + "` but did not.");
     }
 
     public static void requireThrow(Runnable run) {
@@ -151,7 +153,7 @@ public class Assertions {
         } catch (Throwable th) {
             return;
         }
-        throw ExecutionException.execException("Runnable should throw, but did not.");
+        throw execException("Runnable should throw, but did not.");
     }
 
     public static void waitUntilRequirementIsTrue(long milliSecondsToWait, Supplier<Boolean> condition) {
@@ -164,7 +166,7 @@ public class Assertions {
             sleepABit();
             compliance = condition.get();
             if (Instant.now().isAfter(plannedEnd)) {
-                throw ExecutionException.execException(tree("Condition is not met during wait time.")
+                throw execException(tree("Condition is not met during wait time.")
                         .withProperty("milliSecondsToWait", "" + milliSecondsToWait)
                         .withProperty("condition", "" + condition));
             }
