@@ -37,6 +37,11 @@ public class Assertions {
     public static <T> void assertComplies(T subject, Predicate<T> constraint, String description) {
         if (constraint.test(subject)) {
             throw ExecutionException.execException(description);
+
+    public static <T> void requireEmpty(Optional<T> arg) {
+        if (arg.isPresent()) {
+            throw execException(tree("Optional has to be empty, but is not.")
+                    .withProperty("Optional", arg.toString()));
         }
     }
 
