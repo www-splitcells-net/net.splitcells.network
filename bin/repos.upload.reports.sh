@@ -2,6 +2,8 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
+# TODO IDEA Upload JavaDoc to splitcells.net.
+
 set -e
 set +x # Prevent printing secrets.
 # -z is used because -v is not supported in Forgejo workflows.
