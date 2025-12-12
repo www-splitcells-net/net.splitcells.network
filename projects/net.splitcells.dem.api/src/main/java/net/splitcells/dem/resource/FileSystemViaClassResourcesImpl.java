@@ -215,14 +215,18 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
         return walkRecursively(Path.of("./"));
     }
 
+    /**
+     * {@link Path#toString()} never ends with a slash.
+     *
+     * @param path The folder, whose files and folders are walked recursively.
+     * @return A recursive file and folder walk is returned.
+     */
     @Override
     public Stream<Path> walkRecursively(Path path) {
         final var pathStr = normalize(basePath + path.toString());
         final String pathStrFolder;
         if (pathStr.endsWith("/.")) {
             pathStrFolder = pathStr.substring(0, pathStr.length() - 2);
-        } else if (pathStr.endsWith("/")) {
-            pathStrFolder = pathStr;
         } else {
             pathStrFolder = pathStr + "/";
         }
