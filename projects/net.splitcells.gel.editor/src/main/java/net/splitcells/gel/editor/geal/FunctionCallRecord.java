@@ -39,7 +39,10 @@ import static net.splitcells.dem.lang.CommonMarkUtils.joinDocuments;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.constraint.QueryI.query;
+import static net.splitcells.gel.constraint.type.ForAlls.forAll;
+import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
 import static net.splitcells.gel.editor.geal.lang.NameDesc.nameDesc;
+import static net.splitcells.gel.editor.geal.lang.NameDesc.nameDescForTest;
 import static net.splitcells.gel.editor.geal.lang.StringDesc.stringDesc;
 import static net.splitcells.gel.editor.lang.SourceCodeQuote.emptySourceCodeQuote;
 
@@ -159,7 +162,7 @@ public class FunctionCallRecord implements Closeable {
         if (isRecording) {
             argumentTypes.ensurePresence(parameter, NameDesc.class);
             argumentNames.ensurePresence(parameter, parameterName);
-            return null;
+            return nameDescForTest("");
         }
         final var first = context.parse(functionCall.getArguments().get(parameter));
         switch (first) {
@@ -202,7 +205,7 @@ public class FunctionCallRecord implements Closeable {
     public Query parseQuerySubject() {
         if (isRecording) {
             requiredSubjectTypes.addAll(Solution.class, Query.class);
-            return null;
+            return query(forAll());
         }
         if (subject.isEmpty()) {
             throw execException(tree("The "
@@ -256,7 +259,7 @@ public class FunctionCallRecord implements Closeable {
     public List<Attribute<? extends Object>> parseAttributeArguments(int from, String parameterName) {
         if (isRecording) {
             onlyAttributesAsArgumentsFrom = from;
-            return null;
+            return list();
         }
         return functionCall.getArguments().streamIndexes()
                 .filter(i -> i >= from)
@@ -266,7 +269,7 @@ public class FunctionCallRecord implements Closeable {
     public List<Attribute<? extends Object>> parseAttributeArguments(String name) {
         if (isRecording) {
             onlyAttributesAsArgument = true;
-            return null;
+            return list();
         }
         return functionCall.getArguments().streamIndexes().mapToObj(i -> parseAttributeArgument(i, name)).collect(toList());
     }
@@ -293,7 +296,7 @@ public class FunctionCallRecord implements Closeable {
         if (isRecording) {
             argumentTypes.ensurePresence(parameter, Attribute.class);
             argumentNames.ensurePresence(parameter, parameterName);
-            return null;
+            return integerAttribute("recording mode");
         }
         final var a = functionCall.getArguments().get(parameter);
         final var parsed = context.parse(a);
