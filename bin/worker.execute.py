@@ -435,6 +435,8 @@ class WorkerExecution:
         if not os.path.exists(targetFolder) and not self.config.dry_run:
             logging.info("Creating target folder for execution files: " + targetFolder)
             os.makedirs(targetFolder)
+        else:
+            logging.info("Not creating target folder for execution files: " + targetFolder)
         # TODO Consoldiate Dockerfile template extensions, as every case can be solved via a dedicated shell script, that is the entrypoint of the Dockerfile.
         required_argument_count = 0
         self.docker_file = DOCKERFILE_SERVICE_TEMPLATE
