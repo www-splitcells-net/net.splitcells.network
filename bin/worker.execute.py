@@ -433,6 +433,7 @@ class WorkerExecution:
         workerFolder = Path.home().joinpath('.local/state/' + self.config.program_name + "/repos/public/net.splitcells.network/")
         targetFolder = workerFolder.joinpath('target/')
         if not os.path.exists(targetFolder) and not self.config.dry_run:
+            logging.info("Creating target folder for execution files: " + targetFolder)
             os.makedirs(targetFolder)
         # TODO Consoldiate Dockerfile template extensions, as every case can be solved via a dedicated shell script, that is the entrypoint of the Dockerfile.
         required_argument_count = 0
