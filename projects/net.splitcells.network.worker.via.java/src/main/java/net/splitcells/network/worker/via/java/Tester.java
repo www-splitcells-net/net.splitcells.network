@@ -28,8 +28,12 @@ import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.network.worker.via.java.Logger.logger;
 
 /**
- * Executes the standard tests.
- * This is the minimal amount of tests, that should be done, before something is released.
+ * <p>Executes the standard tests and writes the results into the network log repo.
+ * This is the minimal amount of tests, that should be done, before something is released.</p>
+ * <p>Maven's Surefire plugin is not suited for that,
+ * as setting a custom test execution listener via Maven is complicated,
+ * which is required for writing the test results into the network log.
+ * Therefore, a dedicated main function is used.</p>
  */
 public class Tester {
     public static void main(String... args) {
