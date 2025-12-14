@@ -186,7 +186,6 @@ mkdir -p ~/.local/state/${programName}/bin/
 mkdir -p ~/.local/state/${programName}/config/
 mkdir -p ~/.local/state/${programName}/logs/
 mkdir -p ~/.local/state/${programName}/.cache/ms-playwright/
-mkdir -p ./target/
 cd ~/.local/state/${programName}/repos/public/net.splitcells.network
 test -f target/program-${programName} && chmod +x target/program-${programName} # This file does not exist, when '--executable-path' is not set.
 podman build -f "target/Dockerfile-${executionName}" \\
@@ -208,7 +207,6 @@ mkdir -p ~/.local/state/${programName}/bin/
 mkdir -p ~/.local/state/${programName}/config/
 mkdir -p ~/.local/state/${programName}/logs/
 mkdir -p ~/.local/state/${programName}/.cache/ms-playwright/
-mkdir -p ./target/
 test -f target/program-${programName} && chmod +x target/program-${programName} # This file does not exist, when '--executable-path' is not set.
 """
 
@@ -630,7 +628,6 @@ mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/bin/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/config/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/logs/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.cache/ms-playwright/
-mkdir -p ./target/
 cd ~/.local/state/net.splitcells.martins.avots.distro/repos/public/net.splitcells.network
 test -f target/program-net.splitcells.martins.avots.distro && chmod +x target/program-net.splitcells.martins.avots.distro # This file does not exist, when '--executable-path' is not set.
 podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
@@ -655,7 +652,6 @@ mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/bin/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/config/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/logs/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.cache/ms-playwright/
-mkdir -p ./target/
 test -f target/program-net.splitcells.martins.avots.distro && chmod +x target/program-net.splitcells.martins.avots.distro # This file does not exist, when '--executable-path' is not set.
 
 podman run --name "net.splitcells.martins.avots.distro" \\
@@ -693,7 +689,6 @@ mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/bin/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/config/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/logs/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.cache/ms-playwright/
-mkdir -p ./target/
 cd ~/.local/state/net.splitcells.martins.avots.distro/repos/public/net.splitcells.network
 test -f target/program-net.splitcells.martins.avots.distro && chmod +x target/program-net.splitcells.martins.avots.distro # This file does not exist, when '--executable-path' is not set.
 podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
@@ -913,7 +908,6 @@ mkdir -p ~/.local/state/net.splitcells.network.worker/bin/
 mkdir -p ~/.local/state/net.splitcells.network.worker/config/
 mkdir -p ~/.local/state/net.splitcells.network.worker/logs/
 mkdir -p ~/.local/state/net.splitcells.network.worker/.cache/ms-playwright/
-mkdir -p ./target/
 cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
 test -f target/program-net.splitcells.network.worker && chmod +x target/program-net.splitcells.network.worker # This file does not exist, when '--executable-path' is not set.
 podman build -f "target/Dockerfile-net.splitcells.network.worker.boostrap.daemon" \\
@@ -1066,7 +1060,6 @@ mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/bin/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/config/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/logs/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/.cache/ms-playwright/
-mkdir -p ./target/
 cd ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network
 test -f target/program-net.splitcells.martins.avots.distro.livedistro && chmod +x target/program-net.splitcells.martins.avots.distro.livedistro # This file does not exist, when '--executable-path' is not set.
 podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro.livedistro" \\
@@ -1158,7 +1151,6 @@ mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/bin/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/config/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/logs/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/.cache/ms-playwright/
-mkdir -p ./target/
 cd ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network
 test -f target/program-net.splitcells.martins.avots.distro.livedistro && chmod +x target/program-net.splitcells.martins.avots.distro.livedistro # This file does not exist, when '--executable-path' is not set.
 podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro.livedistro" \\
@@ -1208,7 +1200,6 @@ mkdir -p ~/.local/state/net.splitcells.network.worker/bin/
 mkdir -p ~/.local/state/net.splitcells.network.worker/config/
 mkdir -p ~/.local/state/net.splitcells.network.worker/logs/
 mkdir -p ~/.local/state/net.splitcells.network.worker/.cache/ms-playwright/
-mkdir -p ./target/
 cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
 test -f target/program-net.splitcells.network.worker && chmod +x target/program-net.splitcells.network.worker # This file does not exist, when '--executable-path' is not set.
 podman build -f "target/Dockerfile-net.splitcells.network.worker" \\
@@ -1274,7 +1265,6 @@ mkdir -p ~/.local/state/net.splitcells.network.worker/bin/
 mkdir -p ~/.local/state/net.splitcells.network.worker/config/
 mkdir -p ~/.local/state/net.splitcells.network.worker/logs/
 mkdir -p ~/.local/state/net.splitcells.network.worker/.cache/ms-playwright/
-mkdir -p ./target/
 cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
 test -f target/program-net.splitcells.network.worker && chmod +x target/program-net.splitcells.network.worker # This file does not exist, when '--executable-path' is not set.
 podman build -f "target/Dockerfile-net.splitcells.network.worker" \\
