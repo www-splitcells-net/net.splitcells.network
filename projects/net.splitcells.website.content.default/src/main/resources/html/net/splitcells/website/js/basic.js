@@ -190,13 +190,7 @@ function net_splitcells_webserver_form_load(config) {
     var httpRequest = new XMLHttpRequest();
     httpRequest.open("GET", config['load-path'], true);
     function listener() {
-        console.log(this.responseText);
-        const dataTypes = {'Definition' : 'text/markdown'};
-        const dataValues = {'Definition' : this.responseText};
-        const renderingTypes = {'Definition' : 'plain-text'};
-        const formUpdate = {'data-types' : dataTypes, 'data-values' : dataValues, 'rendering-types' : renderingTypes};
-        const update = {'net-splitcells-website-server-form-update' : formUpdate};
-        net_splitcells_webserver_form_update(config, update);
+        net_splitcells_webserver_form_update(config, JSON.parse(this.responseText));
         net_splitcells_webserver_form_tab_select(config['form-id'], 'Definition');
     }
     httpRequest.addEventListener("load", listener);
