@@ -16,6 +16,7 @@
 package net.splitcells.gel.ui.editor.geal.example;
 
 import lombok.val;
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.website.Format;
 import net.splitcells.website.server.Config;
@@ -27,6 +28,7 @@ import net.splitcells.website.server.projects.extension.ProjectsRendererExtensio
 import java.nio.file.Path;
 import java.util.Optional;
 
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.gel.ui.editor.geal.EditorProcessor.FORM_UPDATE;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
@@ -54,5 +56,9 @@ public class ColloquiumExample implements ProjectsRendererExtension {
 
     @Override public boolean requiresAuthentication(RenderRequest request) {
         return false;
+    }
+
+    @Override public Set<Path> projectPaths(ProjectsRendererI projectsRendererI) {
+        return setOfUniques(Path.of(PATH.substring(1)));
     }
 }
