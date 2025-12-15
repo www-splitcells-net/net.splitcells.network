@@ -18,6 +18,7 @@ package net.splitcells.gel.ui.editor.geal.example;
 import lombok.val;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.utils.StringUtils;
+import net.splitcells.gel.editor.GelEditorFileSystem;
 import net.splitcells.website.Format;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.processor.BinaryMessage;
@@ -28,9 +29,11 @@ import net.splitcells.website.server.projects.extension.ProjectsRendererExtensio
 import java.nio.file.Path;
 import java.util.Optional;
 
+import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.gel.ui.editor.geal.EditorProcessor.FORM_UPDATE;
+import static net.splitcells.gel.ui.editor.geal.EditorProcessor.PROBLEM_DEFINITION;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.processor.Response.response;
 
@@ -49,6 +52,8 @@ public class ColloquiumExample implements ProjectsRendererExtension {
     public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         if (PATH.equals(path)) {
             val formUpdate = tree(FORM_UPDATE);
+            formUpdate.withProperty(PROBLEM_DEFINITION, configValue(GelEditorFileSystem.class)
+                    .readString("src/main/resources/html/net/splitcells/gel/editor/geal/examples/colloquium-planning.txt"));
             return Optional.of(binaryMessage(StringUtils.toBytes(formUpdate.toJsonString()), Format.TEXT_PLAIN));
         }
         return Optional.empty();
