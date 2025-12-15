@@ -32,8 +32,8 @@ import java.util.Optional;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.gel.ui.editor.geal.EditorProcessor.FORM_UPDATE;
-import static net.splitcells.gel.ui.editor.geal.EditorProcessor.PROBLEM_DEFINITION;
+import static net.splitcells.gel.ui.editor.geal.EditorProcessor.*;
+import static net.splitcells.website.Format.COMMON_MARK;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.processor.Response.response;
 
@@ -52,7 +52,12 @@ public class ColloquiumExample implements ProjectsRendererExtension {
     public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         if (PATH.equals(path)) {
             val formUpdate = tree(FORM_UPDATE);
-            formUpdate.withProperty(PROBLEM_DEFINITION, configValue(GelEditorFileSystem.class)
+            final var dataTypes = tree(DATA_TYPES).withParent(formUpdate);
+            final var dataValues = tree(DATA_VALUES).withParent(formUpdate);
+            final var renderingTypes = tree(RENDERING_TYPES).withParent(formUpdate);
+            dataTypes.withProperty(PROBLEM_DEFINITION, COMMON_MARK.mimeTypes());
+            renderingTypes.withProperty(PROBLEM_DEFINITION, PLAIN_TEXT);
+            dataValues.withProperty(PROBLEM_DEFINITION, configValue(GelEditorFileSystem.class)
                     .readString("src/main/resources/html/net/splitcells/gel/editor/geal/examples/colloquium-planning.txt"));
             return Optional.of(binaryMessage(StringUtils.toBytes(formUpdate.toJsonString()), Format.TEXT_PLAIN));
         }
