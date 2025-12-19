@@ -30,7 +30,7 @@ public class FormUpdate {
     }
 
 
-    @Getter @Setter private Map<String, FieldUpdate> fields;
+    @Getter @Setter private Map<String, FieldUpdate> fields = map();
 
     private FormUpdate() {
 
