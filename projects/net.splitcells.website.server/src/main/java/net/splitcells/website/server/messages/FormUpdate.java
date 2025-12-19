@@ -25,7 +25,7 @@ import static net.splitcells.dem.utils.StringUtils.parseString;
  */
 @Accessors(chain = true)
 public class FormUpdate {
-    public static FormUpdate editorUpdate() {
+    public static FormUpdate formUpdate() {
         return new FormUpdate();
     }
 
