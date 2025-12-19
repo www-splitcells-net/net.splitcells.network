@@ -58,7 +58,6 @@ public interface Files {
         }
     }
 
-    @Deprecated
     static void createDirectory(Path directory) {
         try {
             createDirectories(directory);
@@ -67,19 +66,16 @@ public interface Files {
         }
     }
 
-    @Deprecated
     static void ensureAbsence(Path path) {
         if (isDirectory(path)) {
             deleteDirectory(path);
         }
     }
 
-    @Deprecated
     static boolean is_file(Path path) {
         return java.nio.file.Files.isRegularFile(path);
     }
 
-    @Deprecated
     static Stream<Path> walkDirectChildren(Path path) {
         try {
             return java.nio.file.Files.walk(path, 1).filter(e -> !path.equals(e));
@@ -88,7 +84,6 @@ public interface Files {
         }
     }
 
-    @Deprecated
     static Stream<Path> walk_recursively(Path path) {
         try {
             return java.nio.file.Files.walk(path);
@@ -97,7 +92,6 @@ public interface Files {
         }
     }
 
-    @Deprecated
     static boolean isDirectory(Path path) {
         return java.nio.file.Files.isDirectory(path);
     }
@@ -105,7 +99,6 @@ public interface Files {
     /**
      * IDEA Create method to move path to trash instead of deleting it.
      */
-    @Deprecated
     static void deleteDirectory(Path dirToDelete) {
         try {
             FileUtils.deleteDirectory(dirToDelete.toFile());
@@ -114,7 +107,6 @@ public interface Files {
         }
     }
 
-    @Deprecated
     static void copyDirectory(Path sourceDirectory, Path targetDirectory) {
         try {
             FileUtils.copyDirectory(sourceDirectory.toFile(), targetDirectory.toFile());
@@ -123,12 +115,10 @@ public interface Files {
         }
     }
 
-    @Deprecated
     static void writeToFile(Path path, Tree content) {
         writeToFile(path, content.toXmlString(xmlConfig()));
     }
 
-    @Deprecated
     static void writeToFile(Path path, byte[] content) {
         try (final var writer = new FileOutputStream(path.toFile())) {
             writer.write(content);
@@ -137,7 +127,6 @@ public interface Files {
         }
     }
 
-    @Deprecated
     static void writeToFile(Path path, String string) {
         writeToFile(path, string.getBytes());
     }
@@ -147,12 +136,10 @@ public interface Files {
      *
      * @return New Line Symbol
      */
-    @Deprecated
     static String newLine() {
         return "\n";
     }
 
-    @Deprecated
     static void appendToFile(Path path, byte[] content) {
         try (final var writer = new FileOutputStream(path.toFile(), true)) {
             writer.write(content);
@@ -161,12 +148,10 @@ public interface Files {
         }
     }
 
-    @Deprecated
     static void appendToFile(Path path, String content) {
         appendToFile(path, content.getBytes(StandardCharsets.UTF_8));
     }
 
-    @Deprecated
     static String readFileAsString(Path path) {
         try {
             return java.nio.file.Files.readString(path);
@@ -175,7 +160,6 @@ public interface Files {
         }
     }
 
-    @Deprecated
     static byte[] readFileAsBytes(Path path) {
         try {
             return java.nio.file.Files.readAllBytes(path);
@@ -193,7 +177,6 @@ public interface Files {
         }
     }
 
-    @Deprecated
     static boolean fileExists(Path path) {
         return java.nio.file.Files.isRegularFile(path);
     }
@@ -232,14 +215,12 @@ public interface Files {
      *
      * @return Returns the user's state files.
      */
-    @Deprecated
     static Path usersStateFiles() {
         final var usersStateFiles = Paths.userHome().resolve(".local/state/net.splitcells.dem");
         generateFolderPath(usersStateFiles);
         return usersStateFiles;
     }
 
-    @JavaLegacyBody
     static String readAsString(InputStream inputStream) {
         try {
             return new String(inputStream.readAllBytes());
