@@ -11,11 +11,10 @@ import net.splitcells.website.Format;
 import java.util.Optional;
 
 import static net.splitcells.website.Format.BINARY;
-import static net.splitcells.website.server.messages.RenderingType.PLAIN_TEXT;
 
 @Accessors(chain = true)
 public class FieldUpdate {
-    public static FieldUpdate fieldUiUpdate() {
+    public static FieldUpdate fieldUpdate() {
         return new FieldUpdate();
     }
 
@@ -26,7 +25,7 @@ public class FieldUpdate {
     /**
      * States how a field should be rendered.
      */
-    @Getter @Setter private Optional<RenderingType> renderingTypes = Optional.empty();
+    @Getter @Setter private Optional<RenderingType> renderingType = Optional.empty();
     /**
      * Contains the data of a field.
      */
