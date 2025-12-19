@@ -19,8 +19,10 @@ import lombok.val;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.editor.GelEditorFileSystem;
+import net.splitcells.gel.ui.editor.geal.EditorProcessor;
 import net.splitcells.website.Format;
 import net.splitcells.website.server.Config;
+import net.splitcells.website.server.messages.RenderingType;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.RenderRequest;
@@ -34,8 +36,10 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.gel.ui.editor.geal.EditorProcessor.*;
 import static net.splitcells.website.Format.COMMON_MARK;
+import static net.splitcells.website.server.messages.FieldUpdate.fieldUpdate;
+import static net.splitcells.website.server.messages.FormUpdate.formUpdate;
+import static net.splitcells.website.server.messages.RenderingType.PLAIN_TEXT;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
-import static net.splitcells.website.server.processor.Response.response;
 
 public class ColloquiumExample implements ProjectsRendererExtension {
     private static final String PATH = "/net/splitcells/gel/ui/editor/geal/example/colloquium-planning.json";
@@ -51,15 +55,14 @@ public class ColloquiumExample implements ProjectsRendererExtension {
     @Override
     public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         if (PATH.equals(path)) {
-            val formUpdate = tree(FORM_UPDATE);
-            final var dataTypes = tree(DATA_TYPES).withParent(formUpdate);
-            final var dataValues = tree(DATA_VALUES).withParent(formUpdate);
-            final var renderingTypes = tree(RENDERING_TYPES).withParent(formUpdate);
-            dataTypes.withProperty(PROBLEM_DEFINITION, COMMON_MARK.mimeTypes());
-            renderingTypes.withProperty(PROBLEM_DEFINITION, PLAIN_TEXT);
-            dataValues.withProperty(PROBLEM_DEFINITION, configValue(GelEditorFileSystem.class)
-                    .readString("src/main/resources/html/net/splitcells/gel/editor/geal/examples/colloquium-planning.txt"));
-            return Optional.of(binaryMessage(StringUtils.toBytes(formUpdate.toJsonString()), Format.TEXT_PLAIN));
+            val formUpdate = formUpdate();
+            val problemDefinition = fieldUpdate()
+                    .setRenderingType(Optional.of(PLAIN_TEXT))
+                    .setData(StringUtils.toBytes(configValue(GelEditorFileSystem.class)
+                            .readString("src/main/resources/html/net/splitcells/gel/editor/geal/examples/colloquium-planning.txt")))
+                    .setType(COMMON_MARK);
+            formUpdate.getFields().put(PROBLEM_DEFINITION, problemDefinition);
+            return Optional.of(binaryMessage(StringUtils.toBytes(formUpdate.toTree().toJsonString()), Format.TEXT_PLAIN));
         }
         return Optional.empty();
     }
