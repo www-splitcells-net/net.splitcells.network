@@ -37,12 +37,11 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 /**
  * Some additional methods for the java.nio.file.Files class.
  *
- * @deprecated This class is an integration to OS functionality.
- * OS functionality should not be used in code directly most of the time.
+ * @deprecated This class is an integration of OS functionality.
+ * This class should not be used in code directly most of the time.
  * Use {@link FileSystem} instead.
  */
 @JavaLegacyArtifact
-@Deprecated
 public interface Files {
 
     static void processInTemporaryFolder(Consumer<Path> process) {
