@@ -9,9 +9,8 @@ import lombok.experimental.Accessors;
 import lombok.val;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
-import net.splitcells.dem.lang.tree.TreeI;
-import net.splitcells.dem.utils.StringUtils;
 
+import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StringUtils.parseString;
@@ -44,8 +43,8 @@ public class FormUpdate {
         fields.entrySet().forEach(entry -> {
             dataValues.withProperty(entry.getKey(), parseString(entry.getValue().getData()));
             dataTypes.withProperty(entry.getKey(), entry.getValue().getType().mimeTypes());
-            entry.getValue().getRenderingTypes().ifPresent(rendering ->
-                    renderingTypes.withProperty(entry.getKey(), rendering.name()));
+            entry.getValue().getRenderingType().ifPresent(rendering ->
+                    renderingTypes.withProperty(entry.getKey(), rendering.getName()));
         });
         return tree;
     }
