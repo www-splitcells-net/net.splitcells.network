@@ -3,12 +3,14 @@
  */
 package net.splitcells.website.server.messages;
 
+import lombok.Getter;
+
 /**
  * States how a field in a form should be rendered.
  */
 public enum RenderingType {
     PLAIN_TEXT("plain-text");
-    private String name;
+    @Getter private final String name;
 
     private RenderingType(String argName) {
         name = argName;
