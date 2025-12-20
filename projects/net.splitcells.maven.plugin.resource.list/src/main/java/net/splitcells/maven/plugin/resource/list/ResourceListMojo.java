@@ -133,17 +133,17 @@ public class ResourceListMojo extends AbstractMojo {
                         } catch (IOException e) {
                             throw new RuntimeException("Could not write meta file: " + metaFilePath, e);
                         }
-                        parseMetaDataFromReuse(this, project.getBasedir().toPath()).forEach(reuseMeta -> {
-                            inventory.compute(reuseMeta.filePath, (filePath, oldMetaData) -> {
-                                if (oldMetaData == null) {
-                                    return reuseMeta;
-                                }
-                                return oldMetaData.replaceWith(reuseMeta);
-                            });
-                        });
                     }
                 });
             }
+            parseMetaDataFromReuse(this, project.getBasedir().toPath()).forEach(reuseMeta -> {
+                inventory.compute(reuseMeta.filePath, (filePath, oldMetaData) -> {
+                    if (oldMetaData == null) {
+                        return reuseMeta;
+                    }
+                    return oldMetaData.replaceWith(reuseMeta);
+                });
+            });
             try (final BufferedWriter resourceListWriter = new BufferedWriter(new FileWriter(resourceListFile.toFile()))) {
                 resourceListWriter.write(resourceList.toString());
             }
