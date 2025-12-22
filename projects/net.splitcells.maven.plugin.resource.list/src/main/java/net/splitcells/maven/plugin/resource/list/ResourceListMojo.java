@@ -116,7 +116,7 @@ public class ResourceListMojo extends AbstractMojo {
                         }
                         inventory.compute(resource, (filePath, oldMetaData) -> {
                             if (oldMetaData == null) {
-                                return parseMetaData(new MetaData(resource), resourceContent);
+                                return parseMetaData(new MetaData(resourceFolder.relativize(resource)), resourceContent);
                             }
                             return parseMetaData(oldMetaData, resourceContent);
                         });
