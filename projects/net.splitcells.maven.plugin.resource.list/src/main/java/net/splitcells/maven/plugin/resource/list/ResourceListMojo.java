@@ -132,7 +132,6 @@ public class ResourceListMojo extends AbstractMojo {
                 });
             });
             inventory.values().forEach(metaData -> {
-                System.out.println("metaData#filePath: " + metaData.filePath);
                 val targetFile = metaDataFolder.resolve(metaData.filePath);
                 try {
                     createDirectories(targetFile.getParent());
@@ -140,7 +139,6 @@ public class ResourceListMojo extends AbstractMojo {
                     throw new RuntimeException("Could not create folder for meta data file: " + targetFile.getParent(), e);
                 }
                 try (final BufferedWriter metaWriter = new BufferedWriter(new FileWriter(targetFile.toFile()))) {
-                    System.out.println("targetFile: " + targetFile);
                     metaWriter.write(metaData.toFileString());
                 } catch (IOException e) {
                     throw new RuntimeException("Could not write meta file: " + metaData.filePath, e);
