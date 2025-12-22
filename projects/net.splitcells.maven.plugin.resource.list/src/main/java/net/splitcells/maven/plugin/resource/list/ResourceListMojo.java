@@ -141,7 +141,7 @@ public class ResourceListMojo extends AbstractMojo {
                 }
                 try (final BufferedWriter metaWriter = new BufferedWriter(new FileWriter(targetFile.toFile()))) {
                     System.out.println("targetFile: " + targetFile);
-                    // TODO The paths are not correct: metaWriter.write(metaData.toFileString());
+                    metaWriter.write(metaData.toFileString());
                 } catch (IOException e) {
                     throw new RuntimeException("Could not write meta file: " + metaData.filePath, e);
                 }
