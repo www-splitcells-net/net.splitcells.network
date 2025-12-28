@@ -16,14 +16,25 @@
 package net.splitcells.dem.resource;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import java.nio.file.Path;
 
 import static net.splitcells.dem.resource.Files.processInTemporaryFolder;
+import static net.splitcells.dem.testing.Assertions.requireThrow;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 @JavaLegacyArtifact
 public class FilesTest {
+
+    @UnitTest public void testProcessInTemporaryFolderError() {
+        requireThrow(() -> {
+            processInTemporaryFolder(p -> {
+                throw execException();
+            });
+        });
+    }
 
     @UnitTest public void testCreateDirectory() {
         processInTemporaryFolder(p -> Files.createDirectory(Path.of("test")));
