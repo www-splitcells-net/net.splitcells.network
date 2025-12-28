@@ -15,13 +15,19 @@
  */
 package net.splitcells.dem.resource;
 
+import lombok.val;
+import net.splitcells.dem.data.atom.Bool;
+import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import java.nio.file.Path;
 
-import static net.splitcells.dem.resource.Files.processInTemporaryFolder;
+import static net.splitcells.dem.data.atom.Bools.require;
+import static net.splitcells.dem.data.atom.Bools.requireNot;
+import static net.splitcells.dem.resource.Files.*;
+import static net.splitcells.dem.resource.Files.ensureAbsence;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
@@ -37,16 +43,26 @@ public class FilesTest {
     }
 
     @UnitTest public void testCreateDirectory() {
-        processInTemporaryFolder(p -> Files.createDirectory(Path.of("test")));
+        processInTemporaryFolder(p -> createDirectory(Path.of("test")));
     }
 
     @UnitTest public void testCreateDirectoryInvalid() {
         requireThrow(() -> {
-            processInTemporaryFolder(p -> Files.createDirectory(Path.of("//\\")));
+            processInTemporaryFolder(p -> createDirectory(Path.of("//\\")));
         });
     }
 
     @UnitTest public void testEnsureAbsenceWithInvalidPath() {
-        Files.ensureAbsence(Path.of("\\//"));
+        ensureAbsence(Path.of("\\//"));
+    }
+
+    @UnitTest public void testEnsureAbsence() {
+        processInTemporaryFolder(p -> {
+            val testFolder = p.resolve("test");
+            createDirectory(testFolder);
+            require(folderExists(testFolder));
+            ensureAbsence(testFolder);
+            requireNot(folderExists(testFolder));
+        });
     }
 }

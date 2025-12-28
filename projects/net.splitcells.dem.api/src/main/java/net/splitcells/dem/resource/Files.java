@@ -180,6 +180,10 @@ public interface Files {
         return java.nio.file.Files.isRegularFile(path);
     }
 
+     static boolean folderExists(Path path) {
+        return java.nio.file.Files.isDirectory(path);
+    }
+
     static String readString(Path path) {
         try {
             return java.nio.file.Files.readString(path);
