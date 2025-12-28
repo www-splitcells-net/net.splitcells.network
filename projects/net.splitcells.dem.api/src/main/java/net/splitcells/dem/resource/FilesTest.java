@@ -39,4 +39,10 @@ public class FilesTest {
     @UnitTest public void testCreateDirectory() {
         processInTemporaryFolder(p -> Files.createDirectory(Path.of("test")));
     }
+
+    @UnitTest public void testCreateDirectoryInvalid() {
+        requireThrow(() -> {
+            processInTemporaryFolder(p -> Files.createDirectory(Path.of("//\\")));
+        });
+    }
 }
