@@ -43,7 +43,7 @@ public class FilesTest {
     }
 
     @UnitTest public void testCreateDirectory() {
-        processInTemporaryFolder(p -> createDirectory(Path.of("test")));
+        processInTemporaryFolder(p -> createDirectory(p.resolve("test")));
     }
 
     @UnitTest public void testCreateDirectoryInvalid() {
