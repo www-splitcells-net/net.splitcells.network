@@ -114,9 +114,10 @@ public class ResourceListMojo extends AbstractMojo {
                         } catch (IOException e) {
                             throw new RuntimeException("Could not read resource file: " + resource, e);
                         }
-                        inventory.compute(resource, (filePath, oldMetaData) -> {
+                        val relativeResource = resourceFolder.relativize(resource);
+                        inventory.compute(relativeResource, (filePath, oldMetaData) -> {
                             if (oldMetaData == null) {
-                                return parseMetaData(new MetaData(resourceFolder.relativize(resource)), resourceContent);
+                                return parseMetaData(new MetaData(relativeResource), resourceContent);
                             }
                             return parseMetaData(oldMetaData, resourceContent);
                         });
