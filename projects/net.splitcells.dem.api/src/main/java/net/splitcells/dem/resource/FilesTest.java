@@ -45,4 +45,8 @@ public class FilesTest {
             processInTemporaryFolder(p -> Files.createDirectory(Path.of("//\\")));
         });
     }
+
+    @UnitTest public void testEnsureAbsenceWithInvalidPath() {
+        Files.ensureAbsence(Path.of("\\//"));
+    }
 }
