@@ -49,12 +49,11 @@ public interface Files {
             final var temporaryFolder = java.nio.file.Files.createTempDirectory(null);
             try {
                 process.accept(temporaryFolder);
-            } catch (RuntimeException ex) {
+            } finally {
                 Files.deleteDirectory(temporaryFolder);
-                throw ex;
             }
-        } catch (IOException e) {
-            throw execException(e);
+        } catch (Throwable t) {
+            throw execException(t);
         }
     }
 
