@@ -28,6 +28,7 @@ import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.resource.Files.*;
 import static net.splitcells.dem.resource.Files.ensureAbsence;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.multiple;
@@ -54,7 +55,9 @@ public class FilesTest {
      */
     @UnitTest public void testCreateDirectoryInvalid() {
         requireThrow(() -> {
-            processInTemporaryFolder(p -> createDirectory(Path.of("\\" + multiple("//\\", 2000))));
+            val testPath = Path.of("\\" + multiple("//\\", 2000));
+            logs().append(testPath.toString());
+            processInTemporaryFolder(p -> createDirectory(testPath));
         });
     }
 
