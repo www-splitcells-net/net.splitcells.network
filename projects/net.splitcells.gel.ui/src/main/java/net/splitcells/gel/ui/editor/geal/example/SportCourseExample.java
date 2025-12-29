@@ -27,7 +27,7 @@ import static net.splitcells.website.server.messages.RenderingType.PLAIN_TEXT;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 public class SportCourseExample implements ProjectsRendererExtension {
-    private static final String PATH = "/net/splitcells/gel/ui/editor/geal/example/sport-course.json";
+    private static final String PATH = "/net/splitcells/gel/ui/editor/geal/example/sports-course-planning.json";
 
     public static SportCourseExample sportCourseExample() {
         return new SportCourseExample();
