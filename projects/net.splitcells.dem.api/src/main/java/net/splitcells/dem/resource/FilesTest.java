@@ -30,6 +30,7 @@ import static net.splitcells.dem.resource.Files.*;
 import static net.splitcells.dem.resource.Files.ensureAbsence;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.dem.utils.StringUtils.multiple;
 
 @JavaLegacyArtifact
 public class FilesTest {
@@ -46,9 +47,14 @@ public class FilesTest {
         processInTemporaryFolder(p -> createDirectory(p.resolve("test")));
     }
 
+    /**
+     * The test tries to create an error by trying to create folder with a {@link Path},
+     * that is valid in Java,
+     * but it is not valid according to the operation system.
+     */
     @UnitTest public void testCreateDirectoryInvalid() {
         requireThrow(() -> {
-            processInTemporaryFolder(p -> createDirectory(Path.of("//\\")));
+            processInTemporaryFolder(p -> createDirectory(Path.of("\\" + multiple("//\\", 2000))));
         });
     }
 
