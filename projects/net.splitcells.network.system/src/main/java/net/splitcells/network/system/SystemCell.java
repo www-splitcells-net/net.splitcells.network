@@ -55,6 +55,7 @@ import static net.splitcells.gel.editor.geal.FunctionCallDoc.functionCallDoc;
 import static net.splitcells.gel.ui.editor.geal.example.ColloquiumExample.colloquiumExample;
 import static net.splitcells.gel.ui.editor.geal.EditorProcessor.editorProcessor;
 import static net.splitcells.gel.ui.editor.geal.EditorProcessorTest.TEST_OPTIMIZATION_GUI;
+import static net.splitcells.gel.ui.editor.geal.example.SportCourseExample.sportCourseExample;
 import static net.splitcells.network.system.PerformanceReport.performanceReport;
 import static net.splitcells.website.server.ProgramConfig.programConfig;
 import static net.splitcells.website.server.ProjectConfig.projectConfig;
@@ -203,6 +204,7 @@ public class SystemCell implements Cell {
                 .withAdditionalProjectsRendererExtension(performanceReport())
                 .withAdditionalProjectsRendererExtension(functionCallDoc())
                 .withAdditionalProjectsRendererExtension(colloquiumExample())
+                .withAdditionalProjectsRendererExtension(sportCourseExample())
                 .withLicensePage(trailLink("Licensing Info of The Core Project net.splitcells.network", "/net/splitcells/network/LICENSE.html"))
                 .withLicensePage(trailLink("Copyright Notice", "/net/splitcells/network/NOTICE.html"))
                 .withLicensePage(trailLink("Developer Certificate of Origin Version 1.1", "/net/splitcells/network/legal/Developer_Certificate_of_Origin.v1.1.html"))
