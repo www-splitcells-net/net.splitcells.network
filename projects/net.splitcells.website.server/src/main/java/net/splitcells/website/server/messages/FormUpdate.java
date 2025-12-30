@@ -24,6 +24,14 @@ import static net.splitcells.dem.utils.StringUtils.parseString;
  */
 @Accessors(chain = true)
 public class FormUpdate {
+    public static final String FORM_UPDATE = "net-splitcells-website-server-form-update";
+    public static final String DATA_VALUES = "data-values";
+    public static final String DATA_TYPES = "data-types";
+    public static final String RENDERING_TYPES = "rendering-types";
+    public static final String ERRORS = "errors";
+    public static final String INTERACTIVE_TABLE = "interactive-table";
+    public static final String PLAIN_TEXT = "plain-text";
+
     public static FormUpdate formUpdate() {
         return new FormUpdate();
     }

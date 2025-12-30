@@ -20,6 +20,7 @@ import net.splitcells.dem.testing.annotations.DisabledTest;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.ui.GelUiCell;
+import net.splitcells.website.server.messages.FormUpdate;
 import net.splitcells.website.server.processor.Request;
 
 import static net.splitcells.dem.Dem.process;
@@ -62,8 +63,8 @@ public class EditorProcessorTest {
         requirePrefixAbsence(testSubject
                         .process(request)
                         .data()
-                        .namedChild(DATA_VALUES)
-                        .namedChild(ERRORS)
+                        .namedChild(FormUpdate.DATA_VALUES)
+                        .namedChild(FormUpdate.ERRORS)
                         .valueName()
                 , "\n");
     }
@@ -74,8 +75,8 @@ public class EditorProcessorTest {
         final var requestTree = tree("");
         testSubject.process(Request.<Tree>request(trail(), requestTree))
                 .data()
-                .namedChild(DATA_VALUES)
-                .namedChild(ERRORS)
+                .namedChild(FormUpdate.DATA_VALUES)
+                .namedChild(FormUpdate.ERRORS)
                 .children()
                 .requireSizeOf(1);
     }

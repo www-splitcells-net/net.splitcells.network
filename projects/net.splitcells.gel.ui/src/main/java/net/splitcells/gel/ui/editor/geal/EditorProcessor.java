@@ -24,6 +24,7 @@ import net.splitcells.dem.resource.communication.log.LogMessage;
 import net.splitcells.dem.testing.need.Need;
 import net.splitcells.dem.testing.reporting.ErrorReporter;
 import net.splitcells.gel.editor.EditorData;
+import net.splitcells.website.server.messages.FormUpdate;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
@@ -39,18 +40,12 @@ import static net.splitcells.dem.utils.StringUtils.*;
 import static net.splitcells.gel.editor.Editor.editor;
 import static net.splitcells.gel.editor.EditorData.editorData;
 import static net.splitcells.website.Format.*;
+import static net.splitcells.website.server.messages.FormUpdate.*;
 import static net.splitcells.website.server.processor.Response.response;
 
 public class EditorProcessor implements Processor<Tree, Tree> {
 
     public static final String PROBLEM_DEFINITION = "Definition";
-    public static final String FORM_UPDATE = "net-splitcells-website-server-form-update";
-    public static final String DATA_VALUES = "data-values";
-    public static final String DATA_TYPES = "data-types";
-    public static final String RENDERING_TYPES = "rendering-types";
-    public static final String INTERACTIVE_TABLE = "interactive-table";
-    public static final String PLAIN_TEXT = "plain-text";
-    public static final String ERRORS = "errors";
 
     public static final Trail PATH = Trail.trail("net/splitcells/gel/ui/editor/geal/form");
 
