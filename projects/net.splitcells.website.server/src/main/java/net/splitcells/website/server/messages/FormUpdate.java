@@ -44,10 +44,10 @@ public class FormUpdate {
     }
 
     public Tree toTree() {
-        val tree = tree("net-splitcells-website-server-form-update");
-        val dataValues = tree("data-values").withParent(tree);
-        val dataTypes = tree("data-types").withParent(tree);
-        val renderingTypes = tree("rendering-types").withParent(tree);
+        val tree = tree(FORM_UPDATE);
+        val dataValues = tree(DATA_VALUES).withParent(tree);
+        val dataTypes = tree(DATA_TYPES).withParent(tree);
+        val renderingTypes = tree(RENDERING_TYPES).withParent(tree);
         fields.entrySet().forEach(entry -> {
             dataValues.withProperty(entry.getKey(), parseString(entry.getValue().getData()));
             dataTypes.withProperty(entry.getKey(), entry.getValue().getType().mimeTypes());
