@@ -51,7 +51,7 @@ public class FilesTest {
     /**
      * The test tries to create an error by trying to create folder with a {@link Path},
      * that is valid in Java,
-     * but it is not valid according to the operation system.
+     * but it is not valid according to the operating system.
      */
     @UnitTest public void testCreateDirectoryInvalid() {
         requireThrow(() -> {
