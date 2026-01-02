@@ -62,12 +62,11 @@ public class ColloquiumExample implements ProjectsRendererExtension {
     public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         if (PATH.equals(path)) {
             val formUpdate = formUpdate();
-            val problemDefinition = fieldUpdate()
+            formUpdate.getFields().put(PROBLEM_DEFINITION, fieldUpdate()
                     .setRenderingType(Optional.of(PLAIN_TEXT))
                     .setData(StringUtils.toBytes(configValue(GelEditorFileSystem.class)
                             .readString("src/main/resources/html/net/splitcells/gel/editor/geal/examples/colloquium-planning.txt")))
-                    .setType(COMMON_MARK);
-            formUpdate.getFields().put(PROBLEM_DEFINITION, problemDefinition);
+                    .setType(COMMON_MARK));
             formUpdate.getFields().put("demands.csv", fieldUpdate()
                     .setRenderingType(Optional.of(PLAIN_TEXT))
                     .setData(StringUtils.toBytes(demandsCsv()))
