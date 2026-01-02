@@ -60,8 +60,6 @@ import static net.splitcells.website.server.project.validator.RenderingValidator
 import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithPath;
 import static net.splitcells.website.server.projects.RenderRequest.renderRequest;
 import static net.splitcells.website.server.projects.RenderResponse.renderResponse;
-import static net.splitcells.website.server.projects.extension.impls.ColloquiumPlanningDemandsTestData.colloquiumPlanningDemandTestData;
-import static net.splitcells.website.server.projects.extension.impls.ColloquiumPlanningSuppliesTestData.colloquiumPlanningSuppliesTestData;
 import static net.splitcells.website.server.projects.extension.impls.DemConfigExtension.demConfigExtension;
 import static net.splitcells.website.server.projects.extension.impls.ConfigDependencyRecordingExtension.configDependencyRecordingExtension;
 import static net.splitcells.website.server.projects.extension.impls.FrontMenuExtension.frontMenuExtension;
@@ -200,8 +198,6 @@ public class ProjectsRendererI implements ProjectsRenderer {
             .withRegisteredExtension(layoutExtension())
             .withRegisteredExtension(layoutTreeExtension())
             .withRegisteredExtension(frontMenuExtension())
-            .withRegisteredExtension(colloquiumPlanningDemandTestData())
-            .withRegisteredExtension(colloquiumPlanningSuppliesTestData())
             .withRegisteredExtension(notificationExtension())
             .withRegisteredExtension(globalChangelogExtension())
             .withRegisteredExtension(newsExtension());
