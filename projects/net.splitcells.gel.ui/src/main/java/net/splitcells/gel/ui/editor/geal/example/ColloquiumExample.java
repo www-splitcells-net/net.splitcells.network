@@ -17,12 +17,12 @@ package net.splitcells.gel.ui.editor.geal.example;
 
 import lombok.val;
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.testing.IdentifiedNameGenerator;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.editor.GelEditorFileSystem;
-import net.splitcells.gel.ui.editor.geal.EditorProcessor;
 import net.splitcells.website.Format;
 import net.splitcells.website.server.Config;
-import net.splitcells.website.server.messages.RenderingType;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.RenderRequest;
@@ -31,11 +31,17 @@ import net.splitcells.website.server.projects.extension.ProjectsRendererExtensio
 import java.nio.file.Path;
 import java.util.Optional;
 
+import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.MathUtils.modulus;
+import static net.splitcells.dem.utils.StringUtils.stringBuilder;
+import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.ui.editor.geal.EditorProcessor.*;
 import static net.splitcells.website.Format.COMMON_MARK;
+import static net.splitcells.website.Format.CSV;
 import static net.splitcells.website.server.messages.FieldUpdate.fieldUpdate;
 import static net.splitcells.website.server.messages.FormUpdate.formUpdate;
 import static net.splitcells.website.server.messages.RenderingType.PLAIN_TEXT;
@@ -62,6 +68,14 @@ public class ColloquiumExample implements ProjectsRendererExtension {
                             .readString("src/main/resources/html/net/splitcells/gel/editor/geal/examples/colloquium-planning.txt")))
                     .setType(COMMON_MARK);
             formUpdate.getFields().put(PROBLEM_DEFINITION, problemDefinition);
+            formUpdate.getFields().put("demands.csv", fieldUpdate()
+                    .setRenderingType(Optional.of(PLAIN_TEXT))
+                    .setData(StringUtils.toBytes(demandsCsv()))
+                    .setType(CSV));
+            formUpdate.getFields().put("supplies.csv", fieldUpdate()
+                    .setRenderingType(Optional.of(PLAIN_TEXT))
+                    .setData(StringUtils.toBytes(suppliesCsv()))
+                    .setType(CSV));
             return Optional.of(binaryMessage(StringUtils.toBytes(formUpdate.toTree().toJsonString()), Format.TEXT_PLAIN));
         }
         return Optional.empty();
@@ -74,4 +88,44 @@ public class ColloquiumExample implements ProjectsRendererExtension {
     @Override public Set<Path> projectPaths(ProjectsRendererI projectsRendererI) {
         return setOfUniques(Path.of(PATH.substring(1)));
     }
+
+    private static String demandsCsv() {
+        final var testData = stringBuilder();
+        testData.append("student,examiner,observer\n");
+        final var randomness = randomness();
+        final var nameGenerator = IdentifiedNameGenerator.identifiedNameGenerator();
+        final Set<String> examinerNames = setOfUniques();
+        range(0, 40).forEach(i -> examinerNames.add(nameGenerator.nextName()));
+        final List<String> examinerNameList = list();
+        examinerNameList.addAll(examinerNames);
+        final Set<String> checkerNames = setOfUniques();
+        range(0, 41).forEach(i -> checkerNames.add(nameGenerator.nextName()));
+        final List<String> checkerNamesList = list();
+        checkerNamesList.addAll(checkerNames);
+        for (int student = 1; student <= 88; ++student) {
+            var studentName = nameGenerator.nextName();
+            for (int exam = 1; exam <= 177 / 88; ++exam) {
+                testData.append(studentName + "," + randomness.chooseOneOf(examinerNameList) + "," + randomness.chooseOneOf(checkerNamesList) + "\n");
+            }
+        }
+        return testData.toString();
+    }
+
+    private static String suppliesCsv() {
+        final var testData = stringBuilder();
+        testData.append("date,shift,roomNumber\n");
+        final int examDayCountPerWeek = 5;
+        for (int roomNumber = 1; roomNumber <= 6; ++roomNumber) {
+            for (int week = 1; week <= 2; ++week) {
+                for (int examDay = 1; examDay <= 5; ++examDay) {
+                    for (int shift = 1; shift <= 5; ++shift) {
+                        testData.append(modulus(examDay, examDayCountPerWeek) + 1
+                                + (week - 1) * 7 + "," + shift + "," + roomNumber + "\n");
+                    }
+                }
+            }
+        }
+        return testData.toString();
+    }
+
 }
