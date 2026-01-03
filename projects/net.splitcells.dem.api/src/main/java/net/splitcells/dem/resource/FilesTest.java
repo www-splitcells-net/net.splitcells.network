@@ -83,7 +83,21 @@ public class FilesTest {
         processInTemporaryFolder(p -> {
             val testFile = p.resolve("test-file");
             appendToFile(testFile, "def");
-            requireEquals(readFileAsString(testFile), "def");
+            appendToFile(testFile, "hij");
+            requireEquals(readFileAsString(testFile), "defhij");
+        });
+    }
+
+    @UnitTest public void testWriteToFile() {
+        requireThrow(() -> {
+            val testFile = Path.of("/not/existing/file/90348237852ß34785427839572");
+            processInTemporaryFolder(p -> writeToFile(testFile, "abc"));
+        });
+        processInTemporaryFolder(p -> {
+            val testFile = p.resolve("test-file");
+            writeToFile(testFile, "def");
+            writeToFile(testFile, "hij");
+            requireEquals(readFileAsString(testFile), "hij");
         });
     }
 }
