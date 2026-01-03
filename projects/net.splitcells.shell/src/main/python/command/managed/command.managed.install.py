@@ -38,9 +38,9 @@ class Command:
 		self.executionCounter = 0
 	def install(self):
 		self.targetFileName = self.name
-		if (self.name.endswith('.sh')):
+		if self.name.endswith('.sh'):
 			self.targetFileName = self.name[:-3]
-		if (self.name.endswith('.py')):
+		if self.name.endswith('.py'):
 			self.targetFileName = self.name[:-3]
 		if not Path.is_dir(self.targetFolder):
 			Path.mkdir(self.targetFolder, parents=True)
