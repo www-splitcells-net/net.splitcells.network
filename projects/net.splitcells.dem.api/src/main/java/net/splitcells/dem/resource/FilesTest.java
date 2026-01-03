@@ -114,4 +114,23 @@ public class FilesTest {
             requireEquals(walkDirectChildren(p).count(), 2L);
         });
     }
+
+    @UnitTest public void testCopyDirectory() {
+        requireThrow(() -> {
+            val testFile = Path.of("/not/existing/folder/90348237852ß34785427839572");
+            processInTemporaryFolder(p -> copyDirectory(testFile, testFile.resolve("something")));
+        });
+        processInTemporaryFolder(p -> {
+            val sourceFolder = p.resolve("source");
+            createDirectory(sourceFolder);
+            val testFile1 = sourceFolder.resolve("test-file-1");
+            val testFile2 = sourceFolder.resolve("test-file-2");
+            writeToFile(testFile1, "def");
+            writeToFile(testFile2, "hij");
+            val targetFolder = p.resolve("target");
+            createDirectory(targetFolder);
+            copyDirectory(sourceFolder, targetFolder);
+            requireEquals(walkDirectChildren(targetFolder).count(), 2L);
+        });
+    }
 }
