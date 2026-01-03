@@ -100,4 +100,18 @@ public class FilesTest {
             requireEquals(readFileAsString(testFile), "hij");
         });
     }
+
+    @UnitTest public void testWalkDirectChildren() {
+        requireThrow(() -> {
+            val testFile = Path.of("/not/existing/folder/90348237852ß34785427839572");
+            processInTemporaryFolder(p -> walkDirectChildren(testFile));
+        });
+        processInTemporaryFolder(p -> {
+            val testFile1 = p.resolve("test-file-1");
+            val testFile2 = p.resolve("test-file-2");
+            writeToFile(testFile1, "def");
+            writeToFile(testFile2, "hij");
+            requireEquals(walkDirectChildren(p).count(), 2L);
+        });
+    }
 }
