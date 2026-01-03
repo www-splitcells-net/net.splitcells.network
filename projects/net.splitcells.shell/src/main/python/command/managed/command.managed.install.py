@@ -3,6 +3,8 @@
 SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
+TODO Simplify this code mess.
+TODO Create test, where a command is installed and check if suffix processing works correctly.
 TODO IDEA Provide option to install commands to a custom folder,
      so that the installation does not have to change the users dotfiles.
      This way the installation is compatible to more environments and therefore more portable.
@@ -65,5 +67,6 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description='Installs command to ~/bin and integrates commands already present.'
 	    + 'Use the environment variable `NET_SPLITCELLS_SHELL_PATH` in order to change the target install directory.' ) # TODO If command already present, check if it is a manager. If this is not the case, throw an error.
 	parser.add_argument('commandToInstall', nargs='?', type=str, help='The name of the command that is installed.')
+	)  # TODO If command already present, check if it is a manager. If this is not the case, throw an error.
 	parsedArgs = parser.parse_args()
 	Command(parsedArgs.commandToInstall).install()
