@@ -33,23 +33,27 @@ class Command:
 		else:
 			self.targetFolder = Path.home()
 		self.targetFolder = self.targetFolder.joinpath('bin', 'net.splitcells.shell.commands.managed')
+		self.targetFile = None
+		self.targetFileName = None
+		self.executionCounter = 0
 	def install(self):
-		executionCounter = 0
-		targetFileName = self.name
+		self.targetFileName = self.name
 		if (self.name.endswith('.sh')):
-			targetFileName = self.name[:-3]
+			self.targetFileName = self.name[:-3]
 		if (self.name.endswith('.py')):
-			targetFileName = self.name[:-3]
+			self.targetFileName = self.name[:-3]
 		if not Path.is_dir(self.targetFolder):
 			Path.mkdir(self.targetFolder, parents=True)
-		targetFile = self.targetFolder.joinpath(targetFileName) # TODO Create test, where a command is installed and check if suffix processing works correctly.
-		if targetFile.exists():
+		self.targetFile = self.targetFolder.joinpath(self.targetFileName) # TODO Create test, where a command is installed and check if suffix processing works correctly.
+		self.installFile()
+	def installFile(self):
+		if self.targetFile.exists():
 			while True:
-				targetFile = self.targetFolder.joinpath(targetFileName + '.' + str(executionCounter))
-				executionCounter+=1
-				if not targetFile.exists():
+				self.targetFile = self.targetFolder.joinpath(self.targetFileName + '.' + str(self.executionCounter))
+				self.executionCounter+=1
+				if not self.targetFile.exists():
 					break
-		shutil.copy(self.sourceFolder.joinpath(self.name), targetFile)
+		shutil.copy(self.sourceFolder.joinpath(self.name), self.targetFile)
 		if 'current_echo_level' in environ:
 			if int(environ['current_echo_level']) >= 5:
 				print(self.name + ' installed.')
