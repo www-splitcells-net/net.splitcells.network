@@ -29,6 +29,7 @@ import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.resource.Files.*;
 import static net.splitcells.dem.resource.Files.ensureAbsence;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
+import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.multiple;
@@ -71,6 +72,18 @@ public class FilesTest {
             require(folderExists(testFolder));
             ensureAbsence(testFolder);
             requireNot(folderExists(testFolder));
+        });
+    }
+
+    @UnitTest public void testAppendToFile() {
+        requireThrow(() -> {
+            val testFile = Path.of("/not/existing/file/90348237852ß34785427839572");
+            processInTemporaryFolder(p -> appendToFile(testFile, "abc"));
+        });
+        processInTemporaryFolder(p -> {
+            val testFile = p.resolve("test-file");
+            appendToFile(testFile, "def");
+            requireEquals(readFileAsString(testFile), "def");
         });
     }
 }
