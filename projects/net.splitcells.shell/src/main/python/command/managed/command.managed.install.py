@@ -23,11 +23,8 @@ import shutil
 from os import environ
 from pathlib import Path, PosixPath
 
-
 def currentFolder():
 	return Path.cwd()
-
-
 class Command:
 	def __init__(self, commandPath):
 		self.commandPosixPath = PosixPath(commandPath)
@@ -44,7 +41,6 @@ class Command:
 		self.targetFile = None
 		self.targetFileName = None
 		self.executionCounter = 0
-
 	def install(self):
 		if not Path.is_dir(self.targetFolder):
 			Path.mkdir(self.targetFolder, parents=True)
@@ -59,7 +55,6 @@ class Command:
 		else:
 			self.calculateTargetFile()
 			self.installFile()
-
 	def calculateTargetFile(self):
 		self.targetFileName = self.name
 		if self.name.endswith(".sh"):
@@ -67,7 +62,6 @@ class Command:
 		if self.name.endswith(".py"):
 			self.targetFileName = self.name[:-3]
 		self.targetFile = self.targetFolder.joinpath(self.targetFileName)
-
 	def installFile(self):
 		if self.targetFile.exists():
 			while True:
@@ -81,8 +75,6 @@ class Command:
 		if "current_echo_level" in environ:
 			if int(environ["current_echo_level"]) >= 5:
 				print(self.name + " installed.")
-
-
 if __name__ == "__main__":
 	if environ.get("log_level") == "debug":
 		logging.basicConfig(format="%(message)s", level=logging.DEBUG)
