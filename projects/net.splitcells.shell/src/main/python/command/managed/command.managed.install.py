@@ -51,6 +51,7 @@ class Command:
 					self.commandPosixPath = path
 					self.calculateTargetFile()
 					self.targetFile = self.targetFolder.joinpath(self.targetFileName)
+					self.executionCounter = 0
 					self.installFile()
 		else:
 			self.calculateTargetFile()
