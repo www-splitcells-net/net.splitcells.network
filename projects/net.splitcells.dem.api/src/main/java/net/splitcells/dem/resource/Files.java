@@ -35,11 +35,10 @@ import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
- * Some additional methods for the java.nio.file.Files class.
- *
- * @deprecated This class is an integration of OS functionality.
+ * <p>Some additional methods for the java.nio.file.Files class.</p>
+ * <p>This class is an integration of OS functionality.
  * This class should not be used in code directly most of the time.
- * Use {@link FileSystem} instead.
+ * Use {@link FileSystem} instead.</p>
  */
 @JavaLegacyArtifact
 public interface Files {
