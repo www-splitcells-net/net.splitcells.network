@@ -56,7 +56,6 @@ public class FilesTest {
     @UnitTest public void testCreateDirectoryInvalid() {
         requireThrow(() -> {
             val testPath = Path.of("\\" + multiple("//\\\\", 2000));
-            System.out.println(testPath.toString());
             processInTemporaryFolder(p -> createDirectory(testPath));
         });
     }
