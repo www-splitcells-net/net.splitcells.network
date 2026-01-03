@@ -53,19 +53,13 @@ do
 		test -d src/main || { echo "Command repo has no src/main folder, so no commands are defined: $propertyValue"; exit 1; }
 		cd src/main
 		if [ -d "sh" ]; then
-			cd sh
-			find . -type f | sort -n | xargs -r -n 1 $installer
-			cd ..
+			$installer "sh"
 		fi
 		if [ -d "bash" ]; then
-			cd bash
-			find . -type f | sort -n | xargs -r -n 1 $installer
-			cd ..
+			$installer "bash"
 		fi
 		if [ -d "python" ]; then
-			cd python
-			find . -type f | sort -n | xargs -r -n 1 $installer
-			cd ..
+			$installer "python"
 		fi
 		chmod +x $($bootstrapRepo/src/main/bash/command/managed/command.managed.bin.sh)/*
 		if [ -d ../doc/man1 ]; then
