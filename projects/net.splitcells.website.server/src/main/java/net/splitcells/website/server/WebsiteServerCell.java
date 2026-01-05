@@ -53,7 +53,6 @@ public class WebsiteServerCell implements Cell {
                 .withAdditionalProject(projectConfig("/"
                         , configValue(WebsiteContentDefaultsFileSystem.class)))
                 .withAdditionalJsBackgroundFiles("net/splitcells/website/js/jquery.js")
-                .withAdditionalJsBackgroundFiles("net/splitcells/website/js/codemirror-editor-bundle.js")
                 .withAdditionalJsBackgroundFiles("net/splitcells/website/js/highlight.js")
                 .withAdditionalJsBackgroundFiles("net/splitcells/website/js/basic.js")
                 .withAdditionalJsBackgroundFiles("net/splitcells/website/js/basic.default.js")
@@ -63,8 +62,6 @@ public class WebsiteServerCell implements Cell {
                 .withAdditionalCssFile("net/splitcells/website/css/den.css")
                 .withAdditionalCssFile("net/splitcells/website/css/layout.default.css")
                 .withAdditionalCssFile("net/splitcells/website/css/theme.css")
-                .withAdditionalCssFile("net/splitcells/website/css/tabulator.min.css")
-                .withAdditionalCssFile("net/splitcells/website/css/highlight.css")
         ;
         env.config().withInitedOption(ServerService.class);
     }

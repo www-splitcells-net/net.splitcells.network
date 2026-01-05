@@ -41,7 +41,7 @@ public class GelUiCell implements Cell {
         env.config().configValue(ServerConfig.class)
                 .withAdditionalProject(projectConfig("/net/splitcells/gel/ui/"
                         , configValue(GelUiFileSystem.class)))
-                .withAdditionalCssFile("net/splitcells/gel/ui/no/code/editor/style.css")
+                .withAdditionalJsBackgroundFiles("net/splitcells/website/js/codemirror-editor-bundle.js")
                 .withAdditionalProcessor(EditorProcessor.PATH, editorProcessor());
         env.withCell(WebsiteServerCell.class);
     }
