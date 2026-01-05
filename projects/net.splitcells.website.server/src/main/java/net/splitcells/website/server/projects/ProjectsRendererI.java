@@ -15,6 +15,7 @@
  */
 package net.splitcells.website.server.projects;
 
+import lombok.val;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
@@ -413,11 +414,18 @@ public class ProjectsRendererI implements ProjectsRenderer {
             return Optional.empty();
         }
         if (metaData.size() > 1) {
-            // TODO This throws sometimes an error on files, that are present in the Network Log repo
+            val matchDescription = renderers.stream()
+                    .map(r -> r.metaData(path, this)
+                            .map(m -> r + " provides meta data: `" + m.path() + "`.")
+                            .orElse(""))
+                    .reduce((a, b) -> a + ", " + b)
+                    .orElse("");
             throw execException("Expecting at most 1 meta data entries but found "
                     + metaData.size()
                     + " instead: "
-                    + metaData);
+                    + metaData
+                    + " with the following details: "
+                    + matchDescription);
         }
         return metaData.get(0);
     }

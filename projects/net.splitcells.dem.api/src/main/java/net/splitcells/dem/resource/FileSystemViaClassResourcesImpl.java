@@ -264,4 +264,8 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
                 , normalize(basePath + path + "/")
                 , resourceList);
     }
+
+    @Override public String toString() {
+        return getClass().getName() + " based on " + clazz.getName();
+    }
 }

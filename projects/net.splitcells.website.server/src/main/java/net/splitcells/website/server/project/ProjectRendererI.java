@@ -635,4 +635,13 @@ public class ProjectRendererI implements ProjectRenderer {
         throw notImplementedYet();
     }
 
+    @Override public String toString() {
+        return getClass().getName()
+                + " for the file system "
+                + projectFileSystem().toString()
+                + " and resource path "
+                + resourceRootPath
+                + " and object id "
+                + super.toString();
+    }
 }
