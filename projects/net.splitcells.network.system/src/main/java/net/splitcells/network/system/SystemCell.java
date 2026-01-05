@@ -25,6 +25,7 @@ import net.splitcells.gel.GelCoreFileSystem;
 import net.splitcells.gel.doc.GelDocFileSystem;
 import net.splitcells.gel.editor.GelEditorFileSystem;
 import net.splitcells.gel.ext.GelExtFileSystem;
+import net.splitcells.gel.ui.GelUiCell;
 import net.splitcells.gel.ui.GelUiFileSystem;
 import net.splitcells.gel.ui.editor.geal.EditorProcessor;
 import net.splitcells.network.NetworkFileSystem;
@@ -83,7 +84,7 @@ public class SystemCell implements Cell {
                 .withConfigValue(ServerConfig.class, config(env.config().configValue(ServerConfig.class)))
                 .withConfigValue(HtmlLiveTest.class, TEST_OPTIMIZATION_GUI)
         ;
-        env.withCell(WebsiteServerCell.class);
+        env.withCell(WebsiteServerCell.class).withCell(GelUiCell.class);
     }
 
     @Deprecated
