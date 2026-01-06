@@ -51,19 +51,11 @@
         <accept-notification>I agree, with the terms of service for using this server.</accept-notification>
     </notification>
     <form-editor id="net-splitcells-gel-ui-editor-geal-form"
-                 action="/net/splitcells/gel/ui/editor/geal/form">
+                 action="/net/splitcells/gel/ui/editor/geal/form"
+                 init="net_splitcells_gel_ui_editor_geal_form_load('/net/splitcells/gel/ui/editor/geal/example/colloquium-planning.json')">
         <library path="net/splitcells/gel/ui/editor/geal/lib"/>
-        <text-area
-                name="Definition"
-                main-tab="true"
-                initial-content-at="/net/splitcells/gel/editor/geal/examples/colloquium-planning.txt"/>
-        <text-area
-                name="demands.csv"
-                initial-content-at="/net/splitcells/gel/ui/colloquium-planning-demands-test-data.csv">
-            <![CDATA[]]></text-area>
-        <text-area
-                name="supplies.csv"
-                initial-content-at="/net/splitcells/gel/ui/colloquium-planning-supplies-test-data.csv">
-            <![CDATA[]]></text-area>
+        <text-area name="Definition" main-tab="true"/>
+        <text-area name="demands.csv"><![CDATA[]]></text-area>
+        <text-area name="supplies.csv"><![CDATA[]]></text-area>
     </form-editor>
 </article>

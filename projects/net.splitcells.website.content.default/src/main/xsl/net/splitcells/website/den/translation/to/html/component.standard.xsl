@@ -363,6 +363,11 @@ document.addEventListener('DOMContentLoaded', function(){
                 <xsl:attribute name="src" select="concat(s:default-root-relative-url(./@path), '.js')"/>
             </script>
         </xsl:for-each>
+        <xsl:if test="./@init">
+            <script type="text/javascript">
+                <xsl:value-of select="./@init"/>
+            </script>
+        </xsl:if>
     </xsl:template>
     <xsl:template match="s:form-submit-button">
         <div class="net-splitcells-button net-splitcells-action-button">
