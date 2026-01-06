@@ -29,6 +29,7 @@ public class WebsiteServerCell implements Cell {
     public static void main(String... args) {
         serve(WebsiteServerCell.class);
     }
+
     @Override
     public String groupId() {
         return "net.splitcells";
@@ -47,6 +48,11 @@ public class WebsiteServerCell implements Cell {
     @Override
     public void accept(Environment env) {
         env.withCell(DemCell.class);
+        configureNoneCellInit(env);
+        env.config().withInitedOption(ServerService.class);
+    }
+
+    public static void configureNoneCellInit(Environment env) {
         env.config().configValue(ServerConfig.class)
                 .withAdditionalProject(projectConfig("/"
                         , configValue(WebsiteServerFileSystem.class)))
@@ -63,6 +69,5 @@ public class WebsiteServerCell implements Cell {
                 .withAdditionalCssFile("net/splitcells/website/css/layout.default.css")
                 .withAdditionalCssFile("net/splitcells/website/css/theme.css")
         ;
-        env.config().withInitedOption(ServerService.class);
     }
 }
