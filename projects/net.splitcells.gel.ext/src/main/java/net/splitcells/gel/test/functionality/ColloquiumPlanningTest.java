@@ -66,7 +66,7 @@ import static net.splitcells.gel.solution.optimization.primitive.OfflineLinearIn
  * <p>TODO IDEA Test object orientation by making all people an instance of a certain class.</p>
  * <p>TODO IDEA The number of days with exams for a teacher should be smaller or equals to a given number.</p>
  * <p>TODO Pupil and teachers are not available on certain days or at certain shifts in certain days.</p>
- * <p>TODO Prefered days and shifts for pupil and teachers.</p>
+ * <p>TODO Preferred days and shifts for pupil and teachers.</p>
  */
 public class ColloquiumPlanningTest extends TestSuiteI {
     public static final Attribute<Integer> STUDENTS = integerAttribute("students");
