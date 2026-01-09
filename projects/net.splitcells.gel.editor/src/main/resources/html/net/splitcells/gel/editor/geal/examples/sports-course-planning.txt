@@ -10,10 +10,9 @@ assignedSportType = attribute(String , 'Assigned Sport Type');
 chosenSport       = attribute(String , 'Chosen Sport'       );
 chosenSportType   = attribute(String , 'Chosen Sport Type'  );
 isSecondaryChoice = attribute(Integer, 'Is Secondary Choice');
-isSportGraduate   = attribute(Integer, 'Is Sport Graduate'  );
 student           = attribute(String , 'Student'            );
 
-studentChoices     = table('Student Choices', student, isSportGraduate, chosenSport, chosenSportType, isSecondaryChoice);
+studentChoices     = table('Student Choices', student, chosenSport, chosenSportType, isSecondaryChoice);
 availableCourses   = table('Available Courses', assignedSport, assignedSportType);
 availableHalfYears = table('Available Half Years', assignedHalfYear);
 
