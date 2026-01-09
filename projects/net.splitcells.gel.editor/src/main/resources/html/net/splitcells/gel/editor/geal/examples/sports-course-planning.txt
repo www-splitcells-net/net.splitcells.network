@@ -13,8 +13,11 @@ isSecondaryChoice = attribute(Integer, 'Is Secondary Choice');
 student           = attribute(String , 'Student'            );
 
 studentChoices     = table('Student Choices', student, chosenSport, chosenSportType, isSecondaryChoice);
+studentChoices     . importCsvData('student-choices.csv');
 availableCourses   = table('Available Courses', assignedSport, assignedSportType);
+availableCourses   . importCsvData('available-courses.csv');
 availableHalfYears = table('Available Half Years', assignedHalfYear);
+availableHalfYears . importCsvData('available-half-years.csv');
 
 courseAssignment  = solution('Assignment of Students to Courses', studentChoices, availableCourses);
 courseAssignment  . forEach(not(equals(assignedSport, 'Dummy Course')))
