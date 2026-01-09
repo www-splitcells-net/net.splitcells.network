@@ -41,12 +41,11 @@ public class SportCourseExample implements ProjectsRendererExtension {
     public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         if (PATH.equals(path)) {
             val formUpdate = formUpdate();
-            val problemDefinition = fieldUpdate()
+            formUpdate.getFields().put(PROBLEM_DEFINITION, fieldUpdate()
                     .setRenderingType(Optional.of(PLAIN_TEXT))
                     .setData(StringUtils.toBytes(configValue(GelEditorFileSystem.class)
                             .readString("src/main/resources/html/net/splitcells/gel/editor/geal/examples/sports-course-planning.txt")))
-                    .setType(COMMON_MARK);
-            formUpdate.getFields().put(PROBLEM_DEFINITION, problemDefinition);
+                    .setType(COMMON_MARK));
             return Optional.of(binaryMessage(StringUtils.toBytes(formUpdate.toTree().toJsonString()), Format.TEXT_PLAIN));
         }
         return Optional.empty();
