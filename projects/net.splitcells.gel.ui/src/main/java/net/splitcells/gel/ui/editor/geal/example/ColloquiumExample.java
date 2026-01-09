@@ -88,6 +88,10 @@ public class ColloquiumExample implements ProjectsRendererExtension {
         return setOfUniques(Path.of(PATH.substring(1)));
     }
 
+    /**
+     *
+     * @return This represents the exams.
+     */
     private static String demandsCsv() {
         final var testData = stringBuilder();
         testData.append("student,examiner,observer\n");
@@ -110,6 +114,10 @@ public class ColloquiumExample implements ProjectsRendererExtension {
         return testData.toString();
     }
 
+    /**
+     *
+     * @return This represents the available slots for holding the exam.
+     */
     private static String suppliesCsv() {
         final var testData = stringBuilder();
         testData.append("date,shift,roomNumber\n");
