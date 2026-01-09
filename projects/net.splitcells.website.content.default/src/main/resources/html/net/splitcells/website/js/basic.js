@@ -158,7 +158,7 @@ function net_splitcells_webserver_form_tab_select(formId, inputName) {
         inputButtons[i].classList.remove('net-splitcells-tab-button-selected');
     }
     showByCssClass(formId + '-' + inputName + '-tab-content');
-    var inputTabButtons = document.getElementsByClassName(formId + '-' + inputName + '-tab-button');
+    var inputTabButtons = document.getElementsByClassName(formId + '-' + net_splitcells_webserver_form_input_name_normalized(inputName) + '-tab-button');
     for (var i = 0; i < inputTabButtons.length; i++) {
         inputTabButtons[i].classList.add('net-splitcells-tab-button-selected');
     }
@@ -214,6 +214,9 @@ function net_splitcells_webserver_form_reset(config) {
         tabHolder.querySelectorAll('.net-splitcells-website-form-editor-tab').forEach((tab) => tab.remove());
     });
 }
+function net_splitcells_webserver_form_input_name_normalized(inputName) {
+    return inputName.replaceAll('.', '-');
+}
 function net_splitcells_webserver_form_update(config, update) {
             const formId = config['form-id'];
             const form = document.getElementById(formId);
@@ -231,7 +234,7 @@ function net_splitcells_webserver_form_update(config, update) {
             }
             for (const [key, value] of Object.entries(dataValues)) {
                 // The cssKey allows it to be used in CSS queries, as dots have special meaning.
-                const cssKey= key.replaceAll('.', '-');
+                const cssKey= net_splitcells_webserver_form_input_name_normalized(key);
                 if (document.querySelector('*[name="' + key + '"]') === null) {
                     console.log('Inserting new form field for update: ' + key);
                     isFieldNew = true;
