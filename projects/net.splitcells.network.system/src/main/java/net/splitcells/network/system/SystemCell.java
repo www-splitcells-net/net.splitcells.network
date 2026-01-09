@@ -170,6 +170,7 @@ public class SystemCell implements Cell {
                 .withXslWindowMenu(Optional.of(configValue(WebsiteContentDefaultsFileSystem.class)
                         .readString("src/main/xsl/net/splitcells/website/window-menu.xsl")))
                 .withAdditionalJsBackgroundFiles("net/splitcells/website/js/dragula.min.js")
+                .withAdditionalJsBackgroundFiles("net/splitcells/website/js/codemirror-editor-bundle.js")
                 .withAdditionalCssFile("net/splitcells/website/css/tabulator.min.css")
                 .withAdditionalCssFile("net/splitcells/website/css/dragula.min.css")
                 .withAdditionalCssFile("net/splitcells/website/css/highlight.css")
