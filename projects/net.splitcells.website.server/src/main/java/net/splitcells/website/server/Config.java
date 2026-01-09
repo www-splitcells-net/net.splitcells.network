@@ -474,6 +474,9 @@ public class Config {
     }
 
     public Config withAdditionalJsBackgroundFiles(String arg) {
+        if (jsBackgroundFiles.contains(arg)) {
+            return this;
+        }
         jsBackgroundFiles.add(arg);
         return this;
     }
