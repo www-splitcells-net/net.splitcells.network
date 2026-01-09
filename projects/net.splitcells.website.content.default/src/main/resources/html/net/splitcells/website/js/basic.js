@@ -335,6 +335,8 @@ function net_splitcells_webserver_form_update(config, update) {
                         if (key === 'Definition') {
                             const firstMenu = menu.querySelector('.net-splitcells-website-menu-sub');
                             const newTabButton2 = newTabButton.cloneNode(true);
+                            // For what ever reason, cloneNode does not clone the onclick property.
+                            newTabButton2.onclick = newTabButton.onclick;
                             if (firstMenu === null) {
                                 menu.appendChild(newTabButton2);
                             } else {
