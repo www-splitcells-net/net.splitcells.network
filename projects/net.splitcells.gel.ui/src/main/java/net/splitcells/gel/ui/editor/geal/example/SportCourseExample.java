@@ -19,8 +19,10 @@ import java.util.Optional;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.utils.StringUtils.stringBuilder;
 import static net.splitcells.gel.ui.editor.geal.EditorProcessor.PROBLEM_DEFINITION;
 import static net.splitcells.website.Format.COMMON_MARK;
+import static net.splitcells.website.Format.CSV;
 import static net.splitcells.website.server.messages.FieldUpdate.fieldUpdate;
 import static net.splitcells.website.server.messages.FormUpdate.formUpdate;
 import static net.splitcells.website.server.messages.RenderingType.PLAIN_TEXT;
@@ -46,9 +48,39 @@ public class SportCourseExample implements ProjectsRendererExtension {
                     .setData(StringUtils.toBytes(configValue(GelEditorFileSystem.class)
                             .readString("src/main/resources/html/net/splitcells/gel/editor/geal/examples/sports-course-planning.txt")))
                     .setType(COMMON_MARK));
+            formUpdate.getFields().put("student-choices.csv", fieldUpdate()
+                    .setRenderingType(Optional.of(PLAIN_TEXT))
+                    .setData(StringUtils.toBytes(studentChoicesCsv()))
+                    .setType(CSV));
+            formUpdate.getFields().put("available-courses.csv", fieldUpdate()
+                    .setRenderingType(Optional.of(PLAIN_TEXT))
+                    .setData(StringUtils.toBytes(availableCoursesCsv()))
+                    .setType(CSV));
+            formUpdate.getFields().put("available-half-years.csv", fieldUpdate()
+                    .setRenderingType(Optional.of(PLAIN_TEXT))
+                    .setData(StringUtils.toBytes(availableHalfYearsCsv()))
+                    .setType(CSV));
             return Optional.of(binaryMessage(StringUtils.toBytes(formUpdate.toTree().toJsonString()), Format.TEXT_PLAIN));
         }
         return Optional.empty();
+    }
+
+    private static String studentChoicesCsv() {
+        val testData = stringBuilder();
+        testData.append("Student,Chosen Sport, Chosen Sport Type, Is Secondary Choice\n");
+        return testData.toString();
+    }
+
+    private static String availableCoursesCsv() {
+        val testData = stringBuilder();
+        testData.append("Assigned Sport,Assigned Sport Type\n");
+        return testData.toString();
+    }
+
+    private static String availableHalfYearsCsv() {
+        val testData = stringBuilder();
+        testData.append("Assigned Half Year\n");
+        return testData.toString();
     }
 
     @Override public boolean requiresAuthentication(RenderRequest request) {
