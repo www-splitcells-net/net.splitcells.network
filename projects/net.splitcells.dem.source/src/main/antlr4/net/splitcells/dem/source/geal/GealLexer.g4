@@ -16,7 +16,7 @@ Integer: [-+]?[0-9]+;
 Name: NamePrefix NameSuffix*;
 Semicolon: ';';
 // Single quote strings do not support escape symbols just like in many other programming languages.
-String: '\'' [a-zA-Z0-9_ \\.]* '\'';
+String: '\'' [a-zA-Z0-9_\- \\.]* '\'';
 
 fragment NamePrefix: [a-zA-Z_];
 fragment NameSuffix: [a-zA-Z0-9_];
