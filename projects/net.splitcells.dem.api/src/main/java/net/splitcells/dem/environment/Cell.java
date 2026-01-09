@@ -56,6 +56,8 @@ import static net.splitcells.dem.utils.reflection.ClassesRelated.simplifiedName;
  * which causes uncomfortableness in the IDE, when trying to adjust the default import.
  * The word unit was not used, in order to avoid confusion regarding unit tests.
  * The word cell was used, as it is also used in the project name ;)</p>
+ * <p>TODO Provide double book accounting for all {@link Cell} based configuration and every aspect of it.</p>
+ * <p>TODO Consider testing distro configurations, in order to easy complex migrations in the future.</p>
  */
 public interface Cell extends Consumer<Environment>, Discoverable, Option<Consumer<Environment>>, Runnable {
     default List<String> path() {
