@@ -33,4 +33,8 @@ statement
     : variable_definition Semicolon
     | function_call_chain Semicolon
     ;
+/* TODO Implement variable declaration via a modifiers and an attached declaration Name i.e. `public int counter`.
+ * The base named variable is created via a function call of the type with a Name as an argument,
+ * which defines the variable's name.
+ */
 variable_definition: Name Equals function_call_chain;
