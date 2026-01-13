@@ -13,10 +13,12 @@ options {
 source_unit: statement*;
 expression
     : function_call
-    | Integer
-    | String
+    | modifier_chain? Integer
+    | modifier_chain? String
     ;
-function_call: Name function_call_arguments?;
+function_call
+    : modifier_chain? Name function_call_arguments?
+    | modifier_chain? Name function_call_bracketless_arguments;
 /* Function calls with round brackets and no arguments are not supported,
  * as these have conceptionally the same meaning as read access to an object field.
  * Therefore, round brackets with no arguments are considered noise and thereby avoided.
@@ -24,11 +26,15 @@ function_call: Name function_call_arguments?;
 function_call_arguments
     : Brace_round_open function_call_chain function_call_arguments_next* Brace_round_closed
     ;
+function_call_bracketless_arguments
+    : function_call_chain function_call_arguments_next*
+    ;
 function_call_arguments_next: Comma function_call_chain;
 /* The dot is never avoided even when the function calls have round brackets,
  * as the dot helps to align function calls in chains.
  */
 function_call_chain: expression (Dot function_call)*;
+modifier_chain: Name+;
 statement
     : variable_definition Semicolon
     | function_call_chain Semicolon
