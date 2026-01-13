@@ -15,12 +15,17 @@
  */
 package net.splitcells.gel.editor.geal.parser;
 
+import lombok.val;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.source.geal.GealParser;
 import net.splitcells.gel.editor.geal.lang.FunctionCallChainDesc;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 
+import java.util.stream.IntStream;
+
+import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.gel.editor.geal.lang.FunctionCallChainDesc.functionCallChainDesc;
 import static net.splitcells.gel.editor.geal.lang.FunctionCallDesc.functionCallDesc;
 import static net.splitcells.gel.editor.geal.lang.NameDesc.nameDesc;
 import static net.splitcells.gel.editor.geal.parser.FunctionCallChainParser.parseFunctionCallChain;
@@ -49,6 +54,17 @@ public class FunctionCallParser extends net.splitcells.dem.source.geal.GealParse
             }
             baseCall = functionCallDesc(name, arguments, sourceCodeQuote(ctx));
         }
-        return baseCall;
+        FunctionCallDesc currentCall = baseCall;
+        if (ctx.modifier_chain() != null && !ctx.modifier_chain().Name().isEmpty()) {
+            val modifierCount = ctx.modifier_chain().Name().size();
+            for (int i = modifierCount - 1; i > -1; --i) {
+                val modifier = ctx.modifier_chain().Name(i);
+                currentCall = functionCallDesc(nameDesc(modifier.getText(), sourceCodeQuote(modifier))
+                        , list(functionCallChainDesc(currentCall, list(), currentCall.getSourceCodeQuote()))
+                        , sourceCodeQuote(modifier));
+            }
+
+        }
+        return currentCall;
     }
 }
