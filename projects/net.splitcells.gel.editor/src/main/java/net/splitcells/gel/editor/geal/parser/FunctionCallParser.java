@@ -21,6 +21,7 @@ import net.splitcells.gel.editor.geal.lang.FunctionCallChainDesc;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.gel.editor.geal.lang.FunctionCallDesc.functionCallDesc;
 import static net.splitcells.gel.editor.geal.lang.NameDesc.nameDesc;
 import static net.splitcells.gel.editor.geal.parser.FunctionCallChainParser.parseFunctionCallChain;
 import static net.splitcells.gel.editor.lang.SourceCodeQuote.sourceCodeQuote;
@@ -36,8 +37,9 @@ public class FunctionCallParser extends net.splitcells.dem.source.geal.GealParse
 
     @Override public FunctionCallDesc visitFunction_call(GealParser.Function_callContext ctx) {
         final var name = nameDesc(ctx.Name().getText(), sourceCodeQuote(ctx.Name()));
+        final FunctionCallDesc baseCall;
         if (ctx.function_call_arguments() == null) {
-            return FunctionCallDesc.functionCallDesc(name, list(), sourceCodeQuote(ctx));
+            baseCall = functionCallDesc(name, list(), sourceCodeQuote(ctx));
         } else {
             final List<FunctionCallChainDesc> arguments = list();
             arguments.add(parseFunctionCallChain(ctx.function_call_arguments().function_call_chain()));
@@ -45,7 +47,8 @@ public class FunctionCallParser extends net.splitcells.dem.source.geal.GealParse
             if (secondaryArgs != null) {
                 secondaryArgs.forEach(a -> arguments.add(parseFunctionCallChain(a.function_call_chain())));
             }
-            return FunctionCallDesc.functionCallDesc(name, arguments, sourceCodeQuote(ctx));
+            baseCall = functionCallDesc(name, arguments, sourceCodeQuote(ctx));
         }
+        return baseCall;
     }
 }
