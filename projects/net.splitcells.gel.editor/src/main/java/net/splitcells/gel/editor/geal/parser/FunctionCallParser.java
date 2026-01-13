@@ -34,8 +34,7 @@ public class FunctionCallParser extends net.splitcells.dem.source.geal.GealParse
 
     }
 
-    @Override
-    public FunctionCallDesc visitFunction_call(GealParser.Function_callContext ctx) {
+    @Override public FunctionCallDesc visitFunction_call(GealParser.Function_callContext ctx) {
         final var name = nameDesc(ctx.Name().getText(), sourceCodeQuote(ctx.Name()));
         if (ctx.function_call_arguments() == null) {
             return FunctionCallDesc.functionCallDesc(name, list(), sourceCodeQuote(ctx));
