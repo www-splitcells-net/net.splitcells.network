@@ -187,7 +187,7 @@ public class EditorTest {
                            .forEach(date, shift)
                            .then(hasSize(1));
                 solution   .forEach(student)
-                           .then(hasSize(2));
+                           .then hasSize(2);
                 """;
         testSubject.interpret(parseGealSourceUnit(testData));
         testSubject.getAttributes().requirePresence("student", stringAttribute("student"), CONTENT_COMPARISON)
