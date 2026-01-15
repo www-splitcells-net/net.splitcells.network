@@ -1,0 +1,15 @@
+variableName = 'string';
+integerVariable = 1;
+variableResolution = integerVariable;
+
+functionCallResult1 = noArgumentFunctionCall;
+functionCallResult2 = functionCall('argument A');
+functionCallResult3 = functionCall(1, 2, 3);
+functionCallResult4 = functionCall(nestedFunctionCall('argument B'));
+
+subject = functionCallChainStart('argument A')
+        . functionCallChainLink('argument B')
+        . functionCallChainEnd('argument C');
+
+subject.methodCall(1);
+subject.methodCall(1).methodCall(functionCall(2)).methodCall(3);

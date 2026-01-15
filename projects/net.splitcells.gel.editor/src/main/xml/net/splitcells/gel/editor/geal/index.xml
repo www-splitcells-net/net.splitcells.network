@@ -25,22 +25,10 @@
             A reference to a variable is the same as a function call without arguments and
             is implemented as such in the editor.
         </paragraph>
-        <code_block><![CDATA[variableName = 'string';
-integerVariable = 1;
-variableResolution = integerVariable;
-
-functionCallResult1 = noArgumentFunctionCall;
-functionCallResult2 = functionCall('argument A');
-functionCallResult3 = functionCall(1, 2, 3);
-functionCallResult4 = functionCall(nestedFunctionCall('argument B'));
-
-subject = functionCallChainStart('argument A')
-        . functionCallChainLink('argument B')
-        . functionCallChainEnd('argument C');
-
-subject.methodCall(1);
-subject.methodCall(1).methodCall(functionCall(2)).methodCall(3);
-]]></code_block>
+        <inline-resource path="net/splitcells/gel/editor/geal/examples/geal-grammar-by-example.txt"/>
+        <code_block>
+            <inline-resource path="net/splitcells/gel/editor/geal/examples/geal-grammar-by-example.txt"/>
+        </code_block>
     </chapter>
     <chapter>
         <title>Language Usage</title>
