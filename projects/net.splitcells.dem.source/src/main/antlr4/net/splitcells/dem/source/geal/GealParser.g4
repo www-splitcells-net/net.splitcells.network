@@ -21,17 +21,20 @@ function_call: modifier_chain? Name function_call_arguments?;
  * as these have conceptionally the same meaning as read access to an object field.
  * Therefore, round brackets with no arguments are considered noise and thereby avoided.
  *
- * Once function calls without round brackets were considered, as it simplified simple modifier chains,
- * that end with a function call.
+ * Once function calls with multiple arguments and without round brackets were considered,
+ * as it simplified simple modifier chains, that end with a function call.
  * The down side of such is, that the missing brackets reduce the easily and
  * intuitively recognizable structure of a statement.
  * Brackets symbolize where the function calls end and where the arguments start.
  * When these are omitted only commas imply this structure and more over the arguments start before the point,
  * that the commas imply the start of arguments:
  * `modifier modifies concatenation(argument, parameter)` vs. `modifier modifies concatenation argument, parameter`
+ * This does not apply for function calls with one arguments, as one argument does not create a new structure:
+ * `modifier modifies concatenation(argument)` vs. `modifier modifies concatenation argument`
  */
 function_call_arguments
     : Brace_round_open function_call_chain function_call_arguments_next* Brace_round_closed
+    | function_call_chain
     ;
 function_call_arguments_next: Comma function_call_chain;
 /* The dot is never avoided even when the function calls have round brackets,
