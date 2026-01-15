@@ -291,16 +291,16 @@ public class EditorTest {
                 shift      = attribute(Integer, 'shift');
                 
                 demands    = table('exams', student);
-                demands    . importCsvData('demands.csv');
+                demands    . importCsvData 'demands.csv' ;
                 
                 supplies   = table('time slots', date, shift);
-                supplies   . importCsvData('supplies.csv');
+                supplies   . importCsvData 'supplies.csv';
                 
                 solution   = solution('Colloquium Plan', demands, supplies);
-                solution   . forEach(student)
-                           . forEach(date)
-                           . forEach(shift)
-                           . then(hasSize(1));
+                solution   . forEach student
+                           . forEach date
+                           . forEach shift
+                           . then hasSize 1;
                 """;
         final var demandsCsv = """
                 student
