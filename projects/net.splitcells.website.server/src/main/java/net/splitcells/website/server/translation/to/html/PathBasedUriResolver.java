@@ -16,7 +16,6 @@
 package net.splitcells.website.server.translation.to.html;
 
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.dem.resource.FileSystemView;
 
 import java.io.ByteArrayInputStream;
@@ -34,14 +33,14 @@ import javax.xml.transform.stream.StreamSource;
 @JavaLegacyArtifact
 public class PathBasedUriResolver implements URIResolver {
 
-    public static PathBasedUriResolver pathBasedUriResolver(FileSystemView folder, FileSystemView configFiles
+    public static PathBasedUriResolver pathBasedUriResolver(FileSystemView argXslLibFolder, FileSystemView configFiles
             , Function<String, Optional<String>> extension) {
-        return new PathBasedUriResolver(folder, extension, configFiles);
+        return new PathBasedUriResolver(argXslLibFolder, extension, configFiles);
     }
 
     private static final String CONFIG_FOLDER = "/net.splitcells.website.server/";
 
-    private final FileSystemView folder;
+    private final FileSystemView xslLibFolder;
     private final FileSystemView configFiles;
     /**
      * Use {@link #configFiles} instead.
@@ -49,9 +48,9 @@ public class PathBasedUriResolver implements URIResolver {
     @Deprecated
     private final Function<String, Optional<String>> extension;
 
-    private PathBasedUriResolver(FileSystemView folder, Function<String, Optional<String>> extension
+    private PathBasedUriResolver(FileSystemView xslLibFolder, Function<String, Optional<String>> extension
             , FileSystemView configFiles) {
-        this.folder = folder;
+        this.xslLibFolder = xslLibFolder;
         this.configFiles = configFiles;
         this.extension = extension;
     }
@@ -73,10 +72,10 @@ public class PathBasedUriResolver implements URIResolver {
         if (href.startsWith(CONFIG_FOLDER)) {
             inputStream = configFiles.inputStream(net.splitcells.dem.resource.Paths
                     .path(href.substring(CONFIG_FOLDER.length())));
-        } else if (!folder.isFile(Paths.get(href))) {
+        } else if (!xslLibFolder.isFile(Paths.get(href))) {
             return null;
         } else {
-            final var rVal = new StreamSource(folder.inputStream(Paths.get(href)));
+            final var rVal = new StreamSource(xslLibFolder.inputStream(Paths.get(href)));
             rVal.setSystemId(Paths.get(href).toString());
             return rVal;
         }
