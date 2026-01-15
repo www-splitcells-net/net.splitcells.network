@@ -1039,8 +1039,15 @@ document.addEventListener('DOMContentLoaded', function(){
                     <xsl:attribute name="class">brush:
                         <xsl:copy-of select="./@language"/>
                     </xsl:attribute>
-                    <xsl:value-of
-                            select="node()"/>
+                    <xsl:choose>
+                        <xsl:when test="s:inline-resource">
+                            <xsl:apply-templates select="s:inline-resource"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of
+                                    select="node()"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:element>
             </div>
         </div>
