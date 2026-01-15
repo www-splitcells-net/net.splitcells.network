@@ -25,6 +25,10 @@
             A reference to a variable is the same as a function call without arguments and
             is implemented as such in the editor.
         </paragraph>
+        <paragraph>Modifiers are syntactic sugar, that allow one to remove the round brackets around function call arguments,
+            if there is only one or none argument.
+            This is demonstrated with the variables ending with <quote>_modified</quote> in the following example.
+        </paragraph>
         <code_block>
             <inline-resource path="net/splitcells/gel/editor/geal/examples/geal-grammar-by-example.txt"/>
         </code_block>
