@@ -380,4 +380,9 @@ public class EditorTest {
         val testData = new GelEditorFileSystem().defaultValue().readString("src/main/resources/html/net/splitcells/gel/editor/geal/examples/geal-minimal-example.txt");
         testSubject.interpret(parseGealSourceUnit(testData));
     }
+
+    @UnitTest public void testGealGrammarByExamplePrasing() {
+        val testData = new GelEditorFileSystem().defaultValue().readString("src/main/resources/html/net/splitcells/gel/editor/geal/examples/geal-grammar-by-example.txt");
+        parseGealSourceUnit(testData);
+    }
 }
