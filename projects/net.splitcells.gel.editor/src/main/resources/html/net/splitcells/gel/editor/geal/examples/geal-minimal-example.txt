@@ -10,7 +10,7 @@ supplies   = table('time slots', date, shift, roomNumber);
 supplies   . importCsvData('supplies.csv');
 
 solution   = solution('Simplified Colloquium Plan', demands, supplies);
-solution   . forAllCombinationsOf(student, date, shift)
+solution   . forEach(student, date, shift)
            . then(hasSize(1));
-solution   . forAllCombinationsOf(date, shift, roomNumber)
+solution   . forEach(date, shift, roomNumber)
            . then(hasSize(1));
