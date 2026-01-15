@@ -25,7 +25,6 @@
             A reference to a variable is the same as a function call without arguments and
             is implemented as such in the editor.
         </paragraph>
-        <inline-resource path="net/splitcells/gel/editor/geal/examples/geal-grammar-by-example.txt"/>
         <code_block>
             <inline-resource path="net/splitcells/gel/editor/geal/examples/geal-grammar-by-example.txt"/>
         </code_block>
