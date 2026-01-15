@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.editor;
 
+import lombok.val;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.editor.geal.lang.*;
@@ -372,5 +373,11 @@ public class EditorTest {
                             * For all groups of shift attribute values: where value is `2`: Then size should be 1, but is 2
                 """;
         requireEquals(solution.constraint().commonMarkRatingReport(), thirdReport);
+    }
+
+    @UnitTest public void testMinimalParsing() {
+        val testSubject = editor("test-subject", EXPLICIT_NO_CONTEXT);
+        val testData = new GelEditorFileSystem().defaultValue().readString("src/main/resources/html/net/splitcells/gel/editor/geal/examples/geal-minimal-example.txt");
+        testSubject.interpret(parseGealSourceUnit(testData));
     }
 }
