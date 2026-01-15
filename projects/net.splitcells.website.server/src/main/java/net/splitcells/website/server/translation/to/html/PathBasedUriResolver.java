@@ -39,6 +39,10 @@ public class PathBasedUriResolver implements URIResolver {
     }
 
     private static final String CONFIG_FOLDER = "/net.splitcells.website.server/";
+    /**
+     * The XSL function unparsed-text puts a `file:` in front of the requested path.
+     */
+    private static final String UNPARSED_TEXT_PREFIX = "file:";
 
     private final FileSystemView xslLibFolder;
     private final FileSystemView configFiles;
@@ -68,6 +72,9 @@ public class PathBasedUriResolver implements URIResolver {
              */
             extensionResolution.setSystemId(Paths.get(href).toString());
             return extensionResolution;
+        }
+        if (href.startsWith(UNPARSED_TEXT_PREFIX)) {
+            href = href.substring(UNPARSED_TEXT_PREFIX.length());
         }
         if (href.startsWith(CONFIG_FOLDER)) {
             inputStream = configFiles.inputStream(net.splitcells.dem.resource.Paths
