@@ -395,6 +395,9 @@ document.addEventListener('DOMContentLoaded', function(){
     <xsl:template match="s:accept-notification">
         <!-- This button is not rendered by default. -->
     </xsl:template>
+    <xsl:template match="s:inline-resource">
+        <xsl:value-of select="unparsed-text(concat('/net.splitcells.website.server/source-code/', @path))"/>
+    </xsl:template>
     <xsl:template match="s:notification">
         <xsl:if test="document('/net/splitcells/website/server/config/is-server-for-general-public.xml')/d:val/node() = 'true'">
             <xsl:if test="./s:only-for-general-public/node() = 'true'">
