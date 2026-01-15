@@ -995,30 +995,6 @@ document.addEventListener('DOMContentLoaded', function(){
         <xsl:if test="@asset!=''">
             <xsl:message select="'asdasd'" terminate="true"/>
         </xsl:if>
-        <xsl:variable name="tmp">
-            <xsl:element name="s:tree">
-                <xsl:element name="s:name">
-                    <xsl:value-of select="''"/>
-                </xsl:element>
-                <xsl:element name="s:tree">
-                    <xsl:element name="s:name">
-                        <xsl:element name="r:text">
-                            <xsl:element name="div">
-                                <xsl:attribute name="style">overflow: auto;</xsl:attribute>
-                                <xsl:element name="pre">
-                                    <xsl:attribute name="style">overflow: auto;</xsl:attribute>
-                                    <xsl:attribute name="class">brush:
-                                        <xsl:copy-of select="./@language"/>
-                                    </xsl:attribute>
-                                    <xsl:value-of
-                                            select="node()"/>
-                                </xsl:element>
-                            </xsl:element>
-                        </xsl:element>
-                    </xsl:element>
-                </xsl:element>
-            </xsl:element>
-        </xsl:variable>
         <xsl:variable name="tmp_id" select="generate-id()"/>
         <div class="net-splitcells-quote-display">
             <xsl:element name="input">
