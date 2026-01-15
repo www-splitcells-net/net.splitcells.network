@@ -6,21 +6,21 @@ shift      = attribute(Integer, 'shift'      );
 student    = attribute(String , 'student'    );
 
 demands    = table('exams', student, examiner, observer);
-demands    . importCsvData('demands.csv');
+demands    . importCsvData 'demands.csv';
 
 supplies   = table('time slots', date, shift, roomNumber);
-supplies   . importCsvData('supplies.csv');
+supplies   . importCsvData 'supplies.csv';
 
 solution   = solution('Colloquium Plan', demands, supplies);
 solution   . forEach(examiner, date, shift)
-           . then(hasSize(1));
+           . then hasSize 1;
 solution   . forEach(student, date, shift)
-           . then(hasSize(1));
-solution   . forEach(student)
-           . then(hasSize(2));
-solution   . forEach(student)
-           . then(minimalDistance(date, 3));
-solution   . forEach(student)
-           . then(minimalDistance(date, 5));
-solution   . columnAttributesForOutputFormat(roomNumber);
+           . then hasSize 1;
+solution   . forEach student
+           . then hasSize 2;
+solution   . forEach student
+           . then minimalDistance(date, 3);
+solution   . forEach student
+           . then minimalDistance(date, 5);
+solution   . columnAttributesForOutputFormat roomNumber;
 solution   . rowAttributesForOutputFormat(date, shift);
