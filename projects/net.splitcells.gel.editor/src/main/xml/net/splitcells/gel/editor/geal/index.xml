@@ -36,21 +36,8 @@
             in order to find an optimal solution according to their constraints.
             <link post="net/splitcells/gel/editor/geal/function-call-doc">A full list of supported functions is listed here.</link>
         </paragraph>
-        <code_block><![CDATA[date       = attribute(Integer, 'date'       );
-roomNumber = attribute(Integer, 'room number');
-shift      = attribute(Integer, 'shift'      );
-student    = attribute(String , 'student'    );
-
-demands    = table('exams', student);
-demands    . importCsvData('demands.csv');
-
-supplies   = table('time slots', date, shift, roomNumber);
-supplies   . importCsvData('supplies.csv');
-
-solution   = solution('Simplified Colloquium Plan', demands, supplies);
-solution   . forAllCombinationsOf(student, date, shift)
-           . then(hasSize(1));
-solution   . forAllCombinationsOf(date, shift, roomNumber)
-           . then(hasSize(1));]]></code_block>
+        <code_block>
+            <inline-resource path="net/splitcells/gel/editor/geal/examples/geal-minimal-example.txt"/>
+        </code_block>
     </chapter>
 </article>

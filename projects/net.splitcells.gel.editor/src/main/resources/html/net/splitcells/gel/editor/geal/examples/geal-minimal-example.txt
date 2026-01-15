@@ -1,0 +1,16 @@
+date       = attribute(Integer, 'date'       );
+roomNumber = attribute(Integer, 'room number');
+shift      = attribute(Integer, 'shift'      );
+student    = attribute(String , 'student'    );
+
+demands    = table('exams', student);
+demands    . importCsvData('demands.csv');
+
+supplies   = table('time slots', date, shift, roomNumber);
+supplies   . importCsvData('supplies.csv');
+
+solution   = solution('Simplified Colloquium Plan', demands, supplies);
+solution   . forAllCombinationsOf(student, date, shift)
+           . then(hasSize(1));
+solution   . forAllCombinationsOf(date, shift, roomNumber)
+           . then(hasSize(1));
