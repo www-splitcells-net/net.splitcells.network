@@ -4,12 +4,22 @@ variableResolution = integerVariable;
 
 functionCallResult1 = noArgumentFunctionCall;
 functionCallResult2 = functionCall('argument A');
+functionCallResult2 = functionCall 'argument A';
 functionCallResult3 = functionCall(1, 2, 3);
-functionCallResult4 = functionCall(nestedFunctionCall('argument B'));
+functionCallResult4 = functionCall(nestedFunctionCall('argument A'));
+functionCallResult4 = functionCall nestedFunctionCall 'argument A';
+functionCallResult5 = functionCall(nestedFunctionCall('argument A', 'argument B'));
+functionCallResult5 = functionCall nestedFunctionCall('argument A', 'argument B');
 
 subject = functionCallChainStart('argument A')
         . functionCallChainLink('argument B')
         . functionCallChainEnd('argument C');
 
+subject = functionCallChainStart 'argument A'
+        . functionCallChainLink 'argument B'
+        . functionCallChainEnd 'argument C';
+
 subject.methodCall(1);
+subject.methodCall 1;
 subject.methodCall(1).methodCall(functionCall(2)).methodCall(3);
+subject.methodCall 1.methodCall functionCall 2.methodCall 3;
