@@ -159,3 +159,15 @@ path = "projects/net.splitcells.website.content.default/src/test/verifier/verifi
 precedence = "aggregate"
 SPDX-FileCopyrightText = "Contributors To The `net.splitcells.*` Projects"
 SPDX-License-Identifier = "EPL-2.0 OR GPL-2.0-or-later"
+
+[[annotations]]
+path = "projects/net.splitcells.gel.editor/src/main/resources/html/net/splitcells/gel/editor/geal/examples/geal-grammar-by-example.txt"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Contributors To The `net.splitcells.*` Projects"
+SPDX-License-Identifier = "EPL-2.0 OR GPL-2.0-or-later"
+
+[[annotations]]
+path = "projects/net.splitcells.gel.editor/src/main/resources/html/net/splitcells/gel/editor/geal/examples/geal-minimal-example.txt"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Contributors To The `net.splitcells.*` Projects"
+SPDX-License-Identifier = "EPL-2.0 OR GPL-2.0-or-later"
