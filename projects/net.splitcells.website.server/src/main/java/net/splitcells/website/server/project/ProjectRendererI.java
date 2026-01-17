@@ -573,7 +573,7 @@ public class ProjectRendererI implements ProjectRenderer {
     private static void extendProjectLayout(Tree layout, Path folder, boolean replaceFileSuffix) {
         if (Files.isDirectory(folder)) {
             try {
-                Files.walk_recursively(folder)
+                Files.walkRecursively(folder)
                         .filter(Files::fileExists)
                         .forEach(file -> {
                             final var relativePath = folder.relativize(file);

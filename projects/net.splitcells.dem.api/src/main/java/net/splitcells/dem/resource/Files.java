@@ -17,7 +17,6 @@ package net.splitcells.dem.resource;
 
 import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.lang.annotations.JavaLegacyBody;
 import net.splitcells.dem.lang.tree.Tree;
 import org.apache.commons.io.FileUtils;
 
@@ -82,7 +81,7 @@ public interface Files {
         }
     }
 
-    static Stream<Path> walk_recursively(Path path) {
+    static Stream<Path> walkRecursively(Path path) {
         try {
             return java.nio.file.Files.walk(path);
         } catch (IOException e) {

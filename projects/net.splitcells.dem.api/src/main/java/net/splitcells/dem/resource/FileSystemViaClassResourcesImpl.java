@@ -20,28 +20,20 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.utils.ExecutionException;
-import net.splitcells.dem.utils.StreamUtils;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLDecoder;
 import java.nio.file.Path;
-import java.util.jar.JarFile;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.Files.readAsString;
-import static net.splitcells.dem.resource.Files.walk_recursively;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
-import static net.splitcells.dem.utils.StringUtils.countChar;
-import static net.splitcells.dem.utils.StringUtils.removePrefix;
 
 /**
  * <p>Provides an {@link FileSystem} API for {@link Class#getResource(String)}.</p>
