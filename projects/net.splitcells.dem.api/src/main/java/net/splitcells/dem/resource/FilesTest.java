@@ -18,6 +18,7 @@ package net.splitcells.dem.resource;
 import lombok.val;
 import net.splitcells.dem.data.atom.Bool;
 import net.splitcells.dem.data.atom.Bools;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
@@ -26,6 +27,8 @@ import java.nio.file.Path;
 
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.resource.Files.*;
 import static net.splitcells.dem.resource.Files.ensureAbsence;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
@@ -124,6 +127,27 @@ public class FilesTest {
             writeToFile(testFile1, "def");
             writeToFile(testFile2, "hij");
             requireEquals(walkDirectChildren(p).count(), 2L);
+        });
+    }
+
+    @UnitTest public void testWalkRecursively() {
+        requireThrow(() -> {
+            val testFile = Path.of("/not/existing/folder/90348237852ß34785427839572");
+            processInTemporaryFolder(p -> walkRecursively(testFile));
+        });
+        processInTemporaryFolder(p -> {
+            val directory1 = p.resolve("directory-1");
+            val directory2 = directory1.resolve("directory-2");
+            createDirectory(directory1);
+            createDirectory(directory2);
+            val testFile1 = directory1.resolve("test-file-1");
+            val testFile2 = directory2.resolve("test-file-2");
+            val testFile3 = p.resolve("test-file-3");
+
+            writeToFile(testFile1, "def");
+            writeToFile(testFile2, "hij");
+            writeToFile(testFile3, "klm");
+            requireEquals(walkRecursively(directory1).collect(toList()), list(directory1, testFile1, directory2, testFile2));
         });
     }
 
