@@ -74,9 +74,9 @@ import static net.splitcells.website.server.projects.extension.impls.Notificatio
 import static net.splitcells.website.server.projects.extension.impls.ResourceLicensingExtension.resourceLicensingExtension;
 import static net.splitcells.website.server.projects.extension.impls.TestExtension.testExtension;
 import static net.splitcells.website.server.projects.extension.impls.UserProfilePageExtension.userProfilePageExtension;
-import static net.splitcells.website.server.projects.extension.status.HostCpuUtilizationExtension.hostCpuUtilizationExtension;
-import static net.splitcells.website.server.projects.extension.status.HostMemoryUtilizationExtension.hostMemoryUtilizationExtension;
-import static net.splitcells.website.server.projects.extension.status.NetworkStatusRenderExtension.networkStatusRenderExtension;
+import static net.splitcells.website.server.projects.extension.impls.status.HostCpuUtilizationExtension.hostCpuUtilizationExtension;
+import static net.splitcells.website.server.projects.extension.impls.status.HostMemoryUtilizationExtension.hostMemoryUtilizationExtension;
+import static net.splitcells.website.server.projects.extension.impls.status.NetworkStatusRenderExtension.networkStatusRenderExtension;
 import static net.splitcells.website.server.projects.extension.ProjectsRendererExtensionMerger.projectsRendererExtensionMerger;
 import static org.assertj.core.api.Assertions.assertThat;
 

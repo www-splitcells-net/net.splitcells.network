@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.website.server.projects.extension.status;
+package net.splitcells.website.server.projects.extension.impls.status;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
@@ -48,7 +48,7 @@ import static net.splitcells.dem.utils.StreamUtils.stream;
 import static net.splitcells.dem.utils.StringUtils.stringBuilder;
 import static net.splitcells.network.worker.via.java.Logger.logger;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
-import static net.splitcells.website.server.projects.extension.status.StatusReport.statusReport;
+import static net.splitcells.website.server.projects.extension.impls.status.StatusReport.statusReport;
 
 /**
  * TODO This probably belongs to the network worker project.
