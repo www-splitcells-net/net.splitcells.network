@@ -133,4 +133,20 @@ public class FilesTest {
             requireEquals(walkDirectChildren(targetFolder).count(), 2L);
         });
     }
+
+    @UnitTest public void testCopyFileFrom() {
+        requireThrow(() -> processInTemporaryFolder(p -> {
+            val source = p.resolve("not/existing/folder/90348237852ß34785427839572");
+            val target = p.resolve("not/existing/folder/1254325");
+            copyFileFrom(source, target);
+        }));
+        processInTemporaryFolder(p -> {
+            val content = "klm";
+            val source = p.resolve("source");
+            val target = p.resolve("target");
+            writeToFile(source, content);
+            copyFileFrom(source, target);
+            requireEquals(readFileAsString(target), content);
+        });
+    }
 }
