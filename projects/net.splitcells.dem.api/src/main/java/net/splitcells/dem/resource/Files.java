@@ -184,11 +184,7 @@ public interface Files {
     }
 
     static String readString(Path path) {
-        try {
-            return java.nio.file.Files.readString(path);
-        } catch (IOException e) {
-            throw new RuntimeException("Could not read file: " + path, e);
-        }
+        return readFileAsString(path);
     }
 
     static void copyFileFrom(Path source, Path target) {
