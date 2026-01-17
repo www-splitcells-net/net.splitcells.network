@@ -183,7 +183,7 @@ public interface Files {
         return java.nio.file.Files.isDirectory(path);
     }
 
-    static String readString(Path path) {
+    @Deprecated static String readString(Path path) {
         return readFileAsString(path);
     }
 
