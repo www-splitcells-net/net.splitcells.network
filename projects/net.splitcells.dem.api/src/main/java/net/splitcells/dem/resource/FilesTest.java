@@ -101,6 +101,18 @@ public class FilesTest {
         });
     }
 
+    @UnitTest public void testReadFileAsString() {
+        requireThrow(() -> processInTemporaryFolder(p -> {
+            readFileAsString(p.resolve("not/existing/file/54b"));
+        }));
+        processInTemporaryFolder(p -> {
+            val file = p.resolve("test-file");
+            val content = "423t";
+            writeToFile(file, content);
+            requireEquals(readFileAsString(file), content);
+        });
+    }
+
     @UnitTest public void testWalkDirectChildren() {
         requireThrow(() -> {
             val testFile = Path.of("/not/existing/folder/90348237852ß34785427839572");
