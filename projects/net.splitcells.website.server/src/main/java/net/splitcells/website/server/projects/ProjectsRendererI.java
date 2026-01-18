@@ -61,6 +61,7 @@ import static net.splitcells.website.server.project.validator.RenderingValidator
 import static net.splitcells.website.server.project.LayoutUtils.extendPerspectiveWithPath;
 import static net.splitcells.website.server.projects.RenderRequest.renderRequest;
 import static net.splitcells.website.server.projects.RenderResponse.renderResponse;
+import static net.splitcells.website.server.projects.extension.impls.BuildLayoutExtension.buildLayoutExtension;
 import static net.splitcells.website.server.projects.extension.impls.DemConfigExtension.demConfigExtension;
 import static net.splitcells.website.server.projects.extension.impls.ConfigDependencyRecordingExtension.configDependencyRecordingExtension;
 import static net.splitcells.website.server.projects.extension.impls.FrontMenuExtension.frontMenuExtension;
@@ -201,7 +202,8 @@ public class ProjectsRendererI implements ProjectsRenderer {
             .withRegisteredExtension(frontMenuExtension())
             .withRegisteredExtension(notificationExtension())
             .withRegisteredExtension(globalChangelogExtension())
-            .withRegisteredExtension(newsExtension());
+            .withRegisteredExtension(newsExtension())
+            .withRegisteredExtension(buildLayoutExtension());
 
     private final List<ProjectsRendererExtension> extensions = listWithValuesOf(
             hostCpuUtilizationExtension()
@@ -216,6 +218,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
             , globalChangelogExtension()
             , newsExtension()
             , resourceLicensingExtension()
+            , buildLayoutExtension()
     );
 
     private ProjectsRendererI(String name
