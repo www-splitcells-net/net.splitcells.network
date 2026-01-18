@@ -31,7 +31,7 @@ import static net.splitcells.website.server.projects.RenderResponse.renderRespon
  * This is the list of files, when all pages of the webserver are rendered.
  */
 public class BuildLayoutExtension implements ProjectsRendererExtension {
-    private static final Trail PATH = trail("/net/splitcells/website/layout/build.html");
+    private static final Trail PATH = trail("net/splitcells/website/layout/build.html");
 
     public static BuildLayoutExtension buildLayoutExtension() {
         return new BuildLayoutExtension();
