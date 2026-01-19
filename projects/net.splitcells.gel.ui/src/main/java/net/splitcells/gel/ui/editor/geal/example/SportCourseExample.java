@@ -30,6 +30,12 @@ import static net.splitcells.website.server.processor.BinaryMessage.binaryMessag
 
 public class SportCourseExample implements ProjectsRendererExtension {
     private static final String PATH = "/net/splitcells/gel/ui/editor/geal/example/sports-course-planning.json";
+    private static final int DEFAULT_STUDENT_COUNT = 126;
+    private static final int DEFAULT_SEMESTER_COUNT = 126;
+    private static final float DEFAULT_SECONDARY_CHOICE_COUNT = 0.5f;
+    private static final int DEFAULT_COURSES_PER_SEMESTER = 9;
+    private static final int DEFAULT_TEAM_COURSES_PER_SEMESTER = 2;
+    private static final int DEFAULT_INDIVIDUAL_COURSES_PER_SEMESTER = 4;
 
     public static SportCourseExample sportCourseExample() {
         return new SportCourseExample();
