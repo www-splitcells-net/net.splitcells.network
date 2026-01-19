@@ -32,7 +32,7 @@ public class SportCourseExample implements ProjectsRendererExtension {
     private static final String PATH = "/net/splitcells/gel/ui/editor/geal/example/sports-course-planning.json";
     private static final int DEFAULT_STUDENT_COUNT = 126;
     private static final int DEFAULT_SEMESTER_COUNT = 126;
-    private static final float DEFAULT_SECONDARY_CHOICE_COUNT = 0.5f;
+    private static final float DEFAULT_SECONDARY_CHOICE_COUNT = 2f;
     private static final int DEFAULT_TEAM_SPORT_COUNTS = 4;
     private static final int DEFAULT_INDIVIDUAL_SPORT_COUNTS = 3;
     private static final int DEFAULT_OTHER_SPORT_COUNTS = 1;
