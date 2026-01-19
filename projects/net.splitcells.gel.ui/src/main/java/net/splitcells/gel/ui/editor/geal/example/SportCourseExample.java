@@ -79,7 +79,7 @@ public class SportCourseExample implements ProjectsRendererExtension {
 
     private static String availableHalfYearsCsv() {
         val testData = stringBuilder();
-        testData.append("Assigned Half Year\n");
+        testData.append("Assigned Semester\n");
         return testData.toString();
     }
 
