@@ -17,6 +17,7 @@ import net.splitcells.website.server.projects.extension.ProjectsRendererExtensio
 import java.nio.file.Path;
 import java.util.Optional;
 
+import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.utils.StringUtils.stringBuilder;
@@ -77,6 +78,23 @@ public class SportCourseExample implements ProjectsRendererExtension {
     private static String studentChoicesCsv() {
         val testData = stringBuilder();
         testData.append("Student,Chosen Sport, Chosen Sport Type, Is Secondary Choice\n");
+        rangeClosed(1, DEFAULT_STUDENT_COUNT).forEach(i -> {
+            {
+                val teamChoice = stringBuilder();
+                teamChoice.append("\n");
+                testData.append(teamChoice);
+            }
+            {
+                val individualChoice = stringBuilder();
+                individualChoice.append("\n");
+                testData.append(individualChoice);
+            }
+            {
+                val otherChoice = stringBuilder();
+                otherChoice.append("\n");
+                testData.append(otherChoice);
+            }
+        });
         return testData.toString();
     }
 
