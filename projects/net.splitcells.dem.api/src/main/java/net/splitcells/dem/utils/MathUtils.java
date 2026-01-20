@@ -149,7 +149,7 @@ public final class MathUtils {
      * @return Returns {@code true}, if the deviation of the {@code value} from the {@code target} is acceptable.
      */
     public static boolean acceptable(double value, double target, double maxDeviation) {
-        return value < target + (1 + maxDeviation) && value > target * (1 - maxDeviation);
+        return value < target * (1 + maxDeviation) && value > target * (1 - maxDeviation);
     }
 
     public static double distance(double a, double b) {
