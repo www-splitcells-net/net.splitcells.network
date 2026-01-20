@@ -127,7 +127,7 @@ public interface Randomness {
         float currentSum = 0f;
         for (int i = 0; i < distribution.length - 1; ++i) {
             currentSum += distribution[i];
-            if (rndChoice < currentSum) {
+            if (rndChoice <= currentSum) {
                 return i;
             }
         }
