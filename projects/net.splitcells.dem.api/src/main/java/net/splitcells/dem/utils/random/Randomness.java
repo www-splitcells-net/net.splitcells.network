@@ -15,19 +15,25 @@
  */
 package net.splitcells.dem.utils.random;
 
+import net.splitcells.dem.data.Flow;
+import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.utils.MathUtils;
 
 import java.util.Iterator;
 import java.util.Random;
+import java.util.stream.Stream;
 
 import static java.lang.Math.abs;
 import static java.util.stream.IntStream.range;
+import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
+import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY_KEY;
 import static net.splitcells.dem.utils.MathUtils.*;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -60,6 +66,10 @@ public interface Randomness {
         return integer(Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
 
+    default float floating(float min, float max) {
+        throw notImplementedYet();
+    }
+
     int integer(final Integer min, final Integer max);
 
     default int integer(int min, double mean, int max) {
@@ -90,6 +100,35 @@ public interface Randomness {
         } else {
             return integer(mean, max);
         }
+    }
+
+    /**
+     *
+     * @param distribution Contains the distribution weights of the indexes.
+     *                     The sum of distribution should be very near to 1.
+     *                     A check of {@link MathUtils#acceptable(double, double)} regarding the sum
+     *                     should return true.
+     * @return <p>Chooses random index of the distribution argument.
+     * The weighting of the indexes corresponds to the distribution values.</p>
+     *
+     */
+    default int integerFromDistribution(float[] distribution) {
+        if (ENFORCING_UNIT_CONSISTENCY) {
+            float sum = 0f;
+            for (float d : distribution) {
+                sum += d;
+            }
+            require(MathUtils.acceptable(sum, 1d));
+        }
+        float rndChoice = floating(0, 1);
+        float currentSum = 0f;
+        for (int i = 0; i < distribution.length - 1; ++i) {
+            currentSum += distribution[i];
+            if (rndChoice < currentSum) {
+                return i;
+            }
+        }
+        return distribution.length - 1;
     }
 
     default boolean truthValue() {
