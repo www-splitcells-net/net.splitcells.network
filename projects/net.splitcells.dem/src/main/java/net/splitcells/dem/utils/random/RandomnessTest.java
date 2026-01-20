@@ -34,6 +34,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class RandomnessTest {
     @Test public void testIntegerFromDistribution() {
         final var testSubject = randomness(0L);
+        requireThrow(() -> testSubject.integerFromDistribution(100f));
+        requireThrow(() -> testSubject.integerFromDistribution());
         requireEquals(testSubject.integerFromDistribution(1f), 0);
         requireEquals(testSubject.integerFromDistribution(0f, 1f), 1);
         val samples = 1_000;
