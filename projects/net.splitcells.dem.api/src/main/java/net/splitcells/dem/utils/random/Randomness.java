@@ -115,7 +115,7 @@ public interface Randomness {
      * The weighting of the indexes corresponds to the distribution values.</p>
      *
      */
-    default int integerFromDistribution(float[] distribution) {
+    default int integerFromDistribution(float... distribution) {
         if (ENFORCING_UNIT_CONSISTENCY) {
             float sum = 0f;
             for (float d : distribution) {
