@@ -1,4 +1,4 @@
-maxCoursesPerHalfYear = 9;
+maxCoursesPerSemester = 9;
 maxCourseSize         = 28;
 minCourseSize         = 22;
 optCourseSize         = 24;
@@ -55,4 +55,4 @@ courseScheduling . forEach not equals(assignedSport, 'Dummy Course')
                  . then hasMaximumSize maxCourseSize;
 courseScheduling . forEach not equals(assignedSport, 'Dummy Course')
                  . forEach assignedSemester
-                 . then uniqueValueCountIsAtMost(maxCoursesPerHalfYear, assignedCourseNumber);
+                 . then uniqueValueCountIsAtMost(maxCoursesPerSemester, assignedCourseNumber);
