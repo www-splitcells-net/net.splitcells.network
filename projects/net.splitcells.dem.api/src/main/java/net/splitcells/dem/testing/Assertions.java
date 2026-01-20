@@ -84,6 +84,22 @@ public class Assertions {
         }
     }
 
+    public static <T> void requireUnequals(T a, T b) {
+        if (a == null) {
+            if (b == null) {
+                tree("Arguments are required to be unequal, but are not.")
+                        .withProperty("first argument", a + "")
+                        .withProperty("second argument", b + "");
+            }
+            return;
+        }
+        if (a.equals(b)) {
+            // Assertj create a nice comparison report, also this report does not explicitly state, which is the
+            // first argument and which is the second.
+            org.assertj.core.api.Assertions.assertThat(a).isNotEqualTo(b);
+        }
+    }
+
     public static <T> void requireEquals(T a, T b) {
         if (a == null) {
             if (b == null) {
