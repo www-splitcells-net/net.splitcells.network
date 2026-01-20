@@ -110,6 +110,7 @@ public interface Randomness {
      *                     The sum of distribution should be very near to 1.
      *                     A check of {@link MathUtils#acceptable(double, double)} regarding the sum
      *                     should return true.
+     *                     Empty distributions are not supported.
      * @return <p>Chooses random index of the distribution argument.
      * The weighting of the indexes corresponds to the distribution values.</p>
      *
