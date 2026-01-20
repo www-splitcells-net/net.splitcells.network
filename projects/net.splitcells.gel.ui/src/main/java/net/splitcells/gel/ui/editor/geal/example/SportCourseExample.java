@@ -6,6 +6,7 @@ package net.splitcells.gel.ui.editor.geal.example;
 import lombok.val;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.utils.StringUtils;
+import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.editor.GelEditorFileSystem;
 import net.splitcells.website.Format;
 import net.splitcells.website.server.Config;
@@ -20,6 +21,8 @@ import java.util.Optional;
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StringUtils.stringBuilder;
 import static net.splitcells.gel.ui.editor.geal.EditorProcessor.PROBLEM_DEFINITION;
 import static net.splitcells.website.Format.COMMON_MARK;
@@ -96,6 +99,21 @@ public class SportCourseExample implements ProjectsRendererExtension {
             }
         });
         return testData.toString();
+    }
+
+    private static String studentChoice(int studentId, Randomness rnd, float teamProbability, float individualProbability) {
+        val choiceSportType = rnd.integerFromDistribution(teamProbability, individualProbability, 1f - teamProbability - individualProbability);
+        final String choiceSportTypeStr;
+        if (choiceSportType == 0) {
+            choiceSportTypeStr = "team sport";
+        } else if (choiceSportType == 1) {
+            choiceSportTypeStr = "individual sport";
+        } else if (choiceSportType == 2) {
+            choiceSportTypeStr = "other sport";
+        } else {
+            throw execException(choiceSportType + "");
+        }
+        throw notImplementedYet();
     }
 
     private static String availableCoursesCsv() {
