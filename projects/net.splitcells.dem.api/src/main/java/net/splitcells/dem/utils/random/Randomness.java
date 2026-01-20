@@ -50,6 +50,10 @@ public interface Randomness {
     static Randomness listBasedRandomness(Iterator<Integer> valueList) {
         return new Randomness() {
 
+            @Override public float floating(float min, float max) {
+                return valueList.next();
+            }
+
             @Override
             public int integer(Integer min, Integer max) {
                 return valueList.next();
@@ -66,9 +70,7 @@ public interface Randomness {
         return integer(Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
 
-    default float floating(float min, float max) {
-        throw notImplementedYet();
-    }
+    float floating(float min, float max);
 
     int integer(final Integer min, final Integer max);
 

@@ -40,6 +40,10 @@ public class JavaRandomWrapper implements Randomness, RndSrcCrypt {
 		return rnd.nextInt();
 	}
 
+	@Override public float floating(float min, float max) {
+		return rnd.nextFloat(min, max);
+	}
+
 	/**
 	 * FIXME Allow negative min and max.
 	 */
