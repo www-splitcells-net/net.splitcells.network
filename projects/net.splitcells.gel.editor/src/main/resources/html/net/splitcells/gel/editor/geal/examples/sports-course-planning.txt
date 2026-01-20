@@ -4,14 +4,14 @@ minCourseSize         = 22;
 optCourseSize         = 24;
 coursesPerStudent     = 4;
 
-assignedSemester     = attribute(Integer, 'Assigned Semester' );
-assignedCourseNumber = attribute(String , 'Assigned Course Number'     );
-assignedSport        = attribute(String , 'Assigned Sport'     );
-assignedSportType    = attribute(String , 'Assigned Sport Type');
-chosenSport          = attribute(String , 'Chosen Sport'       );
-chosenSportType      = attribute(String , 'Chosen Sport Type'  );
-isSecondaryChoice    = attribute(Integer, 'Is Secondary Choice');
-student              = attribute(String , 'Student'            );
+assignedSemester     = attribute(Integer, 'Assigned Semester'     );
+assignedCourseNumber = attribute(String , 'Assigned Course Number');
+assignedSport        = attribute(String , 'Assigned Sport'        );
+assignedSportType    = attribute(String , 'Assigned Sport Type'   );
+chosenSport          = attribute(String , 'Chosen Sport'          );
+chosenSportType      = attribute(String , 'Chosen Sport Type'     );
+isSecondaryChoice    = attribute(Integer, 'Is Secondary Choice'   );
+student              = attribute(String , 'Student'               );
 
 studentChoices     = table('Student Choices', student, chosenSport, chosenSportType, isSecondaryChoice);
 studentChoices     . importCsvData 'student-choices.csv';
