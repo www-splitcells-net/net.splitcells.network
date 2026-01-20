@@ -121,7 +121,7 @@ public interface Randomness {
             for (float d : distribution) {
                 sum += d;
             }
-            require(MathUtils.acceptable(sum, 1d));
+            require(acceptable(sum, 1d));
         }
         float rndChoice = floating(0, 1);
         float currentSum = 0f;
