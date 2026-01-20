@@ -101,9 +101,10 @@ public class SportCourseExample implements ProjectsRendererExtension {
         return testData.toString();
     }
 
-    private static String studentChoice(int studentId, Randomness rnd, float teamProbability, float individualProbability) {
+    private static String studentChoice(int studentId, Randomness rnd, float teamProbability, float individualProbability, boolean isSecondaryChoice) {
         val choiceSportType = rnd.integerFromDistribution(teamProbability, individualProbability, 1f - teamProbability - individualProbability);
         final String choiceSportTypeStr;
+        final String choiceSport = "TODO";
         if (choiceSportType == 0) {
             choiceSportTypeStr = "team sport";
         } else if (choiceSportType == 1) {
@@ -113,7 +114,11 @@ public class SportCourseExample implements ProjectsRendererExtension {
         } else {
             throw execException(choiceSportType + "");
         }
-        throw notImplementedYet();
+        return studentId
+                + "," + choiceSport
+                + "," + choiceSportType
+                + "," + (isSecondaryChoice ? 1 : 0)
+                + "\n";
     }
 
     private static String availableCoursesCsv() {
