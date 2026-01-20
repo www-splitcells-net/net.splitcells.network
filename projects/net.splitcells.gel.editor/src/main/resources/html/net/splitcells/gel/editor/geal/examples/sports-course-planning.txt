@@ -1,4 +1,4 @@
-maxCoursesPerHalfYear = 5;
+maxCoursesPerHalfYear = 9;
 maxCourseSize         = 28;
 minCourseSize         = 22;
 optCourseSize         = 24;
