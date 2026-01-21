@@ -353,6 +353,7 @@ statement
     | name Keysymbol_star Equals expression Semicolon
     | expression Semicolon
     | variable_declaration (Equals expression)? Semicolon
+    | variable_declaration (Equals expression) (Comma Name Equals expression)+ Semicolon
     | name access Equals expression Semicolon
     | name Equals expression Semicolon
     | name Equals_and expression Semicolon
@@ -445,3 +446,4 @@ variable_declaration
     : Keyword_final? type_declaration name
     | Keyword_final? Keyword_var name
     ;
+
