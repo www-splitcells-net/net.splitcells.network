@@ -187,6 +187,7 @@ expression
     | Hyphen_minus expression
     | lambda
     | statement_switch
+    | expression Question_mark expression Keysymbol_colon expression
     ;
 expression_with_prefix
     : Operator_plus Operator_plus expression
@@ -444,4 +445,3 @@ variable_declaration
     : Keyword_final? type_declaration name
     | Keyword_final? Keyword_var name
     ;
-
