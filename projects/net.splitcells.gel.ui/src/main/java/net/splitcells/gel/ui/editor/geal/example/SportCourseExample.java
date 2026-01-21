@@ -46,7 +46,7 @@ public class SportCourseExample implements ProjectsRendererExtension {
     private static final int DEFAULT_COURSES_PER_SEMESTER = 9;
     private static final int DEFAULT_TEAM_COURSES_PER_SEMESTER = 2;
     private static final int DEFAULT_INDIVIDUAL_COURSES_PER_SEMESTER = 4;
-    private static final List<String> DEFAULT_TEAM_SPORTS = list("Volleyball", "Fußball", "Handball", "Basketball");
+    private static final List<String> DEFAULT_TEAM_SPORTS = list("Volleyball", "Football", "Handball", "Basketball");
     private static final List<String> DEFAULT_INDIVIDUAL_SPORTS = list("Swimming", "Running", "Gymnastics", "Badminton");
     private static final List<String> DEFAULT_OTHER_SPORTS = list("Parkour", "Climbing", "Yoga", "Dancing");
 
