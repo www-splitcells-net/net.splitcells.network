@@ -5,6 +5,8 @@ package net.splitcells.gel.ui.editor.geal.example;
 
 import lombok.val;
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.editor.GelEditorFileSystem;
@@ -21,6 +23,7 @@ import java.util.Optional;
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StringUtils.stringBuilder;
@@ -43,6 +46,9 @@ public class SportCourseExample implements ProjectsRendererExtension {
     private static final int DEFAULT_COURSES_PER_SEMESTER = 9;
     private static final int DEFAULT_TEAM_COURSES_PER_SEMESTER = 2;
     private static final int DEFAULT_INDIVIDUAL_COURSES_PER_SEMESTER = 4;
+    private static final List<String> DEFAULT_TEAM_SPORTS = list("Volleyball", "Fußball", "Handball", "Basketball");
+    private static final List<String> DEFAULT_INDIVIDUAL_SPORTS = list("Swimming", "Running", "Gymnastics", "Badminton");
+    private static final List<String> DEFAULT_OTHER_SPORTS = list("Parkour", "Climbing", "Yoga", "Dancing");
 
     public static SportCourseExample sportCourseExample() {
         return new SportCourseExample();
@@ -104,13 +110,16 @@ public class SportCourseExample implements ProjectsRendererExtension {
     private static String studentChoice(int studentId, Randomness rnd, float teamProbability, float individualProbability, boolean isSecondaryChoice) {
         val choiceSportType = rnd.integerFromDistribution(teamProbability, individualProbability, 1f - teamProbability - individualProbability);
         final String choiceSportTypeStr;
-        final String choiceSport = "TODO";
+        final String choiceSport;
         if (choiceSportType == 0) {
             choiceSportTypeStr = "team sport";
+            choiceSport = rnd.chooseOneOf(DEFAULT_TEAM_SPORTS);
         } else if (choiceSportType == 1) {
             choiceSportTypeStr = "individual sport";
+            choiceSport = rnd.chooseOneOf(DEFAULT_INDIVIDUAL_SPORTS);
         } else if (choiceSportType == 2) {
             choiceSportTypeStr = "other sport";
+            choiceSport = rnd.chooseOneOf(DEFAULT_OTHER_SPORTS);
         } else {
             throw execException(choiceSportType + "");
         }
