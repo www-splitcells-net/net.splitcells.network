@@ -47,6 +47,7 @@ public class SportCourseExample implements ProjectsRendererExtension {
     private static final int DEFAULT_COURSES_PER_SEMESTER = 9;
     private static final int DEFAULT_TEAM_COURSES_PER_SEMESTER = 2;
     private static final int DEFAULT_INDIVIDUAL_COURSES_PER_SEMESTER = 4;
+    private static final List<String> SPORT_TYPES = list("Team sport", "Individual sport", "Other sport");
     private static final List<String> DEFAULT_TEAM_SPORTS = list("Volleyball", "Football", "Handball", "Basketball");
     private static final List<String> DEFAULT_INDIVIDUAL_SPORTS = list("Swimming", "Running", "Gymnastics", "Badminton");
     private static final List<String> DEFAULT_OTHER_SPORTS = list("Parkour", "Climbing", "Yoga", "Dancing");
@@ -101,23 +102,19 @@ public class SportCourseExample implements ProjectsRendererExtension {
 
     private static String studentChoice(int studentId, Randomness rnd, float teamProbability, float individualProbability, boolean isSecondaryChoice) {
         val choiceSportType = rnd.integerFromDistribution(teamProbability, individualProbability, 1f - teamProbability - individualProbability);
-        final String choiceSportTypeStr;
         final String choiceSport;
         if (choiceSportType == 0) {
-            choiceSportTypeStr = "team sport";
             choiceSport = rnd.chooseOneOf(DEFAULT_TEAM_SPORTS);
         } else if (choiceSportType == 1) {
-            choiceSportTypeStr = "individual sport";
             choiceSport = rnd.chooseOneOf(DEFAULT_INDIVIDUAL_SPORTS);
         } else if (choiceSportType == 2) {
-            choiceSportTypeStr = "other sport";
             choiceSport = rnd.chooseOneOf(DEFAULT_OTHER_SPORTS);
         } else {
             throw execException(choiceSportType + "");
         }
         return studentId
                 + "," + choiceSport
-                + "," + choiceSportType
+                + "," + SPORT_TYPES.get(choiceSportType)
                 + "," + (isSecondaryChoice ? 1 : 0)
                 + "\n";
     }
