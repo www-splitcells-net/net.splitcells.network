@@ -27,6 +27,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StringUtils.stringBuilder;
+import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.ui.editor.geal.EditorProcessor.PROBLEM_DEFINITION;
 import static net.splitcells.website.Format.COMMON_MARK;
 import static net.splitcells.website.Format.CSV;
@@ -86,23 +87,14 @@ public class SportCourseExample implements ProjectsRendererExtension {
 
     private static String studentChoicesCsv() {
         val testData = stringBuilder();
+        val rnd = randomness();
         testData.append("Student,Chosen Sport, Chosen Sport Type, Is Secondary Choice\n");
         rangeClosed(1, DEFAULT_STUDENT_COUNT).forEach(i -> {
-            {
-                val teamChoice = stringBuilder();
-                teamChoice.append("\n");
-                testData.append(teamChoice);
-            }
-            {
-                val individualChoice = stringBuilder();
-                individualChoice.append("\n");
-                testData.append(individualChoice);
-            }
-            {
-                val otherChoice = stringBuilder();
-                otherChoice.append("\n");
-                testData.append(otherChoice);
-            }
+            testData.append(studentChoice(i, rnd, 1, 0, false));
+            testData.append(studentChoice(i, rnd, 0, 1, false));
+            testData.append(studentChoice(i, rnd, 0, 0, false));
+            testData.append(studentChoice(i, rnd, 1, 0, true));
+            testData.append(studentChoice(i, rnd, 0, 1, true));
         });
         return testData.toString();
     }
