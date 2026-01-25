@@ -292,7 +292,9 @@ public class ProjectsRendererI implements ProjectsRenderer {
      *
      * @param path path
      * @return Rendering Result
+     * @deprecated Use {@link #render(RenderRequest)} instead.
      */
+    @Deprecated
     @Override
     public Optional<BinaryMessage> render(String path) {
         final var normalizedPath = normalizedPath(path);
