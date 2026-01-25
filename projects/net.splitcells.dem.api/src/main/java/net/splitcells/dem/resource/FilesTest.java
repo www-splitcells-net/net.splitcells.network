@@ -22,7 +22,9 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
+import net.splitcells.dem.utils.StringUtils;
 
+import java.io.IOException;
 import java.nio.file.Path;
 
 import static net.splitcells.dem.data.atom.Bools.require;
@@ -36,6 +38,7 @@ import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.multiple;
+import static net.splitcells.dem.utils.StringUtils.parseString;
 
 @JavaLegacyArtifact
 public class FilesTest {
@@ -113,6 +116,28 @@ public class FilesTest {
             val content = "423t";
             writeToFile(file, content);
             requireEquals(readFileAsString(file), content);
+        });
+    }
+
+    @UnitTest public void testReadFileAsBytes() {
+        processInTemporaryFolder(p -> {
+            val file = p.resolve("test-file");
+            val content = "2353";
+            writeToFile(file, content);
+            requireEquals(parseString(readFileAsBytes(file)), content);
+        });
+    }
+
+    @UnitTest public void testNewInputStream() {
+        processInTemporaryFolder(p -> {
+            val file = p.resolve("test-file");
+            val content = "3265";
+            writeToFile(file, content);
+            try {
+                requireEquals(parseString(newInputStream(file).readAllBytes()), content);
+            } catch (IOException e) {
+                throw execException(e);
+            }
         });
     }
 
