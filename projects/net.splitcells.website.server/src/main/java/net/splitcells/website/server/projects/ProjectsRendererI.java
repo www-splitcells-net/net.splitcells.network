@@ -303,11 +303,6 @@ public class ProjectsRendererI implements ProjectsRenderer {
             if (extensionRendering.isPresent()) {
                 return extensionRendering;
             }
-            if (normalizedPath.equals(LAYOUT_PATH)) {
-                logs().append(tree("Refreshing layout."), LogLevel.INFO);
-                this.build();
-                return render("/");
-            }
             final var renderingResult = renderers.stream()
                     .map(renderer -> {
                         final var render = renderer.render(normalizedPath, this);
