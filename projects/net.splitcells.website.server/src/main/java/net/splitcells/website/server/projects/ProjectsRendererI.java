@@ -274,6 +274,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
                 .filter(r -> r.data().isPresent())
                 .collect(toList());
         if (responses.isEmpty()) {
+            logs().append(tree("Path could not be found: " + request.trail().unixPathString()), LogLevel.ERROR);
             return renderResponse(Optional.empty());
         }
         if (responses.size() > 1) {
@@ -316,7 +317,6 @@ public class ProjectsRendererI implements ProjectsRenderer {
                     .filter(Optional::isPresent)
                     .findFirst();
             if (renderingResult.isEmpty()) {
-                logs().append(tree("Path could not be found: " + normalizedPath), LogLevel.ERROR);
                 return validateRenderingResult(Optional.empty(), Path.of(normalizedPath));
             }
             return validateRenderingResult(renderingResult.get(), Path.of(normalizedPath));
