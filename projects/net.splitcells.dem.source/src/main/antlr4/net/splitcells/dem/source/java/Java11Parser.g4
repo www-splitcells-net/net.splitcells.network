@@ -144,7 +144,7 @@ enum_constructor
     | javadoc? annotation* Keyword_public name call_arguments statement_body
     ;
 enum_definition
-	/* TODO Create own enum grammar destinct from class. */
+	/* TODO Create own enum grammar distinct from class. */
     : javadoc? annotation* Keyword_public? Keyword_enum
     	name
     	(Keyword_implements type_declaration)?
