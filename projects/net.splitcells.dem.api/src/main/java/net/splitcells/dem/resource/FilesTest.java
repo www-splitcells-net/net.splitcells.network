@@ -32,7 +32,6 @@ import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.resource.Files.*;
-import static net.splitcells.dem.resource.Files.ensureAbsence;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
@@ -42,6 +41,17 @@ import static net.splitcells.dem.utils.StringUtils.parseString;
 
 @JavaLegacyArtifact
 public class FilesTest {
+
+    @UnitTest public void testGenerateFolderPath() {
+        requireThrow(() -> {
+            generateFolderPath(Path.of("/../../../invalid-relative-path"));
+        });
+        processInTemporaryFolder(p -> {
+            val testFolder = p.resolve("test-folder");
+            generateFolderPath(testFolder);
+            Files.isDirectory(testFolder);
+        });
+    }
 
     @UnitTest public void testProcessInTemporaryFolderError() {
         requireThrow(() -> {
