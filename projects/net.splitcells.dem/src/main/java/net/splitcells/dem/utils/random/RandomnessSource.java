@@ -30,7 +30,7 @@ public class RandomnessSource {
         return factory.rnd();
     }
 
-    public static Randomness randomness(Long seed) {
+    public static Randomness randomness(long seed) {
         return factory.rnd(seed);
     }
 
