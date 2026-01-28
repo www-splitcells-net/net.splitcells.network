@@ -64,6 +64,7 @@ public class SportCourseExample implements ProjectsRendererExtension {
     public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         if (PATH.equals(path)) {
             val formUpdate = formUpdate();
+            val rnd = randomness();
             formUpdate.getFields().put(PROBLEM_DEFINITION, fieldUpdate()
                     .setRenderingType(Optional.of(PLAIN_TEXT))
                     .setData(StringUtils.toBytes(configValue(GelEditorFileSystem.class)
@@ -71,7 +72,7 @@ public class SportCourseExample implements ProjectsRendererExtension {
                     .setType(COMMON_MARK));
             formUpdate.getFields().put("student-choices.csv", fieldUpdate()
                     .setRenderingType(Optional.of(PLAIN_TEXT))
-                    .setData(StringUtils.toBytes(studentChoicesCsv()))
+                    .setData(StringUtils.toBytes(studentChoicesCsv(rnd, DEFAULT_STUDENT_COUNT)))
                     .setType(CSV));
             formUpdate.getFields().put("available-courses.csv", fieldUpdate()
                     .setRenderingType(Optional.of(PLAIN_TEXT))
@@ -86,11 +87,10 @@ public class SportCourseExample implements ProjectsRendererExtension {
         return Optional.empty();
     }
 
-    private static String studentChoicesCsv() {
+    protected static String studentChoicesCsv(Randomness rnd, int studentCount) {
         val testData = stringBuilder();
-        val rnd = randomness();
         testData.append("Student,Chosen Sport, Chosen Sport Type, Is Secondary Choice\n");
-        rangeClosed(1, DEFAULT_STUDENT_COUNT).forEach(i -> {
+        rangeClosed(1, studentCount).forEach(i -> {
             testData.append(studentChoice(i, rnd, 1, 0, false));
             testData.append(studentChoice(i, rnd, 0, 1, false));
             testData.append(studentChoice(i, rnd, 0, 0, false));
