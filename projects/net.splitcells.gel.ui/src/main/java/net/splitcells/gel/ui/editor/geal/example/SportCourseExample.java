@@ -36,6 +36,11 @@ import static net.splitcells.website.server.messages.FormUpdate.formUpdate;
 import static net.splitcells.website.server.messages.RenderingType.PLAIN_TEXT;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
+/**
+ * <p>TODO Constants like {@link #DEFAULT_SEMESTER_COUNT} or {@link #DEFAULT_MAX_COURSE_SIZE} should be parsed from
+ * the original `sports-course-planning.txt`,
+ * in order to avoid divergence between the example data and the problem definition.</p>
+ */
 public class SportCourseExample implements ProjectsRendererExtension {
     private static final String PATH = "/net/splitcells/gel/ui/editor/geal/example/sports-course-planning.json";
     private static final int DEFAULT_STUDENT_COUNT = 126;
