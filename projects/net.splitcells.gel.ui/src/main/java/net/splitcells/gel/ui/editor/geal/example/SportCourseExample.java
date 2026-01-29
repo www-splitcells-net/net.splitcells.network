@@ -37,6 +37,7 @@ import static net.splitcells.website.server.messages.RenderingType.PLAIN_TEXT;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 /**
+ * <p>As only one course per sport type and semester is allowed, a course id is not needed.</p>
  * <p>TODO Constants like {@link #DEFAULT_SEMESTER_COUNT} or {@link #DEFAULT_MAX_COURSE_SIZE} should be parsed from
  * the original `sports-course-planning.txt`,
  * in order to avoid divergence between the example data and the problem definition.</p>
