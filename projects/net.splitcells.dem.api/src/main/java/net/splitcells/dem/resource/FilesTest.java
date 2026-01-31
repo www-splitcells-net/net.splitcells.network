@@ -32,6 +32,7 @@ import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.resource.Files.*;
+import static net.splitcells.dem.resource.Files.deleteDirectory;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
@@ -50,7 +51,27 @@ public class FilesTest {
         processInTemporaryFolder(p -> {
             val testFolder = p.resolve("test-folder");
             generateFolderPath(testFolder);
-            Files.isDirectory(testFolder);
+            isDirectory(testFolder);
+        });
+    }
+
+    @UnitTest public void testDeleteDirectory() {
+        requireThrow(() -> {
+            processInTemporaryFolder(p -> {
+                val testFolder = p.resolve("test-folder");
+                val blockingFile = testFolder.resolve("blocking-file");
+                generateFolderPath(testFolder);
+                appendToFile(blockingFile, "def");
+                deleteDirectory(blockingFile);
+                deleteDirectory(testFolder);
+            });
+        });
+        processInTemporaryFolder(p -> {
+            val testFolder = p.resolve("test-folder");
+            generateFolderPath(testFolder);
+            isDirectory(testFolder);
+            deleteDirectory(testFolder);
+            requireNot(isDirectory(testFolder));
         });
     }
 
