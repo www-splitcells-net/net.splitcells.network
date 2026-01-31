@@ -44,7 +44,8 @@ public class FilesTest {
 
     @UnitTest public void testGenerateFolderPath() {
         requireThrow(() -> {
-            generateFolderPath(Path.of("/../../../invalid-relative-path"));
+            val testPath = Path.of("\\" + multiple("//\\\\", 2000));
+            processInTemporaryFolder(p -> generateFolderPath(testPath));
         });
         processInTemporaryFolder(p -> {
             val testFolder = p.resolve("test-folder");
