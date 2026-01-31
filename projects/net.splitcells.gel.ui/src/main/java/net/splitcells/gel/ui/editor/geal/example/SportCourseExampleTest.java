@@ -9,6 +9,7 @@ import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
+import static net.splitcells.gel.ui.editor.geal.example.SportCourseExample.availableCoursesCsv;
 import static net.splitcells.gel.ui.editor.geal.example.SportCourseExample.studentChoicesCsv;
 
 public class SportCourseExampleTest {
@@ -23,5 +24,9 @@ public class SportCourseExampleTest {
                         1,Gymnastics,Individual sport,1
                         """
         );
+    }
+
+    @UnitTest public void testAvailableCoursesCsv() {
+        System.out.println(availableCoursesCsv(randomness(1), 1, 1, 1, 1, 1));
     }
 }
