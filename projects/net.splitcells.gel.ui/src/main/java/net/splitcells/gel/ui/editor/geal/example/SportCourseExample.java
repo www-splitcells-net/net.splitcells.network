@@ -4,9 +4,12 @@
 package net.splitcells.gel.ui.editor.geal.example;
 
 import lombok.val;
+import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.environment.config.StaticFlags;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.editor.GelEditorFileSystem;
@@ -22,10 +25,12 @@ import java.util.Optional;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.Dem.configValue;
+import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.dem.utils.StringUtils.requireMatch;
 import static net.splitcells.dem.utils.StringUtils.stringBuilder;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.ui.editor.geal.EditorProcessor.PROBLEM_DEFINITION;
@@ -46,13 +51,13 @@ public class SportCourseExample implements ProjectsRendererExtension {
     private static final String PATH = "/net/splitcells/gel/ui/editor/geal/example/sports-course-planning.json";
     private static final int DEFAULT_STUDENT_COUNT = 126;
     private static final int DEFAULT_SEMESTER_COUNT = 4;
-    private static final int DEFAULT_SECONDARY_CHOICE_COUNT = 2;
     private static final int DEFAULT_TEAM_SPORT_COUNTS = 4;
     private static final int DEFAULT_INDIVIDUAL_SPORT_COUNTS = 3;
     private static final int DEFAULT_OTHER_SPORT_COUNTS = 1;
     private static final int DEFAULT_COURSES_PER_SEMESTER = 9;
     private static final int DEFAULT_TEAM_COURSES_PER_SEMESTER = 2;
     private static final int DEFAULT_INDIVIDUAL_COURSES_PER_SEMESTER = 4;
+    private static final int DEFAULT_MAX_COURSE_SIZE = 28;
     private static final List<String> SPORT_TYPES = list("Team sport", "Individual sport", "Other sport");
     private static final List<String> DEFAULT_TEAM_SPORTS = list("Volleyball", "Football", "Handball", "Basketball");
     private static final List<String> DEFAULT_INDIVIDUAL_SPORTS = list("Swimming", "Running", "Gymnastics", "Badminton");
@@ -82,7 +87,12 @@ public class SportCourseExample implements ProjectsRendererExtension {
                     .setType(CSV));
             formUpdate.getFields().put("available-courses.csv", fieldUpdate()
                     .setRenderingType(Optional.of(PLAIN_TEXT))
-                    .setData(StringUtils.toBytes(availableCoursesCsv()))
+                    .setData(StringUtils.toBytes(availableCoursesCsv(rnd
+                            , DEFAULT_SEMESTER_COUNT
+                            , DEFAULT_MAX_COURSE_SIZE
+                            , DEFAULT_TEAM_COURSES_PER_SEMESTER
+                            , DEFAULT_INDIVIDUAL_COURSES_PER_SEMESTER
+                            , DEFAULT_COURSES_PER_SEMESTER - DEFAULT_TEAM_COURSES_PER_SEMESTER - DEFAULT_INDIVIDUAL_COURSES_PER_SEMESTER)))
                     .setType(CSV));
             formUpdate.getFields().put("available-half-years.csv", fieldUpdate()
                     .setRenderingType(Optional.of(PLAIN_TEXT))
@@ -125,9 +135,44 @@ public class SportCourseExample implements ProjectsRendererExtension {
                 + "\n";
     }
 
-    private static String availableCoursesCsv() {
+    protected static String availableCoursesCsv(Randomness rnd
+            , int semesterCount
+            , int maxCourseSize
+            , int teamCoursesPerSemester
+            , int individualCoursesPerSemester
+            , int otherCoursesPerSemester) {
         val testData = stringBuilder();
         testData.append("Assigned Sport,Assigned Sport Type\n");
+        rangeClosed(1, semesterCount).forEach(semester -> {
+            if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) require(DEFAULT_TEAM_SPORTS.size() > teamCoursesPerSemester);
+            rangeClosed(1, teamCoursesPerSemester).forEach(iTeamCourse -> {
+                val sportType = rnd.chooseOneOf(DEFAULT_TEAM_SPORTS);
+                rangeClosed(1, maxCourseSize).forEach(courseSeat -> {
+                    testData.append(SPORT_TYPES.get(0));
+                    testData.append(",");
+                    testData.append(sportType);
+                    testData.append("\n");
+                });
+            });
+            rangeClosed(1, individualCoursesPerSemester).forEach(iIndividualCourse -> {
+                val sportType = rnd.chooseOneOf(DEFAULT_INDIVIDUAL_SPORTS);
+                rangeClosed(1, maxCourseSize).forEach(courseSeat -> {
+                    testData.append(SPORT_TYPES.get(1));
+                    testData.append(",");
+                    testData.append(sportType);
+                    testData.append("\n");
+                });
+            });
+            rangeClosed(1, otherCoursesPerSemester).forEach(iIndividualCourse -> {
+                val sportType = rnd.chooseOneOf(DEFAULT_INDIVIDUAL_SPORTS);
+                rangeClosed(1, maxCourseSize).forEach(courseSeat -> {
+                    testData.append(SPORT_TYPES.get(1));
+                    testData.append(",");
+                    testData.append(sportType);
+                    testData.append("\n");
+                });
+            });
+        });
         return testData.toString();
     }
 
