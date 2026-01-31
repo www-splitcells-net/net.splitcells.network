@@ -152,6 +152,9 @@ public class FilesTest {
     }
 
     @UnitTest public void testReadFileAsBytes() {
+        requireThrow(() -> processInTemporaryFolder(p -> {
+            readFileAsBytes(p.resolve("not/existing/file/54c"));
+        }));
         processInTemporaryFolder(p -> {
             val file = p.resolve("test-file");
             val content = "2353";
