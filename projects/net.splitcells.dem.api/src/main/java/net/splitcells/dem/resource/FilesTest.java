@@ -31,8 +31,10 @@ import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.Files.*;
 import static net.splitcells.dem.resource.Files.deleteDirectory;
+import static net.splitcells.dem.resource.Paths.path;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
@@ -156,10 +158,12 @@ public class FilesTest {
             readFileAsBytes(p.resolve("not/existing/file/54c"));
         }));
         processInTemporaryFolder(p -> {
-            val file = p.resolve("test-file");
+            val file1 = p.resolve("test-file-1");
+            val file2 = p.resolve("test-file-2");
             val content = "2353";
-            writeToFile(file, content);
-            requireEquals(parseString(readFileAsBytes(file)), content);
+            writeToFile(file1, content);
+            writeToFile(file2, tree(content));
+            requireEquals(parseString(readFileAsBytes(file1)), content);
         });
     }
 
