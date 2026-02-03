@@ -74,11 +74,15 @@ public class MetaData {
                     if (filePathStr.startsWith("/")) {
                         filePathStr = filePathStr.substring(1);
                     }
-                    val metaData = new MetaData(Path.of(filePathStr));
-                    metaData.copyrightText = Optional.of(table.getString("SPDX-FileCopyrightText"));
-                    metaData.license = Optional.of(table.getString("SPDX-License-Identifier"));
-                    mojo.getLog().debug("Parsing path: " + metaData);
-                    parsedMetaData.add(metaData);
+                    if (filePathStr.contains("**")) {
+
+                    } else {
+                        val metaData = new MetaData(Path.of(filePathStr));
+                        metaData.copyrightText = Optional.of(table.getString("SPDX-FileCopyrightText"));
+                        metaData.license = Optional.of(table.getString("SPDX-License-Identifier"));
+                        mojo.getLog().debug("Parsing path: " + metaData);
+                        parsedMetaData.add(metaData);
+                    }
                 });
             } catch (IOException e) {
                 throw new RuntimeException(e);
