@@ -111,11 +111,14 @@ ol ol {
 li {
    /* This element can contain any type of content. Therefore, the font is not determined by this class. */
    border-left: .1em solid rgb(100,100,100);
-   padding-left: .5em;
+   text-indent: -1em;
+   padding-left: 1em;
    box-shadow: 0em 0.1em 0.1em -0.1em var(--shadow-color-priority-3);
    margin-top: .1em;
    margin-right: .1em;
    margin-bottom: .1em;
+   padding-top: .125em;
+   padding-bottom: .125em;
    }
 ol li span {
      font-weight: bold;
@@ -137,12 +140,11 @@ ol li::before {
   position: relative;
   top: -0.3em;
   height: 1em;
-  width: 12px;
+  width: 1em;
   color: white;
   border-bottom: .1em solid rgb(100,100,100);
   content: "";
   display: inline-block;
-  left: -.5em;
 }
 li:hover {
     background-color: var(--background-color-selected-priority-0) !important;
