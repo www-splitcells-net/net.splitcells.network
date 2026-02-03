@@ -50,6 +50,6 @@ public class BuildLayoutExtension implements ProjectsRendererExtension {
     }
 
     @Override public boolean requiresAuthentication(RenderRequest request) {
-        return true;
+        return request.trail().equalContents(PATH);
     }
 }
