@@ -148,10 +148,10 @@ public class SportCourseExample implements ProjectsRendererExtension {
             rangeClosed(1, teamCoursesPerSemester).forEach(iTeamCourse -> {
                 val sportType = rnd.chooseOneOf(DEFAULT_TEAM_SPORTS);
                 rangeClosed(1, maxCourseSize).forEach(courseSeat -> {
-                    testData.append(SPORT_TYPES.get(0));
-                    testData.append(",");
-                    testData.append(sportType);
-                    testData.append("\n");
+                    testData.append(SPORT_TYPES.get(0))
+                            .append(",")
+                            .append(sportType)
+                            .append("\n");
                 });
             });
             rangeClosed(1, individualCoursesPerSemester).forEach(iIndividualCourse -> {
