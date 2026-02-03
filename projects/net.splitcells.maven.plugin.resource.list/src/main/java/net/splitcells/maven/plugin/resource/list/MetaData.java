@@ -75,12 +75,14 @@ public class MetaData {
                         filePathStr = filePathStr.substring(1);
                     }
                     if (filePathStr.contains("**")) {
-                        val regex = filePathStr
-                                .replace("**", ".*")
-                                .replace("/*", "/.");
-                        val pattern = Pattern.compile(regex);
-
+                        val matcher = Path.of(filePathStr).getFileSystem().getPathMatcher("glob:" + filePathStr);
                         try (final var walk = java.nio.file.Files.walk(mojo.resourceFolder)) {
+                            walk.forEach(p -> {
+                                p = Path.of(mojo.normalizedResourcePathWithoutProjectPrefix(p));
+                                if (matcher.matches(p)) {
+                                    mojo.getLog().debug("Glob match: " + p);
+                                }
+                            });
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }

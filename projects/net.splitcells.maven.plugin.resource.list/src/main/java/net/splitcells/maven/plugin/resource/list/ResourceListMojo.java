@@ -48,14 +48,38 @@ public class ResourceListMojo extends AbstractMojo {
     @Parameter(defaultValue = "${project}", required = true, readonly = true)
     protected MavenProject project;
     private String fileSystemSeparator = FileSystems.getDefault().getSeparator();
+    protected Path resourceFolder;
+    private String basePathStr;
+    private String resourceFolderName;
+
+    public String normalizedResourcePath(Path resource) {
+        final var absoluteResourcePath = resource
+                .toAbsolutePath()
+                .toString()
+                .replace(fileSystemSeparator, "/");
+        {
+            // Extend resource list.
+            // "+1" makes the paths relative by removing the first slash.
+            var resourcePath = absoluteResourcePath.substring(basePathStr.length() + 1);
+            if (Files.isDirectory(resource)) {
+                resourcePath += "/";
+            }
+            return resourcePath;
+        }
+    }
+
+    public String normalizedResourcePathWithoutProjectPrefix(Path resource) {
+        return normalizedResourcePath(resource).substring(resourceFolderName.length() + 1);
+    }
 
     @Override
     public void execute() throws MojoExecutionException {
         final Path basePath = Path.of(project.getBuild().getDirectory(), "classes");
-        final Path resourceFolder = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources");
+        resourceFolderName = project.getGroupId() + "." + project.getArtifactId() + ".resources";
+        resourceFolder = basePath.resolve(resourceFolderName);
         final Path metaDataFolder = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources.meta");
         final Path resourceListFile = basePath.resolve(project.getGroupId() + "." + project.getArtifactId() + ".resources.list.txt");
-        final String basePathStr = basePath.toAbsolutePath().toString().replace(fileSystemSeparator, "/");
+        basePathStr = basePath.toAbsolutePath().toString().replace(fileSystemSeparator, "/");
         final Map<Path, MetaData> inventory = new HashMap<>();
         try {
             if (Files.isRegularFile(resourceFolder)) {
@@ -87,20 +111,7 @@ public class ResourceListMojo extends AbstractMojo {
             // Every read of the affected files is done in one file loop, in order to minimize file access and therefore to speed up the process.
             try (final var walk = java.nio.file.Files.walk(resourceFolder)) {
                 walk.forEach(resource -> {
-                    final var absoluteResourcePath = resource
-                            .toAbsolutePath()
-                            .toString()
-                            .replace(fileSystemSeparator, "/");
-                    {
-                        // Extend resource list.
-                        // "+1" makes the paths relative by removing the first slash.
-                        var resourcePath = absoluteResourcePath.substring(basePathStr.length() + 1);
-                        if (Files.isDirectory(resource)) {
-                            resourcePath += "/";
-                        }
-                        resourceList.append(resourcePath);
-                        resourceList.append("\n");
-                    }
+                    resourceList.append(normalizedResourcePath(resource)).append("\n");
                     if (Files.isRegularFile(resource)) {
                         // Create meta data.
                         final String resourceContent;
