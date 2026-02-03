@@ -60,6 +60,7 @@ import static net.splitcells.gel.ui.editor.geal.example.SportCourseExample.sport
 import static net.splitcells.network.system.PerformanceReport.performanceReport;
 import static net.splitcells.website.server.ProgramConfig.programConfig;
 import static net.splitcells.website.server.ProjectConfig.projectConfig;
+import static net.splitcells.website.server.WebsiteServerCell.configureNoneCellInit;
 
 public class SystemCell implements Cell {
 
@@ -136,6 +137,7 @@ public class SystemCell implements Cell {
      */
     @Deprecated
     public static Config config(Config arg) {
+        configureNoneCellInit(arg);
         return arg
                 .withAdditionalProject(projectConfig("/net/splitcells/cin/"
                         , configValue(CinFileSystem.class)))
