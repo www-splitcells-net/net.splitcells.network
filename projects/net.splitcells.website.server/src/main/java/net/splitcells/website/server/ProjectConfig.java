@@ -15,6 +15,7 @@
  */
 package net.splitcells.website.server;
 
+import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.resource.FileSystemView;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
@@ -43,5 +44,16 @@ public class ProjectConfig {
 
     public FileSystemView projectFiles() {
         return projectFiles;
+    }
+
+    @Override public int hashCode() {
+        return Thing.hashCode(rootPath, projectFiles);
+    }
+
+    @Override public boolean equals(Object other) {
+        if (other instanceof ProjectConfig otherConfig) {
+            return rootPath.equals(otherConfig.rootPath) && projectFiles.equals(otherConfig.projectFiles);
+        }
+        return false;
     }
 }

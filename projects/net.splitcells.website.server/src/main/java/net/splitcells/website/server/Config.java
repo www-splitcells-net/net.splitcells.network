@@ -259,7 +259,7 @@ public class Config {
 
     /**
      * This is the list of pages, that contain all relevant licensing info of the hosted website.
-     *
+     * <p>
      * TODO IDEA Consider reading the values from all {@link Cell} of the current {@link Dem#config()} by default and as a base value.
      */
     @Getter private List<TrailLink> licensePages = list();
@@ -452,7 +452,9 @@ public class Config {
     }
 
     public Config withAdditionalProject(ProjectConfig project) {
-        additionalProjects.add(project);
+        if (!additionalProjects.contains(project)) {
+            additionalProjects.add(project);
+        }
         return this;
     }
 
