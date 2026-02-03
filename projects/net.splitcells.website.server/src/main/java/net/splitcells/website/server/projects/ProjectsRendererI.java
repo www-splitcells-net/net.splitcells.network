@@ -90,8 +90,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class ProjectsRendererI implements ProjectsRenderer {
 
-    private static final String LAYOUT_PATH = "/net/splitcells/website/layout/build.html";
-
     public static ProjectsRendererI projectsRenderer(String name
             , Function<ProjectsRenderer, ProjectRenderer> fallbackRenderer
             , Function<ProjectsRenderer, List<ProjectRenderer>> renderers
@@ -355,10 +353,10 @@ public class ProjectsRendererI implements ProjectsRenderer {
     @Override
     public Set<Path> projectsPaths() {
         if (config.mutableProjectsPath()) {
-            return calculateProjectsPaths().with(Path.of(LAYOUT_PATH.substring(1)));
+            return calculateProjectsPaths();
         }
         if (projectPathsCache.isEmpty()) {
-            projectPathsCache = Optional.of(calculateProjectsPaths().with(Path.of(LAYOUT_PATH.substring(1))));
+            projectPathsCache = Optional.of(calculateProjectsPaths());
         }
         return projectPathsCache.get();
     }
