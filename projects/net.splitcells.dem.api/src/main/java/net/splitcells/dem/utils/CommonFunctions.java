@@ -80,6 +80,32 @@ public class CommonFunctions {
                 new Throwable().printStackTrace(outF);
             }
         });
+        final PrintStream errF = new PrintStream(System.err);
+        System.setErr(new PrintStream(System.err) {
+            @Override
+            public void println(String x) {
+                errF.println(x);
+                new Throwable().printStackTrace(errF);
+            }
+
+            @Override
+            public void println(long x) {
+                errF.println(x);
+                new Throwable().printStackTrace(errF);
+            }
+
+            @Override
+            public void println(Object x) {
+                errF.println(x);
+                new Throwable().printStackTrace(errF);
+            }
+
+            @Override
+            public void println(int x) {
+                errF.println(x);
+                new Throwable().printStackTrace(errF);
+            }
+        });
     }
 
     public static String asString(byte[] content, ContentType contentType) {
