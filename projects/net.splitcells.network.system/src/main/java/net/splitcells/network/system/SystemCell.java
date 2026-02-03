@@ -176,6 +176,11 @@ public class SystemCell implements Cell {
                 .withAdditionalCssFile("net/splitcells/website/css/tabulator.min.css")
                 .withAdditionalCssFile("net/splitcells/website/css/dragula.min.css")
                 .withAdditionalCssFile("net/splitcells/website/css/highlight.css")
+                // As the Editor is the main interactive thing on the site, it is prioritized as to attract users.
+                .withAdditionalProgramConfig(programConfig("Generic Allocation Editor's Tough Love Edition"
+                        , "/net/splitcells/gel/ui/editor/geal/index")
+                        .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/net.splitcells.gel.ui.logo.jpg"))
+                        .withDescription(Optional.of("Define and solve assignment problems in text form.")))
                 .withAdditionalProgramConfig(programConfig("Splitcells Network Documentation"
                         , "/net/splitcells/network/hub/README")
                         .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/community.2016.12.11.chrom.0.dina4.jpg"))
@@ -184,10 +189,6 @@ public class SystemCell implements Cell {
                         , "/net/splitcells/website/news")
                         .withLogoPath(Optional.of("net/splitcells/website/images/average.source.code.image.generator.filling.via.horizontal.100.percent.jpg"))
                         .withDescription(Optional.of("All User and Developer Relevant News in One Place at Your Finger Tips")))
-                .withAdditionalProgramConfig(programConfig("Generic Allocation Editor's Tough Love Edition"
-                        , "/net/splitcells/gel/ui/editor/geal/index")
-                        .withLogoPath(Optional.of("net/splitcells/website/images/thumbnail/medium/net.splitcells.gel.ui.logo.jpg"))
-                        .withDescription(Optional.of("Define and solve assignment problems in text form.")))
                 .withAdditionalProcessor(EditorProcessor.PATH, editorProcessor())
                 .withAdditionalProjectsRendererExtension(performanceReport())
                 .withAdditionalProjectsRendererExtension(functionCallDoc())
