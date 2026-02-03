@@ -142,13 +142,17 @@ public class SportCourseExample implements ProjectsRendererExtension {
             , int individualCoursesPerSemester
             , int otherCoursesPerSemester) {
         val testData = stringBuilder();
-        testData.append("Assigned Sport,Assigned Sport Type\n");
+        testData.append("Assigned Course Number,Assigned Sport,Assigned Sport Type\n");
+        val coursesPerSemester = teamCoursesPerSemester + individualCoursesPerSemester + otherCoursesPerSemester;
         rangeClosed(1, semesterCount).forEach(semester -> {
             if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) require(DEFAULT_TEAM_SPORTS.size() > teamCoursesPerSemester);
+            val startingCourseNumber = coursesPerSemester * (semester - 1);
             rangeClosed(1, teamCoursesPerSemester).forEach(iTeamCourse -> {
                 val sportType = rnd.chooseOneOf(DEFAULT_TEAM_SPORTS);
                 rangeClosed(1, maxCourseSize).forEach(courseSeat -> {
-                    testData.append(SPORT_TYPES.get(0))
+                    testData.append(iTeamCourse + startingCourseNumber)
+                            .append(",")
+                            .append(SPORT_TYPES.get(0))
                             .append(",")
                             .append(sportType)
                             .append("\n");
@@ -157,16 +161,19 @@ public class SportCourseExample implements ProjectsRendererExtension {
             rangeClosed(1, individualCoursesPerSemester).forEach(iIndividualCourse -> {
                 val sportType = rnd.chooseOneOf(DEFAULT_INDIVIDUAL_SPORTS);
                 rangeClosed(1, maxCourseSize).forEach(courseSeat -> {
-                    testData.append(SPORT_TYPES.get(1))
+                    testData.append(iIndividualCourse + teamCoursesPerSemester + startingCourseNumber)
+                            .append(",")
+                            .append(SPORT_TYPES.get(1))
                             .append(",")
                             .append(sportType)
                             .append("\n");
                 });
             });
-            rangeClosed(1, otherCoursesPerSemester).forEach(iIndividualCourse -> {
-                val sportType = rnd.chooseOneOf(DEFAULT_INDIVIDUAL_SPORTS);
+            rangeClosed(1, otherCoursesPerSemester).forEach(iOtherCourse -> {
+                val sportType = rnd.chooseOneOf(DEFAULT_OTHER_SPORTS);
                 rangeClosed(1, maxCourseSize).forEach(courseSeat -> {
-                    testData.append(SPORT_TYPES.get(1))
+                    testData.append(iOtherCourse + individualCoursesPerSemester + teamCoursesPerSemester + startingCourseNumber)
+                            .append(",").append(SPORT_TYPES.get(1))
                             .append(",")
                             .append(sportType)
                             .append("\n");
