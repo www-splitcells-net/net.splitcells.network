@@ -75,6 +75,10 @@ public class MetaData {
                         filePathStr = filePathStr.substring(1);
                     }
                     if (filePathStr.contains("**")) {
+                        val regex = filePathStr
+                                .replace("**", ".*")
+                                .replace("/*", "/.");
+                        val pattern = Pattern.compile(regex);
 
                     } else {
                         val metaData = new MetaData(Path.of(filePathStr));
