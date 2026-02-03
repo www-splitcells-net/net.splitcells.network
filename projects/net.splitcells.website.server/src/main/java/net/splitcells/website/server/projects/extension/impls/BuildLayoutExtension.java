@@ -15,14 +15,18 @@
  */
 package net.splitcells.website.server.projects.extension.impls;
 
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.website.server.projects.ProjectsRenderer;
+import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.RenderRequest;
 import net.splitcells.website.server.projects.RenderResponse;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
 
+import java.nio.file.Path;
 import java.util.Optional;
 
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.website.server.projects.RenderResponse.renderResponse;
 
@@ -51,5 +55,15 @@ public class BuildLayoutExtension implements ProjectsRendererExtension {
 
     @Override public boolean requiresAuthentication(RenderRequest request) {
         return request.trail().equalContents(PATH);
+    }
+
+    @Override
+    public Set<Path> projectPaths(ProjectsRendererI projectsRenderer) {
+        return setOfUniques(Path.of(PATH.unixPathString()));
+    }
+
+    @Override
+    public Set<Path> projectPaths(ProjectPathsRequest request) {
+        return setOfUniques(Path.of(PATH.unixPathString()));
     }
 }
