@@ -20,6 +20,7 @@
     <!-- TODO Support FindBugs, SpotBugs,Emma, Cobertura und JaCoCo. -->
     <!-- TODO Support coverage test. -->
     <!-- TODO Behavior-Driven Development: consider Acceptance test via user stories: JBehave, Cucumber or JGiven -->
+    <!-- maven-toolchains-plugin is not used, as the same Java version is used for Maven, the build and its execution. -->
     <properties>
         <encoding.default>UTF-8</encoding.default>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
