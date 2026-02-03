@@ -7,4 +7,4 @@ cd ../net.splitcells.network.hub
   git remote get-url origin > /dev/null && git remote set-url origin git@codeberg.org:splitcells-net/net.splitcells.network.hub.git || git remote add origin git@codeberg.org:splitcells-net/net.splitcells.network.hub.git
   git remote get-url origin > /dev/null && git remote set-url --push origin git@codeberg.org:splitcells-net/net.splitcells.network.hub.git || git remote add origin git@codeberg.org:splitcells-net/net.splitcells.network.hub.git
   cd ..
-net.splitcells.network.hub/bin/net.splitcells.osi.repos.peers | xargs -i sh -c "cd {} && git remote get-url origin > /dev/null && git remote set-url origin git@codeberg.org:splitcells-net/{}.git || git remote add origin git@codeberg.org:splitcells-net/{}.git"
+net.splitcells.network.hub/bin/net.splitcells.shell.repos.peers | xargs -i sh -c "cd {} && git remote get-url origin > /dev/null && git remote set-url origin git@codeberg.org:splitcells-net/{}.git || git remote add origin git@codeberg.org:splitcells-net/{}.git"

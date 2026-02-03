@@ -4,4 +4,4 @@
 set -e
 git status
 cd ..
-  net.splitcells.network.hub/bin/net.splitcells.osi.repos.peers | xargs -i sh -c 'cd {} && echo $(pwd) && git push'
+  net.splitcells.network.hub/bin/net.splitcells.shell.repos.peers | xargs -i sh -c 'cd {} && echo $(pwd) && git push'

@@ -14,5 +14,5 @@ git pull --ff-only # Ensure, that current repo is up to date.
 cd ..
   test -d net.splitcells.network.hub || git clone https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
   sh -c "cd net.splitcells.network.hub && git pull --ff-only"
-  net.splitcells.network.hub/bin/net.splitcells.osi.repos.peers | xargs -i sh -c "test -d {} || git clone ssh://git@codeberg.org/splitcells-net/{}.git"
-  net.splitcells.network.hub/bin/net.splitcells.osi.repos.peers | xargs -i -P 20 sh -c "cd {} && git pull --ff-only || echo Could not pull repo {}"
+  net.splitcells.network.hub/bin/net.splitcells.shell.repos.peers | xargs -i sh -c "test -d {} || git clone ssh://git@codeberg.org/splitcells-net/{}.git"
+  net.splitcells.network.hub/bin/net.splitcells.shell.repos.peers | xargs -i -P 20 sh -c "cd {} && git pull --ff-only || echo Could not pull repo {}"

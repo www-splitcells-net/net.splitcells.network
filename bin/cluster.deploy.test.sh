@@ -6,6 +6,6 @@
 # Thereby, the word network is not overloaded with different meanings.
 # Deploys `repos.test` on all available servers.
 
-../net.splitcells.network.hub/bin/net.splitcells.osi.repos.peers \
+../net.splitcells.network.hub/bin/net.splitcells.shell.repos.peers \
   | xargs -i sh -c "cd ../{} && test -f bin/cluster.node.ssh.addresses.sh && bin/cluster.node.ssh.addresses.sh" \
   | xargs -i sh -c "ssh -T {} echo 1 && bin/worker.test.at {} || echo Skipping {}"
