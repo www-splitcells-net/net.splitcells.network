@@ -48,12 +48,12 @@ public class WebsiteServerCell implements Cell {
     @Override
     public void accept(Environment env) {
         env.withCell(DemCell.class);
-        configureNoneCellInit(env);
+        configureNoneCellInit(env.config().configValue(ServerConfig.class));
         env.config().withInitedOption(ServerService.class);
     }
 
-    public static void configureNoneCellInit(Environment env) {
-        env.config().configValue(ServerConfig.class)
+    public static void configureNoneCellInit(Config conf) {
+        conf
                 .withAdditionalProject(projectConfig("/"
                         , configValue(WebsiteServerFileSystem.class)))
                 .withAdditionalProject(projectConfig("/"
