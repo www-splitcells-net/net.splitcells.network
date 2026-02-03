@@ -15,7 +15,7 @@
  */
 package net.splitcells.dem.utils;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 public final class NotImplementedYet extends RuntimeException {
 
@@ -45,7 +45,7 @@ public final class NotImplementedYet extends RuntimeException {
 
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     private NotImplementedYet(String message) {
         super(message);
     }

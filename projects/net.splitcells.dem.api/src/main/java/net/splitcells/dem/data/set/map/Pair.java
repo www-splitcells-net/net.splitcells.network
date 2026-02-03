@@ -15,11 +15,11 @@
  */
 package net.splitcells.dem.data.set.map;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.util.AbstractMap.SimpleImmutableEntry;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class Pair<K, V> extends SimpleImmutableEntry<K, V> {
 	private static final long serialVersionUID = 6380721809354886151L;
 

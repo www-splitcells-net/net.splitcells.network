@@ -17,11 +17,10 @@ package net.splitcells.dem.utils;
 
 import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.util.Collections;
 import java.util.function.BinaryOperator;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.collectingAndThen;
@@ -32,7 +31,7 @@ import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
  *
  * @deprecated {@link Flow} is the replacement.
  */
-@JavaLegacyArtifact
+@JavaLegacy
 @Deprecated
 public final class StreamUtils {
 

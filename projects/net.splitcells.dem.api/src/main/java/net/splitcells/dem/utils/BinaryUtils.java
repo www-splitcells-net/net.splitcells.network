@@ -15,14 +15,14 @@
  */
 package net.splitcells.dem.utils;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class BinaryUtils {
     private BinaryUtils() {
         throw constructorIllegal();

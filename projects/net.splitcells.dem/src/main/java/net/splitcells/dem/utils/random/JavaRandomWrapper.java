@@ -15,14 +15,14 @@
  */
 package net.splitcells.dem.utils.random;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.util.Random;
 
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class JavaRandomWrapper implements Randomness, RndSrcCrypt {
 	private final Random rnd;
 

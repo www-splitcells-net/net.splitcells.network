@@ -16,7 +16,7 @@
 package net.splitcells.dem.resource.communication.log;
 
 import net.splitcells.dem.data.set.list.AppendableList;
-import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.tree.Tree;
@@ -61,7 +61,7 @@ public interface Log extends AppendableList<LogMessage<Tree>> {
      * @deprecated Use {@link #warnUnimplementedPart()} instead, as the class contains no relevant info.
      */
     @ReturnsThis
-    @JavaLegacyBody
+    @JavaLegacy
     @Deprecated
     default Log warnUnimplementedPart(Class<?> clazz) {
         logs().append("Unimplemented program part for class "
@@ -117,7 +117,7 @@ public interface Log extends AppendableList<LogMessage<Tree>> {
         return append(logMessage(content, context, logLevel));
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     default Log fail(Throwable throwable) {
         try {
             final var error = tree("error");
@@ -141,7 +141,7 @@ public interface Log extends AppendableList<LogMessage<Tree>> {
         }
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     /**
      * Warnings are errors, where an action is not required.
      * <p>

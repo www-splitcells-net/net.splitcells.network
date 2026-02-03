@@ -16,7 +16,7 @@
 package net.splitcells.dem.data.set.map;
 
 import net.splitcells.dem.environment.resource.ResourceOptionImpl;
-import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -40,7 +40,7 @@ public class Maps extends ResourceOptionImpl<MapFactory> {
         return rVal;
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     public static <K, V> java.util.stream.Collector<Pair<K, V>, ?, Map<K, V>> toMap() {
         return java.util.stream.Collector.of(
                 () -> configValue(Maps.class).map(),
@@ -55,7 +55,7 @@ public class Maps extends ResourceOptionImpl<MapFactory> {
     /**
      * TODO Remove this, because it is not used anywhere.
      */
-    @JavaLegacyBody
+    @JavaLegacy
     @Deprecated
     public static <T> Map<Class<? extends T>, T> variadicTypeMapping(@SuppressWarnings("unchecked") T... values) {
         return typeMapping(java.util.Arrays.asList(values));
@@ -70,7 +70,7 @@ public class Maps extends ResourceOptionImpl<MapFactory> {
      * @param <T>    type
      * @return return
      */
-    @JavaLegacyBody
+    @JavaLegacy
     @SuppressWarnings("unchecked")
     @Deprecated
     public static <T> Map<Class<? extends T>, T> typeMapping(java.util.Collection<T> values) {

@@ -15,7 +15,7 @@
  */
 package net.splitcells.website.server.project.renderer.extension.commonmark;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.website.server.Config;
 import org.commonmark.node.Link;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ import static net.splitcells.website.server.project.renderer.extension.commonmar
 import static net.splitcells.website.server.projects.ProjectsRendererI.projectsRenderer;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class LinkTranslatorTest {
     @Test
     public void testSourceRelativeLink() {

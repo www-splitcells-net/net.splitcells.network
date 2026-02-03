@@ -15,7 +15,7 @@
  */
 package net.splitcells.dem.testing.annotations;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.testing.TestTypes;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -25,12 +25,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
-
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Tag(TestTypes.UNIT_TEST)
 @Test
-@JavaLegacyArtifact
+@JavaLegacy
 public @interface UnitTest {
 }

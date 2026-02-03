@@ -15,8 +15,6 @@
  */
 package net.splitcells.dem.data.set.map;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-
 public class MutablePair<K, V> {
 
     public static <A, B> MutablePair<A, B> mutablePair(A key, B value) {

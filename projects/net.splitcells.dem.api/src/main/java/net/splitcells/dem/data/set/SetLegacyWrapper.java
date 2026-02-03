@@ -17,12 +17,12 @@ package net.splitcells.dem.data.set;
 
 import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.Flows;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.util.HashSet;
 import java.util.Optional;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class SetLegacyWrapper<T> implements Set<T> {
     public static <R> Set<R> setLegacyWrapper(java.util.Set<R> arg) {
         return new SetLegacyWrapper<>(arg, Optional.empty());

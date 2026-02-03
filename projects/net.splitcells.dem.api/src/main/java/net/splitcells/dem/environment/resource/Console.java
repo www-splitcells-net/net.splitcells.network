@@ -19,7 +19,7 @@ import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.AppendableList;
 import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.environment.config.StartTime;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.dem.resource.communication.Sender;
 import net.splitcells.dem.resource.communication.log.IsEchoToFile;
@@ -44,7 +44,7 @@ import static net.splitcells.dem.resource.Files.createDirectory;
  * This is often the case, when the program is still running.</p>
  * <p>TODO Use alternative async backend.</p>
  */
-@JavaLegacyArtifact
+@JavaLegacy
 public final class Console extends ResourceOptionImpl<Sender<String>> {
 
     public static final String CONSOLE_FILE_NAME = "echo.sum.xml";

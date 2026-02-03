@@ -19,9 +19,8 @@ import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.Flows;
 import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.order.Comparison;
-import net.splitcells.dem.data.order.Ordering;
 import net.splitcells.dem.data.set.SetT;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.utils.ExecutionException;
 
 import java.util.Arrays;
@@ -38,7 +37,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * TODO Extend interface with functional write methods: https://www.vavr.io/vavr-docs/#_list
  */
-@JavaLegacyArtifact
+@JavaLegacy
 public interface ListView<T> extends Collection<T>, java.util.List<T>, Thing, SetT<T> {
 
     default List<T> shallowCopy() {

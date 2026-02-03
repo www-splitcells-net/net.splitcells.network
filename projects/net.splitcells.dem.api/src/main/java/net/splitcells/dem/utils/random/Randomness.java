@@ -15,16 +15,12 @@
  */
 package net.splitcells.dem.utils.random;
 
-import net.splitcells.dem.data.Flow;
-import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.testing.Assertions;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.utils.MathUtils;
 
 import java.util.Iterator;
 import java.util.Random;
-import java.util.stream.Stream;
 
 import static java.lang.Math.abs;
 import static java.util.stream.IntStream.range;
@@ -33,7 +29,6 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
-import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY_KEY;
 import static net.splitcells.dem.utils.MathUtils.*;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -161,7 +156,7 @@ public interface Randomness {
         return rBase.toString();
     }
 
-    @JavaLegacyArtifact
+    @JavaLegacy
     Random asRandom();
 
     default <T> List<T> chooseAtMostMultipleOf(int numberOfThingsToChoose, List<T> args) {

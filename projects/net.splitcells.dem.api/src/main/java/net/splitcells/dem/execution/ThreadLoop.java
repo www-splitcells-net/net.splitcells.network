@@ -15,15 +15,14 @@
  */
 package net.splitcells.dem.execution;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.resource.communication.log.LogLevel;
-import net.splitcells.dem.resource.communication.log.Logs;
 
 import static net.splitcells.dem.Dem.executeThread;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class ThreadLoop {
 
     public static ThreadLoop threadLoop(Class<?> representer, Runnable loopStep) {

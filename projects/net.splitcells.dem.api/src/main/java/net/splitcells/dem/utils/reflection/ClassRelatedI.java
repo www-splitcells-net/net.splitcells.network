@@ -16,15 +16,14 @@
 package net.splitcells.dem.utils.reflection;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.io.File;
 import java.net.URL;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class ClassRelatedI implements ClassRelated {
 
     public static ClassRelated classRelated() {

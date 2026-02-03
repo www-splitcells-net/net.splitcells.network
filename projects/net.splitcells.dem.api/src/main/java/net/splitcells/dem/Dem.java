@@ -15,11 +15,6 @@
  */
 package net.splitcells.dem;
 
-import io.pyroscope.http.Format;
-import io.pyroscope.javaagent.EventType;
-import io.pyroscope.javaagent.PyroscopeAgent;
-import io.pyroscope.javaagent.config.Config;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.Cell;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.environment.EnvironmentI;
@@ -28,13 +23,12 @@ import net.splitcells.dem.environment.config.EndTime;
 import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.environment.config.framework.ConfigurationV;
 import net.splitcells.dem.environment.config.framework.Option;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.Logs;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
 import net.splitcells.dem.utils.ExecutionException;
 
-import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.ZonedDateTime;
@@ -48,7 +42,6 @@ import static net.splitcells.dem.environment.config.StaticFlags.logStaticFlags;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
-import static net.splitcells.dem.resource.communication.log.LogLevel.UNKNOWN_ERROR;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.throwableToString;
@@ -74,7 +67,7 @@ import static net.splitcells.dem.utils.StringUtils.throwableToString;
  * End processes via exceptions or main method returns instead,
  * in order to ensure to cleanly end the program.</p>
  */
-@JavaLegacyArtifact
+@JavaLegacy
 public class Dem {
     public static final String MAVEN_GROUP_ID = "net.splitcells";
     /**

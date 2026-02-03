@@ -15,7 +15,7 @@
  */
 package net.splitcells.dem.data.atom;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.utils.ExecutionException;
 
 import java.util.regex.Pattern;
@@ -31,17 +31,17 @@ public class Integers {
         throw constructorIllegal();
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     public static int parse(String arg) {
         return java.lang.Integer.parseInt(arg);
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     public static boolean isEven(Integer arg) {
         return arg % 2 == 0;
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     public static boolean isNumber(String arg) {
         return NUMBER.matcher(arg).matches();
     }

@@ -18,7 +18,7 @@ package net.splitcells.dem.data.set;
 import net.splitcells.dem.data.atom.Bool;
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.environment.config.StaticFlags;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.utils.ExecutionException;
 
 import java.util.Arrays;
@@ -31,7 +31,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public interface Set<T> extends java.util.Set<T>, SetT<T> {
 
     default T removeAny() {

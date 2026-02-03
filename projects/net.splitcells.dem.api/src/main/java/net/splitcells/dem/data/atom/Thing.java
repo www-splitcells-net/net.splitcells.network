@@ -15,7 +15,7 @@
  */
 package net.splitcells.dem.data.atom;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.utils.ExecutionException;
 
 import static net.splitcells.dem.utils.ExecutionException.execException;
@@ -42,7 +42,7 @@ public interface Thing {
         return a.equals(b);
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     static int hashCode(Object... args) {
         return java.util.Objects.hash(args);
     }

@@ -16,7 +16,7 @@
 package net.splitcells.dem.resource;
 
 import net.splitcells.dem.environment.config.ProgramName;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.utils.ExecutionException;
 
 import java.io.FileOutputStream;
@@ -48,7 +48,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
  * Maybe {@link net.splitcells.dem.environment.config.framework.Configuration} can be used for this.
  * This does not apply to code, that only provides integration to the operation system.</p>
  */
-@JavaLegacyArtifact
+@JavaLegacy
 public class FileSystems implements FileSystem {
     public static FileSystem fileSystemOnLocalHost(Path rootPath) {
         if (!java.nio.file.Files.isDirectory(rootPath)) {

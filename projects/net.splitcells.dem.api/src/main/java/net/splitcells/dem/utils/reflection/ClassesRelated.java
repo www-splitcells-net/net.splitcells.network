@@ -16,7 +16,7 @@
 package net.splitcells.dem.utils.reflection;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.util.Optional;
 
@@ -64,7 +64,7 @@ public class ClassesRelated {
 	 * @param resourceName
 	 * @return
 	 */
-    @JavaLegacyBody
+    @JavaLegacy
 	public static String resourceOfClass(Class<?> clazz, String resourceName) {
 		try {
 			return new String(clazz.getClassLoader().getResourceAsStream(resourceName).readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);

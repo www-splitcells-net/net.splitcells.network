@@ -17,7 +17,7 @@ package net.splitcells.dem.data.set;
 
 import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.Flows;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -25,7 +25,7 @@ import java.util.Iterator;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class SetI<T> implements Set<T> {
 
     public static <T> Set<T> make() {

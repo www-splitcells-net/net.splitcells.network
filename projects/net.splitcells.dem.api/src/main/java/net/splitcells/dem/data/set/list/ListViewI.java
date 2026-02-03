@@ -16,7 +16,7 @@
 package net.splitcells.dem.data.set.list;
 
 import net.splitcells.dem.data.Flow;
-import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
@@ -31,7 +31,7 @@ public class ListViewI<T> implements ListView<T> {
         this.content = content;
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     @Override
     public boolean addAll(int i, java.util.Collection<? extends T> collection) {
         throw new UnsupportedOperationException();
@@ -67,13 +67,13 @@ public class ListViewI<T> implements ListView<T> {
         return content.lastIndexOf(o);
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     @Override
     public java.util.ListIterator<T> listIterator() {
         return content.listIterator();
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     @Override
     public java.util.ListIterator<T> listIterator(int i) {
         return content.listIterator(i);
@@ -99,7 +99,7 @@ public class ListViewI<T> implements ListView<T> {
         return content.contains(o);
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     @Override
     public java.util.Iterator<T> iterator() {
         return content.iterator();
@@ -125,25 +125,25 @@ public class ListViewI<T> implements ListView<T> {
         throw new UnsupportedOperationException();
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     @Override
     public boolean containsAll(java.util.Collection<?> collection) {
         return content.containsAll(collection);
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     @Override
     public boolean addAll(java.util.Collection<? extends T> collection) {
         throw new UnsupportedOperationException();
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     @Override
     public boolean removeAll(java.util.Collection<?> collection) {
         throw new UnsupportedOperationException();
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     @Override
     public boolean retainAll(java.util.Collection<?> collection) {
         throw new UnsupportedOperationException();

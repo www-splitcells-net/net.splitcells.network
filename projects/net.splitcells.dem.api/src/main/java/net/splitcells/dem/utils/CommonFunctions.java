@@ -15,8 +15,7 @@
  */
 package net.splitcells.dem.utils;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.resource.ContentType;
 
 import java.io.File;
@@ -47,7 +46,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
  * From the perspective of the routine that receives the call, i.e. the callee,
  * the thing which is passed is a parameter.
  */
-@JavaLegacyArtifact
+@JavaLegacy
 public class CommonFunctions {
 
     public static int hashCode(Object... args) {
@@ -135,7 +134,7 @@ public class CommonFunctions {
     /**
      * TODO variadic argument support
      */
-    @JavaLegacyBody
+    @JavaLegacy
     public static <T extends Object> T[] concat(T[] a, T[] b) {
         final T[] rVal = CommonFunctions.<T>createArray(a.length + b.length);
         int currentIndex = 0;
@@ -157,7 +156,7 @@ public class CommonFunctions {
         return new String(bytes, StandardCharsets.UTF_8);
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     public static Stream<String> selectMatchesByRegex(String string, Pattern pattern, int group) {
         Stream.Builder<String> matches = Stream.builder();
         try (Scanner scanner = new Scanner(string)) {

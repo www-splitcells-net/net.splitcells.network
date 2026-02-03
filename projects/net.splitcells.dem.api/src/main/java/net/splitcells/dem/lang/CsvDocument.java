@@ -15,7 +15,7 @@
  */
 package net.splitcells.dem.lang;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 
@@ -25,7 +25,7 @@ import java.util.function.Consumer;
 
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class CsvDocument {
     public static CsvDocument csvDocument(String content, String... header) {
         return new CsvDocument(content, header);

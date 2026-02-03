@@ -17,8 +17,7 @@ package net.splitcells.dem.data.set.list;
 
 import net.splitcells.dem.data.set.SetT;
 import net.splitcells.dem.environment.config.StaticFlags;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.dem.utils.random.Randomness;
@@ -40,7 +39,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
 
     default void forEachIndexed(BiConsumer<T, Integer> consumer) {
@@ -99,7 +98,7 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
         remove(arg);
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     /**
      * This method avoids confusion with {@link java.util.List#remove(Object)}.
      *

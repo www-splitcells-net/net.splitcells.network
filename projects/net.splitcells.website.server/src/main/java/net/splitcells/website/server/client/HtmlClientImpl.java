@@ -17,7 +17,7 @@ package net.splitcells.website.server.client;
 
 import com.microsoft.playwright.*;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.website.server.ServerConfig;
 import net.splitcells.website.server.config.InternalPublicPort;
 import net.splitcells.website.server.config.PublicDomain;
@@ -46,7 +46,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
  * If this is the case, the synchronization of Playwright instance creation could be removed:
  * `[62.986s][warning][os,thread] Failed to start thread "Unknown thread" - pthread_create failed (EAGAIN) for attributes: stacksize: 1024k, guardsize: 4k, detached.`</p>
  */
-@JavaLegacyArtifact
+@JavaLegacy
 public class HtmlClientImpl implements HtmlClient {
     /**
      * @return Provides an HTTP based HTML client for {@link net.splitcells.website.server.ServerService}.

@@ -21,7 +21,7 @@ import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.auth.User;
 import io.vertx.ext.auth.authentication.AuthenticationProvider;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.website.server.security.authentication.Authentication;
 import net.splitcells.website.server.security.authentication.Authenticator;
 import net.splitcells.website.server.security.authentication.Login;
@@ -30,7 +30,7 @@ import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
 import static net.splitcells.website.server.security.authentication.UserSession.INSECURE_USER_SESSION;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class FileBasedAuthenticationProvider implements AuthenticationProvider {
     public static final String LOGIN_KEY = FileBasedAuthenticationProvider.class.getName() + ".login.key";
 

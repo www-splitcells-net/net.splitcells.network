@@ -15,7 +15,7 @@
  */
 package net.splitcells.dem.execution;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.resource.communication.log.Logs;
 
 import java.util.concurrent.ArrayBlockingQueue;
@@ -32,7 +32,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
  *
  * @param <Subject> The subject's class that processes the given events asynchronously.
  */
-@JavaLegacyArtifact
+@JavaLegacy
 public class EffectWorker<Subject> implements ExplicitEffect<Subject> {
     public static <S> EffectWorker<S> effectWorker(S subject) {
         return effectWorker(subject, new ArrayBlockingQueue<>(100, true));

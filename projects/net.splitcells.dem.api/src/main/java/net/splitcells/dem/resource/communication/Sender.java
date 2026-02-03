@@ -18,11 +18,11 @@ package net.splitcells.dem.resource.communication;
 import net.splitcells.dem.data.set.AppendableSet;
 import net.splitcells.dem.data.set.list.AppendableList;
 import net.splitcells.dem.environment.resource.Resource;
-import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 public interface Sender<T> extends AppendableList<T>, Resource {
 
-    @JavaLegacyBody
+    @JavaLegacy
     static Sender<String> stringSender(java.io.OutputStream output) {
         return new Sender<String>() {
 
@@ -61,7 +61,7 @@ public interface Sender<T> extends AppendableList<T>, Resource {
         };
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     static Sender<String> stringSenderWithoutClosing(java.io.OutputStream output) {
         return new Sender<String>() {
 

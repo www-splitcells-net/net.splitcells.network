@@ -15,10 +15,10 @@
  */
 package net.splitcells.dem.lang;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import org.apache.commons.csv.CSVRecord;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class CsvRow {
     public static CsvRow csvRow(CSVRecord argRecord) {
         return new CsvRow(argRecord);

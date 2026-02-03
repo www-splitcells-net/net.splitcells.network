@@ -15,7 +15,7 @@
  */
 package net.splitcells.dem.data.set.queue;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class ThreadSafeQueue<T> implements Queue<T> {
     public static <T> ThreadSafeQueue<T> threadSafeQueue() {
         return new ThreadSafeQueue<>();

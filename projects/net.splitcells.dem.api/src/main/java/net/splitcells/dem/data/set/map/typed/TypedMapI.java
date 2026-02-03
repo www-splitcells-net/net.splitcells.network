@@ -16,11 +16,11 @@
 package net.splitcells.dem.data.set.map.typed;
 
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class TypedMapI implements TypedMap {
 
     private final Map<Object, Object> content = map();

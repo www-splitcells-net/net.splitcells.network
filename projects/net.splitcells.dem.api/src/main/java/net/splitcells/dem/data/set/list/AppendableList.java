@@ -16,7 +16,7 @@
 package net.splitcells.dem.data.set.list;
 
 import net.splitcells.dem.data.set.AppendableSet;
-import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 
 /**
@@ -44,7 +44,7 @@ public interface AppendableList<T> extends AppendableSet<T> {
         return (R) this;
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     @SuppressWarnings("unchecked")
     @ReturnsThis
     default <R extends AppendableList<T>> R appendAll(java.util.Collection<T> arg) {
@@ -52,7 +52,7 @@ public interface AppendableList<T> extends AppendableSet<T> {
         return (R) this;
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     @Override
     default <R extends AppendableSet<T>> R addAll(java.util.Collection<T> value) {
         return appendAll(value);

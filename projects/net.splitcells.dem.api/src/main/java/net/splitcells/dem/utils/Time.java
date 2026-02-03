@@ -15,7 +15,7 @@
  */
 package net.splitcells.dem.utils;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 
 import java.time.LocalDateTime;
@@ -24,7 +24,7 @@ import java.time.temporal.ChronoUnit;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class Time {
     private Time() {
         throw constructorIllegal();

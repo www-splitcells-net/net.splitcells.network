@@ -17,7 +17,7 @@ package net.splitcells.network.worker.via.java;
 
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.ProgramName;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.dem.resource.Files;
 import org.junit.platform.engine.TestExecutionResult;
@@ -53,7 +53,7 @@ import static net.splitcells.network.worker.via.java.repo.Repositories.repositor
  * <p>{@link #BUILDER_RUNTIME_LOG}"/&lt;host&gt;.csv" contains the start times of all runs for a given host.
  * </p>
  */
-@JavaLegacyArtifact
+@JavaLegacy
 public class Logger implements TestExecutionListener {
 
     public static Logger logger() {

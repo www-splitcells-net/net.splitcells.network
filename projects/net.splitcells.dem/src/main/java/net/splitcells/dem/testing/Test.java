@@ -17,10 +17,7 @@ package net.splitcells.dem.testing;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.lang.annotations.JavaLegacyBody;
-import org.junit.platform.engine.discovery.DiscoverySelectors;
-import org.junit.platform.launcher.TagFilter;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
 import org.junit.platform.launcher.core.LauncherFactory;
@@ -28,13 +25,10 @@ import org.junit.platform.launcher.core.LauncherFactory;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.FailureDetector.failureDetector;
 import static net.splitcells.dem.testing.LiveReporter.liveReporter;
-import static net.splitcells.dem.testing.TestTypes.BENCHMARK_RUNTIME;
-import static net.splitcells.dem.testing.TestTypes.CAPABILITY_TEST;
 import static net.splitcells.dem.testing.TestTypes.FUNCTIONAL_TEST;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
 import static net.splitcells.dem.testing.TestTypes.extensiveTestTags;
-import static org.junit.platform.engine.discovery.ClassNameFilter.includeClassNamePatterns;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.*;
 import static org.junit.platform.engine.discovery.PackageNameFilter.includePackageNames;
 import static org.junit.platform.launcher.TagFilter.includeTags;
@@ -50,7 +44,7 @@ import static org.junit.platform.launcher.TagFilter.includeTags;
  * <p>TODO Testing without Maven seems to be faster.</p>
  * <p>TODO Execute test during production use in order to find errors and to conduct stress tests.</p>
  */
-@JavaLegacyArtifact
+@JavaLegacy
 public class Test {
     public static void main(String... arg) {
         if (!test()) {

@@ -15,11 +15,11 @@
  */
 package net.splitcells.dem.data.set.queue;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.util.Optional;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public interface Queue<T> extends java.util.Queue<T> {
     Optional<T> pollNext();
 }

@@ -18,7 +18,7 @@ package net.splitcells.website.server.translation.to.html;
 import net.sf.saxon.TransformerFactoryImpl;
 import net.sf.saxon.lib.Logger;
 import net.splitcells.dem.lang.Xml;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 
 import java.io.*;
@@ -36,7 +36,7 @@ import static net.splitcells.dem.resource.communication.log.Logs.logs;
  * The <a href="http://saxon.sourceforge.net/">SAXON The XSLT and XQuery
  * Processor</a> is used by default.
  */
-@JavaLegacyArtifact
+@JavaLegacy
 public class XslTransformer {
 
     static {

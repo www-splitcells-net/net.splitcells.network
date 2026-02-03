@@ -15,7 +15,7 @@
  */
 package net.splitcells.gel.editor.geal.parser;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.source.geal.GealParser;
 import net.splitcells.gel.editor.geal.lang.VariableDefinitionDesc;
 
@@ -24,7 +24,7 @@ import static net.splitcells.gel.editor.geal.lang.VariableDefinitionDesc.variabl
 import static net.splitcells.gel.editor.geal.parser.FunctionCallChainParser.parseFunctionCallChain;
 import static net.splitcells.gel.editor.lang.SourceCodeQuote.sourceCodeQuote;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class VariableDefinitionParser extends net.splitcells.dem.source.geal.GealParserBaseVisitor<VariableDefinitionDesc> {
     public static VariableDefinitionDesc parseVariableDefinition(GealParser.Variable_definitionContext arg) {
         return new VariableDefinitionParser().visitVariable_definition(arg);

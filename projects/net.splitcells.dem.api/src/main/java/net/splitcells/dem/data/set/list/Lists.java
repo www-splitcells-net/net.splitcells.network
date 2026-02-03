@@ -15,9 +15,7 @@
  */
 package net.splitcells.dem.data.set.list;
 
-import net.splitcells.dem.environment.config.StaticFlags;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -26,7 +24,7 @@ import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public final class Lists {
 
     public static <T> T lastValueOf(T... arg) {
@@ -36,7 +34,7 @@ public final class Lists {
         return arg[arg.length - 1];
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     public static <T> java.util.stream.Collector<T, ?, List<T>> toList() {
         return java.util.stream.Collector.of(
                 () -> list(),
@@ -53,7 +51,7 @@ public final class Lists {
     }
 
     @SafeVarargs
-    @JavaLegacyBody
+    @JavaLegacy
     public static <T> List<T> concat(java.util.Collection<T>... collections) {
         final var rVal = Lists.<T>list();
         for (java.util.Collection<T> collection : collections) {
@@ -66,7 +64,7 @@ public final class Lists {
         return ListI._list();
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     public static <T> List<T> listWithValuesOf(java.util.Collection<T> values) {
         final var list = Lists.<T>list();
         list.addAll(values);
@@ -74,13 +72,13 @@ public final class Lists {
     }
 
     @SafeVarargs
-    @JavaLegacyBody
+    @JavaLegacy
     public static <T> List<T> listWithValuesOf(T... values) {
         return listWithValuesOf(java.util.Arrays.asList(values));
     }
 
     @SafeVarargs
-    @JavaLegacyBody
+    @JavaLegacy
     public static <T> List<T> list(T... args) {
         final var list = ListI.<T>_list();
         list.addAll(java.util.Arrays.asList(args));

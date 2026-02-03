@@ -120,7 +120,7 @@ public class SourceCodeCheckMojo extends AbstractMojo {
     private void checkJavaSourceCodeFile(Path file) {
         try {
             final var fileContent = java.nio.file.Files.readString(file);
-            if (fileContent.contains("@JavaLegacyArtifact")) {
+            if (fileContent.contains("@JavaLegacy")) {
                 getLog().debug("Ignoring Java legacy file: " + file);
                 return;
             }

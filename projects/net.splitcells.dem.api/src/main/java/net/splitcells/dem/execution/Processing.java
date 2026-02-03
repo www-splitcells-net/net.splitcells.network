@@ -15,7 +15,7 @@
  */
 package net.splitcells.dem.execution;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 
 import java.util.concurrent.Semaphore;
@@ -29,7 +29,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
  * @param <Argument>
  * @param <Result>
  */
-@JavaLegacyArtifact
+@JavaLegacy
 public class Processing<Argument, Result> {
 
 

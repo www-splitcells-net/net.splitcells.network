@@ -15,7 +15,7 @@
  */
 package net.splitcells.dem.testing.annotations;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -28,6 +28,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Disabled
 @Test
-@JavaLegacyArtifact
+@JavaLegacy
 public @interface DisabledTest {
 }

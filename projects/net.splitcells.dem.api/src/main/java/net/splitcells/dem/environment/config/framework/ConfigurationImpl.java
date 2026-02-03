@@ -20,7 +20,7 @@ import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.map.typed.TypedMap;
 import net.splitcells.dem.environment.config.StaticFlags;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.utils.ExecutionException;
 
 import java.util.*;
@@ -50,7 +50,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
  * but the users of {@link Configuration} can rely on the fact,
  * that the config values are final after the environment consumer's execution.</p>
  */
-@JavaLegacyArtifact
+@JavaLegacy
 public class ConfigurationImpl implements Configuration {
     private final Map<Object, Object> configStore;
     @Deprecated

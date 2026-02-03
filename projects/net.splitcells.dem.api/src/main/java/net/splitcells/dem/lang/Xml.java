@@ -16,7 +16,7 @@
 package net.splitcells.dem.lang;
 
 import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.lang.namespace.NameSpace;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.utils.ExecutionException;
@@ -53,7 +53,7 @@ import static org.w3c.dom.Node.ELEMENT_NODE;
  * Use this only, in order to parse, render and transform XML.
  * Do not handle XML content in Java code directly via this API or Java's XML API!
  */
-@JavaLegacyArtifact
+@JavaLegacy
 public final class Xml {
 
     public static String escape(String arg) {

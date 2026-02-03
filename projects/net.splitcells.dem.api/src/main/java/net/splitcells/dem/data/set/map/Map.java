@@ -17,10 +17,9 @@ package net.splitcells.dem.data.set.map;
 
 import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.order.Comparison;
-import net.splitcells.dem.data.order.Ordering;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.testing.need.Need;
 import net.splitcells.dem.utils.ExecutionException;
 
@@ -37,7 +36,7 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.need.NeedsCheck.checkNeed;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public interface Map<Key, Value> extends java.util.Map<Key, Value> {
 
     /**

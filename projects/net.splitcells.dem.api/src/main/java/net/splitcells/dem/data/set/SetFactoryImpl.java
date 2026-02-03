@@ -15,18 +15,18 @@
  */
 package net.splitcells.dem.data.set;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public final class SetFactoryImpl implements SetF {
-    @JavaLegacyBody
+    @JavaLegacy
     @Override
     public <T> java.util.Set<T> lagacySet() {
         return new java.util.HashSet<>();
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     @Override
     public <T> java.util.Set<T> legacySet(java.util.Collection<T> arg) {
         return new java.util.HashSet<>(arg);
@@ -37,7 +37,7 @@ public final class SetFactoryImpl implements SetF {
         throw notImplementedYet();
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     @Override
     public <T> Set<T> set(java.util.Collection<T> arg) {
         throw notImplementedYet();

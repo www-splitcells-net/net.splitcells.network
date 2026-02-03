@@ -15,8 +15,7 @@
  */
 package net.splitcells.website.server.project.renderer.extension.commonmark;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.resource.Trail;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.website.server.project.validator.RenderingValidator;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import org.commonmark.node.AbstractVisitor;
@@ -43,7 +42,7 @@ import static net.splitcells.dem.resource.Trail.withoutSuffixElements;
  * used in order to ensure,
  * that the heuristics are good enough for now.</p>
  */
-@JavaLegacyArtifact
+@JavaLegacy
 public class LinkTranslator extends AbstractVisitor {
 
     private static final Pattern PROTOCOL = Pattern.compile("([a-z]+://)(.*)");

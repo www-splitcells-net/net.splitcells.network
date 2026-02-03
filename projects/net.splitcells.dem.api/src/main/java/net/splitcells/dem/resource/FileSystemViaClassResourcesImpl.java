@@ -18,7 +18,7 @@ package net.splitcells.dem.resource;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.utils.ExecutionException;
 
 import java.io.InputStream;
@@ -46,7 +46,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
  * to work in different environments.
  * This would probably the case for i.e. TeaVM.</p>
  */
-@JavaLegacyArtifact
+@JavaLegacy
 public class FileSystemViaClassResourcesImpl implements FileSystemView {
 
     /**

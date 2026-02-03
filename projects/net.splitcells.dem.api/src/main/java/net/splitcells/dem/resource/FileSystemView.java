@@ -15,8 +15,6 @@
  */
 package net.splitcells.dem.resource;
 
-import net.splitcells.dem.lang.annotations.JavaLegacy;
-
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.Optional;
@@ -66,15 +64,12 @@ public interface FileSystemView {
         return isDirectory(Path.of(path));
     }
 
-    @JavaLegacy
     Stream<Path> walkRecursively();
 
-    @JavaLegacy
     default Stream<Path> walkRecursively(String path) {
         return walkRecursively(Path.of(path));
     }
 
-    @JavaLegacy
     Stream<Path> walkRecursively(Path path);
 
     byte[] readFileAsBytes(Path path);

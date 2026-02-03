@@ -15,7 +15,7 @@
  */
 package net.splitcells.dem.data.order;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -44,7 +44,7 @@ public interface Comparison<T> extends java.util.Comparator<T> {
         }
     }
 
-    @JavaLegacyArtifact
+    @JavaLegacy
     @Override
     default int compare(T a, T b) {
         final Ordering rBase = compareTo(a, b);

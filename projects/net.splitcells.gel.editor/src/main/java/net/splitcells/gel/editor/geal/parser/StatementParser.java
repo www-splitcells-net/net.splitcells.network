@@ -15,18 +15,16 @@
  */
 package net.splitcells.gel.editor.geal.parser;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.source.geal.GealParser;
-import net.splitcells.gel.editor.geal.lang.FunctionCallChainDesc;
 import net.splitcells.gel.editor.geal.lang.StatementDesc;
-import net.splitcells.gel.editor.geal.lang.VariableDefinitionDesc;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.editor.geal.parser.FunctionCallChainParser.parseFunctionCallChain;
 import static net.splitcells.gel.editor.geal.parser.VariableDefinitionParser.parseVariableDefinition;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class StatementParser extends net.splitcells.dem.source.geal.GealParserBaseVisitor<StatementDesc> {
 
     public static StatementDesc parseStatement(GealParser.StatementContext statementContext) {

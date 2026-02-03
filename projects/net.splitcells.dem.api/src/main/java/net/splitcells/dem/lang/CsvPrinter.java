@@ -16,7 +16,7 @@
 package net.splitcells.dem.lang;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
@@ -28,7 +28,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 /**
  * @deprecated Use or migrate to {@link CsvDocument} instead.
  */
-@JavaLegacyArtifact
+@JavaLegacy
 public class CsvPrinter implements AutoCloseable {
 
     public static CsvPrinter csvDocument(List<String> header) {

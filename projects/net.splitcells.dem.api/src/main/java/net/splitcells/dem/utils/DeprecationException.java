@@ -15,12 +15,12 @@
  */
 package net.splitcells.dem.utils;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 /**
  * Signals that a piece of code should not be used, also it is not removed yet.
  */
-@JavaLegacyArtifact
+@JavaLegacy
 public class DeprecationException extends RuntimeException {
     public static DeprecationException deprecationException() {
         return new DeprecationException();

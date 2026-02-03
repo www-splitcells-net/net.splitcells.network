@@ -16,7 +16,7 @@
 package net.splitcells.dem.data.set.map;
 
 import net.splitcells.dem.environment.config.StaticFlags;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.utils.ExecutionException;
 
 import java.util.HashMap;
@@ -25,7 +25,7 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class MapImpl<K, V> extends HashMap<K, V> implements Map<K, V> {
 
     @Override

@@ -15,12 +15,12 @@
  */
 package net.splitcells.website.server.project.renderer.extension.commonmark;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import org.commonmark.node.Node;
 
 import java.time.LocalDateTime;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class Event {
     public static Event event(LocalDateTime dateTime, Node node) {
         return new Event(dateTime, node);

@@ -15,7 +15,7 @@
  */
 package net.splitcells.dem.data.set.map;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import static net.splitcells.dem.data.set.map.MapLegacyWrapper.mapLegacyWrapper;
 
@@ -32,13 +32,13 @@ public class MapFactoryRandom implements MapFactory {
 
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     @Override
     public <K, V> Map<K, V> map() {
         return mapLegacyWrapper(new java.util.HashMap<K, V>(), false);
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     @Override
     public <K, V> Map<K, V> map(java.util.Map<K, V> arg) {
         return mapLegacyWrapper(new java.util.HashMap<K, V>(arg), false);

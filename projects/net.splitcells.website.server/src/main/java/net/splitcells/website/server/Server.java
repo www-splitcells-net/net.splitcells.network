@@ -37,7 +37,7 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.execution.ExplicitEffect;
 import net.splitcells.dem.execution.Processing;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.utils.ExecutionException;
@@ -92,7 +92,7 @@ import static net.splitcells.website.server.security.authentication.UserSession.
 import static net.splitcells.website.server.vertx.FileBasedAuthenticationProvider.LOGIN_KEY;
 import static net.splitcells.website.server.vertx.FileBasedAuthenticationProvider.fileBasedAuthenticationProvider;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class Server {
 
     private Server() {

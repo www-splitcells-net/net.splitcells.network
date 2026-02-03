@@ -20,7 +20,7 @@ import net.splitcells.dem.data.set.list.AppendableList;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.StartTime;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.host.ProcessPath;
 
@@ -47,7 +47,7 @@ import static net.splitcells.dem.resource.Files.createDirectory;
  * that allows one to inject log message interceptors.
  */
 @Deprecated
-@JavaLegacyArtifact
+@JavaLegacy
 public class LoggerRouter implements Logger {
 
     public static LoggerRouter uiRouter(Predicate<LogMessage<Tree>> messageFilter) {

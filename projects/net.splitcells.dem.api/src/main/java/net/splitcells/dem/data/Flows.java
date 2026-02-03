@@ -15,8 +15,6 @@
  */
 package net.splitcells.dem.data;
 
-import net.splitcells.dem.lang.annotations.JavaLegacy;
-
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Optional;
@@ -37,7 +35,6 @@ import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
-@JavaLegacy
 public class Flows<T> implements Flow<T> {
 
     public static <R> Flow<R> flow(java.util.stream.Stream<R> arg) {

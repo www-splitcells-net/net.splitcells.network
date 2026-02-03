@@ -16,7 +16,7 @@
 package net.splitcells.website.server.project.renderer.extension.commonmark;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import org.commonmark.node.AbstractVisitor;
 import org.commonmark.node.ListItem;
 import org.commonmark.node.StrongEmphasis;
@@ -34,7 +34,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
  * Extracts {@link Event} of changelogs written in CommonMark, by searching for list entries starting with {@link #DATE_TIME_PATTERN}.
  * This can be seen as a not standardized extension of <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>.
  */
-@JavaLegacyArtifact
+@JavaLegacy
 public class EventExtractor extends AbstractVisitor {
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");

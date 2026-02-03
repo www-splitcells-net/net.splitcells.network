@@ -15,13 +15,13 @@
  */
 package net.splitcells.dem.utils.random;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.nio.ByteBuffer;
 import java.security.SecureRandom;
 import java.util.Random;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class BuilderRandomDeterministic implements RndSrcF {
 
     private final Random seedGenerator;

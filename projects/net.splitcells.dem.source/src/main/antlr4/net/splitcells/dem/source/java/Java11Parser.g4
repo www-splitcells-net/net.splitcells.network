@@ -35,11 +35,11 @@ options {
 }
 /* This is the root node. Root nodes should be placed on the start of the document.
  *
- * Normally, one would have to add the rule `(.)*? Keysymbol_at Keyword_JavaLegacyArtifact (.)*? EOF` to this rule,
+ * Normally, one would have to add the rule `(.)*? Keysymbol_at Keyword_JavaLegacy (.)*? EOF` to this rule,
  * but this is avoided by the calling Java code, that checks for this property manually instead.
  * This is done, because such a rule breaks all error messages of the ANTLR4 parser.
  * As this rule basically says,
- * that no grammar applies to a source code file containing `@JavaLegacyArtifact`,
+ * that no grammar applies to a source code file containing `@Keyword_JavaLegacy`,
  * this is also a rule, we can ignore.
  */
 source_unit
@@ -90,7 +90,7 @@ call_arguments_next
     : Comma call_arguments_element
     ;
 class_definition
-    : javadoc? Keysymbol_at Keyword_JavaLegacyBody (.)*?
+    : javadoc? Keysymbol_at Keyword_JavaLegacy (.)*?
     | javadoc? annotation* Keyword_public? Keyword_final?
         /* Keyword_abstract? TODO Is this really needed? */
     	Keyword_class
@@ -102,7 +102,7 @@ class_extension
 	: (Keyword_extends type_declaration)? (Keyword_implements type_declaration (Comma type_declaration)* )? Extension_Exception?
 	;
 class_member
-    : javadoc? Keysymbol_at Keyword_JavaLegacyBody (.)*? Brace_curly_open (.)*? Brace_curly_closed
+    : javadoc? Keysymbol_at Keyword_JavaLegacy (.)*? Brace_curly_open (.)*? Brace_curly_closed
     | class_constructor
     | class_member_class_definition
     | class_member_method_definition
@@ -267,7 +267,7 @@ interface_definition_member_static
 	;
 interface_definition_member
 	: interface_definition_member_method
-	| javadoc? Keysymbol_at Keyword_JavaLegacyBody (.)*?
+	| javadoc? Keysymbol_at Keyword_JavaLegacy (.)*?
 	;
 javadoc
     : Javadoc /*Javadoc_start Javadoc_end*/
@@ -294,8 +294,7 @@ name
      */
     : Name
     | Keyword_class
-    | Keyword_JavaLegacyBody
-    | Keyword_JavaLegacyArtifact
+    | Keyword_JavaLegacy
     | Keyword_super
     | Keyword_var
     | Keyword_Java

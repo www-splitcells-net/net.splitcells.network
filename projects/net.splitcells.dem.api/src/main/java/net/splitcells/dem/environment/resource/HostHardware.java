@@ -15,12 +15,9 @@
  */
 package net.splitcells.dem.environment.resource;
 
-import net.splitcells.dem.lang.annotations.JavaLegacy;
-
 /**
  * States how many CPU processors of the hardware are available for Java.
  */
-@JavaLegacy
 public class HostHardware {
     private HostHardware() {
 

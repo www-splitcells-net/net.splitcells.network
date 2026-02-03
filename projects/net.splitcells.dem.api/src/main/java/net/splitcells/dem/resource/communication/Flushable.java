@@ -15,9 +15,9 @@
  */
 package net.splitcells.dem.resource.communication;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public interface Flushable extends java.io.Flushable {
 
 	/**

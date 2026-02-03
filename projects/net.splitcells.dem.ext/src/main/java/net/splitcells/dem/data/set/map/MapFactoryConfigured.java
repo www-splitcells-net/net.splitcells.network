@@ -18,7 +18,7 @@ package net.splitcells.dem.data.set.map;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.atom.Bool;
 import net.splitcells.dem.environment.config.IsDeterministic;
-import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.util.Optional;
 
@@ -47,7 +47,7 @@ public class MapFactoryConfigured implements MapFactory {
         return mapFactory.map();
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     @Override
     public <K, V> Map<K, V> map(java.util.Map<K, V> arg) {
         return mapFactory.map(arg);

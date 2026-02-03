@@ -16,7 +16,7 @@
 package net.splitcells.dem.data.set;
 
 import net.splitcells.dem.environment.resource.ResourceOptionImpl;
-import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.SetFactoryImplConfigured.setFiConfigured;
@@ -28,7 +28,7 @@ public class Sets extends ResourceOptionImpl<SetF> {
         super(() -> setFiConfigured());
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     public static <T> java.util.stream.Collector<T, ?, Set<T>> toSetOfUniques() {
         return java.util.stream.Collector.of(
                 Sets::<T>setOfUniques,
@@ -40,7 +40,7 @@ public class Sets extends ResourceOptionImpl<SetF> {
         );
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     @SafeVarargs
     public static <T> Set<T> merge(java.util.Collection<T>... collections) {
         final var rVal = configValue(Sets.class).<T>set();
@@ -58,7 +58,7 @@ public class Sets extends ResourceOptionImpl<SetF> {
         }
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     @SafeVarargs
     public static <T> Set<T> setOfUniques(T... args) {
         if (INLINE_STANDARD_FACTORIES) {

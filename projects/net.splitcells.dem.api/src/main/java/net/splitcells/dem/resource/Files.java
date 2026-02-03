@@ -16,7 +16,7 @@
 package net.splitcells.dem.resource;
 
 import net.splitcells.dem.environment.config.ProgramName;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.lang.tree.Tree;
 import org.apache.commons.io.FileUtils;
 
@@ -39,7 +39,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
  * This class should not be used in code directly most of the time.
  * Use {@link FileSystem} instead.</p>
  */
-@JavaLegacyArtifact
+@JavaLegacy
 public interface Files {
 
     static void processInTemporaryFolder(Consumer<Path> process) {

@@ -18,7 +18,7 @@ package net.splitcells.dem.data.set;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.atom.Bool;
 import net.splitcells.dem.environment.config.IsDeterministic;
-import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.util.Optional;
 
@@ -42,13 +42,13 @@ public class SetFactoryImplConfigured implements SetF {
         }
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     @Override
     public <T> java.util.Set<T> lagacySet() {
         return setF.lagacySet();
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     @Override
     public <T> java.util.Set<T> legacySet(java.util.Collection<T> arg) {
         return setF.legacySet(arg);
@@ -73,7 +73,7 @@ public class SetFactoryImplConfigured implements SetF {
         return setF.set();
     }
 
-    @JavaLegacyBody
+    @JavaLegacy
     @Override
     public <T> Set<T> set(java.util.Collection<T> arg) {
         return setF.set(arg);

@@ -15,7 +15,7 @@
  */
 package net.splitcells.dem.data.order;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -25,7 +25,7 @@ import java.util.function.Function;
  *
  * @param <T>
  */
-@JavaLegacyArtifact
+@JavaLegacy
 public class Comparators<T> implements Comparison<T> {
 
     public static final Comparison<String> ASCENDING_STRINGS = comparatorLegacy(String::compareTo);
@@ -93,7 +93,7 @@ public class Comparators<T> implements Comparison<T> {
      * @param <T>        Type of Values being Compared
      * @return Wrapped Comparator
      */
-    @JavaLegacyArtifact
+    @JavaLegacy
     public static <T> Comparison<T> comparatorLegacy(BiFunction<T, T, Integer> comparator) {
         return legacyComparator(comparator);
 

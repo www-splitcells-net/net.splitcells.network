@@ -16,7 +16,7 @@
 package net.splitcells.dem.data.order;
 
 import net.splitcells.dem.environment.config.StaticFlags;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import static net.splitcells.dem.data.atom.Bools.bool;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -57,7 +57,7 @@ public interface Ordered<T> extends Comparable<T>, OrderingCheck<T> {
 		}
 	}
 
-	@JavaLegacyArtifact
+	@JavaLegacy
 	@Override
 	default int compareTo(T arg) {
 		final Ordering rBase = compare_to(arg);

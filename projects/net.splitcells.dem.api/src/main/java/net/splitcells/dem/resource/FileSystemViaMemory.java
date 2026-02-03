@@ -16,7 +16,7 @@
 package net.splitcells.dem.resource;
 
 import com.google.common.jimfs.Jimfs;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.utils.ExecutionException;
 
 import java.io.IOException;
@@ -29,7 +29,7 @@ import java.util.stream.Stream;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class FileSystemViaMemory implements FileSystem {
 
     public static FileSystem fileSystemViaMemory() {

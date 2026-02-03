@@ -17,7 +17,7 @@ package net.splitcells.website.server.project;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.Xml;
-import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.ContentType;
@@ -385,7 +385,7 @@ public class ProjectRendererI implements ProjectRenderer {
      * @param type        type
      * @return return
      */
-    @JavaLegacyBody
+    @JavaLegacy
     private Path resolveSourceFolder(String projectPath, String type) {
         if (flatRepository) {
             projectPath = projectPath.replace(resourceRootPath.substring(1), "");

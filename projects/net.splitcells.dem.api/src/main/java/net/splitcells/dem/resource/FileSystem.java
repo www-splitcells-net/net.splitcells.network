@@ -17,7 +17,6 @@ package net.splitcells.dem.resource;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.environment.config.framework.Option;
-import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 
 import java.nio.file.Path;
@@ -111,7 +110,6 @@ public interface FileSystem extends FileSystemView {
      * @return Returns the {@link Path}, that points to the same directory as this {@link FileSystem},
      * if this {@link FileSystem} supports creating such a {@link Path} object.
      */
-    @JavaLegacy
     default Optional<Path> javaLegacyPath() {
         return Optional.empty();
     }
@@ -124,7 +122,6 @@ public interface FileSystem extends FileSystemView {
      * @param path The path relative to this {@link FileSystem}, for which the legacy access object is to be created.
      * @return This is a {@link Path}, that provides read or write access to the request path.
      */
-    @JavaLegacy
     default Optional<Path> javaLegacyPath(Path path) {
         return Optional.empty();
     }

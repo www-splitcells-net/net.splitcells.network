@@ -15,7 +15,7 @@
  */
 package net.splitcells.dem.testing.annotations;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.testing.TestTypes;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -29,6 +29,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Tag(TestTypes.CAPABILITY_TEST)
 @Test
-@JavaLegacyArtifact
+@JavaLegacy
 public @interface CapabilityTest {
 }

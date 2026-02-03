@@ -15,7 +15,7 @@
  */
 package net.splitcells.dem.utils;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.testing.reporting.ErrorReporter;
 
 import java.nio.charset.StandardCharsets;
@@ -27,7 +27,7 @@ import static net.splitcells.dem.testing.reporting.ErrorReporting.getWithReporte
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class StringUtils {
     private StringUtils() {
         throw constructorIllegal();

@@ -16,7 +16,7 @@
 package net.splitcells.dem.data.set.map;
 
 import net.splitcells.dem.environment.config.StaticFlags;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.utils.ExecutionException;
 
 import java.util.Collection;
@@ -26,7 +26,7 @@ import java.util.Set;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class MapLegacyWrapper<K, V> implements Map<K, V> {
 
     public static <K1, V1> Map<K1, V1> mapLegacyWrapper(java.util.Map<K1, V1> content) {

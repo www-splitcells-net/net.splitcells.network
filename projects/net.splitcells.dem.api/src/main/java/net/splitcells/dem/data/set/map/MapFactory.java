@@ -16,13 +16,13 @@
 package net.splitcells.dem.data.set.map;
 
 import net.splitcells.dem.environment.resource.Resource;
-import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 public interface MapFactory extends Resource {
 
     <K, V> Map<K, V> map();
 
-    @JavaLegacyBody
+    @JavaLegacy
     <K, V> Map<K, V> map(java.util.Map<K, V> arg);
 
     /**

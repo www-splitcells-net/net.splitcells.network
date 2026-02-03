@@ -15,7 +15,7 @@
  */
 package net.splitcells.dem.data.atom;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.utils.CommonFunctions;
 
 public class BoolI implements Bool {
@@ -92,7 +92,7 @@ public class BoolI implements Bool {
         return (R) new BoolI(this.value);
     }
 
-    @JavaLegacyArtifact
+    @JavaLegacy
     @Override
     public boolean toJavaPrimitive() {
         return value;

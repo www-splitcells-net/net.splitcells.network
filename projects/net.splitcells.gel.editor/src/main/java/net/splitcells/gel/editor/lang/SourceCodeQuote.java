@@ -17,7 +17,6 @@ package net.splitcells.gel.editor.lang;
 
 import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.lang.tree.Tree;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -26,7 +25,6 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.source.SourceUtils.root;
 
-@JavaLegacy
 public class SourceCodeQuote {
     public static SourceCodeQuote emptySourceCodeQuote() {
         return sourceCodeQuote("", "", 0);

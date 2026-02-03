@@ -16,7 +16,7 @@
 package net.splitcells.dem.utils;
 
 import net.splitcells.dem.data.atom.Integers;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -26,7 +26,7 @@ import java.time.format.DateTimeFormatter;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class TimeUtils {
 
     private static final DateTimeFormatter UTC_DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");

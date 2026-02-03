@@ -16,7 +16,7 @@
 package net.splitcells.dem.lang;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.lang.tree.Tree;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
@@ -24,7 +24,7 @@ import org.antlr.v4.runtime.misc.ParseCancellationException;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class AntlrUtils {
     private AntlrUtils() {
         throw constructorIllegal();

@@ -18,7 +18,7 @@ package net.splitcells.dem.environment.resource;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.dem.utils.StringUtils;
 
@@ -29,7 +29,6 @@ import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.IntStream;
 
@@ -37,7 +36,7 @@ import static net.splitcells.dem.Dem.executeThread;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class HostUtilizationRecorder implements Service {
 
     public static HostUtilizationRecorder hostUtilizationRecorder() {

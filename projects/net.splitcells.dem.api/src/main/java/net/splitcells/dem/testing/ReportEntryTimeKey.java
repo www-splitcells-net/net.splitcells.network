@@ -15,12 +15,12 @@
  */
 package net.splitcells.dem.testing;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.time.format.DateTimeFormatter;
 
 @Deprecated
-@JavaLegacyArtifact
+@JavaLegacy
 public class ReportEntryTimeKey {
 
     public static final ReportEntryTimeKey START_TIME = new ReportEntryTimeKey();

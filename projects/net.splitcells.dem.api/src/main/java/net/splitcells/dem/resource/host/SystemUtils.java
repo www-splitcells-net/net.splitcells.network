@@ -16,9 +16,7 @@
 package net.splitcells.dem.resource.host;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
-import net.splitcells.dem.lang.annotations.JavaLegacyBody;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 
 import java.io.*;
@@ -37,7 +35,7 @@ import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
  * The other functions do not have access to the same environment, as the user's default shell.
  * For instance, the PATH variable seems to be different.
  */
-@JavaLegacyArtifact
+@JavaLegacy
 public final class SystemUtils {
     private SystemUtils() {
         throw constructorIllegal();

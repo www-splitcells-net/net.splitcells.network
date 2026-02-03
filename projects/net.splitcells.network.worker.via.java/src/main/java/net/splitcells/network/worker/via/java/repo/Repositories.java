@@ -15,14 +15,14 @@
  */
 package net.splitcells.network.worker.via.java.repo;
 
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import org.eclipse.jgit.api.Git;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.nio.file.Path;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class Repositories implements Repository {
     public static Repository repository(Path path) {
         return new Repositories(path);

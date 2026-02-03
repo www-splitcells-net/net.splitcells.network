@@ -16,7 +16,7 @@
 package net.splitcells.dem.utils;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.util.stream.IntStream;
 
@@ -27,7 +27,7 @@ import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_C
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public final class MathUtils {
 
     /**

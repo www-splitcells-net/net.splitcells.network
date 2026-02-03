@@ -16,9 +16,9 @@
 package net.splitcells.website.server.vertx;
 
 import io.vertx.core.impl.NoStackTraceThrowable;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class DocumentNotFound extends NoStackTraceThrowable {
     public DocumentNotFound(String message) {
         super(message);

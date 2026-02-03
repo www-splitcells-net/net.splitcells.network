@@ -17,11 +17,11 @@ package net.splitcells.dem.data.set.list;
 
 import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.Flows;
-import net.splitcells.dem.lang.annotations.JavaLegacyArtifact;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.util.ArrayList;
 
-@JavaLegacyArtifact
+@JavaLegacy
 public class ListI<T> extends ArrayList<T> implements List<T> {
     public static <T> List<T> _list() {
         return new ListI<>();
