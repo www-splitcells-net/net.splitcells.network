@@ -87,7 +87,7 @@ public class NotificationQueueParser {
         if (title.isPresent()) {
             val titleVar = title.get();
             val notification = notification(parseArticleDateFromFileName(article.getFileName().toString()), HTML, "")
-                    .withTitle(Optional.of(Xml.escape(titleVar)))
+                    .withTitle(Optional.of(toProposalTitle(titleVar)))
                     .withLink(Optional.of("/" + article))
                     .withTags(tags);
             parseArticleStartDate(parseString(projectsRenderer.sourceCode(article.toString()).orElseThrow().getContent()))
@@ -105,24 +105,15 @@ public class NotificationQueueParser {
     }
 
     private static String toStartTitle(String arg) {
-        if (arg.endsWith(".")) {
-            return "Project Start: " + arg;
-        }
-        return "Start of the Project " + arg;
+        return "Project Start: " + arg;
     }
 
     private static String toEndTitle(String arg) {
-        if (arg.endsWith(".")) {
-            return "Project End: " + arg;
-        }
-        return "End of the Project " + arg;
+        return "Project End: " + arg;
     }
 
     private static String toProposalTitle(String arg) {
-        if (arg.endsWith(".")) {
-            return "Project Proposal: " + arg;
-        }
-        return "Proposal of the Project " + arg;
+        return "Project Proposal: " + arg;
     }
 
     public static NotificationQueue parseNotificationQueue(RenderRequest request, ProjectsRenderer projectsRenderer) {
