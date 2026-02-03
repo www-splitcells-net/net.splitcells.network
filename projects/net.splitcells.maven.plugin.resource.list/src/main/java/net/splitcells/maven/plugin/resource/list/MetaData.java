@@ -80,6 +80,10 @@ public class MetaData {
                                 .replace("/*", "/.");
                         val pattern = Pattern.compile(regex);
 
+                        try (final var walk = java.nio.file.Files.walk(mojo.resourceFolder)) {
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     } else {
                         val metaData = new MetaData(Path.of(filePathStr));
                         metaData.copyrightText = Optional.of(table.getString("SPDX-FileCopyrightText"));
