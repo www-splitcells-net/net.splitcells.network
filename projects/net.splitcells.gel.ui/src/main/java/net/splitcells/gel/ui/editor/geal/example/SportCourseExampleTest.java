@@ -32,6 +32,6 @@ public class SportCourseExampleTest {
     }
 
     @UnitTest public void testAvailableCoursesCsv() {
-        System.out.println(availableCoursesCsv(randomness(1), 1, 1, 1, 1, 1));
+        System.out.println(availableCoursesCsv(randomness(1), 2, 1, 1, 2, 3));
     }
 }
