@@ -57,15 +57,13 @@ public class ResourceListMojo extends AbstractMojo {
                 .toAbsolutePath()
                 .toString()
                 .replace(fileSystemSeparator, "/");
-        {
-            // Extend resource list.
-            // "+1" makes the paths relative by removing the first slash.
-            var resourcePath = absoluteResourcePath.substring(basePathStr.length() + 1);
-            if (Files.isDirectory(resource)) {
-                resourcePath += "/";
-            }
-            return resourcePath;
+        // Extend resource list.
+        // "+1" makes the paths relative by removing the first slash.
+        var resourcePath = absoluteResourcePath.substring(basePathStr.length() + 1);
+        if (Files.isDirectory(resource)) {
+            resourcePath += "/";
         }
+        return resourcePath;
     }
 
     public String normalizedResourcePathWithoutProjectPrefix(Path resource) {
