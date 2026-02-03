@@ -37,12 +37,6 @@ public final class TestTypes {
      */
     public static final String INTEGRATION_TEST = "testing_integration";
     /**
-     * <p>Tests functionality provided by multiple modules.
-     * These are commonly also called integration tests.</p>
-     * <p>TODO Maybe the naming for tests is wrong in this project.</p>
-     */
-    public static final String FUNCTIONAL_TEST = "testing_functional";
-    /**
      * Such tests may take a lot of time, compared to other test types.
      */
     public static final String CAPABILITY_TEST = "testing_capabilities";
@@ -53,7 +47,7 @@ public final class TestTypes {
     public static final String EXPERIMENTAL_TEST = "experimental_test";
 
     public static List<String> extensiveTestTags() {
-        return list(UNIT_TEST, INTEGRATION_TEST, FUNCTIONAL_TEST, CAPABILITY_TEST, BENCHMARK_RUNTIME, BENCHMARK_MEMORY_USAGE, PROFILING_RUNTIME, PROFILING_MEMORY_USAGE);
+        return list(UNIT_TEST, INTEGRATION_TEST, CAPABILITY_TEST, BENCHMARK_RUNTIME, BENCHMARK_MEMORY_USAGE, PROFILING_RUNTIME, PROFILING_MEMORY_USAGE);
     }
 
     private TestTypes() {
