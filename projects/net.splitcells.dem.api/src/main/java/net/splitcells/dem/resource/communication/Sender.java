@@ -61,13 +61,21 @@ public interface Sender<T> extends AppendableList<T>, Resource {
         };
     }
 
+    /**
+     * Creates a {@link Sender}, that does not close its underlying {@link java.io.OutputStream}.
+     * This is mainly used for the original {@link System#out} etc.,
+     * as closing these just creates problems.
+     *
+     * @param output
+     * @return
+     */
     @JavaLegacy
     static Sender<String> stringSenderWithoutClosing(java.io.OutputStream output) {
         return new Sender<String>() {
 
             @Override
             public void close() {
-                printer.close();
+                // Nothing needs to be done here.
             }
 
             private java.io.PrintWriter printer = new java.io.PrintWriter(output);
