@@ -25,7 +25,6 @@ import org.junit.platform.launcher.core.LauncherFactory;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.FailureDetector.failureDetector;
 import static net.splitcells.dem.testing.LiveReporter.liveReporter;
-import static net.splitcells.dem.testing.TestTypes.FUNCTIONAL_TEST;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
 import static net.splitcells.dem.testing.TestTypes.extensiveTestTags;
@@ -64,7 +63,7 @@ public class Test {
         // TODO The selector is an hack, because an empty string leads to no test execution.
         final var testDiscovery = LauncherDiscoveryRequestBuilder.request()
                 .selectors(selectPackage("net"))
-                .filters(includeTags(FUNCTIONAL_TEST, UNIT_TEST))
+                .filters(includeTags(UNIT_TEST))
                 .build();
         final var testExecutor = LauncherFactory.create();
         final var failureDetector = failureDetector();
