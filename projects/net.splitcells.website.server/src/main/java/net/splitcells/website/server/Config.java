@@ -415,6 +415,9 @@ public class Config {
 
     @ReturnsThis
     public Config withAdditionalCssFile(String arg) {
+        if (cssFiles.contains(arg)) {
+            return this;
+        }
         cssFiles.add(arg);
         return this;
     }
