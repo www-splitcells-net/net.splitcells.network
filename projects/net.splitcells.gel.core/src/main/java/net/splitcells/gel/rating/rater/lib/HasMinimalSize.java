@@ -31,6 +31,7 @@ import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 import static net.splitcells.gel.rating.type.Cost.cost;
@@ -46,6 +47,13 @@ public class HasMinimalSize implements Rater {
     private final List<Discoverable> contexts = list();
 
     private HasMinimalSize(int minimalSize) {
+        if (minimalSize < 2) {
+            throw execException("The rater "
+                    + getClass().getName()
+                    + " requires a minimal target size of at least 2, but"
+                    + minimalSize
+                    + " was given instead. Note, that empty groups do not exist and therefore a group has always at least one element.");
+        }
         this.minimalSize = minimalSize;
     }
 
