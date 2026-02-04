@@ -8,6 +8,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
+import net.splitcells.gel.rating.rater.framework.Rater;
 
 import java.util.Optional;
 
@@ -27,9 +28,21 @@ public class EqualsRunner implements FunctionCallRunner {
     private static class Args {
         Attribute<?> attribute;
         Object targetValue;
+        Attribute<?> targetAttribute;
     }
 
-    private static final FunctionCallRunnerParser<Args> PARSER = functionCallRunnerParser(EQUALS_NAME
+    private static final FunctionCallRunnerParser<Args> PARSER_1 = functionCallRunnerParser(EQUALS_NAME
+            , 1
+            , fcr -> {
+                val args = new Args();
+                fcr.requireSubjectAbsence();
+                args.attribute = fcr.parseAttributeArgument(0, "attribute");
+                args.targetAttribute = fcr.parseAttributeArgument(1, "targetAttribute");
+                fcr.requireArgumentCount(2);
+                return args;
+            });
+
+    private static final FunctionCallRunnerParser<Args> PARSER_2 = functionCallRunnerParser(EQUALS_NAME
             , 1
             , fcr -> {
                 val args = new Args();
@@ -51,14 +64,23 @@ public class EqualsRunner implements FunctionCallRunner {
                 || functionCall.getArguments().size() != 2) {
             return run;
         }
-        val args = PARSER.parse(subject, context, functionCall);
-        val equalityRater = lineValueRater(line -> args.targetValue.equals(line.value(args.attribute))
-                , "Require " + args.attribute.name() + " to be equals to " + args.targetValue);
+        final var secondArg = context.parse(functionCall.getArguments().get(1));
+        final Args args;
+        final Rater equalityRater;
+        if (secondArg instanceof Attribute<?> targetAttribute) {
+            args = PARSER_1.parse(subject, context, functionCall);
+            equalityRater = lineValueRater(line -> line.value(args.attribute).equals(line.value(args.targetAttribute))
+                    , "Require " + args.attribute.name() + " to be equals to the attribute " + args.targetAttribute.name());
+        } else {
+            args = PARSER_2.parse(subject, context, functionCall);
+            equalityRater = lineValueRater(line -> args.targetValue.equals(line.value(args.attribute))
+                    , "Require " + args.attribute.name() + " to be equals to " + args.targetValue);
+        }
         run.setResult(Optional.of(equalityRater));
         return run;
     }
 
     @Override public List<FunctionCallRunnerParser<?>> parsers() {
-        return list(PARSER);
+        return list(PARSER_1, PARSER_2);
     }
 }
