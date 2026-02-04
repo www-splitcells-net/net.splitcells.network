@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.ui.editor.geal;
 
+import lombok.val;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
@@ -24,6 +25,7 @@ import net.splitcells.dem.resource.communication.log.LogMessage;
 import net.splitcells.dem.testing.need.Need;
 import net.splitcells.dem.testing.reporting.ErrorReporter;
 import net.splitcells.gel.editor.EditorData;
+import net.splitcells.website.Format;
 import net.splitcells.website.server.messages.FormUpdate;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
@@ -125,6 +127,12 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                     dataTypes.withProperty(d, data.getFormat().mimeTypes());
                     renderingTypes.withProperty(d, PLAIN_TEXT);
                 }
+            });
+            editor.getSolutions().entrySet().forEach(solution -> {
+                val key = solution.getKey() + ".constraint";
+                dataValues.withProperty(key, solution.getValue().constraint().graph().toCommonMarkString());
+                dataTypes.withProperty(key, COMMON_MARK.mimeTypes());
+                renderingTypes.withProperty(key, PLAIN_TEXT);
             });
             return response(formUpdate);
         });
