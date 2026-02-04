@@ -44,7 +44,7 @@ public class ThenAtLeastRater implements Rater {
         val incomingGroup = addition.value(INCOMING_CONSTRAINT_GROUP);
         constraint.registerAdditions(incomingGroup, addition.value(LINE));
         val linesRating = ratingEvent();
-        val cost = groupElementCost(linesRating, incomingGroup, linesOfGroup, addition, children);
+        val cost = groupElementCost(incomingGroup);
         ratingEventUpdate(linesRating, cost, incomingGroup, linesOfGroup, addition, children);
         linesRating.additions().put(addition
                 , localRating()
@@ -54,7 +54,7 @@ public class ThenAtLeastRater implements Rater {
         return linesRating;
     }
 
-    private Rating groupElementCost(RatingEvent ratingEvent, GroupId incomingGroup, View linesOfGroup, Line changed, List<Constraint> children) {
+    private Rating groupElementCost(GroupId incomingGroup) {
         val numberOfCompliant = constraint.lineProcessing().lookup(INCOMING_CONSTRAINT_GROUP, incomingGroup)
                 .columnView(RATING)
                 .lookup(r -> r.equalz(noCost()))
@@ -77,14 +77,14 @@ public class ThenAtLeastRater implements Rater {
                                 localRating().
                                         withPropagationTo(children).
                                         withRating(cost).
-                                        withResultingGroupId(changed.value(Constraint.INCOMING_CONSTRAINT_GROUP))));
+                                        withResultingGroupId(incomingGroup)));
     }
 
     @Override public RatingEvent rating_before_removal(View lines, Line removal, List<Constraint> children, View lineProcessingBeforeRemoval) {
         val incomingGroup = removal.value(INCOMING_CONSTRAINT_GROUP);
         constraint.registerBeforeRemoval(incomingGroup, removal.value(LINE));
         val linesRating = ratingEvent();
-        val cost = groupElementCost(linesRating, incomingGroup, lines, removal, children);
+        val cost = groupElementCost(incomingGroup);
         ratingEventUpdate(linesRating, cost, incomingGroup, lines, removal, children);
         return linesRating;
     }
