@@ -13,6 +13,8 @@ import net.splitcells.gel.rating.rater.framework.Rater;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRunnerParser.functionCallRunnerParser;
 import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineValue.lineValueRater;
@@ -31,6 +33,7 @@ public class EqualsRunner implements FunctionCallRunner {
         Attribute<?> targetAttribute;
     }
 
+
     private static final FunctionCallRunnerParser<Args> PARSER_1 = functionCallRunnerParser(EQUALS_NAME
             , 1
             , fcr -> {
@@ -39,6 +42,8 @@ public class EqualsRunner implements FunctionCallRunner {
                 args.attribute = fcr.parseAttributeArgument(0, "attribute");
                 args.targetAttribute = fcr.parseAttributeArgument(1, "targetAttribute");
                 fcr.requireArgumentCount(2);
+                fcr.addDescription(tree("paragraph", SEW)
+                        .withText("Rates a given line with no cost, if $attribute and $targetAttribute of the line have the same value."));
                 return args;
             });
 
@@ -50,6 +55,8 @@ public class EqualsRunner implements FunctionCallRunner {
                 args.attribute = fcr.parseAttributeArgument(0, "attribute");
                 args.targetValue = fcr.parseArgument(Object.class, 1, "targetValue");
                 fcr.requireArgumentCount(2);
+                fcr.addDescription(tree("paragraph", SEW)
+                        .withText("Rates a given line with no cost, if the line's $attribute value is equals to $targetValue."));
                 return args;
             });
 
