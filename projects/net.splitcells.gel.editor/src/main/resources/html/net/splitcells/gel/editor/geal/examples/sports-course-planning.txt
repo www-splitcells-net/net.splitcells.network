@@ -27,11 +27,9 @@ courseAssignment  . forEach not equals(assignedSport, 'Dummy Course')
 courseAssignment  . forEach not equals(assignedSport, 'Dummy Course')
                   . then equals(chosenSportType, assignedSportType);
 courseAssignment  . forEach not equals(assignedSport, 'Dummy Course')
-                  . forEach equals(assignedSportType, 'Team Sport')
-                  . then hasMinimumSize 1;
+                  . thenAtLeast(1, equals(assignedSportType, 'Team Sport'));
 courseAssignment  . forEach not equals(assignedSport, 'Dummy Course')
-                  . forEach equals(assignedSportType, 'Individual Sport')
-                  . then hasMinimumSize 1;
+                  . thenAtLeast(1, equals(assignedSportType, 'Individual Sport'));
 courseAssignment  . forEach not equals(assignedSport, 'Dummy Course')
                   . forEach assignedSport
                   . then hasSize 1;
