@@ -34,8 +34,7 @@ public class HasMinimalSizeTest {
         requireThrow(() -> hasMinimalSize(1));
     }
 
-    @Test
-    public void testRating() {
+    @UnitTest public void testRating() {
         final var lineSupplier = Tables.table();
         final var testValue = Then.then(hasMinimalSize(2));
         assertThat(testValue.complying()).isEmpty();
