@@ -100,6 +100,11 @@ public class FunctionCallRecord implements Closeable {
         isRecording = argIsRecording;
     }
 
+    /**
+     *
+     * @param addition A `$[parameter name]` is a reference to the function's parameters and has the same name.
+     * @return
+     */
     public FunctionCallRecord addDescription(Tree addition) {
         if (isRecording) {
             description.add(addition);
