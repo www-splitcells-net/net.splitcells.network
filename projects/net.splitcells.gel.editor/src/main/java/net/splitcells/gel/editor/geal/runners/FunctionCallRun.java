@@ -46,6 +46,11 @@ public class FunctionCallRun {
 
     @Setter @Getter private Optional<Object> result = Optional.empty();
 
+    public FunctionCallRun setResultVal(Object argResult) {
+        result = Optional.of(argResult);
+        return this;
+    }
+
     private FunctionCallRun(Optional<Object> argSubject, Optional<Editor> argContext) {
         subject = argSubject;
         context = argContext;
