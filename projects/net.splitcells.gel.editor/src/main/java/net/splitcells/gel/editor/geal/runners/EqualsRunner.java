@@ -43,7 +43,7 @@ public class EqualsRunner implements FunctionCallRunner {
             });
 
     private static final FunctionCallRunnerParser<Args> PARSER_2 = functionCallRunnerParser(EQUALS_NAME
-            , 1
+            , 2
             , fcr -> {
                 val args = new Args();
                 fcr.requireSubjectAbsence();
