@@ -56,28 +56,28 @@ public class ThenAtLeastRaterTest {
                 .asSolution();
         testData.constraint().rating().requireEqualsTo(noCost());
         val a1 = testData.assign(testData.demandsFree().orderedLine(0), testData.suppliesFree().orderedLine(0));
-        testData.constraint().rating().requireEqualsTo(cost(1));
+        cost(2).requireVerySimilar(testData.constraint().rating());
         val a2 = testData.assign(testData.demandsFree().orderedLine(0), testData.suppliesFree().orderedLine(0));
-        testData.constraint().rating().requireEqualsTo(cost(2));
+        cost(2).requireVerySimilar(testData.constraint().rating());
         val a3 = testData.assign(testData.demandsFree().orderedLine(0), testData.suppliesFree().orderedLine(0));
-        testData.constraint().rating().requireEqualsTo(cost(3));
+        cost(1).requireVerySimilar(testData.constraint().rating());
         val a4 = testData.assign(testData.demandsFree().orderedLine(0), testData.suppliesFree().orderedLine(0));
-        testData.constraint().rating().requireEqualsTo(cost(4));
+        cost(1).requireVerySimilar(testData.constraint().rating());
         val a5 = testData.assign(testData.demandsFree().orderedLine(0), testData.suppliesFree().orderedLine(0));
-        testData.constraint().rating().requireEqualsTo(cost(5));
+        cost(1).requireVerySimilar(testData.constraint().rating());
         val a6 = testData.assign(testData.demandsFree().orderedLine(0), testData.suppliesFree().orderedLine(0));
         testData.constraint().rating().requireEqualsTo(noCost());
         testData.remove(a6);
-        testData.constraint().rating().requireEqualsTo(cost(5));
+        cost(1).requireVerySimilar(testData.constraint().rating());
         testData.remove(a5);
-        testData.constraint().rating().requireEqualsTo(cost(4));
+        cost(1).requireVerySimilar(testData.constraint().rating());
         testData.remove(a4);
-        testData.constraint().rating().requireEqualsTo(cost(3));
+        cost(1).requireVerySimilar(testData.constraint().rating());
         testData.remove(a3);
-        testData.constraint().rating().requireEqualsTo(cost(2));
+        cost(2).requireVerySimilar(testData.constraint().rating());
         testData.remove(a2);
-        testData.constraint().rating().requireEqualsTo(cost(1));
+        cost(2).requireVerySimilar(testData.constraint().rating());
         testData.remove(a1);
-
+        testData.constraint().rating().requireEqualsTo(noCost());
     }
 }

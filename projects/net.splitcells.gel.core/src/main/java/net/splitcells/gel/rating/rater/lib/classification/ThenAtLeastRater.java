@@ -55,7 +55,8 @@ public class ThenAtLeastRater implements Rater {
     }
 
     private Rating groupElementCost(GroupId incomingGroup) {
-        val numberOfCompliant = constraint.lineProcessing().lookup(INCOMING_CONSTRAINT_GROUP, incomingGroup)
+        val incomingTable = constraint.lineProcessing().lookup(INCOMING_CONSTRAINT_GROUP, incomingGroup);
+        double numberOfCompliant = incomingTable
                 .columnView(RATING)
                 .lookup(r -> r.equalz(noCost()))
                 .size();
@@ -63,7 +64,7 @@ public class ThenAtLeastRater implements Rater {
         if (numberOfCompliant >= leastCount) {
             cost = noCost();
         } else {
-            cost = cost(1);
+            cost = cost((leastCount - numberOfCompliant) / incomingTable.size());
         }
         return cost;
     }
