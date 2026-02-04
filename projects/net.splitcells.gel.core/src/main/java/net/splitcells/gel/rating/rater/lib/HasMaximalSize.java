@@ -27,15 +27,15 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 
 
 public class HasMaximalSize implements Rater {
-    public static HasMaximalSize hasMaximalSize(int minimalSize) {
-        return new HasMaximalSize(minimalSize);
+    public static HasMaximalSize hasMaximalSize(int argMaximalSize) {
+        return new HasMaximalSize(argMaximalSize);
     }
 
     private final int maximalSize;
     private final List<Discoverable> contexts = list();
 
-    private HasMaximalSize(int maximalSize) {
-        this.maximalSize = maximalSize;
+    private HasMaximalSize(int argMaximalSize) {
+        maximalSize = argMaximalSize;
     }
 
     @Override
