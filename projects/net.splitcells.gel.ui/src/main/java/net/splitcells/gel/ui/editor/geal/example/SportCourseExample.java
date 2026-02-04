@@ -4,12 +4,9 @@
 package net.splitcells.gel.ui.editor.geal.example;
 
 import lombok.val;
-import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.config.StaticFlags;
-import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.editor.GelEditorFileSystem;
@@ -30,7 +27,6 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
-import static net.splitcells.dem.utils.StringUtils.requireMatch;
 import static net.splitcells.dem.utils.StringUtils.stringBuilder;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.ui.editor.geal.EditorProcessor.PROBLEM_DEFINITION;
@@ -96,7 +92,9 @@ public class SportCourseExample implements ProjectsRendererExtension {
                     .setType(CSV));
             formUpdate.getFields().put("available-half-years.csv", fieldUpdate()
                     .setRenderingType(Optional.of(PLAIN_TEXT))
-                    .setData(StringUtils.toBytes(availableHalfYearsCsv()))
+                    .setData(StringUtils.toBytes(availableSemestersCsv(DEFAULT_MAX_COURSE_SIZE
+                            , DEFAULT_COURSES_PER_SEMESTER + DEFAULT_TEAM_COURSES_PER_SEMESTER + DEFAULT_INDIVIDUAL_COURSES_PER_SEMESTER
+                            , DEFAULT_SEMESTER_COUNT)))
                     .setType(CSV));
             return Optional.of(binaryMessage(StringUtils.toBytes(formUpdate.toTree().toJsonString()), Format.TEXT_PLAIN));
         }
@@ -183,9 +181,16 @@ public class SportCourseExample implements ProjectsRendererExtension {
         return testData.toString();
     }
 
-    private static String availableHalfYearsCsv() {
+    protected static String availableSemestersCsv(int maxCourseSize, int coursesPerSemester, int semesterCount) {
         val testData = stringBuilder();
         testData.append("Assigned Semester\n");
+        rangeClosed(1, semesterCount).forEach(iSemester -> {
+            rangeClosed(1, coursesPerSemester).forEach(iCourse -> {
+                rangeClosed(1, maxCourseSize).forEach(iCourseSeat -> {
+                    testData.append(iSemester).append("\n");
+                });
+            });
+        });
         return testData.toString();
     }
 
