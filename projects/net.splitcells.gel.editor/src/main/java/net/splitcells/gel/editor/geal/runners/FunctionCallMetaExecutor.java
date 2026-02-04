@@ -42,6 +42,7 @@ import static net.splitcells.gel.editor.geal.runners.OutputFormatCallRunner.outp
 import static net.splitcells.gel.editor.geal.runners.ResolutionRunner.resolutionRunner;
 import static net.splitcells.gel.editor.geal.runners.SolutionCallRunner.solutionCallRunner;
 import static net.splitcells.gel.editor.geal.runners.TableCallRunner.tableCallRunner;
+import static net.splitcells.gel.editor.geal.runners.ThenAtLeastRunner.thenAtLeastRunner;
 import static net.splitcells.gel.editor.geal.runners.ThenCallRunner.thenCallRunner;
 import static net.splitcells.gel.editor.geal.runners.UniqueValueCountIsAtMostCallRunner.uniqueValueCountIsAtMostCallRunner;
 
@@ -72,6 +73,7 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
                 .registerExecutor(minSizeCallRunner())
                 .registerExecutor(maxSizeCallRunner())
                 .registerExecutor(uniqueValueCountIsAtMostCallRunner())
+                .registerExecutor(thenAtLeastRunner())
                 ;
     }
 
