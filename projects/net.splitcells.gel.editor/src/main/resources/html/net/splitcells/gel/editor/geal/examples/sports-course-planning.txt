@@ -37,6 +37,8 @@ courseAssignment  . forEach not equals(assignedSport, 'Dummy Course')
                   . forEach student
                   . forEach not equals(chosenSport, assignedSport)
                   . then hasSize 0;
+courseAssignment  . forEach not equals(assignedSport, 'Dummy Course')
+                  . then not equals(isSecondaryChoice, 1);
 
 courseScheduling = solution('Course Scheduling', courseAssignment, availableHalfYears);
 courseScheduling . forEach not equals(assignedSport, 'Dummy Course')
