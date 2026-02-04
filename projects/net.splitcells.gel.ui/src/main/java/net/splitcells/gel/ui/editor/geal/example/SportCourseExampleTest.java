@@ -3,14 +3,11 @@
  */
 package net.splitcells.gel.ui.editor.geal.example;
 
-import lombok.val;
-import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
-import static net.splitcells.gel.ui.editor.geal.example.SportCourseExample.availableCoursesCsv;
-import static net.splitcells.gel.ui.editor.geal.example.SportCourseExample.studentChoicesCsv;
+import static net.splitcells.gel.ui.editor.geal.example.SportCourseExample.*;
 
 public class SportCourseExampleTest {
     @UnitTest public void testStudentChoicesCsv() {
@@ -29,6 +26,37 @@ public class SportCourseExampleTest {
                         2,Running,Individual sport,1
                         """
         );
+    }
+
+    @UnitTest public void testAvailableSemestersCsv() {
+        requireEquals(availableSemestersCsv(4,3,2),
+                """
+                        Assigned Semester
+                        1
+                        1
+                        1
+                        1
+                        1
+                        1
+                        1
+                        1
+                        1
+                        1
+                        1
+                        1
+                        2
+                        2
+                        2
+                        2
+                        2
+                        2
+                        2
+                        2
+                        2
+                        2
+                        2
+                        2
+                        """);
     }
 
     @UnitTest public void testAvailableCoursesCsv() {
