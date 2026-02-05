@@ -23,10 +23,11 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
- * Creates names, that can be mapped unambiguously to ints.
- * One could just generate first names for demonstration purposes,
+ * <p>Creates names, that can be mapped unambiguously to ints.
+ * These names are purely fictional and are not linked to real persons.</p>
+ * <p>One could just generate first names for demonstration purposes,
  * but using the last and first name requires a lot less data to create many unique names.
- * Also, last name duplication can be used for presentation jokes.
+ * Also, last name duplication can be used for presentation jokes.</p>
  */
 public class IdentifiedNameGenerator {
 
