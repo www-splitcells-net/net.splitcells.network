@@ -15,12 +15,15 @@
  */
 package net.splitcells.dem.testing;
 
+import lombok.val;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.utils.ExecutionException;
+import net.splitcells.dem.utils.MathUtils;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.dem.utils.MathUtils.modulus;
 
 /**
  * <p>Creates names, that can be mapped unambiguously to ints.
@@ -63,6 +66,17 @@ public class IdentifiedNameGenerator {
             firstNameIndex = 0;
         }
         return FIRST_NAMES.get(firstNameIndex) + " " + LAST_NAMES.get(lastNameIndex);
+    }
+
+    /**
+     *
+     * @param id There are {@link #FIRST_NAMES} multiplied by  {@link #LAST_NAMES} many names.
+     *           The minimum id is 0,
+     *           where as the maximum id is ({@link #FIRST_NAMES} - 1) multiplied by ({@link #LAST_NAMES} - 1).
+     * @return Returns a name, that corresponds to the given id.
+     */
+    public String name(int id) {
+        return FIRST_NAMES.get(id / LAST_NAMES.size()) + LAST_NAMES.get(modulus(id, LAST_NAMES.size()));
     }
 
     public int currentNameIndex() {
