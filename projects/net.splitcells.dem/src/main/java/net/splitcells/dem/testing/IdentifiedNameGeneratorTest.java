@@ -14,4 +14,10 @@ public class IdentifiedNameGeneratorTest {
     public void testNextName() {
         requireEquals(identifiedNameGenerator().nextName(), "Ottfried Demmin");
     }
+
+    @UnitTest
+    public void testName() {
+        requireEquals(identifiedNameGenerator().name(0), "Ottfried Demmin");
+        requireEquals(identifiedNameGenerator().name(36), "Joshua Soller");
+    }
 }
