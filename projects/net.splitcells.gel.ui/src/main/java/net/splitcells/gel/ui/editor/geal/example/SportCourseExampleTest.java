@@ -14,16 +14,16 @@ public class SportCourseExampleTest {
         requireEquals(studentChoicesCsv(randomness(1), 2),
                 """
                         Student,Chosen Sport, Chosen Sport Type, Is Secondary Choice
-                        1,Volleyball,Team sport,0
-                        1,Running,Individual sport,0
-                        1,Parkour,Other sport,0
-                        1,Gymnastics,Individual sport,1
-                        1,Yoga,Other sport,1
-                        2,Volleyball,Team sport,0
-                        2,Swimming,Individual sport,0
-                        2,Yoga,Other sport,0
-                        2,Dancing,Other sport,1
-                        2,Climbing,Other sport,1
+                        Ottfried Amberger,Volleyball,Team sport,0
+                        Ottfried Amberger,Running,Individual sport,0
+                        Ottfried Amberger,Parkour,Other sport,0
+                        Ottfried Amberger,Gymnastics,Individual sport,1
+                        Ottfried Amberger,Yoga,Other sport,1
+                        Ottfried Herschberger,Volleyball,Team sport,0
+                        Ottfried Herschberger,Swimming,Individual sport,0
+                        Ottfried Herschberger,Yoga,Other sport,0
+                        Ottfried Herschberger,Dancing,Other sport,1
+                        Ottfried Herschberger,Climbing,Other sport,1
                         """
         );
     }
