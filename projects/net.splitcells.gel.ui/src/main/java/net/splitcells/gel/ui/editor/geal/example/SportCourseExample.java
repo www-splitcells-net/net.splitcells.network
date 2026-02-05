@@ -108,8 +108,8 @@ public class SportCourseExample implements ProjectsRendererExtension {
             testData.append(studentChoice(i, rnd, 1, 0, false));
             testData.append(studentChoice(i, rnd, 0, 1, false));
             testData.append(studentChoice(i, rnd, 0, 0, false));
-            testData.append(studentChoice(i, rnd, 1, 0, true));
-            testData.append(studentChoice(i, rnd, 0, 1, true));
+            testData.append(studentChoice(i, rnd, .33f, .33f, true));
+            testData.append(studentChoice(i, rnd, .33f, .33f, true));
         });
         return testData.toString();
     }

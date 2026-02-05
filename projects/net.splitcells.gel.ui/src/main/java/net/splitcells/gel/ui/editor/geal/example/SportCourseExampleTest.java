@@ -17,13 +17,13 @@ public class SportCourseExampleTest {
                         1,Volleyball,Team sport,0
                         1,Running,Individual sport,0
                         1,Parkour,Other sport,0
-                        1,Handball,Team sport,1
                         1,Gymnastics,Individual sport,1
+                        1,Yoga,Other sport,1
                         2,Volleyball,Team sport,0
                         2,Swimming,Individual sport,0
                         2,Yoga,Other sport,0
-                        2,Basketball,Team sport,1
-                        2,Running,Individual sport,1
+                        2,Dancing,Other sport,1
+                        2,Climbing,Other sport,1
                         """
         );
     }
