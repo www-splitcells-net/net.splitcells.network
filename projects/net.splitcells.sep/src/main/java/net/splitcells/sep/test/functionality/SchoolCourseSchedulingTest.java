@@ -841,7 +841,9 @@ public class SchoolCourseSchedulingTest {
                             , "Student gets courses of the same vintage."));
                     r.forAll(STUDENT).forAll(REQUIRED_SUBJECT).then(allSame(COURSE_ID));
                     r.forAll(STUDENT).forAll(RAIL).then(hasSize(1));
-                    r.forAll(COURSE_ID).then(hasMinimalSize(minimalNumberOfStudentsPerCourse));
+                    if (minimalNumberOfStudentsPerCourse > 1) {
+                        r.forAll(COURSE_ID).then(hasMinimalSize(minimalNumberOfStudentsPerCourse));
+                    }
                     r.forAll(COURSE_ID).then(hasSize(optimalNumberOfStudentsPerCourse));
                     return r;
                 })
