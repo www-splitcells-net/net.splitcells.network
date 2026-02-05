@@ -40,7 +40,6 @@ public class IdentifiedNameGenerator {
 
     private int firstNameIndex = -1;
     private int lastNameIndex = 0;
-    private int currentNameIndex = -1;
 
     private IdentifiedNameGenerator() {
 
@@ -54,7 +53,6 @@ public class IdentifiedNameGenerator {
             ++lastNameIndex;
         } else if (lastNameIndex == MAX_LAST_NAME_INDEX) {
             throw ExecutionException.execException(tree("Cannot generate more names.")
-                    .withProperty("currentNameIndex", "" + currentNameIndex)
                     .withProperty("firstNameIndex", "" + firstNameIndex)
                     .withProperty("lastNameIndex", "" + lastNameIndex)
                     .withProperty("MAX_FIRST_NAME_INDEX", "" + MAX_FIRST_NAME_INDEX)
@@ -77,10 +75,6 @@ public class IdentifiedNameGenerator {
      */
     public String name(int id) {
         return FIRST_NAMES.get(id / LAST_NAMES.size()) + LAST_NAMES.get(modulus(id, LAST_NAMES.size()));
-    }
-
-    public int currentNameIndex() {
-        return currentNameIndex;
     }
 
     private static final ListView<String> FIRST_NAMES = list(
