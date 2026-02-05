@@ -74,7 +74,7 @@ public class IdentifiedNameGenerator {
      * @return Returns a name, that corresponds to the given id.
      */
     public String name(int id) {
-        return FIRST_NAMES.get(id / LAST_NAMES.size()) + LAST_NAMES.get(modulus(id, LAST_NAMES.size()));
+        return FIRST_NAMES.get(id / LAST_NAMES.size()) + " " + LAST_NAMES.get(modulus(id, LAST_NAMES.size()));
     }
 
     private static final ListView<String> FIRST_NAMES = list(
