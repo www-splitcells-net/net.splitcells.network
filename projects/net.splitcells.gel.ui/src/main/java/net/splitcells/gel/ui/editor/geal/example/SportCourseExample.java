@@ -25,6 +25,7 @@ import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.testing.IdentifiedNameGenerator.nameById;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StringUtils.stringBuilder;
@@ -126,7 +127,7 @@ public class SportCourseExample implements ProjectsRendererExtension {
         } else {
             throw execException(choiceSportType + "");
         }
-        return studentId
+        return nameById(studentId)
                 + "," + choiceSport
                 + "," + SPORT_TYPES.get(choiceSportType)
                 + "," + (isSecondaryChoice ? 1 : 0)

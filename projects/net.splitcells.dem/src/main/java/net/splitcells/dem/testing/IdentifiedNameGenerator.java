@@ -15,10 +15,8 @@
  */
 package net.splitcells.dem.testing;
 
-import lombok.val;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.utils.ExecutionException;
-import net.splitcells.dem.utils.MathUtils;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
@@ -33,6 +31,15 @@ import static net.splitcells.dem.utils.MathUtils.modulus;
  * Also, last name duplication can be used for presentation jokes.</p>
  */
 public class IdentifiedNameGenerator {
+
+    /**
+     * Only use this, if {@link #nextName()} is not required.
+     */
+    private static IdentifiedNameGenerator DEFAULT_NAME_GENERATOR = identifiedNameGenerator();
+
+    public static String nameById(int id) {
+        return DEFAULT_NAME_GENERATOR.name(id);
+    }
 
     public static IdentifiedNameGenerator identifiedNameGenerator() {
         return new IdentifiedNameGenerator();
