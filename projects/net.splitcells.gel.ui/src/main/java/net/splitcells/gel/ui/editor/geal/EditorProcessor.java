@@ -18,6 +18,7 @@ package net.splitcells.gel.ui.editor.geal;
 import lombok.val;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.lang.tree.CommonMarkConfig;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.resource.communication.log.LogLevel;
@@ -33,6 +34,7 @@ import net.splitcells.website.server.processor.Response;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.CommonMarkUtils.joinDocuments;
+import static net.splitcells.dem.lang.tree.CommonMarkConfig.commonMarkConfig;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT;
 import static net.splitcells.dem.resource.communication.log.LogMessageI.logMessage;
@@ -130,7 +132,10 @@ public class EditorProcessor implements Processor<Tree, Tree> {
             });
             editor.getSolutions().entrySet().forEach(solution -> {
                 val key = solution.getKey() + ".constraint";
-                dataValues.withProperty(key, solution.getValue().constraint().graph().toCompactTree().toCommonMarkString());
+                dataValues.withProperty(key, solution.getValue().constraint()
+                        .graph()
+                        .toCompactTree()
+                        .toCommonMarkString(commonMarkConfig().setUseBlockQuotesForLongNames(false)));
                 dataTypes.withProperty(key, COMMON_MARK.mimeTypes());
                 renderingTypes.withProperty(key, PLAIN_TEXT);
             });
