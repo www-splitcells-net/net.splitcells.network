@@ -21,9 +21,7 @@ import net.splitcells.dem.lang.tree.Tree;
 import org.apache.commons.io.FileUtils;
 
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.function.Consumer;
@@ -58,8 +56,8 @@ public interface Files {
     static void createDirectory(Path directory) {
         try {
             createDirectories(directory);
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
+        } catch (Throwable e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -76,7 +74,7 @@ public interface Files {
     static Stream<Path> walkDirectChildren(Path path) {
         try {
             return java.nio.file.Files.walk(path, 1).filter(e -> !path.equals(e));
-        } catch (IOException e) {
+        } catch (Throwable e) {
             throw new RuntimeException(e);
         }
     }
@@ -84,7 +82,7 @@ public interface Files {
     static Stream<Path> walkRecursively(Path path) {
         try {
             return java.nio.file.Files.walk(path);
-        } catch (IOException e) {
+        } catch (Throwable e) {
             throw new RuntimeException(e);
         }
     }
@@ -99,7 +97,7 @@ public interface Files {
     static void deleteDirectory(Path dirToDelete) {
         try {
             FileUtils.deleteDirectory(dirToDelete.toFile());
-        } catch (IOException e) {
+        } catch (Throwable e) {
             throw new RuntimeException(e);
         }
     }
@@ -107,7 +105,7 @@ public interface Files {
     static void copyDirectory(Path sourceDirectory, Path targetDirectory) {
         try {
             FileUtils.copyDirectory(sourceDirectory.toFile(), targetDirectory.toFile());
-        } catch (IOException e) {
+        } catch (Throwable e) {
             throw new RuntimeException(e);
         }
     }
@@ -152,7 +150,7 @@ public interface Files {
     static String readFileAsString(Path path) {
         try {
             return java.nio.file.Files.readString(path);
-        } catch (IOException e) {
+        } catch (Throwable e) {
             throw new RuntimeException(e);
         }
     }
@@ -169,7 +167,7 @@ public interface Files {
     static InputStream newInputStream(Path path) {
         try {
             return java.nio.file.Files.newInputStream(path);
-        } catch (IOException e) {
+        } catch (Throwable e) {
             throw execException(e);
         }
     }
@@ -189,7 +187,7 @@ public interface Files {
     static void copyFileFrom(Path source, Path target) {
         try {
             com.google.common.io.Files.copy(source.toFile(), target.toFile());
-        } catch (IOException e) {
+        } catch (Throwable e) {
             throw new RuntimeException(e);
         }
     }
@@ -197,7 +195,7 @@ public interface Files {
     static void generateFolderPath(Path targetFolderDescription) {
         try {
             createDirectories(targetFolderDescription);
-        } catch (IOException e) {
+        } catch (Throwable e) {
             throw new RuntimeException(e);
         }
     }
@@ -221,7 +219,7 @@ public interface Files {
     static String readAsString(InputStream inputStream) {
         try {
             return new String(inputStream.readAllBytes());
-        } catch (IOException e) {
+        } catch (Throwable e) {
             throw execException(e);
         }
     }
