@@ -109,6 +109,6 @@ public class RaterBasedOnGrouping implements Rater {
 
     @Override
     public Tree toTree() {
-        return tree("rater-based-on-grouping").withProperty("grouping", grouping.toTree());
+        return tree("rater-based-on-grouping-of").withChild(grouping.toTree());
     }
 }
