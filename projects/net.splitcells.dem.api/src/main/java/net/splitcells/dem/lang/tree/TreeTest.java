@@ -293,7 +293,10 @@ public class TreeTest {
     }
 
     @UnitTest public void testToCompactTree() {
-        val testSubject = tree("1");
-        requireEquals(testSubject, testSubject.toCompactTree());
+        requireEquals(tree("1"), tree("1").toCompactTree());
+        requireEquals("* 1: 2: 3: 4\n"
+                , tree("1").withPath(tree("2"), tree("3"), tree("4"))
+                        .toCompactTree()
+                        .toCommonMarkString());
     }
 }
