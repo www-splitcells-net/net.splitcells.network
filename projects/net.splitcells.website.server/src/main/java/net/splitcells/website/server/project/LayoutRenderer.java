@@ -38,9 +38,9 @@ public class LayoutRenderer {
         final var layout = TreeI.tree("layout", NATURAL);
         Stream.concat(
                         Files.walkRecursively(Paths.get("../net.splitcells.shell/src/main/bash"))
-                                .filter(Files::is_file)
+                                .filter(Files::isFile)
                         , Files.walkRecursively(Paths.get("../net.splitcells.shell/src/main/python"))
-                                .filter(Files::is_file))
+                                .filter(Files::isFile))
                 .sorted()
                 .forEach(file -> extend(layout, list(file.toFile().getName().split("\\."))));
         System.out.println(Paths.get(System.getProperty("user.home"))

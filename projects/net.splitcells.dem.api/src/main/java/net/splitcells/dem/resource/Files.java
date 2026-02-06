@@ -67,7 +67,7 @@ public interface Files {
         }
     }
 
-    static boolean is_file(Path path) {
+    static boolean isFile(Path path) {
         return java.nio.file.Files.isRegularFile(path);
     }
 
