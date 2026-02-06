@@ -1199,4 +1199,8 @@ public interface Tree extends TreeView, Convertible {
                 .withChild(tree("stack-trace").withChild(tree(throwableToString(throwable))));
         return withChild(throwableTree);
     }
+
+    default Tree toCompactTree() {
+        return this;
+    }
 }

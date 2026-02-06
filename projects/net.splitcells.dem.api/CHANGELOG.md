@@ -92,6 +92,8 @@
      This also makes it possible to use the name `Resource` for an interface
      of resource like things.
 ### Minor Changes
+* **2026-02-06\#37** Create `Tree#toCompactTree` to make it possible, to render trees with fewer nodes.
+  Thereby standard rendering methods, require less space for displaying the tree.
 * **2025-11-16\#42** `Dem#process` now supports `Cell#programName`, as an alternative ProgramName.
 * **2025-09-22\#37** Define helper methods `hasKey`, `hasNotkey` and `value` for Map, in order to define more type safe access.
 * **2025-09-22\#37** Define Error Reporting API.

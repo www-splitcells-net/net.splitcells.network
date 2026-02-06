@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.lang.tree;
 
+import lombok.val;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
@@ -158,17 +159,17 @@ public class TreeTest {
         testData.printCommonMarkString(stringSender(resultData));
         requireEquals(resultData.toString(),
                 """
-                   * Lorem ipsum dolor sit amet:
-                       * consectetur adipiscing elit: Cras lobortis mi risus
-                       * eu viverra purus feugiat sit amet:
-                           * Fusce viverra ipsum in arcu scelerisque egestas:
-                               * Vivamus sagittis commodo eleifend: Nullam lobortis purus ut felis viverra vulputate
-                               * Quisque elementum vitae nulla sit amet pretium:
-                                   * Maecenas nunc urna:
-                                       * ullamcorper dictum pellentesque in: vehicula a magna. Vivamus luctus efficitur ex
-                               * el ultrices erat luctus lacinia: Donec vestibulum semper ipsum
-                       * sed pretium felis: Aliquam orci nunc
-                   """);
+                        * Lorem ipsum dolor sit amet:
+                            * consectetur adipiscing elit: Cras lobortis mi risus
+                            * eu viverra purus feugiat sit amet:
+                                * Fusce viverra ipsum in arcu scelerisque egestas:
+                                    * Vivamus sagittis commodo eleifend: Nullam lobortis purus ut felis viverra vulputate
+                                    * Quisque elementum vitae nulla sit amet pretium:
+                                        * Maecenas nunc urna:
+                                            * ullamcorper dictum pellentesque in: vehicula a magna. Vivamus luctus efficitur ex
+                                    * el ultrices erat luctus lacinia: Donec vestibulum semper ipsum
+                            * sed pretium felis: Aliquam orci nunc
+                        """);
     }
 
     @UnitTest
@@ -258,5 +259,10 @@ public class TreeTest {
         requireEquals(testSubject.childrenPath(0, 0, 1).name(), "f");
         requireEquals(testSubject.childrenPathTravel(0, 0, 0, 0).name(), "e");
         requireEquals(testSubject.childrenPathTravel(1, 0, 0, 0).name(), "c");
+    }
+
+    @UnitTest public void testToCompactTree() {
+        val testSubject = tree("1");
+        requireEquals(testSubject, testSubject);
     }
 }
