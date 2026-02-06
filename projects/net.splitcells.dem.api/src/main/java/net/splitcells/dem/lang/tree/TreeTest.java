@@ -277,6 +277,19 @@ public class TreeTest {
         require(tree("1").withChild(tree("2")).equals(tree("1").withChild(tree("2"))));
         requireNot(tree("1").equals(tree("1").withChild(tree("2"))));
         requireNot(tree("1").withChild(tree("2")).equals(tree("1")));
+
+        require(tree("1").withPath(tree("2"), tree("3"))
+                .equals(tree("1").withPath(tree("2"), tree("3"))));
+        requireNot(tree("1").withPath(tree("2"))
+                .equals(tree("1").withPath(tree("2"), tree("3"))));
+        requireNot(tree("1").withPath(tree("2"), tree("3"))
+                .equals(tree("1").withPath(tree("2"))));
+        requireNot(tree("1").withPath(tree("2"), tree("3"))
+                .equals(tree("1").withPath(tree("2"), tree("4"))));
+        requireNot(tree("1").withPath(tree("2"), tree("3"))
+                .equals(tree("1").withPath(tree("3"), tree("3"))));
+        requireNot(tree("1").withPath(tree("2"), tree("3"))
+                .equals(tree("4").withPath(tree("2"), tree("3"))));
     }
 
     @UnitTest public void testToCompactTree() {
