@@ -56,6 +56,7 @@ public class FilesTest {
             val testFile = p.resolve("test-file");
             appendToFile(testFile, "def");
             require(isFile(testFile));
+            require(fileExists(testFile));
         });
     }
 
