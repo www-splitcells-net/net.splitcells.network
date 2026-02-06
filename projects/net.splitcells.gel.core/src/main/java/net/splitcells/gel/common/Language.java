@@ -19,7 +19,7 @@ public enum Language {
     ALLOCATE("allocate"),
     ALLOCATION("allocation"),
     ALLOCATIONS("allocations"),
-    ARGUMENTATION("argumentation"),
+    ARGUMENTS("arguments"),
     CONTENT("content"),
     DATA("data"),
     DATABASE_HISTORY("database-history"),

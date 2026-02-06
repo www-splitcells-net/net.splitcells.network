@@ -130,7 +130,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
             });
             editor.getSolutions().entrySet().forEach(solution -> {
                 val key = solution.getKey() + ".constraint";
-                dataValues.withProperty(key, solution.getValue().constraint().graph().toCommonMarkString());
+                dataValues.withProperty(key, solution.getValue().constraint().graph().toCompactTree().toCommonMarkString());
                 dataTypes.withProperty(key, COMMON_MARK.mimeTypes());
                 renderingTypes.withProperty(key, PLAIN_TEXT);
             });

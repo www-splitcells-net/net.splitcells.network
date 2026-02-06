@@ -132,7 +132,7 @@ public interface Rater extends PubliclyTyped<Rater>
     default Tree toTree() {
         final var perspective = tree(getClass().getSimpleName());
         if (!arguments().isEmpty()) {
-            perspective.withChild(tree(Language.ARGUMENTATION.value())
+            perspective.withChild(tree(Language.ARGUMENTS.value())
                     .withChildren(arguments().stream().map(Domable::toTree)));
         }
         return perspective;
