@@ -51,6 +51,14 @@ public class FilesTest {
         });
     }
 
+    @UnitTest public void testIsFile() {
+        processInTemporaryFolder(p -> {
+            val testFile = p.resolve("test-file");
+            appendToFile(testFile, "def");
+            require(isFile(testFile));
+        });
+    }
+
     @UnitTest public void testNewLine() {
         requireEquals(newLine(), "\n");
     }
