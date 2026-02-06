@@ -78,6 +78,9 @@ public class TreeI implements Tree {
 			if (!name().equals(other.name())) {
 				return false;
 			}
+			if (!nameSpace().equals(other.nameSpace())) {
+				return false;
+			}
 			return true;
 		}
 		return false;

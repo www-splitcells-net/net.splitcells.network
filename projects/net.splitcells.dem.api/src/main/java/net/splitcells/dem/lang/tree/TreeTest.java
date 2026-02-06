@@ -16,6 +16,7 @@
 package net.splitcells.dem.lang.tree;
 
 import lombok.val;
+import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
@@ -271,6 +272,7 @@ public class TreeTest {
         requireNot(tree("1").equals(tree("2")));
         requireNot(tree("2").equals(tree("1")));
 
+        requireNot(tree("1", NATURAL).equals(tree("1", STRING)));
     }
 
     @UnitTest public void testToCompactTree() {
