@@ -1032,11 +1032,11 @@ public interface Tree extends TreeView, Convertible {
         if (isSimpleList) {
             final var newListPrefix = prefix + "    * ";
             final var newPrefix = newListPrefix;
-            children().forEach(c -> c.printCommonMarkString(output, newPrefix, newListPrefix));
+            children().forEach(c -> c.printCommonMarkString(config, output, newPrefix, newListPrefix));
         } else {
             final var newListPrefix = prefix + "    * ";
             final var newPrefix = prefix + "    ";
-            children().forEach(c -> c.printCommonMarkString(output, newPrefix, newListPrefix));
+            children().forEach(c -> c.printCommonMarkString(config, output, newPrefix, newListPrefix));
         }
     }
 
