@@ -174,6 +174,18 @@ public class FilesTest {
         });
     }
 
+    @UnitTest public void testReadAsString() {
+        requireThrow(() -> processInTemporaryFolder(p -> {
+            readAsString(null);
+        }));
+        processInTemporaryFolder(p -> {
+            val file1 = p.resolve("test-file-1");
+            val content = "2353";
+            writeToFile(file1, content);
+            requireEquals(readAsString(newInputStream(file1)), content);
+        });
+    }
+
     @UnitTest public void testNewInputStream() {
         processInTemporaryFolder(p -> {
             val file = p.resolve("test-file");
