@@ -51,6 +51,10 @@ public class FilesTest {
         });
     }
 
+    @UnitTest public void testNewLine() {
+        requireEquals(newLine(), "\n");
+    }
+
     @UnitTest public void testDeleteDirectory() {
         requireThrow(() -> {
             processInTemporaryFolder(p -> {
