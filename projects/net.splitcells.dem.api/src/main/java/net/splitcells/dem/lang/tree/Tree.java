@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.lang.tree;
 
+import lombok.val;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
@@ -1200,7 +1201,39 @@ public interface Tree extends TreeView, Convertible {
         return withChild(throwableTree);
     }
 
+    /**
+     * TODO Consider namespaces of compacted paths.
+     *
+     * @return
+     */
     default Tree toCompactTree() {
+        val compact = tree(name(), nameSpace());
+        children().forEach(child -> {
+            if (child.children().isEmpty()) {
+                compact.withChild(tree(child.name(), child.nameSpace()));
+            } else if (child.children().size() == 1) {
+                val path = child.retrievePath();
+                val pathName = path.stream().map(p -> p.name()).reduce("", (a, b) -> a + ": " + b);
+                val pathRepresentative = tree(pathName, child.nameSpace());
+                compact.withChild(pathRepresentative);
+                val pathEnd = path.getLast();
+                if (pathEnd.children().hasElements()) {
+                    pathEnd.children().forEach(pec -> pathRepresentative.withChild(pec.toCompactTree()));
+                }
+            } else {
+                compact.withChild(child.toCompactTree());
+            }
+        });
         return this;
+    }
+
+    private List<Tree> retrievePath() {
+        List<Tree> path = listWithValuesOf(this);
+        var current = this;
+        while (current.children().size() == 1) {
+            current = current.child(0);
+            path.add(current);
+        }
+        return path;
     }
 }
