@@ -298,5 +298,9 @@ public class TreeTest {
                 , tree("1").withPath(tree("2"), tree("3"), tree("4"))
                         .toCompactTree()
                         .toCommonMarkString());
+        requireEquals("* 1: 2:\n    * a\n    * b\n"
+                , tree("1").withPath(tree("2").withChildren(tree("a"), tree("b")))
+                        .toCompactTree()
+                        .toCommonMarkString());
     }
 }

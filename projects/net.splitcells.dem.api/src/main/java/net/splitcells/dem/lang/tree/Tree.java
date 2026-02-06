@@ -1207,24 +1207,22 @@ public interface Tree extends TreeView, Convertible {
      * @return
      */
     default Tree toCompactTree() {
-        val compact = tree(name(), nameSpace());
-        children().forEach(child -> {
-            if (child.children().isEmpty()) {
-                compact.withChild(tree(child.name(), child.nameSpace()));
-            } else if (child.children().size() == 1) {
-                val path = child.retrievePath();
-                val pathName = path.stream().map(p -> p.name()).reduce("", (a, b) -> a + ": " + b);
-                val pathRepresentative = tree(pathName, child.nameSpace());
-                compact.withChild(pathRepresentative);
-                val pathEnd = path.getLast();
-                if (pathEnd.children().hasElements()) {
-                    pathEnd.children().forEach(pec -> pathRepresentative.withChild(pec.toCompactTree()));
-                }
-            } else {
-                compact.withChild(child.toCompactTree());
+        final Tree compact;
+        if (children().isEmpty()) {
+            compact = tree(name(), nameSpace());
+        } else if (children().size() == 1) {
+            val path = retrievePath();
+            val pathName = path.stream().map(p -> p.name()).reduce((a, b) -> a + ": " + b).orElse("");
+            compact = tree(pathName, nameSpace());
+            val pathEnd = path.getLast();
+            if (pathEnd.children().hasElements()) {
+                pathEnd.children().forEach(pec -> compact.withChild(pec.toCompactTree()));
             }
-        });
-        return this;
+        } else {
+            compact = tree(name(), nameSpace());
+            children().forEach(child -> compact.withChild(child.toCompactTree()));
+        }
+        return compact;
     }
 
     private List<Tree> retrievePath() {
