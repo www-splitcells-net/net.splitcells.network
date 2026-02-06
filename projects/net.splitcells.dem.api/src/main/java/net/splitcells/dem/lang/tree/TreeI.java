@@ -74,18 +74,10 @@ public class TreeI implements Tree {
     }
 
     @Override public boolean equals(Object arg) {
-        if (arg instanceof Tree other) {
-            if (!name().equals(other.name())) {
-                return false;
-            }
-            if (!nameSpace().equals(other.nameSpace())) {
-                return false;
-            }
-            if (!children().equals(other.children())) {
-                return false;
-            }
-            return true;
-        }
+        if (arg instanceof Tree other)
+            return name().equals(other.name())
+                    && nameSpace().equals(other.nameSpace())
+                    && children().equals(other.children());
         return false;
     }
 }
