@@ -187,6 +187,9 @@ public class FilesTest {
     }
 
     @UnitTest public void testNewInputStream() {
+        requireThrow(() -> processInTemporaryFolder(p -> {
+            newInputStream(null);
+        }));
         processInTemporaryFolder(p -> {
             val file = p.resolve("test-file");
             val content = "3265";
