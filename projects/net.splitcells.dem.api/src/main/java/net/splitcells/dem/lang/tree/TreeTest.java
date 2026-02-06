@@ -273,6 +273,10 @@ public class TreeTest {
         requireNot(tree("2").equals(tree("1")));
 
         requireNot(tree("1", NATURAL).equals(tree("1", STRING)));
+
+        require(tree("1").withChild(tree("2")).equals(tree("1").withChild(tree("2"))));
+        requireNot(tree("1").equals(tree("1").withChild(tree("2"))));
+        requireNot(tree("1").withChild(tree("2")).equals(tree("1")));
     }
 
     @UnitTest public void testToCompactTree() {

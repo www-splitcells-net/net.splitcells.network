@@ -25,64 +25,67 @@ import static net.splitcells.dem.lang.namespace.NameSpaces.TEXT;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 
 public class TreeI implements Tree {
-	public static Tree tree(String value, NameSpace nameSpace) {
-		return new TreeI(value, nameSpace);
-	}
+    public static Tree tree(String value, NameSpace nameSpace) {
+        return new TreeI(value, nameSpace);
+    }
 
-	public static Tree tree(String value) {
-		return new TreeI(value, TEXT);
-	}
+    public static Tree tree(String value) {
+        return new TreeI(value, TEXT);
+    }
 
-	private final String value;
-	private final NameSpace nameSpace;
-	private final List<Tree> children = list();
+    private final String value;
+    private final NameSpace nameSpace;
+    private final List<Tree> children = list();
 
-	private TreeI(String value, NameSpace nameSpace) {
-		this.value = value;
-		this.nameSpace = nameSpace;
-	}
+    private TreeI(String value, NameSpace nameSpace) {
+        this.value = value;
+        this.nameSpace = nameSpace;
+    }
 
-	@Override
-	public NameSpace nameSpace() {
-		return nameSpace;
-	}
+    @Override
+    public NameSpace nameSpace() {
+        return nameSpace;
+    }
 
-	@Override
-	public String name() {
-		return value;
-	}
+    @Override
+    public String name() {
+        return value;
+    }
 
-	@Override
-	public List<Tree> children() {
-		return children;
-	}
+    @Override
+    public List<Tree> children() {
+        return children;
+    }
 
-	/**
-	 * @return Returns a descriptive string representation of this.
-	 *
-	 */
-	@Override
-	public String toString() {
-		if (WARNING) {
-			logs().warnUnimplementedPart(TreeI.class);
-		}
-		return toXmlString();
-	}
+    /**
+     * @return Returns a descriptive string representation of this.
+     *
+     */
+    @Override
+    public String toString() {
+        if (WARNING) {
+            logs().warnUnimplementedPart(TreeI.class);
+        }
+        return toXmlString();
+    }
 
-	@Override public int hashCode() {
-		return Thing.hashCode(value, nameSpace, children);
-	}
+    @Override public int hashCode() {
+        return Thing.hashCode(value, nameSpace, children);
+    }
 
-	@Override public boolean equals(Object arg) {
-		if (arg instanceof Tree other) {
-			if (!name().equals(other.name())) {
-				return false;
-			}
-			if (!nameSpace().equals(other.nameSpace())) {
-				return false;
-			}
-			return true;
-		}
-		return false;
-	}
+    @Override public boolean equals(Object arg) {
+        if (arg instanceof Tree other) {
+            if (!name().equals(other.name())) {
+                return false;
+            }
+            if (!nameSpace().equals(other.nameSpace())) {
+                return false;
+            }
+            if (!children().equals(other.children())) {
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
 }
