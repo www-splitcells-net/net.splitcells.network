@@ -19,10 +19,13 @@ import lombok.val;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
+import static net.splitcells.dem.data.atom.Bools.require;
+import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.Tree.JSON_ARRAY;
 import static net.splitcells.dem.lang.tree.Tree.JSON_OBJECT;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.BinaryUtils.binaryOutputStream;
@@ -261,8 +264,17 @@ public class TreeTest {
         requireEquals(testSubject.childrenPathTravel(1, 0, 0, 0).name(), "c");
     }
 
+    @UnitTest public void testEquals() {
+        requireNot(tree("1").equals(trail("")));
+
+        require(tree("1").equals(tree("1")));
+        requireNot(tree("1").equals(tree("2")));
+        requireNot(tree("2").equals(tree("1")));
+
+    }
+
     @UnitTest public void testToCompactTree() {
         val testSubject = tree("1");
-        requireEquals(testSubject, testSubject);
+        requireEquals(testSubject, testSubject.toCompactTree());
     }
 }

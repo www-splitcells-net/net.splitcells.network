@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.lang.tree;
 
+import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.namespace.NameSpace;
 
@@ -66,5 +67,19 @@ public class TreeI implements Tree {
 			logs().warnUnimplementedPart(TreeI.class);
 		}
 		return toXmlString();
+	}
+
+	@Override public int hashCode() {
+		return Thing.hashCode(value, nameSpace, children);
+	}
+
+	@Override public boolean equals(Object arg) {
+		if (arg instanceof Tree other) {
+			if (!name().equals(other.name())) {
+				return false;
+			}
+			return true;
+		}
+		return false;
 	}
 }
