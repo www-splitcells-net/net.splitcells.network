@@ -19,10 +19,12 @@ import lombok.val;
 import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
+import net.splitcells.dem.utils.StringUtils;
 
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
+import static net.splitcells.dem.lang.tree.CommonMarkConfig.commonMarkConfig;
 import static net.splitcells.dem.lang.tree.Tree.JSON_ARRAY;
 import static net.splitcells.dem.lang.tree.Tree.JSON_OBJECT;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
@@ -30,6 +32,7 @@ import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.BinaryUtils.binaryOutputStream;
+import static net.splitcells.dem.utils.StringUtils.multiple;
 
 public class TreeTest {
 
@@ -302,5 +305,12 @@ public class TreeTest {
                 , tree("1").withPath(tree("2").withChildren(tree("a"), tree("b")))
                         .toCompactTree()
                         .toCommonMarkString());
+    }
+
+    @UnitTest public void testToCommonMarkString() {
+        requireEquals("```\n" + multiple("3", 300) + "\n```\n", tree(multiple("3", 300))
+                .toCommonMarkString());
+        requireEquals("* " + multiple("3", 300) + "\n", tree(multiple("3", 300))
+                .toCommonMarkString(commonMarkConfig().setUseBlockQuotesForLongNames(false)));
     }
 }

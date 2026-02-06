@@ -43,6 +43,7 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
+import static net.splitcells.dem.lang.tree.CommonMarkConfig.commonMarkConfig;
 import static net.splitcells.dem.lang.tree.JsonConfig.jsonConfig;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
@@ -984,18 +985,30 @@ public interface Tree extends TreeView, Convertible {
     }
 
     default String toCommonMarkString() {
+        return toCommonMarkString(commonMarkConfig());
+    }
+
+    default String toCommonMarkString(CommonMarkConfig config) {
         final var commonMarkString = binaryOutputStream();
-        printCommonMarkString(stringSender(commonMarkString));
+        printCommonMarkString(config, stringSender(commonMarkString));
         return commonMarkString.toString();
     }
 
+    default void printCommonMarkString(CommonMarkConfig config, Sender<String> output) {
+        printCommonMarkString(config, output, "", "* ");
+    }
+
     default void printCommonMarkString(Sender<String> output) {
-        printCommonMarkString(output, "", "* ");
+        printCommonMarkString(commonMarkConfig(), output);
     }
 
     default void printCommonMarkString(Sender<String> output, String prefix, String listPrefix) {
+        printCommonMarkString(commonMarkConfig(), output, prefix, listPrefix);
+    }
+
+    default void printCommonMarkString(CommonMarkConfig config, Sender<String> output, String prefix, String listPrefix) {
         if (children().isEmpty()) {
-            if (name().length() > 200 || name().contains("\n")) {
+            if (config.isUseBlockQuotesForLongNames() && name().length() > 200 || name().contains("\n")) {
                 output.append("```\n" + name() + "\n```");
             } else {
                 output.append(listPrefix + name());
