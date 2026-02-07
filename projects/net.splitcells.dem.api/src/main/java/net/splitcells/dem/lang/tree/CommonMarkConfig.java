@@ -14,7 +14,7 @@ public class CommonMarkConfig {
         return new CommonMarkConfig();
     }
 
-    private @Getter @Setter boolean useBlockQuotesForLongNames = true;
+    @Getter @Setter private boolean useBlockQuotesForLongNames = true;
 
     private CommonMarkConfig() {
 
