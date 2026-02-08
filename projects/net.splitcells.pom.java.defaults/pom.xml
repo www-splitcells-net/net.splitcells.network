@@ -205,31 +205,16 @@
             </build>
         </profile>
         <profile>
-            <id>uber-jar</id>
+            <id>fat-jar</id>
             <activation>
                 <property>
-                    <name>uber.jar</name>
+                    <name>fat.jar</name>
                 </property>
             </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
-                        <version>2.7.15</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>repackage</goal>
-                                </goals>
-                                <configuration>
-                                    <classifier>spring-boot</classifier>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
+            <!-- TODO This needs to be implemented in the future.
+            In the past Spring Boot was used as a launcher for the fat jar.
+            This is a bad idea, as Spring Boot takes a lot of memory.
+            When a fat jar is required in the future, use maven-assembly-plugin with the single goal instead. -->
         </profile>
         <profile>
             <id>resources-source</id>
