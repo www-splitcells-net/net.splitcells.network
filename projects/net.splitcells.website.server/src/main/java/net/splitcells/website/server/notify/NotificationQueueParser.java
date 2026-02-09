@@ -16,6 +16,7 @@
 package net.splitcells.website.server.notify;
 
 import lombok.val;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.projects.ProjectsRenderer;
@@ -27,6 +28,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.StringUtils.parseString;
@@ -86,8 +88,14 @@ public class NotificationQueueParser {
         final var title = metaData.flatMap(PageMetaData::title);
         if (title.isPresent()) {
             val titleVar = title.get();
+            String proposalTitle;
+            if (listWithValuesOf(tags).contains(BLOG_ARTICLE)) {
+                proposalTitle = toBlogArticleTitle(titleVar);
+            } else {
+                proposalTitle = toProposalTitle(titleVar);
+            }
             val notification = notification(parseArticleDateFromFileName(article.getFileName().toString()), HTML, "")
-                    .withTitle(Optional.of(toProposalTitle(titleVar)))
+                    .withTitle(Optional.of(proposalTitle))
                     .withLink(Optional.of("/" + article))
                     .withTags(tags);
             parseArticleStartDate(parseString(projectsRenderer.sourceCode(article.toString()).orElseThrow().getContent()))
@@ -116,6 +124,10 @@ public class NotificationQueueParser {
         return "Project Proposal: " + arg;
     }
 
+    private static String toBlogArticleTitle(String arg) {
+        return "Blog Article: " + arg;
+    }
+
     public static NotificationQueue parseNotificationQueue(RenderRequest request, ProjectsRenderer projectsRenderer) {
         final var notificationQueue = notificationQueue();
         projectsRenderer.projectRenderers().stream()
@@ -129,9 +141,13 @@ public class NotificationQueueParser {
                     if (!ARTICLE_FILE_NAME_DATE_PREFIX.matcher(p.getFileName().toString()).matches()) {
                         return;
                     }
-                    if (p.toString().startsWith("net/splitcells/network/community/blog/")) {
+                    val pString = p.toString();
+                    if (pString.startsWith("net/splitcells/network/community/blog/task-archive")) {
+                        // Such not-ready articles clutter the notifications queue too much.
+                        return;
+                    } else if (pString.startsWith("net/splitcells/network/community/blog/")) {
                         parseNotification(notificationQueue, projectsRenderer, p, BLOG_ARTICLE);
-                    } else if (p.toString().startsWith("net/splitcells/network/community/")) {
+                    } else if (pString.startsWith("net/splitcells/network/community/")) {
                         parseNotification(notificationQueue, projectsRenderer, p, PROJECT);
                     }
                 });
