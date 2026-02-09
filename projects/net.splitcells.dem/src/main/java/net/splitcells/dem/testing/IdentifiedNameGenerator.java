@@ -35,7 +35,7 @@ public class IdentifiedNameGenerator {
     /**
      * Only use this, if {@link #nextName()} is not required.
      */
-    private static IdentifiedNameGenerator DEFAULT_NAME_GENERATOR = identifiedNameGenerator();
+    private static final IdentifiedNameGenerator DEFAULT_NAME_GENERATOR = identifiedNameGenerator();
 
     public static String nameById(int id) {
         return DEFAULT_NAME_GENERATOR.name(id);
