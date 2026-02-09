@@ -233,7 +233,7 @@ public class FilesTest {
             writeToFile(testFile1, "def");
             writeToFile(testFile2, "hij");
             writeToFile(testFile3, "klm");
-            requireEquals(walkRecursively(directory1).collect(toList()), list(directory1, testFile1, directory2, testFile2));
+            walkRecursively(directory1).collect(toList()).requireContentsOf(directory1, testFile1, directory2, testFile2);
         });
     }
 
