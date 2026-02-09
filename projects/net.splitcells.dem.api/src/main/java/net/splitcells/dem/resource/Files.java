@@ -180,10 +180,6 @@ public interface Files {
         return java.nio.file.Files.isDirectory(path);
     }
 
-    @Deprecated static String readString(Path path) {
-        return readFileAsString(path);
-    }
-
     static void copyFileFrom(Path source, Path target) {
         try {
             com.google.common.io.Files.copy(source.toFile(), target.toFile());

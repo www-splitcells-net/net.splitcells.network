@@ -5,6 +5,7 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2026-02-09\#32** Remove unused `Files#readString`.
 * **2026-02-06\#32** Rename `Files#is_file` to `Files#isFile`, in order to standardize naming.
 * **2026-01-17\#32** Rename `Files#walk_recursively` to `Files#walkRecursively`, in order to standardize naming.
 * **2025-11-24\#37** Log the creation of actually used FileSystemVoids.
