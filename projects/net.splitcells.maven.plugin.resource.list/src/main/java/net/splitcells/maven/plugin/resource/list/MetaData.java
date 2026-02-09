@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static java.nio.file.Files.isRegularFile;
 import static java.util.stream.IntStream.range;
 
 public class MetaData {
@@ -79,8 +80,12 @@ public class MetaData {
                         try (final var walk = java.nio.file.Files.walk(mojo.resourceFolder)) {
                             walk.forEach(p -> {
                                 p = Path.of(mojo.normalizedResourcePathWithoutProjectPrefix(p));
-                                if (matcher.matches(p)) {
-                                    mojo.getLog().debug("Glob match: " + p);
+                                if (matcher.matches(p) && isRegularFile(p)) {
+                                    val metaData = new MetaData(p);
+                                    metaData.copyrightText = Optional.of(table.getString("SPDX-FileCopyrightText"));
+                                    metaData.license = Optional.of(table.getString("SPDX-License-Identifier"));
+                                    mojo.getLog().debug("Parsing path via glob match: " + metaData);
+                                    parsedMetaData.add(metaData);
                                 }
                             });
                         } catch (IOException e) {
