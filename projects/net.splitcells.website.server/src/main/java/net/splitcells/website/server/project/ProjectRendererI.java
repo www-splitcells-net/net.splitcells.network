@@ -61,7 +61,6 @@ import static net.splitcells.website.server.project.renderer.extension.ZipProjec
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkChangelogEventProjectRendererExtension.commonMarkChangelogEventRenderer;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkChangelogProjectRendererExtension.commonMarkChangelogRenderer;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkProjectRendererExtension.commonMarkExtension;
-import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkReadmeProjectRendererExtension.commonMarkReadmeRenderer;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.RootFileProjectRendererExtension.rootFileProjectRendererExtension;
 import static net.splitcells.website.server.projects.ProjectsRendererSourceCodeFileSystem.projectsRendererSourceCodeFileSystem;
 
@@ -156,7 +155,7 @@ public class ProjectRendererI implements ProjectRenderer {
         this.projectFolder = projectFolder;
         this.config = config;
         // TODO MOVE
-        this.renderer.registerExtension(commonMarkReadmeRenderer())
+        this.renderer
                 .registerExtension(commonMarkChangelogRenderer())
                 // .registerExtension(userCommandRenderer()) // TODO This renderer does not work.
                 .registerExtension(commonMarkExtension())
