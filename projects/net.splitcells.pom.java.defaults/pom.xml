@@ -50,6 +50,38 @@
         </extensions>
         <plugins>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>groupId</id>
+                        <goals>
+                            <goal>regex-property</goal>
+                        </goals>
+                        <configuration>
+                            <name>project.groupId.path</name>
+                            <value>${project.groupId}</value>
+                            <regex>\.</regex>
+                            <replacement>/</replacement>
+                            <failIfNoMatch>false</failIfNoMatch>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>artifactId</id>
+                        <goals>
+                            <goal>regex-property</goal>
+                        </goals>
+                        <configuration>
+                            <name>project.artifactId.path</name>
+                            <value>${project.artifactId}</value>
+                            <regex>\.</regex>
+                            <replacement>/</replacement>
+                            <failIfNoMatch>false</failIfNoMatch>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>net.splitcells</groupId>
                 <artifactId>resource-list-maven-plugin</artifactId>
                 <version>${revision}</version>
@@ -760,7 +792,7 @@
                                 </configuration>
                             </execution>
                             <execution>
-                                <id>resources-source-root-resources</id>
+                                <id>resources-source-root-resources-to-root</id>
                                 <phase>validate</phase>
                                 <goals>
                                     <goal>copy-resources</goal>
@@ -780,6 +812,32 @@
                                                 <include>DEVELOPMENT.*</include>
                                                 <include>README.*</include>
                                                 <include>NOTICE.*</include>
+                                            </includes>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>resources-source-root-resources</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>
+                                        ${basedir}/target/classes/${project.groupId}.${project.artifactId}.resources/src/main/md/${project.groupId.path}/${project.artifactId.path}
+                                    </outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>./</directory>
+                                            <filtering>true</filtering>
+                                            <includes>
+                                                <include>BUILD.md</include>
+                                                <include>CHANGELOG.md</include>
+                                                <include>CONTRIBUTING.md</include>
+                                                <include>DEVELOPMENT.md</include>
+                                                <include>README.md</include>
+                                                <include>NOTICE.md</include>
                                             </includes>
                                         </resource>
                                     </resources>
