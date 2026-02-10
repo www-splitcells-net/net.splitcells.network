@@ -71,7 +71,6 @@ def reposProcess(args):
     parser.add_argument('--command-for-missing', dest='commandForMissing', required=False)
     parser.add_argument('--command-for-unknown', dest='commandForUnknown', default='exit 1')
     parser.add_argument('--command-for-current', dest='commandForCurrent', required=True)
-    parser.add_argument('--command-for-children', dest='commandForChildren', required=False)
     parser.add_argument('--ignore-peer-repos', dest='ignorePeerRepos', required=False, default='false')
     parser.add_argument('--dry-run', dest='dryRun', required=False, type=str2bool, default=False, help="If true, commands are only prepared and no commands are executed.")
     parser.add_argument('--verbose', dest='verbose', required=False, type=str2bool, default=False, help="If set to true, the output is verbose.")
