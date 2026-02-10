@@ -9,6 +9,9 @@ import logging
 import unittest
 import sys
 
+def str2bool(arg):
+    # The stringification of the truth boolean is `True` in Python 3 and therefore this capitalization is supported as well.
+    return arg == 'true' or arg == 'True'
 class RepoProcess:
     executionScript = ""
     def execute(self, args):
@@ -23,6 +26,7 @@ def repoProcess(args):
     parser.add_argument('--command-for-current', dest='commandForCurrent', required=False) # TODO What is the purpose of this?
     parser.add_argument('--command-for-children', dest='commandForChildren', required=False)
     parser.add_argument('--ignore-peer-repos', dest='ignorePeerRepos', required=False, default='false')
+    parser.add_argument('--dry-run', dest='dry_run', required=False, type=str2bool, default=False, help="If true, commands are only prepared and no commands are executed.")
     RepoProcess().execute(parser.parse_args(args))
 class TestRepoProcess(unittest.TestCase):
     def test(self):
