@@ -31,6 +31,7 @@ class ReposProcess:
     peerRepo = ''
     targetPath = None
     dryRun = False
+    isRoot = True
     def execute(self, args):
         self.targetPath = Path(args.path)
         self.commandForCurrent = args.commandForCurrent
@@ -39,12 +40,15 @@ class ReposProcess:
         self.executeRepo()
     def copy(self):
         copy = ReposProcess()
+        copy.isRoot = False
         copy.targetPath = self.targetPath
         copy.commandForCurrent = self.commandForCurrent
         copy.dryRun = self.dryRun
         copy.verbose = self.verbose
         return copy
     def executeRepo(self):
+        if self.isRoot:
+            self.executionScript += "set -e\nset -x\n\n"
         if (str(self.targetPath) != './'):
             self.executionScript += 'cd \"' + str(self.targetPath) + '\"\n'
         self.executionScript += self.applyTemplate(self.commandForCurrent) + '\n\n'
@@ -97,7 +101,9 @@ class TestReposProcess(unittest.TestCase):
         with TemporaryDirectory() as tmpDirStr:
             tmpDir = Path(tmpDirStr)
             testResult = reposProcess(["--dry-run=true", "--path=" + tmpDirStr, '--command-for-current=echo'])
-            self.assertEqual(testResult.executionScript, """cd "${tmpDirStr}"
+            self.assertEqual(testResult.executionScript, """set -e
+set -x
+
 echo
 
 """.replace("${tmpDirStr}", tmpDirStr))
@@ -127,7 +133,9 @@ echo
                     """)
             subprocess.call("chmod +x " + str(tmpDir.joinpath('test-repo/sub-1/bin/net.splitcells.shell.repos.peers')), shell='True')
             testResult = reposProcess(["--dry-run=true", "--path=" + str(tmpDir.joinpath('test-repo')), '--command-for-current=echo child:${subRepo},peer:${peerRepo}'])
-            self.assertEqual(testResult.executionScript, """cd "${tmpDirStr}/test-repo"
+            self.assertEqual(testResult.executionScript, """set -e
+set -x
+
 echo child:,peer:
 
 cd ./sub-1
