@@ -104,7 +104,7 @@ def reposProcess(args):
     parser = argparse.ArgumentParser(description="Processes a group of repos.")
     parser.add_argument('--path', dest='path', default='./', help="This is path of the to be processed meta repo.")
     parser.add_argument('--host', dest='host', required=False)
-    parser.add_argument('--command-for-missing', dest='commandForMissing', required=False)
+    parser.add_argument('--command-for-missing', dest='commandForMissing', default='exit 1')
     parser.add_argument('--command-for-unknown', dest='commandForUnknown', default='exit 1')
     parser.add_argument('--command-for-current', dest='commandForCurrent', required=True)
     parser.add_argument('--ignore-peer-repos', dest='ignorePeerRepos', required=False, default='false')
