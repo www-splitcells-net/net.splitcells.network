@@ -14,5 +14,6 @@
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
 # Synchronize repository against all remotes.
+# This command assumes, that the repo has no uncommited changes.
 # TODO Clone missing sub repositories via "repo.clone.into.current".
-repos.commit.all && repos.pull && repos.commit.all && repos.push
+repos.pull && repos.push.at.all
