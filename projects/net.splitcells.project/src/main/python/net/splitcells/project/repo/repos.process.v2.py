@@ -20,10 +20,10 @@ def str2bool(arg):
 class RepoProcess:
     executionScript = ""
     def execute(self, args):
-        if self.config.dry_run:
+        if args.dry_run:
             logging.info("Generated script: \n" + self.executionScript)
         else:
-            if self.config.verbose:
+            if args.verbose:
                 logging.info("Executing script: \n" + self.executionScript)
             subprocess.call(self.executionScript, shell='True')
 def repoProcess(args):
