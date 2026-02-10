@@ -38,7 +38,7 @@ def repoProcess(args):
     parser.add_argument('--host', dest='host', required=False)
     parser.add_argument('--command-for-missing', dest='commandForMissing', required=False)
     parser.add_argument('--command-for-unknown', dest='commandForUnknown', default='exit 1')
-    parser.add_argument('--command-for-current', dest='commandForCurrent', required=False) # TODO What is the purpose of this?
+    parser.add_argument('--command-for-current', dest='commandForCurrent', required=False)
     parser.add_argument('--command-for-children', dest='commandForChildren', required=False)
     parser.add_argument('--ignore-peer-repos', dest='ignorePeerRepos', required=False, default='false')
     parser.add_argument('--dry-run', dest='dry_run', required=False, type=str2bool, default=False, help="If true, commands are only prepared and no commands are executed.")
