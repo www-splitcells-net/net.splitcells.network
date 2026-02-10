@@ -27,7 +27,7 @@ class RepoProcess:
                 logging.info("Executing script: \n" + self.executionScript)
             subprocess.call(self.executionScript, shell='True')
 def repoProcess(args):
-    parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
+    parser = argparse.ArgumentParser(description="Processes a group of repos.")
     parser.add_argument('--relative-path', dest='relativePath', default='./', help="This is path of the currently processed repo.")
     parser.add_argument('--host', dest='host', required=False)
     parser.add_argument('--command', dest='command', required=True)
