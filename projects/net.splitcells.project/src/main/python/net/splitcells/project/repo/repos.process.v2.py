@@ -20,6 +20,8 @@ def str2bool(arg):
 class RepoProcess:
     executionScript = ""
     def execute(self, args):
+        if (args.path is not None):
+            self.executionScript += 'cd \"' + args.path + '\"'
         if args.dry_run:
             logging.info("Generated script: \n" + self.executionScript)
         else:
@@ -28,7 +30,7 @@ class RepoProcess:
             subprocess.call(self.executionScript, shell='True')
 def repoProcess(args):
     parser = argparse.ArgumentParser(description="Processes a group of repos.")
-    parser.add_argument('--path', dest='path', default='./', help="This is path of the currently processed repo.")
+    parser.add_argument('--path', dest='path', help="This is path of the to be processed meta repo.", required=False)
     parser.add_argument('--host', dest='host', required=False)
     parser.add_argument('--command-for-missing', dest='commandForMissing', required=False)
     parser.add_argument('--command-for-unknown', dest='commandForUnknown', default='exit 1')
@@ -37,10 +39,15 @@ def repoProcess(args):
     parser.add_argument('--ignore-peer-repos', dest='ignorePeerRepos', required=False, default='false')
     parser.add_argument('--dry-run', dest='dry_run', required=False, type=str2bool, default=False, help="If true, commands are only prepared and no commands are executed.")
     parser.add_argument('--verbose', dest='verbose', required=False, type=str2bool, default=False, help="If set to true, the output is verbose.")
-    RepoProcess().execute(parser.parse_args(args))
+    repoProcess = RepoProcess()
+    repoProcess.execute(parser.parse_args(args))
+    return repoProcess
 class TestRepoProcess(unittest.TestCase):
-    def testHelp(self):
-        repoProcess(["--dry-run=true"])
+    def testPath(self):
+        testResult = repoProcess(["--dry-run=true"])
+        self.assertEqual(testResult.executionScript, "")
+        testResult = repoProcess(["--dry-run=true", "--path=../"])
+        self.assertEqual(testResult.executionScript, 'cd \"../\"')
 if __name__ == '__main__':
     # As there is no build process for Python unit tests are executed every time, to make sure, that the script works correctly.
     # During this test info logging is disabled, which is disabled by default in Python.
