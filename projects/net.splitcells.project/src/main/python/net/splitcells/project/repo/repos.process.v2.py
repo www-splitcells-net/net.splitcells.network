@@ -37,12 +37,14 @@ class ReposProcess:
         self.commandForCurrent = args.commandForCurrent
         self.dryRun = args.dryRun
         self.verbose = args.verbose
+        self.commandForMissing = args.commandForMissing
         self.executeRepo()
     def copy(self):
         copy = ReposProcess()
         copy.isRoot = False
         copy.targetPath = self.targetPath
         copy.commandForCurrent = self.commandForCurrent
+        copy.commandForMissing = self.commandForMissing
         copy.dryRun = self.dryRun
         copy.verbose = self.verbose
         copy.subRepo = self.subRepo
@@ -51,9 +53,14 @@ class ReposProcess:
     def executeRepo(self):
         if self.isRoot:
             self.executionScript += "set -e\nset -x\n\n"
-        if (str(self.targetPath) != './'):
-            self.executionScript += 'cd \"' + str(self.targetPath) + '\"\n'
-        self.executionScript += self.applyTemplate(self.commandForCurrent) + '\n\n'
+        if self.targetPath.is_dir():
+            if (str(self.targetPath) != './'):
+                self.executionScript += 'cd \"' + str(self.targetPath) + '\"\n'
+            self.executionScript += self.applyTemplate(self.commandForCurrent) + '\n\n'
+        else:
+            self.executionScript += '# Processing missing "' + str(self.targetPath) + '"\n'
+            self.executionScript += 'cd \"' + str(self.targetPath.parent) + '\"\n'
+            self.executionScript += self.applyTemplate(self.commandForMissing) + '\n\n'
         childrenFile = self.targetPath.joinpath('./bin/net.splitcells.repos.children')
         if childrenFile.is_file():
             childQuery = subprocess.run([childrenFile], stdout=subprocess.PIPE)
@@ -61,16 +68,15 @@ class ReposProcess:
                 if not child == "" and not child.isspace():
                     self.subRepo = child
                     childFile = self.targetPath.joinpath(child)
-                    if childFile.is_dir():
-                        childProcess = self.copy()
-                        childProcess.childRepo = ''
-                        childProcess.targetPath = childFile
-                        childProcess.dryRun = True
-                        childProcess.commandForCurrent = self.applyTemplate(self.commandForCurrent)
-                        childProcess.executeRepo()
-                        self.executionScript += childProcess.executionScript
-                        if not self.executionScript.endswith("\n\n"):
-                            self.executionScript += "\n"
+                    childProcess = self.copy()
+                    childProcess.childRepo = ''
+                    childProcess.targetPath = childFile
+                    childProcess.dryRun = True
+                    childProcess.commandForCurrent = self.applyTemplate(self.commandForCurrent)
+                    childProcess.executeRepo()
+                    self.executionScript += childProcess.executionScript
+                    if not self.executionScript.endswith("\n\n"):
+                        self.executionScript += "\n"
                     self.subRepo = ""
         peerFile = self.targetPath.joinpath('./bin/net.splitcells.shell.repos.peers')
         if peerFile.is_file():
@@ -79,16 +85,15 @@ class ReposProcess:
                 if not peer == "" and not peer.isspace():
                     self.peerRepo = peer
                     peerFile = self.targetPath.joinpath("../" + peer).resolve()
-                    if peerFile.is_dir():
-                        peerProcess = self.copy()
-                        peerProcess.peerRepo = ''
-                        peerProcess.targetPath = peerFile
-                        peerProcess.dryRun = True
-                        peerProcess.commandForCurrent = self.applyTemplate(self.commandForCurrent)
-                        peerProcess.executeRepo()
-                        self.executionScript += peerProcess.executionScript
-                        if not self.executionScript.endswith("\n\n"):
-                            self.executionScript += "\n"
+                    peerProcess = self.copy()
+                    peerProcess.peerRepo = ''
+                    peerProcess.targetPath = peerFile
+                    peerProcess.dryRun = True
+                    peerProcess.commandForCurrent = self.applyTemplate(self.commandForCurrent)
+                    peerProcess.executeRepo()
+                    self.executionScript += peerProcess.executionScript
+                    if not self.executionScript.endswith("\n\n"):
+                        self.executionScript += "\n"
                     self.peerRepo = ""
         if self.dryRun:
             logging.info("Generated script: \n" + self.executionScript)
@@ -138,6 +143,7 @@ echo
                 testRepo.write("""#!/usr/bin/env sh
                     echo sub-1
                     echo sub-2
+                    echo missing-sub
                     """)
             subprocess.call("chmod +x " + str(tmpDir.joinpath('test-repo/bin/net.splitcells.repos.children')), shell='True')
             with open(tmpDir.joinpath('test-repo/bin/net.splitcells.shell.repos.peers'), 'w') as peerRepo:
@@ -165,6 +171,10 @@ echo child:sub-1,peer:
 
 cd "${tmpDirStr}/test-repo/sub-2"
 echo child:sub-2,peer:
+
+# Processing missing "${tmpDirStr}/test-repo/missing-sub"
+cd "${tmpDirStr}/test-repo"
+exit 1
 
 cd "${tmpDirStr}/peer-repo"
 echo child:,peer:peer-repo
