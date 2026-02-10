@@ -28,9 +28,8 @@ class RepoProcess:
             subprocess.call(self.executionScript, shell='True')
 def repoProcess(args):
     parser = argparse.ArgumentParser(description="Processes a group of repos.")
-    parser.add_argument('--relative-path', dest='relativePath', default='./', help="This is path of the currently processed repo.")
+    parser.add_argument('--path', dest='path', default='./', help="This is path of the currently processed repo.")
     parser.add_argument('--host', dest='host', required=False)
-    parser.add_argument('--command', dest='command', required=False)
     parser.add_argument('--command-for-missing', dest='commandForMissing', required=False)
     parser.add_argument('--command-for-unknown', dest='commandForUnknown', default='exit 1')
     parser.add_argument('--command-for-current', dest='commandForCurrent', required=False) # TODO What is the purpose of this?
