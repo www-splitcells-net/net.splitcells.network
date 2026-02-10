@@ -1370,5 +1370,6 @@ if __name__ == '__main__':
     test_result = unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestWorkerExecution))
     logging.getLogger().setLevel(logging.INFO)
     if not test_result.wasSuccessful():
-        raise Exception("The self test was not successful: " + str(test_result))
+        # If the tests throw an error, the tests are executed again with INFO logging enabled for better debugging.
+        raise Exception("The self test was not successful: " + str(unittest.TestLoader().loadTestsFromTestCase(TestWorkerExecution)))
     parse_worker_execution_arguments(sys.argv[1:])
