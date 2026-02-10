@@ -218,7 +218,7 @@ PODMAN_COMMAND_TEMPLATE = """podman run --name "${executionName}" \\
   --pids-limit=-1 \\
   --add-host host.docker.internal:10.0.2.2 \\
   --network slirp4netns:allow_host_loopback=true \\
-  --hostname="%H" \\
+  --hostname="$(hostname)" \\
   ${additionalArguments}\\
   --rm \\
   -v ~/.local/state/${programName}/Documents:/root/.local/state/${programName}/Documents \\
@@ -311,7 +311,7 @@ Description=Execute ${executionName}
 [Service]
 Type=simple
 StandardOutput=journal
-ExecStart=""" + PODMAN_COMMAND_TEMPLATE + """
+ExecStart=""" + PODMAN_COMMAND_TEMPLATE.replace('--hostname="$(hostname)" \\', '--hostname="%H" \\') + """
 [Install]
 WantedBy=default.target
 SERVICE_EOL
@@ -662,7 +662,7 @@ podman run --name "net.splitcells.martins.avots.distro" \\
   --pids-limit=-1 \\
   --add-host host.docker.internal:10.0.2.2 \\
   --network slirp4netns:allow_host_loopback=true \\
-  --hostname="%H" \\
+  --hostname="$(hostname)" \\
   \\
   --rm \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/Documents:/root/.local/state/net.splitcells.martins.avots.distro/Documents \\
@@ -706,7 +706,7 @@ podman run --name "net.splitcells.martins.avots.distro" \\
   --pids-limit=-1 \\
   --add-host host.docker.internal:10.0.2.2 \\
   --network slirp4netns:allow_host_loopback=true \\
-  --hostname="%H" \\
+  --hostname="$(hostname)" \\
   \\
   --rm \\
   -v ~/.local/state/net.splitcells.martins.avots.distro/Documents:/root/.local/state/net.splitcells.martins.avots.distro/Documents \\
@@ -1220,7 +1220,7 @@ podman run --name "net.splitcells.network.worker" \\
   --pids-limit=-1 \\
   --add-host host.docker.internal:10.0.2.2 \\
   --network slirp4netns:allow_host_loopback=true \\
-  --hostname="%H" \\
+  --hostname="$(hostname)" \\
   \\
   --rm \\
   -v ~/.local/state/net.splitcells.network.worker/Documents:/root/.local/state/net.splitcells.network.worker/Documents \\
@@ -1286,7 +1286,7 @@ podman run --name "net.splitcells.network.worker" \\
   --pids-limit=-1 \\
   --add-host host.docker.internal:10.0.2.2 \\
   --network slirp4netns:allow_host_loopback=true \\
-  --hostname="%H" \\
+  --hostname="$(hostname)" \\
   \\
   --rm \\
   -v ~/.local/state/net.splitcells.network.worker/Documents:/root/.local/state/net.splitcells.network.worker/Documents \\
