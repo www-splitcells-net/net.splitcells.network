@@ -23,10 +23,17 @@ def str2bool(arg):
     return arg == 'true' or arg == 'True'
 class RepoProcess:
     executionScript = ""
+    children = []
     def execute(self, args):
-        if (args.path is not None):
+        if (args.path != './'):
             self.executionScript += 'cd \"' + args.path + '\"\n'
         self.executionScript += args.commandForCurrent + '\n'
+        childrenFile = Path(args.path).joinpath('./bin/net.splitcells.repos.children')
+        if childrenFile.is_file():
+            childQuery = subprocess.run([childrenFile], stdout=subprocess.PIPE)
+            for child in childQuery.stdout.decode('utf-8').split("\n"):
+                if not child == "" and not child.isspace():
+                    self.children.append(child)
         if args.dry_run:
             logging.info("Generated script: \n" + self.executionScript)
         else:
@@ -35,7 +42,7 @@ class RepoProcess:
             subprocess.call(self.executionScript, shell='True')
 def repoProcess(args):
     parser = argparse.ArgumentParser(description="Processes a group of repos.")
-    parser.add_argument('--path', dest='path', help="This is path of the to be processed meta repo.", required=False)
+    parser.add_argument('--path', dest='path', default='./', help="This is path of the to be processed meta repo.")
     parser.add_argument('--host', dest='host', required=False)
     parser.add_argument('--command-for-missing', dest='commandForMissing', required=False)
     parser.add_argument('--command-for-unknown', dest='commandForUnknown', default='exit 1')
@@ -49,12 +56,12 @@ def repoProcess(args):
     return repoProcess
 class TestRepoProcess(unittest.TestCase):
     def testPath(self):
-        testResult = repoProcess(["--dry-run=true", '--command-for-current=echo'])
-        self.assertEqual(testResult.executionScript, "echo\n")
-        testResult = repoProcess(["--dry-run=true", "--path=../", '--command-for-current=echo'])
-        self.assertEqual(testResult.executionScript, """cd "../"
+        with TemporaryDirectory() as tmpDirStr:
+            tmpDir = Path(tmpDirStr)
+            testResult = repoProcess(["--dry-run=true", "--path=" + tmpDirStr, '--command-for-current=echo'])
+            self.assertEqual(testResult.executionScript, """cd "${tmpDirStr}"
 echo
-""")
+""".replace("${tmpDirStr}", tmpDirStr))
     def testRepo(self):
         with TemporaryDirectory() as tmpDirStr:
             tmpDir = Path(tmpDirStr)
@@ -68,10 +75,12 @@ echo
                     echo sub-1
                     echo sub-2
                     """)
-            testResult = repoProcess(["--dry-run=true", "--path=" + tmpDirStr, '--command-for-current=echo 1'])
-            self.assertEqual(testResult.executionScript, """cd "${tmpDirStr}"
+            subprocess.call("chmod +x " + str(tmpDir.joinpath('test-repo/bin/net.splitcells.repos.children')), shell='True')
+            testResult = repoProcess(["--dry-run=true", "--path=" + str(tmpDir.joinpath('test-repo')), '--command-for-current=echo 1'])
+            self.assertEqual(testResult.executionScript, """cd "${tmpDirStr}/test-repo"
 echo 1
 """.replace("${tmpDirStr}", tmpDirStr))
+            self.assertEqual(testResult.children, ['sub-1', 'sub-2'])
 if __name__ == '__main__':
     # As there is no build process for Python unit tests are executed every time, to make sure, that the script works correctly.
     # During this test info logging is disabled, which is disabled by default in Python.
