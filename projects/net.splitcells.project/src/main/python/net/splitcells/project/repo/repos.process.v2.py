@@ -114,12 +114,16 @@ echo
                     echo sub-1
                     echo sub-2
                     """)
-            with open(tmpDir.joinpath('test-repo/bin/net.splitcells.shell.repos.peers'), 'w') as peerRepo:
-                            peerRepo.write("""#!/usr/bin/env sh
-                                echo peer-repo
-                                """)
             subprocess.call("chmod +x " + str(tmpDir.joinpath('test-repo/bin/net.splitcells.repos.children')), shell='True')
+            with open(tmpDir.joinpath('test-repo/bin/net.splitcells.shell.repos.peers'), 'w') as peerRepo:
+                peerRepo.write("""#!/usr/bin/env sh
+                    echo peer-repo
+                    """)
             subprocess.call("chmod +x " + str(tmpDir.joinpath('test-repo/bin/net.splitcells.shell.repos.peers')), shell='True')
+            with open(tmpDir.joinpath('test-repo/bin/net.splitcells.shell.repos.peers'), 'w') as peerRepo:
+                peerRepo.write("""#!/usr/bin/env sh
+                    echo peer-repo
+                    """)
             testResult = reposProcess(["--dry-run=true", "--path=" + str(tmpDir.joinpath('test-repo')), '--command-for-current=echo child:${subRepo},peer:${peerRepo}'])
             self.assertEqual(testResult.executionScript, """cd "${tmpDirStr}/test-repo"
 echo child:,peer:
