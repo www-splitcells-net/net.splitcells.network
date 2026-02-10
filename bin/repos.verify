@@ -7,6 +7,6 @@ set -e
   | xargs -i sh -c 'set -e && cd ../{} && echo Verifying shell at $(pwd) && ls $(echo $PATH | tr ":" " ") || exit 255'
 # The exit code 255 is used, in order to signal xargs, that a real error occurred.
 ../net.splitcells.network.hub/bin/net.splitcells.shell.repos.peers \
-  | xargs -i sh -c 'set -e && cd ../{} && echo Verifying the data integrity of repo: $(pwd) && repo.verify || exit 255'
+  | xargs -i sh -c 'set -e && cd ../{} && echo Verifying data integrity of repo: $(pwd) && repo.verify || exit 255'
 ../net.splitcells.network.hub/bin/net.splitcells.shell.repos.peers \
-  | xargs -i sh -c 'set -e && cd ../{} && echo Checking the license info of repo: $(pwd) && license.check || exit 255'
+  | xargs -i sh -c 'set -e && cd ../{} && echo Checking license info of repo: $(pwd) && license.check || exit 255'
