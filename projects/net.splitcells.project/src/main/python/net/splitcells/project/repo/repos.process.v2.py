@@ -9,6 +9,10 @@ import logging
 import unittest
 import sys
 
+class RepoProcess:
+    executionScript = ""
+    def execute(self, args):
+        pass
 def repoProcess(args):
     parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('--relative-path', dest='relativePath', default='./', help="This is path of the currently processed repo.")
@@ -19,7 +23,7 @@ def repoProcess(args):
     parser.add_argument('--command-for-current', dest='commandForCurrent', required=False) # TODO What is the purpose of this?
     parser.add_argument('--command-for-children', dest='commandForChildren', required=False)
     parser.add_argument('--ignore-peer-repos', dest='ignorePeerRepos', required=False, default='false')
-    parsedArgs = parser.parse_args()
+    RepoProcess().execute(parser.parse_args(args))
 class TestRepoProcess(unittest.TestCase):
     def test(self):
         print("Test")
