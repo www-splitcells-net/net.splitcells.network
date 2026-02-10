@@ -149,6 +149,7 @@ echo
             with open(tmpDir.joinpath('test-repo/bin/net.splitcells.shell.repos.peers'), 'w') as peerRepo:
                 peerRepo.write("""#!/usr/bin/env sh
                     echo peer-repo
+                    echo missing-peer
                     """)
             subprocess.call("chmod +x " + str(tmpDir.joinpath('test-repo/bin/net.splitcells.shell.repos.peers')), shell='True')
             with open(tmpDir.joinpath('test-repo/sub-1/bin/net.splitcells.shell.repos.peers'), 'w') as peerRepo:
@@ -178,6 +179,10 @@ exit 1
 
 cd "${tmpDirStr}/peer-repo"
 echo child:,peer:peer-repo
+
+# Processing missing "${tmpDirStr}/missing-peer"
+cd "${tmpDirStr}"
+exit 1
 
 """.replace("${tmpDirStr}", tmpDirStr))
 if __name__ == '__main__':
