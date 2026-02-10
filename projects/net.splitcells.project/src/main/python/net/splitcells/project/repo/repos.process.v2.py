@@ -68,7 +68,10 @@ echo
                     echo sub-1
                     echo sub-2
                     """)
-            testResult = repoProcess(["--dry-run=true", "--path=" + tmpDirStr])
+            testResult = repoProcess(["--dry-run=true", "--path=" + tmpDirStr, '--command-for-current=echo 1'])
+            self.assertEqual(testResult.executionScript, """cd "${tmpDirStr}"
+echo 1
+""".replace("${tmpDirStr}", tmpDirStr))
 if __name__ == '__main__':
     # As there is no build process for Python unit tests are executed every time, to make sure, that the script works correctly.
     # During this test info logging is disabled, which is disabled by default in Python.
