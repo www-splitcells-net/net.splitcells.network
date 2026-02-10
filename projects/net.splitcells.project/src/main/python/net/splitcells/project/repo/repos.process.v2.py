@@ -12,7 +12,11 @@ __license__ = "EPL-2.0 OR GPL-2.0-or-later"
 import argparse
 import logging
 import unittest
+import subprocess
 import sys
+from tempfile import TemporaryDirectory
+from os import makedirs
+from pathlib import Path
 
 def str2bool(arg):
     # The stringification of the truth boolean is `True` in Python 3 and therefore this capitalization is supported as well.
@@ -48,6 +52,20 @@ class TestRepoProcess(unittest.TestCase):
         self.assertEqual(testResult.executionScript, "")
         testResult = repoProcess(["--dry-run=true", "--path=../"])
         self.assertEqual(testResult.executionScript, 'cd \"../\"')
+    def testRepo(self):
+        with TemporaryDirectory() as tmpDirStr:
+            tmpDir = Path(tmpDirStr)
+            makedirs(tmpDir.joinpath('test-repo/bin'))
+            makedirs(tmpDir.joinpath('test-repo/sub-1'))
+            makedirs(tmpDir.joinpath('test-repo/sub-2/bin'))
+            makedirs(tmpDir.joinpath('test-repo/sub-2/sub-3'))
+            makedirs(tmpDir.joinpath('peer-repo'))
+            with open(tmpDir.joinpath('test-repo/bin/net.splitcells.repos.children'), 'w') as testRepo:
+                testRepo.write("""#!/usr/bin/env sh
+                    echo sub-1
+                    echo sub-2
+                    """)
+            testResult = repoProcess(["--dry-run=true", "--path=" + tmpDirStr])
 if __name__ == '__main__':
     # As there is no build process for Python unit tests are executed every time, to make sure, that the script works correctly.
     # During this test info logging is disabled, which is disabled by default in Python.
