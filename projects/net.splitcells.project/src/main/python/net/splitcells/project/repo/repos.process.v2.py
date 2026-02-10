@@ -18,6 +18,8 @@ class RepoProcess:
         if self.config.dry_run:
             logging.info("Generated script: \n" + self.executionScript)
         else:
+            if self.config.verbose:
+                logging.info("Executing script: \n" + self.executionScript)
             subprocess.call(self.executionScript, shell='True')
 def repoProcess(args):
     parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
@@ -30,6 +32,7 @@ def repoProcess(args):
     parser.add_argument('--command-for-children', dest='commandForChildren', required=False)
     parser.add_argument('--ignore-peer-repos', dest='ignorePeerRepos', required=False, default='false')
     parser.add_argument('--dry-run', dest='dry_run', required=False, type=str2bool, default=False, help="If true, commands are only prepared and no commands are executed.")
+    parser.add_argument('--verbose', dest='verbose', required=False, type=str2bool, default=False, help="If set to true, the output is verbose.")
     RepoProcess().execute(parser.parse_args(args))
 class TestRepoProcess(unittest.TestCase):
     def test(self):
