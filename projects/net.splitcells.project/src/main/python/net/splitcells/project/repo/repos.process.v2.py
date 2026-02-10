@@ -25,33 +25,46 @@ from pathlib import Path
 def str2bool(arg):
     # The stringification of the truth boolean is `True` in Python 3 and therefore this capitalization is supported as well.
     return arg == 'true' or arg == 'True'
-class RepoProcess:
+class ReposProcess:
     executionScript = ""
     subRepo = ''
     targetPath = None
+    dryRun = False
     def execute(self, args):
         self.targetPath = Path(args.path)
-        if (args.path != './'):
-            self.executionScript += 'cd \"' + args.path + '\"\n'
-        self.executionScript += self.applyTemplate(args.commandForCurrent) + '\n\n'
-        childrenFile = Path(args.path).joinpath('./bin/net.splitcells.repos.children')
+        self.commandForCurrent = args.commandForCurrent
+        self.dryRun = args.dryRun
+        self.verbose = args.verbose
+        self.executeRepo()
+    def copy(self):
+        copy = ReposProcess()
+        copy.targetPath = self.targetPath
+        copy.commandForCurrent = self.commandForCurrent
+        copy.dryRun = self.dryRun
+        copy.verbose = self.verbose
+        return copy
+    def executeRepo(self):
+        if (str(self.targetPath) != './'):
+            self.executionScript += 'cd \"' + str(self.targetPath) + '\"\n'
+        self.executionScript += self.applyTemplate(self.commandForCurrent) + '\n\n'
+        childrenFile = self.targetPath.joinpath('./bin/net.splitcells.repos.children')
         if childrenFile.is_file():
             childQuery = subprocess.run([childrenFile], stdout=subprocess.PIPE)
             for child in childQuery.stdout.decode('utf-8').split("\n"):
                 if not child == "" and not child.isspace():
                     self.subRepo = child
                     if self.targetPath.joinpath(child).is_dir():
-                        self.executionScript += self.applyTemplate("cd ./${subRepo}\n" + args.commandForCurrent + "\n")
+                        self.executionScript += self.applyTemplate("cd ./${subRepo}\n" + self.commandForCurrent + "\n")
                     self.executionScript += "\n"
-        if args.dry_run:
+        if self.dryRun:
             logging.info("Generated script: \n" + self.executionScript)
         else:
-            if args.verbose:
+            if self.verbose:
                 logging.info("Executing script: \n" + self.executionScript)
             subprocess.call(self.executionScript, shell='True')
     def applyTemplate(self, string):
         return Template(string).safe_substitute(subRepo = self.subRepo)
-def repoProcess(args):
+def reposProcess(args):
     parser = argparse.ArgumentParser(description="Processes a group of repos.")
     parser.add_argument('--path', dest='path', default='./', help="This is path of the to be processed meta repo.")
     parser.add_argument('--host', dest='host', required=False)
@@ -60,16 +73,16 @@ def repoProcess(args):
     parser.add_argument('--command-for-current', dest='commandForCurrent', required=True)
     parser.add_argument('--command-for-children', dest='commandForChildren', required=False)
     parser.add_argument('--ignore-peer-repos', dest='ignorePeerRepos', required=False, default='false')
-    parser.add_argument('--dry-run', dest='dry_run', required=False, type=str2bool, default=False, help="If true, commands are only prepared and no commands are executed.")
+    parser.add_argument('--dry-run', dest='dryRun', required=False, type=str2bool, default=False, help="If true, commands are only prepared and no commands are executed.")
     parser.add_argument('--verbose', dest='verbose', required=False, type=str2bool, default=False, help="If set to true, the output is verbose.")
-    repoProcess = RepoProcess()
-    repoProcess.execute(parser.parse_args(args))
-    return repoProcess
-class TestRepoProcess(unittest.TestCase):
+    process = ReposProcess()
+    process.execute(parser.parse_args(args))
+    return process
+class TestReposProcess(unittest.TestCase):
     def testPath(self):
         with TemporaryDirectory() as tmpDirStr:
             tmpDir = Path(tmpDirStr)
-            testResult = repoProcess(["--dry-run=true", "--path=" + tmpDirStr, '--command-for-current=echo'])
+            testResult = reposProcess(["--dry-run=true", "--path=" + tmpDirStr, '--command-for-current=echo'])
             self.assertEqual(testResult.executionScript, """cd "${tmpDirStr}"
 echo
 
@@ -88,7 +101,7 @@ echo
                     echo sub-2
                     """)
             subprocess.call("chmod +x " + str(tmpDir.joinpath('test-repo/bin/net.splitcells.repos.children')), shell='True')
-            testResult = repoProcess(["--dry-run=true", "--path=" + str(tmpDir.joinpath('test-repo')), '--command-for-current=echo child:${subRepo}'])
+            testResult = reposProcess(["--dry-run=true", "--path=" + str(tmpDir.joinpath('test-repo')), '--command-for-current=echo child:${subRepo}'])
             self.assertEqual(testResult.executionScript, """cd "${tmpDirStr}/test-repo"
 echo child:
 
@@ -102,8 +115,8 @@ echo child:sub-2
 if __name__ == '__main__':
     # As there is no build process for Python unit tests are executed every time, to make sure, that the script works correctly.
     # During this test info logging is disabled, which is disabled by default in Python.
-    test_result = unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestRepoProcess))
+    test_result = unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestReposProcess))
     logging.getLogger().setLevel(logging.INFO)
     if not test_result.wasSuccessful():
         raise Exception("The self test was not successful: " + str(test_result))
-    repoProcess(sys.argv[1:])
+    reposProcess(sys.argv[1:])
