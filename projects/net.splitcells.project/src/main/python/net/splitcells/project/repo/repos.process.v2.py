@@ -45,6 +45,8 @@ class ReposProcess:
         copy.commandForCurrent = self.commandForCurrent
         copy.dryRun = self.dryRun
         copy.verbose = self.verbose
+        copy.subRepo = self.subRepo
+        copy.peerRepo = self.peerRepo
         return copy
     def executeRepo(self):
         if self.isRoot:
@@ -58,9 +60,17 @@ class ReposProcess:
             for child in childQuery.stdout.decode('utf-8').split("\n"):
                 if not child == "" and not child.isspace():
                     self.subRepo = child
-                    if self.targetPath.joinpath(child).is_dir():
-                        self.executionScript += self.applyTemplate("cd ./${subRepo}\n" + self.commandForCurrent + "\n")
-                    self.executionScript += "\n"
+                    childFile = self.targetPath.joinpath(child)
+                    if childFile.is_dir():
+                        childProcess = self.copy()
+                        childProcess.childRepo = ''
+                        childProcess.targetPath = childFile
+                        childProcess.dryRun = True
+                        childProcess.commandForCurrent = self.applyTemplate(self.commandForCurrent)
+                        childProcess.executeRepo()
+                        self.executionScript += childProcess.executionScript
+                        if not self.executionScript.endswith("\n\n"):
+                            self.executionScript += "\n"
                     self.subRepo = ""
         peerFile = self.targetPath.joinpath('./bin/net.splitcells.shell.repos.peers')
         if peerFile.is_file():
@@ -70,8 +80,15 @@ class ReposProcess:
                     self.peerRepo = peer
                     peerFile = self.targetPath.joinpath("../" + peer).resolve()
                     if peerFile.is_dir():
-                        self.executionScript += self.applyTemplate("cd " + str(peerFile) + "\n" + self.commandForCurrent + "\n")
-                    self.executionScript += "\n"
+                        peerProcess = self.copy()
+                        peerProcess.peerRepo = ''
+                        peerProcess.targetPath = peerFile
+                        peerProcess.dryRun = True
+                        peerProcess.commandForCurrent = self.applyTemplate(self.commandForCurrent)
+                        peerProcess.executeRepo()
+                        self.executionScript += peerProcess.executionScript
+                        if not self.executionScript.endswith("\n\n"):
+                            self.executionScript += "\n"
                     self.peerRepo = ""
         if self.dryRun:
             logging.info("Generated script: \n" + self.executionScript)
@@ -104,6 +121,7 @@ class TestReposProcess(unittest.TestCase):
             self.assertEqual(testResult.executionScript, """set -e
 set -x
 
+cd "${tmpDirStr}"
 echo
 
 """.replace("${tmpDirStr}", tmpDirStr))
@@ -136,15 +154,19 @@ echo
             self.assertEqual(testResult.executionScript, """set -e
 set -x
 
+cd "${tmpDirStr}/test-repo"
 echo child:,peer:
 
-cd ./sub-1
+cd "${tmpDirStr}/test-repo/sub-1"
 echo child:sub-1,peer:
 
-cd ./sub-2
+cd "${tmpDirStr}/test-repo/peer-3"
+echo child:sub-1,peer:
+
+cd "${tmpDirStr}/test-repo/sub-2"
 echo child:sub-2,peer:
 
-cd ${tmpDirStr}/peer-repo
+cd "${tmpDirStr}/peer-repo"
 echo child:,peer:peer-repo
 
 """.replace("${tmpDirStr}", tmpDirStr))
