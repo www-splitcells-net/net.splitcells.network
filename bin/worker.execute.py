@@ -1029,7 +1029,7 @@ git pull martins-avots@live.splitcells.net master
 FROM docker.io/eclipse-temurin:21-jdk-noble
 RUN apt-get clean
 RUN apt-get update # This fixes install errors. It is unknown why this is the case.
-RUN apt-get install --yes maven git python3 pip
+RUN apt-get install --yes maven git python3 pip pipx
 ADD net.splitcells.network.worker.pom.xml /root/opt/net.splitcells.martins.avots.distro.livedistro/pom.xml
 # RUN pip install --break-system-packages playwright
 # RUN playwright install --with-deps firefox # Install all OS dependencies, that are required for Playwright. Otherwise, Playwright cannot be used in Java.
@@ -1120,7 +1120,7 @@ systemctl --user restart net.splitcells.martins.avots.distro.livedistro.daemon
 FROM docker.io/eclipse-temurin:21-jdk-noble
 RUN apt-get clean
 RUN apt-get update # This fixes install errors. It is unknown why this is the case.
-RUN apt-get install --yes maven git python3 pip
+RUN apt-get install --yes maven git python3 pip pipx
 ADD net.splitcells.network.worker.pom.xml /root/opt/net.splitcells.martins.avots.distro.livedistro/pom.xml
 # RUN pip install --break-system-packages playwright
 # RUN playwright install --with-deps firefox # Install all OS dependencies, that are required for Playwright. Otherwise, Playwright cannot be used in Java.
@@ -1173,7 +1173,7 @@ podman push codeberg.org/splitcells-net/net.splitcells.martins.avots.distro.live
 FROM docker.io/eclipse-temurin:21-jdk-noble
 RUN apt-get clean
 RUN apt-get update # This fixes install errors. It is unknown why this is the case.
-RUN apt-get install --yes maven git python3 pip
+RUN apt-get install --yes maven git python3 pip pipx
 ADD net.splitcells.network.worker.pom.xml /root/opt/net.splitcells.network.worker/pom.xml
 # RUN pip install --break-system-packages playwright
 # RUN playwright install --with-deps firefox # Install all OS dependencies, that are required for Playwright. Otherwise, Playwright cannot be used in Java.
@@ -1238,7 +1238,7 @@ podman run --name "net.splitcells.network.worker" \\
 FROM docker.io/eclipse-temurin:21-jdk-noble
 RUN apt-get clean
 RUN apt-get update # This fixes install errors. It is unknown why this is the case.
-RUN apt-get install --yes maven git python3 pip
+RUN apt-get install --yes maven git python3 pip pipx
 ADD net.splitcells.network.worker.pom.xml /root/opt/net.splitcells.network.worker/pom.xml
 # RUN pip install --break-system-packages playwright
 # RUN playwright install --with-deps firefox # Install all OS dependencies, that are required for Playwright. Otherwise, Playwright cannot be used in Java.
