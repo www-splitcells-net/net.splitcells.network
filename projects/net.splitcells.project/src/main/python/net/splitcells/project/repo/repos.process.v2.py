@@ -15,7 +15,10 @@ def str2bool(arg):
 class RepoProcess:
     executionScript = ""
     def execute(self, args):
-        pass
+        if self.config.dry_run:
+            logging.info("Generated script: \n" + self.executionScript)
+        else:
+            subprocess.call(self.executionScript, shell='True')
 def repoProcess(args):
     parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('--relative-path', dest='relativePath', default='./', help="This is path of the currently processed repo.")
