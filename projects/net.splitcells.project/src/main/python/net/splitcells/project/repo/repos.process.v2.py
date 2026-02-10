@@ -2,6 +2,9 @@
 """
 SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+
+TODO Support subRepo optionally and rename it to childRepo.
+
 """
 
 __author__ = "Mārtiņš Avots"
@@ -12,6 +15,7 @@ __license__ = "EPL-2.0 OR GPL-2.0-or-later"
 import argparse
 import logging
 import unittest
+from string import Template
 import subprocess
 import sys
 from tempfile import TemporaryDirectory
@@ -23,23 +27,30 @@ def str2bool(arg):
     return arg == 'true' or arg == 'True'
 class RepoProcess:
     executionScript = ""
-    children = []
+    subRepo = ''
+    targetPath = None
     def execute(self, args):
+        self.targetPath = Path(args.path)
         if (args.path != './'):
             self.executionScript += 'cd \"' + args.path + '\"\n'
-        self.executionScript += args.commandForCurrent + '\n'
+        self.executionScript += self.applyTemplate(args.commandForCurrent) + '\n\n'
         childrenFile = Path(args.path).joinpath('./bin/net.splitcells.repos.children')
         if childrenFile.is_file():
             childQuery = subprocess.run([childrenFile], stdout=subprocess.PIPE)
             for child in childQuery.stdout.decode('utf-8').split("\n"):
                 if not child == "" and not child.isspace():
-                    self.children.append(child)
+                    self.subRepo = child
+                    if self.targetPath.joinpath(child).is_dir():
+                        self.executionScript += self.applyTemplate("cd ./${subRepo}\n" + args.commandForCurrent + "\n")
+                    self.executionScript += "\n"
         if args.dry_run:
             logging.info("Generated script: \n" + self.executionScript)
         else:
             if args.verbose:
                 logging.info("Executing script: \n" + self.executionScript)
             subprocess.call(self.executionScript, shell='True')
+    def applyTemplate(self, string):
+        return Template(string).safe_substitute(subRepo = self.subRepo)
 def repoProcess(args):
     parser = argparse.ArgumentParser(description="Processes a group of repos.")
     parser.add_argument('--path', dest='path', default='./', help="This is path of the to be processed meta repo.")
@@ -61,6 +72,7 @@ class TestRepoProcess(unittest.TestCase):
             testResult = repoProcess(["--dry-run=true", "--path=" + tmpDirStr, '--command-for-current=echo'])
             self.assertEqual(testResult.executionScript, """cd "${tmpDirStr}"
 echo
+
 """.replace("${tmpDirStr}", tmpDirStr))
     def testRepo(self):
         with TemporaryDirectory() as tmpDirStr:
@@ -76,11 +88,17 @@ echo
                     echo sub-2
                     """)
             subprocess.call("chmod +x " + str(tmpDir.joinpath('test-repo/bin/net.splitcells.repos.children')), shell='True')
-            testResult = repoProcess(["--dry-run=true", "--path=" + str(tmpDir.joinpath('test-repo')), '--command-for-current=echo 1'])
+            testResult = repoProcess(["--dry-run=true", "--path=" + str(tmpDir.joinpath('test-repo')), '--command-for-current=echo child:${subRepo}'])
             self.assertEqual(testResult.executionScript, """cd "${tmpDirStr}/test-repo"
-echo 1
+echo child:
+
+cd ./sub-1
+echo child:sub-1
+
+cd ./sub-2
+echo child:sub-2
+
 """.replace("${tmpDirStr}", tmpDirStr))
-            self.assertEqual(testResult.children, ['sub-1', 'sub-2'])
 if __name__ == '__main__':
     # As there is no build process for Python unit tests are executed every time, to make sure, that the script works correctly.
     # During this test info logging is disabled, which is disabled by default in Python.
