@@ -30,7 +30,7 @@ def repoProcess(args):
     parser = argparse.ArgumentParser(description="Processes a group of repos.")
     parser.add_argument('--relative-path', dest='relativePath', default='./', help="This is path of the currently processed repo.")
     parser.add_argument('--host', dest='host', required=False)
-    parser.add_argument('--command', dest='command', required=True)
+    parser.add_argument('--command', dest='command', required=False)
     parser.add_argument('--command-for-missing', dest='commandForMissing', required=False)
     parser.add_argument('--command-for-unknown', dest='commandForUnknown', default='exit 1')
     parser.add_argument('--command-for-current', dest='commandForCurrent', required=False) # TODO What is the purpose of this?
@@ -40,8 +40,8 @@ def repoProcess(args):
     parser.add_argument('--verbose', dest='verbose', required=False, type=str2bool, default=False, help="If set to true, the output is verbose.")
     RepoProcess().execute(parser.parse_args(args))
 class TestRepoProcess(unittest.TestCase):
-    def test(self):
-        print("Test")
+    def testHelp(self):
+        repoProcess(["--dry-run=true"])
 if __name__ == '__main__':
     # As there is no build process for Python unit tests are executed every time, to make sure, that the script works correctly.
     # During this test info logging is disabled, which is disabled by default in Python.
