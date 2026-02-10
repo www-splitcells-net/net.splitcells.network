@@ -28,6 +28,7 @@ def str2bool(arg):
 class ReposProcess:
     executionScript = ""
     subRepo = ''
+    peerRepo = ''
     targetPath = None
     dryRun = False
     def execute(self, args):
@@ -56,6 +57,18 @@ class ReposProcess:
                     if self.targetPath.joinpath(child).is_dir():
                         self.executionScript += self.applyTemplate("cd ./${subRepo}\n" + self.commandForCurrent + "\n")
                     self.executionScript += "\n"
+                    self.subRepo = ""
+        peerFile = self.targetPath.joinpath('./bin/net.splitcells.shell.repos.peers')
+        if peerFile.is_file():
+            peerQuery = subprocess.run([peerFile], stdout=subprocess.PIPE)
+            for peer in peerQuery.stdout.decode('utf-8').split("\n"):
+                if not peer == "" and not peer.isspace():
+                    self.peerRepo = peer
+                    peerFile = self.targetPath.joinpath("../" + peer).resolve()
+                    if peerFile.is_dir():
+                        self.executionScript += self.applyTemplate("cd " + str(peerFile) + "\n" + self.commandForCurrent + "\n")
+                    self.executionScript += "\n"
+                    self.peerRepo = ""
         if self.dryRun:
             logging.info("Generated script: \n" + self.executionScript)
         else:
@@ -63,7 +76,9 @@ class ReposProcess:
                 logging.info("Executing script: \n" + self.executionScript)
             subprocess.call(self.executionScript, shell='True')
     def applyTemplate(self, string):
-        return Template(string).safe_substitute(subRepo = self.subRepo)
+        return Template(string).safe_substitute(
+             subRepo = self.subRepo
+            ,peerRepo = self.peerRepo)
 def reposProcess(args):
     parser = argparse.ArgumentParser(description="Processes a group of repos.")
     parser.add_argument('--path', dest='path', default='./', help="This is path of the to be processed meta repo.")
@@ -99,16 +114,24 @@ echo
                     echo sub-1
                     echo sub-2
                     """)
+            with open(tmpDir.joinpath('test-repo/bin/net.splitcells.shell.repos.peers'), 'w') as peerRepo:
+                            peerRepo.write("""#!/usr/bin/env sh
+                                echo peer-repo
+                                """)
             subprocess.call("chmod +x " + str(tmpDir.joinpath('test-repo/bin/net.splitcells.repos.children')), shell='True')
-            testResult = reposProcess(["--dry-run=true", "--path=" + str(tmpDir.joinpath('test-repo')), '--command-for-current=echo child:${subRepo}'])
+            subprocess.call("chmod +x " + str(tmpDir.joinpath('test-repo/bin/net.splitcells.shell.repos.peers')), shell='True')
+            testResult = reposProcess(["--dry-run=true", "--path=" + str(tmpDir.joinpath('test-repo')), '--command-for-current=echo child:${subRepo},peer:${peerRepo}'])
             self.assertEqual(testResult.executionScript, """cd "${tmpDirStr}/test-repo"
-echo child:
+echo child:,peer:
 
 cd ./sub-1
-echo child:sub-1
+echo child:sub-1,peer:
 
 cd ./sub-2
-echo child:sub-2
+echo child:sub-2,peer:
+
+cd ${tmpDirStr}/peer-repo
+echo child:,peer:peer-repo
 
 """.replace("${tmpDirStr}", tmpDirStr))
 if __name__ == '__main__':
