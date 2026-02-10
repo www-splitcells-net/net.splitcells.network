@@ -25,7 +25,8 @@ class RepoProcess:
     executionScript = ""
     def execute(self, args):
         if (args.path is not None):
-            self.executionScript += 'cd \"' + args.path + '\"'
+            self.executionScript += 'cd \"' + args.path + '\"\n'
+        self.executionScript += args.commandForCurrent + '\n'
         if args.dry_run:
             logging.info("Generated script: \n" + self.executionScript)
         else:
@@ -38,7 +39,7 @@ def repoProcess(args):
     parser.add_argument('--host', dest='host', required=False)
     parser.add_argument('--command-for-missing', dest='commandForMissing', required=False)
     parser.add_argument('--command-for-unknown', dest='commandForUnknown', default='exit 1')
-    parser.add_argument('--command-for-current', dest='commandForCurrent', required=False)
+    parser.add_argument('--command-for-current', dest='commandForCurrent', required=True)
     parser.add_argument('--command-for-children', dest='commandForChildren', required=False)
     parser.add_argument('--ignore-peer-repos', dest='ignorePeerRepos', required=False, default='false')
     parser.add_argument('--dry-run', dest='dry_run', required=False, type=str2bool, default=False, help="If true, commands are only prepared and no commands are executed.")
@@ -48,10 +49,12 @@ def repoProcess(args):
     return repoProcess
 class TestRepoProcess(unittest.TestCase):
     def testPath(self):
-        testResult = repoProcess(["--dry-run=true"])
-        self.assertEqual(testResult.executionScript, "")
-        testResult = repoProcess(["--dry-run=true", "--path=../"])
-        self.assertEqual(testResult.executionScript, 'cd \"../\"')
+        testResult = repoProcess(["--dry-run=true", '--command-for-current=echo'])
+        self.assertEqual(testResult.executionScript, "echo\n")
+        testResult = repoProcess(["--dry-run=true", "--path=../", '--command-for-current=echo'])
+        self.assertEqual(testResult.executionScript, """cd "../"
+echo
+""")
     def testRepo(self):
         with TemporaryDirectory() as tmpDirStr:
             tmpDir = Path(tmpDirStr)
