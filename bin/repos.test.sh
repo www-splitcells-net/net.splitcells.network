@@ -44,7 +44,7 @@ cd "$reposFolder/net.splitcells.network"
 # Continue normal work
   bin/build.part.with.python
 cd "$reposFolder/net.splitcells.network/projects/net.splitcells.network.system"
-  # TODO mvn exec:java -Dexec.mainClass=net.splitcells.network.worker.via.java.Tester "-Dexec.args=$(hostname)"
+  mvn exec:java -Dexec.mainClass=net.splitcells.network.worker.via.java.Tester "-Dexec.args=$(hostname)"
 # TODO Analyze daily CI problem. Move this to `. bin/worker.bootstrap`, after this is fixed.
   cd "$reposFolder/net.splitcells.network"
   echo $PATH
