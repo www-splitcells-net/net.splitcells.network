@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+set -e
+set -x
+
+cd projects/net.splitcells.network.system
+mvn exec:java -Dexec.mainClass=net.splitcells.network.worker.via.java.Tester "-Dexec.args=$(hostname)"
