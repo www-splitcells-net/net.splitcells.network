@@ -10,6 +10,10 @@ bin/worker.execute.py \
   --auto-configure-cpu-architecture-explicitly=true \
   --verbose=true
 bin/worker.execute.py \
+  --build-remote="$1" \
+  --auto-configure-cpu-architecture-explicitly=true \
+  --verbose=true
+bin/worker.execute.py \
   --execute-via-ssh-at="$1" \
-  --command="cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && . bin/env.setup.sh && bin/repos.test.sh" \
+  --command="cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && . bin/env.setup.sh && bin/worker.test" \
   --auto-configure-cpu-architecture-explicitly=true
