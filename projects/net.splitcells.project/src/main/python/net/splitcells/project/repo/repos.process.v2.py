@@ -105,9 +105,10 @@ echo
         with TemporaryDirectory() as tmpDirStr:
             tmpDir = Path(tmpDirStr)
             makedirs(tmpDir.joinpath('test-repo/bin'))
-            makedirs(tmpDir.joinpath('test-repo/sub-1'))
+            makedirs(tmpDir.joinpath('test-repo/sub-1/bin'))
             makedirs(tmpDir.joinpath('test-repo/sub-2/bin'))
             makedirs(tmpDir.joinpath('test-repo/sub-2/sub-3'))
+            makedirs(tmpDir.joinpath('test-repo/peer-3'))
             makedirs(tmpDir.joinpath('peer-repo'))
             with open(tmpDir.joinpath('test-repo/bin/net.splitcells.repos.children'), 'w') as testRepo:
                 testRepo.write("""#!/usr/bin/env sh
@@ -120,10 +121,11 @@ echo
                     echo peer-repo
                     """)
             subprocess.call("chmod +x " + str(tmpDir.joinpath('test-repo/bin/net.splitcells.shell.repos.peers')), shell='True')
-            with open(tmpDir.joinpath('test-repo/bin/net.splitcells.shell.repos.peers'), 'w') as peerRepo:
+            with open(tmpDir.joinpath('test-repo/sub-1/bin/net.splitcells.shell.repos.peers'), 'w') as peerRepo:
                 peerRepo.write("""#!/usr/bin/env sh
-                    echo peer-repo
+                    echo peer-3
                     """)
+            subprocess.call("chmod +x " + str(tmpDir.joinpath('test-repo/sub-1/bin/net.splitcells.shell.repos.peers')), shell='True')
             testResult = reposProcess(["--dry-run=true", "--path=" + str(tmpDir.joinpath('test-repo')), '--command-for-current=echo child:${subRepo},peer:${peerRepo}'])
             self.assertEqual(testResult.executionScript, """cd "${tmpDirStr}/test-repo"
 echo child:,peer:
