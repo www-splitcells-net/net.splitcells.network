@@ -45,30 +45,6 @@ cd "$reposFolder/net.splitcells.network"
   bin/build.part.with.python
 cd "$reposFolder/net.splitcells.network/projects/net.splitcells.network.system"
   # TODO mvn exec:java -Dexec.mainClass=net.splitcells.network.worker.via.java.Tester "-Dexec.args=$(hostname)"
-cd "$reposFolder/net.splitcells.network" # Creating reports is done last, so the caller can use the reports.
-  # Integration tests need to be enabled here as well, as verify does not only start the source code check, but also reruns the test and therefore the coverage.
-  # The JaCoCo report is created only for the main report, as otherwise the Distro repo causes errors.
-  # `-Dsonar.inclusions=src/main/**,bin/*` does not seem to work.`
-  # Enabling debugg logging via -X makes it easier to find reason for errors in daily CI.
-  # SonarCloud:
-  # * Adding the following to the mvn verify command did not work and broke authorization.
-  #   The install step is required, according to SonarCloud doc https://docs.sonarsource.com/sonarqube-server/10.8/analyzing-source-code/scanners/sonarscanner-for-maven#analyzing
-  # * If one gets an 403 HTTP status code, consider regenerating the SONAR_TOKEN: https://sonarcloud.io/account/security
-  mvn -B clean install \
-    org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-    -Dsonar.projectKey=www-splitcells-net_net.splitcells.network \
-    -Dsonar.organization=www-splitcells-net \
-    -Dsonar.host.url=https://sonarcloud.io \
-    -Dsonar.test.exclusions=src/main/java/**
-  # Clean has to be executed, as otherwise the code coverage report will be missing for `repos.upload.reports.sh`.
-  # Furthermore, one cannot execute both mvn commands as one, as otherwise the `repos.upload.reports.sh` will not work as well.
-  # JavaDocs are primarily build here and uploaded to `repos.upload.reports.sh` and not at other places,
-  # because generating JavaDocs takes a lot of time.
-  mvn clean install site \
-      -Dtest_codecov=1 \
-      -Dsource_code_check=1 \
-      -Dtest.groups=testing_unit,testing_integration \
-      -DexcludedGroups="experimental_test"
 # TODO Analyze daily CI problem. Move this to `. bin/worker.bootstrap`, after this is fixed.
   cd "$reposFolder/net.splitcells.network"
   echo $PATH
