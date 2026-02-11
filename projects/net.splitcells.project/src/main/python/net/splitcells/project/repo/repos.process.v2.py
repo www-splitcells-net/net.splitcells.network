@@ -39,6 +39,7 @@ class ReposProcess:
         self.dryRun = args.dryRun
         self.verbose = args.verbose
         self.commandForMissing = args.commandForMissing
+        self.commandForUnknown = args.commandForUnknown
         self.ignorePeerRepos = args.ignorePeerRepos
         self.executeRepo()
     def childRepoProcess(self):
@@ -47,6 +48,7 @@ class ReposProcess:
         childProcess.targetPath = self.targetPath
         childProcess.command = self.command
         childProcess.commandForMissing = self.commandForMissing
+        childProcess.commandForUnknown = self.commandForUnknown
         childProcess.dryRun = self.dryRun
         childProcess.verbose = self.verbose
         childProcess.childRepo = self.childRepo
@@ -84,7 +86,8 @@ class ReposProcess:
             for targetSubDir in self.targetPath.iterdir():
                 if targetSubDir.is_dir() and not targetSubDir.name.startswith('.') and targetSubDir.name != 'bin':
                     if not targetSubDir.name in children:
-                        self.executionScript += '# Processing unknown repo "' + str(self.targetPath) + '"\n'
+                        self.executionScript += '# Processing unknown repo "' + str(targetSubDir) + '"\n'
+                        self.executionScript += self.commandForUnknown + '\n\n'
         self.processPeerRepos()
     def processPeerRepos(self):
         peerFile = self.targetPath.joinpath('./bin/net.splitcells.shell.repos.peers')
