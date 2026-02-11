@@ -28,7 +28,7 @@ system.network.peer.ssh.reachable hostname \
 ## Add new remote to each sub repo.
 This can be done via a Git specific command pattern:
 ```
-repos.process --command='git remote add GitHub git@github.com:www-splitcells-net/$subRepo'
+repos.process --command='git remote add GitHub git@github.com:www-splitcells-net/$childRepo'
 ```
 Alternatively, there is also a way, to do this more independently from Git:
 ```

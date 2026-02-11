@@ -17,7 +17,7 @@ usage: repos.process
 ## Settings via the environment
 Setting the environment variable `log_level` to `debug`, enables debug level logging.
 ## Default environment variables inside patterns
-All arguments starting with `command` support the variables `$subRepo` and `$peerRepo` inside its value.
+All arguments starting with `command` support the variables `$childRepo` and `$peerRepo` inside its value.
 These variables make it easy to create commands,
 that pull or push a set of repos to a remote server by constructing the appropriate URLs via these variables.
 For illustration purposes, let's assume the follow structure:
@@ -38,10 +38,10 @@ User home folder
     └─peer-repo-2
 ```
 The meaning of the variables:
-* The variable `$subRepo` is used mainly to push a tree of git repos to another server.
+* The variable `$childRepo` is used mainly to push a tree of git repos to another server.
   This is often useful, when the target SSH server is hosted by oneself and the repositories are nested.
-  `$subRepo` is replaced with `--relative-path + the name of the currently processed sub repo`.
-  For example, given a relative-path of `~/Documents/main-repo` and the command `git clone ssh://user@remote/home/user/Documents/main-repo/$subRepo`,
+  `$childRepo` is replaced with `--relative-path + the name of the currently processed sub repo`.
+  For example, given a relative-path of `~/Documents/main-repo` and the command `git clone ssh://user@remote/home/user/Documents/main-repo/$childRepo`,
   the following commands would be generated `git clone ssh://user@remote/home/user/Documents/main-repo`,
   `git clone ssh://user@remote/home/user/Documents/main-repo/sub-repo-1` and `git clone ssh://user@remote/home/user/Documents/main-repo/sub-repo-2`.
 * The variable `$peerRepo` is used mainly to push a single folder of git repos.
