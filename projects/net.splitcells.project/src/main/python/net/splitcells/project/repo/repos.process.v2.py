@@ -32,12 +32,14 @@ class ReposProcess:
     targetPath = None
     dryRun = False
     isRoot = True
+    ignorePeerRepos = False
     def execute(self, args):
         self.targetPath = Path(args.path)
         self.command = args.command
         self.dryRun = args.dryRun
         self.verbose = args.verbose
         self.commandForMissing = args.commandForMissing
+        self.ignorePeerRepos = args.ignorePeerRepos
         self.executeRepo()
     def childRepoProcess(self):
         childProcess = ReposProcess()
@@ -49,6 +51,7 @@ class ReposProcess:
         childProcess.verbose = self.verbose
         childProcess.childRepo = self.childRepo
         childProcess.peerRepo = self.peerRepo
+        childProcess.ignorePeerRepos = self.ignorePeerRepos
         return childProcess
     def executeRepo(self):
         if self.isRoot:
@@ -82,7 +85,13 @@ class ReposProcess:
                 if targetSubDir.is_dir() and not targetSubDir.name.startswith('.') and targetSubDir.name != 'bin':
                     if not targetSubDir.name in children:
                         self.executionScript += '# Processing unknown repo "' + str(self.targetPath) + '"\n'
+        self.processPeerRepos()
+    def processPeerRepos(self):
         peerFile = self.targetPath.joinpath('./bin/net.splitcells.shell.repos.peers')
+        if self.ignorePeerRepos:
+            if peerFile.is_file():
+                logging.info("Ignoring peer repos.")
+            return
         if peerFile.is_file():
             peerQuery = subprocess.run([peerFile], stdout=subprocess.PIPE)
             for peer in peerQuery.stdout.decode('utf-8').split("\n"):
@@ -116,7 +125,7 @@ def reposProcess(args):
     parser.add_argument('--command', dest='command', required=True, help="This command is executed for all present repositories.")
     parser.add_argument('--command-for-missing', dest='commandForMissing', default='exit 1')
     parser.add_argument('--command-for-unknown', dest='commandForUnknown', default='exit 1')
-    parser.add_argument('--ignore-peer-repos', dest='ignorePeerRepos', required=False, default='false')
+    parser.add_argument('--ignore-peer-repos', dest='ignorePeerRepos', type=str2bool, required=False, default='false')
     parser.add_argument('--dry-run', dest='dryRun', required=False, type=str2bool, default=False, help="If true, commands are only prepared and no commands are executed.")
     parser.add_argument('--verbose', dest='verbose', required=False, type=str2bool, default=False, help="If set to true, the output is verbose.")
     process = ReposProcess()
@@ -186,6 +195,29 @@ echo child: & ,peer:peer-repo
 
 # Processing missing "${tmpDirStr}/missing-peer"
 cd "${tmpDirStr}"
+exit 1
+
+""".replace("${tmpDirStr}", tmpDirStr))
+            testResultWithoutPeers = reposProcess(["--dry-run=true"
+                , "--path=" + str(tmpDir.joinpath('test-repo'))
+                , '--command=echo child:${childRepo} & ${subRepo},peer:${peerRepo}'
+                , '--ignore-peer-repos=true'])
+            self.assertEqual(testResultWithoutPeers.executionScript, """set -e
+
+cd "${tmpDirStr}/test-repo"
+echo child: & ,peer:
+
+cd "${tmpDirStr}/test-repo/sub-1"
+echo child:sub-1 & sub-1,peer:
+
+cd "${tmpDirStr}/test-repo/sub-2"
+echo child:sub-2 & sub-2,peer:
+
+# Processing missing "${tmpDirStr}/test-repo/missing-sub"
+cd "${tmpDirStr}/test-repo"
+exit 1
+
+# Processing unknown repo "${tmpDirStr}/test-repo/none-sub-peer"
 exit 1
 
 """.replace("${tmpDirStr}", tmpDirStr))
