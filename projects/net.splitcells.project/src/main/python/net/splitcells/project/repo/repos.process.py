@@ -46,6 +46,7 @@ __copyright__ = "Copyright 2024"
 __license__ = "EPL-2.0 OR GPL-2.0-or-later"
 
 import argparse
+import datetime
 import logging
 import unittest
 from string import Template
@@ -314,6 +315,9 @@ echo
                 
                 """).replace("${tmpDirStr}", tmpDirStr))
 if __name__ == '__main__':
+    if datetime.datetime.strptime("2026.03.12", "%Y.%m.%d") < datetime.datetime.now():
+        print("repo.process.v1 is deprecated and the date of removal is reached. Please, delete repo.process.v1.py from the source code and remove v1 integration from v2.")
+        exit(1)
     if environ.get('repo_process_v1') == '1':
         print('Using ' + str(['repos.process.v1'] + sys.argv[1:]))
         exit(subprocess.call(['repos.process.v1'] + sys.argv[1:]))
