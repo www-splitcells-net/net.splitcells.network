@@ -18,6 +18,7 @@ import unittest
 from string import Template
 import subprocess
 import sys
+import textwrap
 from tempfile import TemporaryDirectory
 from os import (environ, makedirs)
 from pathlib import Path
@@ -189,92 +190,95 @@ echo
             testResult = reposProcess(["--dry-run=true"
                 , "--path=" + str(tmpDir.joinpath('test-repo'))
                 , '--command=echo child:${childRepo} & ${subRepo},peer:${peerRepo}'])
-            self.assertEqual(testResult.executionScript, """set -e
-
-cd "${tmpDirStr}/test-repo"
-echo child: & ,peer:
-
-cd "${tmpDirStr}/test-repo/sub-1"
-echo child:sub-1 & sub-1,peer:
-
-cd "${tmpDirStr}/test-repo/none-sub-peer"
-echo child:sub-1 & sub-1,peer:
-
-cd "${tmpDirStr}/test-repo/sub-2"
-echo child:sub-2 & sub-2,peer:
-
-# Processing missing "${tmpDirStr}/test-repo/missing-sub"
-cd "${tmpDirStr}/test-repo"
-exit 1
-
-# Processing unknown repo "${tmpDirStr}/test-repo/none-sub-peer"
-exit 1
-
-cd "${tmpDirStr}/peer-repo"
-echo child: & ,peer:peer-repo
-
-# Processing missing "${tmpDirStr}/missing-peer"
-cd "${tmpDirStr}"
-exit 1
-
-""".replace("${tmpDirStr}", tmpDirStr))
+            self.assertEqual(testResult.executionScript, textwrap.dedent("""\
+                set -e
+                
+                cd "${tmpDirStr}/test-repo"
+                echo child: & ,peer:
+                
+                cd "${tmpDirStr}/test-repo/sub-1"
+                echo child:sub-1 & sub-1,peer:
+                
+                cd "${tmpDirStr}/test-repo/none-sub-peer"
+                echo child:sub-1 & sub-1,peer:
+                
+                cd "${tmpDirStr}/test-repo/sub-2"
+                echo child:sub-2 & sub-2,peer:
+                
+                # Processing missing "${tmpDirStr}/test-repo/missing-sub"
+                cd "${tmpDirStr}/test-repo"
+                exit 1
+                
+                # Processing unknown repo "${tmpDirStr}/test-repo/none-sub-peer"
+                exit 1
+                
+                cd "${tmpDirStr}/peer-repo"
+                echo child: & ,peer:peer-repo
+                
+                # Processing missing "${tmpDirStr}/missing-peer"
+                cd "${tmpDirStr}"
+                exit 1
+                
+                """).replace("${tmpDirStr}", tmpDirStr))
             testResultForParallelism = reposProcess(["--dry-run=true"
                 , "--path=" + str(tmpDir.joinpath('test-repo'))
                 , '--command=echo child:${childRepo} & ${subRepo},peer:${peerRepo}'
                 , '--process-in-parallel=true'])
-            self.assertEqual(testResultForParallelism.executionScript, """set -e
-
-cd "${tmpDirStr}/test-repo"
-echo child: & ,peer: &
-
-cd "${tmpDirStr}/test-repo/sub-1"
-echo child:sub-1 & sub-1,peer: &
-
-cd "${tmpDirStr}/test-repo/none-sub-peer"
-echo child:sub-1 & sub-1,peer: &
-
-cd "${tmpDirStr}/test-repo/sub-2"
-echo child:sub-2 & sub-2,peer: &
-
-# Processing missing "${tmpDirStr}/test-repo/missing-sub"
-cd "${tmpDirStr}/test-repo"
-exit 1 &
-
-# Processing unknown repo "${tmpDirStr}/test-repo/none-sub-peer"
-exit 1 &
-
-cd "${tmpDirStr}/peer-repo"
-echo child: & ,peer:peer-repo &
-
-# Processing missing "${tmpDirStr}/missing-peer"
-cd "${tmpDirStr}"
-exit 1 &
-
-wait
-""".replace("${tmpDirStr}", tmpDirStr))
+            self.assertEqual(testResultForParallelism.executionScript, textwrap.dedent("""\
+                set -e
+                
+                cd "${tmpDirStr}/test-repo"
+                echo child: & ,peer: &
+                
+                cd "${tmpDirStr}/test-repo/sub-1"
+                echo child:sub-1 & sub-1,peer: &
+                
+                cd "${tmpDirStr}/test-repo/none-sub-peer"
+                echo child:sub-1 & sub-1,peer: &
+                
+                cd "${tmpDirStr}/test-repo/sub-2"
+                echo child:sub-2 & sub-2,peer: &
+                
+                # Processing missing "${tmpDirStr}/test-repo/missing-sub"
+                cd "${tmpDirStr}/test-repo"
+                exit 1 &
+                
+                # Processing unknown repo "${tmpDirStr}/test-repo/none-sub-peer"
+                exit 1 &
+                
+                cd "${tmpDirStr}/peer-repo"
+                echo child: & ,peer:peer-repo &
+                
+                # Processing missing "${tmpDirStr}/missing-peer"
+                cd "${tmpDirStr}"
+                exit 1 &
+                
+                wait
+                """).replace("${tmpDirStr}", tmpDirStr))
             testResultWithoutPeers = reposProcess(["--dry-run=true"
                 , "--path=" + str(tmpDir.joinpath('test-repo'))
                 , '--command=echo child:${childRepo} & ${subRepo},peer:${peerRepo}'
                 , '--ignore-peer-repos=true'])
-            self.assertEqual(testResultWithoutPeers.executionScript, """set -e
-
-cd "${tmpDirStr}/test-repo"
-echo child: & ,peer:
-
-cd "${tmpDirStr}/test-repo/sub-1"
-echo child:sub-1 & sub-1,peer:
-
-cd "${tmpDirStr}/test-repo/sub-2"
-echo child:sub-2 & sub-2,peer:
-
-# Processing missing "${tmpDirStr}/test-repo/missing-sub"
-cd "${tmpDirStr}/test-repo"
-exit 1
-
-# Processing unknown repo "${tmpDirStr}/test-repo/none-sub-peer"
-exit 1
-
-""".replace("${tmpDirStr}", tmpDirStr))
+            self.assertEqual(testResultWithoutPeers.executionScript, textwrap.dedent("""\
+                set -e
+                
+                cd "${tmpDirStr}/test-repo"
+                echo child: & ,peer:
+                
+                cd "${tmpDirStr}/test-repo/sub-1"
+                echo child:sub-1 & sub-1,peer:
+                
+                cd "${tmpDirStr}/test-repo/sub-2"
+                echo child:sub-2 & sub-2,peer:
+                
+                # Processing missing "${tmpDirStr}/test-repo/missing-sub"
+                cd "${tmpDirStr}/test-repo"
+                exit 1
+                
+                # Processing unknown repo "${tmpDirStr}/test-repo/none-sub-peer"
+                exit 1
+                
+                """).replace("${tmpDirStr}", tmpDirStr))
 if __name__ == '__main__':
     # TODO Remove this, when the old repo process is deleted.
     if environ.get('repo_process_v2_parallel') == '1':
