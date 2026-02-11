@@ -3,6 +3,39 @@
 SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
+TODO Repo process, repair or copy do only output debug message if a sub repo is unknown.
+TODO Always use dedicated remotes, as its otherwise harder to work on such repos by hand.
+TODO Use a config object instead of arguments, in order to simplify code.
+TODO Use only python for recursion and not shell, in order simplify command.
+TODO Document that `repo.synchronize` etc. only work on default branch by default.
+     This is done in order to avoid complex synchronization in case of deleted branches by default.
+     If branches are explicitly deleted somewhere, there needs to be a way to state, that this branch is deleted.
+     Otherwise, the branch will be restored by the other repositories.
+TODO Ensure that during repo cloning the default branch for origin is set.
+TODO Make it possible, to store the default branch in a file in the repo.
+     Check this file, if present, and throw an error if the current branch does not match default branch.
+TODO Repo process should have an optional flag in order to only process the current repo.
+     This would than be used in order to execute complex commands on the current repo first and than on its sub repos.
+     For example the command "repos.process 'repo.repair [...] && repo.remote.set [...] && repo.pull [...]'",
+     would than work more reliable, when the remote server deletes sub repos at arbitrary times.
+TODO Support moving child repositories semi-automatically.
+TODO Create compatibility tooling for alternative like meta: https://github.com/mateodelnorte/meta
+     This would create metadata files for the meta tool,
+TODO Make it possible to `repo.synchronize` etc. all branches of a repo.
+     Create a new peer meta repo, that contains the names of all deleted branches.
+     Beware that different branches can be created over time with the same name.
+     The meta repo therefore needs to store some commit info as well and not just the name of the deleted branch.
+     Only using fast forward pushes and merges seems to be a good method,
+     that works great, if no conflicts are present.
+     It may be enough, to fix conflicts always by hand, as these should not occur often.
+     Some kind of options or flags could be used in the future,
+     in order to resolve certain conflicts.
+TODO Maybe repo process should support just being a wrapper around git submodules,
+     that provides easy workflows.
+TODO Handle deletion of sub repos by remote during repo synchronization.
+TODO Support dry run for easier debugging or in order to generate shell scripts.
+TODO Create a way to list a sub repos, in order to create a list of repos.
+     This can be used, in order to create config files for other git management software.
 TODO Make it possible to use relative target path as arg and inside the generated scripts.
      This way portable scripts for other users and computers could be generated.
 """
