@@ -43,6 +43,10 @@ class ReposProcess:
         self.commandForUnknown = args.commandForUnknown
         self.ignorePeerRepos = args.ignorePeerRepos
         self.processInParallel = args.processInParallel
+        if self.processInParallel and 'codeberg' in args.command + self.commandForMissing + self.commandForUnknown:
+                logging.error('Codeberg does not support parallel SSH connection. If this is attempted, the Codeberg server starts rejecting SSH connections.')
+                print('Codeberg does not support parallel SSH connection. If this is attempted, the Codeberg server starts rejecting SSH connections.')
+                exit(1)
         self.executeRepo()
     def childRepoProcess(self):
         childProcess = ReposProcess()
