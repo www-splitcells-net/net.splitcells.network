@@ -27,7 +27,7 @@ def str2bool(arg):
     return arg == 'true' or arg == 'True'
 class ReposProcess:
     executionScript = ""
-    subRepo = ''
+    childRepo = ''
     peerRepo = ''
     targetPath = None
     dryRun = False
@@ -47,7 +47,7 @@ class ReposProcess:
         copy.commandForMissing = self.commandForMissing
         copy.dryRun = self.dryRun
         copy.verbose = self.verbose
-        copy.subRepo = self.subRepo
+        copy.childRepo = self.childRepo
         copy.peerRepo = self.peerRepo
         return copy
     def executeRepo(self):
@@ -67,7 +67,7 @@ class ReposProcess:
             children = childQuery.stdout.decode('utf-8').split("\n")
             for child in children:
                 if not child == "" and not child.isspace():
-                    self.subRepo = child
+                    self.childRepo = child
                     childFile = self.targetPath.joinpath(child)
                     childProcess = self.copy()
                     childProcess.childRepo = ''
@@ -78,7 +78,7 @@ class ReposProcess:
                     self.executionScript += childProcess.executionScript
                     if not self.executionScript.endswith("\n\n"):
                         self.executionScript += "\n"
-                    self.subRepo = ""
+                    self.childRepo = ""
             for targetSubDir in self.targetPath.iterdir():
                 if targetSubDir.is_dir() and not targetSubDir.name.startswith('.') and targetSubDir.name != 'bin':
                     if not targetSubDir.name in children:
@@ -108,7 +108,8 @@ class ReposProcess:
             subprocess.call(self.executionScript, shell='True')
     def applyTemplate(self, string):
         return Template(string).safe_substitute(
-             subRepo = self.subRepo
+             subRepo = self.childRepo
+            ,childRepo = self.childRepo
             ,peerRepo = self.peerRepo)
 def reposProcess(args):
     parser = argparse.ArgumentParser(description="Processes a group of repos.")
@@ -124,6 +125,7 @@ def reposProcess(args):
     process.execute(parser.parse_args(args))
     return process
 class TestReposProcess(unittest.TestCase):
+    maxDiff = None
     def testPath(self):
         with TemporaryDirectory() as tmpDirStr:
             tmpDir = Path(tmpDirStr)
@@ -162,21 +164,21 @@ echo
                     echo peer-3
                     """)
             subprocess.call("chmod +x " + str(tmpDir.joinpath('test-repo/sub-1/bin/net.splitcells.shell.repos.peers')), shell='True')
-            testResult = reposProcess(["--dry-run=true", "--path=" + str(tmpDir.joinpath('test-repo')), '--command-for-current=echo child:${subRepo},peer:${peerRepo}'])
+            testResult = reposProcess(["--dry-run=true", "--path=" + str(tmpDir.joinpath('test-repo')), '--command-for-current=echo child:${subRepo} & ${subRepo},peer:${peerRepo}'])
             self.assertEqual(testResult.executionScript, """set -e
 set -x
 
 cd "${tmpDirStr}/test-repo"
-echo child:,peer:
+echo child: & ,peer:
 
 cd "${tmpDirStr}/test-repo/sub-1"
-echo child:sub-1,peer:
+echo child:sub-1 & sub-1,peer:
 
 cd "${tmpDirStr}/test-repo/peer-3"
-echo child:sub-1,peer:
+echo child:sub-1 & sub-1,peer:
 
 cd "${tmpDirStr}/test-repo/sub-2"
-echo child:sub-2,peer:
+echo child:sub-2 & sub-2,peer:
 
 # Processing missing "${tmpDirStr}/test-repo/missing-sub"
 cd "${tmpDirStr}/test-repo"
@@ -184,7 +186,7 @@ exit 1
 
 # Processing unknown repo "${tmpDirStr}/test-repo"
 cd "${tmpDirStr}/peer-repo"
-echo child:,peer:peer-repo
+echo child: & ,peer:peer-repo
 
 # Processing missing "${tmpDirStr}/missing-peer"
 cd "${tmpDirStr}"
