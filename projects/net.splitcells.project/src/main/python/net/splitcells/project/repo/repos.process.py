@@ -177,7 +177,7 @@ def processSub(relativePath, host, command, commandForMissing, commandForUnknown
 	return True
 if __name__ == '__main__':
 	if environ.get('repo_process_v2') == '1':
-		print('Using +' + str(['repos.process.v2'] + sys.argv[1:]))
+		print('Using ' + str(['repos.process.v2'] + sys.argv[1:]))
 		exit(subprocess.call(['repos.process.v2'] + sys.argv[1:]))
 	if environ.get('log_level') == 'debug':
 		logging.basicConfig(level=logging.DEBUG)
