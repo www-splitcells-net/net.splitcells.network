@@ -92,6 +92,13 @@ class ReposProcess:
         self.processPeerRepos()
         if self.processInParallel and self.isRoot:
             self.executionScript += 'wait\n'
+        if self.dryRun:
+            logging.info("Generated script: \n" + self.executionScript)
+        elif self.isRoot:
+            if self.verbose:
+                logging.info("Executing script: \n" + self.executionScript)
+            logging.info("Executing script: \n" + self.executionScript)
+            subprocess.run(self.executionScript, shell='True')
     def getCommandForScript(self, command):
         scriptLine = self.applyTemplate(command)
         if self.processInParallel:
@@ -116,12 +123,6 @@ class ReposProcess:
                     peerProcess.executeRepo()
                     self.executionScript += peerProcess.executionScript
                     self.peerRepo = ""
-        if self.dryRun:
-            logging.info("Generated script: \n" + self.executionScript)
-        else:
-            if self.verbose:
-                logging.info("Executing script: \n" + self.executionScript)
-            subprocess.call(self.executionScript, shell='True')
     def applyTemplate(self, string):
         return Template(string).safe_substitute(
              subRepo = self.childRepo
