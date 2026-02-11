@@ -34,7 +34,7 @@ class ReposProcess:
     isRoot = True
     def execute(self, args):
         self.targetPath = Path(args.path)
-        self.commandForCurrent = args.commandForCurrent
+        self.command = args.command
         self.dryRun = args.dryRun
         self.verbose = args.verbose
         self.commandForMissing = args.commandForMissing
@@ -43,7 +43,7 @@ class ReposProcess:
         copy = ReposProcess()
         copy.isRoot = False
         copy.targetPath = self.targetPath
-        copy.commandForCurrent = self.commandForCurrent
+        copy.command = self.command
         copy.commandForMissing = self.commandForMissing
         copy.dryRun = self.dryRun
         copy.verbose = self.verbose
@@ -56,7 +56,7 @@ class ReposProcess:
         if self.targetPath.is_dir():
             if (str(self.targetPath) != './'):
                 self.executionScript += 'cd \"' + str(self.targetPath) + '\"\n'
-            self.executionScript += self.applyTemplate(self.commandForCurrent) + '\n\n'
+            self.executionScript += self.applyTemplate(self.command) + '\n\n'
         else:
             self.executionScript += '# Processing missing "' + str(self.targetPath) + '"\n'
             self.executionScript += 'cd \"' + str(self.targetPath.parent) + '\"\n'
@@ -73,7 +73,7 @@ class ReposProcess:
                     childProcess.childRepo = ''
                     childProcess.targetPath = childFile
                     childProcess.dryRun = True
-                    childProcess.commandForCurrent = self.applyTemplate(self.commandForCurrent)
+                    childProcess.command = self.applyTemplate(self.command)
                     childProcess.executeRepo()
                     self.executionScript += childProcess.executionScript
                     if not self.executionScript.endswith("\n\n"):
@@ -94,7 +94,7 @@ class ReposProcess:
                     peerProcess.peerRepo = ''
                     peerProcess.targetPath = peerFile
                     peerProcess.dryRun = True
-                    peerProcess.commandForCurrent = self.applyTemplate(self.commandForCurrent)
+                    peerProcess.command = self.applyTemplate(self.command)
                     peerProcess.executeRepo()
                     self.executionScript += peerProcess.executionScript
                     if not self.executionScript.endswith("\n\n"):
@@ -115,9 +115,9 @@ def reposProcess(args):
     parser = argparse.ArgumentParser(description="Processes a group of repos.")
     parser.add_argument('--path', dest='path', default='./', help="This is path of the to be processed meta repo.")
     parser.add_argument('--host', dest='host', required=False)
+    parser.add_argument('--command', dest='command', required=True, help="This command is executed for all present repositories.")
     parser.add_argument('--command-for-missing', dest='commandForMissing', default='exit 1')
     parser.add_argument('--command-for-unknown', dest='commandForUnknown', default='exit 1')
-    parser.add_argument('--command-for-current', dest='commandForCurrent', required=True)
     parser.add_argument('--ignore-peer-repos', dest='ignorePeerRepos', required=False, default='false')
     parser.add_argument('--dry-run', dest='dryRun', required=False, type=str2bool, default=False, help="If true, commands are only prepared and no commands are executed.")
     parser.add_argument('--verbose', dest='verbose', required=False, type=str2bool, default=False, help="If set to true, the output is verbose.")
@@ -129,7 +129,7 @@ class TestReposProcess(unittest.TestCase):
     def testPath(self):
         with TemporaryDirectory() as tmpDirStr:
             tmpDir = Path(tmpDirStr)
-            testResult = reposProcess(["--dry-run=true", "--path=" + tmpDirStr, '--command-for-current=echo'])
+            testResult = reposProcess(["--dry-run=true", "--path=" + tmpDirStr, '--command=echo'])
             self.assertEqual(testResult.executionScript, """set -e
 set -x
 
@@ -164,7 +164,7 @@ echo
                     echo peer-3
                     """)
             subprocess.call("chmod +x " + str(tmpDir.joinpath('test-repo/sub-1/bin/net.splitcells.shell.repos.peers')), shell='True')
-            testResult = reposProcess(["--dry-run=true", "--path=" + str(tmpDir.joinpath('test-repo')), '--command-for-current=echo child:${subRepo} & ${subRepo},peer:${peerRepo}'])
+            testResult = reposProcess(["--dry-run=true", "--path=" + str(tmpDir.joinpath('test-repo')), '--command=echo child:${subRepo} & ${subRepo},peer:${peerRepo}'])
             self.assertEqual(testResult.executionScript, """set -e
 set -x
 
