@@ -93,7 +93,8 @@ class ReposProcess:
         if self.processInParallel and self.isRoot:
             self.executionScript += 'wait\n'
         if self.dryRun:
-            logging.info("Generated script: \n" + self.executionScript)
+            if self.isRoot:
+                logging.info("Generated script: \n" + self.executionScript)
         elif self.isRoot:
             if self.verbose:
                 logging.info("Executing script: \n" + self.executionScript)
