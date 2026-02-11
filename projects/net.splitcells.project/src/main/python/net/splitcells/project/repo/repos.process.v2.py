@@ -3,6 +3,9 @@
 SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
+TODO Make it possible to use relative target path as arg and inside the generated scripts.
+     This way portable scripts for other users and computers could be generated.
+
 """
 
 __author__ = "Mārtiņš Avots"
