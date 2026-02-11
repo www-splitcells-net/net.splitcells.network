@@ -61,11 +61,11 @@ class ReposProcess:
         if self.targetPath.is_dir():
             if (str(self.targetPath) != './'):
                 self.executionScript += 'cd \"' + str(self.targetPath) + '\"\n'
-            self.executionScript += self.applyTemplate(self.command) + '\n\n'
+            self.executionScript += self.getCommandForScript(self.command) + '\n'
         else:
             self.executionScript += '# Processing missing "' + str(self.targetPath) + '"\n'
             self.executionScript += 'cd \"' + str(self.targetPath.parent) + '\"\n'
-            self.executionScript += self.applyTemplate(self.commandForMissing) + '\n\n'
+            self.executionScript += self.getCommandForScript(self.commandForMissing) + '\n'
         childrenFile = self.targetPath.joinpath('./bin/net.splitcells.repos.children')
         if childrenFile.is_file():
             childQuery = subprocess.run([childrenFile], stdout=subprocess.PIPE)
@@ -80,14 +80,12 @@ class ReposProcess:
                     childProcess.command = self.applyTemplate(self.command)
                     childProcess.executeRepo()
                     self.executionScript += childProcess.executionScript
-                    if not self.executionScript.endswith("\n\n"):
-                        self.executionScript += "\n"
                     self.childRepo = ""
             for targetSubDir in self.targetPath.iterdir():
                 if targetSubDir.is_dir() and not targetSubDir.name.startswith('.') and targetSubDir.name != 'bin':
                     if not targetSubDir.name in children:
                         self.executionScript += '# Processing unknown repo "' + str(targetSubDir) + '"\n'
-                        self.executionScript += self.commandForUnknown + '\n\n'
+                        self.executionScript += self.getCommandForScript(self.commandForUnknown) + '\n'
         self.processPeerRepos()
     def processPeerRepos(self):
         peerFile = self.targetPath.joinpath('./bin/net.splitcells.shell.repos.peers')
