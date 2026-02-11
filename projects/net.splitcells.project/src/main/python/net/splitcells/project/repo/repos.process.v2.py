@@ -39,17 +39,17 @@ class ReposProcess:
         self.verbose = args.verbose
         self.commandForMissing = args.commandForMissing
         self.executeRepo()
-    def copy(self):
-        copy = ReposProcess()
-        copy.isRoot = False
-        copy.targetPath = self.targetPath
-        copy.command = self.command
-        copy.commandForMissing = self.commandForMissing
-        copy.dryRun = self.dryRun
-        copy.verbose = self.verbose
-        copy.childRepo = self.childRepo
-        copy.peerRepo = self.peerRepo
-        return copy
+    def childRepoProcess(self):
+        childProcess = ReposProcess()
+        childProcess.isRoot = False
+        childProcess.targetPath = self.targetPath
+        childProcess.command = self.command
+        childProcess.commandForMissing = self.commandForMissing
+        childProcess.dryRun = self.dryRun
+        childProcess.verbose = self.verbose
+        childProcess.childRepo = self.childRepo
+        childProcess.peerRepo = self.peerRepo
+        return childProcess
     def executeRepo(self):
         if self.isRoot:
             self.executionScript += "set -e\nset -x\n\n"
@@ -69,7 +69,7 @@ class ReposProcess:
                 if not child == "" and not child.isspace():
                     self.childRepo = child
                     childFile = self.targetPath.joinpath(child)
-                    childProcess = self.copy()
+                    childProcess = self.childRepoProcess()
                     childProcess.childRepo = ''
                     childProcess.targetPath = childFile
                     childProcess.dryRun = True
@@ -90,7 +90,7 @@ class ReposProcess:
                 if not peer == "" and not peer.isspace():
                     self.peerRepo = peer
                     peerFile = self.targetPath.joinpath("../" + peer).resolve()
-                    peerProcess = self.copy()
+                    peerProcess = self.childRepoProcess()
                     peerProcess.peerRepo = ''
                     peerProcess.targetPath = peerFile
                     peerProcess.dryRun = True
