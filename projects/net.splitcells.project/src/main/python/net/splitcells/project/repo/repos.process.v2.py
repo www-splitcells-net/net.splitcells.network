@@ -72,7 +72,6 @@ class ReposProcess:
                     childProcess = self.childRepoProcess()
                     childProcess.childRepo = ''
                     childProcess.targetPath = childFile
-                    childProcess.dryRun = True
                     childProcess.command = self.applyTemplate(self.command)
                     childProcess.executeRepo()
                     self.executionScript += childProcess.executionScript
@@ -93,7 +92,6 @@ class ReposProcess:
                     peerProcess = self.childRepoProcess()
                     peerProcess.peerRepo = ''
                     peerProcess.targetPath = peerFile
-                    peerProcess.dryRun = True
                     peerProcess.command = self.applyTemplate(self.command)
                     peerProcess.executeRepo()
                     self.executionScript += peerProcess.executionScript
