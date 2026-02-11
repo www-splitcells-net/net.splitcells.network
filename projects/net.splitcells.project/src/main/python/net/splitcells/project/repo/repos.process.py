@@ -115,15 +115,13 @@ class ReposProcess:
             children = childQuery.stdout.decode('utf-8').split("\n")
             for child in children:
                 if not child == "" and not child.isspace():
-                    self.childRepo = child
                     childFile = self.targetPath.joinpath(child)
                     childProcess = self.childRepoProcess()
-                    childProcess.childRepo = ''
+                    childProcess.childRepo = child
                     childProcess.targetPath = childFile
-                    childProcess.command = self.applyTemplate(self.command)
+                    childProcess.command = childProcess.applyTemplate(self.command)
                     childProcess.executeRepo()
                     self.executionScript += childProcess.executionScript
-                    self.childRepo = ""
             for targetSubDir in self.targetPath.iterdir():
                 if targetSubDir.is_dir() and not targetSubDir.name.startswith('.') and targetSubDir.name != 'bin':
                     if not targetSubDir.name in children:
@@ -155,20 +153,19 @@ class ReposProcess:
             peerQuery = subprocess.run([peerFile], stdout=subprocess.PIPE)
             for peer in peerQuery.stdout.decode('utf-8').split("\n"):
                 if not peer == "" and not peer.isspace():
-                    self.peerRepo = peer
                     peerFile = self.targetPath.joinpath("../" + peer).resolve()
                     peerProcess = self.childRepoProcess()
-                    peerProcess.peerRepo = ''
+                    peerProcess.peerRepo = peer
                     peerProcess.targetPath = peerFile
-                    peerProcess.command = self.applyTemplate(self.command)
+                    peerProcess.command = peerProcess.applyTemplate(self.command)
                     peerProcess.executeRepo()
                     self.executionScript += peerProcess.executionScript
-                    self.peerRepo = ""
     def applyTemplate(self, string):
         return Template(string).safe_substitute(
              subRepo = self.childRepo
             ,childRepo = self.childRepo
-            ,peerRepo = self.peerRepo)
+            ,peerRepo = self.peerRepo
+            ,currentRepo = self.targetPath.name)
 def reposProcess(args):
     parser = argparse.ArgumentParser(description="Processes a group of repos.")
     parser.add_argument('--path', dest='path', default='./', help="This is path of the to be processed meta repo.")
