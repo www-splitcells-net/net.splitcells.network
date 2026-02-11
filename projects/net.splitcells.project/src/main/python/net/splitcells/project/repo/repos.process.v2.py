@@ -33,6 +33,7 @@ class ReposProcess:
     dryRun = False
     isRoot = True
     ignorePeerRepos = False
+    processInParallel = False
     def execute(self, args):
         self.targetPath = Path(args.path)
         self.command = args.command
@@ -41,6 +42,7 @@ class ReposProcess:
         self.commandForMissing = args.commandForMissing
         self.commandForUnknown = args.commandForUnknown
         self.ignorePeerRepos = args.ignorePeerRepos
+        self.processInParallel = args.processInParallel
         self.executeRepo()
     def childRepoProcess(self):
         childProcess = ReposProcess()
@@ -54,6 +56,7 @@ class ReposProcess:
         childProcess.childRepo = self.childRepo
         childProcess.peerRepo = self.peerRepo
         childProcess.ignorePeerRepos = self.ignorePeerRepos
+        childProcess.processInParallel = self.processInParallel
         return childProcess
     def executeRepo(self):
         if self.isRoot:
@@ -87,6 +90,13 @@ class ReposProcess:
                         self.executionScript += '# Processing unknown repo "' + str(targetSubDir) + '"\n'
                         self.executionScript += self.getCommandForScript(self.commandForUnknown) + '\n'
         self.processPeerRepos()
+        if self.processInParallel and self.isRoot:
+            self.executionScript += 'wait\n'
+    def getCommandForScript(self, command):
+        scriptLine = self.applyTemplate(command)
+        if self.processInParallel:
+            return scriptLine + " &\n"
+        return scriptLine + '\n'
     def processPeerRepos(self):
         peerFile = self.targetPath.joinpath('./bin/net.splitcells.shell.repos.peers')
         if self.ignorePeerRepos:
@@ -105,8 +115,6 @@ class ReposProcess:
                     peerProcess.command = self.applyTemplate(self.command)
                     peerProcess.executeRepo()
                     self.executionScript += peerProcess.executionScript
-                    if not self.executionScript.endswith("\n\n"):
-                        self.executionScript += "\n"
                     self.peerRepo = ""
         if self.dryRun:
             logging.info("Generated script: \n" + self.executionScript)
@@ -129,6 +137,7 @@ def reposProcess(args):
     parser.add_argument('--ignore-peer-repos', dest='ignorePeerRepos', type=str2bool, required=False, default='false')
     parser.add_argument('--dry-run', dest='dryRun', required=False, type=str2bool, default=False, help="If true, commands are only prepared and no commands are executed.")
     parser.add_argument('--verbose', dest='verbose', required=False, type=str2bool, default=False, help="If set to true, the output is verbose.")
+    parser.add_argument('--process-in-parallel', dest='processInParallel', type=str2bool, required=False, default='false')
     process = ReposProcess()
     process.execute(parser.parse_args(args))
     return process
@@ -202,6 +211,40 @@ echo child: & ,peer:peer-repo
 cd "${tmpDirStr}"
 exit 1
 
+""".replace("${tmpDirStr}", tmpDirStr))
+            testResultForParallelism = reposProcess(["--dry-run=true"
+                , "--path=" + str(tmpDir.joinpath('test-repo'))
+                , '--command=echo child:${childRepo} & ${subRepo},peer:${peerRepo}'
+                , '--process-in-parallel=true'])
+            self.assertEqual(testResultForParallelism.executionScript, """set -e
+
+cd "${tmpDirStr}/test-repo"
+echo child: & ,peer: &
+
+cd "${tmpDirStr}/test-repo/sub-1"
+echo child:sub-1 & sub-1,peer: &
+
+cd "${tmpDirStr}/test-repo/none-sub-peer"
+echo child:sub-1 & sub-1,peer: &
+
+cd "${tmpDirStr}/test-repo/sub-2"
+echo child:sub-2 & sub-2,peer: &
+
+# Processing missing "${tmpDirStr}/test-repo/missing-sub"
+cd "${tmpDirStr}/test-repo"
+exit 1 &
+
+# Processing unknown repo "${tmpDirStr}/test-repo/none-sub-peer"
+exit 1 &
+
+cd "${tmpDirStr}/peer-repo"
+echo child: & ,peer:peer-repo &
+
+# Processing missing "${tmpDirStr}/missing-peer"
+cd "${tmpDirStr}"
+exit 1 &
+
+wait
 """.replace("${tmpDirStr}", tmpDirStr))
             testResultWithoutPeers = reposProcess(["--dry-run=true"
                 , "--path=" + str(tmpDir.joinpath('test-repo'))
