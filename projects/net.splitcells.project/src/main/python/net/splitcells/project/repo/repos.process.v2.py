@@ -272,12 +272,11 @@ exit 1
 
 """.replace("${tmpDirStr}", tmpDirStr))
 if __name__ == '__main__':
-    if environ.get('repo_process_v2') == '1':
-        # TODO Remove this, when the old repo process is deleted.
-        if environ.get('repo_process_v2_parallel') == '1':
-            sys.argv = sys.argv + ['--process-in-parallel=true']
-        else:
-            sys.argv = sys.argv
+    # TODO Remove this, when the old repo process is deleted.
+    if environ.get('repo_process_v2_parallel') == '1':
+        sys.argv = sys.argv + ['--process-in-parallel=true']
+    else:
+        sys.argv = sys.argv
     # As there is no build process for Python unit tests are executed every time, to make sure, that the script works correctly.
     # During this test info logging is disabled, which is disabled by default in Python.
     test_result = unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestReposProcess))
