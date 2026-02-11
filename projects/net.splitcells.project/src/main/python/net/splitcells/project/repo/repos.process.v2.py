@@ -162,7 +162,7 @@ echo
                     echo peer-3
                     """)
             subprocess.call("chmod +x " + str(tmpDir.joinpath('test-repo/sub-1/bin/net.splitcells.shell.repos.peers')), shell='True')
-            testResult = reposProcess(["--dry-run=true", "--path=" + str(tmpDir.joinpath('test-repo')), '--command=echo child:${subRepo} & ${subRepo},peer:${peerRepo}'])
+            testResult = reposProcess(["--dry-run=true", "--path=" + str(tmpDir.joinpath('test-repo')), '--command=echo child:${childRepo} & ${subRepo},peer:${peerRepo}'])
             self.assertEqual(testResult.executionScript, """set -e
 set -x
 
