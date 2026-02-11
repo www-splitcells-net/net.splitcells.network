@@ -153,7 +153,7 @@ echo
             makedirs(tmpDir.joinpath('test-repo/sub-1/bin'))
             makedirs(tmpDir.joinpath('test-repo/sub-2/bin'))
             makedirs(tmpDir.joinpath('test-repo/sub-2/sub-3'))
-            makedirs(tmpDir.joinpath('test-repo/peer-3'))
+            makedirs(tmpDir.joinpath('test-repo/none-sub-peer'))
             makedirs(tmpDir.joinpath('peer-repo'))
             with open(tmpDir.joinpath('test-repo/bin/net.splitcells.repos.children'), 'w') as testRepo:
                 testRepo.write("""#!/usr/bin/env sh
@@ -170,10 +170,12 @@ echo
             subprocess.call("chmod +x " + str(tmpDir.joinpath('test-repo/bin/net.splitcells.shell.repos.peers')), shell='True')
             with open(tmpDir.joinpath('test-repo/sub-1/bin/net.splitcells.shell.repos.peers'), 'w') as peerRepo:
                 peerRepo.write("""#!/usr/bin/env sh
-                    echo peer-3
+                    echo none-sub-peer
                     """)
             subprocess.call("chmod +x " + str(tmpDir.joinpath('test-repo/sub-1/bin/net.splitcells.shell.repos.peers')), shell='True')
-            testResult = reposProcess(["--dry-run=true", "--path=" + str(tmpDir.joinpath('test-repo')), '--command=echo child:${childRepo} & ${subRepo},peer:${peerRepo}'])
+            testResult = reposProcess(["--dry-run=true"
+                , "--path=" + str(tmpDir.joinpath('test-repo'))
+                , '--command=echo child:${childRepo} & ${subRepo},peer:${peerRepo}'])
             self.assertEqual(testResult.executionScript, """set -e
 
 cd "${tmpDirStr}/test-repo"
@@ -182,7 +184,7 @@ echo child: & ,peer:
 cd "${tmpDirStr}/test-repo/sub-1"
 echo child:sub-1 & sub-1,peer:
 
-cd "${tmpDirStr}/test-repo/peer-3"
+cd "${tmpDirStr}/test-repo/none-sub-peer"
 echo child:sub-1 & sub-1,peer:
 
 cd "${tmpDirStr}/test-repo/sub-2"
@@ -192,7 +194,9 @@ echo child:sub-2 & sub-2,peer:
 cd "${tmpDirStr}/test-repo"
 exit 1
 
-# Processing unknown repo "${tmpDirStr}/test-repo"
+# Processing unknown repo "${tmpDirStr}/test-repo/none-sub-peer"
+exit 1
+
 cd "${tmpDirStr}/peer-repo"
 echo child: & ,peer:peer-repo
 
