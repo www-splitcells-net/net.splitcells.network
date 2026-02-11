@@ -5,7 +5,6 @@ SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
 TODO Make it possible to use relative target path as arg and inside the generated scripts.
      This way portable scripts for other users and computers could be generated.
-
 """
 
 __author__ = "Mārtiņš Avots"
@@ -37,7 +36,8 @@ class ReposProcess:
     ignorePeerRepos = False
     processInParallel = False
     def execute(self, args):
-        self.targetPath = Path(args.path)
+        # TODO Currently, given target paths are converted to be absolute, as peer repos are otherwise not processed correctly.
+        self.targetPath = Path(args.path).absolute()
         self.command = args.command
         self.dryRun = args.dryRun
         self.verbose = args.verbose
