@@ -52,7 +52,7 @@ class ReposProcess:
         return childProcess
     def executeRepo(self):
         if self.isRoot:
-            self.executionScript += "set -e\nset -x\n\n"
+            self.executionScript += "set -e\n\n"
         if self.targetPath.is_dir():
             if (str(self.targetPath) != './'):
                 self.executionScript += 'cd \"' + str(self.targetPath) + '\"\n'
@@ -129,7 +129,6 @@ class TestReposProcess(unittest.TestCase):
             tmpDir = Path(tmpDirStr)
             testResult = reposProcess(["--dry-run=true", "--path=" + tmpDirStr, '--command=echo'])
             self.assertEqual(testResult.executionScript, """set -e
-set -x
 
 cd "${tmpDirStr}"
 echo
@@ -164,7 +163,6 @@ echo
             subprocess.call("chmod +x " + str(tmpDir.joinpath('test-repo/sub-1/bin/net.splitcells.shell.repos.peers')), shell='True')
             testResult = reposProcess(["--dry-run=true", "--path=" + str(tmpDir.joinpath('test-repo')), '--command=echo child:${childRepo} & ${subRepo},peer:${peerRepo}'])
             self.assertEqual(testResult.executionScript, """set -e
-set -x
 
 cd "${tmpDirStr}/test-repo"
 echo child: & ,peer:
