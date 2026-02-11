@@ -64,7 +64,8 @@ class ReposProcess:
         childrenFile = self.targetPath.joinpath('./bin/net.splitcells.repos.children')
         if childrenFile.is_file():
             childQuery = subprocess.run([childrenFile], stdout=subprocess.PIPE)
-            for child in childQuery.stdout.decode('utf-8').split("\n"):
+            children = childQuery.stdout.decode('utf-8').split("\n")
+            for child in children:
                 if not child == "" and not child.isspace():
                     self.subRepo = child
                     childFile = self.targetPath.joinpath(child)
@@ -78,6 +79,10 @@ class ReposProcess:
                     if not self.executionScript.endswith("\n\n"):
                         self.executionScript += "\n"
                     self.subRepo = ""
+            for targetSubDir in self.targetPath.iterdir():
+                if targetSubDir.is_dir() and not targetSubDir.name.startswith('.') and targetSubDir.name != 'bin':
+                    if not targetSubDir.name in children:
+                        self.executionScript += '# Processing unknown repo "' + str(self.targetPath) + '"\n'
         peerFile = self.targetPath.joinpath('./bin/net.splitcells.shell.repos.peers')
         if peerFile.is_file():
             peerQuery = subprocess.run([peerFile], stdout=subprocess.PIPE)
@@ -177,6 +182,7 @@ echo child:sub-2,peer:
 cd "${tmpDirStr}/test-repo"
 exit 1
 
+# Processing unknown repo "${tmpDirStr}/test-repo"
 cd "${tmpDirStr}/peer-repo"
 echo child:,peer:peer-repo
 
