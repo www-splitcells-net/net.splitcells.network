@@ -40,6 +40,7 @@ import net.splitcells.dem.data.order.Comparison;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.StaticFlags;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.utils.CommonFunctions;
 import net.splitcells.dem.utils.MathUtils;
 import net.splitcells.dem.lang.dom.Domable;
@@ -81,6 +82,14 @@ public class MinimalDistance<T> implements Rater {
     private final Comparison<T> comparison;
     private final BiFunction<T, T, Double> distanceMeassurer;
     private final List<Discoverable> contextes = list();
+
+    @Override public Tree toTree() {
+        return tree("Minimal distance")
+                .withProperty("Minimum distance", minimumDistance + "")
+                .withProperty("Attribute", attribute.toTree())
+                .withProperty("Comparator", comparison + "")
+                .withProperty("Distance measurer", distanceMeassurer + "");
+    }
 
     private MinimalDistance
             (Attribute<T> attribute, double minimumDistance
