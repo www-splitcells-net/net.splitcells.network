@@ -63,11 +63,25 @@ public class MinimalDistance<T> implements Rater {
     public static final String MINIMAL_DISTANCE_NAME = "minimalDistance";
 
     public static MinimalDistance<Integer> hasMinimalDistanceOf(Attribute<Integer> attribute, double minimumDistance) {
-        return minimalDistance(attribute, minimumDistance, ASCENDING_INTEGERS, MathUtils::distance);
+        return minimalDistance(attribute, minimumDistance, ASCENDING_INTEGERS, new BiFunction<>() {
+            @Override public Double apply(Integer a, Integer b) {
+                return MathUtils.distance(a, b);
+            }
+            @Override public String toString() {
+                return "Linear distance";
+            }
+        });
     }
 
     public static MinimalDistance<Double> minimalDistance(Attribute<Double> attribute, double minimumDistance) {
-        return minimalDistance(attribute, minimumDistance, ASCENDING_DOUBLES, MathUtils::distance);
+        return minimalDistance(attribute, minimumDistance, ASCENDING_DOUBLES, new BiFunction<>() {
+            @Override public Double apply(Double a, Double b) {
+                return MathUtils.distance(a, b);
+            }
+            @Override public String toString() {
+                return "Linear distance";
+            }
+        });
     }
 
     public static <R> MinimalDistance<R> minimalDistance(Attribute<R> attribute
