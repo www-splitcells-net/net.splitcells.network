@@ -8,6 +8,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
@@ -19,6 +20,7 @@ import net.splitcells.gel.rating.rater.framework.RatingEvent;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.gel.constraint.Constraint.*;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
@@ -86,6 +88,12 @@ public class UniqueValueCountIsAtMost implements GroupingRater {
     }
 
     @Override public List<Domable> arguments() {
-        return list();
+        return list(tree("maxCount: " + maxCount), tree("attribute: " + attribute.name()));
+    }
+
+    @Override public Tree toTree() {
+        return tree("Unique value count is at most")
+                .withProperty("max count", maxCount + "")
+                .withProperty("attribute", attribute.name());
     }
 }

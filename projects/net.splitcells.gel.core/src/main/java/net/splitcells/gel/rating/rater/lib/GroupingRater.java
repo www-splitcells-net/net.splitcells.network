@@ -17,6 +17,7 @@ package net.splitcells.gel.rating.rater.lib;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
@@ -69,4 +70,6 @@ public interface GroupingRater {
     default Proposal propose(Proposal proposal) {
         return proposal;
     }
+    
+    Tree toTree();
 }

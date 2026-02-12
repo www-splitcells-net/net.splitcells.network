@@ -18,6 +18,7 @@ package net.splitcells.cin.raters;
 import net.splitcells.cin.EntityManager;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
@@ -33,6 +34,7 @@ import static net.splitcells.dem.data.order.Comparators.ASCENDING_INTEGERS;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.constraint.Constraint.LINE;
@@ -118,5 +120,9 @@ public class ExistenceCost implements GroupingRater {
     @Override
     public Proposal propose(Proposal proposal) {
         return proposal;
+    }
+
+    @Override public Tree toTree() {
+        return tree(getClass().getName());
     }
 }

@@ -17,6 +17,7 @@ package net.splitcells.gel.rating.rater.lib;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
@@ -26,6 +27,7 @@ import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 
@@ -92,5 +94,10 @@ public class LineGroupRater implements Rater {
 
                 });
         return baseRater.propose(proposal);
+    }
+
+    @Override
+    public Tree toTree() {
+        return tree("Group of").withChild(baseRater.toTree());
     }
 }
