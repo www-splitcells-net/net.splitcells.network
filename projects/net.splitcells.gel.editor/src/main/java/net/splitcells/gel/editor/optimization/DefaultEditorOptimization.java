@@ -25,7 +25,7 @@ public class DefaultEditorOptimization implements EditorOptimization {
                 + " In other words, every solution is only allowed to have at most 1 solution as its demand or supply."
                 + " Furthermore, the solution's interdependencies are not allowed to form a circle.");
         for (int i = solutionPaths.size() - 1; i > -1; --i) {
-            solutionPaths.get(1).get(i).optimize(defaultOptimization());
+            solutionPaths.get(0).get(i).optimize(defaultOptimization());
         }
     }
 }
