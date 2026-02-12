@@ -122,8 +122,8 @@ public final class AttributeI<T> implements Attribute<T> {
     @Override
     public Tree toTree() {
         return tree(Attribute.class.getSimpleName())
-                .withProperty(Language.NAME.value(), name)
-                .withProperty(Language.TYPE.value(), type.getSimpleName());
+                .withProperty("Name", name)
+                .withProperty("Type", type.getSimpleName());
     }
 
     @Override
