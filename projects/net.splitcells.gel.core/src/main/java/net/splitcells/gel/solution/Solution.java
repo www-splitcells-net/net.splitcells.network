@@ -26,7 +26,9 @@ import static net.splitcells.gel.solution.optimization.DefaultOptimization.defau
 import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 
+import lombok.val;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.testing.reporting.ErrorReporter;
 import net.splitcells.dem.utils.StringUtils;
@@ -393,5 +395,28 @@ public interface Solution extends Problem, SolutionView {
 
     @Override default Optional<Solution> lookupAsSolution() {
         return Optional.of(this);
+    }
+
+    default List<List<Solution>> solutionPaths() {
+        return solutionPaths(list());
+    }
+
+    default List<List<Solution>> solutionPaths(List<Solution> currentPath) {
+        val solutionPaths = Lists.<List<Solution>>list();
+        currentPath.add(this);
+        val demandPath = currentPath.shallowCopy();
+        demands().lookupAsSolution().ifPresent(ds -> {
+            ds.demands().lookupAsSolution().ifPresentOrElse(dds -> {
+                solutionPaths.addAll(dds.solutionPaths(demandPath));
+            }, () -> solutionPaths.add(demandPath.withAppended(ds)));
+        });
+
+        val supplyPath = currentPath.shallowCopy();
+        supplies().lookupAsSolution().ifPresent(ss -> {
+            ss.supplies().lookupAsSolution().ifPresentOrElse(sss -> {
+                solutionPaths.addAll(sss.solutionPaths(supplyPath));
+            }, () -> solutionPaths.add(demandPath.withAppended(ss)));
+        });
+        return solutionPaths;
     }
 }
