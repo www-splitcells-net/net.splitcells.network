@@ -29,6 +29,7 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.RepairCo
  * It represents currently the best available optimization for problems in general.
  * Note, that other optimizers might be better for specific problems or
  * if the optimizer ist adjusted to a given problem.
+ * @see DefaultOptimizationStaging
  */
 public class DefaultOptimization implements OnlineOptimization {
     public static OnlineOptimization defaultOptimization() {
