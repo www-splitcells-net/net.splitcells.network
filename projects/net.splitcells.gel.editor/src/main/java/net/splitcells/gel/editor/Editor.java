@@ -76,13 +76,13 @@ public class Editor implements Discoverable {
     private final Map<String, EditorData> data = map();
 
     public Optional<String> lookupTableLikeName(Table table) {
-        final var tableMatches = tables.entrySet().stream().filter(entry -> entry.getValue().equals(table))
+        val tableMatches = tables.entrySet().stream().filter(entry -> entry.getValue().equals(table))
                 .map(entry -> entry.getKey())
                 .toList();
         if (!tableMatches.isEmpty()) {
             return Optional.of(tableMatches.getFirst());
         }
-        final var solutionMatch = solutions.entrySet().stream().filter(entry -> entry.getValue().equals(table))
+        val solutionMatch = solutions.entrySet().stream().filter(entry -> entry.getValue().equals(table))
                 .map(entry -> entry.getKey())
                 .findFirst();
         if (solutionMatch.isEmpty()) {
@@ -119,7 +119,7 @@ public class Editor implements Discoverable {
 
     public EditorData loadData(Format format, String name) {
         return data.getOptionally(name).orElseGet(() -> {
-            final var newValue = editorData(format, new byte[0]);
+            val newValue = editorData(format, new byte[0]);
             data.put(name, newValue);
             return newValue;
         });
@@ -184,7 +184,7 @@ public class Editor implements Discoverable {
 
     @ReturnsThis
     public Editor interpret(VariableDefinitionDesc variableDefinition) {
-        final var varName = variableDefinition.getName().getValue();
+        val varName = variableDefinition.getName().getValue();
         if (attributes.hasKey(varName)) {
             throw execException(tree("The attribute variable \" + name + \" with the same name is already defined.").withProperty("name", varName)
                     .withProperty("attribute variables", attributes.toString()));
@@ -209,7 +209,7 @@ public class Editor implements Discoverable {
                     .withProperty("name", varName)
                     .withProperty("table variables", raters.toString()));
         }
-        final var parsedObject = parse(variableDefinition.getFunctionCallChain());
+        val parsedObject = parse(variableDefinition.getFunctionCallChain());
         if (parsedObject instanceof Attribute<?> attribute) {
             attributes.put(varName, attribute);
         } else if (parsedObject instanceof Solution solution) {
@@ -238,13 +238,13 @@ public class Editor implements Discoverable {
 
     public Object parse(FunctionCallChainDesc functionCallChain) {
         final Object parsedObject;
-        final var functionCallExecutor = functionCallMetaExecutor();
+        val functionCallExecutor = functionCallMetaExecutor();
         FunctionCallRun chainLinkRun;
         if (functionCallChain.getExpression() instanceof FunctionCallDesc functionCall) {
             chainLinkRun = functionCallExecutor.execute(functionCall, Optional.empty(), this);
             parsedObject = chainLinkRun.getResult().orElseThrow();
         } else if (functionCallChain.getExpression() instanceof NameDesc reference) {
-            final var lookup = resolveRaw(reference);
+            val lookup = resolveRaw(reference);
             if (lookup.isEmpty()) {
                 throw execException(tree("Could not find object by name.")
                         .withProperty("name", reference.getValue())
@@ -273,7 +273,7 @@ public class Editor implements Discoverable {
 
     public Editor addRecord(FunctionCallRecord argRecord) {
         if (isRecording) {
-            final var matches = functionCallRecords.stream()
+            val matches = functionCallRecords.stream()
                     .filter(fcr -> fcr.getName().equals(argRecord.getName()) && fcr.getVariation() == argRecord.getVariation())
                     .toList();
             if (matches.isEmpty()) {
