@@ -31,7 +31,6 @@ import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
-import static net.splitcells.gel.common.Language.ARGUMENTS;
 import static net.splitcells.gel.common.Language.EMPTY_STRING;
 import static net.splitcells.gel.constraint.Report.report;
 import static net.splitcells.gel.constraint.intermediate.data.AllocationRating.lineRating;
@@ -495,7 +494,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
     public Tree toTree() {
         final var dom = tree(type().getSimpleName());
         if (!arguments().isEmpty()) {
-            arguments().forEach(arg -> dom.withProperty(ARGUMENTS.value(), arg.toTree()));
+            arguments().forEach(arg -> dom.withChild(arg.toTree()));
         }
         dom.withProperty("rating", rating().toTree());
         {
@@ -519,7 +518,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
     public Tree toPerspective(Set<GroupId> groups) {
         final var dom = tree(type().getSimpleName());
         if (!arguments().isEmpty()) {
-            arguments().forEach(arg -> dom.withProperty(ARGUMENTS.value(), arg.toTree()));
+            arguments().forEach(arg -> dom.withChild(arg.toTree()));
         }
         dom.withProperty("rating", rating(groups).toTree());
         {

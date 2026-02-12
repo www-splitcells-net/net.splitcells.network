@@ -27,7 +27,6 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
-import static net.splitcells.gel.common.Language.ARGUMENTS;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.data.view.attribute.ListAttribute.listAttribute;
 import static net.splitcells.gel.rating.framework.MetaRating.neutral;
@@ -279,7 +278,7 @@ public interface Constraint extends TableSynchronization, ConstraintWriter, Disc
     default Tree graph() {
         final var graph = tree(type().getSimpleName());
         if (!arguments().isEmpty()) {
-            arguments().forEach(arg -> graph.withProperty(ARGUMENTS.value(), arg.toTree()));
+            arguments().forEach(arg -> graph.withChild(arg.toTree()));
         }
         childrenView().forEach(child -> {
             graph.withChild(child.graph());
