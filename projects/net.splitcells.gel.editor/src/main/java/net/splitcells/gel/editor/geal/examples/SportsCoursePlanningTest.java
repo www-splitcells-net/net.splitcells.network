@@ -15,10 +15,12 @@
  */
 package net.splitcells.gel.editor.geal.examples;
 
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.editor.GelEditorFileSystem;
 
 import static net.splitcells.dem.Dem.configValue;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT;
 import static net.splitcells.gel.editor.Editor.editor;
 
@@ -28,5 +30,7 @@ public class SportsCoursePlanningTest {
                 .readString("src/main/resources/html/net/splitcells/gel/editor/geal/examples/sports-course-planning.txt");
         final var testSubject = editor("test-subject", EXPLICIT_NO_CONTEXT);
         testSubject.interpret(problemDefinition);
+        testSubject.solutionPaths()
+                .requireContentsOf(listWithValuesOf(testSubject.getSolutions().get("courseScheduling"), testSubject.getSolutions().get("courseAssignment")));
     }
 }
