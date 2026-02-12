@@ -119,6 +119,6 @@ public class ForAllAttributeValues implements Rater {
 
     @Override
     public Tree toTree() {
-        return tree(FOR_ALL_ATTRIBUTE_VALUES).withProperty("attribute", attribute.toTree());
+        return tree("For all attribute values").withChild(attribute.toTree());
     }
 }

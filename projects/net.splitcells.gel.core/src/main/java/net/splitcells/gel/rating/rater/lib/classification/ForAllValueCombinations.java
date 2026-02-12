@@ -121,8 +121,7 @@ public class ForAllValueCombinations implements Rater {
 
     @Override
     public Tree toTree() {
-        return tree(FOR_ALL_VALUE_COMBINATIONS_NAME)
-                .withChild(tree("attributes").withChildren(listWithValuesOf(attributes.mapped(Domable::toTree))));
+        return tree(FOR_ALL_VALUE_COMBINATIONS_NAME).withChildren(listWithValuesOf(attributes.mapped(Domable::toTree)));
     }
 
     @Override
