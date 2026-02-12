@@ -62,26 +62,40 @@ public class MinimalDistance<T> implements Rater {
 
     public static final String MINIMAL_DISTANCE_NAME = "minimalDistance";
 
+    /**
+     * This is a dedicated constant, so that {@link #equals(Object)} is working expectedly,
+     * when call on itself.
+     */
+    private static final BiFunction<Double, Double, Double> LINEAR_DOUBLE_DISTANCE = new BiFunction<>() {
+        @Override public Double apply(Double a, Double b) {
+            return MathUtils.distance(a, b);
+        }
+
+        @Override public String toString() {
+            return "Linear distance";
+        }
+    };
+
+    /**
+     * This is a dedicated constant, so that {@link #equals(Object)} is working expectedly,
+     * when call on itself.
+     */
+    private static final BiFunction<Integer, Integer, Double> LINEAR_INTEGER_DISTANCE = new BiFunction<>() {
+        @Override public Double apply(Integer a, Integer b) {
+            return MathUtils.distance(a, b);
+        }
+
+        @Override public String toString() {
+            return "Linear distance";
+        }
+    };
+
     public static MinimalDistance<Integer> hasMinimalDistanceOf(Attribute<Integer> attribute, double minimumDistance) {
-        return minimalDistance(attribute, minimumDistance, ASCENDING_INTEGERS, new BiFunction<>() {
-            @Override public Double apply(Integer a, Integer b) {
-                return MathUtils.distance(a, b);
-            }
-            @Override public String toString() {
-                return "Linear distance";
-            }
-        });
+        return minimalDistance(attribute, minimumDistance, ASCENDING_INTEGERS, LINEAR_INTEGER_DISTANCE);
     }
 
     public static MinimalDistance<Double> minimalDistance(Attribute<Double> attribute, double minimumDistance) {
-        return minimalDistance(attribute, minimumDistance, ASCENDING_DOUBLES, new BiFunction<>() {
-            @Override public Double apply(Double a, Double b) {
-                return MathUtils.distance(a, b);
-            }
-            @Override public String toString() {
-                return "Linear distance";
-            }
-        });
+        return minimalDistance(attribute, minimumDistance, ASCENDING_DOUBLES, LINEAR_DOUBLE_DISTANCE);
     }
 
     public static <R> MinimalDistance<R> minimalDistance(Attribute<R> attribute
