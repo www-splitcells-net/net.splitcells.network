@@ -76,8 +76,12 @@ public interface ListView<T> extends Collection<T>, java.util.List<T>, Thing, Se
     }
 
     default void requireSizeOf(int arg) {
+        requireSizeOf(arg, "List should be size of " + arg + " but has size of " + size() + " instead: " + this);
+    }
+
+    default void requireSizeOf(int arg, String errorMessage) {
         if (size() != arg) {
-            throw ExecutionException.execException("List should be size of " + arg + " but has size of " + size() + " instead: " + this);
+            throw ExecutionException.execException(errorMessage);
         }
     }
 
