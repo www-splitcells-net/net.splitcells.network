@@ -35,33 +35,52 @@ public class Comparators<T> implements Comparison<T> {
         return comparatorLegacy((a, b) -> converter.apply(a).compareTo(converter.apply(b)));
     }
 
-    public static final Comparison<Integer> ASCENDING_INTEGERS = comparator((a, b) -> {
-        if (a < b) {
-            return Ordering.LESSER_THAN;
-        } else if (b < a) {
-            return Ordering.GREATER_THAN;
-        } else {
-            return Ordering.EQUAL;
+    public static final Comparison<Integer> ASCENDING_INTEGERS = comparator(new BiFunction<Integer, Integer, Ordering>() {
+        @Override public Ordering apply(Integer a, Integer b) {
+            if (a < b) {
+                return Ordering.LESSER_THAN;
+            } else if (b < a) {
+                return Ordering.GREATER_THAN;
+            } else {
+                return Ordering.EQUAL;
+            }
+        }
+
+        @Override public String toString() {
+            return "ascending integers";
         }
     });
-    public static final Comparison<Double> ASCENDING_DOUBLES = comparator((a, b) -> {
-        if (a < b) {
-            return Ordering.LESSER_THAN;
-        } else if (b < a) {
-            return Ordering.GREATER_THAN;
-        } else {
-            return Ordering.EQUAL;
+    public static final Comparison<Double> ASCENDING_DOUBLES = comparator(new BiFunction<Double, Double, Ordering>() {
+        @Override public Ordering apply(Double a, Double b) {
+            if (a < b) {
+                return Ordering.LESSER_THAN;
+            } else if (b < a) {
+                return Ordering.GREATER_THAN;
+            } else {
+                return Ordering.EQUAL;
+            }
+        }
+
+        @Override public String toString() {
+            return "ascending doubles";
         }
     });
-    public static final Comparison<Boolean> ASCENDING_BOOLEANS = comparator((a, b) -> {
-        if (a && !b) {
-            return Ordering.GREATER_THAN;
-        } else if (!a && b) {
-            return Ordering.LESSER_THAN;
-        } else {
-            return Ordering.EQUAL;
-        }
-    });
+    public static final Comparison<Boolean> ASCENDING_BOOLEANS = comparator(
+            new BiFunction<Boolean, Boolean, Ordering>() {
+                @Override public Ordering apply(Boolean a, Boolean b) {
+                    if (a && !b) {
+                        return Ordering.GREATER_THAN;
+                    } else if (!a && b) {
+                        return Ordering.LESSER_THAN;
+                    } else {
+                        return Ordering.EQUAL;
+                    }
+                }
+
+                @Override public String toString() {
+                    return "ascending booleans";
+                }
+            });
 
     public static <T> Comparators<T> legacyComparator(BiFunction<T, T, Integer> comparator) {
         return new Comparators<>(comparator);
@@ -79,9 +98,12 @@ public class Comparators<T> implements Comparison<T> {
 
     public static <T> Comparison<T> comparator(BiFunction<T, T, Ordering> comparator) {
         return new Comparison<>() {
-            @Override
-            public Ordering compareTo(T a, T b) {
+            @Override public Ordering compareTo(T a, T b) {
                 return comparator.apply(a, b);
+            }
+
+            @Override public String toString() {
+                return comparator.toString();
             }
         };
     }
