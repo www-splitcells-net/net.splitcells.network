@@ -53,6 +53,7 @@ import static net.splitcells.gel.editor.EditorData.editorData;
 import static net.splitcells.gel.editor.geal.parser.SourceUnitParser.parseGealSourceUnit;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallMetaExecutor.functionCallMetaExecutor;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
+import static net.splitcells.gel.editor.optimization.DefaultEditorOptimization.defaultEditorOptimization;
 
 /**
  * There is no distinction, between a things name and their variable name.
@@ -133,6 +134,10 @@ public class Editor implements Discoverable {
     private Editor(String argName, Discoverable argParent) {
         name = argName;
         parent = argParent;
+    }
+
+    public void optimize() {
+        defaultEditorOptimization().optimize(this);
     }
 
     @Override
