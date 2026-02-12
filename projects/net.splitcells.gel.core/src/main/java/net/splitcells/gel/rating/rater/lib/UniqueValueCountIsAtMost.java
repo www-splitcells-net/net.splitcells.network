@@ -93,7 +93,7 @@ public class UniqueValueCountIsAtMost implements GroupingRater {
 
     @Override public Tree toTree() {
         return tree("Unique value count is at most")
-                .withProperty("max count", maxCount + "")
-                .withProperty("attribute", attribute.name());
+                .withProperty("Max count", maxCount + "")
+                .withProperty("Attribute", attribute.name());
     }
 }
