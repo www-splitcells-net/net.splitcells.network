@@ -80,20 +80,25 @@ public class RaterBasedOnLineValue implements Rater {
 
     public static Rater lineValueRater(Predicate<Line> classifier, String description) {
         return lineValueRater(new Predicate<Line>() {
-            @Override
-            public boolean test(Line line) {
+            @Override public boolean test(Line line) {
                 return classifier.test(line);
             }
 
-            @Override
-            public String toString() {
+            @Override public String toString() {
                 return description;
             }
-        }, line -> {
-            if (classifier.test(line)) {
-                return noCost();
-            } else {
-                return cost(1);
+        }, new Function<Line, Rating>() {
+            @Override public Rating apply(Line line) {
+                {
+                    if (classifier.test(line)) {
+                        return noCost();
+                    } else {
+                        return cost(1);
+                    }
+                }
+            }
+            @Override public String toString() {
+                return description;
             }
         });
     }
