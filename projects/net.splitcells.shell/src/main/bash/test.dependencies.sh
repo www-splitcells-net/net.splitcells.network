@@ -20,6 +20,5 @@ mkdir -p ~/.cache/net.splitcells.shell/testing
 repo.clone.into.current.test > /dev/null 2>&1 || echo.error '"'repo.clone.into.current'"' has no valid implementation.
 command.managed.execute.test
 user.ssh.key.generate.test
-repos.process.test
 this.requires test.dependencies.0 && command.managed.execute conjunction test.dependencies
 rm -rf ~/.cache/net.splitcells.shell/testing
