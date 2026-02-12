@@ -88,10 +88,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
             final var dataTypes = tree(DATA_TYPES).withParent(formUpdate);
             final var dataValues = tree(DATA_VALUES).withParent(formUpdate);
             final var renderingTypes = tree(RENDERING_TYPES).withParent(formUpdate);
-            // TODO Optimize any solutions.
-            if (editor.getSolutions().size() == 1) {
-                editor.getSolutions().values().iterator().next().optimize();
-            }
+            editor.optimize();
             editor.getTables().entrySet().forEach(e -> {
                 dataValues.withProperty(e.getKey(), e.getValue().toCSV(reportInvalidCsvData(e.getKey())));
                 dataTypes.withProperty(e.getKey(), CSV.mimeTypes());
