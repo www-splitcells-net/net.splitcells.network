@@ -390,4 +390,8 @@ public interface Solution extends Problem, SolutionView {
                         .orElse("")
                         .replace(',', ' '));
     }
+
+    @Override default Optional<Solution> lookupAsSolution() {
+        return Optional.of(this);
+    }
 }
