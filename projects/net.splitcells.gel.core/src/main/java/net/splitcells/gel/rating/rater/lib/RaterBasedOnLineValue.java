@@ -97,6 +97,7 @@ public class RaterBasedOnLineValue implements Rater {
                     }
                 }
             }
+
             @Override public String toString() {
                 return description;
             }
@@ -189,7 +190,7 @@ public class RaterBasedOnLineValue implements Rater {
 
     @Override
     public Tree toTree() {
-        return tree(getClass().getSimpleName()).withProperty("args", arguments().get(0).toTree());
+        return tree(rater.toString());
     }
 
     @Override
