@@ -23,12 +23,15 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.Constrai
 import static net.splitcells.gel.solution.optimization.primitive.repair.DemandSelectors.commitCompliance;
 import static net.splitcells.gel.solution.optimization.primitive.repair.RepairConfig.repairConfig;
 
-public class DefaultOptimization2 implements OnlineOptimization {
-    public static OnlineOptimization defaultOptimization2() {
-        return new DefaultOptimization2();
+/**
+ * This class is a staging ground for changes to {@link DefaultOptimization}.
+ */
+public class DefaultOptimizationStaging implements OnlineOptimization {
+    public static OnlineOptimization defaultOptimizationStaging() {
+        return new DefaultOptimizationStaging();
     }
 
-    private DefaultOptimization2() {
+    private DefaultOptimizationStaging() {
     }
 
     @Override

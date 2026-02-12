@@ -23,7 +23,6 @@ import static net.splitcells.dem.testing.reporting.ErrorReporting.getWithReporte
 import static net.splitcells.gel.proposal.Proposals.proposalsForConstraintTree;
 import static net.splitcells.gel.solution.OptimizationParameters.optimizationParameters;
 import static net.splitcells.gel.solution.optimization.DefaultOptimization.defaultOptimization;
-import static net.splitcells.gel.solution.optimization.DefaultOptimization2.defaultOptimization2;
 import static net.splitcells.gel.solution.optimization.StepType.ADDITION;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 
@@ -34,7 +33,6 @@ import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.proposal.Proposal;
-import net.splitcells.gel.proposal.Proposals;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.solution.optimization.OfflineOptimization;

@@ -22,7 +22,6 @@ import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.solution.Solution;
-import net.splitcells.gel.solution.optimization.DefaultOptimization2;
 import net.splitcells.gel.solution.optimization.OnlineOptimization;
 
 import java.util.stream.Stream;
@@ -35,7 +34,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
-import static net.splitcells.gel.solution.optimization.DefaultOptimization2.defaultOptimization2;
+import static net.splitcells.gel.solution.optimization.DefaultOptimizationStaging.defaultOptimizationStaging;
 
 /**
  * <p>This is the accounting of the game's objects.</p>
@@ -139,7 +138,7 @@ public class EntityManager {
         entities.demandsFree().unorderedLines()
                 .forEach(fd -> entitySupplies.addTranslated(list(PLAYER_ENERGY, random.integer(1, 100), RESULT_VALUE, NO_SOURCE)));
         entities.init();
-        defaultOptimization2().optimize(entities.optimize());
+        defaultOptimizationStaging().optimize(entities.optimize());
         return this;
     }
 
