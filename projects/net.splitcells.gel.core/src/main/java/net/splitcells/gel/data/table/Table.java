@@ -23,6 +23,9 @@ import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
+import net.splitcells.gel.solution.Solution;
+
+import java.util.Optional;
 
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
@@ -190,5 +193,9 @@ public interface Table extends View {
     default Table withAllLinesRemoved() {
         unorderedLines().forEach(this::remove);
         return this;
+    }
+
+    default Optional<Solution> lookupAsSolution() {
+        return Optional.empty();
     }
 }

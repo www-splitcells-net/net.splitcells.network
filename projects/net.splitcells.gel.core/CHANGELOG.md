@@ -89,6 +89,7 @@
   2. Rename `SupplySelector` to `SupplyOfflineSelector`.
   3. Rename `SupplySelectors` to `SupplyOfflineSelectors`.
 ### Minor Changes
+* **2026-02-12 \#37** Tables can now be checked, if these are Solution instances instead via `Table#lookupAsSolution`.
 * **2025-11-20 \#37**
   1. Create HasMaximalSize rater.
   2. Create `Rater#requireVerySimilar` helper function, in order to better compare Costs' double values.
