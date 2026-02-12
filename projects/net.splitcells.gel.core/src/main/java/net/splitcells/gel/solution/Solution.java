@@ -32,6 +32,7 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.testing.reporting.ErrorReporter;
 import net.splitcells.dem.utils.StringUtils;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.proposal.Proposal;
@@ -55,6 +56,16 @@ import java.util.function.Function;
  * Maybe one could implement a very low level compatibility system based on this for other software?</p>
  */
 public interface Solution extends Problem, SolutionView {
+
+    /**
+     * <p>This variable is only used as a reference point for the term solution tree.</p>
+     * <p>Given an {@link Solution} and using {@link Solution#demands()}, {@link Solution#supplies()} and
+     * {@link Table#lookupAsSolution()} a tree can be created.
+     * This tree represents all constraints of the underlying complex optimization problem.
+     * The root element is the {@link Solution}, that is not a {@link Solution#demands()} or {@link Solution#supplies()}
+     * of another {@link Solution}.</p>
+     */
+    String SOLUTION_TREE = "solution tree";
 
     default Proposal propose() {
         return proposalsForConstraintTree(this);
