@@ -80,7 +80,7 @@ public class MinimalDistance<T> implements Rater {
     private final double minimumDistance;
     private final Attribute<T> attribute;
     private final Comparison<T> comparison;
-    private final BiFunction<T, T, Double> distanceMeassurer;
+    private final BiFunction<T, T, Double> distanceMeasurer;
     private final List<Discoverable> contextes = list();
 
     @Override public Tree toTree() {
@@ -88,14 +88,14 @@ public class MinimalDistance<T> implements Rater {
                 .withProperty("Minimum distance", minimumDistance + "")
                 .withProperty("Attribute", attribute.toTree())
                 .withProperty("Comparator", comparison + "")
-                .withProperty("Distance measurer", distanceMeassurer + "");
+                .withProperty("Distance measurer", distanceMeasurer + "");
     }
 
     private MinimalDistance
             (Attribute<T> attribute, double minimumDistance
                     , Comparison<T> comparison
-                    , BiFunction<T, T, Double> distanceMeassurer) {
-        this.distanceMeassurer = distanceMeassurer;
+                    , BiFunction<T, T, Double> distanceMeasurer) {
+        this.distanceMeasurer = distanceMeasurer;
         this.attribute = attribute;
         this.minimumDistance = minimumDistance;
         this.comparison = comparison;
@@ -245,7 +245,7 @@ public class MinimalDistance<T> implements Rater {
     }
 
     private double distance(Line left, Line right) {
-        return absolute(distanceMeassurer
+        return absolute(distanceMeasurer
                 .apply(left.value(LINE).value(attribute)
                         , right.value(LINE).value(attribute)));
     }
@@ -265,7 +265,7 @@ public class MinimalDistance<T> implements Rater {
                 (tree("minimumDistance").withChild(tree("" + minimumDistance))
                         , tree("attribute").withChild(attribute.toTree())
                         , tree("comparator").withChild(tree("" + comparison))
-                        , tree("distanceMeassurer").withChild(tree("" + distanceMeassurer)));
+                        , tree("distanceMeassurer").withChild(tree("" + distanceMeasurer)));
     }
 
     @Override
@@ -274,14 +274,14 @@ public class MinimalDistance<T> implements Rater {
             return this.minimumDistance == cArg.minimumDistance
                     && this.attribute.equals(cArg.attribute)
                     && this.comparison.equals(cArg.comparison)
-                    && this.distanceMeassurer.equals(cArg.distanceMeassurer);
+                    && this.distanceMeasurer.equals(cArg.distanceMeasurer);
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        return CommonFunctions.hashCode(minimumDistance, attribute, comparison, distanceMeassurer);
+        return CommonFunctions.hashCode(minimumDistance, attribute, comparison, distanceMeasurer);
     }
 
     @Override
