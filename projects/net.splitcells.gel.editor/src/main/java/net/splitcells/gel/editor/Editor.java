@@ -18,8 +18,11 @@ package net.splitcells.gel.editor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import lombok.val;
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.object.Discoverable;
@@ -40,6 +43,7 @@ import net.splitcells.website.Format;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.need.NeedsCheck.checkNeed;
@@ -74,6 +78,40 @@ public class Editor implements Discoverable {
     private final List<FunctionCallRecord> functionCallRecords = list();
     @Getter @Setter private boolean isRecording = false;
     private final Map<String, EditorData> data = map();
+
+    /**
+     * @return Every {@link List} start has a final {@link Solution}.
+     * All following {@link Solution} in the {@link List} are the respective level of {@link Solution#demands()} or
+     * {@link Solution#supplies()} of the final {@link Solution}.
+     * @see #finalSolutions()
+     */
+    public List<List<Solution>> solutionPaths() {
+        val solutionPaths = Lists.<List<Solution>>list();
+        finalSolutions().forEach(fs -> solutionPaths.addAll(fs.solutionPaths()));
+        return solutionPaths;
+    }
+
+    /**
+     *
+     * @return Final {@link Solution} are not {@link Solution#demands()} or {@link Solution#supplies()}
+     * of other {@link Solution}.
+     */
+    public List<Solution> finalSolutions() {
+        val processed = Sets.<Solution>setOfUniques();
+        val finalSolutions = Sets.<Solution>setOfUniques();
+        solutions.values().forEach(s -> {
+            processed.add(s);
+            val sHasParents = solutions.values().stream().map(otherS ->
+                            otherS.demands().lookupAsSolution().map(otherSD -> otherSD.equals(s)).orElse(false)
+                                    && otherS.supplies().lookupAsSolution().map(otherSS -> otherSS.equals(s)).orElse(false))
+                    .reduce((a, b) -> a || b)
+                    .orElse(false);
+            if (!sHasParents) {
+                finalSolutions.add(s);
+            }
+        });
+        return listWithValuesOf(finalSolutions);
+    }
 
     public Optional<String> lookupTableLikeName(Table table) {
         val tableMatches = tables.entrySet().stream().filter(entry -> entry.getValue().equals(table))
