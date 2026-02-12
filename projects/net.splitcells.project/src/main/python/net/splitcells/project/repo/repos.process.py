@@ -111,6 +111,8 @@ class ReposProcess:
         childrenFile = self.targetPath.joinpath('./bin/net.splitcells.repos.children')
         if childrenFile.is_file():
             childQuery = subprocess.run([childrenFile], stdout=subprocess.PIPE)
+            if childQuery.returncode != 0:
+                exit(childQuery.returncode)
             children = childQuery.stdout.decode('utf-8').split("\n")
             for child in children:
                 if not child == "" and not child.isspace():
@@ -136,7 +138,9 @@ class ReposProcess:
             if self.verbose:
                 logging.info("Executing script: \n" + self.executionScript)
             logging.info("Executing script: \n" + self.executionScript)
-            subprocess.run(self.executionScript, shell='True')
+            executionSuccess = subprocess.run(self.executionScript, shell='True')
+            if executionSuccess.returncode != 0:
+                exit(executionSuccess.returncode)
     def getCommandForScript(self, command):
         scriptLine = self.applyTemplate(command)
         if self.processInParallel:
@@ -150,6 +154,8 @@ class ReposProcess:
             return
         if peerFile.is_file():
             peerQuery = subprocess.run([peerFile], stdout=subprocess.PIPE)
+            if peerQuery.returncode != 0:
+                exit(peerQuery.returncode)
             for peer in peerQuery.stdout.decode('utf-8').split("\n"):
                 if not peer == "" and not peer.isspace():
                     peerFile = self.targetPath.joinpath("../" + peer).resolve()
