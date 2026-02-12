@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.solution.optimization;
 
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.solution.Solution;
 
 /**
@@ -36,6 +37,8 @@ import net.splitcells.gel.solution.Solution;
  * which can be useful as well.
  * </p>
  * <p>TODO IDEA Implement random forest.</p>
+ * <p>TODO IDEA Create a single {@link Table} representation for {@link Solution#SOLUTION_TREE}.
+ * This maybe would allow simple {@link OnlineOptimization} to work on complex problems.</p>
  */
 @FunctionalInterface
 public interface OnlineOptimization {
