@@ -5,22 +5,12 @@
 package net.splitcells.dem.resource;
 
 import net.splitcells.dem.testing.TestSuiteI;
-import org.junit.jupiter.api.DynamicTest;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.TestFactory;
 
 import java.util.function.Supplier;
-import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.atom.Bools.require;
-import static net.splitcells.dem.resource.FileSystemViaMemory.fileSystemViaMemory;
-import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
-import static net.splitcells.dem.utils.StreamUtils.concat;
 
 public class FileSystemWriteTest extends TestSuiteI {
-    @Tag(UNIT_TEST) @TestFactory public Stream<DynamicTest> fileSystemWriteTests() {
-        return concat(dynamicTests(this::testExists, () -> fileSystemViaMemory()));
-    }
 
     public void testExists(Supplier<FileSystem> factory) {
         require(factory.get().exists());
