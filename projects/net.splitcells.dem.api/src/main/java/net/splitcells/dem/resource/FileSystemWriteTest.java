@@ -6,6 +6,7 @@ package net.splitcells.dem.resource;
 
 import net.splitcells.dem.testing.TestSuiteI;
 
+import java.nio.file.Path;
 import java.util.function.Supplier;
 
 import static net.splitcells.dem.data.atom.Bools.require;
@@ -16,6 +17,11 @@ public class FileSystemWriteTest extends TestSuiteI {
         require(factory.get().exists());
     }
 
+    /**
+     * TODO {@link FileSystemViaMemory#subFileSystem(Path)} has to be implemented first.
+     * 
+     * @param factory
+     */
     public void testExistsForSubFileSystem(Supplier<FileSystem> factory) {
         require(factory.get().createDirectoryPath("test").subFileSystem("test").exists());
     }
