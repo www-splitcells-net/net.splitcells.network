@@ -34,6 +34,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
@@ -92,10 +93,10 @@ public class ProjectRendererExtensionMerger implements ProjectRendererExtension 
                     .map(Object::toString)
                     .reduce((a, b) -> a + ", " + b)
                     .orElseThrow();
-            throw new RuntimeException("Multiple matches are present: "
+            logs().warn(execException("Multiple matches are present: "
                     + projectRenderer.resourceRootPath2()
                     + ": "
-                    + matchedExtensions);
+                    + matchedExtensions));
         }
         if (rendering.isEmpty()) {
             return Optional.empty();
