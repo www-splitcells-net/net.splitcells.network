@@ -15,4 +15,8 @@ public class FileSystemWriteTest extends TestSuiteI {
     public void testExists(Supplier<FileSystem> factory) {
         require(factory.get().exists());
     }
+
+    public void testExistsForSubFileSystem(Supplier<FileSystem> factory) {
+        require(factory.get().createDirectoryPath("test").subFileSystem("test").exists());
+    }
 }
