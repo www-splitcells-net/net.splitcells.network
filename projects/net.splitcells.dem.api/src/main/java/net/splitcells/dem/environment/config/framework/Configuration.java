@@ -17,6 +17,7 @@ package net.splitcells.dem.environment.config.framework;
 
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
@@ -32,6 +33,17 @@ public interface Configuration extends ConfigurationV {
 
     @ReturnsThis
     <T> Configuration withConfigValue(Class<? extends Option<T>> key, T value);
+
+    /**
+     * This helper method makes it easier to write and read long configuration chains.
+     *
+     * @param configurator
+     * @return
+     */
+    @ReturnsThis default Configuration configure(Consumer<Configuration> configurator) {
+        configurator.accept(this);
+        return this;
+    }
 
     /**
      * Process a certain type of resource values.

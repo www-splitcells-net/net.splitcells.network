@@ -46,10 +46,21 @@ public interface Environment extends EnvironmentV, Service {
     Configuration config();
 
     /**
+     * This helper method makes it easier to write and read long configuration chains.
+     *
+     * @param configurator
+     * @return
+     */
+    @ReturnsThis default Environment configure(Consumer<Environment> configurator) {
+        configurator.accept(this);
+        return this;
+    }
+
+    /**
      *
      * @param clazz
-     * @return
      * @param <T>
+     * @return
      * @see #withCell(Class, Consumer)
      */
     default <T extends Cell> Environment withCell(Class<T> clazz) {
@@ -60,11 +71,11 @@ public interface Environment extends EnvironmentV, Service {
     /**
      * This method is the base in order to declaratively configure {@link Dem#process(Runnable, Consumer)}.
      *
-     * @param clazz This {@link Cell} class is instantiated and then applied as a configuration.
+     * @param clazz        This {@link Cell} class is instantiated and then applied as a configuration.
      * @param cellConsumer After the configuration is applied,
      *                     one can call optional configurations of the {@link Cell} in this {@link Consumer}.
+     * @param <T>          This is the type of the {@link Cell} being used for configuration.
      * @return Returns this.
-     * @param <T> This is the type of the {@link Cell} being used for configuration.
      */
     <T extends Cell> Environment withCell(Class<T> clazz, Consumer<T> cellConsumer);
 
