@@ -1,15 +1,4 @@
 /*
- * Copyright (c) 2021 Contributors To The `net.splitcells.*` Projects
- *
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License 2.0 which is available at
- * http://www.eclipse.org/legal/epl-2.0.
- *
- * This Source Code may also be made available under the following Secondary
- * Licenses when the conditions for such availability set forth in the Eclipse
- * Public License, v. 2.0 are satisfied: GNU General Public License v2.0 or later
- * which is available at https://www.gnu.org/licenses/old-licenses/gpl-2.0-standalone.html
- *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
@@ -60,8 +49,7 @@ public class TableTest extends TestSuiteI {
         return databaseFactories;
     }
 
-    @Test
-    public void testToFods() {
+    @Test public void testToFods() {
         final var testSubject = table(listWithValuesOf(attribute(Integer.class)));
         rangeClosed(1, 10).forEach(i -> {
             testSubject.addTranslated(listWithValuesOf(i));
@@ -69,16 +57,14 @@ public class TableTest extends TestSuiteI {
         testSubject.toFods().toXmlString(xmlConfig());
     }
 
-    @Test
-    public void testToReformattedTableWithEmptyInput() {
+    @Test public void testToReformattedTableWithEmptyInput() {
         final var day = attribute(Integer.class);
         final var task = attribute(String.class);
         final var testSubject = table(list(day, task));
         testSubject.toReformattedTable(list(task), list(day)).requireEqualityTo(list());
     }
 
-    @Test
-    public void testToReformattedTableWithAdvancedInput() {
+    @Test public void testToReformattedTableWithAdvancedInput() {
         final var day = attribute(Integer.class, "day");
         final var timeSlot = attribute(Integer.class, "time slot");
         final var room = attribute(String.class, "room");
@@ -95,8 +81,7 @@ public class TableTest extends TestSuiteI {
                         , list("", "2", "", "Biology", "Lindemann", "", "")));
     }
 
-    @Test
-    public void testQueryInitialization() {
+    @Test public void testQueryInitialization() {
         final var index = attribute(Integer.class);
         final var testSubject = table(listWithValuesOf(index));
         rangeClosed(1, 10).forEach(i -> {
@@ -123,8 +108,7 @@ public class TableTest extends TestSuiteI {
                 .requireSizeOf(20);
     }
 
-    @Test
-    public void testMultiThreadedQueryInitialization() {
+    @Test public void testMultiThreadedQueryInitialization() {
         Dem.process(() -> {
             final var index = attribute(Integer.class);
             final var testSubject = table(listWithValuesOf(index));
@@ -155,10 +139,7 @@ public class TableTest extends TestSuiteI {
         });
     }
 
-    @Tag(UNIT_TEST)
-    @TestFactory
-    @Disabled
-    public Stream<DynamicTest> incorrectly_typed_values_addition_tests() {
+    @Tag(UNIT_TEST) @TestFactory @Disabled public Stream<DynamicTest> incorrectly_typed_values_addition_tests() {
         return dynamicTests2(this::test_incorrectly_typed_values_addition_test, databaseFactories());
     }
 
@@ -168,9 +149,7 @@ public class TableTest extends TestSuiteI {
         requireThrow(Throwable.class, () -> testSubject.addTranslated(list("")));
     }
 
-    @Tag(UNIT_TEST)
-    @TestFactory
-    public Stream<DynamicTest> incorrectly_sized_values_addition_tests() {
+    @Tag(UNIT_TEST) @TestFactory public Stream<DynamicTest> incorrectly_sized_values_addition_tests() {
         return dynamicTests2(this::test_incorrectly_sized_values_addition_test, databaseFactories());
     }
 
@@ -178,9 +157,7 @@ public class TableTest extends TestSuiteI {
         requireThrow(Throwable.class, () -> tableFactory.table().addTranslated(listWithValuesOf(anyObject())));
     }
 
-    @Tag(UNIT_TEST)
-    @TestFactory
-    public Stream<DynamicTest> single_addition_and_removal_tests() {
+    @Tag(UNIT_TEST) @TestFactory public Stream<DynamicTest> single_addition_and_removal_tests() {
         return dynamicTests2(this::test_single_addition_and_removal, databaseFactories());
     }
 
@@ -195,9 +172,7 @@ public class TableTest extends TestSuiteI {
         requireNull(voidDatabase.rawLinesView().get(0));
     }
 
-    @Tag(UNIT_TEST)
-    @TestFactory
-    public Stream<DynamicTest> index_preservation_by_add_tests() {
+    @Tag(UNIT_TEST) @TestFactory public Stream<DynamicTest> index_preservation_by_add_tests() {
         return dynamicTests2(this::test_index_preservation_by_add, databaseFactories());
     }
 
@@ -213,9 +188,7 @@ public class TableTest extends TestSuiteI {
         requireEquals(voidDatabase.addTranslated(list()).index(), 3);
     }
 
-    @Tag(UNIT_TEST)
-    @TestFactory
-    public Stream<DynamicTest> subscription_tests() {
+    @Tag(UNIT_TEST) @TestFactory public Stream<DynamicTest> subscription_tests() {
         return dynamicTests2(this::test_subscriptions, databaseFactories());
     }
 
@@ -236,9 +209,7 @@ public class TableTest extends TestSuiteI {
         removalCounter.requireContentsOf(1);
     }
 
-    @Tag(UNIT_TEST)
-    @TestFactory
-    public Stream<DynamicTest> addTranslated_with_too_many_values_tests() {
+    @Tag(UNIT_TEST) @TestFactory public Stream<DynamicTest> addTranslated_with_too_many_values_tests() {
         return dynamicTests2(this::test_addTranslated_with_too_many_values, databaseFactories());
     }
 
