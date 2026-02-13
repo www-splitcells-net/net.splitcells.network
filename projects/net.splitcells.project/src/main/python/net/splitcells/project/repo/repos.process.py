@@ -137,7 +137,7 @@ class ReposProcess:
         elif self.isRoot:
             if self.verbose:
                 logging.info("Executing script: \n" + self.executionScript)
-            logging.info("Executing script: \n" + self.executionScript)
+            logging.debug("Executing script: \n" + self.executionScript)
             executionSuccess = subprocess.run(self.executionScript, shell='True')
             if executionSuccess.returncode != 0:
                 exit(executionSuccess.returncode)
