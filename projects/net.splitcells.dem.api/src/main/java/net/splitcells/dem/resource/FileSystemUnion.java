@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.resource;
 
+import lombok.val;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.utils.StreamUtils;
@@ -42,9 +43,16 @@ public class FileSystemUnion implements FileSystemView {
     }
 
     private final List<FileSystemView> fileSystems;
+    private final Path basePath;
 
     private FileSystemUnion(List<FileSystemView> fileSystemsArg) {
         fileSystems = fileSystemsArg;
+        basePath = java.nio.file.Paths.get("./");
+    }
+
+    private FileSystemUnion(List<FileSystemView> fileSystemsArg, Path argBasePath) {
+        fileSystems = fileSystemsArg;
+        basePath = argBasePath;
     }
 
     private Optional<FileSystemView> findFileSystemWithExistingFile(Path path) {
@@ -53,11 +61,13 @@ public class FileSystemUnion implements FileSystemView {
 
     @Override
     public InputStream inputStream(Path path) {
+        path = basePath.resolve(path);
         return findFileSystemWithExistingFile(path).orElseThrow().inputStream(path);
     }
 
     @Override
     public String readString(Path path) {
+        path = basePath.resolve(path);
         return findFileSystemWithExistingFile(path).orElseThrow().readString(path);
     }
 
@@ -68,34 +78,38 @@ public class FileSystemUnion implements FileSystemView {
 
     @Override
     public boolean isFile(Path path) {
+        path = basePath.resolve(path);
         return findFileSystemWithExistingFile(path).isPresent();
     }
 
     @Override
     public boolean isDirectory(Path path) {
-        return fileSystems.stream().anyMatch(f -> f.isDirectory(path));
+        val path2 = basePath.resolve(path);
+        return fileSystems.stream().anyMatch(f -> f.isDirectory(path2));
     }
 
     @Override
     public Stream<Path> walkRecursively() {
-        return concat(fileSystems.stream().map(FileSystemView::walkRecursively).collect(Lists.toList()));
+        return concat(fileSystems.stream().map(f -> f.walkRecursively(basePath)).collect(Lists.toList()));
     }
 
     @Override
     public Stream<Path> walkRecursively(Path path) {
+        val path2 = basePath.resolve(path);
         return concat(fileSystems.stream()
-                .filter(f -> f.isDirectory(path))
-                .map(f -> f.walkRecursively(path))
+                .filter(f -> f.isDirectory(path2))
+                .map(f -> f.walkRecursively(path2))
                 .collect(Lists.toList()));
     }
 
     @Override
     public byte[] readFileAsBytes(Path path) {
+        path = basePath.resolve(path);
         return findFileSystemWithExistingFile(path).orElseThrow().readFileAsBytes(path);
     }
 
     @Override
-    public FileSystemView subFileSystemView(String path) {
-        throw notImplementedYet();
+    public FileSystemView subFileSystemView(String newBasePath) {
+        return new FileSystemUnion(fileSystems, basePath.resolve(newBasePath));
     }
 }
