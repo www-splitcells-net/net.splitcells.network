@@ -140,7 +140,7 @@
                 </dependency>
                 <dependency>
                     <groupId>net.splitcells</groupId>
-                    <artifactId>system</artifactId>
+                    <artifactId>network.system</artifactId>
                     <version>${revision}</version>
                 </dependency>
                 <dependency>

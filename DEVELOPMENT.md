@@ -55,7 +55,7 @@ The simplest way to start, is to add the following dependency:
 <dependencies>
     <dependency>
         <groupId>net.splitcells</groupId>
-        <artifactId>system</artifactId>
+        <artifactId>network.system</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </dependency>
 </dependencies>
