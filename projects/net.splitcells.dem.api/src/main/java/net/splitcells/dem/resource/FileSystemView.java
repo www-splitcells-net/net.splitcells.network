@@ -50,7 +50,15 @@ public interface FileSystemView {
     String readString(Path path);
 
 
-    boolean exists();
+    /**
+     * TODO It is suspected, that most method implementations are incorrect.
+     * Furthermore, it is not clear, what a correct implementation is,
+     * as the function is not really documented.
+     * 
+     * @return
+     * @deprecated 
+     */
+    @Deprecated boolean exists();
 
     default boolean isFile(String path) {
         return isFile(Path.of(path));
