@@ -59,9 +59,7 @@ import static net.splitcells.website.server.project.renderer.extension.TextProje
 import static net.splitcells.website.server.project.renderer.extension.XmlProjectRendererExtension.xmlRenderer;
 import static net.splitcells.website.server.project.renderer.extension.ZipProjectRendererExtension.zipRenderer;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkChangelogEventProjectRendererExtension.commonMarkChangelogEventRenderer;
-import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkChangelogProjectRendererExtension.commonMarkChangelogRenderer;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkProjectRendererExtension.commonMarkExtension;
-import static net.splitcells.website.server.project.renderer.extension.commonmark.RootFileProjectRendererExtension.rootFileProjectRendererExtension;
 import static net.splitcells.website.server.projects.ProjectsRendererSourceCodeFileSystem.projectsRendererSourceCodeFileSystem;
 
 /**
@@ -156,7 +154,6 @@ public class ProjectRendererI implements ProjectRenderer {
         this.config = config;
         // TODO MOVE
         this.renderer
-                .registerExtension(commonMarkChangelogRenderer())
                 // .registerExtension(userCommandRenderer()) // TODO This renderer does not work.
                 .registerExtension(commonMarkExtension())
                 .registerExtension(csvRenderer())
@@ -168,11 +165,6 @@ public class ProjectRendererI implements ProjectRenderer {
                 .registerExtension(textExtension())
                 .registerExtension(resourceRenderer())
                 .registerExtension(csvChartRenderer())
-                .registerExtension(rootFileProjectRendererExtension("LICENSE"))
-                .registerExtension(rootFileProjectRendererExtension("NOTICE"))
-                .registerExtension(rootFileProjectRendererExtension("DEVELOPMENT"))
-                .registerExtension(rootFileProjectRendererExtension("BUILD"))
-                .registerExtension(rootFileProjectRendererExtension("CONTRIBUTING"))
                 .registerExtension(zipRenderer())
                 .registerExtension(svgRenderer());
         if (config.cacheRenderers()) {
