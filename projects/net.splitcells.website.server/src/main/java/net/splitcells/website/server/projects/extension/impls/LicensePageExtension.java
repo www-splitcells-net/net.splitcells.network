@@ -55,6 +55,13 @@ public class LicensePageExtension implements ProjectsRendererExtension {
     private LicensePageExtension() {
     }
 
+    /**
+     * TODO A template should be used for the tree construction and not a building API.
+     * 
+     * @param request
+     * @param projectsRenderer
+     * @return
+     */
     @Override
     public RenderResponse render(RenderRequest request, ProjectsRenderer projectsRenderer) {
         if (PATH.equals(request.trail())) {
