@@ -792,32 +792,6 @@
                                 </configuration>
                             </execution>
                             <execution>
-                                <id>resources-source-root-resources-to-root</id>
-                                <phase>validate</phase>
-                                <goals>
-                                    <goal>copy-resources</goal>
-                                </goals>
-                                <configuration>
-                                    <outputDirectory>
-                                        ${basedir}/target/classes/${project.groupId}.${project.artifactId}.resources/
-                                    </outputDirectory>
-                                    <resources>
-                                        <resource>
-                                            <directory>./</directory>
-                                            <filtering>true</filtering>
-                                            <includes>
-                                                <include>BUILD.*</include>
-                                                <include>CHANGELOG.*</include>
-                                                <include>CONTRIBUTING.*</include>
-                                                <include>DEVELOPMENT.*</include>
-                                                <include>README.*</include>
-                                                <include>NOTICE.*</include>
-                                            </includes>
-                                        </resource>
-                                    </resources>
-                                </configuration>
-                            </execution>
-                            <execution>
                                 <id>resources-source-root-resources</id>
                                 <phase>validate</phase>
                                 <goals>
