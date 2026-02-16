@@ -18,6 +18,10 @@ public class SportCoursePlanningTest {
         val editor = editor(getClass().getName(), EXPLICIT_NO_CONTEXT);
         editor.interpret(configValue(GelEditorFileSystem.class)
                 .readString("src/main/resources/html/net/splitcells/gel/editor/geal/examples/sports-course-planning.txt"));
-        editor.importSolutionCsvData("courseAssignment", "");
+        editor.importSolutionCsvData("courseAssignment", """
+                Student,Chosen Sport,Chosen Sport Type,Is Secondary Choice,Assigned Course Number,Assigned Sport,Assigned Sport Type
+                Ottfried,Badminton,Individual sport,0,1,Team sport,basketball
+                """);
+        editor.getSolutions().get("courseAssignment").constraint().rating();
     }
 }
