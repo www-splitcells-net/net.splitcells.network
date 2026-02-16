@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.solution;
 
+import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.CsvDocument.csvDocument;
 import static net.splitcells.dem.lang.Xml.attribute;
@@ -60,6 +61,22 @@ import java.util.function.Function;
 public interface Solution extends Problem, SolutionView {
 
     default Table withAddedCsv(String csvFile) {
+        val demandHSize = demands().headerView().size();
+        val supplyHSize = supplies().headerView().size();
+        csvDocument(csvFile, headerView().stream().map(h -> h.name()).toArray(i -> new String[i]))
+                .process(row -> {
+                    val demandValues = Lists.<Object>list();
+                    val supplyValues = Lists.<Object>list();
+                    range(0, demandHSize).forEach(i -> {
+                        demandValues.add(demands().headerView().get(i).deserializeValue(row.value(i)));
+                    });
+                    range(demandHSize, demandHSize + supplyHSize).forEach(i -> {
+                        supplyValues.add(supplies().headerView().get(i - demandHSize).deserializeValue(row.value(i)));
+                    });
+                    val demand = demands().addTranslated(demandValues);
+                    val supply = supplies().addTranslated(supplyValues);
+                    assign(demand, supply);
+                });
         return this;
     }
 

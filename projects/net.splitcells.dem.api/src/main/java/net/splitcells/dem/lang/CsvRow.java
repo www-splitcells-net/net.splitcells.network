@@ -33,4 +33,8 @@ public class CsvRow {
     public String value(String attribute) {
         return csvRecord.get(attribute);
     }
+
+    public String value(int index) {
+        return csvRecord.get(index);
+    }
 }
