@@ -56,10 +56,7 @@ import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCal
 import static net.splitcells.gel.editor.optimization.DefaultEditorOptimization.defaultEditorOptimization;
 
 /**
- * There is no distinction, between a things name and their variable name.
- * So something like `a = attribute(string, "Alpha")` is not supported,
- * as having multiple ids for one thing will cause problems.
- * Otherwise, error messages and debugging can get hard to understand.
+ * 
  */
 @Accessors(chain = true)
 public class Editor implements Discoverable {
