@@ -20,9 +20,6 @@ import net.splitcells.dem.object.Discoverable;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 
-/**
- * TODO Support log messages without or default priority.
- */
 public interface LogMessage<T> extends Discoverable {
 	T content();
 
