@@ -16,6 +16,7 @@
 package net.splitcells.gel.solution;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.CsvDocument.csvDocument;
 import static net.splitcells.dem.lang.Xml.attribute;
 import static net.splitcells.dem.resource.Files.createDirectory;
 import static net.splitcells.dem.resource.Files.writeToFile;
@@ -28,6 +29,7 @@ import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
 
 import lombok.val;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.testing.reporting.ErrorReporter;
@@ -56,6 +58,10 @@ import java.util.function.Function;
  * Maybe one could implement a very low level compatibility system based on this for other software?</p>
  */
 public interface Solution extends Problem, SolutionView {
+
+    default Table withAddedCsv(String csvFile) {
+        return this;
+    }
 
     /**
      * <p>This variable is only used as a reference point for the term solution tree.</p>

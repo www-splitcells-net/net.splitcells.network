@@ -173,6 +173,11 @@ public class Editor implements Discoverable {
             return newValue;
         });
     }
+    
+    public Editor importSolutionCsvData(String solutionName, String data) {
+        solutions.get(solutionName).withAddedCsv(data);
+        return this;
+    }
 
     public EditorData loadData(String dataKey, Need<Map<String, EditorData>> need) {
         checkNeed(need, data);

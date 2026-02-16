@@ -18,5 +18,6 @@ public class SportCoursePlanningTest {
         val editor = editor(getClass().getName(), EXPLICIT_NO_CONTEXT);
         editor.interpret(configValue(GelEditorFileSystem.class)
                 .readString("src/main/resources/html/net/splitcells/gel/editor/geal/examples/sports-course-planning.txt"));
+        editor.importSolutionCsvData("courseAssignment", "");
     }
 }
