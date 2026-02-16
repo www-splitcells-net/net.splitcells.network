@@ -108,7 +108,9 @@ public class Editor implements Discoverable {
         val finalSolutions = Sets.<Solution>setOfUniques();
         solutions.values().forEach(s -> {
             processed.add(s);
-            val sHasParents = solutions.values().stream().map(otherS ->
+            val sHasParents = solutions.values().stream()
+                    .filter(otherS -> !s.equals(otherS))
+                    .map(otherS ->
                             otherS.demands().lookupAsSolution().map(otherSD -> otherSD.equals(s)).orElse(false)
                                     && otherS.supplies().lookupAsSolution().map(otherSS -> otherSS.equals(s)).orElse(false))
                     .reduce((a, b) -> a || b)

@@ -451,6 +451,9 @@ public interface Solution extends Problem, SolutionView {
                 solutionPaths.addAll(sss.solutionPaths(supplyPath));
             }, () -> solutionPaths.add(demandPath.withAppended(ss)));
         });
+        if (solutionPaths.isEmpty()) {
+            solutionPaths.add(currentPath.shallowCopy());
+        }
         return solutionPaths;
     }
 }
