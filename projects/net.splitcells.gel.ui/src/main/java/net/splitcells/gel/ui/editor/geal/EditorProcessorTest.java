@@ -33,6 +33,9 @@ import static net.splitcells.gel.ui.editor.geal.EditorProcessor.*;
 import static net.splitcells.website.server.client.HtmlClients.htmlClient;
 
 public class EditorProcessorTest {
+    /**
+     * TODO Look up, if there is an error message.
+     */
     public static final Runnable TEST_OPTIMIZATION_GUI = () -> {
         try (final var browser = htmlClient()) {
             try (final var tab = browser.openTab("/net/splitcells/gel/ui/editor/geal/index.html")) {
