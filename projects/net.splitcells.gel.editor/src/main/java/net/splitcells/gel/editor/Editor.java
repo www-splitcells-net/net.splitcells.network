@@ -112,7 +112,7 @@ public class Editor implements Discoverable {
                     .filter(otherS -> !s.equals(otherS))
                     .map(otherS ->
                             otherS.demands().lookupAsSolution().map(otherSD -> otherSD.equals(s)).orElse(false)
-                                    && otherS.supplies().lookupAsSolution().map(otherSS -> otherSS.equals(s)).orElse(false))
+                                    || otherS.supplies().lookupAsSolution().map(otherSS -> otherSS.equals(s)).orElse(false))
                     .reduce((a, b) -> a || b)
                     .orElse(false);
             if (!sHasParents) {
