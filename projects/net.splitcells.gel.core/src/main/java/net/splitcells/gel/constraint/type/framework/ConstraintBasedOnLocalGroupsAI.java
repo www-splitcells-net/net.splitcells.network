@@ -79,6 +79,17 @@ import net.splitcells.gel.solution.Solution;
  * Create test case for {@link #path()} and make it nice.
  */
 public class ConstraintBasedOnLocalGroupsAI implements Constraint {
+    /**
+     * 
+     * @deprecated The name is not actually used.
+     * @param rater
+     * @param name
+     * @param parent
+     * @param localNaturalArgumentation
+     * @param type
+     * @return
+     */
+    @Deprecated
     public static ConstraintBasedOnLocalGroupsAI constraintBasedOnLocalGroupsAI(Rater rater, String name
             , Optional<Discoverable> parent
             , BiFunction<ConstraintBasedOnLocalGroupsAI, Report, String> localNaturalArgumentation
