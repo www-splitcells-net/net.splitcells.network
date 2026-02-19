@@ -97,7 +97,7 @@ public class RaterBasedOnGrouping implements Rater {
      *
      * @return As this {@link Rater} is only used for {@link ForAll}, there is no need to state, that it is a grouping based rater.
      */
-    @Override public String descriptiveName() {
-        return grouping.descriptiveName();
+    @Override public String descriptivePathName() {
+        return grouping.descriptivePathName();
     }
 }

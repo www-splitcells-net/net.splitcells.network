@@ -122,7 +122,7 @@ public class ForAllAttributeValues implements Rater {
         return tree("For all attribute values").withChild(attribute.toTree());
     }
 
-    @Override public String descriptiveName() {
+    @Override public String descriptivePathName() {
         return "for-all-values-of-" + attribute.name();
     }
 }

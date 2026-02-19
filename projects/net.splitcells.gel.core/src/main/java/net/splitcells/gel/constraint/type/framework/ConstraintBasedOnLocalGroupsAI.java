@@ -46,7 +46,6 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.list.List;
@@ -157,7 +156,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
     }
 
     private String descriptiveName() {
-        return type.getSimpleName() + "-" + rater.descriptiveName();
+        return type.getSimpleName() + "-" + rater.descriptivePathName();
     }
 
     private ConstraintBasedOnLocalGroupsAI(GroupId standardGroup, Rater rater, String name

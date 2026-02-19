@@ -27,7 +27,6 @@ import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.communication.log.LogLevel;
-import net.splitcells.gel.common.Language;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.constraint.GroupId;
@@ -166,7 +165,7 @@ public interface Rater extends PubliclyTyped<Rater>
      * 
      * @return Returns a description on the {@link Rater}, that is used for {@link Constraint#path()}.
      */
-    default String descriptiveName() {
+    default String descriptivePathName() {
         return name();
     }
 

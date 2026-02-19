@@ -85,7 +85,7 @@ public class ForAllWithCondition<T> implements Rater {
         return "For all with condition " + condition;
     }
 
-    @Override public String descriptiveName() {
+    @Override public String descriptivePathName() {
         return condition.descriptivePathName();
     }
 }
