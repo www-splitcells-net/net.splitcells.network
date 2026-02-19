@@ -111,4 +111,12 @@ public class RaterBasedOnGrouping implements Rater {
     public Tree toTree() {
         return tree("Rater based on grouping of").withChild(grouping.toTree());
     }
+
+    /**
+     *
+     * @return As this {@link Rater} is only used for {@link ForAll}, there is no need to state, that it is a grouping based rater.
+     */
+    @Override public String descriptiveName() {
+        return grouping.name();
+    }
 }
