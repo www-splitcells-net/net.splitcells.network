@@ -12,6 +12,7 @@ import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.rating.rater.framework.Rater;
+import net.splitcells.gel.rating.rater.framework.RaterPredicate;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 
 import java.util.function.Predicate;
@@ -29,14 +30,14 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 
 public class ForAllWithCondition<T> implements Rater {
 
-    public static <T> ForAllWithCondition<T> forAllWithCondition(Predicate<Line> condition) {
+    public static <T> ForAllWithCondition<T> forAllWithCondition(RaterPredicate<Line> condition) {
         return new ForAllWithCondition<>(condition);
     }
 
-    private final Predicate<Line> condition;
+    private final RaterPredicate<Line> condition;
     private final List<Discoverable> contexts = list();
 
-    private ForAllWithCondition(Predicate<Line> condition) {
+    private ForAllWithCondition(RaterPredicate<Line> condition) {
         this.condition = condition;
     }
 
@@ -82,5 +83,9 @@ public class ForAllWithCondition<T> implements Rater {
     @Override
     public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
         return "For all with condition " + condition;
+    }
+
+    @Override public String descriptiveName() {
+        return condition.descriptivePathName();
     }
 }

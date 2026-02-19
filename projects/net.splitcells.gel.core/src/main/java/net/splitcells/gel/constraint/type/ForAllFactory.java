@@ -15,11 +15,14 @@
  */
 package net.splitcells.gel.constraint.type;
 
+import lombok.val;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.rating.rater.framework.Rater;
+import net.splitcells.gel.rating.rater.framework.RaterPredicate;
 
 import java.util.Optional;
 
@@ -40,8 +43,16 @@ public class ForAllFactory {
     }
 
     public <T> Constraint forAllWithValue(Attribute<T> attribute, T value) {
-        return ForAll.forAll(
-                forAllWithCondition(line -> value.equals(line.value(attribute))));
+        val predicate = new RaterPredicate<Line>() {
+            @Override public boolean test(Line line) {
+                return value.equals(line.value(attribute));
+            }
+
+            @Override public String descriptivePathName() {
+                return attribute.name() + "-equals-" + value;
+            }
+        };
+        return ForAll.forAll(forAllWithCondition(predicate));
     }
 
     public Constraint forAll() {
