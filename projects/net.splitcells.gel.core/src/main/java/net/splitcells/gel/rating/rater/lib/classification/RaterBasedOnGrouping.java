@@ -1,16 +1,4 @@
-/*
- * Copyright (c) 2021 Contributors To The `net.splitcells.*` Projects
- *
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License 2.0 which is available at
- * http://www.eclipse.org/legal/epl-2.0.
- *
- * This Source Code may also be made available under the following Secondary
- * Licenses when the conditions for such availability set forth in the Eclipse
- * Public License, v. 2.0 are satisfied: GNU General Public License v2.0 or later
- * which is available at https://www.gnu.org/licenses/old-licenses/gpl-2.0-standalone.html
- *
- * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+/* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
 package net.splitcells.gel.rating.rater.lib.classification;
@@ -25,6 +13,7 @@ import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.gel.constraint.type.ForAll;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.constraint.GroupId;
@@ -47,13 +36,11 @@ public class RaterBasedOnGrouping implements Rater {
         this.grouping = classifier;
     }
 
-    @Override
-    public RatingEvent ratingAfterAddition(View lines, Line addition, List<Constraint> children, View ratingsBeforeAddition) {
+    @Override public RatingEvent ratingAfterAddition(View lines, Line addition, List<Constraint> children, View ratingsBeforeAddition) {
         return stripCosts(grouping.ratingAfterAddition(lines, addition, children, ratingsBeforeAddition));
     }
 
-    @Override
-    public RatingEvent rating_before_removal(View lines, Line removal, List<Constraint> children, View ratingsBeforeRemoval) {
+    @Override public RatingEvent rating_before_removal(View lines, Line removal, List<Constraint> children, View ratingsBeforeRemoval) {
         return stripCosts(grouping.rating_before_removal(lines, removal, children, ratingsBeforeRemoval));
     }
 
@@ -78,28 +65,23 @@ public class RaterBasedOnGrouping implements Rater {
         return ratingEvent;
     }
 
-    @Override
-    public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
+    @Override public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
         return grouping.toSimpleDescription(line, groupsLineProcessing, incomingGroup);
     }
 
-    @Override
-    public List<Domable> arguments() {
+    @Override public List<Domable> arguments() {
         return list(grouping);
     }
 
-    @Override
-    public void addContext(Discoverable context) {
+    @Override public void addContext(Discoverable context) {
         contexts.add(context);
     }
 
-    @Override
-    public Set<List<String>> paths() {
+    @Override public Set<List<String>> paths() {
         return contexts.stream().map(Discoverable::path).collect(toSetOfUniques());
     }
 
-    @Override
-    public Class<? extends Rater> type() {
+    @Override public Class<? extends Rater> type() {
         return RaterBasedOnGrouping.class;
     }
 
@@ -107,8 +89,7 @@ public class RaterBasedOnGrouping implements Rater {
         return grouping;
     }
 
-    @Override
-    public Tree toTree() {
+    @Override public Tree toTree() {
         return tree("Rater based on grouping of").withChild(grouping.toTree());
     }
 
