@@ -163,6 +163,14 @@ public interface Rater extends PubliclyTyped<Rater>
     }
 
     /**
+     * 
+     * @return Returns a description on the {@link Rater}, that is used for {@link Constraint#path()}.
+     */
+    default String descriptiveName() {
+        return name();
+    }
+
+    /**
      * <p>Initializes the {@link Rater}, so it can be used,
      * which is not always the case before that,
      * depending on the {@link Rater} instance in question.
