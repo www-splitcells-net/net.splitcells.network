@@ -80,17 +80,16 @@ import net.splitcells.gel.solution.Solution;
  */
 public class ConstraintBasedOnLocalGroupsAI implements Constraint {
     /**
-     * 
-     * @deprecated The name is not actually used.
+     *
      * @param rater
      * @param name
      * @param parent
      * @param localNaturalArgumentation
      * @param type
      * @return
+     * @deprecated The name is not actually used.
      */
-    @Deprecated
-    public static ConstraintBasedOnLocalGroupsAI constraintBasedOnLocalGroupsAI(Rater rater, String name
+    @Deprecated public static ConstraintBasedOnLocalGroupsAI constraintBasedOnLocalGroupsAI(Rater rater, String name
             , Optional<Discoverable> parent
             , BiFunction<ConstraintBasedOnLocalGroupsAI, Report, String> localNaturalArgumentation
             , Class<? extends Constraint> type) {
@@ -104,7 +103,17 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         return new ConstraintBasedOnLocalGroupsAI(rater, parent, localNaturalArgumentation, type);
     }
 
-    public static ConstraintBasedOnLocalGroupsAI constraintBasedOnLocalGroupsAI(GroupId standardGroup, Rater rater
+    /**
+     * @param standardGroup
+     * @param rater
+     * @param name
+     * @param parent
+     * @param localNaturalArgumentation
+     * @param type
+     * @return
+     * @deprecated The name is not actually used.
+     */
+    @Deprecated public static ConstraintBasedOnLocalGroupsAI constraintBasedOnLocalGroupsAI(GroupId standardGroup, Rater rater
             , String name
             , Optional<Discoverable> parent
             , BiFunction<ConstraintBasedOnLocalGroupsAI, Report, String> localNaturalArgumentation
