@@ -83,7 +83,7 @@ public class ForAll implements Constraint {
 
     public static Constraint forAll(Rater classifier, Optional<Discoverable> parent) {
         return constraintAspect(new ForAll(classifier
-                , parent.map(d -> d.child(list(classifier.name())))
+                , parent
         ));
     }
 

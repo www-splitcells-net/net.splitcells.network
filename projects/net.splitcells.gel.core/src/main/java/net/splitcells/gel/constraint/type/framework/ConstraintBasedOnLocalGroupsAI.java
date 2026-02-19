@@ -115,6 +115,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
     private final Assignments lineProcessing;
     private final Map<GroupId, Rating> groupProcessing = map();
     private final Class<? extends Constraint> type;
+    final Discoverable parentPath;
 
     private final IndexedAttribute<Line> lineIndex;
     private final IndexedAttribute<List<Constraint>> propagationToIndex;
@@ -135,18 +136,23 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         this(Constraint.standardGroup(), rater, "", parent, localNaturalArgumentation, type);
     }
 
+    private String descriptiveName() {
+        return type.getSimpleName() + "-" + rater.descriptiveName();
+    }
+
     private ConstraintBasedOnLocalGroupsAI(GroupId standardGroup, Rater rater, String name
             , Optional<Discoverable> parent
             , BiFunction<ConstraintBasedOnLocalGroupsAI, Report, String> localNaturalArgumentation
             , Class<? extends Constraint> type) {
         this.type = type;
         this.injectionGroup = standardGroup;
-        final Discoverable parentPath;
+        this.rater = rater;
+        this.localNaturalArgumentor = localNaturalArgumentation;
         if (parent.isPresent()) {
-            parentPath = () -> parent.get().path().withAppended(type.getSimpleName());
+            parentPath = () -> parent.get().path().shallowCopy().withAppended(descriptiveName());
             mainContext = parent;
         } else {
-            parentPath = this;
+            parentPath = () -> list(descriptiveName());
         }
         results = Tables.table("results", parentPath, list(RESULTING_CONSTRAINT_GROUP, RATING, PROPAGATION_TO));
         lines = Tables.table("lines", parentPath, list(LINE, INCOMING_CONSTRAINT_GROUP));
@@ -159,8 +165,6 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         incomingConstraintGroupIndex = indexedAttribute(INCOMING_CONSTRAINT_GROUP, lineProcessing);
         resultingConstraintGroupIndex = indexedAttribute(RESULTING_CONSTRAINT_GROUP, lineProcessing);
         ratingIndex = indexedAttribute(RATING, lineProcessing);
-        this.rater = rater;
-        this.localNaturalArgumentor = localNaturalArgumentation;
     }
 
     @Override
@@ -233,10 +237,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
 
     @Override
     public List<String> path() {
-        return mainContext
-                .map(context -> context.path())
-                .orElseGet(() -> list())
-                .withAppended(type().getSimpleName());
+        return this.parentPath.path();
     }
 
     @Override
@@ -319,7 +320,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
 
     @Override
     public Constraint withChildren(Constraint... children) {
-        Lists.list(children).forEach(child -> {
+        list(children).forEach(child -> {
             this.children.add(child);
             child.addContext(this);
         });
