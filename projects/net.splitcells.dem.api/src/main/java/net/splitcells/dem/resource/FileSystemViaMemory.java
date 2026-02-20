@@ -37,15 +37,21 @@ public class FileSystemViaMemory implements FileSystem {
     }
 
     private final java.nio.file.FileSystem backend;
+    private final Path base;
 
     private FileSystemViaMemory() {
-        backend = Jimfs.newFileSystem();
+        this(Jimfs.newFileSystem(), Path.of("."));
+    }
+
+    private FileSystemViaMemory(java.nio.file.FileSystem argBackend, Path argBase) {
+        backend = argBackend;
+        base = argBase;
     }
 
     @Override
     public FileSystem writeToFile(Path path, byte[] content) {
         try {
-            Files.write(backend.getPath(path.toString()), content);
+            Files.write(backend.getPath(base.resolve(path).toString()), content);
         } catch (IOException e) {
             throw execException(e);
         }
@@ -55,7 +61,7 @@ public class FileSystemViaMemory implements FileSystem {
     @Override
     public FileSystem appendToFile(Path path, byte[] content) {
         try {
-            Files.write(backend.getPath(path.toString()), content, StandardOpenOption.APPEND);
+            Files.write(backend.getPath(base.resolve(path).toString()), content, StandardOpenOption.APPEND);
         } catch (IOException e) {
             throw execException(e);
         }
@@ -64,13 +70,13 @@ public class FileSystemViaMemory implements FileSystem {
 
     @Override
     public FileSystem subFileSystem(Path path) {
-        throw notImplementedYet();
+        return new FileSystemViaMemory(backend, base.resolve(path));
     }
 
     @Override
     public InputStream inputStream(Path path) {
         try {
-            return Files.newInputStream(backend.getPath(path.toString()));
+            return Files.newInputStream(backend.getPath(base.resolve(path).toString()));
         } catch (IOException e) {
             throw execException(e);
         }
@@ -79,7 +85,7 @@ public class FileSystemViaMemory implements FileSystem {
     @Override
     public String readString(Path path) {
         try {
-            return java.nio.file.Files.readString(backend.getPath(path.toString()));
+            return java.nio.file.Files.readString(backend.getPath(base.resolve(path).toString()));
         } catch (IOException e) {
             throw ExecutionException.execException("Could not read file: " + path, e);
         }
@@ -92,18 +98,18 @@ public class FileSystemViaMemory implements FileSystem {
 
     @Override
     public boolean isFile(Path path) {
-        return java.nio.file.Files.isRegularFile(backend.getPath(path.toString()));
+        return java.nio.file.Files.isRegularFile(backend.getPath(base.resolve(path).toString()));
     }
 
     @Override
     public boolean isDirectory(Path path) {
-        return java.nio.file.Files.isDirectory(backend.getPath(path.toString()));
+        return java.nio.file.Files.isDirectory(backend.getPath(base.resolve(path).toString()));
     }
 
     @Override
     public Stream<Path> walkRecursively() {
         try {
-            return java.nio.file.Files.walk(backend.getPath("./"));
+            return java.nio.file.Files.walk(backend.getPath(base.toString()));
         } catch (IOException e) {
             throw execException(e);
         }
@@ -112,7 +118,7 @@ public class FileSystemViaMemory implements FileSystem {
     @Override
     public Stream<Path> walkRecursively(Path path) {
         try {
-            return java.nio.file.Files.walk(backend.getPath(path.toString()));
+            return java.nio.file.Files.walk(backend.getPath(base.resolve(path).toString()));
         } catch (IOException e) {
             throw execException(e);
         }
@@ -121,7 +127,7 @@ public class FileSystemViaMemory implements FileSystem {
     @Override
     public byte[] readFileAsBytes(Path path) {
         try {
-            return java.nio.file.Files.readAllBytes(backend.getPath(path.toString()));
+            return java.nio.file.Files.readAllBytes(backend.getPath(base.resolve(path).toString()));
         } catch (IOException e) {
             throw execException(e);
         }
@@ -135,7 +141,7 @@ public class FileSystemViaMemory implements FileSystem {
     @Override
     public FileSystem createDirectoryPath(String path) {
         try {
-            Files.createDirectories(backend.getPath(path));
+            Files.createDirectories(backend.getPath(base.resolve(path).toString()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -145,7 +151,7 @@ public class FileSystemViaMemory implements FileSystem {
     @Override
     public FileSystem delete(String path) {
         try {
-            Files.delete(backend.getPath(path));
+            Files.delete(backend.getPath(base.resolve(path).toString()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
