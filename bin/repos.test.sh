@@ -42,6 +42,7 @@ cd "$reposFolder/net.splitcells.network"
   ls $(echo $PATH | tr ':' ' ')
   set -e
 # Continue normal work
+  bin/worker.execute.py --help # This executes the script's tests as well.
   bin/build.part.with.python
   bin/worker.test
 # TODO Analyze daily CI problem. Move this to `. bin/worker.bootstrap`, after this is fixed.
