@@ -123,6 +123,6 @@ public class ForAllAttributeValues implements Rater {
     }
 
     @Override public String descriptivePathName() {
-        return "for-all-values-of-" + attribute.name();
+        return "values-of-" + attribute.name();
     }
 }
