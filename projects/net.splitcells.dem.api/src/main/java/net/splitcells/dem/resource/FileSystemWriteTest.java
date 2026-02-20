@@ -25,12 +25,6 @@ public class FileSystemWriteTest extends TestSuiteI {
     public void testExists(Supplier<FileSystem> factory) {
         require(factory.get().exists());
     }
-
-    /**
-     * TODO {@link FileSystemViaMemory#subFileSystem(Path)} has to be implemented first.
-     *
-     * @param factory
-     */
     public void testExistsForSubFileSystem(Supplier<FileSystem> factory) {
         require(factory.get().createDirectoryPath("test").subFileSystem("test").exists());
         require(factory.get().createDirectoryPath("test").subFileSystem(Path.of("test")).exists());
