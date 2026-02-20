@@ -74,7 +74,7 @@ public class EqualsRunner implements FunctionCallRunner {
         final var secondArg = context.parse(functionCall.getArguments().get(1));
         final Args args;
         final Rater equalityRater;
-        if (secondArg instanceof Attribute<?> targetAttribute) {
+        if (secondArg instanceof Attribute<?>) {
             args = PARSER_1.parse(subject, context, functionCall);
             equalityRater = lineValueRater(line -> line.value(args.attribute).equals(line.value(args.targetAttribute))
                     , "Require " + args.attribute.descriptivePathName() + " to be equals to the attribute " + args.targetAttribute.descriptivePathName()
