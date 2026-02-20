@@ -77,11 +77,13 @@ public class EqualsRunner implements FunctionCallRunner {
         if (secondArg instanceof Attribute<?> targetAttribute) {
             args = PARSER_1.parse(subject, context, functionCall);
             equalityRater = lineValueRater(line -> line.value(args.attribute).equals(line.value(args.targetAttribute))
-                    , "Require " + args.attribute.name() + " to be equals to the attribute " + args.targetAttribute.name());
+                    , "Require " + args.attribute.descriptivePathName() + " to be equals to the attribute " + args.targetAttribute.descriptivePathName()
+                    , args.attribute.descriptivePathName() + "-equals-" + args.targetAttribute.descriptivePathName());
         } else {
             args = PARSER_2.parse(subject, context, functionCall);
             equalityRater = lineValueRater(line -> args.targetValue.equals(line.value(args.attribute))
-                    , "Require " + args.attribute.name() + " to be equals to " + args.targetValue);
+                    , "Require " + args.attribute.descriptivePathName() + " to be equals to " + args.targetValue
+                    , args.attribute.descriptivePathName() + "-equals-value-" + args.targetValue);
         }
         run.setResult(Optional.of(equalityRater));
         return run;
