@@ -46,7 +46,8 @@ import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.rating.framework.Rating;
 
 /**
- * This {@link Rater} makes it easy to rate every {@link Line} of a group independent of each other.
+ * <p>This {@link Rater} makes it easy to rate every {@link Line} of a group independent of each other.</p>
+ * <p>TODO Clean up, simplify and make more portable the API of the static factory functions.</p>
  */
 public class RaterBasedOnLineValue implements Rater {
     public static Rater raterBasedOnLineValue(String description, Function<Line, Integer> classifier) {
@@ -75,10 +76,21 @@ public class RaterBasedOnLineValue implements Rater {
             } else {
                 return cost(1);
             }
-        });
+        }, "");
     }
 
+    /**
+     * @param classifier
+     * @param description
+     * @return
+     * @deprecated {@link #lineValueRater(Predicate, String, String)}
+     */
+    @Deprecated
     public static Rater lineValueRater(Predicate<Line> classifier, String description) {
+        return lineValueRater(classifier, description, classifier.toString());
+    }
+
+    public static Rater lineValueRater(Predicate<Line> classifier, String description, String argDescriptivePathName) {
         return lineValueRater(new Predicate<Line>() {
             @Override public boolean test(Line line) {
                 return classifier.test(line);
@@ -101,10 +113,10 @@ public class RaterBasedOnLineValue implements Rater {
             @Override public String toString() {
                 return description;
             }
-        });
+        }, argDescriptivePathName);
     }
 
-    public static Rater lineValueRater(Predicate<Line> classifier, Function<Line, Rating> rater) {
+    public static Rater lineValueRater(Predicate<Line> classifier, Function<Line, Rating> rater, String argDescriptivePathName) {
         return new RaterBasedOnLineValue(rater
                 , describedFunction
                 (addition -> addition.value(Constraint.INCOMING_CONSTRAINT_GROUP)
@@ -115,35 +127,40 @@ public class RaterBasedOnLineValue implements Rater {
             } else {
                 return list();
             }
-        });
+        }, argDescriptivePathName);
     }
 
     public static Rater lineValueSelector(Predicate<Line> classifier) {
-        return lineValueRater(classifier, line -> noCost());
+        return lineValueRater(classifier, line -> noCost(), "");
     }
 
     public static Rater lineValueBasedOnRater(Function<Line, Rating> raterBasedOnLineValue) {
         return new RaterBasedOnLineValue(raterBasedOnLineValue
                 , addition -> addition.value(Constraint.INCOMING_CONSTRAINT_GROUP)
-                , (addition, children) -> children);
+                , (addition, children) -> children
+                , "");
     }
 
     public static Rater raterBasedOnLineValue(Function<Line, GroupId> classifierBasedOnLineValue) {
         return new RaterBasedOnLineValue(additionalLine -> noCost(), classifierBasedOnLineValue
-                , (addition, children) -> children);
+                , (addition, children) -> children
+                , "");
     }
 
     private final Function<Line, Rating> rater;
     private final Function<Line, GroupId> classifier;
     private final BiFunction<Line, List<Constraint>, List<Constraint>> propagation;
     private final List<Discoverable> contexts = list();
+    private final String descriptivePathName;
 
     private RaterBasedOnLineValue(Function<Line, Rating> rater
             , Function<Line, GroupId> classifierBasedOnLineValue
-            , BiFunction<Line, List<Constraint>, List<Constraint>> propagationBasedOnLineValue) {
+            , BiFunction<Line, List<Constraint>, List<Constraint>> propagationBasedOnLineValue
+            , String argDescriptivePathName) {
         this.rater = rater;
         this.classifier = classifierBasedOnLineValue;
         this.propagation = propagationBasedOnLineValue;
+        descriptivePathName = argDescriptivePathName;
     }
 
     @Override
@@ -201,5 +218,9 @@ public class RaterBasedOnLineValue implements Rater {
     @Override
     public String toString() {
         return getClass().getSimpleName() + ", " + rater + ", " + classifier;
+    }
+
+    @Override public String descriptivePathName() {
+        return descriptivePathName;
     }
 }
