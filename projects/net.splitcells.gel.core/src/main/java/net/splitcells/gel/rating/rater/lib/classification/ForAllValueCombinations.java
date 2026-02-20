@@ -133,4 +133,13 @@ public class ForAllValueCombinations implements Rater {
                 .reduce((a, b) -> a + ", " + b)
                 .orElse("");
     }
+
+    @Override public String descriptivePathName() {
+        return "value-combinations-"
+                + attributes.stream()
+                .map(Attribute::name)
+                .reduce((a, b) -> a + "-" + b)
+                .orElse("empty");
+    }
+
 }
