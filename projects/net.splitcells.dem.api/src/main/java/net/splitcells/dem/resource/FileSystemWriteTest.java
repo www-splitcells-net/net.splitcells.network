@@ -15,6 +15,7 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.atom.Bools.require;
+import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.resource.FileSystemViaMemory.fileSystemViaMemory;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
 import static net.splitcells.dem.utils.StreamUtils.concat;
@@ -32,9 +33,12 @@ public class FileSystemWriteTest extends TestSuiteI {
      */
     public void testExistsForSubFileSystem(Supplier<FileSystem> factory) {
         require(factory.get().createDirectoryPath("test").subFileSystem("test").exists());
+        requireNot(factory.get().subFileSystem("test").exists());
     }
 
     public Stream<DynamicTest> fileSystemWriteTests(Supplier<FileSystem> factory) {
-        return concat(dynamicTests(this::testExists, factory));
+        return concat(dynamicTests(this::testExists, factory)
+                , dynamicTests(this::testExistsForSubFileSystem, factory)
+        );
     }
 }
