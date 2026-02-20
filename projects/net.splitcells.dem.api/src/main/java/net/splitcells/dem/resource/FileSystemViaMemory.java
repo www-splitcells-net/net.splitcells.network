@@ -93,7 +93,7 @@ public class FileSystemViaMemory implements FileSystem {
 
     @Override
     public boolean exists() {
-        return true;
+        return Files.exists(backend.getPath(base.toString()));
     }
 
     @Override
