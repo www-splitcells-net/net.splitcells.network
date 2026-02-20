@@ -35,6 +35,10 @@ public interface Attribute<T> extends Domable {
 
     String name();
 
+    default String descriptivePathName() {
+        return name().replace(" ", "-");
+    }
+
     default boolean equalz(Line arg) {
         return this == arg;
     }
