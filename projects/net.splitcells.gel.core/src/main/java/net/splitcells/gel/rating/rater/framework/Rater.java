@@ -164,6 +164,10 @@ public interface Rater extends PubliclyTyped<Rater>
     /**
      * 
      * @return Returns a description on the {@link Rater}, that is used for {@link Constraint#path()}.
+     * Only use upper and lower case characters, numbers and hyphens.
+     * Never return a constraint type as the prefix of this name,
+     * even though the {@link Rater} is only useful for 1 constraint type,
+     * as other code assumes this in order to enable nice constraint tree renderings.
      */
     default String descriptivePathName() {
         return name();
