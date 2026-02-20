@@ -60,7 +60,7 @@ import java.util.function.Function;
  */
 public interface Solution extends Problem, SolutionView {
 
-    default Table withAddedCsv(String csvFile) {
+    @Override default Table withAddedCsv(String csvFile) {
         val demandHSize = demands().headerView().size();
         val supplyHSize = supplies().headerView().size();
         csvDocument(csvFile, headerView().stream().map(h -> h.name()).toArray(i -> new String[i]))
