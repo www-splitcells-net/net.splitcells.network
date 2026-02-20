@@ -160,4 +160,8 @@ public class HasSize implements Rater {
     public Tree toTree() {
         return tree("has-size").withProperty("target-size", targetSize + "");
     }
+
+    @Override public String descriptivePathName() {
+        return "has-size-of-" + targetSize;
+    }
 }
