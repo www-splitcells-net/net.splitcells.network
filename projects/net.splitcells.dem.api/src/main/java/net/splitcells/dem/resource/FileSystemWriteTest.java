@@ -25,6 +25,7 @@ public class FileSystemWriteTest extends TestSuiteI {
     public void testExists(Supplier<FileSystem> factory) {
         require(factory.get().exists());
     }
+
     public void testExistsForSubFileSystem(Supplier<FileSystem> factory) {
         require(factory.get().createDirectoryPath("test").subFileSystem("test").exists());
         require(factory.get().createDirectoryPath("test").subFileSystem(Path.of("test")).exists());
@@ -32,9 +33,15 @@ public class FileSystemWriteTest extends TestSuiteI {
         requireNot(factory.get().subFileSystem(Path.of("test")).exists());
     }
 
+    public void testCreateDirectoryPath(Supplier<FileSystem> factory) {
+        require(factory.get().createDirectoryPath("test-directory").isDirectory(Path.of("test-directory")));
+        require(factory.get().createDirectoryPath("test-directory").isDirectory("test-directory"));
+    }
+
     public Stream<DynamicTest> fileSystemWriteTests(Supplier<FileSystem> factory) {
         return concat(dynamicTests(this::testExists, factory)
                 , dynamicTests(this::testExistsForSubFileSystem, factory)
+                , dynamicTests(this::testCreateDirectoryPath, factory)
         );
     }
 }
