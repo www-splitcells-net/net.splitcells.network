@@ -18,7 +18,6 @@ import static net.splitcells.dem.utils.StreamUtils.concat;
 
 public class FileSystemViaMemoryTest extends TestSuiteI {
     @Tag(UNIT_TEST) @TestFactory public Stream<DynamicTest> fileSystemWriteTests() {
-        val writeTest = new FileSystemWriteTest();
-        return concat(dynamicTests(writeTest::testExists, () -> fileSystemViaMemory()));
+        return new FileSystemWriteTest().fileSystemWriteTests(() -> fileSystemViaMemory());
     }
 }
