@@ -33,7 +33,9 @@ public class FileSystemWriteTest extends TestSuiteI {
      */
     public void testExistsForSubFileSystem(Supplier<FileSystem> factory) {
         require(factory.get().createDirectoryPath("test").subFileSystem("test").exists());
+        require(factory.get().createDirectoryPath("test").subFileSystem(Path.of("test")).exists());
         requireNot(factory.get().subFileSystem("test").exists());
+        requireNot(factory.get().subFileSystem(Path.of("test")).exists());
     }
 
     public Stream<DynamicTest> fileSystemWriteTests(Supplier<FileSystem> factory) {
