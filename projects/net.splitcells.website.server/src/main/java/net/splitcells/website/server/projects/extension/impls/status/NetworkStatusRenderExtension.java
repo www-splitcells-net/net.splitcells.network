@@ -94,14 +94,6 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                             }
                         }
                     });
-            final var linkValidityStatusReport = linkValidityStatus();
-            if (linkValidityStatusReport.logLevel().equals(INFO)) {
-                successfulStatuses.append(linkValidityStatusReport.report());
-            } else if (linkValidityStatusReport.logLevel().equals(LogLevel.WARNING)) {
-                disruptedStatuses.append(linkValidityStatusReport.report());
-            } else {
-                throw notImplementedYet();
-            }
             final var disruptedTasks = "<h2>Disrupted Tasks</h2><ol>"
                     + disruptedStatuses
                     + "</ol>";
@@ -155,36 +147,5 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
     @Override
     public Set<Path> projectPaths(ProjectsRendererI projectsRendererI) {
         return setOfUniques(Path.of(STATUS_DOCUMENT_PATH), Path.of(STATUS_PATH));
-    }
-
-    private StatusReport linkValidityStatus() {
-        // TODO HACK This should be create via an Dem Option (aka dependency injection).
-        final var logRepo = logger();
-        final var invalidLinkHistory = logRepo.readExecutionResults(RenderingValidatorForHtmlLinks.reportPath("build"), config().configValue(HostName.class));
-        final var invalidLinkTable = Lists.list(invalidLinkHistory.split("\n"));
-        invalidLinkTable.remove(0);
-        final var historyMinimum = invalidLinkTable.stream()
-                .map(l -> l.split(",")[1])
-                .map(Double::parseDouble)
-                .min(ASCENDING_DOUBLES)
-                .orElse(0d);
-        final var currentInvalidLinkCount = invalidLinkTable.lastValue()
-                .map(l -> l.split(",")[1])
-                .map(Double::parseDouble)
-                .orElse(0d);
-        if (currentInvalidLinkCount <= historyMinimum) {
-            return statusReport(INFO
-                    , "<li><a href=\""
-                            + "/net/splitcells/website/server/project/validator/RenderingValidatorForHtmlLinks/build/"
-                            + config().configValue(HostName.class)
-                            + ".csv.html"
-                            + "\">The number of invalid links is historically improving.</a></li>");
-        }
-        return statusReport(LogLevel.WARNING
-                , "<li><a href=\""
-                        + "/net/splitcells/website/server/project/validator/RenderingValidatorForHtmlLinks/build/"
-                        + config().configValue(HostName.class)
-                        + ".csv.html"
-                        + "\">The history of invalid link counts is increasing between deployment overall.</a></li>");
     }
 }
