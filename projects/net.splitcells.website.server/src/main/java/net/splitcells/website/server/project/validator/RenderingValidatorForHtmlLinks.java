@@ -117,13 +117,6 @@ public class RenderingValidatorForHtmlLinks implements RenderingValidator {
 
     @Override
     public void endReport() {
-        final var logger = logger();
-        logger.logExecutionResults(reportPath(reportName)
-                , config().configValue(HostName.class)
-                , LocalDate.now()
-                , "Invalid Link Count"
-                , invalidLinkCount);
-        logger.commit();
     }
 
     public static String reportPath(String reportName) {
