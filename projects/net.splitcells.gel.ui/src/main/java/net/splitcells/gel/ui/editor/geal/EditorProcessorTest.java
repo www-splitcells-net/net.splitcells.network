@@ -19,10 +19,14 @@ import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.testing.annotations.DisabledTest;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
+import net.splitcells.dem.utils.StringUtils;
+import net.splitcells.gel.editor.GelEditorFileSystem;
 import net.splitcells.gel.ui.GelUiCell;
+import net.splitcells.gel.ui.editor.geal.example.ColloquiumExample;
 import net.splitcells.website.server.messages.FormUpdate;
 import net.splitcells.website.server.processor.Request;
 
+import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.Dem.process;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.Trail.trail;
@@ -56,6 +60,23 @@ public class EditorProcessorTest {
     @DisabledTest
     public void testOptimization() {
         process(EditorProcessorTest.TEST_OPTIMIZATION_GUI, GelUiCell.class).requireErrorFree();
+    }
+
+    @UnitTest
+    public void testEditorProcessor() {
+        final var testSubject = editorProcessor();
+        final var requestTree = tree("");
+        requestTree.withProperty(PROBLEM_DEFINITION
+                , configValue(GelEditorFileSystem.class).readString("src/main/resources/html/net/splitcells/gel/editor/geal/examples/colloquium-planning.txt"));
+        requestTree.withProperty("demands.csv", ColloquiumExample.demandsCsv());
+        requestTree.withProperty("supplies.csv", ColloquiumExample.suppliesCsv());
+        final var request = Request.<Tree>request(trail(), requestTree);
+        testSubject
+                .process(request)
+                .data()
+                .namedChild(FormUpdate.DATA_VALUES)
+                .namedChildren(FormUpdate.ERRORS)
+                .requireEmpty();
     }
 
     @UnitTest

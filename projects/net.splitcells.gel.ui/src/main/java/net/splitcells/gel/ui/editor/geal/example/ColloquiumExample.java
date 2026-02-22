@@ -92,7 +92,7 @@ public class ColloquiumExample implements ProjectsRendererExtension {
      *
      * @return This represents the exams.
      */
-    private static String demandsCsv() {
+    public static String demandsCsv() {
         final var testData = stringBuilder();
         testData.append("student,examiner,observer\n");
         final var randomness = randomness();
@@ -118,7 +118,7 @@ public class ColloquiumExample implements ProjectsRendererExtension {
      *
      * @return This represents the available slots for holding the exam.
      */
-    private static String suppliesCsv() {
+    public static String suppliesCsv() {
         final var testData = stringBuilder();
         testData.append("date,shift,roomNumber\n");
         final int examDayCountPerWeek = 5;
