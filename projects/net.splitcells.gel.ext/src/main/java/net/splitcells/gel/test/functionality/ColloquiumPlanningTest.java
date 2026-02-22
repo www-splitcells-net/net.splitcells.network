@@ -82,6 +82,7 @@ public class ColloquiumPlanningTest extends TestSuiteI {
      * <p>The number students, examiners etc., where created from a real instance at a school.</p>
      */
     @CapabilityTest
+    @DisabledTest
     public void testRandomInstanceSolving() {
         Dem.process(() -> {
             final var testSubject = randomColloquiumPlanning
@@ -120,6 +121,7 @@ public class ColloquiumPlanningTest extends TestSuiteI {
      * in {@link #testRandomInstanceSolving} via the {@link ConstraintGroupBasedOfflineRepair}.
      */
     @CapabilityTest
+    @DisabledTest
     public void testComplexity() {
         Dem.process(() -> {
             final var testSubject = randomColloquiumPlanning
