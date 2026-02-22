@@ -25,7 +25,7 @@ mvn -B clean install \
 mvn clean install site \
     -Dtest_codecov=1 \
     -Dsource_code_check=1 \
-    -Dtest.groups=testing_unit,testing_integration \
+    -Dtest.groups=testing_unit,testing_integration,testing_capabilities \
     -DexcludedGroups="experimental_test"
 # -z is used because -v is not supported in Forgejo workflows.
 if [ -z "$NET_SPLITCELLS_MARTINS_AVOTS_WEBSITE_SFTP_PRIVATE_KEY" ]; then
