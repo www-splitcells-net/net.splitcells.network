@@ -73,6 +73,14 @@ public class Logger implements TestExecutionListener {
         this.logProject = logProject;
     }
 
+    public void logExecutionResults(Class<?> subject, String reportName, String executor, LocalDate localDate, String resultType
+            , double result) {
+        logExecutionResults(subject.getName().replace('.', '/') + "/" + reportName, executor
+                , localDate
+                , resultType
+                , result);
+    }
+
     public void logExecutionResults(String subject, String executor, LocalDate localDate, String resultType
             , double result) {
         final var projectFolder = "src/main/" + CSV.codeName() + "/" + subject + "/";

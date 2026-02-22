@@ -15,9 +15,13 @@
  */
 package net.splitcells.network.worker.via.java;
 
+import lombok.val;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.environment.config.ProgramName;
+import net.splitcells.dem.resource.host.HostName;
 import net.splitcells.network.worker.via.java.repo.ProjectsFolder;
+
+import java.time.LocalDate;
 
 import static net.splitcells.dem.Dem.config;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -40,14 +44,35 @@ public class Tester {
         if (args.length != 1) {
             throw new IllegalArgumentException("Exactly one argument is required, but " + args.length + " were given. The argument is the id of the test executor.");
         }
-        Dem.process(() -> testFunctionality(list(logger()))
-                , env -> env.config()
-                        .withConfigValue(ProgramName.class, args[0])
-                        .withConfigValue(ProjectsFolder.class, userHome(".local/state/net.splitcells.network.worker/repos/public/"))
-                        .withConfigValue(NetworkWorkerLogFileSystem.class
-                                , fileSystemOnLocalHost(config()
-                                        .configValue(ProjectsFolder.class)
-                                        .resolve("net.splitcells.network.log"))));
+        test(args[0], ".local/state/net.splitcells.network.worker/repos/public/");
+    }
+    
+    public static void test(String hostname, String projectsFolder) {
+        Dem.process(() -> {
+                    val logger = logger();
+                    val executionSuccess = testFunctionality(list(logger));
+                    final double executionResult;
+                    if (executionSuccess) {
+                        executionResult = 1d;
+                    } else {
+                        executionResult = 0d;
+                    }
+                    logger.logExecutionResults(Tester.class
+                            , "execution"
+                            , config().configValue(HostName.class)
+                            , LocalDate.now()
+                            , "tester-success"
+                            , executionResult);
+                }
+                , env -> {
+                    env.config()
+                            .withConfigValue(ProgramName.class, hostname)
+                            .withConfigValue(ProjectsFolder.class, userHome(projectsFolder))
+                            .withConfigValue(NetworkWorkerLogFileSystem.class
+                                    , fileSystemOnLocalHost(config()
+                                            .configValue(ProjectsFolder.class)
+                                            .resolve("net.splitcells.network.log")));
+                });
     }
 
     private Tester() {
