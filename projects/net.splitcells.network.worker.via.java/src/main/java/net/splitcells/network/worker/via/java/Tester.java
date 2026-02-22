@@ -38,6 +38,8 @@ import static net.splitcells.network.worker.via.java.Logger.logger;
  * as setting a custom test execution listener via Maven is complicated,
  * which is required for writing the test results into the network log.
  * Therefore, a dedicated main function is used.</p>
+ * <p>TODO Check environment variable NET_SPLITCELLS_PROJECT_REPOS_PATH and
+ * if set, use this for {@link ProjectsFolder}.</p>
  */
 public class Tester {
     public static void main(String... args) {
