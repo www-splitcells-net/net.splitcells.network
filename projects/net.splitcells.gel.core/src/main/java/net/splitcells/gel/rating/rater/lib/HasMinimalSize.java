@@ -158,4 +158,8 @@ public class HasMinimalSize implements Rater {
     public String toString() {
         return getClass().getSimpleName() + ", " + minimalSize;
     }
+
+    @Override public String descriptivePathName() {
+        return "min-size-of" + minimalSize;
+    }
 }
