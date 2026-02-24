@@ -140,4 +140,8 @@ public class HasMaximalSize implements Rater {
     public String toString() {
         return getClass().getSimpleName() + ", " + maximalSize;
     }
+
+    @Override public String descriptivePathName() {
+        return "max-size-of" + maximalSize;
+    }
 }
