@@ -209,6 +209,10 @@ public class ValueUpdate implements GroupingRater {
         return "attribute " + playerAttribute + " was updated to " + analysis.actualValue;
     }
 
+    @Override public String descriptivePathName() {
+        return "value-update";
+    }
+
     @Override
     public List<Domable> arguments() {
         return listWithValuesOf();

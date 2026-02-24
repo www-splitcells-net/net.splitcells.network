@@ -87,6 +87,10 @@ public class UniqueValueCountIsAtMost implements GroupingRater {
         }
     }
 
+    @Override public String descriptivePathName() {
+        return "at-most-" + maxCount + "-of-" + attribute.descriptivePathName();
+    }
+
     @Override public List<Domable> arguments() {
         return list(tree("maxCount: " + maxCount), tree("attribute: " + attribute.name()));
     }

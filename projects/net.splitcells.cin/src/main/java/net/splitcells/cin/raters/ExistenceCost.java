@@ -112,6 +112,10 @@ public class ExistenceCost implements GroupingRater {
 
     }
 
+    @Override public String descriptivePathName() {
+        return "existence-cost";
+    }
+
     @Override
     public List<Domable> arguments() {
         return list();

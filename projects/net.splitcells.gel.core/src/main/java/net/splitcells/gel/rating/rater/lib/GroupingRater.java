@@ -58,6 +58,15 @@ public interface GroupingRater {
      */
     String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup);
 
+    /**
+     *
+     * @return Returns a description on the {@link GroupingRater}
+     * that is used for {@link LineGroupRater#descriptivePathName()} in {@link Constraint#path()}.
+     * Only use upper and lower case characters, numbers and hyphens.
+     * Avoid whitespaces.
+     */
+    String descriptivePathName();
+
     List<Domable> arguments();
 
     /**
