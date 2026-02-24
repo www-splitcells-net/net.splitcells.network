@@ -83,6 +83,11 @@ public class LineGroupRater implements Rater {
     }
 
     @Override
+    public String descriptivePathName() {
+        return baseRater.descriptivePathName();
+    }
+
+    @Override
     public List<Domable> arguments() {
         return baseRater.arguments();
     }
