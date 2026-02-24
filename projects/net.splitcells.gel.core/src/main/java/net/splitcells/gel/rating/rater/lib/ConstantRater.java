@@ -99,4 +99,8 @@ public class ConstantRater implements Rater {
     public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
         return "Constant rater with " + rating;
     }
+
+    @Override public String descriptivePathName() {
+        return rating.descriptivePathName();
+    }
 }

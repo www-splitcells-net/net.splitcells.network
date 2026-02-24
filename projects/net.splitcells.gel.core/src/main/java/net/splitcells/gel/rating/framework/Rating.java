@@ -19,6 +19,8 @@ import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.order.PartiallyOrdered;
 import net.splitcells.dem.object.Base;
+import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.rating.rater.framework.Rater;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
@@ -48,5 +50,16 @@ public interface Rating extends PartiallyOrdered<Rating>, Domable, Base {
 
     default void requireVerySimilar(Rating arg) {
         requireEqualsTo(arg);
+    }
+
+    /**
+     *
+     * @return Returns a description on the {@link Rating}
+     * that is used for {@link Rater#descriptivePathName()} in {@link Constraint#path()}.
+     * Only use upper and lower case characters, numbers and hyphens.
+     * Avoid whitespaces.
+     */
+    default String descriptivePathName() {
+        return toString();
     }
 }
