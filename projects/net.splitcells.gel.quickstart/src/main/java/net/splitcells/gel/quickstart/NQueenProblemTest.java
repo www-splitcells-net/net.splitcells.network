@@ -56,14 +56,15 @@ public class NQueenProblemTest {
     @Test
     public void test() {
         final var testSubject = nQueenProblem(8, 8).asSolution();
-        testSubject.optimize(offlineLinearInitialization());
-        testSubject.optimizeOnce(functionalHillClimber(100));
-        testSubject.createAnalysis(Path.of("./target/analysis-hill-climber/"));
-        testSubject.optimize(linearDeinitializer());
-        backtracking().optimize(testSubject);
-        require(testSubject.isOptimal());
-        testSubject.createAnalysis(Path.of("./target/analysis-backtracking/"));
-
+        testSubject.history().processWithHistory(() -> {
+            testSubject.optimize(offlineLinearInitialization());
+            testSubject.optimizeOnce(functionalHillClimber(100));
+            testSubject.createAnalysis(Path.of("./target/analysis-hill-climber/"));
+            testSubject.optimize(linearDeinitializer());
+            backtracking().optimize(testSubject);
+            require(testSubject.isOptimal());
+            testSubject.createAnalysis(Path.of("./target/analysis-backtracking/"));
+        });
     }
 
     private static Problem nQueenProblem(int rows, int columns) {
