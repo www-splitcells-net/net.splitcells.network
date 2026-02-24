@@ -166,4 +166,8 @@ public class AllDifferent<T> implements Rater {
     public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
         return "all values of " + attribute.name() + " should be different";
     }
+
+    @Override public String descriptivePathName() {
+        return "all-" + attribute.descriptivePathName() + "-different";
+    }
 }
