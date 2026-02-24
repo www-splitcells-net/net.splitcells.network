@@ -424,4 +424,9 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
                         + attribute.name())
                 .orElse("Should have at least a minimum distance of " + minimumDistance + " " + attribute.name());
     }
+
+    @Override
+    public String descriptivePathName() {
+        return "minimal-distance-of-" + minimumDistance + "-between-" + attribute.descriptivePathName() + "-based-on-diffs";
+    }
 }
