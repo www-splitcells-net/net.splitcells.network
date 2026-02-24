@@ -111,7 +111,7 @@ public class NQueenProblemTest extends TestSuiteI {
     @Test
     public void test_8_queen_problem_with_backtracking() {
         final var testSubject = nQueenProblem(8, 8).asSolution();
-        backtracking().optimize(testSubject);
+        testSubject.history().processWithHistory(() -> backtracking().optimize(testSubject));
         require(testSubject.isOptimal());
     }
 
