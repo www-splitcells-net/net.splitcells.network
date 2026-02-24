@@ -90,4 +90,9 @@ public class Not implements Rater {
     @Override public List<Domable> arguments() {
         return list(base);
     }
+
+    @Override
+    public String descriptivePathName() {
+        return "not-" + base;
+    }
 }
