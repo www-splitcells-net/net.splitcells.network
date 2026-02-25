@@ -381,7 +381,7 @@ public class ProblemI implements Problem {
 
             @Override
             public Optional<String> title() {
-                return Optional.of(threadSafeMirror.get().path().toString());
+                return threadSafeMirror.get().path().stream().reduce((a, b) -> a + " / " + b);
             }
 
             @Override
