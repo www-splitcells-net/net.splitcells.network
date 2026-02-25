@@ -118,8 +118,7 @@ public class RaterBasedOnLineValue implements Rater {
 
     public static Rater lineValueRater(Predicate<Line> classifier, Function<Line, Rating> rater, String argDescriptivePathName) {
         return new RaterBasedOnLineValue(rater
-                , describedFunction
-                (addition -> addition.value(Constraint.INCOMING_CONSTRAINT_GROUP)
+                , describedFunction(addition -> addition.value(Constraint.INCOMING_CONSTRAINT_GROUP)
                         , classifier.toString())
                 , (addition, children) -> {
             if (classifier.test(addition.value(LINE))) {
