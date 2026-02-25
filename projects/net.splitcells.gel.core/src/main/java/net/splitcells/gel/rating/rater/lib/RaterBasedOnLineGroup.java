@@ -49,7 +49,15 @@ public class RaterBasedOnLineGroup implements Rater {
 
     @Deprecated
     public static RaterBasedOnLineGroup groupRater(GroupRater rater) {
-        return groupRater(rater, (a, b, c) -> rater.toString());
+        return groupRater(rater, new SimpleDescriptor() {
+            @Override public String toSimpleDescription(Line line, View groupLineProcessing, GroupId incomingGroup) {
+                return rater.toString();
+            }
+
+            @Override public String descriptivePathName() {
+                return rater.descriptivePathName();
+            }
+        });
     }
 
     @Deprecated
@@ -93,12 +101,29 @@ public class RaterBasedOnLineGroup implements Rater {
 
     @Deprecated
     public static RaterBasedOnLineGroup groupRouter(GroupRouter rater) {
-        return groupRouter(rater, (a, b, c) -> rater.toString(), RaterBasedOnLineGroup.class.getSimpleName());
+        return groupRouter(rater, new SimpleDescriptor() {
+            @Override public String toSimpleDescription(Line line, View groupLineProcessing, GroupId incomingGroup) {
+                return rater.toString();
+            }
+
+            @Override public String descriptivePathName() {
+                return rater.descriptivePathName();
+            }
+        }, RaterBasedOnLineGroup.class.getSimpleName());
     }
 
     @Deprecated
     public static RaterBasedOnLineGroup groupRouter(GroupRouter rater, String name) {
-        return groupRouter(rater, (a, b, c) -> name, name);
+        return groupRouter(rater, new SimpleDescriptor() {
+
+            @Override public String toSimpleDescription(Line line, View groupLineProcessing, GroupId incomingGroup) {
+                return name;
+            }
+
+            @Override public String descriptivePathName() {
+                return name;
+            }
+        }, name);
     }
 
     @Deprecated
@@ -143,7 +168,16 @@ public class RaterBasedOnLineGroup implements Rater {
 
     @Deprecated
     public static RaterBasedOnLineGroup raterBasedOnLineGroup(RaterBasedOnLineGroupLambda rater) {
-        return new RaterBasedOnLineGroup(rater, (a, b, c) -> rater.toString(), rater.getClass().getSimpleName());
+        return new RaterBasedOnLineGroup(rater, new SimpleDescriptor() {
+
+            @Override public String toSimpleDescription(Line line, View groupLineProcessing, GroupId incomingGroup) {
+                return rater.toString();
+            }
+
+            @Override public String descriptivePathName() {
+                return rater.toString();
+            }
+        }, rater.getClass().getSimpleName());
     }
 
     private final RaterBasedOnLineGroupLambda rater;

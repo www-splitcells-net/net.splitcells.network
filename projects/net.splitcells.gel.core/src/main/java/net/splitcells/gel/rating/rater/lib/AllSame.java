@@ -115,6 +115,10 @@ public class AllSame {
                                   }
                                   return proposal;
                               }
+
+                              @Override public String descriptivePathName() {
+                                  return "all-" + attribute.descriptivePathName() + "-same";
+                              }
                           },
                 new SimpleDescriptor() {
                     @Override
@@ -129,6 +133,10 @@ public class AllSame {
                     @Override
                     public Tree toPerspective() {
                         return tree("all-same").withProperty("attribute", attribute.toTree());
+                    }
+
+                    @Override public String descriptivePathName() {
+                        return "all-" + attribute.descriptivePathName() + "-same";
                     }
                 }
         );

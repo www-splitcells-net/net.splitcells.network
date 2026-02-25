@@ -23,10 +23,10 @@ import net.splitcells.gel.data.view.View;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.NotImplementedYet.TODO_NOT_IMPLEMENTED_YET;
 
-@FunctionalInterface
 public interface SimpleDescriptor {
     String toSimpleDescription(Line line, View groupLineProcessing, GroupId incomingGroup);
     default Tree toPerspective() {
         return tree(TODO_NOT_IMPLEMENTED_YET + toString());
     }
+    String descriptivePathName();
 }

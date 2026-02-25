@@ -60,6 +60,10 @@ public class RegulatedLength {
                         .orElseGet(() -> cost(totalCost / (lines.unorderedLines().size() - 1)));
             }
 
+            @Override public String descriptivePathName() {
+                return "sum-of-" + lengthElement.descriptivePathName() + "-equal-to-" + targetLength.descriptivePathName();
+            }
+
             @Override
             public String toString() {
                 return description;

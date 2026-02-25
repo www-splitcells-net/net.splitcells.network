@@ -28,7 +28,6 @@ import static net.splitcells.dem.resource.communication.log.Logs.logs;
 /**
  * This is a helper interface, in order to create a rater based on one method.
  */
-@FunctionalInterface
 public interface GroupRouter {
 
     /**
@@ -46,4 +45,6 @@ public interface GroupRouter {
         }
         return proposal;
     }
+
+    String descriptivePathName();
 }

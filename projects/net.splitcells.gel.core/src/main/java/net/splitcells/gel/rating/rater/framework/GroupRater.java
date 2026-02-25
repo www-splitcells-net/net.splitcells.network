@@ -28,10 +28,9 @@ import static net.splitcells.dem.resource.communication.log.Logs.logs;
 /**
  * This is a helper interface, in order to create a rater based on one method.
  */
-@FunctionalInterface
 public interface GroupRater {
 
-    static GroupRater describedGroupRater(GroupRater arg, String description) {
+    static GroupRater describedGroupRater(GroupRater arg, String description, String descriptivePathName) {
         return new GroupRater() {
             @Override
             public Rating lineRating(View lines, Optional<Line> addition, Optional<Line> removal) {
@@ -41,6 +40,10 @@ public interface GroupRater {
             @Override
             public String toString() {
                 return description;
+            }
+            
+            @Override public String descriptivePathName() {
+                return descriptivePathName;
             }
         };
     }
@@ -67,4 +70,6 @@ public interface GroupRater {
         }
         return proposal;
     }
+    
+    String descriptivePathName();
 }
