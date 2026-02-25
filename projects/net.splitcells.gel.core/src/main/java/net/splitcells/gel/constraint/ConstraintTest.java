@@ -109,6 +109,10 @@ public class ConstraintTest {
                 return "no cost and 2 resulting groups for every line";
             }
 
+            @Override public String descriptivePathName() {
+                return "";
+            }
+
             @Override
             public List<Domable> arguments() {
                 return list();

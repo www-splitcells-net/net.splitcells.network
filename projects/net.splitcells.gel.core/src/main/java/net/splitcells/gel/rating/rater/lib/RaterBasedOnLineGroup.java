@@ -227,6 +227,10 @@ public class RaterBasedOnLineGroup implements Rater {
         return name;
     }
 
+    @Override public String descriptivePathName() {
+        return name;
+    }
+
     @Override
     public Proposal propose(Proposal proposal) {
         return rater.propose(proposal);

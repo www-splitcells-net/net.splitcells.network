@@ -170,9 +170,7 @@ public interface Rater extends PubliclyTyped<Rater>
      * even though the {@link Rater} is only useful for 1 constraint type,
      * as other code assumes this in order to enable nice constraint tree renderings.
      */
-    default String descriptivePathName() {
-        return name();
-    }
+    String descriptivePathName();
 
     /**
      * <p>Initializes the {@link Rater}, so it can be used,
