@@ -83,7 +83,7 @@ public class SolutionCallRunner implements FunctionCallRunner {
         final Optional<Object> result = Optional.of(defineProblem(args.solutionName)
                 .withDemands(args.demands)
                 .withSupplies(args.supplies)
-                .withConstraint(forAll())
+                .withConstraint(forAll(Optional.of(() -> list(args.solutionName, "constraints"))))
                 .toProblem()
                 .asSolution());
         return functionCallRun(subject, context).setResult(result);
