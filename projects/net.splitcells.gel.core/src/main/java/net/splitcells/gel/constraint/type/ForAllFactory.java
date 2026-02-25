@@ -55,6 +55,11 @@ public class ForAllFactory {
         return ForAll.forAll(forAllWithCondition(predicate));
     }
 
+    /**
+     * @deprecated {@link #forAll(Optional)}
+     * @return
+     */
+    @Deprecated
     public Constraint forAll() {
         return ForAll.forAll(propagation());
     }

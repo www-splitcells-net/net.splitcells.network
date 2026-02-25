@@ -34,10 +34,12 @@ public class ForAlls {
     }
 
     /**
-     * TODO PERFORMANCE Specialize implementation for this case.
-     * <p>
-     * TODO TEST
+     * <p>TODO PERFORMANCE Specialize implementation for this case.</p>
+     * <p>TODO TEST</p>
+     * 
+     * @deprecated {@link #forAll(Optional)}
      */
+    @Deprecated
     public static Constraint forAll() {
         return ForAllFactory.instance().forAll();
     }
