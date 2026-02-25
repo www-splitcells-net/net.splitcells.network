@@ -140,7 +140,14 @@ public class Loneliness implements Rater {
             }
 
             @Override public String descriptivePathName() {
-                return "loneliness";
+                return "loneliness-of-"
+                        + playerAttribute.descriptivePathName()
+                        + "-by-"
+                        + timeAttribute.descriptivePathName()
+                        + "-at-"
+                        + xCoordinate.descriptivePathName()
+                        + "-"
+                        + yCoordinate.descriptivePathName();
             }
         });
     }
@@ -307,5 +314,16 @@ public class Loneliness implements Rater {
                 + ", x coordinates " + xCoordinate.name()
                 + ", y coordinates " + yCoordinate.name()
                 + " dies.";
+    }
+
+    @Override public String descriptivePathName() {
+        return "loneliness-of-"
+                + playerAttribute.descriptivePathName()
+                + "-by-"
+                + timeAttribute.descriptivePathName()
+                + "-at-"
+                + xCoordinate.descriptivePathName()
+                + "-"
+                + yCoordinate.descriptivePathName();
     }
 }

@@ -42,7 +42,7 @@ import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
 /**
- * <p>Groups all positions of a 2 dimensional space.
+ * <p>Groups all positions of a 2-dimensional space.
  * Every existing (x, y) coordinate has multiple corresponding position cluster, that is identified by its center.
  * Every such group has a center position and also contains every neighbouring position.
  * Every existing (x, y) coordinate has exactly one position cluster,
@@ -217,5 +217,16 @@ public class PositionClusters implements Rater {
                 , yAttribute
                 , tree("" + xCenterOffset)
                 , tree("" + yCenterOffset));
+    }
+
+    @Override public String descriptivePathName() {
+        return "position-cluster-at"
+                + xAttribute.descriptivePathName()
+                + "-"
+                + yAttribute.descriptivePathName()
+                + "-offset-by-"
+                + xCenterOffset
+                + "-"
+                + yCenterOffset;
     }
 }

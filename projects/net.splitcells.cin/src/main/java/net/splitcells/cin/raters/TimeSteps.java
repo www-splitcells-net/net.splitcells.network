@@ -305,4 +305,8 @@ public class TimeSteps implements Rater {
         }
         return "step of " + timeAttribute.name() + " starting at " + startTime;
     }
+
+    @Override public String descriptivePathName() {
+        return "time-nstep-of-" + timeAttribute.descriptivePathName();
+    }
 }

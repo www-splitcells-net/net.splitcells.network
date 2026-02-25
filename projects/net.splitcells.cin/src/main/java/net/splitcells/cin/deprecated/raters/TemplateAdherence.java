@@ -63,4 +63,8 @@ public class TemplateAdherence implements Rater {
     public String toSimpleDescription(Line line, View groupsLineProcessing, GroupId incomingGroup) {
         throw notImplementedYet();
     }
+
+    @Override public String descriptivePathName() {
+        return "complies-to-template";
+    }
 }

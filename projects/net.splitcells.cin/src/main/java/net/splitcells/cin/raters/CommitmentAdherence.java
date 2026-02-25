@@ -133,4 +133,8 @@ public class CommitmentAdherence implements Rater {
                                         }).toList())));
         return proposal;
     }
+
+    @Override public String descriptivePathName() {
+        return "commitment-of-initial-" + time.descriptivePathName();
+    }
 }

@@ -97,4 +97,8 @@ public class CommitmentAdherence implements Rater {
         invalidDemands.forEach(a -> proposal.proposedAllocations().demands().remove(a));
         return proposal;
     }
+
+    @Override public String descriptivePathName() {
+        return "commitment-of-initial-" + time.descriptivePathName();
+    }
 }
