@@ -92,4 +92,8 @@ public class Propagation implements Rater {
     public Class<? extends Rater> type() {
         return Propagation.class;
     }
+
+    @Override public String descriptivePathName() {
+        return "all";
+    }
 }
