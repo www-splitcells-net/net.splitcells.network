@@ -15,8 +15,13 @@
  */
 package net.splitcells.cin.deprecated.raters.deprecated;
 
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
+import net.splitcells.gel.rating.rater.framework.GroupRouter;
 import net.splitcells.gel.rating.rater.framework.Rater;
+import net.splitcells.gel.rating.rater.framework.RatingEvent;
 
 import java.util.function.Predicate;
 
@@ -53,41 +58,50 @@ public class CrowdClassifier {
             , Attribute<Integer> yCoordinate
             , Predicate<Long> crowdClassifier
             , String name) {
-        return groupRouter((lines, children) -> {
-            final var ratingEvent = ratingEvent();
-            final var lineValues = lines.columnView(LINE).values();
-            final var timeValues = lineValues
-                    .stream()
-                    .map(l -> l.value(timeAttribute))
-                    .distinct()
-                    .sorted(ASCENDING_INTEGERS)
-                    .collect(toList());
-            final var startTime = timeValues.get(0);
-            final var incomingConstraintGroup = lines.orderedLine(0).value(INCOMING_CONSTRAINT_GROUP);
-            final var centerXPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterX.class);
-            final var centerYPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterY.class);
-            final var startCrowdSize = lineValues.stream()
-                    .filter(l -> l.value(timeAttribute).equals(startTime))
-                    .filter(l -> l.value(playerAttribute).equals(playerValue))
-                    .filter(l -> !l.value(xCoordinate).equals(centerXPosition)
-                            || !l.value(yCoordinate).equals(centerYPosition))
-                    .count();
-            if (crowdClassifier.test(startCrowdSize)) {
-                lines.unorderedLinesStream()
-                        .forEach(line -> ratingEvent.updateRating_withReplacement(line
-                                , localRating()
-                                        .withPropagationTo(children)
-                                        .withRating(noCost())
-                                        .withResultingGroupId(incomingConstraintGroup)));
-            } else {
-                lines.unorderedLinesStream()
-                        .forEach(line -> ratingEvent.updateRating_withReplacement(line
-                                , localRating()
-                                        .withPropagationTo(list())
-                                        .withRating(cost(1))
-                                        .withResultingGroupId(incomingConstraintGroup)));
+        return groupRouter(new GroupRouter() {
+
+            @Override public RatingEvent routing(View lines, List<Constraint> children) {
+                {
+                    final var ratingEvent = ratingEvent();
+                    final var lineValues = lines.columnView(LINE).values();
+                    final var timeValues = lineValues
+                            .stream()
+                            .map(l -> l.value(timeAttribute))
+                            .distinct()
+                            .sorted(ASCENDING_INTEGERS)
+                            .collect(toList());
+                    final var startTime = timeValues.get(0);
+                    final var incomingConstraintGroup = lines.orderedLine(0).value(INCOMING_CONSTRAINT_GROUP);
+                    final var centerXPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterX.class);
+                    final var centerYPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterY.class);
+                    final var startCrowdSize = lineValues.stream()
+                            .filter(l -> l.value(timeAttribute).equals(startTime))
+                            .filter(l -> l.value(playerAttribute).equals(playerValue))
+                            .filter(l -> !l.value(xCoordinate).equals(centerXPosition)
+                                    || !l.value(yCoordinate).equals(centerYPosition))
+                            .count();
+                    if (crowdClassifier.test(startCrowdSize)) {
+                        lines.unorderedLinesStream()
+                                .forEach(line -> ratingEvent.updateRating_withReplacement(line
+                                        , localRating()
+                                                .withPropagationTo(children)
+                                                .withRating(noCost())
+                                                .withResultingGroupId(incomingConstraintGroup)));
+                    } else {
+                        lines.unorderedLinesStream()
+                                .forEach(line -> ratingEvent.updateRating_withReplacement(line
+                                        , localRating()
+                                                .withPropagationTo(list())
+                                                .withRating(cost(1))
+                                                .withResultingGroupId(incomingConstraintGroup)));
+                    }
+                    return ratingEvent;
+                }
             }
-            return ratingEvent;
+
+            @Override public String descriptivePathName() {
+                return name;
+            }
         }, name);
     }
 

@@ -15,9 +15,14 @@
  */
 package net.splitcells.cin.deprecated.raters.deprecated;
 
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
+import net.splitcells.gel.rating.rater.framework.GroupRouter;
 import net.splitcells.gel.rating.rater.framework.Rater;
+import net.splitcells.gel.rating.rater.framework.RatingEvent;
 
 import java.util.function.BiPredicate;
 import java.util.stream.Stream;
@@ -55,56 +60,65 @@ public class PlayerValuePersistenceClassifier {
             , Attribute<Integer> yCoordinate
             , BiPredicate<Stream<Line>, Stream<Line>> centerPositionClassifier
             , String name) {
-        return groupRouter((lines, children) -> {
-            final var ratingEvent = ratingEvent();
-            final var startTime = lines.columnView(LINE)
-                    .stream()
-                    .map(l -> l.value(timeAttribute))
-                    .distinct()
-                    .sorted(ASCENDING_INTEGERS)
-                    .findFirst().orElseThrow();
-            final var incomingConstraintGroup = lines.unorderedLinesStream()
-                    .findFirst()
-                    .orElseThrow()
-                    .value(INCOMING_CONSTRAINT_GROUP);
-            final var centerXPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterX.class);
-            final var centerYPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterY.class);
-            final var centerStartPositions = lines.columnView(LINE)
-                    .stream()
-                    .filter(l -> l.value(timeAttribute).equals(startTime))
-                    .filter(l -> l.value(xCoordinate).equals(centerXPosition))
-                    .filter(l -> l.value(yCoordinate).equals(centerYPosition));
-            final var centerEndPositions = lines.columnView(LINE)
-                    .stream()
-                    .filter(l -> l.value(timeAttribute).equals(startTime + 1))
-                    .filter(l -> l.value(xCoordinate).equals(centerXPosition))
-                    .filter(l -> l.value(yCoordinate).equals(centerYPosition));
-            if (centerPositionClassifier.test(centerStartPositions, centerEndPositions)) {
-                lines.unorderedLinesStream()
-                        .forEach(line -> ratingEvent.updateRating_withReplacement(line
-                                , localRating()
-                                        .withPropagationTo(children)
-                                        .withRating(noCost())
-                                        .withResultingGroupId(incomingConstraintGroup)));
-            } else {
-                lines.unorderedLinesStream()
-                        .filter(l -> !l.value(LINE).value(xCoordinate).equals(centerXPosition)
-                                || !l.value(LINE).value(yCoordinate).equals(centerYPosition))
-                        .forEach(line -> ratingEvent.updateRating_withReplacement(line
-                                , localRating()
-                                        .withPropagationTo(list())
-                                        .withRating(noCost())
-                                        .withResultingGroupId(incomingConstraintGroup)));
-                lines.unorderedLinesStream()
-                        .filter(l -> l.value(LINE).value(xCoordinate).equals(centerXPosition))
-                        .filter(l -> l.value(LINE).value(yCoordinate).equals(centerYPosition))
-                        .forEach(line -> ratingEvent.updateRating_withReplacement(line
-                                , localRating()
-                                        .withPropagationTo(list())
-                                        .withRating(cost(1))
-                                        .withResultingGroupId(incomingConstraintGroup)));
+        return groupRouter(new GroupRouter() {
+
+            @Override public RatingEvent routing(View lines, List<Constraint> children) {
+                {
+                    final var ratingEvent = ratingEvent();
+                    final var startTime = lines.columnView(LINE)
+                            .stream()
+                            .map(l -> l.value(timeAttribute))
+                            .distinct()
+                            .sorted(ASCENDING_INTEGERS)
+                            .findFirst().orElseThrow();
+                    final var incomingConstraintGroup = lines.unorderedLinesStream()
+                            .findFirst()
+                            .orElseThrow()
+                            .value(INCOMING_CONSTRAINT_GROUP);
+                    final var centerXPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterX.class);
+                    final var centerYPosition = incomingConstraintGroup.metaData().value(PositionClustersCenterY.class);
+                    final var centerStartPositions = lines.columnView(LINE)
+                            .stream()
+                            .filter(l -> l.value(timeAttribute).equals(startTime))
+                            .filter(l -> l.value(xCoordinate).equals(centerXPosition))
+                            .filter(l -> l.value(yCoordinate).equals(centerYPosition));
+                    final var centerEndPositions = lines.columnView(LINE)
+                            .stream()
+                            .filter(l -> l.value(timeAttribute).equals(startTime + 1))
+                            .filter(l -> l.value(xCoordinate).equals(centerXPosition))
+                            .filter(l -> l.value(yCoordinate).equals(centerYPosition));
+                    if (centerPositionClassifier.test(centerStartPositions, centerEndPositions)) {
+                        lines.unorderedLinesStream()
+                                .forEach(line -> ratingEvent.updateRating_withReplacement(line
+                                        , localRating()
+                                                .withPropagationTo(children)
+                                                .withRating(noCost())
+                                                .withResultingGroupId(incomingConstraintGroup)));
+                    } else {
+                        lines.unorderedLinesStream()
+                                .filter(l -> !l.value(LINE).value(xCoordinate).equals(centerXPosition)
+                                        || !l.value(LINE).value(yCoordinate).equals(centerYPosition))
+                                .forEach(line -> ratingEvent.updateRating_withReplacement(line
+                                        , localRating()
+                                                .withPropagationTo(list())
+                                                .withRating(noCost())
+                                                .withResultingGroupId(incomingConstraintGroup)));
+                        lines.unorderedLinesStream()
+                                .filter(l -> l.value(LINE).value(xCoordinate).equals(centerXPosition))
+                                .filter(l -> l.value(LINE).value(yCoordinate).equals(centerYPosition))
+                                .forEach(line -> ratingEvent.updateRating_withReplacement(line
+                                        , localRating()
+                                                .withPropagationTo(list())
+                                                .withRating(cost(1))
+                                                .withResultingGroupId(incomingConstraintGroup)));
+                    }
+                    return ratingEvent;
+                }
             }
-            return ratingEvent;
+
+            @Override public String descriptivePathName() {
+                return name;
+            }
         }, name);
     }
 
