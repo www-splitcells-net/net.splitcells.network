@@ -102,4 +102,12 @@ public class GroupMultiplier implements Rater {
                 .reduce((a, b) -> a + " " + b)
                 .orElse("");
     }
+
+    @Override public String descriptivePathName() {
+        return "combination-of-"
+                + classifiers.stream()
+                .map(c -> c.descriptivePathName())
+                .reduce((a, b) -> a + "-" + b)
+                .orElse("none");
+    }
 }
