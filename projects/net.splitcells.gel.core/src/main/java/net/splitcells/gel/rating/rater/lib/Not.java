@@ -93,6 +93,6 @@ public class Not implements Rater {
 
     @Override
     public String descriptivePathName() {
-        return "not-" + base;
+        return "not-" + base.descriptivePathName();
     }
 }
