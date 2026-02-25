@@ -100,4 +100,8 @@ public class ThenAtLeastRater implements Rater {
     @Override public List<Domable> arguments() {
         return list(tree(leastCount + ""), constraint);
     }
+
+    @Override public String descriptivePathName() {
+        return "at-least-" + leastCount + "-comply-with-" + rater.descriptivePathName();
+    }
 }
