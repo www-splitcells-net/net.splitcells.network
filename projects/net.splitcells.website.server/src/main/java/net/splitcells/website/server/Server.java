@@ -339,7 +339,7 @@ public class Server {
                                     } else {
                                         vertx.<byte[]>executeBlocking(promise -> {
                                                     try {
-                                                        final String requestPath = requestPath(routingContext);
+                                                        final String requestPath = requestPath(routingContext).replace("%20", " ");
                                                         logs().append(tree("Processing web server rendering request.")
                                                                         .withProperty("Raw request path", routingContext.request().path())
                                                                         .withProperty("Interpreted request path", requestPath)
