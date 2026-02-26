@@ -53,24 +53,24 @@ public class Not implements Rater {
             , Line addition
             , List<Constraint> children
             , View lineProcessingBeforeAddition) {
-        return invertRating(base.ratingAfterAddition(linesOfGroup, addition, children, lineProcessingBeforeAddition));
+        return invertRating(base.ratingAfterAddition(linesOfGroup, addition, children, lineProcessingBeforeAddition), children);
     }
 
     @Override public RatingEvent rating_before_removal(View lines, Line removal, List<Constraint> children, View lineProcessingBeforeRemoval) {
-        return invertRating(base.rating_before_removal(lines, removal, children, lineProcessingBeforeRemoval));
+        return invertRating(base.rating_before_removal(lines, removal, children, lineProcessingBeforeRemoval), children);
     }
 
-    private static RatingEvent invertRating(RatingEvent arg) {
+    private static RatingEvent invertRating(RatingEvent arg, List<Constraint> children) {
         val inversion = ratingEvent();
         inversion.removal().addAll(arg.removal());
         arg.additions()
-                .forEach((line, localRating) -> inversion.additions().put(line, invert(localRating)));
+                .forEach((line, localRating) -> inversion.additions().put(line, invert(localRating, children)));
         arg.complexAdditions().forEach((line, ratings) ->
-                ratings.forEach(rating -> inversion.extendComplexRating(line, invert(rating))));
+                ratings.forEach(rating -> inversion.extendComplexRating(line, invert(rating, children))));
         return inversion;
     }
 
-    private static LocalRating invert(LocalRating localRating) {
+    private static LocalRating invert(LocalRating localRating, List<Constraint> children) {
         if (localRating.rating().equalz(noCost())) {
             return localRating()
                     .withRating(cost(1))
@@ -79,7 +79,7 @@ public class Not implements Rater {
         }
         return localRating()
                 .withRating(noCost())
-                .withPropagationTo(localRating.propagateTo())
+                .withPropagationTo(children)
                 .withResultingGroupId(localRating.resultingConstraintGroupId());
     }
 
