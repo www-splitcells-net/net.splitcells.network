@@ -78,9 +78,7 @@ public final class Lists {
     @SafeVarargs
     @JavaLegacy
     public static <T> List<T> list(T... args) {
-        final var list = ListI.<T>_list();
-        list.addAll(java.util.Arrays.asList(args));
-        return list;
+        return ListI.<T>_list(java.util.Arrays.asList(args));
     }
 
     public static <T> List<List<T>> listOfShallowCopies(List<T> element, int numberOfCopies) {
