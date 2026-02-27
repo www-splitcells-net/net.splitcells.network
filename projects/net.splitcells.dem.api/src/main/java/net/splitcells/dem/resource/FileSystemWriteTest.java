@@ -18,9 +18,11 @@ import java.util.stream.Stream;
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.resource.FileSystemViaMemory.fileSystemViaMemory;
+import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
 import static net.splitcells.dem.utils.StreamUtils.concat;
+import static net.splitcells.dem.utils.StringUtils.parseString;
 
 public class FileSystemWriteTest extends TestSuiteI {
 
@@ -47,6 +49,12 @@ public class FileSystemWriteTest extends TestSuiteI {
         requireNot(testSubject.isFile("not-existing"));
     }
 
+    public void testReadFileAsBytes(Supplier<FileSystem> factory) {
+        val testSubject = factory.get();
+        testSubject.writeToFile("test", "content".getBytes());
+        requireEquals(parseString(testSubject.readFileAsBytes("test")), "content");
+    }
+
     public void testCreateDirectoryPath(Supplier<FileSystem> factory) {
         require(factory.get().createDirectoryPath("test-directory").isDirectory(Path.of("test-directory")));
         require(factory.get().createDirectoryPath("test-directory").isDirectory("test-directory"));
@@ -57,6 +65,7 @@ public class FileSystemWriteTest extends TestSuiteI {
                 , dynamicTests(this::testExistsForSubFileSystem, factory)
                 , dynamicTests(this::testCreateDirectoryPath, factory)
                 , dynamicTests(this::testIsFile, factory)
+                , dynamicTests(this::testReadFileAsBytes, factory)
         );
     }
 }
