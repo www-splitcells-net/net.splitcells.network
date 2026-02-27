@@ -30,6 +30,7 @@ import java.util.function.Supplier;
 
 import static net.splitcells.dem.data.Flows.flow;
 import static net.splitcells.dem.data.order.Ordering.EQUAL;
+import static net.splitcells.dem.data.set.SetLegacyWrapper.setLegacyWrapper;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
@@ -125,7 +126,7 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
     Value put(Key key, Value value);
 
     default net.splitcells.dem.data.set.Set<Key> keySet2() {
-        return setOfUniques(keySet());
+        return setLegacyWrapper(keySet());
     }
 
     default Map<Key, Value> withMerged(Map<Key, Value> args, BiFunction<Value, Value, Value> mergeFunction) {
