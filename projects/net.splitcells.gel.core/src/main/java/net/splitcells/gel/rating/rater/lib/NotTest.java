@@ -31,11 +31,11 @@ public class NotTest {
     public void test() {
         final var testData = defineProblem("test")
                 .withDemandAttributes()
-                .withDemands(list(list(), list()))
+                .withDemands(list(list(), list(), list()))
                 .withSupplyAttributes()
-                .withSupplies(list(list(), list()))
+                .withSupplies(list(list(), list(), list()))
                 .withConstraint(r -> {
-                    r.then(not(hasSize(1)));
+                    r.then(not(hasSize(1))).then(hasSize(10));
                     return r;
                 }).toProblem()
                 .asSolution();
@@ -43,7 +43,7 @@ public class NotTest {
         val first = testData.assign(testData.demandsFree().anyLine(), testData.suppliesFree().anyLine());
         testData.constraint().rating().requireEqualsTo(cost(1));
         val second = testData.assign(testData.demandsFree().anyLine(), testData.suppliesFree().anyLine());
-        testData.constraint().rating().requireEqualsTo(noCost());
+        testData.constraint().rating().requireEqualsTo(cost(8));
         testData.remove(first);
         testData.constraint().rating().requireEqualsTo(cost(1));
         testData.remove(second);
