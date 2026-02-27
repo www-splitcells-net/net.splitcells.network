@@ -117,6 +117,7 @@ public class RenderingValidatorForHtmlLinks implements RenderingValidator {
 
     @Override
     public void endReport() {
+        // In the past the invalid link count was stored. Now nothing needs to be done.
     }
 
     public static String reportPath(String reportName) {
