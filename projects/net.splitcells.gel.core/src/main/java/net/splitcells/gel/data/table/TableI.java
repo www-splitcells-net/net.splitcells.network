@@ -390,6 +390,10 @@ public class TableI implements Table {
         return lines.stream();
     }
 
+    @Override public List<Line> unorderedLines() {
+        return listWithValuesOf(lines);
+    }
+
     @Override
     public List<Line> orderedLines() {
         return rawLines.stream()
