@@ -40,6 +40,13 @@ public class FileSystemWriteTest extends TestSuiteI {
         requireNot(factory.get().subFileSystem(Path.of("test")).exists());
     }
 
+    public void testIsFile(Supplier<FileSystem> factory) {
+        val testSubject = factory.get();
+        testSubject.writeToFile("test", "content".getBytes());
+        require(testSubject.isFile("test"));
+        requireNot(testSubject.isFile("not-existing"));
+    }
+
     public void testCreateDirectoryPath(Supplier<FileSystem> factory) {
         require(factory.get().createDirectoryPath("test-directory").isDirectory(Path.of("test-directory")));
         require(factory.get().createDirectoryPath("test-directory").isDirectory("test-directory"));
@@ -49,6 +56,7 @@ public class FileSystemWriteTest extends TestSuiteI {
         return concat(dynamicTests(this::testExists, factory)
                 , dynamicTests(this::testExistsForSubFileSystem, factory)
                 , dynamicTests(this::testCreateDirectoryPath, factory)
+                , dynamicTests(this::testIsFile, factory)
         );
     }
 }
