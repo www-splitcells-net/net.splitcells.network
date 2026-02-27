@@ -237,7 +237,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
                                 .orElseThrow()
                         , childrenView()
                         , lineProcessing.columnView(INCOMING_CONSTRAINT_GROUP).lookup(incomingGroup)));
-        final var suppliesToRemove = lineProcessing.suppliesFree().unorderedLinesStream().collect(toList());
+        final var suppliesToRemove = lineProcessing.suppliesFree().unorderedLines();
         suppliesToRemove.forEach(freeSupply -> results.remove(freeSupply));
     }
 
@@ -246,7 +246,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
                 lines.columnView(INCOMING_CONSTRAINT_GROUP).lookup(incomingGroup)
                 , childrenView()
                 , lineProcessing.columnView(INCOMING_CONSTRAINT_GROUP).lookup(incomingGroup)));
-        final var suppliesToRemove = lineProcessing.suppliesFree().unorderedLinesStream().collect(toList());
+        final var suppliesToRemove = lineProcessing.suppliesFree().unorderedLines();
         suppliesToRemove.forEach(freeSupply -> results.remove(freeSupply));
     }
 
