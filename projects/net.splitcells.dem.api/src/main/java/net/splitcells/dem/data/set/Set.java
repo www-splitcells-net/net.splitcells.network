@@ -141,13 +141,6 @@ public interface Set<T> extends java.util.Set<T>, SetT<T> {
         return Optional.empty();
     }
 
-    default Bool hasOnlyOnce(T arg) {
-        final var argCount = stream()
-                .filter(e -> e.equals(arg))
-                .count();
-        return Bools.bool(argCount <= 1);
-    }
-
     default void assertSizeIs(int expectedSize) {
         assertThat(this).hasSize(expectedSize);
     }
