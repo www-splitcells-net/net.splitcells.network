@@ -42,6 +42,7 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
@@ -383,6 +384,11 @@ public class TableI implements Table {
 
     @Override
     public Stream<Line> unorderedLinesStream() {
+        return lines.stream();
+    }
+
+    @Override
+    public Flow<Line> unorderedLinesStream2() {
         return lines.stream();
     }
 
