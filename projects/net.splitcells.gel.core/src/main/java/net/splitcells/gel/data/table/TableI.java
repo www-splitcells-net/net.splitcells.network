@@ -314,7 +314,7 @@ public class TableI implements Table {
                 throw ExecutionException.execException(lineIndex + ":" + rawLines.size() + path());
             }
             requireNotNull(rawLines.get(lineIndex));
-            lines.hasOnlyOnce(rawLines.get(lineIndex));
+            lines.requirePresenceOf(rawLines.get(lineIndex));
             columns.forEach(column -> {
                 require(lineIndex < column.size());
                 requireEqualInts(rawLines.size(), column.size());
