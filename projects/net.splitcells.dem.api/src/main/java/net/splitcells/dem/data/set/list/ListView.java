@@ -26,6 +26,7 @@ import net.splitcells.dem.utils.ExecutionException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.order.Ordering.EQUAL;
@@ -76,12 +77,12 @@ public interface ListView<T> extends Collection<T>, java.util.List<T>, Thing, Se
     }
 
     default void requireSizeOf(int arg) {
-        requireSizeOf(arg, "List should be size of " + arg + " but has size of " + size() + " instead: " + this);
+        requireSizeOf(arg, () -> "List should be size of " + arg + " but has size of " + size() + " instead: " + this);
     }
 
-    default void requireSizeOf(int arg, String errorMessage) {
+    default void requireSizeOf(int arg, Supplier<String> errorMessage) {
         if (size() != arg) {
-            throw ExecutionException.execException(errorMessage);
+            throw ExecutionException.execException(errorMessage.get());
         }
     }
 
