@@ -21,7 +21,7 @@ public class DefaultEditorOptimization implements EditorOptimization {
 
     @Override public void optimize(Editor editor) {
         val solutionPaths = editor.solutionPaths();
-        solutionPaths.requireSizeOf(1, getClass().getName() + " only supports a list of solutions and not a full tree or even graph of interdependent solutions."
+        solutionPaths.requireSizeOf(1, () -> getClass().getName() + " only supports a list of solutions and not a full tree or even graph of interdependent solutions."
                 + " In other words, every solution is only allowed to have at most 1 solution as its demand or supply."
                 + " Furthermore, the solution's interdependencies are not allowed to form a circle.");
         for (int i = solutionPaths.get(0).size() - 1; i > -1; --i) {
