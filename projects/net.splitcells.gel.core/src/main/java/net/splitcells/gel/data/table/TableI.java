@@ -382,13 +382,11 @@ public class TableI implements Table {
                 .orElseThrow();
     }
 
-    @Override
-    public Stream<Line> unorderedLinesStream() {
+    @Override public Stream<Line> unorderedLinesStream() {
         return lines.stream();
     }
 
-    @Override
-    public Flow<Line> unorderedLinesStream2() {
+    @Override public Flow<Line> unorderedLinesStream2() {
         return lines.stream();
     }
 
