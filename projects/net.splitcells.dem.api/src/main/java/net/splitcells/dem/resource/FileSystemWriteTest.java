@@ -6,6 +6,7 @@ package net.splitcells.dem.resource;
 
 import lombok.val;
 import net.splitcells.dem.testing.TestSuiteI;
+import net.splitcells.dem.utils.StringUtils;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.TestFactory;
@@ -17,6 +18,7 @@ import java.util.stream.Stream;
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.resource.FileSystemViaMemory.fileSystemViaMemory;
+import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
 import static net.splitcells.dem.utils.StreamUtils.concat;
 
@@ -27,6 +29,11 @@ public class FileSystemWriteTest extends TestSuiteI {
     }
 
     public void testExistsForSubFileSystem(Supplier<FileSystem> factory) {
+        requireThrow(() -> {
+            val testSubject = factory.get();
+            testSubject.writeToFile("test", "content".getBytes());
+            testSubject.createDirectoryPath("test");
+        });
         require(factory.get().createDirectoryPath("test").subFileSystem("test").exists());
         require(factory.get().createDirectoryPath("test").subFileSystem(Path.of("test")).exists());
         requireNot(factory.get().subFileSystem("test").exists());
