@@ -65,10 +65,8 @@ public final class Lists {
     }
 
     @JavaLegacy
-    public static <T> List<T> listWithValuesOf(java.util.Collection<T> values) {
-        final var list = Lists.<T>list();
-        list.addAll(values);
-        return list;
+    public static <T> List<T> listWithValuesOf(java.util.Collection<T> startContent) {
+        return ListI._list(startContent);
     }
 
     @SafeVarargs

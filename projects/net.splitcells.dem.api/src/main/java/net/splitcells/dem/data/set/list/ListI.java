@@ -20,6 +20,7 @@ import net.splitcells.dem.data.Flows;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 @JavaLegacy
 public class ListI<T> extends ArrayList<T> implements List<T> {
@@ -27,7 +28,15 @@ public class ListI<T> extends ArrayList<T> implements List<T> {
         return new ListI<>();
     }
 
+    public static <T> List<T> _list(Collection<T> startContent) {
+        return new ListI<>(startContent);
+    }
+
     private ListI() {
+    }
+    
+    private ListI(Collection<T> startContent) {
+        super(startContent);
     }
 
     @Override
