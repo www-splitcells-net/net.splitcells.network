@@ -51,7 +51,7 @@ import static org.junit.platform.engine.TestExecutionResult.Status.SUCCESSFUL;
  * <p>Each CSV file contains the 2 columns "Date" and "Execution Time".
  * The first one has the executions date of the test case.
  * The second one contains the execution time for the corresponding test case.</p>
- * <p>{@link #BUILDER_RUNTIME_LOG}"/&lt;host&gt;.csv" contains the start times of all runs for a given host.
+ * <p>{@link #RUNTIME_FOLDER}"/&lt;host&gt;.csv" contains the start times of all runs for a given host.
  * </p>
  */
 @JavaLegacy
@@ -65,7 +65,7 @@ public class Logger implements TestExecutionListener {
         return new Logger(networkProject);
     }
 
-    private static final String BUILDER_RUNTIME_LOG = "net/splitcells/network/logger/builder/runtime";
+    public static final Path RUNTIME_FOLDER = Path.of("net/splitcells/network/logger/builder/runtime");
 
     private final FileSystem logProject;
     private final Map<TestIdentifier, Long> testToStartTime = map();
@@ -127,7 +127,7 @@ public class Logger implements TestExecutionListener {
         final var splitTestIdentifier = list(testIdentifier.split("/"));
         final Optional<String> testPath;
         if (splitTestIdentifier.size() == 1) {
-            testPath = Optional.of(BUILDER_RUNTIME_LOG);
+            testPath = Optional.of(RUNTIME_FOLDER.toString());
         } else {
             testPath = splitTestIdentifier
                     .withRemovedByIndex(0)

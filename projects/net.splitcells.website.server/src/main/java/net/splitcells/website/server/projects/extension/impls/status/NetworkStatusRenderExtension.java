@@ -46,6 +46,7 @@ import static net.splitcells.dem.utils.CommonFunctions.getBytes;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StreamUtils.stream;
 import static net.splitcells.dem.utils.StringUtils.stringBuilder;
+import static net.splitcells.network.worker.via.java.Logger.RUNTIME_FOLDER;
 import static net.splitcells.network.worker.via.java.Logger.logger;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.projects.extension.impls.status.StatusReport.statusReport;
@@ -56,7 +57,6 @@ import static net.splitcells.website.server.projects.extension.impls.status.Stat
 public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
     private static final String STATUS_DOCUMENT_PATH = "net/splitcells/network/status.html";
     private static final String STATUS_PATH = "net/splitcells/network/status.csv";
-    private static final Path RUNTIME_FOLDER = Path.of("net/splitcells/network/logger/builder/runtime");
 
     private static final int DAY_WARNING_THRESHOLD = 30;
 
