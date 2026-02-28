@@ -92,7 +92,7 @@
             the more and more complexity is collected and every code change becomes harder.
             Use this complexity in order to enforce good programming.
             In other words, the more complex the software is, the easier it is to write bad code and
-            the more damage such code will create.
+            the more damage such code will create immediately.
             This in turn increases the incentives to code correctly.
         </paragraph>
         <paragraph>In order to contain the cost of maintaining features,
