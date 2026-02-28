@@ -37,6 +37,7 @@ import static net.splitcells.dem.resource.ContentType.CSV;
 import static net.splitcells.dem.resource.communication.log.LogLevel.WARNING;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.network.worker.via.java.repo.Repositories.repository;
+import static org.junit.platform.engine.TestExecutionResult.Status.SUCCESSFUL;
 
 /**
  * <p>Logs the runtime of tests into a project folder
@@ -108,7 +109,8 @@ public class Logger implements TestExecutionListener {
     @Override
     public void executionFinished(TestIdentifier testIdentifier, TestExecutionResult testExecutionResult) {
         final var testPath = parseTestIdentifier(testIdentifier.getUniqueId());
-        if (testPath.isPresent()) {
+        
+        if (testPath.isPresent() && SUCCESSFUL.equals(testExecutionResult.getStatus())) {
             final var endDateTime = System.nanoTime();
             final var startDateTime = testToStartTime.get(testIdentifier);
             final var runTime = (endDateTime - startDateTime) / 1_000_000_000d;
