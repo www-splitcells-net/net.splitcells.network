@@ -62,7 +62,8 @@
             are avoided as long as there is no concrete need for it.
             Therefore, big, deep and fundamental adaptations may need to be done at any moment without any warning,
             as decisions are revisioned.
-            It is expected that the positives of the technical debt outweigh the negatives.
+        </paragraph>
+        <paragraph>It is expected that the positives of the technical debt outweigh the negatives.
             The minimization and containment of the adaptation costs by using migration based development for example
             is one of the highest priorities, as otherwise these costs will kill the project.
         </paragraph>
