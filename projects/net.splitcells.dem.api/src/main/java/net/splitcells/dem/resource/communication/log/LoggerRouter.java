@@ -68,11 +68,10 @@ public class LoggerRouter implements Logger {
     public <R extends AppendableList<LogMessage<Tree>>> R append(LogMessage<Tree> arg) {
         if (messageFilter.test(arg)) {
             boolean noMatch = true;
-            for (Discoverable tag : arg.tags()) {
-                val tagPath = tag.path();
-                if (routing.hasKey(tagPath)) {
+            for (List<String> tag : arg.tags()) {
+                if (routing.hasKey(tag)) {
                     noMatch = false;
-                    routing.get(tagPath).append(arg);
+                    routing.get(tag).append(arg);
                 }
             }
             if (noMatch) {

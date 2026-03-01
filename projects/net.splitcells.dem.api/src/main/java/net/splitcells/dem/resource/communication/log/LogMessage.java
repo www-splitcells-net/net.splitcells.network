@@ -30,7 +30,7 @@ public interface LogMessage<T> extends Discoverable {
 
 	LogLevel priority();
 	
-	default List<Discoverable> tags() {
+	default List<List<String>> tags() {
 		return list();
 	}
 }
