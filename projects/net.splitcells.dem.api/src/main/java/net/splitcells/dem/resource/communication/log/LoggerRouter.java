@@ -26,10 +26,6 @@ import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.host.ProcessPath;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.nio.file.Path;
-import java.time.format.DateTimeFormatter;
 import java.util.function.Predicate;
 
 import static net.splitcells.dem.Dem.environment;
@@ -47,7 +43,6 @@ import static net.splitcells.dem.resource.Files.createDirectory;
  * with a default logger,
  * that allows one to inject log message interceptors.</p>
  */
-@JavaLegacy
 public class LoggerRouter implements Logger {
 
     public static LoggerRouter loggerRouter(Logger argDefaultLogger, Predicate<LogMessage<Tree>> messageFilter) {
