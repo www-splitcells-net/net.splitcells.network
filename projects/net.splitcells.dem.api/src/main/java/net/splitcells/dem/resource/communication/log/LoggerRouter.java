@@ -81,6 +81,11 @@ public class LoggerRouter implements Logger {
         return (R) this;
     }
 
+    public LoggerRouter registerRouting(List<String> path, Logger logger) {
+        routing.put(path, logger);
+        return this;
+    }
+
     @Override
     public void close() {
         routing.values().forEach(Logger::close);
