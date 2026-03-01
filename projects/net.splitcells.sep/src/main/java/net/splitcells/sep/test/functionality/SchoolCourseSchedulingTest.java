@@ -51,7 +51,6 @@ import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.resource.communication.log.LoggerRouter.uiRouter;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.MathUtils.*;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -176,8 +175,7 @@ public class SchoolCourseSchedulingTest {
             env.config()
                     .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
                     .withConfigValue(IsEchoToFile.class, true)
-                    .withConfigValue(MessageFilter.class, logMessage -> logMessage.path().equals(list("demands", "Solution", "isComplete", "optimize", "after", "cost")))
-                    .withConfigValue(Logs.class, uiRouter(env.config().configValue(MessageFilter.class)));
+                    .withConfigValue(MessageFilter.class, logMessage -> logMessage.path().equals(list("demands", "Solution", "isComplete", "optimize", "after", "cost")));
         }));
         if (false) {
             // TODO Will be done later. Simpler instance will be solved first.
@@ -241,8 +239,7 @@ public class SchoolCourseSchedulingTest {
                 env.config()
                         .withConfigValue(IsDeterministic.class, Optional.of(Bools.truthful()))
                         .withConfigValue(IsEchoToFile.class, true)
-                        .withConfigValue(MessageFilter.class, logMessage -> logMessage.path().equals(list("demands", "Solution", "isComplete", "optimize", "after", "cost")))
-                        .withConfigValue(Logs.class, uiRouter(env.config().configValue(MessageFilter.class)));
+                        .withConfigValue(MessageFilter.class, logMessage -> logMessage.path().equals(list("demands", "Solution", "isComplete", "optimize", "after", "cost")));
             }));
         }
     }
