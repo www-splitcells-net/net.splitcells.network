@@ -63,48 +63,6 @@ public class LoggerRouter implements Logger {
     @Override
     public <R extends AppendableList<LogMessage<Tree>>> R append(LogMessage<Tree> arg) {
         if (messageFilter.test(arg)) {
-            if (!routing.containsKey(arg.path())) {
-                Path consolePath;
-                if (arg.path().isEmpty()) {
-                    consolePath = environment().config().configValue(ProcessPath.class)
-                            .resolve("src")
-                            .resolve("main")
-                            .resolve("csv");
-                    createDirectory(consolePath);
-                    consolePath = consolePath.resolve
-                            (environment()
-                                    .config()
-                                    .configValue(StartTime.class)
-                                    .format(DateTimeFormatter.ofPattern("yyyy.MM.dd.HH.mm.ss.nnnn")));
-                } else if (arg.path().size() == 1) {
-                    consolePath = environment().config().configValue(ProcessPath.class)
-                            .resolve("src")
-                            .resolve("main")
-                            .resolve("csv");
-                    createDirectory(consolePath);
-                    // TODO HACK File Suffix
-                    consolePath = consolePath.resolve(arg.path().get(0) + ".csv");
-                } else {
-                    final var filePath = Lists.listWithValuesOf(arg.path());
-                    // TODO HACK File Suffix
-                    final var file = filePath.remove(filePath.size() - 1) + ".csv";
-                    consolePath = environment().config().configValue(ProcessPath.class)
-                            .resolve("src")
-                            .resolve("main")
-                            .resolve("csv");
-                    for (String e : filePath) {
-                        consolePath = consolePath.resolve(e);
-                    }
-                    createDirectory(consolePath);
-                    consolePath = consolePath.resolve(file);
-                }
-                try {
-                    routing.put(arg.path()
-                            , logBasedOnPerspective(stringSender(new FileOutputStream(consolePath.toFile())), messageFilter));
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(arg.path().toString(), e);
-                }
-            }
             routing.get(arg.path()).append(arg);
         }
         return (R) this;
