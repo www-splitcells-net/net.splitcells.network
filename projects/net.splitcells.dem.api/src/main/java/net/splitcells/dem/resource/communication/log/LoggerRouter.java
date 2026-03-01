@@ -47,7 +47,6 @@ import static net.splitcells.dem.resource.Files.createDirectory;
  * with a default logger,
  * that allows one to inject log message interceptors.</p>
  */
-@Deprecated
 @JavaLegacy
 public class LoggerRouter implements Logger {
 
