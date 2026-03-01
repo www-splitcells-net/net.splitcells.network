@@ -20,6 +20,11 @@ import net.splitcells.dem.object.Discoverable;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 
+/**
+ * TODO Remove {@link Discoverable}, as {@link #tags()} is replacing it.
+ * 
+ * @param <T>
+ */
 public interface LogMessage<T> extends Discoverable {
 	T content();
 
