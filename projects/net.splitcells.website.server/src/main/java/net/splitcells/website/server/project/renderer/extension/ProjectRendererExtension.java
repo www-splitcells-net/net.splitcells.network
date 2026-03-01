@@ -22,6 +22,7 @@ import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.projects.ProjectsRenderer;
+import net.splitcells.website.server.projects.RenderRequest;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
 
 import java.nio.file.Path;
@@ -64,8 +65,22 @@ public interface ProjectRendererExtension {
      * In other words, an empty {@link Optional} and
      * an {@link Optional} {@link PageMetaData} with only the path being present are equivalent.
      * This is done in such a way, in order to have a fast default implementation.
+     * @deprecated {@link #metaData(RenderRequest, ProjectsRenderer, ProjectRenderer)}
      */
-    default Optional<PageMetaData> metaData(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
+    @Deprecated default Optional<PageMetaData> metaData(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
+        return Optional.empty();
+    }
+
+    /**
+     * @param request
+     * @param projectsRenderer
+     * @param projectRenderer
+     * @return Returns an empty {@link Optional}, if the file is known, but no additional data can be provided.
+     * In other words, an empty {@link Optional} and
+     * an {@link Optional} {@link PageMetaData} with only the path being present are equivalent.
+     * This is done in such a way, in order to have a fast default implementation.
+     */
+    default Optional<PageMetaData> metaData(RenderRequest request, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
         return Optional.empty();
     }
 
