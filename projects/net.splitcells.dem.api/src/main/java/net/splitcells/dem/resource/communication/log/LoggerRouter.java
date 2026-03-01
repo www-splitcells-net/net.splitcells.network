@@ -37,14 +37,13 @@ import static net.splitcells.dem.resource.communication.log.LoggerImpl.logBasedO
 import static net.splitcells.dem.resource.Files.createDirectory;
 
 /**
- * TODO Log all used {@link LogMessage#path()} to dedicated file.
- *
- * TODO REMOVE This class seems to be a mess and was only used for tests.
+ * <p>TODO Log all used {@link LogMessage#path()} to dedicated file.</p>
+ * <p>TODO REMOVE This class seems to be a mess and was only used for tests.
  * This class is used in order to save statistics.
  * Unfortunately, this class is over specific to this task.
  * Instead the following is required: A Logger object,
  * with a default logger,
- * that allows one to inject log message interceptors.
+ * that allows one to inject log message interceptors.</p>
  */
 @Deprecated
 @JavaLegacy
