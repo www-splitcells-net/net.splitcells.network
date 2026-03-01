@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.resource.communication.log;
 
+import lombok.val;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.AppendableList;
 import net.splitcells.dem.data.set.list.Lists;
@@ -22,6 +23,7 @@ import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.StartTime;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.host.ProcessPath;
 
 import java.io.FileNotFoundException;
@@ -49,21 +51,33 @@ import static net.splitcells.dem.resource.Files.createDirectory;
 @JavaLegacy
 public class LoggerRouter implements Logger {
 
-    public static LoggerRouter loggerRouter(Predicate<LogMessage<Tree>> messageFilter) {
-        return new LoggerRouter(messageFilter);
+    public static LoggerRouter loggerRouter(Logger argDefaultLogger, Predicate<LogMessage<Tree>> messageFilter) {
+        return new LoggerRouter(argDefaultLogger, messageFilter);
     }
 
+    private final Logger defaultLogger;
     private final Map<List<String>, Logger> routing = map();
     private final Predicate<LogMessage<Tree>> messageFilter;
 
-    private LoggerRouter(Predicate<LogMessage<Tree>> messageFilter) {
+    private LoggerRouter(Logger argDefaultLogger, Predicate<LogMessage<Tree>> messageFilter) {
+        defaultLogger = argDefaultLogger;
         this.messageFilter = messageFilter;
     }
 
     @Override
     public <R extends AppendableList<LogMessage<Tree>>> R append(LogMessage<Tree> arg) {
         if (messageFilter.test(arg)) {
-            routing.get(arg.path()).append(arg);
+            boolean noMatch = true;
+            for (Discoverable tag : arg.tags()) {
+                val tagPath = tag.path();
+                if (routing.hasKey(tagPath)) {
+                    noMatch = false;
+                    routing.get(tagPath).append(arg);
+                }
+            }
+            if (noMatch) {
+                defaultLogger.append(arg);
+            }
         }
         return (R) this;
     }
