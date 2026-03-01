@@ -50,7 +50,7 @@ import static net.splitcells.dem.resource.Files.createDirectory;
 @JavaLegacy
 public class LoggerRouter implements Logger {
 
-    public static LoggerRouter uiRouter(Predicate<LogMessage<Tree>> messageFilter) {
+    public static LoggerRouter loggerRouter(Predicate<LogMessage<Tree>> messageFilter) {
         return new LoggerRouter(messageFilter);
     }
 
