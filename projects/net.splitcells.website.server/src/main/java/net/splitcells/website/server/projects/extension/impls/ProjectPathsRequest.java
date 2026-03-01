@@ -20,6 +20,9 @@ import net.splitcells.website.server.security.authentication.UserSession;
 
 import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
 
+/**
+ * An instance to request all website paths via {@link ProjectsRenderer#projectPaths(ProjectPathsRequest)}.
+ */
 public class ProjectPathsRequest {
     public static ProjectPathsRequest projectPathsRequest(ProjectsRenderer projectsRenderer) {
         return new ProjectPathsRequest(projectsRenderer);
