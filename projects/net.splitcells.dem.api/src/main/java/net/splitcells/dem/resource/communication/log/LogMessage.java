@@ -29,7 +29,13 @@ public interface LogMessage<T> extends Discoverable {
 	T content();
 
 	LogLevel priority();
-	
+
+	/**
+	 * {@link Discoverable} is not returned,
+	 * as this would require direct access to an object with {@link Discoverable#path()}.
+	 * 
+	 * @return
+	 */
 	default List<List<String>> tags() {
 		return list();
 	}
