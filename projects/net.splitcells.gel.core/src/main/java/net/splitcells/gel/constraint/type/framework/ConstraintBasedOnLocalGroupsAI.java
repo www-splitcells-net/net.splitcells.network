@@ -593,7 +593,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         final var naturalArgumentation = lineProcessing
                 .columnView(INCOMING_CONSTRAINT_GROUP)
                 .lookup(group)
-                .unorderedLines()
+                .orderedLines()
                 .stream()
                 .map(allocation -> allocation.value(LINE))
                 .map(line -> naturalArgumentation(line, group, AllocationSelector::selectLinesWithCost))
