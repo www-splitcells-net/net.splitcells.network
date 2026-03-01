@@ -60,7 +60,7 @@ public interface ProjectRendererExtension {
      * @param path
      * @param projectsRenderer
      * @param projectRenderer
-     * @return Returns an empty {@link Optional}, if the file is known, but know additional data can be provided.
+     * @return Returns an empty {@link Optional}, if the file is known, but no additional data can be provided.
      * In other words, an empty {@link Optional} and
      * an {@link Optional} {@link PageMetaData} with only the path being present are equivalent.
      * This is done in such a way, in order to have a fast default implementation.
