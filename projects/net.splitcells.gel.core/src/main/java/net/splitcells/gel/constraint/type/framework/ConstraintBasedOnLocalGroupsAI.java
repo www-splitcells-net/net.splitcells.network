@@ -637,7 +637,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
                 .lookup(line)
                 .columnView(INCOMING_CONSTRAINT_GROUP)
                 .lookup(group)
-                .unorderedLines()
+                .orderedLines()
                 .stream()
                 .filter(allocation
                         -> allocationSelector

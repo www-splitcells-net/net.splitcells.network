@@ -15,12 +15,18 @@
  */
 package net.splitcells.gel.solution.optimization.primitive;
 
+import net.splitcells.dem.Dem;
+import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
+import static net.splitcells.dem.data.atom.Bools.truthful;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -41,91 +47,96 @@ public class ConstraintGroupBasedOfflineRepairTest {
 
     @Test
     public void test_repair_of_defying_group() {
-        final var a = attribute(Integer.class, "a");
-        final var b = attribute(Integer.class, "b");
-        final var invalidValueA = 1;
-        final var invalidValueB = 3;
-        final var validValue = 5;
-        final var defyingGroupA = then(cost(1));
-        final var defyingGroupB = then(cost(1));
-        /**
-         * Needless constraints are added, in order to check, if the correct {@link Constraint} is selected.
-         */
-        @SuppressWarnings("unchecked") final var solution
-                = defineProblem()
-                .withDemandAttributes(a, b)
-                .withDemands
-                        (list(invalidValueA, 1)
-                                , list(invalidValueA, 1)
-                                , list(invalidValueA, 2)
-                                , list(invalidValueA, 2)
-                                , list(2, invalidValueB)
-                                , list(2, invalidValueB)
-                                , list(validValue, validValue))
-                .withSupplyAttributes()
-                .withSupplies
-                        (list()
-                                , list()
-                                , list()
-                                , list()
-                                , list()
-                                , list()
-                                , list()
-                                , list()
-                                , list()
-                                , list()
-                                , list()
-                        )
-                .withConstraint
-                        (forAll().withChildren
-                                (forAllWithValue(a, validValue).withChildren(then(noCost()))
-                                        , forAllWithValue(b, validValue).withChildren(then(noCost()))
-                                        , forAllWithValue(a, invalidValueA).withChildren(defyingGroupA)
-                                        , forAllWithValue(b, invalidValueB).withChildren(defyingGroupB)
-                                        , forAllWithValue(a, validValue).withChildren(then(noCost()))
-                                        , forAllWithValue(b, validValue).withChildren(then(noCost()))))
-                .toProblem()
-                .asSolution();
-        solution.optimize(offlineLinearInitialization());
-        // Select the first defying group.
-        final var testSubject = ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(
-                constraintGroup -> list(constraintGroup.get(6))
-                , (freeDemandGroups, freedSupplies) -> currentSolution -> {
-                    final List<OptimizationEvent> repairs = list();
-                    final var i = list(0);
-                    freeDemandGroups.entrySet().forEach(freeGroup -> {
-                        freeGroup.getValue().forEach(freeDemand -> {
-                            final var i2 = i.get(0);
-                            repairs.add(
-                                    optimizationEvent(
-                                            ADDITION
-                                            , freeDemand.toLinePointer()
-                                            , currentSolution.suppliesFree().unorderedLines().get(i2).toLinePointer()
-                                    ));
-                            i.set(0, i2 + 1);
+        Dem.process(() -> {
+
+            final var a = attribute(Integer.class, "a");
+            final var b = attribute(Integer.class, "b");
+            final var invalidValueA = 1;
+            final var invalidValueB = 3;
+            final var validValue = 5;
+            final var defyingGroupA = then(cost(1));
+            final var defyingGroupB = then(cost(1));
+            /**
+             * Needless constraints are added, in order to check, if the correct {@link Constraint} is selected.
+             */
+            @SuppressWarnings("unchecked") final var solution
+                    = defineProblem()
+                    .withDemandAttributes(a, b)
+                    .withDemands
+                            (list(invalidValueA, 1)
+                                    , list(invalidValueA, 1)
+                                    , list(invalidValueA, 2)
+                                    , list(invalidValueA, 2)
+                                    , list(2, invalidValueB)
+                                    , list(2, invalidValueB)
+                                    , list(validValue, validValue))
+                    .withSupplyAttributes()
+                    .withSupplies
+                            (list()
+                                    , list()
+                                    , list()
+                                    , list()
+                                    , list()
+                                    , list()
+                                    , list()
+                                    , list()
+                                    , list()
+                                    , list()
+                                    , list()
+                            )
+                    .withConstraint
+                            (forAll().withChildren
+                                    (forAllWithValue(a, validValue).withChildren(then(noCost()))
+                                            , forAllWithValue(b, validValue).withChildren(then(noCost()))
+                                            , forAllWithValue(a, invalidValueA).withChildren(defyingGroupA)
+                                            , forAllWithValue(b, invalidValueB).withChildren(defyingGroupB)
+                                            , forAllWithValue(a, validValue).withChildren(then(noCost()))
+                                            , forAllWithValue(b, validValue).withChildren(then(noCost()))))
+                    .toProblem()
+                    .asSolution();
+            solution.optimize(offlineLinearInitialization());
+            // Select the first defying group.
+            final var testSubject = ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(
+                    constraintGroup -> list(constraintGroup.get(6))
+                    , (freeDemandGroups, freedSupplies) -> currentSolution -> {
+                        final List<OptimizationEvent> repairs = list();
+                        final var i = list(0);
+                        freeDemandGroups.entrySet().forEach(freeGroup -> {
+                            freeGroup.getValue().forEach(freeDemand -> {
+                                final var i2 = i.get(0);
+                                repairs.add(
+                                        optimizationEvent(
+                                                ADDITION
+                                                , freeDemand.toLinePointer()
+                                                , currentSolution.suppliesFree().orderedLines().get(i2).toLinePointer()
+                                        ));
+                                i.set(0, i2 + 1);
+                            });
                         });
-                    });
-                    return repairs;
-                }
-        );
-        final var groupsOfConstraintGroup = testSubject.groupOfConstraintGroup(solution);
-        final var demandClassifications = groupsOfConstraintGroup
-                .stream()
-                .map(e -> e
-                        .lastValue()
-                        .map(f -> testSubject.demandGrouping(f, solution))
-                        .orElseGet(() -> map()))
-                .collect(toList());
-        final var testProduct = testSubject.repair(solution, demandClassifications.get(0), list());
-        testProduct.requireSizeOf(4);
-        final var freeSupplyIndexes = testProduct.stream()
-                .map(optimizationEvent -> optimizationEvent.supply().index())
-                .collect(toList());
-        freeSupplyIndexes.requireEquals(list(7, 8, 9, 10));
-        final var demandIndexes = testProduct.stream()
-                .map(optimizationEvent -> optimizationEvent.demand().index())
-                .collect(toList());
-        demandIndexes.requireContentsOf(0, 1, 2, 3);
+                        return repairs;
+                    }
+            );
+            final var groupsOfConstraintGroup = testSubject.groupOfConstraintGroup(solution);
+            final var demandClassifications = groupsOfConstraintGroup
+                    .stream()
+                    .map(e -> e
+                            .lastValue()
+                            .map(f -> testSubject.demandGrouping(f, solution))
+                            .orElseGet(() -> map()))
+                    .collect(toList());
+            final var testProduct = testSubject.repair(solution, demandClassifications.get(0), list());
+            testProduct.requireSizeOf(4);
+            final var freeSupplyIndexes = testProduct.stream()
+                    .map(optimizationEvent -> optimizationEvent.supply().index())
+                    .collect(toList());
+            freeSupplyIndexes.requireEquals(list(7, 8, 9, 10));
+            final var demandIndexes = testProduct.stream()
+                    .map(optimizationEvent -> optimizationEvent.demand().index())
+                    .collect(toList());
+            demandIndexes.requireContentsOf(0, 1, 2, 3);
+        }, env -> {
+            env.config().withConfigValue(IsDeterministic.class, Optional.of(truthful()));
+        });
     }
 
     @Test
