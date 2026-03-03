@@ -44,7 +44,7 @@ public class TemplateInitializer implements OfflineOptimization {
         final List<OptimizationEvent> optimization = list();
         final Set<Line> usedDemands = setOfUniques();
         final Set<Line> usedSupplies = setOfUniques();
-        template.unorderedLines().forEach(line -> {
+        template.orderedLines().forEach(line -> {
             final var demandValues = solution.demandsFree()
                     .headerView()
                     .stream()
