@@ -59,11 +59,11 @@ public class TemplateInitializerTest {
                                         , list(1, 2)
                                         , list(1, 1)
                                         , list(1, 1)))));
-        testProduct.unorderedLines().get(0).values().requireEquals(list(2, 1));
-        testProduct.unorderedLines().get(1).values().requireEquals(list(2, 1));
-        testProduct.unorderedLines().get(2).values().requireEquals(list(1, 2));
-        testProduct.unorderedLines().get(3).values().requireEquals(list(1, 2));
-        testProduct.unorderedLines().get(4).values().requireEquals(list(1, 1));
-        testProduct.unorderedLines().get(5).values().requireEquals(list(1, 1));
+        testProduct.orderedLine(0).values().requireEquals(list(2, 1));
+        testProduct.orderedLine(1).values().requireEquals(list(2, 1));
+        testProduct.orderedLine(2).values().requireEquals(list(1, 2));
+        testProduct.orderedLine(3).values().requireEquals(list(1, 2));
+        testProduct.orderedLine(4).values().requireEquals(list(1, 1));
+        testProduct.orderedLine(5).values().requireEquals(list(1, 1));
     }
 }
