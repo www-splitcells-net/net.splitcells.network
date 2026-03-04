@@ -84,25 +84,25 @@ public class TableModificationCounterAspect implements Table {
 
     @Override
     public Line add(Line line) {
-        configValue(TableModificationCounter.class).count(this, 1 + (long) line.values().size());
+        configValue(TableModificationCounter.class).count(this, 1 + (long) line.context().headerView().size());
         return table.add(line);
     }
 
     @Override
     public Line addWithSameHeaderPrefix(Line line) {
-        configValue(TableModificationCounter.class).count(this, 1 + (long) line.values().size());
+        configValue(TableModificationCounter.class).count(this, 1 + (long) line.context().headerView().size());
         return table.addWithSameHeaderPrefix(line);
     }
 
     @Override
     public void remove(int lineIndex) {
-        configValue(TableModificationCounter.class).count(this, 1 + (long) rawLine(lineIndex).values().size());
+        configValue(TableModificationCounter.class).count(this, 1 + (long) rawLine(lineIndex).context().headerView().size());
         table.remove(lineIndex);
     }
 
     @Override
     public void remove(Line line) {
-        configValue(TableModificationCounter.class).count(this, 1 + (long) line.values().size());
+        configValue(TableModificationCounter.class).count(this, 1 + (long) line.context().headerView().size());
         table.remove(line);
     }
 
