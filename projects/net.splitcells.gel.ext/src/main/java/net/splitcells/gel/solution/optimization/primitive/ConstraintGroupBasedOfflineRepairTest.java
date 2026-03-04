@@ -48,7 +48,6 @@ public class ConstraintGroupBasedOfflineRepairTest {
     @Test
     public void test_repair_of_defying_group() {
         Dem.process(() -> {
-
             final var a = attribute(Integer.class, "a");
             final var b = attribute(Integer.class, "b");
             final var invalidValueA = 1;
