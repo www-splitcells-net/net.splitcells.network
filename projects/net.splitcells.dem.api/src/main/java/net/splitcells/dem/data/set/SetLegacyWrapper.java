@@ -18,6 +18,7 @@ package net.splitcells.dem.data.set;
 import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.Flows;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
+import net.splitcells.dem.utils.ExecutionException;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -46,6 +47,20 @@ public class SetLegacyWrapper<T> implements Set<T> {
 
     public int size() {
         return this.content.size();
+    }
+
+    /**
+     * This implementation speeds up the default {@link Set#remove(Object)} implementation.
+     *
+     * @param arg This is the object to be removed from this set, if present.
+     * @return
+     */
+    @Override
+    public boolean remove(Object arg) {
+        if (!content.remove(arg)) {
+            throw ExecutionException.execException("" + arg);
+        }
+        return true;
     }
 
     @SuppressWarnings("all")
