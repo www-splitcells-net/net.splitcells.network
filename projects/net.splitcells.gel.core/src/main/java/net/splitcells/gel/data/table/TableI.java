@@ -70,6 +70,7 @@ import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 public class TableI implements Table {
     private final String name;
     private final Optional<Discoverable> parent;
+    private final List<String> parentPath;
     private final List<Attribute<Object>> attributes;
     private final List<Attribute<? extends Object>> attributes2;
     private final List<Column<Object>> columns = list();
@@ -121,6 +122,7 @@ public class TableI implements Table {
         final List<ColumnView<Object>> columnsViewViewList = list();
         columns.forEach(c -> columnsViewViewList.add(c));
         columnsViewView = listView(columnsViewViewList);
+        parentPath = this.parent.map(d -> d.path().shallowCopy()).orElseGet(Lists::list).withAppended(name);
     }
 
     public static Table tableI(List<Attribute<?>> attributes, Collection<List<Object>> linesValues) {
@@ -365,8 +367,8 @@ public class TableI implements Table {
     }
 
     @Override
-    public net.splitcells.dem.data.set.list.List<String> path() {
-        return parent.map(Discoverable::path).orElse(list()).withAppended(name);
+    public net.splitcells.dem.data.set.list.ListView<String> path() {
+        return parentPath;
     }
 
     @Override
@@ -474,7 +476,7 @@ public class TableI implements Table {
             }
 
             @Override
-            public List<String> path() {
+            public ListView<String> path() {
                 return threadSafeMirror.get().path();
             }
         };

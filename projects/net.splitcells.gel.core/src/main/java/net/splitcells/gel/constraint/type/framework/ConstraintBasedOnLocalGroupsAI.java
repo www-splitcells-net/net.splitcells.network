@@ -46,6 +46,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.data.set.list.List;
@@ -255,7 +256,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
     }
 
     @Override
-    public List<String> path() {
+    public ListView<String> path() {
         return this.parentPath.path();
     }
 
@@ -501,7 +502,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
 
     @Override
     public net.splitcells.dem.data.set.Set<net.splitcells.dem.data.set.list.List<String>> paths() {
-        return contexts.stream().map(Discoverable::path).collect(toSetOfUniques());
+        return contexts.stream().map(d -> d.path().shallowCopy()).collect(toSetOfUniques());
     }
 
     @Override

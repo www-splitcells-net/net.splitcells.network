@@ -17,6 +17,7 @@ package net.splitcells.dem.object;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.environment.config.ProgramRepresentative;
 
 import java.util.Optional;
@@ -78,7 +79,7 @@ public interface Discoverable {
      *
      * @return
      */
-    List<String> path();
+    ListView<String> path();
 
     default Discoverable child(List<String> extension) {
         final var rThis = this;

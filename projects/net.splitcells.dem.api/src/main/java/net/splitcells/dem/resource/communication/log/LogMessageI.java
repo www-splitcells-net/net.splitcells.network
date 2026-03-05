@@ -16,6 +16,7 @@
 package net.splitcells.dem.resource.communication.log;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.object.Discoverable;
 
 public class LogMessageI<T> implements LogMessage<T> {
@@ -50,7 +51,7 @@ public class LogMessageI<T> implements LogMessage<T> {
     }
 
     @Override
-    public List<String> path() {
+    public ListView<String> path() {
         return context.path();
     }
 

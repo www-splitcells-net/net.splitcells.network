@@ -319,7 +319,7 @@ public class MinimalDistance<T> implements Rater {
 
     @Override
     public Set<List<String>> paths() {
-        return contextes.stream().map(Discoverable::path).collect(toSetOfUniques());
+        return contextes.stream().map(d -> d.path().shallowCopy()).collect(toSetOfUniques());
     }
 
     private Stream<Line> sortedStream(View lines) {

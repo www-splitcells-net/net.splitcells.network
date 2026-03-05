@@ -116,7 +116,7 @@ public class ForAllValueCombinations implements Rater {
 
     @Override
     public Set<List<String>> paths() {
-        return contexts.stream().map(Discoverable::path).collect(Sets.toSetOfUniques());
+        return contexts.stream().map(d -> d.path().shallowCopy()).collect(Sets.toSetOfUniques());
     }
 
     @Override

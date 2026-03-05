@@ -17,6 +17,7 @@ package net.splitcells.gel.constraint.type.framework;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.dom.Domable;
@@ -62,7 +63,7 @@ public class ConstraintAspect implements Constraint {
     }
 
     @Override
-    public List<String> path() {
+    public ListView<String> path() {
         return constraint.path();
     }
 

@@ -16,6 +16,7 @@
 package net.splitcells.gel.data.lookup;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 
@@ -52,12 +53,14 @@ public class LookupManager<T> implements Lookup<T> {
     private long lookupWriteCount = 0;
     private long lastStrategyTime = 0;
     private final int minStrategyTime;
+    private final ListView<String> path;
 
     private LookupManager(View argView, Attribute<T> argAttribute, int argMinStrategyTime) {
         view = argView;
         attribute = argAttribute;
         persistedLookup = persistedLookupI(view, attribute, false);
         minStrategyTime = argMinStrategyTime;
+        path = view.path().shallowCopy().withAppended(attribute.name());
     }
 
     private void enablePersistedLookup() {
@@ -94,9 +97,7 @@ public class LookupManager<T> implements Lookup<T> {
     }
 
     @Override
-    public List<String> path() {
-        final List<String> path = view.path();
-        path.add(attribute.name());
+    public ListView<String> path() {
         return path;
     }
 
@@ -146,10 +147,6 @@ public class LookupManager<T> implements Lookup<T> {
     private View lookupIntern(Predicate<T> predicate) {
         if (isPersistedLookupActive) {
             return persistedLookup.persistedLookup(predicate);
-        }
-        final var lookupBasePath = view.path();
-        if (lookupBasePath.hasElements()) {
-            lookupBasePath.removeAt(lookupBasePath.size() - 1);
         }
         final var lookup = lookupTable(view, attribute);
         view.unorderedLinesStream()

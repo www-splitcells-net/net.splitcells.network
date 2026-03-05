@@ -16,6 +16,7 @@
 package net.splitcells.dem.testing;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.environment.config.framework.Option;
@@ -42,7 +43,7 @@ public class MetaCounter implements Discoverable, ImplicitEffect {
     /**
      * Maps {@link Discoverable} to {@link Counter}.
      */
-    private Map<List<String>, Counter> counters = synchronizedMap();
+    private Map<ListView<String>, Counter> counters = synchronizedMap();
     private Counter sumCounter = counter();
     private final Discoverable path;
 
@@ -63,7 +64,7 @@ public class MetaCounter implements Discoverable, ImplicitEffect {
         sumCounter.count(times);
     }
 
-    public Map<List<String>, Counter> counters() {
+    public Map<ListView<String>, Counter> counters() {
         return counters;
     }
 
@@ -72,7 +73,7 @@ public class MetaCounter implements Discoverable, ImplicitEffect {
     }
 
     @Override
-    public List<String> path() {
+    public ListView<String> path() {
         return path.path();
     }
 }

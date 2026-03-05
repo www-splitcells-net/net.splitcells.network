@@ -508,7 +508,7 @@ public class AssignmentsI implements Assignments {
     }
 
     @Override
-    public net.splitcells.dem.data.set.list.List<String> path() {
+    public ListView<String> path() {
         return assignments.path();
     }
 

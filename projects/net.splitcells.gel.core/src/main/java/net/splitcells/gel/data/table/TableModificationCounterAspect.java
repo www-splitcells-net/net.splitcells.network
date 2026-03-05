@@ -42,6 +42,8 @@ public class TableModificationCounterAspect implements Table {
     private TableModificationCounterAspect(Table argTable) {
         table = argTable;
         ObjectsRenderer.registerObject(new CsvRenderer() {
+            private final List<String> path = table.path().shallowCopy().withAppended("database-modification-counter.csv");
+
             @Override
             public String renderCsv() {
                 final var counter = configValue(TableModificationCounter.class)
@@ -64,8 +66,8 @@ public class TableModificationCounterAspect implements Table {
             }
 
             @Override
-            public List<String> path() {
-                return table.path().withAppended("database-modification-counter.csv");
+            public ListView<String> path() {
+                return path;
             }
         });
     }
@@ -177,7 +179,7 @@ public class TableModificationCounterAspect implements Table {
     }
 
     @Override
-    public List<String> path() {
+    public ListView<String> path() {
         return table.path();
     }
 

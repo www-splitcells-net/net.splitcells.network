@@ -16,6 +16,7 @@
 package net.splitcells.gel.data.table;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.testing.MetaCounter;
 import net.splitcells.website.server.project.renderer.CsvRenderer;
@@ -33,6 +34,11 @@ public class TableModificationCounter implements Option<MetaCounter> {
         final var metaCounter = metaCounter(discoverable(TableModificationCounter.class));
         configValue(Tables.class).withAspect(TableModificationCounterAspect::tableModificationCounterAspect);
         ObjectsRenderer.registerObject(new CsvRenderer() {
+            private final List<String> path = metaCounter
+                    .path()
+                    .shallowCopy()
+                    .modify(p -> p.set(p.size() - 1, p.get(p.size() - 1) + ".csv"));
+
             @Override
             public String renderCsv() {
                 return "time,count\n" + metaCounter.sumCounter().measurements()
@@ -47,9 +53,7 @@ public class TableModificationCounter implements Option<MetaCounter> {
             }
 
             @Override
-            public List<String> path() {
-                final var path = metaCounter.path();
-                path.set(path.size() - 1, path.get(path.size() - 1) + ".csv");
+            public ListView<String> path() {
                 return path;
             }
         });

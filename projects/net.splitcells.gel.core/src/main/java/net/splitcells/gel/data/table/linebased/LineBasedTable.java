@@ -18,6 +18,7 @@ package net.splitcells.gel.data.table.linebased;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.utils.ExecutionException;
@@ -63,6 +64,7 @@ public class LineBasedTable implements Table {
     private final Set<Integer> indexesOfFree = setOfUniques();
     private final Map<Attribute<?>, Integer> typedColumnIndex = map();
     private Optional<Constraint> constraint = Optional.empty();
+    private final ListView<String> path;
 
     public static Table lineBasedDatabase(String name, Optional<Discoverable> parent, List<Attribute<Object>> attributes) {
         return new LineBasedTable(name, parent, attributes);
@@ -79,7 +81,7 @@ public class LineBasedTable implements Table {
         range(0, attributes.size()).forEach(i -> typedColumnIndex.put(attributes.get(i), i));
         columns.forEach(this::subscribeToAfterAdditions);
         columns.forEach(this::subscribeToBeforeRemoval);
-
+        path = parent.map(d -> d.path().shallowCopy()).orElseGet(Lists::list).withAppended(name);
     }
 
     @Override
@@ -88,8 +90,8 @@ public class LineBasedTable implements Table {
     }
 
     @Override
-    public List<String> path() {
-        return parent.map(Discoverable::path).orElse(list()).withAppended(name);
+    public ListView<String> path() {
+        return path;
     }
 
     @Override

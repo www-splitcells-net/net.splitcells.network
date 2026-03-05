@@ -382,7 +382,9 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
 
     @Override
     public Set<List<String>> paths() {
-        return contextes.stream().map(Discoverable::path).collect(Sets.toSetOfUniques());
+        return contextes.stream()
+                .map(d -> d.path().shallowCopy())
+                .collect(Sets.toSetOfUniques());
     }
 
     private List<Line> sorted(View lines) {

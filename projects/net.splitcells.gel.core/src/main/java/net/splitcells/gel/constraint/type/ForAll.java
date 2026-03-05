@@ -22,6 +22,7 @@ import static net.splitcells.gel.rating.rater.lib.classification.RaterBasedOnGro
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.object.Discoverable;
@@ -116,7 +117,7 @@ public class ForAll implements Constraint {
     }
 
     @Override
-    public List<String> path() {
+    public ListView<String> path() {
         return constraint.path();
     }
 

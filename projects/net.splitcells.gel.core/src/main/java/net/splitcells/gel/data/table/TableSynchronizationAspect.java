@@ -280,7 +280,7 @@ public class TableSynchronizationAspect implements Table {
     }
 
     @Override
-    public synchronized List<String> path() {
+    public synchronized ListView<String> path() {
         return content.path();
     }
 

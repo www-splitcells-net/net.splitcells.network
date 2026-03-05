@@ -70,6 +70,7 @@ public class PersistedLookupViewI implements PersistedLookupView {
     private final List<ColumnView<Object>> columnsView;
     private final List<Line> rawLinesCache = list();
     private final Map<Integer, Line> rawLinesHashedCache = map();
+    private final ListView<String> path;
 
     private final boolean useExperimentalRawLineCache;
 
@@ -141,6 +142,7 @@ public class PersistedLookupViewI implements PersistedLookupView {
         columnsView = Lists.<ColumnView<Object>>list();
         columnsView.addAll(lookupColumns);
         this.useExperimentalRawLineCache = useExperimentalRawLineCache;
+        path = viewView.path().shallowCopy().withAppended(PersistedLookupView.class.getSimpleName() + "(" + name + ")");
     }
 
     @Override
@@ -343,9 +345,7 @@ public class PersistedLookupViewI implements PersistedLookupView {
     }
 
     @Override
-    public List<String> path() {
-        final var path = viewView.path();
-        path.add(PersistedLookupView.class.getSimpleName() + "(" + name + ")");
+    public ListView<String> path() {
         return path;
     }
 

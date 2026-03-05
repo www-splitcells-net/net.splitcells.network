@@ -123,7 +123,7 @@ public class PersistedLookupViewModificationCounterAspect implements PersistedLo
     }
 
     @Override
-    public List<String> path() {
+    public ListView<String> path() {
         return persistedLookupView.path();
     }
 

@@ -22,6 +22,7 @@ import static net.splitcells.gel.rating.rater.lib.ConstantRater.constantRater;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.lang.tree.Tree;
@@ -89,7 +90,7 @@ public class Then implements Constraint {
     }
 
     @Override
-    public List<String> path() {
+    public ListView<String> path() {
         return constraint.path();
     }
 

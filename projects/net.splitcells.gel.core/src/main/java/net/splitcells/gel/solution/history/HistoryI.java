@@ -35,6 +35,7 @@ import static net.splitcells.gel.solution.history.meta.type.AllocationNaturalArg
 import static net.splitcells.gel.solution.history.meta.type.AllocationRating.allocationRating;
 import static net.splitcells.gel.solution.history.meta.type.CompleteRating.completeRating;
 
+import lombok.val;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
@@ -79,15 +80,16 @@ public class HistoryI implements History {
     private boolean logNaturalArgumentation = false;
 
     private HistoryI(Solution solution) {
+        val historyParentPath = solution.path().shallowCopy().withAppended(HISTORY.value());
         assignments = Assignmentss.assignments
                 (HISTORY.value()
                         , Tables.table
                                 (EVENT.value()
-                                        , () -> solution.path().withAppended(HISTORY.value())
+                                        , () -> historyParentPath
                                         , list(ALLOCATION_ID, ALLOCATION_EVENT))
                         , Tables.table
                                 (RESULT.value()
-                                        , () -> solution.path().withAppended(HISTORY.value())
+                                        , () -> historyParentPath
                                         , list(META_DATA)));
         this.solution = solution;
         solution.subscribeToAfterAdditions(this);
@@ -607,7 +609,7 @@ public class HistoryI implements History {
     }
 
     @Override
-    public List<String> path() {
+    public ListView<String> path() {
         return assignments.path();
     }
 

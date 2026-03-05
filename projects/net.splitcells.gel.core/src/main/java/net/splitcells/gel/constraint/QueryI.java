@@ -207,7 +207,7 @@ public class QueryI implements Query, QueryEditor {
             }
         } else if (isBuilder) {
             resultBase = Optional.of(ForAlls.forEach(classifier
-                    , Optional.of(discoverable(currentConstraint.path()))));
+                    , Optional.of(discoverable(currentConstraint.path().shallowCopy()))));
             currentConstraint.withChildren(resultBase.get());
             resultingGroups.addAll(groups);
         } else {
@@ -249,7 +249,7 @@ public class QueryI implements Query, QueryEditor {
             }
         } else if (isBuilder) {
             resultBase = Optional.of(ForAlls.forEach(attribute
-                    , Optional.of(discoverable(currentConstraint.path()))));
+                    , Optional.of(discoverable(currentConstraint.path().shallowCopy()))));
             currentConstraint.withChildren(resultBase.get());
             resultingGroup.addAll(groups);
         } else {
@@ -283,7 +283,7 @@ public class QueryI implements Query, QueryEditor {
             throw ExecutionException.execException(tree("Could not find forAll child constraint.")
                     .withProperty("current constraint", currentConstraint.toTree()));
         }
-        final var forAll = ForAlls.forAll(Optional.of(discoverable(currentConstraint.path())));
+        final var forAll = ForAlls.forAll(Optional.of(discoverable(currentConstraint.path().shallowCopy())));
         currentConstraint.withChildren(forAll);
         return nextQueryPathElement(setOfUniques(groups), forAll);
     }
@@ -307,7 +307,7 @@ public class QueryI implements Query, QueryEditor {
                                 .values());
             }
         } else if (isBuilder) {
-            resultBase = Optional.of(Then.then(rater, Optional.of(discoverable(currentConstraint.path()))));
+            resultBase = Optional.of(Then.then(rater, Optional.of(discoverable(currentConstraint.path().shallowCopy()))));
             currentConstraint.withChildren(resultBase.get());
             resultingGroups.addAll(groups);
         } else {
@@ -355,7 +355,7 @@ public class QueryI implements Query, QueryEditor {
             }
         } else if (isBuilder) {
             resultBase = Optional.of(ForAlls.forEach(forAllValueCombinations(attributes)
-                    , Optional.of(discoverable(currentConstraint.path()))));
+                    , Optional.of(discoverable(currentConstraint.path().shallowCopy()))));
             currentConstraint.withChildren(resultBase.get());
             root.ifPresent(Constraint::recalculateProcessing);
             resultingGroups.addAll(groups);
@@ -401,9 +401,11 @@ public class QueryI implements Query, QueryEditor {
     public Query forAll(List<Rater> classifiers) {
         if (WARNING) logs().append("Groups are not supported yet: " + groups.toString(), LogLevel.WARNING);
         final var forAllCatcher = ForAlls.forAll(Optional.of(discoverable(currentConstraint.path()
+                .shallowCopy()
                 .withAppended("for-all-catcher-" + currentConstraint.childrenView().size()))));
         classifiers.forEach(c -> {
             final var f = ForAlls.forEach(c, Optional.of(discoverable(currentConstraint.path()
+                    .shallowCopy()
                     .withAppended("" + currentConstraint.childrenView().size()))));
             f.withChildren(forAllCatcher);
             if (!isBuilder) {

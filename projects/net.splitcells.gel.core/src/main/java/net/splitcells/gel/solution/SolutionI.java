@@ -310,7 +310,7 @@ public class SolutionI implements Solution {
     }
 
     @SuppressWarnings("all")
-    public List<String> path() {
+    public ListView<String> path() {
         return this.problem.path();
     }
 

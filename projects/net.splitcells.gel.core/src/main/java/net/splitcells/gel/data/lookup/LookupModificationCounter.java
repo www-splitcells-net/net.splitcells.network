@@ -16,6 +16,7 @@
 package net.splitcells.gel.data.lookup;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.testing.MetaCounter;
 import net.splitcells.gel.data.table.TableModificationCounter;
@@ -34,6 +35,10 @@ public class LookupModificationCounter implements Option<MetaCounter> {
         final var metaCounter = metaCounter(discoverable(TableModificationCounter.class));
         configValue(LookupTables.class).withAspect(PersistedLookupViewModificationCounterAspect::lookupViewModificationCounterAspect);
         ObjectsRenderer.registerObject(new CsvRenderer() {
+            final ListView<String> path = metaCounter.path()
+                    .shallowCopy()
+                    .modify(p -> p.set(p.size() - 1, p.get(p.size() - 1) + ".csv"));
+
             @Override
             public String renderCsv() {
                 return "time,count\n" + metaCounter.sumCounter().measurements()
@@ -48,9 +53,7 @@ public class LookupModificationCounter implements Option<MetaCounter> {
             }
 
             @Override
-            public List<String> path() {
-                final var path = metaCounter.path();
-                path.set(path.size() - 1, path.get(path.size() - 1) + ".csv");
+            public ListView<String> path() {
                 return path;
             }
         });

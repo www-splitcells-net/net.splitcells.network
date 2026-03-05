@@ -19,6 +19,7 @@ import net.splitcells.dem.Dem;
 import net.splitcells.dem.ProcessResult;
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.environment.Cell;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.environment.config.IsDeterministic;
@@ -112,7 +113,7 @@ public class GelExtCell implements Cell {
                         }
 
                         @Override
-                        public List<String> path() {
+                        public ListView<String> path() {
                             return database.path();
                         }
                     }));
@@ -129,12 +130,13 @@ public class GelExtCell implements Cell {
                         }
 
                         @Override
-                        public List<String> path() {
+                        public ListView<String> path() {
                             return solution.path();
                         }
                     }));
             env.config().configValue(Solutions.class)
                     .withConnector(solution -> ObjectsRenderer.registerObject(new DiscoverableRenderer() {
+                        final ListView<String> path = solution.path().shallowCopy().withAppended("constraint");
                         @Override
                         public String render() {
                             return solution.constraint().renderToHtml().toHtmlString();
@@ -146,21 +148,21 @@ public class GelExtCell implements Cell {
                         }
 
                         @Override
-                        public List<String> path() {
-                            return solution.path().withAppended("constraint");
+                        public ListView<String> path() {
+                            return path; 
                         }
                     }));
             env.config().configValue(Solutions.class)
                     .withConnector(solution -> ObjectsMediaRenderer.registerMediaObject(new DiscoverableMediaRenderer() {
+                        final ListView<String> path = solution.path().shallowCopy().modify(p -> p.withAppended(p.removeAt(p.size() - 1) + ".csv"));
                         @Override
                         public Optional<BinaryMessage> render(ProjectRenderer projectRenderer, Config config) {
                             return Optional.of(binaryMessage(solution.toCSV().getBytes(), ContentType.CSV.codeName()));
                         }
 
                         @Override
-                        public List<String> path() {
-                            final var path = solution.path().shallowCopy();
-                            return path.withAppended(path.removeAt(path.size() - 1) + ".csv");
+                        public ListView<String> path() {
+                            return path;
                         }
                     }));
             env.config().configValue(LookupTables.class).withConnector(lookupTable -> ObjectsRenderer.registerObject(new DiscoverableRenderer() {
@@ -175,7 +177,7 @@ public class GelExtCell implements Cell {
                 }
 
                 @Override
-                public List<String> path() {
+                public ListView<String> path() {
                     return lookupTable.path();
                 }
             }));

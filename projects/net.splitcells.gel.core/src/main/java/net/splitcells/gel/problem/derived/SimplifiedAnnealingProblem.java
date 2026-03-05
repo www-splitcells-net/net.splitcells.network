@@ -90,7 +90,7 @@ public class SimplifiedAnnealingProblem implements Solution {
     }
 
     @Override
-    public List<String> path() {
+    public ListView<String> path() {
         return originalSolution.path();
     }
 

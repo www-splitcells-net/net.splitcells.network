@@ -48,6 +48,16 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
         });
     }
 
+    default List<T> replace(int index, T value) {
+        set(index, value);
+        return this;
+    }
+
+    default List<T> modify(Consumer<List<T>> modifier) {
+        modifier.accept(this);
+        return this;
+    }
+
     default IntStream streamIndexes() {
         return IntStream.range(0, size());
     }

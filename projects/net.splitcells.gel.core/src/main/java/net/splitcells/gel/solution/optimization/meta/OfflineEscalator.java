@@ -59,7 +59,7 @@ public class OfflineEscalator implements OfflineOptimization {
             logs().append(tree("escalation-step")
                             .withProperty("escalation-level", "" + escalationLevel)
                             .withProperty("root-cost", "" + rootRating.asMetaRating().getContentValue(Cost.class).value())
-                    , () -> solution.path().withAppended(OPTIMIZATION.value(), getClass().getSimpleName())
+                    , () -> solution.path().shallowCopy().withAppended(OPTIMIZATION.value(), getClass().getSimpleName())
                     , LogLevel.TRACE);
         }
         if (escalationLevel < minimumEscalationLevel) {

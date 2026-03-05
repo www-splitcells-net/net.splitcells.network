@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.solution;
 
+import lombok.val;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
@@ -63,10 +64,8 @@ public class SolutionAspect implements Solution {
     public Solution optimize(List<OptimizationEvent> events) {
         Solution.super.optimize(events);
         if (StaticFlags.TRACING) {
-            logs().append
-                    (constraint().rating()
-                            , () -> this.path().withAppended(RATING.value())
-                            , LogLevel.TRACE);
+            val logPath = this.path().shallowCopy().withAppended(RATING.value());
+            logs().append(constraint().rating(), () -> logPath, LogLevel.TRACE);
         }
         return this;
     }
@@ -75,9 +74,10 @@ public class SolutionAspect implements Solution {
     public Rating rating(List<OptimizationEvent> event) {
         final var rating = Solution.super.rating(event);
         if (StaticFlags.TRACING) {
+            val logPath = solution.path().shallowCopy().withAppended(RATING.value());
             logs().append
                     (rating
-                            , () -> solution.path().withAppended(RATING.value())
+                            , () -> logPath
                             , LogLevel.TRACE);
         }
         return rating;
@@ -108,12 +108,14 @@ public class SolutionAspect implements Solution {
         }
         final var result = solution.optimize(event, parameters);
         if (StaticFlags.TELLING_STORY) {
+            val logPath = path().shallowCopy().withAppended("optimize", "after", "cost");
             logs().append(tree("" + constraint().rating().asMetaRating().getContentValue(Cost.class).value())
-                    , () -> path().withAppended("optimize", "after", "cost")
+                    , () -> logPath
                     , LogLevel.DEBUG);
             if (isComplete()) {
+                val completeLogPath = path().shallowCopy().withAppended("isComplete", "optimize", "after", "cost");
                 logs().append(tree(this.history().size() + ", " + constraint().rating().asMetaRating().getContentValue(Cost.class).value())
-                        , () -> path().withAppended("isComplete", "optimize", "after", "cost")
+                        , () -> completeLogPath
                         , LogLevel.DEBUG);
             }
         }
@@ -311,7 +313,7 @@ public class SolutionAspect implements Solution {
     }
 
     @Override
-    public List<String> path() {
+    public ListView<String> path() {
         return solution.path();
     }
 

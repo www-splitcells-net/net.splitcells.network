@@ -181,7 +181,7 @@ public class TableMetaAspect implements Table {
     }
 
     @Override
-    public List<String> path() {
+    public ListView<String> path() {
         return table.path();
     }
 

@@ -47,6 +47,7 @@ public class DerivedSolution implements Solution {
     private final Assignments assignments;
     private final History history;
     private final Discoverable contexts;
+    private final ListView<String> path;
 
     public static DerivedSolution derivedSolution(Discoverable context, Assignments assignments
             , Constraint originalConstraint, Function<Rating, Rating> derivation) {
@@ -76,12 +77,14 @@ public class DerivedSolution implements Solution {
         this.constraint = derivation;
         this.history = Histories.history(this);
         this.contexts = context;
+        path = contexts.path().shallowCopy().withAppended(DerivedSolution.class.getSimpleName());
     }
 
     private DerivedSolution(Discoverable contexts, Assignments assignments) {
         this.assignments = assignments;
         history = Histories.history(this);
         this.contexts = contexts;
+        path = contexts.path().shallowCopy().withAppended(DerivedSolution.class.getSimpleName());
     }
 
     @Override
@@ -275,8 +278,8 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public List<String> path() {
-        return contexts.path().withAppended(DerivedSolution.class.getSimpleName());
+    public ListView<String> path() {
+        return path;
     }
 
     @Override

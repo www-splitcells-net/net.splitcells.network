@@ -107,7 +107,7 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public List<String> path() {
+    public ListView<String> path() {
         return allocations.path();
     }
 

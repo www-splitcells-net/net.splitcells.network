@@ -80,7 +80,7 @@ public class Propagation implements Rater {
 
     @Override
     public Set<List<String>> paths() {
-        return contexts.stream().map(Discoverable::path).collect(toSetOfUniques());
+        return contexts.stream().map(d -> d.path().shallowCopy()).collect(toSetOfUniques());
     }
 
     @Override

@@ -17,6 +17,7 @@ package net.splitcells.gel.constraint.type.framework;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.execution.ExplicitEffect;
 import net.splitcells.dem.lang.dom.Domable;
@@ -170,7 +171,7 @@ public class ConstraintThreadingAspect implements Constraint {
     }
 
     @Override
-    public List<String> path() {
+    public ListView<String> path() {
         return constraintEffect.affectSynchronously(c -> c.path());
     }
 

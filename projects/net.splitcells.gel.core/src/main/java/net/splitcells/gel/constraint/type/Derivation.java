@@ -51,10 +51,12 @@ public final class Derivation implements Constraint {
 
     private final Constraint derivationTarget;
     private final Function<Rating, Rating> derivationFunction;
+    private final List<String> path;
 
     private Derivation(Constraint derivationTarget, Function<Rating, Rating> derivationFunction) {
         this.derivationTarget = derivationTarget;
         this.derivationFunction = derivationFunction;
+        path = derivationTarget.path().shallowCopy().withAppended(getClass().getSimpleName());
     }
 
     @Override
@@ -158,9 +160,7 @@ public final class Derivation implements Constraint {
     }
 
     @Override
-    public net.splitcells.dem.data.set.list.List<String> path() {
-        final var path = derivationTarget.path();
-        path.add(getClass().getSimpleName());
+    public net.splitcells.dem.data.set.list.ListView<String> path() {
         return path;
     }
 

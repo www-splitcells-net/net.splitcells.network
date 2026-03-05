@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.solution.optimization.meta.hill.climber;
 
+import lombok.val;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.solution.SolutionView;
@@ -84,14 +85,12 @@ public class FunctionalHillClimber implements OfflineOptimization {
                 continue;
             }
             if (TRACING) {
-                recommendations.forEach
-                        (suggestion -> logs().append
-                                (suggestion.toTree()
-                                        , () -> solution.path().withAppended
-                                                (OfflineOptimization.class.getSimpleName()
-                                                        , getClass().getSimpleName())
-                                        , LogLevel.TRACE)
-                        );
+                val logPath = solution.path().shallowCopy().withAppended(OfflineOptimization.class.getSimpleName(), getClass().getSimpleName());
+                recommendations.forEach(suggestion -> logs().append
+                        (suggestion.toTree()
+                                , () -> logPath
+                                , LogLevel.TRACE)
+                );
             }
             final var currentRating = solution.rating(recommendations);
             if (bestNeighbourRating.isEmpty()

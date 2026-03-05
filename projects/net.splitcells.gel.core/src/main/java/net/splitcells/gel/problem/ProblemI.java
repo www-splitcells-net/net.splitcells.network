@@ -385,14 +385,14 @@ public class ProblemI implements Problem {
             }
 
             @Override
-            public List<String> path() {
+            public ListView<String> path() {
                 return threadSafeMirror.get().path();
             }
         };
     }
 
     @Override
-    public List<String> path() {
+    public ListView<String> path() {
         return this.assignments.path();
     }
 

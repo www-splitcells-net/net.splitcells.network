@@ -30,6 +30,7 @@ import static net.splitcells.gel.problem.ProblemI.problem;
 import java.util.Optional;
 import java.util.function.Function;
 
+import lombok.val;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.config.ProgramsDiscoveryPath;
@@ -87,16 +88,17 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
 
     private void initAllocations() {
         final var assignmentsName = name.orElse(Solution.class.getSimpleName());
+        val parentPath = configValue(ProgramsDiscoveryPath.class).path().shallowCopy().withAppended(assignmentsName);
         final var problemsDemands = demandsDatabase.orElseGet(() -> {
             final var d = Tables.table(DEMANDS.value()
-                    , () -> configValue(ProgramsDiscoveryPath.class).path().withAppended(assignmentsName)
+                    , () -> parentPath
                     , demandAttributes);
             demands.forEach(demand -> d.addTranslated(demand));
             return d;
         });
         final var problemsSupplies = suppliesDatabase.orElseGet(() -> {
             final var s = Tables.table(SUPPLIES.value()
-                    , () -> configValue(ProgramsDiscoveryPath.class).path().withAppended(assignmentsName)
+                    , () -> parentPath
                     , supplyAttributes);
             supplies.forEach(supply -> s.addTranslated(supply));
             return s;
@@ -114,7 +116,7 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
     @Override
     public ProblemGenerator withConstraint(Function<Query, Query> builder) {
         initAllocations();
-        this.constraint = builder.apply(query(forAll(Optional.of(() -> assignments.path().withAppended("constraints"))), assignments)).currentConstraint();
+        this.constraint = builder.apply(query(forAll(Optional.of(() -> assignments.path().shallowCopy().withAppended("constraints"))), assignments)).currentConstraint();
         return this;
     }
 

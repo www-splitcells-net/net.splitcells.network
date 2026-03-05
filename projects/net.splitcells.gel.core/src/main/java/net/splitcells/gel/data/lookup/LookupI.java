@@ -24,6 +24,7 @@ import static net.splitcells.gel.data.lookup.LookupTables.lookupTable;
 import java.util.function.Predicate;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.gel.data.view.Line;
@@ -58,6 +59,7 @@ public class LookupI<T> implements Lookup<T> {
     private final Map<T, PersistedLookupView> content = map();
     private final Attribute<T> attribute;
     private final Map<Predicate<T>, PersistedLookupView> complexContent = map();
+    private final ListView<String> path;
 
     private LookupI(View view, Attribute<T> attribute, boolean isPersisted) {
         this.view = view;
@@ -66,6 +68,7 @@ public class LookupI<T> implements Lookup<T> {
         if (isPersisted) {
             view.unorderedLinesStream().forEach(e -> register_addition(e.value(attribute), e.index()));
         }
+        path = view.path().shallowCopy().withAppended(attribute.name());
     }
 
     @Override
@@ -154,9 +157,7 @@ public class LookupI<T> implements Lookup<T> {
     }
 
     @Override
-    public List<String> path() {
-        final List<String> path = view.path();
-        path.add(attribute.name());
+    public ListView<String> path() {
         return path;
     }
 }

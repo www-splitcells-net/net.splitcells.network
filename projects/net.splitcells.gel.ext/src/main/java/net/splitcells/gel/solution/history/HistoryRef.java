@@ -114,7 +114,7 @@ public class HistoryRef implements History {
     }
 
     @Override
-    public List<String> path() {
+    public ListView<String> path() {
         return history.path();
     }
 
