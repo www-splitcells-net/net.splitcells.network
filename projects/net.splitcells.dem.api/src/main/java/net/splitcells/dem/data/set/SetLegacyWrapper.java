@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.data.set;
 
+import gnu.trove.set.hash.THashSet;
 import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.Flows;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
@@ -34,7 +35,7 @@ public class SetLegacyWrapper<T> implements Set<T> {
     }
 
     public static <R> Set<R> setLegacyWrapper() {
-        return setLegacyWrapper(new HashSet<>());
+        return setLegacyWrapper(new THashSet<>());
     }
 
     private final java.util.Set<T> content;
