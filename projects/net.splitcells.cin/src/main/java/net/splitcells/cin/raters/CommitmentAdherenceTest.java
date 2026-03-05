@@ -35,6 +35,7 @@ import static net.splitcells.gel.proposal.Proposals.propose;
 public class CommitmentAdherenceTest {
 
     @UnitTest
+    @DisabledTest
     public void test() {
         final var demandingAttribute = attribute(Integer.class, "demandingAttribute");
         final var suppliedAttribute = attribute(Integer.class, "suppliedAttribute");

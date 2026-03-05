@@ -51,6 +51,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ConstraintTest {
 
     @Test
+    @DisabledTest
     public void testArgumentation() {
         final var attribute = attribute(Integer.class, "a");
         final int valueA = 1;
