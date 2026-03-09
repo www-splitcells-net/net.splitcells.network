@@ -22,7 +22,7 @@ import net.splitcells.dem.environment.resource.ResourceOptionImpl;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import static net.splitcells.dem.Dem.configValue;
-import static net.splitcells.dem.data.set.factory.SetFactoryImplConfigured.setFiConfigured;
+import static net.splitcells.dem.data.set.factory.SetFactoryConfigured.setFiConfigured;
 import static net.splitcells.dem.data.set.legacy.LegacySetWrapper.legacySetWrapper;
 import static net.splitcells.dem.environment.config.StaticFlags.INLINE_STANDARD_FACTORIES;
 

@@ -17,7 +17,7 @@ package net.splitcells.dem.data.set.factory;
 
 import net.splitcells.dem.environment.resource.ResourceOptionImpl;
 
-import static net.splitcells.dem.data.set.factory.SetFactoryImplConfigured.setFiConfigured;
+import static net.splitcells.dem.data.set.factory.SetFactoryConfigured.setFiConfigured;
 
 public class SetsFactory extends ResourceOptionImpl<SetFactory> {
     public SetsFactory() {

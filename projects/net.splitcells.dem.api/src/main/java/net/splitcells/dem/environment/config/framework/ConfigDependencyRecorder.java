@@ -18,13 +18,11 @@ package net.splitcells.dem.environment.config.framework;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.factory.SetFactory;
-import net.splitcells.dem.data.set.factory.SetFactoryImplDeterministic;
-import net.splitcells.dem.data.set.legacy.LegacySetWrapper;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.data.set.map.DeterministicMapFactory;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
-import static net.splitcells.dem.data.set.factory.SetFactoryImplDeterministic.setFactoryImplDeterministic;
+import static net.splitcells.dem.data.set.factory.SetFactoryDeterministic.setFactoryImplDeterministic;
 import static net.splitcells.dem.data.set.map.DeterministicMapFactory.deterministicMapFactory;
 import static net.splitcells.dem.data.set.map.Maps.map;
 
