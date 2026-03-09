@@ -26,12 +26,12 @@ import static net.splitcells.dem.data.set.factory.SetFactoryImplConfigured.setFi
 import static net.splitcells.dem.data.set.legacy.LegacySetWrapper.legacySetWrapper;
 import static net.splitcells.dem.environment.config.StaticFlags.INLINE_STANDARD_FACTORIES;
 
+@JavaLegacy
 public class Sets extends ResourceOptionImpl<SetFactory> {
     public Sets() {
         super(() -> setFiConfigured());
     }
-
-    @JavaLegacy
+    
     public static <T> java.util.stream.Collector<T, ?, Set<T>> toSetOfUniques() {
         return java.util.stream.Collector.of(
                 Sets::<T>setOfUniques,
@@ -42,8 +42,7 @@ public class Sets extends ResourceOptionImpl<SetFactory> {
                 }
         );
     }
-
-    @JavaLegacy
+    
     @SafeVarargs
     public static <T> Set<T> merge(java.util.Collection<T>... collections) {
         final var rVal = configValue(Sets.class).<T>set();
@@ -60,8 +59,7 @@ public class Sets extends ResourceOptionImpl<SetFactory> {
             return configValue(Sets.class).<T>set();
         }
     }
-
-    @JavaLegacy
+    
     @SafeVarargs
     public static <T> Set<T> setOfUniques(T... args) {
         if (INLINE_STANDARD_FACTORIES) {
@@ -79,9 +77,5 @@ public class Sets extends ResourceOptionImpl<SetFactory> {
             rVal.addAll(arg);
             return rVal;
         }
-    }
-
-    public static <R> Set<R> legacySetJava() {
-        return legacySetWrapper(LegacySets.legacySet());
     }
 }
