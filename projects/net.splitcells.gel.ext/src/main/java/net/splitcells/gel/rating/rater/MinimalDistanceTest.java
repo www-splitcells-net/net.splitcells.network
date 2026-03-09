@@ -15,7 +15,9 @@
  */
 package net.splitcells.gel.rating.rater;
 
+import lombok.val;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.solution.optimization.StepType;
 import org.junit.jupiter.api.Tag;
@@ -37,11 +39,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class MinimalDistanceTest {
 
-    @Tag(INTEGRATION_TEST)
-    @Test
+    @UnitTest
     public void test_multiple_line_addition_and_removal() {
-        final var integer = integerAttribute("integer");
-        final var testSubject = defineProblem()
+        val integer = integerAttribute("integer");
+        val testSubject = defineProblem()
                 .withDemandAttributes()
                 .withEmptyDemands(3)
                 .withSupplyAttributes(integer)
@@ -55,27 +56,16 @@ public class MinimalDistanceTest {
                 .toProblem()
                 .asSolution();
         testSubject.optimize(offlineLinearInitialization());
-        testSubject.optimize
-                (optimizationEvent
-                        (StepType.REMOVAL
-                                , testSubject.demands().orderedLine(1).toLinePointer()
-                                , testSubject.supplies().orderedLine(1).toLinePointer()));
-        testSubject.optimize
-                (optimizationEvent
-                        (StepType.REMOVAL
-                                , testSubject.demands().orderedLine(2).toLinePointer()
-                                , testSubject.supplies().orderedLine(2).toLinePointer()));
-        testSubject.optimize
-                (optimizationEvent
-                        (StepType.ADDITION
-                                , testSubject.demands().orderedLine(1).toLinePointer()
-                                , testSubject.supplies().orderedLine(2).toLinePointer()));
-        testSubject.optimize
-                (optimizationEvent
-                        (StepType.REMOVAL
-                                , testSubject.demands().orderedLine(1).toLinePointer()
-                                , testSubject.supplies().orderedLine(2).toLinePointer()));
-
+        val firstAssignment = testSubject.orderedLine(1);
+        val firstAssignmentD = testSubject.demandOfAssignment(firstAssignment).toLinePointer();
+        val firstAssignmentS = testSubject.supplyOfAssignment(firstAssignment).toLinePointer();
+        testSubject.optimize(optimizationEvent(StepType.REMOVAL, firstAssignmentD, firstAssignmentS));
+        val secondAssignment = testSubject.orderedLine(1);
+        val secondAssignmentD = testSubject.demandOfAssignment(secondAssignment).toLinePointer();
+        val secondAssignmentS = testSubject.supplyOfAssignment(secondAssignment).toLinePointer();
+        testSubject.optimize(optimizationEvent(StepType.REMOVAL, secondAssignmentD, secondAssignmentS));
+        testSubject.optimize(optimizationEvent(StepType.ADDITION, firstAssignmentD, secondAssignmentS));
+        testSubject.optimize(optimizationEvent(StepType.REMOVAL, firstAssignmentD, secondAssignmentS));
     }
 
     @Test
