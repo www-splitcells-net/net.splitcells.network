@@ -15,9 +15,8 @@
  */
 package net.splitcells.dem.data.set;
 
+import net.splitcells.dem.data.set.legacy.LegacySetWrapper;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
-
-import static net.splitcells.dem.data.set.legacy.SetLegacyWrapper.setLegacyWrapper;
 
 public class SetFactoryImplDeterministic implements SetF {
 
@@ -44,13 +43,13 @@ public class SetFactoryImplDeterministic implements SetF {
     @JavaLegacy
     @Override
     public <T> net.splitcells.dem.data.set.Set<T> set() {
-        return setLegacyWrapper(new java.util.LinkedHashSet<>(), true);
+        return LegacySetWrapper.legacySetJava(new java.util.LinkedHashSet<>(), true);
     }
 
     @JavaLegacy
     @Override
     public <T> net.splitcells.dem.data.set.Set<T> set(java.util.Collection<T> arg) {
-        return setLegacyWrapper(new java.util.LinkedHashSet<>(arg), true);
+        return LegacySetWrapper.legacySetJava(new java.util.LinkedHashSet<>(arg), true);
     }
 
 }

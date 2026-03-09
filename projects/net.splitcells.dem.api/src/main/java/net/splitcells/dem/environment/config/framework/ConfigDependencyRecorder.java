@@ -17,10 +17,10 @@ package net.splitcells.dem.environment.config.framework;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.legacy.LegacySetWrapper;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.data.set.map.DeterministicMapFactory;
 
-import static net.splitcells.dem.data.set.legacy.SetLegacyWrapper.setLegacyWrapper;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.map.DeterministicMapFactory.deterministicMapFactory;
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -53,7 +53,7 @@ public class ConfigDependencyRecorder {
     public void recordDependency(Class<? extends Option<? extends Object>> from
             , Class<? extends Option<? extends Object>> to) {
         dependencies
-                .computeIfAbsent(from, f -> setLegacyWrapper(new java.util.LinkedHashSet<>()))
+                .computeIfAbsent(from, f -> LegacySetWrapper.legacySetJava(new java.util.LinkedHashSet<>()))
                 .add(to);
     }
 

@@ -24,7 +24,6 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.SetFactoryImplDeterministic.setFactoryImplDeterministic;
 import static net.splitcells.dem.data.set.SetFactoryImplRandom.setFactoryImplRandom;
-import static net.splitcells.dem.data.set.legacy.SetLegacyWrapper.setLegacyWrapper;
 
 public class SetFactoryImplConfigured implements SetF {
     public static SetF setFiConfigured() {

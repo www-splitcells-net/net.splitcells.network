@@ -17,6 +17,7 @@ package net.splitcells.dem.data.set.map;
 
 import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.order.Comparison;
+import net.splitcells.dem.data.set.legacy.LegacySetWrapper;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
@@ -30,7 +31,6 @@ import java.util.function.Supplier;
 
 import static net.splitcells.dem.data.Flows.flow;
 import static net.splitcells.dem.data.order.Ordering.EQUAL;
-import static net.splitcells.dem.data.set.legacy.SetLegacyWrapper.setLegacyWrapper;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
@@ -126,7 +126,7 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
     Value put(Key key, Value value);
 
     default net.splitcells.dem.data.set.Set<Key> keySet2() {
-        return setLegacyWrapper(keySet());
+        return LegacySetWrapper.legacySetJava(keySet());
     }
 
     default Map<Key, Value> withMerged(Map<Key, Value> args, BiFunction<Value, Value, Value> mergeFunction) {

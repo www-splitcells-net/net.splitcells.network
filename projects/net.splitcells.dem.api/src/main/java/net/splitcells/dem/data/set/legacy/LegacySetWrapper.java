@@ -15,7 +15,6 @@
  */
 package net.splitcells.dem.data.set.legacy;
 
-import gnu.trove.set.hash.THashSet;
 import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.Flows;
 import net.splitcells.dem.data.set.Set;
@@ -25,23 +24,19 @@ import net.splitcells.dem.utils.ExecutionException;
 import java.util.Optional;
 
 @JavaLegacy
-public class SetLegacyWrapper<T> implements Set<T> {
-    public static <R> Set<R> setLegacyWrapper(java.util.Set<R> arg) {
-        return new SetLegacyWrapper<>(arg, Optional.empty());
+public class LegacySetWrapper<T> implements Set<T> {
+    public static <R> Set<R> legacySetJava(java.util.Set<R> arg) {
+        return new LegacySetWrapper<>(arg, Optional.empty());
     }
 
-    public static <R> Set<R> setLegacyWrapper(java.util.Set<R> arg, boolean isDeterministic) {
-        return new SetLegacyWrapper<>(arg, Optional.of(isDeterministic));
-    }
-
-    public static <R> Set<R> setLegacyWrapper() {
-        return setLegacyWrapper(new THashSet<>());
+    public static <R> Set<R> legacySetJava(java.util.Set<R> arg, boolean isDeterministic) {
+        return new LegacySetWrapper<>(arg, Optional.of(isDeterministic));
     }
 
     private final java.util.Set<T> content;
     private final Optional<Boolean> isDeterministic;
 
-    private SetLegacyWrapper(java.util.Set<T> content, Optional<Boolean> isDeterministic) {
+    private LegacySetWrapper(java.util.Set<T> content, Optional<Boolean> isDeterministic) {
         this.content = content;
         this.isDeterministic = isDeterministic;
     }

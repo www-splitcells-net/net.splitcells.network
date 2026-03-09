@@ -15,12 +15,12 @@
  */
 package net.splitcells.dem.data.set;
 
+import net.splitcells.dem.data.set.legacy.LegacySetWrapper;
 import net.splitcells.dem.environment.resource.ResourceOptionImpl;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.SetFactoryImplConfigured.setFiConfigured;
-import static net.splitcells.dem.data.set.legacy.SetLegacyWrapper.setLegacyWrapper;
 import static net.splitcells.dem.environment.config.StaticFlags.INLINE_STANDARD_FACTORIES;
 
 public class Sets extends ResourceOptionImpl<SetF> {
@@ -52,7 +52,7 @@ public class Sets extends ResourceOptionImpl<SetF> {
 
     public static <T> Set<T> setOfUniques() {
         if (INLINE_STANDARD_FACTORIES) {
-            return setLegacyWrapper(new java.util.HashSet<>());
+            return LegacySetWrapper.legacySetJava(new java.util.HashSet<>());
         } else {
             return configValue(Sets.class).<T>set();
         }
@@ -62,7 +62,7 @@ public class Sets extends ResourceOptionImpl<SetF> {
     @SafeVarargs
     public static <T> Set<T> setOfUniques(T... args) {
         if (INLINE_STANDARD_FACTORIES) {
-            return setLegacyWrapper(new java.util.HashSet<T>()).with(args);
+            return LegacySetWrapper.legacySetJava(new java.util.HashSet<T>()).with(args);
         } else {
             return setOfUniques(java.util.Arrays.asList(args));
         }
@@ -70,7 +70,7 @@ public class Sets extends ResourceOptionImpl<SetF> {
 
     public static <T> Set<T> setOfUniques(java.util.Collection<T> arg) {
         if (INLINE_STANDARD_FACTORIES) {
-            return setLegacyWrapper(new java.util.HashSet<T>()).with(arg);
+            return LegacySetWrapper.legacySetJava(new java.util.HashSet<T>()).with(arg);
         } else {
             final var rVal = configValue(Sets.class).<T>set();
             rVal.addAll(arg);

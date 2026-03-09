@@ -15,9 +15,8 @@
  */
 package net.splitcells.dem.data.set;
 
+import net.splitcells.dem.data.set.legacy.LegacySetWrapper;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
-
-import static net.splitcells.dem.data.set.legacy.SetLegacyWrapper.setLegacyWrapper;
 
 public class SetFactoryImplRandom implements SetF {
 
@@ -44,12 +43,12 @@ public class SetFactoryImplRandom implements SetF {
     @JavaLegacy
     @Override
     public <T> net.splitcells.dem.data.set.Set<T> set() {
-        return setLegacyWrapper(new java.util.HashSet<>(), false);
+        return LegacySetWrapper.legacySetJava(new java.util.HashSet<>(), false);
     }
 
     @JavaLegacy
     @Override
     public <T> net.splitcells.dem.data.set.Set<T> set(java.util.Collection<T> arg) {
-        return setLegacyWrapper(new java.util.HashSet<T>(), false).with(arg);
+        return LegacySetWrapper.legacySetJava(new java.util.HashSet<T>(), false).with(arg);
     }
 }
