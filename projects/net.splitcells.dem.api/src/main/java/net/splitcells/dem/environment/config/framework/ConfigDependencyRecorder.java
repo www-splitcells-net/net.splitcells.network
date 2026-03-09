@@ -20,7 +20,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.data.set.map.DeterministicMapFactory;
 
-import static net.splitcells.dem.data.set.SetLegacyWrapper.setLegacyWrapper;
+import static net.splitcells.dem.data.set.legacy.SetLegacyWrapper.setLegacyWrapper;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.map.DeterministicMapFactory.deterministicMapFactory;
 import static net.splitcells.dem.data.set.map.Maps.map;

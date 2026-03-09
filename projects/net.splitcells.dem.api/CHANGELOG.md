@@ -5,6 +5,7 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2026-03-09\#37** Move SetLegacyWrapper class to `net.splitcells.dem.data.set.legacy` package.
 * **2026-03-01\#69** Reimplement LoggerRouter, in order to make it more practible and portable.
 * **2026-02-09\#32** Remove unused `Files#readString`.
 * **2026-02-06\#32** Rename `Files#is_file` to `Files#isFile`, in order to standardize naming.

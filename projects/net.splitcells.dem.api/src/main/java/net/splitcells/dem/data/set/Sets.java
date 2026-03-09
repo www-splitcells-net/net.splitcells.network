@@ -20,7 +20,7 @@ import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.SetFactoryImplConfigured.setFiConfigured;
-import static net.splitcells.dem.data.set.SetLegacyWrapper.setLegacyWrapper;
+import static net.splitcells.dem.data.set.legacy.SetLegacyWrapper.setLegacyWrapper;
 import static net.splitcells.dem.environment.config.StaticFlags.INLINE_STANDARD_FACTORIES;
 
 public class Sets extends ResourceOptionImpl<SetF> {

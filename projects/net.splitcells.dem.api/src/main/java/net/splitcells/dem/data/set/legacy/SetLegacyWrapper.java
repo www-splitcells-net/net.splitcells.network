@@ -13,15 +13,15 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.dem.data.set;
+package net.splitcells.dem.data.set.legacy;
 
 import gnu.trove.set.hash.THashSet;
 import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.Flows;
+import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.utils.ExecutionException;
 
-import java.util.HashSet;
 import java.util.Optional;
 
 @JavaLegacy

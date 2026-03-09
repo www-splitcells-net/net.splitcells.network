@@ -17,7 +17,7 @@ package net.splitcells.dem.data.set;
 
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 
-import static net.splitcells.dem.data.set.SetLegacyWrapper.setLegacyWrapper;
+import static net.splitcells.dem.data.set.legacy.SetLegacyWrapper.setLegacyWrapper;
 
 public class SetFactoryImplRandom implements SetF {
 
