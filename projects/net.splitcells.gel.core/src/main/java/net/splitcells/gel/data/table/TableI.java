@@ -256,7 +256,7 @@ public class TableI implements Table {
         }
         if (index >= rawLines.size()) {
             range(0, lineValues.size()).forEach(i -> {
-                extend_content_to(columns.get(i), index);
+                extendContentTo(columns.get(i), index);
             });
             rawLines.prepareForSizeOf(index);
             rangeClosed(rawLines.size(), index).forEach(i -> {
@@ -278,7 +278,7 @@ public class TableI implements Table {
     /**
      * TODO Move this to an utility class.
      */
-    private static void extend_content_to(List<?> list, int targetMaximalIndex) {
+    private static void extendContentTo(List<?> list, int targetMaximalIndex) {
         while (list.size() < targetMaximalIndex + 1) {
             list.add(null);
         }
