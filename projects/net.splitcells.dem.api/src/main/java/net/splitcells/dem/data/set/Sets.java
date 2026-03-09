@@ -82,6 +82,6 @@ public class Sets extends ResourceOptionImpl<SetFactory> {
     }
 
     public static <R> Set<R> legacySetJava() {
-        return legacySetWrapper(LegacySets.set());
+        return legacySetWrapper(LegacySets.legacySet());
     }
 }

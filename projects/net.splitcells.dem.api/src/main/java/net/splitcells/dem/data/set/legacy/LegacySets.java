@@ -16,11 +16,11 @@ public class LegacySets {
         throw constructorIllegal();
     }
 
-    public static <T> java.util.Set<T> set() {
+    public static <T> java.util.Set<T> legacySet() {
         return SET_FACTORY.legacySet();
     }
 
-    public static <T> java.util.Set<T> set(java.util.Collection<T> arg) {
+    public static <T> java.util.Set<T> legacySet(java.util.Collection<T> arg) {
         return SET_FACTORY.legacySet(arg);
     }
 
