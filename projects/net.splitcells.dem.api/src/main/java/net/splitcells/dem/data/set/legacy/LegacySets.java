@@ -3,6 +3,7 @@
  */
 package net.splitcells.dem.data.set.legacy;
 
+import static net.splitcells.dem.data.set.legacy.LegacySetEclipse.legacySetEclipse;
 import static net.splitcells.dem.data.set.legacy.LegacySetTrove.legacySetTrove;
 import static net.splitcells.dem.data.set.legacy.LegacySetWrapper.legacySetWrapper;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
@@ -10,7 +11,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public class LegacySets {
 
-    private static final LegacySetFactory SET_FACTORY = legacySetTrove();
+    private static final LegacySetFactory SET_FACTORY = legacySetEclipse();
 
     private LegacySets() {
         throw constructorIllegal();
