@@ -15,14 +15,15 @@
  */
 package net.splitcells.gel.common;
 
+import net.splitcells.dem.data.set.legacy.LegacySets;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import static net.splitcells.dem.data.set.legacy.LegacySets.legacySet;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 /**
@@ -43,7 +44,7 @@ public class CommonFunctions {
 	@Deprecated
 	public static <E> Collection<E> sum(Collection<Set<E>> arg) {
 		final var argIter = arg.iterator();
-		final var sum = new HashSet<>(argIter.next());
+		final var sum = legacySet(argIter.next());
 		while (argIter.hasNext()) {
 			sum.addAll(argIter.next());
 		}
@@ -58,13 +59,13 @@ public class CommonFunctions {
 	@Deprecated
 	public static <E> Set<E> intersection(Collection<Set<E>> arg) {
 		if (arg.isEmpty()) {
-			return new HashSet<>();
+			return legacySet();
 		} else if (arg.size() == 1) {
 			return arg.iterator().next();
 		}
 		final var argIter = arg.iterator();
-		Set<E> rVal = new HashSet<>(argIter.next());
-		Set<E> tmpIntersection = new HashSet<>();
+		Set<E> rVal = legacySet(argIter.next());
+		Set<E> tmpIntersection = legacySet();
 		Set<E> argCurrent;
 		while (argIter.hasNext()) {
 			argCurrent = argIter.next();
@@ -86,7 +87,7 @@ public class CommonFunctions {
 		if (exceptThis.isEmpty()) {
 			return all;
 		}
-		Set<E> rVal = new HashSet<>();
+		Set<E> rVal = legacySet();
 		for (E ele : all) {
 			if (!exceptThis.contains(ele)) {
 				rVal.add(ele);

@@ -55,7 +55,7 @@ public class Sets extends ResourceOptionImpl<SetFactory> {
 
     public static <T> Set<T> setOfUniques() {
         if (INLINE_STANDARD_FACTORIES) {
-            return LegacySetWrapper.legacySetWrapper(new java.util.HashSet<>());
+            return legacySetWrapper(LegacySets.legacySet());
         } else {
             return configValue(Sets.class).<T>set();
         }
@@ -65,7 +65,7 @@ public class Sets extends ResourceOptionImpl<SetFactory> {
     @SafeVarargs
     public static <T> Set<T> setOfUniques(T... args) {
         if (INLINE_STANDARD_FACTORIES) {
-            return LegacySetWrapper.legacySetWrapper(new java.util.HashSet<T>()).with(args);
+            return LegacySetWrapper.legacySetWrapper(LegacySets.<T>legacySet()).with(args);
         } else {
             return setOfUniques(java.util.Arrays.asList(args));
         }
@@ -73,7 +73,7 @@ public class Sets extends ResourceOptionImpl<SetFactory> {
 
     public static <T> Set<T> setOfUniques(java.util.Collection<T> arg) {
         if (INLINE_STANDARD_FACTORIES) {
-            return LegacySetWrapper.legacySetWrapper(new java.util.HashSet<T>()).with(arg);
+            return LegacySetWrapper.legacySetWrapper(LegacySets.<T>legacySet()).with(arg);
         } else {
             final var rVal = configValue(Sets.class).<T>set();
             rVal.addAll(arg);

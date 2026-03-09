@@ -29,6 +29,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.data.set.legacy.LegacySets.legacySet;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.environment.config.framework.ConfigDependencyRecorder.dependencyRecorder;
@@ -92,7 +93,7 @@ public class ConfigurationImpl implements Configuration {
                 if (StaticFlags.ENFORCING_UNIT_CONSISTENCY) {
                     Bools.require(!subscribers.containsKey(key));
                 }
-                keySubscribers = new HashSet<>();
+                keySubscribers = legacySet();
                 subscribers.put(key, keySubscribers);
             }
             final Object oldValue = configStore.get(key);

@@ -17,11 +17,14 @@ package net.splitcells.dem.environment.config.framework;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.factory.SetFactory;
+import net.splitcells.dem.data.set.factory.SetFactoryImplDeterministic;
 import net.splitcells.dem.data.set.legacy.LegacySetWrapper;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.data.set.map.DeterministicMapFactory;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.data.set.factory.SetFactoryImplDeterministic.setFactoryImplDeterministic;
 import static net.splitcells.dem.data.set.map.DeterministicMapFactory.deterministicMapFactory;
 import static net.splitcells.dem.data.set.map.Maps.map;
 
@@ -35,6 +38,8 @@ public class ConfigDependencyRecorder {
     public static ConfigDependencyRecorder dependencyRecorder() {
         return new ConfigDependencyRecorder();
     }
+
+    private final SetFactory setFactory = setFactoryImplDeterministic();
 
     /**
      * Maps for every {@link Option}, which are set via {@link Configuration#withConfigValue(Class, Object)} etc.,
@@ -53,7 +58,7 @@ public class ConfigDependencyRecorder {
     public void recordDependency(Class<? extends Option<? extends Object>> from
             , Class<? extends Option<? extends Object>> to) {
         dependencies
-                .computeIfAbsent(from, f -> LegacySetWrapper.legacySetWrapper(new java.util.LinkedHashSet<>()))
+                .computeIfAbsent(from, f -> setFactory.set())
                 .add(to);
     }
 

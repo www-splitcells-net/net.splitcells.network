@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.data.set;
 
+import lombok.val;
 import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;
@@ -24,7 +25,6 @@ import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.dem.utils.StreamUtils;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.function.BiPredicate;
 import java.util.function.BinaryOperator;
@@ -32,6 +32,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.data.set.legacy.LegacySets.legacySet;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
@@ -75,7 +76,7 @@ public interface SetT<T> extends Collection<T> {
     }
 
     default boolean hasDuplicates() {
-        final java.util.Set<T> uniques = new HashSet<>();
+        val uniques = setOfUniques();
         for (T e : this) {
             if (uniques.contains(e)) {
                 return true;

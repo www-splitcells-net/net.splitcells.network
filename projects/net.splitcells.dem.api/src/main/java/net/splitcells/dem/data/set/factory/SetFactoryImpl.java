@@ -16,32 +16,35 @@
 package net.splitcells.dem.data.set.factory;
 
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.legacy.LegacySets;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 
+import static net.splitcells.dem.data.set.legacy.LegacySetWrapper.legacySetWrapper;
+import static net.splitcells.dem.data.set.legacy.LegacySets.legacySet;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public final class SetFactoryImpl implements SetFactory {
     @JavaLegacy
     @Override
     public <T> java.util.Set<T> lagacySet() {
-        return new java.util.HashSet<>();
+        return LegacySets.legacySet();
     }
 
     @JavaLegacy
     @Override
     public <T> java.util.Set<T> legacySet(java.util.Collection<T> arg) {
-        return new java.util.HashSet<>(arg);
+        return LegacySets.legacySet(arg);
     }
 
     @Override
     public <T> Set<T> set() {
-        throw notImplementedYet();
+        return legacySetWrapper(LegacySets.legacySet());
     }
 
     @JavaLegacy
     @Override
     public <T> Set<T> set(java.util.Collection<T> arg) {
-        throw notImplementedYet();
+        return legacySetWrapper(LegacySets.legacySet(arg));
     }
 
 }
