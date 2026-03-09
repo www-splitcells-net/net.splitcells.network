@@ -3,29 +3,29 @@
  */
 package net.splitcells.dem.data.set.legacy;
 
+import gnu.trove.set.hash.THashSet;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.util.Collection;
-import java.util.HashSet;
 
 import static net.splitcells.dem.data.set.legacy.LegacySetWrapper.legacySetWrapper;
 
 @JavaLegacy
-public class LegacySetJava implements LegacySetFactory {
-    public static LegacySetJava legacySetJava() {
-        return new LegacySetJava();
+public class LegacySetTrove implements LegacySetFactory {
+    public static LegacySetTrove legacySetTrove() {
+        return new LegacySetTrove();
     }
 
-    private LegacySetJava() {
+    private LegacySetTrove() {
 
     }
 
     @Override public <T> Set<T> set() {
-        return legacySetWrapper(new HashSet<>());
+        return legacySetWrapper(new THashSet<>());
     }
 
     @Override public <T> Set<T> set(Collection<T> arg) {
-        return legacySetWrapper(new HashSet<>(arg));
+        return legacySetWrapper(new THashSet<>(arg));
     }
 }

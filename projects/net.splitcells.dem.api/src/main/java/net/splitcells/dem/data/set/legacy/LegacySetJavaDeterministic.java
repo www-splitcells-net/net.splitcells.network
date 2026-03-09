@@ -7,25 +7,25 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 import static net.splitcells.dem.data.set.legacy.LegacySetWrapper.legacySetWrapper;
 
 @JavaLegacy
-public class LegacySetJava implements LegacySetFactory {
-    public static LegacySetJava legacySetJava() {
-        return new LegacySetJava();
+public class LegacySetJavaDeterministic implements LegacySetFactory {
+    public static LegacySetJavaDeterministic legacySetJavaDeterministic() {
+        return new LegacySetJavaDeterministic();
     }
 
-    private LegacySetJava() {
+    private LegacySetJavaDeterministic() {
 
     }
 
     @Override public <T> Set<T> set() {
-        return legacySetWrapper(new HashSet<>());
+        return legacySetWrapper(new LinkedHashSet<>());
     }
 
     @Override public <T> Set<T> set(Collection<T> arg) {
-        return legacySetWrapper(new HashSet<>(arg));
+        return legacySetWrapper(new LinkedHashSet<>(arg));
     }
 }

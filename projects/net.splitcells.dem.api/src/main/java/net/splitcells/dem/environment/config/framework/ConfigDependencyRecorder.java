@@ -53,7 +53,7 @@ public class ConfigDependencyRecorder {
     public void recordDependency(Class<? extends Option<? extends Object>> from
             , Class<? extends Option<? extends Object>> to) {
         dependencies
-                .computeIfAbsent(from, f -> LegacySetWrapper.legacySetJava(new java.util.LinkedHashSet<>()))
+                .computeIfAbsent(from, f -> LegacySetWrapper.legacySetWrapper(new java.util.LinkedHashSet<>()))
                 .add(to);
     }
 

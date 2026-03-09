@@ -126,7 +126,7 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
     Value put(Key key, Value value);
 
     default net.splitcells.dem.data.set.Set<Key> keySet2() {
-        return LegacySetWrapper.legacySetJava(keySet());
+        return LegacySetWrapper.legacySetWrapper(keySet());
     }
 
     default Map<Key, Value> withMerged(Map<Key, Value> args, BiFunction<Value, Value, Value> mergeFunction) {

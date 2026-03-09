@@ -3,19 +3,25 @@
  */
 package net.splitcells.dem.data.set.legacy;
 
+import static net.splitcells.dem.data.set.legacy.LegacySetTrove.legacySetTrove;
+import static net.splitcells.dem.data.set.legacy.LegacySetWrapper.legacySetWrapper;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public class LegacySets {
+
+    private static final LegacySetFactory SET_FACTORY = legacySetTrove();
+
     private LegacySets() {
         throw constructorIllegal();
     }
 
     public static <T> java.util.Set<T> set() {
-        throw notImplementedYet();
+        return SET_FACTORY.set();
     }
 
     public static <T> java.util.Set<T> set(java.util.Collection<T> arg) {
-        throw notImplementedYet();
+        return SET_FACTORY.set(arg);
     }
+
 }

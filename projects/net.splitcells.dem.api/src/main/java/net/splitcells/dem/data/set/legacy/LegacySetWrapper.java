@@ -25,11 +25,11 @@ import java.util.Optional;
 
 @JavaLegacy
 public class LegacySetWrapper<T> implements Set<T> {
-    public static <R> Set<R> legacySetJava(java.util.Set<R> arg) {
+    public static <R> Set<R> legacySetWrapper(java.util.Set<R> arg) {
         return new LegacySetWrapper<>(arg, Optional.empty());
     }
 
-    public static <R> Set<R> legacySetJava(java.util.Set<R> arg, boolean isDeterministic) {
+    public static <R> Set<R> legacySetWrapper(java.util.Set<R> arg, boolean isDeterministic) {
         return new LegacySetWrapper<>(arg, Optional.of(isDeterministic));
     }
 

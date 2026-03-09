@@ -43,13 +43,13 @@ public class SetFactoryImplDeterministic implements SetF {
     @JavaLegacy
     @Override
     public <T> net.splitcells.dem.data.set.Set<T> set() {
-        return LegacySetWrapper.legacySetJava(new java.util.LinkedHashSet<>(), true);
+        return LegacySetWrapper.legacySetWrapper(new java.util.LinkedHashSet<>(), true);
     }
 
     @JavaLegacy
     @Override
     public <T> net.splitcells.dem.data.set.Set<T> set(java.util.Collection<T> arg) {
-        return LegacySetWrapper.legacySetJava(new java.util.LinkedHashSet<>(arg), true);
+        return LegacySetWrapper.legacySetWrapper(new java.util.LinkedHashSet<>(arg), true);
     }
 
 }
