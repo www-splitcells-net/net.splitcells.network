@@ -75,16 +75,16 @@ public class DerivedSolution implements Solution {
             , Constraint derivation) {
         this.assignments = assignments;
         this.constraint = derivation;
-        this.history = Histories.history(this);
         this.contexts = context;
         path = contexts.path().shallowCopy().withAppended(DerivedSolution.class.getSimpleName());
+        this.history = Histories.history(this);
     }
 
     private DerivedSolution(Discoverable contexts, Assignments assignments) {
         this.assignments = assignments;
-        history = Histories.history(this);
         this.contexts = contexts;
         path = contexts.path().shallowCopy().withAppended(DerivedSolution.class.getSimpleName());
+        history = Histories.history(this);
     }
 
     @Override

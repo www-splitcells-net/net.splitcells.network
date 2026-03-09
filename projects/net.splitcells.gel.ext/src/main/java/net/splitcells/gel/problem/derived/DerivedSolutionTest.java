@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.problem.derived;
 
+import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.gel.constraint.type.Then;
 import net.splitcells.gel.data.view.attribute.AttributeI;
 import net.splitcells.gel.rating.type.Cost;
@@ -30,9 +31,8 @@ import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.optimization.primitive.OfflineLinearInitialization.offlineLinearInitialization;
 
 public class DerivedSolutionTest {
-
-    @Tag(INTEGRATION_TEST)
-    @Test
+    
+    @IntegrationTest
     public void test_rating_manipulation_from_start() {
         final var derivedCostManipulationFactor = 11d;
         final var complianceValue = 5;
