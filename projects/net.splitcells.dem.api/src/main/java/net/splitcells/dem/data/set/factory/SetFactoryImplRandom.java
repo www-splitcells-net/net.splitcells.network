@@ -15,14 +15,13 @@
  */
 package net.splitcells.dem.data.set.factory;
 
-import net.splitcells.dem.data.set.SetF;
 import net.splitcells.dem.data.set.legacy.LegacySetJava;
 import net.splitcells.dem.data.set.legacy.LegacySetWrapper;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 
-public class SetFactoryImplRandom implements SetF {
+public class SetFactoryImplRandom implements SetFactory {
 
-    public static SetF setFactoryImplRandom() {
+    public static SetFactory setFactoryImplRandom() {
         return new SetFactoryImplRandom();
     }
 

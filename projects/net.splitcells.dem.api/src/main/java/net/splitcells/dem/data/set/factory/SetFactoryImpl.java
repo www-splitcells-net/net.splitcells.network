@@ -16,12 +16,11 @@
 package net.splitcells.dem.data.set.factory;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.data.set.SetF;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
-public final class SetFactoryImpl implements SetF {
+public final class SetFactoryImpl implements SetFactory {
     @JavaLegacy
     @Override
     public <T> java.util.Set<T> lagacySet() {

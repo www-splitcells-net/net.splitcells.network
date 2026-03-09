@@ -18,7 +18,6 @@ package net.splitcells.dem.data.set.factory;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.atom.Bool;
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.data.set.SetF;
 import net.splitcells.dem.environment.config.IsDeterministic;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 
@@ -27,32 +26,32 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.factory.SetFactoryImplDeterministic.setFactoryImplDeterministic;
 import static net.splitcells.dem.data.set.factory.SetFactoryImplRandom.setFactoryImplRandom;
 
-public class SetFactoryImplConfigured implements SetF {
-    public static SetF setFiConfigured() {
+public class SetFactoryImplConfigured implements SetFactory {
+    public static SetFactory setFiConfigured() {
         return new SetFactoryImplConfigured();
     }
 
-    private SetF setF;
+    private SetFactory setFactory;
 
     private SetFactoryImplConfigured() {
         final var isDeterministic = Dem.configValue(IsDeterministic.class);
         if (isDeterministic.isPresent() && isDeterministic.get().isTrue()) {
-            setF = setFactoryImplDeterministic();
+            setFactory = setFactoryImplDeterministic();
         } else {
-            setF = setFactoryImplRandom();
+            setFactory = setFactoryImplRandom();
         }
     }
 
     @JavaLegacy
     @Override
     public <T> java.util.Set<T> lagacySet() {
-        return setF.lagacySet();
+        return setFactory.lagacySet();
     }
 
     @JavaLegacy
     @Override
     public <T> java.util.Set<T> legacySet(java.util.Collection<T> arg) {
-        return setF.legacySet(arg);
+        return setFactory.legacySet(arg);
     }
 
     /**
@@ -61,22 +60,22 @@ public class SetFactoryImplConfigured implements SetF {
     @Deprecated
     private void update(Optional<Bool> oldValue, Optional<Bool> newValue) {
         if (newValue.isEmpty()) {
-            setF = new SetFactoryImpl();
+            setFactory = new SetFactoryImpl();
         } else if (newValue.get().isTrue()) {
-            setF = setFactoryImplDeterministic();
+            setFactory = setFactoryImplDeterministic();
         } else {
-            setF = setFactoryImplRandom();
+            setFactory = setFactoryImplRandom();
         }
     }
 
     @Override
     public <T> Set<T> set() {
-        return setF.set();
+        return setFactory.set();
     }
 
     @JavaLegacy
     @Override
     public <T> Set<T> set(java.util.Collection<T> arg) {
-        return setF.set(arg);
+        return setFactory.set(arg);
     }
 }

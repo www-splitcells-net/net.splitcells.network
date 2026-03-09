@@ -15,16 +15,15 @@
  */
 package net.splitcells.dem.data.set.factory;
 
-import net.splitcells.dem.data.set.SetF;
 import net.splitcells.dem.data.set.legacy.LegacySetJavaDeterministic;
 import net.splitcells.dem.data.set.legacy.LegacySetWrapper;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import static net.splitcells.dem.data.set.legacy.LegacySetJavaDeterministic.legacySetJavaDeterministic;
 
-public class SetFactoryImplDeterministic implements SetF {
+public class SetFactoryImplDeterministic implements SetFactory {
 
-    public static SetF setFactoryImplDeterministic() {
+    public static SetFactory setFactoryImplDeterministic() {
         return new SetFactoryImplDeterministic();
     }
 
