@@ -16,6 +16,7 @@
 package net.splitcells.gel.solution.optimization.primitive;
 
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.constraint.type.Then;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -41,8 +42,7 @@ public class UsedSupplySwitcherTest {
     public static final Attribute<Integer> A = attribute(Integer.class, "A");
     public static final Attribute<Integer> B = attribute(Integer.class, "B");
 
-    @Tag(INTEGRATION_TEST)
-    @Test
+    @UnitTest
     public void testSwitchWithNoUnused() {
         final var testSolution = defineProblem()
                 .withDemandAttributes(A)
@@ -80,8 +80,7 @@ public class UsedSupplySwitcherTest {
         }
     }
 
-    @Tag(INTEGRATION_TEST)
-    @Test
+    @UnitTest
     public void testSwitchWithUnusedSupplyPresent() {
         final var testSolution = defineProblem()
                 .withDemandAttributes(A)
@@ -120,8 +119,7 @@ public class UsedSupplySwitcherTest {
         }
     }
 
-    @Tag(INTEGRATION_TEST)
-    @Test
+    @UnitTest
     public void testSwitchWithUnusedDemandPresent() {
         final var testSolution = defineProblem()
                 .withDemandAttributes(A)
@@ -160,8 +158,7 @@ public class UsedSupplySwitcherTest {
         }
     }
 
-    @Tag(INTEGRATION_TEST)
-    @Test
+    @UnitTest
     public void testSwitchMultipleStepsInOptimization() {
         final var stepCount = 2;
         final var variables = 4;
