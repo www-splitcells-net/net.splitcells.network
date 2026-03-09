@@ -13,34 +13,46 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.dem.data.set;
+package net.splitcells.dem.data.set.factory;
 
+import net.splitcells.dem.data.set.SetF;
+import net.splitcells.dem.data.set.legacy.LegacySetJava;
+import net.splitcells.dem.data.set.legacy.LegacySetWrapper;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 
-import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+public class SetFactoryImplRandom implements SetF {
 
-public final class SetFactoryImpl implements SetF {
+    public static SetF setFactoryImplRandom() {
+        return new SetFactoryImplRandom();
+    }
+
+    private final LegacySetJava legacyFactory = LegacySetJava.legacySetJava();
+
+    private SetFactoryImplRandom() {
+
+    }
+
     @JavaLegacy
     @Override
     public <T> java.util.Set<T> lagacySet() {
-        return new java.util.HashSet<>();
+        return legacyFactory.legacySet();
     }
 
     @JavaLegacy
     @Override
     public <T> java.util.Set<T> legacySet(java.util.Collection<T> arg) {
-        return new java.util.HashSet<>(arg);
-    }
-
-    @Override
-    public <T> Set<T> set() {
-        throw notImplementedYet();
+        return legacyFactory.legacySet(arg);
     }
 
     @JavaLegacy
     @Override
-    public <T> Set<T> set(java.util.Collection<T> arg) {
-        throw notImplementedYet();
+    public <T> net.splitcells.dem.data.set.Set<T> set() {
+        return LegacySetWrapper.legacySetWrapper(legacyFactory.legacySet(), false);
     }
 
+    @JavaLegacy
+    @Override
+    public <T> net.splitcells.dem.data.set.Set<T> set(java.util.Collection<T> arg) {
+        return LegacySetWrapper.legacySetWrapper(legacyFactory.legacySet(arg), false);
+    }
 }
