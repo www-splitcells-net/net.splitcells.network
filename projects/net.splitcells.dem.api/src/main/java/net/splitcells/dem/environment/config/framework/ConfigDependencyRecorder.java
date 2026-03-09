@@ -57,9 +57,7 @@ public class ConfigDependencyRecorder {
 
     public void recordDependency(Class<? extends Option<? extends Object>> from
             , Class<? extends Option<? extends Object>> to) {
-        dependencies
-                .computeIfAbsent(from, f -> setFactory.set())
-                .add(to);
+        dependencies.computeIfAbsent(from, f -> setFactory.set()).add(to);
     }
 
     public Map<Class<? extends Option<? extends Object>>, Set<Class<? extends Option<? extends Object>>>> dependencies() {
