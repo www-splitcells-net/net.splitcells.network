@@ -11,6 +11,9 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public class LegacySets {
 
+    /**
+     * We use the factory, that is assumed to be produce the most performant sets by default. 
+     */
     private static final LegacySetFactory SET_FACTORY = legacySetEclipse();
 
     private LegacySets() {
