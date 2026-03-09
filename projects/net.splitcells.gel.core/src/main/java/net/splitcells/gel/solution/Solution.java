@@ -337,18 +337,16 @@ public interface Solution extends Problem, SolutionView {
                     demandsFree().rawLine(event.demand().interpret().orElseThrow().index()),
                     suppliesFree().rawLine(event.supply().interpret().orElseThrow().index()));
         } else if (event.stepType().equals(REMOVAL)) {
-            final var demandBeforeRemoval = event.demand().interpret();
-            final var supplyBeforeRemoval = event.supply().interpret();
+            val demandBeforeRemoval = event.demand().interpret();
+            val supplyBeforeRemoval = event.supply().interpret();
             if (parameters.dublicateRemovalAllowed()
                     && demandBeforeRemoval.isEmpty()
                     && supplyBeforeRemoval.isEmpty()) {
                 return this;
             }
-            remove(assignmentsOf
-                    (demandBeforeRemoval.orElseThrow()
-                            , supplyBeforeRemoval.orElseThrow())
-                    .iterator()
-                    .next());
+            val assignments = assignmentsOf(demandBeforeRemoval.orElseThrow()
+                    , supplyBeforeRemoval.orElseThrow());
+            remove(assignments.iterator().next());
         } else {
             throw new UnsupportedOperationException();
         }
