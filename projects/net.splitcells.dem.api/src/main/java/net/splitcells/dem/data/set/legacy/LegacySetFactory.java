@@ -7,7 +7,7 @@ import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 @JavaLegacy
 public interface LegacySetFactory {
-    <T> java.util.Set<T> set();
+    <T> java.util.Set<T> legacySet();
 
-    <T> java.util.Set<T> set(java.util.Collection<T> arg);
+    <T> java.util.Set<T> legacySet(java.util.Collection<T> arg);
 }

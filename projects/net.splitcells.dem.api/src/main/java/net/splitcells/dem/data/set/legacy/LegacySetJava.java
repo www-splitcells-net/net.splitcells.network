@@ -21,11 +21,11 @@ public class LegacySetJava implements LegacySetFactory {
 
     }
 
-    @Override public <T> Set<T> set() {
+    @Override public <T> Set<T> legacySet() {
         return legacySetWrapper(new HashSet<>());
     }
 
-    @Override public <T> Set<T> set(Collection<T> arg) {
+    @Override public <T> Set<T> legacySet(Collection<T> arg) {
         return legacySetWrapper(new HashSet<>(arg));
     }
 }

@@ -17,11 +17,11 @@ public class LegacySets {
     }
 
     public static <T> java.util.Set<T> set() {
-        return SET_FACTORY.set();
+        return SET_FACTORY.legacySet();
     }
 
     public static <T> java.util.Set<T> set(java.util.Collection<T> arg) {
-        return SET_FACTORY.set(arg);
+        return SET_FACTORY.legacySet(arg);
     }
 
 }

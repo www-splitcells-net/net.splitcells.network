@@ -21,11 +21,11 @@ public class LegacySetJavaDeterministic implements LegacySetFactory {
 
     }
 
-    @Override public <T> Set<T> set() {
+    @Override public <T> Set<T> legacySet() {
         return legacySetWrapper(new LinkedHashSet<>());
     }
 
-    @Override public <T> Set<T> set(Collection<T> arg) {
+    @Override public <T> Set<T> legacySet(Collection<T> arg) {
         return legacySetWrapper(new LinkedHashSet<>(arg));
     }
 }
