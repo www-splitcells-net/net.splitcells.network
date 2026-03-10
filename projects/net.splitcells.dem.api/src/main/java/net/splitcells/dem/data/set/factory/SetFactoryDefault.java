@@ -22,7 +22,7 @@ import net.splitcells.dem.lang.annotations.JavaLegacy;
 @JavaLegacy
 public class SetFactoryDefault implements SetFactory {
 
-    public static SetFactory setFactoryImplRandom() {
+    public static SetFactory setFactoryDefault() {
         return new SetFactoryDefault();
     }
 

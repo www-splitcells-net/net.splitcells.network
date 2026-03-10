@@ -23,7 +23,7 @@ import static net.splitcells.dem.data.set.legacy.LegacySetJavaDeterministic.lega
 
 public class SetFactoryDeterministic implements SetFactory {
 
-    public static SetFactory setFactoryImplDeterministic() {
+    public static SetFactory setFactoryDeterministic() {
         return new SetFactoryDeterministic();
     }
 

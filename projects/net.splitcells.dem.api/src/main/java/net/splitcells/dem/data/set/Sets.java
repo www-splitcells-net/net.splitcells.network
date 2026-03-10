@@ -22,14 +22,14 @@ import net.splitcells.dem.environment.resource.ResourceOptionImpl;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import static net.splitcells.dem.Dem.configValue;
-import static net.splitcells.dem.data.set.factory.SetFactoryConfigured.setFiConfigured;
+import static net.splitcells.dem.data.set.factory.SetFactoryConfigured.setFactoryConfigured;
 import static net.splitcells.dem.data.set.legacy.LegacySetWrapper.legacySetWrapper;
 import static net.splitcells.dem.environment.config.StaticFlags.INLINE_STANDARD_FACTORIES;
 
 @JavaLegacy
 public class Sets extends ResourceOptionImpl<SetFactory> {
     public Sets() {
-        super(() -> setFiConfigured());
+        super(() -> setFactoryConfigured());
     }
     
     public static <T> java.util.stream.Collector<T, ?, Set<T>> toSetOfUniques() {

@@ -22,7 +22,7 @@ import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.data.set.map.DeterministicMapFactory;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
-import static net.splitcells.dem.data.set.factory.SetFactoryDeterministic.setFactoryImplDeterministic;
+import static net.splitcells.dem.data.set.factory.SetFactoryDeterministic.setFactoryDeterministic;
 import static net.splitcells.dem.data.set.map.DeterministicMapFactory.deterministicMapFactory;
 import static net.splitcells.dem.data.set.map.Maps.map;
 
@@ -37,7 +37,7 @@ public class ConfigDependencyRecorder {
         return new ConfigDependencyRecorder();
     }
 
-    private final SetFactory setFactory = setFactoryImplDeterministic();
+    private final SetFactory setFactory = setFactoryDeterministic();
 
     /**
      * Maps for every {@link Option}, which are set via {@link Configuration#withConfigValue(Class, Object)} etc.,

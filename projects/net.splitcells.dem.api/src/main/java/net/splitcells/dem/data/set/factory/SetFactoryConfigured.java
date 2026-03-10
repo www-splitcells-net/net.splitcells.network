@@ -23,11 +23,11 @@ import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.util.Optional;
 
-import static net.splitcells.dem.data.set.factory.SetFactoryDeterministic.setFactoryImplDeterministic;
-import static net.splitcells.dem.data.set.factory.SetFactoryDefault.setFactoryImplRandom;
+import static net.splitcells.dem.data.set.factory.SetFactoryDeterministic.setFactoryDeterministic;
+import static net.splitcells.dem.data.set.factory.SetFactoryDefault.setFactoryDefault;
 
 public class SetFactoryConfigured implements SetFactory {
-    public static SetFactory setFiConfigured() {
+    public static SetFactory setFactoryConfigured() {
         return new SetFactoryConfigured();
     }
 
@@ -36,9 +36,9 @@ public class SetFactoryConfigured implements SetFactory {
     private SetFactoryConfigured() {
         final var isDeterministic = Dem.configValue(IsDeterministic.class);
         if (isDeterministic.isPresent() && isDeterministic.get().isTrue()) {
-            setFactory = setFactoryImplDeterministic();
+            setFactory = setFactoryDeterministic();
         } else {
-            setFactory = setFactoryImplRandom();
+            setFactory = setFactoryDefault();
         }
     }
 
@@ -60,11 +60,11 @@ public class SetFactoryConfigured implements SetFactory {
     @Deprecated
     private void update(Optional<Bool> oldValue, Optional<Bool> newValue) {
         if (newValue.isEmpty()) {
-            setFactory = new SetFactoryImpl();
+            setFactory = setFactoryDefault();
         } else if (newValue.get().isTrue()) {
-            setFactory = setFactoryImplDeterministic();
+            setFactory = setFactoryDeterministic();
         } else {
-            setFactory = setFactoryImplRandom();
+            setFactory = setFactoryDefault();
         }
     }
 
