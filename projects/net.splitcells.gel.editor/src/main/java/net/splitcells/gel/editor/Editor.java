@@ -144,7 +144,7 @@ public class Editor implements Discoverable {
     private Editor(String argName, Discoverable argParent) {
         name = argName;
         parent = argParent;
-        path = parent.path().shallowCopy().withAppended(name);;
+        path = parent.path().shallowCopy().withAppended(name);
     }
 
     public void optimize() {
