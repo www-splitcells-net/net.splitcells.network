@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.data.set;
 
+import lombok.val;
 import net.splitcells.dem.data.atom.Bool;
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.environment.config.StaticFlags;
@@ -35,8 +36,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 public interface Set<T> extends java.util.Set<T>, SetT<T> {
 
     default T removeAny() {
-        final T rVal = iterator().next();
-        remove(rVal);
+        val iter = iterator();
+        val rVal = iter.next();
+        iter.remove();
         return rVal;
     }
 
