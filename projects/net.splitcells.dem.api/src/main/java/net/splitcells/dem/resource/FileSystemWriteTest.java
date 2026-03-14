@@ -5,6 +5,7 @@
 package net.splitcells.dem.resource;
 
 import lombok.val;
+import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.dem.utils.StringUtils;
 import org.junit.jupiter.api.DynamicTest;
@@ -18,6 +19,7 @@ import java.util.stream.Stream;
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.resource.FileSystemViaMemory.fileSystemViaMemory;
+import static net.splitcells.dem.resource.communication.Closeable.close;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
@@ -71,6 +73,17 @@ public class FileSystemWriteTest extends TestSuiteI {
         });
     }
 
+    public void testInputStream(Supplier<FileSystem> factory) {
+        val testSubject = factory.get();
+        val testContent = "content";
+        testSubject.writeToFile("test", testContent.getBytes());
+        requireEquals(Files.readAsString(testSubject.inputStream("test")), testContent);
+        requireThrow(() -> {
+            val failTester = factory.get();
+            close(() -> failTester.inputStream("test"));
+        });
+    }
+
     public void testWriteToFile(Supplier<FileSystem> factory) {
         val testSubject = factory.get();
         testSubject.writeToFile("test", "content".getBytes());
@@ -93,6 +106,7 @@ public class FileSystemWriteTest extends TestSuiteI {
                 , dynamicTests(this::testReadFileAsBytes, factory)
                 , dynamicTests(this::testWriteToFile, factory)
                 , dynamicTests(this::testReadString, factory)
+                , dynamicTests(this::testInputStream, factory)
         );
     }
 }
