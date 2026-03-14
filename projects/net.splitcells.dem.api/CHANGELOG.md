@@ -95,6 +95,8 @@
      This also makes it possible to use the name `Resource` for an interface
      of resource like things.
 ### Minor Changes
+* **2026-03-14\#32** The new helper function `Closeable#close(Supplier)` closes invalid Closeables in tests,
+  without creating code warnings or empty code blocks.
 * **2026-03-09\#37** LegacySets makes it easier to replace the used Java Set implementation.
 * **2026-03-05\#37** Make `Discoverable#path` read only by default, in order to increase performance.
 * **2026-02-06\#37** Create `Tree#toCommonMarkString` has now an option to not use blockquotes for very long ways.
