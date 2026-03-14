@@ -60,6 +60,17 @@ public class FileSystemWriteTest extends TestSuiteI {
         });
     }
 
+    public void testReadString(Supplier<FileSystem> factory) {
+        val testSubject = factory.get();
+        val testContent = "content";
+        testSubject.writeToFile("test", testContent.getBytes());
+        requireEquals(testSubject.readString("test"), testContent);
+        requireThrow(() -> {
+            val failTester = factory.get();
+            failTester.readString("test");
+        });
+    }
+
     public void testWriteToFile(Supplier<FileSystem> factory) {
         val testSubject = factory.get();
         testSubject.writeToFile("test", "content".getBytes());
@@ -81,6 +92,7 @@ public class FileSystemWriteTest extends TestSuiteI {
                 , dynamicTests(this::testIsFile, factory)
                 , dynamicTests(this::testReadFileAsBytes, factory)
                 , dynamicTests(this::testWriteToFile, factory)
+                , dynamicTests(this::testReadString, factory)
         );
     }
 }
