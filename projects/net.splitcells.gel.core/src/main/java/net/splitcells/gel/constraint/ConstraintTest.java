@@ -15,6 +15,8 @@
  */
 package net.splitcells.gel.constraint;
 
+import lombok.val;
+import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;
@@ -28,11 +30,13 @@ import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import org.junit.jupiter.api.Test;
 
+import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
+import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.gel.constraint.GroupId.group;
 import static net.splitcells.gel.constraint.GroupId.rootGroup;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
@@ -51,7 +55,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ConstraintTest {
 
     @Test
-    @DisabledTest
     public void testArgumentation() {
         final var attribute = attribute(Integer.class, "a");
         final int valueA = 1;
@@ -72,15 +75,19 @@ public class ConstraintTest {
                 .toProblem()
                 .asSolution();
         solution.optimize(offlineLinearInitialization());
-        solution.constraint().naturalArgumentation().orElseThrow().requireEqualsTo(
-                tree("For all allocations", STRING).withChildren(
-                        tree("For all groups of a attribute values: where value is `1`", STRING)
-                                .withChildren(tree("Then size should be 4, but is 2", STRING))
-                        , tree("Then size should be 2, but is 4", STRING)
-                        , tree("For all groups of a attribute values: where value is `3`", STRING)
-                                .withChildren(tree("Then size should be 4, but is 2", STRING))
-                ))
-        ;
+        val testResult = solution.constraint().naturalArgumentation().orElseThrow();
+        requireEquals(testResult.name(), "For all allocations");
+        val child1 = tree("For all groups of a attribute values: where value is `1`", STRING)
+                .withChildren(tree("Then size should be 4, but is 2", STRING));
+        require(testResult.children().stream().map(child -> child.equals(child1))
+                .reduce((a, b) -> a || b).orElse(false));
+        val child2 = tree("Then size should be 2, but is 4", STRING);
+        require(testResult.children().stream().map(child -> child.equals(child2))
+                .reduce((a, b) -> a || b).orElse(false));
+        val child3 = tree("For all groups of a attribute values: where value is `3`", STRING)
+                .withChildren(tree("Then size should be 4, but is 2", STRING));
+        require(testResult.children().stream().map(child -> child.equals(child3))
+                .reduce((a, b) -> a || b).orElse(false));
     }
 
     @Test
