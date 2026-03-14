@@ -125,4 +125,8 @@ public interface FileSystem extends FileSystemView {
     default Optional<Path> javaLegacyPath(Path path) {
         return Optional.empty();
     }
+
+    default FileSystemView subFileSystemView(String path) {
+        return subFileSystem(path);
+    }
 }
