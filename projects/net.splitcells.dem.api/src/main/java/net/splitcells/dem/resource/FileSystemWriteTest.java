@@ -52,6 +52,14 @@ public class FileSystemWriteTest extends TestSuiteI {
         requireNot(testSubject.isFile("not-existing"));
     }
 
+    public void testDelete(Supplier<FileSystem> factory) {
+        val testSubject = factory.get();
+        testSubject.writeToFile("test", "content".getBytes());
+        require(testSubject.isFile("test"));
+        testSubject.delete("test");
+        requireNot(testSubject.isFile("test"));
+    }
+
     public void testReadFileAsBytes(Supplier<FileSystem> factory) {
         val testSubject = factory.get();
         testSubject.writeToFile("test", "content".getBytes());
@@ -107,6 +115,7 @@ public class FileSystemWriteTest extends TestSuiteI {
                 , dynamicTests(this::testWriteToFile, factory)
                 , dynamicTests(this::testReadString, factory)
                 , dynamicTests(this::testInputStream, factory)
+                , dynamicTests(this::testDelete, factory)
         );
     }
 }
