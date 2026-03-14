@@ -54,6 +54,10 @@ public class FileSystemWriteTest extends TestSuiteI {
         val testSubject = factory.get();
         testSubject.writeToFile("test", "content".getBytes());
         requireEquals(parseString(testSubject.readFileAsBytes("test")), "content");
+        requireThrow(() -> {
+            val failTester = factory.get();
+            requireEquals(parseString(failTester.readFileAsBytes("test")), "content");
+        });
     }
 
     public void testCreateDirectoryPath(Supplier<FileSystem> factory) {
