@@ -40,14 +40,14 @@ public interface AspectOrientedConstructor<T> {
      * An {@code aspect} takes a given argument and returns a wrapper of it.</p>
      * <p>Keep in mind, that {@link Object#equals(Object)} only works,
      * if the base implementations and all aspects override
-     * {@link Object#equals(Object)} and {@link Object#hashCode()} in such a way,
-     * that contents are only compared via {@link Identifiable#identity()}.
+     * {@link Object#equals(Object)} and {@link Object#hashCode()}</p>
+     * <p>There are 2 types of {@link Object#equals(Object)} implementations.
+     * One type checks the identity via this reference and the other not.
+     * If this identity is used such references should be compared via {@link Identifiable#identity()}.
      * The reason for this, is the fact that the base implementations and aspects,
      * may use this and give it to other objects or function calls.
      * When an object collection contains both versions of the same object, this leads to issues,
-     * as equals will not return true for both.
-     * Also keep in mind, that implementing {@link Object#equals(Object)} and {@link Object#hashCode()} in such a way,
-     * is basically a hack and a leaky abstraction.</p>
+     * as equals will not return true for both.</p>
      * <p>Sometimes the question arises, if one or multiple aspects should be created for multiple functionalities.
      * Writing wrappers can sometimes take a bit much time, if the corresponding interface is large.
      * In this case it is often easier to use one aspect for multiple features,
