@@ -31,7 +31,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 public class SetBenchmark {
 
     public static void main(String... args) throws RunnerException {
-        requireImplRuntimeOrder(benchmark(SetBenchmark.class), "Eclipse", "Java", "Trove");
+        requireImplRuntimeOrder("testRemoveAny", SetBenchmark.class, "Eclipse", "Java", "Trove");
     }
 
     @Benchmark public void testRemoveAny(State state, Blackhole blackhole) {

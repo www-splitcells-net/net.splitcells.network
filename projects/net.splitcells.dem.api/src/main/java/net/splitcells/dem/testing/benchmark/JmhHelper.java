@@ -10,6 +10,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 import org.openjdk.jmh.annotations.Mode;
+import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.profile.GCProfiler;
 import org.openjdk.jmh.results.Result;
 import org.openjdk.jmh.results.RunResult;
@@ -39,12 +40,16 @@ public class JmhHelper {
 
     /**
      *
-     * @param clazz Benchmarks this given class. Only one test with a parametrized state is allowed.
+     * @param clazz      Benchmarks this given class. Only one test with a parametrized state is allowed.
+     * @param testMethod The Method annotated with {@link Param}, that is used for the benchmark.
+     * @param impls      The "impls" parameter values. The first element should be the fastest and
+     *                   the last element should be the slowest.
      */
-    public static Collection<RunResult> benchmark(Class<?> clazz) {
+    public static void requireImplRuntimeOrder(String testMethod, Class<?> clazz, String... impls) {
         try {
+            val test = clazz.getName() + "." + testMethod;
             val opt = new OptionsBuilder()
-                    .include(clazz.getSimpleName())
+                    .include(test)
                     .warmupIterations(3)
                     .warmupTime(TimeValue.seconds(2))
                     .measurementIterations(5)
@@ -55,17 +60,18 @@ public class JmhHelper {
                     .shouldDoGC(true)
                     .addProfiler(GCProfiler.class)
                     .build();
-            return new Runner(opt).run();
+            requireImplRuntimeOrder(new Runner(opt).run(), test, impls);
         } catch (RunnerException e) {
             throw execException(e);
         }
     }
 
-    public static void requireImplRuntimeOrder(Collection<RunResult> runResults, String... impls) {
+    private static void requireImplRuntimeOrder(Collection<RunResult> runResults, String test, String... impls) {
         val sortedImplRuns = Lists.<RunResult>list();
         for (String impl : impls) {
             val matches = runResults.stream()
-                    .filter(r -> impl.equals(r.getParams().getParam("impl")))
+                    .filter(r -> r.getParams().getBenchmark().endsWith(test)
+                            && impl.equals(r.getParams().getParam("impl")))
                     .toList();
             if (matches.size() != 1) {
                 throw execException("There should be one "
