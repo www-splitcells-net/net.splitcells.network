@@ -31,21 +31,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 public class SetBenchmark {
 
     public static void main(String... args) throws RunnerException {
-        val opt = new OptionsBuilder()
-                .include(SetBenchmark.class.getSimpleName())
-                .warmupIterations(3)
-                .warmupTime(TimeValue.seconds(2))
-                .measurementIterations(5)
-                .measurementTime(TimeValue.seconds(3))
-                .forks(1)
-                .mode(Mode.Throughput)
-                .timeUnit(TimeUnit.SECONDS)
-                .shouldDoGC(true)
-                .addProfiler(GCProfiler.class)
-                .build();
-        val runner = new Runner(opt);
-        val benchResults = runner.run();
-        requireImplRuntimeOrder(benchResults, "Eclipse", "Java", "Trove");
+        requireImplRuntimeOrder(benchmark(SetBenchmark.class), "Eclipse", "Java", "Trove");
     }
 
     @Benchmark public void testRemoveAny(State state, Blackhole blackhole) {

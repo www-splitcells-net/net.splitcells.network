@@ -5,13 +5,21 @@ package net.splitcells.dem.testing.benchmark;
 
 import lombok.val;
 import net.splitcells.dem.data.atom.Integers;
+import net.splitcells.dem.data.set.benchmark.SetBenchmark;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
+import org.openjdk.jmh.annotations.Mode;
+import org.openjdk.jmh.profile.GCProfiler;
 import org.openjdk.jmh.results.Result;
 import org.openjdk.jmh.results.RunResult;
+import org.openjdk.jmh.runner.Runner;
+import org.openjdk.jmh.runner.RunnerException;
+import org.openjdk.jmh.runner.options.OptionsBuilder;
+import org.openjdk.jmh.runner.options.TimeValue;
 
 import java.util.Collection;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
 import static java.util.stream.IntStream.range;
@@ -24,8 +32,33 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 
 @JavaLegacy
 public class JmhHelper {
+
     private JmhHelper() {
         throw constructorIllegal();
+    }
+
+    /**
+     *
+     * @param clazz Benchmarks this given class. Only one test with a parametrized state is allowed.
+     */
+    public static Collection<RunResult> benchmark(Class<?> clazz) {
+        try {
+            val opt = new OptionsBuilder()
+                    .include(clazz.getSimpleName())
+                    .warmupIterations(3)
+                    .warmupTime(TimeValue.seconds(2))
+                    .measurementIterations(5)
+                    .measurementTime(TimeValue.seconds(3))
+                    .forks(1)
+                    .mode(Mode.Throughput)
+                    .timeUnit(TimeUnit.SECONDS)
+                    .shouldDoGC(true)
+                    .addProfiler(GCProfiler.class)
+                    .build();
+            return new Runner(opt).run();
+        } catch (RunnerException e) {
+            throw execException(e);
+        }
     }
 
     public static void requireImplRuntimeOrder(Collection<RunResult> runResults, String... impls) {
