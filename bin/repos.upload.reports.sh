@@ -25,8 +25,8 @@ mvn -B clean install \
 mvn clean install site \
     -Dtest_codecov=1 \
     -Dsource_code_check=1 \
-    -Dtest.groups=testing_unit,testing_integration,testing_capabilities,benchmarking_runtime \
-    -DexcludedGroups="experimental_test"
+    -Dtest.groups=testing_unit,testing_integration,testing_capabilities \
+    -DexcludedGroups=experimental_test,benchmarking_runtime
 # -z is used because -v is not supported in Forgejo workflows.
 if [ -z "$NET_SPLITCELLS_MARTINS_AVOTS_WEBSITE_SFTP_PRIVATE_KEY" ]; then
   echo Upload to https://splitcells.net is disabled, because the environment variable NET_SPLITCELLS_MARTINS_AVOTS_WEBSITE_SFTP_PRIVATE_KEY is not set.
