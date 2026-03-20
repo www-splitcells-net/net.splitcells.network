@@ -4,6 +4,7 @@
 package net.splitcells.dem.data.set.benchmark;
 
 import lombok.val;
+import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 import org.openjdk.jmh.annotations.*;
@@ -18,6 +19,7 @@ import org.openjdk.jmh.runner.options.TimeValue;
 import java.util.concurrent.TimeUnit;
 
 import static java.util.stream.IntStream.range;
+import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.set.legacy.LegacySetEclipse.legacySetEclipse;
 import static net.splitcells.dem.data.set.legacy.LegacySetJava.legacySetJava;
 import static net.splitcells.dem.data.set.legacy.LegacySetTrove.legacySetTrove;
@@ -39,10 +41,14 @@ public class SetBenchmark {
                 .timeUnit(TimeUnit.SECONDS)
                 .shouldDoGC(true)
                 .addProfiler(GCProfiler.class)
-                .resultFormat(ResultFormatType.JSON)
                 .build();
         val runner = new Runner(opt);
-        val testResult = runner.run();
+        val benchResults = runner.run();
+        val java = benchResults.stream().filter(r -> "Java".equals(r.getParams().getParam("impl"))).findFirst().orElseThrow();
+        val eclipse = benchResults.stream().filter(r -> "Eclipse".equals(r.getParams().getParam("impl"))).findFirst().orElseThrow();
+        val trove = benchResults.stream().filter(r -> "Trove".equals(r.getParams().getParam("impl"))).findFirst().orElseThrow();
+        require(trove.getPrimaryResult().getScore() < java.getPrimaryResult().getScore());
+        require(java.getPrimaryResult().getScore() < eclipse.getPrimaryResult().getScore());
     }
 
     @Benchmark public void testRemoveAny(State state, Blackhole blackhole) {
