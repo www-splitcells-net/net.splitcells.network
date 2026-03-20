@@ -24,6 +24,7 @@ import static net.splitcells.dem.data.set.legacy.LegacySetEclipse.legacySetEclip
 import static net.splitcells.dem.data.set.legacy.LegacySetJava.legacySetJava;
 import static net.splitcells.dem.data.set.legacy.LegacySetTrove.legacySetTrove;
 import static net.splitcells.dem.data.set.legacy.LegacySetWrapper.legacySetWrapper;
+import static net.splitcells.dem.testing.benchmark.JmhHelper.requireImplRuntimeOrder;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
 @JavaLegacy
@@ -47,8 +48,7 @@ public class SetBenchmark {
         val java = benchResults.stream().filter(r -> "Java".equals(r.getParams().getParam("impl"))).findFirst().orElseThrow();
         val eclipse = benchResults.stream().filter(r -> "Eclipse".equals(r.getParams().getParam("impl"))).findFirst().orElseThrow();
         val trove = benchResults.stream().filter(r -> "Trove".equals(r.getParams().getParam("impl"))).findFirst().orElseThrow();
-        require(trove.getPrimaryResult().getScore() < java.getPrimaryResult().getScore());
-        require(java.getPrimaryResult().getScore() < eclipse.getPrimaryResult().getScore());
+        requireImplRuntimeOrder(eclipse, java, trove);
     }
 
     @Benchmark public void testRemoveAny(State state, Blackhole blackhole) {
