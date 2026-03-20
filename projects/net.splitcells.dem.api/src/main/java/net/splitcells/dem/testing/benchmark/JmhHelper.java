@@ -68,6 +68,9 @@ public class JmhHelper {
 
     private static void requireImplRuntimeOrder(Collection<RunResult> runResults, String test, String... impls) {
         val sortedImplRuns = Lists.<RunResult>list();
+        if (runResults.isEmpty()) {
+            throw execException("There are no " + RunResult.class.getSimpleName() + " produced by a benchmark run. This seems to be incorrect.");
+        }
         for (String impl : impls) {
             val matches = runResults.stream()
                     .filter(r -> r.getParams().getBenchmark().endsWith(test)
