@@ -26,6 +26,7 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.factory.SetFactoryDeterministic.setFactoryDeterministic;
 import static net.splitcells.dem.data.set.factory.SetFactoryDefault.setFactoryDefault;
 
+@JavaLegacy
 public class SetFactoryConfigured implements SetFactory {
     public static SetFactory setFactoryConfigured() {
         return new SetFactoryConfigured();
@@ -42,13 +43,11 @@ public class SetFactoryConfigured implements SetFactory {
         }
     }
 
-    @JavaLegacy
     @Override
     public <T> java.util.Set<T> lagacySet() {
         return setFactory.lagacySet();
     }
 
-    @JavaLegacy
     @Override
     public <T> java.util.Set<T> legacySet(java.util.Collection<T> arg) {
         return setFactory.legacySet(arg);
@@ -73,7 +72,6 @@ public class SetFactoryConfigured implements SetFactory {
         return setFactory.set();
     }
 
-    @JavaLegacy
     @Override
     public <T> Set<T> set(java.util.Collection<T> arg) {
         return setFactory.set(arg);
