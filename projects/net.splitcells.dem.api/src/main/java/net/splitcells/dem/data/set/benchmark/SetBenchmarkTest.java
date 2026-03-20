@@ -4,22 +4,13 @@
 package net.splitcells.dem.data.set.benchmark;
 
 import lombok.val;
-import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
+import net.splitcells.dem.testing.annotations.BenchmarkTest;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
-import org.openjdk.jmh.profile.GCProfiler;
-import org.openjdk.jmh.results.format.ResultFormatType;
-import org.openjdk.jmh.runner.Runner;
-import org.openjdk.jmh.runner.RunnerException;
-import org.openjdk.jmh.runner.options.OptionsBuilder;
-import org.openjdk.jmh.runner.options.TimeValue;
-
-import java.util.concurrent.TimeUnit;
 
 import static java.util.stream.IntStream.range;
-import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.set.legacy.LegacySetEclipse.legacySetEclipse;
 import static net.splitcells.dem.data.set.legacy.LegacySetJava.legacySetJava;
 import static net.splitcells.dem.data.set.legacy.LegacySetTrove.legacySetTrove;
@@ -28,10 +19,10 @@ import static net.splitcells.dem.testing.benchmark.JmhHelper.*;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
 @JavaLegacy
-public class SetBenchmark {
+public class SetBenchmarkTest {
 
-    public static void main(String... args) throws RunnerException {
-        requireImplRuntimeOrder("testRemoveAny", SetBenchmark.class, "Eclipse", "Java", "Trove");
+    @BenchmarkTest public void test() {
+        requireImplRuntimeOrder("testRemoveAny", SetBenchmarkTest.class, "Eclipse", "Java", "Trove");
     }
 
     @Benchmark public void testRemoveAny(State state, Blackhole blackhole) {

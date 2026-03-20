@@ -4,8 +4,6 @@
 package net.splitcells.dem.testing.benchmark;
 
 import lombok.val;
-import net.splitcells.dem.data.atom.Integers;
-import net.splitcells.dem.data.set.benchmark.SetBenchmark;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
@@ -21,13 +19,9 @@ import org.openjdk.jmh.runner.options.TimeValue;
 
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.IntStream;
 
 import static java.util.stream.IntStream.range;
-import static java.util.stream.IntStream.rangeClosed;
-import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.DescribedBool.describedBool;
-import static net.splitcells.dem.data.atom.Integers.requireEqualInts;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
