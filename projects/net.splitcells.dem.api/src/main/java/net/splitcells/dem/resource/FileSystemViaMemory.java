@@ -19,6 +19,7 @@ import com.google.common.jimfs.Jimfs;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.utils.ExecutionException;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -61,7 +62,10 @@ public class FileSystemViaMemory implements FileSystem {
     @Override
     public FileSystem appendToFile(Path path, byte[] content) {
         try {
-            Files.write(backend.getPath(base.resolve(path).toString()), content, StandardOpenOption.APPEND);
+            Files.write(backend.getPath(base.resolve(path).toString())
+                    , content
+                    , StandardOpenOption.APPEND
+                    , StandardOpenOption.CREATE);
         } catch (IOException e) {
             throw execException(e);
         }
