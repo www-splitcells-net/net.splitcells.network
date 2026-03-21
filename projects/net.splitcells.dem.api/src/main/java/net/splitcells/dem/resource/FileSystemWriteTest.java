@@ -58,6 +58,9 @@ public class FileSystemWriteTest extends TestSuiteI {
         require(testSubject.isFile("test"));
         testSubject.delete("test");
         requireNot(testSubject.isFile("test"));
+        requireThrow(() -> {
+            factory.get().delete("not-existing-file");
+        });
     }
 
     public void testReadFileAsBytes(Supplier<FileSystem> factory) {
