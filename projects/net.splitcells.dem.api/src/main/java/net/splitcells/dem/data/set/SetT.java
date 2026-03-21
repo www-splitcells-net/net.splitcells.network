@@ -116,14 +116,7 @@ public interface SetT<T> extends Collection<T> {
      * @param content
      */
     default SetT<T> requireContentsOf(T... content) {
-        StreamUtils.stream(content).forEach(c -> {
-            if (!contains(c)) {
-                throw ExecutionException.execException("Set should contain following contents in any order, but does not: set="
-                        + this
-                        + ", contents="
-                        + listWithValuesOf(content));
-            }
-        });
+        requireContentsOf(setOfUniques(content));
         return this;
     }
 
@@ -179,10 +172,10 @@ public interface SetT<T> extends Collection<T> {
     default void requireContentsOf(SetT<T> content) {
         content.forEach(c -> {
             if (!contains(c)) {
-                throw ExecutionException.execException("Set should contents in any order, but does not: set="
-                        + this
-                        + ", contents="
-                        + content);
+                throw execException(tree("Set should contain following contents in any order, but does not.")
+                        .withProperty("Subject", this.toString())
+                        .withProperty("Expected content", content.toString())
+                        .withProperty("First missing element", c.toString()));
             }
         });
     }
