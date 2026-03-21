@@ -15,6 +15,7 @@
  */
 package net.splitcells.cin.deprecated.raters;
 
+import lombok.val;
 import net.splitcells.dem.data.order.Comparators;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;
@@ -31,7 +32,11 @@ import net.splitcells.gel.solution.Solution;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
+import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
+import static net.splitcells.gel.rating.type.Cost.cost;
+import static net.splitcells.gel.rating.type.Cost.noCost;
 
 public class CommitmentAdherence implements Rater {
 
@@ -67,7 +72,17 @@ public class CommitmentAdherence implements Rater {
      */
     @Override
     public RatingEvent ratingAfterAddition(View lines, Line addition, List<Constraint> children, View lineProcessing) {
-        return ratingEvent();
+        val ratingEvent = ratingEvent();
+        val localRating = localRating()
+                .withPropagationTo(children)
+                .withResultingGroupId(addition.value(INCOMING_CONSTRAINT_GROUP));
+        if (addition.value(time) <= committedTime) {
+            localRating.withRating(cost(1));
+        } else {
+            localRating.withRating(noCost());
+        }
+        ratingEvent.addRating_viaAddition(addition, localRating);
+        return ratingEvent;
     }
 
     @Override public RatingEvent rating_before_removal(View lines, Line removal, List<Constraint> children, View lineProcessingBeforeRemoval) {
