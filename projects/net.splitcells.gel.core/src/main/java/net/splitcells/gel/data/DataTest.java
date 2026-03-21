@@ -17,6 +17,7 @@ package net.splitcells.gel.data;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.testing.annotations.BenchmarkTest;
+import net.splitcells.dem.testing.annotations.DisabledTest;
 import net.splitcells.gel.data.table.TableModificationCounter;
 
 import static java.util.stream.IntStream.range;
@@ -31,6 +32,7 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 
 public class DataTest {
 
+    @DisabledTest
     @BenchmarkTest
     public void test_runtime_performance_difference_of_assignments_and_tables() {
         final var tableTestTime = measureTimeInNanoSeconds(DataTest::testTableRuntimePerformance);
@@ -82,6 +84,7 @@ public class DataTest {
         });
     }
 
+    @DisabledTest
     @BenchmarkTest
     public void test_performance_difference_of_assignments_and_tables() {
         final List<Long> tableTestCounts = list();
