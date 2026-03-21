@@ -58,19 +58,14 @@ public class FileSystemWriteTest extends TestSuiteI {
         require(testSubject.isFile("test"));
         testSubject.delete("test");
         requireNot(testSubject.isFile("test"));
-        requireThrow(() -> {
-            factory.get().delete("not-existing-file");
-        });
+        requireThrow(() -> factory.get().delete("not-existing-file"));
     }
 
     public void testReadFileAsBytes(Supplier<FileSystem> factory) {
         val testSubject = factory.get();
         testSubject.writeToFile("test", "content".getBytes());
         requireEquals(parseString(testSubject.readFileAsBytes("test")), "content");
-        requireThrow(() -> {
-            val failTester = factory.get();
-            requireEquals(parseString(failTester.readFileAsBytes("test")), "content");
-        });
+        requireThrow(() -> requireEquals(parseString(factory.get().readFileAsBytes("test")), "content"));
     }
 
     public void testReadString(Supplier<FileSystem> factory) {
@@ -78,10 +73,7 @@ public class FileSystemWriteTest extends TestSuiteI {
         val testContent = "content";
         testSubject.writeToFile("test", testContent.getBytes());
         requireEquals(testSubject.readString("test"), testContent);
-        requireThrow(() -> {
-            val failTester = factory.get();
-            failTester.readString("test");
-        });
+        requireThrow(() -> factory.get().readString("test"));
     }
 
     public void testInputStream(Supplier<FileSystem> factory) {
@@ -98,10 +90,7 @@ public class FileSystemWriteTest extends TestSuiteI {
     public void testWriteToFile(Supplier<FileSystem> factory) {
         val testSubject = factory.get();
         testSubject.writeToFile("test", "content".getBytes());
-        requireThrow(() -> {
-            val failTester = factory.get();
-            failTester.writeToFile("missing-folder/test", "content".getBytes());
-        });
+        requireThrow(() -> factory.get().writeToFile("missing-folder/test", "content".getBytes()));
     }
 
     public void testAppendToFile(Supplier<FileSystem> factory) {
