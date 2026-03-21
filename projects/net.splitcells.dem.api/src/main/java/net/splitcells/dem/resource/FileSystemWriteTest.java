@@ -16,9 +16,15 @@ import java.nio.file.Path;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.FileSystemViaMemory.fileSystemViaMemory;
+import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
+import static net.splitcells.dem.resource.Files.processInTemporaryFolder;
 import static net.splitcells.dem.resource.communication.Closeable.close;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
@@ -106,6 +112,28 @@ public class FileSystemWriteTest extends TestSuiteI {
         require(factory.get().createDirectoryPath("test-directory").isDirectory("test-directory"));
     }
 
+    public void testWalkRecursively(Supplier<FileSystem> factory) {
+        val testSubject = factory.get();
+        val testFolder = "test/folder/path/";
+        val testFile = testFolder + "file";
+        val testContent = "test-content";
+        testSubject.createDirectoryPath(testFolder);
+        testSubject.writeToFile(testFile, testContent.getBytes());
+        val expectedResult = setOfUniques(
+                "test"
+                , "test/folder"
+                , "test/folder/path"
+                , "test/folder/path/file");
+        testSubject.walkRecursively(Path.of("./"))
+                .map(Path::toString)
+                .collect(toSetOfUniques())
+                .requireContentsOf(expectedResult);
+        testSubject.walkRecursively()
+                .map(Path::toString)
+                .collect(toSetOfUniques())
+                .requireContentsOf(expectedResult);
+    }
+
     public Stream<DynamicTest> fileSystemWriteTests(Supplier<FileSystem> factory) {
         return concat(dynamicTests(this::testExists, factory)
                 , dynamicTests(this::testExistsForSubFileSystem, factory)
@@ -117,6 +145,7 @@ public class FileSystemWriteTest extends TestSuiteI {
                 , dynamicTests(this::testInputStream, factory)
                 , dynamicTests(this::testDelete, factory)
                 , dynamicTests(this::testAppendToFile, factory)
+                , dynamicTests(this::testWalkRecursively, factory)
         );
     }
 }
