@@ -15,11 +15,11 @@
  */
 package net.splitcells.dem.resource;
 
+import com.google.common.jimfs.Configuration;
 import com.google.common.jimfs.Jimfs;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.utils.ExecutionException;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -28,7 +28,6 @@ import java.nio.file.StandardOpenOption;
 import java.util.stream.Stream;
 
 import static net.splitcells.dem.utils.ExecutionException.execException;
-import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 @JavaLegacy
 public class FileSystemViaMemory implements FileSystem {
@@ -41,7 +40,10 @@ public class FileSystemViaMemory implements FileSystem {
     private final Path base;
 
     private FileSystemViaMemory() {
-        this(Jimfs.newFileSystem(), Path.of("."));
+        this(Jimfs.newFileSystem(Configuration.unix()
+                .toBuilder()
+                .setWorkingDirectory("/")
+                .build()), Path.of("."));
     }
 
     private FileSystemViaMemory(java.nio.file.FileSystem argBackend, Path argBase) {
@@ -112,17 +114,19 @@ public class FileSystemViaMemory implements FileSystem {
 
     @Override
     public Stream<Path> walkRecursively() {
-        try {
-            return java.nio.file.Files.walk(backend.getPath(base.toString()));
-        } catch (IOException e) {
-            throw execException(e);
-        }
+        return walkRecursively(".");
     }
 
     @Override
     public Stream<Path> walkRecursively(Path path) {
         try {
-            return java.nio.file.Files.walk(backend.getPath(base.resolve(path).toString()));
+            return java.nio.file.Files.walk(backend.getPath(base.resolve(path).normalize().toString()))
+                    .map(p -> {
+                        if (p.startsWith("/")) {
+                            return Path.of(p.toString().substring(1));
+                        }
+                        return p;
+                    }).filter(p -> !p.toString().isEmpty());
         } catch (IOException e) {
             throw execException(e);
         }
