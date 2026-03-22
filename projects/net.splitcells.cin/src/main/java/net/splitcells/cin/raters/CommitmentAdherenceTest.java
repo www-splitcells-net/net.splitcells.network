@@ -56,9 +56,9 @@ public class CommitmentAdherenceTest {
                 , testSubject.supplies().orderedLine(0));
         testSubject.init();
         final var testProposal1 = proposalsForGroups(testSubject, constraintPath);
-        testProposal1.get(1).contextAssignments().unorderedLines().requireSizeOf(1);
-        testProposal1.get(1).proposedAssignments().unorderedLines().requireSizeOf(1);
-        final var proposedAssignment1 = testProposal1.get(1).proposedAssignments().unorderedLines().get(0);
+        testProposal1.get(1).contextAssignments().orderedLines().requireSizeOf(1);
+        testProposal1.get(1).proposedAssignments().orderedLines().requireSizeOf(1);
+        final var proposedAssignment1 = testProposal1.get(1).proposedAssignments().orderedLines().get(0);
         requireEquals(proposedAssignment1.value(ASSIGNMENT_PROPOSAL_TYPE), PROPOSE_UNCHANGED);
         testSubject.headerView().forEach(attribute -> {
             if (demandingAttribute.equals(attribute)) {
@@ -72,7 +72,7 @@ public class CommitmentAdherenceTest {
         final var testProposal2 = proposalsForGroups(testSubject, constraintPath);
         testProposal2.get(1).contextAssignments().unorderedLines().requireSizeOf(2);
         testProposal2.get(1).proposedAssignments().unorderedLines().requireSizeOf(1);
-        final var proposedAssignment2 = testProposal2.get(1).proposedAssignments().unorderedLines().get(0);
+        final var proposedAssignment2 = testProposal2.get(1).proposedAssignments().orderedLines().get(0);
         requireEquals(proposedAssignment2.value(ASSIGNMENT_PROPOSAL_TYPE), PROPOSE_UNCHANGED);
         testSubject.headerView().forEach(attribute -> {
             if (demandingAttribute.equals(attribute)) {
@@ -85,8 +85,8 @@ public class CommitmentAdherenceTest {
         final var testProposal3 = proposalsForGroups(testSubject, constraintPath);
         testProposal3.get(1).contextAssignments().unorderedLines().requireSizeOf(2);
         testProposal3.get(1).proposedAssignments().unorderedLines().requireSizeOf(2);
-        final var proposedAssignment31 = testProposal3.get(1).proposedAssignments().unorderedLines().get(0);
-        final var proposedAssignment32 = testProposal3.get(1).proposedAssignments().unorderedLines().get(1);
+        final var proposedAssignment31 = testProposal3.get(1).proposedAssignments().orderedLines().get(0);
+        final var proposedAssignment32 = testProposal3.get(1).proposedAssignments().orderedLines().get(1);
         requireEquals(proposedAssignment31.value(ASSIGNMENT_PROPOSAL_TYPE), PROPOSE_UNCHANGED);
         requireEquals(proposedAssignment32.value(ASSIGNMENT_PROPOSAL_TYPE), PROPOSE_UNCHANGED);
         testSubject.headerView().forEach(attribute -> {
