@@ -84,7 +84,7 @@ public class TableI implements Table {
     private final List<AfterAdditionSubscriber> additionSubscriber = list();
     private final List<BeforeRemovalSubscriber> beforeRemovalSubscriber = list();
     private final List<BeforeRemovalSubscriber> afterRemovalSubscriber = list();
-    private final net.splitcells.dem.data.set.Set<Integer> indexesOfFree = setOfUniques();
+    private final Set<Integer> indexesOfFree = setOfUniques();
     private Optional<Constraint> constraint = Optional.empty();
     private Optional<Table> threadSafeMirror = Optional.empty();
 
