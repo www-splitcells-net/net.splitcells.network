@@ -74,7 +74,6 @@ public class TableI implements Table {
     private final List<Attribute<Object>> attributes;
     private final List<Attribute<? extends Object>> attributes2;
     private final List<Column<Object>> columns = list();
-    private final ListView<Column<Object>> columnsView = listView(columns);
     private final ListView<ColumnView<Object>> columnsViewView;
     private final Map<Attribute<?>, Integer> typedColumnIndex = map();
     private final Set<Line> lines = setOfUniques();
