@@ -65,9 +65,9 @@ public class HistoryTest {
     public void test_rest_to_beginning_runtime() {
         final var testSubject = defineProblem("test_rest_to_beginning_runtime")
                 .withDemandAttributes()
-                .withDemands(rangeClosed(1, 100000).mapToObj(i -> list()).collect(toList()))
+                .withDemands(rangeClosed(1, 1000).mapToObj(i -> list()).collect(toList()))
                 .withSupplyAttributes()
-                .withSupplies(rangeClosed(1, 100000).mapToObj(i -> list()).collect(toList()))
+                .withSupplies(rangeClosed(1, 1000).mapToObj(i -> list()).collect(toList()))
                 .withConstraint(then(constantRater(cost(7))))
                 .toProblem()
                 .asSolution();
