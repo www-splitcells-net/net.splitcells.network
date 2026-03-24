@@ -15,6 +15,8 @@
  */
 package net.splitcells.gel.solution.history;
 
+import net.splitcells.dem.testing.annotations.BenchmarkTest;
+import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.solution.history.meta.type.AllocationRating;
 import org.junit.jupiter.api.Tag;
@@ -41,9 +43,6 @@ import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearIni
 public class HistoryTest {
 
 
-    /**
-     * TODO Test content.
-     */
     @UnitTest
     public void testToAnalysisFods() {
         final var testSubject = defineProblem("testToAnalysisFods")
@@ -60,8 +59,7 @@ public class HistoryTest {
         testSubject.history().toAnalysisFods().toXmlString(xmlConfig());
     }
 
-    @Tag(BENCHMARK_RUNTIME)
-    @Test
+    @BenchmarkTest
     public void test_rest_to_beginning_runtime() {
         final var testSubject = defineProblem("test_rest_to_beginning_runtime")
                 .withDemandAttributes()
@@ -77,8 +75,7 @@ public class HistoryTest {
         });
     }
 
-    @Tag(INTEGRATION_TEST)
-    @Test
+    @IntegrationTest
     public void test_reset_to_beginning() {
         final var testSubject = defineProblem("test_reset_to_beginning")
                 .withDemandAttributes()
@@ -97,8 +94,7 @@ public class HistoryTest {
         });
     }
 
-    @Tag(INTEGRATION_TEST)
-    @Test
+    @IntegrationTest
     public void test_reset_to_middle() {
         final var solution = defineProblem("test_reset_to_middle")
                 .withDemandAttributes()
@@ -124,8 +120,7 @@ public class HistoryTest {
         });
     }
 
-    @Tag(INTEGRATION_TEST)
-    @Test
+    @IntegrationTest
     public void test_subscription_of_history_to_solution() {
         final var solution = defineProblem("test_subscription_of_history_to_solution")
                 .withDemandAttributes()
@@ -161,8 +156,7 @@ public class HistoryTest {
         });
     }
 
-    @Tag(INTEGRATION_TEST)
-    @Test
+    @IntegrationTest
     public void test_history_allocation_rating() {
         final var solution = defineProblem("test_history_allocation_rating")
                 .withDemandAttributes()
