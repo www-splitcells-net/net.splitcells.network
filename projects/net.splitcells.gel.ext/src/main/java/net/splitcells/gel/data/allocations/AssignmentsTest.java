@@ -128,7 +128,7 @@ public class AssignmentsTest extends TestSuiteI {
             final var demands = Tables.table();
             final var supplies = Tables.table();
             final var allocations = assignments("test", demands, supplies);
-            allocations.subscribeToAfterRemoval
+            allocations.subscribeToBeforeRemoval
                     (allocation -> requireNotNull(allocations.demandOfAssignment(allocation)));
             allocations.remove(
                     allocations.assign
