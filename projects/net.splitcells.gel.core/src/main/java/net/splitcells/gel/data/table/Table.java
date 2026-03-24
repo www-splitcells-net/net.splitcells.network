@@ -34,6 +34,7 @@ import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.CsvDocument.csvDocument;
 import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
@@ -151,7 +152,9 @@ public interface Table extends View {
      * @param subscriber Object to be informed of removal after the fact.
      */
     @Deprecated
-    void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber);
+    default void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber) {
+        throw execException("This method is about to be removed.");
+    }
 
     @Override
     default Tree toTree() {
