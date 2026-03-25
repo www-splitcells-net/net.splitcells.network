@@ -95,11 +95,6 @@ public class AllocationStateLookup implements Table {
     }
 
     @Override
-    public void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber) {
-        throw notImplementedYet();
-    }
-
-    @Override
     public String name() {
         throw notImplementedYet();
     }

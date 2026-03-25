@@ -438,12 +438,6 @@ public class AssignmentsI implements Assignments {
     }
 
     @Override
-    public void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber) {
-        afterRemovalSubscriptions.add(subscriber);
-        throw notImplementedYet("This method is not correct: the argument type is completely of.");
-    }
-
-    @Override
     public Set<Line> assignmentsOfSupply(Line supply) {
         if (ENFORCING_UNIT_CONSISTENCY && !usedSupplyIndexesToAllocationIndexes.containsKey(supply.index())) {
             throw ExecutionException.execException(tree("No allocations for the given supply are present.")

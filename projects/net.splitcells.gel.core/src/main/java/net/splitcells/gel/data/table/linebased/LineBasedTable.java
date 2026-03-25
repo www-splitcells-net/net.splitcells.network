@@ -169,11 +169,6 @@ public class LineBasedTable implements Table {
     }
 
     @Override
-    public void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber) {
-        afterRemovalSubscriber.add(subscriber);
-    }
-
-    @Override
     public String name() {
         return name;
     }

@@ -82,7 +82,6 @@ public class TableI implements Table {
     private int size;
     private final List<AfterAdditionSubscriber> additionSubscriber = list();
     private final List<BeforeRemovalSubscriber> beforeRemovalSubscriber = list();
-    private final List<BeforeRemovalSubscriber> afterRemovalSubscriber = list();
     private final Set<Integer> indexesOfFree = setOfUniques();
     private Optional<Constraint> constraint = Optional.empty();
     private Optional<Table> threadSafeMirror = Optional.empty();
@@ -332,7 +331,6 @@ public class TableI implements Table {
         rawLines.set(lineIndex, null);
         indexesOfFree.add(lineIndex);
         --size;
-        afterRemovalSubscriber.forEach(subscriber -> subscriber.registerBeforeRemoval(removalFrom));
     }
 
     @Override
@@ -343,11 +341,6 @@ public class TableI implements Table {
     @Override
     public int size() {
         return size;
-    }
-
-    @Override
-    public void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber) {
-        afterRemovalSubscriber.add(subscriber);
     }
 
     /**

@@ -104,11 +104,6 @@ public class TableSynchronizationAspect implements Table {
     }
 
     @Override
-    public synchronized void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber) {
-        content.subscribeToBeforeRemoval(subscriber);
-    }
-
-    @Override
     public synchronized Tree toTree() {
         return content.toTree();
     }
