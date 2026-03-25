@@ -234,11 +234,6 @@ public class HistoryRef implements History {
     }
 
     @Override
-    public void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber) {
-        history.subscribeToAfterRemoval(subscriber);
-    }
-
-    @Override
     public String name() {
         return history.name();
     }

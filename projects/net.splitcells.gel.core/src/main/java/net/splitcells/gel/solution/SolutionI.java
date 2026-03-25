@@ -218,11 +218,6 @@ public class SolutionI implements Solution {
         this.problem.subscribeToBeforeRemoval(subscriber);
     }
 
-    @SuppressWarnings("all")
-    public void subscribeToAfterRemoval(final BeforeRemovalSubscriber listener) {
-        this.problem.subscribeToAfterRemoval(listener);
-    }
-
     @Override
     public String name() {
         return problem.name();

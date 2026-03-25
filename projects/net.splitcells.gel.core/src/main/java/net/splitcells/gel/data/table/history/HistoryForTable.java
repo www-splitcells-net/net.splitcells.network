@@ -121,11 +121,6 @@ public class HistoryForTable implements History {
     }
 
     @Override
-    public void subscribeToAfterRemoval(BeforeRemovalSubscriber beforeRemovalSubscriber) {
-        history.subscribeToAfterRemoval(beforeRemovalSubscriber);
-    }
-
-    @Override
     public Line addTranslated(ListView<Object> lineValues, int index) {
         throw notImplementedYet();
     }

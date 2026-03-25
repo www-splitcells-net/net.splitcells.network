@@ -200,11 +200,6 @@ public class SimplifiedAnnealingProblem implements Solution {
     }
 
     @Override
-    public void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber) {
-        originalSolution.subscribeToAfterRemoval(subscriber);
-    }
-
-    @Override
     public String name() {
         return "Simplified annealing problem of " + originalSolution.name();
     }

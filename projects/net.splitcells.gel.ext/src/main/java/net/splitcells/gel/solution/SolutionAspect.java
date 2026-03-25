@@ -188,11 +188,6 @@ public class SolutionAspect implements Solution {
     }
 
     @Override
-    public void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber) {
-        solution.subscribeToAfterRemoval(subscriber);
-    }
-
-    @Override
     public Constraint constraint() {
         return solution.constraint();
     }

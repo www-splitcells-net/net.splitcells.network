@@ -240,11 +240,6 @@ public class ProblemI implements Problem {
     }
 
     @Override
-    public void subscribeToAfterRemoval(final BeforeRemovalSubscriber subscriber) {
-        this.assignments.subscribeToAfterRemoval(subscriber);
-    }
-
-    @Override
     public String name() {
         return assignments.name();
     }

@@ -146,16 +146,6 @@ public interface Table extends View {
 
     void subscribeToBeforeRemoval(BeforeRemovalSubscriber subscriber);
 
-    /**
-     * TODO The argument type is false.
-     *
-     * @param subscriber Object to be informed of removal after the fact.
-     */
-    @Deprecated
-    default void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber) {
-        throw execException("This method is about to be removed.");
-    }
-
     @Override
     default Tree toTree() {
         final var dom = tree(getClass().getSimpleName());

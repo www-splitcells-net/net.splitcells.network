@@ -207,11 +207,6 @@ public class AllocationsI implements Allocations {
     }
 
     @Override
-    public void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber) {
-        allocations.subscribeToAfterRemoval(subscriber);
-    }
-
-    @Override
     public String name() {
         return name;
     }

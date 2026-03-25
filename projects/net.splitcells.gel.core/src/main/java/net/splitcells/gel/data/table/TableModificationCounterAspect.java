@@ -119,11 +119,6 @@ public class TableModificationCounterAspect implements Table {
     }
 
     @Override
-    public void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber) {
-        table.subscribeToAfterRemoval(subscriber);
-    }
-
-    @Override
     public String name() {
         return table.name();
     }

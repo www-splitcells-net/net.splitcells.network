@@ -171,11 +171,6 @@ public class TableMetaAspect implements Table {
     }
 
     @Override
-    public void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber) {
-        table.subscribeToAfterRemoval(subscriber);
-    }
-
-    @Override
     public Tree toTree() {
         return table.toTree();
     }

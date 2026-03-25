@@ -213,11 +213,6 @@ public class DerivedSolution implements Solution {
     }
 
     @Override
-    public void subscribeToAfterRemoval(BeforeRemovalSubscriber subscriber) {
-        assignments.subscribeToAfterRemoval(subscriber);
-    }
-
-    @Override
     public String name() {
         return assignments.name();
     }

@@ -123,22 +123,6 @@ public class AssignmentsTest extends TestSuiteI {
     }
 
     @UnitTest
-    public void test_subscriber_to_afterRemoval() {
-        requireThrow(Exception.class, () -> {
-            final var demands = Tables.table();
-            final var supplies = Tables.table();
-            final var allocations = assignments("test", demands, supplies);
-            allocations.subscribeToBeforeRemoval
-                    (allocation -> requireNotNull(allocations.demandOfAssignment(allocation)));
-            allocations.remove(
-                    allocations.assign
-                            (demands.addTranslated(list())
-                                    , supplies.addTranslated(list()))
-            );
-        });
-    }
-
-    @UnitTest
     public void test_allocate_and_remove() {
         final var demandAttribute = attribute(Double.class);
         final var demands = Tables.table(demandAttribute);

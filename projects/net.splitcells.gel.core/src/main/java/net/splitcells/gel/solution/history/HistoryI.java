@@ -301,11 +301,6 @@ public class HistoryI implements History {
     }
 
     @Override
-    public void subscribeToAfterRemoval(BeforeRemovalSubscriber beforeRemovalSubscriber) {
-        assignments.subscribeToAfterRemoval(beforeRemovalSubscriber);
-    }
-
-    @Override
     public Line addTranslated(ListView<Object> lineValues, int index) {
         return assignments.addTranslated(lineValues, index);
     }
