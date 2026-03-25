@@ -76,6 +76,10 @@ public class TableI implements Table {
     private final List<Column<Object>> columns = list();
     private final ListView<ColumnView<Object>> columnsViewView;
     private final Map<Attribute<?>, Integer> typedColumnIndex = map();
+    /**
+     * This variable is required, in order to quickly iterate over all {@link Line} without having to filter nulls
+     * inside {@link #rawLines}, which should improve the runtime performance.
+     */
     private final Set<Line> lines = setOfUniques();
     private final List<Line> rawLines = list();
     private final ListView<Line> rawLinesView = listView(rawLines);
