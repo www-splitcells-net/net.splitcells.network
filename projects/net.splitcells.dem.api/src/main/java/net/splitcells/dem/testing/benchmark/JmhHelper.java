@@ -60,6 +60,27 @@ public class JmhHelper {
         }
     }
 
+    public static void benchmark(Class<?> clazz) {
+        try {
+            val test = clazz.getName();
+            val opt = new OptionsBuilder()
+                    .include(test)
+                    .warmupIterations(3)
+                    .warmupTime(TimeValue.seconds(2))
+                    .measurementIterations(5)
+                    .measurementTime(TimeValue.seconds(3))
+                    .forks(1)
+                    .mode(Mode.Throughput)
+                    .timeUnit(TimeUnit.SECONDS)
+                    .shouldDoGC(true)
+                    .addProfiler(GCProfiler.class)
+                    .build();
+            new Runner(opt).run();
+        } catch (RunnerException e) {
+            throw execException(e);
+        }
+    }
+
     private static void requireImplRuntimeOrder(Collection<RunResult> runResults, String test, String... impls) {
         val sortedImplRuns = Lists.<RunResult>list();
         if (runResults.isEmpty()) {
