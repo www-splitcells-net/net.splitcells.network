@@ -84,6 +84,13 @@ public class TableI implements Table {
     private final List<Line> rawLines = list();
     private final ListView<Line> rawLinesView = listView(rawLines);
     private int size;
+    /**
+     * The combination of {@link #additionSubscriber} and {@link #beforeRemovalSubscriber} ensures,
+     * that all subscribers always sees all affected {@link Line}.
+     * If an `afterRemovalSubscriber` had been defined,
+     * such subscribers would see removed lines without any values in the tables.
+     * This would make it harder to interpret {@link Line} removals.
+     */
     private final List<AfterAdditionSubscriber> additionSubscriber = list();
     private final List<BeforeRemovalSubscriber> beforeRemovalSubscriber = list();
     /**
