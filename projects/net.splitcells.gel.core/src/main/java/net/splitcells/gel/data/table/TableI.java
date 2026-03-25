@@ -82,6 +82,9 @@ public class TableI implements Table {
     private int size;
     private final List<AfterAdditionSubscriber> additionSubscriber = list();
     private final List<BeforeRemovalSubscriber> beforeRemovalSubscriber = list();
+    /**
+     * This should not be made a {@link List}, as {@link Set#delete(Object)} is required for an improved runtime performance.
+     */
     private final Set<Integer> indexesOfFree = setOfUniques();
     private Optional<Constraint> constraint = Optional.empty();
     private Optional<Table> threadSafeMirror = Optional.empty();
