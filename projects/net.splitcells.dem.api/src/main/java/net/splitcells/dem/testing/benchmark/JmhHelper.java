@@ -18,12 +18,13 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.TimeValue;
 
 import java.util.Collection;
-import java.util.concurrent.TimeUnit;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.atom.DescribedBool.describedBool;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
+import static org.openjdk.jmh.annotations.Mode.AverageTime;
 
 @JavaLegacy
 public class JmhHelper {
@@ -49,8 +50,8 @@ public class JmhHelper {
                     .measurementIterations(5)
                     .measurementTime(TimeValue.seconds(3))
                     .forks(1)
-                    .mode(Mode.Throughput)
-                    .timeUnit(TimeUnit.SECONDS)
+                    .mode(AverageTime)
+                    .timeUnit(SECONDS)
                     .shouldDoGC(true)
                     .addProfiler(GCProfiler.class)
                     .build();
@@ -70,8 +71,8 @@ public class JmhHelper {
                     .measurementIterations(5)
                     .measurementTime(TimeValue.seconds(3))
                     .forks(1)
-                    .mode(Mode.Throughput)
-                    .timeUnit(TimeUnit.SECONDS)
+                    .mode(AverageTime)
+                    .timeUnit(SECONDS)
                     .shouldDoGC(true)
                     .addProfiler(GCProfiler.class)
                     .build();
@@ -119,12 +120,12 @@ public class JmhHelper {
      */
     private static void requireImplRuntimeOrder(List<RunResult> results) {
         range(0, results.size() - 1).forEach(i ->
-                describedBool(results.get(i).getPrimaryResult().getScore() > results.get(i + 1).getPrimaryResult().getScore()
+                describedBool(results.get(i).getPrimaryResult().getScore() < results.get(i + 1).getPrimaryResult().getScore()
                         , () -> "The implementation "
                                 + results.get(i).getParams().getParam("impl")
                                 + " (="
                                 + results.get(i).getPrimaryResult().getScore()
-                                + ") should be faster (higher score) than "
+                                + ") should be faster (average time in JMH) than "
                                 + results.get(i + 1).getParams().getParam("impl")
                                 + " (="
                                 + results.get(i + 1).getPrimaryResult().getScore()
