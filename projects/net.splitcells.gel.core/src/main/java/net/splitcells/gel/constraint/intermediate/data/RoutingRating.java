@@ -26,6 +26,10 @@ import net.splitcells.gel.rating.framework.Rating;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 
+/**
+ * Lists all {@link Rating} of a {@link Constraint}'s {@link GroupId} and
+ * also states which {@link GroupId} are propagated to which {@link Constraint#childrenView()}.
+ */
 public class RoutingRating {
     /**
      * TODO RENAME
