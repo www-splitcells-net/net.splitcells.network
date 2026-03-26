@@ -78,7 +78,7 @@ public class LookupI<T> implements Lookup<T> {
         }
         {
             final PersistedLookupView lookupTable;
-            if (content.containsKey(addition)) {
+            if (content.hasKey(addition)) {
                 lookupTable = content.get(addition);
             } else {
                 lookupTable = lookupTable(view, attribute, false);
