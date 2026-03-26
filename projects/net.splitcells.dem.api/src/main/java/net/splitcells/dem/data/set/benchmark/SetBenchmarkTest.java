@@ -11,7 +11,7 @@ import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 
 import static java.util.stream.IntStream.range;
-import static net.splitcells.dem.data.set.legacy.LegacySetEclipse.legacySetEclipse;
+import static net.splitcells.dem.data.set.legacy.LegacySetEclipseFactory.legacySetEclipseFactory;
 import static net.splitcells.dem.data.set.legacy.LegacySetJava.legacySetJava;
 import static net.splitcells.dem.data.set.legacy.LegacySetTrove.legacySetTrove;
 import static net.splitcells.dem.data.set.legacy.LegacySetWrapper.legacySetWrapper;
@@ -40,7 +40,7 @@ public class SetBenchmarkTest {
         public void setupIteration() {
             val factory = switch (impl) {
                 case "Java" -> legacySetJava();
-                case "Eclipse" -> legacySetEclipse();
+                case "Eclipse" -> legacySetEclipseFactory();
                 case "Trove" -> legacySetTrove();
                 default -> throw execException(impl);
             };

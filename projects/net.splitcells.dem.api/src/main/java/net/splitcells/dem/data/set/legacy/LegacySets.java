@@ -3,8 +3,7 @@
  */
 package net.splitcells.dem.data.set.legacy;
 
-import static net.splitcells.dem.data.set.legacy.LegacySetEclipse.legacySetEclipse;
-import static net.splitcells.dem.data.set.legacy.LegacySetTrove.legacySetTrove;
+import static net.splitcells.dem.data.set.legacy.LegacySetEclipseFactory.legacySetEclipseFactory;
 import static net.splitcells.dem.data.set.legacy.LegacySetWrapper.legacySetWrapper;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -14,7 +13,7 @@ public class LegacySets {
     /**
      * We use the factory, that is assumed to be produce the most performant sets by default. 
      */
-    private static final LegacySetFactory SET_FACTORY = legacySetEclipse();
+    private static final LegacySetFactory SET_FACTORY = legacySetEclipseFactory();
 
     private LegacySets() {
         throw constructorIllegal();

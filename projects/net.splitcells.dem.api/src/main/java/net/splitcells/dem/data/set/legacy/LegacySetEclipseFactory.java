@@ -12,12 +12,12 @@ import java.util.Collection;
 import static net.splitcells.dem.data.set.legacy.LegacySetWrapper.legacySetWrapper;
 
 @JavaLegacy
-public class LegacySetEclipse implements LegacySetFactory {
-    public static LegacySetEclipse legacySetEclipse() {
-        return new LegacySetEclipse();
+public class LegacySetEclipseFactory implements LegacySetFactory {
+    public static LegacySetEclipseFactory legacySetEclipseFactory() {
+        return new LegacySetEclipseFactory();
     }
 
-    private LegacySetEclipse() {
+    private LegacySetEclipseFactory() {
 
     }
 
