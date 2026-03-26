@@ -17,6 +17,7 @@ package net.splitcells.gel.data.table;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.testing.MetaCounter;
 import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -38,6 +39,7 @@ public class TableModificationCounterAspect implements Table {
     }
 
     private final Table table;
+    private final MetaCounter counter = configValue(TableModificationCounter.class);
 
     private TableModificationCounterAspect(Table argTable) {
         table = argTable;
@@ -46,7 +48,7 @@ public class TableModificationCounterAspect implements Table {
 
             @Override
             public String renderCsv() {
-                final var counter = configValue(TableModificationCounter.class)
+                final var counter = TableModificationCounterAspect.this.counter
                         .counters()
                         .get(table.path());
                 if (counter == null) {
@@ -74,37 +76,37 @@ public class TableModificationCounterAspect implements Table {
 
     @Override
     public Line addTranslated(ListView<Object> lineValues, int index) {
-        configValue(TableModificationCounter.class).count(this, 1 + (long) lineValues.size());
+        counter.count(this, 1 + (long) lineValues.size());
         return table.addTranslated(lineValues, index);
     }
 
     @Override
     public Line addTranslated(ListView<?> values) {
-        configValue(TableModificationCounter.class).count(this, 1 + (long) values.size());
+        counter.count(this, 1 + (long) values.size());
         return table.addTranslated(values);
     }
 
     @Override
     public Line add(Line line) {
-        configValue(TableModificationCounter.class).count(this, 1 + (long) line.context().headerView().size());
+        counter.count(this, 1 + (long) line.context().headerView().size());
         return table.add(line);
     }
 
     @Override
     public Line addWithSameHeaderPrefix(Line line) {
-        configValue(TableModificationCounter.class).count(this, 1 + (long) line.context().headerView().size());
+        counter.count(this, 1 + (long) line.context().headerView().size());
         return table.addWithSameHeaderPrefix(line);
     }
 
     @Override
     public void remove(int lineIndex) {
-        configValue(TableModificationCounter.class).count(this, 1 + (long) rawLine(lineIndex).context().headerView().size());
+        counter.count(this, 1 + (long) rawLine(lineIndex).context().headerView().size());
         table.remove(lineIndex);
     }
 
     @Override
     public void remove(Line line) {
-        configValue(TableModificationCounter.class).count(this, 1 + (long) line.context().headerView().size());
+        counter.count(this, 1 + (long) line.context().headerView().size());
         table.remove(line);
     }
 
