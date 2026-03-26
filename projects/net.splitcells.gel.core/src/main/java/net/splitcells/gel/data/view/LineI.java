@@ -32,14 +32,19 @@ import net.splitcells.gel.data.view.attribute.Attribute;
 public class LineI implements Line {
     private final View context;
     private final int index;
+    /**
+     * The {@link #hashCode()} is cached, as it is highly likely to be calculated more than once per instance.
+     */
+    private final int hashCode;
 
     public static Line line(View context, int index) {
         return new LineI(context, index);
     }
 
-    private LineI(View context, int line) {
-        this.context = context;
-        this.index = line;
+    private LineI(View argContext, int argLine) {
+        this.context = argContext;
+        this.index = argLine;
+        hashCode = Thing.hashCode(index, context);
     }
 
     @Override
@@ -112,7 +117,7 @@ public class LineI implements Line {
 
     @Override
     public int hashCode() {
-        return Thing.hashCode(index(), context());
+        return hashCode;
     }
 
 }
