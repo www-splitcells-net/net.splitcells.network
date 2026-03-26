@@ -58,7 +58,7 @@ import net.splitcells.gel.constraint.QueryI;
 import net.splitcells.gel.constraint.Report;
 import net.splitcells.gel.constraint.intermediate.data.AllocationRating;
 import net.splitcells.gel.constraint.intermediate.data.AllocationSelector;
-import net.splitcells.gel.constraint.intermediate.data.RoutingRating;
+import net.splitcells.gel.constraint.intermediate.data.RatingRouting;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.table.Tables;
@@ -384,8 +384,8 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
                 .orElseThrow();
     }
 
-    private RoutingRating routingRating(GroupId group, Predicate<Line> lineSelector) {
-        final var routingRating = RoutingRating.create();
+    private RatingRouting routingRating(GroupId group, Predicate<Line> lineSelector) {
+        final var routingRating = RatingRouting.ratingRouting();
         lineProcessing.rawLinesView().forEach(line -> {
             if (line != null
                     && group.equals(line.value(incomingConstraintGroupIndex))
@@ -406,8 +406,8 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         return routingRating;
     }
 
-    private RoutingRating routingRating(Stream<Line> lines) {
-        final var routingRating = RoutingRating.create();
+    private RatingRouting routingRating(Stream<Line> lines) {
+        final var routingRating = RatingRouting.ratingRouting();
         lines.forEach(line -> {
             if (line != null) {
                 routingRating.ratings().add(line.value(ratingIndex));
