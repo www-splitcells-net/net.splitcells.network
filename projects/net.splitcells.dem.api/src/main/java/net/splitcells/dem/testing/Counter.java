@@ -23,6 +23,9 @@ import static net.splitcells.dem.resource.Time.ONE_SECOND_IN_NANOSECONDS;
 import static net.splitcells.dem.resource.Time.elapsedTimeInNanoSeconds;
 import static net.splitcells.dem.testing.Measurement.measurement;
 
+/**
+ * Counts times of a thing being done per second.
+ */
 public class Counter {
 
     public static Counter counter() {
