@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.testing;
 
+import lombok.val;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.map.Map;
@@ -52,14 +53,8 @@ public class MetaCounter implements Discoverable, ImplicitEffect {
     }
 
     public synchronized void count(Discoverable subject, long times) {
-        final Counter counter;
-        final var subjectPath = subject.path();
-        if (counters.containsKey(subjectPath)) {
-            counter = counters.get(subjectPath);
-        } else {
-            counter = counter();
-            counters.put(subjectPath, counter);
-        }
+        val subjectPath = subject.path();
+        val counter = counters.computeIfAbsent(subjectPath, key -> counter());
         counter.count(times);
         sumCounter.count(times);
     }
