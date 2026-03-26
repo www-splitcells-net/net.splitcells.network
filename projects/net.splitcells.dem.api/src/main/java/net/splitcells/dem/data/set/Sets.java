@@ -16,6 +16,7 @@
 package net.splitcells.dem.data.set;
 
 import net.splitcells.dem.data.set.factory.SetFactory;
+import net.splitcells.dem.data.set.legacy.LegacySetEclipseFactory;
 import net.splitcells.dem.data.set.legacy.LegacySetWrapper;
 import net.splitcells.dem.data.set.legacy.LegacySets;
 import net.splitcells.dem.environment.resource.ResourceOptionImpl;
@@ -23,6 +24,7 @@ import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.factory.SetFactoryConfigured.setFactoryConfigured;
+import static net.splitcells.dem.data.set.legacy.LegacySetEclipseFactory.legacySetEclipseFactory;
 import static net.splitcells.dem.data.set.legacy.LegacySetWrapper.legacySetWrapper;
 import static net.splitcells.dem.environment.config.StaticFlags.INLINE_STANDARD_FACTORIES;
 
@@ -31,7 +33,9 @@ public class Sets extends ResourceOptionImpl<SetFactory> {
     public Sets() {
         super(() -> setFactoryConfigured());
     }
-    
+
+    private static final LegacySetEclipseFactory STANDARD_SET_FACTORY = legacySetEclipseFactory();
+
     public static <T> java.util.stream.Collector<T, ?, Set<T>> toSetOfUniques() {
         return java.util.stream.Collector.of(
                 Sets::<T>setOfUniques,
@@ -42,7 +46,7 @@ public class Sets extends ResourceOptionImpl<SetFactory> {
                 }
         );
     }
-    
+
     @SafeVarargs
     public static <T> Set<T> merge(java.util.Collection<T>... collections) {
         final var rVal = configValue(Sets.class).<T>set();
@@ -54,12 +58,12 @@ public class Sets extends ResourceOptionImpl<SetFactory> {
 
     public static <T> Set<T> setOfUniques() {
         if (INLINE_STANDARD_FACTORIES) {
-            return legacySetWrapper(LegacySets.legacySet());
+            return legacySetWrapper(STANDARD_SET_FACTORY.legacySet());
         } else {
             return configValue(Sets.class).<T>set();
         }
     }
-    
+
     @SafeVarargs
     public static <T> Set<T> setOfUniques(T... args) {
         if (INLINE_STANDARD_FACTORIES) {
