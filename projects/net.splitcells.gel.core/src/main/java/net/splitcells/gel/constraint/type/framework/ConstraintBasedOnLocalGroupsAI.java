@@ -393,7 +393,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
                 routingRating.ratingComponents().add(line.value(ratingIndex));
                 line.value(propagationToIndex).forEach(child -> {
                     final Set<GroupId> groupsOfChild;
-                    if (!routingRating.children_to_groups().containsKey(child)) {
+                    if (!routingRating.children_to_groups().hasKey(child)) {
                         groupsOfChild = setOfUniques();
                         routingRating.children_to_groups().put(child, groupsOfChild);
                     } else {
