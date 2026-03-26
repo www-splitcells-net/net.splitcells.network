@@ -28,7 +28,7 @@ public class RatingRouting {
     }
 
     /**
-     * All
+     * Lists all {@link Rating} of a {@link Constraint}'s {@link GroupId}.
      */
     private final List<Rating> ratings = list();
     private final Map<Constraint, Set<GroupId>> childrenToGroups = map();
