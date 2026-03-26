@@ -374,12 +374,12 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
                 .lookup(INCOMING_CONSTRAINT_GROUP, group)
                 .unorderedLinesStream());
         routingRating.children_to_groups().forEach((child, groups) ->
-                groups.forEach(group2 -> routingRating.ratingComponents().add(child.rating(group2, line)))
+                groups.forEach(group2 -> routingRating.ratings().add(child.rating(group2, line)))
         );
-        if (routingRating.ratingComponents().isEmpty()) {
+        if (routingRating.ratings().isEmpty()) {
             return noCost();
         }
-        return routingRating.ratingComponents().stream()
+        return routingRating.ratings().stream()
                 .reduce((a, b) -> a.combine(b))
                 .orElseThrow();
     }
@@ -390,7 +390,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
             if (line != null
                     && group.equals(line.value(incomingConstraintGroupIndex))
                     && lineSelector.test(line)) {
-                routingRating.ratingComponents().add(line.value(ratingIndex));
+                routingRating.ratings().add(line.value(ratingIndex));
                 line.value(propagationToIndex).forEach(child -> {
                     final Set<GroupId> groupsOfChild;
                     if (!routingRating.children_to_groups().hasKey(child)) {
@@ -410,7 +410,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         final var routingRating = RoutingRating.create();
         lines.forEach(line -> {
             if (line != null) {
-                routingRating.ratingComponents().add(line.value(ratingIndex));
+                routingRating.ratings().add(line.value(ratingIndex));
                 line.value(propagationToIndex).forEach(child -> {
                     final Set<GroupId> groupsOfChild;
                     if (!routingRating.children_to_groups().containsKey(child)) {
@@ -431,11 +431,11 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         final var routingRating
                 = routingRating(group, lineSelector -> true);
         routingRating.children_to_groups().forEach((routingRhildren, groups) ->
-                groups.forEach(group2 -> routingRating.ratingComponents().add(routingRhildren.rating(group2))));
-        if (routingRating.ratingComponents().isEmpty()) {
+                groups.forEach(group2 -> routingRating.ratings().add(routingRhildren.rating(group2))));
+        if (routingRating.ratings().isEmpty()) {
             return noCost();
         }
-        return routingRating.ratingComponents().stream()
+        return routingRating.ratings().stream()
                 .reduce((a, b) -> a.combine(b))
                 .orElseThrow();
     }

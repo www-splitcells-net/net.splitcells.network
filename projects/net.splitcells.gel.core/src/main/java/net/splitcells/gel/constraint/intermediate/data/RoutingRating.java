@@ -42,10 +42,14 @@ public class RoutingRating {
     private RoutingRating() {
 
     }
+
+    /**
+     * All 
+     */
     private final List<Rating> ratings = list();
     private final Map<Constraint, Set<GroupId>> childrenToGroups = map();
 
-    public List<Rating> ratingComponents() {
+    public List<Rating> ratings() {
         return ratings;
     }
 
