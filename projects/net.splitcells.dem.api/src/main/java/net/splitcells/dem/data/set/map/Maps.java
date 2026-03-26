@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.data.set.map;
 
+import lombok.val;
 import net.splitcells.dem.environment.resource.ResourceOptionImpl;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 
@@ -22,20 +23,32 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.map.DeterministicMapFactory.deterministicMapFactory;
+import static net.splitcells.dem.data.set.map.MapFactoryRandom.mapFI_random;
 import static net.splitcells.dem.data.set.map.MapLegacyWrapper.mapLegacyWrapper;
+import static net.splitcells.dem.environment.config.StaticFlags.INLINE_STANDARD_FACTORIES;
 
 public class Maps extends ResourceOptionImpl<MapFactory> {
+
+    private static final MapFactory STANDARD_MAP_FACTORY = mapFI_random();
 
     public Maps() {
         super(() -> deterministicMapFactory());
     }
 
     public static <K, V> Map<K, V> map() {
+        if (INLINE_STANDARD_FACTORIES) {
+            return STANDARD_MAP_FACTORY.map();
+        }
         return configValue(Maps.class).map();
     }
 
     public static <K2, V1> Map<K2, V1> map(Map<K2, V1> arg) {
-        var rVal = configValue(Maps.class).<K2, V1>map();
+        final Map<K2, V1> rVal;
+        if (INLINE_STANDARD_FACTORIES) {
+            return STANDARD_MAP_FACTORY.map();
+        } else {
+            rVal = configValue(Maps.class).<K2, V1>map();
+        }
         arg.entrySet().forEach(entry -> rVal.put(entry.getKey(), entry.getValue()));
         return rVal;
     }
@@ -43,7 +56,15 @@ public class Maps extends ResourceOptionImpl<MapFactory> {
     @JavaLegacy
     public static <K, V> java.util.stream.Collector<Pair<K, V>, ?, Map<K, V>> toMap() {
         return java.util.stream.Collector.of(
-                () -> configValue(Maps.class).map(),
+                () -> {
+                    final Map<K, V> rVal;
+                    if (INLINE_STANDARD_FACTORIES) {
+                        return STANDARD_MAP_FACTORY.map();
+                    } else {
+                        rVal = configValue(Maps.class).<K, V>map();
+                    }
+                    return rVal;
+                },
                 (a, b) -> a.put(b.getKey(), b.getValue()),
                 (a, b) -> {
                     b.entrySet().forEach(entry -> a.put(entry.getKey(), entry.getValue()));
@@ -74,7 +95,12 @@ public class Maps extends ResourceOptionImpl<MapFactory> {
     @SuppressWarnings("unchecked")
     @Deprecated
     public static <T> Map<Class<? extends T>, T> typeMapping(java.util.Collection<T> values) {
-        final Map<Class<? extends T>, T> rVal = configValue(Maps.class).map();
+        final Map<Class<? extends T>, T> rVal;
+        if (INLINE_STANDARD_FACTORIES) {
+            return STANDARD_MAP_FACTORY.map();
+        } else {
+            rVal = configValue(Maps.class).map();
+        }
         values.forEach(value -> {
             if (rVal.containsKey(value.getClass())) {
                 throw new RuntimeException();
@@ -84,7 +110,7 @@ public class Maps extends ResourceOptionImpl<MapFactory> {
         return rVal;
     }
 
-    public static <K,V> Map<K,V> synchronizedMap() {
+    public static <K, V> Map<K, V> synchronizedMap() {
         return mapLegacyWrapper(new ConcurrentHashMap<>(), false);
     }
 
