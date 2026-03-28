@@ -16,8 +16,7 @@
 package net.splitcells.gel.data;
 
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.testing.annotations.BenchmarkTest;
-import net.splitcells.dem.testing.annotations.DisabledTest;
+import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.data.table.TableModificationCounter;
 
 import static java.util.stream.IntStream.range;
@@ -25,68 +24,13 @@ import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.Dem.process;
 import static net.splitcells.dem.data.atom.DescribedBool.describedBool;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.resource.Time.measureTimeInNanoSeconds;
 import static net.splitcells.gel.data.assignment.AssignmentsI.assignments;
 import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 
 public class DataTest {
 
-    @DisabledTest
-    @BenchmarkTest
-    public void test_runtime_performance_difference_of_assignments_and_tables() {
-        final var tableTestTime = measureTimeInNanoSeconds(DataTest::testTableRuntimePerformance);
-        final var assignmentsTestTime = measureTimeInNanoSeconds(() -> testAssignmentsRuntimePerformance(false));
-        final var assignmentsTestWorstCaseTime = measureTimeInNanoSeconds(() -> testAssignmentsRuntimePerformance(true));
-        describedBool(tableTestTime * 3 < assignmentsTestWorstCaseTime, tableTestTime + " * 3 < " + assignmentsTestWorstCaseTime)
-                .required();
-        describedBool(tableTestTime < assignmentsTestTime, tableTestTime + " < " + assignmentsTestTime)
-                .required();
-    }
-
-    private static void testTableRuntimePerformance() {
-        range(0, 10).forEach(i -> {
-            process(() -> {
-                final var d = attribute(Integer.class, "d");
-                final var s = attribute(Integer.class, "s");
-                final var table = table(d, s);
-                range(0, 10_000).forEach(j -> {
-                    table.addTranslated(list(j, j));
-                });
-                range(0, 10_000).forEach(table::remove);
-            });
-        });
-    }
-
-    private static void testAssignmentsRuntimePerformance(boolean worstCase) {
-        range(0, 10).forEach(i -> {
-            process(() -> {
-                final var d = attribute(Integer.class, "d");
-                final var s = attribute(Integer.class, "s");
-                final var demands = table(d);
-                final var supplies = table(s);
-                final var assignments = assignments("test", demands, supplies);
-                if (worstCase) {
-                    range(0, 10_000).forEach(j -> {
-                        demands.addTranslated(list(j));
-                        supplies.addTranslated(list(j));
-                    });
-                    range(0, 10_000).forEach(j -> {
-                        assignments.assign(demands.rawLine(j), supplies.rawLine(j));
-                    });
-                } else {
-                    range(0, 10_000).forEach(j -> {
-                        assignments.assign(demands.addTranslated(list(j)), supplies.addTranslated(list(j)));
-                    });
-                }
-                range(0, 10_000).forEach(assignments::remove);
-            });
-        });
-    }
-
-    @DisabledTest
-    @BenchmarkTest
-    public void test_performance_difference_of_assignments_and_tables() {
+    @UnitTest public void test_performance_difference_of_assignments_and_tables() {
         final List<Long> tableTestCounts = list();
         final List<Long> assignmentsTestCounts = list();
         range(0, 1).forEach(i -> {
