@@ -91,9 +91,13 @@ public class FileSystemUnionView implements FileSystemView {
                 .filter(f -> f)
                 .collect(toList());
         if (matches.size() > 1) {
-            throw execException(tree(UNAMBIGUOUS_PATH)
+            val exception = execException(tree(UNAMBIGUOUS_PATH)
                     .withProperty(PATH, path.toString())
                     .withProperty(MATCHES, matches.toString()));
+            logs().warn(exception);
+            if (strictMode) {
+                throw exception;
+            }
         }
         return matches.hasElements();
     }
@@ -105,10 +109,14 @@ public class FileSystemUnionView implements FileSystemView {
                 .map(f -> f.isDirectory(adjustedPath))
                 .filter(f -> f)
                 .collect(toList());
-        if (matches.size() != 1) {
-            throw execException(tree(UNAMBIGUOUS_PATH)
+        if (matches.size() > 1) {
+            val exception = execException(tree(UNAMBIGUOUS_PATH)
                     .withProperty(PATH, path.toString())
                     .withProperty(MATCHES, matches.toString()));
+            logs().warn(exception);
+            if (strictMode) {
+                throw exception;
+            }
         }
         return matches.hasElements();
     }
