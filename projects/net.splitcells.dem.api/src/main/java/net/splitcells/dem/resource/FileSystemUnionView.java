@@ -36,19 +36,26 @@ public class FileSystemUnionView implements FileSystemView {
 
     private final List<FileSystemView> fileSystems;
     private final boolean strictMode;
+    private final Path basePath;
 
     private FileSystemUnionView(boolean argStrictMode, List<FileSystemView> fileSystemsArg) {
+        this(argStrictMode, fileSystemsArg, java.nio.file.Paths.get("./"));
+    }
+
+    private FileSystemUnionView(boolean argStrictMode, List<FileSystemView> fileSystemsArg, Path argBasePath) {
         fileSystems = fileSystemsArg;
         strictMode = argStrictMode;
+        basePath = argBasePath;
     }
 
     private FileSystemView getFileSystemWithExistingFile(Path path) {
+        val adjustedPath = basePath.resolve(path);
         final var matches = fileSystems.stream()
-                .filter(f -> f.isFile(path))
+                .filter(f -> f.isFile(adjustedPath))
                 .collect(toList());
         if (matches.size() != 1) {
             val exception = execException(tree(UNAMBIGUOUS_PATH)
-                    .withProperty(PATH, path.toString())
+                    .withProperty(PATH, adjustedPath.toString())
                     .withProperty(MATCHES, matches.toString()));
             logs().warn(exception);
             if (strictMode) {
@@ -60,12 +67,12 @@ public class FileSystemUnionView implements FileSystemView {
 
     @Override
     public InputStream inputStream(Path path) {
-        return getFileSystemWithExistingFile(path).inputStream(path);
+        return getFileSystemWithExistingFile(path).inputStream(basePath.resolve(path));
     }
 
     @Override
     public String readString(Path path) {
-        return getFileSystemWithExistingFile(path).readString(path);
+        return getFileSystemWithExistingFile(path).readString(basePath.resolve(path));
     }
 
     @Override
@@ -78,8 +85,9 @@ public class FileSystemUnionView implements FileSystemView {
 
     @Override
     public boolean isFile(Path path) {
+        val adjustedPath = basePath.resolve(path);
         final var matches = fileSystems.stream()
-                .map(f -> f.isFile(path))
+                .map(f -> f.isFile(adjustedPath))
                 .filter(f -> f)
                 .collect(toList());
         if (matches.size() > 1) {
@@ -92,8 +100,9 @@ public class FileSystemUnionView implements FileSystemView {
 
     @Override
     public boolean isDirectory(Path path) {
+        val adjustedPath = basePath.resolve(path);
         final var matches = fileSystems.stream()
-                .map(f -> f.isDirectory(path))
+                .map(f -> f.isDirectory(adjustedPath))
                 .filter(f -> f)
                 .collect(toList());
         if (matches.size() != 1) {
@@ -107,26 +116,29 @@ public class FileSystemUnionView implements FileSystemView {
     @Override
     public Stream<Path> walkRecursively() {
         final var walks = fileSystems.stream()
-                .map(f -> f.walkRecursively())
+                .map(f -> f.walkRecursively(basePath))
                 .collect(toList());
         return StreamUtils.concat(walks);
     }
 
     @Override
     public Stream<Path> walkRecursively(Path path) {
+        val adjustedPath = basePath.resolve(path);
         final var walks = fileSystems.stream()
-                .map(f -> f.walkRecursively(path))
+                .filter(f -> f.isDirectory(adjustedPath))
+                .map(f -> f.walkRecursively(adjustedPath))
                 .collect(toList());
         return StreamUtils.concat(walks);
     }
 
     @Override
     public byte[] readFileAsBytes(Path path) {
-        return getFileSystemWithExistingFile(path).readFileAsBytes(path);
+        val adjustedPath = basePath.resolve(path);
+        return getFileSystemWithExistingFile(adjustedPath).readFileAsBytes(adjustedPath);
     }
 
     @Override
     public FileSystemView subFileSystemView(String path) {
-        throw notImplementedYet();
+        return new FileSystemUnionView(strictMode, fileSystems, basePath.resolve(path));
     }
 }
