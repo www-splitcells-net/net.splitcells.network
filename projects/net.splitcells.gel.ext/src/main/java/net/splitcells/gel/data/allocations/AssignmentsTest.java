@@ -1,27 +1,22 @@
-/*
- * Copyright (c) 2021 Contributors To The `net.splitcells.*` Projects
- *
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License 2.0 which is available at
- * http://www.eclipse.org/legal/epl-2.0.
- *
- * This Source Code may also be made available under the following Secondary
- * Licenses when the conditions for such availability set forth in the Eclipse
- * Public License, v. 2.0 are satisfied: GNU General Public License v2.0 or later
- * which is available at https://www.gnu.org/licenses/old-licenses/gpl-2.0-standalone.html
- *
- * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+/* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
 package net.splitcells.gel.data.allocations;
 
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.dem.testing.annotations.UnitTest;
+import net.splitcells.gel.data.assignment.AssignmentsI;
+import net.splitcells.gel.data.table.TableModificationCounter;
 import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.view.Line;
 
+import static java.util.stream.IntStream.range;
 import static java.util.stream.IntStream.rangeClosed;
+import static net.splitcells.dem.Dem.configValue;
+import static net.splitcells.dem.Dem.process;
+import static net.splitcells.dem.data.atom.DescribedBool.describedBool;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
@@ -31,6 +26,44 @@ import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 
 public class AssignmentsTest extends TestSuiteI {
+
+    @UnitTest public void testPerformanceDifferenceOfAssignmentsAndTables() {
+        final List<Long> tableTestCounts = list();
+        final List<Long> assignmentsTestCounts = list();
+        range(0, 1).forEach(i -> {
+            testTablePerformance(tableTestCounts);
+            testAssignmentsPerformance(assignmentsTestCounts);
+        });
+        describedBool(tableTestCounts.get(0) * 6 < assignmentsTestCounts.get(0)
+                , tableTestCounts.get(0) + " * 6 < " + assignmentsTestCounts.get(0))
+                .required();
+    }
+
+    private static void testTablePerformance(List<Long> tableTestCounts) {
+        process(() -> {
+            final var d = attribute(Integer.class, "d");
+            final var s = attribute(Integer.class, "s");
+            final var table = table(d, s);
+            range(0, 10_000).forEach(i -> {
+                table.addTranslated(list(i, i));
+            });
+            tableTestCounts.add(configValue(TableModificationCounter.class).sumCounter().currentCount());
+        }, env -> env.config().withInitedOption(TableModificationCounter.class));
+    }
+
+    private static void testAssignmentsPerformance(List<Long> tableTestCounts) {
+        process(() -> {
+            final var d = attribute(Integer.class, "d");
+            final var s = attribute(Integer.class, "s");
+            final var demands = table(d);
+            final var supplies = table(s);
+            final var assignments = AssignmentsI.assignments("test", demands, supplies);
+            range(0, 10_000).forEach(i -> {
+                assignments.assign(demands.addTranslated(list(i)), supplies.addTranslated(list(i)));
+            });
+            tableTestCounts.add(configValue(TableModificationCounter.class).sumCounter().currentCount());
+        }, env -> env.config().withInitedOption(TableModificationCounter.class));
+    }
 
     @UnitTest
     public void testMultipleAllocationsPerDemand() {
