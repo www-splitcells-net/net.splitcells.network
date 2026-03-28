@@ -5,6 +5,8 @@ package net.splitcells.dem.resource;
 
 import lombok.val;
 import net.splitcells.dem.testing.TestSuiteI;
+import net.splitcells.dem.testing.annotations.UnitTest;
+import net.splitcells.dem.testing.annotations.UnitTestFactory;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 
@@ -13,7 +15,7 @@ import java.util.stream.Stream;
 import static net.splitcells.dem.resource.FileSystemViaMemory.fileSystemViaMemory;
 
 public class FileSystemViaMemoryTest {
-    @TestFactory public Stream<DynamicTest> fileSystemTests() {
+    @UnitTestFactory public Stream<DynamicTest> fileSystemTests() {
         return new FileSystemTest().fileSystemWriteTests(() -> {
             val fileSystem = fileSystemViaMemory();
             return new FileSystemTest.FileSystemAccess(fileSystem, fileSystem);
