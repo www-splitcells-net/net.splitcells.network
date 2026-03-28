@@ -74,9 +74,14 @@ public class Logger implements TestExecutionListener {
         this.logProject = logProject;
     }
 
+    public static String reportPath(Class<?> subject, String reportName) {
+        return subject.getName().replace('.', '/') + "/" + reportName;
+    }
+
     public void logExecutionResults(Class<?> subject, String reportName, String executor, LocalDate localDate, String resultType
             , double result) {
-        logExecutionResults(subject.getName().replace('.', '/') + "/" + reportName, executor
+        logExecutionResults(reportPath(subject, reportName)
+                , executor
                 , localDate
                 , resultType
                 , result);
@@ -109,7 +114,7 @@ public class Logger implements TestExecutionListener {
     @Override
     public void executionFinished(TestIdentifier testIdentifier, TestExecutionResult testExecutionResult) {
         final var testPath = parseTestIdentifier(testIdentifier.getUniqueId());
-        
+
         if (testPath.isPresent() && SUCCESSFUL.equals(testExecutionResult.getStatus())) {
             final var endDateTime = System.nanoTime();
             final var startDateTime = testToStartTime.get(testIdentifier);
