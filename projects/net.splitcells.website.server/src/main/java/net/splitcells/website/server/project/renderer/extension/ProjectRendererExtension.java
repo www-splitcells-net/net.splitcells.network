@@ -72,7 +72,7 @@ public interface ProjectRendererExtension {
      * @deprecated This is deprecated by {@link #metaData(RenderRequest, ProjectsRenderer, ProjectRenderer)}, because the String path argument is deprecated.
      */
     @Deprecated default Optional<PageMetaData> metaData(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
-        return metaData(RenderRequest.renderRequest(trail(path), Optional.empty(), ANONYMOUS_USER_SESSION), projectsRenderer, projectRenderer);
+        return Optional.empty();
     }
 
     /**
