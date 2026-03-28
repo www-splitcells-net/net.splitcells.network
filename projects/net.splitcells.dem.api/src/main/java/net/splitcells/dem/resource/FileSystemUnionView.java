@@ -17,12 +17,6 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
-/**
- * TODO I implemented this, because I thought I needed this,
- * but this is not the case yet.
- * It will be needed for the webserver.
- *
- */
 public class FileSystemUnionView implements FileSystemView {
 
     private static final String UNAMBIGUOUS_PATH = "Could find unambiguous file system match.";
