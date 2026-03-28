@@ -74,7 +74,7 @@ public class FileSystemUnionView implements FileSystemView {
                 .map(f -> f.isFile(path))
                 .filter(f -> f)
                 .collect(toList());
-        if (matches.size() != 1) {
+        if (matches.size() > 1) {
             throw ExecutionException.execException(tree(UNAMBIGUOUS_PATH)
                     .withProperty(PATH, path.toString())
                     .withProperty(MATCHES, matches.toString()));
