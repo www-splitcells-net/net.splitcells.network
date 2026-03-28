@@ -5,8 +5,6 @@ package net.splitcells.dem.resource;
 
 import lombok.val;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.resource.communication.log.Logs;
-import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.dem.utils.StreamUtils;
 
 import java.io.InputStream;
@@ -26,26 +24,32 @@ public class FileSystemUnionView implements FileSystemView {
     private static final String MATCHES = "matches";
     private static final String PATH = "matches";
 
-    public static FileSystemUnionView fileSystemUnionView(boolean argStrictMode, List<FileSystemView> fileSystems) {
-        return new FileSystemUnionView(argStrictMode, fileSystems);
+    public static FileSystemUnionView fileSystemUnionView(boolean argUnique, List<FileSystemView> fileSystems) {
+        return new FileSystemUnionView(argUnique, argUnique, fileSystems);
     }
 
-    public static FileSystemUnionView fileSystemUnionView(boolean argStrictMode, FileSystemView... fileSystems) {
-        return new FileSystemUnionView(argStrictMode, list(fileSystems));
+    public static FileSystemUnionView fileSystemUnionView(boolean argUnique, FileSystemView... fileSystems) {
+        return new FileSystemUnionView(argUnique, argUnique, list(fileSystems));
+    }
+
+    public static FileSystemUnionView fileSystemUnionView(boolean argUnique, boolean argEnforceUniqueFiles, FileSystemView... fileSystems) {
+        return new FileSystemUnionView(argUnique, argEnforceUniqueFiles, list(fileSystems));
     }
 
     private final List<FileSystemView> fileSystems;
-    private final boolean strictMode;
+    private final boolean uniqueFiles;
+    private final boolean enforceUniqueFiles;
     private final Path basePath;
 
-    private FileSystemUnionView(boolean argStrictMode, List<FileSystemView> fileSystemsArg) {
-        this(argStrictMode, fileSystemsArg, java.nio.file.Paths.get("./"));
+    private FileSystemUnionView(boolean argUnique, boolean argEnforceUniqueFiles, List<FileSystemView> fileSystemsArg) {
+        this(argUnique, argEnforceUniqueFiles, fileSystemsArg, java.nio.file.Paths.get("./"));
     }
 
-    private FileSystemUnionView(boolean argStrictMode, List<FileSystemView> fileSystemsArg, Path argBasePath) {
+    private FileSystemUnionView(boolean argUnique, boolean argEnforceUniqueFiles, List<FileSystemView> fileSystemsArg, Path argBasePath) {
         fileSystems = fileSystemsArg;
-        strictMode = argStrictMode;
+        uniqueFiles = argUnique;
         basePath = argBasePath;
+        enforceUniqueFiles = argEnforceUniqueFiles;
     }
 
     private FileSystemView getFileSystemWithExistingFile(Path path) {
@@ -53,12 +57,12 @@ public class FileSystemUnionView implements FileSystemView {
         final var matches = fileSystems.stream()
                 .filter(f -> f.isFile(adjustedPath))
                 .collect(toList());
-        if (matches.size() != 1) {
+        if (uniqueFiles && matches.size() != 1) {
             val exception = execException(tree(UNAMBIGUOUS_PATH)
                     .withProperty(PATH, adjustedPath.toString())
                     .withProperty(MATCHES, matches.toString()));
             logs().warn(exception);
-            if (strictMode) {
+            if (enforceUniqueFiles) {
                 throw exception;
             }
         }
@@ -90,12 +94,12 @@ public class FileSystemUnionView implements FileSystemView {
                 .map(f -> f.isFile(adjustedPath))
                 .filter(f -> f)
                 .collect(toList());
-        if (matches.size() > 1) {
+        if (uniqueFiles && matches.size() > 1) {
             val exception = execException(tree(UNAMBIGUOUS_PATH)
                     .withProperty(PATH, path.toString())
                     .withProperty(MATCHES, matches.toString()));
             logs().warn(exception);
-            if (strictMode) {
+            if (enforceUniqueFiles) {
                 throw exception;
             }
         }
@@ -109,12 +113,12 @@ public class FileSystemUnionView implements FileSystemView {
                 .map(f -> f.isDirectory(adjustedPath))
                 .filter(f -> f)
                 .collect(toList());
-        if (matches.size() > 1) {
+        if (uniqueFiles && matches.size() > 1) {
             val exception = execException(tree(UNAMBIGUOUS_PATH)
                     .withProperty(PATH, path.toString())
                     .withProperty(MATCHES, matches.toString()));
             logs().warn(exception);
-            if (strictMode) {
+            if (enforceUniqueFiles) {
                 throw exception;
             }
         }
@@ -147,6 +151,6 @@ public class FileSystemUnionView implements FileSystemView {
 
     @Override
     public FileSystemView subFileSystemView(String path) {
-        return new FileSystemUnionView(strictMode, fileSystems, basePath.resolve(path));
+        return new FileSystemUnionView(uniqueFiles, enforceUniqueFiles, fileSystems, basePath.resolve(path));
     }
 }
