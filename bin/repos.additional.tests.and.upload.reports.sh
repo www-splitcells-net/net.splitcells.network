@@ -18,9 +18,9 @@ mvn -B clean install \
   -Dsonar.organization=www-splitcells-net \
   -Dsonar.host.url=https://sonarcloud.io \
   -Dsonar.test.exclusions=src/main/java/**
-# Clean has to be executed, as otherwise the code coverage report will be missing for `repos.upload.reports.sh`.
-# Furthermore, one cannot execute both mvn commands as one, as otherwise the `repos.upload.reports.sh` will not work as well.
-# JavaDocs are primarily build here and uploaded to `repos.upload.reports.sh` and not at other places,
+# Clean has to be executed, as otherwise the code coverage report will be missing for `repos.additional.tests.and.upload.reports.sh`.
+# Furthermore, one cannot execute both mvn commands as one, as otherwise the `repos.additional.tests.and.upload.reports.sh` will not work as well.
+# JavaDocs are primarily build here and uploaded to `repos.additional.tests.and.upload.reports.sh` and not at other places,
 # because generating JavaDocs takes a lot of time.
 mvn clean install site \
     -Dtest_codecov=1 \
