@@ -20,7 +20,16 @@ public class FileSystemUnionViewTest {
         return new FileSystemTest().fileSystemWriteTests(() -> {
             val fs1 = fileSystemViaMemory();
             val fs2 = fileSystemViaMemory();
-            val testSubject = fileSystemUnionView(list(fs1, fs2));
+            val testSubject = fileSystemUnionView(true, list(fs1, fs2));
+            return new FileSystemTest.FileSystemAccess(fs1, testSubject);
+        });
+    }
+
+    @TestFactory public Stream<DynamicTest> testVarArg() {
+        return new FileSystemTest().fileSystemWriteTests(() -> {
+            val fs1 = fileSystemViaMemory();
+            val fs2 = fileSystemViaMemory();
+            val testSubject = fileSystemUnionView(true, fs1, fs2);
             return new FileSystemTest.FileSystemAccess(fs1, testSubject);
         });
     }

@@ -3,7 +3,9 @@
  */
 package net.splitcells.dem.resource;
 
+import lombok.val;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.resource.communication.log.Logs;
 import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.dem.utils.StreamUtils;
 
@@ -14,27 +16,30 @@ import java.util.stream.Stream;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 public class FileSystemUnionView implements FileSystemView {
 
     private static final String UNAMBIGUOUS_PATH = "Could find unambiguous file system match.";
-    private  static final String MATCHES = "matches";
-    private  static final String PATH = "matches";
+    private static final String MATCHES = "matches";
+    private static final String PATH = "matches";
 
-    public static FileSystemUnionView fileSystemUnionView(List<FileSystemView> fileSystems) {
-        return new FileSystemUnionView(fileSystems);
+    public static FileSystemUnionView fileSystemUnionView(boolean argStrictMode, List<FileSystemView> fileSystems) {
+        return new FileSystemUnionView(argStrictMode, fileSystems);
     }
 
-    public static FileSystemUnionView fileSystemUnionView(FileSystemView... fileSystems) {
-        return new FileSystemUnionView(list(fileSystems));
+    public static FileSystemUnionView fileSystemUnionView(boolean argStrictMode, FileSystemView... fileSystems) {
+        return new FileSystemUnionView(argStrictMode, list(fileSystems));
     }
 
     private final List<FileSystemView> fileSystems;
+    private final boolean strictMode;
 
-    private FileSystemUnionView(List<FileSystemView> fileSystemsArg) {
+    private FileSystemUnionView(boolean argStrictMode, List<FileSystemView> fileSystemsArg) {
         fileSystems = fileSystemsArg;
+        strictMode = argStrictMode;
     }
 
     private FileSystemView getFileSystemWithExistingFile(Path path) {
@@ -42,9 +47,13 @@ public class FileSystemUnionView implements FileSystemView {
                 .filter(f -> f.isFile(path))
                 .collect(toList());
         if (matches.size() != 1) {
-            throw ExecutionException.execException(tree(UNAMBIGUOUS_PATH)
+            val exception = execException(tree(UNAMBIGUOUS_PATH)
                     .withProperty(PATH, path.toString())
                     .withProperty(MATCHES, matches.toString()));
+            logs().warn(exception);
+            if (strictMode) {
+                throw exception;
+            }
         }
         return matches.get(0);
     }
@@ -74,7 +83,7 @@ public class FileSystemUnionView implements FileSystemView {
                 .filter(f -> f)
                 .collect(toList());
         if (matches.size() > 1) {
-            throw ExecutionException.execException(tree(UNAMBIGUOUS_PATH)
+            throw execException(tree(UNAMBIGUOUS_PATH)
                     .withProperty(PATH, path.toString())
                     .withProperty(MATCHES, matches.toString()));
         }
@@ -88,7 +97,7 @@ public class FileSystemUnionView implements FileSystemView {
                 .filter(f -> f)
                 .collect(toList());
         if (matches.size() != 1) {
-            throw ExecutionException.execException(tree(UNAMBIGUOUS_PATH)
+            throw execException(tree(UNAMBIGUOUS_PATH)
                     .withProperty(PATH, path.toString())
                     .withProperty(MATCHES, matches.toString()));
         }
