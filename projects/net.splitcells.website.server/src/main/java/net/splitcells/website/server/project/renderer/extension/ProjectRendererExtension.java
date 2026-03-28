@@ -17,6 +17,7 @@ package net.splitcells.website.server.project.renderer.extension;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.resource.Trail;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.processor.BinaryMessage;
@@ -24,13 +25,16 @@ import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.RenderRequest;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
+import net.splitcells.website.server.security.authentication.UserSession;
 
 import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
+import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.website.server.project.renderer.PageMetaData.pageMetaData;
+import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
 
 /**
  * TODO Do not only test {@link #projectPaths(ProjectRenderer)},
@@ -68,7 +72,7 @@ public interface ProjectRendererExtension {
      * @deprecated This is deprecated by {@link #metaData(RenderRequest, ProjectsRenderer, ProjectRenderer)}, because the String path argument is deprecated.
      */
     @Deprecated default Optional<PageMetaData> metaData(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
-        return Optional.empty();
+        return metaData(RenderRequest.renderRequest(trail(path), Optional.empty(), ANONYMOUS_USER_SESSION), projectsRenderer, projectRenderer);
     }
 
     /**
@@ -81,7 +85,7 @@ public interface ProjectRendererExtension {
      * This is done in such a way, in order to have a fast default implementation.
      */
     default Optional<PageMetaData> metaData(RenderRequest request, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
-        return Optional.empty();
+        return metaData(request.trail().unixPathString(), projectsRenderer, projectRenderer);
     }
 
     default Optional<BinaryMessage> sourceCode(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
