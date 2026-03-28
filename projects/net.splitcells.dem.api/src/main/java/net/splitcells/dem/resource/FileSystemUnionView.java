@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
@@ -30,6 +31,10 @@ public class FileSystemUnionView implements FileSystemView {
 
     public static FileSystemUnionView fileSystemUnionView(List<FileSystemView> fileSystems) {
         return new FileSystemUnionView(fileSystems);
+    }
+
+    public static FileSystemUnionView fileSystemUnionView(FileSystemView... fileSystems) {
+        return new FileSystemUnionView(list(fileSystems));
     }
 
     private final List<FileSystemView> fileSystems;
