@@ -142,7 +142,7 @@ public class FileSystemUnionView implements FileSystemView {
     @Override
     public byte[] readFileAsBytes(Path path) {
         val adjustedPath = basePath.resolve(path);
-        return getFileSystemWithExistingFile(adjustedPath).readFileAsBytes(adjustedPath);
+        return getFileSystemWithExistingFile(path).readFileAsBytes(adjustedPath);
     }
 
     @Override
