@@ -65,7 +65,7 @@ public interface ProjectRendererExtension {
      * In other words, an empty {@link Optional} and
      * an {@link Optional} {@link PageMetaData} with only the path being present are equivalent.
      * This is done in such a way, in order to have a fast default implementation.
-     * @deprecated {@link #metaData(RenderRequest, ProjectsRenderer, ProjectRenderer)}
+     * @deprecated This is deprecated by {@link #metaData(RenderRequest, ProjectsRenderer, ProjectRenderer)}, because the String path argument is deprecated.
      */
     @Deprecated default Optional<PageMetaData> metaData(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
         return Optional.empty();
