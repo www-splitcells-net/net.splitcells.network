@@ -25,115 +25,128 @@ import static net.splitcells.dem.utils.StringUtils.parseString;
 
 public class FileSystemTest extends TestSuiteI {
 
-    public void testExists(Supplier<FileSystem> factory) {
-        require(factory.get().exists());
+    public void testExists(Supplier<FileSystemAccess> factory) {
+        require(factory.get().reader.exists());
     }
 
-    public void testExistsForSubFileSystem(Supplier<FileSystem> factory) {
+    public void testExistsForSubFileSystem(Supplier<FileSystemAccess> factory) {
         requireThrow(() -> {
             val testSubject = factory.get();
-            testSubject.writeToFile("test", "content".getBytes());
-            testSubject.createDirectoryPath("test");
+            testSubject.writer.writeToFile("test", "content".getBytes());
+            testSubject.writer.createDirectoryPath("test");
         });
-        require(factory.get().createDirectoryPath("test").subFileSystem("test").exists());
-        require(factory.get().createDirectoryPath("test").subFileSystemView("test").exists());
-        require(factory.get().createDirectoryPath("test").subFileSystem(Path.of("test")).exists());
-        requireNot(factory.get().subFileSystem("test").exists());
-        requireNot(factory.get().subFileSystem(Path.of("test")).exists());
+        require(factory.get().writer.createDirectoryPath("test").subFileSystem("test").exists());
+        require(factory.get().writer.createDirectoryPath("test").subFileSystemView("test").exists());
+        require(factory.get().writer.createDirectoryPath("test").subFileSystem(Path.of("test")).exists());
+        requireNot(factory.get().writer.subFileSystem("test").exists());
+        requireNot(factory.get().writer.subFileSystem(Path.of("test")).exists());
     }
 
-    public void testIsFile(Supplier<FileSystem> factory) {
+    public void testIsFile(Supplier<FileSystemAccess> factory) {
         val testSubject = factory.get();
-        testSubject.writeToFile("test", "content".getBytes());
-        require(testSubject.isFile("test"));
-        requireNot(testSubject.isFile("not-existing"));
+        testSubject.writer.writeToFile("test", "content".getBytes());
+        require(testSubject.reader.isFile("test"));
+        requireNot(testSubject.reader.isFile("not-existing"));
     }
 
-    public void testDelete(Supplier<FileSystem> factory) {
+    public void testDelete(Supplier<FileSystemAccess> factory) {
         val testSubject = factory.get();
-        testSubject.writeToFile("test", "content".getBytes());
-        require(testSubject.isFile("test"));
-        testSubject.delete("test");
-        requireNot(testSubject.isFile("test"));
-        requireThrow(() -> factory.get().delete("not-existing-file"));
+        testSubject.writer.writeToFile("test", "content".getBytes());
+        require(testSubject.reader.isFile("test"));
+        testSubject.writer.delete("test");
+        requireNot(testSubject.reader.isFile("test"));
+        requireThrow(() -> factory.get().writer.delete("not-existing-file"));
     }
 
-    public void testReadFileAsBytes(Supplier<FileSystem> factory) {
+    public void testReadFileAsBytes(Supplier<FileSystemAccess> factory) {
         val testSubject = factory.get();
-        testSubject.writeToFile("test", "content".getBytes());
-        requireEquals(parseString(testSubject.readFileAsBytes("test")), "content");
-        requireThrow(() -> requireEquals(parseString(factory.get().readFileAsBytes("test")), "content"));
+        testSubject.writer.writeToFile("test", "content".getBytes());
+        requireEquals(parseString(testSubject.reader.readFileAsBytes("test")), "content");
+        requireThrow(() -> requireEquals(parseString(factory.get().reader.readFileAsBytes("test")), "content"));
     }
 
-    public void testReadString(Supplier<FileSystem> factory) {
-        val testSubject = factory.get();
-        val testContent = "content";
-        testSubject.writeToFile("test", testContent.getBytes());
-        requireEquals(testSubject.readString("test"), testContent);
-        requireThrow(() -> factory.get().readString("test"));
-    }
-
-    public void testInputStream(Supplier<FileSystem> factory) {
+    public void testReadString(Supplier<FileSystemAccess> factory) {
         val testSubject = factory.get();
         val testContent = "content";
-        testSubject.writeToFile("test", testContent.getBytes());
-        requireEquals(Files.readAsString(testSubject.inputStream("test")), testContent);
+        testSubject.writer.writeToFile("test", testContent.getBytes());
+        requireEquals(testSubject.reader.readString("test"), testContent);
+        requireThrow(() -> factory.get().reader.readString("test"));
+    }
+
+    public void testInputStream(Supplier<FileSystemAccess> factory) {
+        val testSubject = factory.get();
+        val testContent = "content";
+        testSubject.writer.writeToFile("test", testContent.getBytes());
+        requireEquals(Files.readAsString(testSubject.reader.inputStream("test")), testContent);
         requireThrow(() -> {
             val failTester = factory.get();
-            close(() -> failTester.inputStream("test"));
+            close(() -> failTester.reader.inputStream("test"));
         });
     }
 
-    public void testWriteToFile(Supplier<FileSystem> factory) {
+    public void testWriteToFile(Supplier<FileSystemAccess> factory) {
         val testSubject = factory.get();
-        testSubject.writeToFile("test", "content".getBytes());
-        requireThrow(() -> factory.get().writeToFile("missing-folder/test", "content".getBytes()));
+        testSubject.writer.writeToFile("test", "content".getBytes());
+        requireThrow(() -> factory.get().writer.writeToFile("missing-folder/test", "content".getBytes()));
     }
 
-    public void testAppendToFile(Supplier<FileSystem> factory) {
+    public void testAppendToFile(Supplier<FileSystemAccess> factory) {
         val testSubject = factory.get();
-        testSubject.appendToFile(Path.of("test"), "test-".getBytes());
-        testSubject.appendToFile(Path.of("test"), "content".getBytes());
-        requireEquals(testSubject.readString("test"), "test-content");
-        requireThrow(() -> factory.get().appendToFile(Path.of("missing-folder/test"), "content".getBytes()));
+        testSubject.writer.appendToFile(Path.of("test"), "test-".getBytes());
+        testSubject.writer.appendToFile(Path.of("test"), "content".getBytes());
+        requireEquals(testSubject.reader.readString("test"), "test-content");
+        requireThrow(() -> factory.get().writer.appendToFile(Path.of("missing-folder/test"), "content".getBytes()));
     }
 
-    public void testCreateDirectoryPath(Supplier<FileSystem> factory) {
-        require(factory.get().createDirectoryPath("test-directory").isDirectory(Path.of("test-directory")));
-        require(factory.get().createDirectoryPath("test-directory").isDirectory("test-directory"));
+    public void testCreateDirectoryPath(Supplier<FileSystemAccess> factory) {
+        require(factory.get().writer.createDirectoryPath("test-directory").isDirectory(Path.of("test-directory")));
+        require(factory.get().writer.createDirectoryPath("test-directory").isDirectory("test-directory"));
     }
 
-    public void testWalkRecursively(Supplier<FileSystem> factory) {
+    public void testWalkRecursively(Supplier<FileSystemAccess> factory) {
         val testSubject = factory.get();
         val testFolder = "test/folder/path/";
         val testFile = testFolder + "file";
         val testContent = "test-content";
-        testSubject.createDirectoryPath(testFolder);
-        testSubject.writeToFile(testFile, testContent.getBytes());
+        testSubject.writer.createDirectoryPath(testFolder);
+        testSubject.writer.writeToFile(testFile, testContent.getBytes());
         val expectedResult = setOfUniques(
                 "test"
                 , "test/folder"
                 , "test/folder/path"
                 , "test/folder/path/file");
-        testSubject.walkRecursively(Path.of("./"))
+        testSubject.reader.walkRecursively(Path.of("./"))
                 .map(Path::toString)
                 .collect(toSetOfUniques())
                 .requireContentsOf(expectedResult);
-        testSubject.walkRecursively(Path.of("/./"))
+        testSubject.reader.walkRecursively(Path.of("/./"))
                 .map(Path::toString)
                 .collect(toSetOfUniques())
                 .requireContentsOf(expectedResult);
-        testSubject.walkRecursively()
+        testSubject.reader.walkRecursively()
                 .map(Path::toString)
                 .collect(toSetOfUniques())
                 .requireContentsOf(expectedResult);
-        requireThrow(() -> testSubject.walkRecursively(Path.of("./not-existing-folder"))
+        requireThrow(() -> testSubject.reader.walkRecursively(Path.of("./not-existing-folder"))
                 .map(Path::toString)
                 .collect(toSetOfUniques())
                 .requireContentsOf(expectedResult));
     }
 
-    public Stream<DynamicTest> fileSystemWriteTests(Supplier<FileSystem> factory) {
+    /**
+     * This record makes it possible to test read only {@link FileSystemView},
+     * where the data comes from a {@link FileSystem}.
+     * This only works, when {@link FileSystemView} is kind of a wrapper for {@link FileSystem}.
+     * See {@link FileSystemUnionView} as an example for this.
+     *
+     * @param writer
+     * @param reader
+     */
+    public record FileSystemAccess(FileSystem writer, FileSystemView reader) {
+
+    }
+
+    public Stream<DynamicTest> fileSystemWriteTests(Supplier<FileSystemAccess> factory) {
         return concat(dynamicTests(this::testExists, factory)
                 , dynamicTests(this::testExistsForSubFileSystem, factory)
                 , dynamicTests(this::testCreateDirectoryPath, factory)

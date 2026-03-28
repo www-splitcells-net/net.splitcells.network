@@ -4,6 +4,7 @@
  */
 package net.splitcells.dem.resource;
 
+import lombok.val;
 import net.splitcells.dem.testing.TestSuiteI;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Tag;
@@ -17,6 +18,9 @@ import static net.splitcells.dem.utils.StreamUtils.concat;
 
 public class FileSystemViaMemoryTest extends TestSuiteI {
     @Tag(UNIT_TEST) @TestFactory public Stream<DynamicTest> fileSystemTests() {
-        return new FileSystemTest().fileSystemWriteTests(() -> fileSystemViaMemory());
+        return new FileSystemTest().fileSystemWriteTests(() -> {
+            val fileSystem = fileSystemViaMemory();
+            return new FileSystemTest.FileSystemAccess(fileSystem, fileSystem);
+        });
     }
 }
