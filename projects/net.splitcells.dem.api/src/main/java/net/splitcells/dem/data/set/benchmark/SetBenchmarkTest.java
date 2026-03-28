@@ -32,9 +32,9 @@ public class SetBenchmarkTest {
 
     @org.openjdk.jmh.annotations.State(Scope.Thread)
     public static class State {
-        public Set<Integer> testSubject;
+        private Set<Integer> testSubject;
         @Param({"Java", "Eclipse", "Trove"})
-        public String impl;
+        private String impl;
 
         @Setup(Level.Invocation)
         public void setupIteration() {
