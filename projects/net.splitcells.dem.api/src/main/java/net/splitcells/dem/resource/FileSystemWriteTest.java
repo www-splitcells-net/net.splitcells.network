@@ -128,10 +128,18 @@ public class FileSystemWriteTest extends TestSuiteI {
                 .map(Path::toString)
                 .collect(toSetOfUniques())
                 .requireContentsOf(expectedResult);
+        testSubject.walkRecursively(Path.of("/./"))
+                .map(Path::toString)
+                .collect(toSetOfUniques())
+                .requireContentsOf(expectedResult);
         testSubject.walkRecursively()
                 .map(Path::toString)
                 .collect(toSetOfUniques())
                 .requireContentsOf(expectedResult);
+        requireThrow(() -> testSubject.walkRecursively(Path.of("./not-existing-folder"))
+                .map(Path::toString)
+                .collect(toSetOfUniques())
+                .requireContentsOf(expectedResult));
     }
 
     public Stream<DynamicTest> fileSystemWriteTests(Supplier<FileSystem> factory) {
