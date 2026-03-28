@@ -5,34 +5,25 @@
 package net.splitcells.dem.resource;
 
 import lombok.val;
-import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.testing.TestSuiteI;
-import net.splitcells.dem.utils.StringUtils;
 import org.junit.jupiter.api.DynamicTest;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.TestFactory;
 
 import java.nio.file.Path;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.resource.FileSystemViaMemory.fileSystemViaMemory;
-import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
-import static net.splitcells.dem.resource.Files.processInTemporaryFolder;
 import static net.splitcells.dem.resource.communication.Closeable.close;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
-import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
 import static net.splitcells.dem.utils.StreamUtils.concat;
 import static net.splitcells.dem.utils.StringUtils.parseString;
 
-public class FileSystemWriteTest extends TestSuiteI {
+public class FileSystemTest extends TestSuiteI {
 
     public void testExists(Supplier<FileSystem> factory) {
         require(factory.get().exists());
