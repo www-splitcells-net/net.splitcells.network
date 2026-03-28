@@ -139,6 +139,7 @@ lexer grammar Java11Lexer;
 	Keyword_private: 'private';
 	Keyword_protected: 'protected';
 	Keyword_public: 'public';
+	Keyword_record: 'record';
 	Keyword_return: 'return';
 	Keyword_static: 'static';
 	Keyword_sealed: 'sealed';

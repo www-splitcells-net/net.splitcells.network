@@ -43,14 +43,11 @@ options {
  * this is also a rule, we can ignore.
  */
 source_unit
-    : license_declaration package_declaration import_declaration* class_definition
-    	EOF
-    | license_declaration package_declaration import_declaration* interface_definition
-        EOF
-    | license_declaration package_declaration import_declaration* annotation_definition
-        EOF
-    | license_declaration package_declaration import_declaration* enum_definition
-       EOF
+    : license_declaration package_declaration import_declaration* class_definition EOF
+    | license_declaration package_declaration import_declaration* interface_definition EOF
+    | license_declaration package_declaration import_declaration* annotation_definition EOF
+    | license_declaration package_declaration import_declaration* enum_definition EOF
+    | license_declaration package_declaration import_declaration* record_definition EOF
     ;
 access
     : inline_comment? Dot type_argument? name call_arguments access? inline_comment?
@@ -89,6 +86,20 @@ call_arguments_element
 call_arguments_next
     : Comma call_arguments_element
     ;
+record_definition
+    : javadoc? modifier_visibility? Keyword_record name record_arguments
+        Brace_curly_open Brace_curly_closed
+    ;
+record_arguments
+    : Brace_round_open Brace_round_closed
+    | Brace_round_open record_arguments_element record_arguments_next* Brace_round_closed
+    ;
+record_arguments_element
+    : annotation? variable_declaration
+    ;
+record_arguments_next
+    : Comma record_arguments_element
+    ;
 class_definition
     : javadoc? Keysymbol_at Keyword_JavaLegacy (.)*?
     | javadoc? annotation* Keyword_public? Keyword_final?
@@ -105,6 +116,7 @@ class_member
     : javadoc? Keysymbol_at Keyword_JavaLegacy (.)*? Brace_curly_open (.)*? Brace_curly_closed
     | class_constructor
     | class_member_class_definition
+    | record_definition
     | class_member_method_definition
     | class_member_value_declaration
     | Comment_multiline
