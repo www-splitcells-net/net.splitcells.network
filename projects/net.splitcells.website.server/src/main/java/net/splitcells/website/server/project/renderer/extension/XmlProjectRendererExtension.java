@@ -15,6 +15,7 @@
  */
 package net.splitcells.website.server.project.renderer.extension;
 
+import lombok.val;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.lang.Xml;
@@ -25,6 +26,7 @@ import net.splitcells.website.server.project.ProjectRenderer;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.projects.ProjectsRenderer;
+import net.splitcells.website.server.projects.RenderRequest;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -59,15 +61,16 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
     }
 
     @Override
-    public Optional<PageMetaData> metaData(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
-        final var xmlPath = xmlPath(path, projectsRenderer, projectRenderer);
+    public Optional<PageMetaData> metaData(RenderRequest renderRequest, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
+        val path = renderRequest.trail().unixPathString();
+        val xmlPath = xmlPath(path, projectsRenderer, projectRenderer);
         if (xmlPath.isPresent()) {
-            final var metaData = pageMetaData(path);
-            final var document = Xml.parse(projectRenderer.projectFileSystem().readString(xmlPath.get()));
+            val metaData = pageMetaData(path);
+            val document = Xml.parse(projectRenderer.projectFileSystem().readString(xmlPath.get()));
             if (NameSpaces.SEW.uri().equals(document.getDocumentElement().getNamespaceURI())) {
-                final var metaElement = optionalDirectChildElementsByName(document.getDocumentElement(), "meta", NameSpaces.SEW);
+                val metaElement = optionalDirectChildElementsByName(document.getDocumentElement(), "meta", NameSpaces.SEW);
                 if (metaElement.isPresent()) {
-                    final var titleElement = optionalDirectChildElementsByName(metaElement.get(), "title", NameSpaces.SEW);
+                    val titleElement = optionalDirectChildElementsByName(metaElement.get(), "title", NameSpaces.SEW);
                     if (titleElement.isPresent()) {
                         metaData.withTitle(Optional.of(titleElement.get().getTextContent()));
                     }
