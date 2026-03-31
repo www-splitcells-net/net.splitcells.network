@@ -79,7 +79,13 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
                 , dynamicTests(this::testWalkRecursivelyForSubFileSystem, factory)
                 , dynamicTests(this::testSubFileSystemView, factory)
                 , dynamicTests(this::testReadFileAsBytes, factory)
-                , dynamicTests(this::testInvalidConstruction, factory));
+                , dynamicTests(this::testInvalidConstruction, factory)
+                , dynamicTests(this::testToString, factory));
+    }
+
+    public void testToString(FileSystemViaClassResourcesFactoryApi factory) {
+        require(factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
+                , MAVEN_GROUP_ID, DEM_API).toString().isBlank());
     }
 
     public void testInvalidConstruction(FileSystemViaClassResourcesFactoryApi factory) {
