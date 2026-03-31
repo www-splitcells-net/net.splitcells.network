@@ -20,22 +20,21 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.gel.constraint.Constraint.*;
 import static net.splitcells.gel.constraint.type.Then.then;
-import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
 import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
-public class ThenAtLeastRater implements Rater {
-    public static Rater thenAtLeastRater(int argLeastCount, Rater argRater) {
-        return new ThenAtLeastRater(argLeastCount, argRater);
+public class ThenAtLeastFastRater implements Rater {
+    public static Rater thenAtLeastFastRater(int argLeastCount, Rater argRater) {
+        return new ThenAtLeastFastRater(argLeastCount, argRater);
     }
 
     private final int leastCount;
     private final Constraint constraint;
     private final Rater rater;
 
-    private ThenAtLeastRater(int argLeastCount, Rater argRater) {
+    private ThenAtLeastFastRater(int argLeastCount, Rater argRater) {
         leastCount = argLeastCount;
         constraint = then(argRater);
         rater = argRater;
