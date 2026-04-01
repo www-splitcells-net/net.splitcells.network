@@ -84,7 +84,7 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
     }
 
     public void testToString(FileSystemViaClassResourcesFactoryApi factory) {
-        require(factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
+        requireNot(factory.fileSystemViaClassResources(FileSystemViaClassResourcesTest.class
                 , MAVEN_GROUP_ID, DEM_API).toString().isBlank());
     }
 
