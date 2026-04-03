@@ -64,16 +64,16 @@ public class ThenAtLeastFastRater implements Rater {
      */
     private Rating groupElementCost(GroupId incomingGroup, Optional<Line> beforeRemoval, Optional<Line> afterAddition) {
         val incomingTable = constraint.lineProcessing().lookup(INCOMING_CONSTRAINT_GROUP, incomingGroup);
-        var ratingLookup = incomingTable
+        var compliantLookup = incomingTable
                 .columnView(RATING)
                 .lookup(r -> r.equalz(noCost()));
         if (beforeRemoval.isPresent()) {
-            ratingLookup = ratingLookup.columnView(LINE).lookup(l -> !l.equalsTo(beforeRemoval.orElseThrow()));
+            compliantLookup = compliantLookup.columnView(LINE).lookup(l -> !l.equalsTo(beforeRemoval.orElseThrow()));
         }
         if (afterAddition.isPresent()) {
-            ratingLookup = ratingLookup.columnView(LINE).lookup(l -> !l.equalsTo(afterAddition.orElseThrow()));
+            compliantLookup = compliantLookup.columnView(LINE).lookup(l -> !l.equalsTo(afterAddition.orElseThrow()));
         }
-        double numberOfCompliant = ratingLookup.size();
+        double numberOfCompliant = compliantLookup.size();
         Rating cost;
         if (numberOfCompliant >= leastCount) {
             cost = noCost();
