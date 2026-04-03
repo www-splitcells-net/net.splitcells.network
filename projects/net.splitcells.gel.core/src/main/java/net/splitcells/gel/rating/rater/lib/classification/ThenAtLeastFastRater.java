@@ -8,6 +8,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.rating.framework.Rating;
@@ -42,16 +43,25 @@ public class ThenAtLeastFastRater implements Rater {
 
     @Override public RatingEvent ratingAfterAddition(View linesOfGroup, Line addition, List<Constraint> children, View lineProcessingBeforeAddition) {
         val incomingGroup = addition.value(INCOMING_CONSTRAINT_GROUP);
+        val incomingTable = constraint.lineProcessing().lookup(INCOMING_CONSTRAINT_GROUP, incomingGroup);
         val previousCost = groupElementCost(incomingGroup, Optional.empty(), Optional.of(addition));
         constraint.registerAdditions(incomingGroup, addition.value(LINE));
         val linesRating = ratingEvent();
         val nextCost = groupElementCost(incomingGroup, Optional.empty(), Optional.empty());
-        ratingEventUpdate(linesRating, previousCost, nextCost, incomingGroup, linesOfGroup, Optional.of(addition), Optional.empty(), children);
-        linesRating.additions().put(addition
-                , localRating()
-                        .withPropagationTo(children)
-                        .withRating(nextCost)
-                        .withResultingGroupId(addition.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
+        ratingEventUpdate(linesRating, previousCost, nextCost, incomingGroup, incomingTable, Optional.of(addition), Optional.empty(), children);
+        if (linesOfGroup.size() == 1) {
+            linesRating.additions().put(addition
+                    , localRating()
+                            .withPropagationTo(children)
+                            .withRating(nextCost)
+                            .withResultingGroupId(addition.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
+        } else {
+            linesRating.additions().put(addition
+                    , localRating()
+                            .withPropagationTo(children)
+                            .withRating(noCost())
+                            .withResultingGroupId(addition.value(Constraint.INCOMING_CONSTRAINT_GROUP)));
+        }
         return linesRating;
     }
 
@@ -83,27 +93,39 @@ public class ThenAtLeastFastRater implements Rater {
         return cost;
     }
 
-    private void ratingEventUpdate(RatingEvent ratingEvent, Rating previousCost, Rating nextCost, GroupId incomingGroup, View linesOfGroup, Optional<Line> afterAddition, Optional<Line> beforeRemoval, List<Constraint> children) {
+    /**
+     *
+     * @param ratingEvent
+     * @param previousCost
+     * @param nextCost
+     * @param incomingGroup
+     * @param incomingTable The {@link Table#headerView()} format corresponds to {@link Constraint#lineProcessing()} of {@link #constraint}.
+     * @param afterAddition
+     * @param beforeRemoval
+     * @param children
+     */
+    private void ratingEventUpdate(RatingEvent ratingEvent, Rating previousCost, Rating nextCost, GroupId incomingGroup, View incomingTable, Optional<Line> afterAddition, Optional<Line> beforeRemoval, List<Constraint> children) {
         if (previousCost.equalz(nextCost)) {
             return;
         }
-        linesOfGroup.rawLinesView().stream()
+        incomingTable.rawLinesView().stream()
                 .filter(e -> e != null)
                 .filter(e -> {
                     final boolean isAddition;
                     if (afterAddition.isPresent()) {
-                        isAddition = e.index() == afterAddition.orElseThrow().index();
+                        isAddition = e.value(LINE).index() == afterAddition.orElseThrow().index();
                     } else {
                         isAddition = false;
                     }
                     final boolean isRemoval;
                     if (beforeRemoval.isPresent()) {
-                        isRemoval = e.index() == beforeRemoval.orElseThrow().index();
+                        isRemoval = e.value(LINE).index() == beforeRemoval.orElseThrow().index();
                     } else {
                         isRemoval = false;
                     }
                     return !isAddition && !isRemoval;
                 })
+                .filter(e -> e.value(RATING).equalz(previousCost))
                 .forEach(e ->
                         ratingEvent.updateRating_withReplacement(e
                                 , localRating().
@@ -114,11 +136,12 @@ public class ThenAtLeastFastRater implements Rater {
 
     @Override public RatingEvent rating_before_removal(View lines, Line removal, List<Constraint> children, View lineProcessingBeforeRemoval) {
         val incomingGroup = removal.value(INCOMING_CONSTRAINT_GROUP);
+        val incomingTable = constraint.lineProcessing().lookup(INCOMING_CONSTRAINT_GROUP, incomingGroup);
         val previousCost = groupElementCost(incomingGroup, Optional.of(removal), Optional.empty());
         constraint.registerBeforeRemoval(incomingGroup, removal.value(LINE));
         val linesRating = ratingEvent();
         val nextCost = groupElementCost(incomingGroup, Optional.empty(), Optional.empty());
-        ratingEventUpdate(linesRating, previousCost, nextCost, incomingGroup, lines, Optional.empty(), Optional.of(removal), children);
+        ratingEventUpdate(linesRating, previousCost, nextCost, incomingGroup, incomingTable, Optional.empty(), Optional.of(removal), children);
         return linesRating;
     }
 
