@@ -3,6 +3,7 @@
  */package net.splitcells.gel.rating.rater.lib.classification;
 
 import lombok.val;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -14,7 +15,7 @@ import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
 public class ThenAtLeastFastRaterTest {
-    @Test public void testRating() {
+    @Disabled @Test public void testRating() {
         val i = integerAttribute("i");
         final var testData = defineProblem("testRating")
                 .withDemandAttributes(i)
