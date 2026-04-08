@@ -34,6 +34,7 @@ import static net.splitcells.gel.editor.geal.runners.ForEachAttributeCallRunner.
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 import static net.splitcells.gel.editor.geal.runners.HasMinimalDistanceOfCallRunner.hasMinimalDistanceOfCallRunner;
 import static net.splitcells.gel.editor.geal.runners.HasSizeCallRunner.hasSizeCallRunner;
+import static net.splitcells.gel.editor.geal.runners.HasSizeFastCallRunner.hasSizeFastCallRunner;
 import static net.splitcells.gel.editor.geal.runners.ImportCsvDataRunner.importCsvDataRunner;
 import static net.splitcells.gel.editor.geal.runners.MaxSizeCallRunner.maxSizeCallRunner;
 import static net.splitcells.gel.editor.geal.runners.MinSizeCallRunner.minSizeCallRunner;
@@ -76,6 +77,7 @@ public class FunctionCallMetaExecutor implements FunctionCallExecutor {
                 .registerExecutor(uniqueValueCountIsAtMostCallRunner())
                 .registerExecutor(thenAtLeastRunner())
                 .registerExecutor(thenAtLeastFastRunner())
+                .registerExecutor(hasSizeFastCallRunner())
                 ;
     }
 
