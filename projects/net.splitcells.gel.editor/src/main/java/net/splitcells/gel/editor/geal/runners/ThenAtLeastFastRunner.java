@@ -6,7 +6,6 @@ package net.splitcells.gel.editor.geal.runners;
 import lombok.val;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.constraint.Query;
-import net.splitcells.gel.constraint.type.Then;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 import net.splitcells.gel.rating.rater.framework.Rater;
@@ -16,22 +15,25 @@ import java.util.Optional;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.gel.constraint.type.Then.then;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRunnerParser.functionCallRunnerParser;
-import static net.splitcells.gel.rating.rater.lib.classification.ThenAtLeastRater.thenAtLeastRater;
+import static net.splitcells.gel.rating.rater.lib.classification.ThenAtLeastFastRater.thenAtLeastFastRater;
 
-public class ThenAtLeastRunner implements FunctionCallRunner {
-    public static ThenAtLeastRunner thenAtLeastRunner() {
-        return new ThenAtLeastRunner();
+public class ThenAtLeastFastRunner implements FunctionCallRunner {
+    public static ThenAtLeastFastRunner thenAtLeastFastRunner() {
+        return new ThenAtLeastFastRunner();
     }
 
-    private static final String NAME = "thenAtLeast";
+    private static final String NAME = "thenAtLeastFast";
     private static final String DESCRIPTION = """
             Creates and returns a constraint node, where groups are rated with no cost,
             if $atLeastCount number of lines comply with the given $rater.
             If this is not the case, the cost of the group is the difference between $atLeastCount
-            and the number of lines, that comply with $rater.""";
+            and the number of lines, that comply with $rater.
+            
+            This is basically a quite faster version of thenAtLeast,
+            which gets its speed by assigning costs to only one line in the group.
+            This is an incorrect distribution of cost and such a constraint, should not have child constraints.""";
 
     private static class Args {
         Query subjectVal;
@@ -50,7 +52,7 @@ public class ThenAtLeastRunner implements FunctionCallRunner {
                 return args;
             });
 
-    private ThenAtLeastRunner() {
+    private ThenAtLeastFastRunner() {
 
     }
 
@@ -58,7 +60,7 @@ public class ThenAtLeastRunner implements FunctionCallRunner {
         val run = functionCallRun(subject, context);
         if (functionCall.getName().getValue().equals(NAME)) {
             val args = PARSER.parse(subject, context, functionCall);
-            run.setResultVal(args.subjectVal.then(thenAtLeastRater(args.atLeastCount, args.rater)));
+            run.setResultVal(args.subjectVal.then(thenAtLeastFastRater(args.atLeastCount, args.rater)));
         }
         return run;
     }
