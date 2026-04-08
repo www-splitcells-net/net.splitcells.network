@@ -32,7 +32,10 @@ import static net.splitcells.gel.rating.type.Cost.noCost;
 /**
  * This is an incorrect, but faster implementation of {@link ThenAtLeastRater},
  * as it only updates up to 2 {@link Line} per change.
+ * {@link ThenAtLeastRater} is significantly slower than this implementation.
  * {@link ThenAtLeastRater} changes all {@link Line}, if the {@link Rating} is not {@link Cost#noCost()}.
+ * The {@link Cost#noCost()} part {@link Rating} of an {@link Constraint#INCOMING_CONSTRAINT_GROUP}
+ * is only stored at one {@link Line} and is the basis for the speed-up.
  */
 public class ThenAtLeastFastRater implements Rater {
     public static Rater thenAtLeastFastRater(int argLeastCount, Rater argRater) {
