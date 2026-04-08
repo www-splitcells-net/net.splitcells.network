@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.data.set.map;
 
+import lombok.val;
 import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.order.Comparison;
 import net.splitcells.dem.data.set.legacy.LegacySetWrapper;
@@ -60,6 +61,18 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
         checkNeed(need, this);
         return get(key);
     }
+
+    default Value value(Key key) {
+        val rVal = get(key);
+        if (rVal == null) {
+            throw execException(tree("There is no value for key in map.")
+                    .withProperty("map", toString())
+                    .withProperty("key", key.toString()));
+        }
+        return rVal;
+    }
+
+    @Deprecated @Override Value get(Object key);
 
     default Optional<Value> getOptionally(Key key) {
         return Optional.ofNullable(get(key));
