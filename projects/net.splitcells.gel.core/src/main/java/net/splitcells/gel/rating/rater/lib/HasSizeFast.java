@@ -17,6 +17,8 @@ import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
+import net.splitcells.gel.rating.rater.lib.classification.ThenAtLeastRater;
+import net.splitcells.gel.rating.type.Cost;
 
 import java.util.Optional;
 
@@ -31,7 +33,16 @@ import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
-
+/**
+ * <p>This is an incorrect, but faster implementation of {@link HasSize},
+ * as it only updates up to 2 {@link Line} per change.
+ * {@link HasSize} is significantly slower than this implementation.
+ * </p><p>{@link HasSize} changes all {@link Line}, if the {@link Rating} is not {@link Cost#noCost()}.
+ * The {@link Cost#noCost()} part {@link Rating} of an {@link Constraint#INCOMING_CONSTRAINT_GROUP}
+ * is only stored at one {@link Line} and is the basis for the speed-up.
+ * Therefore, the propagation of {@link Line} does not work correctly and individual {@link Rating} are incorrect,
+ * whereas the {@link Rating} of a {@link GroupId} is correct.</p>
+ */
 public class HasSizeFast implements Rater {
     public static final String HAS_SIZE_NAME = "hasSizeFast";
 
