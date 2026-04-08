@@ -146,7 +146,7 @@ public interface View extends Discoverable, Domable, Identifiable {
      */
     @Deprecated
     default Stream<Line> unorderedLinesStream() {
-        return unorderedLines().stream();
+        return rawLinesView().stream().filter(e -> e != null);
     }
 
     /**
@@ -168,7 +168,7 @@ public interface View extends Discoverable, Domable, Identifiable {
      * @return An ordered {@link Stream} of {@link #orderedLines()}.
      */
     default Flow<Line> unorderedLinesStream2() {
-        return unorderedLines().stream();
+        return rawLinesView().stream().filter(e -> e != null);
     }
 
     /**
