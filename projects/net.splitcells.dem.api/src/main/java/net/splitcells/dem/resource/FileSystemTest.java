@@ -99,8 +99,11 @@ public class FileSystemTest extends TestSuiteI {
     }
 
     public void testCreateDirectoryPath(Supplier<FileSystemAccess> factory) {
-        require(factory.get().writer.createDirectoryPath("test-directory").isDirectory(Path.of("test-directory")));
-        require(factory.get().writer.createDirectoryPath("test-directory").isDirectory("test-directory"));
+        val testSubject = factory.get();
+        testSubject.writer.createDirectoryPath("test-directory");
+        require(testSubject.reader.isDirectory(Path.of("test-directory")));
+        testSubject.writer.createDirectoryPath("test-directory");
+        require(testSubject.reader.isDirectory("test-directory"));
     }
 
     public void testWalkRecursively(Supplier<FileSystemAccess> factory) {
