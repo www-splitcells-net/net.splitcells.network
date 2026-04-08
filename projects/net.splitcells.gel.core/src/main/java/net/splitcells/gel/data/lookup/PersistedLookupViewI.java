@@ -201,7 +201,7 @@ public class PersistedLookupViewI implements PersistedLookupView {
     private void checkConsistency() {
         if (ENFORCING_UNIT_CONSISTENCY) {
             range(0, viewView.rawLinesView().size()).forEach(i -> {
-                if (content.contains(i)) {
+                if (content.has(i)) {
                     requireNotNull(viewView.rawLinesView().get(i));
                 } else {
                     content.requireAbsenceOf(i);
