@@ -188,10 +188,10 @@ mkdir -p ~/.local/state/${programName}/logs/
 mkdir -p ~/.local/state/${programName}/.cache/ms-playwright/
 cd ~/.local/state/${programName}/repos/public/net.splitcells.network
 test -f target/program-${programName} && chmod +x target/program-${programName} # This file does not exist, when '--executable-path' is not set.
-podman build -f "target/Dockerfile-${executionName}" \\
-    --tag "localhost/${executionName}"  \\
-    --arch string \\
-    ${additionalArguments}\\
+podman build -f "target/Dockerfile-${executionName}" \\\\
+    --tag "localhost/${executionName}"  \\\\
+    --arch string \\\\
+    ${additionalArguments}\\\\
     --log-level=warn
 """
 
@@ -214,24 +214,24 @@ test -f target/program-${programName} && chmod +x target/program-${programName} 
 # --pids-limit=-1 is required, as the Podmans default of 2048 is too low, when many Playwright instances are created.
 # --add-host host.docker.internal:10.0.2.2 provides compatibility to Docker.
 # Furthermore, Podman does sometimes not seem to have a working DNS name for the host.
-PODMAN_COMMAND_TEMPLATE = """podman run --name "${executionName}" \\
-  --pids-limit=-1 \\
-  --add-host host.docker.internal:10.0.2.2 \\
-  --network slirp4netns:allow_host_loopback=true \\
-  --hostname="$(hostname)" \\
-  ${additionalArguments}\\
-  --rm \\
-  -v ~/.local/state/${programName}/Documents:/root/.local/state/${programName}/Documents \\
-  -v ~/.local/state/${programName}/.ssh:/root/.ssh \\
-  -v ~/.local/state/${programName}/.config:/root/.config \\
-  -v ~/.local/state/${programName}/.m2:/root/.m2 \\
-  -v ~/.local/state/${programName}/.local:/root/.local/state/${programName}/.local \\
-  -v ~/.local/state/${programName}/repos:/root/.local/state/${programName}/repos \\
-  -v ~/.local/state/${programName}/config:/root/.local/state/${programName}/config \\
-  -v ~/.local/state/${programName}/logs:/root/.local/state/${programName}/logs \\
-  -v ~/.local/state/${programName}/bin:/root/bin \\
-  -v ~/.local/state/${programName}/.cache/ms-playwright/:/root/.cache/ms-playwright/ \\
-  ${podmanParameters}\\
+PODMAN_COMMAND_TEMPLATE = """podman run --name "${executionName}" \\\\
+  --pids-limit=-1 \\\\
+  --add-host host.docker.internal:10.0.2.2 \\\\
+  --network slirp4netns:allow_host_loopback=true \\\\
+  --hostname="$(hostname)" \\\\
+  ${additionalArguments}\\\\
+  --rm \\\\
+  -v ~/.local/state/${programName}/Documents:/root/.local/state/${programName}/Documents \\\\
+  -v ~/.local/state/${programName}/.ssh:/root/.ssh \\\\
+  -v ~/.local/state/${programName}/.config:/root/.config \\\\
+  -v ~/.local/state/${programName}/.m2:/root/.m2 \\\\
+  -v ~/.local/state/${programName}/.local:/root/.local/state/${programName}/.local \\\\
+  -v ~/.local/state/${programName}/repos:/root/.local/state/${programName}/repos \\\\
+  -v ~/.local/state/${programName}/config:/root/.local/state/${programName}/config \\\\
+  -v ~/.local/state/${programName}/logs:/root/.local/state/${programName}/logs \\\\
+  -v ~/.local/state/${programName}/bin:/root/bin \\\\
+  -v ~/.local/state/${programName}/.cache/ms-playwright/:/root/.cache/ms-playwright/ \\\\
+  ${podmanParameters}\\\\
   "localhost/${executionName}"
 """
 
@@ -298,7 +298,7 @@ ssh ${execute_via_ssh_at} /bin/sh << EOF
   cd ~/.local/state/${programName}/repos/public/net.splitcells.network && git pull
   cd ~/.local/state/${programName}/repos/public/net.splitcells.network.hub && git pull
   cd ~/.local/state/${programName}/repos/public/net.splitcells.network
-  ${bin_worker_execute} \\\n${remoteNetworkerArguments}
+  ${bin_worker_execute} \\\\\n${remoteNetworkerArguments}
 EOF"""
 
 # The type simple is used, so that restarting the service is not an endlessly blocking operation.
@@ -384,7 +384,7 @@ class WorkerExecution:
                 value_string = str(parsedVars[key]).replace("\'", "\\\'").replace("\"", "\\\"").replace("\n", "")
             self.remote_networker_arguments += "    --" + key.replace("_", "-") + "='" + value_string + "'"
             if i != len(parsedKeys) - 1:
-                self.remote_networker_arguments += "\\\n"
+                self.remote_networker_arguments += "\\\\\n"
             else:
                 self.remote_networker_arguments += "\n"
         self.remote_execution_script_template = self.applyTemplate(EXECUTE_MAIN_TASK_REMOTELY)
@@ -634,10 +634,10 @@ mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/logs/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.cache/ms-playwright/
 cd ~/.local/state/net.splitcells.martins.avots.distro/repos/public/net.splitcells.network
 test -f target/program-net.splitcells.martins.avots.distro && chmod +x target/program-net.splitcells.martins.avots.distro # This file does not exist, when '--executable-path' is not set.
-podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
-    --tag "localhost/net.splitcells.martins.avots.distro"  \\
-    \\
-    \\
+podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\\\
+    --tag "localhost/net.splitcells.martins.avots.distro"  \\\\
+    \\\\
+    \\\\
     --log-level=warn
 """)
     def test_only_execute_image(self):
@@ -658,24 +658,24 @@ mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/logs/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.cache/ms-playwright/
 test -f target/program-net.splitcells.martins.avots.distro && chmod +x target/program-net.splitcells.martins.avots.distro # This file does not exist, when '--executable-path' is not set.
 
-podman run --name "net.splitcells.martins.avots.distro" \\
-  --pids-limit=-1 \\
-  --add-host host.docker.internal:10.0.2.2 \\
-  --network slirp4netns:allow_host_loopback=true \\
-  --hostname="$(hostname)" \\
-  \\
-  --rm \\
-  -v ~/.local/state/net.splitcells.martins.avots.distro/Documents:/root/.local/state/net.splitcells.martins.avots.distro/Documents \\
-  -v ~/.local/state/net.splitcells.martins.avots.distro/.ssh:/root/.ssh \\
-  -v ~/.local/state/net.splitcells.martins.avots.distro/.config:/root/.config \\
-  -v ~/.local/state/net.splitcells.martins.avots.distro/.m2:/root/.m2 \\
-  -v ~/.local/state/net.splitcells.martins.avots.distro/.local:/root/.local/state/net.splitcells.martins.avots.distro/.local \\
-  -v ~/.local/state/net.splitcells.martins.avots.distro/repos:/root/.local/state/net.splitcells.martins.avots.distro/repos \\
-  -v ~/.local/state/net.splitcells.martins.avots.distro/config:/root/.local/state/net.splitcells.martins.avots.distro/config \\
-  -v ~/.local/state/net.splitcells.martins.avots.distro/logs:/root/.local/state/net.splitcells.martins.avots.distro/logs \\
-  -v ~/.local/state/net.splitcells.martins.avots.distro/bin:/root/bin \\
-  -v ~/.local/state/net.splitcells.martins.avots.distro/.cache/ms-playwright/:/root/.cache/ms-playwright/ \\
-  \\
+podman run --name "net.splitcells.martins.avots.distro" \\\\
+  --pids-limit=-1 \\\\
+  --add-host host.docker.internal:10.0.2.2 \\\\
+  --network slirp4netns:allow_host_loopback=true \\\\
+  --hostname="$(hostname)" \\\\
+  \\\\
+  --rm \\\\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/Documents:/root/.local/state/net.splitcells.martins.avots.distro/Documents \\\\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/.ssh:/root/.ssh \\\\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/.config:/root/.config \\\\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/.m2:/root/.m2 \\\\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/.local:/root/.local/state/net.splitcells.martins.avots.distro/.local \\\\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/repos:/root/.local/state/net.splitcells.martins.avots.distro/repos \\\\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/config:/root/.local/state/net.splitcells.martins.avots.distro/config \\\\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/logs:/root/.local/state/net.splitcells.martins.avots.distro/logs \\\\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/bin:/root/bin \\\\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/.cache/ms-playwright/:/root/.cache/ms-playwright/ \\\\
+  \\\\
   "localhost/net.splitcells.martins.avots.distro"
 """)
     def test_bootstrap(self):
@@ -696,30 +696,30 @@ mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/logs/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro/.cache/ms-playwright/
 cd ~/.local/state/net.splitcells.martins.avots.distro/repos/public/net.splitcells.network
 test -f target/program-net.splitcells.martins.avots.distro && chmod +x target/program-net.splitcells.martins.avots.distro # This file does not exist, when '--executable-path' is not set.
-podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
-    --tag "localhost/net.splitcells.martins.avots.distro"  \\
-    \\
-    \\
+podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\\\
+    --tag "localhost/net.splitcells.martins.avots.distro"  \\\\
+    \\\\
+    \\\\
     --log-level=warn
 
-podman run --name "net.splitcells.martins.avots.distro" \\
-  --pids-limit=-1 \\
-  --add-host host.docker.internal:10.0.2.2 \\
-  --network slirp4netns:allow_host_loopback=true \\
-  --hostname="$(hostname)" \\
-  \\
-  --rm \\
-  -v ~/.local/state/net.splitcells.martins.avots.distro/Documents:/root/.local/state/net.splitcells.martins.avots.distro/Documents \\
-  -v ~/.local/state/net.splitcells.martins.avots.distro/.ssh:/root/.ssh \\
-  -v ~/.local/state/net.splitcells.martins.avots.distro/.config:/root/.config \\
-  -v ~/.local/state/net.splitcells.martins.avots.distro/.m2:/root/.m2 \\
-  -v ~/.local/state/net.splitcells.martins.avots.distro/.local:/root/.local/state/net.splitcells.martins.avots.distro/.local \\
-  -v ~/.local/state/net.splitcells.martins.avots.distro/repos:/root/.local/state/net.splitcells.martins.avots.distro/repos \\
-  -v ~/.local/state/net.splitcells.martins.avots.distro/config:/root/.local/state/net.splitcells.martins.avots.distro/config \\
-  -v ~/.local/state/net.splitcells.martins.avots.distro/logs:/root/.local/state/net.splitcells.martins.avots.distro/logs \\
-  -v ~/.local/state/net.splitcells.martins.avots.distro/bin:/root/bin \\
-  -v ~/.local/state/net.splitcells.martins.avots.distro/.cache/ms-playwright/:/root/.cache/ms-playwright/ \\
-  \\
+podman run --name "net.splitcells.martins.avots.distro" \\\\
+  --pids-limit=-1 \\\\
+  --add-host host.docker.internal:10.0.2.2 \\\\
+  --network slirp4netns:allow_host_loopback=true \\\\
+  --hostname="$(hostname)" \\\\
+  \\\\
+  --rm \\\\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/Documents:/root/.local/state/net.splitcells.martins.avots.distro/Documents \\\\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/.ssh:/root/.ssh \\\\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/.config:/root/.config \\\\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/.m2:/root/.m2 \\\\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/.local:/root/.local/state/net.splitcells.martins.avots.distro/.local \\\\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/repos:/root/.local/state/net.splitcells.martins.avots.distro/repos \\\\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/config:/root/.local/state/net.splitcells.martins.avots.distro/config \\\\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/logs:/root/.local/state/net.splitcells.martins.avots.distro/logs \\\\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/bin:/root/bin \\\\
+  -v ~/.local/state/net.splitcells.martins.avots.distro/.cache/ms-playwright/:/root/.cache/ms-playwright/ \\\\
+  \\\\
   "localhost/net.splitcells.martins.avots.distro"
 """)
     def test_bootstrap_remote(self):
@@ -754,10 +754,10 @@ ssh user@address /bin/sh << EOF
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && git pull
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.hub && git pull
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
-  bin/worker.execute.py \\
-    --command='export NET_SPLITCELLS_NETWORK_WORKER_NAME=net.splitcells.network.worker && cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'\\
-    --dry-run='true'\\
-    --execution-name='net.splitcells.network.worker.boostrap'\\
+  bin/worker.execute.py \\\\
+    --command='export NET_SPLITCELLS_NETWORK_WORKER_NAME=net.splitcells.network.worker && cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'\\\\
+    --dry-run='true'\\\\
+    --execution-name='net.splitcells.network.worker.boostrap'\\\\
     --program-name='net.splitcells.network.worker'
 
 EOF
@@ -801,10 +801,10 @@ ssh user@address /bin/sh << EOF
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && git pull
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.hub && git pull
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
-  bin/worker.execute.py \\
-    --command='cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.test'\\
-    --dry-run='true'\\
-    --execution-name='net.splitcells.network.worker.test.remote'\\
+  bin/worker.execute.py \\\\
+    --command='cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.test'\\\\
+    --dry-run='true'\\\\
+    --execution-name='net.splitcells.network.worker.test.remote'\\\\
     --program-name='net.splitcells.network.worker'
 
 EOF
@@ -837,10 +837,10 @@ ssh user@address /bin/sh << EOF
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && git pull
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.hub && git pull
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
-  bin/worker.execute.py \\
-    --command='cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.build'\\
-    --dry-run='true'\\
-    --execution-name='net.splitcells.network.worker.build.remote'\\
+  bin/worker.execute.py \\\\
+    --command='cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap && bin/repos.build'\\\\
+    --dry-run='true'\\\\
+    --execution-name='net.splitcells.network.worker.build.remote'\\\\
     --program-name='net.splitcells.network.worker'
 
 EOF
@@ -877,11 +877,11 @@ ssh user@address /bin/sh << EOF
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && git pull
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network.hub && git pull
   cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
-  bin/worker.execute.py \\
-    --command='export NET_SPLITCELLS_NETWORK_WORKER_NAME=net.splitcells.network.worker && cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'\\
-    --dry-run='true'\\
-    --execution-name='net.splitcells.network.worker.boostrap.daemon'\\
-    --is-daemon='true'\\
+  bin/worker.execute.py \\\\
+    --command='export NET_SPLITCELLS_NETWORK_WORKER_NAME=net.splitcells.network.worker && cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network && bin/worker.bootstrap'\\\\
+    --dry-run='true'\\\\
+    --execution-name='net.splitcells.network.worker.boostrap.daemon'\\\\
+    --is-daemon='true'\\\\
     --program-name='net.splitcells.network.worker'
 
 EOF
@@ -916,10 +916,10 @@ mkdir -p ~/.local/state/net.splitcells.network.worker/logs/
 mkdir -p ~/.local/state/net.splitcells.network.worker/.cache/ms-playwright/
 cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
 test -f target/program-net.splitcells.network.worker && chmod +x target/program-net.splitcells.network.worker # This file does not exist, when '--executable-path' is not set.
-podman build -f "target/Dockerfile-net.splitcells.network.worker.boostrap.daemon" \\
-    --tag "localhost/net.splitcells.network.worker.boostrap.daemon"  \\
-    \\
-    \\
+podman build -f "target/Dockerfile-net.splitcells.network.worker.boostrap.daemon" \\\\
+    --tag "localhost/net.splitcells.network.worker.boostrap.daemon"  \\\\
+    \\\\
+    \\\\
     --log-level=warn
 
 # Set up Systemd service
@@ -931,24 +931,24 @@ Description=Execute net.splitcells.network.worker.boostrap.daemon
 [Service]
 Type=simple
 StandardOutput=journal
-ExecStart=podman run --name "net.splitcells.network.worker.boostrap.daemon" \\
-  --pids-limit=-1 \\
-  --add-host host.docker.internal:10.0.2.2 \\
-  --network slirp4netns:allow_host_loopback=true \\
-  --hostname="%H" \\
-  \\
-  --rm \\
-  -v %h/.local/state/net.splitcells.network.worker/Documents:/root/.local/state/net.splitcells.network.worker/Documents \\
-  -v %h/.local/state/net.splitcells.network.worker/.ssh:/root/.ssh \\
-  -v %h/.local/state/net.splitcells.network.worker/.config:/root/.config \\
-  -v %h/.local/state/net.splitcells.network.worker/.m2:/root/.m2 \\
-  -v %h/.local/state/net.splitcells.network.worker/.local:/root/.local/state/net.splitcells.network.worker/.local \\
-  -v %h/.local/state/net.splitcells.network.worker/repos:/root/.local/state/net.splitcells.network.worker/repos \\
-  -v %h/.local/state/net.splitcells.network.worker/config:/root/.local/state/net.splitcells.network.worker/config \\
-  -v %h/.local/state/net.splitcells.network.worker/logs:/root/.local/state/net.splitcells.network.worker/logs \\
-  -v %h/.local/state/net.splitcells.network.worker/bin:/root/bin \\
-  -v %h/.local/state/net.splitcells.network.worker/.cache/ms-playwright/:/root/.cache/ms-playwright/ \\
-  --publish 8080:8080 \\
+ExecStart=podman run --name "net.splitcells.network.worker.boostrap.daemon" \\\\
+  --pids-limit=-1 \\\\
+  --add-host host.docker.internal:10.0.2.2 \\\\
+  --network slirp4netns:allow_host_loopback=true \\\\
+  --hostname="%H" \\\\
+  \\\\
+  --rm \\\\
+  -v %h/.local/state/net.splitcells.network.worker/Documents:/root/.local/state/net.splitcells.network.worker/Documents \\\\
+  -v %h/.local/state/net.splitcells.network.worker/.ssh:/root/.ssh \\\\
+  -v %h/.local/state/net.splitcells.network.worker/.config:/root/.config \\\\
+  -v %h/.local/state/net.splitcells.network.worker/.m2:/root/.m2 \\\\
+  -v %h/.local/state/net.splitcells.network.worker/.local:/root/.local/state/net.splitcells.network.worker/.local \\\\
+  -v %h/.local/state/net.splitcells.network.worker/repos:/root/.local/state/net.splitcells.network.worker/repos \\\\
+  -v %h/.local/state/net.splitcells.network.worker/config:/root/.local/state/net.splitcells.network.worker/config \\\\
+  -v %h/.local/state/net.splitcells.network.worker/logs:/root/.local/state/net.splitcells.network.worker/logs \\\\
+  -v %h/.local/state/net.splitcells.network.worker/bin:/root/bin \\\\
+  -v %h/.local/state/net.splitcells.network.worker/.cache/ms-playwright/:/root/.cache/ms-playwright/ \\\\
+  --publish 8080:8080 \\\\
   "localhost/net.splitcells.network.worker.boostrap.daemon"
 
 [Install]
@@ -998,15 +998,15 @@ ssh martins-avots@live.splitcells.net /bin/sh << EOF
   cd ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network && git pull
   cd ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network.hub && git pull
   cd ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network
-  bin/worker.execute.py \\
-    --class-for-execution='net.splitcells.martins.avots.distro.LiveDistro'\\
-    --dry-run='true'\\
-    --execution-name='net.splitcells.martins.avots.distro.livedistro.daemon'\\
-    --is-daemon='true'\\
-    --port-publishing='8443:8443,8080:8080'\\
-    --program-name='net.splitcells.martins.avots.distro.livedistro'\\
-    --source-repo='net.splitcells.martins.avots.distro'\\
-    --use-playwright='true'\\
+  bin/worker.execute.py \\\\
+    --class-for-execution='net.splitcells.martins.avots.distro.LiveDistro'\\\\
+    --dry-run='true'\\\\
+    --execution-name='net.splitcells.martins.avots.distro.livedistro.daemon'\\\\
+    --is-daemon='true'\\\\
+    --port-publishing='8443:8443,8080:8080'\\\\
+    --program-name='net.splitcells.martins.avots.distro.livedistro'\\\\
+    --source-repo='net.splitcells.martins.avots.distro'\\\\
+    --use-playwright='true'\\\\
     --verbose='true'
 
 EOF
@@ -1069,10 +1069,10 @@ mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/logs/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/.cache/ms-playwright/
 cd ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network
 test -f target/program-net.splitcells.martins.avots.distro.livedistro && chmod +x target/program-net.splitcells.martins.avots.distro.livedistro # This file does not exist, when '--executable-path' is not set.
-podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro.livedistro" \\
-    --tag "localhost/net.splitcells.martins.avots.distro.livedistro"  \\
-    --arch arm64 \\
-    \\
+podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro.livedistro" \\\\
+    --tag "localhost/net.splitcells.martins.avots.distro.livedistro"  \\\\
+    --arch arm64 \\\\
+    \\\\
     --log-level=warn
 
 # Set up Systemd service
@@ -1084,24 +1084,24 @@ Description=Execute net.splitcells.martins.avots.distro.livedistro
 [Service]
 Type=simple
 StandardOutput=journal
-ExecStart=podman run --name "net.splitcells.martins.avots.distro.livedistro" \\
-  --pids-limit=-1 \\
-  --add-host host.docker.internal:10.0.2.2 \\
-  --network slirp4netns:allow_host_loopback=true \\
-  --hostname="%H" \\
-  \\
-  --rm \\
-  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/Documents:/root/.local/state/net.splitcells.martins.avots.distro.livedistro/Documents \\
-  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/.ssh:/root/.ssh \\
-  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/.config:/root/.config \\
-  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/.m2:/root/.m2 \\
-  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/.local:/root/.local/state/net.splitcells.martins.avots.distro.livedistro/.local \\
-  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/repos:/root/.local/state/net.splitcells.martins.avots.distro.livedistro/repos \\
-  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/config:/root/.local/state/net.splitcells.martins.avots.distro.livedistro/config \\
-  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/logs:/root/.local/state/net.splitcells.martins.avots.distro.livedistro/logs \\
-  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/bin:/root/bin \\
-  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/.cache/ms-playwright/:/root/.cache/ms-playwright/ \\
-  --publish 8443:8443 --publish 8080:8080 \\
+ExecStart=podman run --name "net.splitcells.martins.avots.distro.livedistro" \\\\
+  --pids-limit=-1 \\\\
+  --add-host host.docker.internal:10.0.2.2 \\\\
+  --network slirp4netns:allow_host_loopback=true \\\\
+  --hostname="%H" \\\\
+  \\\\
+  --rm \\\\
+  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/Documents:/root/.local/state/net.splitcells.martins.avots.distro.livedistro/Documents \\\\
+  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/.ssh:/root/.ssh \\\\
+  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/.config:/root/.config \\\\
+  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/.m2:/root/.m2 \\\\
+  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/.local:/root/.local/state/net.splitcells.martins.avots.distro.livedistro/.local \\\\
+  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/repos:/root/.local/state/net.splitcells.martins.avots.distro.livedistro/repos \\\\
+  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/config:/root/.local/state/net.splitcells.martins.avots.distro.livedistro/config \\\\
+  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/logs:/root/.local/state/net.splitcells.martins.avots.distro.livedistro/logs \\\\
+  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/bin:/root/bin \\\\
+  -v %h/.local/state/net.splitcells.martins.avots.distro.livedistro/.cache/ms-playwright/:/root/.cache/ms-playwright/ \\\\
+  --publish 8443:8443 --publish 8080:8080 \\\\
   "localhost/net.splitcells.martins.avots.distro.livedistro"
 
 [Install]
@@ -1161,10 +1161,10 @@ mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/logs/
 mkdir -p ~/.local/state/net.splitcells.martins.avots.distro.livedistro/.cache/ms-playwright/
 cd ~/.local/state/net.splitcells.martins.avots.distro.livedistro/repos/public/net.splitcells.network
 test -f target/program-net.splitcells.martins.avots.distro.livedistro && chmod +x target/program-net.splitcells.martins.avots.distro.livedistro # This file does not exist, when '--executable-path' is not set.
-podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro.livedistro" \\
-    --tag "localhost/net.splitcells.martins.avots.distro.livedistro"  \\
-    \\
-    \\
+podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro.livedistro" \\\\
+    --tag "localhost/net.splitcells.martins.avots.distro.livedistro"  \\\\
+    \\\\
+    \\\\
     --log-level=warn
 
 podman tag net.splitcells.martins.avots.distro.livedistro:latest codeberg.org/splitcells-net/net.splitcells.martins.avots.distro.livedistro:latest
@@ -1210,30 +1210,30 @@ mkdir -p ~/.local/state/net.splitcells.network.worker/logs/
 mkdir -p ~/.local/state/net.splitcells.network.worker/.cache/ms-playwright/
 cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
 test -f target/program-net.splitcells.network.worker && chmod +x target/program-net.splitcells.network.worker # This file does not exist, when '--executable-path' is not set.
-podman build -f "target/Dockerfile-net.splitcells.network.worker" \\
-    --tag "localhost/net.splitcells.network.worker"  \\
-    \\
-    \\
+podman build -f "target/Dockerfile-net.splitcells.network.worker" \\\\
+    --tag "localhost/net.splitcells.network.worker"  \\\\
+    \\\\
+    \\\\
     --log-level=warn
 
-podman run --name "net.splitcells.network.worker" \\
-  --pids-limit=-1 \\
-  --add-host host.docker.internal:10.0.2.2 \\
-  --network slirp4netns:allow_host_loopback=true \\
-  --hostname="$(hostname)" \\
-  \\
-  --rm \\
-  -v ~/.local/state/net.splitcells.network.worker/Documents:/root/.local/state/net.splitcells.network.worker/Documents \\
-  -v ~/.local/state/net.splitcells.network.worker/.ssh:/root/.ssh \\
-  -v ~/.local/state/net.splitcells.network.worker/.config:/root/.config \\
-  -v ~/.local/state/net.splitcells.network.worker/.m2:/root/.m2 \\
-  -v ~/.local/state/net.splitcells.network.worker/.local:/root/.local/state/net.splitcells.network.worker/.local \\
-  -v ~/.local/state/net.splitcells.network.worker/repos:/root/.local/state/net.splitcells.network.worker/repos \\
-  -v ~/.local/state/net.splitcells.network.worker/config:/root/.local/state/net.splitcells.network.worker/config \\
-  -v ~/.local/state/net.splitcells.network.worker/logs:/root/.local/state/net.splitcells.network.worker/logs \\
-  -v ~/.local/state/net.splitcells.network.worker/bin:/root/bin \\
-  -v ~/.local/state/net.splitcells.network.worker/.cache/ms-playwright/:/root/.cache/ms-playwright/ \\
-  \\
+podman run --name "net.splitcells.network.worker" \\\\
+  --pids-limit=-1 \\\\
+  --add-host host.docker.internal:10.0.2.2 \\\\
+  --network slirp4netns:allow_host_loopback=true \\\\
+  --hostname="$(hostname)" \\\\
+  \\\\
+  --rm \\\\
+  -v ~/.local/state/net.splitcells.network.worker/Documents:/root/.local/state/net.splitcells.network.worker/Documents \\\\
+  -v ~/.local/state/net.splitcells.network.worker/.ssh:/root/.ssh \\\\
+  -v ~/.local/state/net.splitcells.network.worker/.config:/root/.config \\\\
+  -v ~/.local/state/net.splitcells.network.worker/.m2:/root/.m2 \\\\
+  -v ~/.local/state/net.splitcells.network.worker/.local:/root/.local/state/net.splitcells.network.worker/.local \\\\
+  -v ~/.local/state/net.splitcells.network.worker/repos:/root/.local/state/net.splitcells.network.worker/repos \\\\
+  -v ~/.local/state/net.splitcells.network.worker/config:/root/.local/state/net.splitcells.network.worker/config \\\\
+  -v ~/.local/state/net.splitcells.network.worker/logs:/root/.local/state/net.splitcells.network.worker/logs \\\\
+  -v ~/.local/state/net.splitcells.network.worker/bin:/root/bin \\\\
+  -v ~/.local/state/net.splitcells.network.worker/.cache/ms-playwright/:/root/.cache/ms-playwright/ \\\\
+  \\\\
   "localhost/net.splitcells.network.worker"
 """)
     def test_boostrap_container_locally(self):
@@ -1276,30 +1276,30 @@ mkdir -p ~/.local/state/net.splitcells.network.worker/logs/
 mkdir -p ~/.local/state/net.splitcells.network.worker/.cache/ms-playwright/
 cd ~/.local/state/net.splitcells.network.worker/repos/public/net.splitcells.network
 test -f target/program-net.splitcells.network.worker && chmod +x target/program-net.splitcells.network.worker # This file does not exist, when '--executable-path' is not set.
-podman build -f "target/Dockerfile-net.splitcells.network.worker" \\
-    --tag "localhost/net.splitcells.network.worker"  \\
-    \\
-    \\
+podman build -f "target/Dockerfile-net.splitcells.network.worker" \\\\
+    --tag "localhost/net.splitcells.network.worker"  \\\\
+    \\\\
+    \\\\
     --log-level=warn
 
-podman run --name "net.splitcells.network.worker" \\
-  --pids-limit=-1 \\
-  --add-host host.docker.internal:10.0.2.2 \\
-  --network slirp4netns:allow_host_loopback=true \\
-  --hostname="$(hostname)" \\
-  \\
-  --rm \\
-  -v ~/.local/state/net.splitcells.network.worker/Documents:/root/.local/state/net.splitcells.network.worker/Documents \\
-  -v ~/.local/state/net.splitcells.network.worker/.ssh:/root/.ssh \\
-  -v ~/.local/state/net.splitcells.network.worker/.config:/root/.config \\
-  -v ~/.local/state/net.splitcells.network.worker/.m2:/root/.m2 \\
-  -v ~/.local/state/net.splitcells.network.worker/.local:/root/.local/state/net.splitcells.network.worker/.local \\
-  -v ~/.local/state/net.splitcells.network.worker/repos:/root/.local/state/net.splitcells.network.worker/repos \\
-  -v ~/.local/state/net.splitcells.network.worker/config:/root/.local/state/net.splitcells.network.worker/config \\
-  -v ~/.local/state/net.splitcells.network.worker/logs:/root/.local/state/net.splitcells.network.worker/logs \\
-  -v ~/.local/state/net.splitcells.network.worker/bin:/root/bin \\
-  -v ~/.local/state/net.splitcells.network.worker/.cache/ms-playwright/:/root/.cache/ms-playwright/ \\
-  \\
+podman run --name "net.splitcells.network.worker" \\\\
+  --pids-limit=-1 \\\\
+  --add-host host.docker.internal:10.0.2.2 \\\\
+  --network slirp4netns:allow_host_loopback=true \\\\
+  --hostname="$(hostname)" \\\\
+  \\\\
+  --rm \\\\
+  -v ~/.local/state/net.splitcells.network.worker/Documents:/root/.local/state/net.splitcells.network.worker/Documents \\\\
+  -v ~/.local/state/net.splitcells.network.worker/.ssh:/root/.ssh \\\\
+  -v ~/.local/state/net.splitcells.network.worker/.config:/root/.config \\\\
+  -v ~/.local/state/net.splitcells.network.worker/.m2:/root/.m2 \\\\
+  -v ~/.local/state/net.splitcells.network.worker/.local:/root/.local/state/net.splitcells.network.worker/.local \\\\
+  -v ~/.local/state/net.splitcells.network.worker/repos:/root/.local/state/net.splitcells.network.worker/repos \\\\
+  -v ~/.local/state/net.splitcells.network.worker/config:/root/.local/state/net.splitcells.network.worker/config \\\\
+  -v ~/.local/state/net.splitcells.network.worker/logs:/root/.local/state/net.splitcells.network.worker/logs \\\\
+  -v ~/.local/state/net.splitcells.network.worker/bin:/root/bin \\\\
+  -v ~/.local/state/net.splitcells.network.worker/.cache/ms-playwright/:/root/.cache/ms-playwright/ \\\\
+  \\\\
   "localhost/net.splitcells.network.worker"
 """)
         self.assertEqual(test_subject.container_pom, """
