@@ -20,6 +20,7 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.gel.constraint.type.Then.then;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRun.functionCallRun;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallRunnerParser.functionCallRunnerParser;
+import static net.splitcells.gel.rating.rater.lib.classification.ThenAtLeastFastRater.thenAtLeastFastRater;
 import static net.splitcells.gel.rating.rater.lib.classification.ThenAtLeastRater.thenAtLeastRater;
 
 public class ThenAtLeastRunner implements FunctionCallRunner {
@@ -59,7 +60,7 @@ public class ThenAtLeastRunner implements FunctionCallRunner {
         val run = functionCallRun(subject, context);
         if (functionCall.getName().getValue().equals(NAME)) {
             val args = PARSER.parse(subject, context, functionCall);
-            run.setResultVal(args.subjectVal.then(thenAtLeastRater(args.atLeastCount, args.rater)));
+            run.setResultVal(args.subjectVal.then(thenAtLeastFastRater(args.atLeastCount, args.rater)));
         }
         return run;
     }
