@@ -23,7 +23,7 @@ availableHalfYears . importCsvData 'available-half-years.csv';
 courseAssignment  = solution('Assignment of Students to Courses', studentChoices, availableCourses);
 courseAssignment  . forEach not equals(assignedSport, 'Dummy Course')
                   . forEach student
-                  . then hasSize coursesPerStudent;
+                  . then hasSizeFast coursesPerStudent;
 courseAssignment  . forEach not equals(assignedSport, 'Dummy Course')
                   . then equals(chosenSportType, assignedSportType);
 courseAssignment  . forEach not equals(assignedSport, 'Dummy Course')
@@ -32,24 +32,24 @@ courseAssignment  . forEach not equals(assignedSport, 'Dummy Course')
                   . thenAtLeastFast(1, equals(assignedSportType, 'Individual Sport'));
 courseAssignment  . forEach not equals(assignedSport, 'Dummy Course')
                   . forEach assignedSport
-                  . then hasSize 1;
+                  . then hasSizeFast 1;
 courseAssignment  . forEach not equals(assignedSport, 'Dummy Course')
                   . forEach student
                   . forEach not equals(chosenSport, assignedSport)
-                  . then hasSize 0;
+                  . then hasSizeFast 0;
 courseAssignment  . forEach not equals(assignedSport, 'Dummy Course')
                   . then not equals(isSecondaryChoice, 1);
 
 courseScheduling = solution('Course Scheduling', courseAssignment, availableHalfYears);
 courseScheduling . forEach not equals(assignedSport, 'Dummy Course')
                  . forEach(student, assignedSemester)
-                 . then hasSize 1;
+                 . then hasSizeFast 1;
 courseScheduling . forEach not equals(assignedSport, 'Dummy Course')
                  . forEach(assignedCourseNumber, assignedSemester)
                  . then hasMinimumSize minCourseSize;
 courseScheduling . forEach not equals(assignedSport, 'Dummy Course')
                  . forEach(assignedCourseNumber, assignedSemester)
-                 . then hasSize optCourseSize;
+                 . then hasSizeFast optCourseSize;
 courseScheduling . forEach not equals(assignedSport, 'Dummy Course')
                  . forEach(assignedCourseNumber, assignedSemester)
                  . then hasMaximumSize maxCourseSize;
