@@ -33,11 +33,9 @@ public class SetBenchmarkTest {
     @org.openjdk.jmh.annotations.State(Scope.Thread)
     public static class State {
         private Set<Integer> testSubject;
-        @Param({"Java", "Eclipse", "Trove"})
-        private String impl;
+        @Param({"Java", "Eclipse", "Trove"}) private String impl;
 
-        @Setup(Level.Invocation)
-        public void setupIteration() {
+        @Setup(Level.Invocation) public void setupIteration() {
             val factory = switch (impl) {
                 case "Java" -> legacySetJava();
                 case "Eclipse" -> legacySetEclipseFactory();
