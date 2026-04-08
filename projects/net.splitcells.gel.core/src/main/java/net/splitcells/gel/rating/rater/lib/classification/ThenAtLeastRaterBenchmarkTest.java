@@ -1,0 +1,57 @@
+/* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+ * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+ */
+package net.splitcells.gel.rating.rater.lib.classification;
+
+import lombok.val;
+import net.splitcells.dem.data.set.benchmark.SetBenchmarkTest;
+import net.splitcells.dem.testing.annotations.BenchmarkTest;
+import org.junit.jupiter.api.Test;
+import org.openjdk.jmh.annotations.*;
+import org.openjdk.jmh.infra.Blackhole;
+
+import java.util.function.Supplier;
+
+import static java.util.stream.IntStream.range;
+import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.testing.benchmark.JmhHelper.requireImplRuntimeOrder;
+import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.gel.Gel.defineProblem;
+import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
+import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineValue.lineValueRater;
+import static net.splitcells.gel.rating.rater.lib.classification.ThenAtLeastRater.thenAtLeastRater;
+import static net.splitcells.gel.rating.type.Cost.cost;
+import static net.splitcells.gel.rating.type.Cost.noCost;
+
+public class ThenAtLeastRaterBenchmarkTest {
+
+    @BenchmarkTest public void test() {
+        requireImplRuntimeOrder("test", getClass(), "fast", "correct");
+    }
+
+    @Benchmark public void test(State state, Blackhole blackhole) {
+        range(0, 10).forEach(i -> blackhole.consume(state.test.get()));
+    }
+
+    @org.openjdk.jmh.annotations.State(Scope.Thread)
+    public static class State {
+        private Supplier<Object> test;
+        @Param({"correct", "fast"}) private String impl;
+
+        @Setup(Level.Invocation) public void setupIteration() {
+            test = switch (impl) {
+                case "correct" -> () -> {
+                    val test = new ThenAtLeastRaterTest();
+                    test.testRating();
+                    return test;
+                };
+                case "fast" -> () -> {
+                    val test = new ThenAtLeastFastRaterTest();
+                    test.testRating();
+                    return test;
+                };
+                default -> throw execException(impl);
+            };
+        }
+    }
+}
