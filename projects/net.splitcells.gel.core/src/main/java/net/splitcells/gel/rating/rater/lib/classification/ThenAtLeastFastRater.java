@@ -15,6 +15,7 @@ import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.rating.rater.framework.RatingEvent;
+import net.splitcells.gel.rating.type.Cost;
 
 import java.util.Optional;
 
@@ -28,6 +29,11 @@ import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
+/**
+ * This is an incorrect, but faster implementation of {@link ThenAtLeastRater},
+ * as it only updates up to 2 {@link Line} per change.
+ * {@link ThenAtLeastRater} changes all {@link Line}, if the {@link Rating} is not {@link Cost#noCost()}.
+ */
 public class ThenAtLeastFastRater implements Rater {
     public static Rater thenAtLeastFastRater(int argLeastCount, Rater argRater) {
         return new ThenAtLeastFastRater(argLeastCount, argRater);
