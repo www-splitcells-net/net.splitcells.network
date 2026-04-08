@@ -5,6 +5,7 @@
 package net.splitcells.website.server.project.renderer;
 
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.resource.FileSystemView;
 import net.splitcells.dem.testing.annotations.UnitTest;
@@ -19,8 +20,10 @@ import net.splitcells.website.server.projects.ProjectsRenderer;
 import java.nio.file.Path;
 import java.util.Optional;
 
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
 import static net.splitcells.website.Format.BINARY;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
@@ -42,7 +45,7 @@ public class ObjectsMediaRendererTest {
         });
         requireEquals(testSubject.render("/folder/file", Config.create(), new ProjectRenderer() {
             @Override public FileSystemView projectFileSystem() {
-                return null;
+                throw notImplementedYet();
             }
 
             @Override public Optional<byte[]> renderString(String arg) {
@@ -62,11 +65,11 @@ public class ObjectsMediaRendererTest {
             }
 
             @Override public Set<Path> projectPaths() {
-                return null;
+                return setOfUniques();
             }
 
             @Override public Set<Path> relevantProjectPaths() {
-                return null;
+                return setOfUniques();
             }
 
             @Override public Optional<BinaryMessage> render(String path) {
