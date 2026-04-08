@@ -257,11 +257,11 @@ public class FilesTest {
     }
 
     @UnitTest public void testCopyFileFrom() {
-        requireThrow(() -> processInTemporaryFolder(p -> {
+        processInTemporaryFolder(p -> {
             val source = p.resolve("not/existing/folder/90348237852ß34785427839572");
             val target = p.resolve("not/existing/folder/1254325");
-            copyFileFrom(source, target);
-        }));
+            requireThrow(() -> copyFileFrom(source, target));
+        });
         processInTemporaryFolder(p -> {
             val content = "klm";
             val source = p.resolve("source");
