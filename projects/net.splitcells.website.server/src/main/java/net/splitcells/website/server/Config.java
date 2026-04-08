@@ -16,6 +16,7 @@
 package net.splitcells.website.server;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
@@ -244,8 +245,13 @@ public class Config {
      */
     private boolean isDownloadingViaHtmlElement = false;
     /**
-     * If set to true, it is assumed, that the server is used to render the server as a static website once.
-     * This option is used, in order to improve the runtime in this use case.
+     * <p>If set to true, it is assumed, that the server is used to render the server as a static website once.
+     * This option was originally introduced, in order to improve the runtime in this use case.
+     * By now some additional adjustments are done.</p>
+     * <p>If set to true, all pages requiring interactive action with the backend like a code editor are rendered normally.
+     * If set to false, all interactive pages are replaced with corresponding redirects to a none static server instance.
+     * The target server is set via {@link #interactiveServer}.</p>
+     *
      */
     private boolean isRenderingStaticWebsite = false;
 
@@ -263,6 +269,7 @@ public class Config {
      * TODO IDEA Consider reading the values from all {@link Cell} of the current {@link Dem#config()} by default and as a base value.
      */
     @Getter private List<TrailLink> licensePages = list();
+    @Getter @Setter String interactiveServer = "https://live.splitcells.net/";
 
     private Config() {
     }
