@@ -54,9 +54,9 @@ public interface FileSystemView {
      * TODO It is suspected, that most method implementations are incorrect.
      * Furthermore, it is not clear, what a correct implementation is,
      * as the function is not really documented.
-     * 
+     *
      * @return
-     * @deprecated 
+     * @deprecated
      */
     @Deprecated boolean exists();
 
@@ -87,4 +87,8 @@ public interface FileSystemView {
     }
 
     FileSystemView subFileSystemView(String path);
+
+    default Optional<License> license(String path) {
+        return Optional.empty();
+    }
 }
