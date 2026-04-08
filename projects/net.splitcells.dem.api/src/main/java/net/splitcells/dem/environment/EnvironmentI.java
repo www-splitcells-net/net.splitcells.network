@@ -15,10 +15,7 @@
  */
 package net.splitcells.dem.environment;
 
-import net.splitcells.dem.environment.config.IsDeterministic;
-import net.splitcells.dem.environment.config.ProgramLocalIdentity;
-import net.splitcells.dem.environment.config.ProgramRepresentative;
-import net.splitcells.dem.environment.config.StartTime;
+import net.splitcells.dem.environment.config.*;
 import net.splitcells.dem.environment.config.framework.ConfigDependencyRecording;
 import net.splitcells.dem.environment.config.framework.Configuration;
 import net.splitcells.dem.environment.resource.Service;
@@ -57,11 +54,13 @@ public class EnvironmentI implements Environment {
 
     @Override
     public void start() {
-        config.process(Service.class, s -> {
-            logs().append("Starting `" + s.getClass().getName() + "` service.", LogLevel.DEBUG);
-            s.start();
-            return s;
-        });
+        if (config.configValue(StartServicesAutomatically.class)) {
+            config.process(Service.class, s -> {
+                logs().append("Starting `" + s.getClass().getName() + "` service.", LogLevel.DEBUG);
+                s.start();
+                return s;
+            });
+        }
     }
 
     @Override
@@ -96,11 +95,13 @@ public class EnvironmentI implements Environment {
 
     @Override
     public void close() {
-        config.process(Closeable.class, r -> {
-            logs().append("Closing `" + r.getClass().getName() + "`.", LogLevel.DEBUG);
-            r.close();
-            return r;
-        });
+        if (config.configValue(StartServicesAutomatically.class)) {
+            config.process(Closeable.class, r -> {
+                logs().append("Closing `" + r.getClass().getName() + "`.", LogLevel.DEBUG);
+                r.close();
+                return r;
+            });
+        }
     }
 
 }

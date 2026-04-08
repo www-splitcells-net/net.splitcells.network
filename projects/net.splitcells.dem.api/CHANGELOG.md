@@ -95,6 +95,7 @@
      This also makes it possible to use the name `Resource` for an interface
      of resource like things.
 ### Minor Changes
+* **2026-04-08\#42** Introduce the new option StartServicesAutomatically.
 * **2026-03-14\#32** The new helper function `Closeable#close(Supplier)` closes invalid Closeables in tests,
   without creating code warnings or empty code blocks.
 * **2026-03-09\#37** LegacySets makes it easier to replace the used Java Set implementation.
