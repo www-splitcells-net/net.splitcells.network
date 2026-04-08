@@ -15,7 +15,7 @@ import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
 public class ThenAtLeastFastRaterTest {
-    @Disabled @Test public void testRating() {
+    @Test public void testRating() {
         val i = integerAttribute("i");
         final var testData = defineProblem("testRating")
                 .withDemandAttributes(i)

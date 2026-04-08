@@ -5,6 +5,7 @@ package net.splitcells.gel.rating.rater.lib.classification;
 
 import lombok.val;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
@@ -18,6 +19,7 @@ import net.splitcells.gel.rating.rater.framework.RatingEvent;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.gel.constraint.Constraint.*;
 import static net.splitcells.gel.constraint.type.Then.then;
@@ -34,6 +36,7 @@ public class ThenAtLeastFastRater implements Rater {
     private final int leastCount;
     private final Constraint constraint;
     private final Rater rater;
+    private final Map<Line, Line> additionLineToAddition = map();
 
     private ThenAtLeastFastRater(int argLeastCount, Rater argRater) {
         leastCount = argLeastCount;
@@ -45,7 +48,9 @@ public class ThenAtLeastFastRater implements Rater {
         val incomingGroup = addition.value(INCOMING_CONSTRAINT_GROUP);
         val incomingTable = constraint.lineProcessing().lookup(INCOMING_CONSTRAINT_GROUP, incomingGroup);
         val previousCost = groupElementCost(incomingGroup, Optional.empty(), Optional.of(addition));
-        constraint.registerAdditions(incomingGroup, addition.value(LINE));
+        val additionLine = addition.value(LINE);
+        additionLineToAddition.put(additionLine, addition);
+        constraint.registerAdditions(incomingGroup, additionLine);
         val linesRating = ratingEvent();
         val nextCost = groupElementCost(incomingGroup, Optional.empty(), Optional.empty());
         ratingEventUpdate(linesRating, previousCost, nextCost, incomingGroup, incomingTable, Optional.of(addition), Optional.empty(), children);
@@ -88,7 +93,7 @@ public class ThenAtLeastFastRater implements Rater {
         if (numberOfCompliant >= leastCount) {
             cost = noCost();
         } else {
-            cost = cost((leastCount - numberOfCompliant) / incomingTable.size());
+            cost = cost((leastCount - numberOfCompliant));
         }
         return cost;
     }
@@ -108,8 +113,7 @@ public class ThenAtLeastFastRater implements Rater {
         if (previousCost.equalz(nextCost)) {
             return;
         }
-        incomingTable.rawLinesView().stream()
-                .filter(e -> e != null)
+        incomingTable.unorderedLinesStream2()
                 .filter(e -> {
                     final boolean isAddition;
                     if (afterAddition.isPresent()) {
@@ -125,23 +129,33 @@ public class ThenAtLeastFastRater implements Rater {
                     }
                     return !isAddition && !isRemoval;
                 })
-                .filter(e -> e.value(RATING).equalz(previousCost))
+                .filter(e -> !e.value(RATING).equalz(noCost()))
                 .forEach(e ->
-                        ratingEvent.updateRating_withReplacement(e
+                        ratingEvent.updateRating_withReplacement(additionLineToAddition.value(e.value(LINE))
                                 , localRating().
                                         withPropagationTo(children).
-                                        withRating(nextCost).
+                                        withRating(noCost()).
                                         withResultingGroupId(incomingGroup)));
+        val ratingContainer = additionLineToAddition.value(incomingTable.orderedLine(0).value(LINE));
+        ratingEvent.removal().delete(ratingContainer);
+        ratingEvent.additions().remove(ratingContainer);
+        ratingEvent.updateRating_withReplacement(ratingContainer
+                , localRating().
+                        withPropagationTo(children).
+                        withRating(nextCost).
+                        withResultingGroupId(incomingGroup));
     }
 
     @Override public RatingEvent rating_before_removal(View lines, Line removal, List<Constraint> children, View lineProcessingBeforeRemoval) {
         val incomingGroup = removal.value(INCOMING_CONSTRAINT_GROUP);
-        val incomingTable = constraint.lineProcessing().lookup(INCOMING_CONSTRAINT_GROUP, incomingGroup);
         val previousCost = groupElementCost(incomingGroup, Optional.of(removal), Optional.empty());
-        constraint.registerBeforeRemoval(incomingGroup, removal.value(LINE));
+        val removalLine = removal.value(LINE);
         val linesRating = ratingEvent();
+        constraint.registerBeforeRemoval(incomingGroup, removalLine);
+        val incomingTable = constraint.lineProcessing().lookup(INCOMING_CONSTRAINT_GROUP, incomingGroup);
         val nextCost = groupElementCost(incomingGroup, Optional.empty(), Optional.empty());
         ratingEventUpdate(linesRating, previousCost, nextCost, incomingGroup, incomingTable, Optional.empty(), Optional.of(removal), children);
+        additionLineToAddition.remove(removalLine);
         return linesRating;
     }
 
