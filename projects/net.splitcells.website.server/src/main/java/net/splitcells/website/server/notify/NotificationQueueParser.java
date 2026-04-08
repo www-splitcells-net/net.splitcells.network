@@ -89,8 +89,12 @@ public class NotificationQueueParser {
         if (title.isPresent()) {
             val titleVar = title.get();
             String proposalTitle;
+            val articleStartDate = parseArticleStartDate(parseString(projectsRenderer.sourceCode(article.toString()).orElseThrow().getContent()));
             if (listWithValuesOf(tags).contains(BLOG_ARTICLE)) {
                 proposalTitle = toBlogArticleTitle(titleVar);
+            } else if (articleStartDate.isEmpty()) {
+                // Too many project proposals clutters the news queue by quite a bit.
+                return;
             } else {
                 proposalTitle = toProposalTitle(titleVar);
             }
@@ -98,11 +102,10 @@ public class NotificationQueueParser {
                     .withTitle(Optional.of(proposalTitle))
                     .withLink(Optional.of("/" + article))
                     .withTags(tags);
-            parseArticleStartDate(parseString(projectsRenderer.sourceCode(article.toString()).orElseThrow().getContent()))
-                    .ifPresent(startDate -> notificationQueue.withAdditionalNotification(
-                            notification.deepClone(Notification.class)
-                                    .withTime(startDate)
-                                    .withTitle(toStartTitle(titleVar))));
+            articleStartDate.ifPresent(startDate -> notificationQueue.withAdditionalNotification(
+                    notification.deepClone(Notification.class)
+                            .withTime(startDate)
+                            .withTitle(toStartTitle(titleVar))));
             parseArticleEndDate(parseString(projectsRenderer.sourceCode(article.toString()).orElseThrow().getContent()))
                     .ifPresent(startDate -> notificationQueue.withAdditionalNotification(
                             notification.deepClone(Notification.class)
