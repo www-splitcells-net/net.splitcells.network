@@ -13,13 +13,14 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.rating.rater;
+package net.splitcells.gel.rating.rater.lib;
 
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.gel.constraint.type.Then;
 import net.splitcells.gel.data.table.Tables;
 import org.junit.jupiter.api.Test;
 
+import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.rating.rater.lib.HasSizeFast.hasSizeFast;
 import static net.splitcells.gel.rating.type.Cost.cost;
@@ -79,8 +80,11 @@ public class HasSizeFastTest extends TestSuiteI {
         }
     }
 
-    @Test
-    public void testRating() {
+    @Test public void testRating() {
+        testRating(1);
+    }
+
+    public void testRating(int testCycleCount) {
         final var lineSupplier = Tables.table();
         final var testValue = Then.then(hasSizeFast(1));
         assertThat(testValue.complying()).isEmpty();
@@ -88,46 +92,48 @@ public class HasSizeFastTest extends TestSuiteI {
         final var firstTestValue = lineSupplier.addTranslated(list());
         final var secondTestValue = lineSupplier.addTranslated(list());
         final var thirdTestVaLUE = lineSupplier.addTranslated(list());
-        {
-            assertThat(testValue.defying()).isEmpty();
-            assertThat(testValue.complying()).isEmpty();
-            assertThat(testValue.rating()).isEqualTo(noCost());
-        }
-        {
-            testValue.register(firstTestValue);
-            assertThat(testValue.defying()).isEmpty();
-            assertThat(testValue.complying()).hasSize(1);
-            assertThat(testValue.rating()).isEqualTo(noCost());
-        }
-        {
-            testValue.register(secondTestValue);
-            assertThat(testValue.defying()).hasSize(1);
-            assertThat(testValue.complying()).hasSize(1);
-            assertThat(testValue.rating()).isEqualTo(cost(1.0));
-        }
-        {
-            testValue.register(thirdTestVaLUE);
-            assertThat(testValue.defying()).hasSize(1);
-            assertThat(testValue.complying()).hasSize(2);
-            assertThat(testValue.rating()).isEqualTo(cost(2.0));
-        }
-        {
-            testValue.registerBeforeRemoval(thirdTestVaLUE);
-            assertThat(testValue.defying()).hasSize(1);
-            assertThat(testValue.complying()).hasSize(1);
-            assertThat(testValue.rating()).isEqualTo(cost(1.0));
-        }
-        {
-            testValue.registerBeforeRemoval(secondTestValue);
-            assertThat(testValue.defying()).isEmpty();
-            assertThat(testValue.complying()).hasSize(1);
-            assertThat(testValue.rating()).isEqualTo(noCost());
-        }
-        {
-            testValue.registerBeforeRemoval(firstTestValue);
-            assertThat(testValue.defying()).isEmpty();
-            assertThat(testValue.complying()).isEmpty();
-            assertThat(testValue.rating()).isEqualTo(noCost());
-        }
+        range(0, testCycleCount).forEach(i -> {
+            {
+                assertThat(testValue.defying()).isEmpty();
+                assertThat(testValue.complying()).isEmpty();
+                assertThat(testValue.rating()).isEqualTo(noCost());
+            }
+            {
+                testValue.register(firstTestValue);
+                assertThat(testValue.defying()).isEmpty();
+                assertThat(testValue.complying()).hasSize(1);
+                assertThat(testValue.rating()).isEqualTo(noCost());
+            }
+            {
+                testValue.register(secondTestValue);
+                assertThat(testValue.defying()).hasSize(1);
+                assertThat(testValue.complying()).hasSize(1);
+                assertThat(testValue.rating()).isEqualTo(cost(1.0));
+            }
+            {
+                testValue.register(thirdTestVaLUE);
+                assertThat(testValue.defying()).hasSize(1);
+                assertThat(testValue.complying()).hasSize(2);
+                assertThat(testValue.rating()).isEqualTo(cost(2.0));
+            }
+            {
+                testValue.registerBeforeRemoval(thirdTestVaLUE);
+                assertThat(testValue.defying()).hasSize(1);
+                assertThat(testValue.complying()).hasSize(1);
+                assertThat(testValue.rating()).isEqualTo(cost(1.0));
+            }
+            {
+                testValue.registerBeforeRemoval(secondTestValue);
+                assertThat(testValue.defying()).isEmpty();
+                assertThat(testValue.complying()).hasSize(1);
+                assertThat(testValue.rating()).isEqualTo(noCost());
+            }
+            {
+                testValue.registerBeforeRemoval(firstTestValue);
+                assertThat(testValue.defying()).isEmpty();
+                assertThat(testValue.complying()).isEmpty();
+                assertThat(testValue.rating()).isEqualTo(noCost());
+            }
+        });
     }
 }
