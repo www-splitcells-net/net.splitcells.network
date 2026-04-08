@@ -38,6 +38,16 @@ public class FileSystemUnionViewTest {
     }
 
     @UnitTest public void testIsDirectory() {
+        val fs1 = fileSystemViaMemory();
+        val fs2 = fileSystemViaMemory();
+        val testSubject = fileSystemUnionView(true, true, fs1, fs2);
+        val testDirectory = "test-directory/";
+        fs1.createDirectoryPath(testDirectory);
+        fs2.createDirectoryPath(testDirectory);
+        requireThrow(() -> {
+            testSubject.isDirectory(testDirectory);
+        });
+    }
         requireThrow(() -> {
             val fs1 = fileSystemViaMemory();
             val fs2 = fileSystemViaMemory();
