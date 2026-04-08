@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.FileSystemUnionView.fileSystemUnionView;
 import static net.splitcells.dem.resource.FileSystemViaMemory.fileSystemViaMemory;
+import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
 
 public class FileSystemUnionViewTest {
@@ -33,6 +34,18 @@ public class FileSystemUnionViewTest {
             val fs2 = fileSystemViaMemory();
             val testSubject = fileSystemUnionView(true, fs1, fs2);
             return new FileSystemTest.FileSystemAccess(fs1, testSubject);
+        });
+    }
+
+    @UnitTest public void testIsDirectory() {
+        requireThrow(() -> {
+            val fs1 = fileSystemViaMemory();
+            val fs2 = fileSystemViaMemory();
+            val testSubject = fileSystemUnionView(true, true, fs1, fs2);
+            val testDirectory = "test-directory/";
+            fs1.createDirectoryPath(testDirectory);
+            fs2.createDirectoryPath(testDirectory);
+            testSubject.isDirectory(testDirectory);
         });
     }
 }
