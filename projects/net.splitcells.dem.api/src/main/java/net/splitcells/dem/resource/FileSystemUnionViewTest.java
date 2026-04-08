@@ -39,6 +39,15 @@ public class FileSystemUnionViewTest {
         });
     }
 
+    @UnitTestFactory public Stream<DynamicTest> testVarArg2() {
+        return new FileSystemTest().fileSystemWriteTests(() -> {
+            val fs1 = fileSystemViaMemory();
+            val fs2 = fileSystemViaMemory();
+            val testSubject = fileSystemUnionView(true, true, fs1, fs2);
+            return new FileSystemTest.FileSystemAccess(fs1, testSubject);
+        });
+    }
+
     @UnitTest public void testIsDirectory() {
         val fs1 = fileSystemViaMemory();
         val fs2 = fileSystemViaMemory();
