@@ -372,7 +372,7 @@ public class ConstraintBasedOnLocalGroupsAI implements Constraint {
         final var routingRating = routingRating(lineProcessing
                 .lookup(LINE, line)
                 .lookup(INCOMING_CONSTRAINT_GROUP, group)
-                .unorderedLinesStream());
+                .unorderedLinesStream2());
         routingRating.children_to_groups().forEach((child, groups) ->
                 groups.forEach(group2 -> routingRating.ratings().add(child.rating(group2, line)))
         );
