@@ -197,6 +197,10 @@ public class PersistedLookupViewI implements PersistedLookupView {
         return content.stream().map(viewView::rawLine).filter(e -> e != null);
     }
 
+    @Override public List<Line> unorderedLines() {
+        return unorderedLinesStream2().toList();
+    }
+
     private void checkConsistency() {
         if (ENFORCING_UNIT_CONSISTENCY) {
             range(0, viewView.rawLinesView().size()).forEach(i -> {
