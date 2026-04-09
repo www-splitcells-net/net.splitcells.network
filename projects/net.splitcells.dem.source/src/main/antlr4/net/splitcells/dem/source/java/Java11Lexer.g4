@@ -83,6 +83,13 @@ lexer grammar Java11Lexer;
     		| 'import lombok.experimental.Delegate'
     		| 'import lombok.EqualsAndHashCode'
     		| 'import lombok.Data'
+    		| 'import org.openjdk.jmh.annotations.Benchmark;'
+    		| 'import org.openjdk.jmh.annotations.Level;v
+    		| 'import org.openjdk.jmh.annotations.Scope;'
+    		| 'import org.openjdk.jmh.annotations.Setup;'
+    		| 'import org.openjdk.jmh.annotations.State;'
+    		| 'import org.openjdk.jmh.annotations.Param;'
+    		| 'import org.openjdk.jmh.infra.Blackhole;Ä
     		;
 	Arrow: '->';
 	Bigger_than: '>';
