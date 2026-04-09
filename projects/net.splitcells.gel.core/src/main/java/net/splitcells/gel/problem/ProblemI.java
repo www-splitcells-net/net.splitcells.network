@@ -72,14 +72,12 @@ public class ProblemI implements Problem {
             @Override
             public void registerBeforeRemoval(Line removal) {
                 constraint.registerBeforeRemoval(removal);
-                constraint.rating();
             }
 
             @EffectSynchronization(ConstraintAspect.class)
             @Override
             public void registerAddition(Line addition) {
                 constraint.registerAddition(addition);
-                constraint.rating();
             }
         });
         return problem;
