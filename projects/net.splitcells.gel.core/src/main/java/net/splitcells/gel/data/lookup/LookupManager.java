@@ -138,7 +138,6 @@ public class LookupManager<T> implements Lookup<T> {
 
     @Override
     public View lookup(Predicate<T> predicate) {
-        ++lookupReadCount;
         ++lastStrategyTime;
         updateStatistics();
         return lookupIntern(predicate);
@@ -149,9 +148,12 @@ public class LookupManager<T> implements Lookup<T> {
             return persistedLookup.persistedLookup(predicate);
         }
         final var lookup = lookupTable(view, attribute);
-        view.unorderedLinesStream()
+        view.unorderedLinesStream2()
                 .filter(l -> predicate.test(l.value(attribute)))
-                .forEach(lookup::register);
+                .forEach(l -> {
+                    ++lookupReadCount;
+                    lookup.register(l);
+                });
         return lookup;
     }
 
