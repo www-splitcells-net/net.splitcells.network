@@ -15,8 +15,10 @@
  */
 package net.splitcells.gel.data.lookup;
 
+import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.SetT;
+import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
@@ -194,6 +196,17 @@ public class PersistedLookupViewI implements PersistedLookupView {
         }
         if (USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE) {
             return rawLinesHashedCache.values().stream().filter(e -> e != null);
+        }
+        return content.stream().map(viewView::rawLine).filter(e -> e != null);
+    }
+
+    @Override
+    public Flow<Line> unorderedLinesStream2() {
+        if (useExperimentalRawLineCache) {
+            return rawLinesCache.stream().filter(e -> e != null);
+        }
+        if (USE_EXPERIMENTAL_RAW_LINE_HASHED_CACHE) {
+            return setOfUniques(rawLinesHashedCache.values()).stream().filter(e -> e != null);
         }
         return content.stream().map(viewView::rawLine).filter(e -> e != null);
     }
