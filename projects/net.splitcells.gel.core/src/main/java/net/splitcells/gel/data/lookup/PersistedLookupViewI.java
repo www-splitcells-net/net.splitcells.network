@@ -78,42 +78,35 @@ public class PersistedLookupViewI implements PersistedLookupView {
 
     public static LookupTableFactory lookupTableFactory() {
         return new LookupTableFactory() {
-            @Override
-            public AspectOrientedConstructor<PersistedLookupView> withAspect(Function<PersistedLookupView, PersistedLookupView> aspect) {
+            @Override public AspectOrientedConstructor<PersistedLookupView> withAspect(Function<PersistedLookupView, PersistedLookupView> aspect) {
                 return aspects.withAspect(aspect);
             }
 
-            @Override
-            public PersistedLookupView joinAspects(PersistedLookupView arg) {
+            @Override public PersistedLookupView joinAspects(PersistedLookupView arg) {
                 return aspects.joinAspects(arg);
             }
 
             private final AspectOrientedConstructorBase<PersistedLookupView> aspects = aspectOrientedConstructor();
             private final ConnectingConstructor<PersistedLookupView> connector = connectingConstructor();
 
-            @Override
-            public ConnectingConstructor<PersistedLookupView> withConnector(Consumer<PersistedLookupView> connector) {
+            @Override public ConnectingConstructor<PersistedLookupView> withConnector(Consumer<PersistedLookupView> connector) {
                 this.connector.withConnector(connector);
                 return this;
             }
 
-            @Override
-            public PersistedLookupView connect(PersistedLookupView subject) {
+            @Override public PersistedLookupView connect(PersistedLookupView subject) {
                 return connector.connect(joinAspects(subject));
             }
 
-            @Override
-            public PersistedLookupView lookupTable(View view, String name) {
+            @Override public PersistedLookupView lookupTable(View view, String name) {
                 return connector.connect(joinAspects(PersistedLookupViewI.lookupTable(view, name)));
             }
 
-            @Override
-            public PersistedLookupView lookupTable(View view, Attribute<?> attribute) {
+            @Override public PersistedLookupView lookupTable(View view, Attribute<?> attribute) {
                 return connector.connect(joinAspects(PersistedLookupViewI.lookupTable(view, attribute)));
             }
 
-            @Override
-            public PersistedLookupView lookupTable(View view, Attribute<?> attribute, boolean cacheRawLines) {
+            @Override public PersistedLookupView lookupTable(View view, Attribute<?> attribute, boolean cacheRawLines) {
                 return connector.connect(joinAspects(PersistedLookupViewI.lookupTable(view, attribute, cacheRawLines)));
             }
         };
@@ -147,24 +140,20 @@ public class PersistedLookupViewI implements PersistedLookupView {
         path = viewView.path().shallowCopy().withAppended(PersistedLookupView.class.getSimpleName() + "(" + name + ")");
     }
 
-    @Override
-    public String name() {
+    @Override public String name() {
         return name;
     }
 
-    @Override
-    public List<Attribute<Object>> headerView() {
+    @Override public List<Attribute<Object>> headerView() {
         return viewView.headerView();
     }
 
-    @Override
-    public List<Attribute<? extends Object>> headerView2() {
+    @Override public List<Attribute<? extends Object>> headerView2() {
         return viewView.headerView2();
     }
 
     @SuppressWarnings("unchecked")
-    @Override
-    public <T> Column<T> columnView(Attribute<T> attribute) {
+    @Override public <T> Column<T> columnView(Attribute<T> attribute) {
         int index = 0;
         for (final var headerAttribute : viewView.headerView()) {
             if (headerAttribute.equals(attribute)) {
@@ -175,8 +164,7 @@ public class PersistedLookupViewI implements PersistedLookupView {
         throw new IllegalArgumentException(attribute.toString());
     }
 
-    @Override
-    public Line rawLine(int index) {
+    @Override public Line rawLine(int index) {
         if (useExperimentalRawLineCache) {
             return rawLinesCache.get(index);
         }
@@ -189,8 +177,7 @@ public class PersistedLookupViewI implements PersistedLookupView {
         return null;
     }
 
-    @Override
-    public Stream<Line> unorderedLinesStream() {
+    @Override public Stream<Line> unorderedLinesStream() {
         if (useExperimentalRawLineCache) {
             return rawLinesCache.stream().filter(e -> e != null);
         }
@@ -200,8 +187,7 @@ public class PersistedLookupViewI implements PersistedLookupView {
         return content.stream().map(viewView::rawLine).filter(e -> e != null);
     }
 
-    @Override
-    public Flow<Line> unorderedLinesStream2() {
+    @Override public Flow<Line> unorderedLinesStream2() {
         if (useExperimentalRawLineCache) {
             return rawLinesCache.stream().filter(e -> e != null);
         }
@@ -228,8 +214,7 @@ public class PersistedLookupViewI implements PersistedLookupView {
      *
      * @return
      */
-    @Override
-    public ListView<Line> rawLinesView() {
+    @Override public ListView<Line> rawLinesView() {
         checkConsistency();
         if (useExperimentalRawLineCache) {
             return listView(rawLinesCache);
@@ -259,13 +244,11 @@ public class PersistedLookupViewI implements PersistedLookupView {
         return rawLines;
     }
 
-    @Override
-    public int size() {
+    @Override public int size() {
         return content.size();
     }
 
-    @Override
-    public void register(Line line) {
+    @Override public void register(Line line) {
         if (ENFORCING_UNIT_CONSISTENCY) {
             checkConsistency();
             content.requireAbsenceOf(line.index());
@@ -307,8 +290,7 @@ public class PersistedLookupViewI implements PersistedLookupView {
         lookupColumns.forEach(column -> column.registerAddition(line));
     }
 
-    @Override
-    public void removeRegistration(Line line) {
+    @Override public void removeRegistration(Line line) {
         if (TRACING) {
             logs().append(tree("deregister." + getClass().getSimpleName())
                             .withProperty("subject", path().toString())
@@ -342,28 +324,23 @@ public class PersistedLookupViewI implements PersistedLookupView {
         }
     }
 
-    @Override
-    public List<ColumnView<Object>> columnsView() {
+    @Override public List<ColumnView<Object>> columnsView() {
         return columnsView;
     }
 
-    @Override
-    public View base() {
+    @Override public View base() {
         return viewView;
     }
 
-    @Override
-    public SetT<Integer> contentIndexes() {
+    @Override public SetT<Integer> contentIndexes() {
         return content;
     }
 
-    @Override
-    public ListView<String> path() {
+    @Override public ListView<String> path() {
         return path;
     }
 
-    @Override
-    public Tree toTree() {
+    @Override public Tree toTree() {
         final var rVal = tree(PersistedLookupView.class.getSimpleName());
         // REMOVE
         rVal.withProperty("hashCode", "" + hashCode());
@@ -376,13 +353,11 @@ public class PersistedLookupViewI implements PersistedLookupView {
         return rVal;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return PersistedLookupView.class.getSimpleName() + path().toString();
     }
 
-    @Override
-    public List<Line> rawLines() {
+    @Override public List<Line> rawLines() {
         if (useExperimentalRawLineCache) {
             return listWithValuesOf(rawLinesCache);
         }
@@ -397,8 +372,7 @@ public class PersistedLookupViewI implements PersistedLookupView {
         return rawLines;
     }
 
-    @Override
-    public Line lookupEquals(Attribute<Line> attribute, Line values) {
+    @Override public Line lookupEquals(Attribute<Line> attribute, Line values) {
         final var rBase = viewView.lookupEquals(attribute, values);
         if (content.contains(rBase.index())) {
             return rBase;
@@ -407,18 +381,15 @@ public class PersistedLookupViewI implements PersistedLookupView {
         return null;
     }
 
-    @Override
-    public DiscoverableRenderer discoverableRenderer() {
+    @Override public DiscoverableRenderer discoverableRenderer() {
         throw notImplementedYet();
     }
 
-    @Override
-    public Object identity() {
+    @Override public Object identity() {
         return this;
     }
 
-    @Override
-    public Stream<Line> orderedLinesStream() {
+    @Override public Stream<Line> orderedLinesStream() {
         if (useExperimentalRawLineCache) {
             return rawLinesCache.stream().filter(e -> e != null);
         }
