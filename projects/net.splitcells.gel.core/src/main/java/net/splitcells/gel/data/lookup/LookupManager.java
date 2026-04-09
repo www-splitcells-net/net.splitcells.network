@@ -15,6 +15,7 @@
  */
 package net.splitcells.gel.data.lookup;
 
+import lombok.val;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.data.view.View;
@@ -145,7 +146,9 @@ public class LookupManager<T> implements Lookup<T> {
 
     private View lookupIntern(Predicate<T> predicate) {
         if (isPersistedLookupActive) {
-            return persistedLookup.persistedLookup(predicate);
+            val lookup = persistedLookup.persistedLookup(predicate);
+            lookupReadCount += lookup.size();
+            return lookup;
         }
         final var lookup = lookupTable(view, attribute);
         view.unorderedLinesStream2()
