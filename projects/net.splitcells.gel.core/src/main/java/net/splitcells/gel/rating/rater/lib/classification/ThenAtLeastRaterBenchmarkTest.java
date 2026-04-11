@@ -4,10 +4,13 @@
 package net.splitcells.gel.rating.rater.lib.classification;
 
 import lombok.val;
-import net.splitcells.dem.data.set.benchmark.SetBenchmarkTest;
 import net.splitcells.dem.testing.annotations.BenchmarkTest;
-import org.junit.jupiter.api.Test;
-import org.openjdk.jmh.annotations.*;
+import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.Level;
+import org.openjdk.jmh.annotations.Scope;
+import org.openjdk.jmh.annotations.Setup;
+import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.infra.Blackhole;
 
 import java.util.function.Supplier;
@@ -17,11 +20,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.benchmark.JmhHelper.requireImplRuntimeOrder;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.gel.Gel.defineProblem;
-import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
 import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineValue.lineValueRater;
-import static net.splitcells.gel.rating.rater.lib.classification.ThenAtLeastRater.thenAtLeastRater;
-import static net.splitcells.gel.rating.type.Cost.cost;
-import static net.splitcells.gel.rating.type.Cost.noCost;
 
 public class ThenAtLeastRaterBenchmarkTest {
 
@@ -29,12 +28,11 @@ public class ThenAtLeastRaterBenchmarkTest {
         requireImplRuntimeOrder("test", getClass(), "fast", "correct");
     }
 
-    @Benchmark public void test(State state, Blackhole blackhole) {
+    @Benchmark public void test(BenchmarkState state, Blackhole blackhole) {
         range(0, 10).forEach(i -> blackhole.consume(state.test.get()));
     }
 
-    @org.openjdk.jmh.annotations.State(Scope.Thread)
-    public static class State {
+    @State(Scope.Thread) public static class BenchmarkState {
         private Supplier<Object> test;
         @Param({"correct", "fast"}) private String impl;
 
