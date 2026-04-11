@@ -34,14 +34,14 @@ public class HasSizeBenchmarkTest {
         @Setup(Level.Invocation) public void setupIteration() {
             test = switch (impl) {
                 case "correct" -> () -> {
-                    val test = new HasSizeTest();
-                    test.testRating(100);
-                    return test;
+                    val testImpl = new HasSizeTest();
+                    testImpl.testRating(100);
+                    return testImpl;
                 };
                 case "fast" -> () -> {
-                    val test = new HasSizeFastTest();
-                    test.testRating(100);
-                    return test;
+                    val testImpl = new HasSizeFastTest();
+                    testImpl.testRating(100);
+                    return testImpl;
                 };
                 default -> throw execException(impl);
             };
