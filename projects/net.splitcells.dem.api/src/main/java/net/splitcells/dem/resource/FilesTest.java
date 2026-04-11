@@ -40,9 +40,10 @@ import static net.splitcells.dem.utils.StringUtils.parseString;
 public class FilesTest {
 
     @UnitTest public void testGenerateFolderPath() {
-        requireThrow(() -> {
+
+        processInTemporaryFolder(p -> {
             val testPath = Path.of("\\" + multiple("//\\\\", 2000));
-            processInTemporaryFolder(p -> generateFolderPath(testPath));
+            requireThrow(() -> generateFolderPath(testPath));
         });
         processInTemporaryFolder(p -> {
             val testFolder = p.resolve("test-folder");
@@ -65,15 +66,13 @@ public class FilesTest {
     }
 
     @UnitTest public void testDeleteDirectory() {
-        requireThrow(() -> {
-            processInTemporaryFolder(p -> {
-                val testFolder = p.resolve("test-folder");
-                val blockingFile = testFolder.resolve("blocking-file");
-                generateFolderPath(testFolder);
-                appendToFile(blockingFile, "def");
-                deleteDirectory(blockingFile);
-                deleteDirectory(testFolder);
-            });
+        processInTemporaryFolder(p -> {
+            val testFolder = p.resolve("test-folder");
+            val blockingFile = testFolder.resolve("blocking-file");
+            generateFolderPath(testFolder);
+            appendToFile(blockingFile, "def");
+            requireThrow(() -> deleteDirectory(blockingFile));
+            deleteDirectory(testFolder);
         });
         processInTemporaryFolder(p -> {
             val testFolder = p.resolve("test-folder");
@@ -102,10 +101,8 @@ public class FilesTest {
      * but it is not valid according to the operating system.
      */
     @UnitTest public void testCreateDirectoryInvalid() {
-        requireThrow(() -> {
-            val testPath = Path.of("\\" + multiple("//\\\\", 2000));
-            processInTemporaryFolder(p -> createDirectory(testPath));
-        });
+        val testPath = Path.of("\\" + multiple("//\\\\", 2000));
+        requireThrow(() -> processInTemporaryFolder(p -> createDirectory(testPath)));
     }
 
     @UnitTest public void testEnsureAbsenceWithInvalidPath() {
@@ -123,9 +120,9 @@ public class FilesTest {
     }
 
     @UnitTest public void testAppendToFile() {
-        requireThrow(() -> {
+        processInTemporaryFolder(p -> {
             val testFile = Path.of("/not/existing/file/90348237852ß34785427839572");
-            processInTemporaryFolder(p -> appendToFile(testFile, "abc"));
+            requireThrow(() -> appendToFile(testFile, "abc"));
         });
         processInTemporaryFolder(p -> {
             val testFile = p.resolve("test-file");
@@ -136,10 +133,10 @@ public class FilesTest {
     }
 
     @UnitTest public void testWriteToFile() {
-        requireThrow(() -> processInTemporaryFolder(p -> {
+        processInTemporaryFolder(p -> {
             val testFile = p.resolve("not/existing/file/90348237852ß34785427839572");
-            writeToFile(testFile, "abc");
-        }));
+            requireThrow(() -> writeToFile(testFile, "abc"));
+        });
         processInTemporaryFolder(p -> {
             val testFile = p.resolve("test-file");
             writeToFile(testFile, "def");
@@ -203,9 +200,9 @@ public class FilesTest {
     }
 
     @UnitTest public void testWalkDirectChildren() {
-        requireThrow(() -> {
+        processInTemporaryFolder(p -> {
             val testFile = Path.of("/not/existing/folder/90348237852ß34785427839572");
-            processInTemporaryFolder(p -> walkDirectChildren(testFile));
+            requireThrow(() -> walkDirectChildren(testFile));
         });
         processInTemporaryFolder(p -> {
             val testFile1 = p.resolve("test-file-1");
@@ -217,9 +214,9 @@ public class FilesTest {
     }
 
     @UnitTest public void testWalkRecursively() {
-        requireThrow(() -> {
+        processInTemporaryFolder(p -> {
             val testFile = Path.of("/not/existing/folder/90348237852ß34785427839572");
-            processInTemporaryFolder(p -> walkRecursively(testFile));
+            requireThrow(() -> walkRecursively(testFile));
         });
         processInTemporaryFolder(p -> {
             val directory1 = p.resolve("directory-1");
@@ -238,9 +235,9 @@ public class FilesTest {
     }
 
     @UnitTest public void testCopyDirectory() {
-        requireThrow(() -> {
+        processInTemporaryFolder(p -> {
             val testFile = Path.of("/not/existing/folder/90348237852ß34785427839572");
-            processInTemporaryFolder(p -> copyDirectory(testFile, testFile.resolve("something")));
+            requireThrow(() -> copyDirectory(testFile, testFile.resolve("something")));
         });
         processInTemporaryFolder(p -> {
             val sourceFolder = p.resolve("source");
