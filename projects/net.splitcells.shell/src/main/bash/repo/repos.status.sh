@@ -14,4 +14,4 @@
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
 # TODO Support for meta repos.
-repos.process --command 'command.managed.execute disjunction repo.status'
+repos.process --command 'command.managed.execute disjunction repo.status' $@
