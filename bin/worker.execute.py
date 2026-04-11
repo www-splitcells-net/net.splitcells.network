@@ -71,6 +71,8 @@ it became obvious how to quickly develop such a deployment script by creating sh
 
 # Tasks
 
+TODO Create a flag, in order to the things at `~/Documents/${programName}/*` instead of `~/.local/state/${programName}/*`.
+     This is useful for developer computers.
 TODO Add test coverage and consider checking minimum coverage percentage.
 TODO Use only applyTemplate for any String replacement.
 TODO Create option to delete things like `.m2`, `repos` and `net.splitcells.shell.commands.managed`,
