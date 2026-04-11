@@ -325,7 +325,10 @@ if __name__ == '__main__':
     # As there is no build process for Python, unit tests are executed every time, to make sure, that the script works correctly.
     # During this test info logging is disabled, which is disabled by default in Python.
     test_result = unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestReposProcess))
-    logging.getLogger().setLevel(logging.INFO)
+    if environ.get('log_level') == 'debug':
+        logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.getLogger().setLevel(logging.INFO)
     if not test_result.wasSuccessful():
         raise Exception("The self test was not successful: " + str(test_result))
     reposProcess(sys.argv[1:])
