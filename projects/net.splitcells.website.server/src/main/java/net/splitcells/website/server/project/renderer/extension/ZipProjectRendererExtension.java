@@ -29,6 +29,10 @@ import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
 import static net.splitcells.dem.resource.ContentType.ZIP;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
+/**
+ * {@link ResourceProjectRendererExtension} is better suited for that, as it avoids code duplication and simplifies the folder structure.
+ */
+@Deprecated
 public class ZipProjectRendererExtension implements ProjectRendererExtension {
     public static ZipProjectRendererExtension zipRenderer() {
         return new ZipProjectRendererExtension();
