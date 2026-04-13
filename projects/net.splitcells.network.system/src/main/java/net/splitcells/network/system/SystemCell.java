@@ -88,16 +88,6 @@ public class SystemCell implements Cell {
         env.withCell(WebsiteServerCell.class).withCell(GelUiCell.class);
     }
 
-    @Deprecated
-    public Config config2() {
-        return config();
-    }
-
-    @Deprecated
-    public Config config2(Config arg) {
-        return config(arg);
-    }
-
     public ProjectsRendererI projectsRenderer2(Config config) {
         return projectsRenderer(config);
     }
@@ -116,16 +106,6 @@ public class SystemCell implements Cell {
             , SourceValidator sourceValidator
             , Config config) {
         return fallbackProjectRenderer(projectsRenderer, profile, sourceValidator, config);
-    }
-
-    /**
-     * @return
-     * @deprecated TODO This method is used for versions, where the server is not managed by {@link Dem}.
-     * Remove the callers and after that remove this method.
-     */
-    @Deprecated
-    public static Config config() {
-        return config(configValue(ServerConfig.class));
     }
 
     /**

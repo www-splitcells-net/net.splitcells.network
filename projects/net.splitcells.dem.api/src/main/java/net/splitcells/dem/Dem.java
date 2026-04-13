@@ -124,6 +124,13 @@ public class Dem {
         thread.start();
     }
 
+    public static ProcessResult process(Runnable program, Consumer<Environment> configurator, Class<? extends Cell>... cells) {
+        return process(program, env -> {
+            configurator.accept(env);
+            listWithValuesOf(cells).forEach(env::withCell);
+        });
+    }
+
     public static ProcessResult process(Runnable program, Class<? extends Cell>... cells) {
         return process(program, env -> listWithValuesOf(cells).forEach(env::withCell));
     }

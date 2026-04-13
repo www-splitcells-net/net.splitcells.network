@@ -16,9 +16,13 @@
 package net.splitcells.network.system;
 
 import net.splitcells.dem.Dem;
+import net.splitcells.dem.environment.Cell;
+import net.splitcells.dem.environment.Environment;
+import net.splitcells.dem.environment.config.StartServicesAutomatically;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
+import net.splitcells.website.server.ServerConfig;
 import net.splitcells.website.server.projects.RenderRequest;
 
 import java.nio.file.Paths;
@@ -31,16 +35,19 @@ public class SystemCellTest {
 
     @IntegrationTest
     public void testServingWebsiteToFolder() {
-        process(() -> SystemCell.projectsRenderer(SystemCell.config()).serveTo(Paths.get("target/test"))
-                , SystemCell.class);
+        process(() -> SystemCell.projectsRenderer(Dem.configValue(ServerConfig.class)).serveTo(Paths.get("target/test"))
+                , env -> env.config().withConfigValue(StartServicesAutomatically.class, false)
+                , SystemCell.class
+        );
     }
 
     @UnitTest
     public void testInvalidPath() {
-        process(() -> SystemCell.projectsRenderer(SystemCell.config()).render(RenderRequest.renderRequest(
+        process(() -> SystemCell.projectsRenderer(Dem.configValue(ServerConfig.class)).render(RenderRequest.renderRequest(
                         Trail.trail("invalid-path")
                         , Optional.empty()
                         , ANONYMOUS_USER_SESSION))
+                , env -> env.config().withConfigValue(StartServicesAutomatically.class, false)
                 , SystemCell.class);
     }
 }
