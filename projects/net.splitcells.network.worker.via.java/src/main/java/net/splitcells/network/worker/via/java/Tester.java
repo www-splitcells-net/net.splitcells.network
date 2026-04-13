@@ -30,6 +30,7 @@ import static net.splitcells.dem.resource.Paths.userHome;
 import static net.splitcells.dem.testing.Test.testFunctionality;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.network.worker.via.java.Logger.logger;
+import static net.splitcells.network.worker.via.java.Logger.reportPath;
 
 /**
  * <p>Executes the standard tests and writes the results into the network log repo.
@@ -42,13 +43,17 @@ import static net.splitcells.network.worker.via.java.Logger.logger;
  * if set, use this for {@link ProjectsFolder}.</p>
  */
 public class Tester {
+
+    private static final String EXECUTION = "execution";
+    public static final String REPORT_PATH = reportPath(Tester.class, EXECUTION);
+
     public static void main(String... args) {
         if (args.length != 1) {
             throw new IllegalArgumentException("Exactly one argument is required, but " + args.length + " were given. The argument is the id of the test executor.");
         }
         test(args[0], ".local/state/net.splitcells.network.worker/repos/public/");
     }
-    
+
     public static void test(String hostname, String projectsFolder) {
         Dem.process(() -> {
                     val logger = logger();
@@ -60,7 +65,7 @@ public class Tester {
                         executionResult = 0d;
                     }
                     logger.logExecutionResults(Tester.class
-                            , "execution"
+                            , EXECUTION
                             , config().configValue(HostName.class)
                             , LocalDate.now()
                             , "tester-success"
