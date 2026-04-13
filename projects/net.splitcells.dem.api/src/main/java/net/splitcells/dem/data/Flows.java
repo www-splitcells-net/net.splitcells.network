@@ -15,6 +15,8 @@
  */
 package net.splitcells.dem.data;
 
+import net.splitcells.dem.utils.StreamUtils;
+
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Optional;
@@ -35,10 +37,16 @@ import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
+import static net.splitcells.dem.utils.StreamUtils.stream;
+
 public class Flows<T> implements Flow<T> {
 
     public static <R> Flow<R> flow(java.util.stream.Stream<R> arg) {
         return new Flows<>(arg);
+    }
+
+    public static <R> Flow<R> flow(R... arg) {
+        return new Flows<>(stream(arg));
     }
 
     private final java.util.stream.Stream<T> content;
