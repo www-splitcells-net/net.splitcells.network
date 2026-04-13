@@ -27,52 +27,26 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 /**
  * TODO REMOVE This is a duplicate of {@link ContentType}.
  */
+@Deprecated
 public enum Format {
-    BINARY("application/octet-stream", true),
-    HTML("text/html", false),
-    CSS("text/css", false),
-    CSV("text/csv", false),
-    TEXT_PLAIN("text/plain", false),
-    COMMON_MARK("text/markdown", false),
-    JSON("application/json", false),
-    XML("application/xml", false),
-    ZIP("application/zip", true);
-
-    public static Format parse(String arg) {
-        val parsed = parseOptionally(arg);
-        if (parsed.isEmpty()) {
-            throw execException("Unknown format: " + arg);
-        }
-        return parsed.get();
-    }
-
-    public static Optional<Format> parseOptionally(String arg) {
-        return switch (arg) {
-            case "text/html" -> Optional.of(HTML);
-            case "text/css" -> Optional.of(CSS);
-            case "text/csv" -> Optional.of(CSV);
-            case "text/plain" -> Optional.of(TEXT_PLAIN);
-            case "text/markdown" -> Optional.of(COMMON_MARK);
-            case "application/json" -> Optional.of(JSON);
-            case "application/xml" -> Optional.of(XML);
-            default -> Optional.empty();
-        };
-    }
+    @Deprecated BINARY("application/octet-stream"),
+    @Deprecated HTML("text/html"),
+    @Deprecated CSS("text/css"),
+    @Deprecated CSV("text/csv"),
+    @Deprecated TEXT_PLAIN("text/plain"),
+    @Deprecated COMMON_MARK("text/markdown"),
+    @Deprecated JSON("application/json"),
+    @Deprecated XML("application/xml"),
+    @Deprecated ZIP("application/zip");
 
 
     private final String mimeTypes;
-    private final boolean isBinary;
 
-    Format(String mimeTypes, boolean argIsBinary) {
+    Format(String mimeTypes) {
         this.mimeTypes = mimeTypes;
-        isBinary = argIsBinary;
     }
 
     public String mimeTypes() {
         return mimeTypes;
-    }
-
-    public boolean isBinary() {
-        return isBinary;
     }
 }

@@ -19,7 +19,7 @@ import lombok.val;
 import net.splitcells.website.Format;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.website.Format.parseOptionally;
+import static net.splitcells.dem.resource.ContentType.parseOptionally;
 
 public class BinaryMessage {
     /**
