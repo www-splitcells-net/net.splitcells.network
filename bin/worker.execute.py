@@ -284,6 +284,8 @@ git pull ${execute_via_ssh_at} master
 
 # The `net.splitcells.network && git pull` etc. ensures, that changes to bin/worker.execute etc. are available as fast as possible.
 EXECUTE_MAIN_TASK_REMOTELY = """# Execute Main Task Remotely
+set -e
+set -x
 ssh ${execute_via_ssh_at} /bin/sh << EOF
   set -e
   set -x
@@ -740,6 +742,8 @@ then
 fi
 
 # Execute Main Task Remotely
+set -e
+set -x
 ssh user@address /bin/sh << EOF
   set -e
   set -x
@@ -787,6 +791,8 @@ then
 fi
 
 # Execute Main Task Remotely
+set -e
+set -x
 ssh user@address /bin/sh << EOF
   set -e
   set -x
@@ -823,6 +829,8 @@ git pull user@address master
         self.assertEqual(test_subject.remote_execution_script, """set -e
 set -x
 # Execute Main Task Remotely
+set -e
+set -x
 ssh user@address /bin/sh << EOF
   set -e
   set -x
@@ -863,6 +871,8 @@ then
 fi
 
 # Execute Main Task Remotely
+set -e
+set -x
 ssh user@address /bin/sh << EOF
   set -e
   set -x
@@ -984,6 +994,8 @@ then
 fi
 
 # Execute Main Task Remotely
+set -e
+set -x
 ssh martins-avots@live.splitcells.net /bin/sh << EOF
   set -e
   set -x
