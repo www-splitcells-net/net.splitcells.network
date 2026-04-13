@@ -126,6 +126,10 @@ public class ConfigurationImpl implements Configuration {
         return (T) this.configStore.get(key);
     }
 
+    @Override public synchronized <T> boolean isConfigInitialized(Class<? extends Option<T>> key) {
+        return this.configStore.containsKey(key);
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public synchronized <T> T configValue(Class<? extends Option<T>> key) {

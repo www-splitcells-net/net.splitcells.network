@@ -34,6 +34,8 @@ public interface Configuration extends ConfigurationV {
     @ReturnsThis
     <T> Configuration withConfigValue(Class<? extends Option<T>> key, T value);
 
+    <T> boolean isConfigInitialized(Class<? extends Option<T>> key);
+
     /**
      * This helper method makes it easier to write and read long configuration chains.
      *

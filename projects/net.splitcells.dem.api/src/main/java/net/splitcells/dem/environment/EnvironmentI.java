@@ -77,8 +77,13 @@ public class EnvironmentI implements Environment {
                 config.configValue(ConfigDependencyRecording.class).recordDependency(dependencyCellStack.get(dependencyCellStack.size() - 2)
                         , dependencyCellStack.get(dependencyCellStack.size() - 1));
             }
-            final var cell = config().withInitedOption(clazz).configValue(clazz);
-            cell.accept(this);
+            final Consumer<Environment> cell;
+            if (!config().isConfigInitialized(clazz)) {
+                cell = config().configValue(clazz);
+                cell.accept(this);
+            } else {
+                cell = config().configValue(clazz);
+            }
             cellConsumer.accept((T) cell);
         } finally {
             dependencyCellStack.remove(dependencyCellStack.size() - 1);
