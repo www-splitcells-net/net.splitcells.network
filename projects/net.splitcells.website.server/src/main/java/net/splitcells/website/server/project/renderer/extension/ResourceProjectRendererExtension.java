@@ -66,6 +66,8 @@ public class ResourceProjectRendererExtension implements ProjectRendererExtensio
                 format = ContentType.JSON.codeName();
             } else if (path.endsWith(".gif")) {
                 format = ContentType.GIF.codeName();
+            } else if (path.endsWith(".zip")) {
+                format = ContentType.ZIP.codeName();
             } else {
                 format = HTML_TEXT.codeName();
             }
