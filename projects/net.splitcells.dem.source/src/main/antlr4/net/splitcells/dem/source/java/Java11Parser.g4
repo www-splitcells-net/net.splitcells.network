@@ -60,6 +60,7 @@ annotation
 annotation_arguments
     : Brace_round_open Brace_round_closed
     | Brace_round_open annotation_arguments_element annotation_arguments_next* Brace_round_closed
+    | Brace_round_open Brace_curly_open annotation_arguments_element annotation_arguments_next* Brace_curly_closed Brace_round_closed
     ;
 annotation_arguments_element
     : Line_comment* annotation? (name Equals)? reference
