@@ -21,6 +21,7 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.host.HostName;
+import net.splitcells.network.worker.via.java.Tester;
 import net.splitcells.website.Format;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.processor.BinaryMessage;
@@ -70,6 +71,28 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
         if (path.equals("/" + STATUS_DOCUMENT_PATH)) {
             final var disruptedStatuses = stringBuilder();
             final var successfulStatuses = stringBuilder();
+            projectsRendererI.projectsPaths().stream()
+                    .filter(p -> p.startsWith(Tester.REPORT_PATH))
+                    .filter(p -> p.toString().endsWith(".csv"))
+                    .forEach(p -> {
+                        final var csvContent = asString(projectsRendererI.render(config.rootPath() + "/" + p.toString())
+                                .orElseThrow()
+                                .getContent(), ContentType.UTF_8);
+                        final var lastMeasurement = stream(csvContent.split("\\R"))
+                                .filter(l -> !l.trim().isEmpty())
+                                .collect(toList())
+                                .lastValue();
+                        if (1f == Float.parseFloat(lastMeasurement.orElse("0").split(",")[1].trim())) {
+                            successfulStatuses.append("<li>The last Tester run was executed successfully on <q>");
+                            successfulStatuses.append(p.getFileName().toString().substring(0, p.getFileName().toString().length() - 4));
+                            successfulStatuses.append("</li>");
+                        } else {
+
+                            disruptedStatuses.append("<li>The last Tester run was not executed successfully on <q>");
+                            disruptedStatuses.append(p.getFileName().toString().substring(0, p.getFileName().toString().length() - 4));
+                            disruptedStatuses.append("</li>");
+                        }
+                    });
             projectsRendererI.projectsPaths().stream()
                     .filter(p -> p.startsWith(RUNTIME_FOLDER))
                     .filter(p -> p.toString().endsWith(".csv"))
