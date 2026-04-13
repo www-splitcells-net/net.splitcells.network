@@ -72,30 +72,30 @@ public class EditorProcessor implements Processor<Tree, Tree> {
      */
     @Override
     public Response<Tree> process(Request<Tree> request) {
-        final var endResponse = runWithCheckedNeeds(() -> {
-            final var editor = editor("editor-data-query", EXPLICIT_NO_CONTEXT);
-            final var problemDefinition = request.data().namedChild(PROBLEM_DEFINITION, needInput(PROBLEM_DEFINITION));
-            final var inputValues = request.data().children();
+        val endResponse = runWithCheckedNeeds(() -> {
+            val editor = editor("editor-data-query", EXPLICIT_NO_CONTEXT);
+            val problemDefinition = request.data().namedChild(PROBLEM_DEFINITION, needInput(PROBLEM_DEFINITION));
+            val inputValues = request.data().children();
             if (inputValues.hasElements()) {
                 inputValues.forEach(c -> {
-                    final var content = toBytes(c.child(0).name());
+                    val content = toBytes(c.child(0).name());
                     // TODO Support multiple formats of data.
                     editor.saveData(c.name(), editorData(TEXT_PLAIN, content));
                 });
             }
             editor.interpret(problemDefinition.content());
-            final var formUpdate = tree(FORM_UPDATE);
-            final var dataTypes = tree(DATA_TYPES).withParent(formUpdate);
-            final var dataValues = tree(DATA_VALUES).withParent(formUpdate);
-            final var renderingTypes = tree(RENDERING_TYPES).withParent(formUpdate);
+            val formUpdate = tree(FORM_UPDATE);
+            val dataTypes = tree(DATA_TYPES).withParent(formUpdate);
+            val dataValues = tree(DATA_VALUES).withParent(formUpdate);
+            val renderingTypes = tree(RENDERING_TYPES).withParent(formUpdate);
             editor.optimize();
             editor.getTables().entrySet().forEach(e -> {
                 dataValues.withProperty(e.getKey(), e.getValue().toCSV(reportInvalidCsvData(e.getKey())));
                 dataTypes.withProperty(e.getKey(), CSV.mimeTypes());
                 renderingTypes.withProperty(e.getKey(), INTERACTIVE_TABLE);
                 if (editor.getTableFormatting().hasKey(e.getKey())) {
-                    final var formatting = editor.getTableFormatting().get(e.getKey());
-                    final var formattingKey = e.getKey() + ".formatted";
+                    val formatting = editor.getTableFormatting().get(e.getKey());
+                    val formattingKey = e.getKey() + ".formatted";
                     dataValues.withProperty(formattingKey, e.getValue()
                             .toReformattedCsv(formatting.getColumnAttributes(), formatting.getRowAttributes()));
                     dataTypes.withProperty(formattingKey, CSV.mimeTypes());
@@ -106,13 +106,13 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                 dataValues.withProperty(e.getKey(), e.getValue().toSimplifiedCSV(reportInvalidCsvData(e.getKey())));
                 dataTypes.withProperty(e.getKey(), CSV.mimeTypes());
                 renderingTypes.withProperty(e.getKey(), INTERACTIVE_TABLE);
-                final var ratingDescriptionKey = e.getKey() + ".rating.report";
+                val ratingDescriptionKey = e.getKey() + ".rating.report";
                 dataValues.withProperty(ratingDescriptionKey, e.getValue().constraint().commonMarkRatingReport());
                 dataTypes.withProperty(ratingDescriptionKey, COMMON_MARK.mimeTypes());
                 renderingTypes.withProperty(ratingDescriptionKey, PLAIN_TEXT);
                 if (editor.getTableFormatting().hasKey(e.getKey())) {
-                    final var formatting = editor.getTableFormatting().get(e.getKey());
-                    final var formattingKey = e.getKey() + ".formatted";
+                    val formatting = editor.getTableFormatting().get(e.getKey());
+                    val formattingKey = e.getKey() + ".formatted";
                     dataValues.withProperty(formattingKey, e.getValue()
                             .toReformattedCsv(formatting.getColumnAttributes(), formatting.getRowAttributes()));
                     dataTypes.withProperty(formattingKey, CSV.mimeTypes());
@@ -120,7 +120,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                 }
             });
             editor.dataKeys().stream().forEach(d -> {
-                final var data = editor.loadData(d, needDataForOutput(d));
+                val data = editor.loadData(d, needDataForOutput(d));
                 if (dataValues.namedChildren(d).isEmpty()) {
                     dataValues.withProperty(d, parseString(data.getContent(), reportOutputParsing(d)));
                     dataTypes.withProperty(d, data.getFormat().mimeTypes());
@@ -141,9 +141,9 @@ public class EditorProcessor implements Processor<Tree, Tree> {
         if (endResponse.working()) {
             return endResponse.requiredValue();
         }
-        final var formUpdate = tree(FORM_UPDATE);
-        final var dataValues = tree(DATA_VALUES).withParent(formUpdate);
-        final var dataTypes = tree(DATA_TYPES).withParent(formUpdate);
+        val formUpdate = tree(FORM_UPDATE);
+        val dataValues = tree(DATA_VALUES).withParent(formUpdate);
+        val dataTypes = tree(DATA_TYPES).withParent(formUpdate);
         dataTypes.withProperty(ERRORS, COMMON_MARK.mimeTypes());
         dataValues.withProperty(ERRORS
                 , endResponse.errorMessages()
@@ -188,7 +188,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
     public static Need<Tree> needInput(String name) {
         return arg -> {
             List<LogMessage<Tree>> log = list();
-            final var namedChildren = arg.namedChildren(name);
+            val namedChildren = arg.namedChildren(name);
             if (namedChildren.isEmpty()) {
                 log.add(logMessage(tree("The submitted form does not have the field `" + name + "` even though one is required.")
                                 .withProperty("form", arg)
