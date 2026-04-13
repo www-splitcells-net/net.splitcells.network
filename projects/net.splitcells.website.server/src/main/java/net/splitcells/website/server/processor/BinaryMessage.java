@@ -15,9 +15,11 @@
  */
 package net.splitcells.website.server.processor;
 
+import lombok.val;
 import net.splitcells.website.Format;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.website.Format.parseOptionally;
 
 public class BinaryMessage {
     /**
@@ -54,9 +56,13 @@ public class BinaryMessage {
 
     @Override
     public String toString() {
-        return tree("RenderingResult:")
-                .withProperty("format", format)
-                .withProperty("content", new String(content))
-                .toXmlString();
+        val rVal = tree("RenderingResult:").withProperty("format", format);
+        val formatType = parseOptionally(format);
+        if (formatType.isPresent() && !formatType.get().isBinary()) {
+            rVal.withProperty("content", new String(content));
+        } else {
+            rVal.withProperty("content", "[binary content]");
+        }
+        return rVal.toXmlString();
     }
 }
