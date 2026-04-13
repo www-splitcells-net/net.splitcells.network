@@ -68,6 +68,11 @@ public interface Environment extends EnvironmentV, Service {
         });
     }
 
+    default <T extends Cell> T cell(Class<T> clazz) {
+        return (T) withCell(clazz, c -> {
+        });
+    }
+
     /**
      * This method is the base in order to declaratively configure {@link Dem#process(Runnable, Consumer)}.
      *

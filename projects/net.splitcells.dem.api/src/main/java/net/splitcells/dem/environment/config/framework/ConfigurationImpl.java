@@ -121,6 +121,11 @@ public class ConfigurationImpl implements Configuration {
         }
     }
 
+    @Override public <T> T configValueTyped(Class<T> key) {
+        recordConfigAccess((Class<? extends Option<?>>) key);
+        return (T) this.configStore.get(key);
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public synchronized <T> T configValue(Class<? extends Option<T>> key) {

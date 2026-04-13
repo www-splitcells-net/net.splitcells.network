@@ -20,7 +20,9 @@ import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.environment.EnvironmentI;
 import net.splitcells.dem.environment.EnvironmentV;
 import net.splitcells.dem.environment.config.EndTime;
+import net.splitcells.dem.environment.config.Initialized;
 import net.splitcells.dem.environment.config.ProgramName;
+import net.splitcells.dem.environment.config.framework.Configuration;
 import net.splitcells.dem.environment.config.framework.ConfigurationV;
 import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
@@ -177,6 +179,7 @@ public class Dem {
                     if (program instanceof Cell programCell) {
                         env.config().withConfigValue(ProgramName.class, programCell.programName());
                     }
+                    env.config().withInitedOption(Initialized.class);
                     configurator.accept(env);
                 });
                 processEnvironment.start();
@@ -283,10 +286,13 @@ public class Dem {
     }
 
     /**
-     * TODO If the user does not care, how it is initialized he does not care about
+     * <p>TODO REMOVE This should be removed, as this provides write access to the global state.
+     * This should only be possible during {@link Initialized}.</p>
+     * <p>TODO If the user does not care, how it is initialized he does not care about
      * output. But this only is true for certain output. Logging level should be
-     * WARNING by default.
+     * WARNING by default.</p>
      */
+    @Deprecated
     public static EnvironmentV environment() {
         if (null == CURRENT.get()) {
             return ensuredInitialized();
@@ -301,7 +307,15 @@ public class Dem {
      *
      * @return The Configuration Of The Current Environment
      */
+    @Deprecated
     public static ConfigurationV config() {
+        return environment().config();
+    }
+
+    public static Configuration configWrite() {
+        if (configValue(Initialized.class)) {
+            throw execException("Config write access is only allowed during the initialization phase.");
+        }
         return environment().config();
     }
 

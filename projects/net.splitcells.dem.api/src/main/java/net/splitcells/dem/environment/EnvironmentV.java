@@ -26,5 +26,5 @@ import net.splitcells.dem.resource.communication.Closeable;
  */
 public interface EnvironmentV {
 
-    ConfigurationV config();
+    Configuration config();
 }

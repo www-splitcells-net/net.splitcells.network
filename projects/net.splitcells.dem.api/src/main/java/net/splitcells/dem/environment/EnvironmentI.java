@@ -54,6 +54,7 @@ public class EnvironmentI implements Environment {
 
     @Override
     public void start() {
+        config().withConfigValue(Initialized.class, true);
         if (config.configValue(StartServicesAutomatically.class)) {
             config.process(Service.class, s -> {
                 logs().append("Starting `" + s.getClass().getName() + "` service.", LogLevel.DEBUG);

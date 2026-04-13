@@ -22,6 +22,8 @@ import java.util.function.BiConsumer;
 public interface ConfigurationV {
     <T> T configValue(Class<? extends Option<T>> key);
 
+    <T> T configValueTyped(Class<T> key);
+
     Object configValueUntyped(Object key);
 
     Set<Class<? extends Option<?>>> keys();
@@ -29,9 +31,9 @@ public interface ConfigurationV {
     /**
      * Consumes a certain type of {@link Option} and {@link Option#defaultValue()}.
      *
-     * @param type        Type of {@link Option}, that will be processed.
-     * @param consumer    Function that consumes the corresponding {@link Option} and their values.
-     * @param <V> Type of {@link Option#defaultValue()}, that will be consumed.
+     * @param type     Type of {@link Option}, that will be processed.
+     * @param consumer Function that consumes the corresponding {@link Option} and their values.
+     * @param <V>      Type of {@link Option#defaultValue()}, that will be consumed.
      */
     <K extends Class<? extends Option<V>>, V> void consume(K type, BiConsumer<K, V> consumer);
 }
