@@ -10,15 +10,13 @@ jobs:
         # Maybe this could be fixed via `playwright.driver.tmpdir`. See https://github.com/microsoft/playwright-java/issues/728
     steps:
       - name: Setup Build
-        env:
-          SSH_WORKFLOW_PRIVATE_KEY: ${{ secrets.SSH_WORKFLOW_PRIVATE_KEY }}
         run: |
           set -e
           set -x
           apt update --fix-missing # $(pwd) = /workspace/splitcells-net/net.splitcells.network and --fix-missing is required on Codeberg. 
           apt install -y bash curl git python3 openjdk-21-jdk maven
           mkdir -p ~/.ssh/
-          set +x && echo "$SSH_WORKFLOW_PRIVATE_KEY" > ~/.ssh/id_rsa
+          set +x && echo "${{ secrets.SSH_WORKFLOW_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           set -x
           chmod 700 ~/.ssh/id_rsa
           ssh-keygen -F codeberg.org || ssh-keyscan codeberg.org >> ~/.ssh/known_hosts
