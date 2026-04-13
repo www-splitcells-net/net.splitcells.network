@@ -13,10 +13,13 @@ jobs:
         env:
           SSH_CI_KEY_PRIVATE: ${{ secrets.SSH_CI_KEY_PRIVATE }}
         run: |
+          set -e
+          set -x
           apt update --fix-missing # $(pwd) = /workspace/splitcells-net/net.splitcells.network and --fix-missing is required on Codeberg. 
           apt install -y bash curl git python3 openjdk-21-jdk maven
           mkdir -p ~/.ssh/
-          echo "$SSH_CI_KEY_PRIVATE" > ~/.ssh/id_rsa
+          set +x && echo "$SSH_CI_KEY_PRIVATE" > ~/.ssh/id_rsa
+          set -x
           chmod 700 ~/.ssh/id_rsa
           ssh-keygen -F codeberg.org || ssh-keyscan codeberg.org >> ~/.ssh/known_hosts
           cd /workspace/splitcells-net/
@@ -25,6 +28,8 @@ jobs:
           git clone --depth 1 ssh://git@codeberg.org/splitcells-net/net.splitcells.network.git
       - name: Build
         run: |
+          set -e
+          set -x
           cd /workspace/splitcells-net/net.splitcells.network.bom.base
           mvn clean install
           cd /workspace/splitcells-net/net.splitcells.network.bom
