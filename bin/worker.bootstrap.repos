@@ -7,7 +7,7 @@ set -x
   if [ -z "$NET_SPLITCELLS_NETWORK_WORKER_NAME" ]; then
     export NET_SPLITCELLS_NETWORK_WORKER_NAME="net.splitcells.network.worker"
   fi
-  bin/user.ssh.setup
+  bin/user.ssh.setup.sh
 # Bootstrap minimal required repos.
   mkdir -p ~/.local/state/$NET_SPLITCELLS_NETWORK_WORKER_NAME/repos/public
   cd ~/.local/state/$NET_SPLITCELLS_NETWORK_WORKER_NAME/repos/public

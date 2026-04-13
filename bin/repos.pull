@@ -9,7 +9,7 @@
 set -e
 set -x
 [ ! -d "bin" ] && cd ..
-bin/user.ssh.setup
+bin/user.ssh.setup.sh
 git pull --ff-only # Ensure, that current repo is up to date.
 cd ..
   test -d net.splitcells.network.hub || git clone https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
