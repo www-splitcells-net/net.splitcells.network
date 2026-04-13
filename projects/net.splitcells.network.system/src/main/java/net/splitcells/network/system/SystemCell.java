@@ -116,8 +116,7 @@ public class SystemCell implements Cell {
      * @deprecated TODO Move this method into {@link SystemCell}.
      */
     @Deprecated
-    public static Config config(Config arg) {
-        configureNoneCellInit(arg);
+    private static Config config(Config arg) {
         return arg
                 .withAdditionalProject(projectConfig("/net/splitcells/cin/"
                         , configValue(CinFileSystem.class)))
