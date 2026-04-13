@@ -3,7 +3,7 @@
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
 set -e
-set +x # Prevent printing secrets in CI pipeline.
+set -x
 # Integration tests need to be enabled here as well, as verify does not only start the source code check, but also reruns the test and therefore the coverage.
 # The JaCoCo report is created only for the main report, as otherwise the Distro repo causes errors.
 # `-Dsonar.inclusions=src/main/**,bin/*` does not seem to work.`
@@ -27,20 +27,18 @@ mvn clean install site \
     -Dsource_code_check=1 \
     -Dtest.groups=testing_unit,testing_integration,testing_capabilities \
     -DexcludedGroups=experimental_test,benchmarking_runtime
-# -z is used because -v is not supported in Forgejo workflows.
-if [ -z "$NET_SPLITCELLS_MARTINS_AVOTS_WEBSITE_SFTP_PRIVATE_KEY" ]; then
-  echo Upload to https://splitcells.net is disabled, because the environment variable NET_SPLITCELLS_MARTINS_AVOTS_WEBSITE_SFTP_PRIVATE_KEY is not set.
-else
-  mkdir -p ~/.ssh-website-upload/
-  echo "$NET_SPLITCELLS_MARTINS_AVOTS_WEBSITE_SFTP_PRIVATE_KEY" > ~/.ssh-website-upload/id_rsa
-  chmod 700 ~/.ssh-website-upload/id_rsa # Otherwise, scp may not work.
-  mkdir -p target/website-upload/public_html/net/splitcells/martins/avots/website/jacoco-aggregate # Using subdirectories, ensures, that scp does not get a problem with missing directories.
-  cp -r target/site/jacoco-aggregate/* target/website-upload/public_html/net/splitcells/martins/avots/website/jacoco-aggregate
-  set -x
-  set -e
-  realpath target/website-upload/public_html/net/splitcells/martins/avots/website/jacoco-aggregate
-  # The targeted scp upload folder is dependent on the relative source path. Therefore, cd and the current folder are used, in order to avoid this strange mapping.
-  cd target/website-upload/
-  scp -v -i ~/.ssh-website-upload/id_rsa -o PubkeyAuthentication=yes -o StrictHostKeyChecking=no -r ./ splitcm@www322.your-server.de:
-  rm ~/.ssh-website-upload/id_rsa
-fi
+set +x && test -z "$NET_SPLITCELLS_MARTINS_AVOTS_WEBSITE_SFTP_PRIVATE_KEY" \
+  && echo Upload to https://splitcells.net is disabled, because the environment variable NET_SPLITCELLS_MARTINS_AVOTS_WEBSITE_SFTP_PRIVATE_KEY is not set. \
+  && exit 1
+mkdir -p ~/.ssh-website-upload/
+set +x && echo "$NET_SPLITCELLS_MARTINS_AVOTS_WEBSITE_SFTP_PRIVATE_KEY" > ~/.ssh-website-upload/id_rsa
+set -x
+set -e
+chmod 700 ~/.ssh-website-upload/id_rsa # Otherwise, scp may not work.
+mkdir -p target/website-upload/public_html/net/splitcells/martins/avots/website/jacoco-aggregate # Using subdirectories, ensures, that scp does not get a problem with missing directories.
+cp -r target/site/jacoco-aggregate/* target/website-upload/public_html/net/splitcells/martins/avots/website/jacoco-aggregate
+realpath target/website-upload/public_html/net/splitcells/martins/avots/website/jacoco-aggregate
+# The targeted scp upload folder is dependent on the relative source path. Therefore, cd and the current folder are used, in order to avoid this strange mapping.
+cd target/website-upload/
+scp -v -i ~/.ssh-website-upload/id_rsa -o PubkeyAuthentication=yes -o StrictHostKeyChecking=no -r ./ splitcm@www322.your-server.de:
+rm ~/.ssh-website-upload/id_rsa
