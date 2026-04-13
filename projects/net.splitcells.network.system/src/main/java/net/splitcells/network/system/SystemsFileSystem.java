@@ -22,6 +22,6 @@ import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystem
 
 public class SystemsFileSystem extends OptionImpl<FileSystemView> {
     public SystemsFileSystem() {
-        super(() -> fileSystemViaClassResources(SystemsFileSystem.class, "net.splitcells", "system"));
+        super(() -> fileSystemViaClassResources(SystemsFileSystem.class, "net.splitcells", "network.system"));
     }
 }
