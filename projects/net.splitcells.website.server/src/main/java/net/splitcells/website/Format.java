@@ -15,8 +15,11 @@
  */
 package net.splitcells.website;
 
+import lombok.val;
 import net.splitcells.dem.resource.ContentType;
 import net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkIntegration;
+
+import java.util.Optional;
 
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -25,43 +28,51 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
  * TODO REMOVE This is a duplicate of {@link ContentType}.
  */
 public enum Format {
-    BINARY("application/octet-stream"),
-    HTML("text/html"),
-    CSS("text/css"),
-    CSV("text/csv"),
-    TEXT_PLAIN("text/plain"),
-    COMMON_MARK("text/markdown"),
-    JSON("application/json"),
-    XML("application/xml");
+    BINARY("application/octet-stream", true),
+    HTML("text/html", false),
+    CSS("text/css", false),
+    CSV("text/csv", false),
+    TEXT_PLAIN("text/plain", false),
+    COMMON_MARK("text/markdown", false),
+    JSON("application/json", false),
+    XML("application/xml", false),
+    ZIP("application/zip", true);
 
     public static Format parse(String arg) {
-        switch (arg) {
-            case "text/html":
-                return HTML;
-            case "text/css":
-                return CSS;
-            case "text/csv":
-                return CSV;
-            case "text/plain":
-                return TEXT_PLAIN;
-            case "text/markdown":
-                return COMMON_MARK;
-            case "application/json":
-                return JSON;
-            case "application/xml":
-                return XML;
-            default:
-                throw execException("Unknown format: " + arg);
+        val parsed = parseOptionally(arg);
+        if (parsed.isEmpty()) {
+            throw execException("Unknown format: " + arg);
         }
+        return parsed.get();
     }
 
-    private final String mimeTypes;
+    public static Optional<Format> parseOptionally(String arg) {
+        return switch (arg) {
+            case "text/html" -> Optional.of(HTML);
+            case "text/css" -> Optional.of(CSS);
+            case "text/csv" -> Optional.of(CSV);
+            case "text/plain" -> Optional.of(TEXT_PLAIN);
+            case "text/markdown" -> Optional.of(COMMON_MARK);
+            case "application/json" -> Optional.of(JSON);
+            case "application/xml" -> Optional.of(XML);
+            default -> Optional.empty();
+        };
+    }
 
-    Format(String mimeTypes) {
+
+    private final String mimeTypes;
+    private final boolean isBinary;
+
+    Format(String mimeTypes, boolean argIsBinary) {
         this.mimeTypes = mimeTypes;
+        isBinary = argIsBinary;
     }
 
     public String mimeTypes() {
         return mimeTypes;
+    }
+
+    public boolean isBinary() {
+        return isBinary;
     }
 }
