@@ -54,7 +54,12 @@ public class AccessContainer<T> implements AccessProvider<T> {
             dataValue = accessSupplier.apply(userSession);
             content.put(dataKey, dataValue);
         }
-        return processor.apply(dataValue);
+        try {
+            return processor.apply(dataValue);
+        } catch (RuntimeException e) {
+            content.remove(dataKey);
+            throw e;
+        }
     }
 
     public synchronized AccessContainer<T> delete(UserSession userSession) {
