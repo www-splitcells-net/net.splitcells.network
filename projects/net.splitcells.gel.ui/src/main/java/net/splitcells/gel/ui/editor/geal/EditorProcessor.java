@@ -12,6 +12,7 @@ import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.LogMessage;
+import net.splitcells.dem.testing.Result;
 import net.splitcells.dem.testing.need.Need;
 import net.splitcells.dem.testing.reporting.ErrorReporter;
 import net.splitcells.gel.editor.Editor;
@@ -23,6 +24,8 @@ import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
 import net.splitcells.website.server.security.access.AccessContainer;
 import net.splitcells.website.server.security.authentication.UserSession;
+
+import java.util.Optional;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -46,6 +49,8 @@ public class EditorProcessor implements Processor<Tree, Tree> {
 
     public static final String PROBLEM_DEFINITION = "Definition";
     private static final String ASYNC = "async";
+    private static final String ASYNC_ID = "async-user-session-life-cycle-id";
+    private static final String REQUEST_UPDATE_FOR_ASYNC_ID = "request-async-update-for-life-cycle-id";
 
     public static final Trail PATH = Trail.trail("net/splitcells/gel/ui/editor/geal/form");
 
@@ -152,19 +157,32 @@ public class EditorProcessor implements Processor<Tree, Tree> {
     @Override
     public Response<Tree> process(Request<Tree> request) {
         val userSession = anonymous();
-        val endResponse = runWithCheckedNeeds(
-                () -> editorAccess.createAndAccess(session -> editor("editor-data-query", EXPLICIT_NO_CONTEXT)
-                        , editor -> process(request, userSession, editor)
-                        , userSession));
-        if (endResponse.working()) {
-            return endResponse.requiredValue();
+        val asyncIdUpdate = Optional.of(request.data().namedChildren(REQUEST_UPDATE_FOR_ASYNC_ID))
+                .filter(List::hasElements)
+                .map(ids -> ids.firstValue().orElseThrow())
+                .stream()
+                .findFirst();
+        Result<Response<Tree>, String> result;
+        if (asyncIdUpdate.isPresent()) {
+            result = runWithCheckedNeeds(
+                    () -> editorAccess.process(asyncEditor -> asyncEditor.processTablesSynchronously(editor -> process(request, userSession, editor))
+                            , userSession
+                            , asyncIdUpdate.orElseThrow().valueName()));
+        } else {
+            result = runWithCheckedNeeds(
+                    () -> editorAccess.createAndAccess(session -> editor("editor-data-query", EXPLICIT_NO_CONTEXT)
+                            , editor -> process(request, userSession, editor)
+                            , userSession));
+        }
+        if (result.working()) {
+            return result.requiredValue();
         }
         val formUpdate = tree(FORM_UPDATE);
         val dataValues = tree(DATA_VALUES).withParent(formUpdate);
         val dataTypes = tree(DATA_TYPES).withParent(formUpdate);
         dataTypes.withProperty(ERRORS, COMMON_MARK.mimeTypes());
         dataValues.withProperty(ERRORS
-                , endResponse.errorMessages()
+                , result.errorMessages()
                         .stream()
                         .reduce((a, b) -> joinDocuments(a, b))
                         .orElse("")
