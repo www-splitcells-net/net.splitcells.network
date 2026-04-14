@@ -20,6 +20,8 @@ import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.website.server.security.authentication.UserSession;
 
+import java.util.function.Consumer;
+
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -45,10 +47,18 @@ public class AccessControlTest {
         final var subjectAccessed = new Firewall() {
             boolean isValid = true;
         };
-        final var testSubject = accessControl(authenticator, c -> {
-            c.accept(subjectAccessed);
-            subjectAccessed.isValid = false;
-        });
+        final var testSubject = accessControl(authenticator,
+                new AccessProvider<Firewall>() {
+                    @Override public void access(Consumer<Firewall> accessor, UserSession userSession) {
+                        accessor.accept(subjectAccessed);
+                        subjectAccessed.isValid = false;
+                    }
+
+                    @Override public void access(Consumer<Firewall> accessor, UserSession userSession, String lifeCycleId) {
+                        accessor.accept(subjectAccessed);
+                        subjectAccessed.isValid = false;
+                    }
+                });
         testSubject.access((u, a) -> {
             accessCounter.requireEmpty();
             userSessions.requireEmpty();

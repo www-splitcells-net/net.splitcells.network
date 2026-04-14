@@ -58,4 +58,8 @@ public class Authentication implements Option<Authenticator> {
     public static UserSession anonymous() {
         return configValue(Authentication.class).anonymous();
     }
+
+    public static String lifeCycleId(UserSession userSession) {
+        return configValue(Authentication.class).lifeCycleId(userSession);
+    }
 }

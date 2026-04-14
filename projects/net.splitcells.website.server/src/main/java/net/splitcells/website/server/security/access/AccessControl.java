@@ -57,4 +57,6 @@ public interface AccessControl<T extends Firewall> {
      * @param userSession This object authorizes the access for the action.
      */
     void access(BiConsumer<UserSession, T> action, UserSession userSession);
+
+    void access(BiConsumer<UserSession, T> action, UserSession userSession, String lifeCycleId);
 }

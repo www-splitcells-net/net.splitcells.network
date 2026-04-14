@@ -92,4 +92,6 @@ public interface Authenticator {
      * in order to avoid unexpected things based on usernames.
      */
     String name(UserSession userSession);
+
+    String lifeCycleId(UserSession userSession);
 }

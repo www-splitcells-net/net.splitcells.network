@@ -25,32 +25,38 @@ import java.util.function.BiConsumer;
 import static net.splitcells.dem.Dem.configValue;
 
 public class AccessControlImpl<T extends Firewall> implements AccessControl<T> {
-    public static <R extends Firewall> AccessControl<R> accessControl(AccessSession<R> accessSession) {
-        return new AccessControlImpl<>(configValue(Authentication.class), accessSession);
+    public static <R extends Firewall> AccessControl<R> accessControl(AccessProvider<R> accessProvider) {
+        return new AccessControlImpl<>(configValue(Authentication.class), accessProvider);
     }
 
     public static <R extends Firewall> AccessControl<R> accessControl(Authenticator authenticator
-            , AccessSession<R> accessSession) {
-        return new AccessControlImpl<>(authenticator, accessSession);
+            , AccessProvider<R> accessProvider) {
+        return new AccessControlImpl<>(authenticator, accessProvider);
     }
 
     private final Authenticator authenticator;
-    private final AccessSession<T> accessSession;
+    private final AccessProvider<T> accessProvider;
 
-    private AccessControlImpl(Authenticator argAuthenticator, AccessSession<T> argAccessSession) {
+    private AccessControlImpl(Authenticator argAuthenticator, AccessProvider<T> argAccessProvider) {
         authenticator = argAuthenticator;
-        accessSession = argAccessSession;
+        accessProvider = argAccessProvider;
     }
 
-    @Override
-    public void access(BiConsumer<UserSession, T> action, Login login) {
+    @Override public void access(BiConsumer<UserSession, T> action, Login login) {
         access(action, authenticator.userSession(login));
     }
 
-    @Override
-    public void access(BiConsumer<UserSession, T> action, UserSession userSession) {
+    @Override public void access(BiConsumer<UserSession, T> action, UserSession userSession) {
         try {
-            accessSession.access(a -> action.accept(userSession, a));
+            accessProvider.access(a -> action.accept(userSession, a), userSession);
+        } finally {
+            authenticator.endSession(userSession);
+        }
+    }
+
+    @Override public void access(BiConsumer<UserSession, T> action, UserSession userSession, String lifeCycleId) {
+        try {
+            accessProvider.access(a -> action.accept(userSession, a), userSession, lifeCycleId);
         } finally {
             authenticator.endSession(userSession);
         }

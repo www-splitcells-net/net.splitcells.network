@@ -159,6 +159,12 @@ public class AuthenticatorImpl implements Authenticator {
         return sessionState.value(userSession).getUsername();
     }
 
+    @Override
+    public synchronized String lifeCycleId(UserSession userSession) {
+        requireValid(userSession);
+        return sessionState.value(userSession).getLifeCycleId();
+    }
+
     private synchronized void requireValid(UserSession userSession) {
         if (!isValid(userSession)) {
             throw ExecutionException.execException(tree("The given user session is invalid")
