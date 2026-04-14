@@ -7,6 +7,11 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
 
 ## [Unreleased]
 ### Major Changes
+* **2026-04-14: \#37**
+    * Every user session now also gets a life cycle id.
+      This id can be used, to retrieve data of one user session from another one.
+      This should in general only be used to access data from different sessions but the same user.
+    * The user session anonymous now works like any other user session. 
 * **2025-08-14: \#37** Rename `net.splitcells.website.Formats` to `net.splitcells.website.Format`,
   in order to make the enum's name consistent with its values.
 * **2024-11-05: \#37** Add basic security system:
