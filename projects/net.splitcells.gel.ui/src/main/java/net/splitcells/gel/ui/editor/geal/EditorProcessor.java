@@ -44,6 +44,7 @@ import static net.splitcells.website.Format.*;
 import static net.splitcells.website.server.messages.FormUpdate.*;
 import static net.splitcells.website.server.processor.Response.response;
 import static net.splitcells.website.server.security.authentication.Authentication.anonymous;
+import static net.splitcells.website.server.security.authentication.Authentication.lifeCycleId;
 
 public class EditorProcessor implements Processor<Tree, Tree> {
 
@@ -83,6 +84,8 @@ public class EditorProcessor implements Processor<Tree, Tree> {
         val isSync = asyncs.isEmpty() || !"true".equals(asyncs.get(0).valueName());
         if (isSync) {
             editor.optimize();
+        } else {
+            tree(ASYNC_ID).withChild(tree(lifeCycleId(userSession))).withParent(formUpdate);
         }
         editor.getTables().entrySet().forEach(e -> {
             dataValues.withProperty(e.getKey(), e.getValue().toCSV(reportInvalidCsvData(e.getKey())));
