@@ -130,8 +130,11 @@ public class EditorProcessor implements Processor<Tree, Tree> {
             editorAccess.delete(userSession);
         } else {
             Dem.executeThread(EditorProcessor.class, () -> {
-                editor.optimize();
-                editorAccess.delete(userSession);
+                try {
+                    editor.optimize();
+                } finally {
+                    editorAccess.delete(userSession);
+                }
             });
         }
         return response(formUpdate);
