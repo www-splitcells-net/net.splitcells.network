@@ -51,6 +51,8 @@ The changelog format can be found [here](../../src/main/md/net/splitcells/networ
   2. Create interface `ProjectsRenderer` used by `ProjectsRendererI`.
      This way alternative web server implementations are possible.
 ### Minor Changes
+* **2026-04-14 \#37:** Expand AccessController, so it can hold user session specific data and
+  also provide a way to share data of one user across user sessions.
 * **2025-09-27 \#8:** Define `HtmlClientImpl#evalIfExists`.
 * **2024-08-24 \#37:** Provide optional multi-threading of `net.splitcells.website.server.Server#serveToHttpAt`.
   The multi-threading is achieved by using a copy of the `ProjectsRenderer` for each thread.
