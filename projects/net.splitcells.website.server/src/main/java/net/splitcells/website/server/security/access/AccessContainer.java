@@ -5,6 +5,7 @@ package net.splitcells.website.server.security.access;
 
 import lombok.val;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.website.server.security.authentication.Authenticator;
 import net.splitcells.website.server.security.authentication.UserSession;
 
 import java.util.function.Consumer;
@@ -17,6 +18,12 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.website.server.security.authentication.Authentication.lifeCycleId;
 import static net.splitcells.website.server.security.authentication.Authentication.name;
 
+/**
+ * <p>Provides data specific to {@link UserSession} and {@link Authenticator#lifeCycleId(UserSession)}.</p>
+ * <p>TODO Currently, the life cycle of the data has to be managed manually. This is not good.</p>
+ *
+ * @param <T>
+ */
 public class AccessContainer<T> implements AccessProvider<T> {
     public static <R> AccessContainer<R> accessContainer() {
         return new AccessContainer<>();
