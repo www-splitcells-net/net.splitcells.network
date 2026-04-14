@@ -321,7 +321,14 @@ public class Server {
                                     if (routingContext.request().isExpectMultipart()) {
                                         vertx.<byte[]>executeBlocking(promise -> {
                                                     val requestPath = routingContext.request().path();
+                                                    final UserSession user;
+                                                    if (routingContext.user() == null) {
+                                                        user = anonymous();
+                                                    } else {
+                                                        user = (UserSession) routingContext.user().attributes().getValue(LOGIN_KEY);
+                                                    }
                                                     final var binaryRequest = parseBinaryRequest(requestPath
+                                                            , user
                                                             , routingContext.request().formAttributes());
                                                     logs().append(tree("Processing web server binary request.")
                                                                     .withProperty("Binary request", binaryRequest.data())
@@ -452,7 +459,7 @@ public class Server {
         }
     }
 
-    private static Request<Tree> parseBinaryRequest(String path, MultiMap multiMap) {
+    private static Request<Tree> parseBinaryRequest(String path, UserSession userSession, MultiMap multiMap) {
         final var pathSplit = Lists.listWithValuesOf(path.split("/"));
         if (!pathSplit.isEmpty() && "".equals(pathSplit.get(0))) {
             pathSplit.removeAt(0);
@@ -461,7 +468,7 @@ public class Server {
         multiMap.entries().forEach(entry -> {
             requestData.withProperty(entry.getKey(), entry.getValue());
         });
-        return request(trail(pathSplit), requestData);
+        return request(trail(pathSplit), requestData, userSession);
     }
 
     /**
