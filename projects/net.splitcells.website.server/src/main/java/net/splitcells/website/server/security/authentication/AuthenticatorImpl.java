@@ -116,9 +116,9 @@ public class AuthenticatorImpl implements Authenticator {
             return userSession;
         }
         validUserSessions.add(userSession);
-        userSessionState.setUsername(login.username()).setLifeCycleId(rnd.readableAsciiString(64));
+        userSessionState.setUsername(login.username()).setLifeCycleId(rnd.alphaNumericString(64));
         while (sessionsByLifeCycleId.hasKey(userSessionState.getLifeCycleId())) {
-            userSessionState.setLifeCycleId(rnd.readableAsciiString(64));
+            userSessionState.setLifeCycleId(rnd.alphaNumericString(64));
         }
         sessionsByLifeCycleId.put(userSessionState.getLifeCycleId(), userSession);
         sessionState.put(userSession, userSessionState);

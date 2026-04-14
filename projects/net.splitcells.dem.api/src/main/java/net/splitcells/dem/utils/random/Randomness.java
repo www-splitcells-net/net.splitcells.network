@@ -34,6 +34,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public interface Randomness {
+    String ALPHA_NUMERIC = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     /**
      * Creates a deterministic {@link Randomness}, that returns it's values according to the given
@@ -152,6 +153,14 @@ public interface Randomness {
         final StringBuilder rBase = new StringBuilder();
         for (int i = 0; i < size; ++i) {
             rBase.append((char) asRandom().nextInt(126));
+        }
+        return rBase.toString();
+    }
+
+    default String alphaNumericString(int size) {
+        final StringBuilder rBase = new StringBuilder();
+        for (int i = 0; i < size; ++i) {
+            rBase.append(ALPHA_NUMERIC.charAt(asRandom().nextInt(ALPHA_NUMERIC.length())));
         }
         return rBase.toString();
     }
