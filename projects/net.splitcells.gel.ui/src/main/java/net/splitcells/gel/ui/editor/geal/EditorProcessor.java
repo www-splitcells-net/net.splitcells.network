@@ -45,7 +45,7 @@ import static net.splitcells.website.server.security.authentication.Authenticati
 public class EditorProcessor implements Processor<Tree, Tree> {
 
     public static final String PROBLEM_DEFINITION = "Definition";
-    public static final String ASYNC = "async";
+    private static final String ASYNC = "async";
 
     public static final Trail PATH = Trail.trail("net/splitcells/gel/ui/editor/geal/form");
 
@@ -74,8 +74,8 @@ public class EditorProcessor implements Processor<Tree, Tree> {
         val dataTypes = tree(DATA_TYPES).withParent(formUpdate);
         val dataValues = tree(DATA_VALUES).withParent(formUpdate);
         val renderingTypes = tree(RENDERING_TYPES).withParent(formUpdate);
-        val async = request.data().namedChildren(ASYNC);
-        val isSync = async.isEmpty() || !"true".equals(async.get(0).valueName());
+        val asyncs = request.data().namedChildren(ASYNC);
+        val isSync = asyncs.isEmpty() || !"true".equals(asyncs.get(0).valueName());
         if (isSync) {
             editor.optimize();
         }
