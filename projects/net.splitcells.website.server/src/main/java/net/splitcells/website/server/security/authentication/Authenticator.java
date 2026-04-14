@@ -18,6 +18,7 @@ package net.splitcells.website.server.security.authentication;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
+import static net.splitcells.website.server.security.authentication.Login.anonymousLogin;
 import static net.splitcells.website.server.security.authentication.Login.login;
 import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_NAME;
 
@@ -48,8 +49,10 @@ public interface Authenticator {
     UserSession userSession(Login login);
 
     default UserSession anonymous() {
-        return userSession(login(ANONYMOUS_USER_NAME, "no-password"));
+        return userSession(anonymousLogin());
     }
+
+    boolean isActivelyAuthenticated(UserSession userSession);
 
     /**
      * <p>TODO Maybe it makes sense, to limit the number of valid {@link UserSession} at any given time,
@@ -63,7 +66,7 @@ public interface Authenticator {
      * Such {@link UserSession} are primarily ones, that were created by this {@link Authenticator} and is
      * still valid and therefore its lifetime has not ended yet.
      * There are also valid {@link UserSession}, that are not created by this,
-     * like {@link UserSession#ANONYMOUS_USER_SESSION} or {@link UserSession#INSECURE_USER_SESSION}.
+     * like {@link UserSession#ANONYMOUS_USER_NAME}.
      * In other words, a {@link UserSession} is valid, when an {@link Login} was successfully mapped
      * to an {@link UserSession}, regardless of the correctness of the user's login data.
      * Therefore, a given {@link UserSession} is also a report regarding the validity of a corresponding {@link Login}.

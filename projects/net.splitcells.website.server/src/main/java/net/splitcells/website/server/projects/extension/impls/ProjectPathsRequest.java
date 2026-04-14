@@ -16,9 +16,11 @@
 package net.splitcells.website.server.projects.extension.impls;
 
 import net.splitcells.website.server.projects.ProjectsRenderer;
+import net.splitcells.website.server.security.authentication.Authentication;
 import net.splitcells.website.server.security.authentication.UserSession;
 
-import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
+import static net.splitcells.dem.Dem.configValue;
+import static net.splitcells.website.server.security.authentication.Authentication.anonymous;
 
 /**
  * An instance to request all website paths via {@link ProjectsRenderer#projectPaths(ProjectPathsRequest)}.
@@ -29,7 +31,7 @@ public class ProjectPathsRequest {
     }
 
     private final ProjectsRenderer projectsRenderer;
-    private UserSession requestor = ANONYMOUS_USER_SESSION;
+    private UserSession requestor = anonymous();
 
     private ProjectPathsRequest(ProjectsRenderer argProjectsRenderer) {
         projectsRenderer = argProjectsRenderer;

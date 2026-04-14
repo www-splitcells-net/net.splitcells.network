@@ -12,11 +12,16 @@ public class UserSessionState {
     public static UserSessionState userSessionState() {
         return new UserSessionState();
     }
-    
+
     @Getter @Setter String username;
     @Getter @Setter String lifeCycleId;
-    
+    /**
+     * This is true for users, that are registered to the program.
+     * Users like {@link Authenticator#anonymous()} are not actively authenticated.
+     */
+    @Getter @Setter boolean isActivelyAuthenticated = false;
+
     private UserSessionState() {
-        
+
     }
 }

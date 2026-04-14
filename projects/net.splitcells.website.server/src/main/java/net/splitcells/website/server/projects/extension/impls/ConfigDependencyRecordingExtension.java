@@ -35,7 +35,6 @@ import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.utils.StringUtils.stringBuilder;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.projects.RenderResponse.renderResponse;
-import static net.splitcells.website.server.security.authentication.UserSession.isValidNoLoginStandard;
 import static net.splitcells.website.server.security.authorization.AdminRole.ADMIN_ROLE;
 import static net.splitcells.website.server.security.authorization.Authorization.missesRole;
 
@@ -68,9 +67,7 @@ public class ConfigDependencyRecordingExtension implements ProjectsRendererExten
         if (!request.trail().equalContents(DEPENDENCY_RECORDING_PATH)) {
             return renderResponse(Optional.empty());
         }
-        if (isValidNoLoginStandard(request.user())) {
-            return projectsRenderer.renderMissingLogin(request);
-        } else if (missesRole(request.user(), ADMIN_ROLE)) {
+        if (missesRole(request.user(), ADMIN_ROLE)) {
             return projectsRenderer.renderMissingAccessRights(request);
         } else {
             final var content = stringBuilder();

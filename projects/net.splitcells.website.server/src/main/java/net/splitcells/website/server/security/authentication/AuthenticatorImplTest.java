@@ -23,8 +23,6 @@ import static net.splitcells.dem.testing.Assertions.requireDistinct;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.website.server.security.authentication.AuthenticatorImpl.PASSWORD_FILE;
 import static net.splitcells.website.server.security.authentication.AuthenticatorImpl.authenticatorBasedOnFiles;
-import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
-import static net.splitcells.website.server.security.authentication.UserSession.INSECURE_USER_SESSION;
 
 public class AuthenticatorImplTest {
     @UnitTest
@@ -36,11 +34,10 @@ public class AuthenticatorImplTest {
         userData.writeToFile(username + PASSWORD_FILE, StringUtils.toBytes(password));
         final var testSubject = authenticatorBasedOnFiles(userData);
         final var validLogin = testSubject.userSession(Login.login(username, password));
-        requireDistinct(validLogin, ANONYMOUS_USER_SESSION);
-        requireDistinct(validLogin, INSECURE_USER_SESSION);
-        requireEquals(testSubject.userSession(Login.login(username, "not-password"))
-                , INSECURE_USER_SESSION);
-        requireEquals(testSubject.userSession(Login.login("not-user", "not-password"))
-                , INSECURE_USER_SESSION);
+        requireDistinct(validLogin, testSubject.anonymous());
+        requireEquals(testSubject.name(testSubject.userSession(Login.login(username, "not-password")))
+                , testSubject.name(testSubject.anonymous()));
+        requireEquals(testSubject.name(testSubject.userSession(Login.login("not-user", "not-password")))
+                , testSubject.name(testSubject.anonymous()));
     }
 }

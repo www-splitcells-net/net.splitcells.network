@@ -41,33 +41,12 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
  * that cannot be copied, faked and misused for other than intended operations.</p>
  */
 public class UserSession {
-    /**
-     * This method exists, so that valid {@link UserSession} without a login can be checked,
-     * while having a central location for such a default definition.
-     *
-     * @param userSession
-     * @return Returns true if the given {@link UserSession} is one,
-     * that is always expected to be true by default for any given {@link Authentication}.
-     * Any {@link Authentication} is allowed to not discard such {@link UserSession},
-     * but most will accept such.
-     */
-    public static boolean isValidNoLoginStandard(UserSession userSession) {
-        return userSession == ANONYMOUS_USER_SESSION || userSession == INSECURE_USER_SESSION;
-    }
-
-    public static String noLoginUserId(UserSession userSession) {
-        if (userSession == ANONYMOUS_USER_SESSION) {
-            return ANONYMOUS_USER_NAME;
-        }
-        if (userSession == INSECURE_USER_SESSION) {
-            return INSECURE_USER_NAME;
-        }
-        throw ExecutionException.execException(tree("Not a valid no login user was given")
-                .withProperty("user session", userSession.toString()));
-    }
 
     /**
-     * This is the id of the user of {@link #ANONYMOUS_USER_SESSION}.
+     * This is the id of an unauthenticated virtual user.
+     * As a username is no secret, this is not considered to be a security issue.
+     * Therefore, this is used for {@link UserSession}, that represents a not registred user.
+     * This is also known as a random internet user.
      */
     public static final String ANONYMOUS_USER_NAME = "anonymous";
 
@@ -76,18 +55,13 @@ public class UserSession {
      */
     public static final String INSECURE_USER_NAME = "insecure-user";
     /**
-     * This {@link UserSession} is created without any {@link Login},
-     * or a login with an invalid name.
-     * As a username is no secret, this is not considered to be a security issue.
-     * Therefore, this {@link UserSession} represents a user,
-     * that is not registered to this program.
-     * This is also known as a random internet user.
+
      */
     public static final UserSession ANONYMOUS_USER_SESSION = notAuthenticatedUser();
     /**
      * This {@link UserSession} is created by invalid secrets provided by {@link Login}.
      * If no special treatment is required,
-     * this user can also be handled exactly like {@link #ANONYMOUS_USER_SESSION}.
+     * this user can also be handled exactly like {@link #ANONYMOUS_USER_NAME}.
      */
     public static final UserSession INSECURE_USER_SESSION = notAuthenticatedUser();
 

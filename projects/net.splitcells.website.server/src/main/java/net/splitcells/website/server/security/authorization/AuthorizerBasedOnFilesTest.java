@@ -21,6 +21,7 @@ import net.splitcells.dem.utils.StringUtils;
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.resource.FileSystemViaMemory.fileSystemViaMemory;
+import static net.splitcells.website.server.security.authentication.Authentication.anonymous;
 import static net.splitcells.website.server.security.authentication.UserSession.*;
 import static net.splitcells.website.server.security.authorization.AuthorizerBasedOnFiles.ROLE_FOLDER;
 import static net.splitcells.website.server.security.authorization.AuthorizerBasedOnFiles.authorizerBasedOnFiles;
@@ -35,7 +36,6 @@ public class AuthorizerBasedOnFilesTest {
         userData.createDirectoryPath(username + ROLE_FOLDER);
         userData.writeToFile(username + ROLE_FOLDER + roleName, StringUtils.toBytes(""));
         final var testSubject = authorizerBasedOnFiles(userData);
-        require(testSubject.hasRole(ANONYMOUS_USER_SESSION, role(roleName)));
-        requireNot(testSubject.hasRole(INSECURE_USER_SESSION, role(roleName)));
+        require(testSubject.hasRole(anonymous(), role(roleName)));
     }
 }

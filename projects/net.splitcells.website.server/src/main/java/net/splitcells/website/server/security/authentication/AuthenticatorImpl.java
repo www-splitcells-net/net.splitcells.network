@@ -74,18 +74,18 @@ public class AuthenticatorImpl implements Authenticator {
     public static Authenticator authenticatorBasedOnFiles(FileSystemView userData) {
         return new AuthenticatorImpl((login, argAuthenticator) -> {
             if (!userData.isFile(login.username() + AuthenticatorImpl.PASSWORD_FILE)) {
-                return INSECURE_USER_SESSION;
+                return argAuthenticator.anonymous();
             }
             /* TODO HACK This was a hack, because the equals method did not work otherwise.
              * Currently, it is unknown, why some text editors like nano add a new line symbol to the end,
              * that cannot be seen.
              */
             if (!VALID_USERNAME_SYMBOLS.matcher(login.username()).matches()) {
-                return INSECURE_USER_SESSION;
+                return argAuthenticator.anonymous();
             }
             final var storedPassword = userData.readString(login.username() + AuthenticatorImpl.PASSWORD_FILE).split("\n")[0];
             if (!login.password().equals(storedPassword)) {
-                return INSECURE_USER_SESSION;
+                return argAuthenticator.anonymous();
             }
             return UserSession.user(argAuthenticator);
         });
@@ -103,17 +103,20 @@ public class AuthenticatorImpl implements Authenticator {
 
     @Override
     public synchronized UserSession userSession(Login login) {
-
         final UserSession userSession;
+        val userSessionState = userSessionState();
         if (ANONYMOUS_USER_NAME.equals(login.username())) {
             userSession = user(this);
         } else {
             userSession = authenticator.apply(login, this);
+
+            userSessionState.setActivelyAuthenticated(true);
+        }
+        if (sessionState.hasKey(userSession)) {
+            return userSession;
         }
         validUserSessions.add(userSession);
-        val userSessionState = userSessionState()
-                .setUsername(login.username())
-                .setLifeCycleId(rnd.readableAsciiString(64));
+        userSessionState.setUsername(login.username()).setLifeCycleId(rnd.readableAsciiString(64));
         while (sessionsByLifeCycleId.hasKey(userSessionState.getLifeCycleId())) {
             userSessionState.setLifeCycleId(rnd.readableAsciiString(64));
         }
@@ -128,12 +131,12 @@ public class AuthenticatorImpl implements Authenticator {
     }
 
     @Override
+    public synchronized boolean isActivelyAuthenticated(UserSession userSession) {
+        return sessionState.value(userSession).isActivelyAuthenticated();
+    }
+
+    @Override
     public synchronized boolean isValid(UserSession userSession) {
-        if (isValidNoLoginStandard(userSession)) {
-            validUserSessions.requireAbsenceOf(userSession);
-            sessionState.requireKeyAbsence(userSession);
-            return true;
-        }
         if (userSession.authenticatedBy().isEmpty()) {
             return false;
         }
@@ -146,11 +149,6 @@ public class AuthenticatorImpl implements Authenticator {
     @Override
     public synchronized void endSession(UserSession userSession) {
         requireValid(userSession);
-        if (isValidNoLoginStandard(userSession)) {
-            validUserSessions.requireAbsenceOf(userSession);
-            sessionState.requireKeyAbsence(userSession);
-            return;
-        }
         validUserSessions.delete(userSession);
         sessionsByLifeCycleId.remove(sessionState.remove(userSession).getLifeCycleId());
     }
@@ -158,10 +156,6 @@ public class AuthenticatorImpl implements Authenticator {
     @Override
     public synchronized String name(UserSession userSession) {
         requireValid(userSession);
-        if (isValidNoLoginStandard(userSession)) {
-            sessionState.requireKeyAbsence(userSession);
-            return noLoginUserId(userSession);
-        }
         return sessionState.value(userSession).getUsername();
     }
 

@@ -36,6 +36,7 @@ import net.splitcells.website.server.Config;
 import net.splitcells.website.server.projects.extension.impls.ProjectPathsRequest;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtensionMerger;
+import net.splitcells.website.server.security.authentication.Authentication;
 import net.splitcells.website.server.security.authentication.UserSession;
 
 import java.nio.file.Path;
@@ -44,6 +45,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
+import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.map.Maps.map;
@@ -79,6 +81,7 @@ import static net.splitcells.website.server.projects.extension.impls.status.Host
 import static net.splitcells.website.server.projects.extension.impls.status.HostMemoryUtilizationExtension.hostMemoryUtilizationExtension;
 import static net.splitcells.website.server.projects.extension.impls.status.NetworkStatusRenderExtension.networkStatusRenderExtension;
 import static net.splitcells.website.server.projects.extension.ProjectsRendererExtensionMerger.projectsRendererExtensionMerger;
+import static net.splitcells.website.server.security.authentication.Authentication.anonymous;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -156,7 +159,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
                         Files.createDirectory(targetPath.getParent());
                         Files.writeToFile(targetPath, render(renderRequest(trail(path.substring(1))
                                 , Optional.empty()
-                                , UserSession.ANONYMOUS_USER_SESSION)).data().orElseThrow().getContent());
+                                , anonymous())).data().orElseThrow().getContent());
                     } catch (Exception e) {
                         throw ExecutionException.execException(tree("Could not serve path to file system.")
                                         .withProperty("target", target.toString())

@@ -25,6 +25,7 @@ import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.FileSystemViaMemory.fileSystemViaMemory;
 import static net.splitcells.website.server.security.access.AccessControlImpl.accessControl;
+import static net.splitcells.website.server.security.authentication.Authentication.isActivelyAuthenticated;
 import static net.splitcells.website.server.security.authentication.AuthenticatorImpl.PASSWORD_FILE;
 import static net.splitcells.website.server.security.authentication.AuthenticatorImpl.authenticatorBasedOnFiles;
 import static net.splitcells.website.server.security.authentication.Login.login;
@@ -52,7 +53,7 @@ public class AccessControlTest {
             accessCounter.requireEmpty();
             userSessions.requireEmpty();
             require(subjectAccessed.isValid);
-            if (!isValidNoLoginStandard(u)) {
+            if (authenticator.isActivelyAuthenticated(u)) {
                 userSessions.add(u);
                 accessCounter.add(a);
             }

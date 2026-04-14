@@ -35,7 +35,7 @@ import static net.splitcells.dem.utils.StringUtils.stringBuilder;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.projects.RenderResponse.renderResponse;
 import static net.splitcells.website.server.projects.extension.impls.ProjectPathsRequest.projectPathsRequest;
-import static net.splitcells.website.server.security.authentication.UserSession.isValidNoLoginStandard;
+import static net.splitcells.website.server.security.authentication.Authentication.isActivelyAuthenticated;
 
 public class UserProfilePageExtension implements ProjectsRendererExtension {
     private static final Trail PROFILE_PATH = trail("net/splitcells/website/server/projects/extension/user-profile-page-extension.html");
@@ -53,7 +53,7 @@ public class UserProfilePageExtension implements ProjectsRendererExtension {
         if (!request.trail().equalContents(PROFILE_PATH)) {
             return renderResponse(Optional.empty());
         }
-        if (isValidNoLoginStandard(request.user())) {
+        if (!isActivelyAuthenticated(request.user())) {
             return projectsRenderer.renderMissingLogin(request);
         } else {
             final var content = stringBuilder();

@@ -55,6 +55,7 @@ import net.splitcells.website.server.projects.RenderRequest;
 import net.splitcells.website.server.projects.RenderResponse;
 import net.splitcells.website.server.projects.extension.impls.ProjectPathsRequest;
 import net.splitcells.website.server.security.access.AccessControl;
+import net.splitcells.website.server.security.authentication.Authentication;
 import net.splitcells.website.server.security.authentication.UserSession;
 import net.splitcells.website.server.security.encryption.PrivateIdentityPemStore;
 import net.splitcells.website.server.security.encryption.PublicIdentityPemStore;
@@ -88,6 +89,8 @@ import static net.splitcells.website.server.processor.Request.request;
 import static net.splitcells.website.server.projects.RenderRequest.renderRequest;
 import static net.splitcells.website.server.security.access.AccessControlImpl.accessControl;
 import static net.splitcells.website.server.security.access.AccessSession.unsecuredStaticAccessSession;
+import static net.splitcells.website.server.security.authentication.Authentication.anonymous;
+import static net.splitcells.website.server.security.authentication.Login.anonymousLogin;
 import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
 import static net.splitcells.website.server.vertx.FileBasedAuthenticationProvider.LOGIN_KEY;
 import static net.splitcells.website.server.vertx.FileBasedAuthenticationProvider.fileBasedAuthenticationProvider;
@@ -309,7 +312,7 @@ public class Server {
                                                 } else {
                                                     routingContext.next();
                                                 }
-                                            }, ANONYMOUS_USER_SESSION);
+                                            }, anonymousLogin());
                                         } else {
                                             routingContext.next();
                                         }
@@ -350,7 +353,7 @@ public class Server {
                                                          */
                                                         final UserSession user;
                                                         if (routingContext.user() == null) {
-                                                            user = ANONYMOUS_USER_SESSION;
+                                                            user = anonymous();
                                                         } else {
                                                             user = (UserSession) routingContext.user().attributes().getValue(LOGIN_KEY);
                                                         }

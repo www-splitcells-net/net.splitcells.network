@@ -24,11 +24,14 @@ import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.website.server.ServerConfig;
 import net.splitcells.website.server.projects.RenderRequest;
+import net.splitcells.website.server.security.authentication.Authentication;
 
 import java.nio.file.Paths;
 import java.util.Optional;
 
+import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.Dem.process;
+import static net.splitcells.website.server.security.authentication.Authentication.anonymous;
 import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
 
 public class SystemCellTest {
@@ -46,7 +49,7 @@ public class SystemCellTest {
         process(() -> SystemCell.projectsRenderer(Dem.configValue(ServerConfig.class)).render(RenderRequest.renderRequest(
                         Trail.trail("invalid-path")
                         , Optional.empty()
-                        , ANONYMOUS_USER_SESSION))
+                        , anonymous()))
                 , env -> env.config().withConfigValue(StartServicesAutomatically.class, false)
                 , SystemCell.class);
     }

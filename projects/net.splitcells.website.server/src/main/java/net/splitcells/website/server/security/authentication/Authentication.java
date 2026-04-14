@@ -23,7 +23,6 @@ import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.website.server.security.authentication.AuthenticatorImpl.authenticator;
-import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
 
 /**
  * <p>Any used {@link Authenticator}, has to be thread safe, when a multi thread {@link Dem#process(Runnable)} is used.</p>
@@ -37,7 +36,7 @@ public class Authentication implements Option<Authenticator> {
 
     @Override
     public Authenticator defaultValue() {
-        return authenticator((login, authenticator) -> ANONYMOUS_USER_SESSION);
+        return authenticator((login, authenticator) -> authenticator.anonymous());
     }
 
     public static UserSession requireValid(UserSession userSession) {
@@ -50,5 +49,13 @@ public class Authentication implements Option<Authenticator> {
 
     public static String name(UserSession userSession) {
         return configValue(Authentication.class).name(userSession);
+    }
+    
+    public static boolean isActivelyAuthenticated(UserSession userSession) {
+        return configValue(Authentication.class).isActivelyAuthenticated(userSession);
+    }
+
+    public static UserSession anonymous() {
+        return configValue(Authentication.class).anonymous();
     }
 }
