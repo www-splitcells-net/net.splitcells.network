@@ -81,7 +81,13 @@ public interface Cell extends Consumer<Environment>, Discoverable, Option<Consum
     String artifactId();
 
     /**
-     * This method is declared here, in order to improve the autocompletion of the parameter name by IDEs.
+     * <p>When this is implemented, most of the time {@link Environment#withCell(Class)}
+     * should be called as late as possible,
+     * so that any custom settings of this {@link Cell} are considered in the {@link Cell} dependencies.
+     * For instance, any changes to the webserver configuration should be considered by the website server {@link Cell}
+     * and therefore these configurations should be set before calling the wbsite server {@link Cell}. 
+     * Otherwise, these changes are lost.</p>
+     * <p>This method is declared here, in order to improve the autocompletion of the parameter name by IDEs.</p>
      *
      * @param env The configuration that bootstraps this {@link Cell}.
      */
