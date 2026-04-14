@@ -23,13 +23,19 @@ import net.splitcells.website.server.security.authentication.UserSession;
 import java.util.function.BiConsumer;
 
 /**
- * TODO Consider using the {@link UserSession} that is stored at a new {@link Dem#config()}.
+ * <p>Provides authenticated and authorized access to existing things.</p>
+ * <p>TODO The difference between {@link AccessControl} and {@link AccessContainer} is the paradigm for managing content.
+ * In other words, {@link AccessControl} manages the access to something, that may or may not be owned by the user,
+ * whereas {@link AccessContainer} stores and provides user specific data.
+ * Therefore, {@link AccessControl} is read-only oriented and {@link AccessContainer} supports read and write access.
+ * Maybe this fact should be reflected by the interface hierachy.</p>
+ * <p>TODO Consider using the {@link UserSession} that is stored at a new {@link Dem#config()}.
  * In other words, for every user access a child {@link Dem} would have to be created,
  * where {@link Dem#config()} is the same as the parent one,
  * but contains the current {@link UserSession}.
  * The advantage of this, is the fact, that a {@link UserSession} always exists and
  * is harder to accidentally swap with other {@link UserSession},
- * which causes access rights escalations.
+ * which causes access rights escalations.</p>
  *
  * @param <T> This is the type of object, whose access is controlled via {@link UserSession}.
  *            The instance of these themselves are responsible to only allow things,

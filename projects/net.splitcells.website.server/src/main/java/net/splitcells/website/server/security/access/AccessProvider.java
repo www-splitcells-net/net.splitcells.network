@@ -7,6 +7,11 @@ import net.splitcells.website.server.security.authentication.UserSession;
 
 import java.util.function.Consumer;
 
+/**
+ * Provides access to existing data for authenticated and authorized users.
+ * 
+ * @param <T>
+ */
 public interface AccessProvider<T> {
     static <R> AccessProvider<R> unsecuredStaticAccessSession(R staticValue) {
         return new AccessProvider<>() {

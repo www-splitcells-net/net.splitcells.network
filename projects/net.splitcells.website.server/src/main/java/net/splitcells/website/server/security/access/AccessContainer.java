@@ -20,7 +20,7 @@ import static net.splitcells.website.server.security.authentication.Authenticati
 
 /**
  * <p>Provides data specific to {@link UserSession} and {@link Authenticator#lifeCycleId(UserSession)}.
- * In other words, user specific data can be stored here.</p>
+ * In other words, user specific data can be stored and accessed here.</p>
  * <p>TODO Currently, the life cycle of the data has to be managed manually. This is not good.</p>
  *
  * @param <T>
