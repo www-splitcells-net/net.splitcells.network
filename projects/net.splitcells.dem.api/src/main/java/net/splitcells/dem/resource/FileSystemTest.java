@@ -132,10 +132,7 @@ public class FileSystemTest extends TestSuiteI {
                 .map(Path::toString)
                 .collect(toSetOfUniques())
                 .requireContentsOf(expectedResult);
-        requireThrow(() -> testSubject.reader.walkRecursively(Path.of("./not-existing-folder"))
-                .map(Path::toString)
-                .collect(toSetOfUniques())
-                .requireContentsOf(expectedResult));
+        requireThrow(() -> testSubject.reader.walkRecursively(Path.of("./not-existing-folder")));
     }
 
     /**
