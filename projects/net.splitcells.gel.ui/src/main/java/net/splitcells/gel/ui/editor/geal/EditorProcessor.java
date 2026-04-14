@@ -4,6 +4,7 @@
 package net.splitcells.gel.ui.editor.geal;
 
 import lombok.val;
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.CommonMarkConfig;
@@ -13,13 +14,16 @@ import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.LogMessage;
 import net.splitcells.dem.testing.need.Need;
 import net.splitcells.dem.testing.reporting.ErrorReporter;
+import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.EditorData;
 import net.splitcells.website.Format;
 import net.splitcells.website.server.messages.FormUpdate;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
+import net.splitcells.website.server.security.access.AccessContainer;
 
+import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.CommonMarkUtils.joinDocuments;
 import static net.splitcells.dem.lang.tree.CommonMarkConfig.commonMarkConfig;
@@ -35,6 +39,7 @@ import static net.splitcells.gel.editor.EditorData.editorData;
 import static net.splitcells.website.Format.*;
 import static net.splitcells.website.server.messages.FormUpdate.*;
 import static net.splitcells.website.server.processor.Response.response;
+import static net.splitcells.website.server.security.authentication.Authentication.anonymous;
 
 public class EditorProcessor implements Processor<Tree, Tree> {
 
@@ -46,6 +51,8 @@ public class EditorProcessor implements Processor<Tree, Tree> {
     public static EditorProcessor editorProcessor() {
         return new EditorProcessor();
     }
+
+    private final AccessContainer<Editor> editorAccess = configValue(EditorAccess.class);
 
     private EditorProcessor() {
 
@@ -62,76 +69,86 @@ public class EditorProcessor implements Processor<Tree, Tree> {
      */
     @Override
     public Response<Tree> process(Request<Tree> request) {
+        val userSession = anonymous();
         val endResponse = runWithCheckedNeeds(() -> {
-            val editor = editor("editor-data-query", EXPLICIT_NO_CONTEXT);
-            val problemDefinition = request.data().namedChild(PROBLEM_DEFINITION, needInput(PROBLEM_DEFINITION));
-            val inputValues = request.data().children();
-            if (inputValues.hasElements()) {
-                inputValues.forEach(c -> {
-                    val content = toBytes(c.child(0).name());
-                    // TODO Support multiple formats of data.
-                    editor.saveData(c.name(), editorData(TEXT_PLAIN, content));
-                });
-            }
-            editor.interpret(problemDefinition.content());
-            val formUpdate = tree(FORM_UPDATE);
-            val dataTypes = tree(DATA_TYPES).withParent(formUpdate);
-            val dataValues = tree(DATA_VALUES).withParent(formUpdate);
-            val renderingTypes = tree(RENDERING_TYPES).withParent(formUpdate);
-            val async = request.data().namedChildren(ASYNC);
-            if (async.isEmpty() || !"true".equals(async.get(0).valueName())) {
-                editor.optimize();
-            } else {
-                throw notImplementedYet();
-            }
-            editor.getTables().entrySet().forEach(e -> {
-                dataValues.withProperty(e.getKey(), e.getValue().toCSV(reportInvalidCsvData(e.getKey())));
-                dataTypes.withProperty(e.getKey(), CSV.mimeTypes());
-                renderingTypes.withProperty(e.getKey(), INTERACTIVE_TABLE);
-                if (editor.getTableFormatting().hasKey(e.getKey())) {
-                    val formatting = editor.getTableFormatting().get(e.getKey());
-                    val formattingKey = e.getKey() + ".formatted";
-                    dataValues.withProperty(formattingKey, e.getValue()
-                            .toReformattedCsv(formatting.getColumnAttributes(), formatting.getRowAttributes()));
-                    dataTypes.withProperty(formattingKey, CSV.mimeTypes());
-                    renderingTypes.withProperty(formattingKey, INTERACTIVE_TABLE);
-                }
-            });
-            editor.getSolutions().entrySet().forEach(e -> {
-                dataValues.withProperty(e.getKey(), e.getValue().toSimplifiedCSV(reportInvalidCsvData(e.getKey())));
-                dataTypes.withProperty(e.getKey(), CSV.mimeTypes());
-                renderingTypes.withProperty(e.getKey(), INTERACTIVE_TABLE);
-                val ratingDescriptionKey = e.getKey() + ".rating.report";
-                dataValues.withProperty(ratingDescriptionKey, e.getValue().constraint().commonMarkRatingReport());
-                dataTypes.withProperty(ratingDescriptionKey, COMMON_MARK.mimeTypes());
-                renderingTypes.withProperty(ratingDescriptionKey, PLAIN_TEXT);
-                if (editor.getTableFormatting().hasKey(e.getKey())) {
-                    val formatting = editor.getTableFormatting().get(e.getKey());
-                    val formattingKey = e.getKey() + ".formatted";
-                    dataValues.withProperty(formattingKey, e.getValue()
-                            .toReformattedCsv(formatting.getColumnAttributes(), formatting.getRowAttributes()));
-                    dataTypes.withProperty(formattingKey, CSV.mimeTypes());
-                    renderingTypes.withProperty(formattingKey, INTERACTIVE_TABLE);
-                }
-            });
-            editor.dataKeys().stream().forEach(d -> {
-                val data = editor.loadData(d, needDataForOutput(d));
-                if (dataValues.namedChildren(d).isEmpty()) {
-                    dataValues.withProperty(d, parseString(data.getContent(), reportOutputParsing(d)));
-                    dataTypes.withProperty(d, data.getFormat().mimeTypes());
-                    renderingTypes.withProperty(d, PLAIN_TEXT);
-                }
-            });
-            editor.getSolutions().entrySet().forEach(solution -> {
-                val key = solution.getKey() + ".constraint";
-                dataValues.withProperty(key, solution.getValue().constraint()
-                        .graph()
-                        .toCompactTree()
-                        .toCommonMarkString(commonMarkConfig().setUseBlockQuotesForLongNames(false)));
-                dataTypes.withProperty(key, COMMON_MARK.mimeTypes());
-                renderingTypes.withProperty(key, PLAIN_TEXT);
-            });
-            return response(formUpdate);
+            return editorAccess.createAndAccess(session -> editor("editor-data-query", EXPLICIT_NO_CONTEXT)
+                    , editor -> {
+                        val problemDefinition = request.data().namedChild(PROBLEM_DEFINITION, needInput(PROBLEM_DEFINITION));
+                        val inputValues = request.data().children();
+                        if (inputValues.hasElements()) {
+                            inputValues.forEach(c -> {
+                                val content = toBytes(c.child(0).name());
+                                // TODO Support multiple formats of data.
+                                editor.saveData(c.name(), editorData(TEXT_PLAIN, content));
+                            });
+                        }
+                        editor.interpret(problemDefinition.content());
+                        val formUpdate = tree(FORM_UPDATE);
+                        val dataTypes = tree(DATA_TYPES).withParent(formUpdate);
+                        val dataValues = tree(DATA_VALUES).withParent(formUpdate);
+                        val renderingTypes = tree(RENDERING_TYPES).withParent(formUpdate);
+                        val async = request.data().namedChildren(ASYNC);
+                        val isSync = async.isEmpty() || !"true".equals(async.get(0).valueName());
+                        if (isSync) {
+                            editor.optimize();
+                        }
+                        editor.getTables().entrySet().forEach(e -> {
+                            dataValues.withProperty(e.getKey(), e.getValue().toCSV(reportInvalidCsvData(e.getKey())));
+                            dataTypes.withProperty(e.getKey(), CSV.mimeTypes());
+                            renderingTypes.withProperty(e.getKey(), INTERACTIVE_TABLE);
+                            if (editor.getTableFormatting().hasKey(e.getKey())) {
+                                val formatting = editor.getTableFormatting().get(e.getKey());
+                                val formattingKey = e.getKey() + ".formatted";
+                                dataValues.withProperty(formattingKey, e.getValue()
+                                        .toReformattedCsv(formatting.getColumnAttributes(), formatting.getRowAttributes()));
+                                dataTypes.withProperty(formattingKey, CSV.mimeTypes());
+                                renderingTypes.withProperty(formattingKey, INTERACTIVE_TABLE);
+                            }
+                        });
+                        editor.getSolutions().entrySet().forEach(e -> {
+                            dataValues.withProperty(e.getKey(), e.getValue().toSimplifiedCSV(reportInvalidCsvData(e.getKey())));
+                            dataTypes.withProperty(e.getKey(), CSV.mimeTypes());
+                            renderingTypes.withProperty(e.getKey(), INTERACTIVE_TABLE);
+                            val ratingDescriptionKey = e.getKey() + ".rating.report";
+                            dataValues.withProperty(ratingDescriptionKey, e.getValue().constraint().commonMarkRatingReport());
+                            dataTypes.withProperty(ratingDescriptionKey, COMMON_MARK.mimeTypes());
+                            renderingTypes.withProperty(ratingDescriptionKey, PLAIN_TEXT);
+                            if (editor.getTableFormatting().hasKey(e.getKey())) {
+                                val formatting = editor.getTableFormatting().get(e.getKey());
+                                val formattingKey = e.getKey() + ".formatted";
+                                dataValues.withProperty(formattingKey, e.getValue()
+                                        .toReformattedCsv(formatting.getColumnAttributes(), formatting.getRowAttributes()));
+                                dataTypes.withProperty(formattingKey, CSV.mimeTypes());
+                                renderingTypes.withProperty(formattingKey, INTERACTIVE_TABLE);
+                            }
+                        });
+                        editor.dataKeys().stream().forEach(d -> {
+                            val data = editor.loadData(d, needDataForOutput(d));
+                            if (dataValues.namedChildren(d).isEmpty()) {
+                                dataValues.withProperty(d, parseString(data.getContent(), reportOutputParsing(d)));
+                                dataTypes.withProperty(d, data.getFormat().mimeTypes());
+                                renderingTypes.withProperty(d, PLAIN_TEXT);
+                            }
+                        });
+                        editor.getSolutions().entrySet().forEach(solution -> {
+                            val key = solution.getKey() + ".constraint";
+                            dataValues.withProperty(key, solution.getValue().constraint()
+                                    .graph()
+                                    .toCompactTree()
+                                    .toCommonMarkString(commonMarkConfig().setUseBlockQuotesForLongNames(false)));
+                            dataTypes.withProperty(key, COMMON_MARK.mimeTypes());
+                            renderingTypes.withProperty(key, PLAIN_TEXT);
+                        });
+                        if (isSync) {
+                            editorAccess.delete(userSession);
+                        } else {
+                            Dem.executeThread(EditorProcessor.class, () -> {
+                                editor.optimize();
+                                editorAccess.delete(userSession);
+                            });
+                        }
+                        return response(formUpdate);
+                    }, userSession);
         });
         if (endResponse.working()) {
             return endResponse.requiredValue();
