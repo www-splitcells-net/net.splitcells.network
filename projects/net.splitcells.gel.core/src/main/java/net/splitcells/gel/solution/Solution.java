@@ -102,11 +102,25 @@ public interface Solution extends Problem, SolutionView {
         return this;
     }
 
+    /**
+     * 
+     * @deprecated TODO This is too complicated. Such logic should be inside {@link OnlineOptimization} instances.
+     * @param optimization
+     * @return
+     */
+    @Deprecated
     @ReturnsThis
     default Solution optimize(OfflineOptimization optimization) {
         return optimizeWithFunction(s -> optimization.optimize(s));
     }
 
+    /**
+     * 
+     * @deprecated TODO This is too complicated. Such logic should be inside {@link OnlineOptimization} instances.
+     * @param optimization
+     * @return
+     */
+    @Deprecated
     @ReturnsThis
     default Solution optimize(OnlineOptimization optimization) {
         return optimizeOnlineWithFunction(s -> optimization.optimize(s));
@@ -162,6 +176,14 @@ public interface Solution extends Problem, SolutionView {
         return optimizeWithFunction(optimizationFunction, (currentSolution, i) -> !currentSolution.isOptimal(), config);
     }
 
+    /**
+     * 
+     * @deprecated TODO This is too complicated. Such logic should be inside {@link OnlineOptimization} instances.
+     * @param optimizationFunction
+     * @param continuationCondition
+     * @return
+     */
+    @Deprecated
     @ReturnsThis
     default Solution optimizeWithFunction(OfflineOptimization optimizationFunction, BiPredicate<Solution, Integer> continuationCondition) {
         int i = 0;
@@ -298,11 +320,24 @@ public interface Solution extends Problem, SolutionView {
         return this;
     }
 
+    /**
+     * 
+     * @deprecated TODO This is too complicated. Such logic should be inside {@link OnlineOptimization} instances.
+     * @param optimization
+     * @return
+     */
+    @Deprecated
     @ReturnsThis
     default Solution optimizeOnce(OfflineOptimization optimization) {
         return optimizeWithFunctionOnce(s -> optimization.optimize(s));
     }
 
+    /**
+     * @deprecated TODO This is too complicated. Such logic should be inside {@link OnlineOptimization} instances.
+     * @param optimization
+     * @return
+     */
+    @Deprecated
     @ReturnsThis
     default Solution optimizeWithFunctionOnce(Function<Solution, List<OptimizationEvent>> optimization) {
         final var recommendations = optimization.apply(this);
@@ -318,7 +353,7 @@ public interface Solution extends Problem, SolutionView {
         events.forEach(this::optimize);
         return this;
     }
-
+    
     @ReturnsThis
     default Solution optimize(List<OptimizationEvent> events, OptimizationParameters parameters) {
         events.forEach(e -> optimize(e, parameters));
