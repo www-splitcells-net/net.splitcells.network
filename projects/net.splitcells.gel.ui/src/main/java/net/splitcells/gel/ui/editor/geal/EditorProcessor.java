@@ -65,7 +65,8 @@ public class EditorProcessor implements Processor<Tree, Tree> {
 
     }
 
-    private Response<Tree> process(Request<Tree> request, UserSession userSession, Editor editor) {
+    private Response<Tree> process(Request<Tree> request, Editor editor) {
+        val userSession = request.userSession();
         val problemDefinition = request.data().namedChild(PROBLEM_DEFINITION, needInput(PROBLEM_DEFINITION));
         val inputValues = request.data().children();
         if (inputValues.hasElements()) {
@@ -159,7 +160,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
      */
     @Override
     public Response<Tree> process(Request<Tree> request) {
-        val userSession = anonymous();
+        val userSession = request.userSession();
         val asyncIdUpdate = Optional.of(request.data().namedChildren(REQUEST_UPDATE_FOR_ASYNC_ID))
                 .filter(List::hasElements)
                 .map(ids -> ids.firstValue().orElseThrow())
@@ -168,13 +169,13 @@ public class EditorProcessor implements Processor<Tree, Tree> {
         Result<Response<Tree>, String> result;
         if (asyncIdUpdate.isPresent()) {
             result = runWithCheckedNeeds(
-                    () -> editorAccess.process(asyncEditor -> asyncEditor.processTablesSynchronously(editor -> process(request, userSession, editor))
+                    () -> editorAccess.process(asyncEditor -> asyncEditor.processTablesSynchronously(editor -> process(request, editor))
                             , userSession
                             , asyncIdUpdate.orElseThrow().valueName()));
         } else {
             result = runWithCheckedNeeds(
                     () -> editorAccess.createAndAccess(session -> editor("editor-data-query", EXPLICIT_NO_CONTEXT)
-                            , editor -> process(request, userSession, editor)
+                            , editor -> process(request, editor)
                             , userSession));
         }
         if (result.working()) {
