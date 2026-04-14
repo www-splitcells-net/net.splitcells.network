@@ -22,6 +22,7 @@ import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.website.server.security.authentication.UserSession;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
@@ -58,6 +59,12 @@ public class AccessControlTest {
                     @Override public void access(Consumer<Firewall> accessor, UserSession userSession, String lifeCycleId) {
                         accessor.accept(subjectAccessed);
                         subjectAccessed.isValid = false;
+                    }
+
+                    @Override public <R> R process(Function<Firewall, R> processor, UserSession userSession, String lifeCycleId) {
+                        val rVal = processor.apply(subjectAccessed);
+                        subjectAccessed.isValid = false;
+                        return rVal;
                     }
                 });
         testSubject.access((u, a) -> {
