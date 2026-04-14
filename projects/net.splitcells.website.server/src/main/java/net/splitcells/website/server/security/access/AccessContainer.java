@@ -9,39 +9,60 @@ import net.splitcells.website.server.security.authentication.UserSession;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.website.server.security.authentication.Authentication.lifeCycleId;
 import static net.splitcells.website.server.security.authentication.Authentication.name;
 
 public class AccessContainer<T> implements AccessProvider<T> {
-    public static <R> AccessContainer<R> accessContainer(Function<UserSession, R> argDataCreator) {
-        return new AccessContainer<>(argDataCreator);
+    public static <R> AccessContainer<R> accessContainer() {
+        return new AccessContainer<>();
     }
 
-    private final Function<UserSession, T> dataCreator;
     private final Map<DataKey, T> content = map();
 
     private record DataKey(String username, String lifeCycleId) {
     }
 
-    private AccessContainer(Function<UserSession, T> argDataCreator) {
-        dataCreator = argDataCreator;
+    private AccessContainer() {
     }
 
-    @Override public void access(Consumer<T> accessor, UserSession userSession) {
+    @Override public synchronized void access(Consumer<T> accessor, UserSession userSession) {
         access(accessor, userSession, lifeCycleId(userSession));
     }
 
-    @Override public void access(Consumer<T> accessor, UserSession userSession, String lifeCycleId) {
+    @Override public synchronized void access(Consumer<T> accessor, UserSession userSession, String lifeCycleId) {
         val dataKey = new DataKey(name(userSession), lifeCycleId);
         final T dataValue;
         if (content.hasKey(dataKey)) {
             dataValue = content.value(dataKey);
         } else {
-            dataValue = dataCreator.apply(userSession);
-            content.put(dataKey, dataValue);
+            throw execException("No data exists for given user session and lifeCycleId.");
         }
         accessor.accept(dataValue);
+    }
+
+    public synchronized <R> R createAndAccess(Function<UserSession, T> accessSupplier, Function<T, R> processor, UserSession userSession) {
+        val dataKey = new DataKey(name(userSession), lifeCycleId(userSession));
+        final T dataValue;
+        if (content.hasKey(dataKey)) {
+            throw execException("Data should not exist for given user session and lifeCycleId, but it does.");
+        } else {
+            dataValue = accessSupplier.apply(userSession);
+            content.put(dataKey, dataValue);
+        }
+        return processor.apply(dataValue);
+    }
+
+    public synchronized AccessContainer<T> delete(UserSession userSession) {
+        return delete(userSession, lifeCycleId(userSession));
+    }
+
+    public synchronized AccessContainer<T> delete(UserSession userSession, String lifeCycleId) {
+        content.remove(new DataKey(name(userSession), lifeCycleId));
+        return this;
     }
 }
