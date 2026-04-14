@@ -73,7 +73,7 @@ public class Editor implements Discoverable {
     @Getter private final Map<String, Attribute<?>> attributes = map();
     @Getter private final Map<String, Rater> raters = map();
     @Getter private final Map<String, Table> tables = map();
-    @Getter private final Map<String, Solution> solutions = map();
+    private final Map<String, Solution> solutions = map();
     @Getter private final Map<String, Constraint> constraints = map();
     @Getter private final Map<String, TableFormatting> tableFormatting = map();
     @Getter private final Map<String, Integer> integerVariables = map();
