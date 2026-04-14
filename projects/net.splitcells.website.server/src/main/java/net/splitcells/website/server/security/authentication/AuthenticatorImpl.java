@@ -15,11 +15,13 @@
  */
 package net.splitcells.website.server.security.authentication;
 
+import lombok.val;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.resource.ConfigFileSystem;
 import net.splitcells.dem.resource.FileSystemView;
 import net.splitcells.dem.utils.ExecutionException;
+import net.splitcells.dem.utils.random.Randomness;
 
 import java.util.function.BiFunction;
 
@@ -28,7 +30,9 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.dem.utils.random.RandomnessSource.cryptoRandomness;
 import static net.splitcells.website.server.security.authentication.UserSession.*;
+import static net.splitcells.website.server.security.authentication.UserSessionState.userSessionState;
 
 
 public class AuthenticatorImpl implements Authenticator {
@@ -88,7 +92,9 @@ public class AuthenticatorImpl implements Authenticator {
 
     private final BiFunction<Login, Authenticator, UserSession> authenticator;
     private final Set<UserSession> validUserSessions = setOfUniques();
-    private final Map<UserSession, String> usernames = map();
+    private final Map<UserSession, UserSessionState> sessionState = map();
+    private final Map<String, UserSession> sessionsByLifeCycleId = map();
+    private final Randomness rnd = cryptoRandomness();
 
     private AuthenticatorImpl(BiFunction<Login, Authenticator, UserSession> argAuthenticator) {
         authenticator = argAuthenticator;
@@ -96,12 +102,20 @@ public class AuthenticatorImpl implements Authenticator {
 
     @Override
     public synchronized UserSession userSession(Login login) {
-        final var userSession = authenticator.apply(login, this);
+        val userSession = authenticator.apply(login, this);
         if (UserSession.isValidNoLoginStandard(userSession)) {
             return userSession;
         }
         validUserSessions.add(userSession);
-        usernames.put(userSession, login.username());
+        val userSessionState = userSessionState()
+                .setUsername(login.username())
+                .setLifeCycleId(rnd.readableAsciiString(64));
+        while (sessionsByLifeCycleId.hasKey(userSessionState.getLifeCycleId())) {
+            userSessionState.setLifeCycleId(rnd.readableAsciiString(64));
+        }
+        sessionsByLifeCycleId.put(userSessionState.getLifeCycleId(), userSession);
+        sessionState.put(userSession, userSessionState);
+
         if (!isValid(userSession)) {
             throw ExecutionException.execException(tree("Could not create a valid user session, given the login.")
                     .withProperty("login data", login.toString()));
@@ -113,7 +127,7 @@ public class AuthenticatorImpl implements Authenticator {
     public synchronized boolean isValid(UserSession userSession) {
         if (isValidNoLoginStandard(userSession)) {
             validUserSessions.requireAbsenceOf(userSession);
-            usernames.requireKeyAbsence(userSession);
+            sessionState.requireKeyAbsence(userSession);
             return true;
         }
         if (userSession.authenticatedBy().isEmpty()) {
@@ -130,21 +144,21 @@ public class AuthenticatorImpl implements Authenticator {
         requireValid(userSession);
         if (isValidNoLoginStandard(userSession)) {
             validUserSessions.requireAbsenceOf(userSession);
-            usernames.requireKeyAbsence(userSession);
+            sessionState.requireKeyAbsence(userSession);
             return;
         }
-        validUserSessions.remove(userSession);
-        usernames.remove(userSession);
+        validUserSessions.delete(userSession);
+        sessionsByLifeCycleId.remove(sessionState.remove(userSession).getLifeCycleId());
     }
-
+    
     @Override
     public synchronized String name(UserSession userSession) {
         requireValid(userSession);
         if (isValidNoLoginStandard(userSession)) {
-            usernames.requireKeyAbsence(userSession);
+            sessionState.requireKeyAbsence(userSession);
             return noLoginUserId(userSession);
         }
-        return usernames.get(userSession);
+        return sessionState.value(userSession).getUsername();
     }
 
     private synchronized void requireValid(UserSession userSession) {
