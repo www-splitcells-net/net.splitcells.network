@@ -30,9 +30,12 @@ public class BuilderRandomConfigurable implements RndSrcF {
         return new BuilderRandomConfigurable();
     }
 
+    /**
+     * If {@link IsDeterministic} is not set, the factory with the most secure {@link RndSrcF#rndCrypt()} has to be used.
+     */
     private BuilderRandomConfigurable() {
-        if (environment().config().configValue(IsDeterministic.class).isEmpty()
-                || environment().config().configValue(IsDeterministic.class).orElseThrow().isTrue()) {
+        if (environment().config().configValue(IsDeterministic.class).isPresent()
+                && environment().config().configValue(IsDeterministic.class).orElseThrow().isTrue()) {
             deterministicBuilder(environment().config().configValue(DeterministicRootSourceSeed.class));
         } else {
             builderRandom = new RndSrcStandardF();
