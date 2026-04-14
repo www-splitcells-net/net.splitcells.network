@@ -34,4 +34,8 @@ public class RandomnessSource {
         return factory.rnd(seed);
     }
 
+    public static Randomness cryptoRandomness() {
+        return factory.rndCrypt();
+    }
+
 }
