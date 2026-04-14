@@ -15,6 +15,7 @@
  */
 package net.splitcells.website.server.security.access;
 
+import lombok.val;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.dem.utils.StringUtils;
@@ -36,15 +37,15 @@ import static net.splitcells.website.server.security.authentication.UserSession.
 public class AccessControlTest {
     @UnitTest
     public void test() {
-        final var username = "username-123";
-        final var password = "password-456";
-        final var userData = fileSystemViaMemory();
+        val username = "username-123";
+        val password = "password-456";
+        val userData = fileSystemViaMemory();
         userData.createDirectoryPath(username);
         userData.writeToFile(username + PASSWORD_FILE, StringUtils.toBytes(password));
-        final var authenticator = authenticatorBasedOnFiles(userData);
+        val authenticator = authenticatorBasedOnFiles(userData);
         final List<Firewall> accessCounter = list();
         final List<UserSession> userSessions = list();
-        final var subjectAccessed = new Firewall() {
+        val subjectAccessed = new Firewall() {
             boolean isValid = true;
         };
         final var testSubject = accessControl(authenticator,
