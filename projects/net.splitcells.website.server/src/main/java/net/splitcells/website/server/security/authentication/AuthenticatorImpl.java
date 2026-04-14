@@ -31,6 +31,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.random.RandomnessSource.cryptoRandomness;
+import static net.splitcells.website.server.security.authentication.Login.login;
 import static net.splitcells.website.server.security.authentication.UserSession.*;
 import static net.splitcells.website.server.security.authentication.UserSessionState.userSessionState;
 
@@ -102,9 +103,12 @@ public class AuthenticatorImpl implements Authenticator {
 
     @Override
     public synchronized UserSession userSession(Login login) {
-        val userSession = authenticator.apply(login, this);
-        if (UserSession.isValidNoLoginStandard(userSession)) {
-            return userSession;
+
+        final UserSession userSession;
+        if (ANONYMOUS_USER_NAME.equals(login.username())) {
+            userSession = user(this);
+        } else {
+            userSession = authenticator.apply(login, this);
         }
         validUserSessions.add(userSession);
         val userSessionState = userSessionState()
@@ -150,7 +154,7 @@ public class AuthenticatorImpl implements Authenticator {
         validUserSessions.delete(userSession);
         sessionsByLifeCycleId.remove(sessionState.remove(userSession).getLifeCycleId());
     }
-    
+
     @Override
     public synchronized String name(UserSession userSession) {
         requireValid(userSession);

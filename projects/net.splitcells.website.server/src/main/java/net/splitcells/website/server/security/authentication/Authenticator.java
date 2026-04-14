@@ -15,7 +15,11 @@
  */
 package net.splitcells.website.server.security.authentication;
 
+import java.util.function.Consumer;
 import java.util.regex.Pattern;
+
+import static net.splitcells.website.server.security.authentication.Login.login;
+import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_NAME;
 
 /**
  * <p>TODO Create a base {@link Authenticator} class, that takes some authentication functions and
@@ -43,6 +47,10 @@ public interface Authenticator {
 
     UserSession userSession(Login login);
 
+    default UserSession anonymous() {
+        return userSession(login(ANONYMOUS_USER_NAME, "no-password"));
+    }
+
     /**
      * <p>TODO Maybe it makes sense, to limit the number of valid {@link UserSession} at any given time,
      * in order to find bugs in the security system,
@@ -62,6 +70,13 @@ public interface Authenticator {
      */
     boolean isValid(UserSession userSession);
 
+    /**
+     * TODO {@link UserSession} should only be accessed via {@link Consumer} passed to this interface,
+     * just like AccessControl.
+     * This way the life cycles are easier to enforce and to understand.
+     *
+     * @param userSession
+     */
     void endSession(UserSession userSession);
 
     /**
