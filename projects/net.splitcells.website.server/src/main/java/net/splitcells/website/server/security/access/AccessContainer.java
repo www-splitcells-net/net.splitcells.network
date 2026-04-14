@@ -30,11 +30,11 @@ public class AccessContainer<T> implements AccessProvider<T> {
     }
 
     @Override public void access(Consumer<T> accessor, UserSession userSession) {
-
+        access(accessor, userSession, lifeCycleId(userSession));
     }
 
     @Override public void access(Consumer<T> accessor, UserSession userSession, String lifeCycleId) {
-        val dataKey = new DataKey(name(userSession), lifeCycleId(userSession));
+        val dataKey = new DataKey(name(userSession), lifeCycleId);
         final T dataValue;
         if (content.hasKey(dataKey)) {
             dataValue = content.value(dataKey);
