@@ -16,6 +16,7 @@
 package net.splitcells.website.server.processor;
 
 import net.splitcells.dem.resource.Trail;
+import net.splitcells.website.server.security.authentication.UserSession;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.website.server.processor.RequestImpl.requestImpl;
@@ -32,7 +33,13 @@ public interface Request<T> {
         return requestImpl(trail, data);
     }
 
+    static <T> Request<T> request(Trail trail, T data, UserSession userSession) {
+        return requestImpl(trail, data, userSession);
+    }
+
     T data();
 
     Trail trail();
+
+    UserSession userSession();
 }

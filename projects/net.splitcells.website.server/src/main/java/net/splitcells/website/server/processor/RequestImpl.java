@@ -16,6 +16,9 @@
 package net.splitcells.website.server.processor;
 
 import net.splitcells.dem.resource.Trail;
+import net.splitcells.website.server.security.authentication.UserSession;
+
+import static net.splitcells.website.server.security.authentication.Authentication.anonymous;
 
 /**
  * This is the base class for all requests.
@@ -26,22 +29,32 @@ import net.splitcells.dem.resource.Trail;
  */
 public class RequestImpl<T> implements Request<T> {
     public static <T> RequestImpl<T> requestImpl(Trail trail, T data) {
-        return new RequestImpl<>(trail, data);
+        return new RequestImpl<>(trail, data, anonymous());
+    }
+
+    public static <T> RequestImpl<T> requestImpl(Trail trail, T data, UserSession argUserSession) {
+        return new RequestImpl<>(trail, data, argUserSession);
     }
 
     private Trail trail;
     private final T data;
+    private final UserSession userSession;
 
-    private RequestImpl(Trail trailArg, T dataArg) {
+    private RequestImpl(Trail trailArg, T dataArg, UserSession argUserSession) {
         trail = trailArg;
         data = dataArg;
+        userSession = argUserSession;
     }
 
-    public T data() {
+    @Override public T data() {
         return data;
     }
 
-    public Trail trail() {
+    @Override public Trail trail() {
         return trail;
+    }
+
+    @Override public UserSession userSession() {
+        return userSession;
     }
 }
