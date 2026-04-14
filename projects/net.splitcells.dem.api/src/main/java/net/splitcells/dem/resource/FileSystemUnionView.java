@@ -130,6 +130,11 @@ public class FileSystemUnionView implements FileSystemView {
         final var walks = fileSystems.stream()
                 .map(f -> f.walkRecursively(basePath))
                 .collect(toList());
+        if (walks.isEmpty()) {
+            throw execException(tree("Given directory does not exist and therefore cannot be walked.")
+                    .withProperty("basePath", basePath.toString())
+                    .withProperty("file system", this.toString()));
+        }
         return StreamUtils.concat(walks);
     }
 
@@ -140,6 +145,12 @@ public class FileSystemUnionView implements FileSystemView {
                 .filter(f -> f.isDirectory(adjustedPath))
                 .map(f -> f.walkRecursively(adjustedPath))
                 .collect(toList());
+        if (walks.isEmpty()) {
+            throw execException(tree("Given directory does not exist and therefore cannot be walked.")
+                    .withProperty("path", path.toString())
+                    .withProperty("basePath", basePath.toString())
+                    .withProperty("file system", this.toString()));
+        }
         return StreamUtils.concat(walks);
     }
 
