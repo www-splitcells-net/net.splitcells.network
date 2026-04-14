@@ -44,6 +44,8 @@ import net.splitcells.gel.solution.Solution;
 import net.splitcells.website.Format;
 
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -155,13 +157,27 @@ public class Editor implements Discoverable {
         return optimizationStatus;
     }
 
+    /**
+     * This method ensures, that the {@link Table} are not read and {@link Solution#optimize()} at the same time.
+     * 
+     * @param processor
+     */
+    public synchronized <R> R processTablesSynchronously(Function<Editor, R> processor) {
+        return processor.apply(this);
+    }
+
+    /**
+     * This method is executed asynchronously and therefore needs to synchronize its access the {@link Table}.
+     */
     public void optimize() {
         var nextStep = Optional.of(defaultEditorOptimization(this));
-        optimizationStatus = tree("Started optimization via " + nextStep.orElseThrow().getClass().getSimpleName() + ".");
+        synchronized (this) {
+            optimizationStatus = tree("Started optimization via " + nextStep.orElseThrow().getClass().getSimpleName() + ".");
+        }
         while (nextStep.isPresent()) {
-            val currentStep = nextStep.get();
-            nextStep = currentStep.runNextStep();
             synchronized (this) {
+                val currentStep = nextStep.get();
+                nextStep = currentStep.runNextStep();
                 optimizationStatus = currentStep.status();
             }
         }
