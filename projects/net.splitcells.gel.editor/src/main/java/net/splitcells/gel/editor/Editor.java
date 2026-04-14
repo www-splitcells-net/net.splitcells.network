@@ -160,10 +160,10 @@ public class Editor implements Discoverable {
         optimizationStatus = tree("Started optimization via " + nextStep.orElseThrow().getClass().getSimpleName() + ".");
         while (nextStep.isPresent()) {
             val currentStep = nextStep.get();
+            nextStep = currentStep.runNextStep();
             synchronized (this) {
                 optimizationStatus = currentStep.status();
             }
-            nextStep = currentStep.runNextStep();
         }
     }
 
