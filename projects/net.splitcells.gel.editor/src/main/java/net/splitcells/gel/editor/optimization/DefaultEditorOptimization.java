@@ -39,7 +39,7 @@ public class DefaultEditorOptimization implements EditorOptimization {
                 + " Furthermore, the solution's interdependencies are not allowed to form a circle.");
         if (--currentSolutionIndex > -1) {
             val currentSolution = solutionPaths.get(currentSolutionPath).get(currentSolutionIndex);
-            currentSolution.history().processWithHistory(() -> currentSolution.optimize(defaultOptimization()));
+            currentSolution.history().processWithHistory(() -> defaultOptimization().optimize(currentSolution));
             return Optional.of(this);
         }
         return Optional.empty();
