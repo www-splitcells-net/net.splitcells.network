@@ -23,7 +23,6 @@ import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.RenderRequest;
 import net.splitcells.website.server.projects.RenderResponse;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
-import net.splitcells.website.server.projects.extension.impls.ProjectPathsRequest;
 import net.splitcells.website.server.security.authentication.Authentication;
 
 import java.nio.file.Path;
@@ -53,13 +52,13 @@ public class UserProfilePageExtension implements ProjectsRendererExtension {
         if (!request.trail().equalContents(PROFILE_PATH)) {
             return renderResponse(Optional.empty());
         }
-        if (!isActivelyAuthenticated(request.user())) {
+        if (!isActivelyAuthenticated(request.userSession())) {
             return projectsRenderer.renderMissingLogin(request);
         } else {
             final var content = stringBuilder();
             content.append("<h2>Authorized Pages</h2>");
             content.append("<ol>");
-            projectsRenderer.projectPaths(projectPathsRequest(projectsRenderer).withUser(request.user()))
+            projectsRenderer.projectPaths(projectPathsRequest(projectsRenderer).withUser(request.userSession()))
                     .forEach(p -> {
                         content.append("<li><a href=\"/")
                                 .append(p)
@@ -69,7 +68,7 @@ public class UserProfilePageExtension implements ProjectsRendererExtension {
                     });
             content.append("</ol>");
             return renderResponse(Optional.of(binaryMessage(projectsRenderer.renderHtmlBodyContent(content.toString()
-                                    , Optional.of("User Profile Page of " + Authentication.name(request.user()))
+                                    , Optional.of("User Profile Page of " + Authentication.name(request.userSession()))
                                     , Optional.of(PROFILE_PATH.unixPathString())
                                     , projectsRenderer.config())
                             .orElseThrow()

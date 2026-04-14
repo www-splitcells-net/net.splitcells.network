@@ -67,7 +67,7 @@ public class ConfigDependencyRecordingExtension implements ProjectsRendererExten
         if (!request.trail().equalContents(DEPENDENCY_RECORDING_PATH)) {
             return renderResponse(Optional.empty());
         }
-        if (missesRole(request.user(), ADMIN_ROLE)) {
+        if (missesRole(request.userSession(), ADMIN_ROLE)) {
             return projectsRenderer.renderMissingAccessRights(request);
         } else {
             final var content = stringBuilder();

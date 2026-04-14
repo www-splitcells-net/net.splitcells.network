@@ -54,7 +54,7 @@ public class TestExtension implements ProjectsRendererExtension {
         if (!request.trail().equalContents(PATH)) {
             return renderResponse(empty());
         }
-        if (missesRole(request.user(), ADMIN_ROLE)) {
+        if (missesRole(request.userSession(), ADMIN_ROLE)) {
             return projectsRenderer.renderMissingAccessRights(request);
         }
         if ("true".equals(System.getProperty("net.splitcells.mode.build"))) {

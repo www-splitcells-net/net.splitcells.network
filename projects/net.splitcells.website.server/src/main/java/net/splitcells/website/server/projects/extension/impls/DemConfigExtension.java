@@ -19,9 +19,6 @@ import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.environment.config.framework.Configuration;
 import net.splitcells.dem.resource.Trail;
-import net.splitcells.website.server.Config;
-import net.splitcells.website.server.processor.BinaryMessage;
-import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.RenderRequest;
@@ -29,7 +26,6 @@ import net.splitcells.website.server.projects.RenderResponse;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
 
 import java.nio.file.Path;
-import java.util.Optional;
 
 import static java.util.Optional.empty;
 import static net.splitcells.dem.Dem.config;
@@ -63,7 +59,7 @@ public class DemConfigExtension implements ProjectsRendererExtension {
         if (!request.trail().equalContents(PATH)) {
             return renderResponse(empty());
         }
-        if (missesRole(request.user(), ADMIN_ROLE)) {
+        if (missesRole(request.userSession(), ADMIN_ROLE)) {
             return projectsRenderer.renderMissingAccessRights(request);
         }
         if (projectsRenderer.config().layout().isPresent()) {

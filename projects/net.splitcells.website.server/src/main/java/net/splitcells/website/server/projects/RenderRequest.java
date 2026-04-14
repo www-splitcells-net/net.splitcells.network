@@ -49,7 +49,7 @@ public class RenderRequest implements Request<Optional<byte[]>> {
      * I did not name it requester, because otherwise a function pointer would be `RenderRequest::requester`.
      * This makes it harder to read, as a word would kind of be present 2 times.
      */
-    public UserSession user() {
+    public UserSession userSession() {
         return userSession;
     }
 }

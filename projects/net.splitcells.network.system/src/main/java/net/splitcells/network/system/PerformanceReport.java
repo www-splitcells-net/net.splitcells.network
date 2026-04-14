@@ -57,7 +57,7 @@ public class PerformanceReport implements ProjectsRendererExtension {
     @Override
     public RenderResponse render(RenderRequest request, ProjectsRenderer projectsRenderer) {
         if (PATH.equals(request.trail())) {
-            if (missesRole(request.user(), ADMIN_ROLE)) {
+            if (missesRole(request.userSession(), ADMIN_ROLE)) {
                 return projectsRenderer.renderMissingAccessRights(request);
             }
             return renderResponse(projectsRenderer.renderContent(htmlReport()

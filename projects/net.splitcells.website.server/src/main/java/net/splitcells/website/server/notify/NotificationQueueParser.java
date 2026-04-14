@@ -16,8 +16,6 @@
 package net.splitcells.website.server.notify;
 
 import lombok.val;
-import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.lang.Xml;
 import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.RenderRequest;
@@ -137,7 +135,7 @@ public class NotificationQueueParser {
                 .map(pr -> parseNotificationsFromChangelog(pr, CHANGELOG))
                 .forEach(ns -> ns.forEach(notificationQueue::withAdditionalNotification));
         projectsRenderer
-                .projectPaths(projectPathsRequest(projectsRenderer).withUser(request.user()))
+                .projectPaths(projectPathsRequest(projectsRenderer).withUser(request.userSession()))
                 .stream()
                 .concat(projectsRenderer.projectsPaths().stream())
                 .forEach(p -> {
