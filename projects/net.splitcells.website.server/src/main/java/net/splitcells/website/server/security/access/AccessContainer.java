@@ -53,6 +53,17 @@ public class AccessContainer<T> implements AccessProvider<T> {
         accessor.accept(dataValue);
     }
 
+    @Override public synchronized <R> R process(Function<T, R> processor, UserSession userSession, String lifeCycleId) {
+        val dataKey = new DataKey(name(userSession), lifeCycleId);
+        final T dataValue;
+        if (content.hasKey(dataKey)) {
+            dataValue = content.value(dataKey);
+        } else {
+            throw execException("No data exists for given user session and lifeCycleId.");
+        }
+        return processor.apply(dataValue);
+    }
+
     public synchronized <R> R createAndAccess(Function<UserSession, T> accessSupplier, Function<T, R> processor, UserSession userSession) {
         val dataKey = new DataKey(name(userSession), lifeCycleId(userSession));
         final T dataValue;
