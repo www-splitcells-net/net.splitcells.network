@@ -60,6 +60,16 @@ import java.util.function.Function;
  */
 public interface Solution extends Problem, SolutionView {
 
+    default String commonMarkRatingReport() {
+        final String summary;
+        if (isOptimal()) {
+            summary = "The problem is optimally solved.";
+        } else {
+            summary = "The problem is not fully optimized.";
+        }
+        return constraint().commonMarkRatingReport(summary);
+    }
+
     @Override default Table withAddedCsv(String csvFile) {
         val demandHSize = demands().headerView().size();
         val supplyHSize = supplies().headerView().size();

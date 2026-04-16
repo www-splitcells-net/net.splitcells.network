@@ -117,7 +117,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
             dataTypes.withProperty(e.getKey(), CSV.mimeTypes());
             renderingTypes.withProperty(e.getKey(), INTERACTIVE_TABLE);
             val ratingDescriptionKey = e.getKey() + ".rating.report";
-            dataValues.withProperty(ratingDescriptionKey, e.getValue().constraint().commonMarkRatingReport());
+            dataValues.withProperty(ratingDescriptionKey, e.getValue().commonMarkRatingReport());
             dataTypes.withProperty(ratingDescriptionKey, COMMON_MARK.mimeTypes());
             renderingTypes.withProperty(ratingDescriptionKey, PLAIN_TEXT);
             if (editor.getTableFormatting().hasKey(e.getKey())) {

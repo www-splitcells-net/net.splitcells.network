@@ -138,8 +138,13 @@ public interface Constraint extends TableSynchronization, ConstraintWriter, Disc
     }
 
     default String commonMarkRatingReport() {
+        return commonMarkRatingReport("");
+    }
+
+    default String commonMarkRatingReport(String commonMarkText) {
         final var description = StringUtils.stringBuilder();
         joinDocuments(description, "# Constraint Rating Report");
+        joinDocuments(description, commonMarkText);
         joinDocuments(description, "## Description");
         joinDocuments(description, rating().descriptionForUser());
         joinDocuments(description, "## Argumentation");
