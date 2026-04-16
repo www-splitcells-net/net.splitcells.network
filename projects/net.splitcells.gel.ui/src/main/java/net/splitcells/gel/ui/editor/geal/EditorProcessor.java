@@ -49,7 +49,7 @@ import static net.splitcells.website.server.security.authentication.Authenticati
 public class EditorProcessor implements Processor<Tree, Tree> {
 
     public static final String PROBLEM_DEFINITION = "Definition";
-    private static final String ASYNC = "async";
+    private static final String ASYNC = "requesting-async";
     private static final String ASYNC_ID = "async-user-session-life-cycle-id";
     private static final String REQUEST_UPDATE_FOR_ASYNC_ID = "request-async-update-for-life-cycle-id";
 
