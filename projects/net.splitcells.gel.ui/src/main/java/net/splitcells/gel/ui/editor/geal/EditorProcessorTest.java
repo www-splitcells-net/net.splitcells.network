@@ -16,6 +16,7 @@
 package net.splitcells.gel.ui.editor.geal;
 
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.testing.annotations.CapabilityTest;
 import net.splitcells.dem.testing.annotations.DisabledTest;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
@@ -62,7 +63,7 @@ public class EditorProcessorTest {
         process(EditorProcessorTest.TEST_OPTIMIZATION_GUI, GelUiCell.class).requireErrorFree();
     }
 
-    @DisabledTest @UnitTest public void testEditorProcessor() {
+    @CapabilityTest public void testEditorProcessor() {
         final var testSubject = editorProcessor();
         final var requestTree = tree("");
         requestTree.withProperty(PROBLEM_DEFINITION
