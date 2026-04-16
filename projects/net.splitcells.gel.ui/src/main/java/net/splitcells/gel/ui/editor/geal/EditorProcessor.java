@@ -172,6 +172,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                     () -> editorAccess.process(asyncEditor -> asyncEditor.processTablesSynchronously(editor -> process(request, editor))
                             , userSession
                             , asyncIdUpdate.orElseThrow().valueName()));
+            result.optionalValue().ifPresent(ov -> ov.data().withProperty(ASYNC_ID, asyncIdUpdate.orElseThrow().valueName()));
         } else {
             result = runWithCheckedNeeds(
                     () -> editorAccess.createAndAccess(session -> editor("editor-data-query", EXPLICIT_NO_CONTEXT)
