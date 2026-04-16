@@ -64,8 +64,6 @@ public class DefaultEditorOptimization implements EditorOptimization {
     @Override public Tree status() {
         val completed = solutionPaths.size() - 1 <= currentSolutionPath
                 && currentSolutionIndex < 0;
-        if (completed) {
-            return tree(editor.getName() + " is optimized by " + getClass().getSimpleName());
         }
         val currentSolutionPathDescription = solutionPaths.get(currentSolutionPath)
                 .stream()
