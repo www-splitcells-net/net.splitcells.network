@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
+import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.gel.editor.optimization.RepairOptimizationStep.repairOptimizationStep;
 import static net.splitcells.gel.solution.optimization.DefaultOptimization.defaultOptimization;
@@ -62,8 +63,11 @@ public class DefaultEditorOptimization implements EditorOptimization {
     }
 
     @Override public Tree status() {
-        val completed = solutionPaths.size() - 1 <= currentSolutionPath
-                && currentSolutionIndex < 0;
+        final Optional<Solution> currentSolution;
+        if (currentSolutionIndex > -1) {
+            currentSolution = Optional.of(solutionPaths.get(currentSolutionPath).get(currentSolutionIndex));
+        } else {
+            currentSolution = Optional.empty();
         }
         val currentSolutionPathDescription = solutionPaths.get(currentSolutionPath)
                 .stream()
@@ -71,9 +75,20 @@ public class DefaultEditorOptimization implements EditorOptimization {
                 .reduce((a, b) -> a + "/" + b)
                 .orElse("");
         return tree(editor.getName() + " is being optimized by " + getClass().getSimpleName())
-                .withProperty("Solution paths processed", "" + (currentSolutionPath + 1) + "/" + solutionPaths.size())
-                .withProperty("Current Solution path position", currentSolutionIndex + "/" + solutionPaths.get(currentSolutionPath).size())
-                .withProperty("Current Solution path", currentSolutionPathDescription)
+                .withProperty("Solution paths processed", (currentSolutionPath + 1) + "/" + solutionPaths.size())
+                .withProperty("Current solution path position", currentSolutionIndex + "/" + solutionPaths.get(currentSolutionPath).size())
+                .withProperty("Current solution path", currentSolutionPathDescription)
+                .withProperty("Current sub optimizer", currentOptimizer
+                        .map(EditorOptimization::status)
+                        .orElseGet(() -> tree("No sub optimizer present")))
+                .withProperty("Current solution rating", currentSolution.map(cs -> cs.name()
+                        + ": "
+                        + cs.constraint().rating().descriptionForUser()
+                ).orElse("No rating is present."))
+                .withChild(tree("Overhaul solutions rating")
+                        .withChildren(editor.getSolutions().values().stream()
+                                .map(s -> tree(s.name() + ": " + s.constraint().rating().descriptionForUser()))
+                                .collect(toList())))
                 ;
     }
 }
