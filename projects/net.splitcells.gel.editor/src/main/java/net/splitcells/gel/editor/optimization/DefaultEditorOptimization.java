@@ -53,7 +53,7 @@ public class DefaultEditorOptimization implements EditorOptimization {
             currentOptimizer = currentSolution.history().processWithHistory(cs -> cs.orElseThrow().runNextStep(), currentOptimizer);
             return Optional.of(this);
         } else {
-            if (currentSolutionPath >= solutionPaths.size()) {
+            if (currentSolutionPath > solutionPaths.size() - 2) {
                 return Optional.empty();
             }
             currentSolutionIndex = solutionPaths.get(++currentSolutionPath).size();
@@ -63,7 +63,7 @@ public class DefaultEditorOptimization implements EditorOptimization {
 
     @Override public Tree status() {
         val completed = solutionPaths.size() - 1 <= currentSolutionPath
-                && solutionPaths.get(currentSolutionPath).size() - 1 <= currentSolutionIndex;
+                && currentSolutionIndex < 0;
         if (completed) {
             return tree(editor.getName() + " is optimized by " + getClass().getSimpleName());
         }

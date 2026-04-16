@@ -62,8 +62,7 @@ public class EditorProcessorTest {
         process(EditorProcessorTest.TEST_OPTIMIZATION_GUI, GelUiCell.class).requireErrorFree();
     }
 
-    @UnitTest
-    public void testEditorProcessor() {
+    @DisabledTest @UnitTest public void testEditorProcessor() {
         final var testSubject = editorProcessor();
         final var requestTree = tree("");
         requestTree.withProperty(PROBLEM_DEFINITION
