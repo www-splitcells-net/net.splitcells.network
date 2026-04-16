@@ -49,7 +49,6 @@ public class EditorProcessor implements Processor<Tree, Tree> {
     private static final String REQUESTING_ASYNC = "requesting-async";
     private static final String IS_OPTIMIZING = "is-optimizing";
     private static final String ASYNC_ID = "async-user-session-life-cycle-id";
-    private static final String REQUEST_UPDATE_FOR_ASYNC_ID = "request-async-update-for-life-cycle-id";
 
     public static final Trail PATH = Trail.trail("net/splitcells/gel/ui/editor/geal/form");
 
@@ -175,7 +174,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
     @Override
     public Response<Tree> process(Request<Tree> request) {
         val userSession = request.userSession();
-        val asyncIdUpdate = Optional.of(request.data().namedChildren(REQUEST_UPDATE_FOR_ASYNC_ID))
+        val asyncIdUpdate = Optional.of(request.data().namedChildren(ASYNC_ID))
                 .filter(List::hasElements)
                 .map(ids -> ids.firstValue().orElseThrow())
                 .stream()
