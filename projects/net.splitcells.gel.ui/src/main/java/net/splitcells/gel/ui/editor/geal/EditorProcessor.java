@@ -69,10 +69,6 @@ public class EditorProcessor implements Processor<Tree, Tree> {
         val inputValues = request.data().children();
         if (inputValues.hasElements()) {
             inputValues.stream()
-                    .filter(c -> {
-                        val name = c.name();
-                        return !name.equals(REQUESTING_ASYNC) && !name.equals(ASYNC_ID);
-                    })
                     .forEach(c -> {
                         val content = toBytes(c.child(0).name());
                         // TODO Support multiple formats of data.
