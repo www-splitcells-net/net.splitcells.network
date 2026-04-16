@@ -65,7 +65,7 @@ public class RepairOptimizationStep implements EditorOptimization {
     }
 
     @Override public Tree status() {
-        return tree("Constraint Group Based Reapir")
+        return tree("Constraint Group Based Repair")
                 .withProperty("current step", "" + currentStep)
                 .withProperty("max step", "" + maxStep);
     }
