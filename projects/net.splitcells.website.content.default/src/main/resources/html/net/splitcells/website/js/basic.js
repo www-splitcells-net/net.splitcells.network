@@ -418,6 +418,9 @@ function net_splitcells_webserver_form_submit(config) {
         let responseObject = JSON.parse(this.responseText);
         if ('net-splitcells-website-server-form-update' in responseObject) {
             net_splitcells_webserver_form_update(config, responseObject);
+            if (responseObject['net-splitcells-website-server-form-update']['data-values']['is-optimizing'] === 'true') {
+                console.log('Optimization is still running.');
+            }
         }
         config['on-submission-completion']();
         submitButton.classList.remove("net-splitcells-button-activity");
