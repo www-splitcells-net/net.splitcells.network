@@ -81,6 +81,7 @@ public class Editor implements Discoverable {
     @Getter private final Map<String, Integer> integerVariables = map();
     private final List<FunctionCallRecord> functionCallRecords = list();
     @Getter @Setter private boolean isRecording = false;
+    @Getter private volatile boolean isOptimizing = false;
     private final Map<String, EditorData> data = map();
     private final ListView<String> path;
     private Tree optimizationStatus = tree("No optimization was started yet.");
@@ -159,7 +160,7 @@ public class Editor implements Discoverable {
 
     /**
      * This method ensures, that the {@link Table} are not read and {@link Solution#optimize()} at the same time.
-     * 
+     *
      * @param processor
      */
     public synchronized <R> R processTablesSynchronously(Function<Editor, R> processor) {
@@ -170,16 +171,21 @@ public class Editor implements Discoverable {
      * This method is executed asynchronously and therefore needs to synchronize its access the {@link Table}.
      */
     public void optimize() {
-        var nextStep = Optional.of(defaultEditorOptimization(this));
-        synchronized (this) {
-            optimizationStatus = tree("Started optimization via " + nextStep.orElseThrow().getClass().getSimpleName() + ".");
-        }
-        while (nextStep.isPresent()) {
+        try {
+            isOptimizing = true;
+            var nextStep = Optional.of(defaultEditorOptimization(this));
             synchronized (this) {
-                val currentStep = nextStep.get();
-                nextStep = currentStep.runNextStep();
-                optimizationStatus = currentStep.status();
+                optimizationStatus = tree("Started optimization via " + nextStep.orElseThrow().getClass().getSimpleName() + ".");
             }
+            while (nextStep.isPresent()) {
+                synchronized (this) {
+                    val currentStep = nextStep.get();
+                    nextStep = currentStep.runNextStep();
+                    optimizationStatus = currentStep.status();
+                }
+            }
+        } finally {
+            isOptimizing = false;
         }
     }
 
