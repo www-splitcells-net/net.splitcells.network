@@ -8,6 +8,7 @@ import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.LogMessage;
@@ -29,6 +30,7 @@ import static net.splitcells.dem.lang.CommonMarkUtils.joinDocuments;
 import static net.splitcells.dem.lang.tree.CommonMarkConfig.commonMarkConfig;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT;
+import static net.splitcells.dem.resource.ContentType.TEXT;
 import static net.splitcells.dem.resource.communication.log.LogMessageI.logMessage;
 import static net.splitcells.dem.testing.need.NeedsCheck.runWithCheckedNeeds;
 import static net.splitcells.dem.utils.ExecutionException.execException;
@@ -45,6 +47,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
 
     public static final String PROBLEM_DEFINITION = "Definition";
     private static final String REQUESTING_ASYNC = "requesting-async";
+    private static final String IS_OPTIMIZING = "is-optimizing";
     private static final String ASYNC_ID = "async-user-session-life-cycle-id";
     private static final String REQUEST_UPDATE_FOR_ASYNC_ID = "request-async-update-for-life-cycle-id";
 
@@ -87,6 +90,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
             editor.optimize();
         } else {
             tree(ASYNC_ID).withChild(tree(lifeCycleId(userSession))).withParent(formUpdate);
+            editor.setOptimizing(true);
         }
         editor.getTables().entrySet().forEach(e -> {
             dataValues.withProperty(e.getKey(), e.getValue().toCSV(reportInvalidCsvData(e.getKey())));

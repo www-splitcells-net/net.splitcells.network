@@ -81,7 +81,7 @@ public class Editor implements Discoverable {
     @Getter private final Map<String, Integer> integerVariables = map();
     private final List<FunctionCallRecord> functionCallRecords = list();
     @Getter @Setter private boolean isRecording = false;
-    @Getter private volatile boolean isOptimizing = false;
+    @Getter @Setter private volatile boolean isOptimizing = false;
     private final Map<String, EditorData> data = map();
     private final ListView<String> path;
     private Tree optimizationStatus = tree("No optimization was started yet.");
