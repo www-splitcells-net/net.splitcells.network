@@ -85,8 +85,13 @@ public class EditorProcessor implements Processor<Tree, Tree> {
         if (isSync) {
             editor.optimize();
         } else {
-            tree(ASYNC_ID).withChild(tree(lifeCycleId(userSession))).withParent(formUpdate);
             editor.setOptimizing(true);
+            dataValues.withProperty(ASYNC_ID, tree(lifeCycleId(userSession)));
+            dataTypes.withProperty(ASYNC_ID, TEXT.codeName());
+            renderingTypes.withProperty(ASYNC_ID, PLAIN_TEXT);
+            dataValues.withProperty(IS_OPTIMIZING, tree("" + editor.isOptimizing()));
+            dataTypes.withProperty(IS_OPTIMIZING, TEXT.codeName());
+            renderingTypes.withProperty(IS_OPTIMIZING, PLAIN_TEXT);
         }
         editor.getTables().entrySet().forEach(e -> {
             dataValues.withProperty(e.getKey(), e.getValue().toCSV(reportInvalidCsvData(e.getKey())));
