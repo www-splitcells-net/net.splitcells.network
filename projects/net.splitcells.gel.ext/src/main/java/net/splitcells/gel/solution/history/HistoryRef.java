@@ -28,6 +28,7 @@ import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
@@ -70,6 +71,10 @@ public class HistoryRef implements History {
     @Override
     public void processWithHistory(Runnable runnable) {
         history.processWithHistory(runnable);
+    }
+
+    @Override public <A, R> R processWithHistory(Function<A, R> processor, A arg) {
+        return history.processWithHistory(processor, arg);
     }
 
     @Override

@@ -30,6 +30,7 @@ import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.gel.solution.history.History;
 import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -102,6 +103,10 @@ public class HistoryForTable implements History {
 
     @Override
     public <T> T supplyWithHistory(Supplier<T> supplier) {
+        throw notImplementedYet();
+    }
+
+    @Override public <A, R> R processWithHistory(Function<A, R> processor, A arg) {
         throw notImplementedYet();
     }
 

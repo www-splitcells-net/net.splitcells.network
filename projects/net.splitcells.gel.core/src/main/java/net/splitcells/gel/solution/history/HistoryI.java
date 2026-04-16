@@ -56,6 +56,7 @@ import net.splitcells.gel.solution.history.meta.type.AllocationRating;
 import net.splitcells.gel.solution.history.meta.type.CompleteRating;
 import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -200,10 +201,14 @@ public class HistoryI implements History {
         runnable.run();
     }
 
-    @Override
-    public void processWithHistory(Runnable runnable) {
+    @Override public void processWithHistory(Runnable runnable) {
         isRegisterEventIsEnabled = true;
         runnable.run();
+    }
+
+    @Override public <A, R> R processWithHistory(Function<A, R> processor, A arg) {
+        isRegisterEventIsEnabled = true;
+        return processor.apply(arg);
     }
 
     @Override

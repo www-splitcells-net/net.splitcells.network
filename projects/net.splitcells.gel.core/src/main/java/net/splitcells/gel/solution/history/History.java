@@ -35,6 +35,7 @@ import net.splitcells.gel.solution.history.meta.type.AllocationRating;
 import net.splitcells.gel.solution.history.meta.type.CompleteRating;
 import net.splitcells.gel.solution.Solution;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -98,6 +99,8 @@ public interface History extends Assignments, AfterAdditionSubscriber, BeforeRem
      * @param runnable This is the code to be run during which the {@link History} is enabled.
      */
     void processWithHistory(Runnable runnable);
+
+    <A, R> R processWithHistory(Function<A, R> processor, A arg);
 
     /**
      * <p>This method guarantees,
