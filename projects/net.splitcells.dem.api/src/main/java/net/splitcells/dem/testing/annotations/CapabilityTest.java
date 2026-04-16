@@ -30,5 +30,9 @@ import java.lang.annotation.Target;
 @Tag(TestTypes.CAPABILITY_TEST)
 @Test
 @JavaLegacy
+/**
+ * Tests that are more like {@link UnitTest}, but require a lot of resources can be placed here,
+ * in order to speed up the default build.
+ */
 public @interface CapabilityTest {
 }
