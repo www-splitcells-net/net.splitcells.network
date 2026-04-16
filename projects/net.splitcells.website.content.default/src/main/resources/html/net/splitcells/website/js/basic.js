@@ -422,7 +422,7 @@ function net_splitcells_webserver_form_submit(config) {
         if ('net-splitcells-website-server-form-update' in responseObject) {
             net_splitcells_webserver_form_update(config, responseObject);
             if (responseObject['net-splitcells-website-server-form-update']['data-values']['is-optimizing'] === 'true') {
-                console.log('Optimization is still running. Checking for updates.');
+                console.log('Form submission is still running. Checking for updates.');
                 promiseSleepForMs(1000);
                 net_splitcells_webserver_form_submit(config);
             } else {
