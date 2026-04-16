@@ -15,16 +15,19 @@ import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.gel.editor.optimization.RepairOptimizationStep.repairOptimizationStep;
 import static net.splitcells.gel.solution.optimization.DefaultOptimization.defaultOptimization;
+import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 
 public class DefaultEditorOptimization implements EditorOptimization {
-    public static DefaultEditorOptimization defaultEditorOptimization(Editor argEditor) {
+    public static EditorOptimization defaultEditorOptimization(Editor argEditor) {
         return new DefaultEditorOptimization(argEditor);
     }
 
     private final Editor editor;
     private int currentSolutionPath = 0;
     private int currentSolutionIndex;
+    private Optional<EditorOptimization> currentOptimizer = Optional.empty();
     private final List<List<Solution>> solutionPaths;
 
     private DefaultEditorOptimization(Editor argEditor) {
@@ -33,16 +36,29 @@ public class DefaultEditorOptimization implements EditorOptimization {
         currentSolutionIndex = solutionPaths.get(currentSolutionPath).size();
     }
 
-    @Override public Optional<DefaultEditorOptimization> runNextStep() {
+    @Override public Optional<EditorOptimization> runNextStep() {
         solutionPaths.requireSizeOf(1, () -> getClass().getName() + " only supports a list of solutions and not a full tree or even graph of interdependent solutions."
                 + " In other words, every solution is only allowed to have at most 1 solution as its demand or supply."
                 + " Furthermore, the solution's interdependencies are not allowed to form a circle.");
-        if (--currentSolutionIndex > -1) {
-            val currentSolution = solutionPaths.get(currentSolutionPath).get(currentSolutionIndex);
-            currentSolution.history().processWithHistory(() -> defaultOptimization().optimize(currentSolution));
+        if (currentOptimizer.isPresent()) {
+            currentOptimizer = currentOptimizer.get().runNextStep();
             return Optional.of(this);
         }
-        return Optional.empty();
+        if (--currentSolutionIndex > -1) {
+            val currentSolution = solutionPaths.get(currentSolutionPath).get(currentSolutionIndex);
+            if (currentSolutionIndex == solutionPaths.get(currentSolutionPath).size() - 1) {
+                currentSolution.history().processWithHistory(() -> onlineLinearInitialization().optimize(currentSolution));
+            }
+            currentOptimizer = Optional.of(repairOptimizationStep(currentSolution));
+            currentOptimizer = currentSolution.history().processWithHistory(cs -> cs.orElseThrow().runNextStep(), currentOptimizer);
+            return Optional.of(this);
+        } else {
+            if (currentSolutionPath >= solutionPaths.size()) {
+                return Optional.empty();
+            }
+            currentSolutionIndex = solutionPaths.get(++currentSolutionPath).size();
+            return runNextStep();
+        }
     }
 
     @Override public Tree status() {
