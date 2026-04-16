@@ -247,7 +247,7 @@ function net_splitcells_webserver_form_update(config, update) {
                     newTabContent.style.visibility = 'hidden';
                     tabHolder.appendChild(newTabContent);
 
-                    if ((dataTypes[key] === 'text/csv' || dataTypes[key] === 'text/markdown') && (renderingTypes[key] === undefined || renderingTypes[key] === 'plain-text')) {
+                    if ((dataTypes[key] === 'text/plain' || dataTypes[key] === 'text/csv' || dataTypes[key] === 'text/markdown') && (renderingTypes[key] === undefined || renderingTypes[key] === 'plain-text')) {
                         // TODO Check rendering type.
                         const newTabInput = document.createElement('textarea');
                         newTabInput.id = formId + '-' + key;
