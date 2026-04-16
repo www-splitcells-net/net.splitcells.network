@@ -408,6 +408,7 @@ function net_splitcells_webserver_form_submit(config) {
     const form = document.getElementById(formId);
     const request  = new XMLHttpRequest();
     const data = new FormData(form);
+    data.append('requesting-async', 'true');
     const dynamicMenus = document.querySelectorAll('.net-splitcells-website-menu-dynamic');
     const tabHolder = form.querySelector('.net-splitcells-website-form-editor-tab-holder');
     request.onload = function() {
