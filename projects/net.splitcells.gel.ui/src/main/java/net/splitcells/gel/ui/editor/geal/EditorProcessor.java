@@ -138,6 +138,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
         if (isSync) {
             editorAccess.delete(userSession);
         } else {
+            formUpdate.withProperty(ASYNC_ID, lifeCycleId(userSession));
             Dem.executeThread(EditorProcessor.class, () -> {
                 try {
                     editor.optimize();
