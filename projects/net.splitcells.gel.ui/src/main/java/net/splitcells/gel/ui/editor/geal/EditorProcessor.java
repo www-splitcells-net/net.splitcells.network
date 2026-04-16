@@ -65,11 +65,16 @@ public class EditorProcessor implements Processor<Tree, Tree> {
         val problemDefinition = request.data().namedChild(PROBLEM_DEFINITION, needInput(PROBLEM_DEFINITION));
         val inputValues = request.data().children();
         if (inputValues.hasElements()) {
-            inputValues.forEach(c -> {
-                val content = toBytes(c.child(0).name());
-                // TODO Support multiple formats of data.
-                editor.saveData(c.name(), editorData(TEXT_PLAIN, content));
-            });
+            inputValues.stream()
+                    .filter(c -> {
+                        val name = c.name();
+                        return !name.equals(REQUESTING_ASYNC) && !name.equals(ASYNC_ID);
+                    })
+                    .forEach(c -> {
+                        val content = toBytes(c.child(0).name());
+                        // TODO Support multiple formats of data.
+                        editor.saveData(c.name(), editorData(TEXT_PLAIN, content));
+                    });
         }
         editor.interpret(problemDefinition.content());
         val formUpdate = tree(FORM_UPDATE);
