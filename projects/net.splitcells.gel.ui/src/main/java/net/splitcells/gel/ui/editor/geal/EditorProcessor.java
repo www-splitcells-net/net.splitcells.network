@@ -63,26 +63,26 @@ public class EditorProcessor implements Processor<Tree, Tree> {
     }
 
     private Response<Tree> process(Request<Tree> request, Editor editor) {
+        val asyncs = request.data().namedChildren(REQUESTING_ASYNC);
+        val isSync = asyncs.isEmpty() || !"true".equals(asyncs.get(0).valueName());
         val asyncId = request.data().namedChildren(ASYNC_ID);
         val isFirstRequest = asyncId.isEmpty();
         val userSession = request.userSession();
         val problemDefinition = request.data().namedChild(PROBLEM_DEFINITION, needInput(PROBLEM_DEFINITION));
         val inputValues = request.data().children();
-        if (inputValues.hasElements()) {
+        if (isSync || isFirstRequest) {
             inputValues.stream()
                     .forEach(c -> {
                         val content = toBytes(c.child(0).name());
                         // TODO Support multiple formats of data.
                         editor.saveData(c.name(), editorData(TEXT_PLAIN, content));
                     });
+            editor.interpret(problemDefinition.content());
         }
-        editor.interpret(problemDefinition.content());
         val formUpdate = tree(FORM_UPDATE);
         val dataTypes = tree(DATA_TYPES).withParent(formUpdate);
         val dataValues = tree(DATA_VALUES).withParent(formUpdate);
         val renderingTypes = tree(RENDERING_TYPES).withParent(formUpdate);
-        val asyncs = request.data().namedChildren(REQUESTING_ASYNC);
-        val isSync = asyncs.isEmpty() || !"true".equals(asyncs.get(0).valueName());
         if (isSync) {
             editor.optimize();
         } else {
