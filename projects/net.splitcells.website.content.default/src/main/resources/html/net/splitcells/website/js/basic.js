@@ -385,6 +385,9 @@ function net_splitcells_webserver_form_update(config, update) {
                 }
             }
 }
+function promiseSleepForMs(milliseconds) {
+    return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
 /* Submits a HTML form's action.
  * The request is sent as multipart/form-data and contains the form's inputs.
  * The response is a JSON dictionary containing the key `net-splitcells-website-server-form-update`.
@@ -420,6 +423,7 @@ function net_splitcells_webserver_form_submit(config) {
             net_splitcells_webserver_form_update(config, responseObject);
             if (responseObject['net-splitcells-website-server-form-update']['data-values']['is-optimizing'] === 'true') {
                 console.log('Optimization is still running. Checking for updates.');
+                promiseSleepForMs(1000);
                 net_splitcells_webserver_form_submit(config);
             } else {
                 console.log('Form is fully submitted.');
