@@ -43,6 +43,11 @@ public enum ContentType {
         isBinary = argIsBinary;
     }
 
+    /**
+     * TODO rename this to mime type of something like that.
+     * 
+     * @return
+     */
     public String codeName() {
         return codeName;
     }
