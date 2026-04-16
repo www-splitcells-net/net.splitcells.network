@@ -399,7 +399,9 @@ function net_splitcells_webserver_form_update(config, update) {
 function net_splitcells_webserver_form_submit(config) {
     const submitButton = document.getElementById(config['submit-button-id']);
     const formId = config['form-id'];
-    const preSubmitButtonText = submitButton.innerHTML;
+    if (!submitButton.hasAttribute('original-inner-html')) {
+        submitButton.setAttribute('original-inner-html', submitButton.innerHTML);
+    }
     const onClickCode = submitButton.onclick;
     submitButton.onclick = null;
     submitButton.innerHTML = "Executing...";
@@ -424,6 +426,7 @@ function net_splitcells_webserver_form_submit(config) {
                 return;
             } else {
                 console.log('Form is fully submitted.');
+                submitButton.innerHTML = submitButton.getAttribute('original-inner-html');
             }
         }
         config['on-submission-completion']();
