@@ -148,6 +148,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                 try {
                     editor.optimize();
                 } finally {
+                    Dem.sleepAtLeast(60_000);
                     editorAccess.delete(userSession);
                 }
             });
