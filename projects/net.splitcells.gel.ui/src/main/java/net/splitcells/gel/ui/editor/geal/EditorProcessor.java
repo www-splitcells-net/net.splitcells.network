@@ -7,7 +7,6 @@ import lombok.val;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
-import net.splitcells.dem.lang.tree.CommonMarkConfig;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.resource.communication.log.LogLevel;
@@ -17,13 +16,10 @@ import net.splitcells.dem.testing.need.Need;
 import net.splitcells.dem.testing.reporting.ErrorReporter;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.EditorData;
-import net.splitcells.website.Format;
-import net.splitcells.website.server.messages.FormUpdate;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.Request;
 import net.splitcells.website.server.processor.Response;
 import net.splitcells.website.server.security.access.AccessContainer;
-import net.splitcells.website.server.security.authentication.UserSession;
 
 import java.util.Optional;
 
@@ -43,13 +39,12 @@ import static net.splitcells.gel.editor.EditorData.editorData;
 import static net.splitcells.website.Format.*;
 import static net.splitcells.website.server.messages.FormUpdate.*;
 import static net.splitcells.website.server.processor.Response.response;
-import static net.splitcells.website.server.security.authentication.Authentication.anonymous;
 import static net.splitcells.website.server.security.authentication.Authentication.lifeCycleId;
 
 public class EditorProcessor implements Processor<Tree, Tree> {
 
     public static final String PROBLEM_DEFINITION = "Definition";
-    private static final String ASYNC = "requesting-async";
+    private static final String REQUESTING_ASYNC = "requesting-async";
     private static final String ASYNC_ID = "async-user-session-life-cycle-id";
     private static final String REQUEST_UPDATE_FOR_ASYNC_ID = "request-async-update-for-life-cycle-id";
 
@@ -81,7 +76,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
         val dataTypes = tree(DATA_TYPES).withParent(formUpdate);
         val dataValues = tree(DATA_VALUES).withParent(formUpdate);
         val renderingTypes = tree(RENDERING_TYPES).withParent(formUpdate);
-        val asyncs = request.data().namedChildren(ASYNC);
+        val asyncs = request.data().namedChildren(REQUESTING_ASYNC);
         val isSync = asyncs.isEmpty() || !"true".equals(asyncs.get(0).valueName());
         if (isSync) {
             editor.optimize();
