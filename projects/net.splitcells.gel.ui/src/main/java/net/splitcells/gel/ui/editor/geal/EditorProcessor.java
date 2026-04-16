@@ -64,6 +64,8 @@ public class EditorProcessor implements Processor<Tree, Tree> {
     }
 
     private Response<Tree> process(Request<Tree> request, Editor editor) {
+        val asyncId = request.data().namedChildren(ASYNC_ID);
+        val isFirstRequest = asyncId.isEmpty();
         val userSession = request.userSession();
         val problemDefinition = request.data().namedChild(PROBLEM_DEFINITION, needInput(PROBLEM_DEFINITION));
         val inputValues = request.data().children();
@@ -85,8 +87,12 @@ public class EditorProcessor implements Processor<Tree, Tree> {
         if (isSync) {
             editor.optimize();
         } else {
-            editor.setOptimizing(true);
-            dataValues.withProperty(ASYNC_ID, tree(lifeCycleId(userSession)));
+            if (isFirstRequest) {
+                editor.setOptimizing(true);
+                dataValues.withProperty(ASYNC_ID, tree(lifeCycleId(userSession)));
+            } else {
+                dataValues.withProperty(ASYNC_ID, asyncId.get(0).valueName());
+            }
             dataTypes.withProperty(ASYNC_ID, TEXT.codeName());
             renderingTypes.withProperty(ASYNC_ID, PLAIN_TEXT);
             dataValues.withProperty(IS_OPTIMIZING, tree("" + editor.isOptimizing()));
@@ -143,15 +149,16 @@ public class EditorProcessor implements Processor<Tree, Tree> {
         if (isSync) {
             editorAccess.delete(userSession);
         } else {
-            formUpdate.withProperty(ASYNC_ID, lifeCycleId(userSession));
-            Dem.executeThread(EditorProcessor.class, () -> {
-                try {
-                    editor.optimize();
-                } finally {
-                    Dem.sleepAtLeast(60_000);
-                    editorAccess.delete(userSession);
-                }
-            });
+            if (isFirstRequest) {
+                Dem.executeThread(EditorProcessor.class, () -> {
+                    try {
+                        editor.optimize();
+                    } finally {
+                        Dem.sleepAtLeast(60_000);
+                        editorAccess.delete(userSession);
+                    }
+                });
+            }
         }
         return response(formUpdate);
     }
