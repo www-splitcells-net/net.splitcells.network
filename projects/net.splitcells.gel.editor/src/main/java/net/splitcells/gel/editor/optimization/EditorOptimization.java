@@ -14,7 +14,7 @@ import java.util.function.Supplier;
  * Defines an optimizer, that tackles all {@link Editor#getSolutions()}.
  */
 public interface EditorOptimization {
-    Optional<DefaultEditorOptimization> runNextStep();
+    Optional<EditorOptimization> runNextStep();
 
     Tree status();
 }
