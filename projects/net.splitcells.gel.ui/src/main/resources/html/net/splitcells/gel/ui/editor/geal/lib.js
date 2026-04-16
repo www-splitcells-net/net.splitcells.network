@@ -6,6 +6,7 @@ function net_splitcells_gel_ui_editor_geal_form_submit() {
     config['form-id'] = 'net-splitcells-gel-ui-editor-geal-form'
     config['submit-button-id'] = 'net-splitcells-gel-ui-editor-geal-form-submit';
     config['on-submission-completion'] = () => {};
+    config['requesting-async'] = 'true'
     net_splitcells_webserver_form_submit(config);
 }
 function net_splitcells_gel_ui_editor_geal_form_load(loadPath) {
