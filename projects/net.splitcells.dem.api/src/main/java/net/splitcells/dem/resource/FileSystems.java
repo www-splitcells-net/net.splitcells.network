@@ -58,6 +58,11 @@ public class FileSystems implements FileSystem {
         return new FileSystems(rootPath);
     }
 
+    /**
+     * TODO Manage the clean up during long run processes as well.
+     *
+     * @return
+     */
     public static FileSystemResource temporaryFileSystem() {
         try {
             final var baseFolder = java.nio.file.Files.createTempDirectory(configValue(ProgramName.class));
