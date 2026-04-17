@@ -31,6 +31,8 @@ import static net.splitcells.website.server.security.authentication.Authenticati
 
 /**
  * <p>Provides authenticated and authorized access to existing things.</p>
+ * <p>TODO Extend interface or builder in such a way, that authentication rules can be created.
+ * Although known as defining which roles, can access a subject.</p>
  * <p>TODO Consider using the {@link UserSession} that is stored at a new {@link Dem#config()}.
  * In other words, for every user access a child {@link Dem} would have to be created,
  * where {@link Dem#config()} is the same as the parent one,
