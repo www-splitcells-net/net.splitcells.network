@@ -50,7 +50,14 @@ public class FileSystemsTest {
             return new FileSystemTest.FileSystemAccess(fileSystem, fileSystem);
         }, () -> tmps.forEach(Files::deleteDirectory));
     }
-    
+
+    @UnitTestFactory public Stream<DynamicTest> testTemporaryFileSystem() {
+        return new FileSystemTest().fileSystemWriteTests(() -> {
+            val fileSystem = temporaryFileSystem();
+            return new FileSystemTest.FileSystemAccess(fileSystem, fileSystem);
+        });
+    }
+
     @UnitTest public void testInvalidLocalhostFolder() {
         requireThrow(() -> fileSystemOnLocalHost(Path.of("/not-existing-local-folder-12431234235325")));
     }
