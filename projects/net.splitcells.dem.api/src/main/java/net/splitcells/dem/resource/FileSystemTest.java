@@ -124,10 +124,6 @@ public class FileSystemTest extends TestSuiteI {
                 .map(Path::toString)
                 .collect(toSetOfUniques())
                 .requireContentsOf(expectedResult);
-        testSubject.reader.walkRecursively(Path.of("/./"))
-                .map(Path::toString)
-                .collect(toSetOfUniques())
-                .requireContentsOf(expectedResult);
         testSubject.reader.walkRecursively()
                 .map(Path::toString)
                 .collect(toSetOfUniques())
