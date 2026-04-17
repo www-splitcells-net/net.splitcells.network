@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static java.nio.file.Files.createDirectories;
@@ -48,6 +49,18 @@ public interface Files {
             } finally {
                 Files.deleteDirectory(temporaryFolder);
             }
+        } catch (Throwable t) {
+            throw execException(t);
+        }
+    }
+
+    /**
+     *
+     * @return The caller has to delete the returned temporary folder.
+     */
+    static Path unclosedTemporaryFolder() {
+        try {
+            return java.nio.file.Files.createTempDirectory(null);
         } catch (Throwable t) {
             throw execException(t);
         }
@@ -176,7 +189,7 @@ public interface Files {
         return java.nio.file.Files.isRegularFile(path);
     }
 
-     static boolean folderExists(Path path) {
+    static boolean folderExists(Path path) {
         return java.nio.file.Files.isDirectory(path);
     }
 

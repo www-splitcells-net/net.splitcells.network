@@ -145,10 +145,20 @@ public class FileSystemTest extends TestSuiteI {
      * @param reader
      */
     public record FileSystemAccess(FileSystem writer, FileSystemView reader) {
-
     }
 
     public Stream<DynamicTest> fileSystemWriteTests(Supplier<FileSystemAccess> factory) {
+        return fileSystemWriteTests(factory, () -> {
+        });
+    }
+
+    /**
+     *
+     * @param factory
+     * @param closing Here things like resource can be closed.
+     * @return
+     */
+    public Stream<DynamicTest> fileSystemWriteTests(Supplier<FileSystemAccess> factory, Runnable closing) {
         return concat(dynamicTests(this::testExists, factory)
                 , dynamicTests(this::testExistsForSubFileSystem, factory)
                 , dynamicTests(this::testCreateDirectoryPath, factory)
@@ -160,6 +170,7 @@ public class FileSystemTest extends TestSuiteI {
                 , dynamicTests(this::testDelete, factory)
                 , dynamicTests(this::testAppendToFile, factory)
                 , dynamicTests(this::testWalkRecursively, factory)
+                , dynamicTests(f -> closing.run(), factory)
         );
     }
 }

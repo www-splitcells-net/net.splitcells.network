@@ -15,98 +15,39 @@
  */
 package net.splitcells.dem.resource;
 
+import lombok.val;
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
+import net.splitcells.dem.testing.annotations.UnitTest;
+import net.splitcells.dem.testing.annotations.UnitTestFactory;
 import net.splitcells.dem.utils.ExecutionException;
+import org.junit.jupiter.api.DynamicTest;
 
 import java.nio.file.Path;
+import java.util.stream.Stream;
 
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.resource.FileSystemViaMemory.fileSystemViaMemory;
 import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.resource.FileSystems.temporaryFileSystem;
-import static net.splitcells.dem.resource.Files.processInTemporaryFolder;
+import static net.splitcells.dem.resource.Files.*;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
 
 public class FileSystemsTest {
-    @IntegrationTest
-    public void testInputStream() {
-        final var testData = "78t789tb912dfrf";
-        final var testPath = Path.of("test-data.txt");
-        processInTemporaryFolder(path -> {
-            final var testSubject = fileSystemOnLocalHost(path);
-            testSubject.writeToFile(testPath, testData);
-            try {
-                requireEquals(new String(testSubject.inputStream(testPath).readAllBytes())
-                        , testData);
-            } catch (Throwable e) {
-                throw execException(e);
-            }
-        });
-    }
-
-    @IntegrationTest
-    public void testInputStreamWithFolder() {
-        final var testData = "78t789tb912dfrf";
-        final var testPath = Path.of("test-folder/test-file.txt");
-        processInTemporaryFolder(path -> {
-            final var testSubject = fileSystemOnLocalHost(path);
-            testSubject.writeToFile(testPath, testData);
-            try {
-                requireEquals(new String(testSubject.inputStream(testPath).readAllBytes())
-                        , testData);
-            } catch (Throwable e) {
-                throw execException(e);
-            }
-        });
-    }
-
-    @IntegrationTest
-    public void testJavaLegacyPath() {
-        processInTemporaryFolder(path -> {
-            fileSystemOnLocalHost(path).javaLegacyPath(Path.of("folder/file.txt"));
-        });
-    }
-
-    @IntegrationTest
-    public void testInvalidJavaLegacyPath() {
-        processInTemporaryFolder
-                (path -> Assertions.requireThrow(ExecutionException.class
-                        , () -> fileSystemOnLocalHost(path).javaLegacyPath(Path.of("/invalid/path.txt"))));
-    }
-
-    @IntegrationTest
-    public void testWalkRecursively() {
-        final var testData = list("78t789tb912dfrf", "123124");
-        final var testPath = list(Path.of("root/test-folder/test-file.txt")
-                , Path.of("root/another-folder/test-file.txt"));
-        processInTemporaryFolder(path -> {
-            final var testSubject = fileSystemOnLocalHost(path);
-            range(0, testData.size()).forEach(i -> testSubject.writeToFile(testPath.get(i), testData.get(i)));
-            testSubject.walkRecursively(Path.of("root/")).collect(toSetOfUniques())
-                    .requireContentsOf(setOfUniques(
-                            Path.of("root")
-                            , Path.of("root/test-folder")
-                            , Path.of("root/test-folder/test-file.txt")
-                            , Path.of("root/another-folder")
-                            , Path.of("root/another-folder/test-file.txt")));
-        });
-    }
-
-    @IntegrationTest
-    public void testCreateDirectoryPath() {
-        try (final var testSubject = temporaryFileSystem()) {
-            final var testValue = "test value";
-            final var testFolder = "test/folder";
-            final var testFile = testFolder + "/file";
-            testSubject.createDirectoryPath(testFolder);
-            testSubject.writeToFile(testFile, toBytes(testValue));
-            requireEquals(testSubject.readString(testFile), testValue);
-        }
+    @UnitTestFactory public Stream<DynamicTest> testFileSystemOnLocalHost() {
+        final List<Path> tmps = list();
+        return new FileSystemTest().fileSystemWriteTests(() -> {
+            val tmp = unclosedTemporaryFolder();
+            tmps.add(tmp);
+            val fileSystem = fileSystemOnLocalHost(tmp);
+            return new FileSystemTest.FileSystemAccess(fileSystem, fileSystem);
+        }, () -> tmps.forEach(Files::deleteDirectory));
     }
 }
