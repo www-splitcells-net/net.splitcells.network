@@ -31,11 +31,6 @@ import static net.splitcells.website.server.security.authentication.Authenticati
 
 /**
  * <p>Provides authenticated and authorized access to existing things.</p>
- * <p>TODO The difference between {@link AccessControl} and {@link AccessContainer} is the paradigm for managing content.
- * In other words, {@link AccessControl} manages the access to something, that may or may not be owned by the user,
- * whereas {@link AccessContainer} stores and provides user specific data.
- * Therefore, {@link AccessControl} is read-only oriented and {@link AccessContainer} supports read and write access.
- * Maybe this fact should be reflected by the interface hierachy.</p>
  * <p>TODO Consider using the {@link UserSession} that is stored at a new {@link Dem#config()}.
  * In other words, for every user access a child {@link Dem} would have to be created,
  * where {@link Dem#config()} is the same as the parent one,
