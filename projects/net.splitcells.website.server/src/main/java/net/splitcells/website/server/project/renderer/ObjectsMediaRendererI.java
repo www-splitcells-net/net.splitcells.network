@@ -21,7 +21,6 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.resource.FileSystemVoid.fileSystemVoid;
-import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 
 public class ObjectsMediaRendererI implements ProjectRenderer {

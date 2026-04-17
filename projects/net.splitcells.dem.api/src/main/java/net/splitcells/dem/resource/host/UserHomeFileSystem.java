@@ -19,11 +19,11 @@ import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.dem.resource.Paths;
 
-import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
+import static net.splitcells.dem.resource.PathFileSystem.pathFileSystem;
 
 public class UserHomeFileSystem implements Option<FileSystem> {
     @Override
     public FileSystem defaultValue() {
-        return fileSystemOnLocalHost(Paths.userHome());
+        return pathFileSystem(Paths.userHome());
     }
 }

@@ -41,7 +41,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
  * that are really needed.
  * Otherwise, it will be hard to avoid random access to the local file system,
  * which makes it hard to ensure the programs portability.
- * In other words, provide {@link FileSystems} instances to the local file system of the operation system
+ * In other words, provide {@link PathFileSystem} instances to the local file system of the operation system
  * via configuration and to via direct manual instance creation.
  * For this something like a registry is required,
  * where one can list such instances
@@ -49,13 +49,13 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
  * This does not apply to code, that only provides integration to the operation system.</p>
  */
 @JavaLegacy
-public class FileSystems implements FileSystem {
-    public static FileSystem fileSystemOnLocalHost(Path rootPath) {
+public class PathFileSystem implements FileSystem {
+    public static FileSystem pathFileSystem(Path rootPath) {
         if (!java.nio.file.Files.isDirectory(rootPath)) {
             throw ExecutionException.execException(tree("Could not create file system API for given folder, because the folder does not exist:")
                     .withProperty("rootPath", rootPath.toString()));
         }
-        return new FileSystems(rootPath);
+        return new PathFileSystem(rootPath);
     }
 
     /**
@@ -67,7 +67,7 @@ public class FileSystems implements FileSystem {
         try {
             final var baseFolder = java.nio.file.Files.createTempDirectory(configValue(ProgramName.class));
             Runtime.getRuntime().addShutdownHook(new Thread(() -> Files.deleteDirectory(baseFolder)));
-            final var baseFileSystem = fileSystemOnLocalHost(baseFolder);
+            final var baseFileSystem = pathFileSystem(baseFolder);
             return new FileSystemResource() {
 
                 @Override
@@ -153,17 +153,17 @@ public class FileSystems implements FileSystem {
     }
 
     public static FileSystem usersStateFiles() {
-        return fileSystemOnLocalHost(Files.usersStateFiles());
+        return pathFileSystem(Files.usersStateFiles());
     }
 
 
     public static FileSystem userHome() {
-        return fileSystemOnLocalHost(Paths.userHome());
+        return pathFileSystem(Paths.userHome());
     }
 
     private final Path rootPath;
 
-    private FileSystems(Path rootPath) {
+    private PathFileSystem(Path rootPath) {
         this.rootPath = rootPath;
     }
 
@@ -291,7 +291,7 @@ public class FileSystems implements FileSystem {
      */
     @Override
     public FileSystem subFileSystem(Path path) {
-        return new FileSystems(rootPath.resolve(path));
+        return new PathFileSystem(rootPath.resolve(path));
     }
 
     @Override

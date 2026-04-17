@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 import java.nio.file.Path;
 import java.util.Optional;
 
-import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
+import static net.splitcells.dem.resource.PathFileSystem.pathFileSystem;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,9 +36,9 @@ public class TextProjectRendererExtensionTest {
     public void testLayout() {
         final var testSubject = projectRenderer
                 ("public"
-                        , fileSystemOnLocalHost(Path.of("."))
-                        , fileSystemOnLocalHost(Path.of("../net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/"))
-                        , fileSystemOnLocalHost(Path.of("../net.splitcells.website.content.default/src/main/resources/html"))
+                        , pathFileSystem(Path.of("."))
+                        , pathFileSystem(Path.of("../net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/"))
+                        , pathFileSystem(Path.of("../net.splitcells.website.content.default/src/main/resources/html"))
                         , "/net/splitcells/dem"
                         , a -> Optional.empty()
                         , Config.create());
@@ -50,9 +50,9 @@ public class TextProjectRendererExtensionTest {
     public void testRawLayout() {
         final var testSubject = projectRenderer
                 ("public"
-                        , fileSystemOnLocalHost(Path.of("../net.splitcells.network"))
-                        , fileSystemOnLocalHost(Path.of("../net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/"))
-                        , fileSystemOnLocalHost(Path.of("../net.splitcells.website.content.default/src/main/resources/html"))
+                        , pathFileSystem(Path.of("../net.splitcells.network"))
+                        , pathFileSystem(Path.of("../net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/"))
+                        , pathFileSystem(Path.of("../net.splitcells.website.content.default/src/main/resources/html"))
                         , "/"
                         , a -> Optional.empty()
                         , Config.create());

@@ -17,16 +17,13 @@ package net.splitcells.dem.resource.host;
 
 import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.resource.FileSystem;
-import net.splitcells.dem.resource.FileSystems;
-
-import java.nio.file.Path;
 
 import static net.splitcells.dem.Dem.configValue;
-import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
+import static net.splitcells.dem.resource.PathFileSystem.pathFileSystem;
 
 public class CurrentFileSystem implements Option<FileSystem> {
     @Override
     public FileSystem defaultValue() {
-        return fileSystemOnLocalHost(configValue(ProcessHostPath.class));
+        return pathFileSystem(configValue(ProcessHostPath.class));
     }
 }

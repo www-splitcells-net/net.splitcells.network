@@ -16,20 +16,14 @@
 package net.splitcells.website;
 
 import net.splitcells.dem.Dem;
-import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.resource.Files;
 import net.splitcells.website.server.Config;
-import net.splitcells.website.server.project.ProjectRenderer;
-import net.splitcells.website.server.project.validator.SourceValidator;
-import net.splitcells.website.server.projects.ProjectsRendererI;
 
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 
-import static net.splitcells.dem.Dem.waitIndefinitely;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
+import static net.splitcells.dem.resource.PathFileSystem.pathFileSystem;
 import static net.splitcells.dem.resource.Files.readFileAsString;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
@@ -57,9 +51,9 @@ public class BareMinimumWebsite {
             final var targetFolder = Paths.get("target/minimal-test-website");
             Files.createDirectory(targetFolder);
             projectsRenderer("public", projectsRenderer -> projectRenderer("public"
-                            , fileSystemOnLocalHost(Paths.get("projects/net.splitcells.website.content.minimal/"))
-                            , fileSystemOnLocalHost(xslLib)
-                            , fileSystemOnLocalHost(Paths.get("projects/net.splitcells.website.content.default/src/main/resources/html"))
+                            , pathFileSystem(Paths.get("projects/net.splitcells.website.content.minimal/"))
+                            , pathFileSystem(xslLib)
+                            , pathFileSystem(Paths.get("projects/net.splitcells.website.content.default/src/main/resources/html"))
                             , "/"
                             , VOID_VALIDATOR
                             , config

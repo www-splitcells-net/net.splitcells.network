@@ -18,7 +18,7 @@ package net.splitcells.website;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.resource.FileSystem;
-import net.splitcells.dem.resource.FileSystems;
+import net.splitcells.dem.resource.PathFileSystem;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
@@ -29,11 +29,10 @@ import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.project.validator.SourceValidator;
 
 import java.nio.file.Path;
-import java.util.Optional;
 import java.util.function.Function;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
+import static net.splitcells.dem.resource.PathFileSystem.pathFileSystem;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -65,10 +64,10 @@ public class Projects {
         return ProjectsRendererI.projectsRenderer(profile, fallbackProjectRenderer
                 , projectsRenderer -> additionalProjects.apply(projectsRenderer)
                         .withAppended(projectRenderers(profile
-                                , fileSystemOnLocalHost(projectRepository)
-                                , fileSystemOnLocalHost(projectRepository.resolve("../../"))
+                                , pathFileSystem(projectRepository)
+                                , pathFileSystem(projectRepository.resolve("../../"))
                                 , sourceValidator
-                                , fileSystemOnLocalHost(xslLib)
+                                , pathFileSystem(xslLib)
                                 , config
                                 , projectsRenderer))
                 , config);
@@ -96,9 +95,9 @@ public class Projects {
             , Config config
             , ProjectsRenderer projectsRenderer) {
         return projectRenderer(profile
-                , fileSystemOnLocalHost(projectRepositories.resolve("net.splitcells.website.content.default/"))
-                , fileSystemOnLocalHost(projectRepositories.resolve("net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/"))
-                , fileSystemOnLocalHost(projectRepositories.resolve("net.splitcells.website.content.default/src/main/resources/content"))
+                , pathFileSystem(projectRepositories.resolve("net.splitcells.website.content.default/"))
+                , pathFileSystem(projectRepositories.resolve("net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/"))
+                , pathFileSystem(projectRepositories.resolve("net.splitcells.website.content.default/src/main/resources/content"))
                 , "/"
                 , sourceValidator
                 , config
@@ -234,7 +233,7 @@ public class Projects {
         );
         if (Dem.configValue(RenderUserStateRepo.class)) {
             projectRenderers.withAppended(projectRenderer(profile
-                    , FileSystems.usersStateFiles()
+                    , PathFileSystem.usersStateFiles()
                     , xslLib
                     , integratedProjectRepo.subFileSystem("net.splitcells.martins.avots.website/src/main/resources/html")
                     , "/"

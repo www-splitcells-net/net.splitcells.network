@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 import java.nio.file.Path;
 import java.util.Optional;
 
-import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
+import static net.splitcells.dem.resource.PathFileSystem.pathFileSystem;
 import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.website.server.project.ProjectRenderer.projectRenderer;
 
@@ -35,9 +35,9 @@ public class ResourceOptionProjectRendererExtensionTest {
     public void testResourceLayout() {
         final var testSubject = projectRenderer
                 ("public"
-                        , fileSystemOnLocalHost(Path.of("."))
-                        , fileSystemOnLocalHost(Path.of("../net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/"))
-                        , fileSystemOnLocalHost(Path.of("../net.splitcells.website.content.default/src/main/resources/html"))
+                        , pathFileSystem(Path.of("."))
+                        , pathFileSystem(Path.of("../net.splitcells.website.content.default/src/main/xsl/net/splitcells/website/den/translation/to/html/"))
+                        , pathFileSystem(Path.of("../net.splitcells.website.content.default/src/main/resources/html"))
                         , "/net/splitcells/network"
                         , a -> Optional.empty()
                         , Config.create());

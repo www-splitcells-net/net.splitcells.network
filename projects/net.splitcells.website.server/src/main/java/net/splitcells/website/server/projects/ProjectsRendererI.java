@@ -36,8 +36,6 @@ import net.splitcells.website.server.Config;
 import net.splitcells.website.server.projects.extension.impls.ProjectPathsRequest;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
 import net.splitcells.website.server.projects.extension.ProjectsRendererExtensionMerger;
-import net.splitcells.website.server.security.authentication.Authentication;
-import net.splitcells.website.server.security.authentication.UserSession;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -45,14 +43,13 @@ import java.util.Optional;
 import java.util.function.Function;
 
 import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
-import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
-import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
+import static net.splitcells.dem.resource.PathFileSystem.pathFileSystem;
 import static net.splitcells.dem.resource.Paths.path;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
@@ -107,7 +104,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
     public void build() {
         final var generatedFilesPath = Paths.get("target", "generated");
         Files.createDirectory(generatedFilesPath);
-        final var generatedFiles = fileSystemOnLocalHost(generatedFilesPath);
+        final var generatedFiles = pathFileSystem(generatedFilesPath);
         generatedFiles.writeToFile(Path.of("generation.style.xml")
                 , "<val xmlns=\"http://splitcells.net/den.xsd\">"
                         + config.generationStyle()

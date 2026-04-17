@@ -5,6 +5,8 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2026-04-17\#32** Rename FileSystems to PathFileSystem in order to show,
+  that it is based on Java's file system drivers that are provided by Java's Path.
 * **2026-03-09\#37** Move SetLegacyWrapper class to `net.splitcells.dem.data.set.legacy` package.
 * **2026-03-01\#69** Reimplement LoggerRouter, in order to make it more practible and portable.
 * **2026-02-09\#32** Remove unused `Files#readString`.

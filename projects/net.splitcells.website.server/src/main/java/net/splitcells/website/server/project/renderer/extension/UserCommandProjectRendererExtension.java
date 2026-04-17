@@ -20,7 +20,7 @@ import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.resource.FileSystem;
-import net.splitcells.dem.resource.FileSystems;
+import net.splitcells.dem.resource.PathFileSystem;
 import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.LayoutRenderer;
@@ -56,7 +56,7 @@ public class UserCommandProjectRendererExtension implements ProjectRendererExten
 
     private static final String RENDERING_PATH = "net/splitcells/shell/installed/index.html";
     private static final Path BIN_FOLDER_PATH = Path.of("bin/net.splitcells.shell.commands.managed/");
-    private static final FileSystem BIN_FOLDER = FileSystems.userHome();
+    private static final FileSystem BIN_FOLDER = PathFileSystem.userHome();
 
     private UserCommandProjectRendererExtension() {
 

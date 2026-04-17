@@ -25,7 +25,7 @@ import java.time.LocalDate;
 
 import static net.splitcells.dem.Dem.config;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
+import static net.splitcells.dem.resource.PathFileSystem.pathFileSystem;
 import static net.splitcells.dem.resource.Paths.userHome;
 import static net.splitcells.dem.testing.Test.testFunctionality;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
@@ -76,7 +76,7 @@ public class Tester {
                             .withConfigValue(ProgramName.class, hostname)
                             .withConfigValue(ProjectsFolder.class, userHome(projectsFolder))
                             .withConfigValue(NetworkWorkerLogFileSystem.class
-                                    , fileSystemOnLocalHost(config()
+                                    , pathFileSystem(config()
                                             .configValue(ProjectsFolder.class)
                                             .resolve("net.splitcells.network.log")));
                 });

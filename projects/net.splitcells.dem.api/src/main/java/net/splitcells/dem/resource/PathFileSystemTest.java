@@ -17,36 +17,29 @@ package net.splitcells.dem.resource;
 
 import lombok.val;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.testing.Assertions;
-import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.dem.testing.annotations.UnitTestFactory;
-import net.splitcells.dem.utils.ExecutionException;
 import org.junit.jupiter.api.DynamicTest;
 
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
-import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
-import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.resource.FileSystemViaMemory.fileSystemViaMemory;
-import static net.splitcells.dem.resource.FileSystems.fileSystemOnLocalHost;
-import static net.splitcells.dem.resource.FileSystems.temporaryFileSystem;
+import static net.splitcells.dem.resource.PathFileSystem.pathFileSystem;
+import static net.splitcells.dem.resource.PathFileSystem.temporaryFileSystem;
 import static net.splitcells.dem.resource.Files.*;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.ExecutionException.execException;
-import static net.splitcells.dem.utils.StringUtils.toBytes;
 
-public class FileSystemsTest {
-    @UnitTestFactory public Stream<DynamicTest> testFileSystemOnLocalHost() {
+public class PathFileSystemTest {
+    @UnitTestFactory public Stream<DynamicTest> testPathFileSystem() {
         final List<Path> tmps = list();
         return new FileSystemTest().fileSystemWriteTests(() -> {
             val tmp = unclosedTemporaryFolder();
             tmps.add(tmp);
-            val fileSystem = fileSystemOnLocalHost(tmp);
+            val fileSystem = pathFileSystem(tmp);
             return new FileSystemTest.FileSystemAccess(fileSystem, fileSystem);
         }, () -> tmps.forEach(Files::deleteDirectory));
     }
@@ -59,11 +52,11 @@ public class FileSystemsTest {
     }
 
     @UnitTest public void testInvalidLocalhostFolder() {
-        requireThrow(() -> fileSystemOnLocalHost(Path.of("/not-existing-local-folder-12431234235325")));
+        requireThrow(() -> pathFileSystem(Path.of("/not-existing-local-folder-12431234235325")));
     }
 
     @UnitTest public void testUsersStateFiles() {
-        val testSubject = FileSystems.usersStateFiles();
+        val testSubject = PathFileSystem.usersStateFiles();
         val testFile = Path.of("./test-file.txt");
         val testContent = "testUsersStateFiles";
         testSubject.writeToFile(testFile, testContent);
