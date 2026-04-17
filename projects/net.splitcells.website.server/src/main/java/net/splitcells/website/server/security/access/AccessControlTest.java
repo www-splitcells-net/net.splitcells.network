@@ -28,12 +28,10 @@ import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.FileSystemViaMemory.fileSystemViaMemory;
-import static net.splitcells.website.server.security.access.AccessControlImpl.accessControl;
-import static net.splitcells.website.server.security.authentication.Authentication.isActivelyAuthenticated;
+import static net.splitcells.website.server.security.access.StaticAccessControl.staticAccessControl;
 import static net.splitcells.website.server.security.authentication.AuthenticatorImpl.PASSWORD_FILE;
 import static net.splitcells.website.server.security.authentication.AuthenticatorImpl.authenticatorBasedOnFiles;
 import static net.splitcells.website.server.security.authentication.Login.login;
-import static net.splitcells.website.server.security.authentication.UserSession.*;
 
 public class AccessControlTest {
     @UnitTest
@@ -44,41 +42,22 @@ public class AccessControlTest {
         userData.createDirectoryPath(username);
         userData.writeToFile(username + PASSWORD_FILE, StringUtils.toBytes(password));
         val authenticator = authenticatorBasedOnFiles(userData);
-        final List<Firewall> accessCounter = list();
+        final List<Object> accessRecorder = list();
         final List<UserSession> userSessions = list();
-        val subjectAccessed = new Firewall() {
-            boolean isValid = true;
-        };
-        final var testSubject = accessControl(authenticator,
-                new AccessProvider<Firewall>() {
-                    @Override public void access(Consumer<Firewall> accessor, UserSession userSession) {
-                        accessor.accept(subjectAccessed);
-                        subjectAccessed.isValid = false;
-                    }
-
-                    @Override public void access(Consumer<Firewall> accessor, UserSession userSession, String lifeCycleId) {
-                        accessor.accept(subjectAccessed);
-                        subjectAccessed.isValid = false;
-                    }
-
-                    @Override public <R> R process(Function<Firewall, R> processor, UserSession userSession, String lifeCycleId) {
-                        val rVal = processor.apply(subjectAccessed);
-                        subjectAccessed.isValid = false;
-                        return rVal;
-                    }
-                });
+        val accessCounter = list(0);
+        final var testSubject = staticAccessControl(authenticator, accessCounter);
         testSubject.access((u, a) -> {
-            accessCounter.requireEmpty();
+            accessRecorder.requireEmpty();
             userSessions.requireEmpty();
-            require(subjectAccessed.isValid);
+            a.set(0, 1 + a.get(0));
             if (authenticator.isActivelyAuthenticated(u)) {
                 userSessions.add(u);
-                accessCounter.add(a);
+                accessRecorder.add(a);
             }
         }, login(username, password));
-        accessCounter.requireEquals(list(subjectAccessed));
+        accessRecorder.requireEquals(list(accessCounter));
         userSessions.requireSizeOf(1);
         requireNot(authenticator.isValid(userSessions.get(0)));
-        requireNot(subjectAccessed.isValid);
+        accessCounter.require(0, 1);
     }
 }

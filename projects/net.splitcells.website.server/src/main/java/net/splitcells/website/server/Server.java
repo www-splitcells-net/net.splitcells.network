@@ -55,6 +55,7 @@ import net.splitcells.website.server.projects.RenderRequest;
 import net.splitcells.website.server.projects.RenderResponse;
 import net.splitcells.website.server.projects.extension.impls.ProjectPathsRequest;
 import net.splitcells.website.server.security.access.AccessControl;
+import net.splitcells.website.server.security.access.StaticAccessControl;
 import net.splitcells.website.server.security.authentication.UserSession;
 import net.splitcells.website.server.security.encryption.PrivateIdentityPemStore;
 import net.splitcells.website.server.security.encryption.PublicIdentityPemStore;
@@ -86,8 +87,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
 import static net.splitcells.website.server.processor.Request.request;
 import static net.splitcells.website.server.projects.RenderRequest.renderRequest;
-import static net.splitcells.website.server.security.access.AccessControlImpl.accessControl;
-import static net.splitcells.website.server.security.access.AccessProvider.unsecuredStaticAccessSession;
+import static net.splitcells.website.server.security.access.StaticAccessControl.staticAccessControl;
 import static net.splitcells.website.server.security.authentication.Authentication.anonymous;
 import static net.splitcells.website.server.security.authentication.Login.anonymousLogin;
 import static net.splitcells.website.server.vertx.FileBasedAuthenticationProvider.LOGIN_KEY;
@@ -198,7 +198,7 @@ public class Server {
                 throw notImplementedYet();
             }
         };
-        return serveToHttpAt(accessControl(unsecuredStaticAccessSession(projectsRenderer)), config);
+        return serveToHttpAt(StaticAccessControl.staticAccessControl(projectsRenderer), config);
     }
 
     /**

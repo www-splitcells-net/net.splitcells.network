@@ -26,19 +26,26 @@ import java.util.function.Function;
 
 import static net.splitcells.dem.Dem.configValue;
 
-public class AccessControlImpl<T> implements AccessControl<T> {
-    public static <R> AccessControl<R> accessControl(R argSubject) {
-        return new AccessControlImpl<>(configValue(Authentication.class), argSubject);
+/**
+ * <p>Provides access to a single mutable object.</p>
+ * <p>TODO Implement a wrapper, that allows one to make given access invalid.
+ * For that T probably would need to implement something like a closeable clone.</p>
+ *
+ * @param <T> The type of value being provided.
+ */
+public class StaticAccessControl<T> implements AccessControl<T> {
+    public static <R> AccessControl<R> staticAccessControl(R argSubject) {
+        return new StaticAccessControl<>(configValue(Authentication.class), argSubject);
     }
 
-    public static <R> AccessControl<R> accessControl(Authenticator authenticator, R argSubject) {
-        return new AccessControlImpl<>(authenticator, argSubject);
+    public static <R> AccessControl<R> staticAccessControl(Authenticator authenticator, R argSubject) {
+        return new StaticAccessControl<>(authenticator, argSubject);
     }
 
     private final Authenticator authenticator;
     private final T subject;
 
-    private AccessControlImpl(Authenticator argAuthenticator, T argSubject) {
+    private StaticAccessControl(Authenticator argAuthenticator, T argSubject) {
         authenticator = argAuthenticator;
         subject = argSubject;
     }

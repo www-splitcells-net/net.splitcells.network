@@ -6,17 +6,17 @@ package net.splitcells.website.server.security.access;
 import lombok.val;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.website.server.security.authentication.Authenticator;
+import net.splitcells.website.server.security.authentication.Login;
 import net.splitcells.website.server.security.authentication.UserSession;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
-import static net.splitcells.website.server.security.authentication.Authentication.lifeCycleId;
-import static net.splitcells.website.server.security.authentication.Authentication.name;
+import static net.splitcells.website.server.security.authentication.Authentication.*;
 
 /**
  * <p>Provides data specific to {@link UserSession} and {@link Authenticator#lifeCycleId(UserSession)}.
@@ -25,7 +25,7 @@ import static net.splitcells.website.server.security.authentication.Authenticati
  *
  * @param <T>
  */
-public class AccessContainer<T> implements AccessProvider<T> {
+public class AccessContainer<T> implements AccessControl<T> {
     public static <R> AccessContainer<R> accessContainer() {
         return new AccessContainer<>();
     }
@@ -38,11 +38,20 @@ public class AccessContainer<T> implements AccessProvider<T> {
     private AccessContainer() {
     }
 
-    @Override public synchronized void access(Consumer<T> accessor, UserSession userSession) {
-        access(accessor, userSession, lifeCycleId(userSession));
+    @Override public void access(BiConsumer<UserSession, T> action, Login login) {
+        val userSession = userSession(login);
+        try {
+            access(action, userSession);
+        } finally {
+            endSession(userSession);
+        }
     }
 
-    @Override public synchronized void access(Consumer<T> accessor, UserSession userSession, String lifeCycleId) {
+    @Override public synchronized void access(Consumer<T> action, UserSession userSession) {
+        access(action, userSession, lifeCycleId(userSession));
+    }
+
+    @Override public synchronized void access(Consumer<T> action, UserSession userSession, String lifeCycleId) {
         val dataKey = new DataKey(name(userSession), lifeCycleId);
         final T dataValue;
         if (content.hasKey(dataKey)) {
@@ -50,7 +59,7 @@ public class AccessContainer<T> implements AccessProvider<T> {
         } else {
             throw execException("No data exists for given user session and lifeCycleId.");
         }
-        accessor.accept(dataValue);
+        action.accept(dataValue);
     }
 
     @Override public synchronized <R> R process(Function<T, R> processor, UserSession userSession, String lifeCycleId) {
