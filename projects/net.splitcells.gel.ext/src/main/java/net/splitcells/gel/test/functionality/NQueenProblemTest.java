@@ -15,6 +15,8 @@
  */
 package net.splitcells.gel.test.functionality;
 
+import lombok.val;
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.config.IsDeterministic;
@@ -24,6 +26,7 @@ import net.splitcells.dem.resource.communication.log.IsEchoToFile;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.dem.testing.annotations.DisabledTest;
+import net.splitcells.dem.utils.random.BuilderRandomDeterministic;
 import net.splitcells.gel.Gel;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.ext.GelExtCell;
@@ -72,12 +75,12 @@ public class NQueenProblemTest extends TestSuiteI {
     @Tag(CAPABILITY_TEST)
     @Test
     public void test_8_queen_problem_with_rolling_the_dice() {
-        // TODO Setting the randomness seed.
-        final Solution testSubject = nQueenProblem(8, 8).asSolution();
+        val rndFactory = new BuilderRandomDeterministic(1);
+        val testSubject = nQueenProblem(8, 8).asSolution();
         testSubject.history().withRegisterEventIsEnabled(true);
         testSubject.optimize(offlineLinearInitialization());
-        testSubject.optimize(functionalHillClimber(UsedSupplySwitcher.usedSupplySwitcher(6), 50));
-        testSubject.optimize(functionalHillClimber(UsedSupplySwitcher.usedSupplySwitcher(8), 100));
+        testSubject.optimize(functionalHillClimber(UsedSupplySwitcher.usedSupplySwitcher(rndFactory.rnd(), 6), 50));
+        testSubject.optimize(functionalHillClimber(UsedSupplySwitcher.usedSupplySwitcher(rndFactory.rnd(), 8), 100));
         createDirectory(environment().config().configValue(ProcessPath.class));
         writeToFile(environment().config().configValue(ProcessPath.class).resolve("history.fods")
                 , testSubject.history().toFods());
