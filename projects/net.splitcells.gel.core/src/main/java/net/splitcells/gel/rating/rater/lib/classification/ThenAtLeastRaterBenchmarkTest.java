@@ -39,14 +39,14 @@ public class ThenAtLeastRaterBenchmarkTest {
         @Setup(Level.Invocation) public void setupIteration() {
             test = switch (impl) {
                 case "correct" -> () -> {
-                    val test = new ThenAtLeastRaterTest();
-                    test.testRating();
-                    return test;
+                    val tester = new ThenAtLeastRaterTest();
+                    tester.testRating();
+                    return tester;
                 };
                 case "fast" -> () -> {
-                    val test = new ThenAtLeastFastRaterTest();
-                    test.testRating();
-                    return test;
+                    val tester = new ThenAtLeastFastRaterTest();
+                    tester.testRating();
+                    return tester;
                 };
                 default -> throw execException(impl);
             };
