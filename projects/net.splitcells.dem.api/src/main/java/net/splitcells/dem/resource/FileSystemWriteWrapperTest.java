@@ -8,8 +8,11 @@ import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.dem.testing.annotations.UnitTestFactory;
 import org.junit.jupiter.api.DynamicTest;
 
+import java.nio.file.Path;
 import java.util.stream.Stream;
 
+import static net.splitcells.dem.data.atom.Bools.require;
+import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.FileSystemUnionView.fileSystemUnionView;
 import static net.splitcells.dem.resource.FileSystemViaMemory.fileSystemViaMemory;
@@ -22,5 +25,22 @@ public class FileSystemWriteWrapperTest {
             val reader = fileSystemWriteWrapper(writer);
             return new FileSystemTest.FileSystemAccess(writer, reader);
         });
+    }
+
+    @UnitTest public void testWriteBlockage() {
+        val writer = fileSystemViaMemory();
+        val wrapper = fileSystemWriteWrapper(writer);
+        val subWrapper = wrapper.subFileSystem("./");
+        val notExistingFile = Path.of("./not-existing-file");
+        val existingFile = Path.of("./existing-file");
+        writer.writeToFile(existingFile, "".getBytes());
+        wrapper.writeToFile(notExistingFile, "".getBytes());
+        subWrapper.writeToFile(notExistingFile, "".getBytes());
+        wrapper.appendToFile(notExistingFile, "".getBytes());
+        subWrapper.appendToFile(notExistingFile, "".getBytes());
+        wrapper.delete(existingFile.toString());
+        subWrapper.delete(existingFile.toString());
+        require(writer.isFile(existingFile));
+        requireNot(writer.isFile(notExistingFile));
     }
 }
