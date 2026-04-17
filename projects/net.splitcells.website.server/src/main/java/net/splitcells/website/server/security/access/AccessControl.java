@@ -41,7 +41,7 @@ import java.util.function.BiConsumer;
  *            The instance of these themselves are responsible to only allow things,
  *            that the {@link UserSession} is allowed to do.
  */
-public interface AccessControl<T extends Firewall> {
+public interface AccessControl<T> {
     /**
      * Provides a {@link T}, that is encapsulated in this, to the given running action.
      * During the run the {@link UserSession} is {@link Authenticator#isValid(UserSession)}
