@@ -11,6 +11,7 @@ import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
@@ -22,7 +23,11 @@ import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearIni
 
 public class DefaultEditorOptimization implements EditorOptimization {
     public static EditorOptimization defaultEditorOptimization(Editor argEditor) {
-        return new DefaultEditorOptimization(argEditor);
+        return new DefaultEditorOptimization(argEditor, cs -> repairOptimizationStep(cs));
+    }
+
+    public static EditorOptimization defaultEditorOptimization(Editor argEditor, Function<Solution, EditorOptimization> argSubOptimizerFactory) {
+        return new DefaultEditorOptimization(argEditor, argSubOptimizerFactory);
     }
 
     private final Editor editor;
@@ -30,8 +35,10 @@ public class DefaultEditorOptimization implements EditorOptimization {
     private int currentSolutionIndex;
     private Optional<EditorOptimization> currentOptimizer = Optional.empty();
     private final List<List<Solution>> solutionPaths;
+    private final Function<Solution, EditorOptimization> subOptimizerFactory;
 
-    private DefaultEditorOptimization(Editor argEditor) {
+    private DefaultEditorOptimization(Editor argEditor, Function<Solution, EditorOptimization> argSubOptimizerFactory) {
+        subOptimizerFactory = argSubOptimizerFactory;
         editor = argEditor;
         solutionPaths = editor.solutionPaths();
         currentSolutionIndex = solutionPaths.get(currentSolutionPath).size();
@@ -50,7 +57,7 @@ public class DefaultEditorOptimization implements EditorOptimization {
             if (currentSolutionIndex == solutionPaths.get(currentSolutionPath).size() - 1) {
                 currentSolution.history().processWithHistory(() -> onlineLinearInitialization().optimize(currentSolution));
             }
-            currentOptimizer = Optional.of(repairOptimizationStep(currentSolution));
+            currentOptimizer = Optional.of(subOptimizerFactory.apply(currentSolution));
             currentOptimizer = currentSolution.history().processWithHistory(cs -> cs.orElseThrow().runNextStep(), currentOptimizer);
             return Optional.of(this);
         } else {
