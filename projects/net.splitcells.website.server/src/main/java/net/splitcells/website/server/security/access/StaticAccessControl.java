@@ -21,25 +21,26 @@ import net.splitcells.website.server.security.authentication.Login;
 import net.splitcells.website.server.security.authentication.UserSession;
 
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import static net.splitcells.dem.Dem.configValue;
 
-public class AccessControlImpl<T extends Firewall> implements AccessControl<T> {
-    public static <R extends Firewall> AccessControl<R> accessControl(AccessProvider<R> accessProvider) {
-        return new AccessControlImpl<>(configValue(Authentication.class), accessProvider);
+public class AccessControlImpl<T> implements AccessControl<T> {
+    public static <R> AccessControl<R> accessControl(R argSubject) {
+        return new AccessControlImpl<>(configValue(Authentication.class), argSubject);
     }
 
-    public static <R extends Firewall> AccessControl<R> accessControl(Authenticator authenticator
-            , AccessProvider<R> accessProvider) {
-        return new AccessControlImpl<>(authenticator, accessProvider);
+    public static <R> AccessControl<R> accessControl(Authenticator authenticator, R argSubject) {
+        return new AccessControlImpl<>(authenticator, argSubject);
     }
 
     private final Authenticator authenticator;
-    private final AccessProvider<T> accessProvider;
+    private final T subject;
 
-    private AccessControlImpl(Authenticator argAuthenticator, AccessProvider<T> argAccessProvider) {
+    private AccessControlImpl(Authenticator argAuthenticator, T argSubject) {
         authenticator = argAuthenticator;
-        accessProvider = argAccessProvider;
+        subject = argSubject;
     }
 
     @Override public void access(BiConsumer<UserSession, T> action, Login login) {
@@ -48,7 +49,7 @@ public class AccessControlImpl<T extends Firewall> implements AccessControl<T> {
 
     @Override public void access(BiConsumer<UserSession, T> action, UserSession userSession) {
         try {
-            accessProvider.access(a -> action.accept(userSession, a), userSession);
+            action.accept(userSession, subject);
         } finally {
             authenticator.endSession(userSession);
         }
@@ -56,7 +57,31 @@ public class AccessControlImpl<T extends Firewall> implements AccessControl<T> {
 
     @Override public void access(BiConsumer<UserSession, T> action, UserSession userSession, String lifeCycleId) {
         try {
-            accessProvider.access(a -> action.accept(userSession, a), userSession, lifeCycleId);
+            action.accept(userSession, subject);
+        } finally {
+            authenticator.endSession(userSession);
+        }
+    }
+
+    @Override public void access(Consumer<T> action, UserSession userSession) {
+        try {
+            action.accept(subject);
+        } finally {
+            authenticator.endSession(userSession);
+        }
+    }
+
+    @Override public void access(Consumer<T> action, UserSession userSession, String lifeCycleId) {
+        try {
+            action.accept(subject);
+        } finally {
+            authenticator.endSession(userSession);
+        }
+    }
+
+    @Override public <R> R process(Function<T, R> processor, UserSession userSession, String lifeCycleId) {
+        try {
+            return processor.apply(subject);
         } finally {
             authenticator.endSession(userSession);
         }

@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.data.set.list;
 
+import lombok.val;
 import net.splitcells.dem.data.set.SetT;
 import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
@@ -50,6 +51,14 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
 
     default List<T> replace(int index, T value) {
         set(index, value);
+        return this;
+    }
+
+    default List<T> require(int index, T value) {
+        val existing = get(index);
+        if (!value.equals(existing)) {
+            throw execException("List should contain value `" + value + "` at index " + index + ", but instead it has `" + existing + "` there.");
+        }
         return this;
     }
 
