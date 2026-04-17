@@ -22,6 +22,9 @@ import net.splitcells.website.server.security.authentication.UserSession;
  * that have a {@link UserSession} with appropriate rights.
  * Currently, this is only a marker interface.
  * In other words, the interface hints, the special care should be taken regarding security.
+ * 
+ * @deprecated TODO There is no real need for that, because interfaces like {@link AccessControl} already do that.
  */
+@Deprecated
 public interface Firewall {
 }
