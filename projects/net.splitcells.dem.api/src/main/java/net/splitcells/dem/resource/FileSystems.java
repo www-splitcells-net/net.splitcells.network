@@ -213,9 +213,6 @@ public class FileSystems implements FileSystem {
     @Override
     public FileSystem writeToFile(Path path, byte[] content) {
         final var targetPath = rootPath.resolve(path);
-        if (path.getParent() != null) {
-            Files.createDirectory(targetPath.getParent());
-        }
         try (final var writer = new FileOutputStream(targetPath.toFile())) {
             writer.write(content);
         } catch (Exception e) {
@@ -227,9 +224,6 @@ public class FileSystems implements FileSystem {
     @Override
     public FileSystem appendToFile(Path path, byte[] content) {
         final var targetPath = rootPath.resolve(path);
-        if (path.getParent() != null) {
-            Files.createDirectory(targetPath.getParent());
-        }
         try (final var writer = new FileOutputStream(targetPath.toFile(), true)) {
             writer.write(content);
         } catch (Exception e) {
