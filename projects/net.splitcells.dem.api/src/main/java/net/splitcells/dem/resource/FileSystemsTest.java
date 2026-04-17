@@ -61,4 +61,12 @@ public class FileSystemsTest {
     @UnitTest public void testInvalidLocalhostFolder() {
         requireThrow(() -> fileSystemOnLocalHost(Path.of("/not-existing-local-folder-12431234235325")));
     }
+
+    @UnitTest public void testUsersStateFiles() {
+        val testSubject = FileSystems.usersStateFiles();
+        val testFile = Path.of("./test-file.txt");
+        val testContent = "testUsersStateFiles";
+        testSubject.writeToFile(testFile, testContent);
+        requireEquals(testSubject.readString(testFile), testContent);
+    }
 }
