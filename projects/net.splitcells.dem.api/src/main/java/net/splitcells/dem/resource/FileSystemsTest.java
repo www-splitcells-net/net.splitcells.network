@@ -50,4 +50,8 @@ public class FileSystemsTest {
             return new FileSystemTest.FileSystemAccess(fileSystem, fileSystem);
         }, () -> tmps.forEach(Files::deleteDirectory));
     }
+    
+    @UnitTest public void testInvalidLocalhostFolder() {
+        requireThrow(() -> fileSystemOnLocalHost(Path.of("/not-existing-local-folder-12431234235325")));
+    }
 }
