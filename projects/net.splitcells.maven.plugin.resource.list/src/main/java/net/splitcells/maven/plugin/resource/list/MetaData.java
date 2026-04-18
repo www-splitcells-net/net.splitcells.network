@@ -155,6 +155,6 @@ public class MetaData {
     }
 
     public String toFileString() {
-        return "license=" + license.orElse("No license info") + "\ncopyrightText=" + copyrightText.orElse("No copyright text");
+        return "SPDX-License-Identifier=" + license.orElse("No license info") + "\nSPDX-FileCopyrightText=" + copyrightText.orElse("No copyright text");
     }
 }
