@@ -4,16 +4,21 @@
 package net.splitcells.dem.resource;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
+
+import java.util.Optional;
 
 @Accessors(chain = true)
 public class License {
-    public static License license(String argSpdxIdentifier) {
-        return new License(argSpdxIdentifier);
+    public static License license(String argSpdxLicenseIdentifier) {
+        return new License(argSpdxLicenseIdentifier);
     }
 
-    @Getter private final String spdxIdentifier;
-    private License(String argSpdxIdentifier) {
-        spdxIdentifier = argSpdxIdentifier;
+    @Getter private final String spdxLicenseIdentifier;
+    @Getter @Setter private Optional<String> spdxCopyrightText;
+
+    private License(String argSpdxLicenseIdentifier) {
+        spdxLicenseIdentifier = argSpdxLicenseIdentifier;
     }
 }
