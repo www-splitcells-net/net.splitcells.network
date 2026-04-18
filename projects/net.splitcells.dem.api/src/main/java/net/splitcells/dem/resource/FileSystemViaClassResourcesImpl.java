@@ -36,7 +36,9 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
 /**
- * <p>Provides an {@link FileSystem} API for {@link Class#getResource(String)}.</p>
+ * <p>Provides an {@link FileSystem} API for {@link Class#getResource(String)}.
+ * Special functionality is supported via the special folders and files,
+ * which are created via the Maven plugin `net.splitcells.maven.plugin.resource.list`.</p>
  * <p>Never place multiple {@link FileSystemViaClassResourcesImpl} at the same package across modules or jars,
  * but with a different class name,
  * because this will create hard to debug problems while accessing files.</p>
