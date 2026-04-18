@@ -146,10 +146,8 @@ class_member_method_definition
     ;
 class_member_method_definition_throws : Keyword_throws name;
 class_member_value_declaration
-    : javadoc? annotation* modifier_visibility? Keyword_static? Keyword_final?
-        type_declaration? name Equals statement
-    | javadoc? annotation* modifier_visibility? Keyword_static? Keyword_final?
-              type_declaration? name Semicolon
+    : javadoc? annotation* modifier_data? type_declaration? name Equals statement
+    | javadoc? annotation* modifier_data? type_declaration? name Semicolon
     ;
 enum_constructor
     : javadoc? annotation* name call_arguments statement_body
@@ -296,6 +294,7 @@ lambda
 license_declaration
     : Comment_multiline
     ;
+modifier_data: modifier_visibility? Keyword_static? Keyword_final? Keyword_volatile?;
 modifier_visibility
     : Keyword_public
     | Keyword_private

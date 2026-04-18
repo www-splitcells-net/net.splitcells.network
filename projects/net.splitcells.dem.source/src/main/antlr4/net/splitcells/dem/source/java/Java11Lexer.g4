@@ -157,6 +157,7 @@ lexer grammar Java11Lexer;
 	Keyword_throws: 'throws';
 	Keyword_try: 'try';
 	Keyword_var: 'var';
+	Keyword_volatile: 'volatile';
 	Keyword_while: 'while';
 	Less_than: '<';
 	Question_mark: '?';
