@@ -15,6 +15,7 @@ import net.splitcells.dem.resource.communication.log.MessageFilter;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.dem.testing.annotations.CapabilityTest;
 import net.splitcells.dem.testing.annotations.DisabledTest;
+import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.dem.utils.random.BuilderRandomDeterministic;
 import net.splitcells.gel.Gel;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -62,7 +63,7 @@ public class NQueenProblemTest extends TestSuiteI {
     public static final Attribute<Integer> ROW = attribute(Integer.class, "row");
     
     @CapabilityTest public void test_8_queen_problem_with_rolling_the_dice() {
-        val rndFactory = new BuilderRandomDeterministic(1);
+        val rndFactory = new BuilderRandomDeterministic(2);
         val testSubject = nQueenProblem(8, 8).asSolution();
         testSubject.history().withRegisterEventIsEnabled(true);
         testSubject.optimize(offlineLinearInitialization());
