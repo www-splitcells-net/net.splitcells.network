@@ -51,8 +51,6 @@ import static org.junit.platform.engine.TestExecutionResult.Status.SUCCESSFUL;
  * <p>Each CSV file contains the 2 columns "Date" and "Execution Time".
  * The first one has the executions date of the test case.
  * The second one contains the execution time for the corresponding test case.</p>
- * <p>{@link #RUNTIME_FOLDER}"/&lt;host&gt;.csv" contains the start times of all runs for a given host.
- * </p>
  */
 @JavaLegacy
 public class Logger implements TestExecutionListener {

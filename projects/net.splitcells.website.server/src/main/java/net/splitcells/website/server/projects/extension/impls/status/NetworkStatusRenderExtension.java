@@ -42,12 +42,12 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
+import static net.splitcells.dem.resource.communication.log.LogLevel.WARNING;
 import static net.splitcells.dem.utils.CommonFunctions.asString;
 import static net.splitcells.dem.utils.CommonFunctions.getBytes;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StreamUtils.stream;
 import static net.splitcells.dem.utils.StringUtils.stringBuilder;
-import static net.splitcells.network.worker.via.java.Logger.RUNTIME_FOLDER;
 import static net.splitcells.network.worker.via.java.Logger.logger;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.projects.extension.impls.status.StatusReport.statusReport;
@@ -68,7 +68,7 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
     @Override
     public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         // TODO Avoid code duplication in if else structure.
-        if (path.equals("/" + STATUS_DOCUMENT_PATH)) {
+        if (path.equals("/" + STATUS_DOCUMENT_PATH) || path.equals("/" + STATUS_PATH)) {
             final var disruptedStatuses = stringBuilder();
             final var successfulStatuses = stringBuilder();
             projectsRendererI.projectsPaths().stream()
@@ -93,71 +93,25 @@ public class NetworkStatusRenderExtension implements ProjectsRendererExtension {
                             disruptedStatuses.append("</li>");
                         }
                     });
-            projectsRendererI.projectsPaths().stream()
-                    .filter(p -> p.startsWith(RUNTIME_FOLDER))
-                    .filter(p -> p.toString().endsWith(".csv"))
-                    .forEach(p -> {
-                        final var csvContent = asString(projectsRendererI.render(config.rootPath() + "/" + p.toString())
-                                .orElseThrow()
-                                .getContent(), ContentType.UTF_8);
-                        final var lastMeasurement = stream(csvContent.split("\\R"))
-                                .filter(l -> !l.trim().isEmpty())
-                                .collect(toList())
-                                .lastValue();
-                        if (lastMeasurement.isPresent()) {
-                            final var localDate = LocalDate.parse(lastMeasurement.get().split(",")[0]);
-                            if (LocalDate.now().minusDays(DAY_WARNING_THRESHOLD).isAfter(localDate)) {
-                                disruptedStatuses.append("<li>The build was not executed successfully on <q>"
-                                        + p.getFileName().toString().substring(0, p.getFileName().toString().length() - 4)
-                                        + "</q> in the last " + DAY_WARNING_THRESHOLD + " days.</li>");
-                            } else {
-                                successfulStatuses.append("<li>The build was executed successfully on <q>"
-                                        + p.getFileName().toString().substring(0, p.getFileName().toString().length() - 4)
-                                        + "</q> in the last " + DAY_WARNING_THRESHOLD + " days.</li>");
-                            }
-                        }
-                    });
             final var disruptedTasks = "<h2>Disrupted Tasks</h2><ol>"
                     + disruptedStatuses
                     + "</ol>";
             final var successfulTasks = "<h2>Successful Tasks</h2><ol>"
                     + successfulStatuses
                     + "</ol>";
-            return Optional.of(binaryMessage(projectsRendererI.renderHtmlBodyContent(disruptedTasks + successfulTasks
-                                    , Optional.of("Network Status")
-                                    , Optional.of(STATUS_DOCUMENT_PATH)
-                                    , config)
-                            .orElseThrow()
-                    , ContentType.HTML_TEXT.codeName()));
-        }
-        if (path.equals("/" + STATUS_PATH)) {
-            final List<LogLevel> logLevels = list();
-            projectsRendererI.projectsPaths().stream()
-                    .filter(p -> p.startsWith(RUNTIME_FOLDER))
-                    .filter(p -> p.toString().endsWith(".csv"))
-                    .forEach(p -> {
-                        final var csvContent = asString(projectsRendererI.render(config.rootPath() + "/" + p.toString())
+            if (path.equals("/" + STATUS_DOCUMENT_PATH)) {
+                return Optional.of(binaryMessage(projectsRendererI.renderHtmlBodyContent(disruptedTasks + successfulTasks
+                                        , Optional.of("Network Status")
+                                        , Optional.of(STATUS_DOCUMENT_PATH)
+                                        , config)
                                 .orElseThrow()
-                                .getContent(), ContentType.UTF_8);
-                        final var lastMeasurement = stream(csvContent.split("\\R"))
-                                .filter(l -> !l.trim().isEmpty())
-                                .collect(toList())
-                                .lastValue();
-                        if (lastMeasurement.isPresent()) {
-                            final var localDate = LocalDate.parse(lastMeasurement.get().split(",")[0]);
-                            if (LocalDate.now().minusDays(7).isAfter(localDate)) {
-                                logLevels.withAppended(LogLevel.WARNING);
-                            } else {
-                                logLevels.withAppended(INFO);
-                            }
-                        }
-                    });
-            logLevels.sort(naturalComparator());
-            if (logLevels.isEmpty()) {
-                return Optional.of(binaryMessage(getBytes(INFO.name(), ContentType.UTF_8), Format.TEXT_PLAIN.mimeTypes()));
+                        , ContentType.HTML_TEXT.codeName()));
+            } else {
+                if (disruptedStatuses.isEmpty()) {
+                    return Optional.of(binaryMessage(getBytes(INFO.name(), ContentType.UTF_8), Format.TEXT_PLAIN.mimeTypes()));
+                }
+                return Optional.of(binaryMessage(getBytes(WARNING.name(), ContentType.UTF_8), Format.TEXT_PLAIN.mimeTypes()));
             }
-            final var statusLevel = logLevels.get(0);
-            return Optional.of(binaryMessage(getBytes(statusLevel.name(), ContentType.UTF_8), Format.TEXT_PLAIN.mimeTypes()));
         }
         return Optional.empty();
     }
