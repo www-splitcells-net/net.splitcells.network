@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.resource;
 
+import lombok.val;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
@@ -69,44 +70,58 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
         return groupdId + "." + artifiactId + ".resources/";
     }
 
+    private static String metaBasePath(String groupdId, String artifiactId) {
+        return groupdId + "." + artifiactId + ".meta/";
+    }
+
     public static String resourceListPath(String groupdId, String artifiactId) {
         return groupdId + "." + artifiactId + ".resources.list.txt";
     }
 
     public static FileSystemView _fileSystemViaClassResourcesImpl(Class<?> clazz, String groupdId, String artifactId) {
         return new FileSystemViaClassResourcesImpl(clazz, resourceBasePath(groupdId, artifactId)
+                , metaBasePath(groupdId, artifactId)
                 , resourceListPath(groupdId, artifactId));
     }
 
     public static FileSystemView _fileSystemViaClassResourcesImpl(Class<?> clazz, String groupdId, String artifactId, Set<String> argResourceList) {
         return new FileSystemViaClassResourcesImpl(clazz, resourceBasePath(groupdId, artifactId)
+                , metaBasePath(groupdId, artifactId)
                 , argResourceList);
     }
 
     /**
-     * All files accessed via paths has {@link #basePath} as the prefix for these paths.
+     * All files accessed via paths has {@link #resourceBasePath} as the prefix for these paths.
      */
-    private final String basePath;
+
+    private final String resourceBasePath;
+    private final String metaBasePath;
     private final Class<?> clazz;
     private final Set<String> resourceList;
 
-    private FileSystemViaClassResourcesImpl(Class<?> clazz, String basePath, Set<String> resourceListArg) {
-        this.clazz = clazz;
-        this.basePath = basePath;
-        this.resourceList = resourceListArg;
+    private FileSystemViaClassResourcesImpl(Class<?> argClazz, String argResourceBasePath
+            , String argMetaBasePath
+            , Set<String> argResourceList) {
+        clazz = argClazz;
+        resourceBasePath = argResourceBasePath;
+        metaBasePath = argMetaBasePath;
+        resourceList = argResourceList;
     }
 
-    private FileSystemViaClassResourcesImpl(Class<?> clazz, String basePath, String resourceListPath) {
-        this.clazz = clazz;
-        this.basePath = basePath;
+    private FileSystemViaClassResourcesImpl(Class<?> argClazz, String argResourceBasePath
+            , String argMetaBasePath
+            , String argResourceListPath) {
+        clazz = argClazz;
+        resourceBasePath = argResourceBasePath;
+        metaBasePath = argMetaBasePath;
         resourceList = setOfUniques();
-        final var resourceListContent = clazz.getResourceAsStream("/" + resourceListPath);
+        final var resourceListContent = argClazz.getResourceAsStream("/" + argResourceListPath);
         if (resourceListContent == null) {
             // TODO TOFIX This only happens, because the `website.server` is dependent on the `network.worker.via.java`.
             logs().warn(execException(tree("Could not provide a file system API for the given class.")
-                    .withProperty("Class", clazz.getName())
-                    .withProperty("Base Path", basePath)
-                    .withProperty("Resource List Path", resourceListPath)));
+                    .withProperty("Class", argClazz.getName())
+                    .withProperty("Base Path", argResourceBasePath)
+                    .withProperty("Resource List Path", argResourceListPath)));
         } else {
             for (final var resource : readAsString(resourceListContent).split("\n")) {
                 resourceList.add(normalize(resource));
@@ -142,21 +157,21 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
 
     @Override
     public InputStream inputStream(Path path) {
-        final var resourcePath = normalize("/" + basePath + path.toString());
+        final var resourcePath = normalize("/" + resourceBasePath + path.toString());
         requireValidResourcePath(resourcePath);
         return clazz.getResourceAsStream(resourcePath);
     }
 
     @Override
     public String readString(Path path) {
-        final var resourcePath = normalize("/" + basePath + path.toString());
+        final var resourcePath = normalize("/" + resourceBasePath + path.toString());
         requireValidResourcePath(resourcePath);
         return readAsString(clazz.getResourceAsStream(resourcePath));
     }
 
     @Override
     public Optional<String> readStringIfPresent(Path path) {
-        final var resourcePath = normalize("/" + basePath + path.toString());
+        final var resourcePath = normalize("/" + resourceBasePath + path.toString());
         if (!isResourcePathValid(resourcePath)) {
             return Optional.empty();
         }
@@ -189,7 +204,7 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
      */
     @Override
     public boolean isFile(Path path) {
-        final var pathStr = normalize(basePath + path);
+        final var pathStr = normalize(resourceBasePath + path);
         for (final var r : resourceList) {
             if (r.length() == pathStr.length() && r.equals(pathStr)) {
                 return true;
@@ -225,7 +240,7 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
      */
     @Override
     public Stream<Path> walkRecursively(Path path) {
-        final var pathStr = normalize(basePath + path.toString());
+        final var pathStr = normalize(resourceBasePath + path.toString());
         final String pathStrFolder;
         if (pathStr.endsWith("/.")) {
             pathStrFolder = pathStr.substring(0, pathStr.length() - 2);
@@ -236,7 +251,7 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
         for (final var resource : resourceList) {
             final var resourceStr = resource;
             if (resourceStr.startsWith(pathStrFolder) || resourceStr.equals(pathStr)) {
-                walk.add(Path.of(resourceStr.substring(basePath.length())));
+                walk.add(Path.of(resourceStr.substring(resourceBasePath.length())));
             }
         }
         return walk.stream();
@@ -245,7 +260,7 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
     @Override
     public byte[] readFileAsBytes(Path path) {
         try {
-            final var resourcePath = normalize("/" + basePath + path.toString());
+            final var resourcePath = normalize("/" + resourceBasePath + path.toString());
             requireValidResourcePath(resourcePath);
             return clazz.getResourceAsStream(resourcePath).readAllBytes();
         } catch (Throwable e) {
@@ -255,11 +270,42 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
 
     public FileSystemView subFileSystemView(String path) {
         return new FileSystemViaClassResourcesImpl(clazz
-                , normalize(basePath + path + "/")
+                , normalize(resourceBasePath + path + "/")
+                , normalize(metaBasePath + path + "/")
                 , resourceList);
     }
 
     @Override public String toString() {
         return getClass().getName() + " based on " + clazz.getName();
+    }
+
+    @Override public Optional<License> license(String path) {
+        final var metaPath = normalize("/" + metaBasePath + path.toString());
+        if (!isResourcePathValid(metaPath)) {
+            return Optional.empty();
+        }
+        final var fileContent = clazz.getResourceAsStream(metaPath);
+        if (fileContent != null) {
+            Optional<String> licenseId = Optional.empty();
+            Optional<String> copyrightText = Optional.empty();
+            for (val line : Files.readAsString(fileContent).split("\\R")) {
+                val lineSplit = line.split("=");
+                if (lineSplit.length > 1) {
+                    if ("SPDX-License-Identifier".equals(lineSplit[0])) {
+                        licenseId = Optional.of(lineSplit[1]);
+                    } else if ("SPDX-FileCopyrightText".equals(lineSplit[0])) {
+                        copyrightText = Optional.of(lineSplit[1]);
+                    }
+                }
+            }
+            if (licenseId.isPresent()) {
+                val license = License.license(licenseId.get());
+                if (copyrightText.isPresent()) {
+                    license.setSpdxCopyrightText(copyrightText);
+                }
+                return Optional.of(license);
+            }
+        }
+        return Optional.empty();
     }
 }
