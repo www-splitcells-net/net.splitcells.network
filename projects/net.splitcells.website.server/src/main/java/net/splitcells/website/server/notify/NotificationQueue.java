@@ -76,7 +76,7 @@ public class NotificationQueue {
 
     public String toHtml() {
         return "<ol xmlns=\"http://www.w3.org/1999/xhtml\">"
-                + notifications.reversed().stream()
+                + notifications().reversed().stream()
                 .map(n -> "<li>" + n.toHtml() + "</li>")
                 .reduce((a, b) -> a + "\n" + b)
                 .orElse("")
