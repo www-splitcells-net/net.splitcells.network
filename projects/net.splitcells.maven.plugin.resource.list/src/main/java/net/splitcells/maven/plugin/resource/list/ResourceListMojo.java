@@ -37,10 +37,16 @@ import static net.splitcells.maven.plugin.resource.list.MetaData.parseMetaData;
 import static net.splitcells.maven.plugin.resource.list.MetaData.parseMetaDataFromReuse;
 
 /**
- * <p>This Maven Plugin creates a file, that list all resources of the jar to be built,
- * and adds this file to the jar's resources,
- * so that other Java code can list all jar resources in a portable way.
- * This file is located at "${project.build.directory}/classes/${project.groupId}.${project.artifactId}.resources.list.txt".</p>
+ * <p>This Maven Plugin creates meta files for portable functionality based on {@link Class#getResource(String)}.</p>
+ * <ul>
+ *     <li>The file "${project.build.directory}/classes/${project.groupId}.${project.artifactId}.resources.list.txt"
+ *     lists all resources of the jar to be built, and adds this file to the jar's resources,
+ *     so that other Java code can list all jar resources in a portable way.</li>
+ *     <li>The folder "${project.build.directory}/classes/${project.groupId}.${project.artifactId}.resources.meta"
+ *     has the same files and folders as "${project.build.directory}/classes/${project.groupId}.${project.artifactId}.resources",
+ *     but the content are UTF-8 encoded properties files and contain metadata like the licensing of the corresponding file.
+ *     </li>
+ * </ul>
  * <p>This goal should be executed in the compile phase.</p>
  */
 @Mojo(name = "generate-resource-list")
