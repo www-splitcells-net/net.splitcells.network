@@ -30,7 +30,9 @@ import static net.splitcells.dem.utils.reflection.ClassesRelated.simplifiedName;
 
 /**
  * <p>This interface provides a single point of entry for a Java module based on {@link Dem}.
- * It bundles all settings of a module at one place.</p>
+ * It bundles all settings of a module at one place.
+ * They are also a way to ensure, that some configuration is applied only once for one Java module
+ * even though multiple transient dependency modules have such a configuration as its dependency.</p>
  * <p>An instance of this interface describes the configuration of a program,
  * that can be executed via {@link Dem#serve(Class[])}.
  * Such a program provides its functionality via {@link Service}.
@@ -85,7 +87,7 @@ public interface Cell extends Consumer<Environment>, Discoverable, Option<Consum
      * should be called as late as possible,
      * so that any custom settings of this {@link Cell} are considered in the {@link Cell} dependencies.
      * For instance, any changes to the webserver configuration should be considered by the website server {@link Cell}
-     * and therefore these configurations should be set before calling the wbsite server {@link Cell}. 
+     * and therefore these configurations should be set before calling the wbsite server {@link Cell}.
      * Otherwise, these changes are lost.</p>
      * <p>This method is declared here, in order to improve the autocompletion of the parameter name by IDEs.</p>
      *
