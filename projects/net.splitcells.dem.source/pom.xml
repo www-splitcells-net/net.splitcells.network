@@ -67,38 +67,6 @@
                                 </configuration>
                             </execution>
                             <execution>
-                                <id>antlr4-generate-den-grammar</id>
-                                <goals>
-                                    <goal>antlr4</goal>
-                                </goals>
-                                <configuration>
-                                    <sourceDirectory>src/main/antlr4/net/splitcells/dem/source/den</sourceDirectory>
-                                    <includes>
-                                        <include>DenLexer.g4</include>
-                                        <include>DenParser.g4</include>
-                                    </includes>
-                                    <visitor>true</visitor>
-                                    <listener>true</listener>
-                                    <outputDirectory>target/antlr4/net/splitcells/dem/source/den</outputDirectory>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>antlr4-generate-no-code-den-grammar</id>
-                                <goals>
-                                    <goal>antlr4</goal>
-                                </goals>
-                                <configuration>
-                                    <sourceDirectory>src/main/antlr4/net/splitcells/dem/source/den/no/code</sourceDirectory>
-                                    <includes>
-                                        <include>NoCodeDenLexer.g4</include>
-                                        <include>NoCodeDenParser.g4</include>
-                                    </includes>
-                                    <visitor>true</visitor>
-                                    <listener>true</listener>
-                                    <outputDirectory>target/antlr4/net/splitcells/dem/source/den/no/code</outputDirectory>
-                                </configuration>
-                            </execution>
-                            <execution>
                                 <id>antlr4-generate-geal-grammar</id>
                                 <goals>
                                     <goal>antlr4</goal>
