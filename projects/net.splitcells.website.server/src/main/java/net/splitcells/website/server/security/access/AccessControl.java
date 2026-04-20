@@ -40,6 +40,12 @@ import static net.splitcells.website.server.security.authentication.Authenticati
  * The advantage of this, is the fact, that a {@link UserSession} always exists and
  * is harder to accidentally swap with other {@link UserSession},
  * which causes access rights escalations.</p>
+ * <p>TODO Create an interface for code, that is executed in an not authenticated environment and
+ * than transitions to an authenticated environment.
+ * An authenticated environment is where the current user is determined via {@link Dem#configValue(Class)},
+ * which also needs to be implemented.
+ * In other words, all code is assumed to be executed in an authenticated environment except for the code,
+ * whose job is to authenticate requests.</p>
  *
  * @param <T> This is the type of object, whose access is controlled via {@link UserSession}.
  *            The instance of these themselves are responsible to only allow things,
