@@ -8,7 +8,6 @@ import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
-import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.LogMessage;
@@ -41,7 +40,7 @@ import static net.splitcells.gel.editor.EditorData.editorData;
 import static net.splitcells.website.Format.*;
 import static net.splitcells.website.server.messages.FormUpdate.*;
 import static net.splitcells.website.server.processor.Response.response;
-import static net.splitcells.website.server.security.authentication.Authentication.lifeCycleId;
+import static net.splitcells.website.server.security.authentication.Authentication.lifeCycleToken;
 
 public class EditorProcessor implements Processor<Tree, Tree> {
 
@@ -89,7 +88,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
         } else {
             if (isFirstRequest) {
                 editor.setOptimizing(true);
-                dataValues.withProperty(ASYNC_ID, tree(lifeCycleId(userSession)));
+                dataValues.withProperty(ASYNC_ID, tree(lifeCycleToken(userSession)));
             } else {
                 dataValues.withProperty(ASYNC_ID, asyncId.get(0).valueName());
             }

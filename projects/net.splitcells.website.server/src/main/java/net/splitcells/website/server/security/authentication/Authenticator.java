@@ -91,5 +91,10 @@ public interface Authenticator {
      */
     String userId(UserSession userSession);
 
-    String lifeCycleId(UserSession userSession);
+    /**
+     * 
+     * @param userSession
+     * @return Never give this token to a not authorized {@link UserSession}.
+     */
+    String lifeCycleToken(UserSession userSession);
 }

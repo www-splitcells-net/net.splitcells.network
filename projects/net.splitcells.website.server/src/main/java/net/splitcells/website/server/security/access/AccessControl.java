@@ -3,10 +3,8 @@
  */
 package net.splitcells.website.server.security.access;
 
-import lombok.val;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.utils.lambdas.TriConsumer;
-import net.splitcells.website.server.security.authentication.Authentication;
 import net.splitcells.website.server.security.authentication.Authenticator;
 import net.splitcells.website.server.security.authentication.Login;
 import net.splitcells.website.server.security.authentication.UserSession;
@@ -14,8 +12,6 @@ import net.splitcells.website.server.security.authentication.UserSession;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
-
-import static net.splitcells.website.server.security.authentication.Authentication.anonymous;
 
 /**
  * <p>Provides authenticated and authorized access to existing things.</p>
@@ -72,7 +68,7 @@ public interface AccessControl<T> {
      * @param lifeCycleId The caller wants to get data authorized for the userSession, that was provided
      *                    by the same {@link UserSession}, but with a different lifeCycleId.
      *                    If this implementation of the {@link UserSession} does not allow or support it,
-     *                    the data of the different {@link Authenticator#lifeCycleId(UserSession)} is not provided silently.
+     *                    the data of the different {@link Authenticator#lifeCycleToken(UserSession)} is not provided silently.
      */
     default void access(BiConsumer<UserSession, T> action, UserSession userSession, String lifeCycleId) {
         access(t -> action.accept(userSession, t), userSession, lifeCycleId);
@@ -97,7 +93,7 @@ public interface AccessControl<T> {
      * @param lifeCycleId The caller wants to get data authorized for the userSession, that was provided
      *                    by the same {@link UserSession}, but with a different lifeCycleId.
      *                    If this implementation of the {@link UserSession} does not allow or support it,
-     *                    the data of the different {@link Authenticator#lifeCycleId(UserSession)} is not provided silently.
+     *                    the data of the different {@link Authenticator#lifeCycleToken(UserSession)} is not provided silently.
      * @deprecated I think using the {@link BiConsumer} versions would be better,
      * as this makes it more obvious, when it is forgotten to pass {@link UserSession} to the consuming code.
      */
@@ -111,7 +107,7 @@ public interface AccessControl<T> {
      * @param lifeCycleId The caller wants to get data authorized for the userSession, that was provided
      *                    by the same {@link UserSession}, but with a different lifeCycleId.
      *                    If this implementation of the {@link UserSession} does not allow or support it,
-     *                    the data of the different {@link Authenticator#lifeCycleId(UserSession)} is not provided silently.
+     *                    the data of the different {@link Authenticator#lifeCycleToken(UserSession)} is not provided silently.
      * @param <R>
      * @return The result of the processor is returned.
      * @deprecated I think using a {@link TriConsumer} version would be better,

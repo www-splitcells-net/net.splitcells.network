@@ -160,7 +160,7 @@ public class AuthenticatorImpl implements Authenticator {
     }
 
     @Override
-    public synchronized String lifeCycleId(UserSession userSession) {
+    public synchronized String lifeCycleToken(UserSession userSession) {
         requireValid(userSession);
         return sessionState.value(userSession).getLifeCycleId();
     }

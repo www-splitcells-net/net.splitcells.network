@@ -19,7 +19,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.website.server.security.authentication.Authentication.*;
 
 /**
- * <p>Provides data specific to {@link UserSession} and {@link Authenticator#lifeCycleId(UserSession)}.
+ * <p>Provides data specific to {@link UserSession} and {@link Authenticator#lifeCycleToken(UserSession)}.
  * In other words, user specific data can be stored and accessed here.</p>
  * <p>TODO Currently, the life cycle of the data has to be managed manually. This is not good.</p>
  * <p>TODO Clean up old content, that was not {@link #delete(UserSession)} by accident like an exception.
@@ -50,7 +50,7 @@ public class AccessContainer<T> implements AccessControl<T> {
     }
 
     @Override public synchronized void access(Consumer<T> action, UserSession userSession) {
-        access(action, userSession, lifeCycleId(userSession));
+        access(action, userSession, lifeCycleToken(userSession));
     }
 
     @Override public synchronized void access(Consumer<T> action, UserSession userSession, String lifeCycleId) {
@@ -76,7 +76,7 @@ public class AccessContainer<T> implements AccessControl<T> {
     }
 
     public synchronized <R> R createAndAccess(Function<UserSession, T> accessSupplier, Function<T, R> processor, UserSession userSession) {
-        val dataKey = new DataKey(userId(userSession), lifeCycleId(userSession));
+        val dataKey = new DataKey(userId(userSession), lifeCycleToken(userSession));
         final T dataValue;
         if (content.hasKey(dataKey)) {
             throw execException("Data should not exist for given user session and lifeCycleId, but it does.");
@@ -93,7 +93,7 @@ public class AccessContainer<T> implements AccessControl<T> {
     }
 
     public synchronized AccessContainer<T> delete(UserSession userSession) {
-        return delete(userSession, lifeCycleId(userSession));
+        return delete(userSession, lifeCycleToken(userSession));
     }
 
     public synchronized AccessContainer<T> delete(UserSession userSession, String lifeCycleId) {
