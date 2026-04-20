@@ -22,6 +22,8 @@ import static net.splitcells.website.server.security.authentication.Authenticati
  * <p>Provides data specific to {@link UserSession} and {@link Authenticator#lifeCycleId(UserSession)}.
  * In other words, user specific data can be stored and accessed here.</p>
  * <p>TODO Currently, the life cycle of the data has to be managed manually. This is not good.</p>
+ * <p>TODO Clean up old content, that was not {@link #delete(UserSession)} by accident like an exception.
+ * Maybe ensure, that only concepts like RAID are used.</p>
  *
  * @param <T>
  */
