@@ -68,7 +68,7 @@ public class UserProfilePageExtension implements ProjectsRendererExtension {
                     });
             content.append("</ol>");
             return renderResponse(Optional.of(binaryMessage(projectsRenderer.renderHtmlBodyContent(content.toString()
-                                    , Optional.of("User Profile Page of " + Authentication.name(request.userSession()))
+                                    , Optional.of("User Profile Page of " + Authentication.userId(request.userSession()))
                                     , Optional.of(PROFILE_PATH.unixPathString())
                                     , projectsRenderer.config())
                             .orElseThrow()

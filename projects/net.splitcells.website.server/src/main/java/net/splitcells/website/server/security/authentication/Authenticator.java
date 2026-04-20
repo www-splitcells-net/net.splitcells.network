@@ -19,8 +19,6 @@ import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
 import static net.splitcells.website.server.security.authentication.Login.anonymousLogin;
-import static net.splitcells.website.server.security.authentication.Login.login;
-import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_NAME;
 
 /**
  * <p>TODO Create a base {@link Authenticator} class, that takes some authentication functions and
@@ -91,7 +89,7 @@ public interface Authenticator {
      * Valid ids have to comply with {@link #VALID_USERNAME_SYMBOLS},
      * in order to avoid unexpected things based on usernames.
      */
-    String name(UserSession userSession);
+    String userId(UserSession userSession);
 
     String lifeCycleId(UserSession userSession);
 }

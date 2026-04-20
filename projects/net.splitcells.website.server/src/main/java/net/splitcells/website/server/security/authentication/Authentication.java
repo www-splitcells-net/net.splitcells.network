@@ -55,8 +55,8 @@ public class Authentication implements Option<Authenticator> {
         configValue(Authentication.class).endSession(userSession);
     }
 
-    public static String name(UserSession userSession) {
-        return configValue(Authentication.class).name(userSession);
+    public static String userId(UserSession userSession) {
+        return configValue(Authentication.class).userId(userSession);
     }
 
     public static boolean isActivelyAuthenticated(UserSession userSession) {

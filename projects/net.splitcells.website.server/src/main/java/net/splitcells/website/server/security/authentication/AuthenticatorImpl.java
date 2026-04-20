@@ -154,7 +154,7 @@ public class AuthenticatorImpl implements Authenticator {
     }
 
     @Override
-    public synchronized String name(UserSession userSession) {
+    public synchronized String userId(UserSession userSession) {
         requireValid(userSession);
         return sessionState.value(userSession).getUsername();
     }

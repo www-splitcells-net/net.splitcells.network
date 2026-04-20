@@ -35,9 +35,9 @@ public class AuthenticatorImplTest {
         final var testSubject = authenticatorBasedOnFiles(userData);
         final var validLogin = testSubject.userSession(Login.login(username, password));
         requireDistinct(validLogin, testSubject.anonymous());
-        requireEquals(testSubject.name(testSubject.userSession(Login.login(username, "not-password")))
-                , testSubject.name(testSubject.anonymous()));
-        requireEquals(testSubject.name(testSubject.userSession(Login.login("not-user", "not-password")))
-                , testSubject.name(testSubject.anonymous()));
+        requireEquals(testSubject.userId(testSubject.userSession(Login.login(username, "not-password")))
+                , testSubject.userId(testSubject.anonymous()));
+        requireEquals(testSubject.userId(testSubject.userSession(Login.login("not-user", "not-password")))
+                , testSubject.userId(testSubject.anonymous()));
     }
 }

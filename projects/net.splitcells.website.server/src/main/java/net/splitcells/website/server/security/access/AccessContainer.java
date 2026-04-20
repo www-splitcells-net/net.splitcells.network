@@ -52,7 +52,7 @@ public class AccessContainer<T> implements AccessControl<T> {
     }
 
     @Override public synchronized void access(Consumer<T> action, UserSession userSession, String lifeCycleId) {
-        val dataKey = new DataKey(name(userSession), lifeCycleId);
+        val dataKey = new DataKey(userId(userSession), lifeCycleId);
         final T dataValue;
         if (content.hasKey(dataKey)) {
             dataValue = content.value(dataKey);
@@ -63,7 +63,7 @@ public class AccessContainer<T> implements AccessControl<T> {
     }
 
     @Override public synchronized <R> R process(Function<T, R> processor, UserSession userSession, String lifeCycleId) {
-        val dataKey = new DataKey(name(userSession), lifeCycleId);
+        val dataKey = new DataKey(userId(userSession), lifeCycleId);
         final T dataValue;
         if (content.hasKey(dataKey)) {
             dataValue = content.value(dataKey);
@@ -74,7 +74,7 @@ public class AccessContainer<T> implements AccessControl<T> {
     }
 
     public synchronized <R> R createAndAccess(Function<UserSession, T> accessSupplier, Function<T, R> processor, UserSession userSession) {
-        val dataKey = new DataKey(name(userSession), lifeCycleId(userSession));
+        val dataKey = new DataKey(userId(userSession), lifeCycleId(userSession));
         final T dataValue;
         if (content.hasKey(dataKey)) {
             throw execException("Data should not exist for given user session and lifeCycleId, but it does.");
@@ -95,7 +95,7 @@ public class AccessContainer<T> implements AccessControl<T> {
     }
 
     public synchronized AccessContainer<T> delete(UserSession userSession, String lifeCycleId) {
-        content.remove(new DataKey(name(userSession), lifeCycleId));
+        content.remove(new DataKey(userId(userSession), lifeCycleId));
         return this;
     }
 }
