@@ -37,7 +37,7 @@ public class AccessContainerTest {
         testSubject.access(a -> {
         }, user1, lifeCycleId(user2));
         testSubject.access(a -> {
-        }, user2, lifeCycleId(user2));
+        }, user2);
         testSubject.delete(user1, lifeCycleId(user2));
         requireThrow(() -> testSubject.access(a -> {
         }, user2));
