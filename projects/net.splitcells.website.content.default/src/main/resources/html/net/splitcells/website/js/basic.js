@@ -404,7 +404,6 @@ function net_splitcells_webserver_form_submit(config) {
     }
     const onClickCode = submitButton.onclick;
     submitButton.onclick = null;
-    preSubmitButtonText = submitButton.innerHTML;
     submitButton.innerHTML = "Executing...";
     submitButton.classList.add("net-splitcells-button-activity");
     submitButton.classList.remove("net-splitcells-action-button");
@@ -433,7 +432,7 @@ function net_splitcells_webserver_form_submit(config) {
         config['on-submission-completion']();
         submitButton.classList.remove("net-splitcells-button-activity");
         submitButton.classList.add("net-splitcells-action-button");
-        submitButton.innerHTML = preSubmitButtonText;
+        submitButton.innerHTML = submitButton.getAttribute('original-inner-html');
         submitButton.onclick = onClickCode;
     }
     request.open("post", form.action);
