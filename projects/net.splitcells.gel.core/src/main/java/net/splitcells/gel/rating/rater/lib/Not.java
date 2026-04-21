@@ -77,6 +77,7 @@ public class Not implements Rater {
                     .withPropagationTo(list())
                     .withResultingGroupId(localRating.resultingConstraintGroupId());
         }
+        // TODO Consider really inverting the children by just removing elements in children that are already in `localRating.propagateTo()`. 
         return localRating()
                 .withRating(noCost())
                 .withPropagationTo(children)
