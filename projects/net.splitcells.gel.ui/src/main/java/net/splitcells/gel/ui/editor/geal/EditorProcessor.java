@@ -197,7 +197,13 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                             , userSession));
         }
         if (result.working()) {
-            return result.requiredValue();
+            val rValue = result.requiredValue();
+            if (request.data().namedChildren(ERRORS).hasElements()) {
+                // Clean up error field, if the client previously had an error already.
+                rValue.data().namedChild(DATA_TYPES).withProperty(ERRORS, COMMON_MARK.mimeTypes());
+                rValue.data().namedChild(DATA_VALUES).withProperty(ERRORS, "");
+            }
+            return rValue;
         }
         val formUpdate = tree(FORM_UPDATE);
         val dataValues = tree(DATA_VALUES).withParent(formUpdate);
