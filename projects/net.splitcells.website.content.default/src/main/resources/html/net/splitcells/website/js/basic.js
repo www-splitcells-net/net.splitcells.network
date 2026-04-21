@@ -404,6 +404,7 @@ function net_splitcells_webserver_form_submit(config) {
     }
     const onClickCode = submitButton.onclick;
     submitButton.onclick = null;
+    preSubmitButtonText = submitButton.innerHTML;
     submitButton.innerHTML = "Executing...";
     submitButton.classList.add("net-splitcells-button-activity");
     submitButton.classList.remove("net-splitcells-action-button");
