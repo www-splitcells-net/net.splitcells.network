@@ -61,7 +61,7 @@ import java.util.function.Supplier;
 
 /**
  * <p>TODO TOFIX The variable isRegisterEventIsEnabled is used incorrectly.</p>
- * <p>TODO Limit or disable meta data in order to improve runtime performance.</p>
+ * <p>TODO Limit or disable metadata in order to improve runtime performance.</p>
  */
 public class HistoryI implements History {
 
