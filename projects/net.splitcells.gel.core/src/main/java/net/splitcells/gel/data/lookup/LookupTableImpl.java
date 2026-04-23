@@ -131,7 +131,7 @@ public class LookupTableImpl implements LookupTable {
         this.viewView = view;
         this.name = name;
         lookupColumns = view.headerView().stream()
-                .map(attribute -> LookupBasedColumn.lookupColumn(this, attribute))
+                .map(attribute -> LookupTableBasedColumn.lookupTableBasedColumn(this, attribute))
                 .collect(toList());
         columnsView = Lists.<ColumnView<Object>>list();
         columnsView.addAll(lookupColumns);

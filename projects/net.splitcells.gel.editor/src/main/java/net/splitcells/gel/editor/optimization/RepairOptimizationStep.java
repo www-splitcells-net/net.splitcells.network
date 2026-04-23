@@ -20,13 +20,18 @@ import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.DefaultOptimizationStaging;
 import net.splitcells.gel.solution.optimization.OnlineOptimization;
+import net.splitcells.gel.solution.optimization.primitive.repair.DemandSelectors;
+import net.splitcells.gel.solution.optimization.primitive.repair.DemandSelectorsConfig;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.gel.solution.optimization.meta.Deescalation.deescalation;
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.constraintGroupBasedRepair;
+import static net.splitcells.gel.solution.optimization.primitive.repair.DemandSelectors.demandSelector;
+import static net.splitcells.gel.solution.optimization.primitive.repair.DemandSelectorsConfig.demandSelectorsConfig;
 import static net.splitcells.gel.solution.optimization.primitive.repair.RepairConfig.repairConfig;
 
 public class RepairOptimizationStep implements EditorOptimization {
@@ -45,7 +50,8 @@ public class RepairOptimizationStep implements EditorOptimization {
         deescalation = deescalation(currentDepth -> s -> {
                     final int execCount = currentDepth + 1;
                     for (int j = 0; j < execCount; ++j) {
-                        constraintGroupBasedRepair(repairConfig().withMinimumConstraintGroupPath(currentDepth))
+                        constraintGroupBasedRepair(repairConfig().withMinimumConstraintGroupPath(currentDepth)
+                                .withDemandSelector(demandSelector(demandSelectorsConfig(), list(solution.constraint()))))
                                 .optimize(s);
                     }
                 }

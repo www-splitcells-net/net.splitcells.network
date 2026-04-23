@@ -8,7 +8,7 @@
 * **2026-04-23 \#37** Make lookup system easier to understand by renaming its interfaces and classes.
     1. Rename `LookupComponents` to `LookupMethods`.
     2. Rename `AllocationLookupComponents` to `AllocationLookupMethods`.
-    3. Rename `LookupColumn` to `LookupBasedColumn`.
+    3. Rename `LookupColumn` to `LookupTableBasedColumn`.
     4. Rename `LookupColumn` to `LookupColumnImpl`.
     5. Rename `PersistedLookupView` to `LookupTable`.
     6. Rename `PersistedLookupViewI` to `LookupTableImpl`. 

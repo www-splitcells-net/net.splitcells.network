@@ -42,17 +42,17 @@ import net.splitcells.gel.data.view.column.Column;
  * 
  * @param <T>
  */
-public class LookupBasedColumn<T> implements Column<T> {
+public class LookupTableBasedColumn<T> implements Column<T> {
 
     private final LookupTable table;
     private Optional<LookupColumn<T>> lookup = Optional.empty();
     private final Attribute<T> attribute;
 
-    public static <T> LookupBasedColumn<T> lookupColumn(LookupTable table, Attribute<T> attribute) {
-        return new LookupBasedColumn<>(table, attribute);
+    public static <T> LookupTableBasedColumn<T> lookupTableBasedColumn(LookupTable table, Attribute<T> attribute) {
+        return new LookupTableBasedColumn<>(table, attribute);
     }
 
-    private LookupBasedColumn(LookupTable table, Attribute<T> attribute) {
+    private LookupTableBasedColumn(LookupTable table, Attribute<T> attribute) {
         this.table = table;
         this.attribute = attribute;
     }
