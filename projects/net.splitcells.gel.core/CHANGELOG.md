@@ -5,6 +5,13 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2026-04-24 \#37** Make lookup system easier to understand by renaming its interfaces and classes.
+    1. Rename `LookupComponents` to `LookupMethods`.
+    2. Rename `AllocationLookupComponents` to `AllocationLookupMethods`.
+    3. Rename `LookupColumn` to `LookupBasedColumn`.
+    4. Rename `LookupColumn` to `LookupColumnImpl`.
+    5. Rename `PersistedLookupView` to `LookupTable`.
+    6. Rename `PersistedLookupViewI` to `LookupTableImpl`. 
 * **2025-11-08 \#37** Require `Rater#rating_before_removal` to be implemented.
 * **2024-12-04 \#55**
   1. Rename `LookupComponents#lookup` to `LookupComponents#persistedLookup`.

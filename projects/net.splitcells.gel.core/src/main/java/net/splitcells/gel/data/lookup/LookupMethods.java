@@ -21,7 +21,7 @@ import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.column.Column;
 
-public interface LookupComponents<T> {
+public interface LookupMethods<T> {
     /**
      * @param value The value, that each selected line should contain.
      * @return Returns a {@link View}, where one or more {@link Column} contain only the provided value.

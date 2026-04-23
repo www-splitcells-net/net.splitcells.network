@@ -33,11 +33,11 @@ import static net.splitcells.gel.data.table.TableI.tableI;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 
 /**
- * TODO {@link Table} and {@link Column} should not be based on {@link Lookup}.
- * Instead only {@link Lookup} should depend on {@link Table} and {@link Column} as a regular  subscriber,
- * in order to simplify code. Otherwise it is too hard to add an {@link Lookup} without adding code to {@link Table} and {@link Column} too.
+ * TODO {@link Table} and {@link Column} should not be based on {@link LookupColumn}.
+ * Instead only {@link LookupColumn} should depend on {@link Table} and {@link Column} as a regular  subscriber,
+ * in order to simplify code. Otherwise it is too hard to add an {@link LookupColumn} without adding code to {@link Table} and {@link Column} too.
  */
-public class LookupTest extends TestSuiteI {
+public class LookupColumnTest extends TestSuiteI {
     @Test
     @Tag(INTEGRATION_TEST)
     public void testMultipleLookupsSimultaneously() {

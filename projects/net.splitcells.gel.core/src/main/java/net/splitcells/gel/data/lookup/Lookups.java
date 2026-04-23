@@ -19,7 +19,7 @@ import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
-import static net.splitcells.gel.data.lookup.LookupI.persistedLookupI;
+import static net.splitcells.gel.data.lookup.LookupColumnImpl.lookupColumnImpl;
 import static net.splitcells.gel.data.lookup.LookupManager.lookupManager;
 
 public class Lookups {
@@ -27,7 +27,7 @@ public class Lookups {
         throw constructorIllegal();
     }
 
-    public static <R> Lookup<R> lookup(View view, Attribute<R> attribute) {
+    public static <R> LookupColumn<R> lookup(View view, Attribute<R> attribute) {
         return lookupManager(view, attribute);
     }
 }

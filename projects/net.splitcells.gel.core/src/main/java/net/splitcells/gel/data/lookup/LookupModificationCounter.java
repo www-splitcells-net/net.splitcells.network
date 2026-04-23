@@ -15,7 +15,6 @@
  */
 package net.splitcells.gel.data.lookup;
 
-import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.testing.MetaCounter;
@@ -33,7 +32,7 @@ public class LookupModificationCounter implements Option<MetaCounter> {
     @Override
     public MetaCounter defaultValue() {
         final var metaCounter = metaCounter(discoverable(TableModificationCounter.class));
-        configValue(LookupTables.class).withAspect(PersistedLookupViewModificationCounterAspect::lookupViewModificationCounterAspect);
+        configValue(LookupTables.class).withAspect(LookupTableModificationCounterAspect::lookupViewModificationCounterAspect);
         ObjectsRenderer.registerObject(new CsvRenderer() {
             final ListView<String> path = metaCounter.path()
                     .shallowCopy()

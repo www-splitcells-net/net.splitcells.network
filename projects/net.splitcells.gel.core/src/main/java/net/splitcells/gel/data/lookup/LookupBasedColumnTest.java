@@ -25,7 +25,7 @@ import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.gel.data.lookup.LookupTables.lookupTable;
 import static net.splitcells.gel.data.table.Tables.table;
 
-public class LookupColumnTest {
+public class LookupBasedColumnTest {
     @UnitTest
     public void testSteam() {
         final var attribute = AttributeI.attribute(Integer.class, "attribute");

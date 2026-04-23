@@ -15,12 +15,28 @@
  */
 package net.splitcells.gel.data.lookup;
 
-import java.util.function.Predicate;
+import net.splitcells.dem.data.set.SetT;
+import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.data.view.View;
 
-import net.splitcells.gel.data.assignment.Assignments;
+/**
+ * <p>Provides a view to a subset of a {@link View} as a {@link View}.
+ * By default, the {@link LookupTable} is empty.
+ * Every {@link Line} has to be manually added via {@link #register(Line)}
+ * or manually removed  via {@link #removeRegistration(Line)}.
+ * See {@link LookupColumn} for automated synchronization.</p>
+ */
+public interface LookupTable extends View {
 
-public interface AllocationLookupComponents<T> extends LookupComponents<T> {
-	Assignments persistedLookup(T value);
+    static LookupTableFactory lookupTableFactory() {
+        return LookupTableImpl.lookupTableFactory();
+    }
 
-	Assignments persistedLookup(Predicate<T> predicate);
+    void register(Line line);
+
+    void removeRegistration(Line line);
+
+    View base();
+
+    SetT<Integer> contentIndexes();
 }

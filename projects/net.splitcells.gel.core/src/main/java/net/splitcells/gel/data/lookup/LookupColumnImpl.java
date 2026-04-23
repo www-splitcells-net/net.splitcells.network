@@ -23,7 +23,6 @@ import static net.splitcells.gel.data.lookup.LookupTables.lookupTable;
 
 import java.util.function.Predicate;
 
-import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
@@ -38,32 +37,32 @@ import net.splitcells.gel.data.view.attribute.Attribute;
  *
  * @param <T>
  */
-public class LookupI<T> implements Lookup<T> {
+public class LookupColumnImpl<T> implements LookupColumn<T> {
 
     /**
-     * TODO This needs to be tested and probably only enabled for only some {@link LookupI}.
+     * TODO This needs to be tested and probably only enabled for only some {@link LookupColumnImpl}.
      */
     private static final boolean EXPERIMENTAL_SPEED_UP = false;
 
-    public static <T> Lookup<T> persistedLookupI(View view, Attribute<T> attribute) {
-        return new LookupI<>(view, attribute, true);
+    public static <T> LookupColumn<T> lookupColumnImpl(View view, Attribute<T> attribute) {
+        return new LookupColumnImpl<>(view, attribute, true);
     }
 
-    public static <T> Lookup<T> persistedLookupI(View view, Attribute<T> attribute, boolean isPersisted) {
-        return new LookupI<>(view, attribute, isPersisted);
+    public static <T> LookupColumn<T> lookupColumnImpl(View view, Attribute<T> attribute, boolean isPersisted) {
+        return new LookupColumnImpl<>(view, attribute, isPersisted);
     }
 
-    private final PersistedLookupView mainLookup;
+    private final LookupTable lookupTable;
 
     private final View view;
-    private final Map<T, PersistedLookupView> content = map();
+    private final Map<T, LookupTable> content = map();
     private final Attribute<T> attribute;
-    private final Map<Predicate<T>, PersistedLookupView> complexContent = map();
+    private final Map<Predicate<T>, LookupTable> complexContent = map();
     private final ListView<String> path;
 
-    private LookupI(View view, Attribute<T> attribute, boolean isPersisted) {
+    private LookupColumnImpl(View view, Attribute<T> attribute, boolean isPersisted) {
         this.view = view;
-        this.mainLookup = lookupTable(view, attribute);
+        this.lookupTable = lookupTable(view, attribute);
         this.attribute = attribute;
         if (isPersisted) {
             view.unorderedLinesStream().forEach(e -> register_addition(e.value(attribute), e.index()));
@@ -77,7 +76,7 @@ public class LookupI<T> implements Lookup<T> {
             require(view.rawLinesView().size() > index);
         }
         {
-            final PersistedLookupView lookupTable;
+            final LookupTable lookupTable;
             if (content.hasKey(addition)) {
                 lookupTable = content.get(addition);
             } else {
@@ -135,7 +134,7 @@ public class LookupI<T> implements Lookup<T> {
         if (content.containsKey(value)) {
             return content.get(value);
         }
-        return mainLookup;
+        return lookupTable;
     }
 
     @Override

@@ -13,13 +13,13 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
-package net.splitcells.gel.data.view.column;
+package net.splitcells.gel.data.lookup;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
-import static net.splitcells.gel.data.lookup.LookupTables.lookupTable;
-import static net.splitcells.gel.data.table.Tables.table;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -28,68 +28,68 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import net.splitcells.dem.data.Flow;
+import net.splitcells.dem.data.Flows;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.data.lookup.LookupColumn;
-import net.splitcells.gel.data.lookup.Lookups;
+import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
+import net.splitcells.gel.data.view.column.Column;
 
-public class ColumnI<T> implements Column<T> {
-    public static <R> Column<R> column(View view, Attribute<R> attribute) {
-        return new ColumnI<>(view, attribute);
-    }
+/**
+ * Implements a {@link Column} that is based on a table, that is created via a lookup.
+ * 
+ * @param <T>
+ */
+public class LookupBasedColumn<T> implements Column<T> {
 
-    private final List<T> content = list();
-    private final Attribute<T> attribute;
-    private final View view;
+    private final LookupTable table;
     private Optional<LookupColumn<T>> lookup = Optional.empty();
+    private final Attribute<T> attribute;
 
-    private ColumnI(View view, Attribute<T> attribute) {
-        this.attribute = attribute;
-        this.view = view;
+    public static <T> LookupBasedColumn<T> lookupColumn(LookupTable table, Attribute<T> attribute) {
+        return new LookupBasedColumn<>(table, attribute);
     }
 
-    private LookupColumn<T> ensureInitializedLookup() {
-        if (lookup.isEmpty()) {
-            lookup = Optional.of(Lookups.lookup(view, attribute));
-        }
-        return lookup.get();
+    private LookupBasedColumn(LookupTable table, Attribute<T> attribute) {
+        this.table = table;
+        this.attribute = attribute;
     }
 
     @Override
     public int size() {
-        return content.size();
+        return table.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return content.isEmpty();
+        throw notImplementedYet();
     }
 
     @Override
     public boolean contains(Object o) {
-        return content.contains(o);
+        throw notImplementedYet();
     }
 
     @Override
     public Iterator<T> iterator() {
-        return content.iterator();
+        return values().iterator();
     }
 
     @Override
     public Object[] toArray() {
-        return content.toArray();
+        throw notImplementedYet();
     }
 
     @Override
     public <R> R[] toArray(R[] a) {
-        return content.toArray(a);
+        throw notImplementedYet();
     }
 
     @Override
     public boolean add(T e) {
-        return content.add(e);
+        throw notImplementedYet();
     }
 
     @Override
@@ -99,16 +99,12 @@ public class ColumnI<T> implements Column<T> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        return content.containsAll(c);
+        throw notImplementedYet();
     }
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        var contentChanged = false;
-        for (T e : c) {
-            contentChanged |= add(e);
-        }
-        return contentChanged;
+        throw notImplementedYet();
     }
 
     @Override
@@ -128,22 +124,26 @@ public class ColumnI<T> implements Column<T> {
 
     @Override
     public void clear() {
-        content.clear();
+        throw notImplementedYet();
     }
 
     @Override
     public T get(int index) {
-        return content.get(index);
+        if (ENFORCING_UNIT_CONSISTENCY && !table.contentIndexes().contains(index)) {
+            throw ExecutionException.execException(tree("Given index is not present in lookup table.")
+                    .withProperty("index", index + "")
+                    .withProperty("lookup table", table.path().toString()));
+        }
+        return table.base().columnView(attribute).get(index);
     }
 
     @Override
-    public T set(int index, T additionalElement) {
-        content.set(index, additionalElement);
-        return additionalElement;
+    public T set(int indexes, T elements) {
+        throw notImplementedYet();
     }
 
     @Override
-    public void add(int index, T element) {
+    public void add(int index, T value) {
         throw notImplementedYet();
     }
 
@@ -154,27 +154,33 @@ public class ColumnI<T> implements Column<T> {
 
     @Override
     public int indexOf(Object o) {
-        return content.indexOf(o);
+        throw notImplementedYet();
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        return content.lastIndexOf(o);
+        throw notImplementedYet();
     }
 
     @Override
     public ListIterator<T> listIterator() {
-        return content.listIterator();
+        throw notImplementedYet();
     }
 
     @Override
     public ListIterator<T> listIterator(int index) {
-        return content.listIterator(index);
+        throw notImplementedYet();
     }
 
     @Override
     public List<T> subList(int startIndex, int endIndex) {
-        return listWithValuesOf(content.subList(startIndex, endIndex));
+        throw notImplementedYet();
+    }
+
+    private void ensureInitializedLookup() {
+        if (!lookup.isPresent()) {
+            lookup = Optional.of(Lookups.lookup(table, attribute));
+        }
     }
 
     @Override
@@ -190,27 +196,39 @@ public class ColumnI<T> implements Column<T> {
     }
 
     @Override
-    public void registerAddition(Line addition) {
-        lookup.ifPresent(i -> i.register_addition(addition.value(attribute), addition.index()));
-    }
-
-    @Override
-    public void registerBeforeRemoval(Line removal) {
-        lookup.ifPresent(i -> i.register_removal(removal.value(attribute), removal.index()));
-    }
-
-    @Override
-    public Flow<T> stream() {
-        return content.stream();
-    }
-
-    @Override
     public View lookup(T value) {
-        return ensureInitializedLookup().lookup(value);
+        ensureInitializedLookup();
+        return lookup.get().lookup(value);
     }
 
     @Override
     public View lookup(Predicate<T> predicate) {
-        return ensureInitializedLookup().lookup(predicate);
+        ensureInitializedLookup();
+        return lookup.get().lookup(predicate);
+    }
+
+    @Override
+    public void registerAddition(Line addition) {
+        lookup.ifPresent(l -> l.register_addition(addition.value(attribute), addition.index()));
+    }
+
+    @Override
+    public void registerBeforeRemoval(Line removal) {
+        lookup.ifPresent(l -> l.register_removal(removal.value(attribute), removal.index()));
+    }
+
+    @Override
+    public List<T> values() {
+        return table.unorderedLinesStream()
+                .map(e -> e.value(attribute))//
+                .collect(Lists.toList());
+    }
+
+    @Override
+    public Flow<T> stream() {
+        final var content = table.contentIndexes();
+        return Flows.flow(table.base().unorderedLinesStream()
+                .filter(l -> l != null && content.has(l.index()))
+                .map(l -> l.value(attribute)));
     }
 }

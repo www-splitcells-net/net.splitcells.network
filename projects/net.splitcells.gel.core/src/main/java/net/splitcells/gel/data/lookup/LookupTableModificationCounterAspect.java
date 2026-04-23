@@ -29,114 +29,114 @@ import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
-public class PersistedLookupViewModificationCounterAspect implements PersistedLookupView {
-    public static PersistedLookupView lookupViewModificationCounterAspect(PersistedLookupView persistedLookupView) {
-        return new PersistedLookupViewModificationCounterAspect(persistedLookupView);
+public class LookupTableModificationCounterAspect implements LookupTable {
+    public static LookupTable lookupViewModificationCounterAspect(LookupTable lookupTable) {
+        return new LookupTableModificationCounterAspect(lookupTable);
     }
 
-    private final PersistedLookupView persistedLookupView;
+    private final LookupTable lookupTable;
 
-    private PersistedLookupViewModificationCounterAspect(PersistedLookupView argPersistedLookupView) {
-        persistedLookupView = argPersistedLookupView;
+    private LookupTableModificationCounterAspect(LookupTable argLookupTable) {
+        lookupTable = argLookupTable;
     }
 
     @Override
     public void register(Line line) {
         configValue(LookupModificationCounter.class).count(this, 1 + (long) line.values().size());
-        persistedLookupView.register(line);
+        lookupTable.register(line);
     }
 
     @Override
     public void removeRegistration(Line line) {
         configValue(LookupModificationCounter.class).count(this, 1 + (long) line.values().size());
-        persistedLookupView.removeRegistration(line);
+        lookupTable.removeRegistration(line);
     }
 
     @Override
     public View base() {
-        return persistedLookupView.base();
+        return lookupTable.base();
     }
 
     @Override
     public SetT<Integer> contentIndexes() {
-        return persistedLookupView.contentIndexes();
+        return lookupTable.contentIndexes();
     }
 
     @Override
     public String name() {
-        return persistedLookupView.name();
+        return lookupTable.name();
     }
 
     @Override
     public List<Attribute<Object>> headerView() {
-        return persistedLookupView.headerView();
+        return lookupTable.headerView();
     }
 
     @Override
     public List<Attribute<? extends Object>> headerView2() {
-        return persistedLookupView.headerView2();
+        return lookupTable.headerView2();
     }
 
     @Override
     public <T> ColumnView<T> columnView(Attribute<T> attribute) {
-        return persistedLookupView.columnView(attribute);
+        return lookupTable.columnView(attribute);
     }
 
     @Override
     public ListView<ColumnView<Object>> columnsView() {
-        return persistedLookupView.columnsView();
+        return lookupTable.columnsView();
     }
 
     @Override
     public ListView<Line> rawLinesView() {
-        return persistedLookupView.rawLinesView();
+        return lookupTable.rawLinesView();
     }
 
     @Override
     public int size() {
-        return persistedLookupView.size();
+        return lookupTable.size();
     }
 
     @Override
     public List<Line> rawLines() {
-        return persistedLookupView.rawLines();
+        return lookupTable.rawLines();
     }
 
     @Override
     public Line lookupEquals(Attribute<Line> attribute, Line values) {
-        return persistedLookupView.lookupEquals(attribute, values);
+        return lookupTable.lookupEquals(attribute, values);
     }
 
     @Override
     public DiscoverableRenderer discoverableRenderer() {
-        return persistedLookupView.discoverableRenderer();
+        return lookupTable.discoverableRenderer();
     }
 
     @Override
     public Object identity() {
-        return persistedLookupView.identity();
+        return lookupTable.identity();
     }
 
     @Override
     public Tree toTree() {
-        return persistedLookupView.toTree();
+        return lookupTable.toTree();
     }
 
     @Override
     public ListView<String> path() {
-        return persistedLookupView.path();
+        return lookupTable.path();
     }
 
     @Override
     public boolean equals(Object arg) {
-        if (arg instanceof PersistedLookupView view) {
-            return view.identity() == persistedLookupView.identity();
+        if (arg instanceof LookupTable view) {
+            return view.identity() == lookupTable.identity();
         }
         throw ExecutionException.execException("Invalid argument type: " + arg);
     }
 
     @Override
     public int hashCode() {
-        return persistedLookupView.hashCode();
+        return lookupTable.hashCode();
     }
 }

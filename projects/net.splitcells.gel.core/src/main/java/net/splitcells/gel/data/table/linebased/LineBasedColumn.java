@@ -17,7 +17,7 @@ package net.splitcells.gel.data.table.linebased;
 
 import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.gel.data.lookup.Lookup;
+import net.splitcells.gel.data.lookup.LookupColumn;
 import net.splitcells.gel.data.lookup.Lookups;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
@@ -45,7 +45,7 @@ public class LineBasedColumn<T> implements Column<T> {
 
     private final IndexedAttribute<T> attribute;
     private final View view;
-    private Optional<Lookup<T>> lookup = Optional.empty();
+    private Optional<LookupColumn<T>> lookup = Optional.empty();
 
     private LineBasedColumn(View view, Attribute<T> attribute) {
         this.view = view;
@@ -190,7 +190,7 @@ public class LineBasedColumn<T> implements Column<T> {
         return lookup.get().persistedLookup(predicate);
     }
 
-    private Lookup<T> ensureInitializedLookup() {
+    private LookupColumn<T> ensureInitializedLookup() {
         if (lookup.isEmpty()) {
             lookup = Optional.of(Lookups.lookup(view, attribute.attribute()));
         }

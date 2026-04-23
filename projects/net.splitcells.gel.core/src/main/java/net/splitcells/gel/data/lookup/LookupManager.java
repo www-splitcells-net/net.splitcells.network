@@ -16,7 +16,6 @@
 package net.splitcells.gel.data.lookup;
 
 import lombok.val;
-import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -24,17 +23,17 @@ import net.splitcells.gel.data.view.attribute.Attribute;
 import java.util.function.Predicate;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
-import static net.splitcells.gel.data.lookup.LookupI.persistedLookupI;
+import static net.splitcells.gel.data.lookup.LookupColumnImpl.lookupColumnImpl;
 import static net.splitcells.gel.data.lookup.LookupTables.lookupTable;
 import static net.splitcells.gel.data.view.View.INVALID_INDEX;
 
 /**
- * This {@link Lookup} decides, which {@link Lookup} implementation is used, at a given time.
+ * This {@link LookupColumn} decides, which {@link LookupColumn} implementation is used, at a given time.
  * This is done, in order to improve the performance.
  *
  * @param <T> The type of value, that is looked up.
  */
-public class LookupManager<T> implements Lookup<T> {
+public class LookupManager<T> implements LookupColumn<T> {
     public static final int DEFAULT_MIN_STRATEGY_TIME = 100;
 
     public static <T> LookupManager<T> lookupManager(View view, Attribute<T> attribute) {
@@ -47,7 +46,7 @@ public class LookupManager<T> implements Lookup<T> {
 
     private final View view;
     private final Attribute<T> attribute;
-    private final Lookup<T> persistedLookup;
+    private final LookupColumn<T> lookupColumn;
     private boolean isPersistedLookupActive = false;
     private boolean isPersistedLookupForced = false;
     private long lookupReadCount = 0;
@@ -59,7 +58,7 @@ public class LookupManager<T> implements Lookup<T> {
     private LookupManager(View argView, Attribute<T> argAttribute, int argMinStrategyTime) {
         view = argView;
         attribute = argAttribute;
-        persistedLookup = persistedLookupI(view, attribute, false);
+        lookupColumn = lookupColumnImpl(view, attribute, false);
         minStrategyTime = argMinStrategyTime;
         path = view.path().shallowCopy().withAppended(attribute.name());
     }
@@ -73,7 +72,7 @@ public class LookupManager<T> implements Lookup<T> {
         lastStrategyTime = 0;
         view.unorderedLinesStream()
                 .filter(l -> l.index() != additionIndex && l.index() != removalIndex)
-                .forEach(l -> persistedLookup.register_addition(l.value(attribute), l.index()));
+                .forEach(l -> lookupColumn.register_addition(l.value(attribute), l.index()));
     }
 
     private void updateStatistics() {
@@ -90,7 +89,7 @@ public class LookupManager<T> implements Lookup<T> {
                 lastStrategyTime = 0;
                 view.unorderedLinesStream()
                         .filter(l -> l.index() != additionIndex && l.index() != removalIndex)
-                        .forEach(l -> persistedLookup.register_removal(l.value(attribute), l.index()));
+                        .forEach(l -> lookupColumn.register_removal(l.value(attribute), l.index()));
             }
         } else if (lookupReadCount > lookupWriteCount) {
             enablePersistedLookup(additionIndex, removalIndex);
@@ -111,7 +110,7 @@ public class LookupManager<T> implements Lookup<T> {
             isPersistedLookupForced = true;
             enablePersistedLookup();
         }
-        return persistedLookup.persistedLookup(value);
+        return lookupColumn.persistedLookup(value);
     }
 
     @Override
@@ -123,7 +122,7 @@ public class LookupManager<T> implements Lookup<T> {
             isPersistedLookupForced = true;
             enablePersistedLookup();
         }
-        return persistedLookup.persistedLookup(predicate);
+        return lookupColumn.persistedLookup(predicate);
     }
 
     @Override
@@ -132,7 +131,7 @@ public class LookupManager<T> implements Lookup<T> {
         ++lastStrategyTime;
         updateStatistics();
         if (isPersistedLookupActive) {
-            return persistedLookup.persistedLookup(value);
+            return lookupColumn.persistedLookup(value);
         }
         return lookupIntern(a -> a.equals(value));
     }
@@ -146,7 +145,7 @@ public class LookupManager<T> implements Lookup<T> {
 
     private View lookupIntern(Predicate<T> predicate) {
         if (isPersistedLookupActive) {
-            val lookup = persistedLookup.persistedLookup(predicate);
+            val lookup = lookupColumn.persistedLookup(predicate);
             lookupReadCount += lookup.size();
             return lookup;
         }
@@ -166,7 +165,7 @@ public class LookupManager<T> implements Lookup<T> {
         ++lastStrategyTime;
         updateStatistics(index, INVALID_INDEX);
         if (isPersistedLookupActive) {
-            persistedLookup.register_addition(addition, index);
+            lookupColumn.register_addition(addition, index);
         }
     }
 
@@ -177,7 +176,7 @@ public class LookupManager<T> implements Lookup<T> {
         final var wasPersistedLookupActive = isPersistedLookupActive;
         updateStatistics(INVALID_INDEX, index);
         if (wasPersistedLookupActive) {
-            persistedLookup.register_removal(removal, index);
+            lookupColumn.register_removal(removal, index);
         }
     }
 

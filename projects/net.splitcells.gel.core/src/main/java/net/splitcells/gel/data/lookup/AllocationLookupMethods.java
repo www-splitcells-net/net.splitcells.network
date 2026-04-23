@@ -15,15 +15,12 @@
  */
 package net.splitcells.gel.data.lookup;
 
-import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.data.view.column.Column;
-import net.splitcells.gel.data.view.column.ColumnSubscriber;
+import java.util.function.Predicate;
 
-/**
- * Provides an API to look up values of a {@link Column}.
- *
- * @param <T> Value type being looked up.
- */
-public interface Lookup<T> extends ColumnSubscriber<T>, LookupComponents<T>, Discoverable {
+import net.splitcells.gel.data.assignment.Assignments;
 
+public interface AllocationLookupMethods<T> extends LookupMethods<T> {
+	Assignments persistedLookup(T value);
+
+	Assignments persistedLookup(Predicate<T> predicate);
 }
