@@ -85,7 +85,7 @@ public class FileSystemVoid implements FileSystem {
     @Override
     public boolean exists() {
         warnUsage();
-        return false;
+        return true;
     }
 
     @Override
