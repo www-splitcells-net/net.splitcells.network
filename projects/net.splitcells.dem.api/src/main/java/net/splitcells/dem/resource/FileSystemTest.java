@@ -30,18 +30,11 @@ public class FileSystemTest extends TestSuiteI {
     }
 
     public void testExistsForSubFileSystem(Supplier<FileSystemAccess> factory) {
-        requireThrow(() -> {
-            val testSubject = factory.get();
-            testSubject.writer.writeToFile("test", "content".getBytes());
-            testSubject.writer.createDirectoryPath("test");
-        });
-        {
-            val testSubject = factory.get();
-            testSubject.writer.createDirectoryPath("test");
-            require(testSubject.writer.subFileSystem("test").exists());
-            require(testSubject.writer.subFileSystem(Path.of("test")).exists());
-            require(testSubject.reader.subFileSystemView("test").exists());
-        }
+        val testSubject = factory.get();
+        testSubject.writer.createDirectoryPath("test");
+        require(testSubject.writer.subFileSystem("test").exists());
+        require(testSubject.writer.subFileSystem(Path.of("test")).exists());
+        require(testSubject.reader.subFileSystemView("test").exists());
     }
 
     public void testIsFile(Supplier<FileSystemAccess> factory) {
@@ -101,6 +94,11 @@ public class FileSystemTest extends TestSuiteI {
     }
 
     public void testCreateDirectoryPath(Supplier<FileSystemAccess> factory) {
+        {
+            val testSubject = factory.get();
+            testSubject.writer.writeToFile("test", "content".getBytes());
+            requireThrow(() -> testSubject.writer.createDirectoryPath("test"));
+        }
         val testSubject = factory.get();
         testSubject.writer.createDirectoryPath("test-directory");
         require(testSubject.reader.isDirectory(Path.of("test-directory")));
