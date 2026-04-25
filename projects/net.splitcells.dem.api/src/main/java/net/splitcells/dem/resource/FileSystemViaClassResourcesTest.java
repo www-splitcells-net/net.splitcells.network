@@ -15,9 +15,6 @@
  */
 package net.splitcells.dem.resource;
 
-import lombok.val;
-import net.splitcells.dem.environment.config.StaticFlags;
-import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import org.junit.jupiter.api.DynamicTest;
@@ -35,10 +32,9 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.environment.config.StaticFlags.runWithEnforcingUnityConsistency;
 import static net.splitcells.dem.resource.FileSystemViaClassResourcesFactoryImpl._fileSystemViaClassResourcesFactoryImpl;
-import static net.splitcells.dem.resource.FileSystemViaClassResourcesImpl._fileSystemViaClassResourcesImpl;
+import static net.splitcells.dem.resource.FileSystemViaClassResourcesImpl.fileSystemViaClassResourcesImpl;
 import static net.splitcells.dem.resource.Files.readAsString;
 import static net.splitcells.dem.testing.Assertions.*;
-import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
 import static net.splitcells.dem.utils.StreamUtils.concat;
 
@@ -57,7 +53,7 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
 
     @UnitTest
     public void readStringIfPresentWithNotBackedString() {
-        requireEmpty(_fileSystemViaClassResourcesImpl(getClass(), MAVEN_GROUP_ID, DEM_API, setOfUniques(NOT_EXISTING_FILE))
+        requireEmpty(FileSystemViaClassResourcesImpl.fileSystemViaClassResourcesImpl(getClass(), MAVEN_GROUP_ID, DEM_API, setOfUniques(NOT_EXISTING_FILE))
                 .readStringIfPresent(Path.of(NOT_EXISTING_FILE)));
 
     }

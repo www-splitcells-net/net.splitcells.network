@@ -78,13 +78,13 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
         return groupdId + "." + artifiactId + ".resources.list.txt";
     }
 
-    public static FileSystemView _fileSystemViaClassResourcesImpl(Class<?> clazz, String groupId, String artifactId) {
+    public static FileSystemView fileSystemViaClassResourcesImpl(Class<?> clazz, String groupId, String artifactId) {
         return new FileSystemViaClassResourcesImpl(clazz, resourceBasePath(groupId, artifactId)
                 , metaBasePath(groupId, artifactId)
                 , resourceListPath(groupId, artifactId));
     }
 
-    public static FileSystemView _fileSystemViaClassResourcesImpl(Class<?> clazz, String groupId, String artifactId, Set<String> argResourceList) {
+    public static FileSystemView fileSystemViaClassResourcesImpl(Class<?> clazz, String groupId, String artifactId, Set<String> argResourceList) {
         return new FileSystemViaClassResourcesImpl(clazz, resourceBasePath(groupId, artifactId)
                 , metaBasePath(groupId, artifactId)
                 , argResourceList);

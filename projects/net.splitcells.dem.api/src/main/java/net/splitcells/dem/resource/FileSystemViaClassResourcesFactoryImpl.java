@@ -26,6 +26,6 @@ public class FileSystemViaClassResourcesFactoryImpl implements FileSystemViaClas
 
     @Override
     public FileSystemView fileSystemViaClassResources(Class<?> clazz, String groupId, String artifactId) {
-        return FileSystemViaClassResourcesImpl._fileSystemViaClassResourcesImpl(clazz, groupId, artifactId);
+        return FileSystemViaClassResourcesImpl.fileSystemViaClassResourcesImpl(clazz, groupId, artifactId);
     }
 }
