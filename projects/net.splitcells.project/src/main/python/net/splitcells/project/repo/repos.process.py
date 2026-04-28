@@ -62,8 +62,7 @@ def str2bool(arg):
     return arg == 'true' or arg == 'True'
 class ReposProcess:
     executionScript = ""
-    childRepo = ''
-    peerRepo = ''
+    childRepoPath = []
     targetPath = None
     dryRun = False
     isRoot = True
@@ -72,6 +71,7 @@ class ReposProcess:
     def execute(self, args):
         # TODO Currently, given target paths are converted to be absolute, as peer repos are otherwise not processed correctly.
         self.targetPath = Path(args.path).absolute()
+        self.childRepoPath = [self.targetPath.name]
         self.command = args.command
         self.dryRun = args.dryRun
         self.verbose = args.verbose
@@ -82,7 +82,7 @@ class ReposProcess:
         if self.processInParallel and 'codeberg' in args.command + self.commandForMissing + self.commandForUnknown:
             logging.error('Disabling --process-in-parallel, as Codeberg does not support parallel SSH connections. If this is attempted, the Codeberg server starts rejecting SSH connections.')
             self.processInParallel = False
-        self.executeRepo()
+        self.process()
     def childRepoProcess(self):
         childProcess = ReposProcess()
         childProcess.isRoot = False
@@ -92,12 +92,11 @@ class ReposProcess:
         childProcess.commandForUnknown = self.commandForUnknown
         childProcess.dryRun = self.dryRun
         childProcess.verbose = self.verbose
-        childProcess.childRepo = self.childRepo
-        childProcess.peerRepo = self.peerRepo
+        childProcess.childRepoPath = self.childRepoPath.copy()
         childProcess.ignorePeerRepos = self.ignorePeerRepos
         childProcess.processInParallel = self.processInParallel
         return childProcess
-    def executeRepo(self):
+    def process(self):
         if self.isRoot:
             self.executionScript += "set -e\n\n"
         if self.targetPath.is_dir():
@@ -118,10 +117,10 @@ class ReposProcess:
                 if not child == "" and not child.isspace():
                     childFile = self.targetPath.joinpath(child)
                     childProcess = self.childRepoProcess()
-                    childProcess.childRepo = child
+                    childProcess.childRepoPath = self.childRepoPath.copy() + [child]
                     childProcess.targetPath = childFile
                     childProcess.command = childProcess.applyTemplate(self.command)
-                    childProcess.executeRepo()
+                    childProcess.process()
                     self.executionScript += childProcess.executionScript
             for targetSubDir in self.targetPath.iterdir():
                 if targetSubDir.is_dir() and not targetSubDir.name.startswith('.') and targetSubDir.name != 'bin':
@@ -160,17 +159,15 @@ class ReposProcess:
                 if not peer == "" and not peer.isspace():
                     peerFile = self.targetPath.joinpath("../" + peer).resolve()
                     peerProcess = self.childRepoProcess()
-                    peerProcess.peerRepo = peer
+                    peerProcess.childRepoPath = self.childRepoPath.copy()[:-1] + [peer]
                     peerProcess.targetPath = peerFile
                     peerProcess.command = peerProcess.applyTemplate(self.command)
-                    peerProcess.executeRepo()
+                    peerProcess.process()
                     self.executionScript += peerProcess.executionScript
     def applyTemplate(self, string):
         return Template(string).safe_substitute(
-             subRepo = self.childRepo
-            ,childRepo = self.childRepo
-            ,peerRepo = self.peerRepo
-            ,currentRepo = self.targetPath.name)
+             childRepo = '/'.join(self.childRepoPath)
+            )
 def reposProcess(args):
     parser = argparse.ArgumentParser(description="Processes a group of repos.")
     parser.add_argument('--path', dest='path', default='./', help="This is path of the to be processed meta repo.")
@@ -226,21 +223,21 @@ echo
             subprocess.call("chmod +x " + str(tmpDir.joinpath('test-repo/sub-1/bin/net.splitcells.shell.repos.peers')), shell='True')
             testResult = reposProcess(["--dry-run=true"
                 , "--path=" + str(tmpDir.joinpath('test-repo'))
-                , '--command=echo child:${childRepo} & ${subRepo},peer:${peerRepo}'])
+                , '--command=echo ${childRepo}'])
             self.assertEqual(testResult.executionScript, textwrap.dedent("""\
                 set -e
                 
                 cd "${tmpDirStr}/test-repo"
-                echo child: & ,peer:
+                echo test-repo
                 
                 cd "${tmpDirStr}/test-repo/sub-1"
-                echo child:sub-1 & sub-1,peer:
+                echo test-repo/sub-1
                 
                 cd "${tmpDirStr}/test-repo/none-sub-peer"
                 echo child:sub-1 & sub-1,peer:
                 
                 cd "${tmpDirStr}/test-repo/sub-2"
-                echo child:sub-2 & sub-2,peer:
+                cho test-repo/sub-2
                 
                 # Processing missing "${tmpDirStr}/test-repo/missing-sub"
                 cd "${tmpDirStr}/test-repo"
@@ -250,7 +247,7 @@ echo
                 exit 1
                 
                 cd "${tmpDirStr}/peer-repo"
-                echo child: & ,peer:peer-repo
+                echo peer-repo
                 
                 # Processing missing "${tmpDirStr}/missing-peer"
                 cd "${tmpDirStr}"
