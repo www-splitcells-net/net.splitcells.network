@@ -63,15 +63,15 @@ def str2bool(arg):
 class ReposProcess:
     executionScript = ""
     childRepoPath = []
-    targetPath = None
+    path = None
     dryRun = False
     isRoot = True
     ignorePeerRepos = False
     processInParallel = False
     def execute(self, args):
         # TODO Currently, given target paths are converted to be absolute, as peer repos are otherwise not processed correctly.
-        self.targetPath = Path(args.path).absolute()
-        self.childRepoPath = [self.targetPath.name]
+        self.path = Path(args.path).parent
+        self.childRepoPath = [Path(args.path).name]
         self.command = args.command
         self.dryRun = args.dryRun
         self.verbose = args.verbose
@@ -86,7 +86,7 @@ class ReposProcess:
     def childRepoProcess(self):
         childProcess = ReposProcess()
         childProcess.isRoot = False
-        childProcess.targetPath = self.targetPath
+        childProcess.path = self.path
         childProcess.command = self.command
         childProcess.commandForMissing = self.commandForMissing
         childProcess.commandForUnknown = self.commandForUnknown
@@ -96,18 +96,19 @@ class ReposProcess:
         childProcess.ignorePeerRepos = self.ignorePeerRepos
         childProcess.processInParallel = self.processInParallel
         return childProcess
+    def childPath(self):
+        return self.path.joinpath('/'.join(self.childRepoPath))
     def process(self):
         if self.isRoot:
             self.executionScript += "set -e\n\n"
-        if self.targetPath.is_dir():
-            if (str(self.targetPath) != './'):
-                self.executionScript += 'cd \"' + str(self.targetPath) + '\"\n'
+        if self.path.is_dir():
+            self.executionScript += 'cd \"' + str(self.childPath()) + '\"\n'
             self.executionScript += self.getCommandForScript(self.command) + '\n'
         else:
-            self.executionScript += '# Processing missing "' + str(self.targetPath) + '"\n'
-            self.executionScript += 'cd \"' + str(self.targetPath.parent) + '\"\n'
+            self.executionScript += '# Processing missing "' + str(self.childPath()) + '"\n'
+            self.executionScript += 'cd \"' + str(self.childPath().parent) + '\"\n'
             self.executionScript += self.getCommandForScript(self.commandForMissing) + '\n'
-        childrenFile = self.targetPath.joinpath('./bin/net.splitcells.repos.children')
+        childrenFile = self.childPath().joinpath('./bin/net.splitcells.repos.children')
         if childrenFile.is_file():
             childQuery = subprocess.run([childrenFile], stdout=subprocess.PIPE)
             if childQuery.returncode != 0:
@@ -115,14 +116,13 @@ class ReposProcess:
             children = childQuery.stdout.decode('utf-8').split("\n")
             for child in children:
                 if not child == "" and not child.isspace():
-                    childFile = self.targetPath.joinpath(child)
                     childProcess = self.childRepoProcess()
                     childProcess.childRepoPath = self.childRepoPath.copy() + [child]
-                    childProcess.targetPath = childFile
+                    childProcess.path = self.path
                     childProcess.command = childProcess.applyTemplate(self.command)
                     childProcess.process()
                     self.executionScript += childProcess.executionScript
-            for targetSubDir in self.targetPath.iterdir():
+            for targetSubDir in self.childPath().iterdir():
                 if targetSubDir.is_dir() and not targetSubDir.name.startswith('.') and targetSubDir.name != 'bin':
                     if not targetSubDir.name in children:
                         self.executionScript += '# Processing unknown repo "' + str(targetSubDir) + '"\n'
@@ -146,10 +146,9 @@ class ReposProcess:
             return scriptLine + " &\n"
         return scriptLine + '\n'
     def processPeerRepos(self):
-        peerFile = self.targetPath.joinpath('./bin/net.splitcells.shell.repos.peers')
+        peerFile = self.childPath().joinpath('./bin/net.splitcells.shell.repos.peers')
         if self.ignorePeerRepos:
-            if peerFile.is_file():
-                logging.info("Ignoring peer repos.")
+            logging.info("Ignoring peer repos.")
             return
         if peerFile.is_file():
             peerQuery = subprocess.run([peerFile], stdout=subprocess.PIPE)
@@ -157,10 +156,9 @@ class ReposProcess:
                 exit(peerQuery.returncode)
             for peer in peerQuery.stdout.decode('utf-8').split("\n"):
                 if not peer == "" and not peer.isspace():
-                    peerFile = self.targetPath.joinpath("../" + peer).resolve()
                     peerProcess = self.childRepoProcess()
                     peerProcess.childRepoPath = self.childRepoPath.copy()[:-1] + [peer]
-                    peerProcess.targetPath = peerFile
+                    peerProcess.path = self.path
                     peerProcess.command = peerProcess.applyTemplate(self.command)
                     peerProcess.process()
                     self.executionScript += peerProcess.executionScript
@@ -237,7 +235,7 @@ echo
                 echo child:sub-1 & sub-1,peer:
                 
                 cd "${tmpDirStr}/test-repo/sub-2"
-                cho test-repo/sub-2
+                echo test-repo/sub-2
                 
                 # Processing missing "${tmpDirStr}/test-repo/missing-sub"
                 cd "${tmpDirStr}/test-repo"
