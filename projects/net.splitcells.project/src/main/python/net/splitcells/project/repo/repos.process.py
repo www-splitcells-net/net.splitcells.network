@@ -289,19 +289,19 @@ echo
                 """).replace("${tmpDirStr}", tmpDirStr))
             testResultWithoutPeers = reposProcess(["--dry-run=true"
                 , "--path=" + str(tmpDir.joinpath('test-repo'))
-                , '--command=echo child:${childRepo} & ${subRepo},peer:${peerRepo}'
+                , '--command=echo ${childRepo}'
                 , '--ignore-peer-repos=true'])
             self.assertEqual(testResultWithoutPeers.executionScript, textwrap.dedent("""\
                 set -e
                 
                 cd "${tmpDirStr}/test-repo"
-                echo child: & ,peer:
+                echo test-repo
                 
                 cd "${tmpDirStr}/test-repo/sub-1"
-                echo child:sub-1 & sub-1,peer:
+                echo test-repo/sub-1
                 
                 cd "${tmpDirStr}/test-repo/sub-2"
-                echo child:sub-2 & sub-2,peer:
+                echo test-repo/sub-2
                 
                 # Processing missing "${tmpDirStr}/test-repo/missing-sub"
                 cd "${tmpDirStr}/test-repo"
