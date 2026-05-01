@@ -232,7 +232,7 @@ echo
                 echo test-repo/sub-1
                 
                 cd "${tmpDirStr}/test-repo/none-sub-peer"
-                echo child:sub-1 & sub-1,peer:
+                echo test-repo/none-sub-peer
                 
                 cd "${tmpDirStr}/test-repo/sub-2"
                 echo test-repo/sub-2
