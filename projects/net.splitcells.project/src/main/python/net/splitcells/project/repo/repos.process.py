@@ -69,9 +69,8 @@ class ReposProcess:
     ignorePeerRepos = False
     processInParallel = False
     def execute(self, args):
-        # TODO Currently, given target paths are converted to be absolute, as peer repos are otherwise not processed correctly.
-        self.path = Path(args.path).parent
-        self.childRepoPath = [Path(args.path).name]
+        self.path = Path(args.path).absolute().parent
+        self.childRepoPath = [Path(args.path).absolute().name]
         self.command = args.command
         self.dryRun = args.dryRun
         self.verbose = args.verbose
