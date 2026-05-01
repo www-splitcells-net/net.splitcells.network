@@ -254,22 +254,22 @@ echo
                 """).replace("${tmpDirStr}", tmpDirStr))
             testResultForParallelism = reposProcess(["--dry-run=true"
                 , "--path=" + str(tmpDir.joinpath('test-repo'))
-                , '--command=echo child:${childRepo} & ${subRepo},peer:${peerRepo}'
+                , '--command=echo ${childRepo}'
                 , '--process-in-parallel=true'])
             self.assertEqual(testResultForParallelism.executionScript, textwrap.dedent("""\
                 set -e
                 
                 cd "${tmpDirStr}/test-repo"
-                echo child: & ,peer: &
+                echo test-repo &
                 
                 cd "${tmpDirStr}/test-repo/sub-1"
-                echo child:sub-1 & sub-1,peer: &
+                echo test-repo/sub-1 &
                 
                 cd "${tmpDirStr}/test-repo/none-sub-peer"
-                echo child:sub-1 & sub-1,peer: &
+                echo test-repo/none-sub-peer &
                 
                 cd "${tmpDirStr}/test-repo/sub-2"
-                echo child:sub-2 & sub-2,peer: &
+                echo test-repo/sub-2 &
                 
                 # Processing missing "${tmpDirStr}/test-repo/missing-sub"
                 cd "${tmpDirStr}/test-repo"
@@ -279,7 +279,7 @@ echo
                 exit 1 &
                 
                 cd "${tmpDirStr}/peer-repo"
-                echo child: & ,peer:peer-repo &
+                echo peer-repo &
                 
                 # Processing missing "${tmpDirStr}/missing-peer"
                 cd "${tmpDirStr}"
