@@ -26,16 +26,16 @@ if __name__ == '__main__':
 	# First the repair is executed by ignoring peer repos,
 	# as these often cause problems,
 	# when peer or sub repos are deleted.
-	commandToExecute = "repos.process"\
-		+ " --command 'exit'"\
-		+ " --command-for-missing 'command.managed.execute disjunction repos.clone.into.current "\
-		+ parser.parse_args().remoteRepo + "/$subRepo'"
+	commandToExecute = "repos.process --verbose=true"\
+		+ " --command 'echo ${childRepo} is present.'"\
+		+ " --command-for-missing 'repo.clone "\
+		+ parser.parse_args().remoteRepo + "/${childRepo}'"
 	logging.debug("Executing: " + commandToExecute)
 	subprocess.call(commandToExecute, shell='True')
 	commandToExecute = "repos.process"\
-		+ " --command 'exit'"\
+		+ " --command 'echo ${childRepo} is present.'"\
 		+ " --ignore-peer-repos 'false'"\
-		+ " --command-for-missing 'command.managed.execute disjunction repos.clone.into.current "\
-		+ parser.parse_args().remoteRepo + "/$subRepo'"
+		+ " --command-for-missing 'repo.clone "\
+		+ parser.parse_args().remoteRepo + "/${childRepo}'"
 	logging.debug("Executing: " + commandToExecute)
 	subprocess.call(commandToExecute, shell='True')
