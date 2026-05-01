@@ -24,8 +24,6 @@ if __name__ == '__main__':
     parser.add_argument('--remote-repo', dest='remoteRepo', required=True)
     parser.add_argument('--target-folder', dest='targetFolder', required=True)
     parsedArgs = parser.parse_args()
-    # TODO Do not create shell script, but call directly.
-    # TODO Log errors to error stream.
     returnCode = None
     if parsedArgs.targetFolder == '.':
         synchronizationScript = 'repo.clone.into.current ' + parsedArgs.remoteRepo
