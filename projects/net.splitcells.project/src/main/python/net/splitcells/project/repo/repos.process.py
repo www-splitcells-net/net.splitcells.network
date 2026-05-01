@@ -224,36 +224,36 @@ echo
                 , '--command=echo ${childRepo}'])
             self.assertEqual(testResult.executionScript, textwrap.dedent("""\
                 set -e
-                
+
                 cd "${tmpDirStr}/test-repo"
                 echo test-repo
-                
+
                 cd "${tmpDirStr}/test-repo/sub-1"
                 echo test-repo/sub-1
-                
+
                 cd "${tmpDirStr}/test-repo/none-sub-peer"
                 echo test-repo/none-sub-peer
-                
+
                 cd "${tmpDirStr}/test-repo/sub-2"
                 echo test-repo/sub-2
-                
+
                 # Processing missing "${tmpDirStr}/test-repo/missing-sub"
                 cd "${tmpDirStr}/test-repo"
                 echo Missing repo test-repo/missing-sub at $(pwd)
                 exit 1
-                
+
                 # Processing unknown repo "${tmpDirStr}/test-repo/none-sub-peer"
                 echo Unknown repo test-repo at $(pwd)
                 exit 1
-                
+
                 cd "${tmpDirStr}/peer-repo"
                 echo peer-repo
-                
+
                 # Processing missing "${tmpDirStr}/missing-peer"
                 cd "${tmpDirStr}"
                 echo Missing repo missing-peer at $(pwd)
                 exit 1
-                
+
                 """).replace("${tmpDirStr}", tmpDirStr))
             testResultForParallelism = reposProcess(["--dry-run=true"
                 , "--path=" + str(tmpDir.joinpath('test-repo'))
@@ -261,36 +261,36 @@ echo
                 , '--process-in-parallel=true'])
             self.assertEqual(testResultForParallelism.executionScript, textwrap.dedent("""\
                 set -e
-                
+
                 cd "${tmpDirStr}/test-repo"
                 echo test-repo &
-                
+
                 cd "${tmpDirStr}/test-repo/sub-1"
                 echo test-repo/sub-1 &
-                
+
                 cd "${tmpDirStr}/test-repo/none-sub-peer"
                 echo test-repo/none-sub-peer &
-                
+
                 cd "${tmpDirStr}/test-repo/sub-2"
                 echo test-repo/sub-2 &
-                
+
                 # Processing missing "${tmpDirStr}/test-repo/missing-sub"
                 cd "${tmpDirStr}/test-repo"
                 echo Missing repo test-repo/missing-sub at $(pwd)
                 exit 1 &
-                
+
                 # Processing unknown repo "${tmpDirStr}/test-repo/none-sub-peer"
                 echo Unknown repo test-repo at $(pwd)
                 exit 1 &
-                
+
                 cd "${tmpDirStr}/peer-repo"
                 echo peer-repo &
-                
+
                 # Processing missing "${tmpDirStr}/missing-peer"
                 cd "${tmpDirStr}"
                 echo Missing repo missing-peer at $(pwd)
                 exit 1 &
-                
+
                 wait
                 """).replace("${tmpDirStr}", tmpDirStr))
             testResultWithoutPeers = reposProcess(["--dry-run=true"
@@ -299,25 +299,25 @@ echo
                 , '--ignore-peer-repos=true'])
             self.assertEqual(testResultWithoutPeers.executionScript, textwrap.dedent("""\
                 set -e
-                
+
                 cd "${tmpDirStr}/test-repo"
                 echo test-repo
-                
+
                 cd "${tmpDirStr}/test-repo/sub-1"
                 echo test-repo/sub-1
-                
+
                 cd "${tmpDirStr}/test-repo/sub-2"
                 echo test-repo/sub-2
-                
+
                 # Processing missing "${tmpDirStr}/test-repo/missing-sub"
                 cd "${tmpDirStr}/test-repo"
                 echo Missing repo test-repo/missing-sub at $(pwd)
                 exit 1
-                
+
                 # Processing unknown repo "${tmpDirStr}/test-repo/none-sub-peer"
                 echo Unknown repo test-repo at $(pwd)
                 exit 1
-                
+
                 """).replace("${tmpDirStr}", tmpDirStr))
 if __name__ == '__main__':
     # TODO Remove this, when the old repo process is deleted.
@@ -334,4 +334,5 @@ if __name__ == '__main__':
         logging.getLogger().setLevel(logging.INFO)
     if not test_result.wasSuccessful():
         raise Exception("The self test was not successful: " + str(test_result))
+    logging.getLogger().setLevel(logging.INFO) # TODO Why does the if else regarding the log level not work?
     reposProcess(sys.argv[1:])
