@@ -20,4 +20,4 @@
 # Secondly, if the remote repo hoster deletes a repo and updates the `repos.process` data accordingly,
 # an online version of `repo.remote.set` would cause problems with a very limited number of benefits. 
 
-repos.process --command "command.managed.execute disjunction repo.remote.set $@/\$subRepo"
+repos.process --command "command.managed.execute disjunction repo.remote.set $@/\${childRepo}"
