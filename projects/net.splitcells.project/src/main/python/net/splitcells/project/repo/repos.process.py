@@ -171,8 +171,8 @@ def reposProcess(args):
     parser.add_argument('--path', dest='path', default='./', help="This is path of the to be processed meta repo.")
     parser.add_argument('--host', dest='host', required=False)
     parser.add_argument('--command', dest='command', required=True, help="This command is executed for all present repositories.")
-    parser.add_argument('--command-for-missing', dest='commandForMissing', default='exit 1')
-    parser.add_argument('--command-for-unknown', dest='commandForUnknown', default='exit 1')
+    parser.add_argument('--command-for-missing', dest='commandForMissing', default='echo Missing repo ${childRepo} at $(pwd)\nexit 1')
+    parser.add_argument('--command-for-unknown', dest='commandForUnknown', default='echo Unknown repo ${childRepo} at $(pwd)\nexit 1')
     parser.add_argument('--ignore-peer-repos', dest='ignorePeerRepos', type=str2bool, required=False, default='false')
     parser.add_argument('--dry-run', dest='dryRun', required=False, type=str2bool, default=False, help="If true, commands are only prepared and no commands are executed.")
     parser.add_argument('--verbose', dest='verbose', required=False, type=str2bool, default=False, help="If set to true, the output is verbose.")
@@ -239,9 +239,11 @@ echo
                 
                 # Processing missing "${tmpDirStr}/test-repo/missing-sub"
                 cd "${tmpDirStr}/test-repo"
+                echo Missing repo test-repo/missing-sub at $(pwd)
                 exit 1
                 
                 # Processing unknown repo "${tmpDirStr}/test-repo/none-sub-peer"
+                echo Unknown repo test-repo at $(pwd)
                 exit 1
                 
                 cd "${tmpDirStr}/peer-repo"
@@ -249,6 +251,7 @@ echo
                 
                 # Processing missing "${tmpDirStr}/missing-peer"
                 cd "${tmpDirStr}"
+                echo Missing repo missing-peer at $(pwd)
                 exit 1
                 
                 """).replace("${tmpDirStr}", tmpDirStr))
@@ -273,9 +276,11 @@ echo
                 
                 # Processing missing "${tmpDirStr}/test-repo/missing-sub"
                 cd "${tmpDirStr}/test-repo"
+                echo Missing repo test-repo/missing-sub at $(pwd)
                 exit 1 &
                 
                 # Processing unknown repo "${tmpDirStr}/test-repo/none-sub-peer"
+                echo Unknown repo test-repo at $(pwd)
                 exit 1 &
                 
                 cd "${tmpDirStr}/peer-repo"
@@ -283,6 +288,7 @@ echo
                 
                 # Processing missing "${tmpDirStr}/missing-peer"
                 cd "${tmpDirStr}"
+                echo Missing repo missing-peer at $(pwd)
                 exit 1 &
                 
                 wait
@@ -305,9 +311,11 @@ echo
                 
                 # Processing missing "${tmpDirStr}/test-repo/missing-sub"
                 cd "${tmpDirStr}/test-repo"
+                echo Missing repo test-repo/missing-sub at $(pwd)
                 exit 1
                 
                 # Processing unknown repo "${tmpDirStr}/test-repo/none-sub-peer"
+                echo Unknown repo test-repo at $(pwd)
                 exit 1
                 
                 """).replace("${tmpDirStr}", tmpDirStr))
