@@ -101,7 +101,7 @@ class ReposProcess:
     def process(self):
         if self.isRoot:
             self.executionScript += "set -e\n\n"
-        if self.path.is_dir():
+        if Path(self.childPath()).is_dir():
             self.executionScript += 'cd \"' + str(self.childPath()) + '\"\n'
             self.executionScript += self.getCommandForScript(self.command) + '\n'
         else:
