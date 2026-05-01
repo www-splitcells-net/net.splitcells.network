@@ -22,14 +22,10 @@ if __name__ == '__main__':
         logging.basicConfig(level=logging.DEBUG)
     parser = argparse.ArgumentParser()
     parser.add_argument('--remote-repo', dest='remoteRepo', required=True)
-    parser.add_argument('--omit-if-exists', dest='omitIfExists', type=bool, default=False)
     parser.add_argument('--target-folder', dest='targetFolder', required=True)
     parsedArgs = parser.parse_args()
     # TODO Do not create shell script, but call directly.
     # TODO Log errors to error stream.
-    if parsedArgs.omitIfExists  and parsedArgs.targetFolder == '.' and subprocess.call('repo.is.instance', shell='True') == 0:
-        logging.debug('The repo already exists, so nothing needs to be done.')
-        exit(0)
     returnCode = None
     if parsedArgs.targetFolder == '.':
         synchronizationScript = 'repo.clone.into.current ' + parsedArgs.remoteRepo
