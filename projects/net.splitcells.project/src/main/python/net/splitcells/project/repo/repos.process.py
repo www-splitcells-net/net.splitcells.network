@@ -119,7 +119,7 @@ class ReposProcess:
                     childProcess = self.childRepoProcess()
                     childProcess.childRepoPath = self.childRepoPath.copy() + [child]
                     childProcess.path = self.path
-                    childProcess.command = childProcess.applyTemplate(self.command)
+                    childProcess.command = self.command
                     childProcess.process()
                     self.executionScript += childProcess.executionScript
             for targetSubDir in self.childPath().iterdir():
@@ -159,7 +159,7 @@ class ReposProcess:
                     peerProcess = self.childRepoProcess()
                     peerProcess.childRepoPath = self.childRepoPath.copy()[:-1] + [peer]
                     peerProcess.path = self.path
-                    peerProcess.command = peerProcess.applyTemplate(self.command)
+                    peerProcess.command = self.command
                     peerProcess.process()
                     self.executionScript += peerProcess.executionScript
     def applyTemplate(self, string):
