@@ -97,7 +97,7 @@ class ReposProcess:
         childProcess.processInParallel = self.processInParallel
         return childProcess
     def childPath(self):
-        return self.path.joinpath('/'.join(self.childRepoPath))
+        return self.path.joinpath('./' + '/'.join(self.childRepoPath))
     def process(self):
         if self.isRoot:
             self.executionScript += "set -e\n\n"
