@@ -17,11 +17,13 @@
 # for things like reinstallations.
 # In other words, this command is used for bootstrapping a Shell project installation.
 
+# ~/bin/* is used for binaries, that are placed by the user there manually.
+
 set -e
 # TODO Remove explicit addition of `$HOME/bin` to PATH, as this is not part of the shell project.
 export PATH="$HOME/bin:$PATH"
 if [ -z "$NET_SPLITCELLS_SHELL_PATH" ]; then
-  export PATH="$(realpath $HOME/bin/net.splitcells.shell.commands.managed):$PATH"
+  export PATH="$(realpath $HOME/bin/net.splitcells.shell.commands.managed):$(realpath $HOME/bin):$PATH"
 else
-  export PATH="$NET_SPLITCELLS_SHELL_PATH:$PATH"
+  export PATH="$NET_SPLITCELLS_SHELL_PATH:$(realpath $HOME/bin):$PATH"
 fi
