@@ -26,11 +26,12 @@ if __name__ == '__main__':
 	parsedArgs = parser.parse_args()
 	# TODO Do not create shell script, but call directly.
 	# TODO Log errors to error stream.
+	# TODO Parallelizing the repos.pull leads to errors, but would create big performance boost.
 	synchronizationScript = """system.network.peer.ssh.reachable {0} \\
 	&& repos.repair --remote-repo={1} \\
 	&& repos.remote.set {1} \\
 	&& repos.is.clean \\
-	&& repos.pull --process-in-parallel=true \\
+	&& repos.pull \\
 	|| echo.error Could not synchronize with {0}.""".format(parsedArgs.remoteHost, parsedArgs.remoteRepo)
 	logging.debug('Executing: ' + synchronizationScript)
 	returnCode = subprocess.call(synchronizationScript, shell='True')
