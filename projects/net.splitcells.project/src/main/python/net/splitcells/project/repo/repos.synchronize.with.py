@@ -30,7 +30,7 @@ if __name__ == '__main__':
 	&& repos.repair --remote-repo={1} \\
 	&& repos.remote.set {1} \\
 	&& repos.is.clean \\
-	&& repos.pull \\
+	&& repos.pull --process-in-parallel=true \\
 	|| echo.error Could not synchronize with {0}.""".format(parsedArgs.remoteHost, parsedArgs.remoteRepo)
 	logging.debug('Executing: ' + synchronizationScript)
 	returnCode = subprocess.call(synchronizationScript, shell='True')

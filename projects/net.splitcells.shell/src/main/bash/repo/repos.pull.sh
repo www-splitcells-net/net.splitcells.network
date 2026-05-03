@@ -14,7 +14,7 @@
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
 # Pull information from all remotes.
-repos.process --command 'command.managed.execute disjunction repo.pull'
+repos.process --command 'command.managed.execute disjunction repo.pull' $@
 
 exit # TODO
 repos.process \
