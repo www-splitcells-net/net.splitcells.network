@@ -27,11 +27,13 @@ if __name__ == '__main__':
 	# TODO Do not create shell script, but call directly.
 	# TODO Log errors to error stream.
 	# TODO Parallelizing the repos.pull leads to errors, but would create big performance boost.
+	# TODO Optionally support synchronizing without merge commits, in order to prevent unexpected changes from server.
+	#      Right now this command is only used to synchronize fully trusted sources.
 	synchronizationScript = """system.network.peer.ssh.reachable {0} \\
 	&& repos.repair --remote-repo={1} \\
 	&& repos.remote.set {1} \\
 	&& repos.is.clean \\
-	&& repos.pull \\
+	&& repo.pull.with.merge.sh \\
 	|| echo.error Could not synchronize with {0}.""".format(parsedArgs.remoteHost, parsedArgs.remoteRepo)
 	logging.debug('Executing: ' + synchronizationScript)
 	returnCode = subprocess.call(synchronizationScript, shell='True')
