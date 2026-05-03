@@ -33,7 +33,7 @@ if __name__ == '__main__':
 	&& repos.repair --remote-repo={1} \\
 	&& repos.remote.set {1} \\
 	&& repos.is.clean \\
-	&& repo.pull.with.merge \\
+	&& repos.pull.with.merge \\
 	|| echo.error Could not synchronize with {0}.""".format(parsedArgs.remoteHost, parsedArgs.remoteRepo)
 	logging.debug('Executing: ' + synchronizationScript)
 	returnCode = subprocess.call(synchronizationScript, shell='True')
