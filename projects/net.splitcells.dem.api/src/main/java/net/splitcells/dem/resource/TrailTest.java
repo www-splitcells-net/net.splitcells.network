@@ -15,10 +15,13 @@
  */
 package net.splitcells.dem.resource;
 
+import lombok.val;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.dem.utils.ExecutionException;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.Trail.elementCount;
 import static net.splitcells.dem.resource.Trail.parentCount;
 import static net.splitcells.dem.resource.Trail.trail;
@@ -30,6 +33,7 @@ import static net.splitcells.dem.testing.Assertions.requireEquals;
 public class TrailTest {
     @UnitTest
     public void testParentCount() {
+        requireEquals(parentCount("../../.."), 3);
         requireEquals(parentCount("../../../a/../../b/../c/.."), 3);
         requireEquals(parentCount("/../../../a/../../b/../c/.."), 0);
         requireEquals(parentCount("/a/../../../a/../../b/../c/.."), 0);
@@ -79,9 +83,9 @@ public class TrailTest {
 
     @UnitTest
     public void testWithoutSuffixElementsIllegalRemoval() {
-        Assertions.requireThrow(ExecutionException.class, () -> withoutPrefixElements("/../../..", 1));
-        Assertions.requireThrow(ExecutionException.class, () -> withoutPrefixElements("../../..", 4));
-        Assertions.requireThrow(ExecutionException.class, () -> withoutPrefixElements("../../..", -1));
+        Assertions.requireThrow(ExecutionException.class, () -> withoutSuffixElements("/../../..", 1));
+        Assertions.requireThrow(ExecutionException.class, () -> withoutSuffixElements("../../..", 4));
+        Assertions.requireThrow(ExecutionException.class, () -> withoutSuffixElements("../../..", -1));
     }
 
     @UnitTest
@@ -91,5 +95,15 @@ public class TrailTest {
         requireEquals(elementCount("..///a/////"), 2);
         requireEquals(elementCount("///aaa/////"), 1);
         requireEquals(elementCount("///a//a/a//"), 3);
+    }
+
+    @UnitTest public void testJavaLegacyPath() {
+        val testPath = "../abc";
+        requireEquals(trail(testPath).unixPathString(), testPath);
+        requireEquals(trail(testPath).toString(), testPath);
+    }
+
+    @UnitTest public void testEquals() {
+        requireThrow(() -> trail("abc").equals(new Object()));
     }
 }
