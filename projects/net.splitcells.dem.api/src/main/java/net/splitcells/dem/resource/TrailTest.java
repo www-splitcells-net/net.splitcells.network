@@ -31,16 +31,14 @@ import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 
 public class TrailTest {
-    @UnitTest
-    public void testParentCount() {
+    @UnitTest public void testParentCount() {
         requireEquals(parentCount("../../.."), 3);
         requireEquals(parentCount("../../../a/../../b/../c/.."), 3);
         requireEquals(parentCount("/../../../a/../../b/../c/.."), 0);
         requireEquals(parentCount("/a/../../../a/../../b/../c/.."), 0);
     }
 
-    @UnitTest
-    public void testUnixPathString() {
+    @UnitTest public void testUnixPathString() {
         requireEquals(trail("abc").unixPathString(), "abc");
         requireEquals(trail("a", "b", "c").unixPathString(), "a/b/c");
         requireEquals(trail().unixPathString(), "");
@@ -48,8 +46,7 @@ public class TrailTest {
         requireEquals(trail("a", "", "c").unixPathString(), "a/c");
     }
 
-    @UnitTest
-    public void testWithoutPrefixElements() {
+    @UnitTest public void testWithoutPrefixElements() {
         requireEquals(withoutPrefixElements("a/b/c", 0), "a/b/c");
         requireEquals(withoutPrefixElements("a/b/c", 1), "b/c");
         requireEquals(withoutPrefixElements("a/b/c", 2), "c");
@@ -61,8 +58,7 @@ public class TrailTest {
         requireEquals(withoutPrefixElements("../../..", 3), "");
     }
 
-    @UnitTest
-    public void testWithoutSuffixElements() {
+    @UnitTest public void testWithoutSuffixElements() {
         requireEquals(withoutSuffixElements("a/b/c", 0), "a/b/c");
         requireEquals(withoutSuffixElements("a/b/c", 1), "a/b");
         requireEquals(withoutSuffixElements("a/b/c", 2), "a");
@@ -74,22 +70,19 @@ public class TrailTest {
         requireEquals(withoutSuffixElements("../../..", 3), "");
     }
 
-    @UnitTest
-    public void testWithoutPrefixElementsIllegalRemoval() {
-        Assertions.requireThrow(ExecutionException.class, () -> withoutPrefixElements("/../../..", 1));
-        Assertions.requireThrow(ExecutionException.class, () -> withoutPrefixElements("../../..", 4));
-        Assertions.requireThrow(ExecutionException.class, () -> withoutPrefixElements("../../..", -1));
+    @UnitTest public void testWithoutPrefixElementsIllegalRemoval() {
+        requireThrow(ExecutionException.class, () -> withoutPrefixElements("/../../..", 1));
+        requireThrow(ExecutionException.class, () -> withoutPrefixElements("../../..", 4));
+        requireThrow(ExecutionException.class, () -> withoutPrefixElements("../../..", -1));
     }
 
-    @UnitTest
-    public void testWithoutSuffixElementsIllegalRemoval() {
-        Assertions.requireThrow(ExecutionException.class, () -> withoutSuffixElements("/../../..", 1));
-        Assertions.requireThrow(ExecutionException.class, () -> withoutSuffixElements("../../..", 4));
-        Assertions.requireThrow(ExecutionException.class, () -> withoutSuffixElements("../../..", -1));
+    @UnitTest public void testWithoutSuffixElementsIllegalRemoval() {
+        requireThrow(ExecutionException.class, () -> withoutSuffixElements("/../../..", 1));
+        requireThrow(ExecutionException.class, () -> withoutSuffixElements("../../..", 4));
+        requireThrow(ExecutionException.class, () -> withoutSuffixElements("../../..", -1));
     }
 
-    @UnitTest
-    public void testElementCount() {
+    @UnitTest public void testElementCount() {
         requireEquals(elementCount("////////"), 0);
         requireEquals(elementCount("///a/////"), 1);
         requireEquals(elementCount("..///a/////"), 2);
