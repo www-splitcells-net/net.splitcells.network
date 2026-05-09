@@ -71,4 +71,8 @@ public interface Processor<Source, Target> {
      * @return This is the set of requested binary data.
      */
     Response<Target> process(Request<Source> request);
+    
+    default boolean isInteractive() {
+        return false;
+    }
 }
