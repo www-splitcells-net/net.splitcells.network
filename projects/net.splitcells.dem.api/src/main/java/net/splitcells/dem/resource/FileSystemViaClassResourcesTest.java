@@ -1,16 +1,4 @@
-/*
- * Copyright (c) 2021 Contributors To The `net.splitcells.*` Projects
- *
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License 2.0 which is available at
- * http://www.eclipse.org/legal/epl-2.0.
- *
- * This Source Code may also be made available under the following Secondary
- * Licenses when the conditions for such availability set forth in the Eclipse
- * Public License, v. 2.0 are satisfied: GNU General Public License v2.0 or later
- * which is available at https://www.gnu.org/licenses/old-licenses/gpl-2.0-standalone.html
- *
- * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+/* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
 package net.splitcells.dem.resource;
@@ -32,7 +20,6 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.environment.config.StaticFlags.runWithEnforcingUnityConsistency;
 import static net.splitcells.dem.resource.FileSystemViaClassResourcesFactoryImpl._fileSystemViaClassResourcesFactoryImpl;
-import static net.splitcells.dem.resource.FileSystemViaClassResourcesImpl.fileSystemViaClassResourcesImpl;
 import static net.splitcells.dem.resource.Files.readAsString;
 import static net.splitcells.dem.testing.Assertions.*;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
@@ -45,14 +32,11 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
     private static final String TEST_FILE_CONTENT = "This is a test file of the 20th of July 2023.";
     private static final String DEM_API_FOLDER = "src/main/resources/net/splitcells/dem/api";
 
-    @Tag(UNIT_TEST)
-    @TestFactory
-    public Stream<DynamicTest> testStdFactory() {
+    @Tag(UNIT_TEST) @TestFactory public Stream<DynamicTest> testStdFactory() {
         return testFactory(_fileSystemViaClassResourcesFactoryImpl());
     }
 
-    @UnitTest
-    public void readStringIfPresentWithNotBackedString() {
+    @UnitTest public void readStringIfPresentWithNotBackedString() {
         requireEmpty(FileSystemViaClassResourcesImpl.fileSystemViaClassResourcesImpl(getClass(), MAVEN_GROUP_ID, DEM_API, setOfUniques(NOT_EXISTING_FILE))
                 .readStringIfPresent(Path.of(NOT_EXISTING_FILE)));
 
