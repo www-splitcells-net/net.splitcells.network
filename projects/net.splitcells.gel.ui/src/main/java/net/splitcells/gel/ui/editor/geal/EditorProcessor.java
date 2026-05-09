@@ -265,4 +265,8 @@ public class EditorProcessor implements Processor<Tree, Tree> {
             return log;
         };
     }
+    
+    @Override public boolean isInteractive() {
+        return true;
+    }
 }
