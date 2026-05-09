@@ -281,7 +281,8 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
 
     @Override public Optional<License> license(String path) {
         final var metaPath = normalize("/" + metaBasePath + path);
-        if (!isResourcePathValid(metaPath)) {
+        final var resourcePath = normalize("/" + resourceBasePath + path);
+        if (!isResourcePathValid(resourcePath)) {
             return Optional.empty();
         }
         final var fileContent = clazz.getResourceAsStream(metaPath);

@@ -3,6 +3,7 @@
  */
 package net.splitcells.dem.resource;
 
+import lombok.val;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import org.junit.jupiter.api.DynamicTest;
@@ -35,6 +36,13 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
 
     @Tag(UNIT_TEST) @TestFactory public Stream<DynamicTest> testStdFactory() {
         return testFactory(_fileSystemViaClassResourcesFactoryImpl());
+    }
+
+    @UnitTest public void testLicense() {
+        val testSubject = fileSystemViaClassResourcesImpl(FileSystemViaClassResourcesTest.class, MAVEN_GROUP_ID, DEM_API);
+        val testResult = testSubject.license(TEST_FILE_PATH).orElseThrow();
+        requireEquals(testResult.getSpdxLicenseIdentifier(), "EPL-2.0 OR GPL-2.0-or-later");
+        requireEquals(testResult.getSpdxCopyrightText().orElseThrow(), "Contributors To The `net.splitcells.*` Projects");
     }
 
     @UnitTest public void readStringIfPresentWithNotBackedString() {
