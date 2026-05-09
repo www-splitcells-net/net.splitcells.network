@@ -21,6 +21,8 @@ import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.dem.utils.ExecutionException;
 
+import java.nio.file.Path;
+
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.Trail.elementCount;
 import static net.splitcells.dem.resource.Trail.parentCount;
@@ -39,6 +41,7 @@ public class TrailTest {
     }
 
     @UnitTest public void testUnixPathString() {
+        requireEquals(trail("../abc").unixPathString(), "../abc");
         requireEquals(trail("abc").unixPathString(), "abc");
         requireEquals(trail("a", "b", "c").unixPathString(), "a/b/c");
         requireEquals(trail().unixPathString(), "");
@@ -90,10 +93,15 @@ public class TrailTest {
         requireEquals(elementCount("///a//a/a//"), 3);
     }
 
-    @UnitTest public void testJavaLegacyPath() {
+    @UnitTest public void testToString() {
         val testPath = "../abc";
         requireEquals(trail(testPath).unixPathString(), testPath);
         requireEquals(trail(testPath).toString(), testPath);
+    }
+
+    @UnitTest public void testJavaLegacyPath() {
+        val testPath = "../abc";
+        requireEquals(trail(testPath).javaLegacyPath(), Path.of(testPath));
     }
 
     @UnitTest public void testEquals() {
