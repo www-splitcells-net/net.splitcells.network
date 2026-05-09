@@ -3,7 +3,7 @@
 * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 ----
 # Introduction to the Generic Allocator
-If you encounter an unknown word or phrase you can look up some of this at this
+If you encounter an unknown word or phrase you can look up some of these at this
 [dictionary](../../../../../../../../src/main/md/net/splitcells/network/dictionary.md).
 The [project's history](../../../../../../src/main/xml/net/splitcells/gel/history/index.html)
 is also documented.
