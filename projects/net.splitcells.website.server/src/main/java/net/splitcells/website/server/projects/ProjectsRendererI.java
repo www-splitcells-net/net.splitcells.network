@@ -340,7 +340,9 @@ public class ProjectsRendererI implements ProjectsRenderer {
 
     private Optional<BinaryMessage> validateRenderingResult(Optional<BinaryMessage> renderingResult, Path requestedPath) {
         try {
-            renderingValidator.validate(renderingResult, this, requestedPath);
+            if (config.isValidateLinks()) {
+                renderingValidator.validate(renderingResult, this, requestedPath);
+            }
         } catch (Throwable th) {
             logs().warn(tree("Could not validate rendering result:")
                             .withProperty("rendering result", renderingResult.toString())
