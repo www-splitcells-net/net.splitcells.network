@@ -51,11 +51,19 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 @JavaLegacy
 public class PathFileSystem implements FileSystem {
     public static FileSystem pathFileSystem(Path rootPath) {
+        return pathFileSystem(rootPath, Optional.empty());
+    }
+
+    public static FileSystem pathFileSystemForMavenProject(Path rootPath, String projectName) {
+        return pathFileSystem(rootPath.resolve(projectName), Optional.of(rootPath.resolve(projectName + "/target/classes/" + projectName + ".resources.meta")));
+    }
+
+    public static FileSystem pathFileSystem(Path rootPath, Optional<Path> metaRootPath) {
         if (!java.nio.file.Files.isDirectory(rootPath)) {
             throw ExecutionException.execException(tree("Could not create file system API for given folder, because the folder does not exist:")
                     .withProperty("rootPath", rootPath.toString()));
         }
-        return new PathFileSystem(rootPath);
+        return new PathFileSystem(rootPath, metaRootPath);
     }
 
     /**
@@ -162,9 +170,16 @@ public class PathFileSystem implements FileSystem {
     }
 
     private final Path rootPath;
+    private final Optional<Path> metaRootPath;
 
-    private PathFileSystem(Path rootPath) {
-        this.rootPath = rootPath;
+    private PathFileSystem(Path argRootPath, Optional<Path> argMetaRootPath) {
+        rootPath = argRootPath;
+        metaRootPath = argMetaRootPath;
+    }
+
+    private PathFileSystem(Path argRootPath) {
+        rootPath = argRootPath;
+        metaRootPath = Optional.empty();
     }
 
     @Override
