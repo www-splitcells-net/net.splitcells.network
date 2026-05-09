@@ -5,7 +5,7 @@
 # Introduction to the Generic Allocator
 If you encounter an unknown word or phrase you can look up some of these at this
 [dictionary](../../../../../../../../src/main/md/net/splitcells/network/dictionary.md).
-The [project's history](../../../../../../src/main/xml/net/splitcells/gel/history/index.html)
+The [project's history](../../../../../../net.splitcells.network/src/main/md/net/splitcells/network/history/index.html)
 is also documented.
 ## Introduction for Users
 The Generic Allocator (Gel) is a Java framework
