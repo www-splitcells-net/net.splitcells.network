@@ -62,20 +62,20 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
      * This in turn, could be critical for operations such as {@link FileSystemView#walkRecursively(String)}.
      * </p>
      *
-     * @param groupdId
-     * @param artifiactId
+     * @param groupId
+     * @param artifactId
      * @return
      */
-    public static String resourceBasePath(String groupdId, String artifiactId) {
-        return groupdId + "." + artifiactId + ".resources/";
+    public static String resourceBasePath(String groupId, String artifactId) {
+        return groupId + "." + artifactId + ".resources/";
     }
 
-    private static String metaBasePath(String groupdId, String artifiactId) {
-        return groupdId + "." + artifiactId + ".resources.meta/";
+    private static String metaBasePath(String groupId, String artifactId) {
+        return groupId + "." + artifactId + ".resources.meta/";
     }
 
-    public static String resourceListPath(String groupdId, String artifiactId) {
-        return groupdId + "." + artifiactId + ".resources.list.txt";
+    public static String resourceListPath(String groupId, String artifactId) {
+        return groupId + "." + artifactId + ".resources.list.txt";
     }
 
     public static FileSystemView fileSystemViaClassResourcesImpl(Class<?> clazz, String groupId, String artifactId) {
