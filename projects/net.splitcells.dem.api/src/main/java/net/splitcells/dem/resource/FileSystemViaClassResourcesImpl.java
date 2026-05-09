@@ -280,7 +280,7 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
     }
 
     @Override public Optional<License> license(String path) {
-        final var metaPath = normalize("/" + metaBasePath + path.toString());
+        final var metaPath = normalize("/" + metaBasePath + path);
         if (!isResourcePathValid(metaPath)) {
             return Optional.empty();
         }
