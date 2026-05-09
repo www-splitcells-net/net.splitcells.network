@@ -270,6 +270,11 @@ public class Config {
      */
     @Getter private List<TrailLink> licensePages = list();
     @Getter @Setter String interactiveServer = "https://live.splitcells.net/";
+    /**
+     * States whether links are validated.
+     * This is set to false on the live server, in order to speed up page loading.
+     */
+    @Getter @Setter boolean validateLinks = true;
 
     private Config() {
     }
