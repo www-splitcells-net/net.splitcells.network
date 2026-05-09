@@ -71,7 +71,7 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
     }
 
     private static String metaBasePath(String groupdId, String artifiactId) {
-        return groupdId + "." + artifiactId + ".meta/";
+        return groupdId + "." + artifiactId + ".resources.meta/";
     }
 
     public static String resourceListPath(String groupdId, String artifiactId) {
