@@ -71,7 +71,13 @@ public interface Processor<Source, Target> {
      * @return This is the set of requested binary data.
      */
     Response<Target> process(Request<Source> request);
-    
+
+    /**
+     *
+     * @return Returns true,
+     * if this page is interactive and if a static rendering of this site should redirect to an interactive server,
+     * instead of serving this page statically.
+     */
     default boolean isInteractive() {
         return false;
     }
