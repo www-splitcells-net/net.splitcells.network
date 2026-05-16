@@ -31,6 +31,12 @@ import static net.splitcells.gel.rating.rater.lib.HasSizeFast.hasSizeFast;
 
 public class HasSizeFastCallRunner implements FunctionCallRunner {
     public static final String HAS_SIZE_FAST_NAME = "hasSizeFast";
+    private static final String DESCRIPTION = """
+            Creates a rater, that requires a given line group to have at least as many lines as the given argument.
+            
+            This is basically a quite faster version of hasSize,
+            which gets its speed by assigning costs to only one line in the group.
+            This is an incorrect distribution of cost and such a constraint, should not have child constraints.""";
 
     public static HasSizeFastCallRunner hasSizeFastCallRunner() {
         return new HasSizeFastCallRunner();
@@ -46,12 +52,7 @@ public class HasSizeFastCallRunner implements FunctionCallRunner {
                 fcr.requireSubjectAbsence();
                 fcr.requireArgumentCount(1);
                 args.targetSize = fcr.parseArgument(Integer.class, 0, "targetSize");
-                fcr.addDescription(tree("paragraph", SEW).withText("""
-                        Creates a rater, that requires a given line group to have at least as many lines as the given argument.
-                        
-                        This is basically a quite faster version of hasSize,
-                        which gets its speed by assigning costs to only one line in the group.
-                        This is an incorrect distribution of cost and such a constraint, should not have child constraints."""));
+                fcr.addDescription(tree("paragraph", SEW).withText(DESCRIPTION));
                 return args;
             });
 
