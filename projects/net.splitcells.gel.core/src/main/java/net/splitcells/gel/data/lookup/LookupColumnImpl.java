@@ -76,14 +76,14 @@ public class LookupColumnImpl<T> implements LookupColumn<T> {
             require(view.rawLinesView().size() > index);
         }
         {
-            final LookupTable lookupTable;
+            final LookupTable contentTable;
             if (content.hasKey(addition)) {
-                lookupTable = content.get(addition);
+                contentTable = content.get(addition);
             } else {
-                lookupTable = lookupTable(view, attribute, false);
-                content.put(addition, lookupTable);
+                contentTable = lookupTable(view, attribute, false);
+                content.put(addition, contentTable);
             }
-            lookupTable.register(view.rawLine(index));
+            contentTable.register(view.rawLine(index));
         }
         register_beforeAddition_atComplexContent(addition, index);
     }
