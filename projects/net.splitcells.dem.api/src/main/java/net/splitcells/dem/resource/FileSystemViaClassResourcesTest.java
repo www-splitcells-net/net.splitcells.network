@@ -43,6 +43,8 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
         val testResult = testSubject.license(TEST_FILE_PATH).orElseThrow();
         requireEquals(testResult.getSpdxLicenseIdentifier(), "EPL-2.0 OR GPL-2.0-or-later");
         requireEquals(testResult.getSpdxCopyrightText().orElseThrow(), "Contributors To The `net.splitcells.*` Projects");
+        require(testSubject.license(NOT_EXISTING_FILE).isEmpty());
+        require(testSubject.license(NOT_EXISTING_FOLDER).isEmpty());
     }
 
     @UnitTest public void readStringIfPresentWithNotBackedString() {
