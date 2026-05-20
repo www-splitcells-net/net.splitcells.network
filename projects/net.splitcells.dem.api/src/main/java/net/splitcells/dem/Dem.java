@@ -49,6 +49,7 @@ import static net.splitcells.dem.environment.config.StaticFlags.logStaticFlags;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
+import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.throwableToString;
@@ -297,7 +298,11 @@ public class Dem {
         return rVal;
     }
 
-    public static Tree serializeConfiguration(Class<? extends Cell> cellClass) {
+    public static void testSerializeConfiguration(Class<? extends Cell> cellClass, String expectedCommonMarkSerialization) {
+        requireEquals(serializeConfiguration(cellClass).toCommonMarkString(), expectedCommonMarkSerialization);
+    }
+
+    private static Tree serializeConfiguration(Class<? extends Cell> cellClass) {
         try {
             val cell = cellClass.getDeclaredConstructor().newInstance();
             final List<Tree> serialization = list();
