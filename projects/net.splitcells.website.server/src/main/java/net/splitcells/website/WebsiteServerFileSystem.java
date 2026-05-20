@@ -16,13 +16,20 @@
 package net.splitcells.website;
 
 import net.splitcells.dem.environment.config.framework.OptionImpl;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.FileSystemView;
 
+import java.util.Optional;
+
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
 
 
 public class WebsiteServerFileSystem extends OptionImpl<FileSystemView> {
     public WebsiteServerFileSystem() {
         super(() -> fileSystemViaClassResources(WebsiteServerFileSystem.class, "net.splitcells", "website.server"));
+    }
+    @Override public Optional<Tree> serialize(FileSystemView currentValue) {
+        return Optional.of(tree(currentValue.toString()));
     }
 }

@@ -16,11 +16,19 @@
 package net.splitcells.dem.environment.config;
 
 import net.splitcells.dem.environment.config.framework.OptionImpl;
+import net.splitcells.dem.lang.tree.Tree;
+
+import java.util.Optional;
+
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 
 public class ProgramRepresentative extends OptionImpl<Class<?>> {
 
-	public ProgramRepresentative() {
-		super(null);
-	}
+    public ProgramRepresentative() {
+        super(null);
+    }
 
+    @Override public Optional<Tree> serialize(Class<?> currentValue) {
+        return Optional.of(tree(currentValue.getName()));
+    }
 }

@@ -16,6 +16,11 @@
 package net.splitcells.dem.resource.communication.log;
 
 import net.splitcells.dem.environment.config.framework.OptionImpl;
+import net.splitcells.dem.lang.tree.Tree;
+
+import java.util.Optional;
+
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 
 /**
  * TODO RENAME This {@link net.splitcells.dem.environment.config.framework.Option}
@@ -28,4 +33,7 @@ public class IsEchoToFile extends OptionImpl<Boolean> {
 		super(() -> false);
 	}
 
+    @Override public Optional<Tree> serialize(Boolean currentValue) {
+        return Optional.of(tree("" + currentValue));
+    }
 }

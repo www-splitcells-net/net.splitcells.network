@@ -16,10 +16,13 @@
 package net.splitcells.dem.resource.host;
 
 import net.splitcells.dem.environment.config.framework.OptionImpl;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.utils.ExecutionException;
 
 import java.nio.file.Path;
+import java.util.Optional;
 
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.host.SystemUtils.runShellScript;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
@@ -32,5 +35,8 @@ public class HostName extends OptionImpl<String> {
             }
             return hostname.output();
         });
+    }
+    @Override public Optional<Tree> serialize(String currentValue) {
+        return Optional.of(tree(currentValue));
     }
 }

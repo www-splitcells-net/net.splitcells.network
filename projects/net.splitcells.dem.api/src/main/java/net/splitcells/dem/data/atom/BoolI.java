@@ -102,5 +102,9 @@ public class BoolI implements Bool {
     public <A extends Bool> Bool equalContent(A arg) {
         return Bools.bool(value == arg.toJavaPrimitive());
     }
+    
+    @Override public String toString() {
+        return "" + value;
+    }
 
 }

@@ -16,12 +16,19 @@
 package net.splitcells.shell;
 
 import net.splitcells.dem.environment.config.framework.OptionImpl;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.FileSystemView;
 
+import java.util.Optional;
+
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
 
 public class OsiFileSystem extends OptionImpl<FileSystemView> {
     public OsiFileSystem() {
         super(() -> fileSystemViaClassResources(OsiFileSystem.class, "net.splitcells", "shell"));
+    }
+    @Override public Optional<Tree> serialize(FileSystemView currentValue) {
+        return Optional.of(tree(currentValue.toString()));
     }
 }

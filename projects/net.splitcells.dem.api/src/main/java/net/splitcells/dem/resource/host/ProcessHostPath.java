@@ -16,9 +16,13 @@
 package net.splitcells.dem.resource.host;
 
 import net.splitcells.dem.environment.config.framework.OptionImpl;
+import net.splitcells.dem.lang.tree.Tree;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
+
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 
 public class ProcessHostPath extends OptionImpl<Path> {
     public ProcessHostPath() {
@@ -34,5 +38,9 @@ public class ProcessHostPath extends OptionImpl<Path> {
                 return Paths.get(".");
             }
         });
+    }
+
+    @Override public Optional<Tree> serialize(Path currentValue) {
+        return Optional.of(tree(currentValue.toString()));
     }
 }

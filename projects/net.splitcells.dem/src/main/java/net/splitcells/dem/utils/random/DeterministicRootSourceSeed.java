@@ -16,11 +16,19 @@
 package net.splitcells.dem.utils.random;
 
 import net.splitcells.dem.environment.config.framework.OptionImpl;
+import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.resource.FileSystemView;
+
+import java.util.Optional;
+
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 
 public class DeterministicRootSourceSeed extends OptionImpl<Long> {
 
 	public DeterministicRootSourceSeed() {
 		super(() -> 3L);
 	}
-
+    @Override public Optional<Tree> serialize(Long currentValue) {
+        return Optional.of(tree("" + currentValue));
+    }
 }
