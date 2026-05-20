@@ -16,6 +16,10 @@
 package net.splitcells.dem.environment.config.framework;
 
 import net.splitcells.dem.Dem;
+import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.object.Convertible;
+
+import java.util.Optional;
 
 /**
  * <p>Every implementation has to have a public default constructor and needs to be thread safe.</p>
@@ -31,4 +35,15 @@ import net.splitcells.dem.Dem;
  */
 public interface Option<T extends Object> {
     T defaultValue();
+    
+    /**
+     * IDEA Use {@link Convertible}. In the past this it not worth to use it yet,
+     * but {@link Convertible} would be a lot more portable and more fitting from a technical point of view.
+     * On the other hand, {@link Convertible} would require some extensions in order to support nested data structures.
+     *  
+     * @return
+     */
+    default Optional<Tree> serialize(T currentValue)  {
+        return Optional.empty();
+    }
 }
