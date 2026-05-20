@@ -298,8 +298,21 @@ public class Dem {
         return rVal;
     }
 
+    /**
+     * There is an additional logging regarding the actual configuration,
+     * so it is easily copy and pastable from the test output.
+     *
+     * @param cellClass
+     * @param expectedCommonMarkSerialization
+     */
     public static void testSerializeConfiguration(Class<? extends Cell> cellClass, String expectedCommonMarkSerialization) {
-        requireEquals(serializeConfiguration(cellClass).toCommonMarkString(), expectedCommonMarkSerialization);
+        val actualConfig = serializeConfiguration(cellClass).toCommonMarkString();
+        try {
+            requireEquals(actualConfig, expectedCommonMarkSerialization);
+        } catch (Throwable t) {
+            logs().append("Actual Configuration:\n" + actualConfig, LogLevel.ERROR);
+            throw t;
+        }
     }
 
     private static Tree serializeConfiguration(Class<? extends Cell> cellClass) {
