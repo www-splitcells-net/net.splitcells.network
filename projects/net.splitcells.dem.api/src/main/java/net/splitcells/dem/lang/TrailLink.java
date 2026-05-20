@@ -39,4 +39,9 @@ public class TrailLink {
         name = argName;
         path = argPath;
     }
+    
+    @Override
+    public String toString() {
+        return path.unixPathString() + " named as " + name;
+    }
 }
