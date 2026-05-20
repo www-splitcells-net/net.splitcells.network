@@ -82,6 +82,7 @@ public class ClassesRelated {
             val properties = Maps.<String, String>map();
             Field[] fields = object.getClass().getDeclaredFields();
             for (Field f : fields) {
+                f.setAccessible(true);
                 properties.put(f.getName(), "" + f.get(object));
             }
             return properties;
