@@ -21,10 +21,7 @@ import net.splitcells.dem.environment.Cell;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.environment.EnvironmentI;
 import net.splitcells.dem.environment.EnvironmentV;
-import net.splitcells.dem.environment.config.EndTime;
-import net.splitcells.dem.environment.config.Initialized;
-import net.splitcells.dem.environment.config.ProgramName;
-import net.splitcells.dem.environment.config.ProgramRepresentative;
+import net.splitcells.dem.environment.config.*;
 import net.splitcells.dem.environment.config.framework.Configuration;
 import net.splitcells.dem.environment.config.framework.ConfigurationV;
 import net.splitcells.dem.environment.config.framework.Option;
@@ -39,6 +36,7 @@ import net.splitcells.dem.utils.ExecutionException;
 import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.concurrent.Semaphore;
@@ -336,7 +334,11 @@ public class Dem {
                 }
 
                 @Override public void accept(Environment env) {
-                    env.config().withConfigValue(ProgramRepresentative.class, cellClass);
+                    env.config()
+                            .withConfigValue(ProgramRepresentative.class, cellClass)
+                            .withConfigValue(StartTime.class, ZonedDateTime.of(2026, 5, 20, 22, 35, 10, 0, ZoneId.of("UTC")))
+                            .withConfigValue(ProgramLocalIdentity.class, cellClass + "")
+                    ;
                 }
             }, cellClass);
             return serialization.value().orElseThrow();
