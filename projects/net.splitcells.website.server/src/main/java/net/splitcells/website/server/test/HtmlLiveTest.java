@@ -16,8 +16,12 @@
 package net.splitcells.website.server.test;
 
 import net.splitcells.dem.environment.config.framework.Option;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.website.server.client.HtmlClientImpl;
 
+import java.util.Optional;
+
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.website.server.client.HtmlClients.htmlClient;
 
 /**
@@ -40,5 +44,9 @@ public class HtmlLiveTest implements Option<Runnable> {
                 browser.openTab("/").close();
             }
         };
+    }
+
+    @Override public Optional<Tree> serialize(Runnable currentValue) {
+        return Optional.of(tree(getClass() + " is enabled."));
     }
 }

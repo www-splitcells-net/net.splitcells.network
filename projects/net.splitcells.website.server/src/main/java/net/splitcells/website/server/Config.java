@@ -18,12 +18,14 @@ package net.splitcells.website.server;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import lombok.val;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.Cell;
 import net.splitcells.dem.lang.TrailLink;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.object.Convertible;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.website.server.processor.Processor;
 import net.splitcells.website.server.processor.ProcessorRegistry;
@@ -39,6 +41,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.reflection.ClassesRelated.instanceProperties;
 import static net.splitcells.website.server.processor.ProcessorRegistry.binaryProcessorRegistry;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
@@ -604,5 +607,12 @@ public class Config {
     public Config withLicensePage(TrailLink page) {
         licensePages.add(page);
         return this;
+    }
+
+    public Tree serialize() {
+        val properties = instanceProperties(this);
+        val serialization = tree(getClass().getName());
+        properties.entrySet().forEach(entry -> serialization.withProperty(entry.getKey(), entry.getValue()));
+        return serialization;
     }
 }

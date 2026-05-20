@@ -123,4 +123,8 @@ public interface ListView<T> extends Collection<T>, java.util.List<T>, Thing, Se
     default Flow<T> flow() {
         return Flows.flow(stream());
     }
+
+    default String unixPathString() {
+        return stream().map(e -> e + "").reduce((a, b) -> a + "/" + b).orElse("");
+    }
 }

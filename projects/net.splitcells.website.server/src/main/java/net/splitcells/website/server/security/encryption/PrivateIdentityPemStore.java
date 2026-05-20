@@ -16,12 +16,20 @@
 package net.splitcells.website.server.security.encryption;
 
 import net.splitcells.dem.environment.config.framework.Option;
+import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.utils.StringUtils;
+import net.splitcells.website.server.security.authorization.Authorizer;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.lang.tree.TreeI.tree;
+
 public class PrivateIdentityPemStore implements Option<Optional<byte[]>> {
-    @Override
-    public Optional<byte[]> defaultValue() {
+    @Override public Optional<byte[]> defaultValue() {
         return Optional.empty();
+    }
+
+    @Override public Optional<Tree> serialize(Optional<byte[]> currentValue) {
+        return currentValue.map(v -> tree(StringUtils.toHexString(v)));
     }
 }

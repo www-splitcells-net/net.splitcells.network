@@ -17,13 +17,20 @@ package net.splitcells.dem.resource;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.environment.config.framework.Option;
+import net.splitcells.dem.lang.tree.Tree;
+
+import java.util.Optional;
+
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 
 /**
  * This {@link FileSystem} contains the user data, that is owned by the program.
  */
 public class UserFileSystem implements Option<FileSystem> {
-    @Override
-    public FileSystem defaultValue() {
+    @Override public FileSystem defaultValue() {
         return Dem.configValue(BootstrapFileSystem.class).subFileSystem("user-files");
+    }
+    @Override public Optional<Tree> serialize(FileSystem currentValue) {
+        return Optional.of(tree(currentValue.toString()));
     }
 }

@@ -16,6 +16,11 @@
 package net.splitcells.website.server.config;
 
 import net.splitcells.dem.environment.config.framework.Option;
+import net.splitcells.dem.lang.tree.Tree;
+
+import java.util.Optional;
+
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 
 /**
  * Defines the default port for HTTP.
@@ -24,8 +29,10 @@ import net.splitcells.dem.environment.config.framework.Option;
  * If this is the case, no real error message is created sometimes and can eat up a lot of time.
  */
 public class HttpPort implements Option<Integer> {
-    @Override
-    public Integer defaultValue() {
+    @Override public Integer defaultValue() {
         return 8080;
+    }
+    @Override public Optional<Tree> serialize(Integer currentValue) {
+        return Optional.of(tree("" + currentValue));
     }
 }

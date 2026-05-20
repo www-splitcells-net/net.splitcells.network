@@ -16,16 +16,21 @@
 package net.splitcells.website.server.config;
 
 import net.splitcells.dem.environment.config.framework.Option;
+import net.splitcells.dem.lang.tree.Tree;
 
 import java.util.Optional;
+
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 
 /**
  * This is the public e-mail address, that can be used for contacting the operator of this public server.
  * This can be used as an account contact e-mail address for the ACME protocol.
  */
 public class PublicContactEMailAddress implements Option<Optional<String>> {
-    @Override
-    public Optional<String> defaultValue() {
+    @Override public Optional<String> defaultValue() {
         return Optional.empty();
+    }
+    @Override public Optional<Tree> serialize(Optional<String> currentValue) {
+        return Optional.of(tree("" + currentValue));
     }
 }

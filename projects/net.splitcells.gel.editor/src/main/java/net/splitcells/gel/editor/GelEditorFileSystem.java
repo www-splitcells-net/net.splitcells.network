@@ -16,12 +16,19 @@
 package net.splitcells.gel.editor;
 
 import net.splitcells.dem.environment.config.framework.Option;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.FileSystemView;
 
+import java.util.Optional;
+
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.FileSystemViaClassResources.fileSystemViaClassResources;
 
 public class GelEditorFileSystem implements Option<FileSystemView> {
     @Override public FileSystemView defaultValue() {
         return fileSystemViaClassResources(GelEditorFileSystem.class, "net.splitcells", "gel.editor");
+    }
+    @Override public Optional<Tree> serialize(FileSystemView currentValue) {
+        return Optional.of(tree(currentValue.toString()));
     }
 }

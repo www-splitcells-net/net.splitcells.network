@@ -4,9 +4,18 @@
 package net.splitcells.dem.environment.config;
 
 import net.splitcells.dem.environment.config.framework.Option;
+import net.splitcells.dem.lang.tree.Tree;
+
+import java.util.Optional;
+
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 
 public class Initialized implements Option<Boolean> {
     @Override public Boolean defaultValue() {
         return false;
+    }
+
+    @Override public Optional<Tree> serialize(Boolean currentValue) {
+        return Optional.of(tree("" + currentValue));
     }
 }

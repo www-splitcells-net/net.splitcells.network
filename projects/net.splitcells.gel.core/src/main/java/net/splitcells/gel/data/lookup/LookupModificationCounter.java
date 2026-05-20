@@ -17,6 +17,7 @@ package net.splitcells.gel.data.lookup;
 
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.environment.config.framework.Option;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.testing.MetaCounter;
 import net.splitcells.gel.data.table.TableModificationCounter;
 import net.splitcells.website.server.project.renderer.CsvRenderer;
@@ -25,12 +26,12 @@ import net.splitcells.website.server.project.renderer.ObjectsRenderer;
 import java.util.Optional;
 
 import static net.splitcells.dem.Dem.configValue;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.object.Discoverable.discoverable;
 import static net.splitcells.dem.testing.MetaCounter.metaCounter;
 
 public class LookupModificationCounter implements Option<MetaCounter> {
-    @Override
-    public MetaCounter defaultValue() {
+    @Override public MetaCounter defaultValue() {
         final var metaCounter = metaCounter(discoverable(TableModificationCounter.class));
         configValue(LookupTables.class).withAspect(LookupTableModificationCounterAspect::lookupViewModificationCounterAspect);
         ObjectsRenderer.registerObject(new CsvRenderer() {
@@ -57,5 +58,8 @@ public class LookupModificationCounter implements Option<MetaCounter> {
             }
         });
         return metaCounter;
+    }
+    @Override public Optional<Tree> serialize(MetaCounter currentValue)  {
+        return Optional.of(tree(currentValue.path().unixPathString()));
     }
 }

@@ -16,12 +16,17 @@
 package net.splitcells.website.server.projects;
 
 import net.splitcells.dem.environment.config.framework.Option;
+import net.splitcells.dem.lang.tree.Tree;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.lang.tree.TreeI.tree;
+
 public class ProjectsRendererOption implements Option<Optional<ProjectsRenderer>> {
-    @Override
-    public Optional<ProjectsRenderer> defaultValue() {
+    @Override public Optional<ProjectsRenderer> defaultValue() {
+        return Optional.empty();
+    }
+    @Override public Optional<Tree> serialize(Optional<ProjectsRenderer> currentValue) {
         return Optional.empty();
     }
 }

@@ -6,6 +6,11 @@ package net.splitcells.dem.environment.config;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.environment.resource.Service;
+import net.splitcells.dem.lang.tree.Tree;
+
+import java.util.Optional;
+
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 
 
 /**
@@ -18,5 +23,8 @@ import net.splitcells.dem.environment.resource.Service;
 public class StartServicesAutomatically implements Option<Boolean> {
     @Override public Boolean defaultValue() {
         return true;
+    }
+    @Override public Optional<Tree> serialize(Boolean currentValue) {
+        return Optional.of(tree("" + currentValue));
     }
 }

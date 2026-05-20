@@ -18,6 +18,7 @@ package net.splitcells.dem.utils;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.testing.reporting.ErrorReporter;
 
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
@@ -155,5 +156,10 @@ public class StringUtils {
             throw execException(tree("String does not comply with regex pattern.")
                     .withProperty("String", arg)
                     .withProperty("Pattern", pattern.toString()));
+    }
+
+    public static String toHexString(byte[] bytes) {
+        BigInteger bigInteger = new BigInteger(1, bytes);
+        return bigInteger.toString(16);
     }
 }

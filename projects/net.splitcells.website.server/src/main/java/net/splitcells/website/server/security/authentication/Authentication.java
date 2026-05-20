@@ -16,8 +16,13 @@
 package net.splitcells.website.server.security.authentication;
 
 import net.splitcells.dem.Dem;
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.framework.Option;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.utils.ExecutionException;
+import net.splitcells.website.server.projects.extension.ProjectsRendererExtension;
+
+import java.util.Optional;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
@@ -34,8 +39,7 @@ import static net.splitcells.website.server.security.authentication.Authenticato
  */
 public class Authentication implements Option<Authenticator> {
 
-    @Override
-    public Authenticator defaultValue() {
+    @Override public Authenticator defaultValue() {
         return authenticator((login, authenticator) -> authenticator.anonymous());
     }
 
@@ -69,5 +73,9 @@ public class Authentication implements Option<Authenticator> {
 
     public static String lifeCycleToken(UserSession userSession) {
         return configValue(Authentication.class).lifeCycleToken(userSession);
+    }
+
+    @Override public Optional<Tree> serialize(Authenticator currentValue) {
+        return Optional.empty();
     }
 }

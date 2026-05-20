@@ -17,8 +17,12 @@ package net.splitcells.dem.resource;
 
 import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.environment.config.framework.Option;
+import net.splitcells.dem.lang.tree.Tree;
+
+import java.util.Optional;
 
 import static net.splitcells.dem.Dem.configValue;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 
 /**
  * <p>This is the generic default storage for all files created and permanently owned by the program.
@@ -39,8 +43,10 @@ import static net.splitcells.dem.Dem.configValue;
  * but may not be visible in any {@link FileSystem#subFileSystem(String)}.</p>
  */
 public class BootstrapFileSystem implements Option<FileSystem> {
-    @Override
-    public FileSystem defaultValue() {
+    @Override public FileSystem defaultValue() {
         return PathFileSystem.pathFileSystem(Paths.userHome(".local", "state", configValue(ProgramName.class).toLowerCase()));
+    }
+    @Override public Optional<Tree> serialize(FileSystem currentValue) {
+        return Optional.of(tree(currentValue.toString()));
     }
 }
