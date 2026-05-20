@@ -609,8 +609,22 @@ public class Config {
         return this;
     }
 
+    /**
+     * TODO Currently, properties with very large values are not serialized, as this not that nice for configuration tests.
+     * 
+     * @return
+     */
     public Tree serialize() {
         val properties = instanceProperties(this);
+        properties
+                .removeKey("layout")
+                .removeKey("layoutRelevant")
+                .removeKey("layoutPerspective")
+                .removeKey("layoutRelevantPerspective")
+                .removeKey("detailedXslMenu")
+                .removeKey("xslWindowMenu")
+                .removeKey("additionalProjects")
+                .removeKey("projectsRendererExtension");
         val serialization = tree(getClass().getName());
         properties.entrySet().forEach(entry -> serialization.withProperty(entry.getKey(), entry.getValue()));
         return serialization;
