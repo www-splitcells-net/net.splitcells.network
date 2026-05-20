@@ -46,4 +46,15 @@ public interface Option<T extends Object> {
     default Optional<Tree> serialize(T currentValue)  {
         return Optional.empty();
     }
+
+    /**
+     * This method makes it easier to handle the genric types.
+     * Using {@link #serialize(T)} instead, is recommended where possible.
+     * 
+     * @param currentValue
+     * @return
+     */
+    default Optional<Tree> serializeUntyped(Object currentValue)  {
+        return serialize((T) currentValue);
+    }
 }
