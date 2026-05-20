@@ -60,6 +60,13 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
         return this;
     }
 
+    default Map<Key, Value> removeKeys(Key... keys) {
+        for (val key : keys) {
+            remove(key);
+        }
+        return this;
+    }
+
     default boolean hasNotKey(Key key) {
         return !containsKey(key);
     }
