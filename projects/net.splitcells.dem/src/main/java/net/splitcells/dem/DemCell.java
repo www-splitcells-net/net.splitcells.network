@@ -17,6 +17,10 @@ package net.splitcells.dem;
 
 import net.splitcells.dem.environment.Cell;
 import net.splitcells.dem.environment.Environment;
+import net.splitcells.dem.lang.tree.Tree;
+
+import java.util.Optional;
+import java.util.function.Consumer;
 
 public class DemCell implements Cell {
     @Override

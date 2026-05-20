@@ -20,11 +20,14 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.ProgramRepresentative;
 import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.environment.resource.Service;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.object.Discoverable;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.StreamUtils.stream;
 import static net.splitcells.dem.utils.reflection.ClassesRelated.simplifiedName;
 
@@ -115,5 +118,9 @@ public interface Cell extends Consumer<Environment>, Discoverable, Option<Consum
     @Override
     default void run() {
         Dem.waitIndefinitely();
+    }
+
+    @Override default Optional<Tree> serialize(Consumer<Environment> currentValue) {
+        return Optional.of(tree(programName()));
     }
 }

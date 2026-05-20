@@ -22,8 +22,12 @@ import io.pyroscope.javaagent.config.Config;
 import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.environment.resource.ResourceOption;
 import net.splitcells.dem.environment.resource.Service;
+import net.splitcells.dem.lang.tree.Tree;
+
+import java.util.Optional;
 
 import static net.splitcells.dem.Dem.configValue;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 
 /**
  * Uses Pyroscope in order to do Java profiling.
@@ -49,5 +53,9 @@ public class PyroscopeService implements ResourceOption<Service> {
                         .build());
             }
         };
+    }
+
+    @Override public Optional<Tree> serialize(Service currentValue) {
+        return Optional.of(tree(getClass() + " is enabled."));
     }
 }

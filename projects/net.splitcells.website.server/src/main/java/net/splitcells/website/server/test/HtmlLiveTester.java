@@ -18,11 +18,15 @@ package net.splitcells.website.server.test;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.environment.resource.ResourceOption;
 import net.splitcells.dem.environment.resource.Service;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.communication.log.LogLevel;
+
+import java.util.Optional;
 
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.Dem.executeThread;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 
 /**
@@ -67,5 +71,9 @@ public class HtmlLiveTester implements ResourceOption<Service> {
                 // Nothing needs to be done.
             }
         };
+    }
+
+    @Override public Optional<Tree> serialize(Service currentValue) {
+        return Optional.of(tree(getClass() + " is enabled."));
     }
 }

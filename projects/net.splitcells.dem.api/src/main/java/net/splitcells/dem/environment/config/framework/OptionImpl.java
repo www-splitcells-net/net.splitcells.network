@@ -15,6 +15,9 @@
  */
 package net.splitcells.dem.environment.config.framework;
 
+import net.splitcells.dem.lang.tree.Tree;
+
+import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -36,6 +39,10 @@ public class OptionImpl<V> implements Option<V> {
     @Override
     public V defaultValue() {
         return defaultValue.get();
+    }
+
+    @Override public Optional<Tree> serialize(V currentValue) {
+        return Optional.empty();
     }
 
 }

@@ -18,6 +18,9 @@ package net.splitcells.cin.deprecated;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.environment.resource.ResourceOption;
 import net.splitcells.dem.environment.resource.Service;
+import net.splitcells.dem.lang.tree.Tree;
+
+import java.util.Optional;
 
 import static net.splitcells.cin.deprecated.World.WORLD_HISTORY;
 import static net.splitcells.cin.deprecated.World.addNextTime;
@@ -27,6 +30,7 @@ import static net.splitcells.cin.deprecated.World.initWorldHistory;
 import static net.splitcells.cin.deprecated.World.worldHistory;
 import static net.splitcells.cin.deprecated.World.worldOptimizer;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.Time.reportRuntime;
@@ -74,5 +78,9 @@ public class CinService implements ResourceOption<Service> {
                 // There is no known flush operation yet for this service.
             }
         };
+    }
+
+    @Override public Optional<Tree> serialize(Service currentValue) {
+        return Optional.of(tree(getClass() + " is enabled."));
     }
 }

@@ -323,6 +323,10 @@ public class Dem {
             Dem.process(() -> serialization.withValue(Dem.config().serialize()), new Cell() {
 
 
+                @Override public Optional<Tree> serialize(Consumer<Environment> currentValue) {
+                    return Optional.empty();
+                }
+
                 @Override public String groupId() {
                     return cell.groupId();
                 }
