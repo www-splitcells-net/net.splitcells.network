@@ -45,4 +45,9 @@ public class Variable<T> {
         value = arg;
         return this;
     }
+
+    public Variable<T> withValue(T arg) {
+        value = Optional.of(arg);
+        return this;
+    }
 }

@@ -28,6 +28,7 @@ import net.splitcells.dem.environment.config.ProgramRepresentative;
 import net.splitcells.dem.environment.config.framework.Configuration;
 import net.splitcells.dem.environment.config.framework.ConfigurationV;
 import net.splitcells.dem.environment.config.framework.Option;
+import net.splitcells.dem.environment.config.framework.Variable;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.communication.log.LogLevel;
@@ -318,8 +319,8 @@ public class Dem {
     private static Tree serializeConfiguration(Class<? extends Cell> cellClass) {
         try {
             val cell = cellClass.getDeclaredConstructor().newInstance();
-            final List<Tree> serialization = list();
-            Dem.process(() -> serialization.add(Dem.config().serialize()), new Cell() {
+            val serialization = Variable.<Tree>variable();
+            Dem.process(() -> serialization.withValue(Dem.config().serialize()), new Cell() {
 
 
                 @Override public String groupId() {
@@ -334,7 +335,7 @@ public class Dem {
                     env.config().withConfigValue(ProgramRepresentative.class, cellClass);
                 }
             }, cellClass);
-            return serialization.get(0);
+            return serialization.value().orElseThrow();
         } catch (Throwable t) {
             throw execException(t);
         }
