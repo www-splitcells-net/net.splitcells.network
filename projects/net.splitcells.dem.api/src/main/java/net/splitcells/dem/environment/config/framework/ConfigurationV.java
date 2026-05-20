@@ -47,8 +47,9 @@ public interface ConfigurationV {
         val serialization = tree("Configuration Serialization");
         keys().forEach(key -> {
             try {
-                val value = key.getDeclaredConstructor().newInstance().serializeUntyped(configValueUntyped(key));
-                value.ifPresent(serialization::withChild);
+                val option = key.getDeclaredConstructor().newInstance();
+                val value = option.serializeUntyped(configValueUntyped(key));
+                value.ifPresent(v -> serialization.withChild(tree(option.name()).withChild(v)));
             } catch (Throwable t) {
                 throw execException(t);
             }

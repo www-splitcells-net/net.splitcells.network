@@ -57,4 +57,8 @@ public interface Option<T extends Object> {
     default Optional<Tree> serializeUntyped(Object currentValue)  {
         return serialize((T) currentValue);
     }
+    
+    default String name() {
+        return getClass().getName();
+    }
 }
