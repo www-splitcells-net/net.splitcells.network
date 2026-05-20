@@ -36,16 +36,14 @@ import static net.splitcells.website.server.security.authentication.UserSession.
 
 public class SystemCellTest {
 
-    @IntegrationTest
-    public void testServingWebsiteToFolder() {
+    @IntegrationTest public void testServingWebsiteToFolder() {
         process(() -> SystemCell.projectsRenderer(Dem.configValue(ServerConfig.class)).serveTo(Paths.get("target/test"))
                 , env -> env.config().withConfigValue(StartServicesAutomatically.class, false)
                 , SystemCell.class
         );
     }
 
-    @UnitTest
-    public void testInvalidPath() {
+    @UnitTest public void testInvalidPath() {
         process(() -> SystemCell.projectsRenderer(Dem.configValue(ServerConfig.class)).render(RenderRequest.renderRequest(
                         Trail.trail("invalid-path")
                         , Optional.empty()
