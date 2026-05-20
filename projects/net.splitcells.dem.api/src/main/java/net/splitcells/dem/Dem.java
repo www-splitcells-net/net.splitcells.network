@@ -15,6 +15,8 @@
  */
 package net.splitcells.dem;
 
+import lombok.val;
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.Cell;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.environment.EnvironmentI;
@@ -22,15 +24,18 @@ import net.splitcells.dem.environment.EnvironmentV;
 import net.splitcells.dem.environment.config.EndTime;
 import net.splitcells.dem.environment.config.Initialized;
 import net.splitcells.dem.environment.config.ProgramName;
+import net.splitcells.dem.environment.config.ProgramRepresentative;
 import net.splitcells.dem.environment.config.framework.Configuration;
 import net.splitcells.dem.environment.config.framework.ConfigurationV;
 import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.Logs;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
 import net.splitcells.dem.utils.ExecutionException;
 
+import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.ZonedDateTime;
@@ -290,6 +295,31 @@ public class Dem {
             rVal = CURRENT.get();
         }
         return rVal;
+    }
+
+    public static Tree serializeConfiguration(Class<? extends Cell> cellClass) {
+        try {
+            val cell = cellClass.getDeclaredConstructor().newInstance();
+            final List<Tree> serialization = list();
+            Dem.process(() -> serialization.add(Dem.config().serialize()), new Cell() {
+
+
+                @Override public String groupId() {
+                    return cell.groupId();
+                }
+
+                @Override public String artifactId() {
+                    return cell.artifactId();
+                }
+
+                @Override public void accept(Environment env) {
+                    env.config().withConfigValue(ProgramRepresentative.class, cellClass);
+                }
+            }, cellClass);
+            return serialization.get(0);
+        } catch (Throwable t) {
+            throw execException(t);
+        }
     }
 
     /**
