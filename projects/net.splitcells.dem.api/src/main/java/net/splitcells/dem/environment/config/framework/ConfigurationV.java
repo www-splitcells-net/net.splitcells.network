@@ -15,9 +15,15 @@
  */
 package net.splitcells.dem.environment.config.framework;
 
+import lombok.val;
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.lang.tree.Tree;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.function.BiConsumer;
+
+import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 public interface ConfigurationV {
     <T> T configValue(Class<? extends Option<T>> key);
@@ -36,4 +42,17 @@ public interface ConfigurationV {
      * @param <V>      Type of {@link Option#defaultValue()}, that will be consumed.
      */
     <K extends Class<? extends Option<V>>, V> void consume(K type, BiConsumer<K, V> consumer);
+
+    default Tree serialize() {
+        val serialization = tree("Configuration Serialization");
+        keys().forEach(key -> {
+            try {
+                val value = key.getDeclaredConstructor().newInstance().serializeUntyped(configValueUntyped(key));
+                value.ifPresent(serialization::withChild);
+            } catch (Throwable t) {
+                throw execException(t);
+            }
+        });
+        return serialization;
+    }
 }
