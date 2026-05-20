@@ -43,9 +43,7 @@ public interface Option<T extends Object> {
      *  
      * @return
      */
-    default Optional<Tree> serialize(T currentValue)  {
-        return Optional.empty();
-    }
+    Optional<Tree> serialize(T currentValue);
 
     /**
      * This method makes it easier to handle the genric types.
