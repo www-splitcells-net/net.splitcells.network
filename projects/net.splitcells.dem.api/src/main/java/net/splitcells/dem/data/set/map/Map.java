@@ -53,6 +53,13 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
         return containsKey(key);
     }
 
+    @Deprecated Value remove(Object key);
+
+    default Map<Key, Value> removeKey(Key key) {
+        remove(key);
+        return this;
+    }
+
     default boolean hasNotKey(Key key) {
         return !containsKey(key);
     }
