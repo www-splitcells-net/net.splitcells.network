@@ -25,12 +25,12 @@ import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.website.server.ServerConfig;
 import net.splitcells.website.server.projects.RenderRequest;
 import net.splitcells.website.server.security.authentication.Authentication;
+import org.junit.jupiter.api.Disabled;
 
 import java.nio.file.Paths;
 import java.util.Optional;
 
-import static net.splitcells.dem.Dem.configValue;
-import static net.splitcells.dem.Dem.process;
+import static net.splitcells.dem.Dem.*;
 import static net.splitcells.website.server.security.authentication.Authentication.anonymous;
 import static net.splitcells.website.server.security.authentication.UserSession.ANONYMOUS_USER_SESSION;
 
@@ -50,5 +50,12 @@ public class SystemCellTest {
                         , anonymous()))
                 , env -> env.config().withConfigValue(StartServicesAutomatically.class, false)
                 , SystemCell.class);
+    }
+
+    @Disabled @UnitTest public void testConfig() {
+        testSerializeConfiguration(SystemCell.class, """
+                * Configuration Serialization:
+                    * net.splitcells.dem.environment.config.ProgramName: net.splitcells.network.system.SystemCell
+                """);
     }
 }
