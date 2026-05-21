@@ -15,6 +15,11 @@
  */
 package net.splitcells.dem.utils;
 
+import com.github.difflib.DiffUtils;
+import com.github.difflib.UnifiedDiffUtils;
+import com.github.difflib.text.DiffRow;
+import com.github.difflib.text.DiffRowGenerator;
+import lombok.val;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.testing.reporting.ErrorReporter;
 
@@ -23,6 +28,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.testing.reporting.ErrorReporting.getWithReportedErrors;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
@@ -161,5 +167,14 @@ public class StringUtils {
     public static String toHexString(byte[] bytes) {
         BigInteger bigInteger = new BigInteger(1, bytes);
         return bigInteger.toString(16);
+    }
+
+    public static String createDiff(String a, String b) {
+        val patch = DiffUtils.diff(list(a.split("\\R")), list(b.split("\\R")));
+        val diff = stringBuilder();
+        for (val delta : patch.getDeltas()) {
+            diff.append(delta.toString());
+        }
+        return diff.toString();
     }
 }

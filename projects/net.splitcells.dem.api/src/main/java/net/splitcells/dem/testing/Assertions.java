@@ -27,6 +27,7 @@ import static net.splitcells.dem.Dem.sleepABit;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.dem.utils.StringUtils.createDiff;
 
 public class Assertions {
     private Assertions() {
@@ -93,9 +94,16 @@ public class Assertions {
             return;
         }
         if (a.equals(b)) {
-            // Assertj create a nice comparison report, also this report does not explicitly state, which is the
-            // first argument and which is the second.
-            org.assertj.core.api.Assertions.assertThat(a).isNotEqualTo(b);
+
+            try {
+                org.assertj.core.api.Assertions.assertThat(a).isNotEqualTo(b);
+            } catch (Throwable t) {
+                /* TODO This is a hack.
+                 * AssertJ create a nice comparison report, also this report does not explicitly state,
+                 * which is the first argument and which is the second.
+                 */
+                throw execException(createDiff(a + "", b + ""), t);
+            }
         }
     }
 
@@ -108,6 +116,7 @@ public class Assertions {
                     + a + ", second argument: " + b);
         }
         if (!a.equals(b)) {
+            createDiff(a + "", b + "");
             // Assertj create a nice comparison report, also this report does not explicitly state, which is the
             // first argument and which is the second.
             org.assertj.core.api.Assertions.assertThat(a).isEqualTo(b);
