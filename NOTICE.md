@@ -413,3 +413,7 @@ highlight.js
 * License: BSD-3-Clause
 * Source Code: https://github.com/highlightjs/highlight.js
 * Website: https://highlightjs.org/
+
+java-diff-utils
+* License: Apache-2.0
+* Website: https://github.com/java-diff-utils/java-diff-utils
