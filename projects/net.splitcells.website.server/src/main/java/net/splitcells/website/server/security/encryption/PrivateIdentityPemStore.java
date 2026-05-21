@@ -30,6 +30,6 @@ public class PrivateIdentityPemStore implements Option<Optional<byte[]>> {
     }
 
     @Override public Optional<Tree> serialize(Optional<byte[]> currentValue) {
-        return currentValue.map(v -> tree(StringUtils.toHexString(v)));
+        return Optional.of(tree("This value is host specific."));
     }
 }

@@ -620,6 +620,7 @@ public class Config {
                 "additionalProjects"
                 , "config"
                 , "detailedXslMenu"
+                , "frontMenuDescription"
                 , "layout"
                 , "layoutPerspective"
                 , "layoutRelevant"
