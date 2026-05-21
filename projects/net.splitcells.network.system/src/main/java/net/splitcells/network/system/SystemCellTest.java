@@ -113,7 +113,6 @@ public class SystemCellTest {
                     * net.splitcells.website.server.config.PasswordAuthenticationEnabled: false
                     * net.splitcells.website.server.security.encryption.SslEnabled: false
                     * net.splitcells.website.server.test.HtmlLiveTest: class net.splitcells.website.server.test.HtmlLiveTest is enabled.
-                
                 """);
     }
 }
