@@ -135,4 +135,8 @@ public class FileSystemVoid implements FileSystem {
         warnUsage();
         return this;
     }
+    
+    @Override public String toString() {
+        return getClass().getName();
+    }
 }
