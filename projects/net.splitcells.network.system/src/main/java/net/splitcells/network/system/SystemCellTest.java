@@ -67,7 +67,7 @@ public class SystemCellTest {
                     * net.splitcells.dem.environment.config.StartServicesAutomatically: true
                     * net.splitcells.dem.environment.config.StartTime: 2026-05-20T22:35:10Z[UTC]
                     * net.splitcells.dem.resource.communication.log.IsEchoToFile: false
-                    * net.splitcells.dem.resource.host.ProcessPath: /home/splitcells/.local/state/net.splitcells.dem
+                    * net.splitcells.dem.resource.host.ProcessPath: This value is host specific.
                     * net.splitcells.gel.GelCoreFileSystem: net.splitcells.dem.resource.FileSystemViaClassResourcesImpl based on net.splitcells.gel.GelCoreFileSystem
                     * net.splitcells.gel.doc.GelDocFileSystem: net.splitcells.dem.resource.FileSystemViaClassResourcesImpl based on net.splitcells.gel.doc.GelDocFileSystem
                     * net.splitcells.gel.editor.GelEditorFileSystem: net.splitcells.dem.resource.FileSystemViaClassResourcesImpl based on net.splitcells.gel.editor.GelEditorFileSystem
@@ -113,6 +113,7 @@ public class SystemCellTest {
                     * net.splitcells.website.server.config.PasswordAuthenticationEnabled: false
                     * net.splitcells.website.server.security.encryption.SslEnabled: false
                     * net.splitcells.website.server.test.HtmlLiveTest: class net.splitcells.website.server.test.HtmlLiveTest is enabled.
+                
                 """);
     }
 }

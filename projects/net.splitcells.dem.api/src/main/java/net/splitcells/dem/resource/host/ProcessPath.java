@@ -34,6 +34,6 @@ public class ProcessPath extends OptionImpl<Path> {
         super(() -> Files.usersStateFiles());
     }
     @Override public Optional<Tree> serialize(Path currentValue) {
-        return Optional.of(tree(currentValue.toString()));
+        return Optional.of(tree("This value is host specific."));
     }
 }
