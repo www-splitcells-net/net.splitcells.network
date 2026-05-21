@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.resource;
 
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.utils.ExecutionException;
@@ -326,5 +327,12 @@ public class PathFileSystem implements FileSystem {
     @Override
     public Optional<Path> javaLegacyPath() {
         return Optional.of(rootPath);
+    }
+
+    /**
+     * @return The implementation returns a constant String so that {@link Dem#testSerializeConfiguration(Class, String)} works.
+     */
+    @Override public String toString() {
+        return getClass().getName();
     }
 }
