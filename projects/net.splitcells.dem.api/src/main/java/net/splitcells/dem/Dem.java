@@ -338,6 +338,7 @@ public class Dem {
                             .withConfigValue(ProgramRepresentative.class, cellClass)
                             .withConfigValue(StartTime.class, ZonedDateTime.of(2026, 5, 20, 22, 35, 10, 0, ZoneId.of("UTC")))
                             .withConfigValue(ProgramLocalIdentity.class, cellClass + "")
+                            .withConfigValue(StartServicesAutomatically.class, false)
                     ;
                 }
             }, cellClass);
