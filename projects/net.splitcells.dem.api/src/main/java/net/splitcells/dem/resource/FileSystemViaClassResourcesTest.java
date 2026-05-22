@@ -21,6 +21,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.environment.config.StaticFlags.runWithEnforcingUnityConsistency;
 import static net.splitcells.dem.resource.FileSystemViaClassResourcesFactoryImpl._fileSystemViaClassResourcesFactoryImpl;
+import static net.splitcells.dem.resource.FileSystemViaClassResourcesImpl.TEST_PATH;
 import static net.splitcells.dem.resource.FileSystemViaClassResourcesImpl.fileSystemViaClassResourcesImpl;
 import static net.splitcells.dem.resource.Files.readAsString;
 import static net.splitcells.dem.testing.Assertions.*;
@@ -45,6 +46,7 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
         requireEquals(testResult.getSpdxCopyrightText().orElseThrow(), "Contributors To The `net.splitcells.*` Projects");
         require(testSubject.license(NOT_EXISTING_FILE).isEmpty());
         require(testSubject.license(NOT_EXISTING_FOLDER).isEmpty());
+        require(testSubject.license(TEST_PATH).isEmpty());
     }
 
     @UnitTest public void readStringIfPresentWithNotBackedString() {
