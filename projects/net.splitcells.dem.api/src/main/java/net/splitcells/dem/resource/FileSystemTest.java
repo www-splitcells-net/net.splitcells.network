@@ -12,14 +12,12 @@ import java.nio.file.Path;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-import static net.splitcells.dem.data.atom.Bools.require;
-import static net.splitcells.dem.data.atom.Bools.requireNot;
+import static net.splitcells.dem.data.atom.Bools.*;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.Sets.toSetOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.communication.Closeable.close;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
-import static net.splitcells.dem.testing.Assertions.requireThrow;
+import static net.splitcells.dem.testing.Assertions.*;
 import static net.splitcells.dem.utils.StreamUtils.concat;
 import static net.splitcells.dem.utils.StringUtils.parseString;
 
@@ -106,6 +104,17 @@ public class FileSystemTest extends TestSuiteI {
         require(testSubject.reader.isDirectory("test-directory"));
     }
 
+    public void testJavaLegacyPath(Supplier<FileSystemAccess> factory) {
+        val testSubject = factory.get();
+        val testPath = Path.of("test/path");
+        val invalidTestPath = Path.of("/invalid/test/path");
+        val rootPath = testSubject.writer.javaLegacyPath();
+        if (rootPath.isPresent()) {
+            requireEquals(testSubject.writer.javaLegacyPath(testPath).get(), rootPath.get().resolve(testPath));
+            requireThrow(() -> testSubject.writer.javaLegacyPath(invalidTestPath));
+        }
+    }
+
     public void testWalkRecursively(Supplier<FileSystemAccess> factory) {
         val testSubject = factory.get();
         val testFolder = "test/folder/path/";
@@ -164,6 +173,7 @@ public class FileSystemTest extends TestSuiteI {
                 , dynamicTests(this::testDelete, factory)
                 , dynamicTests(this::testAppendToFile, factory)
                 , dynamicTests(this::testWalkRecursively, factory)
+                , dynamicTests(this::testJavaLegacyPath, factory)
                 , dynamicTests(f -> closing.run(), factory)
         );
     }
