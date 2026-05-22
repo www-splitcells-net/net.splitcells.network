@@ -286,26 +286,24 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
             return Optional.empty();
         }
         final var fileContent = clazz.getResourceAsStream(metaPath);
-        if (fileContent != null) {
-            Optional<String> licenseId = Optional.empty();
-            Optional<String> copyrightText = Optional.empty();
-            for (val line : Files.readAsString(fileContent).split("\\R")) {
-                val lineSplit = line.split("=");
-                if (lineSplit.length > 1) {
-                    if ("SPDX-License-Identifier".equals(lineSplit[0])) {
-                        licenseId = Optional.of(lineSplit[1]);
-                    } else if ("SPDX-FileCopyrightText".equals(lineSplit[0])) {
-                        copyrightText = Optional.of(lineSplit[1]);
-                    }
+        Optional<String> licenseId = Optional.empty();
+        Optional<String> copyrightText = Optional.empty();
+        for (val line : Files.readAsString(fileContent).split("\\R")) {
+            val lineSplit = line.split("=");
+            if (lineSplit.length > 1) {
+                if ("SPDX-License-Identifier".equals(lineSplit[0])) {
+                    licenseId = Optional.of(lineSplit[1]);
+                } else if ("SPDX-FileCopyrightText".equals(lineSplit[0])) {
+                    copyrightText = Optional.of(lineSplit[1]);
                 }
             }
-            if (licenseId.isPresent()) {
-                val license = License.license(licenseId.get());
-                if (copyrightText.isPresent()) {
-                    license.setSpdxCopyrightText(copyrightText);
-                }
-                return Optional.of(license);
+        }
+        if (licenseId.isPresent()) {
+            val license = License.license(licenseId.get());
+            if (copyrightText.isPresent()) {
+                license.setSpdxCopyrightText(copyrightText);
             }
+            return Optional.of(license);
         }
         return Optional.empty();
     }
