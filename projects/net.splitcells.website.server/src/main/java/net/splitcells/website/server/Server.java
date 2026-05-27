@@ -100,6 +100,27 @@ public class Server {
         throw constructorIllegal();
     }
 
+    public static String htmlRedirectToInteractiveServer(Config config, String redirectionTarget) {
+        return """
+                <!DOCTYPE html><!doctype html>
+                <html>
+                <!--
+                  SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+                  SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
+                -->
+                <head>
+                    <title>splitcells.net</title>
+                    <meta charset="utf-8"/>
+                    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+                    <meta http-equiv="Pragma" content="no-cache"/>
+                    <meta http-equiv="Expires" content="0"/>
+                    <meta http-equiv="refresh" content="0; url=${REDIRECTION_TARGET}"/>
+                </head>
+                <body/>
+                </html>
+                """.replace("${REDIRECTION_TARGET}", config.getInteractiveServer() + redirectionTarget);
+    }
+
     /**
      * TODO Create stress test.
      *
