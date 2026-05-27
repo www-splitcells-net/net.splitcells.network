@@ -16,6 +16,7 @@
 package net.splitcells.website.server.project.renderer.extension.commonmark;
 
 import lombok.val;
+import net.splitcells.dem.data.Flows;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.resource.Trail;
@@ -29,9 +30,13 @@ import org.commonmark.renderer.html.HtmlRenderer;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static net.splitcells.dem.data.Flows.flow;
 import static net.splitcells.dem.resource.Trail.withoutSuffixElements;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.LinkTranslator.linkTranslator;
 
+/**
+ * TODO TOFIX There are many heuristic CommonMark source code operations. This should be done via ASTs instead.
+ */
 public class CommonMarkIntegration {
 
     /**
@@ -93,7 +98,14 @@ public class CommonMarkIntegration {
     public String renderBareHtml(String arg, ProjectRenderer projectRenderer, String path, Config config
             , ProjectsRenderer projectsRenderer) {
         final String contentToRender;
-        if (arg.startsWith(LICENSE_HEADER)) {
+        val metaHeaderSearch = arg.split("----*\\R");
+        if (metaHeaderSearch.length > 2 && metaHeaderSearch[1].startsWith("* ")) {
+            arg = flow(metaHeaderSearch).skip(2)
+                    .reduce((a,b) -> a + "---\n" + b)
+                    .orElseThrow()
+                    + "\n---\n"
+                    + metaHeaderSearch[1];
+        } else if (arg.startsWith(LICENSE_HEADER)) {
             arg = arg.substring(LICENSE_HEADER.length()) + "\n\n" + LICENSE_HEADER;
         }
         if (arg.startsWith("#")) {
