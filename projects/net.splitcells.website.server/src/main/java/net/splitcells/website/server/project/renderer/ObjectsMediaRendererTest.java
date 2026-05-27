@@ -44,41 +44,43 @@ public class ObjectsMediaRendererTest {
             }
         });
         requireEquals(testSubject.render("/folder/file", Config.create(), new ProjectRenderer() {
-            @Override public FileSystemView projectFileSystem() {
-                throw notImplementedYet();
-            }
+                    @Override public FileSystemView projectFileSystem() {
+                        throw notImplementedYet();
+                    }
 
-            @Override public Optional<byte[]> renderString(String arg) {
-                return Optional.empty();
-            }
+                    @Override public Optional<byte[]> renderString(String arg) {
+                        return Optional.empty();
+                    }
 
-            @Override public Optional<byte[]> renderHtmlBodyContent(String bodyContent, Optional<String> title, Optional<String> path, Config config, ProjectsRenderer projectsRenderer) {
-                return Optional.empty();
-            }
+                    @Override public Optional<byte[]> renderHtmlBodyContent(String bodyContent, Optional<String> title, Optional<String> path, Config config, ProjectsRenderer projectsRenderer) {
+                        return Optional.empty();
+                    }
 
-            @Override public Optional<byte[]> renderXml(String xml, LayoutConfig layoutConfig, Config config) {
-                return Optional.empty();
-            }
+                    @Override public Optional<byte[]> renderXml(String xml, LayoutConfig layoutConfig, Config config) {
+                        return Optional.empty();
+                    }
 
-            @Override public Optional<byte[]> renderRawXml(String xml, Config config) {
-                return Optional.empty();
-            }
+                    @Override public Optional<byte[]> renderRawXml(String xml, Config config) {
+                        return Optional.empty();
+                    }
 
-            @Override public Set<Path> projectPaths() {
-                return setOfUniques();
-            }
+                    @Override public Set<Path> projectPaths() {
+                        return setOfUniques();
+                    }
 
-            @Override public Set<Path> relevantProjectPaths() {
-                return setOfUniques();
-            }
+                    @Override public Set<Path> relevantProjectPaths() {
+                        return setOfUniques();
+                    }
 
-            @Override public Optional<BinaryMessage> render(String path) {
-                return Optional.empty();
-            }
+                    @Override public Optional<BinaryMessage> render(String path) {
+                        return Optional.empty();
+                    }
 
-            @Override public String resourceRootPath() {
-                return "";
-            }
-        }).orElseThrow().getContent(), toBytes("test-content"));
+                    @Override public String resourceRootPath() {
+                        return "";
+                    }
+                }).orElseThrow().getContent()
+                , toBytes("test-content")
+                , StringUtils::parseString);
     }
 }
