@@ -763,6 +763,10 @@ request.send();]]>
                                         </div>
                                     </xsl:if>
                                     <xsl:apply-templates select="$column_1"/>
+                                    <div class="net-splitcells-error-log">
+                                        <h1>Error Log</h1>
+                                        <ol class="net-splitcells-error-log-list"></ol>
+                                    </div>
                                 </article>
                             </div>
                         </xsl:if>
