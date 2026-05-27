@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.testing;
 
+import lombok.val;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.utils.ConstructorIllegal;
 
@@ -27,7 +28,7 @@ import static net.splitcells.dem.Dem.sleepABit;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
-import static net.splitcells.dem.utils.StringUtils.createDiff;
+import static net.splitcells.dem.utils.StringUtils.createUnifiedRawDiff;
 
 public class Assertions {
     private Assertions() {
@@ -102,24 +103,26 @@ public class Assertions {
                  * AssertJ create a nice comparison report, also this report does not explicitly state,
                  * which is the first argument and which is the second.
                  */
-                throw execException(createDiff(a + "", b + ""), t);
+                throw execException(createUnifiedRawDiff(a + "", b + ""), t);
             }
         }
     }
 
-    public static <T> void requireEquals(T a, T b) {
-        if (a == null) {
-            if (b == null) {
+    public static <T> void requireEquals(T expected, T actual) {
+        if (expected == null) {
+            if (actual == null) {
                 return;
             }
             throw execException("Arguments are required to be equal, but are not: first argument: "
-                    + a + ", second argument: " + b);
+                    + expected + ", second argument: " + actual);
         }
-        if (!a.equals(b)) {
-            createDiff(a + "", b + "");
-            // Assertj create a nice comparison report, also this report does not explicitly state, which is the
-            // first argument and which is the second.
-            org.assertj.core.api.Assertions.assertThat(a).isEqualTo(b);
+        if (!expected.equals(actual)) {
+            val expectedStr = expected + "";
+            val actualStr = actual + "";
+            throw execException(tree("Expected object is not equal to actual object.")
+                    .withProperty("Expected", expectedStr)
+                    .withProperty("Actual", actualStr)
+                    .withProperty("Diff", createUnifiedRawDiff(expectedStr, actualStr)));
         }
     }
 
