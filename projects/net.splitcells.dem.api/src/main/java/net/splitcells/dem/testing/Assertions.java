@@ -125,8 +125,8 @@ public class Assertions {
                 val expectedStr = printer.apply(expected);
                 val actualStr = printer.apply(actual);
                 throw execException(tree("Expected object is not equal to actual object.")
-                        .withProperty("Expected", expectedStr)
-                        .withProperty("Actual", actualStr)
+                        .withProperty("Expected", "`" + expectedStr + "`")
+                        .withProperty("Actual", "`" + actualStr + "`")
                         .withProperty("Diff", createUnifiedRawDiff(expectedStr, actualStr)));
             }
         }
