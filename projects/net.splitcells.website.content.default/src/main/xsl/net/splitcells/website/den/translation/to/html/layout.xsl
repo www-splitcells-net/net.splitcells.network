@@ -445,6 +445,18 @@ request.send();]]>
                 </xsl:variable>
                 <html>
                     <head>
+                        <xsl:variable name="path-str" select="./s:content/s:meta/s:path"/>
+                        <xsl:if test="$is-interactive = 'true' and $path-str != ''">
+                            <meta http-equiv="refresh">
+                                <xsl:attribute name="content" select="concat('0; url=', $interactive-server-url, $path-str)"/>
+                            </meta>
+                            <!-- The JavaScript variant is required for Firefox, as refresh via meta does not work,
+                            when JavaScript is enabled in this layout.
+                            The reason for that is unknwon and likely hints to another unknown bug.-->
+                            <x:script type="text/javascript">window.location =
+                                <xsl:value-of select="concat('&quot;', $interactive-server-url, $path-str, '&quot;')"/>;
+                            </x:script>
+                        </xsl:if>
                         <meta http-equiv="Content-Type" content="application/xhtml+xml;charset=UTF-8"/>
                         <!-- Disable caching, so that CSS styling is reloading in webbrowsers on CSS updates automatically. -->
                         <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
