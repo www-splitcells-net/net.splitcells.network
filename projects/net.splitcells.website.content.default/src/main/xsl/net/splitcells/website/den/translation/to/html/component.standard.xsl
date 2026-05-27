@@ -119,7 +119,7 @@
         <!-- Private information is not published. -->
     </xsl:template>
     <xsl:template match="s:republication">
-        <!-- Republications redirections are used in order to keep up link compatiblity. -->
+        <!-- Republications redirections are used in order to keep up link compatibility. -->
         <xsl:variable name="tmp">
             <s:paragraph>
                 <s:link>
