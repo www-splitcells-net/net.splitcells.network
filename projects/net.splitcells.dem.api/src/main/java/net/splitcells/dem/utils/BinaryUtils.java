@@ -37,7 +37,7 @@ public class BinaryUtils {
         return new ByteArrayInputStream(content);
     }
 
-    public static <T> boolean equalBytes(T[] expected, T[] actual) {
+    public static boolean equalBytes(byte[] expected, byte[] actual) {
         return Arrays.equals(expected, actual);
     }
 

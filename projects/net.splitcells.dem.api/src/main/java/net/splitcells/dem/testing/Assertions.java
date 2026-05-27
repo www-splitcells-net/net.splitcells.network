@@ -21,6 +21,7 @@ import net.splitcells.dem.utils.ConstructorIllegal;
 
 import java.time.Instant;
 import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -110,15 +111,15 @@ public class Assertions {
     }
 
     public static <T> void requireEquals(T expected, T actual) {
-        requireEquals(expected, actual, a -> a + "");
+        requireEquals(expected, actual, a -> a + "", (a, b) -> a.equals(b));
     }
 
-    public static <T> void requireEquals(T expected, T actual, Function<T, String> printer) {
+    public static <T> void requireEquals(T expected, T actual, Function<T, String> printer, BiFunction<T, T, Boolean> comparison) {
         boolean equals = false;
         if (expected == null) {
             equals = actual == null;
         } else {
-            equals = expected.equals(actual);
+            equals = comparison.apply(expected, actual);
         }
         if (!equals) {
             if (!expected.equals(actual)) {
