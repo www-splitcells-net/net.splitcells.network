@@ -31,6 +31,8 @@ import java.util.stream.Stream;
 import static java.nio.file.Files.createDirectories;
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.resource.Files.fileExists;
+import static net.splitcells.dem.resource.License.parseLicense;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
@@ -334,5 +336,16 @@ public class PathFileSystem implements FileSystem {
      */
     @Override public String toString() {
         return getClass().getName();
+    }
+
+    @Override public Optional<License> license(String path) {
+        if (metaRootPath.isEmpty()) {
+            return Optional.empty();
+        }
+        final var metaPath = metaRootPath.get().resolve(path);
+        if (!fileExists(metaPath)) {
+            return Optional.empty();
+        }
+        return parseLicense(Files.readFileAsString(metaPath));
     }
 }
