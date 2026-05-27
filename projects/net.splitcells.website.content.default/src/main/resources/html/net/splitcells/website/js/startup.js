@@ -15,6 +15,7 @@ window.onerror = function(message, source, lineno, colno, error) {
     console.log(`colno: ${colno}`);
     console.log(`error: ${error}`);
     console.log(document.readyState);
+    // logError is used, in order to debug errors on browsers with hard to get debug info, like it is the case on iPhones.
     if (document.readyState == "complete") {
         logError(message, source, lineno, colno, error);
     } else {
