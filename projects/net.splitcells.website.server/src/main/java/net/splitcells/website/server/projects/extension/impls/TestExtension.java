@@ -16,8 +16,10 @@
 package net.splitcells.website.server.projects.extension.impls;
 
 import net.splitcells.dem.data.set.Set;
+import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.testing.Test;
+import net.splitcells.website.server.Server;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.ProjectsRendererI;
@@ -32,6 +34,7 @@ import static java.util.Optional.empty;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
+import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.project.LayoutConfig.layoutConfig;
 import static net.splitcells.website.server.projects.RenderResponse.renderResponse;
 import static net.splitcells.website.server.security.authorization.AdminRole.ADMIN_ROLE;
@@ -53,6 +56,10 @@ public class TestExtension implements ProjectsRendererExtension {
     public RenderResponse render(RenderRequest request, ProjectsRenderer projectsRenderer) {
         if (!request.trail().equalContents(PATH)) {
             return renderResponse(empty());
+        }
+        if (projectsRenderer.config().isRenderingStaticWebsite()) {
+            return renderResponse(binaryMessage(Server.htmlRedirectToInteractiveServer(projectsRenderer.config(), request.trail().unixPathString()).getBytes()
+                    , ContentType.HTML_TEXT.codeName()));
         }
         if (missesRole(request.userSession(), ADMIN_ROLE)) {
             return projectsRenderer.renderMissingAccessRights(request);

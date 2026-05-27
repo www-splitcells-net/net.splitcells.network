@@ -18,6 +18,7 @@ package net.splitcells.website.server.projects.extension.impls;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.Trail;
+import net.splitcells.website.server.Server;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.ProjectsRendererI;
 import net.splitcells.website.server.projects.RenderRequest;
@@ -51,6 +52,10 @@ public class UserProfilePageExtension implements ProjectsRendererExtension {
     public RenderResponse render(RenderRequest request, ProjectsRenderer projectsRenderer) {
         if (!request.trail().equalContents(PROFILE_PATH)) {
             return renderResponse(Optional.empty());
+        }
+        if (projectsRenderer.config().isRenderingStaticWebsite()) {
+            return renderResponse(binaryMessage(Server.htmlRedirectToInteractiveServer(projectsRenderer.config(), request.trail().unixPathString()).getBytes()
+                    , ContentType.HTML_TEXT.codeName()));
         }
         if (!isActivelyAuthenticated(request.userSession())) {
             return projectsRenderer.renderMissingLogin(request);
