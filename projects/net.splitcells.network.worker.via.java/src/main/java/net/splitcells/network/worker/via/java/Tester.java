@@ -18,6 +18,7 @@ package net.splitcells.network.worker.via.java;
 import lombok.val;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.environment.config.ProgramName;
+import net.splitcells.dem.environment.config.framework.Variable;
 import net.splitcells.dem.resource.host.HostName;
 import net.splitcells.network.worker.via.java.repo.ProjectsFolder;
 
@@ -25,12 +26,14 @@ import java.time.LocalDate;
 
 import static net.splitcells.dem.Dem.config;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.environment.config.framework.Variable.variable;
 import static net.splitcells.dem.resource.PathFileSystem.pathFileSystem;
 import static net.splitcells.dem.resource.Paths.userHome;
+import static net.splitcells.dem.resource.Time.measureTimeInNanoSeconds;
 import static net.splitcells.dem.testing.Test.testFunctionality;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
-import static net.splitcells.network.worker.via.java.Logger.logger;
-import static net.splitcells.network.worker.via.java.Logger.reportPath;
+import static net.splitcells.network.worker.via.java.LogEntryProperty.logEntryProperty;
+import static net.splitcells.network.worker.via.java.Logger.*;
 
 /**
  * <p>Executes the standard tests and writes the results into the network log repo.
@@ -57,9 +60,12 @@ public class Tester {
     public static void test(String hostname, String projectsFolder) {
         Dem.process(() -> {
                     val logger = logger();
-                    val executionSuccess = testFunctionality(list(logger));
+                    val executionSuccess = Variable.<Boolean>variable();
+                    val executionTime = measureTimeInNanoSeconds(() -> {
+                        executionSuccess.withValue(testFunctionality(list(logger)));
+                    });
                     final double executionResult;
-                    if (executionSuccess) {
+                    if (executionSuccess.value().orElseThrow()) {
                         executionResult = 1d;
                     } else {
                         executionResult = 0d;
@@ -68,8 +74,8 @@ public class Tester {
                             , EXECUTION
                             , config().configValue(HostName.class)
                             , LocalDate.now()
-                            , "tester-success"
-                            , executionResult);
+                            , logEntryProperty("tester-success", executionResult + "")
+                            , logEntryProperty(EXECUTION_TIME, executionTime + ""));
                 }
                 , env -> {
                     env.config()

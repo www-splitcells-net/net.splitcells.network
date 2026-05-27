@@ -1,20 +1,11 @@
-/*
- * Copyright (c) 2021 Contributors To The `net.splitcells.*` Projects
- *
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License 2.0 which is available at
- * http://www.eclipse.org/legal/epl-2.0.
- *
- * This Source Code may also be made available under the following Secondary
- * Licenses when the conditions for such availability set forth in the Eclipse
- * Public License, v. 2.0 are satisfied: GNU General Public License v2.0 or later
- * which is available at https://www.gnu.org/licenses/old-licenses/gpl-2.0-standalone.html
- *
- * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+/* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
 package net.splitcells.network.worker.via.java;
 
+import lombok.val;
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
@@ -36,6 +27,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.resource.ContentType.CSV;
 import static net.splitcells.dem.resource.communication.log.LogLevel.WARNING;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
+import static net.splitcells.network.worker.via.java.LogEntryProperty.logEntryProperty;
 import static net.splitcells.network.worker.via.java.repo.Repositories.repository;
 import static org.junit.platform.engine.TestExecutionResult.Status.SUCCESSFUL;
 
@@ -54,6 +46,8 @@ import static org.junit.platform.engine.TestExecutionResult.Status.SUCCESSFUL;
  */
 @JavaLegacy
 public class Logger implements TestExecutionListener {
+
+    public static final String EXECUTION_TIME = "Execution Time";
 
     public static Logger logger() {
         return logger(config().configValue(NetworkWorkerLogFileSystem.class));
@@ -76,26 +70,38 @@ public class Logger implements TestExecutionListener {
         return subject.getName().replace('.', '/') + "/" + reportName;
     }
 
-    public void logExecutionResults(Class<?> subject, String reportName, String executor, LocalDate localDate, String resultType
-            , double result) {
+    public void logExecutionResults(Class<?> subject, String reportName, String executor, LocalDate localDate, LogEntryProperty... properties) {
+        logExecutionResults(reportPath(subject, reportName), executor, localDate, Lists.list(properties));
+    }
+
+    public void logExecutionResults(String subject, String executor, LocalDate localDate, LogEntryProperty... properties) {
+        logExecutionResults(subject, executor, localDate, Lists.list(properties));
+    }
+
+    public void logExecutionResults(Class<?> subject, String reportName, String executor, LocalDate localDate, List<LogEntryProperty> properties) {
         logExecutionResults(reportPath(subject, reportName)
                 , executor
                 , localDate
-                , resultType
-                , result);
+                , properties);
     }
 
-    public void logExecutionResults(String subject, String executor, LocalDate localDate, String resultType
-            , double result) {
-        final var projectFolder = "src/main/" + CSV.codeName() + "/" + subject + "/";
+    public void logExecutionResults(String subject, String executor, LocalDate localDate
+            , List<LogEntryProperty> properties) {
+        val projectFolder = "src/main/" + CSV.codeName() + "/" + subject + "/";
         logProject.createDirectoryPath(projectFolder);
-        final var projectPath = projectFolder + executor + "." + CSV.codeName();
+        val projectPath = projectFolder + executor + "." + CSV.codeName();
         if (!logProject.isFile(projectPath)) {
+            val resultHeader = properties.stream().map(p -> p.getKey())
+                    .reduce((a, b) -> a + "," + b)
+                    .orElseThrow();
             logProject.writeToFile(Path.of(projectPath)
-                    , ("Date," + resultType + Files.newLine()).getBytes(StandardCharsets.UTF_8));
+                    , ("Date," + resultHeader + Files.newLine()).getBytes(StandardCharsets.UTF_8));
         }
+        val results = properties.stream().map(p -> p.getValue())
+                .reduce((a, b) -> a + "," + b)
+                .orElseThrow();
         logProject.appendToFile(Path.of(projectPath)
-                , (localDate + "," + result + Files.newLine()).getBytes(StandardCharsets.UTF_8));
+                , (localDate + "," + results + Files.newLine()).getBytes(StandardCharsets.UTF_8));
     }
 
     public String readExecutionResults(String subject, String executor) {
@@ -113,15 +119,15 @@ public class Logger implements TestExecutionListener {
     public void executionFinished(TestIdentifier testIdentifier, TestExecutionResult testExecutionResult) {
         final var testPath = parseTestIdentifier(testIdentifier.getUniqueId());
 
+        // public void logExecutionResults(String subject, String reportName, String executor, LocalDate localDate, LogEntryProperty... properties) {
         if (testPath.isPresent() && SUCCESSFUL.equals(testExecutionResult.getStatus())) {
             final var endDateTime = System.nanoTime();
             final var startDateTime = testToStartTime.get(testIdentifier);
             final var runTime = (endDateTime - startDateTime) / 1_000_000_000d;
             logExecutionResults(testPath.get()
-                    , config().configValue(ProgramName.class)
+                    , config().configValue(ProgramName.class).toString()
                     , LocalDate.now()
-                    , "Execution Time"
-                    , runTime);
+                    , logEntryProperty(EXECUTION_TIME, runTime + ""));
         }
 
     }
