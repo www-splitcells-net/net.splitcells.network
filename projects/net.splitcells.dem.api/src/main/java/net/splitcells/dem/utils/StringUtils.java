@@ -17,8 +17,6 @@ package net.splitcells.dem.utils;
 
 import com.github.difflib.DiffUtils;
 import com.github.difflib.UnifiedDiffUtils;
-import com.github.difflib.text.DiffRow;
-import com.github.difflib.text.DiffRowGenerator;
 import lombok.val;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.testing.reporting.ErrorReporter;
@@ -169,12 +167,18 @@ public class StringUtils {
         return bigInteger.toString(16);
     }
 
-    public static String createDiff(String a, String b) {
-        val patch = DiffUtils.diff(list(a.split("\\R")), list(b.split("\\R")));
-        val diff = stringBuilder();
-        for (val delta : patch.getDeltas()) {
-            diff.append(delta.toString());
-        }
-        return diff.toString();
+    /**
+     * 
+     * @param expected
+     * @param actual
+     * @return Returns a unified diff, that can be easily read in the terminal.
+     */
+    public static String createUnifiedRawDiff(String expected, String actual) {
+        val originalLines = list(expected.split("\\R"));
+        val patch = DiffUtils.diff(originalLines, list(actual.split("\\R")));
+        return UnifiedDiffUtils.generateUnifiedDiff("expected", "actual", originalLines, patch, 3)
+                .stream()
+                .reduce((a, b) -> a + "\n" + b)
+                .orElse("");
     }
 }
