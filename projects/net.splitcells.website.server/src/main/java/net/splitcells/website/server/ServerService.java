@@ -15,6 +15,7 @@
  */
 package net.splitcells.website.server;
 
+import lombok.val;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.resource.ResourceOptionImpl;
@@ -26,10 +27,13 @@ import net.splitcells.website.server.project.renderer.ObjectsRenderer;
 import net.splitcells.website.server.project.validator.SourceValidator;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.ProjectsRendererI;
+import net.splitcells.website.server.projects.ProjectsRendererOption;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 import static net.splitcells.dem.Dem.configValue;
+import static net.splitcells.dem.Dem.configWrite;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -48,7 +52,9 @@ public class ServerService extends ResourceOptionImpl<Service> {
 
                 @Override
                 public void start() {
-                    httpServer = projectsRenderer(Dem.configValue(ServerConfig.class)).httpServer();
+                    val renderer = projectsRenderer(Dem.configValue(ServerConfig.class));
+                    configWrite().withConfigValue(ProjectsRendererOption.class, Optional.of(renderer));
+                    httpServer = renderer.httpServer();
                     httpServer.start();
                 }
 

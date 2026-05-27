@@ -197,7 +197,7 @@ public class SystemCell implements Cell {
      * @return
      */
     @Deprecated
-    public static ProjectsRendererI projectsRenderer(Config config) {
+    private static ProjectsRendererI projectsRenderer(Config config) {
         return ServerService.projectsRenderer(config);
     }
 

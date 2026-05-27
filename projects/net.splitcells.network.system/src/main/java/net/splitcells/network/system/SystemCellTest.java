@@ -23,6 +23,7 @@ import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.website.server.ServerConfig;
+import net.splitcells.website.server.projects.ProjectsRendererOption;
 import net.splitcells.website.server.projects.RenderRequest;
 import net.splitcells.website.server.security.authentication.Authentication;
 import org.junit.jupiter.api.Disabled;
@@ -37,14 +38,14 @@ import static net.splitcells.website.server.security.authentication.UserSession.
 public class SystemCellTest {
 
     @IntegrationTest public void testServingWebsiteToFolder() {
-        process(() -> SystemCell.projectsRenderer(Dem.configValue(ServerConfig.class)).serveTo(Paths.get("target/test"))
+        process(() -> Dem.configValue(ProjectsRendererOption.class).orElseThrow().serveTo(Paths.get("target/test"))
                 , env -> env.config().withConfigValue(StartServicesAutomatically.class, false)
                 , SystemCell.class
         );
     }
 
     @UnitTest public void testInvalidPath() {
-        process(() -> SystemCell.projectsRenderer(Dem.configValue(ServerConfig.class)).render(RenderRequest.renderRequest(
+        process(() -> Dem.configValue(ProjectsRendererOption.class).orElseThrow().render(RenderRequest.renderRequest(
                         Trail.trail("invalid-path")
                         , Optional.empty()
                         , anonymous()))
