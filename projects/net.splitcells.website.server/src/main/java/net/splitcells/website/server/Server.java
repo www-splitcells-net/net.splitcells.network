@@ -354,8 +354,7 @@ public class Server {
                                                     logs().append(tree("Processing web server binary request.")
                                                                     .withProperty("Binary request", binaryRequest.data())
                                                             , LogLevel.DEBUG);
-                                                    final var binaryResponse = binaryProcessor
-                                                            .process(binaryRequest);
+                                                    final var binaryResponse = binaryProcessor.process(binaryRequest);
                                                     response.putHeader("content-type", Format.JSON.mimeTypes());
                                                     if (binaryResponse.hasData()) {
                                                         promise.complete(toBytes(binaryResponse.data().createToJsonPrintable()
