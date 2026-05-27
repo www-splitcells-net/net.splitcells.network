@@ -89,7 +89,7 @@ public class SystemCell implements Cell {
     }
 
     public ProjectsRendererI projectsRenderer2(Config config) {
-        return projectsRenderer(config);
+        return ServerService.projectsRenderer(config);
     }
 
     @Deprecated
@@ -188,17 +188,6 @@ public class SystemCell implements Cell {
                 .withLicensePage(trailLink("MIT License", "/net/splitcells/network/legal/licenses/MIT.html"))
                 .withLicensePage(trailLink("Mozilla Public License Version 2.0", "/net/splitcells/network/legal/licenses/MPL-2.0.html"))
                 ;
-    }
-
-    /**
-     * Use {@link ServerService#projectsRenderer(Config)} instead.
-     *
-     * @param config
-     * @return
-     */
-    @Deprecated
-    private static ProjectsRendererI projectsRenderer(Config config) {
-        return ServerService.projectsRenderer(config);
     }
 
     /**
