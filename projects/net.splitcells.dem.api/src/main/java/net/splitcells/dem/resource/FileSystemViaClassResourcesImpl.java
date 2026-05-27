@@ -32,6 +32,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.Files.readAsString;
+import static net.splitcells.dem.resource.License.parseLicense;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -290,26 +291,6 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
         if (!isResourcePathValid(resourcePath)) {
             return Optional.empty();
         }
-        final var fileContent = clazz.getResourceAsStream(metaPath);
-        Optional<String> licenseId = Optional.empty();
-        Optional<String> copyrightText = Optional.empty();
-        for (val line : Files.readAsString(fileContent).split("\\R")) {
-            val lineSplit = line.split("=");
-            if (lineSplit.length > 1) {
-                if ("SPDX-License-Identifier".equals(lineSplit[0])) {
-                    licenseId = Optional.of(lineSplit[1]);
-                } else if ("SPDX-FileCopyrightText".equals(lineSplit[0])) {
-                    copyrightText = Optional.of(lineSplit[1]);
-                }
-            }
-        }
-        if (licenseId.isPresent()) {
-            val license = License.license(licenseId.get());
-            if (copyrightText.isPresent()) {
-                license.setSpdxCopyrightText(copyrightText);
-            }
-            return Optional.of(license);
-        }
-        return Optional.empty();
+        return parseLicense(Files.readAsString(clazz.getResourceAsStream(metaPath)));
     }
 }
