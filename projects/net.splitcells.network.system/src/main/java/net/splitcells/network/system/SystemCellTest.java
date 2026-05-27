@@ -64,7 +64,7 @@ public class SystemCellTest {
                     * net.splitcells.dem.environment.config.ProgramLocalIdentity: class net.splitcells.network.system.SystemCell
                     * net.splitcells.dem.environment.config.ProgramName: net.splitcells.network.system.SystemCell
                     * net.splitcells.dem.environment.config.ProgramRepresentative: net.splitcells.network.system.SystemCell
-                    * net.splitcells.dem.environment.config.StartServicesAutomatically: true
+                    * net.splitcells.dem.environment.config.StartServicesAutomatically: false
                     * net.splitcells.dem.environment.config.StartTime: 2026-05-20T22:35:10Z[UTC]
                     * net.splitcells.dem.resource.communication.log.IsEchoToFile: false
                     * net.splitcells.dem.resource.host.ProcessPath: This value is host specific.
@@ -86,7 +86,6 @@ public class SystemCellTest {
                     * net.splitcells.website.server.ServerConfig:
                         * net.splitcells.website.server.Config:
                             * isSecured: false
-                            * frontMenuDescription: Contains all major programs and documents of this site.
                             * sslKeystorePassword: Optional.empty
                             * sslKeystoreFile: Optional.empty
                             * xmlSchema: Optional[src/main/xsd/den.xsd]
@@ -105,13 +104,11 @@ public class SystemCellTest {
                             * isServerForGeneralPublic: true
                             * isDownloadingViaHtmlElement: false
                             * isRenderingStaticWebsite: false
-                            * isMultiThreaded: true
+                            * isMultiThreaded: false
                             * licensePages: [net/splitcells/network/LICENSE.html named as Licensing Info of The Core Project net.splitcells.network, net/splitcells/network/NOTICE.html named as Copyright Notice, net/splitcells/network/legal/Developer_Certificate_of_Origin.v1.1.html named as Developer Certificate of Origin Version 1.1, net/splitcells/network/legal/licenses/Apache-2.0.html named as Apache License - Version 2.0, January 2004, net/splitcells/network/legal/licenses/BSD-2-Clause.html named as BSD 2 Clause License, net/splitcells/network/legal/licenses/BSD-3-Clause.html named as BSD 3 Clause License, net/splitcells/network/legal/licenses/CC-BY-SA-4.0.html named as Attribution-ShareAlike 4.0 International License, net/splitcells/network/legal/licenses/EPL-2.0.html named as Eclipse Public License - v 2.0, net/splitcells/network/legal/licenses/GPL-2.0-or-later-WITH-Classpath-exception-2.0.html named as GNU GENERAL PUBLIC LICENSE - Version 2, June 1991 with Classpath Exception, net/splitcells/network/legal/licenses/GPL-2.0-or-later.html named as GNU GENERAL PUBLIC LICENSE - Version 2, June 1991, net/splitcells/network/legal/licenses/ISC.html named as ISC License, net/splitcells/network/legal/licenses/LGPL-2.1-or-later.html named as GNU LESSER GENERAL PUBLIC LICENSE - Version 2.1, February 1999, net/splitcells/network/legal/licenses/MIT.html named as MIT License, net/splitcells/network/legal/licenses/MPL-2.0.html named as Mozilla Public License Version 2.0]
                             * interactiveServer: https://live.splitcells.net/
                             * validateLinks: true
                     * net.splitcells.website.server.WebsiteServerCell: net.splitcells.website.server.WebsiteServerCell
-                    * net.splitcells.website.server.config.PasswordAuthenticationEnabled: false
-                    * net.splitcells.website.server.security.encryption.SslEnabled: false
                     * net.splitcells.website.server.test.HtmlLiveTest: class net.splitcells.website.server.test.HtmlLiveTest is enabled.
                 """);
     }
