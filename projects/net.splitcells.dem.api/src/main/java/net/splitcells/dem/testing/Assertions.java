@@ -109,20 +109,21 @@ public class Assertions {
     }
 
     public static <T> void requireEquals(T expected, T actual) {
+        boolean equals = false;
         if (expected == null) {
-            if (actual == null) {
-                return;
-            }
-            throw execException("Arguments are required to be equal, but are not: first argument: "
-                    + expected + ", second argument: " + actual);
+            equals = actual == null;
+        } else {
+            equals = expected.equals(actual);
         }
-        if (!expected.equals(actual)) {
-            val expectedStr = expected + "";
-            val actualStr = actual + "";
-            throw execException(tree("Expected object is not equal to actual object.")
-                    .withProperty("Expected", expectedStr)
-                    .withProperty("Actual", actualStr)
-                    .withProperty("Diff", createUnifiedRawDiff(expectedStr, actualStr)));
+        if (!equals) {
+            if (!expected.equals(actual)) {
+                val expectedStr = expected + "";
+                val actualStr = actual + "";
+                throw execException(tree("Expected object is not equal to actual object.")
+                        .withProperty("Expected", expectedStr)
+                        .withProperty("Actual", actualStr)
+                        .withProperty("Diff", createUnifiedRawDiff(expectedStr, actualStr)));
+            }
         }
     }
 
