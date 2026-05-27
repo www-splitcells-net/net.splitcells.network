@@ -313,7 +313,8 @@ public class Dem {
     public static void testSerializeConfiguration(Class<? extends Cell> cellClass, String expectedCommonMarkSerialization) {
         val actualConfig = serializeConfiguration(cellClass).toCommonMarkString();
         try {
-            requireEquals(actualConfig, expectedCommonMarkSerialization);
+            requireEquals(expectedCommonMarkSerialization, actualConfig);
+            requireEquals(expectedCommonMarkSerialization, actualConfig);
         } catch (Throwable t) {
             logs().append("Actual Configuration:\n" + actualConfig, LogLevel.ERROR);
             throw t;
