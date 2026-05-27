@@ -227,6 +227,14 @@ public class ProjectRendererI implements ProjectRenderer {
                         return Optional.of("<val xmlns=\"http://splitcells.net/den.xsd\">"
                                 + config.isServerForGeneralPublic()
                                 + "</val>");
+                    } else if ("/net/splitcells/website/server/config/is-interactive.xml".equals(p)) {
+                        return Optional.of("<val xmlns=\"http://splitcells.net/den.xsd\">"
+                                + !config.isRenderingStaticWebsite()
+                                + "</val>");
+                    } else if ("/net/splitcells/website/server/config/interactive-server-url.xml".equals(p)) {
+                        return Optional.of("<val xmlns=\"http://splitcells.net/den.xsd\">"
+                                + config.getInteractiveServer()
+                                + "</val>");
                     }
                     return Optional.empty();
                 }

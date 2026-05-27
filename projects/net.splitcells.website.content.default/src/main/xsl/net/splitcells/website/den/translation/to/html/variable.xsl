@@ -18,6 +18,12 @@
     </xsl:variable>
     <xsl:variable name="siteName" select="'Splitcells™ Network'"/>
     <xsl:variable name="site.description" select="'splitcells.net by Mārtiņš Avots NOS'"/>
+    <xsl:variable name="is-interactive">
+        <xsl:value-of select="document('/net/splitcells/website/server/config/is-interactive.xml')"/>
+    </xsl:variable>
+    <xsl:variable name="interactive-server-url">
+        <xsl:value-of select="document('/net/splitcells/website/server/config/interactive-server-url.xml')"/>
+    </xsl:variable>
     <xsl:variable name="generation.style">
         <!-- Currently, only standard and minimal are supported. -->
         <xsl:choose>
