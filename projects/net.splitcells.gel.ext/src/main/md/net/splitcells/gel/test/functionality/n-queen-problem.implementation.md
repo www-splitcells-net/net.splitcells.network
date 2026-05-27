@@ -13,7 +13,7 @@ because of its minimal content.
 > Add dependency to your project in order to use the Generic Allocator. 
 
 If you want to use the bleeding edge version of this project, you need
-to [build it locally](../../../../../../../../../../CONTRIBUTING.md).
+to [build it locally](../../../../../../../../../../src/main/md/net/splitcells/network/CONTRIBUTING.md).
 After this you can add the corresponding dependency to your project:
 ```
 <dependency>
