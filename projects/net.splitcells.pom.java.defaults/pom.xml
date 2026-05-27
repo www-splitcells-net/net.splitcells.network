@@ -45,7 +45,6 @@
                      as it cannot be moved into the fitting profile. -->
                 <groupId>fr.jcgay.maven</groupId>
                 <artifactId>maven-profiler</artifactId>
-                <version>3.2</version>
             </extension>
         </extensions>
         <plugins>
