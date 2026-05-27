@@ -19,6 +19,7 @@ import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.Arrays;
 
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
@@ -34,6 +35,10 @@ public class BinaryUtils {
 
     public static ByteArrayInputStream binaryInputStream(byte[] content) {
         return new ByteArrayInputStream(content);
+    }
+
+    public static <T> boolean equalBytes(T[] expected, T[] actual) {
+        return Arrays.equals(expected, actual);
     }
 
     public static byte[] emptyByteArray() {
