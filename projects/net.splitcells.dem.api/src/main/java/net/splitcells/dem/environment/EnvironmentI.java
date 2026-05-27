@@ -54,7 +54,6 @@ public class EnvironmentI implements Environment {
 
     @Override
     public void start() {
-        config().withConfigValue(Initialized.class, true);
         if (config.configValue(StartServicesAutomatically.class)) {
             config.process(Service.class, s -> {
                 logs().append("Starting `" + s.getClass().getName() + "` service.", LogLevel.DEBUG);
@@ -62,6 +61,8 @@ public class EnvironmentI implements Environment {
                 return s;
             });
         }
+        // Allow configuration write access during service starts.
+        config().withConfigValue(Initialized.class, true);
     }
 
     @Override
