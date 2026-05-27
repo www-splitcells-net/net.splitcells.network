@@ -21,6 +21,7 @@ import net.splitcells.dem.utils.ConstructorIllegal;
 
 import java.time.Instant;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -109,6 +110,10 @@ public class Assertions {
     }
 
     public static <T> void requireEquals(T expected, T actual) {
+        requireEquals(expected, actual, a -> a + "");
+    }
+
+    public static <T> void requireEquals(T expected, T actual, Function<T, String> printer) {
         boolean equals = false;
         if (expected == null) {
             equals = actual == null;
@@ -117,8 +122,8 @@ public class Assertions {
         }
         if (!equals) {
             if (!expected.equals(actual)) {
-                val expectedStr = expected + "";
-                val actualStr = actual + "";
+                val expectedStr = printer.apply(expected);
+                val actualStr = printer.apply(actual);
                 throw execException(tree("Expected object is not equal to actual object.")
                         .withProperty("Expected", expectedStr)
                         .withProperty("Actual", actualStr)
