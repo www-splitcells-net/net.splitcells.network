@@ -446,7 +446,7 @@ request.send();]]>
                 <html>
                     <head>
                         <xsl:variable name="path-str" select="./s:content/s:meta/s:path"/>
-                        <xsl:if test="$is-interactive = 'true' and $path-str != ''">
+                        <xsl:if test="$is-interactive != 'true' and $path-str != ''">
                             <meta http-equiv="refresh">
                                 <xsl:attribute name="content" select="concat('0; url=', $interactive-server-url, $path-str)"/>
                             </meta>
