@@ -63,7 +63,7 @@ public class RepairOptimizationStep implements EditorOptimization {
             // Ensures, that at the end of the optimization all values are assigned.
             onlineLinearInitialization().optimize(solution);
         }
-        if (currentStep <= maxStep) {
+        if (currentStep <= maxStep && !solution.isOptimal()) {
             deescalation.optimize(solution);
             return Optional.of(this);
         }
