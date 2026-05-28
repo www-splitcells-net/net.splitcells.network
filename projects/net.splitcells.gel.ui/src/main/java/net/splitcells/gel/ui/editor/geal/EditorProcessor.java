@@ -176,11 +176,11 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                     throw execException(e);
                 }
                 dataValues.withProperty(OPTIMIZATION_STATUS
-                        , optimizationStatusToCommonMark(editor.currentOptimizationStatus()));
+                        , editor.currentOptimizationStatus().toCommonMarkString());
             } else {
                 val previousStatus = request.data().namedChildren(OPTIMIZATION_STATUS).stream();
                 dataValues.withProperty(OPTIMIZATION_STATUS
-                        , optimizationStatusToCommonMark(editor.currentOptimizationStatus())
+                        , editor.currentOptimizationStatus().toCommonMarkString()
                                 + previousStatus.findFirst()
                                 .map(ps -> "\n" + ps.value().orElseThrow())
                                 .orElse("")
@@ -189,19 +189,12 @@ public class EditorProcessor implements Processor<Tree, Tree> {
             }
             dataValues.withProperty(OPTIMIZATION_STATUS_HISTORY
                     , editor.optimizationStatusHistory().stream()
-                            .reverse()            
-                            .map(EditorProcessor::optimizationStatusToCommonMark)
+                            .reverse()
+                            .map(Tree::toCommonMarkString)
                             .reduce((a, b) -> a + "\n" + b)
                             .orElse(""));
         }
         return response(formUpdate);
-    }
-
-    private static String optimizationStatusToCommonMark(Tree optimizationStatus) {
-        return "# "
-                + toIsoString(zonedDateTime())
-                + "\n"
-                + optimizationStatus.toCommonMarkString();
     }
 
     /**

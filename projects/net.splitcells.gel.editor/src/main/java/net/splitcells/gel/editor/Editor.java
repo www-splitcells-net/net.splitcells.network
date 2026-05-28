@@ -54,6 +54,8 @@ import static net.splitcells.dem.resource.Lock.lock;
 import static net.splitcells.dem.testing.need.NeedsCheck.checkNeed;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
+import static net.splitcells.dem.utils.TimeUtils.toIsoString;
+import static net.splitcells.dem.utils.TimeUtils.zonedDateTime;
 import static net.splitcells.gel.editor.EditorData.editorData;
 import static net.splitcells.gel.editor.geal.parser.SourceUnitParser.parseGealSourceUnit;
 import static net.splitcells.gel.editor.geal.runners.FunctionCallMetaExecutor.functionCallMetaExecutor;
@@ -184,7 +186,7 @@ public class Editor implements Discoverable {
             isOptimizing = true;
             var nextStep = Optional.of(defaultEditorOptimization(this));
             val firstStep = nextStep;
-            optimizationStatusHistory.add(optimizationLock.supply(() -> tree("Started optimization via " + firstStep.orElseThrow().getClass().getSimpleName() + ".")));
+            optimizationStatusHistory.add(optimizationLock.supply(() -> enhanceOptimizationStatus(tree("Started optimization via " + firstStep.orElseThrow().getClass().getSimpleName() + "."))));
             boolean isFirstStep = true;
             if (nextStep.isEmpty()) {
                 afterFirstStep.run();
@@ -194,7 +196,7 @@ public class Editor implements Discoverable {
                 nextStep = optimizationLock.supply(() -> {
                     val currentStep = previousStep.get();
                     val suppliedStep = currentStep.runNextStep();
-                    optimizationStatusHistory.add(currentStep.status());
+                    optimizationStatusHistory.add(enhanceOptimizationStatus(currentStep.status()));
                     return suppliedStep;
                 });
                 if (isFirstStep) {
@@ -205,6 +207,10 @@ public class Editor implements Discoverable {
         } finally {
             isOptimizing = false;
         }
+    }
+
+    private static Tree enhanceOptimizationStatus(Tree optimizationStatus) {
+        return tree(toIsoString(zonedDateTime())).withChild(optimizationStatus);
     }
 
     @Override
