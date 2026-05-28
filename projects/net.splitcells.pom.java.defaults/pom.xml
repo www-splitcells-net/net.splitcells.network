@@ -868,7 +868,7 @@
                             <!--trimStackTrace: show full stack trace in console: source: https://stackoverflow.com/questions/2928548/make-mavens-surefire-show-stacktrace-in-console/16941432#16941432-->
                             <trimStackTrace>false</trimStackTrace>
                             <systemPropertyVariables>
-                                <!-- TOFIX Does not work. Currently the property is set in TestSuiteI manually. -->
+                                <!-- TOFIX Does not work. Currently, the property is set in TestSuiteI manually. -->
                                 <net.splitcells.mode.build>true</net.splitcells.mode.build>
                             </systemPropertyVariables>
                             <!-- TODO Execute tests in parallel.
