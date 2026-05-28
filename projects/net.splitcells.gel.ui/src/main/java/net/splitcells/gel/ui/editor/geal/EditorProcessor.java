@@ -154,6 +154,8 @@ public class EditorProcessor implements Processor<Tree, Tree> {
         } else {
             dataTypes.withProperty(OPTIMIZATION_STATUS, TEXT.codeName());
             renderingTypes.withProperty(OPTIMIZATION_STATUS, PLAIN_TEXT);
+            dataTypes.withProperty(OPTIMIZATION_STATUS_HISTORY, TEXT.codeName());
+            renderingTypes.withProperty(OPTIMIZATION_STATUS_HISTORY, PLAIN_TEXT);
             val statusWaiter = new Semaphore(0, true);
             if (isFirstRequest) {
                 Dem.executeThread(EditorProcessor.class, () -> {
@@ -172,21 +174,32 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                 } catch (InterruptedException e) {
                     throw execException(e);
                 }
-                dataValues.withProperty(OPTIMIZATION_STATUS, "# "
-                        + toIsoString(zonedDateTime())
-                        + "\n"
-                        + editor.currentOptimizationStatus().toCommonMarkString());
+                dataValues.withProperty(OPTIMIZATION_STATUS
+                        , optimizationStatusToCommonMark(editor.currentOptimizationStatus()));
             } else {
                 val previousStatus = request.data().namedChildren(OPTIMIZATION_STATUS).stream();
-                dataValues.withProperty(OPTIMIZATION_STATUS, "# "
-                        + toIsoString(zonedDateTime())
-                        + "\n"
-                        + editor.currentOptimizationStatus().toCommonMarkString()
-                        + previousStatus.findFirst().map(ps -> "\n" + ps.value().orElseThrow()).orElse("")
+                dataValues.withProperty(OPTIMIZATION_STATUS
+                        , optimizationStatusToCommonMark(editor.currentOptimizationStatus())
+                                + previousStatus.findFirst()
+                                .map(ps -> "\n" + ps.value().orElseThrow())
+                                .orElse("")
+
                 );
             }
+            dataValues.withProperty(OPTIMIZATION_STATUS_HISTORY
+                    , editor.optimizationStatusHistory().stream()
+                            .map(EditorProcessor::optimizationStatusToCommonMark)
+                            .reduce((a, b) -> a + "\n" + b)
+                            .orElse(""));
         }
         return response(formUpdate);
+    }
+
+    private static String optimizationStatusToCommonMark(Tree optimizationStatus) {
+        return "# "
+                + toIsoString(zonedDateTime())
+                + "\n"
+                + optimizationStatus.toCommonMarkString();
     }
 
     /**

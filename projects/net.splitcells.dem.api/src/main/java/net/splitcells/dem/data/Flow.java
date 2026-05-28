@@ -20,6 +20,7 @@ import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.utils.ExecutionException;
+import net.splitcells.dem.utils.StreamUtils;
 
 import java.util.Comparator;
 import java.util.Optional;
@@ -48,6 +49,10 @@ public interface Flow<T> extends java.util.stream.Stream<T> {
 
     default Set<T> toSetOfUniques() {
         return collect(Sets.toSetOfUniques());
+    }
+
+    default Flow<T> reverse() {
+        return flow(StreamUtils.reverse(this));
     }
 
 
