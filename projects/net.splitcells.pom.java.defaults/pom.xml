@@ -14,7 +14,6 @@
         <relativePath>../net.splitcells.pom.java.minimal/pom.xml</relativePath>
     </parent>
     <!-- TODO .gitignore of this project is also a template. -->
-    <!-- TODO Update to Java 12. -->
     <!-- TODO Use automatic code formatting with own rules. -->
     <!-- TODO https://fedoramagazine.org/jdk-mission-control-is-now-in-fedora-29/ https://stackoverflow.com/questions/25518834/how-to-add-enable-flag-for-flight-recorder-in-maven-project -->
     <!-- TODO Support FindBugs, SpotBugs,Emma, Cobertura und JaCoCo. -->
