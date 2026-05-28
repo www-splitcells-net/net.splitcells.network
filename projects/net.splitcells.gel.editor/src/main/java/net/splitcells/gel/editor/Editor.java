@@ -39,15 +39,12 @@ import net.splitcells.gel.editor.geal.lang.*;
 import net.splitcells.gel.editor.geal.runners.FunctionCallMetaExecutor;
 import net.splitcells.gel.editor.geal.runners.FunctionCallRun;
 import net.splitcells.gel.editor.lang.SourceCodeQuotation;
-import net.splitcells.gel.editor.optimization.DefaultEditorOptimization;
 import net.splitcells.gel.rating.rater.framework.Rater;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.website.Format;
 
 import java.util.Optional;
-import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
@@ -86,7 +83,7 @@ public class Editor implements Discoverable {
     @Getter @Setter private volatile boolean isOptimizing = false;
     private final Map<String, EditorData> data = map();
     private final ListView<String> path;
-    private Tree optimizationStatus = tree("No optimization was started yet.");
+    private List<Tree> optimizationStatus = list(tree("No optimization was started yet."));
     private final Lock optimizationLock = lock();
 
     /**
@@ -158,7 +155,7 @@ public class Editor implements Discoverable {
     }
 
     public Tree optimizationStatus() {
-        return optimizationStatus;
+        return optimizationStatus.get(optimizationStatus.size() - 1);
     }
 
     /**
@@ -183,7 +180,7 @@ public class Editor implements Discoverable {
             isOptimizing = true;
             var nextStep = Optional.of(defaultEditorOptimization(this));
             val firstStep = nextStep;
-            optimizationStatus = optimizationLock.supply(() -> tree("Started optimization via " + firstStep.orElseThrow().getClass().getSimpleName() + "."));
+            optimizationStatus.add(optimizationLock.supply(() -> tree("Started optimization via " + firstStep.orElseThrow().getClass().getSimpleName() + ".")));
             boolean isFirstStep = true;
             if (nextStep.isEmpty()) {
                 afterFirstStep.run();
@@ -193,7 +190,7 @@ public class Editor implements Discoverable {
                 nextStep = optimizationLock.supply(() -> {
                     val currentStep = previousStep.get();
                     val suppliedStep = currentStep.runNextStep();
-                    optimizationStatus = currentStep.status();
+                    optimizationStatus.add(currentStep.status());
                     return suppliedStep;
                 });
                 if (isFirstStep) {
