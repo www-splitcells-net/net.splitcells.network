@@ -122,6 +122,7 @@ public class Dem {
         thread.setUncaughtExceptionHandler((throwingThread, throwable) -> {
             /**
              * TODO Sometimes {@link Logs#logs()} does not work. Maybe logging is currently not thread safe?
+             * Last confirmed 2026-05-28.
              */
             throwable.printStackTrace();
             logs().fail(throwable);
