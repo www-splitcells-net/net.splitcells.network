@@ -22,6 +22,7 @@ import net.splitcells.website.server.processor.Response;
 import net.splitcells.website.server.security.access.AccessContainer;
 
 import java.util.Optional;
+import java.util.concurrent.Semaphore;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
@@ -149,15 +150,24 @@ public class EditorProcessor implements Processor<Tree, Tree> {
         if (isSync) {
             editorAccess.delete(userSession);
         } else {
+            dataTypes.withProperty(OPTIMIZATION_STATUS, TEXT.codeName());
+            renderingTypes.withProperty(OPTIMIZATION_STATUS, PLAIN_TEXT);
+            val statusWaiter = new Semaphore(0, true);
             if (isFirstRequest) {
                 Dem.executeThread(EditorProcessor.class, () -> {
                     try {
-                        editor.optimize();
+                        editor.optimize(() -> statusWaiter.release());
                     } finally {
                         Dem.sleepAtLeast(60_000);
                         editorAccess.delete(userSession);
                     }
                 });
+                try {
+                    statusWaiter.acquire();
+                } catch (InterruptedException e) {
+                    throw execException(e);
+                }
+                dataValues.withProperty(OPTIMIZATION_STATUS, editor.optimizationStatus().toCommonMarkString());
             } else {
                 val previousStatus = request.data().namedChildren(OPTIMIZATION_STATUS).stream();
                 dataValues.withProperty(OPTIMIZATION_STATUS, "# "
@@ -166,8 +176,6 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                         + editor.optimizationStatus().toCommonMarkString()
                         + previousStatus.findFirst().map(ps -> "\n" + ps.value().orElseThrow()).orElse("")
                 );
-                dataTypes.withProperty(OPTIMIZATION_STATUS, TEXT.codeName());
-                renderingTypes.withProperty(OPTIMIZATION_STATUS, PLAIN_TEXT);
             }
         }
         return response(formUpdate);

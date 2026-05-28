@@ -170,16 +170,24 @@ public class Editor implements Discoverable {
         return optimizationLock.supply(() -> processor.apply(this));
     }
 
+    public void optimize() {
+        optimize(() -> {
+        });
+    }
+
     /**
      * This method is executed asynchronously and therefore needs to synchronize its access the {@link Table}.
      */
-    public void optimize() {
+    public void optimize(Runnable afterFirstStep) {
         try {
             isOptimizing = true;
             var nextStep = Optional.of(defaultEditorOptimization(this));
             val firstStep = nextStep;
             optimizationStatus = optimizationLock.supply(() -> tree("Started optimization via " + firstStep.orElseThrow().getClass().getSimpleName() + "."));
             while (nextStep.isPresent()) {
+                if (firstStep == nextStep) {
+                    afterFirstStep.run();
+                }
                 val previousStep = nextStep;
                 nextStep = optimizationLock.supply(() -> {
                     val currentStep = previousStep.get();
