@@ -24,6 +24,7 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+import static java.time.format.DateTimeFormatter.ISO_ZONED_DATE_TIME;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 
 @JavaLegacy
@@ -55,8 +56,12 @@ public class TimeUtils {
                 , ZoneId.of("UTC"));
     }
 
-    public static String toUtcStringForFiles(ZonedDateTime arg)  {
+    public static String toUtcStringForFiles(ZonedDateTime arg) {
         return arg.withZoneSameInstant(ZoneOffset.UTC).format(UTC_DATE_TIME_FORMAT);
+    }
+
+    public static String toIsoString(ZonedDateTime arg) {
+        return arg.withZoneSameInstant(ZoneOffset.UTC).format(ISO_ZONED_DATE_TIME);
     }
 
     private TimeUtils() {
