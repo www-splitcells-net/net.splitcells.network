@@ -14,6 +14,7 @@ import net.splitcells.dem.resource.communication.log.LogMessage;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.dem.testing.need.Need;
 import net.splitcells.dem.testing.reporting.ErrorReporter;
+import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.EditorData;
 import net.splitcells.website.server.processor.Processor;
@@ -188,6 +189,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
             }
             dataValues.withProperty(OPTIMIZATION_STATUS_HISTORY
                     , editor.optimizationStatusHistory().stream()
+                            .reverse()            
                             .map(EditorProcessor::optimizationStatusToCommonMark)
                             .reduce((a, b) -> a + "\n" + b)
                             .orElse(""));
