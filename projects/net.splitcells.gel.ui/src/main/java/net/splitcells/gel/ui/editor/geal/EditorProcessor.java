@@ -182,7 +182,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                 dataValues.withProperty(OPTIMIZATION_STATUS
                         , editor.currentOptimizationStatus().toCommonMarkString()
                                 + previousStatus.findFirst()
-                                .map(ps -> "\n" + ps.value().orElseThrow())
+                                .map(ps -> ps.value().orElseThrow().name())
                                 .orElse("")
 
                 );
@@ -191,7 +191,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                     , editor.optimizationStatusHistory().stream()
                             .reverse()
                             .map(Tree::toCommonMarkString)
-                            .reduce((a, b) -> a + "\n" + b)
+                            .reduce((a, b) -> a + b)
                             .orElse(""));
         }
         return response(formUpdate);
