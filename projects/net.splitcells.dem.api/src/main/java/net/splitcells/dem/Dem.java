@@ -314,7 +314,6 @@ public class Dem {
         val actualConfig = serializeConfiguration(cellClass).toCommonMarkString();
         try {
             requireEquals(expectedCommonMarkSerialization, actualConfig);
-            requireEquals(expectedCommonMarkSerialization, actualConfig);
         } catch (Throwable t) {
             logs().append("Actual Configuration:\n" + actualConfig, LogLevel.ERROR);
             throw t;
