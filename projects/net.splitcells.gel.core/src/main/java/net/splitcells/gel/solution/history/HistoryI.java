@@ -201,16 +201,37 @@ public class HistoryI implements History {
         runnable.run();
     }
 
+    /**
+     * TODO TOFIX Shouldn't {@link #isRegisterEventIsEnabled} be set to false at the end?
+     * 
+     * @param runnable This is the code to be run during which the {@link History} is enabled.
+     */
     @Override public void processWithHistory(Runnable runnable) {
         isRegisterEventIsEnabled = true;
         runnable.run();
     }
 
+    /**
+     * TODO TOFIX Shouldn't {@link #isRegisterEventIsEnabled} be set to false at the end?
+     * 
+     * @param processor
+     * @param arg
+     * @return
+     * @param <A>
+     * @param <R>
+     */
     @Override public <A, R> R processWithHistory(Function<A, R> processor, A arg) {
         isRegisterEventIsEnabled = true;
         return processor.apply(arg);
     }
 
+    /**
+     * TODO TOFIX Shouldn't {@link #isRegisterEventIsEnabled} be set to false at the end?
+     * 
+     * @param supplier This is the code to be run during which the {@link History} is enabled.
+     * @return
+     * @param <T>
+     */
     @Override
     public <T> T supplyWithHistory(Supplier<T> supplier) {
         isRegisterEventIsEnabled = true;
