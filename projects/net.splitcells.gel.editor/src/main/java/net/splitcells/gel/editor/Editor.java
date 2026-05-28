@@ -184,10 +184,11 @@ public class Editor implements Discoverable {
             var nextStep = Optional.of(defaultEditorOptimization(this));
             val firstStep = nextStep;
             optimizationStatus = optimizationLock.supply(() -> tree("Started optimization via " + firstStep.orElseThrow().getClass().getSimpleName() + "."));
+            boolean isFirstStep = true;
+            if (nextStep.isEmpty()) {
+                afterFirstStep.run();
+            }
             while (nextStep.isPresent()) {
-                if (firstStep == nextStep) {
-                    afterFirstStep.run();
-                }
                 val previousStep = nextStep;
                 nextStep = optimizationLock.supply(() -> {
                     val currentStep = previousStep.get();
@@ -195,6 +196,10 @@ public class Editor implements Discoverable {
                     optimizationStatus = currentStep.status();
                     return suppliedStep;
                 });
+                if (isFirstStep) {
+                    afterFirstStep.run();
+                    isFirstStep = false;
+                }
             }
         } finally {
             isOptimizing = false;
