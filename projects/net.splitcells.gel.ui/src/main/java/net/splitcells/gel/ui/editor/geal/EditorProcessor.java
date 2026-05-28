@@ -50,6 +50,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
     public static final String PROBLEM_DEFINITION = "Definition";
     private static final String REQUESTING_ASYNC = "requesting-async";
     private static final String OPTIMIZATION_STATUS = "optimization-status";
+    private static final String OPTIMIZATION_STATUS_HISTORY = "optimization-status-history";
     private static final String IS_OPTIMIZING = "is-optimizing";
     private static final String ASYNC_ID = "async-user-session-life-cycle-id";
 
@@ -174,13 +175,13 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                 dataValues.withProperty(OPTIMIZATION_STATUS, "# "
                         + toIsoString(zonedDateTime())
                         + "\n"
-                        + editor.optimizationStatus().toCommonMarkString());
+                        + editor.currentOptimizationStatus().toCommonMarkString());
             } else {
                 val previousStatus = request.data().namedChildren(OPTIMIZATION_STATUS).stream();
                 dataValues.withProperty(OPTIMIZATION_STATUS, "# "
                         + toIsoString(zonedDateTime())
                         + "\n"
-                        + editor.optimizationStatus().toCommonMarkString()
+                        + editor.currentOptimizationStatus().toCommonMarkString()
                         + previousStatus.findFirst().map(ps -> "\n" + ps.value().orElseThrow()).orElse("")
                 );
             }

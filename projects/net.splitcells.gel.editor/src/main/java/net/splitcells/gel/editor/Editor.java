@@ -83,7 +83,7 @@ public class Editor implements Discoverable {
     @Getter @Setter private volatile boolean isOptimizing = false;
     private final Map<String, EditorData> data = map();
     private final ListView<String> path;
-    private List<Tree> optimizationStatus = list(tree("No optimization was started yet."));
+    private List<Tree> optimizationStatusHistory = list(tree("No optimization was started yet."));
     private final Lock optimizationLock = lock();
 
     /**
@@ -154,8 +154,12 @@ public class Editor implements Discoverable {
         path = parent.path().shallowCopy().withAppended(name);
     }
 
-    public Tree optimizationStatus() {
-        return optimizationStatus.get(optimizationStatus.size() - 1);
+    public Tree currentOptimizationStatus() {
+        return optimizationStatusHistory.get(optimizationStatusHistory.size() - 1);
+    }
+
+    public List<Tree> optimizationStatusHistory() {
+        return optimizationStatusHistory;
     }
 
     /**
@@ -180,7 +184,7 @@ public class Editor implements Discoverable {
             isOptimizing = true;
             var nextStep = Optional.of(defaultEditorOptimization(this));
             val firstStep = nextStep;
-            optimizationStatus.add(optimizationLock.supply(() -> tree("Started optimization via " + firstStep.orElseThrow().getClass().getSimpleName() + ".")));
+            optimizationStatusHistory.add(optimizationLock.supply(() -> tree("Started optimization via " + firstStep.orElseThrow().getClass().getSimpleName() + ".")));
             boolean isFirstStep = true;
             if (nextStep.isEmpty()) {
                 afterFirstStep.run();
@@ -190,7 +194,7 @@ public class Editor implements Discoverable {
                 nextStep = optimizationLock.supply(() -> {
                     val currentStep = previousStep.get();
                     val suppliedStep = currentStep.runNextStep();
-                    optimizationStatus.add(currentStep.status());
+                    optimizationStatusHistory.add(currentStep.status());
                     return suppliedStep;
                 });
                 if (isFirstStep) {
