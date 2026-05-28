@@ -16,4 +16,7 @@ cd ../net.splitcells.network
   export PATH="$(realpath ./):$PATH"
   echo "$(pwd)/mvnw \$@" > mvn
   chmod +x mvn
+  # Print crash logs, in order to debug CI workflow crashes.
+  export MAVEN_OPTS="-XX:ErrorFile=$HOME/hs_err_pid%p.log"
+  trap "cat $HOME/hs_err_pid*.log" EXIT
 . ./projects/net.splitcells.shell/src/main/bash/command/managed/command.managed.export.bin.sh
