@@ -171,7 +171,10 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                 } catch (InterruptedException e) {
                     throw execException(e);
                 }
-                dataValues.withProperty(OPTIMIZATION_STATUS, editor.optimizationStatus().toCommonMarkString());
+                dataValues.withProperty(OPTIMIZATION_STATUS, "# "
+                        + toIsoString(zonedDateTime())
+                        + "\n"
+                        + editor.optimizationStatus().toCommonMarkString());
             } else {
                 val previousStatus = request.data().namedChildren(OPTIMIZATION_STATUS).stream();
                 dataValues.withProperty(OPTIMIZATION_STATUS, "# "
