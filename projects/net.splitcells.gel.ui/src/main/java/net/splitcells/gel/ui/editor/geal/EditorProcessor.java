@@ -35,6 +35,7 @@ import static net.splitcells.dem.testing.need.NeedsCheck.runWithCheckedNeeds;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StringUtils.*;
+import static net.splitcells.dem.utils.TimeUtils.*;
 import static net.splitcells.gel.editor.Editor.editor;
 import static net.splitcells.gel.editor.EditorData.editorData;
 import static net.splitcells.website.Format.*;
@@ -158,7 +159,13 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                     }
                 });
             } else {
-                dataValues.withProperty(OPTIMIZATION_STATUS, tree(editor.optimizationStatus().toCommonMarkString()));
+                val previousStatus = request.data().namedChildren(OPTIMIZATION_STATUS).stream();
+                dataValues.withProperty(OPTIMIZATION_STATUS, "# "
+                        + toIsoString(zonedDateTime())
+                        + "\n"
+                        + editor.optimizationStatus().toCommonMarkString()
+                        + previousStatus.findFirst().map(ps -> "\n" + ps.value().orElseThrow()).orElse("")
+                );
                 dataTypes.withProperty(OPTIMIZATION_STATUS, TEXT.codeName());
                 renderingTypes.withProperty(OPTIMIZATION_STATUS, PLAIN_TEXT);
             }
@@ -265,7 +272,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
             return log;
         };
     }
-    
+
     @Override public boolean isInteractive() {
         return true;
     }
