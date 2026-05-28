@@ -32,6 +32,7 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT;
 import static net.splitcells.dem.resource.ContentType.TEXT;
 import static net.splitcells.dem.resource.communication.log.LogMessageI.logMessage;
+import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.need.NeedsCheck.runWithCheckedNeeds;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -157,6 +158,9 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                 Dem.executeThread(EditorProcessor.class, () -> {
                     try {
                         editor.optimize(() -> statusWaiter.release());
+                    } catch (Throwable t) {
+                        // TODO TOFIX Otherwise, the error would not be logged. Dem#executeThread does not work in this regard.
+                        logs().fail(execException("Could not optimize problem.", t));
                     } finally {
                         Dem.sleepAtLeast(60_000);
                         editorAccess.delete(userSession);
