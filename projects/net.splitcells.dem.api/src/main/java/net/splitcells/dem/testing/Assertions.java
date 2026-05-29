@@ -32,6 +32,7 @@ import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.createUnifiedRawDiff;
 
+@JavaLegacy
 public class Assertions {
     private Assertions() {
         throw constructorIllegal();
@@ -114,22 +115,31 @@ public class Assertions {
         requireEquals(expected, actual, a -> a + "", (a, b) -> a.equals(b));
     }
 
+    /**
+     * Explicit checks for nulls are done here, as normal code of {@code comparison} is not expected to handle nulls. 
+     * 
+     * @param expected
+     * @param actual
+     * @param printer
+     * @param comparison
+     * @param <T>
+     */
     public static <T> void requireEquals(T expected, T actual, Function<T, String> printer, BiFunction<T, T, Boolean> comparison) {
         boolean equals = false;
         if (expected == null) {
             equals = actual == null;
+        } else if (actual == null) {
+            equals = expected == null;
         } else {
             equals = comparison.apply(expected, actual);
         }
         if (!equals) {
-            if (!expected.equals(actual)) {
-                val expectedStr = printer.apply(expected);
-                val actualStr = printer.apply(actual);
-                throw execException(tree("Expected object is not equal to actual object.")
-                        .withProperty("Expected", "`" + expectedStr + "`")
-                        .withProperty("Actual", "`" + actualStr + "`")
-                        .withProperty("Diff", createUnifiedRawDiff(expectedStr, actualStr)));
-            }
+            val expectedStr = printer.apply(expected);
+            val actualStr = printer.apply(actual);
+            throw execException(tree("Expected object is not equal to actual object.")
+                    .withProperty("Expected", "`" + expectedStr + "`")
+                    .withProperty("Actual", "`" + actualStr + "`")
+                    .withProperty("Diff", createUnifiedRawDiff(expectedStr, actualStr)));
         }
     }
 
