@@ -188,9 +188,6 @@ public class Editor implements Discoverable {
             val firstStep = nextStep;
             optimizationStatusHistory.add(optimizationLock.supply(() -> enhanceOptimizationStatus(tree("Started optimization via " + firstStep.orElseThrow().getClass().getSimpleName() + "."))));
             boolean isFirstStep = true;
-            if (nextStep.isEmpty()) {
-                afterFirstStep.run();
-            }
             while (nextStep.isPresent()) {
                 val previousStep = nextStep;
                 nextStep = optimizationLock.supply(() -> {
