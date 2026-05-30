@@ -17,15 +17,19 @@ package net.splitcells.gel.data.assignment;
 
 import net.splitcells.dem.resource.AspectOrientedConstructor;
 import net.splitcells.dem.resource.AspectOrientedConstructorBase;
+import net.splitcells.dem.resource.ConnectingConstructor;
 import net.splitcells.gel.data.table.Table;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static net.splitcells.dem.resource.AspectOrientedConstructorBase.aspectOrientedConstructor;
+import static net.splitcells.dem.resource.ConnectingConstructorI.connectingConstructor;
 
 public class AssignmentsIFactory implements AssignmentsFactory {
 
     private final AspectOrientedConstructorBase<Assignments> aspects = aspectOrientedConstructor();
+    private final ConnectingConstructor<Assignments> connector = connectingConstructor();
 
     @Override
     public void close() {
@@ -50,5 +54,14 @@ public class AssignmentsIFactory implements AssignmentsFactory {
     @Override
     public Assignments joinAspects(Assignments arg) {
         return aspects.joinAspects(arg);
+    }
+
+    @Override public ConnectingConstructor<Assignments> withConnector(Consumer<Assignments> argConnector) {
+        this.connector.withConnector(argConnector);
+        return this;
+    }
+
+    @Override public Assignments connect(Assignments subject) {
+        return connector.connect(subject);
     }
 }
