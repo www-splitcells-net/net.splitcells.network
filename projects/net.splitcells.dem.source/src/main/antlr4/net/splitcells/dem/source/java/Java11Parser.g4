@@ -102,8 +102,7 @@ record_arguments_next
     : Comma record_arguments_element
     ;
 class_definition
-    : javadoc? Keysymbol_at Keyword_JavaLegacy (.)*?
-    | javadoc? annotation* Keyword_public? Keyword_final?
+    : javadoc? annotation* Keyword_public? Keyword_final?
         /* Keyword_abstract? TODO Is this really needed? */
     	Keyword_class
     	type_declaration
@@ -457,4 +456,3 @@ variable_declaration
     : Keyword_final? type_declaration name
     | Keyword_final? Keyword_var name
     ;
-
