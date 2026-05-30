@@ -80,9 +80,10 @@ lexer grammar Java11Lexer;
     		| 'import lombok.Getter;'
     		| 'import lombok.Setter;'
     		| 'import lombok.experimental.Accessors;' /* TODO Remove Accessors. See Java guidelines. */
-    		| 'import lombok.experimental.Delegate'
-    		| 'import lombok.EqualsAndHashCode'
-    		| 'import lombok.Data'
+    		| 'import lombok.experimental.Delegate;'
+    		| 'import lombok.EqualsAndHashCode;'
+    		| 'import lombok.Data;'
+    		| 'import lombok.val;'
     		| 'import org.openjdk.jmh.annotations.Benchmark;'
     		| 'import org.openjdk.jmh.annotations.Level;'
     		| 'import org.openjdk.jmh.annotations.Scope;'
