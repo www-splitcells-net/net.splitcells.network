@@ -31,6 +31,10 @@ public class Variable<T> {
         return new Variable<>();
     }
 
+    public static <T> Variable<T> create() {
+        return variable();
+    }
+
     private Optional<T> value = Optional.empty();
 
     private Variable() {
