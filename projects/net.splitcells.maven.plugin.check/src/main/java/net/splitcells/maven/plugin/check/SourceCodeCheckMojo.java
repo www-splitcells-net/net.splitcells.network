@@ -46,6 +46,10 @@ import static java.util.stream.Collectors.toList;
  */
 @Mojo(name = "source-code-check")
 public class SourceCodeCheckMojo extends AbstractMojo {
+    
+    public static void main(String... args) {
+        new SourceCodeCheckMojo().checkJavaSourceCodeFile(Path.of("/home/splitcells/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network/projects/net.splitcells.gel.ui/src/main/java/net/splitcells/gel/ui/editor/geal/EditorProcessor.java"));
+    }
 
     @Parameter(defaultValue = "${project}", required = true, readonly = true)
     private MavenProject project;
@@ -67,6 +71,7 @@ public class SourceCodeCheckMojo extends AbstractMojo {
                 } else {
                     final var rootPath = Path.of(sourceRoot.toString());
                     if (isDirectory(rootPath)) {
+                        getLog().debug("Checking source code folder: " + sourceRoot);
                         List<Throwable> errors = new ArrayList<>();
                         try (final var walk = Files.walk(rootPath)) {
                             // Collect is done, because the parallel Stream of walk itself is not as good as a dedicated parallel processing.
@@ -124,7 +129,6 @@ public class SourceCodeCheckMojo extends AbstractMojo {
                 getLog().debug("Ignoring Java legacy file: " + file);
                 return;
             }
-            getLog().debug("Checking file: " + file);
             final var lexer = new net.splitcells.dem.source.java.Java11Lexer(CharStreams.fromString(fileContent));
             final var parser = new net.splitcells.dem.source.java.Java11Parser(new CommonTokenStream(lexer));
             // TODO These error handler and listener creates errors, but maybe this is somehow useful?
@@ -143,7 +147,10 @@ public class SourceCodeCheckMojo extends AbstractMojo {
                     throw new ParseCancellationException("Invalid line: " + line + ", charPositionInLine = " + charPositionInLine + ", msg = " + msg, e);
                 }
             });
-            parser.source_unit();
+            // This is assigned to a variable, for debugging purposes in IDE.
+            final var parsingResult = parser.source_unit();
+            // The source_unit is moved into logging, so that it 100%, that the parsing is executed.
+            getLog().debug("Checking file: " + file + " with the result " + parsingResult);
         } catch (Throwable e) {
             // This is logged, as otherwise the stack trace is not visible.
             getLog().error("The source code file is invalid: " + file, e);
