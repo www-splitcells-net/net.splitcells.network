@@ -47,7 +47,8 @@ lexer grammar Java11Lexer;
 @header {
     package net.splitcells.dem.source.java;
 }
-/* Keywords and Keysymbols */
+/* Keywords and Keysymbols */ 
+    Default_import_prefix_fragment: 'net.splitcells';
     Legacy_Imports: Legacy_Import_Instances;
     fragment Legacy_Import_Instances
     		: 'import java.io.InputStream;'

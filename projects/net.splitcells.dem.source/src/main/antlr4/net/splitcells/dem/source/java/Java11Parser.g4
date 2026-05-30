@@ -309,6 +309,7 @@ name
     | Keyword_super
     | Keyword_var
     | Keyword_Java
+    | Default_import_prefix_fragment
     ;
 operator
 	: Keysymbol_not_equals
@@ -449,10 +450,14 @@ type_name
 	;
 type_path
     /* References to foreign code like the standard Java library are only allowed in legacy code. */
+    : Default_import_prefix_fragment Dot type_path_sub
+    | name;
+type_path_sub
     : name
-    | name Dot type_path
+    | name Dot type_path_sub
     ;
 variable_declaration
     : Keyword_final? type_declaration name
     | Keyword_final? Keyword_var name
     ;
+
