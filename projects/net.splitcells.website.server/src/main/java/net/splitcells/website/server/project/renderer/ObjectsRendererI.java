@@ -63,9 +63,6 @@ public class ObjectsRendererI implements ProjectRenderer {
     }
 
     public synchronized ObjectsRendererI withObject(DiscoverableRenderer object) {
-        if (object.isNoContext()) {
-            return this;
-        }
         final var path = Path.of(pathPrefix + "/" + object.path().stream().reduce((a, b) -> a + "/" + b).orElseThrow());
         Optional<Path> alternativePath;
         if (objects.containsKey(path)) {
@@ -90,9 +87,6 @@ public class ObjectsRendererI implements ProjectRenderer {
     }
 
     public synchronized ObjectsRendererI withObject(CsvRenderer object) {
-        if (object.isNoContext()) {
-            return this;
-        }
         final var path = Path.of(pathPrefix + "/" + object.path().stream().reduce((a, b) -> a + "/" + b).orElseThrow());
         Optional<Path> alternativePath;
         if (csvRenderers.containsKey(path)) {
