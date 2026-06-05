@@ -89,6 +89,7 @@ lexer grammar Java11Lexer;
     		| 'import java.util.Iterator;'
     		| 'import java.util.ListIterator;'
     		| 'import java.util.Collection;'
+    		| 'import java.util.stream.IntStream;'
     		| 'import lombok.Getter;'
     		| 'import lombok.Setter;'
     		| 'import lombok.experimental.Accessors;' /* TODO Remove Accessors. See Java guidelines. */
