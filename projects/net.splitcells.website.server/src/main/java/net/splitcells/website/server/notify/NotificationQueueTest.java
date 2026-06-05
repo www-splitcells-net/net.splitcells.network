@@ -29,8 +29,6 @@ public class NotificationQueueTest {
     @UnitTest
     public void testWithAdditionalNotifications() {
         final var testSubject = notificationQueue();
-
-
         final var testData1 = list(notification(ZonedDateTime.of(1992,3,11,0,0,0,1000, ZoneId.of("UTC")), COMMON_MARK, "A")
                 , notification(ZonedDateTime.of(1992,3,11,0,0,0,1010, ZoneId.of("UTC")), COMMON_MARK, "B")
                 , notification(ZonedDateTime.of(1992,3,11,0,0,0,1030, ZoneId.of("UTC")), COMMON_MARK, "C"));
