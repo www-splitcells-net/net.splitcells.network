@@ -37,7 +37,6 @@ import net.splitcells.gel.rating.rater.lib.classification.RaterBasedOnGrouping;
 
 import java.nio.file.Path;
 
-import static com.google.common.collect.Streams.concat;
 import static net.splitcells.dem.Dem.environment;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;

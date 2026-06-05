@@ -20,8 +20,6 @@ import net.splitcells.gel.constraint.type.Then;
 import net.splitcells.gel.data.table.Tables;
 import org.junit.jupiter.api.Test;
 
-import java.util.stream.IntStream;
-
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.rating.rater.lib.HasSize.hasSize;
