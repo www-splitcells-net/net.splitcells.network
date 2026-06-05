@@ -113,8 +113,7 @@ class_extension
 	: (Keyword_extends type_declaration)? (Keyword_implements type_declaration (Comma type_declaration)* )? Extension_Exception?
 	;
 class_member
-    : javadoc? Keysymbol_at Keyword_JavaLegacy (.)*? Brace_curly_open (.)*? Brace_curly_closed
-    | class_constructor
+    : class_constructor
     | class_member_class_definition
     | record_definition
     | class_member_method_definition
