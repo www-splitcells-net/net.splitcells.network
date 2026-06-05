@@ -15,6 +15,8 @@
  */
 package net.splitcells.dem.environment;
 
+import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.config.*;
 import net.splitcells.dem.environment.config.framework.ConfigDependencyRecording;
 import net.splitcells.dem.environment.config.framework.Configuration;
@@ -24,17 +26,16 @@ import net.splitcells.dem.resource.communication.Flushable;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.host.ProcessPath;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Consumer;
 
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.environment.config.framework.ConfigurationImpl.configuration;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 
 public class EnvironmentI implements Environment {
 
     private final Configuration config = configuration();
-    private final List<Class<? extends Cell>> dependencyCellStack = new ArrayList<>();
+    private final List<Class<? extends Cell>> dependencyCellStack = list();
 
     public static Environment create(Class<?> programRepresentative) {
         return new EnvironmentI(programRepresentative);

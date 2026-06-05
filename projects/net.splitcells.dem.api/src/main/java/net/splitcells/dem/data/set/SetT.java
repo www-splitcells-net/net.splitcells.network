@@ -40,6 +40,14 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 @JavaLegacy
 public interface SetT<T> extends Collection<T> {
 
+    default SetT<T> requireSizeUpperBound(int upperBound) {
+        if (size() <= upperBound) {
+            throw execException(tree("Set should have size at most " + upperBound + " but was " + size() + " instead.")
+                    .withProperty("list", toString()));
+        }
+        return this;
+    }
+
     /**
      * This is the replacement for the deprecated {@link #contains(Object)} Java legacy method.
      *

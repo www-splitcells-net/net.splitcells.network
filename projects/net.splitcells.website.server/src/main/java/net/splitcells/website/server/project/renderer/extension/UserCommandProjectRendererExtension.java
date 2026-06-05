@@ -31,10 +31,10 @@ import net.splitcells.website.server.processor.BinaryMessage;
 import java.nio.file.Path;
 import java.util.Optional;
 
-import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
@@ -85,7 +85,7 @@ public class UserCommandProjectRendererExtension implements ProjectRendererExten
                 throw new RuntimeException(e);
             }
             return projectRenderer.renderString(layout.toString())
-                    .map(r -> binaryMessage(r, TEXT_HTML.toString()));
+                    .map(r -> binaryMessage(r, HTML_TEXT.codeName()));
         }
         return Optional.empty();
     }

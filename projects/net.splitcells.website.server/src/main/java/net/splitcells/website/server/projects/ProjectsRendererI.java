@@ -42,13 +42,13 @@ import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.function.Function;
 
-import static io.vertx.core.http.HttpHeaders.TEXT_HTML;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
+import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
 import static net.splitcells.dem.resource.PathFileSystem.pathFileSystem;
 import static net.splitcells.dem.resource.Paths.path;
 import static net.splitcells.dem.resource.Trail.trail;
@@ -79,7 +79,6 @@ import static net.splitcells.website.server.projects.extension.impls.status.Host
 import static net.splitcells.website.server.projects.extension.impls.status.NetworkStatusRenderExtension.networkStatusRenderExtension;
 import static net.splitcells.website.server.projects.extension.ProjectsRendererExtensionMerger.projectsRendererExtensionMerger;
 import static net.splitcells.website.server.security.authentication.Authentication.anonymous;
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * <p>TODO Create extension system meta project rendering.</p>
@@ -390,7 +389,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
                 .filter(child -> child.propertyInstances(NAME, NATURAL).stream()
                         .anyMatch(property -> property.value().orElseThrow().name().equals(element)))
                 .collect(toList());
-        assertThat(children).hasSizeLessThan(2);
+        children.requireSizeUpperBound(1);
         return children;
     }
 
@@ -440,7 +439,7 @@ public class ProjectsRendererI implements ProjectsRenderer {
 
     @Override
     public Optional<BinaryMessage> renderContent(String content, LayoutConfig metaContent) {
-        return Optional.of(binaryMessage(fallbackRenderer.renderXml(content, metaContent, config).orElseThrow(), TEXT_HTML.toString()));
+        return Optional.of(binaryMessage(fallbackRenderer.renderXml(content, metaContent, config).orElseThrow(), HTML_TEXT.codeName()));
     }
 
     @Override
