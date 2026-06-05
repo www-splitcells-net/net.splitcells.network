@@ -178,6 +178,7 @@ lexer grammar Java11Lexer;
 	Comment_multiline: '/*' .*? '*/';
 	Line_comment: '//' .*? Line_ending;
 /* Generic Content */
+    TypeName: [A-Z][a-zA-Z0-9_]*;
 	Name: [a-zA-Z_][a-zA-Z0-9_]*;
 	TextBlock: '"""' TextBlock_character+ '"""';
 	fragment TextBlock_character

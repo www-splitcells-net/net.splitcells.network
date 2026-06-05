@@ -310,6 +310,7 @@ name
     | Keyword_var
     | Keyword_Java
     | Default_import_prefix_fragment
+    | TypeName
     ;
 operator
 	: Keysymbol_not_equals
@@ -364,7 +365,7 @@ statement
     | name Keysymbol_star Equals expression Semicolon
     | expression Semicolon
     | variable_declaration (Equals expression)? Semicolon
-    | variable_declaration (Equals expression) (Comma Name Equals expression)+ Semicolon
+    | variable_declaration (Equals expression) (Comma name Equals expression)+ Semicolon
     | name access Equals expression Semicolon
     | name Equals expression Semicolon
     | name Equals_and expression Semicolon
@@ -451,7 +452,11 @@ type_name
 type_path
     /* References to foreign code like the standard Java library are only allowed in legacy code. */
     : Default_import_prefix_fragment Dot type_path_sub
-    | name;
+    | name
+    /* Paths starting with upper case import local classes and not classes of external class. See FileSystemTest.FileSystemAccess vs. java.util.function.BiFunction vs. net.splitcells.dem.resource. */
+    | TypeName Dot type_path_sub
+    | TypeName
+    ;
 type_path_sub
     : name
     | name Dot type_path_sub
