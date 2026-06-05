@@ -20,8 +20,6 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
 
-import java.util.Arrays;
-
 import static net.splitcells.dem.data.set.list.Lists.list;
 
 public class NotificationQueue {

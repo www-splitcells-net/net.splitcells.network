@@ -20,7 +20,6 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.tree.Tree;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.function.BiConsumer;
 
 import static net.splitcells.dem.data.order.Comparators.ASCENDING_STRINGS;
