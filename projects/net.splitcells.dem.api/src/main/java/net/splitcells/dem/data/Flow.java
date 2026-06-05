@@ -19,6 +19,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.dem.utils.StreamUtils;
 
@@ -32,6 +33,7 @@ import java.util.stream.Stream;
 import static net.splitcells.dem.data.Flows.flow;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
+@JavaLegacy
 public interface Flow<T> extends java.util.stream.Stream<T> {
 
     default Flow<T> withAppended(Stream<T> other) {

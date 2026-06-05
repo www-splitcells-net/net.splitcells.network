@@ -24,6 +24,7 @@ import net.splitcells.dem.lang.annotations.JavaLegacy;
  * <p>
  * TODO Specify required performance signature.
  */
+@JavaLegacy
 public interface SetFactory extends Resource {
 
     <T> Set<T> set();

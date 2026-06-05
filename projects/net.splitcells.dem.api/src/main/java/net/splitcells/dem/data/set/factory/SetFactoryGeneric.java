@@ -5,9 +5,11 @@ package net.splitcells.dem.data.set.factory;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.legacy.LegacySetFactory;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import static net.splitcells.dem.data.set.legacy.LegacySetWrapper.legacySetWrapper;
 
+@JavaLegacy
 public class SetFactoryGeneric implements SetFactory {
     public static SetFactory setFactoryGeneric(LegacySetFactory argLegacySetFactory) {
         return new SetFactoryGeneric(argLegacySetFactory);

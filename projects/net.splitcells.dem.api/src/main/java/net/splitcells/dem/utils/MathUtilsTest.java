@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.utils;
 
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
@@ -25,6 +26,7 @@ import static net.splitcells.dem.utils.MathUtils.isEven;
 import static net.splitcells.dem.utils.MathUtils.sumsForTarget;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+@JavaLegacy
 public class MathUtilsTest {
 
     @UnitTest

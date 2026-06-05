@@ -3,11 +3,14 @@
  */
 package net.splitcells.dem.data.set.legacy;
 
+import net.splitcells.dem.lang.annotations.JavaLegacy;
+
 import static net.splitcells.dem.data.set.legacy.LegacySetEclipseFactory.legacySetEclipseFactory;
 import static net.splitcells.dem.data.set.legacy.LegacySetWrapper.legacySetWrapper;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
+@JavaLegacy
 public class LegacySets {
 
     /**

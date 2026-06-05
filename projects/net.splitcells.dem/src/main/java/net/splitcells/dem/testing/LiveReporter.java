@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.testing;
 
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestIdentifier;
@@ -25,6 +26,7 @@ import static org.junit.platform.engine.TestExecutionResult.Status.SUCCESSFUL;
 /**
  * TODO Create and use generic stack trace to String method.
  */
+@JavaLegacy
 public class LiveReporter implements TestExecutionListener {
     public static LiveReporter liveReporter() {
         return new LiveReporter();

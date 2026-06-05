@@ -19,6 +19,7 @@ import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServerOptions;
 import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.environment.resource.Service;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.FileSystemView;
 import net.splitcells.website.server.config.HttpPort;
@@ -31,6 +32,7 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 /**
  * Redirects HTTP calls to HTTPS.
  */
+@JavaLegacy
 public class RedirectServer implements Option<Service> {
 
     @Override public Service defaultValue() {

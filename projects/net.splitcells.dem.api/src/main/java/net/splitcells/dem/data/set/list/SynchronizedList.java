@@ -17,11 +17,13 @@ package net.splitcells.dem.data.set.list;
 
 import net.splitcells.dem.data.Flow;
 import net.splitcells.dem.execution.ImplicitEffect;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
+@JavaLegacy
 public class SynchronizedList<T> extends CopyOnWriteArrayList<T> implements List<T>, ImplicitEffect {
     public static <T> List<T> _synchronizedList() {
         return new SynchronizedList<>();

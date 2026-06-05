@@ -15,12 +15,14 @@
  */
 package net.splitcells.dem.testing;
 
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestIdentifier;
 
 import static org.junit.platform.engine.TestExecutionResult.Status.SUCCESSFUL;
 
+@JavaLegacy
 public class FailureDetector implements TestExecutionListener {
     public static FailureDetector failureDetector() {
         return new FailureDetector();

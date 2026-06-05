@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.data.order;
 
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.order.Comparators.ASCENDING_BOOLEANS;
@@ -23,6 +24,7 @@ import static net.splitcells.dem.data.order.Comparators.ASCENDING_INTEGERS;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+@JavaLegacy
 public class ComparisonTest {
     @Test
     public void testAscendingIntegers() {

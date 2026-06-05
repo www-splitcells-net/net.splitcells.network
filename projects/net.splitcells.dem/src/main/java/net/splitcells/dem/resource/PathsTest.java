@@ -15,10 +15,12 @@
  */
 package net.splitcells.dem.resource;
 
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+@JavaLegacy
 public class PathsTest {
     @Test
     public void testRemoveFileSuffix() {

@@ -19,6 +19,7 @@ import lombok.val;
 import net.splitcells.dem.data.Flows;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.Xml;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.project.ProjectRenderer;
@@ -37,6 +38,7 @@ import static net.splitcells.website.server.project.renderer.extension.commonmar
 /**
  * TODO TOFIX There are many heuristic CommonMark source code operations. This should be done via ASTs instead.
  */
+@JavaLegacy
 public class CommonMarkIntegration {
 
     /**
