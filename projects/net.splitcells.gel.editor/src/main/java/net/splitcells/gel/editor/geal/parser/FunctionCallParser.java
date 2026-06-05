@@ -21,9 +21,6 @@ import net.splitcells.dem.source.geal.GealParser;
 import net.splitcells.gel.editor.geal.lang.FunctionCallChainDesc;
 import net.splitcells.gel.editor.geal.lang.FunctionCallDesc;
 
-import java.util.stream.IntStream;
-
-import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.gel.editor.geal.lang.FunctionCallChainDesc.functionCallChainDesc;
 import static net.splitcells.gel.editor.geal.lang.FunctionCallDesc.functionCallDesc;

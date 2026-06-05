@@ -12,8 +12,6 @@ import net.splitcells.gel.solution.Solution;
 
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.function.Supplier;
-import java.util.stream.IntStream;
 
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.tree.TreeI.tree;

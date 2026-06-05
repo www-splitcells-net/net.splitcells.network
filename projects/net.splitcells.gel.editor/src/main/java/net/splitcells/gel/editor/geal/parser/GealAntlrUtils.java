@@ -16,6 +16,7 @@
 package net.splitcells.gel.editor.geal.parser;
 
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.source.geal.GealLexer;
 import net.splitcells.dem.source.geal.GealParser.Source_unitContext;
@@ -29,6 +30,7 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
+@JavaLegacy
 public class GealAntlrUtils {
 
     public static Source_unitContext parseSourceUnit(String arg) {
