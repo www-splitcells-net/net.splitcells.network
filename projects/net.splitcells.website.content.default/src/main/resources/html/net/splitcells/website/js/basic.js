@@ -402,7 +402,10 @@ function net_splitcells_webserver_form_submit(config) {
     if (!submitButton.hasAttribute('original-inner-html')) {
         submitButton.setAttribute('original-inner-html', submitButton.innerHTML);
     }
-    const onClickCode = submitButton.onclick;
+    let onClickCode = submitButton.onclick;
+    if (!submitButton.hasAttribute('submitButton.onclick_original')) {
+        onClickCode = submitButton.onclick_original;
+    }
     submitButton.onclick = null;
     submitButton.innerHTML = "Executing...";
     submitButton.classList.add("net-splitcells-button-activity");
@@ -422,18 +425,19 @@ function net_splitcells_webserver_form_submit(config) {
             net_splitcells_webserver_form_update(config, responseObject);
             if (responseObject['net-splitcells-website-server-form-update']['data-values']['is-optimizing'] === 'true') {
                 console.log('Form submission is still running. Checking for updates.');
-                setTimeout(() => {net_splitcells_webserver_form_submit(config);}, 1000); 
+                submitButton.onclick_original = onClickCode;
+                setTimeout(() => {net_splitcells_webserver_form_submit(config);}, 3000) 
                 return;
             } else {
                 console.log('Form is fully submitted.');
                 submitButton.innerHTML = submitButton.getAttribute('original-inner-html');
+                config['on-submission-completion']();
+                submitButton.classList.remove("net-splitcells-button-activity");
+                submitButton.classList.add("net-splitcells-action-button");
+                submitButton.innerHTML = submitButton.getAttribute('original-inner-html');
+                submitButton.onclick = onClickCode;
             }
         }
-        config['on-submission-completion']();
-        submitButton.classList.remove("net-splitcells-button-activity");
-        submitButton.classList.add("net-splitcells-action-button");
-        submitButton.innerHTML = submitButton.getAttribute('original-inner-html');
-        submitButton.onclick = onClickCode;
     }
     request.open("post", form.action);
     request.send(data);
