@@ -382,9 +382,8 @@ public class HistoryI implements History {
         }
         return lastEventId;
     }
-
-    @Override
-    public Line assign(Line demand, Line supply) {
+    
+    private Line assign(Line demand, Line supply) {
         if (!isRegisterEventIsEnabled) {
             throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
@@ -394,13 +393,11 @@ public class HistoryI implements History {
         throw notImplementedYet();
     }
 
-    @Override
-    public boolean allowsSuppliesOnDemand() {
+    private boolean allowsSuppliesOnDemand() {
         return assignments.allowsSuppliesOnDemand();
     }
 
-    @Override
-    public Line anyAssignmentOf(LinePointer demand, LinePointer supply) {
+    private Line anyAssignmentOf(LinePointer demand, LinePointer supply) {
         if (!isRegisterEventIsEnabled) {
             throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
@@ -410,8 +407,7 @@ public class HistoryI implements History {
         return this.assignments.anyAssignmentOf(demand, supply);
     }
 
-    @Override
-    public Table supplies() {
+    private Table supplies() {
         if (!isRegisterEventIsEnabled) {
             throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
@@ -421,8 +417,7 @@ public class HistoryI implements History {
         return assignments.supplies();
     }
 
-    @Override
-    public Table suppliesUsed() {
+    private Table suppliesUsed() {
         if (!isRegisterEventIsEnabled) {
             throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
@@ -432,8 +427,7 @@ public class HistoryI implements History {
         return assignments.suppliesUsed();
     }
 
-    @Override
-    public Table suppliesFree() {
+    private Table suppliesFree() {
         if (!isRegisterEventIsEnabled) {
             throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
@@ -443,8 +437,7 @@ public class HistoryI implements History {
         return assignments.suppliesFree();
     }
 
-    @Override
-    public Table demands() {
+    private Table demands() {
         if (!isRegisterEventIsEnabled) {
             throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
@@ -454,8 +447,7 @@ public class HistoryI implements History {
         return assignments.demands();
     }
 
-    @Override
-    public Table demandsUsed() {
+    private Table demandsUsed() {
         if (!isRegisterEventIsEnabled) {
             throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
@@ -465,8 +457,7 @@ public class HistoryI implements History {
         return assignments.demandsUsed();
     }
 
-    @Override
-    public Table demandsFree() {
+    private Table demandsFree() {
         if (!isRegisterEventIsEnabled) {
             throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
@@ -476,8 +467,7 @@ public class HistoryI implements History {
         return assignments.demandsFree();
     }
 
-    @Override
-    public Line demandOfAssignment(Line allocation) {
+    private Line demandOfAssignment(Line allocation) {
         if (!isRegisterEventIsEnabled) {
             throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
@@ -487,8 +477,7 @@ public class HistoryI implements History {
         return assignments.demandOfAssignment(allocation);
     }
 
-    @Override
-    public Line supplyOfAssignment(Line allocation) {
+    private Line supplyOfAssignment(Line allocation) {
         if (!isRegisterEventIsEnabled) {
             throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
@@ -498,8 +487,7 @@ public class HistoryI implements History {
         return assignments.supplyOfAssignment(allocation);
     }
 
-    @Override
-    public Set<Line> assignmentsOfSupply(Line supply) {
+    private Set<Line> assignmentsOfSupply(Line supply) {
         if (!isRegisterEventIsEnabled) {
             throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }
@@ -509,8 +497,7 @@ public class HistoryI implements History {
         return assignments.assignmentsOfSupply(supply);
     }
 
-    @Override
-    public Set<Line> assignmentsOfDemand(Line demand) {
+    private Set<Line> assignmentsOfDemand(Line demand) {
         if (!isRegisterEventIsEnabled) {
             throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
         }

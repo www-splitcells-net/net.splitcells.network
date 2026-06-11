@@ -23,6 +23,7 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.TreeI;
+import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.rating.type.Cost;
@@ -61,7 +62,7 @@ import java.util.function.Supplier;
  * <p>IDEA History should only contain primary demand/supply references and no references to used or unused demand/supply,
  * in order to preserve line pointer validity.</p>
  */
-public interface History extends Assignments, AfterAdditionSubscriber, BeforeRemovalSubscriber {
+public interface History extends Table, AfterAdditionSubscriber, BeforeRemovalSubscriber {
     /**
      * The allocation ID is required, as there is no guarantee, that {@link Line#index()} is in ascending order.
      */

@@ -155,68 +155,55 @@ public class HistoryForTable implements History {
         return history.size() - 1;
     }
 
-    @Override
-    public Line assign(Line demand, Line supply) {
+    private Line assign(Line demand, Line supply) {
         throw notImplementedYet();
     }
 
-    @Override
-    public boolean allowsSuppliesOnDemand() {
+    private boolean allowsSuppliesOnDemand() {
         return history.allowsSuppliesOnDemand();
     }
 
-    @Override
-    public Line anyAssignmentOf(LinePointer demand, LinePointer supply) {
+    private Line anyAssignmentOf(LinePointer demand, LinePointer supply) {
         throw notImplementedYet();
     }
 
-    @Override
-    public Table supplies() {
+    private Table supplies() {
         throw notImplementedYet();
     }
 
-    @Override
-    public Table suppliesUsed() {
+    private Table suppliesUsed() {
         throw notImplementedYet();
     }
 
-    @Override
-    public Table suppliesFree() {
+    private Table suppliesFree() {
         throw notImplementedYet();
     }
 
-    @Override
-    public Table demands() {
+    private Table demands() {
         throw notImplementedYet();
     }
 
-    @Override
-    public Table demandsUsed() {
+    private Table demandsUsed() {
         throw notImplementedYet();
     }
 
-    @Override
-    public Table demandsFree() {
+    private Table demandsFree() {
         throw notImplementedYet();
     }
 
-    @Override
-    public Line demandOfAssignment(Line allocation) {
+    private Line demandOfAssignment(Line allocation) {
         throw notImplementedYet();
     }
 
-    @Override
-    public Line supplyOfAssignment(Line allocation) {
+    private Line supplyOfAssignment(Line allocation) {
         throw notImplementedYet();
     }
 
-    @Override
-    public Set<Line> assignmentsOfSupply(Line supply) {
+    private Set<Line> assignmentsOfSupply(Line supply) {
         throw notImplementedYet();
     }
 
-    @Override
-    public Set<Line> assignmentsOfDemand(Line demand) {
+    private Set<Line> assignmentsOfDemand(Line demand) {
         throw notImplementedYet();
     }
 
