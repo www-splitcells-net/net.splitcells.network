@@ -90,7 +90,7 @@ public class HistoryI implements History {
         solution.headerView2().stream()
                 .map(a -> attribute(a.type(), VALUE_PREFIX + a.name()))
                 .forEach(valueAttributes::add);
-        val header = list(ALLOCATION_ID, META_DATA);
+        val header = list(ALLOCATION_ID, ALLOCATION_EVENT, META_DATA);
         valueAttributes.forEach(header::add);
         assignments = table("history", solution, header);
         this.solution = solution;
@@ -115,7 +115,11 @@ public class HistoryI implements History {
                                     toStringPathsDescription(naturalArgumentation.get().toStringPaths())));
                 }
             }
-            final List<Object> values = list(TableEventType.ADDITION, metaData);
+            final List<Object> values = list(moveLastEventIdForward()
+                    , allocations(AllocationChangeType.ADDITION
+                            , solution.demandOfAssignment(allocationValues)
+                            , solution.supplyOfAssignment(allocationValues))
+                    , metaData);
             solution.headerView().forEach(va -> values.add(allocationValues.value(va)));
             assignments.addTranslated(values);
         } else {
@@ -133,7 +137,11 @@ public class HistoryI implements History {
                     , completeRating(solution.constraint().rating()));
             metaData.with(AllocationRating.class
                     , allocationRating(solution.constraint().rating(removal)));
-            final List<Object> values = list(TableEventType.REMOVAL, metaData);
+            final List<Object> values = list(moveLastEventIdForward()
+                    , allocations(AllocationChangeType.REMOVAL
+                            , solution.demandOfAssignment(removal)
+                            , solution.supplyOfAssignment(removal))
+                    , metaData);
             solution.headerView().forEach(va -> values.add(removal.value(va)));
             assignments.addTranslated(values);
         } else {
