@@ -27,8 +27,11 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.StreamUtils.reverse;
 import static net.splitcells.gel.common.Language.*;
+import static net.splitcells.gel.data.table.Tables.table;
+import static net.splitcells.gel.data.table.history.TableEventType.ADDITION;
+import static net.splitcells.gel.data.table.history.TableEventType.ADDITION;
+import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.solution.history.event.Allocation.allocations;
-import static net.splitcells.gel.solution.history.event.AllocationChangeType.ADDITION;
 import static net.splitcells.gel.solution.history.event.AllocationChangeType.REMOVAL;
 import static net.splitcells.gel.solution.history.meta.MetaDataI.metaData;
 import static net.splitcells.gel.solution.history.meta.type.AllocationNaturalArgumentation.allocationNaturalArgumentation;
@@ -43,6 +46,7 @@ import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.table.history.TableEventType;
 import net.splitcells.gel.data.view.LinePointer;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.data.view.column.ColumnView;
@@ -51,6 +55,7 @@ import net.splitcells.gel.data.table.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.assignment.Assignmentss;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.attribute.Attribute;
+import net.splitcells.gel.solution.history.event.AllocationChangeType;
 import net.splitcells.gel.solution.history.meta.type.AllocationNaturalArgumentation;
 import net.splitcells.gel.solution.history.meta.type.AllocationRating;
 import net.splitcells.gel.solution.history.meta.type.CompleteRating;
@@ -74,24 +79,20 @@ public class HistoryI implements History {
 
     private final Solution solution;
     private int lastEventId = -1;
-    private Assignments assignments;
+    private final Table assignments;
     private boolean isRegisterEventIsEnabled = false;
     private boolean isHistoryConsistent = false;
     private boolean synchronizes = false;
     private boolean logNaturalArgumentation = false;
+    private final List<Attribute<?>> valueAttributes = list();
 
     private HistoryI(Solution solution) {
-        val historyParentPath = solution.path().shallowCopy().withAppended(HISTORY.value());
-        assignments = Assignmentss.assignments
-                (HISTORY.value()
-                        , Tables.table
-                                (EVENT.value()
-                                        , () -> historyParentPath
-                                        , list(ALLOCATION_ID, ALLOCATION_EVENT))
-                        , Tables.table
-                                (RESULT.value()
-                                        , () -> historyParentPath
-                                        , list(META_DATA)));
+        solution.headerView2().stream()
+                .map(a -> attribute(a.type(), VALUE_PREFIX + a.name()))
+                .forEach(valueAttributes::add);
+        val header = list(ALLOCATION_ID, META_DATA);
+        valueAttributes.forEach(header::add);
+        assignments = table("history", solution, header);
         this.solution = solution;
         solution.subscribeToAfterAdditions(this);
         solution.subscribeToBeforeRemoval(this);
@@ -114,13 +115,9 @@ public class HistoryI implements History {
                                     toStringPathsDescription(naturalArgumentation.get().toStringPaths())));
                 }
             }
-            final Line allocation
-                    = demands().addTranslated(list(
-                    moveLastEventIdForward()
-                    , allocations(ADDITION
-                            , solution.demandOfAssignment(allocationValues)
-                            , solution.supplyOfAssignment(allocationValues))));
-            assignments.assign(allocation, this.supplies().addTranslated(list(metaData)));
+            final List<Object> values = list(TableEventType.ADDITION, metaData);
+            solution.headerView().forEach(va -> values.add(allocationValues.value(va)));
+            assignments.addTranslated(values);
         } else {
             if (!synchronizes) {
                 isHistoryConsistent = true;
@@ -136,13 +133,9 @@ public class HistoryI implements History {
                     , completeRating(solution.constraint().rating()));
             metaData.with(AllocationRating.class
                     , allocationRating(solution.constraint().rating(removal)));
-            final Line allocation
-                    = demands().addTranslated(list(
-                    moveLastEventIdForward()
-                    , allocations(REMOVAL
-                            , solution.demandOfAssignment(removal)
-                            , solution.supplyOfAssignment(removal))));
-            assignments.assign(allocation, this.supplies().addTranslated(list(metaData)));
+            final List<Object> values = list(TableEventType.REMOVAL, metaData);
+            solution.headerView().forEach(va -> values.add(removal.value(va)));
+            assignments.addTranslated(values);
         } else {
             if (!synchronizes) {
                 isHistoryConsistent = true;
@@ -203,7 +196,7 @@ public class HistoryI implements History {
 
     /**
      * TODO TOFIX Shouldn't {@link #isRegisterEventIsEnabled} be set to false at the end?
-     * 
+     *
      * @param runnable This is the code to be run during which the {@link History} is enabled.
      */
     @Override public void processWithHistory(Runnable runnable) {
@@ -213,12 +206,12 @@ public class HistoryI implements History {
 
     /**
      * TODO TOFIX Shouldn't {@link #isRegisterEventIsEnabled} be set to false at the end?
-     * 
+     *
      * @param processor
      * @param arg
-     * @return
      * @param <A>
      * @param <R>
+     * @return
      */
     @Override public <A, R> R processWithHistory(Function<A, R> processor, A arg) {
         isRegisterEventIsEnabled = true;
@@ -227,10 +220,10 @@ public class HistoryI implements History {
 
     /**
      * TODO TOFIX Shouldn't {@link #isRegisterEventIsEnabled} be set to false at the end?
-     * 
+     *
      * @param supplier This is the code to be run during which the {@link History} is enabled.
-     * @return
      * @param <T>
+     * @return
      */
     @Override
     public <T> T supplyWithHistory(Supplier<T> supplier) {
@@ -265,7 +258,7 @@ public class HistoryI implements History {
                 .orElseThrow()
                 .value(ALLOCATION_EVENT);
         final var eventType = eventToRemove.type();
-        if (eventType.equals(ADDITION)) {
+        if (eventType.equals(AllocationChangeType.ADDITION)) {
             solution.remove(solution.anyAssignmentOf
                     (eventToRemove.demand().toLinePointer()
                             , eventToRemove.supply().toLinePointer()));
@@ -382,7 +375,7 @@ public class HistoryI implements History {
         }
         return lastEventId;
     }
-    
+
     private Line assign(Line demand, Line supply) {
         if (!isRegisterEventIsEnabled) {
             throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
@@ -391,120 +384,6 @@ public class HistoryI implements History {
             throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
         }
         throw notImplementedYet();
-    }
-
-    private boolean allowsSuppliesOnDemand() {
-        return assignments.allowsSuppliesOnDemand();
-    }
-
-    private Line anyAssignmentOf(LinePointer demand, LinePointer supply) {
-        if (!isRegisterEventIsEnabled) {
-            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
-        }
-        if (isHistoryConsistent) {
-            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
-        }
-        return this.assignments.anyAssignmentOf(demand, supply);
-    }
-
-    private Table supplies() {
-        if (!isRegisterEventIsEnabled) {
-            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
-        }
-        if (isHistoryConsistent) {
-            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
-        }
-        return assignments.supplies();
-    }
-
-    private Table suppliesUsed() {
-        if (!isRegisterEventIsEnabled) {
-            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
-        }
-        if (isHistoryConsistent) {
-            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
-        }
-        return assignments.suppliesUsed();
-    }
-
-    private Table suppliesFree() {
-        if (!isRegisterEventIsEnabled) {
-            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
-        }
-        if (isHistoryConsistent) {
-            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
-        }
-        return assignments.suppliesFree();
-    }
-
-    private Table demands() {
-        if (!isRegisterEventIsEnabled) {
-            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
-        }
-        if (isHistoryConsistent) {
-            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
-        }
-        return assignments.demands();
-    }
-
-    private Table demandsUsed() {
-        if (!isRegisterEventIsEnabled) {
-            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
-        }
-        if (isHistoryConsistent) {
-            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
-        }
-        return assignments.demandsUsed();
-    }
-
-    private Table demandsFree() {
-        if (!isRegisterEventIsEnabled) {
-            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
-        }
-        if (isHistoryConsistent) {
-            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
-        }
-        return assignments.demandsFree();
-    }
-
-    private Line demandOfAssignment(Line allocation) {
-        if (!isRegisterEventIsEnabled) {
-            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
-        }
-        if (isHistoryConsistent) {
-            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
-        }
-        return assignments.demandOfAssignment(allocation);
-    }
-
-    private Line supplyOfAssignment(Line allocation) {
-        if (!isRegisterEventIsEnabled) {
-            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
-        }
-        if (isHistoryConsistent) {
-            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
-        }
-        return assignments.supplyOfAssignment(allocation);
-    }
-
-    private Set<Line> assignmentsOfSupply(Line supply) {
-        if (!isRegisterEventIsEnabled) {
-            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
-        }
-        if (isHistoryConsistent) {
-            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
-        }
-        return assignments.assignmentsOfSupply(supply);
-    }
-
-    private Set<Line> assignmentsOfDemand(Line demand) {
-        if (!isRegisterEventIsEnabled) {
-            throw ExecutionException.execException(ERROR_HISTORY_DISABLED);
-        }
-        if (isHistoryConsistent) {
-            throw ExecutionException.execException(ERROR_HISTORY_INCONSISTENT);
-        }
-        return assignments.assignmentsOfDemand(demand);
     }
 
     @Override

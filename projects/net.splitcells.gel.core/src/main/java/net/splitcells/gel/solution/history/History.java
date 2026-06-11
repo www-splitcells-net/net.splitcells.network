@@ -24,6 +24,7 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.table.history.TableEventType;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.rating.type.Cost;
@@ -68,7 +69,9 @@ public interface History extends Table, AfterAdditionSubscriber, BeforeRemovalSu
      */
     Attribute<Integer> ALLOCATION_ID = attribute(Integer.class, "allocation-id");
     Attribute<Allocation> ALLOCATION_EVENT = attribute(Allocation.class, "allocation-event");
+    Attribute<TableEventType> DATABASE_EVENT_TYPE = attribute(TableEventType.class, "database-event-type");
     Attribute<MetaDataView> META_DATA = attribute(MetaDataView.class, "meta-data");
+    String VALUE_PREFIX = "value-";
 
     /**
      * Undoes actions recorded by this {@link History} up to the point in
@@ -186,25 +189,14 @@ public interface History extends Table, AfterAdditionSubscriber, BeforeRemovalSu
                     cell.withChild(TreeI.tree("p", FODS_TEXT).withChild(tree(attName)));
                     return cell;
                 }).forEach(attDesc -> header.withChild(attDesc));
-        if (!unorderedLines().isEmpty()) {
-            // TODO HACK Prevents errors if the history is empty.
-            unorderedLines().get(0).value(ALLOCATION_EVENT).demand().context().headerView()
-                    .forEach(a -> header.withChild(tableCell("demand-" + a.name())));
-            unorderedLines().get(0).value(ALLOCATION_EVENT).supply().context().headerView()
-                    .forEach(a -> header.withChild(tableCell("supply-" + a.name())));
-        }
+        headerView().forEach(a -> header.withChild(tableCell(a.name())));
         header.withChild(tableCell("allocation-cost"));
         header.withChild(tableCell("complete-cost"));
         header.withChild(tableCell(META_DATA.name()));
         unorderedLines().forEach(line -> {
             final var tableLine = TreeI.tree("table-row", FODS_TABLE);
             table.withChild(tableLine);
-            tableLine.withChild(tableCell("" + line.value(ALLOCATION_ID)));
-            tableLine.withChild(tableCell(line.value(ALLOCATION_EVENT).type().name()));
-            line.value(ALLOCATION_EVENT).demand().context().headerView()
-                    .forEach(a -> tableLine.withChild(tableCell(line.value(ALLOCATION_EVENT).demand().value(a).toString())));
-            line.value(ALLOCATION_EVENT).supply().context().headerView()
-                    .forEach(a -> tableLine.withChild(tableCell(line.value(ALLOCATION_EVENT).supply().value(a).toString())));
+            headerView().forEach(a -> tableCell("" + line.value(a)));
             tableLine.withChild(tableCell("1"));
             tableLine.withChild(tableCell("2"));
             tableLine.withChild(tableCell("" + line.value(META_DATA).value(AllocationRating.class).get().value().asMetaRating().getContentValue(Cost.class).value()));
