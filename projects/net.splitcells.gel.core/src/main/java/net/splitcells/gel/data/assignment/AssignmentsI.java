@@ -70,6 +70,8 @@ public class AssignmentsI implements Assignments {
         return new AssignmentsI(name, demands, supplies);
     }
 
+    private static final String ASSIGNMENT = "assignment";
+
     /**
      * TODO This is deprecated, because {@link #assignments} already has the fitting name.
      */
@@ -102,7 +104,20 @@ public class AssignmentsI implements Assignments {
     private final Map<Integer, Set<Integer>> usedDemandsIndexToUsedSuppliesIndex = map();
     private final Map<Integer, Set<Integer>> usedSupplyIndexToUsedDemandsIndex = map();
 
+    /**
+     * The suffix {@link #ASSIGNMENT} is added to the name,
+     * in order to make it easier to find such a path three.
+     *
+     * @param name
+     * @param demand
+     * @param supply
+     */
     private AssignmentsI(String name, Table demand, Table supply) {
+        if (name.isEmpty()) {
+            name += "-" + ASSIGNMENT;
+        } else {
+            name += ASSIGNMENT;
+        }
         this.names = name;
         assignments = Tables.table2(name, demand, concat(demand.headerView(), supply.headerView()));
         // TODO Remove code and comment duplications.
