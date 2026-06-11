@@ -23,6 +23,7 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.TreeI;
+import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.history.event.Allocation;
@@ -61,6 +62,9 @@ import java.util.function.Supplier;
  * in order to preserve line pointer validity.</p>
  */
 public interface History extends Assignments, AfterAdditionSubscriber, BeforeRemovalSubscriber {
+    /**
+     * The allocation ID is required, as there is no guarantee, that {@link Line#index()} is in ascending order.
+     */
     Attribute<Integer> ALLOCATION_ID = attribute(Integer.class, "allocation-id");
     Attribute<Allocation> ALLOCATION_EVENT = attribute(Allocation.class, "allocation-event");
     Attribute<MetaDataView> META_DATA = attribute(MetaDataView.class, "meta-data");
