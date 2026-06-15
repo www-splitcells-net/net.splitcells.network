@@ -32,6 +32,7 @@ public class RenderCell implements Cell {
     }
 
     @Override public void accept(Environment env) {
+        env.withCell(WebsiteServerCell.class);
         env.config().configValue(Tables.class).withConnector(table -> {
             if (!table.name().equals(MIRROR_NAME)) {
                 registerObject(table.discoverableRenderer());
