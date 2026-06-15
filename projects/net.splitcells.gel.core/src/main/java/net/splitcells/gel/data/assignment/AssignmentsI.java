@@ -114,9 +114,9 @@ public class AssignmentsI implements Assignments {
      */
     private AssignmentsI(String name, Table demand, Table supply) {
         if (name.isEmpty()) {
-            name += "-" + ASSIGNMENT;
-        } else {
             name += ASSIGNMENT;
+        } else {
+            name += "-" + ASSIGNMENT;
         }
         this.names = name;
         assignments = Tables.table2(name, demand, concat(demand.headerView(), supply.headerView()));
