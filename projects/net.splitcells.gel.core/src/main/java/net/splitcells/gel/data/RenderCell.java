@@ -9,6 +9,7 @@ import net.splitcells.dem.environment.config.framework.Option;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.data.assignment.Assignmentss;
 import net.splitcells.gel.data.table.Tables;
+import net.splitcells.website.server.WebsiteServerCell;
 
 import java.util.Optional;
 
@@ -16,6 +17,10 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.gel.data.view.View.MIRROR_NAME;
 import static net.splitcells.website.server.project.renderer.ObjectsRenderer.registerObject;
 
+/**
+ * Enables the rendering of data on the {@link WebsiteServerCell}.
+ * This needs additional memory and CPU and therefore is not enabled by default.
+ */
 public class RenderCell implements Cell {
 
     @Override public String groupId() {
