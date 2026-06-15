@@ -113,8 +113,7 @@ public class AssignmentsTest extends TestSuiteI {
         final var demands = Tables.table("demands");
         final var supplies = Tables.table("supplies");
         final var allocations = assignments("test", demands, supplies);
-
-        Assertions.requireEquals(allocations.path(), list("demands", "test"));
+        requireEquals(allocations.path(), list("demands", "test-assignment"));
     }
 
     @UnitTest
