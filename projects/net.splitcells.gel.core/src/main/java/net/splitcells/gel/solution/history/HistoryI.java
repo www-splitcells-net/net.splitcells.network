@@ -261,17 +261,15 @@ public class HistoryI implements History {
                 .lookup(index)
                 .unorderedLinesStream()
                 .findFirst()
-                .orElseThrow()
-                .value(ALLOCATION_EVENT);
-        final var eventType = eventToRemove.type();
+                .orElseThrow();
+        final var eventType = eventToRemove.value(EVENT_TYPE);
         if (eventType.equals(AllocationChangeType.ADDITION)) {
             solution.remove(solution.anyAssignmentOf
-                    (eventToRemove.demand().toLinePointer()
-                            , eventToRemove.supply().toLinePointer()));
+                    (eventToRemove.value(DEMAND).toLinePointer(), eventToRemove.value(SUPPLY).toLinePointer()));
         } else if (eventType.equals(REMOVAL)) {
             solution.assign
-                    (eventToRemove.demand().toLinePointer().interpret(solution.demands()).orElseThrow()
-                            , eventToRemove.supply().toLinePointer().interpret(solution.supplies()).orElseThrow());
+                    (eventToRemove.value(DEMAND).toLinePointer().interpret(solution.demands()).orElseThrow()
+                            , eventToRemove.value(SUPPLY).toLinePointer().interpret(solution.supplies()).orElseThrow());
         } else {
             throw new UnsupportedOperationException();
         }
