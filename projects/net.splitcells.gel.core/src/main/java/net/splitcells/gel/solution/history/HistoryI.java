@@ -40,6 +40,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.table.history.TableEventType;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.gel.data.table.AfterAdditionSubscriber;
@@ -81,7 +82,7 @@ public class HistoryI implements History {
         solution.headerView2().stream()
                 .map(a -> attribute(a.type(), VALUE_PREFIX + a.name()))
                 .forEach(valueAttributes::add);
-        val header = list(EVENT_ID, ALLOCATION_EVENT, META_DATA);
+        val header = list(EVENT_ID, EVENT_TYPE, ALLOCATION_EVENT, META_DATA);
         valueAttributes.forEach(header::add);
         assignments = table("history", solution, header);
         this.solution = solution;
@@ -107,6 +108,7 @@ public class HistoryI implements History {
                 }
             }
             final List<Object> values = list(moveLastEventIdForward()
+                    , TableEventType.ADDITION
                     , allocations(AllocationChangeType.ADDITION
                             , solution.demandOfAssignment(allocationValues)
                             , solution.supplyOfAssignment(allocationValues))
@@ -129,6 +131,7 @@ public class HistoryI implements History {
             metaData.with(AllocationRating.class
                     , allocationRating(solution.constraint().rating(removal)));
             final List<Object> values = list(moveLastEventIdForward()
+                    , TableEventType.REMOVAL
                     , allocations(AllocationChangeType.REMOVAL
                             , solution.demandOfAssignment(removal)
                             , solution.supplyOfAssignment(removal))

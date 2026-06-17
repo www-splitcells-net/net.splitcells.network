@@ -68,8 +68,8 @@ public interface History extends Table, AfterAdditionSubscriber, BeforeRemovalSu
      * The event ID is required, as there is no guarantee, that {@link Line#index()} is in ascending order.
      */
     Attribute<Integer> EVENT_ID = attribute(Integer.class, "event-id");
+    Attribute<TableEventType> EVENT_TYPE = attribute(TableEventType.class, "database-event-type");
     Attribute<AllocationChange> ALLOCATION_EVENT = attribute(AllocationChange.class, "allocation-event");
-    Attribute<TableEventType> DATABASE_EVENT_TYPE = attribute(TableEventType.class, "database-event-type");
     Attribute<MetaDataView> META_DATA = attribute(MetaDataView.class, "meta-data");
     String VALUE_PREFIX = "value-";
 
