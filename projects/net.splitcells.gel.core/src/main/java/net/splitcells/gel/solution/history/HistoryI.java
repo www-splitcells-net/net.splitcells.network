@@ -82,7 +82,7 @@ public class HistoryI implements History {
         solution.headerView2().stream()
                 .map(a -> attribute(a.type(), VALUE_PREFIX + a.name()))
                 .forEach(valueAttributes::add);
-        val header = list(EVENT_ID, EVENT_TYPE, ALLOCATION_EVENT, META_DATA);
+        val header = list(EVENT_ID, EVENT_TYPE, ALLOCATION_EVENT, DEMAND, SUPPLY, META_DATA);
         valueAttributes.forEach(header::add);
         assignments = table("history", solution, header);
         this.solution = solution;
@@ -107,11 +107,13 @@ public class HistoryI implements History {
                                     toStringPathsDescription(naturalArgumentation.get().toStringPaths())));
                 }
             }
+            val demand = solution.demandOfAssignment(allocationValues);
+            val supply = solution.supplyOfAssignment(allocationValues);
             final List<Object> values = list(moveLastEventIdForward()
                     , TableEventType.ADDITION
-                    , allocations(AllocationChangeType.ADDITION
-                            , solution.demandOfAssignment(allocationValues)
-                            , solution.supplyOfAssignment(allocationValues))
+                    , allocations(AllocationChangeType.ADDITION, demand, supply)
+                    , demand
+                    , supply
                     , metaData);
             solution.headerView().forEach(va -> values.add(allocationValues.value(va)));
             assignments.addTranslated(values);
@@ -130,11 +132,13 @@ public class HistoryI implements History {
                     , completeRating(solution.constraint().rating()));
             metaData.with(AllocationRating.class
                     , allocationRating(solution.constraint().rating(removal)));
+            val demand = solution.demandOfAssignment(removal);
+            val supply = solution.supplyOfAssignment(removal);
             final List<Object> values = list(moveLastEventIdForward()
                     , TableEventType.REMOVAL
-                    , allocations(AllocationChangeType.REMOVAL
-                            , solution.demandOfAssignment(removal)
-                            , solution.supplyOfAssignment(removal))
+                    , allocations(AllocationChangeType.REMOVAL, demand, supply)
+                    , demand
+                    , supply
                     , metaData);
             solution.headerView().forEach(va -> values.add(removal.value(va)));
             assignments.addTranslated(values);
