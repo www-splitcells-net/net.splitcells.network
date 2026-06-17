@@ -5,7 +5,9 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
-* **2026-06-12 \#37** Rename `History#ALLOCATION_ID` to `History#EVENT_ID` in order to make the name more understandable.
+* **2026-06-12 \#37**
+    1. Rename `History#ALLOCATION_ID` to `History#EVENT_ID` in order to make the name more understandable.
+    2. Rename `net.splitcells.gel.solution.history.event.Allocation` to `net.splitcells.gel.solution.history.event.AllocationChange` in order to make the name more understandable.
 * **2026-04-23 \#37** Make lookup system easier to understand by renaming its interfaces and classes.
     1. Rename `LookupComponents` to `LookupMethods`.
     2. Rename `AllocationLookupComponents` to `AllocationLookupMethods`.

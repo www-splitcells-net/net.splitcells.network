@@ -28,7 +28,7 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.StreamUtils.reverse;
 import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
-import static net.splitcells.gel.solution.history.event.Allocation.allocations;
+import static net.splitcells.gel.solution.history.event.AllocationChange.allocations;
 import static net.splitcells.gel.solution.history.event.AllocationChangeType.REMOVAL;
 import static net.splitcells.gel.solution.history.meta.MetaDataI.metaData;
 import static net.splitcells.gel.solution.history.meta.type.AllocationNaturalArgumentation.allocationNaturalArgumentation;

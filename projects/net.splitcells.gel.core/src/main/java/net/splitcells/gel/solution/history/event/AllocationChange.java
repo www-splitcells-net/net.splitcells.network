@@ -22,16 +22,16 @@ import net.splitcells.gel.data.view.Line;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.gel.common.Language.*;
 
-public class Allocation implements Domable {
+public class AllocationChange implements Domable {
     private final AllocationChangeType type;
     private final Line demand;
     private final Line supply;
 
-    public static Allocation allocations(AllocationChangeType type, Line demand, Line supply) {
-        return new Allocation(type, demand, supply);
+    public static AllocationChange allocations(AllocationChangeType type, Line demand, Line supply) {
+        return new AllocationChange(type, demand, supply);
     }
 
-    private Allocation(AllocationChangeType type, Line demand, Line supply) {
+    private AllocationChange(AllocationChangeType type, Line demand, Line supply) {
         this.type = type;
         this.demand = demand;
         this.supply = supply;

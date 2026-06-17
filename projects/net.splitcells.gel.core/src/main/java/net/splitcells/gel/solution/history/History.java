@@ -28,7 +28,7 @@ import net.splitcells.gel.data.table.history.TableEventType;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.rating.type.Cost;
-import net.splitcells.gel.solution.history.event.Allocation;
+import net.splitcells.gel.solution.history.event.AllocationChange;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.AfterAdditionSubscriber;
 import net.splitcells.gel.data.table.BeforeRemovalSubscriber;
@@ -68,7 +68,7 @@ public interface History extends Table, AfterAdditionSubscriber, BeforeRemovalSu
      * The event ID is required, as there is no guarantee, that {@link Line#index()} is in ascending order.
      */
     Attribute<Integer> EVENT_ID = attribute(Integer.class, "event-id");
-    Attribute<Allocation> ALLOCATION_EVENT = attribute(Allocation.class, "allocation-event");
+    Attribute<AllocationChange> ALLOCATION_EVENT = attribute(AllocationChange.class, "allocation-event");
     Attribute<TableEventType> DATABASE_EVENT_TYPE = attribute(TableEventType.class, "database-event-type");
     Attribute<MetaDataView> META_DATA = attribute(MetaDataView.class, "meta-data");
     String VALUE_PREFIX = "value-";
