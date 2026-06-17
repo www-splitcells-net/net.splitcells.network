@@ -26,10 +26,7 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.StreamUtils.reverse;
-import static net.splitcells.gel.common.Language.*;
 import static net.splitcells.gel.data.table.Tables.table;
-import static net.splitcells.gel.data.table.history.TableEventType.ADDITION;
-import static net.splitcells.gel.data.table.history.TableEventType.ADDITION;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.solution.history.event.Allocation.allocations;
 import static net.splitcells.gel.solution.history.event.AllocationChangeType.REMOVAL;
@@ -39,20 +36,14 @@ import static net.splitcells.gel.solution.history.meta.type.AllocationRating.all
 import static net.splitcells.gel.solution.history.meta.type.CompleteRating.completeRating;
 
 import lombok.val;
-import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.utils.ExecutionException;
-import net.splitcells.gel.data.assignment.Assignments;
-import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.table.Table;
-import net.splitcells.gel.data.table.history.TableEventType;
-import net.splitcells.gel.data.view.LinePointer;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.gel.data.table.AfterAdditionSubscriber;
 import net.splitcells.gel.data.table.BeforeRemovalSubscriber;
-import net.splitcells.gel.data.assignment.Assignmentss;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.solution.history.event.AllocationChangeType;
@@ -90,7 +81,7 @@ public class HistoryI implements History {
         solution.headerView2().stream()
                 .map(a -> attribute(a.type(), VALUE_PREFIX + a.name()))
                 .forEach(valueAttributes::add);
-        val header = list(ALLOCATION_ID, ALLOCATION_EVENT, META_DATA);
+        val header = list(EVENT_ID, ALLOCATION_EVENT, META_DATA);
         valueAttributes.forEach(header::add);
         assignments = table("history", solution, header);
         this.solution = solution;
@@ -253,13 +244,13 @@ public class HistoryI implements History {
     private void resetLast() {
         synchronizes = true;
         if (ENFORCING_UNIT_CONSISTENCY) {
-            assignments.columnView(ALLOCATION_ID)
+            assignments.columnView(EVENT_ID)
                     .lookup(assignments.size() - 1)
                     .unorderedLines()
                     .requireSizeOf(1);
         }
         final var index = assignments.size() - 1;
-        final var eventToRemove = assignments.columnView(ALLOCATION_ID)
+        final var eventToRemove = assignments.columnView(EVENT_ID)
                 .lookup(index)
                 .unorderedLinesStream()
                 .findFirst()
@@ -285,13 +276,13 @@ public class HistoryI implements History {
         if (ENFORCING_UNIT_CONSISTENCY) {
             assignments.unorderedLines().requireSizeOf(index + 1);
             try {
-                assignments.columnView(ALLOCATION_ID).lookup(index + 1).unorderedLines().requireEmptySet();
-                assignments.columnView(ALLOCATION_ID).lookup(index).unorderedLines().requireSizeOf(1);
+                assignments.columnView(EVENT_ID).lookup(index + 1).unorderedLines().requireEmptySet();
+                assignments.columnView(EVENT_ID).lookup(index).unorderedLines().requireSizeOf(1);
             } catch (Throwable t) {
                 throw new RuntimeException(t);
             }
         }
-        removal_(assignments.columnView(ALLOCATION_ID).lookup(index).unorderedLinesStream().findFirst().orElseThrow());
+        removal_(assignments.columnView(EVENT_ID).lookup(index).unorderedLinesStream().findFirst().orElseThrow());
     }
 
     /**

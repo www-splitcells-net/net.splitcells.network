@@ -65,9 +65,9 @@ import java.util.function.Supplier;
  */
 public interface History extends Table, AfterAdditionSubscriber, BeforeRemovalSubscriber {
     /**
-     * The allocation ID is required, as there is no guarantee, that {@link Line#index()} is in ascending order.
+     * The event ID is required, as there is no guarantee, that {@link Line#index()} is in ascending order.
      */
-    Attribute<Integer> ALLOCATION_ID = attribute(Integer.class, "allocation-id");
+    Attribute<Integer> EVENT_ID = attribute(Integer.class, "event-id");
     Attribute<Allocation> ALLOCATION_EVENT = attribute(Allocation.class, "allocation-event");
     Attribute<TableEventType> DATABASE_EVENT_TYPE = attribute(TableEventType.class, "database-event-type");
     Attribute<MetaDataView> META_DATA = attribute(MetaDataView.class, "meta-data");
