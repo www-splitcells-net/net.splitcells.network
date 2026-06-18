@@ -37,8 +37,7 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSel
 
 public class ConstraintGroupBasedRepairTest {
 
-    @Test
-    public void test_repair_of_defying_group() {
+    @Test public void test_repair_of_defying_group() {
         final var a = attribute(Integer.class, "a");
         final var b = attribute(Integer.class, "b");
         final var invalidValueA = 1;
@@ -119,8 +118,7 @@ public class ConstraintGroupBasedRepairTest {
         });
     }
 
-    @Test
-    public void test_removal_of_defying_group() {
+    @Test public void test_removal_of_defying_group() {
         final var a = attribute(Integer.class, "a");
         final var b = attribute(Integer.class, "b");
         final var invalidValueA = 1;
@@ -168,8 +166,7 @@ public class ConstraintGroupBasedRepairTest {
         solution.unorderedLines().requireSizeOf(1);
     }
 
-    @Test
-    public void test_demandGrouping() {
+    @Test public void test_demandGrouping() {
         final var a = attribute(Integer.class, "a");
         final var b = attribute(Integer.class, "b");
         final var invalidValueA = 1;
